@@ -15,10 +15,10 @@ class HomeController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('Dashboard');
-            $content->description('Description...');
+            $content->header('系统信息');
+//            $content->description('Description...');
 
-            $content->row(Dashboard::title());
+//            $content->row(Dashboard::title());
 
             $content->row(function (Row $row) {
 
@@ -34,6 +34,9 @@ class HomeController extends Controller
                     $column->append(Dashboard::dependencies());
                 });
             });
+
+//            $content->body(view('welcome'));
+
         });
     }
 }

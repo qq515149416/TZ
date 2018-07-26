@@ -12,13 +12,14 @@ use Encore\Admin\Layout\Row;
 class HomeController extends Controller
 {
     public function index()
-    {
+    {   
         return Admin::content(function (Content $content) {
 
             $content->header('系统信息');
 //            $content->description('Description...');
 
-//            $content->row(Dashboard::title())
+//            $content->row(Dashboard::title());
+
             $content->row(function (Row $row) {
 
                 $row->column(4, function (Column $column) {
@@ -34,7 +35,7 @@ class HomeController extends Controller
                 });
             });
 
-//            $content->body(view('welcome'));
+            $content->body(view('welcome'));
 
         });
     }

@@ -18,8 +18,7 @@ class HomeController extends Controller
             $content->header('系统信息');
 //            $content->description('Description...');
 
-//            $content->row(Dashboard::title());
-
+//            $content->row(Dashboard::title())
             $content->row(function (Row $row) {
 
                 $row->column(4, function (Column $column) {

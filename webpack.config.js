@@ -8,10 +8,13 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.css$/,
+                test: /\.js$/,
                 use: {
-                    
-                }
+                    loader: 'babel-loader'
+                },
+                exclude: [
+                    path.resolve(__dirname,"node_modules")
+                ],
             }
         ]
     }

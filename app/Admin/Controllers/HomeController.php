@@ -39,11 +39,4 @@ class HomeController extends Controller
 
         });
     }
-    public function test() {
-        return Admin::content(function (Content $content) {
-            $content->header('PHP配置信息');
-            $content->description('测试');
-            $content->body(view('test/index'));
-        });
-    }
 }

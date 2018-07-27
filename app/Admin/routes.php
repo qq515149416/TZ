@@ -11,8 +11,19 @@ Route::group([
 ], function (Router $router) {
 
     $router->get('/', 'HomeController@index');
-    $router->get('/test', 'HomeController@test');
+
+
 
     //Jun   个人测试用
     $router->post('jun', 'Idc\MachineRoomController@store');
+
+
+    $router->get('test', 'Others\StaffController@test');
+    $router->get('staff/maillist', 'Others\StaffController@index');
+    $router->get('ctset', 'Others\ContactsController@test');
+    $router->get('contacts/maillist', 'Others\ContactsController@test');
+    $router->post('rules', 'Others\ContactsController@rulestest');
+
+    $router->get('/user_list', 'UserController@index');
+
 });

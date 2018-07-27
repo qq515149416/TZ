@@ -17,7 +17,7 @@ Route::group([
     $router->get('ctset', 'Others\ContactsController@test');
     $router->get('contacts/maillist', 'Others\ContactsController@test');
     $router->post('rules', 'Others\ContactsController@rulestest');
-
+	$router->get('rules', 'Others\ContactsController@rulestest');
     $router->get('/user_list', 'UserController@index');
 
 });

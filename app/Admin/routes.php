@@ -15,7 +15,7 @@ Route::group([
 
 
     //Jun   个人测试用
-    $router->post('jun', 'Idc\MachineRoomController@store');
+    $router->post('jun/test', 'Idc\MachineRoomController@store');
 
 
     $router->get('test', 'Others\StaffController@test');

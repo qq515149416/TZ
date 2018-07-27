@@ -3,7 +3,7 @@
 namespace App\Admin\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Contracts\Validation\Validator;
 class Test extends FormRequest
 {
     /**
@@ -11,6 +11,7 @@ class Test extends FormRequest
      *
      * @return bool
      */
+   
     public function authorize()
     {
         return true;
@@ -24,16 +25,29 @@ class Test extends FormRequest
     public function rules()
     {
         return [
-            'tittle'=>'require',
+            'title'=>'required|min:10|email',
+            'hah' => 'required',
         ];
     }
 
 
-    public function message()
+    public function messages()
     {
-        return [
-            'title.required' => 'A title is required',
+        // $mes = 'test';
+        return  [
+            'title.required' => '标题必须',
+            'title.min' => '1',
+            'title.email' => 'email',
+            'hah.required' =>'test', 
             // 'body.required'  => 'A message is required',
         ];
+    }
+
+    public function failedValidation(Validator $validator ) {
+        exit(json_encode(array(
+            'code' => 0,
+            'message' => $validator->getMessageBag()->toArray(),
+            // 'data' => $validator->getMessageBag()->toArray()
+        )));
     }
 }

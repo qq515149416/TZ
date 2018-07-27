@@ -35,7 +35,7 @@ class HomeController extends Controller
                 });
             });
 
-            $content->body(view('welcome'));
+//            $content->body(view('welcome'));
 
         });
     }

@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers\Idc;
 
+use App\Admin\Models\Idc\MachineRoom;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use Encore\Admin\Facades\Admin;
@@ -49,9 +50,10 @@ class MachineRoomController extends Controller
     public function store(Request $request)
     {
         //获取参数
-        $par = $request->post();
+//        $par = $request->post();
 
-
+        $machineRoomModel = new MachineRoom();
+        dump($machineRoomModel->store(1,2));
 
     }
 

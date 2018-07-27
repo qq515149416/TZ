@@ -12,6 +12,7 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        //
+        //此处用于排除CSRF  用户开发测试
+        'tz_admin/jun',
     ];
 }

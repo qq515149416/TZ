@@ -23,6 +23,7 @@ Route::group([
     $router->get('ctset', 'Others\ContactsController@test');
     $router->get('test', 'Others\StaffController@test');
     $router->get('contacts/maillist', 'Others\ContactsController@test');
+
     // 显示通讯录
     $router->get('staff/maillist', 'Others\StaffController@index');
     
@@ -34,5 +35,11 @@ Route::group([
     $router->post('contacts/remove','Others\ContactsController@deleted');
 
     $router->get('/user_list', 'UserController@index');
+
+    $router->post('rules', 'Others\ContactsController@rulestest');
+	$router->get('rules', 'Others\ContactsController@rulestest');
+	$router->get('vi', 'Others\ContactsController@vi');
+    $router->get('/user_list', 'Show\UserController@index');
+
 
 });

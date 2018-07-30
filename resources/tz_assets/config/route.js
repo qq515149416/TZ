@@ -1,5 +1,22 @@
 import React from "react";
 import {BrowserRouter} from "react-router-dom";
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            light: "#FFF59D",
+            main: "#FFEB3B",
+            dark: "#FBC02D",
+            contrastText: "#fff"
+        },
+        secondary: {
+            light: '#FFE082',
+            main: '#FFC107',
+            dark: '#FFA000',
+            contrastText: '#333'
+        }
+    }
+});
 /**
  * @augments ReactDOM 用来渲染react对象
  * @augments renderComponents 渲染列表
@@ -8,7 +25,9 @@ import {BrowserRouter} from "react-router-dom";
 const Main = (Render) => {
     return (
         <BrowserRouter>
-            <Render />
+            <MuiThemeProvider theme={theme}>
+                <Render />
+            </MuiThemeProvider>
         </BrowserRouter>
     );
 };

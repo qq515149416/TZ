@@ -130,7 +130,11 @@ class Contacts extends Model
         return $result;
     }
 
-
+    /**
+     * 删除联系人信息
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
     public function deleted($id) {
         $result = [];
         $ids = $id + 0;

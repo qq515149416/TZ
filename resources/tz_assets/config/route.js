@@ -5,10 +5,10 @@ import {BrowserRouter} from "react-router-dom";
  * @augments renderComponents 渲染列表
  * @augments id 当前渲染名称
  */
-const Main = (render) => {
+const Main = (Render) => {
     return (
-        <BrowserRouter basename="/tz_admin">
-            {render}
+        <BrowserRouter>
+            <Render />
         </BrowserRouter>
     );
 };

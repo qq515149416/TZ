@@ -18,7 +18,7 @@ class Staff extends Model
     * @return 返回数组将相关信息返回
     */
     public function index(){
-    	$result = $this->all(['id,admin_users_id,fullname,sex,age,department,position,work_number,phone,QQ,wechat,email,note,created_at,updated_at']);
+    	$result = $this->all(['id','admin_users_id','fullname','sex','age','department','position','work_number','phone','QQ','wechat','email','note','created_at','updated_at']);
     	if(!$result->isEmpty()) {
             $sex = ['女','男','保密'];
             foreach($result as $key=>$value) {

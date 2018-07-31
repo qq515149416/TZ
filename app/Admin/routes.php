@@ -25,7 +25,7 @@ Route::group([
     $router->get('contacts/maillist', 'Others\ContactsController@test');
 
     // 显示通讯录
-    $router->get('staff/maillist', 'Others\StaffController@index');
+    $router->get('staff/staff_list', 'Others\StaffController@index');
     
   // 联系人表
     $router->get('contacts/list','Others\ContactsController@index');

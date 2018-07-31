@@ -25,8 +25,8 @@ class Test extends FormRequest
     public function rules()
     {
         return [
-            'title'=>'required|min:10|email',
-            'hah' => 'required',
+            'title'=>'required',
+            // 'hah' => 'required',
         ];
     }
 
@@ -36,18 +36,19 @@ class Test extends FormRequest
         // $mes = 'test';
         return  [
             'title.required' => '标题必须',
-            'title.min' => '1',
-            'title.email' => 'email',
-            'hah.required' =>'test', 
+            // 'title.min' => '1',
+            // 'title.email' => 'email',
+            // 'hah.required' =>'test', 
             // 'body.required'  => 'A message is required',
         ];
     }
 
     public function failedValidation(Validator $validator ) {
-        exit(json_encode(array(
-            'code' => 0,
-            'message' => $validator->getMessageBag()->toArray(),
-            // 'data' => $validator->getMessageBag()->toArray()
-        )));
+        exit(tz_ajax_echo($data=[],$info=$validator->getMessageBag()->toArray(),0));
+        //     json_encode(array(
+        //     'code' => 0,
+        //     'message' => $validator->getMessageBag()->toArray(),
+        //     // 'data' => $validator->getMessageBag()->toArray()
+        // )));
     }
 }

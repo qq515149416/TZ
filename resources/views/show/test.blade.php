@@ -20,7 +20,8 @@
 
 <!-- Create Post Form -->
 <form action="/tz_admin/rules" method="post">
-    <input type="text" id="post_test_title" placeholder="TITLE" />
+    <input type="text" id="post_test_title" placeholder="TITLE" name="title" />
+    <input type="text" id="post_test_test" placeholder="TITLE" name="test" />
     <button id="post_test">提交</button>
 </form>
   
@@ -30,7 +31,8 @@
         // $(function() {
         //     $("#post_test").click(function() {
         //         $.post("/tz_admin/rules",{
-        //             title: $("#post_test_title").val()
+        //             title: $("#post_test_title").val(),
+        //             test: $("#post_test_test").val(),
         //         },function(data) {
         //             console.log(data);
         //         })

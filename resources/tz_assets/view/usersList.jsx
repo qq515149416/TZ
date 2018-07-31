@@ -1,4 +1,5 @@
 import React from "react";
+<<<<<<< HEAD
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -323,10 +324,13 @@ class EnhancedTable extends React.Component {
       </Paper>
     );
   }
+=======
+class UsersList extends React.Component {
+    render() {
+        return (
+            <div>这是测试的</div>
+        );
+    }
+>>>>>>> bab3aef98cb4d98101e65762f4236e19b6783342
 }
-
-EnhancedTable.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(EnhancedTable);
+export default UsersList;

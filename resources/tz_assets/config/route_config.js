@@ -1,6 +1,7 @@
 import React from "react";
 // import UsersList from "../view/usersList.jsx";
-import ReactRouterConfig from "./reactRouterConfig.jsx";
+import ReactRouterConfig from "./reactRouterConfig.js";
+console.log(ReactRouterConfig);
 export default [
     {
         id: "user_list",

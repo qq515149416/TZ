@@ -24,7 +24,7 @@ const theme = createMuiTheme({
  * @augments renderComponents 渲染列表
  * @augments id 当前渲染名称
  */
-const Main = (Render) => {
+const Main = (render) => {
     return (
         <BrowserRouter>
             <Provider usersInfoStores={new UsersInfoStores()}>

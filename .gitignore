@@ -30,6 +30,4 @@ public/.uini
 /doc
 /storage
 /tests
-/app/Admin/*
-!/app/Admin/Show
 

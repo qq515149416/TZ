@@ -35,10 +35,16 @@ class OaContracts extends FormRequest
     public function rules()
     {
         return [
-            
+            'contactname'=>'required|min:3|max:12',
+            'qq'=>'required|regex:[1-9][0-9]{4,14}',
+            'mobile'=>[
+                'required',
+                'regex:/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/',
+            ]
+            'email'=>'required|email',
         ];
     }
-
+// /^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/
     /**
      * 自定义字段的错误提示信息
      */
@@ -46,7 +52,15 @@ class OaContracts extends FormRequest
     {
         
         return  [
-            
+            'contactname.required'=>'姓名必须填写',
+            'contactname.min'=>'姓名至少要有姓氏',
+            'contactname.max'=>'姓名最多只能四个汉字',
+            'qq.required'=>'联系人QQ号码必须填写',
+            'qq.regex'=>'QQ号码的填写必须符合腾讯相关规则',
+            'mobile.required'=>'联系人手机号码必须填写',
+            'mobile.regex'=>'手机号码必须符合号码相关规则',
+            'email.required'=>'联系人邮箱必须填写',
+            'email.email'=>'邮箱必须符合相关规范',
         ];
     }
 

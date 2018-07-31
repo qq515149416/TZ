@@ -16,7 +16,7 @@ class Contacts extends Model
     *
     * @var array
     */
-    protected $fillable = ['contactname', 'qq','mobile','email','rank','site'];
+    protected $fillable = ['contactname', 'qq','mobile','email','rank','site','created_at','updated_at','deleted_at'];
 
     public function test() {
     	return 456;
@@ -30,7 +30,10 @@ class Contacts extends Model
         // 查询数据并进行权重排序（权重数值越小，越靠前）
     	$result = $this->all(['id','contactname', 'qq','mobile','email','rank','site'])->orderBy('rank');
     	if(!$result->isEmpty()) {
-            // 存在数据
+            $site = [1=>'左侧',2=>'联系人页面',3=>'两侧均显示'];
+            foreach($result as $key => $value){
+                $result[$key]['site'] = $site[$value['site']];
+            }
     		$result['code'] = 1;
     		$result['msg'] = '获取信息成功！';
     	} else {
@@ -84,6 +87,10 @@ class Contacts extends Model
             $result = $this->where('id',$ids)->get(['id','contactname', 'qq','mobile','email','rank','site']);
             if($result){
                 // 根据条件查询到数据
+                $site = [1=>'左侧',2=>'联系人页面',3=>'两侧均显示'];
+                foreach($result as $key => $value){
+                    $result[$key]['sitename'] = $site[$value['site']];
+                }
                $result['code'] = 1;
                $result['msg'] = '获取信息成功！！'; 
             } else {

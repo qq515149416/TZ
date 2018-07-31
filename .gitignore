@@ -1,7 +1,8 @@
 /node_modules
 /public/hot
 /public/storage
-/storage/*.key
+/public/tz_assets
+#/storage/*.key
 /vendor
 /.idea
 /.vscode
@@ -22,3 +23,13 @@ public/ErrorFiles/403.html
 public/ErrorFiles/401.html
 public/ErrorFiles/400.html
 public/.uini
+/routes
+/bootstrap
+/config
+/database
+/doc
+/storage
+/tests
+/app/Admin/*
+!/app/Admin/Show
+

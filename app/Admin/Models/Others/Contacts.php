@@ -28,7 +28,8 @@ class Contacts extends Model
     */
     public function index(){
         // 查询数据并进行权重排序（权重数值越小，越靠前）
-    	$result = $this->all(['id','contactname', 'qq','mobile','email','rank','site'])->orderBy('rank');
+    	$result = $this->all(['id','contactname', 'qq','mobile','email','rank','site']);
+        $this->orderBy('rank');
     	if(!$result->isEmpty()) {
             $site = [1=>'左侧',2=>'联系人页面',3=>'两侧均显示'];
             foreach($result as $key => $value){
@@ -41,7 +42,7 @@ class Contacts extends Model
     		$result['code'] = 0;
     		$result['msg'] = '暂无数据';	
     	}
-    	return $data;
+    	return $result;
     	
     }
 
@@ -142,7 +143,7 @@ class Contacts extends Model
      * @param  [type] $id [description]
      * @return [type]     [description]
      */
-    public function deleted($id) {
+    public function dele($id) {
         $result = [];
         $ids = $id + 0;
         if($ids){

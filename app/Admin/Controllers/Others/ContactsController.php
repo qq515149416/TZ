@@ -56,7 +56,7 @@ class ContactsController extends Controller
      * @return json 返回相关的信息
      */
     public function index() {
-      $index = new contactsmodel();
+      $index = new Contacts();
       $contacts = $index->index();
       // print_r($data);
       return tz_ajax_echo($contacts,$contacts['msg'],$contacts['code']);
@@ -135,14 +135,14 @@ class ContactsController extends Controller
      * @param  Requests $request 操作删除的条件
      * @return json           相关的信息返回
      */
-    public function deleted(Requests $request){
+    public function dele(Requests $request){
       // 判断传输方式
       if($request->isMethod('get')){
         // 获取传递的参数
         $id = $request->get('delete_id');
         $edit = new Contacts();
         // 将参数传递到对应的model的方法并进行接收结果
-        $result = $edit->deleted($id);
+        $result = $edit->dele($id);
         // 返回相关数据和信息提示
         return tz_ajax_echo($result,$result['msg'],$result['code']);
       } else {

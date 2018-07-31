@@ -19,11 +19,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import { inject,observer } from "mobx-react";
-let counter = 0;
-function createData(name, qq, job_number, mobile, sex, branch, job, mailbox) {
-  counter += 1;
-  return { id: counter, name, qq, job_number, mobile, sex, branch, job, mailbox};
-}
 
 function getSorting(order, orderBy) {
   return order === 'desc'
@@ -184,21 +179,21 @@ const styles = theme => ({
   },
 });
 @inject("usersInfoStores")
-@observer
+@observer 
 class EnhancedTable extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       order: 'asc',
       orderBy: 'calories',
       selected: [],
-      data: this.props.usersInfoStores.user,
       page: 0,
       rowsPerPage: 5,
     };
   }
-
+  componentDidMount() {
+    // this.props.usersInfoStores.getData();
+  }
   handleRequestSort = (event, property) => {
     const orderBy = property;
     let order = 'desc';
@@ -212,7 +207,7 @@ class EnhancedTable extends React.Component {
 
   handleSelectAllClick = (event, checked) => {
     if (checked) {
-      this.setState(state => ({ selected: state.data.map(n => n.id) }));
+      this.setState({ selected: this.props.usersInfoStores.user.map(n => n.id) });
       return;
     }
     this.setState({ selected: [] });
@@ -251,8 +246,8 @@ class EnhancedTable extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+    const {  order, orderBy, selected, rowsPerPage, page } = this.state;
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, this.props.usersInfoStores.user.length - page * rowsPerPage);
 
     return (
       <Paper className={classes.root}>
@@ -265,10 +260,10 @@ class EnhancedTable extends React.Component {
               orderBy={orderBy}
               onSelectAllClick={this.handleSelectAllClick}
               onRequestSort={this.handleRequestSort}
-              rowCount={data.length}
+              rowCount={this.props.usersInfoStores.user.length}
             />
             <TableBody>
-              {data
+              {this.props.usersInfoStores.user
                 .sort(getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(n => {
@@ -306,7 +301,7 @@ class EnhancedTable extends React.Component {
         </div>
         <TablePagination
           component="div"
-          count={data.length}
+          count={this.props.usersInfoStores.user.length}
           rowsPerPage={rowsPerPage}
           page={page}
           backIconButtonProps={{
@@ -324,4 +319,7 @@ class EnhancedTable extends React.Component {
     );
   }
 }
-export default UsersList;
+const UsersList = (props) => {
+  return <EnhancedTable {...props} />
+}
+export default withStyles(styles)(UsersList);

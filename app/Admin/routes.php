@@ -34,8 +34,6 @@ Route::group([
     $router->post('contacts/alerting','Others\ContactsController@doEdit');
     $router->post('contacts/remove','Others\ContactsController@deleted');
 
-    $router->get('/user_list', 'UserController@index');
-
     $router->post('rules', 'Others\ContactsController@rulestest');
 	$router->get('rules', 'Others\ContactsController@rulestest');
 	$router->get('vi', 'Others\ContactsController@vi');

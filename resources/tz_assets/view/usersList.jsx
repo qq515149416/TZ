@@ -192,7 +192,7 @@ class EnhancedTable extends React.Component {
     };
   }
   componentDidMount() {
-    // this.props.usersInfoStores.getData();
+    this.props.usersInfoStores.getData();
   }
   handleRequestSort = (event, property) => {
     const orderBy = property;

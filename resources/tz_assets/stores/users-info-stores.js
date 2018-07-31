@@ -1,4 +1,5 @@
 import { observable, action, extendObservable} from "mobx";
+import {get,post} from "../tool/http.js";
 class UserInfoStores {
     @observable name =  "";
     @observable qq ="";
@@ -40,10 +41,14 @@ class UsersInfoStores {
         this.counter += 1;
         return { id: this.counter, name, qq, job_number, mobile, sex, branch, job, mailbox};
     }
-    // @action.bound 
-    // getData() {
-        
-    // }
+    @action.bound 
+    getData() {
+        get("staff/staff_list").then((res) => {
+            if(res.data.code==1) {
+                this.user = res.data.data.map(item => item);
+            }
+        });
+    }
     constructor() {
         this.user.push(new UserInfoStores(this.createData('庞志伟', '328139413/83289000', 'A080', '18922986777', '男', '市场部', '市场部经理','328139413@qq.com')));
         this.user.push(new UserInfoStores(this.createData('刘聪', '2851506991', 'A080', '18038990936', '男', '销售2部', '销售主管','2851506991@qq.com')));

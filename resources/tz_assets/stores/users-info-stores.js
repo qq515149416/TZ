@@ -45,7 +45,8 @@ class UsersInfoStores {
     getData() {
         get("staff/staff_list").then((res) => {
             if(res.data.code==1) {
-                this.user = res.data.data.map(item => item);
+                console.log(res.data);
+                this.user = res.data.data.map(item => new UserInfoStores({...item}));
             }
         });
     }

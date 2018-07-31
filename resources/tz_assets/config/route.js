@@ -1,6 +1,8 @@
 import React from "react";
 import {BrowserRouter} from "react-router-dom";
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { Provider } from "mobx-react";
+import UsersInfoStores from "../stores/users-info-stores.js";
 const theme = createMuiTheme({
     palette: {
         primary: {
@@ -25,9 +27,11 @@ const theme = createMuiTheme({
 const Main = (Render) => {
     return (
         <BrowserRouter>
-            <MuiThemeProvider theme={theme}>
-                <Render />
-            </MuiThemeProvider>
+            <Provider usersInfoStores={new UsersInfoStores()}>
+                <MuiThemeProvider theme={theme}>
+                    <Render />
+                </MuiThemeProvider>
+            </Provider>
         </BrowserRouter>
     );
 };

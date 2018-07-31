@@ -18,6 +18,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
+import { inject,observer } from "mobx-react";
 let counter = 0;
 function createData(name, qq, job_number, mobile, sex, branch, job, mailbox) {
   counter += 1;
@@ -31,7 +32,7 @@ function getSorting(order, orderBy) {
 }
 
 const columnData = [
-  { id: 'name', numeric: false, disablePadding: true, label: '姓名' },
+  { id: 'name', numeric: true, disablePadding: false, label: '姓名' },
   { id: 'qq', numeric: true, disablePadding: false, label: 'qq' },
   { id: 'job_number', numeric: true, disablePadding: false, label: '工号' },
   { id: 'mobile', numeric: true, disablePadding: false, label: '手机' },
@@ -52,13 +53,13 @@ class EnhancedTableHead extends React.Component {
     return (
       <TableHead>
         <TableRow>
-          <TableCell padding="checkbox">
+          {/* <TableCell padding="checkbox">
             <Checkbox
               indeterminate={numSelected > 0 && numSelected < rowCount}
               checked={numSelected === rowCount}
               onChange={onSelectAllClick}
             />
-          </TableCell>
+          </TableCell> */}
           {columnData.map(column => {
             return (
               <TableCell
@@ -182,7 +183,8 @@ const styles = theme => ({
     overflowX: 'auto',
   },
 });
-
+@inject("usersInfoStores")
+@observer
 class EnhancedTable extends React.Component {
   constructor(props) {
     super(props);
@@ -191,21 +193,7 @@ class EnhancedTable extends React.Component {
       order: 'asc',
       orderBy: 'calories',
       selected: [],
-      data: [
-        createData('庞志伟', '328139413/83289000', 'A080', '18922986777', '男', '市场部', '市场部经理','328139413@qq.com'),
-        createData('刘聪', '2851506991', 'A080', '18038990936', '男', '销售2部', '销售主管','2851506991@qq.com'),
-        createData('杨培安', '2851217783', 'A061', '18026487999', '男', '响应中心', '副总','ypa@tzidc.com'),
-        createData('尹锐轩', '123684025', 'A018', '13602608665', '男', '财务部', '财务人员','123684025@qq.com'),
-        createData('庞志伟', '328139413/83289000', 'A080', '18922986777', '男', '市场部', '市场部经理','328139413@qq.com'),
-        createData('庞志伟', '328139413/83289000', 'A080', '18922986777', '男', '市场部', '市场部经理','328139413@qq.com'),
-        createData('庞志伟', '328139413/83289000', 'A080', '18922986777', '男', '市场部', '市场部经理','328139413@qq.com'),
-        createData('庞志伟', '328139413/83289000', 'A080', '18922986777', '男', '市场部', '市场部经理','328139413@qq.com'),
-        createData('庞志伟', '328139413/83289000', 'A080', '18922986777', '男', '市场部', '市场部经理','328139413@qq.com'),
-        createData('庞志伟', '328139413/83289000', 'A080', '18922986777', '男', '市场部', '市场部经理','328139413@qq.com'),
-        createData('庞志伟', '328139413/83289000', 'A080', '18922986777', '男', '市场部', '市场部经理','328139413@qq.com'),
-        createData('庞志伟', '328139413/83289000', 'A080', '18922986777', '男', '市场部', '市场部经理','328139413@qq.com'),
-        createData('庞志伟', '328139413/83289000', 'A080', '18922986777', '男', '市场部', '市场部经理','328139413@qq.com'),
-      ],
+      data: this.props.usersInfoStores.user,
       page: 0,
       rowsPerPage: 5,
     };
@@ -288,17 +276,13 @@ class EnhancedTable extends React.Component {
                   return (
                     <TableRow
                       hover
-                      onClick={event => this.handleClick(event, n.id)}
-                      role="checkbox"
-                      aria-checked={isSelected}
                       tabIndex={-1}
                       key={n.id}
-                      selected={isSelected}
                     >
-                      <TableCell padding="checkbox">
+                      {/* <TableCell padding="checkbox">
                         <Checkbox checked={isSelected} />
-                      </TableCell>
-                      <TableCell component="th" scope="row" padding="none">
+                      </TableCell> */}
+                      <TableCell numeric>
                         {n.name}
                       </TableCell>
                       <TableCell numeric>{n.qq}</TableCell>
@@ -314,7 +298,7 @@ class EnhancedTable extends React.Component {
                 })}
               {emptyRows > 0 && (
                 <TableRow style={{ height: 49 * emptyRows }}>
-                  <TableCell colSpan={6} />
+                  <TableCell colSpan={8} />
                 </TableRow>
               )}
             </TableBody>

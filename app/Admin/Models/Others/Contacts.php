@@ -35,10 +35,12 @@ class Contacts extends Model
             foreach($result as $key => $value){
                 $result[$key]['site'] = $site[$value['site']];
             }
+            $result['data'] = $result;
     		$result['code'] = 1;
     		$result['msg'] = '获取信息成功！';
     	} else {
             // 不存在数据
+            $result['data'] = $result;
     		$result['code'] = 0;
     		$result['msg'] = '暂无数据';	
     	}
@@ -92,15 +94,18 @@ class Contacts extends Model
                 foreach($result as $key => $value){
                     $result[$key]['sitename'] = $site[$value['site']];
                 }
+                $result['data'] = $result;
                $result['code'] = 1;
                $result['msg'] = '获取信息成功！！'; 
             } else {
                 // 根据条件没有查询到数据
+                $result['data'] = $result;
                 $result['code'] = 0;
                 $result['msg'] = '无法获取到信息！！';
             }
         }else {
             // 没传递条件
+            $result['data'] = '';
             $result['code'] = 0;
             $result['msg'] = '无法获取信息！！';
         }

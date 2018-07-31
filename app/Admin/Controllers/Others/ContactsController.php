@@ -59,7 +59,7 @@ class ContactsController extends Controller
       $index = new Contacts();
       $contacts = $index->index();
       // print_r($data);
-      return tz_ajax_echo($contacts,$contacts['msg'],$contacts['code']);
+      return tz_ajax_echo($contacts['data'],$contacts['msg'],$contacts['code']);
     }
 
     /**
@@ -99,7 +99,7 @@ class ContactsController extends Controller
         // 将参数传递到对应的model的方法并进行接收结果
         $result = $edit->edit($id);
         // 返回相关数据和信息提示
-        return tz_ajax_echo($result,$result['msg'],$result['code']);
+        return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
       } else {
         // 不符合的传输方式
         return  tz_ajax_echo([],'获取信息失败！！',0);

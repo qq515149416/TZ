@@ -24,10 +24,12 @@ class Staff extends Model
             foreach($result as $key=>$value) {
                 $result[$key]['sex'] = $sex[$value['sex']];
             }
+            $result['data'] = $result;
     		$result['code'] = 1;
     		$result['msg'] = '';
     		// return $result;
     	} else {
+            $result['data'] = $result;
     		$result['code'] = 0;
     		$result['msg'] = '暂无数据';
     		

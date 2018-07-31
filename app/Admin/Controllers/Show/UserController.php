@@ -18,6 +18,7 @@ let myScript = document.querySelector('script[src*="tz_assets/bundle.js"]');
 let script = document.createElement("script");
 script.type="text/javascript";
 script.src="/tz_assets/bundle.js";
+console.log('测试');
 document.body.replaceChild(script,myScript);
 SCRIPT;
     }

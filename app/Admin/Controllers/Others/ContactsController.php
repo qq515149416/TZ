@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use App\Admin\Models\Others\Contacts;
 use App\Admin\Requests\Test;
-use App\Admin\Requests\OaContracts;
+use App\Admin\Requests\OaContacts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -68,7 +68,7 @@ class ContactsController extends Controller
      * @param  array $data 前台传输过来的信息
      * @return json               将相关的信息进行json返回
      */
-    public function create(OaContracts $request){
+    public function create(OaContacts $request){
       // 当传递过来的信息通过验证后会进行传输方式的判断和表单提交方式的判断
         if($request->isMethod('post')){
           // 符合判断的方式正确继续进行，获取提交信息
@@ -112,7 +112,7 @@ class ContactsController extends Controller
      * @param  array $data 前台传输过来的信息
      * @return json               将相关的信息进行json返回
      */
-    public function doEdit(OaContracts $request){
+    public function doEdit(OaContacts $request){
       // 当传递过来的信息通过验证后会进行传输方式的判断和表单提交方式的判断
       if($request->ajax() && $request->isMethod('post')){
         // 符合判断的方式正确继续进行，获取提交信息

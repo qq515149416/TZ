@@ -59,7 +59,7 @@ class Contacts extends Model
         // $result = [];
         if($data) {
             // 存在传递的数据进行对应字段的插入
-            $row = $this->fill($data)->save();
+            $row = $this->fill()->save($data);
             // $this->create_at;
             if($row){
                 // 插入数据成功

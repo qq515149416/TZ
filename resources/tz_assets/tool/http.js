@@ -1,4 +1,5 @@
 import axios from  "axios";
+const qs = require('qs');
 const baseURL = location.protocol+"//"+location.hostname+"/tz_admin/";
 export const get = (url,data={}) => {
     return new Promise((resolve,reject) => {
@@ -50,8 +51,8 @@ export const get = (url,data={}) => {
 }
 export const post = (url,data={}) => {
     return new Promise((resolve,reject) => {
-        axios.post(baseURL+url,data,{
-            // headers: {"Content-Type": "application/x-www-form-urlencoded"}
+        axios.post(baseURL+url,qs.stringify(data),{
+            headers: {"Content-Type": "application/x-www-form-urlencoded"}
         }).then((response) => {
             resolve({
                 data: response.data,

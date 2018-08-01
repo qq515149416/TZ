@@ -53,6 +53,12 @@ class MachineRoomController extends Controller
 //        $par = $request->post();
 
         $machineRoomModel = new MachineRoom();
+
+
+//        $machineRoomModel->machine_room_id = 13213;
+//        $machineRoomModel->machine_room_name = '123';
+//
+//        $machineRoomModel->save();
         dump($machineRoomModel->store(1,2));
 
     }

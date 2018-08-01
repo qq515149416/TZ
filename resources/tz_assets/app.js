@@ -7,6 +7,9 @@ $(function() {
     if(document.getElementById("user_list")) {
         route(ReactDOM,route_config,"user_list");
     }
+    if(document.getElementById("link_user")) {
+        route(ReactDOM,route_config,"link_user");
+    }
 });
 
 

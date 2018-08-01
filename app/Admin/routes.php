@@ -39,6 +39,5 @@ Route::group([
 	$router->get('rules', 'Others\ContactsController@rulestest');
 	$router->get('vi', 'Others\ContactsController@vi');
     $router->get('/user_list', 'Show\UserController@index');
-
-
+    $router->get('/user_link_list', 'Show\LinkUserController@index');
 });

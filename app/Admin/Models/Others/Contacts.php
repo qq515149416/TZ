@@ -54,13 +54,13 @@ class Contacts extends Model
      * @param  array $data 要添加的数据
      * @return array       返回信息和状态
      */
-    public function create($data){
+    public function insert($data){
         // 定义一个空数组接收返回的信息
         // $result = [];
         if($data) {
             // 存在传递的数据进行对应字段的插入
              $this->fill($data);
-             $row = $this->save();
+             $row = $this->create();
             // $this->create_at;
             if($row){
                 // 插入数据成功

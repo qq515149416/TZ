@@ -313,7 +313,7 @@ class EnhancedTable extends React.Component {
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
           labelRowsPerPage="每页行数："
-          labelDisplayedRows={({ from, to, count }) => `${from}到${to}条，一共： ${count}条` }
+          labelDisplayedRows={({ from, to, count }) => `${from}到${to}条，一共： ${count}页` }
         />
       </Paper>
     );

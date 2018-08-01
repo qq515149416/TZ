@@ -50,16 +50,14 @@ class MachineRoomController extends Controller
     public function store(Request $request)
     {
         //获取参数
-//        $par = $request->post();
+        $par = $request->post();
 
+        //实例化
         $machineRoomModel = new MachineRoom();
 
-
-//        $machineRoomModel->machine_room_id = 13213;
-//        $machineRoomModel->machine_room_name = '123';
-//
-//        $machineRoomModel->save();
-        dump($machineRoomModel->store(1,2));
+        //模型添加机房数据
+        $res = $machineRoomModel->store($par['room_id'], $par['room_name']);
+        dump($res);
 
     }
 

@@ -33,17 +33,22 @@ class UsersLinkInfoStores {
     }
     @action.bound 
     addData(data) {
-        post("contacts/insert",{
-            contactname: data.contactname,
-            qq: data.qq,
-            mobile: data.mobile,
-            email: data.email,
-            rank: data.rank,
-            site: data.site
-        }).then((res) => {
-            if(res.data.code==1) {
-                this.user.push(new UserLinkInfoStores(this.createData({...data})));
-            }
+        return new Promise((resolve,reject) => {
+            post("contacts/insert",{
+                contactname: data.contactname,
+                qq: data.qq,
+                mobile: data.mobile,
+                email: data.email,
+                rank: data.rank,
+                site: data.site
+            }).then((res) => {
+                if(res.data.code==1) {
+                    this.user.push(new UserLinkInfoStores(this.createData({...data})));
+                    resolve(true);
+                } else {
+                    resolve(false);
+                }
+            }).catch(reject);
         });
     }
     @action.bound 

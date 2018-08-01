@@ -35,16 +35,16 @@ class Contacts extends Model
             foreach($result as $key => $value){
                 $result[$key]['site'] = $site[$value['site']];
             }
-            $result['data'] = $result;
-    		$result['code'] = 1;
-    		$result['msg'] = '获取信息成功！';
+            $return['data'] = $result;
+    		$return['code'] = 1;
+    		$return['msg'] = '获取信息成功！';
     	} else {
             // 不存在数据
-            $result['data'] = $result;
-    		$result['code'] = 0;
-    		$result['msg'] = '暂无数据';	
+            $return['data'] = $result;
+    		$return['code'] = 0;
+    		$return['msg'] = '暂无数据';	
     	}
-    	return $result;
+    	return $return;
     	
     }
 
@@ -55,27 +55,27 @@ class Contacts extends Model
      */
     public function create($data){
         // 定义一个空数组接收返回的信息
-        $result = [];
+        // $result = [];
         if($data) {
             // 存在传递的数据进行对应字段的插入
             $row = $this->fill($data)->save();
             if($row){
                 // 插入数据成功
-                $result['code'] = $row;
-                $result['msg'] = '新增信息成功！！';
+                $return['code'] = $row;
+                $return['msg'] = '新增信息成功！！';
             } else {
                 // 插入数据失败
-                $result['code'] = 0;
-                $result['msg'] = '新增信息失败！！';
+                $return['code'] = 0;
+                $return['msg'] = '新增信息失败！！';
             }
 
         } else {
             // 不存在传递的数据
-            $result['code'] = 0;
-            $result['msg'] = '请输入正确的信息';
+            $return['code'] = 0;
+            $return['msg'] = '请输入正确的信息';
         }
 
-        return $result;
+        return $return;
     }
 
     /**
@@ -94,23 +94,23 @@ class Contacts extends Model
                 foreach($result as $key => $value){
                     $result[$key]['sitename'] = $site[$value['site']];
                 }
-                $result['data'] = $result;
-               $result['code'] = 1;
-               $result['msg'] = '获取信息成功！！'; 
+                $return['data'] = $result;
+               $return['code'] = 1;
+               $return['msg'] = '获取信息成功！！'; 
             } else {
                 // 根据条件没有查询到数据
-                $result['data'] = $result;
-                $result['code'] = 0;
-                $result['msg'] = '无法获取到信息！！';
+                $return['data'] = $result;
+                $return['code'] = 0;
+                $return['msg'] = '无法获取到信息！！';
             }
         }else {
             // 没传递条件
-            $result['data'] = '';
-            $result['code'] = 0;
-            $result['msg'] = '无法获取信息！！';
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg'] = '无法获取信息！！';
         }
 
-        return $result;
+        return $return;
     }
 
     /**
@@ -120,27 +120,27 @@ class Contacts extends Model
      */
     public function doEdit($data) {
         // 定义一个空的数组接收返回的信息
-        $result = [];
+        // $result = [];
         if($data && $data['id']+0) {
             //存在修改的数据进行修改操作
             $row = $this->where('id',$data['id'])->fill($data)->save();
             if($row){
                 // 修改数据成功
-                $result['code'] = $row;
-                $result['msg'] = '修改信息成功！！';
+                $return['code'] = $row;
+                $return['msg'] = '修改信息成功！！';
             } else {
                 // 修改数据失败
-                $result['code'] = 0;
-                $result['msg'] = '修改信息失败！！';
+                $return['code'] = 0;
+                $return['msg'] = '修改信息失败！！';
             }
 
         } else {
             // 没有数据
-            $result['code'] = 0;
-            $result['msg'] = '请确保信息正确';
+            $return['code'] = 0;
+            $return['msg'] = '请确保信息正确';
         }
 
-        return $result;
+        return $return;
     }
 
     /**
@@ -149,26 +149,26 @@ class Contacts extends Model
      * @return [type]     [description]
      */
     public function dele($id) {
-        $result = [];
+        // $result = [];
         $ids = $id + 0;
         if($ids){
             // 存在条件进行删除
             $row = $this->where('id',$ids)->delete();
             if($result){
                 // 根据条件查询到数据
-               $result['code'] = $row;
-               $result['msg'] = '删除信息成功！！'; 
+               $return['code'] = $row;
+               $return['msg'] = '删除信息成功！！'; 
             } else {
                 // 根据条件没有删除到数据
-                $result['code'] = 0;
-                $result['msg'] = '无法删除相关的信息！！';
+                $return['code'] = 0;
+                $return['msg'] = '无法删除相关的信息！！';
             }
         }else {
             // 没传递条件
-            $result['code'] = 0;
-            $result['msg'] = '无法删除相关信息！！';
+            $return['code'] = 0;
+            $return['msg'] = '无法删除相关信息！！';
         }
 
-        return $result;
+        return $return;
     }
 }

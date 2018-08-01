@@ -19,6 +19,15 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import { inject,observer } from "mobx-react";
+// 添加数据
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+// import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import MenuItem from '@material-ui/core/MenuItem';
 
 function getSorting(order, orderBy) {
     return order === 'desc'
@@ -129,11 +138,11 @@ class EnhancedTableHead extends React.Component {
         <div className={classes.title}>
           {numSelected > 0 ? (
             <Typography color="inherit" variant="subheading">
-              {numSelected} selected
+              {numSelected} 选中
             </Typography>
           ) : (
             <Typography variant="title" id="tableTitle">
-              Nutrition
+              用户通讯录
             </Typography>
           )}
         </div>
@@ -164,10 +173,189 @@ class EnhancedTableHead extends React.Component {
   
   EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
   
+
+    const UsersLinkAddStyle = theme => ({
+        button: {
+            margin: theme.spacing.unit
+        },
+        textField: {
+            width: theme.breakpoints.values.sm
+        },
+        menu: {
+            width: theme.breakpoints.values.sm / 2,
+        },
+        dialog: {
+            maxWidth: theme.breakpoints.values.sm + 50
+        }
+    });
+    class UsersLinkAdd extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                open: false,
+                inputAttr: {
+                    contactname: {
+                        error: false,
+                        label: "姓名"
+                    },
+                    qq: {
+                        error: false,
+                        label: "QQ"
+                    },
+                    mobile: {
+                        error: false,
+                        label: "手机"
+                    },
+                    email: {
+                        error: false,
+                        label: "邮箱"
+                    },
+                    rank: {
+                        error: false,
+                        label: "权重"
+                    },
+                    site: {
+                        currency: 1,
+                        label: "显示位置"
+                    }
+                }
+            };
+        }
+        handleClickOpen = () => {
+            this.setState({ open: true });
+        };
+        
+        handleClose = () => {
+            this.setState({ open: false });
+        };
+        addPostUserLink = () => {
+            // console.log(this.contactname.value);
+            this.props.usersLinkInfoStores.addData({
+                contactname: this.contactname.value,
+                qq: this.qq.value,
+                mobile: this.mobile.value,
+                email: this.email.value,
+                rank: this.rank.value,
+                site: this.state.inputAttr.site.currency
+            });
+        }
+        handleChange = name => event => {
+            this.setState(state => state.inputAttr.site[name] = event.target.value);
+        };
+        render() {
+            const {classes} = this.props;
+            const {inputAttr} = this.state;
+            return [
+                <Button variant="contained" onClick={this.handleClickOpen} color="primary" className={classes.button}>
+                    添加联系方式
+                </Button>,
+                <Dialog
+                open={this.state.open}
+                onClose={this.handleClose}
+                aria-labelledby="form-dialog-title"
+                maxWidth="sm"
+                PaperProps={{
+                    className: classes.dialog
+                }}
+              >
+                <DialogTitle id="form-dialog-title">添加员工联系方式</DialogTitle>
+                <DialogContent>
+                  <TextField
+                    error={inputAttr.contactname.error}
+                    margin="dense"
+                    id="contactname"
+                    label={inputAttr.contactname.label}
+                    type="text"
+                    fullWidth
+                    className={classes.textField}
+                    inputRef = {(ref) => this.contactname = ref}
+                  />
+                  <TextField
+                    error={inputAttr.qq.error}
+                    margin="dense"
+                    id="qq"
+                    label={inputAttr.qq.label}
+                    type="text"
+                    fullWidth
+                    className={classes.textField}
+                    inputRef = {(ref) => this.qq = ref}
+                  />
+                  <TextField
+                    error={inputAttr.mobile.error}
+                    margin="dense"
+                    id="mobile"
+                    label={inputAttr.mobile.label}
+                    type="text"
+                    fullWidth
+                    className={classes.textField}
+                    inputRef = {(ref) => this.mobile = ref}
+                  />
+                  <TextField
+                    error={inputAttr.email.error}
+                    margin="dense"
+                    id="email"
+                    label={inputAttr.email.label}
+                    type="text"
+                    fullWidth
+                    className={classes.textField}
+                    inputRef = {(ref) => this.email = ref}
+                  />
+                  <TextField
+                    error={inputAttr.rank.error}
+                    margin="dense"
+                    id="rank"
+                    label={inputAttr.rank.label}
+                    type="text"
+                    fullWidth
+                    className={classes.textField}
+                    inputRef = {(ref) => this.rank = ref}
+                  />
+                    <TextField
+                        id="site"
+                        select
+                        label={inputAttr.site.label}
+                        className={classes.textField}
+                        value={inputAttr.site.currency}
+                        onChange={this.handleChange('currency')}
+                        SelectProps={{
+                            MenuProps: {
+                                className: classes.menu
+                            },
+                        }}
+                        margin="normal"
+                    >
+                        <MenuItem value={1}>
+                            左侧
+                        </MenuItem>
+                        <MenuItem value={2}>
+                            联系人页面
+                        </MenuItem>
+                        <MenuItem value={3}>
+                            两侧均显示
+                        </MenuItem>
+                    </TextField>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={this.handleClose} color="primary">
+                    取消
+                  </Button>
+                  <Button onClick={this.addPostUserLink} color="primary">
+                    添加
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            ];
+        }
+    }
+    UsersLinkAdd.propTypes = {
+        classes: PropTypes.object.isRequired,
+    };
+    UsersLinkAdd = withStyles(UsersLinkAddStyle)(UsersLinkAdd);
+
   const styles = theme => ({
     root: {
       width: '100%',
-      marginTop: theme.spacing.unit * 3,
+      marginTop: theme.spacing.unit,
     },
     table: {
       minWidth: 1020,
@@ -176,7 +364,8 @@ class EnhancedTableHead extends React.Component {
       overflowX: 'auto',
     },
   });
-  
+@inject("usersLinkInfoStores")
+@observer 
   class EnhancedTable extends React.Component {
     constructor(props) {
       super(props);
@@ -185,12 +374,13 @@ class EnhancedTableHead extends React.Component {
         order: 'asc',
         orderBy: 'calories',
         selected: [],
-        data: [],
         page: 0,
         rowsPerPage: 5,
       };
     }
-  
+    componentDidMount() {
+        this.props.usersLinkInfoStores.getData();
+    }
     handleRequestSort = (event, property) => {
       const orderBy = property;
       let order = 'desc';
@@ -204,7 +394,7 @@ class EnhancedTableHead extends React.Component {
   
     handleSelectAllClick = (event, checked) => {
       if (checked) {
-        this.setState(state => ({ selected: state.data.map(n => n.id) }));
+        this.setState({ selected: this.props.usersLinkInfoStores.user.map(n => n.id) });
         return;
       }
       this.setState({ selected: [] });
@@ -243,10 +433,11 @@ class EnhancedTableHead extends React.Component {
   
     render() {
       const { classes } = this.props;
-      const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
-      const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+      const {  order, orderBy, selected, rowsPerPage, page } = this.state;
+      const emptyRows = rowsPerPage - Math.min(rowsPerPage, this.props.usersLinkInfoStores.user.length - page * rowsPerPage);
   
-      return (
+      return [
+          <UsersLinkAdd usersLinkInfoStores={this.props.usersLinkInfoStores} />,
         <Paper className={classes.root}>
           <EnhancedTableToolbar numSelected={selected.length} />
           <div className={classes.tableWrapper}>
@@ -257,10 +448,10 @@ class EnhancedTableHead extends React.Component {
                 orderBy={orderBy}
                 onSelectAllClick={this.handleSelectAllClick}
                 onRequestSort={this.handleRequestSort}
-                rowCount={data.length}
+                rowCount={this.props.usersLinkInfoStores.user.length}
               />
               <TableBody>
-                {data
+                {this.props.usersLinkInfoStores.user
                   .sort(getSorting(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map(n => {
@@ -294,7 +485,7 @@ class EnhancedTableHead extends React.Component {
                   })}
                 {emptyRows > 0 && (
                   <TableRow style={{ height: 49 * emptyRows }}>
-                    <TableCell colSpan={6} />
+                    <TableCell colSpan={9} />
                   </TableRow>
                 )}
               </TableBody>
@@ -302,7 +493,7 @@ class EnhancedTableHead extends React.Component {
           </div>
           <TablePagination
             component="div"
-            count={data.length}
+            count={this.props.usersLinkInfoStores.user.length}
             rowsPerPage={rowsPerPage}
             page={page}
             backIconButtonProps={{
@@ -317,7 +508,7 @@ class EnhancedTableHead extends React.Component {
             labelDisplayedRows={({ from, to, count }) => `${from}到${to}条，一共： ${count}页` }
           />
         </Paper>
-      );
+      ];
     }
   }
   EnhancedTable.propTypes = {

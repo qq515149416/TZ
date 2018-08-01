@@ -27,7 +27,7 @@ function getSorting(order, orderBy) {
 }
 
 const columnData = [
-  { id: 'name', numeric: true, disablePadding: false, label: '姓名' },
+  { id: 'name', numeric: true, disablePadding: true, label: '姓名' },
   { id: 'qq', numeric: true, disablePadding: false, label: 'qq' },
   { id: 'job_number', numeric: true, disablePadding: false, label: '工号' },
   { id: 'mobile', numeric: true, disablePadding: false, label: '手机' },
@@ -48,13 +48,13 @@ class EnhancedTableHead extends React.Component {
     return (
       <TableHead>
         <TableRow>
-          {/* <TableCell padding="checkbox">
+          <TableCell padding="checkbox">
             <Checkbox
               indeterminate={numSelected > 0 && numSelected < rowCount}
               checked={numSelected === rowCount}
               onChange={onSelectAllClick}
             />
-          </TableCell> */}
+          </TableCell>
           {columnData.map(column => {
             return (
               <TableCell
@@ -131,7 +131,7 @@ let EnhancedTableToolbar = props => {
       <div className={classes.title}>
         {numSelected > 0 ? (
           <Typography color="inherit" variant="subheading">
-            {numSelected} selected
+            {numSelected} 选中
           </Typography>
         ) : (
           <Typography variant="title" id="tableTitle">
@@ -273,11 +273,15 @@ class EnhancedTable extends React.Component {
                       hover
                       tabIndex={-1}
                       key={n.id}
+                      onClick={event => this.handleClick(event, n.id)}
+                      role="checkbox"
+                      aria-checked={isSelected}
+                      selected={isSelected}
                     >
-                      {/* <TableCell padding="checkbox">
+                      <TableCell padding="checkbox">
                         <Checkbox checked={isSelected} />
-                      </TableCell> */}
-                      <TableCell numeric>
+                      </TableCell>
+                      <TableCell numeric component="th" scope="row" padding="none">
                         {n.name}
                       </TableCell>
                       <TableCell numeric>{n.qq}</TableCell>
@@ -293,7 +297,7 @@ class EnhancedTable extends React.Component {
                 })}
               {emptyRows > 0 && (
                 <TableRow style={{ height: 49 * emptyRows }}>
-                  <TableCell colSpan={8} />
+                  <TableCell colSpan={9} />
                 </TableRow>
               )}
             </TableBody>

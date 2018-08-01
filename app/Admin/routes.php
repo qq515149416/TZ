@@ -30,7 +30,7 @@ Route::group([
     
   // 联系人表
     $router->get('contacts/list','Others\ContactsController@index');
-    $router->post('contacts/insert','Others\ContactsController@created');
+    $router->post('contacts/insert','Others\ContactsController@create');
     $router->get('contacts/alert','Others\ContactsController@edit');
     $router->post('contacts/alerting','Others\ContactsController@doEdit');
     $router->post('contacts/remove','Others\ContactsController@deleted');

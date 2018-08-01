@@ -54,7 +54,7 @@ class Contacts extends Model
      * @param  array $data 要添加的数据
      * @return array       返回信息和状态
      */
-    public function created($data){
+    public function create($data){
         // 定义一个空数组接收返回的信息
         // $result = [];
         if($data) {

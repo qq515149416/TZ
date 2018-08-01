@@ -68,7 +68,7 @@ class ContactsController extends Controller
      * @param  array $data 前台传输过来的信息
      * @return json               将相关的信息进行json返回
      */
-    public function created(OaContracts $request){
+    public function create(OaContracts $request){
       // 当传递过来的信息通过验证后会进行传输方式的判断和表单提交方式的判断
         if($request->isMethod('post')){
           // 符合判断的方式正确继续进行，获取提交信息
@@ -76,7 +76,7 @@ class ContactsController extends Controller
             // 实例化model
             $create = new Contacts();
             // 数据进行model层处理
-            $result = $create->created($data);
+            $result = $create->create($data);
             // 返回信息
             return tz_ajax_echo($result,$result['msg'],$result['code']);
         } else {

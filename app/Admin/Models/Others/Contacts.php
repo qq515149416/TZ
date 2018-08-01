@@ -28,7 +28,7 @@ class Contacts extends Model
     */
     public function index(){
         // 查询数据并进行权重排序（权重数值越小，越靠前）
-    	$result = $this->all(['id','contactname', 'qq','mobile','email','rank','site']);
+    	$result = $this->all(['id','contactname', 'qq','mobile','email','rank','site','created_at','updated_at']);
         $this->orderBy('rank');
 
     	if(!$result->isEmpty()) {
@@ -59,8 +59,8 @@ class Contacts extends Model
         // $result = [];
         if($data) {
             // 存在传递的数据进行对应字段的插入
-             $this->fill($data);
-             $row = $this->create();
+            $fill = $this->fill($data);
+            $row = $this->create($fill);
             // $this->create_at;
             if($row){
                 // 插入数据成功

@@ -23,7 +23,8 @@ class StaffController extends Controller
     public function index() {
     	$index = new staffmodel();
     	$staff = $index->index();
-    	// print_r($data);
+    	// echo 123;
     	return tz_ajax_echo($staff['data'],$staff['msg'],$staff['code']);
+        // return "{test: 123}"; 
     }
 }

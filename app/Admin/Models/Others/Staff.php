@@ -13,25 +13,27 @@ class Staff extends Model
     	return 123;
     }
 
-     /**
-     * 查询员工基本信息表的数据
-     * @return 返回数组将相关信息返回
-     */
+    /**
+    * 查询员工基本信息表的数据
+    * @return 返回数组将相关信息返回
+    */
     public function index(){
-    	$data = [];
-    	$result = $this->all();
-    	// $result = (object)[['1'],[2],[4]];
+    	$result = $this->all(['id','admin_users_id','fullname','sex','age','department','job','work_number','phone','QQ','wechat','email','note','created_at','updated_at']);
     	if(!$result->isEmpty()) {
-    		$data['data'] = $result;
-    		$data['code'] = 1;
-    		$data['msg'] = '';
-    		// return $result;
+            $sex = ['女','男','保密'];
+            foreach($result as $key=>$value) {
+                $result[$key]['sex'] = $sex[$value['sex']];
+            }
+            $return['data'] = $result;
+    		$return['code'] = 1;
+    		$return['msg'] = '';
+    		// return $ret;
     	} else {
-    		$data['data'] = $result;
-    		$data['code'] = 0;
-    		$data['msg'] = '暂无数据';
+            $return['data'] = $result;
+    		$return['code'] = 0;
+    		$return['msg'] = '暂无数据';
     		
     	}
-    	return $data;
+    	return $return;
     }
 }

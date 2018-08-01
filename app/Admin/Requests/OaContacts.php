@@ -35,7 +35,7 @@ class OaContracts extends FormRequest
     public function rules()
     {
         return [
-            'contactname'=>'required|min:3|max:12',
+            'contactname'=>'required|max:20',
             'qq'=>'required|regex:/^[1-9]\d{4,10}$/',
             'mobile'=>[
                 'required',
@@ -53,8 +53,8 @@ class OaContracts extends FormRequest
         
         return  [
             'contactname.required'=>'姓名必须填写',
-            'contactname.min'=>'姓名至少要有姓氏',
-            'contactname.max'=>'姓名最多只能四个汉字',
+            // 'contactname.min'=>'姓名至少要有姓氏',
+            'contactname.max'=>'姓名最多只能20个字符',
             'qq.required'=>'联系人QQ号码必须填写',
             'qq.regex'=>'QQ号码的填写必须符合腾讯相关规则',
             'mobile.required'=>'联系人手机号码必须填写',

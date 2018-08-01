@@ -61,7 +61,7 @@ class ContactsController extends Controller
       // print_r($data);
       return tz_ajax_echo($contacts['data'],$contacts['msg'],$contacts['code']);
     }
-
+// $request->ajax() && 
     /**
      * 新增联系人表的信息
      * @param  OaContracts $request 进行字段验证

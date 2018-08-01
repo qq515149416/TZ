@@ -16,7 +16,7 @@ class Contacts extends Model
     *
     * @var array
     */
-    protected $fillable = ['contactname', 'qq','mobile','email','rank','site','created_at','updated_at','deleted_at'];
+    protected $fillable = ['contactname', 'qq','mobile','email','rank','site'];
 
     public function test() {
     	return 456;

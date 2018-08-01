@@ -50,7 +50,9 @@ export const get = (url,data={}) => {
 }
 export const post = (url,data={}) => {
     return new Promise((resolve,reject) => {
-        axios.post(baseURL+url,data).then((response) => {
+        axios.post(baseURL+url,data,{
+            // headers: {"Content-Type": "application/x-www-form-urlencoded"}
+        }).then((response) => {
             resolve({
                 data: response.data,
                 status: response.status,

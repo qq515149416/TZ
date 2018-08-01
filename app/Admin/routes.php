@@ -23,6 +23,7 @@ Route::group([
     $router->get('ctset', 'Others\ContactsController@test');
     $router->get('test', 'Others\StaffController@test');
     $router->get('contacts/maillist', 'Others\ContactsController@test');
+    $router->get('ip/test','Idc\IpsController@test');
 
     // 显示通讯录
     $router->get('staff/staff_list', 'Others\StaffController@index');
@@ -38,6 +39,5 @@ Route::group([
 	$router->get('rules', 'Others\ContactsController@rulestest');
 	$router->get('vi', 'Others\ContactsController@vi');
     $router->get('/user_list', 'Show\UserController@index');
-
-
+    $router->get('/user_link_list', 'Show\LinkUserController@index');
 });

@@ -30,6 +30,7 @@ class Contacts extends Model
         // 查询数据并进行权重排序（权重数值越小，越靠前）
     	$result = $this->all(['id','contactname', 'qq','mobile','email','rank','site']);
         $this->orderBy('rank');
+
     	if(!$result->isEmpty()) {
             $site = [1=>'左侧',2=>'联系人页面',3=>'两侧均显示'];
             foreach($result as $key => $value){
@@ -58,7 +59,8 @@ class Contacts extends Model
         // $result = [];
         if($data) {
             // 存在传递的数据进行对应字段的插入
-            $row = $this->fill($data)->save();
+            $row = $this->fill()->save($data);
+            // $this->create_at;
             if($row){
                 // 插入数据成功
                 $return['code'] = $row;

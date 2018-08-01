@@ -3,6 +3,8 @@ import {BrowserRouter} from "react-router-dom";
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { Provider } from "mobx-react";
 import UsersInfoStores from "../stores/users-info-stores.js";
+import UsersLinkInfoStores from "../stores/usersLink-info-stores.js";
+
 const theme = createMuiTheme({
     palette: {
         primary: {
@@ -24,10 +26,14 @@ const theme = createMuiTheme({
  * @augments renderComponents 渲染列表
  * @augments id 当前渲染名称
  */
+let stores = {
+    usersInfoStores: new UsersInfoStores(),
+    usersLinkInfoStores: new UsersLinkInfoStores()
+}
 const Main = (Render) => {
     return (
         <BrowserRouter>
-            <Provider usersInfoStores={new UsersInfoStores()}>
+            <Provider {...stores}>
                 <MuiThemeProvider theme={theme}>
                     <Render />
                 </MuiThemeProvider>

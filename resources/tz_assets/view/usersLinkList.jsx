@@ -237,6 +237,10 @@ class EnhancedTableHead extends React.Component {
                 email: this.email.value,
                 rank: this.rank.value,
                 site: this.state.inputAttr.site.currency
+            }).then((state) => {
+                if(state) {
+                    this.setState({ open: false });
+                }
             });
         }
         handleChange = name => event => {

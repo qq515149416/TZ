@@ -19,23 +19,35 @@ class MachineRoom extends Model
      */
     public function store($roomId, $roomName)
     {
-        //判断机房编号是否存在
-        if ($this->where('machine_room_id', '=', $roomId)->exists()) {
-            return '机房编号已存在';
+//        //判断机房编号是否存在
+//        if ($this->where('machine_room_id', '=', $roomId)->exists()) {
+//            $res['content'] = '';
+//            $res['message'] = '机房编号已存在';
+//            $res['state']   = 0;
+//            return $res;
+//        }
+//
+//        //判断机房名称是否存在
+//        if ($this->where('machine_room_name', '=', $roomName)->exists()) {
+//            $res['content'] = '';
+//            $res['message'] = '机房名字已存在';
+//            $res['state']   = 0;
+//            return $res;
+//        }
+
+
+        $this->machine_room_id = '';
+        $this->machine_room_name = '123';
+
+        $insertInfo=$this->save();
+        //添加机房记录
+        if (1) {
+            $res['content'] = $insertInfo;
+            $res['message'] = '添加机房成功';
+            $res['state']   = 1;
+            return $res;
         }
 
-        //判断机房名称是否存在
-        if ($this->where('machine_room_name', '=', $roomName)->exists()) {
-            return '机房名称已经存在';
-        }
-
-
-        $data = $this->where('machine_room_id', '=', $roomId)->exists();
-        if ($data) {
-            dd($data);
-        }
-//        return $data;
-//        return 'su';
     }
 
 }

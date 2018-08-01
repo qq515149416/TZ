@@ -16,7 +16,7 @@ class Contacts extends Model
     *
     * @var array
     */
-    protected $fillable = ['contactname', 'qq','mobile','email','rank','site'];
+    protected $fillable = ['contactname', 'qq','mobile','email','rank','site','created_at','updated_at','deleted_at'];
 
     public function test() {
     	return 456;
@@ -30,6 +30,7 @@ class Contacts extends Model
         // 查询数据并进行权重排序（权重数值越小，越靠前）
     	$result = $this->all(['id','contactname', 'qq','mobile','email','rank','site']);
         $this->orderBy('rank');
+
     	if(!$result->isEmpty()) {
             $site = [1=>'左侧',2=>'联系人页面',3=>'两侧均显示'];
             foreach($result as $key => $value){
@@ -53,12 +54,13 @@ class Contacts extends Model
      * @param  array $data 要添加的数据
      * @return array       返回信息和状态
      */
-    public function create($data){
+    public function created($data){
         // 定义一个空数组接收返回的信息
         // $result = [];
         if($data) {
             // 存在传递的数据进行对应字段的插入
-            $row = $this->fill($data)->save();
+            $row = $this->fill($data)->create();
+            // $this->create_at;
             if($row){
                 // 插入数据成功
                 $return['code'] = $row;

@@ -14,7 +14,7 @@ namespace App\Admin\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
-class OaContracts extends FormRequest
+class OaContacts extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

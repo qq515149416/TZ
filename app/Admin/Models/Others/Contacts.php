@@ -64,7 +64,7 @@ class Contacts extends Model
             // $this->create_at;
             if($row){
                 // 插入数据成功
-                $return['code'] = $row;
+                $return['code'] = 1;
                 $return['msg'] = '新增信息成功！！';
             } else {
                 // 插入数据失败

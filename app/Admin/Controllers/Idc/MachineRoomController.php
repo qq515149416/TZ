@@ -63,6 +63,7 @@ class MachineRoomController extends Controller
         //模型添加机房数据
         $res = $machineRoomModel->store($par['room_id'], $par['room_name']);
         dump($res);
+        return tz_ajax_echo([], '新增机房成功', 1);
 
     }
 

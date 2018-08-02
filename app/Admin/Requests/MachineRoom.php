@@ -4,6 +4,7 @@ namespace App\Admin\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+
 class MachineRoom extends FormRequest
 {
     /**
@@ -25,29 +26,42 @@ class MachineRoom extends FormRequest
     public function rules()
     {
         return [
-            'title'=>'required|min:10|email',
-            'hah' => 'required',
+//            'title'=>'required|min:10|email',
+            'room_id'   => 'required|unique:idc_machineroom,machine_room_id',
+            'room_name' => 'required|unique:idc_machineroom,machine_room_name',
+
         ];
     }
 
 
+    /**
+     *  错误时返回的信息
+     * @return array
+     */
     public function messages()
     {
-        // $mes = 'test';
-        return  [
-//            'title.required' => '标题必须',
-//            'title.min' => '1',
-//            'title.email' => 'email',
-//            'hah.required' =>'test',
-            // 'body.required'  => 'A message is required',
+        return [
+            'room_id.required'   => '机房编号必须填写',
+            'room_id.unique'     => '机房编号重复',
+            'room_name.required' => '机房中文名必须填写',
+            'room_name.unique'   => '机房名重复',
         ];
     }
 
-    public function failedValidation(Validator $validator ) {
-        exit(json_encode(array(
-            'code' => 0,
-            'message' => $validator->getMessageBag()->toArray(),
-            // 'data' => $validator->getMessageBag()->toArray()
-        )));
+    /**
+     * 验证不通过时的操作
+     *
+     * @param Validator $validator
+     */
+    public function failedValidation(Validator $validator)
+    {
+//        exit(json_encode(array(
+//            'code' => 0,
+//            'message' => $validator->getMessageBag(),
+//             'data' => $validator->getMessageBag()->toArray()
+//        )));
+        exit(dump($validator->errors()->first()));
+//        exit(tz_ajax_echo([],$validator->errors()->first(),0));
+
     }
 }

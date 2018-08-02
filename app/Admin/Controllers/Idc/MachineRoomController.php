@@ -8,6 +8,7 @@ use Encore\Admin\Controllers\ModelForm;
 use Encore\Admin\Facades\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use App\Admin\Requests\MachineRoom as MachineRoomValidate;
 
 class MachineRoomController extends Controller
 {
@@ -34,11 +35,15 @@ class MachineRoomController extends Controller
     public function create()
     {
 
+        dump('create');
     }
 
     /**
      * 添加机房接口
      * 传参方式:POST
+     * 参数:
+     * room_id:机房编号
+     * room_namee:机房中文名
      *
      * 表:idc_machineroom
      *
@@ -47,7 +52,7 @@ class MachineRoomController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MachineRoomValidate $request)
     {
         //获取参数
         $par = $request->post();

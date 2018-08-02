@@ -16,6 +16,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import { inject,observer } from "mobx-react";
@@ -120,6 +122,8 @@ class EnhancedTableHead extends React.Component {
     },
     actions: {
       color: theme.palette.text.secondary,
+      width: 48 * 2 + 10,
+      textAlign: "right"
     },
     title: {
       flex: '0 0 auto',
@@ -161,9 +165,14 @@ class EnhancedTableHead extends React.Component {
         <div className={classes.spacer} />
         <div className={classes.actions}>
           {numSelected > 0 ? [
-            <Tooltip title="Delete">
+            <Tooltip title="删除">
               <IconButton onClick={()=>{delData();}} aria-label="Delete">
                 <DeleteIcon />
+              </IconButton>
+            </Tooltip>,
+            <Tooltip title="编辑">
+              <IconButton aria-label="Edit">
+                <EditIcon />
               </IconButton>
             </Tooltip>
           ]: (

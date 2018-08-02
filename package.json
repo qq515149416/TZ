@@ -36,6 +36,7 @@
         "@material-ui/icons": "^2.0.0",
         "mobx": "^5.0.3",
         "mobx-react": "^5.2.3",
+        "qs": "^6.5.2",
         "react": "^16.4.1",
         "react-dom": "^16.4.1",
         "react-router-dom": "^4.3.1"

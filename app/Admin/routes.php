@@ -34,6 +34,12 @@ Route::group([
     $router->get('contacts/alert','Others\ContactsController@edit');
     $router->post('contacts/alerting','Others\ContactsController@doEdit');
     $router->post('contacts/remove','Others\ContactsController@deleted');
+//ip
+    $router->get('ips/index','Idc\IpsController@index');
+    $router->post('ips/insert','Idc\IpsController@insert');
+    $router->get('ips/alert','Idc\IpsController@edit');
+    $router->post('ips/alerting','Idc\IpsController@doEdit');
+    $router->post('ips/remove','Idc\IpsController@deleted');
 
     $router->post('rules', 'Others\ContactsController@rulestest');
 	$router->get('rules', 'Others\ContactsController@rulestest');

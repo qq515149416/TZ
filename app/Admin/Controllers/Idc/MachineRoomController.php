@@ -98,7 +98,9 @@ class MachineRoomController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //修改机房编号或名字
+
+
     }
 
     /**
@@ -109,7 +111,22 @@ class MachineRoomController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //软删除
+
+        //实例化
+        $machineRoomModel = new MachineRoom();
+
+//        dd($machineRoomModel->destroy(22));
+        if ($machineRoomModel->destroy($id)) {
+            //软删除成功
+            return tz_ajax_echo([], '删除成功', 1);
+
+        } else {
+            //软删除失败
+            return tz_ajax_echo([], '删除失败', 0);
+
+        }
+
     }
 
 

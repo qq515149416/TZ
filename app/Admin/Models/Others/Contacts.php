@@ -60,7 +60,7 @@ class Contacts extends Model
         if($data) {
             // 存在传递的数据进行对应字段的插入
             // $fill = $this->fill();
-            $row = $this->save($data);
+            $row = $this->create($data);
             // $this->create_at;
             if($row != false){
                 // 插入数据成功

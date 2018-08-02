@@ -90,7 +90,7 @@ class ContactsController extends Controller
      * @param  Requests $request 接收传递的参数
      * @return json            返回相关的数据或信息提示
      */
-    public function edit(Requests $request) {
+    public function edit(Request $request) {
       // 判断传输方式
       if($request->isMethod('get')){
         // 获取传递的参数
@@ -135,9 +135,9 @@ class ContactsController extends Controller
      * @param  Requests $request 操作删除的条件
      * @return json           相关的信息返回
      */
-    public function dele(Requests $request){
+    public function deleted(Request $request){
       // 判断传输方式
-      if($request->isMethod('get')){
+      if($request->isMethod('post')){
         // 获取传递的参数
         $id = $request->get('delete_id');
         $edit = new Contacts();

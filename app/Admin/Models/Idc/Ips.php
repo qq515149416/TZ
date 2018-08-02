@@ -89,11 +89,7 @@ class Ips extends Model
     	}
     	return $return;
     }
-// DB::table('idc_ips')
-// 		            ->join('idc_machineroom', 'idc_ips.ip_comproom', '=', 'idc_machineroom.machine_room_id')
-// 		            ->where('idc_ips.id',$id)
-// 		            ->select('users.*', 'contacts.phone', 'orders.price')
-// 		            ->get();
+    
     /**
      * 查找对应的IP数据
      * @param  int $id 查找IP的id条件

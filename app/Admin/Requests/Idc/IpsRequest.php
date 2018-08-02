@@ -27,7 +27,7 @@ class IpsRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * 规则.
      *
      * @return array
      */

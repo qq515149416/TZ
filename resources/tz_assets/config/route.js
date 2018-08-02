@@ -1,7 +1,7 @@
 import React from "react";
 import {BrowserRouter} from "react-router-dom";
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { Provider } from "mobx-react";
+import { Provider, onError } from "mobx-react";
 import UsersInfoStores from "../stores/users-info-stores.js";
 import UsersLinkInfoStores from "../stores/usersLink-info-stores.js";
 
@@ -20,6 +20,10 @@ const theme = createMuiTheme({
             contrastText: '#333'
         }
     }
+});
+// mobx错误捕获
+onError(error => {
+    console.log(error);
 });
 /**
  * @augments ReactDOM 用来渲染react对象

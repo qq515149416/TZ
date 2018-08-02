@@ -4,21 +4,14 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { Provider, onError } from "mobx-react";
 import UsersInfoStores from "../stores/users-info-stores.js";
 import UsersLinkInfoStores from "../stores/usersLink-info-stores.js";
+import blue from '@material-ui/core/colors/blue';
+import deepOrange from '@material-ui/core/colors/deepOrange';
+
 
 const theme = createMuiTheme({
     palette: {
-        primary: {
-            light: "#FFF59D",
-            main: "#FFEB3B",
-            dark: "#FBC02D",
-            contrastText: "#fff"
-        },
-        secondary: {
-            light: '#FFE082',
-            main: '#FFC107',
-            dark: '#FFA000',
-            contrastText: '#333'
-        }
+        primary: blue,
+        secondary: deepOrange
     }
 });
 // mobx错误捕获

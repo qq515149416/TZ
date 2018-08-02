@@ -127,8 +127,20 @@ class EnhancedTableHead extends React.Component {
   });
   
   let EnhancedTableToolbar = props => {
-    const { numSelected, classes } = props;
-  
+    const { numSelected, classes, selectedData, usersLinkInfoStores } = props;
+    const delData = () => {
+      let delIng = selectedData.map(item => usersLinkInfoStores.delData(item));
+      Promise.all(delIng).then((ret) => {
+        selectedData.forEach((item,index) => {
+          if(ret[index]) {
+            console.log("ID:"+item+"，添加成功");
+          } else {
+            console.warn("ID:"+item+"，添加失败");
+          }
+        });
+        props.handleSelectAllEmptyClick();
+      });
+    }
     return (
       <Toolbar
         className={classNames(classes.root, {
@@ -148,13 +160,13 @@ class EnhancedTableHead extends React.Component {
         </div>
         <div className={classes.spacer} />
         <div className={classes.actions}>
-          {numSelected > 0 ? (
+          {numSelected > 0 ? [
             <Tooltip title="Delete">
-              <IconButton aria-label="Delete">
+              <IconButton onClick={()=>{delData();}} aria-label="Delete">
                 <DeleteIcon />
               </IconButton>
             </Tooltip>
-          ) : (
+          ]: (
             <Tooltip title="Filter list">
               <IconButton aria-label="Filter list">
                 <FilterListIcon />
@@ -395,7 +407,9 @@ class EnhancedTableHead extends React.Component {
   
       this.setState({ order, orderBy });
     };
-  
+    handleSelectAllEmptyClick = () => {
+      this.setState({ selected: [] });
+    }
     handleSelectAllClick = (event, checked) => {
       if (checked) {
         this.setState({ selected: this.props.usersLinkInfoStores.user.map(n => n.id) });
@@ -443,7 +457,7 @@ class EnhancedTableHead extends React.Component {
       return [
           <UsersLinkAdd usersLinkInfoStores={this.props.usersLinkInfoStores} />,
         <Paper className={classes.root}>
-          <EnhancedTableToolbar numSelected={selected.length} />
+          <EnhancedTableToolbar numSelected={selected.length} handleSelectAllEmptyClick={this.handleSelectAllEmptyClick} usersLinkInfoStores={this.props.usersLinkInfoStores} selectedData={selected} />
           <div className={classes.tableWrapper}>
             <Table className={classes.table} aria-labelledby="tableTitle">
               <EnhancedTableHead

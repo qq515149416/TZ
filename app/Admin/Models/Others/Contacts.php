@@ -60,9 +60,9 @@ class Contacts extends Model
         if($data) {
             // 存在传递的数据进行对应字段的插入
             // $fill = $this->fill();
-            $row = $this->create($data);
+            $row = $this->save($data);
             // $this->create_at;
-            if($row){
+            if($row != false){
                 // 插入数据成功
                 $return['code'] = 1;
                 $return['msg'] = '新增信息成功！！';
@@ -126,10 +126,10 @@ class Contacts extends Model
         // $result = [];
         if($data && $data['id']+0) {
             //存在修改的数据进行修改操作
-            $row = $this->where('id',$data['id'])->fill($data)->save();
-            if($row){
+            $row = $this->where('id',$data['id'])->save($data);
+            if($row != false){
                 // 修改数据成功
-                $return['code'] = $row;
+                $return['code'] = 1;
                 $return['msg'] = '修改信息成功！！';
             } else {
                 // 修改数据失败
@@ -157,9 +157,9 @@ class Contacts extends Model
         if($ids){
             // 存在条件进行删除
             $row = $this->where('id',$ids)->delete();
-            if($result){
+            if($row != false){
                 // 根据条件查询到数据
-               $return['code'] = $row;
+               $return['code'] = 1;
                $return['msg'] = '删除信息成功！！'; 
             } else {
                 // 根据条件没有删除到数据

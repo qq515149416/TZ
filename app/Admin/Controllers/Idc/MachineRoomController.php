@@ -111,6 +111,45 @@ class MachineRoomController extends Controller
      */
     public function destroy($id)
     {
+
+
+    }
+
+    /**
+     * 添加机房接口
+     * 传参方式:POST
+     * 参数:
+     * room_id:机房编号
+     * room_namee:机房中文名
+     *
+     * 表:idc_machineroom
+     * @param MachineRoomValidate $request
+     * @return mixed
+     */
+    public function storeByAjax(MachineRoomValidate $request)
+    {
+        //获取参数
+        $par = $request->post();
+
+        //实例化
+        $machineRoomModel = new MachineRoom();
+
+        //模型添加机房数据
+        $res = $machineRoomModel->store($par['room_id'], $par['room_name']);
+        dump($res);
+        return tz_ajax_echo([], '新增机房成功', 1);
+
+    }
+
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyByAjax($id)
+    {
         //软删除
 
         //实例化
@@ -130,25 +169,29 @@ class MachineRoomController extends Controller
     }
 
 
-    public function retrieveById($identifier)
-    {
-    }
 
-    public function retrieveByToken($identifier, $token)
-    {
-    }
 
-    public function updateRememberToken(Authenticatable $user, $token)
-    {
-    }
+    
 
-    public function retrieveByCredentials(array $credentials)
-    {
-        // 用$credentials里面的用户名密码去获取用户信息，然后返回Illuminate\Contracts\Auth\Authenticatable对象
-    }
-
-    public function validateCredentials(Authenticatable $user, array $credentials)
-    {
-        // 用$credentials里面的用户名密码校验用户，返回true或false
-    }
+//    public function retrieveById($identifier)
+//    {
+//    }
+//
+//    public function retrieveByToken($identifier, $token)
+//    {
+//    }
+//
+//    public function updateRememberToken(Authenticatable $user, $token)
+//    {
+//    }
+//
+//    public function retrieveByCredentials(array $credentials)
+//    {
+//        // 用$credentials里面的用户名密码去获取用户信息，然后返回Illuminate\Contracts\Auth\Authenticatable对象
+//    }
+//
+//    public function validateCredentials(Authenticatable $user, array $credentials)
+//    {
+//        // 用$credentials里面的用户名密码校验用户，返回true或false
+//    }
 }

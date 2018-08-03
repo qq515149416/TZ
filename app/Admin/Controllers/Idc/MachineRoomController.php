@@ -62,7 +62,7 @@ class MachineRoomController extends Controller
 
         //模型添加机房数据
         $res = $machineRoomModel->store($par['room_id'], $par['room_name']);
-        dump($res);
+//        dump($res);
         return tz_ajax_echo([], '新增机房成功', 1);
 
     }
@@ -155,7 +155,7 @@ class MachineRoomController extends Controller
         //实例化
         $machineRoomModel = new MachineRoom();
 
-//        dd($machineRoomModel->destroy(22));
+        //判断是否删除成功
         if ($machineRoomModel->destroy($id)) {
             //软删除成功
             return tz_ajax_echo([], '删除成功', 1);
@@ -168,10 +168,19 @@ class MachineRoomController extends Controller
 
     }
 
+    /**
+     *  修改机房编号或名字
+     * @param Request $request
+     * @param $id
+     */
+    public function updateByAjax(Request $request)
+    {
+
+
+    }
 
 
 
-    
 
 //    public function retrieveById($identifier)
 //    {

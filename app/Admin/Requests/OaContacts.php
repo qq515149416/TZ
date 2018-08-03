@@ -67,7 +67,7 @@ class OaContacts extends FormRequest
     /**
      * 重新定义数据字段返回的提示信息
      */
-    public function failedValidation(Validator $validator ) {
-        exit(tz_ajax_echo($data=[],$info=$validator->getMessageBag()->toArray(),0));
+    public function failedValidation(Validator $validator) {
+        exit(tz_ajax_echo([],$validator->errors()->first(),0));
     }
 }

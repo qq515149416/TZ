@@ -148,15 +148,15 @@ class MachineRoomController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroyByAjax($id)
+    public function destroyByAjax(Request $request)
     {
         //软删除
-
+        $par = $request->post();
         //实例化
         $machineRoomModel = new MachineRoom();
 
         //判断是否删除成功
-        if ($machineRoomModel->destroy($id)) {
+        if ($machineRoomModel->destroy($par['id'])) {
             //软删除成功
             return tz_ajax_echo([], '删除成功', 1);
 

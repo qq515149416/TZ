@@ -27,7 +27,7 @@ Route::group([
 
     // 显示通讯录
     $router->get('staff/staff_list', 'Others\StaffController@index');
-    
+
   // 联系人表
     $router->get('contacts/list','Others\ContactsController@index');
     $router->post('contacts/insert','Others\ContactsController@insert');
@@ -46,4 +46,9 @@ Route::group([
 	$router->get('vi', 'Others\ContactsController@vi');
     $router->get('/user_list', 'Show\UserController@index');
     $router->get('/user_link_list', 'Show\LinkUserController@index');
+
+    //机房管理
+    $router->post('machine_room/storeByAjax','Idc\MachineRoomController@storeByAjax');
+
+
 });

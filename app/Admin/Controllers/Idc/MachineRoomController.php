@@ -120,7 +120,7 @@ class MachineRoomController extends Controller
      * 传参方式:POST
      * 参数:
      * room_id:机房编号
-     * room_namee:机房中文名
+     * room_name:机房中文名
      *
      * 表:idc_machineroom
      * @param MachineRoomValidate $request
@@ -170,11 +170,22 @@ class MachineRoomController extends Controller
 
     /**
      *  修改机房编号或名字
+     *  参数:
+     * id: 需要修改过机房ID
+     * room_id: 修改后的机房编号名
+     * room_name: 修改后的机房名字
+     *
      * @param Request $request
      * @param $id
      */
     public function updateByAjax(Request $request)
     {
+        //获取参数
+        $par = $request->post();
+
+        if (1) {
+            dump('123');
+        }
 
 
     }

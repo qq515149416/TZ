@@ -114,7 +114,7 @@ class ContactsController extends Controller
      */
     public function doEdit(OaContacts $request){
       // 当传递过来的信息通过验证后会进行传输方式的判断和表单提交方式的判断
-      if($request->ajax() && $request->isMethod('post')){
+      if($request->isMethod('post')){
         // 符合判断的方式正确继续进行，获取提交信息
           $data = $request->only(['id','contactname', 'qq','mobile','email','rank','site']);
           // 实例化model

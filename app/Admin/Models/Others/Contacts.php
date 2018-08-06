@@ -5,6 +5,7 @@ namespace App\Admin\Models\Others;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Collection;
 class Contacts extends Model
 {
     use SoftDeletes;
@@ -28,8 +29,8 @@ class Contacts extends Model
     */
     public function index(){
         // 查询数据并进行权重排序（权重数值越小，越靠前）
-    	$result = $this->all(['id','contactname', 'qq','mobile','email','rank','site','created_at','updated_at']);
-        $this->orderBy('rank');
+    	$result = $this->orderBy('rank','desc')
+                ->get(['id','contactname', 'qq','mobile','email','rank','site','created_at','updated_at']);
 
     	if(!$result->isEmpty()) {
             $site = [1=>'左侧',2=>'联系人页面',3=>'两侧均显示'];

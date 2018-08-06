@@ -3,12 +3,21 @@
 namespace App\Admin\Models\Idc;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
 class MachineRoom extends Model
 {
+    use SoftDeletes;
+
     //表名
     protected $table = 'idc_machineroom';
+
+    //设置主键
+    public $primaryKey = 'id';
+
+    protected $dates = ['delete_at'];
+
 
     /**
      * 根据机房编号,机房名称生成机房 记录

@@ -87,7 +87,7 @@ class ContactsController extends Controller
 
     /**
      * 查找要修改的数据
-     * @param  Requests $request 接收传递的参数
+     * @param  Request $request 接收传递的参数
      * @return json            返回相关的数据或信息提示
      */
     public function edit(Request $request) {
@@ -116,7 +116,7 @@ class ContactsController extends Controller
       // 当传递过来的信息通过验证后会进行传输方式的判断和表单提交方式的判断
       if($request->ajax() && $request->isMethod('post')){
         // 符合判断的方式正确继续进行，获取提交信息
-          $data = $request->all();
+          $data = $request->only(['id','contactname', 'qq','mobile','email','rank','site']);
           // 实例化model
           $create = new Contacts();
           // 数据进行model层处理
@@ -132,7 +132,7 @@ class ContactsController extends Controller
 
     /**
      * 删除操作
-     * @param  Requests $request 操作删除的条件
+     * @param  Request $request 操作删除的条件
      * @return json           相关的信息返回
      */
     public function deleted(Request $request){

@@ -55,12 +55,16 @@ class MachineRoom extends FormRequest
      */
     public function failedValidation(Validator $validator)
     {
+
 //        exit(json_encode(array(
 //            'code' => 0,
 //            'message' => $validator->getMessageBag(),
 //             'data' => $validator->getMessageBag()->toArray()
 //        )));
-        exit(dump($validator->errors()->first()));
+
+
+        //返回错误信息
+        exit($validator->errors()->first());
 //        exit(tz_ajax_echo([],$validator->errors()->first(),0));
 
     }

@@ -56,9 +56,9 @@ class UsersLinkInfoStores {
             }).then((res) => {
                 if(res.data.code==1) {
                     this.user.splice(this.user.findIndex((item) => item.id==id),1);
-                    resolve(true);
+                    resolve(res.data);
                 } else {
-                    resolve(false);
+                    resolve(res.data);
                 }
             }).catch(reject);
         });

@@ -42,6 +42,7 @@ class OaContacts extends FormRequest
                 'regex:/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/',
             ],
             'email'=>'required|email',
+            'rank'=>'required|integer',
         ];
     }
 // /^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/
@@ -61,6 +62,9 @@ class OaContacts extends FormRequest
             'mobile.regex'=>'手机号码必须符合号码相关规则',
             'email.required'=>'联系人邮箱必须填写',
             'email.email'=>'邮箱必须符合相关规范',
+            'rank.required'=>'权重必须填写且是整数数字',
+            'rank.integer'=>'权重必须是有效整数数字'
+            
         ];
     }
 

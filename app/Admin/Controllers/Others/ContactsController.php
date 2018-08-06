@@ -78,7 +78,7 @@ class ContactsController extends Controller
             // 数据进行model层处理
             $result = $create->insert($data);
             // 返回信息
-            return tz_ajax_echo($result,$result['msg'],$result['code']);
+            return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
         } else {
           // 不符合提交方式的
           return  tz_ajax_echo([],'新增信息失败！！',0);
@@ -140,6 +140,7 @@ class ContactsController extends Controller
       if($request->isMethod('post')){
         // 获取传递的参数
         $id = $request->get('delete_id');
+        // echo $id;
         $edit = new Contacts();
         // 将参数传递到对应的model的方法并进行接收结果
         $result = $edit->dele($id);

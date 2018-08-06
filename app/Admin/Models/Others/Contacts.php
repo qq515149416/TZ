@@ -64,17 +64,20 @@ class Contacts extends Model
             $row = $this->create($data);
             // $this->create_at;
             if($row != false){
-                // 插入数据成功
+                // 插入数据成功返回最后插入的数据的id
+                $return['data'] = $row->id;
                 $return['code'] = 1;
                 $return['msg'] = '新增信息成功！！';
             } else {
                 // 插入数据失败
+                $return['data'] = '';
                 $return['code'] = 0;
                 $return['msg'] = '新增信息失败！！';
             }
 
         } else {
             // 不存在传递的数据
+            $return['data'] = '';
             $return['code'] = 0;
             $return['msg'] = '请输入正确的信息';
         }
@@ -153,7 +156,6 @@ class Contacts extends Model
      * @return [type]     [description]
      */
     public function dele($id) {
-        // $result = [];
         $ids = $id + 0;
         if($ids){
             // 存在条件进行删除

@@ -52,7 +52,7 @@ class IpsController extends Controller
     		// 传递数据到对应的model层处理
     		$revert = $create->create($param);
     		// 返回信息
-    		return tz_ajax_echo($revert,$revert['msg'],$revert['code']);
+    		return tz_ajax_echo($revert['data'],$revert['msg'],$revert['code']);
     	} else {
     		// 不符合方式的
     		return tz_ajax_echo([],'新增IP地址失败!!',0);

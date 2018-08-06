@@ -74,16 +74,19 @@ class Ips extends Model
     		$row = $this->create($data);
     		if($row != false){
     			// 插入数据成功
+    			$return['data'] = $row->id;
     			$return['code'] = 1;
     			$return['msg'] = '新增IP地址信息成功!!';
 
     		} else {
     			// 插入数据失败
+    			$return['data'] = '';
     			$return['code'] = 0;
     			$return['msg'] = '新增IP地址信息失败!!';
     		}
     	} else {
     		// 未有数据传递
+    		$return['data'] = '';
     		$return['code'] = 0;
     		$return['msg'] = '请检查您要新增的信息是否正确!!';
     	}

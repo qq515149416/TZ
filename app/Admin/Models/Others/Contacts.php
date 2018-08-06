@@ -29,7 +29,7 @@ class Contacts extends Model
     */
     public function index(){
         // 查询数据并进行权重排序（权重数值越小，越靠前）
-    	$result = $this->orderBy('rank','desc')
+    	$result = $this->orderBy('rank','')
                 ->get(['id','contactname', 'qq','mobile','email','rank','site','created_at','updated_at']);
 
     	if(!$result->isEmpty()) {

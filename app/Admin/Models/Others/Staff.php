@@ -18,11 +18,13 @@ class Staff extends Model
     * @return 返回数组将相关信息返回
     */
     public function index(){
-    	$result = $this->all(['id','admin_users_id','fullname','sex','age','department','job','work_number','phone','QQ','wechat','email','note','created_at','updated_at']);
+    	$result = $this->orderBy('entrytime','')->get(['id','admin_users_id','fullname','sex','age','department','job','work_number','entrytime','dimission','phone','QQ','wechat','email','note','created_at','updated_at']);
     	if(!$result->isEmpty()) {
             $sex = ['女','男','保密'];
+            $dimission = ['在职','离职'];
             foreach($result as $key=>$value) {
                 $result[$key]['sex'] = $sex[$value['sex']];
+                $result[$key]['dimission'] = $dimission[$value['dimission']];
             }
             $return['data'] = $result;
     		$return['code'] = 1;

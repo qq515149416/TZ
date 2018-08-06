@@ -62,7 +62,7 @@ class MachineRoomController extends Controller
 
         //模型添加机房数据
         $res = $machineRoomModel->store($par['room_id'], $par['room_name']);
-        dump($res);
+//        dump($res);
         return tz_ajax_echo([], '新增机房成功', 1);
 
     }
@@ -120,7 +120,7 @@ class MachineRoomController extends Controller
      * 传参方式:POST
      * 参数:
      * room_id:机房编号
-     * room_namee:机房中文名
+     * room_name:机房中文名
      *
      * 表:idc_machineroom
      * @param MachineRoomValidate $request
@@ -148,15 +148,15 @@ class MachineRoomController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroyByAjax($id)
+    public function destroyByAjax(Request $request)
     {
         //软删除
-
+        $par = $request->post();
         //实例化
         $machineRoomModel = new MachineRoom();
 
-//        dd($machineRoomModel->destroy(22));
-        if ($machineRoomModel->destroy($id)) {
+        //判断是否删除成功
+        if ($machineRoomModel->destroy($par['id'])) {
             //软删除成功
             return tz_ajax_echo([], '删除成功', 1);
 
@@ -168,10 +168,30 @@ class MachineRoomController extends Controller
 
     }
 
+    /**
+     *  修改机房编号或名字
+     *  参数:
+     * id: 需要修改过机房ID
+     * room_id: 修改后的机房编号名
+     * room_name: 修改后的机房名字
+     *
+     * @param Request $request
+     * @param $id
+     */
+    public function updateByAjax(Request $request)
+    {
+        //获取参数
+        $par = $request->post();
+
+        if (1) {
+            dump('123');
+        }
+
+
+    }
 
 
 
-    
 
 //    public function retrieveById($identifier)
 //    {

@@ -18,6 +18,7 @@ class MachineRoom extends Model
 
     protected $dates = ['delete_at'];
 
+
     /**
      * 根据机房编号,机房名称生成机房 记录
      *

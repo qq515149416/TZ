@@ -49,8 +49,8 @@ Route::group([
     $router->get('/user_link_list', 'Show\LinkUserController@index');
     $router->get('/machine_room/show', 'Show\TestController@index');
     $router->get('/resource/ip', 'Show\IpController@index');
-
-    $router->get('account/index','Hr\AccountController@index');
+//人事
+    $router->get('account/show','Hr\AccountController@showAccount');
     //机房管理
     $router->get('machine_room/showByAjax', 'Idc\MachineRoomController@showByAjax');
     $router->post('machine_room/storeByAjax', 'Idc\MachineRoomController@storeByAjax');

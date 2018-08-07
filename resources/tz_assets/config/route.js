@@ -2,11 +2,9 @@ import React from "react";
 import {BrowserRouter} from "react-router-dom";
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { Provider, onError } from "mobx-react";
-import UsersInfoStores from "../stores/users-info-stores.js";
-import UsersLinkInfoStores from "../stores/usersLink-info-stores.js";
 import blue from '@material-ui/core/colors/blue';
 import deepOrange from '@material-ui/core/colors/deepOrange';
-
+import {stores} from "./common/config.js";
 
 const theme = createMuiTheme({
     palette: {
@@ -23,10 +21,6 @@ onError(error => {
  * @augments renderComponents 渲染列表
  * @augments id 当前渲染名称
  */
-let stores = {
-    usersInfoStores: new UsersInfoStores(),
-    usersLinkInfoStores: new UsersLinkInfoStores()
-}
 const Main = (Render) => {
     return (
         <BrowserRouter>

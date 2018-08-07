@@ -36,6 +36,7 @@ class IpsController extends Controller
     public function index(){
     	$index = new Ips();
     	$ips = $index->index();
+    	// dd($ips['data']);
     	return tz_ajax_echo($ips['data'],$ips['msg'],$ips['code']);
     }
     /**
@@ -47,7 +48,7 @@ class IpsController extends Controller
     	// 判断传递的方式和提交方式
     	if($request->isMethod('post')) {
     		// 符合提交方式的进行数据的提取
-    		$param = $request->only(['vlan', 'ip','ip_company','ip_status','ip_lock','ip_note','ip_comproom','ip_comproomname']);
+    		$param = $request->only(['vlan', 'ip','ip_company','ip_status','ip_lock','ip_note','ip_comproom']);
     		$create = new Ips();
     		// 传递数据到对应的model层处理
     		$revert = $create->create($param);
@@ -87,9 +88,9 @@ class IpsController extends Controller
      */
     public function doEdit(IpsRequest $request) {
     	//判断提交的方式
-    	if($request->ajax() && $request->isMethod('post')){
+    	if($request->isMethod('post')){
     		// 符合判断的进行数据提取
-    		$data = $request->only(['id','vlan', 'ip','ip_company','ip_status','ip_lock','ip_note','ip_comproom','ip_comproomname']);
+    		$data = $request->only(['id','vlan', 'ip','ip_company','ip_status','ip_lock','ip_note','ip_comproom']);
     		$doedit = new Ips();
     		// 模型层处理
     		$result = $doedit->doEdit($data);
@@ -111,7 +112,7 @@ class IpsController extends Controller
     		$id = $request->get('delete_id');
     		if($id+0) {
     			$delete = new Ips();
-    			$result = $delete->deleted($id);
+    			$result = $delete->dele($id);
     			return tz_ajax_echo($result,$result['msg'],$result['code']);
     		} else {
     			return tz_ajax_echo([],'删除信息失败',0);

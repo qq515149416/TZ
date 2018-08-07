@@ -49,6 +49,20 @@ class UsersLinkInfoStores {
         return { id: (this.user.length ? this.user[this.user.length-1].id + 1 : 1), contactname, qq, mobile, email, rank, site, created_at, updated_at};
     }
     @action.bound 
+    changeData(param) {
+        return new Promise((resolve,reject) => {
+            post("contacts/alerting",param).then((res) => {
+                if(res.data.code==1) {
+                    this.user[this.user.findIndex((item) => item.id==param.id)] = new UserLinkInfoStores(param);
+                    resolve(true);
+                }else {
+                    alert(res.data.msg);
+                    resolve(false);
+                }
+            }).catch(reject);
+        });
+    }
+    @action.bound 
     delData(id) {
         return new Promise((resolve,reject) => {
             post("contacts/remove",{
@@ -56,9 +70,9 @@ class UsersLinkInfoStores {
             }).then((res) => {
                 if(res.data.code==1) {
                     this.user.splice(this.user.findIndex((item) => item.id==id),1);
-                    resolve(res.data);
+                    resolve(true);
                 } else {
-                    resolve(res.data);
+                    resolve(false);
                 }
             }).catch(reject);
         });
@@ -75,7 +89,9 @@ class UsersLinkInfoStores {
                 site: data.site
             }).then((res) => {
                 if(res.data.code==1) {
-                    this.user.push(new UserLinkInfoStores(this.createData(data.contactname,data.qq,data.mobile,data.email,data.rank,data.site)));
+                    this.user.push(new UserLinkInfoStores(Object.assign(this.createData(data.contactname,data.qq,data.mobile,data.email,data.rank,data.site),{
+                        id: res.data.data
+                    })));
                     resolve(true);
                 } else {
                     resolve(false);
@@ -94,7 +110,7 @@ class UsersLinkInfoStores {
         });
     }
     constructor() {
-        this.user.push(new UserLinkInfoStores(this.createData('唐康', '2885650826', '13712756033', '2885650826@qq.com', '1', '3', '2018-08-01 11:25:48', '2018-08-01 11:25:48')));
+        // this.user.push(new UserLinkInfoStores(this.createData('唐康', '2885650826', '13712756033', '2885650826@qq.com', '1', '3', '2018-08-01 11:25:48', '2018-08-01 11:25:48')));
     }
 
 }

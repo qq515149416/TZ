@@ -43,6 +43,7 @@ const toolbarStyles = theme => ({
     const delData = () => {
         let isDel = confirm(`是否要删除选中的${numSelected}个联系人？`);
         if(isDel) {
+            props.handleSelectAllEmptyClick();
             props.delData(selectedData,(delIng) => {
                 Promise.all(delIng).then((ret) => {
                     selectedData.forEach((item,index) => {
@@ -52,7 +53,6 @@ const toolbarStyles = theme => ({
                         console.warn("ID:"+item+"，删除失败");
                       }
                     });
-                    props.handleSelectAllEmptyClick();
                   });
             });
         }
@@ -81,8 +81,7 @@ const toolbarStyles = theme => ({
               <IconButton onClick={()=>{delData();}} aria-label="Delete">
                 <DeleteIcon />
               </IconButton>
-            </Tooltip>,
-            <UsersLinkPost postType="edit" editData={data[numSelected - 1]} />
+            </Tooltip>
           ]: (
             <Tooltip title="Filter list">
               <IconButton aria-label="Filter list">

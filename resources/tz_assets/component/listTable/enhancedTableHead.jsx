@@ -14,7 +14,8 @@ const columnData = [
     { id: 'rank', numeric: true, disablePadding: false, label: '权重' },
     { id: 'site', numeric: true, disablePadding: false, label: '显示位置' },
     { id: 'created_at', numeric: true, disablePadding: false, label: '创建时间' },
-    { id: 'updated_at', numeric: true, disablePadding: false, label: '更新时间' }
+    { id: 'updated_at', numeric: true, disablePadding: false, label: '更新时间' },
+    { id: 'operat', numeric: true, disablePadding: false, label: '操作' }
 ];
 class EnhancedTableHead extends React.Component {
     createSortHandler = property => event => {

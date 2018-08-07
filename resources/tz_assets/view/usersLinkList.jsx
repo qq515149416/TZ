@@ -17,9 +17,15 @@ class UsersLinkList extends React.Component {
     let delIng = selectedData.map(item => usersLinkInfoStores.delData(item));
     callbrak(delIng);
   }
+  changeData = (param,callbrak) => {
+    const {usersLinkInfoStores} = this.props;
+    usersLinkInfoStores.changeData(param).then((state) => {
+      callbrak(state);
+    });
+  }
   render() {
     return (
-      <ListTableComponent data={this.props.usersLinkInfoStores.user} addData={this.addData.bind(this)} delData={this.delData.bind(this)}  />
+      <ListTableComponent data={this.props.usersLinkInfoStores.user} changeData={this.changeData.bind(this)} addData={this.addData.bind(this)} delData={this.delData.bind(this)}  />
     );
   }
 }

@@ -104,6 +104,7 @@ const styles = theme => ({
       const { classes } = this.props;
       const {  order, orderBy, selected, rowsPerPage, page } = this.state;
       const emptyRows = rowsPerPage - Math.min(rowsPerPage, this.props.data.length - page * rowsPerPage);
+      // console.log(this.props.data);
       return [
           <UsersLinkPost addData={this.props.addData} postType="add" />,
         <Paper className={classes.root}>
@@ -147,7 +148,9 @@ const styles = theme => ({
                         <TableCell numeric>{n.site}</TableCell>
                         <TableCell numeric>{n.created_at}</TableCell>
                         <TableCell numeric>{n.updated_at}</TableCell>
-
+                        <TableCell numeric>
+                          <UsersLinkPost postType="edit" editData={n} changeData={this.props.changeData} />
+                        </TableCell>
                       </TableRow>
                     );
                   })}

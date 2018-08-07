@@ -74,8 +74,9 @@ class UsersLinkPost extends React.Component {
                 return 3;
         }
     }
-    handleClickOpen = () => {
+    handleClickOpen = event => {
         this.setState({ open: true });
+        event.stopPropagation();
     };
     
     handleClose = () => {
@@ -93,20 +94,27 @@ class UsersLinkPost extends React.Component {
                 rank: this.rank.value,
                 site: this.state.inputAttr.site.currency
             },(data) => {
-                if(data.code==1) {
+                if(data) {
                     this.setState({ open: false });
                 } else {
-                    for(let key in data.msg) {
-                        inputAttr[key].error = true;
-                        inputAttr[key].label = data.msg[key].join(",");
-                    }
-                    console.log(inputAttr,data);
-                    this.setState({
-                        inputAttr
-                    });
-                    
+                    alert("添加失败");
                 }
                 
+            });
+        }
+        if(this.props.postType == "edit") {
+            this.props.changeData({
+                id: this.props.editData.id,
+                contactname: this.contactname.value,
+                qq: this.qq.value,
+                mobile: this.mobile.value,
+                email: this.email.value,
+                rank: this.rank.value,
+                site: this.state.inputAttr.site.currency
+            },(data) => {
+                if(data) {
+                    this.setState({ open: false });
+                }
             });
         }
     }
@@ -228,7 +236,7 @@ class UsersLinkPost extends React.Component {
                 取消
               </Button>
               <Button onClick={this.postUserLink} color="primary">
-                添加
+              {postType == "add" ? "添加" : "修改"}
               </Button>
             </DialogActions>
           </Dialog>

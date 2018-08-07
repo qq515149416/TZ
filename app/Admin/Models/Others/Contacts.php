@@ -17,7 +17,7 @@ class Contacts extends Model
     *
     * @var array
     */
-    protected $fillable = ['contactname', 'qq','mobile','email','rank','site','created_at','updated_at','deleted_at'];
+    protected $fillable = ['id','contactname', 'qq','mobile','email','rank','site','created_at','updated_at','deleted_at'];
 
     public function test() {
     	return 456;
@@ -130,7 +130,7 @@ class Contacts extends Model
         // $result = [];
         if($data && $data['id']+0) {
             //存在修改的数据进行修改操作
-            $row = $this->where('id',$data['id'])->save($data);
+            $row = $data->save();
             if($row != false){
                 // 修改数据成功
                 $return['code'] = 1;

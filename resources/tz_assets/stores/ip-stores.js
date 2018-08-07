@@ -56,3 +56,4 @@ class IpsStores {
         });
     }
 }
+export default IpsStores;

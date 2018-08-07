@@ -49,6 +49,7 @@ Route::group([
     //机房管理
     $router->post('machine_room/storeByAjax', 'Idc\MachineRoomController@storeByAjax');
     $router->post('machine_room/destroyByAjax', 'Idc\MachineRoomController@destroyByAjax');
+    $router->post('machine_room/updateByAjax', 'Idc\MachineRoomController@updateByAjax');
 
 
 });

@@ -120,15 +120,25 @@ class MachineRoomController extends Controller
      * Ajax 获取机房列表
      * 接口地址 :/machine_room/showByAjax
      *
+     *
+     * TODO 没有做分页
      */
     public function showByAjax()
     {
         //实例化
         $machineRoomModel = new MachineRoom();
 
-        //
+        //使用模型方法获取列表数据
+        $listData = $machineRoomModel->show();
 
-
+        //判断是否获取到数据
+        if ($listData) {
+            //成功
+            return tz_ajax_echo($listData, '机房列表获取成功', 1);
+        } else {
+            //失败
+            return tz_ajax_echo($listData, '机房列表获取失败', 0);
+        }
 
     }
 
@@ -205,7 +215,7 @@ class MachineRoomController extends Controller
         //获取参数
         $par = $request->post();
 
-        dump($par);
+//        dump($par);
 
         //判断是否获取到参数
 //        if (1) {

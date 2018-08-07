@@ -99,16 +99,45 @@
         $(function() {
             var room_data = [
                 {
+                    id: 1,
                     room_number: "1",
                     room_name: "西安机房",
                     room_order: "1000"
                 }
             ];
-            rendData("room_data",room_data);
+            $.get("/tz_admin/machine_room/showByAjax",function(data) {
+                if(data.code==1) {
+                    room_data = data.data.map(function(item) {
+                        return {
+                            id: item.id,
+                            room_number: item.machine_room_id,
+                            room_name: item.machine_room_name,
+                            room_order: "100"
+                        };
+                    });
+                    rendData("room_data",room_data);
+                }
+            });
+            
             $("#room_data").on("click",".delRoomdata",function() {
-                var id = ($(this).attr("data-id") - 1);
-                room_data.splice(id,1);
-                rendData("room_data",room_data);
+                var id = $(this).attr("data-id");
+                $.post("/tz_admin/machine_room/destroyByAjax",{
+                    id: id
+                },function(data) {
+                    if(data.code==1) {
+                        room_data.splice(room_data.findIndex(function(item) {
+                            if(item.id==id) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }),1);
+                        rendData("room_data",room_data);
+                    } else {
+                        alert(data.msg);
+                    }
+                });
+                
             });
             $('#room').on('shown.bs.modal', function (e) {
                 var self = $(this);
@@ -165,13 +194,13 @@
             var renderStr = "";
             data.forEach(function(item,index) {
                 renderStr += '<tr>\
-                    <td>'+(++index)+'</td>\
+                    <td>'+item.id+'</td>\
                     <td>'+item.room_number+'</td>\
                     <td>'+item.room_name+'</td>\
                     <td>'+item.room_order+'</td>\
                     <td>\
-                        <button type="button" class="btn btn-primary" data-roomdata="id:'+index+'|room_number:'+item.room_number+'|room_name:'+item.room_name+'|room_order:'+item.room_order+'" data-type="edit" data-toggle="modal" data-target="#room">修改</button>\
-                        <button type="button" class="btn btn-primary delRoomdata" data-id="'+index+'">删除</button>\
+                        <button type="button" class="btn btn-primary" data-roomdata="id:'+item.id+'|room_number:'+item.room_number+'|room_name:'+item.room_name+'|room_order:'+item.room_order+'" data-type="edit" data-toggle="modal" data-target="#room">修改</button>\
+                        <button type="button" class="btn btn-primary delRoomdata" data-id="'+item.id+'">删除</button>\
                     </td>\
                 </tr>';
             });

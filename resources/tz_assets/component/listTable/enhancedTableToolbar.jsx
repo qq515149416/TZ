@@ -77,11 +77,15 @@ const toolbarStyles = theme => ({
         <div className={classes.spacer} />
         <div className={classes.actions}>
           {numSelected > 0 ? [
-            <Tooltip title="删除">
-              <IconButton onClick={()=>{delData();}} aria-label="Delete">
-                <DeleteIcon />
-              </IconButton>
-            </Tooltip>
+            <div>
+              {
+                props.delData && (<Tooltip title="删除">
+                  <IconButton onClick={()=>{delData();}} aria-label="Delete">
+                    <DeleteIcon />
+                  </IconButton>
+                </Tooltip>)
+              }
+            </div>
           ]: (
             <Tooltip title="Filter list">
               <IconButton aria-label="Filter list">

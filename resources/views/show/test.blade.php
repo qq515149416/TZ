@@ -133,6 +133,7 @@
                             room_id: getParam(self).room_number,
                             room_name: getParam(self).room_name
                         },function(data) {
+                            console.log(data);
                             if(data.code==1) {
                                 room_data.push(getParam(self));
                                 rendData("room_data",room_data);

@@ -106,7 +106,13 @@ const styles = theme => ({
       const emptyRows = rowsPerPage - Math.min(rowsPerPage, this.props.data.length - page * rowsPerPage);
       // console.log(this.props.data);
       return [
-          <UsersLinkPost addData={this.props.addData} postType="add" />,
+          <div>
+            {
+              this.props.addData && (
+                <UsersLinkPost addData={this.props.addData} postType="add" />
+              )
+            }
+          </div>,
         <Paper className={classes.root}>
           <EnhancedTableToolbar numSelected={selected.length} getParentData={this.getData.bind(this)} handleSelectAllEmptyClick={this.handleSelectAllEmptyClick} delData={this.props.delData} selectedData={selected} />
           <div className={classes.tableWrapper}>
@@ -157,9 +163,13 @@ const styles = theme => ({
                             }
                           })
                         }
-                        <TableCell numeric>
-                          <UsersLinkPost postType="edit" editData={n} changeData={this.props.changeData} />
-                        </TableCell>
+                        {
+                          this.props.changeData && (
+                            <TableCell numeric>
+                              <UsersLinkPost postType="edit" editData={n} changeData={this.props.changeData} />
+                            </TableCell>
+                          )
+                        }
                       </TableRow>
                     );
                   })}

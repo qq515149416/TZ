@@ -130,7 +130,17 @@ class Contacts extends Model
         // $result = [];
         if($data && $data['id']+0) {
             //存在修改的数据进行修改操作
-            $row = $data->save();
+            $edit = $this->find($data['id']);
+            
+            $edit->contactname = $data['contactname'];
+            $edit->qq = $data['qq'];
+            $edit->mobile = $data['mobile'];
+            $edit->email = $data['email'];
+            $edit->rank = $data['rank'];
+            $edit->site = $data['site'];
+           
+            $row = $edit->save();
+            
             if($row != false){
                 // 修改数据成功
                 $return['code'] = 1;

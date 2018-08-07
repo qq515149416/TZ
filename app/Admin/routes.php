@@ -57,5 +57,14 @@ Route::group([
     $router->post('machine_room/destroyByAjax', 'Idc\MachineRoomController@destroyByAjax');
     $router->post('machine_room/updateByAjax', 'Idc\MachineRoomController@updateByAjax');
 
+    //机柜管理
+    Route::group([
+        'prefix' => 'cabinet',
+    ], function (Router $router) {
+        $router->get('test', 'Idc\CabinetController@showByAjax');
+    });
+
+
+
 
 });

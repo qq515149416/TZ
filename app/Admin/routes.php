@@ -43,8 +43,10 @@ Route::group([
     $router->post('rules', 'Others\ContactsController@rulestest');
     $router->get('rules', 'Others\ContactsController@rulestest');
     $router->get('vi', 'Others\ContactsController@vi');
+    // 前端显示
     $router->get('/user_list', 'Show\UserController@index');
     $router->get('/user_link_list', 'Show\LinkUserController@index');
+    $router->get('/machine_room/show', 'Show\TestController@index');
 
     //机房管理
     $router->post('machine_room/storeByAjax', 'Idc\MachineRoomController@storeByAjax');

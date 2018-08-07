@@ -118,6 +118,7 @@ const styles = theme => ({
                 onSelectAllClick={this.handleSelectAllClick}
                 onRequestSort={this.handleRequestSort}
                 rowCount={this.props.data.length}
+                headTitlesData = {this.props.headTitlesData}
               />
               <TableBody>
                 {this.props.data
@@ -138,16 +139,24 @@ const styles = theme => ({
                         <TableCell padding="checkbox">
                           <Checkbox checked={isSelected} />
                         </TableCell>
-                        <TableCell component="th" scope="row" padding="none">
-                          {n.contactname}
-                        </TableCell>
-                        <TableCell numeric>{n.qq}</TableCell>
-                        <TableCell numeric>{n.mobile}</TableCell>
-                        <TableCell numeric>{n.email}</TableCell>
-                        <TableCell numeric>{n.rank}</TableCell>
-                        <TableCell numeric>{n.site}</TableCell>
-                        <TableCell numeric>{n.created_at}</TableCell>
-                        <TableCell numeric>{n.updated_at}</TableCell>
+                        {
+                          this.props.headTitlesData.map((item,index) => {
+                            if(item.id=="operat") {
+                              return null;
+                            }
+                            if(index==0) {
+                              return (
+                                <TableCell component="th" scope="row" padding="none">
+                                  {n[item.id]}
+                                </TableCell>
+                              )
+                            } else {
+                              return (
+                                <TableCell numeric>{n[item.id]}</TableCell>
+                              )
+                            }
+                          })
+                        }
                         <TableCell numeric>
                           <UsersLinkPost postType="edit" editData={n} changeData={this.props.changeData} />
                         </TableCell>

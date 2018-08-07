@@ -6,17 +6,17 @@ import TableRow from '@material-ui/core/TableRow';
 import Checkbox from '@material-ui/core/Checkbox';
 import Tooltip from '@material-ui/core/Tooltip';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
-const columnData = [
-    { id: 'contactname', numeric: false, disablePadding: true, label: '姓名' },
-    { id: 'qq', numeric: true, disablePadding: false, label: 'QQ' },
-    { id: 'mobile', numeric: true, disablePadding: false, label: '手机' },
-    { id: 'email', numeric: true, disablePadding: false, label: '邮箱' },
-    { id: 'rank', numeric: true, disablePadding: false, label: '权重' },
-    { id: 'site', numeric: true, disablePadding: false, label: '显示位置' },
-    { id: 'created_at', numeric: true, disablePadding: false, label: '创建时间' },
-    { id: 'updated_at', numeric: true, disablePadding: false, label: '更新时间' },
-    { id: 'operat', numeric: true, disablePadding: false, label: '操作' }
-];
+// const columnData = [
+//     { id: 'contactname', numeric: false, disablePadding: true, label: '姓名' },
+//     { id: 'qq', numeric: true, disablePadding: false, label: 'QQ' },
+//     { id: 'mobile', numeric: true, disablePadding: false, label: '手机' },
+//     { id: 'email', numeric: true, disablePadding: false, label: '邮箱' },
+//     { id: 'rank', numeric: true, disablePadding: false, label: '权重' },
+//     { id: 'site', numeric: true, disablePadding: false, label: '显示位置' },
+//     { id: 'created_at', numeric: true, disablePadding: false, label: '创建时间' },
+//     { id: 'updated_at', numeric: true, disablePadding: false, label: '更新时间' },
+//     { id: 'operat', numeric: true, disablePadding: false, label: '操作' }
+// ];
 class EnhancedTableHead extends React.Component {
     createSortHandler = property => event => {
       this.props.onRequestSort(event, property);
@@ -35,7 +35,7 @@ class EnhancedTableHead extends React.Component {
                 onChange={onSelectAllClick}
               />
             </TableCell>
-            {columnData.map(column => {
+            {this.props.headTitlesData.map(column => {
               return (
                 <TableCell
                   key={column.id}

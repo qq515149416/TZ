@@ -126,8 +126,8 @@ class MachineRoomController extends Controller
         //实例化
         $machineRoomModel = new MachineRoom();
 
-        //
-
+        //查询列表数据
+        dump($machineRoomModel->show());
 
 
     }

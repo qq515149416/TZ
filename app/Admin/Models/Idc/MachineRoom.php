@@ -64,4 +64,16 @@ class MachineRoom extends Model
 
     }
 
+    /**
+     * 查询列表数据
+     *
+     *
+     */
+    public function show()
+    {
+        $res = $this->all();
+
+        return $res;
+    }
+
 }

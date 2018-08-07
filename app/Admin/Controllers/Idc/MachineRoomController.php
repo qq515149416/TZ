@@ -9,6 +9,7 @@ use Encore\Admin\Facades\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Admin\Requests\MachineRoom as MachineRoomValidate;
+use Psy\Util\Json;
 
 class MachineRoomController extends Controller
 {
@@ -116,11 +117,29 @@ class MachineRoomController extends Controller
     }
 
     /**
+     * Ajax 获取机房列表
+     * 接口地址 :/machine_room/showByAjax
+     *
+     */
+    public function showByAjax()
+    {
+        //实例化
+        $machineRoomModel = new MachineRoom();
+
+        //
+
+
+
+    }
+
+    /**
      * 添加机房接口
+     * 接口地址: /machine_room/storeByAjax
      * 传参方式:POST
      * 参数:
      * room_id:机房编号
      * room_name:机房中文名
+     *
      *
      * 表:idc_machineroom
      * @param MachineRoomValidate $request
@@ -136,14 +155,16 @@ class MachineRoomController extends Controller
 
         //模型添加机房数据
         $res = $machineRoomModel->store($par['room_id'], $par['room_name']);
-        dump($res);
+//        dump($res);
         return tz_ajax_echo([], '新增机房成功', 1);
 
     }
 
 
     /**
-     * Remove the specified resource from storage.
+     * 删除机房Ajax接口
+     * 参数:
+     *
      *
      * @param  int $id
      * @return \Illuminate\Http\Response
@@ -170,22 +191,30 @@ class MachineRoomController extends Controller
 
     /**
      *  修改机房编号或名字
-     *  参数:
+     * 参数:
      * id: 需要修改过机房ID
      * room_id: 修改后的机房编号名
      * room_name: 修改后的机房名字
      *
      * @param Request $request
      * @param $id
+     * @return Json
      */
     public function updateByAjax(Request $request)
     {
         //获取参数
         $par = $request->post();
 
-        if (1) {
-            dump('123');
-        }
+        dump($par);
+
+        //判断是否获取到参数
+//        if (1) {
+//            dump('su');
+//        }
+
+
+        //返回正确信息
+//        return tz_ajax_echo([], '修改成功', 0);
 
 
     }

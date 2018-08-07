@@ -39,6 +39,7 @@ Route::group([
     $router->get('ips/alert', 'Idc\IpsController@edit');
     $router->post('ips/alerting', 'Idc\IpsController@doEdit');
     $router->post('ips/remove', 'Idc\IpsController@deleted');
+    $router->get('ips/machineroom', 'Idc\IpsController@machineroom');
 
     $router->post('rules', 'Others\ContactsController@rulestest');
     $router->get('rules', 'Others\ContactsController@rulestest');
@@ -48,19 +49,13 @@ Route::group([
     $router->get('/user_link_list', 'Show\LinkUserController@index');
     $router->get('/machine_room/show', 'Show\TestController@index');
     $router->get('/resource/ip', 'Show\IpController@index');
-
-    $router->get('account/index', 'Hr\AccountController@index');
+//人事
+    $router->get('account/show','Hr\AccountController@showAccount');
     //机房管理
     $router->get('machine_room/showByAjax', 'Idc\MachineRoomController@showByAjax');
     $router->post('machine_room/storeByAjax', 'Idc\MachineRoomController@storeByAjax');
     $router->post('machine_room/destroyByAjax', 'Idc\MachineRoomController@destroyByAjax');
     $router->post('machine_room/updateByAjax', 'Idc\MachineRoomController@updateByAjax');
 
-    //机柜管理
-    Route::group([
-        'prefix' => 'cabinet',
-    ], function (Router $router) {
-        $router->get('test', 'Idc\CabinetController@showByAjax');
-    });
 
 });

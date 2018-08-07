@@ -9,6 +9,21 @@ const columnData = [
     { id: 'ip_status', numeric: true, disablePadding: false, label: '使用状态' },
     { id: 'ip_lock', numeric: true, disablePadding: false, label: '锁定状态' },
     { id: 'ip_note', numeric: true, disablePadding: false, label: '备注信息' },
-    { id: 'job', numeric: true, disablePadding: false, label: '岗位' },
-    { id: 'mailbox', numeric: true, disablePadding: false, label: '邮箱' }
+    { id: 'ip_comproom', numeric: true, disablePadding: false, label: '机房编号' },
+    { id: 'ip_comproomname', numeric: true, disablePadding: false, label: '所属机房' },
+    { id: 'created_at', numeric: true, disablePadding: false, label: '创建时间' },
+    { id: 'updated_at', numeric: true, disablePadding: false, label: '更新时间' }
 ];
+@inject("ipsStores")
+@observer 
+class IpList extends React.Component {
+  componentDidMount() {
+    this.props.ipsStores.getData();
+  }
+  render() {
+    return (
+      <ListTableComponent headTitlesData={columnData} data={this.props.ipsStores.ips}  />
+    );
+  }
+}
+export default IpList;

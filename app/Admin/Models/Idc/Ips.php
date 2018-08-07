@@ -26,7 +26,7 @@ class Ips extends Model
     *
     * @var array
     */
-    protected $fillable = ['vlan', 'ip','ip_company','ip_status','ip_lock','ip_note','ip_comproom','ip_comproomname','created_at','updated_at','deleted_at'];
+    protected $fillable = ['vlan', 'ip','ip_company','ip_status','ip_lock','ip_note','ip_comproom','created_at','updated_at','deleted_at'];
     // 测试
     public function test() {
     	return 'ip 测试';
@@ -38,18 +38,24 @@ class Ips extends Model
      */
     public function index(){
     	// 用模型进行数据查询
-    	$index = $this->all(['id','vlan','ip','ip_company','ip_status','ip_lock','ip_note','ip_comproom','ip_comproomname','created_at','updated_at']);
-    	if($index->isEmpty()){
+    	$index = $this->all(['id','vlan','ip','ip_company','ip_status','ip_lock','ip_note','ip_comproom','created_at','updated_at']);
+    	if(!$index->isEmpty()){
     		// 判断存在数据就对部分需要转换的数据进行数据转换的操作
-    		$ip_company = ['电信公司','移动公司','联通公司'];
-    		$ip_status = ['未使用','使用(子IP)','使用(内部机器主IP)','使用(托管主机的主IP)'];
-    		$ip_lock = ['未锁定','锁定'];
+    		$ip_company = [0=>'电信公司',1=>'移动公司',2=>'联通公司'];
+    		$ip_status = [0=>'未使用',1=>'使用(子IP)',2=>'使用(内部机器主IP)',3=>'使用(托管主机的主IP)'];
+    		$ip_lock = [0=>'未锁定',1=>'锁定'];
+
     		foreach($index as $ipkey=>$ipvalue) {
     			// 对应的字段的数据转换
-    			$index[$ipkey]['ip_company'] = $ip_company[$value['ip_company']];
-    			$index[$ipkey]['ip_status'] = $ip_status[$value['ip_status']];
-    			$index[$ipkey]['ip_lock'] = $ip_lock[$value['ip_lock']];
+    			// return 123;
+    			$room = (array)$this->machineroom($ipvalue['ip_comproom']);
+    			$index[$ipkey]['ip_company'] = $ip_company[$ipvalue['ip_company']];
+    			$index[$ipkey]['ip_status'] = $ip_status[$ipvalue['ip_status']];
+    			$index[$ipkey]['ip_lock'] = $ip_lock[$ipvalue['ip_lock']];
+    			$index[$ipkey]['ip_comproomname'] = $room['machine_room_name'];
+    			$index[$ipkey]['ip_roomno'] = $room['machine_room_id'];
     		}
+    		// dd($room);
     		$return['data'] = $index;
     		$return['code'] = 1;
     		$return['msg'] = '获取信息成功！！';
@@ -100,9 +106,9 @@ class Ips extends Model
      */
     public function edit($id){
     	if($id){
-    		$result = $this->where('id',$ids)->get(['vlan', 'ip','ip_company','ip_status','ip_lock','ip_note','ip_comproom','ip_comproomname']);
+    		$result = $this->where('id',$ids)->get(['vlan', 'ip','ip_company','ip_status','ip_lock','ip_note','ip_comproom']);
     		if($result){
-    			$return['data'] = $result;
+    		   $return['data'] = $result;
                $return['code'] = 1;
                $return['msg'] = '获取信息成功！！';
             } else {
@@ -126,7 +132,15 @@ class Ips extends Model
      */
     public function doEdit($data){
     	if($data && $data['id']+0) {
-    		$row = $this->where('id',$data['id'])->save($data);
+    		$edit = $this->find($data['id']);
+    		$edit->vlan = $data['vlan'];
+    		$edit->ip = $data['ip'];
+    		$edit->ip_company = $data['ip_company'];
+    		$edit->ip_status = $data['ip_status'];
+    		$edit->ip_lock = $data['ip_lock'];
+    		$edit->ip_note = $data['ip_note'];
+    		$edit->ip_comproom = $data['ip_comproom'];
+    		$row = $edit->save();
     		if($row != false){
     			$return['code'] = 1;
     			$return['msg'] = '修改IP信息成功！！';
@@ -145,7 +159,7 @@ class Ips extends Model
      * @param  [type] $id [description]
      * @return [type]     [description]
      */
-    public function deleted($id) {
+    public function dele($id) {
     	if($id) {
     		$row = $this->where('id',$id)->delete();
     		if($row != false){
@@ -167,18 +181,29 @@ class Ips extends Model
      * 获取机房的信息
      * @return array 返回相关的信息和数据
      */
-    public function machineroom() {
-    	$result = DB::table('idc_machineroom')->select('machine_room_id','machine_room_name')->get();
-    	if($result) {
-    		$return['data'] = $result;
-    		$return['code'] = 1;
-    		$return['msg'] = '机房信息获取成功!!';
+    public function machineroom($id='') {
+    	if($id){
+    		$room = DB::table('idc_machineroom')->find($id,['machine_room_id','machine_room_name']);
+    		return $room;
     	} else {
-    		$return['data'] = '';
-    		$return['code'] = 0;
-    		$return['msg'] = '机房信息获取失败!!';
-    	}
+    		$result = DB::table('idc_machineroom')->select('id as roomid','machine_room_id','machine_room_name')->get();
+	    	if($result) {
+	    		$return['data'] = $result;
+	    		$return['code'] = 1;
+	    		$return['msg'] = '机房信息获取成功!!';
+	    	} else {
+	    		$return['data'] = '';
+	    		$return['code'] = 0;
+	    		$return['msg'] = '机房信息获取失败!!';
+	    	}
 
-    	return $return;
+	    	return $return;
+    	}
+    	
     }
+
+
+    // public function findroom($id){
+    // 	$result = DB::table('idc_machineroom')->where(['id'=>$id])->value('machine_room_id','machine_room_name');
+    // }
 }

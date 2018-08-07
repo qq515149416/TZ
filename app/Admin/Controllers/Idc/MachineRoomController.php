@@ -126,7 +126,7 @@ class MachineRoomController extends Controller
         //实例化
         $machineRoomModel = new MachineRoom();
 
-        
+
 
     }
 

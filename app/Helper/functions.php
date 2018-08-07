@@ -25,5 +25,5 @@
  */
 function tz_ajax_echo($data = [], $info = "", $code = 0)
 {
-    return json_encode(["code" => $code, "data" => $data, "msg" => $info]);
+    return response()->json(["code" => $code, "data" => $data, "msg" => $info]);
 }

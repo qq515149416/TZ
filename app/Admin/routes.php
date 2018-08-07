@@ -39,6 +39,7 @@ Route::group([
     $router->get('ips/alert', 'Idc\IpsController@edit');
     $router->post('ips/alerting', 'Idc\IpsController@doEdit');
     $router->post('ips/remove', 'Idc\IpsController@deleted');
+    $router->get('ips/machineroom', 'Idc\IpsController@machineroom');
 
     $router->post('rules', 'Others\ContactsController@rulestest');
     $router->get('rules', 'Others\ContactsController@rulestest');

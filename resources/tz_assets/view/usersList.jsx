@@ -2,12 +2,6 @@ import React from "react";
 import ListTableComponent from "../component/listTableComponent.jsx";
 import { inject,observer } from "mobx-react";
 
-function getSorting(order, orderBy) {
-  return order === 'desc'
-    ? (a, b) => (b[orderBy] < a[orderBy] ? -1 : 1)
-    : (a, b) => (a[orderBy] < b[orderBy] ? -1 : 1);
-}
-
 const columnData = [
   { id: 'name', numeric: true, disablePadding: true, label: '姓名' },
   { id: 'qq', numeric: true, disablePadding: false, label: 'qq' },

@@ -1,6 +1,7 @@
 import { observable, action} from "mobx";
 import {get,post} from "../tool/http.js";
 class UserInfoStores {
+    @observable id = 1;
     @observable name =  "";
     @observable qq ="";
     @observable job_number = "";
@@ -9,8 +10,9 @@ class UserInfoStores {
     @observable branch = "";
     @observable job = "";
     @observable mailbox = "";
-    constructor({name, qq, job_number, mobile, sex, branch, job, mailbox}) {
+    constructor({id,name, qq, job_number, mobile, sex, branch, job, mailbox}) {
         Object.assign(this,{
+            id,
             name,
             qq,
             job_number,
@@ -23,13 +25,11 @@ class UserInfoStores {
     }
 }
 class UsersInfoStores {
-    counter = 0;
     @observable user = [
 
     ];
     createData(name, qq, job_number, mobile, sex, branch, job, mailbox) {
-        this.counter += 1;
-        return { id: this.counter, name, qq, job_number, mobile, sex, branch, job, mailbox};
+        return { id: (this.user.length ? this.user[this.user.length-1].id + 1 : 1), name, qq, job_number, mobile, sex, branch, job, mailbox};
     }
     @action.bound 
     getData() {
@@ -38,6 +38,7 @@ class UsersInfoStores {
                 console.log(res.data);
                 this.user = res.data.data.map(item => new UserInfoStores({
                     ...{
+                        id: item.id,
                         name: item.fullname,
                         qq: item.QQ,
                         job_number: item.work_number,

@@ -104,7 +104,19 @@
                     room_order: "1000"
                 }
             ];
-            rendData("room_data",room_data);
+            $.get("/tz_admin/machine_room/showByAjax",function(data) {
+                if(data.code==1) {
+                    room_data = data.data.map(function(item) {
+                        return {
+                            room_number: item.room_id,
+                            room_name: item.room_name,
+                            room_order: "100"
+                        };
+                    });
+                    rendData("room_data",room_data);
+                }
+            });
+            
             $("#room_data").on("click",".delRoomdata",function() {
                 var id = ($(this).attr("data-id") - 1);
                 room_data.splice(id,1);

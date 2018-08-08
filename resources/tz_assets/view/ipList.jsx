@@ -5,14 +5,103 @@ import { inject,observer } from "mobx-react";
 const columnData = [
     { id: 'ip', numeric: true, disablePadding: true, label: 'IP地址' },
     { id: 'vlan', numeric: true, disablePadding: false, label: 'vlan' },
-    { id: 'ip_company', numeric: true, disablePadding: false, label: '所属运营商' },
+    { 
+      id: 'ip_company', 
+      numeric: true, 
+      disablePadding: false, 
+      label: '所属运营商'
+    },
     { id: 'ip_status', numeric: true, disablePadding: false, label: '使用状态' },
     { id: 'ip_lock', numeric: true, disablePadding: false, label: '锁定状态' },
-    { id: 'ip_note', numeric: true, disablePadding: false, label: '备注信息' },
-    { id: 'ip_comproom', numeric: true, disablePadding: false, label: '机房编号' },
-    { id: 'ip_comproomname', numeric: true, disablePadding: false, label: '所属机房' },
+    { id: 'ip_note', numeric: true, disablePadding: false ,label: '备注信息' },
+    { 
+      id: 'ip_comproomname', 
+      numeric: true, 
+      disablePadding: false, 
+      label: '所属机房' 
+    },
     { id: 'created_at', numeric: true, disablePadding: false, label: '创建时间' },
     { id: 'updated_at', numeric: true, disablePadding: false, label: '更新时间' }
+];
+const inputType = [
+  {
+    field: "ip",
+    label: "IP地址",
+    type: "text"
+  },
+  {
+    field: "vlan",
+    label: "vlan",
+    type: "text"
+  },
+  {
+    field: "ip_company",
+    radioData: [
+      {
+        checked: true,
+        value: "0",
+        label: "电信"
+      },
+      {
+        checked: false,
+        value: "1",
+        label: "移动"
+      },
+      {
+        checked: false,
+        value: "2",
+        label: "联通"
+      }
+    ],
+    type: "switch"
+  },
+  {
+    field: "ip_status",
+    radioData: [
+      {
+        checked: true,
+        value: "0",
+        label: "未使用"
+      },
+      {
+        checked: false,
+        value: "1",
+        label: "使用子IP"
+      },
+      {
+        checked: false,
+        value: "2",
+        label: "已使用的内部机器主IP"
+      },
+      {
+        checked: false,
+        value: "3",
+        label: "已使用的托管主机IP"
+      }
+    ],
+    type: "switch"
+  },
+  {
+    field: "ip_lock",
+    radioData: [
+      {
+        checked: true,
+        value: "0",
+        label: "未锁定"
+      },
+      {
+        checked: false,
+        value: "1",
+        label: "锁定"
+      }
+    ],
+    type: "switch"
+  },
+  {
+    field: "ip_note",
+    label: "备注信息",
+    type: "text"
+  }
 ];
 @inject("ipsStores")
 @observer 
@@ -20,9 +109,19 @@ class IpList extends React.Component {
   componentDidMount() {
     this.props.ipsStores.getData();
   }
+  addData = (param,callbrak) => {
+    console.log(param);
+    callbrak(false);
+  }
   render() {
     return (
-      <ListTableComponent headTitlesData={columnData} data={this.props.ipsStores.ips}  />
+      <ListTableComponent 
+        title="ip资源库"
+        inputType={inputType} 
+        headTitlesData={columnData} 
+        data={this.props.ipsStores.ips}  
+        addData={this.addData.bind(this)} 
+      />
     );
   }
 }

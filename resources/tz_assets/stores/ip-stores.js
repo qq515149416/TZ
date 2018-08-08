@@ -29,8 +29,14 @@ class IpStores {
         });
     }
 }
+class ComproomStores {
+    
+}
 class IpsStores {
     @observable ips = [
+
+    ];
+    @observable comprooms = [
 
     ];
     @action.bound 

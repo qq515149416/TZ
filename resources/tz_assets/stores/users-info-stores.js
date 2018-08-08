@@ -2,25 +2,36 @@ import { observable, action} from "mobx";
 import {get,post} from "../tool/http.js";
 class UserInfoStores {
     @observable id = 1;
-    @observable name =  "";
-    @observable qq ="";
-    @observable job_number = "";
-    @observable mobile = "";
-    @observable sex = "";
-    @observable branch = "";
+    @observable fullname =  "";
+    @observable sex ="";
+    @observable age = "";
+    @observable department = "";
     @observable job = "";
-    @observable mailbox = "";
-    constructor({id,name, qq, job_number, mobile, sex, branch, job, mailbox}) {
+    @observable work_number = "";
+    @observable phone = "";
+    @observable QQ = "";
+    @observable wechat = "";
+    @observable Email = "";
+    @observable note = "";
+    @observable created_at = "";
+    @observable updated_at = "";
+
+    constructor({id,fullname, sex, age, department, job, work_number, phone, QQ,wechat,Email,note,created_at,updated_at}) {
         Object.assign(this,{
             id,
-            name,
-            qq,
-            job_number,
-            mobile,
+            fullname,
             sex,
-            branch,
+            age,
+            department,
             job,
-            mailbox
+            work_number,
+            phone,
+            QQ,
+            wechat,
+            Email,
+            note,
+            created_at,
+            updated_at
         });
     }
 }
@@ -37,17 +48,7 @@ class UsersInfoStores {
             if(res.data.code==1) {
                 console.log(res.data);
                 this.user = res.data.data.map(item => new UserInfoStores({
-                    ...{
-                        id: item.id,
-                        name: item.fullname,
-                        qq: item.QQ,
-                        job_number: item.work_number,
-                        mobile: item.phone,
-                        sex: item.sex,
-                        branch: item.department,
-                        job: item.job,
-                        mailbox: item.email
-                    }
+                    ...item
                 }));
             }
         });

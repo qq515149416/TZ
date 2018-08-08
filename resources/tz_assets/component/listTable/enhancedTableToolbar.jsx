@@ -70,7 +70,7 @@ const toolbarStyles = theme => ({
             </Typography>
           ) : (
             <Typography variant="title" id="tableTitle">
-              用户通讯录
+              {props.title}
             </Typography>
           )}
         </div>

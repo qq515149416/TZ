@@ -12,6 +12,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
+import Radio from '@material-ui/core/Radio';
+import FormLabel from '@material-ui/core/FormLabel';
 const UsersLinkPostStyle = theme => ({
     button: {
         margin: theme.spacing.unit
@@ -24,44 +26,44 @@ const UsersLinkPostStyle = theme => ({
     },
     dialog: {
         maxWidth: theme.breakpoints.values.sm + 50
+    },
+    formControl: {
+        margin: theme.spacing.unit * 3,
     }
 });
 class UsersLinkPost extends React.Component {
     constructor(props) {
         super(props);
+        let inputAttr = {};
+        if(this.props.inputType) {
+            this.props.inputType.forEach(item => {
+                if(item.type=="select") {
+                    Object.assign(inputAttr,{
+                        [item.field]: {
+                            label: item.label,
+                            currency: this.props.editData ? ((item.model&&item.model.selectCode) ? item.model.selectCode(this.props.editData[item.field]): this.siteCode(this.props.editData[item.field])) : ""
+                        }
+                    });
+                }else if(item.type=="switch") {
+                    Object.assign(inputAttr,{
+                        [item.field]: {
+                            radioData: item.radioData
+                        }
+                    });
+                } else {
+                    Object.assign(inputAttr,{
+                        [item.field]: {
+                            error: false,
+                            label: item.label,
+                            defaultValue: this.props.editData ? this.props.editData[item.field] : ""
+                        }
+                    });
+                }
+            });
+        }
         this.state = {
             open: false,
-            inputAttr: {
-                contactname: {
-                    error: false,
-                    label: "姓名",
-                    defaultValue: this.props.editData ? this.props.editData.contactname : ""
-                },
-                qq: {
-                    error: false,
-                    label: "QQ",
-                    defaultValue: this.props.editData ? this.props.editData.qq : ""
-                },
-                mobile: {
-                    error: false,
-                    label: "手机",
-                    defaultValue: this.props.editData ? this.props.editData.mobile : ""
-                },
-                email: {
-                    error: false,
-                    label: "邮箱",
-                    defaultValue: this.props.editData ? this.props.editData.email : ""
-                },
-                rank: {
-                    error: false,
-                    label: "权重",
-                    defaultValue: this.props.editData ? this.props.editData.rank : ""
-                },
-                site: {
-                    currency: this.props.editData ? this.siteCode(this.props.editData.site) : 1,
-                    label: "显示位置"
-                }
-            }
+            inputAttr
         };
     }
     siteCode = (data) => {
@@ -86,14 +88,7 @@ class UsersLinkPost extends React.Component {
         // console.log(this.contactname.value);
         let {inputAttr} = this.state;
         if(this.props.postType == "add") {
-            this.props.addData({
-                contactname: this.contactname.value,
-                qq: this.qq.value,
-                mobile: this.mobile.value,
-                email: this.email.value,
-                rank: this.rank.value,
-                site: this.state.inputAttr.site.currency
-            },(data) => {
+            this.props.addData(this.decompressionParam(),(data) => {
                 if(data) {
                     this.setState({ open: false });
                 } else {
@@ -103,15 +98,7 @@ class UsersLinkPost extends React.Component {
             });
         }
         if(this.props.postType == "edit") {
-            this.props.changeData({
-                id: this.props.editData.id,
-                contactname: this.contactname.value,
-                qq: this.qq.value,
-                mobile: this.mobile.value,
-                email: this.email.value,
-                rank: this.rank.value,
-                site: this.state.inputAttr.site.currency
-            },(data) => {
+            this.props.changeData(this.decompressionParam(),(data) => {
                 if(data) {
                     this.setState({ open: false });
                 }
@@ -119,11 +106,94 @@ class UsersLinkPost extends React.Component {
         }
     }
     handleChange = name => event => {
-        this.setState(state => state.inputAttr.site[name] = event.target.value);
+        this[name.split(".")[0]] = {
+            value: event.target.value
+        };
+        this.setState(state => state.inputAttr[name.split(".")[0]][name.split(".")[1]] = event.target.value);
     };
+    handleChecke = name => event => {
+        this[name.split(".")[0]] = {
+            value: event.target.value
+        };
+        const checkedIndex = this.state.inputAttr[name.split(".")[0]][name.split(".")[1]].findIndex(item=>item.value==event.target.value);
+        this.setState(state => {
+            state.inputAttr[name.split(".")[0]][name.split(".")[1]].forEach(item => {
+                item.checked = false;
+            });
+            state.inputAttr[name.split(".")[0]][name.split(".")[1]][checkedIndex].checked = true;
+            return state;
+        });
+    }
+    decompressionParam = () => {
+        let returnObj = {};
+        this.props.inputType.forEach(item => {
+            returnObj[item.field] = this[item.field].value;
+        });
+        return returnObj
+    }
+    returnInput = inputTypeData => {
+        const {classes} = this.props;
+        const {inputAttr} = this.state;
+        switch(inputTypeData.type) {
+            case "text":
+                return (
+                    <TextField
+                        error={inputAttr[inputTypeData.field].error}
+                        margin="dense"
+                        id={inputTypeData.field}
+                        label={inputAttr[inputTypeData.field].label}
+                        type="text"
+                        fullWidth
+                        className={classes.textField}
+                        defaultValue={inputAttr[inputTypeData.field].defaultValue}
+                        inputRef = {(ref) => this[inputTypeData.field] = ref}
+                    />
+                )
+            case "select":
+                return (
+                    <TextField
+                        id="site"
+                        select
+                        label={inputAttr[inputTypeData.field].label}
+                        className={classes.textField}
+                        value={inputAttr[inputTypeData.field].currency}
+                        onChange={this.handleChange(inputTypeData.field+'.currency')}
+                        SelectProps={{
+                            MenuProps: {
+                                className: classes.menu
+                            },
+                        }}
+                        margin="normal"
+                    >
+                        {
+                            inputTypeData.defaultData.map(item => (
+                                <MenuItem value={item.value}>
+                                    {item.text}
+                                </MenuItem>
+                            ))
+                        }
+                       
+                        
+                    </TextField>
+                )
+            case "switch":
+                return (
+                    <div>
+                        {
+                            inputAttr[inputTypeData.field].radioData.map(e => (
+                                <FormLabel>
+                                    <Radio checked={e.checked} onChange={this.handleChecke(inputTypeData.field+".radioData")} value={e.value} name={e.label} aria-label={e.label} />
+                                    {e.label}
+                                </FormLabel>
+                            ))
+                        }
+                        
+                    </div>
+                );
+        }
+    }
     render() {
         const {classes, postType} = this.props;
-        const {inputAttr} = this.state;
         return [
             <span>
               {
@@ -151,85 +221,9 @@ class UsersLinkPost extends React.Component {
           >
             <DialogTitle id="form-dialog-title">{postType == "add" ? "添加" : "修改"}员工联系方式</DialogTitle>
             <DialogContent>
-              <TextField
-                error={inputAttr.contactname.error}
-                margin="dense"
-                id="contactname"
-                label={inputAttr.contactname.label}
-                type="text"
-                fullWidth
-                className={classes.textField}
-                defaultValue={inputAttr.contactname.defaultValue}
-                inputRef = {(ref) => this.contactname = ref}
-              />
-              <TextField
-                error={inputAttr.qq.error}
-                margin="dense"
-                id="qq"
-                label={inputAttr.qq.label}
-                type="text"
-                fullWidth
-                className={classes.textField}
-                defaultValue={inputAttr.qq.defaultValue}
-                inputRef = {(ref) => this.qq = ref}
-              />
-              <TextField
-                error={inputAttr.mobile.error}
-                margin="dense"
-                id="mobile"
-                label={inputAttr.mobile.label}
-                type="text"
-                fullWidth
-                className={classes.textField}
-                defaultValue={inputAttr.mobile.defaultValue}
-                inputRef = {(ref) => this.mobile = ref}
-              />
-              <TextField
-                error={inputAttr.email.error}
-                margin="dense"
-                id="email"
-                label={inputAttr.email.label}
-                type="text"
-                fullWidth
-                className={classes.textField}
-                defaultValue={inputAttr.email.defaultValue}
-                inputRef = {(ref) => this.email = ref}
-              />
-              <TextField
-                error={inputAttr.rank.error}
-                margin="dense"
-                id="rank"
-                label={inputAttr.rank.label}
-                type="text"
-                fullWidth
-                className={classes.textField}
-                defaultValue={inputAttr.rank.defaultValue}
-                inputRef = {(ref) => this.rank = ref}
-              />
-                <TextField
-                    id="site"
-                    select
-                    label={inputAttr.site.label}
-                    className={classes.textField}
-                    value={inputAttr.site.currency}
-                    onChange={this.handleChange('currency')}
-                    SelectProps={{
-                        MenuProps: {
-                            className: classes.menu
-                        },
-                    }}
-                    margin="normal"
-                >
-                    <MenuItem value={1}>
-                        左侧
-                    </MenuItem>
-                    <MenuItem value={2}>
-                        联系人页面
-                    </MenuItem>
-                    <MenuItem value={3}>
-                        两侧均显示
-                    </MenuItem>
-                </TextField>
+                {
+                    this.props.inputType.map(item => this.returnInput(item))
+                }              
             </DialogContent>
             <DialogActions>
               <Button onClick={this.handleClose} color="primary">

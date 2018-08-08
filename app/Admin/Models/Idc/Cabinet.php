@@ -26,8 +26,11 @@ class Cabinet extends Model
      */
     public function test()
     {
-//        $res =
-        return '测试方法';
+
+        $data = $this->all();
+
+        return $data;
+
     }
 
 }

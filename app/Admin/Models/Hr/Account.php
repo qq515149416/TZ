@@ -38,6 +38,32 @@ class Account extends Model
    		return $return;
    	}
 
+   	/**
+   	 * 个人账号查询
+   	 * @param  [type] $user_id [description]
+   	 * @return [type]          [description]
+   	 */
+   	public function personalAccount($user_id){
+   		$result = $this->where('id',$user_id)->get(['id','username','name','created_at','updated_at']);
+   		if(!$result->isEmpty()){
+
+   			foreach($result as $accounts => $account) {
+   				// 查找对应的角色名称
+   				$role = $this->roles($account['id']);
+   				$result[$accounts]['role'] = $role;
+   			}
+   			$return['data'] = $result;
+   			$return['msg'] = '获取信息成功！！';
+   			$return['code'] = 1;
+   		} else {
+   			$return['data'] = '';
+   			$return['msg'] = '暂无数据';
+   			$return['code'] = 0;
+   		}
+
+   		return $return;
+   	}
+
 
    	/**
    	 * 查找对应账号的角色

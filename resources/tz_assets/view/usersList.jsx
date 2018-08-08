@@ -3,16 +3,17 @@ import ListTableComponent from "../component/listTableComponent.jsx";
 import { inject,observer } from "mobx-react";
 
 const columnData = [
-  { id: 'name', numeric: true, disablePadding: true, label: '姓名' },
-  { id: 'qq', numeric: true, disablePadding: false, label: 'qq' },
-  { id: 'job_number', numeric: true, disablePadding: false, label: '工号' },
-  { id: 'mobile', numeric: true, disablePadding: false, label: '手机' },
+  { id: 'fullname', numeric: true, disablePadding: true, label: '姓名' },
   { id: 'sex', numeric: true, disablePadding: false, label: '性别' },
-  { id: 'branch', numeric: true, disablePadding: false, label: '部门' },
+  { id: 'age', numeric: true, disablePadding: false, label: '年龄' },
+  { id: 'department', numeric: true, disablePadding: false, label: '部门' },
   { id: 'job', numeric: true, disablePadding: false, label: '岗位' },
-  { id: 'mailbox', numeric: true, disablePadding: false, label: '邮箱' }
+  { id: 'work_number', numeric: true, disablePadding: false, label: '工号' },
+  { id: 'wechat', numeric: true, disablePadding: false, label: '微信' },
+  { id: 'created_at', numeric: true, disablePadding: false, label: '创建时间' },
+  { id: 'updated_at', numeric: true, disablePadding: false, label: '更新时间' },
 ];
-
+const inputType = [];
 @inject("usersInfoStores")
 @observer 
 class usersList extends React.Component {
@@ -21,7 +22,12 @@ class usersList extends React.Component {
   }
   render() {
     return (
-      <ListTableComponent headTitlesData={columnData} data={this.props.usersInfoStores.user}  />
+      <ListTableComponent 
+        title="通讯录"
+        inputType={inputType} 
+        headTitlesData={columnData} 
+        data={this.props.usersInfoStores.user}  
+      />
     );
   }
 }

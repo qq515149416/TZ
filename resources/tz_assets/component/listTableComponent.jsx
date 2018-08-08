@@ -109,12 +109,12 @@ const styles = theme => ({
           <div>
             {
               this.props.addData && (
-                <UsersLinkPost addData={this.props.addData} postType="add" />
+                <UsersLinkPost inputType={this.props.inputType} addData={this.props.addData} postType="add" />
               )
             }
           </div>,
         <Paper className={classes.root}>
-          <EnhancedTableToolbar numSelected={selected.length} getParentData={this.getData.bind(this)} handleSelectAllEmptyClick={this.handleSelectAllEmptyClick} delData={this.props.delData} selectedData={selected} />
+          <EnhancedTableToolbar title={(this.props.title || "未定义")} numSelected={selected.length} getParentData={this.getData.bind(this)} handleSelectAllEmptyClick={this.handleSelectAllEmptyClick} delData={this.props.delData} selectedData={selected} />
           <div className={classes.tableWrapper}>
             <Table className={classes.table} aria-labelledby="tableTitle">
               <EnhancedTableHead
@@ -166,7 +166,7 @@ const styles = theme => ({
                         {
                           this.props.changeData && (
                             <TableCell numeric>
-                              <UsersLinkPost postType="edit" editData={n} changeData={this.props.changeData} />
+                              <UsersLinkPost inputType={this.props.inputType} postType="edit" editData={n} changeData={this.props.changeData} />
                             </TableCell>
                           )
                         }
@@ -175,7 +175,7 @@ const styles = theme => ({
                   })}
                 {emptyRows > 0 && (
                   <TableRow style={{ height: 49 * emptyRows }}>
-                    <TableCell colSpan={9} />
+                    <TableCell colSpan={this.props.headTitlesData.length+1} />
                   </TableRow>
                 )}
               </TableBody>

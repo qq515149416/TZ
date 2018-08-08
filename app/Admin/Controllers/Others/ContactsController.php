@@ -58,7 +58,6 @@ class ContactsController extends Controller
     public function index() {
       $index = new Contacts();
       $contacts = $index->index();
-      // print_r($data);
       return tz_ajax_echo($contacts['data'],$contacts['msg'],$contacts['code']);
     }
 // $request->ajax() && 

@@ -23,6 +23,7 @@ Route::group([
     $router->get('test', 'Others\StaffController@test');
     $router->get('contacts/maillist', 'Others\ContactsController@test');
     $router->get('ip/test', 'Idc\IpsController@test');
+    $router->get('account/test','Hr\AccountController@test');
 
     // 显示通讯录
     $router->get('staff/staff_list', 'Others\StaffController@index');

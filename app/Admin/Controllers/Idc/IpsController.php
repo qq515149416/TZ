@@ -51,7 +51,7 @@ class IpsController extends Controller
     		$param = $request->only(['vlan', 'ip','ip_company','ip_status','ip_lock','ip_note','ip_comproom']);
     		$create = new Ips();
     		// 传递数据到对应的model层处理
-    		$revert = $create->create($param);
+    		$revert = $create->insert($param);
     		// 返回信息
     		return tz_ajax_echo($revert['data'],$revert['msg'],$revert['code']);
     	} else {

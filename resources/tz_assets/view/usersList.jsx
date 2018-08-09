@@ -24,6 +24,7 @@ class usersList extends React.Component {
     return (
       <ListTableComponent 
         title="通讯录"
+        operattext="通讯录"
         inputType={inputType} 
         headTitlesData={columnData} 
         data={this.props.usersInfoStores.user}  

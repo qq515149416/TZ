@@ -87,7 +87,7 @@ const toolbarStyles = theme => ({
               }
             </div>
           ]: (
-            <Tooltip title="Filter list">
+            <Tooltip title="筛选">
               <IconButton aria-label="Filter list">
                 <FilterListIcon />
               </IconButton>

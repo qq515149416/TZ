@@ -1,5 +1,6 @@
 import { observable, action} from "mobx";
 import {get,post} from "../tool/http.js";
+import ActionBoundStores from "./common/action-bound-stores.js";
 const dateFormat = require('dateformat');
 class UserLinkInfoStores {
     @observable id = 1;
@@ -11,7 +12,7 @@ class UserLinkInfoStores {
     @observable site = "";
     @observable created_at = "";
     @observable updated_at = "";
-    constructor({id,contactname, qq, mobile, email, rank, site, created_at, updated_at}) {
+    constructor({id,contactname, qq, mobile, email, rank, site, created_at = dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss"), updated_at = dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss")}) {
         if(!isNaN(site)) {
             let siteText = "";
             switch(site) {
@@ -41,13 +42,10 @@ class UserLinkInfoStores {
         });
     }
 }
-class UsersLinkInfoStores {
+class UsersLinkInfoStores extends ActionBoundStores {
     @observable user = [
 
     ];
-    createData(contactname, qq, mobile, email, rank, site, created_at = dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss"), updated_at = dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss")) {
-        return { id: (this.user.length ? this.user[this.user.length-1].id + 1 : 1), contactname, qq, mobile, email, rank, site, created_at, updated_at};
-    }
     @action.bound 
     changeData(param) {
         return new Promise((resolve,reject) => {
@@ -62,14 +60,13 @@ class UsersLinkInfoStores {
             }).catch(reject);
         });
     }
-    @action.bound 
     delData(id) {
         return new Promise((resolve,reject) => {
             post("contacts/remove",{
                 delete_id: id
             }).then((res) => {
                 if(res.data.code==1) {
-                    this.user.splice(this.user.findIndex((item) => item.id==id),1);
+                    this.delStoreData("user",id);
                     resolve(true);
                 } else {
                     resolve(false);
@@ -77,7 +74,6 @@ class UsersLinkInfoStores {
             }).catch(reject);
         });
     }
-    @action.bound 
     addData(data) {
         return new Promise((resolve,reject) => {
             post("contacts/insert",{
@@ -89,9 +85,8 @@ class UsersLinkInfoStores {
                 site: data.site
             }).then((res) => {
                 if(res.data.code==1) {
-                    this.user.push(new UserLinkInfoStores(Object.assign(this.createData(data.contactname,data.qq,data.mobile,data.email,data.rank,data.site),{
-                        id: res.data.data
-                    })));
+                    // this.user.push(new UserLinkInfoStores(data));
+                    this.addStoreData("user",UserLinkInfoStores,data);
                     resolve(true);
                 } else {
                     resolve(false);
@@ -108,9 +103,6 @@ class UsersLinkInfoStores {
                 }));
             }
         });
-    }
-    constructor() {
-        // this.user.push(new UserLinkInfoStores(this.createData('唐康', '2885650826', '13712756033', '2885650826@qq.com', '1', '3', '2018-08-01 11:25:48', '2018-08-01 11:25:48')));
     }
 
 }

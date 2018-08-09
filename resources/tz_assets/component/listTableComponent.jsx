@@ -109,7 +109,7 @@ const styles = theme => ({
           <div>
             {
               this.props.addData && (
-                <UsersLinkPost inputType={this.props.inputType} addData={this.props.addData} postType="add" />
+                <UsersLinkPost operattext={this.props.operattext || this.props.title} inputType={this.props.inputType} addData={this.props.addData} postType="add" />
               )
             }
           </div>,
@@ -166,7 +166,7 @@ const styles = theme => ({
                         {
                           this.props.changeData && (
                             <TableCell numeric>
-                              <UsersLinkPost inputType={this.props.inputType} postType="edit" editData={n} changeData={this.props.changeData} />
+                              <UsersLinkPost operattext={this.props.operattext || this.props.title} inputType={this.props.inputType} postType="edit" editData={n} changeData={this.props.changeData} />
                             </TableCell>
                           )
                         }

@@ -44,7 +44,7 @@ class EnhancedTableHead extends React.Component {
                   sortDirection={orderBy === column.id ? order : false}
                 >
                   <Tooltip
-                    title="Sort"
+                    title="排序"
                     placement={column.numeric ? 'bottom-end' : 'bottom-start'}
                     enterDelay={300}
                   >

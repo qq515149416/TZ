@@ -38,19 +38,32 @@ class UsersLinkPost extends React.Component {
         if(this.props.inputType) {
             this.props.inputType.forEach(item => {
                 if(item.type=="select") {
+                    let defaultValue = (item.defaultData.length>0?item.defaultData[0].value:"");
                     Object.assign(inputAttr,{
                         [item.field]: {
                             label: item.label,
-                            currency: this.props.editData ? ((item.model&&item.model.selectCode) ? item.model.selectCode(this.props.editData[item.field]): this.siteCode(this.props.editData[item.field])) : ""
+                            currency: this.props.editData ? ((item.model&&item.model.selectCode) ? item.model.selectCode(this.props.editData[item.field]): this.props.editData[item.field]) : defaultValue
                         }
                     });
                 }else if(item.type=="switch") {
+                    if(this.props.editData) {
+                        item.radioData.forEach(e => {
+                            e.checked = false;
+                        });
+                        item.radioData.find(e => e.value==this.props.editData[item.field]).checked = true;
+                    }
+                    this[item.field] = {
+                        value : item.radioData.find(e => e.checked).value
+                    };
                     Object.assign(inputAttr,{
                         [item.field]: {
                             radioData: item.radioData
                         }
                     });
                 } else {
+                    this[item.field] = {
+                        value : this.props.editData ? this.props.editData[item.field] : ""
+                    };
                     Object.assign(inputAttr,{
                         [item.field]: {
                             error: false,
@@ -65,16 +78,6 @@ class UsersLinkPost extends React.Component {
             open: false,
             inputAttr
         };
-    }
-    siteCode = (data) => {
-        switch(data) {
-            case "左侧":
-                return 1;
-            case "联系人页面":
-                return 2;
-            case "两侧均显示":
-                return 3;
-        }
     }
     handleClickOpen = event => {
         this.setState({ open: true });
@@ -98,7 +101,9 @@ class UsersLinkPost extends React.Component {
             });
         }
         if(this.props.postType == "edit") {
-            this.props.changeData(this.decompressionParam(),(data) => {
+            this.props.changeData(Object.assign(this.decompressionParam(),{
+                id: this.props.editData.id
+            }),(data) => {
                 if(data) {
                     this.setState({ open: false });
                 }
@@ -127,7 +132,12 @@ class UsersLinkPost extends React.Component {
     decompressionParam = () => {
         let returnObj = {};
         this.props.inputType.forEach(item => {
-            returnObj[item.field] = this[item.field].value;
+            if(this[item.field]) {
+                returnObj[item.field] = this[item.field].value;
+            } else {
+                console.warn(this[item.field],item.field);
+            }
+            
         });
         return returnObj
     }
@@ -194,12 +204,13 @@ class UsersLinkPost extends React.Component {
     }
     render() {
         const {classes, postType} = this.props;
+        
         return [
             <span>
               {
                 postType == "add" ? (
                 <Button variant="contained" onClick={this.handleClickOpen} color="primary" className={classes.button}>
-                    添加联系方式
+                    添加{this.props.operattext}
                 </Button>
                 ) : (
                     <Tooltip title="编辑">
@@ -219,7 +230,7 @@ class UsersLinkPost extends React.Component {
                 className: classes.dialog
             }}
           >
-            <DialogTitle id="form-dialog-title">{postType == "add" ? "添加" : "修改"}员工联系方式</DialogTitle>
+            <DialogTitle id="form-dialog-title">{postType == "add" ? "添加" : "修改"}{this.props.operattext}</DialogTitle>
             <DialogContent>
                 {
                     this.props.inputType.map(item => this.returnInput(item))

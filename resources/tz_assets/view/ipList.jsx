@@ -101,6 +101,12 @@ const inputType = [
     field: "ip_note",
     label: "备注信息",
     type: "text"
+  },
+  {
+    field: "ip_comproom",
+    label: "所属机房",
+    type: "select",
+    defaultData: []
   }
 ];
 @inject("ipsStores")
@@ -110,17 +116,32 @@ class IpList extends React.Component {
     this.props.ipsStores.getData();
   }
   addData = (param,callbrak) => {
-    console.log(param);
-    callbrak(false);
+    // console.log(param);
+    this.props.ipsStores.addData(param).then(state => {
+      callbrak(state);
+    });
+  }
+  delData = (selectedData,callbrak) => {
+    const {ipsStores} = this.props;
+    let delIng = selectedData.map(item => ipsStores.delData(item));
+    callbrak(delIng);
   }
   render() {
+    inputType[inputType.findIndex(item => item.field=="ip_comproom")].defaultData = this.props.ipsStores.comprooms.map(item => {
+      return {
+        value: item.roomid,
+        text: item.machine_room_name
+      }
+    })
     return (
       <ListTableComponent 
         title="ip资源库"
+        operattext="ip资源"
         inputType={inputType} 
         headTitlesData={columnData} 
         data={this.props.ipsStores.ips}  
         addData={this.addData.bind(this)} 
+        delData={this.delData.bind(this)}  
       />
     );
   }

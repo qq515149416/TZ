@@ -96,6 +96,7 @@ class UsersLinkList extends React.Component {
     return (
       <ListTableComponent  
         title="联系人信息"
+        operattext="联系人信息"
         inputType={inputType} 
         headTitlesData={columnData} 
         data={this.props.usersLinkInfoStores.user} 

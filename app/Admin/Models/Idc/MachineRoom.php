@@ -16,6 +16,7 @@ class MachineRoom extends Model
     //设置主键
     public $primaryKey = 'id';
 
+    //定义软删除 字段
     protected $dates = ['delete_at'];
 
 

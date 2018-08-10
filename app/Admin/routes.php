@@ -66,6 +66,7 @@ Route::group([
         $router->post('storeByAjax', 'Idc\CabinetController@storeByAjax');
         $router->post('destroyByAjax', 'Idc\CabinetController@destroyByAjax');
         $router->post('updateByAjax', 'Idc\CabinetController@updateByAjax');
+
     });
 
 

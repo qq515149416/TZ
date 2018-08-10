@@ -77,4 +77,13 @@ class MachineRoom extends Model
         return $res;
     }
 
+    /**
+     * 获取机房多选列表
+     */
+    public function showSelectList()
+    {
+
+
+    }
+
 }

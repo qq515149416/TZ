@@ -73,6 +73,7 @@ Route::group([
         'prefix' => 'machine_room',
     ], function (Router $router) {
     $router->get('showByAjax', 'Idc\MachineRoomController@showByAjax');
+    $router->get('show_select_list_by_ajax', 'Idc\MachineRoomController@showSelectListByAjax');
     $router->post('storeByAjax', 'Idc\MachineRoomController@storeByAjax');
     $router->post('destroyByAjax', 'Idc\MachineRoomController@destroyByAjax');
     $router->post('updateByAjax', 'Idc\MachineRoomController@updateByAjax');

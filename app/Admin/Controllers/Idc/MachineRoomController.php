@@ -230,6 +230,16 @@ class MachineRoomController extends Controller
     }
 
 
+    /**
+     * 显示机房选择列表
+     */
+    public function showSelectListByAjax()
+    {
+
+        dump('123');
+    }
+
+
 
 
 //    public function retrieveById($identifier)

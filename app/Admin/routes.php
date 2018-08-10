@@ -52,11 +52,16 @@ Route::group([
     $router->get('/resource/ip', 'Show\IpController@index');
 //人事
     $router->get('account/show', 'Hr\AccountController@showAccount');
+
     //机房管理
-    $router->get('machine_room/showByAjax', 'Idc\MachineRoomController@showByAjax');
-    $router->post('machine_room/storeByAjax', 'Idc\MachineRoomController@storeByAjax');
-    $router->post('machine_room/destroyByAjax', 'Idc\MachineRoomController@destroyByAjax');
-    $router->post('machine_room/updateByAjax', 'Idc\MachineRoomController@updateByAjax');
+    Route::group([
+        'prefix' => 'machine_room',
+    ], function (Router $router) {
+    $router->get('showByAjax', 'Idc\MachineRoomController@showByAjax');
+    $router->post('storeByAjax', 'Idc\MachineRoomController@storeByAjax');
+    $router->post('destroyByAjax', 'Idc\MachineRoomController@destroyByAjax');
+    $router->post('updateByAjax', 'Idc\MachineRoomController@updateByAjax');
+    });
 
     //机柜管理   分组增删改查
     Route::group([

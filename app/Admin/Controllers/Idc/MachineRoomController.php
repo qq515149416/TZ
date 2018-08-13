@@ -36,7 +36,7 @@ class MachineRoomController extends Controller
     public function create()
     {
 
-        dump('create');
+//        dump('create');
     }
 
     /**
@@ -130,6 +130,7 @@ class MachineRoomController extends Controller
 
         //使用模型方法获取列表数据
         $listData = $machineRoomModel->show();
+
 
         //判断是否获取到数据
         if ($listData) {

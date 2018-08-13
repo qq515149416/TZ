@@ -95,7 +95,7 @@ class MachineRoom extends Model
     public function queryMachineRoomName($id = '')
     {
 
-        $data = $this->where('')->select('machine_room_name')->get();
+        $data = $this->where('id', $id)->select('machine_room_name')->first();
 
         return $data;
 

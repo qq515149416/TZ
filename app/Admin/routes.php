@@ -49,6 +49,7 @@ Route::group([
         $router->post('alerting', 'Idc\IpsController@doEdit');
         $router->post('remove', 'Idc\IpsController@deleted');
         $router->get('machineroom', 'Idc\IpsController@machineroom');
+        $router->post('batch','Idc\IpsController@batch');
     });
     
 
@@ -60,6 +61,8 @@ Route::group([
     $router->get('/user_link_list', 'Show\LinkUserController@index');
     $router->get('/machine_room/show', 'Show\TestController@index');
     $router->get('/resource/ip', 'Show\IpController@index');
+    $router->get('/resource/machine_room', 'Show\MachineRoomController@index');
+    $router->get('/resource/cabinet', 'Show\CabinetController@index');
 //人事
     Route::group([
         'prefix' => 'hr',
@@ -90,14 +93,5 @@ Route::group([
 
     });
 
-    //消息管理
-    Route::group([
-        'prefix' => 'news',
-    ],function (Router $router) {
-        $router->get('news_list', 'News\NewsController@index');
-        $router->post('news/insert', 'News\NewsController@insert');
-        $router->post('news/edit', 'News\NewsController@edit');
-        $router->post('news/deleted', 'News\NewsController@deleted');
-        $router->get('news/get_news_type', 'News\NewsController@get_news_type');
-    });
+
 });

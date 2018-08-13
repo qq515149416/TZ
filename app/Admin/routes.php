@@ -49,6 +49,7 @@ Route::group([
         $router->post('alerting', 'Idc\IpsController@doEdit');
         $router->post('remove', 'Idc\IpsController@deleted');
         $router->get('machineroom', 'Idc\IpsController@machineroom');
+        $router->post('batch','Idc\IpsController@batch');
     });
     
 

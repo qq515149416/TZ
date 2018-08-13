@@ -82,8 +82,11 @@ class MachineRoom extends Model
      */
     public function showSelectList()
     {
+        $listData = $this->select('id', 'machine_room_name')->get();
 
 
+        return $listData;
     }
+
 
 }

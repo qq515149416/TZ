@@ -232,11 +232,23 @@ class MachineRoomController extends Controller
 
     /**
      * 显示机房选择列表
+     * GET
+     * 接口: tz_admin/machine_room/show_select_list_by_ajax
+     *
+     * 返回参数:
+     *  id:机房ID
+     *  machine_room_name:机房中文名
+     *
      */
     public function showSelectListByAjax()
     {
+        //实例化
+        $machineRoomModel = new MachineRoom();
 
-        dump('123');
+        //获取选择列表信息
+        $listData = $machineRoomModel->showSelectList();
+
+        return $listData ? tz_ajax_echo($listData, '成功获取选择列表', 1) : tz_ajax_echo([], '获取选择列表失败', 0);
     }
 
 

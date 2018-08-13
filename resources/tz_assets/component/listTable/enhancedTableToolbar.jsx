@@ -9,7 +9,6 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
-import UsersLinkPost from "./usersLinkPost.jsx";
 const toolbarStyles = theme => ({
     root: {
       paddingRight: theme.spacing.unit,

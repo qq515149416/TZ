@@ -151,7 +151,8 @@ class Ips extends Model
     	} else {
     		$return['code'] = 0;
     		$return['msg'] = '确保信息正确';
-    	}
+		}
+		return $return;
     }
 
     /**

@@ -34,9 +34,10 @@ class NewsRequest extends FormRequest
     public function rules()
     {
         return [
-            
-            'ip' => 'required|ip|unique:idc_ips,ip',
-            'vlan' => 'required|integer',
+
+	'title'		=> 'required|max:50',
+	'content'	=> 'required|min:30',
+	'digest'		=> 'required'
         ];
     }
 
@@ -44,11 +45,12 @@ class NewsRequest extends FormRequest
     {
         
         return  [
-            'ip.required' => 'IP地址必须填写',
-            'ip.ip' => 'IP地址填写必须符合IP地址规范',
-            'ip.unique'=>'IP地址唯一',
-            'vlan.required' => 'IP所属局域网必须填写',
-            'vlan.integer' => 'IP所属局域网填写必须是整数',
+            'title.required' 		=> '标题必须填写',
+            'title.max' 		=> '标题长度不得超过50字符',
+            'content.required' 	=> '内容必须填写',
+            'content.required' 	=> '内容长度必须大于30字符',
+            'digest.required' 		=> '摘要必须填写',
+
         ];
     }
 

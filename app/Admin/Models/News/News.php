@@ -28,25 +28,24 @@ class  News extends Model
 	// 测试
 
 	/**
-	* 查询IP表的数据
+	* 查询文章表的数据
 	* @return 将数据及相关的信息返回到控制器
 	*/
 	public function index(){
 		// 用模型进行数据查询
 		$index = $this->all(['id','tid','title','content','top_status','home_status','seoKeywords','seoTitle','seoDescription','digest','created_at','updated_at']);
+
 		if(!$index->isEmpty()){
 		// 判断存在数据就对部分需要转换的数据进行数据转换的操作
 			$status 	= [0=>'不显示',1=>'显示'];
 
-			foreach($index as $ipkey=>$ipvalue) {
+			foreach($index as $key=>$value) {
 			// 对应的字段的数据转换
 			// return 123;
-				$room = (array)$this->get_news_type($ipvalue['ip_comproom']);
-				$index[$ipkey]['ip_company'] = $ip_company[$ipvalue['ip_company']];
-				$index[$ipkey]['ip_status'] = $ip_status[$ipvalue['ip_status']];
-				$index[$ipkey]['ip_lock'] = $ip_lock[$ipvalue['ip_lock']];
-				$index[$ipkey]['ip_comproomname'] = $room['machine_room_name'];
-				$index[$ipkey]['ip_roomno'] = $room['machine_room_id'];
+				$index[$key]['type_name'] 	= (array)$this->get_news_type($value['tid']);
+				$index[$key]['top_status'] 	= $status[$value['top_status']];
+				$index[$key]['home_status'] 	= $status[$value['home_status']];
+				
 			}
 		
 			$return['data'] = $index;

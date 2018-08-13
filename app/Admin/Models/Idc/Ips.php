@@ -49,11 +49,15 @@ class Ips extends Model
     			// 对应的字段的数据转换
     			// return 123;
     			$room = (array)$this->machineroom($ipvalue['ip_comproom']);
+                // dump($room);
     			$index[$ipkey]['ip_company'] = $ip_company[$ipvalue['ip_company']];
     			$index[$ipkey]['ip_status'] = $ip_status[$ipvalue['ip_status']];
     			$index[$ipkey]['ip_lock'] = $ip_lock[$ipvalue['ip_lock']];
-    			$index[$ipkey]['ip_comproomname'] = $room['machine_room_name'];
-    			$index[$ipkey]['ip_roomno'] = $room['machine_room_id'];
+                if(!empty($room)){
+                    $index[$ipkey]['ip_comproomname'] = $room['machine_room_name'];
+                    $index[$ipkey]['ip_roomno'] = $room['machine_room_id'];
+                }
+    			
     		}
     		// dd($room);
     		$return['data'] = $index;
@@ -151,8 +155,8 @@ class Ips extends Model
     	} else {
     		$return['code'] = 0;
     		$return['msg'] = '确保信息正确';
-		}
-		return $return;
+    	}
+        return $return;
     }
 
     /**
@@ -182,11 +186,14 @@ class Ips extends Model
      * 获取机房的信息
      * @return array 返回相关的信息和数据
      */
-    public function machineroom($id='') {
-    	if($id){
+    public function machineroom($id = 0) {
+    	if(isset($id)){
+            // echo $id;
     		$room = DB::table('idc_machineroom')->find($id,['machine_room_id','machine_room_name']);
+            // echo 123;
     		return $room;
     	} else {
+            // echo 456;
     		$result = DB::table('idc_machineroom')->whereNull('deleted_at')->select('id as roomid','machine_room_id','machine_room_name')->get();
 	    	if($result) {
 	    		$return['data'] = $result;
@@ -204,7 +211,30 @@ class Ips extends Model
     }
 
 
-    // public function findroom($id){
-    // 	$result = DB::table('idc_machineroom')->where(['id'=>$id])->value('machine_room_id','machine_room_name');
-    // }
+    public function batching($data){
+        if($data){
+            // 存在数据就用model进行数据写入操作
+            // $fill = $this->fill($data);
+            $row = $this->create($data);
+            if($row != false){
+                // 插入数据成功
+                $return['data'] = $row->id;
+                $return['code'] = 1;
+                $return['msg'] = '新增IP地址信息成功!!';
+
+            } else {
+                // 插入数据失败
+                $return['data'] = '';
+                $return['code'] = 0;
+                $return['msg'] = '新增IP地址信息失败!!';
+            }
+        } else {
+            // 未有数据传递
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg'] = '请检查您要新增的信息是否正确!!';
+        }
+        return $return;
+    }
+    
 }

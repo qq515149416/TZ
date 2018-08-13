@@ -8,5 +8,9 @@ class ActionBoundStores {
     delStoreData(storeAttr,id) {
         this[storeAttr].splice(this[storeAttr].findIndex((item) => item.id==id),1);
     }
+    @action.bound
+    changeStoreData(storeAttr,EditStore,param) {
+        this[storeAttr][this[storeAttr].findIndex((item) => item.id==param.id)] = new EditStore(param);
+    }
 }
 export default ActionBoundStores;

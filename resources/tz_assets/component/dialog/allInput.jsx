@@ -9,12 +9,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 // import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import MenuItem from '@material-ui/core/MenuItem';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import EditIcon from '@material-ui/icons/Edit';
 import Radio from '@material-ui/core/Radio';
 import FormLabel from '@material-ui/core/FormLabel';
-const UsersLinkPostStyle = theme => ({
+const AllInputStyle = theme => ({
     button: {
         margin: theme.spacing.unit
     },
@@ -31,14 +28,30 @@ const UsersLinkPostStyle = theme => ({
         margin: theme.spacing.unit * 3,
     }
 });
-class UsersLinkPost extends React.Component {
+class AllInput extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            open: false,
+            inputAttr: this.inputAttr()
+        };
+    }
+    componentDidMount() {
+        this.setState({
+            inputAttr: this.inputAttr()
+        });
+        this.dialogOpen = true;
+        this.props.getRef(this);
+    }
+    inputAttr = () => {
         let inputAttr = {};
         if(this.props.inputType) {
             this.props.inputType.forEach(item => {
                 if(item.type=="select") {
                     let defaultValue = (item.defaultData.length>0?item.defaultData[0].value:"");
+                    this[item.field] = {
+                        value : this.props.editData ? ((item.model&&item.model.selectCode) ? item.model.selectCode(this.props.editData[item.field]): this.props.editData[item.field]) : defaultValue
+                    };
                     Object.assign(inputAttr,{
                         [item.field]: {
                             label: item.label,
@@ -47,10 +60,14 @@ class UsersLinkPost extends React.Component {
                     });
                 }else if(item.type=="switch") {
                     if(this.props.editData) {
+                        const currCode = ((item.model&&item.model.selectCode) ? item.model.selectCode(this.props.editData[item.field]):this.props.editData[item.field]);
                         item.radioData.forEach(e => {
-                            e.checked = false;
+                            if(e.value==currCode) {
+                                e.checked = true;
+                            } else {
+                                e.checked = false;
+                            }
                         });
-                        item.radioData.find(e => e.value==this.props.editData[item.field]).checked = true;
                     }
                     this[item.field] = {
                         value : item.radioData.find(e => e.checked).value
@@ -60,10 +77,11 @@ class UsersLinkPost extends React.Component {
                             radioData: item.radioData
                         }
                     });
+                    
                 } else {
-                    this[item.field] = {
-                        value : this.props.editData ? this.props.editData[item.field] : ""
-                    };
+                    // this[item.field] = {
+                    //     value : this.props.editData ? this.props.editData[item.field] : ""
+                    // };
                     Object.assign(inputAttr,{
                         [item.field]: {
                             error: false,
@@ -74,41 +92,7 @@ class UsersLinkPost extends React.Component {
                 }
             });
         }
-        this.state = {
-            open: false,
-            inputAttr
-        };
-    }
-    handleClickOpen = event => {
-        this.setState({ open: true });
-        event.stopPropagation();
-    };
-    
-    handleClose = () => {
-        this.setState({ open: false });
-    };
-    postUserLink = () => {
-        // console.log(this.contactname.value);
-        let {inputAttr} = this.state;
-        if(this.props.postType == "add") {
-            this.props.addData(this.decompressionParam(),(data) => {
-                if(data) {
-                    this.setState({ open: false });
-                } else {
-                    alert("添加失败");
-                }
-                
-            });
-        }
-        if(this.props.postType == "edit") {
-            this.props.changeData(Object.assign(this.decompressionParam(),{
-                id: this.props.editData.id
-            }),(data) => {
-                if(data) {
-                    this.setState({ open: false });
-                }
-            });
-        }
+        return inputAttr;
     }
     handleChange = name => event => {
         this[name.split(".")[0]] = {
@@ -129,18 +113,12 @@ class UsersLinkPost extends React.Component {
             return state;
         });
     }
-    decompressionParam = () => {
-        let returnObj = {};
-        this.props.inputType.forEach(item => {
-            if(this[item.field]) {
-                returnObj[item.field] = this[item.field].value;
-            } else {
-                console.warn(this[item.field],item.field);
-            }
-            
-        });
-        return returnObj
-    }
+    handleClickOpen = () => {
+        this.setState({ open: true });
+    } 
+    handleClose = () => {
+        this.setState({ open: false });
+    };
     returnInput = inputTypeData => {
         const {classes} = this.props;
         const {inputAttr} = this.state;
@@ -202,56 +180,49 @@ class UsersLinkPost extends React.Component {
                 );
         }
     }
+    showDialog = () => {
+        if(this.dialogOpen) {
+            this.setState({
+                inputAttr: this.inputAttr()
+            });
+            this.dialogOpen = false;
+        }
+    }
     render() {
-        const {classes, postType} = this.props;
-        
-        return [
-            <span>
-              {
-                postType == "add" ? (
-                <Button variant="contained" onClick={this.handleClickOpen} color="primary" className={classes.button}>
-                    添加{this.props.operattext}
-                </Button>
-                ) : (
-                    <Tooltip title="编辑">
-                        <IconButton onClick={this.handleClickOpen} aria-label="Edit">
-                            <EditIcon />
-                        </IconButton>
-                    </Tooltip>
-                )
-              }
-            </span>,
+        const {classes, title, inputType, operattext} = this.props;
+        return (
             <Dialog
             open={this.state.open}
             onClose={this.handleClose}
             aria-labelledby="form-dialog-title"
             maxWidth="sm"
+            onEntered={this.showDialog}
             PaperProps={{
                 className: classes.dialog
             }}
           >
-            <DialogTitle id="form-dialog-title">{postType == "add" ? "添加" : "修改"}{this.props.operattext}</DialogTitle>
+            <DialogTitle id="form-dialog-title">{title}</DialogTitle>
             <DialogContent>
                 {
-                    this.props.inputType.map(item => this.returnInput(item))
+                    inputType.map(item => this.returnInput(item))
                 }              
             </DialogContent>
             <DialogActions>
               <Button onClick={this.handleClose} color="primary">
                 取消
               </Button>
-              <Button onClick={this.postUserLink} color="primary">
-              {postType == "add" ? "添加" : "修改"}
+              <Button onClick={this.props.post} color="primary">
+                {operattext}
               </Button>
             </DialogActions>
           </Dialog>
-        ];
+        );
     }
 }
-UsersLinkPost.propTypes = {
+AllInput.propTypes = {
     classes: PropTypes.object.isRequired,
 };
-const UsersLinkPostRender = (props) => {
-    return <UsersLinkPost {...props} />
+const AllInputRender = (props) => {
+    return <AllInput {...props} />
 }
-export default withStyles(UsersLinkPostStyle)(UsersLinkPostRender);
+export default withStyles(AllInputStyle)(AllInputRender);

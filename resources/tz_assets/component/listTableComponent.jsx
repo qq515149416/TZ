@@ -9,7 +9,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Checkbox from '@material-ui/core/Checkbox';
 import { observer } from "mobx-react";
-import UsersLinkPost from "./listTable/usersLinkPost.jsx";
+import PostData from "./listTable/postData.jsx";
 import EnhancedTableHead from "./listTable/enhancedTableHead.jsx";
 import EnhancedTableToolbar from "./listTable/enhancedTableToolbar.jsx";
 function getSorting(order, orderBy) {
@@ -109,7 +109,7 @@ const styles = theme => ({
           <div>
             {
               this.props.addData && (
-                <UsersLinkPost operattext={this.props.operattext || this.props.title} inputType={this.props.inputType} addData={this.props.addData} postType="add" />
+                <PostData operattext={this.props.operattext || this.props.title} inputType={this.props.inputType} addData={this.props.addData} postType="add" />
               )
             }
           </div>,
@@ -166,7 +166,7 @@ const styles = theme => ({
                         {
                           this.props.changeData && (
                             <TableCell numeric>
-                              <UsersLinkPost operattext={this.props.operattext || this.props.title} inputType={this.props.inputType} postType="edit" editData={n} changeData={this.props.changeData} />
+                              <PostData operattext={this.props.operattext || this.props.title} inputType={this.props.inputType} postType="edit" editData={n} changeData={this.props.changeData} />
                             </TableCell>
                           )
                         }
@@ -195,7 +195,7 @@ const styles = theme => ({
             onChangePage={this.handleChangePage}
             onChangeRowsPerPage={this.handleChangeRowsPerPage}
             labelRowsPerPage="每页行数："
-            labelDisplayedRows={({ from, to, count }) => `${from}到${to}条，一共： ${count}页` }
+            labelDisplayedRows={({ from, to, count }) => `${from}到${to}条，一共： ${count}条` }
           />
         </Paper>
       ];

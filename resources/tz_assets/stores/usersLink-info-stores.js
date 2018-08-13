@@ -46,12 +46,11 @@ class UsersLinkInfoStores extends ActionBoundStores {
     @observable user = [
 
     ];
-    @action.bound 
     changeData(param) {
         return new Promise((resolve,reject) => {
             post("contacts/alerting",param).then((res) => {
                 if(res.data.code==1) {
-                    this.user[this.user.findIndex((item) => item.id==param.id)] = new UserLinkInfoStores(param);
+                    this.changeStoreData("user",UserLinkInfoStores,param);
                     resolve(true);
                 }else {
                     alert(res.data.msg);

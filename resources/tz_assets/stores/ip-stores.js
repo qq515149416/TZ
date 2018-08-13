@@ -52,6 +52,38 @@ class IpsStores extends ActionBoundStores {
     stateText(state,codes) {
         return codes[state];
     }
+    changeData(param) {
+        return new Promise((resolve,reject) => {
+            post("ips/alerting",param).then((res) => {
+                if(res.data.code==1) {
+                    this.changeStoreData("ips",IpStores,Object.assign(param,{
+                        ip_company: this.stateText(String(param.ip_company),{
+                            "0" : "电信公司",
+                            "1": "移动公司",
+                            "2": "联通公司"
+                        }),
+                        ip_status: this.stateText(String(param.ip_status),{
+                            "0" : "未使用",
+                            "1": "使用(子IP)",
+                            "2": "使用(内部机器主IP)",
+                            "3": "使用(托管主机的主IP)"
+                        }),
+                        ip_lock: this.stateText(String(param.ip_lock),{
+                            "0" : "未锁定",
+                            "1": "锁定"
+                        }),
+                        ip_comproomname: this.comprooms.find(item => item.roomid==param.ip_comproom).machine_room_name,
+                        created_at: dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss"),
+                        updated_at: dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss")
+                    }));
+                    resolve(true);
+                }else {
+                    alert(res.data.msg);
+                    resolve(false);
+                }
+            }).catch(reject);
+        });
+    }
     delData(id) {
         return new Promise((resolve,reject) => {
             post("ips/remove",{

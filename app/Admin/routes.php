@@ -30,18 +30,18 @@ Route::group([
 
     // 联系人表
     Route::group([
-        'prefix' => 'contacts';
+        'prefix' => 'contacts',
     ],function(Router $router){
-        $router->get('contacts/list', 'Others\ContactsController@index');
-        $router->post('contacts/insert', 'Others\ContactsController@insert');
-        $router->get('contacts/alert', 'Others\ContactsController@edit');
-        $router->post('contacts/alerting', 'Others\ContactsController@doEdit');
-        $router->post('contacts/remove', 'Others\ContactsController@deleted');
+        $router->get('list', 'Others\ContactsController@index');
+        $router->post('insert', 'Others\ContactsController@insert');
+        $router->get('alert', 'Others\ContactsController@edit');
+        $router->post('alerting', 'Others\ContactsController@doEdit');
+        $router->post('remove', 'Others\ContactsController@deleted');
     });
     
 //ip
     Route::group([
-        'prefix' => 'ips';
+        'prefix' => 'ips',
     ],function(Router $router){
         $router->get('index', 'Idc\IpsController@index');
         $router->post('insert', 'Idc\IpsController@insert');
@@ -62,7 +62,7 @@ Route::group([
     $router->get('/resource/ip', 'Show\IpController@index');
 //人事
     Route::group([
-        'prefix' => 'hr';
+        'prefix' => 'hr',
     ],function(Router $router){
         $router->get('showaccount', 'Hr\AccountController@showAccount');
     });

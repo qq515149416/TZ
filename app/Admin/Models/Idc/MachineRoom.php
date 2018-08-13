@@ -89,4 +89,17 @@ class MachineRoom extends Model
     }
 
 
+    /**
+     * 根据机房id查询机房中文名称
+     */
+    public function queryMachineRoomName($id = '')
+    {
+
+        $data = $this->where('')->select('machine_room_name')->get();
+
+        return $data;
+
+    }
+
+
 }

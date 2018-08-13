@@ -146,11 +146,11 @@ const styles = theme => ({
                           <Checkbox checked={isSelected} />
                         </TableCell>
                         {
-                          this.props.headTitlesData.map((item,index) => {
+                          this.props.headTitlesData.map((item,index,original) => {
                             if(item.id=="operat") {
                               return null;
                             }
-                            if(index==0) {
+                            if(index==0&&original.length>5) {
                               return (
                                 <TableCell component="th" scope="row" padding="none">
                                   {n[item.id]}

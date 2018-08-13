@@ -35,7 +35,7 @@ class IpsRequest extends FormRequest
     {
         return [
             
-            'ip' => 'required|ip',
+            'ip' => 'required|ip|unique:idc_ips,ip',
             'vlan' => 'required|integer',
         ];
     }
@@ -46,6 +46,7 @@ class IpsRequest extends FormRequest
         return  [
             'ip.required' => 'IP地址必须填写',
             'ip.ip' => 'IP地址填写必须符合IP地址规范',
+            'ip.unique'=>'IP地址唯一',
             'vlan.required' => 'IP所属局域网必须填写',
             'vlan.integer' => 'IP所属局域网填写必须是整数',
         ];

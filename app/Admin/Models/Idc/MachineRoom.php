@@ -77,4 +77,16 @@ class MachineRoom extends Model
         return $res;
     }
 
+    /**
+     * 获取机房多选列表
+     */
+    public function showSelectList()
+    {
+        $listData = $this->select('id', 'machine_room_name')->get();
+
+
+        return $listData;
+    }
+
+
 }

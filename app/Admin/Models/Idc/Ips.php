@@ -187,7 +187,7 @@ class Ips extends Model
     		$room = DB::table('idc_machineroom')->find($id,['machine_room_id','machine_room_name']);
     		return $room;
     	} else {
-    		$result = DB::table('idc_machineroom')->select('id as roomid','machine_room_id','machine_room_name')->get();
+    		$result = DB::table('idc_machineroom')->whereNull('deleted_at')->select('id as roomid','machine_room_id','machine_room_name')->get();
 	    	if($result) {
 	    		$return['data'] = $result;
 	    		$return['code'] = 1;

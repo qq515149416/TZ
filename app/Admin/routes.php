@@ -29,18 +29,28 @@ Route::group([
     $router->get('staff/staff_list', 'Others\StaffController@index');
 
     // 联系人表
-    $router->get('contacts/list', 'Others\ContactsController@index');
-    $router->post('contacts/insert', 'Others\ContactsController@insert');
-    $router->get('contacts/alert', 'Others\ContactsController@edit');
-    $router->post('contacts/alerting', 'Others\ContactsController@doEdit');
-    $router->post('contacts/remove', 'Others\ContactsController@deleted');
+    Route::group([
+        'prefix' => 'contacts',
+    ],function(Router $router){
+        $router->get('list', 'Others\ContactsController@index');
+        $router->post('insert', 'Others\ContactsController@insert');
+        $router->get('alert', 'Others\ContactsController@edit');
+        $router->post('alerting', 'Others\ContactsController@doEdit');
+        $router->post('remove', 'Others\ContactsController@deleted');
+    });
+    
 //ip
-    $router->get('ips/index', 'Idc\IpsController@index');
-    $router->post('ips/insert', 'Idc\IpsController@insert');
-    $router->get('ips/alert', 'Idc\IpsController@edit');
-    $router->post('ips/alerting', 'Idc\IpsController@doEdit');
-    $router->post('ips/remove', 'Idc\IpsController@deleted');
-    $router->get('ips/machineroom', 'Idc\IpsController@machineroom');
+    Route::group([
+        'prefix' => 'ips',
+    ],function(Router $router){
+        $router->get('index', 'Idc\IpsController@index');
+        $router->post('insert', 'Idc\IpsController@insert');
+        $router->get('alert', 'Idc\IpsController@edit');
+        $router->post('alerting', 'Idc\IpsController@doEdit');
+        $router->post('remove', 'Idc\IpsController@deleted');
+        $router->get('machineroom', 'Idc\IpsController@machineroom');
+    });
+    
 
     $router->post('rules', 'Others\ContactsController@rulestest');
     $router->get('rules', 'Others\ContactsController@rulestest');
@@ -51,12 +61,23 @@ Route::group([
     $router->get('/machine_room/show', 'Show\TestController@index');
     $router->get('/resource/ip', 'Show\IpController@index');
 //人事
-    $router->get('account/show', 'Hr\AccountController@showAccount');
+    Route::group([
+        'prefix' => 'hr',
+    ],function(Router $router){
+        $router->get('showaccount', 'Hr\AccountController@showAccount');
+    });
+    
+
     //机房管理
-    $router->get('machine_room/showByAjax', 'Idc\MachineRoomController@showByAjax');
-    $router->post('machine_room/storeByAjax', 'Idc\MachineRoomController@storeByAjax');
-    $router->post('machine_room/destroyByAjax', 'Idc\MachineRoomController@destroyByAjax');
-    $router->post('machine_room/updateByAjax', 'Idc\MachineRoomController@updateByAjax');
+    Route::group([
+        'prefix' => 'machine_room',
+    ], function (Router $router) {
+    $router->get('showByAjax', 'Idc\MachineRoomController@showByAjax');
+    $router->get('show_select_list_by_ajax', 'Idc\MachineRoomController@showSelectListByAjax');
+    $router->post('storeByAjax', 'Idc\MachineRoomController@storeByAjax');
+    $router->post('destroyByAjax', 'Idc\MachineRoomController@destroyByAjax');
+    $router->post('updateByAjax', 'Idc\MachineRoomController@updateByAjax');
+    });
 
     //机柜管理   分组增删改查
     Route::group([
@@ -66,6 +87,7 @@ Route::group([
         $router->post('storeByAjax', 'Idc\CabinetController@storeByAjax');
         $router->post('destroyByAjax', 'Idc\CabinetController@destroyByAjax');
         $router->post('updateByAjax', 'Idc\CabinetController@updateByAjax');
+
     });
 
 

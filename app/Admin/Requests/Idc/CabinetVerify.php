@@ -26,7 +26,8 @@ class CabinetVerify extends FormRequest
     public function rules()
     {
         return [
-            
+            'machineroom_id' => 'required',
+            'cabinet_id'     => 'required|unique:idc_cabinet,cabinet_id',
         ];
     }
 
@@ -34,7 +35,9 @@ class CabinetVerify extends FormRequest
     {
 
         return [
-
+            'machineroom_id.required' => '机房ID不能为空',
+            'cabinet_id.required'     => '机柜编号不能为空',
+            'cabinet_id.unique'       => '机柜编号已存在',
         ];
     }
 

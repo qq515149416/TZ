@@ -24,6 +24,20 @@ class MachineRoomsStores extends ActionBoundStores {
     @observable machineRooms = [
 
     ];
+    delData(id) {
+        return new Promise((resolve,reject) => {
+            post("machine_room/destroyByAjax",{
+                id: id
+            }).then((res) => {
+                if(res.data.code==1) {
+                    this.delStoreData("machineRooms",id);
+                    resolve(true);
+                } else {
+                    resolve(false);
+                }
+            }).catch(reject);
+        });
+    }
     addData(data) {
         return new Promise((resolve,reject) => {
             post("machine_room/storeByAjax",data).then((res) => {
@@ -31,7 +45,9 @@ class MachineRoomsStores extends ActionBoundStores {
                     this.addStoreData("machineRooms",MachineRoomStores,{
                         machine_room_id: data.room_id,
                         machine_room_name: data.room_name,
-                        list_order: data.list_order
+                        list_order: data.list_order,
+                        created_at: dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss"),
+                        updated_at: dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss")
                     });
                     resolve(true);
                 } else {

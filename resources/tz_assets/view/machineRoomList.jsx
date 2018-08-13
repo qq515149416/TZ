@@ -38,6 +38,11 @@ class MachineRoomList extends React.Component {
       callbrak(state);
     });
   }
+  delData = (selectedData,callbrak) => {
+    const {MachineRoomsStores} = this.props;
+    let delIng = selectedData.map(item => MachineRoomsStores.delData(item));
+    callbrak(delIng);
+  }
   render() {
     return (
       <ListTableComponent 
@@ -47,6 +52,7 @@ class MachineRoomList extends React.Component {
         headTitlesData={columnData} 
         data={this.props.MachineRoomsStores.machineRooms}
         addData={this.addData.bind(this)}  
+        delData={this.delData.bind(this)}  
       />
     );
   }

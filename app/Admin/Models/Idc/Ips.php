@@ -149,10 +149,11 @@ class Ips extends Model
     			$return['code'] = 1;
     			$return['msg'] = '修改IP信息成功！！';
     		} else {
-    			$return['code'] = 0;
+    			$return['code'] = 123;
     			$return['msg'] = '修改IP信息失败！！！';
     		}
     	} else {
+            echo 123;
     		$return['code'] = 0;
     		$return['msg'] = '确保信息正确';
     	}
@@ -187,7 +188,7 @@ class Ips extends Model
      * @return array 返回相关的信息和数据
      */
     public function machineroom($id = 0) {
-    	if(isset($id)){
+    	if($id != 0){
             // echo $id;
     		$room = DB::table('idc_machineroom')->find($id,['machine_room_id','machine_room_name']);
             // echo 123;
@@ -209,6 +210,11 @@ class Ips extends Model
     	}
     	
     }
+
+
+    // public function findroom() {
+
+    // }
 
 
     public function batching($data){

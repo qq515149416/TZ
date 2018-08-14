@@ -87,6 +87,8 @@ class IpsController extends Controller
      * @return json             返回相关的信息
      */
     public function doEdit(IpsRequest $request) {
+        dd($request->all());
+
     	//判断提交的方式
     	if($request->isMethod('post')){
     		// 符合判断的进行数据提取
@@ -132,13 +134,6 @@ class IpsController extends Controller
     	return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
     }
 
-// $edit->vlan = $data['vlan'];
-//             $edit->ip = $data['ip'];
-//             $edit->ip_company = $data['ip_company'];
-//             $edit->ip_status = $data['ip_status'];
-//             $edit->ip_lock = $data['ip_lock'];
-//             $edit->ip_note = $data['ip_note'];
-//             $edit->ip_comproom = $data['ip_comproom'];
     
     public function batch(Request $request){
         if($request->isMethod('post')){
@@ -148,12 +143,7 @@ class IpsController extends Controller
 
             for($i = $start;$i <= $end;$i++){
                 $batch['ip'] = rtrim($batch['ip_part'],0).$i;
-            //     unset($batch['ip_part']);
-            // unset($batch['start']);
-            // unset($batch['end']);
-
-            $this->batching($batch);
-
+                $this->batching($batch);
             }
     
             
@@ -162,13 +152,12 @@ class IpsController extends Controller
 
 
     public function batching($batch){
-        // echo 132;
-        //     unset($batch['ip_part']);
-        //     unset($batch['start']);
-        //     unset($batch['end']);
-        // dump($batch);
         $batching = new Ips();
-                $result = $batching->batching($batch);
-                return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
+        
+        
+        // dd($request);
+        // $request->rules();
+        // $result = $batching->batching($batch);
+        // return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
     }
 }

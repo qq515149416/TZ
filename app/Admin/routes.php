@@ -93,5 +93,15 @@ Route::group([
 
     });
 
-
+    //消息管理
+    Route::group([
+        'prefix' => 'news',
+    ],function (Router $router) {
+        $router->get('news_list', 'News\NewsController@index');
+        $router->post('insert', 'News\NewsController@insert');
+        $router->post('edit', 'News\NewsController@edit');
+        $router->post('deleted', 'News\NewsController@deleted');
+        $router->get('get_news_type', 'News\NewsController@get_news_type');
+    });
 });
+

@@ -59,8 +59,5 @@ class IpsRequest extends FormRequest
         $msg = $validator->errors()->first();
         header('Content-type:application/json');
         exit('{"code": 0,"data":[],"msg":"'.$msg.'"}'); 
-        // tz_ajax_echo([],$validator->errors()->first(),0);
-        // exit();
-        // exit;;
     }
 }

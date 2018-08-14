@@ -164,7 +164,7 @@ return [
          *  后安装
          */
         //富文本编辑器
-        Stevenyangecho\UEditor\UEditorServiceProvider::class,
+//        Stevenyangecho\UEditor\UEditorServiceProvider::class,
 
     ],
 

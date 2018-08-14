@@ -60,7 +60,7 @@ class AllInput extends React.Component {
                     });
                 }else if(item.type=="switch") {
                     if(this.props.editData) {
-                        const currCode = ((item.model&&item.model.selectCode) ? item.model.selectCode(this.props.editData[item.field]):this.props.editData[item.field]);
+                        const currCode = this.props.editData ? ((item.model&&item.model.selectCode) ? item.model.selectCode(this.props.editData[item.field]):this.props.editData[item.field]) : item.radioData.find(e => e.checked).value;
                         item.radioData.forEach(e => {
                             if(e.value==currCode) {
                                 e.checked = true;

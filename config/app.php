@@ -160,6 +160,12 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /**
+         *  后安装
+         */
+        //富文本编辑器
+//        Stevenyangecho\UEditor\UEditorServiceProvider::class,
+
     ],
 
     /*

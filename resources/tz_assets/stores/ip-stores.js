@@ -54,6 +54,7 @@ class IpsStores extends ActionBoundStores {
     }
     changeData(param) {
         return new Promise((resolve,reject) => {
+            delete param.ip;
             post("ips/alerting",param).then((res) => {
                 if(res.data.code==1) {
                     this.changeStoreData("ips",IpStores,Object.assign(param,{
@@ -125,6 +126,7 @@ class IpsStores extends ActionBoundStores {
                     }));
                     resolve(true);
                 } else {
+                    alert(res.data.msg);
                     resolve(false);
                 }
             });

@@ -132,43 +132,30 @@ class IpsController extends Controller
     	return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
     }
 
-// $edit->vlan = $data['vlan'];
-//             $edit->ip = $data['ip'];
-//             $edit->ip_company = $data['ip_company'];
-//             $edit->ip_status = $data['ip_status'];
-//             $edit->ip_lock = $data['ip_lock'];
-//             $edit->ip_note = $data['ip_note'];
-//             $edit->ip_comproom = $data['ip_comproom'];
     
     public function batch(Request $request){
         if($request->isMethod('post')){
             $batch = $request->only(['ip_part','start','end','vlan','ip_company','ip_status','ip_lock','ip_note','ip_comproom']);
             $start = $batch['start'];
             $end = $batch['end'];
-
-            for($i = $start;$i <= $end;$i++){
+            $i = $start;
+            $time = time();
+            while($i<=$end){
                 $batch['ip'] = rtrim($batch['ip_part'],0).$i;
-            //     unset($batch['ip_part']);
-            // unset($batch['start']);
-            // unset($batch['end']);
-
-            $this->batching($batch);
-
+                $this->batching($batch);
+                $i++;
             }
-    
+            $endtime = time();
+            echo $endtime - $time();
             
+        } else {
+            return tz_ajax_echo([],'批量新增IP失败!!',0);
         }
     }
 
 
     public function batching($batch){
-        // echo 132;
-        //     unset($batch['ip_part']);
-        //     unset($batch['start']);
-        //     unset($batch['end']);
-        // dump($batch);
         $batching = new Ips();
-                $result = $batching->batching($batch);
-                return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
+        
     }
 }

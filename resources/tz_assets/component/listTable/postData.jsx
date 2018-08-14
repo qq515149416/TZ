@@ -42,11 +42,9 @@ class PostData extends React.Component {
     }
     post() {
         if(this.props.postType == "add") {
-            this.props.addData(this.decompressionParam(),(data) => {
+            this.props.addData(this.decompressionParam(),(data,result) => {
                 if(data) {
                     this.dialogComponent.handleClose();
-                } else {
-                    alert("添加失败");
                 }
                 
             });
@@ -54,7 +52,7 @@ class PostData extends React.Component {
         if(this.props.postType == "edit") {
             this.props.changeData(Object.assign(this.decompressionParam(),{
                 id: this.props.editData.id
-            }),(data) => {
+            }),(data,result) => {
                 if(data) {
                     this.dialogComponent.handleClose();
                 }

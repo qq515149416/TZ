@@ -37,19 +37,23 @@ class  News extends Model
 
 		if(!$index->isEmpty()){
 		// 判断存在数据就对部分需要转换的数据进行数据转换的操作
-			$status 	= [0=>'不显示',1=>'显示'];
-			$type = $this->get_news_type();
-			// echo "<pre>";
-			// print_r(json_decode(json_encode($type),true));exit;
+			$status 	= [0=>'不显示',1=>'显示'];		
+			$type = json_decode(json_encode($this->get_news_type() ),true);
+			$type = $type['data'];
+			$type_arr = [];
+			foreach ($type as $k=> $v) {
+				$type_arr[$v['tid']] = $v['type_name'];
+			}
+		
 			foreach($index as $key=>$value) {
 			// 对应的字段的数据转换
 			// return 123;
-				$index[$key]['type_name'] 	= (array)$this->get_news_type($value['tid']);
+				$index[$key]['type_name'] 	= $type_arr[$value['tid']];
 				$index[$key]['top_status'] 	= $status[$value['top_status']];
 				$index[$key]['home_status'] 	= $status[$value['home_status']];
 				
 			}
-		
+
 			$return['data'] = $index;
 			$return['code'] = 1;
 			$return['msg'] = '获取信息成功！！';
@@ -103,7 +107,7 @@ class  News extends Model
 	 * @return array       返回信息和状态
 	 */
 	public function edit($data){
-		if($data && $data['newsid']+0) {
+		if($data && $data['id']+0) {
 			$edit = $this->find($data['newsid']);
 			$edit->tid 		= $data['tid'];
 			$edit->title 		= $data['title'];
@@ -116,15 +120,15 @@ class  News extends Model
 			$edit->digest 		= $data['digest'];
 			$row = $edit->save();
 			if($row != false){
-				$return['code'] = 1;
-				$return['msg'] = '修改文章信息成功！！';
+				$return['code'] 	= 1;
+				$return['msg'] 	= '修改文章信息成功！！';
 			} else {
-				$return['code'] = 0;
-				$return['msg'] = '修改文章信息失败！！';
+				$return['code']	= 0;
+				$return['msg'] 	= '修改文章信息失败！！';
 			}
 		} else {
-			$return['code'] = 0;
-			$return['msg'] = '请确保信息正确';
+			$return['code'] 	= 0;
+			$return['msg'] 	= '请确保信息正确';
 		}
 		return $return;
 	}
@@ -137,15 +141,15 @@ class  News extends Model
 		if($id) {
 			$row = $this->where('id',$id)->delete();
 			if($row != false){
-				$return['code'] = 1;
-				$return['msg'] = '删除文章信息成功';
+				$return['code'] 	= 1;
+				$return['msg'] 	= '删除文章信息成功';
 			} else {
-				$return['code'] = 0;
-				$return['msg'] = '删除文章信息失败';
+				$return['code'] 	= 0;
+				$return['msg'] 	= '删除文章信息失败';
 			}
 		} else {
-			$return['code'] = 0;
-			$return['msg'] = '无法删除文章信息';
+			$return['code'] 	= 0;
+			$return['msg'] 	= '无法删除文章信息';
 		}
 
 		return $return;

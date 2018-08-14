@@ -88,6 +88,7 @@ class UsersLinkInfoStores extends ActionBoundStores {
                     this.addStoreData("user",UserLinkInfoStores,data);
                     resolve(true);
                 } else {
+                    alert(res.data.msg);
                     resolve(false);
                 }
             }).catch(reject);

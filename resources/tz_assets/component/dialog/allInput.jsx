@@ -82,11 +82,18 @@ class AllInput extends React.Component {
                     // this[item.field] = {
                     //     value : this.props.editData ? this.props.editData[item.field] : ""
                     // };
+                    let disabled = false;
+                    if(item.rule) {
+                        if(item.rule.term=="edit"&&item.rule.execute=="disabled"&&this.props.editData) {
+                            disabled = true;
+                        }
+                    }
                     Object.assign(inputAttr,{
                         [item.field]: {
                             error: false,
                             label: item.label,
-                            defaultValue: this.props.editData ? this.props.editData[item.field] : ""
+                            defaultValue: this.props.editData ? this.props.editData[item.field] : "",
+                            disabled: disabled
                         }
                     });
                 }
@@ -135,6 +142,7 @@ class AllInput extends React.Component {
                         className={classes.textField}
                         defaultValue={inputAttr[inputTypeData.field].defaultValue}
                         inputRef = {(ref) => this[inputTypeData.field] = ref}
+                        disabled={inputAttr[inputTypeData.field].disabled}
                     />
                 )
             case "select":

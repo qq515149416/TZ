@@ -51,6 +51,7 @@ class MachineRoomsStores extends ActionBoundStores {
                     });
                     resolve(true);
                 } else {
+                    alert(res.data.msg);
                     resolve(false);
                 }
             }).catch(reject);

@@ -28,7 +28,11 @@ const inputType = [
   {
     field: "ip",
     label: "IP地址",
-    type: "text"
+    type: "text",
+    rule: {
+      term: "edit",
+      execute: "disabled"
+    }
   },
   {
     field: "vlan",
@@ -154,8 +158,8 @@ class IpList extends React.Component {
   }
   addData = (param,callbrak) => {
     // console.log(param);
-    this.props.ipsStores.addData(param).then(state => {
-      callbrak(state);
+    this.props.ipsStores.addData(param).then((state,data) => {
+      callbrak(state,data);
     });
   }
   delData = (selectedData,callbrak) => {
@@ -165,8 +169,8 @@ class IpList extends React.Component {
   }
   changeData = (param,callbrak) => {
     const {ipsStores} = this.props;
-    ipsStores.changeData(param).then((state) => {
-      callbrak(state);
+    ipsStores.changeData(param).then((state,data) => {
+      callbrak(state,data);
     });
   }
   render() {

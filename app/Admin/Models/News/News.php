@@ -38,7 +38,9 @@ class  News extends Model
 		if(!$index->isEmpty()){
 		// 判断存在数据就对部分需要转换的数据进行数据转换的操作
 			$status 	= [0=>'不显示',1=>'显示'];
-
+			$type = $this->get_news_type();
+			// echo "<pre>";
+			// print_r(json_decode(json_encode($type),true));exit;
 			foreach($index as $key=>$value) {
 			// 对应的字段的数据转换
 			// return 123;

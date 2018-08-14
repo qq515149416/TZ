@@ -82,10 +82,10 @@ class AllInput extends React.Component {
                     // this[item.field] = {
                     //     value : this.props.editData ? this.props.editData[item.field] : ""
                     // };
-                    let disabled = true;
+                    let disabled = false;
                     if(item.rule) {
                         if(item.rule.term=="edit"&&item.rule.execute=="disabled"&&this.props.editData) {
-                            disabled = false;
+                            disabled = true;
                         }
                     }
                     Object.assign(inputAttr,{

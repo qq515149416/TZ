@@ -45,8 +45,6 @@ class PostData extends React.Component {
             this.props.addData(this.decompressionParam(),(data,result) => {
                 if(data) {
                     this.dialogComponent.handleClose();
-                } else {
-                    alert(result ? result.msg : "添加失败");
                 }
                 
             });
@@ -57,8 +55,6 @@ class PostData extends React.Component {
             }),(data,result) => {
                 if(data) {
                     this.dialogComponent.handleClose();
-                } else {
-                    alert(result ? result.msg : "修改失败");
                 }
             });
         }

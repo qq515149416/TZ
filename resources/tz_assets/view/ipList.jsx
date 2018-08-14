@@ -158,8 +158,8 @@ class IpList extends React.Component {
   }
   addData = (param,callbrak) => {
     // console.log(param);
-    this.props.ipsStores.addData(param).then((state,data) => {
-      callbrak(state,data);
+    this.props.ipsStores.addData(param).then((state) => {
+      callbrak(state);
     });
   }
   delData = (selectedData,callbrak) => {
@@ -169,8 +169,8 @@ class IpList extends React.Component {
   }
   changeData = (param,callbrak) => {
     const {ipsStores} = this.props;
-    ipsStores.changeData(param).then((state,data) => {
-      callbrak(state,data);
+    ipsStores.changeData(param).then((state) => {
+      callbrak(state);
     });
   }
   render() {

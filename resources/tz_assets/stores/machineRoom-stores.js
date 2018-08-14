@@ -49,9 +49,10 @@ class MachineRoomsStores extends ActionBoundStores {
                         created_at: dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss"),
                         updated_at: dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss")
                     });
-                    resolve(true,res.data);
+                    resolve(true);
                 } else {
-                    resolve(false,res.data);
+                    alert(res.data.msg);
+                    resolve(false);
                 }
             }).catch(reject);
         });

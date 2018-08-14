@@ -51,10 +51,10 @@ class UsersLinkInfoStores extends ActionBoundStores {
             post("contacts/alerting",param).then((res) => {
                 if(res.data.code==1) {
                     this.changeStoreData("user",UserLinkInfoStores,param);
-                    resolve(true,res.data);
+                    resolve(true);
                 }else {
-                    // alert(res.data.msg);
-                    resolve(false,res.data);
+                    alert(res.data.msg);
+                    resolve(false);
                 }
             }).catch(reject);
         });
@@ -86,9 +86,10 @@ class UsersLinkInfoStores extends ActionBoundStores {
                 if(res.data.code==1) {
                     // this.user.push(new UserLinkInfoStores(data));
                     this.addStoreData("user",UserLinkInfoStores,data);
-                    resolve(true,res.data);
+                    resolve(true);
                 } else {
-                    resolve(false,res.data);
+                    alert(res.data.msg);
+                    resolve(false);
                 }
             }).catch(reject);
         });

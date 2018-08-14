@@ -138,7 +138,7 @@ class Ips extends Model
     	if($data && $data['id']+0) {
     		$edit = $this->find($data['id']);
     		$edit->vlan = $data['vlan'];
-    		$edit->ip = $data['ip'];
+    		// $edit->ip = $data['ip'];
     		$edit->ip_company = $data['ip_company'];
     		$edit->ip_status = $data['ip_status'];
     		$edit->ip_lock = $data['ip_lock'];

@@ -87,8 +87,6 @@ class IpsController extends Controller
      * @return json             返回相关的信息
      */
     public function doEdit(IpsRequest $request) {
-        dd($request->all());
-
     	//判断提交的方式
     	if($request->isMethod('post')){
     		// 符合判断的进行数据提取
@@ -140,13 +138,18 @@ class IpsController extends Controller
             $batch = $request->only(['ip_part','start','end','vlan','ip_company','ip_status','ip_lock','ip_note','ip_comproom']);
             $start = $batch['start'];
             $end = $batch['end'];
-
-            for($i = $start;$i <= $end;$i++){
+            $i = $start;
+            $time = time();
+            while($i<=$end){
                 $batch['ip'] = rtrim($batch['ip_part'],0).$i;
                 $this->batching($batch);
+                $i++;
             }
-    
+            $endtime = time();
+            echo $endtime - $time();
             
+        } else {
+            return tz_ajax_echo([],'批量新增IP失败!!',0);
         }
     }
 
@@ -154,10 +157,5 @@ class IpsController extends Controller
     public function batching($batch){
         $batching = new Ips();
         
-        
-        // dd($request);
-        // $request->rules();
-        // $result = $batching->batching($batch);
-        // return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
     }
 }

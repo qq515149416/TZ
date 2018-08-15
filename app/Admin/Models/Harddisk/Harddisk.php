@@ -5,36 +5,35 @@
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016-2018 by cmd
 // +----------------------------------------------------------------------
-// | Description: 处理cpu的模型
+// | Description: 处理harddisk的模型
 // +----------------------------------------------------------------------
-// | @DateTime: 2018-08-014 17:21:37
+// | @DateTime: 2018-08-015 14:34:37
 // +----------------------------------------------------------------------
-namespace App\Admin\Models\Cpu;
+namespace App\Admin\Models\Harddisk;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
-class  Cpu extends Model
+class  Harddisk extends Model
 {
    use SoftDeletes;
    
-	protected $table = 'idc_cpu';
+	protected $table = 'idc_harddisk';
 	
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
 	
-	protected $fillable = ['cpu_number', 'cpu_param','cpu_used','created_at','updated_at','service_num'];
+	protected $fillable = ['harddisk_number', 'harddisk_param','harddisk_used','created_at','updated_at','service_num'];
 	// 测试
 
 	/**
-	* 查询cpu表的数据
+	* 查询harddisk表的数据
 	* @return 将数据及相关的信息返回到控制器
 	*/
 	public function index(){
 		// 用模型进行数据查询
-		$index = $this->all(['id','cpu_number','cpu_param','cpu_used','created_at','updated_at','service_num']);
-
+		$index = $this->all(['id','harddisk_number','harddisk_param','harddisk_used','created_at','updated_at','service_num']);
 		$status = [
 			0 => '未使用',
 			1 => '已使用',
@@ -43,7 +42,7 @@ class  Cpu extends Model
 		];
 		
 		foreach ($index as $k => $v) {
-			$index[$k]['cpu_used'] = $status[$index[$k]['cpu_used']];
+			$index[$k]['harddisk_used'] = $status[$index[$k]['harddisk_used']];
 		}
 		
 		if(!$index->isEmpty()){	
@@ -61,7 +60,7 @@ class  Cpu extends Model
 
 
 	/**
-	* 对cpu信息进行添加处理
+	* 对harddisk信息进行添加处理
 	* @param  array $data 要添加的数据
 	* @return array      返回的信息和状态
 	*/
@@ -77,13 +76,13 @@ class  Cpu extends Model
 			// 插入数据成功
 				$return['data'] = $row->id;
 				$return['code'] = 1;
-				$return['msg'] = 'cpu信息录入成功!!';
+				$return['msg'] = 'harddisk信息录入成功!!';
 
 			} else {
 			// 插入数据失败
 				$return['data'] = '';
 				$return['code'] = 0;
-				$return['msg'] = 'cpu信息录入失败!!';
+				$return['msg'] = 'harddisk信息录入失败!!';
 			}
 		} else {
 			// 未有数据传递
@@ -108,10 +107,10 @@ class  Cpu extends Model
 
 			if($row != false){
 				$return['code'] 	= 1;
-				$return['msg'] 	= '修改cpu信息成功！！';
+				$return['msg'] 	= '修改harddisk信息成功！！';
 			} else {
 				$return['code']	= 0;
-				$return['msg'] 	= '修改cpu信息失败！！';
+				$return['msg'] 	= '修改harddisk信息失败！！';
 			}
 		} else {
 			$return['code'] 	= 0;
@@ -120,7 +119,7 @@ class  Cpu extends Model
 		return $return;
 	}
 	/**
-	 * 删除cpu信息
+	 * 删除harddisk信息
 	 * @param  [type] $id [description]
 	 * @return [type]     [description]
 	 */
@@ -129,14 +128,14 @@ class  Cpu extends Model
 			$row = $this->where('id',$id)->delete();
 			if($row != false){
 				$return['code'] 	= 1;
-				$return['msg'] 	= '删除cpu信息成功';
+				$return['msg'] 	= '删除harddisk信息成功';
 			} else {
 				$return['code'] 	= 0;
-				$return['msg'] 	= '删除cpu信息失败';
+				$return['msg'] 	= '删除harddisk信息失败';
 			}
 		} else {
 			$return['code'] 	= 0;
-			$return['msg'] 	= '无法删除cpu信息';
+			$return['msg'] 	= '无法删除harddisk信息';
 		}
 
 		return $return;

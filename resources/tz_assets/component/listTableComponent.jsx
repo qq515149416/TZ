@@ -12,6 +12,8 @@ import { observer } from "mobx-react";
 import PostData from "./listTable/postData.jsx";
 import EnhancedTableHead from "./listTable/enhancedTableHead.jsx";
 import EnhancedTableToolbar from "./listTable/enhancedTableToolbar.jsx";
+import ExpansionComponent from "./expansionComponent.jsx";
+
 function getSorting(order, orderBy) {
     return order === 'desc'
       ? (a, b) => (b[orderBy] < a[orderBy] ? -1 : 1)
@@ -105,6 +107,7 @@ const styles = theme => ({
       const {  order, orderBy, selected, rowsPerPage, page } = this.state;
       const emptyRows = rowsPerPage - Math.min(rowsPerPage, this.props.data.length - page * rowsPerPage);
       // console.log(this.props.data);
+     
       return [
           <div>
             {
@@ -153,22 +156,36 @@ const styles = theme => ({
                             if(index==0&&original.length>5) {
                               return (
                                 <TableCell component="th" scope="row" padding="none">
-                                  {n[item.id]}
+                                  {item.id.indexOf(".") > -1 ? n[item.id.split(".")[0]][item.id.split(".")[1]] : n[item.id]}
                                 </TableCell>
                               )
                             } else {
                               return (
-                                <TableCell numeric>{n[item.id]}</TableCell>
+                                <TableCell numeric>{item.id.indexOf(".") > -1 ? n[item.id.split(".")[0]][item.id.split(".")[1]] : n[item.id]}</TableCell>
                               )
                             }
                           })
                         }
                         {
-                          this.props.changeData && (
+                          this.props.headTitlesData.find(item => item.id=="operat") ? (
                             <TableCell numeric>
-                              <PostData operattext={this.props.operattext || this.props.title} inputType={this.props.inputType} postType="edit" editData={n} changeData={this.props.changeData} />
+                              {this.props.changeData && (
+                                <PostData operattext={this.props.operattext || this.props.title} inputType={this.props.inputType} postType="edit" editData={n} changeData={this.props.changeData} />
+                              )}
+                              {
+                                (this.props.headTitlesData.find(item => item.id=="operat").extend && this.props.headTitlesData.find(item => item.id=="operat").extendData ) && (
+                                  <ExpansionComponent 
+                                      type="show"
+                                      data={{
+                                        title: n[this.props.headTitlesData.find(item => item.id=="operat").extendData[0]],
+                                        description: n[this.props.headTitlesData.find(item => item.id=="operat").extendData[1]],
+                                        content: n[this.props.headTitlesData.find(item => item.id=="operat").extendData[2]]
+                                      }}
+                                    />
+                                )
+                              }
                             </TableCell>
-                          )
+                          ):null
                         }
                       </TableRow>
                     );

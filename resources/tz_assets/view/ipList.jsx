@@ -20,8 +20,8 @@ const columnData = [
       disablePadding: false, 
       label: '所属机房' 
     },
-    { id: 'created_at', numeric: true, disablePadding: false, label: '创建时间' },
-    { id: 'updated_at', numeric: true, disablePadding: false, label: '更新时间' },
+    // { id: 'created_at', numeric: true, disablePadding: false, label: '创建时间' },
+    // { id: 'updated_at', numeric: true, disablePadding: false, label: '更新时间' },
     { id: 'operat', numeric: true, disablePadding: false, label: '操作' }
 ];
 const inputType = [

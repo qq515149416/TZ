@@ -1,15 +1,15 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import AllInput from "./dialog/allInput.jsx";
+import Show from "./dialog/show.jsx";
 class DialogComponent extends React.Component {
     render() {
-        const {type,state,title,operattext,post,inputType,getRef} = this.props;
-        if(type=="input") {
+        if(this.props.type=="input") {
+            const {title,operattext,post,inputType,getRef} = this.props;
             return (
                 <AllInput 
                     title={title}
                     operattext={operattext}
-                    open={state}
                     post={post}
                     inputType={inputType}
                     getRef={ref => getRef(ref)}
@@ -17,10 +17,20 @@ class DialogComponent extends React.Component {
                 />
             );
         }
+        if(this.props.type=="show") {
+            const {title,description,content} = this.props.data;
+            return (
+                <Show 
+                    title={title}
+                    description={description}
+                    content={content}
+                    getRef={ref => this.props.getRef(ref)}
+                />
+            );
+        }
     }
 }
 DialogComponent.propTypes = {
-    type: PropTypes.string.isRequired,
-    state: PropTypes.bool.isRequired
+    type: PropTypes.string.isRequired
 };
 export default DialogComponent;

@@ -63,6 +63,7 @@ Route::group([
     $router->get('/resource/ip', 'Show\IpController@index');
     $router->get('/resource/machine_room', 'Show\MachineRoomController@index');
     $router->get('/resource/cabinet', 'Show\CabinetController@index');
+    $router->get('/article', 'Show\NewController@index');
 //人事
     Route::group([
         'prefix' => 'hr',

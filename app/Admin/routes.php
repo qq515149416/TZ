@@ -104,5 +104,13 @@ Route::group([
         $router->post('deleted', 'News\NewsController@deleted');
         $router->get('get_news_type', 'News\NewsController@get_news_type');
     });
+
+    //消息管理
+    Route::group([
+        'prefix' => 'cpu',
+    ],function (Router $router) {
+        $router->get('cpu_list', 'Cpu\CpuController@index');
+        $router->post('insert', 'Cpu\CpuController@insert');
+    });
 });
 

@@ -51,7 +51,7 @@ class NewsController extends Controller
 		// 传递数据到对应的model层处理
 		$revert = $create->insert($article);
 		// 返回信息
-		dump($revert);
+		
 			return tz_ajax_echo($revert['data'],$revert['msg'],$revert['code']);
 
 		} else {
@@ -69,7 +69,7 @@ class NewsController extends Controller
 		//判断提交的方式
 		if($request->isMethod('post')){
 			// 符合判断的进行数据提取
-			$data = $request->only(['newsid','tid', 'title','content','top_status','home_status','seoKeywords','seoTitle','seoDescription','digest']);
+			$data = $request->only(['id','tid', 'title','content','top_status','home_status','seoKeywords','seoTitle','seoDescription','digest']);
 			$edit = new News();
 			// 模型层处理
 			$result = $edit->edit($data);

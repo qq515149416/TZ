@@ -1,30 +1,30 @@
 <?php
 
 // +----------------------------------------------------------------------
-// | Author: 街"角．回 忆 <2773495294@qq.com>
+// | Author: kiri <420541662@qq.com>
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016-2018 by cmd
 // +----------------------------------------------------------------------
-// | Description: 处理IP的模型
+// | Description: 处理cpu的模型
 // +----------------------------------------------------------------------
-// | @DateTime: 2018-08-01 14:21:37
+// | @DateTime: 2018-08-014 17:21:37
 // +----------------------------------------------------------------------
-namespace App\Admin\Models\News;
+namespace App\Admin\Models\Cpu;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
-class  News extends Model
+class  Cpu extends Model
 {
    use SoftDeletes;
    
-	protected $table = 'tz_news';
-	protected $table2 = 'tz_news_type';
+	protected $table = 'idc_cpu';
+	
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
 	
-	protected $fillable = ['tid', 'title','content','created_at','updated_at','top_status','home_status','seoKeywords','seoTitle','seoDescription','digest'];
+	protected $fillable = ['cpu_number', 'cpu_param','cpu_used','created_at','updated_at','suit_num'];
 	// 测试
 
 	/**
@@ -68,7 +68,7 @@ class  News extends Model
 
 
 	/**
-	* 对文章信息进行添加处理
+	* 对cpu信息进行添加处理
 	* @param  array $data 要添加的数据
 	* @return array      返回的信息和状态
 	*/
@@ -101,6 +101,7 @@ class  News extends Model
 		return $return;
 
 	}
+	
   	 /**
 	 * 对要修改的信息进行处理
 	 * @param  array $data 要修改的数据

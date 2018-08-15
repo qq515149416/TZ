@@ -49,7 +49,7 @@ class IpsController extends Controller
     	// 判断传递的方式和提交方式
     	if($request->isMethod('post')) {
     		// 符合提交方式的进行数据的提取
-    		$param = $request->only(['vlan', 'ip','ip_company','ip_status','ip_lock','ip_note','ip_comproom']);
+    		$param = $request->only(['ip_start','ip_end','vlan','ip_company','ip_status','ip_lock','ip_note','ip_comproom']);
     		$create = new Ips();
     		// 传递数据到对应的model层处理
     		$revert = $create->insert($param);
@@ -133,22 +133,5 @@ class IpsController extends Controller
     	return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
     }
 
-    /**
-     * IP地址批量添加的处理
-     * @param  IpsBatchRequest $request 进行相关字段的验证
-     * @return json                  返回相关的提示信息和状态
-     */
-    public function batch(IpsBatchRequest $request){
-        if($request->isMethod('post')){
-            $param = $request->only(['ip_part','origin','finish','vlan','ip_company','ip_status','ip_lock','ip_note','ip_comproom']);
-            $batch = new Ips();
-            $result = $batch->batch($param);
-            dump($result);
-            exit;
-            return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
-        } else {
-            return tz_ajax_echo([],'批量新增IP失败!!',0);
-        }
-    }
 
 }

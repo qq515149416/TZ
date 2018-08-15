@@ -111,6 +111,8 @@ Route::group([
     ],function (Router $router) {
         $router->get('cpu_list', 'Cpu\CpuController@index');
         $router->post('insert', 'Cpu\CpuController@insert');
+        $router->post('deleted', 'Cpu\CpuController@deleted');
+        $router->post('edit', 'Cpu\CpuController@edit');
     });
 });
 

@@ -10,11 +10,11 @@
 // | @DateTime: 2018-08-01 14:09:24
 // +----------------------------------------------------------------------
 
-namespace App\Admin\Requests;
+namespace App\Admin\Requests\Cpu;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
-class NewsRequest extends FormRequest
+class CpuRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

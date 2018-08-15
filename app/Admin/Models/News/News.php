@@ -108,7 +108,7 @@ class  News extends Model
 	 */
 	public function edit($data){
 		if($data && $data['id']+0) {
-			$edit = $this->find($data['newsid']);
+			$edit = $this->find($data['id']);
 			$edit->tid 		= $data['tid'];
 			$edit->title 		= $data['title'];
 			$edit->content 		= $data['content'];

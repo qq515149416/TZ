@@ -28,32 +28,14 @@ class  Cpu extends Model
 	// 测试
 
 	/**
-	* 查询文章表的数据
+	* 查询cpu表的数据
 	* @return 将数据及相关的信息返回到控制器
 	*/
 	public function index(){
 		// 用模型进行数据查询
-		$index = $this->all(['id','tid','title','content','top_status','home_status','seoKeywords','seoTitle','seoDescription','digest','created_at','updated_at']);
+		$index = $this->all(['id','cpu_number','cpu_param','cpu_used','created_at','updated_at','suit_num']);
 
-		if(!$index->isEmpty()){
-		// 判断存在数据就对部分需要转换的数据进行数据转换的操作
-			$status 	= [0=>'不显示',1=>'显示'];		
-			$type = json_decode(json_encode($this->get_news_type() ),true);
-			$type = $type['data'];
-			$type_arr = [];
-			foreach ($type as $k=> $v) {
-				$type_arr[$v['tid']] = $v['type_name'];
-			}
-		
-			foreach($index as $key=>$value) {
-			// 对应的字段的数据转换
-			// return 123;
-				$index[$key]['type_name'] 	= $type_arr[$value['tid']];
-				$index[$key]['top_status'] 	= $status[$value['top_status']];
-				$index[$key]['home_status'] 	= $status[$value['home_status']];
-				
-			}
-
+		if(!$index->isEmpty()){	
 			$return['data'] = $index;
 			$return['code'] = 1;
 			$return['msg'] = '获取信息成功！！';
@@ -84,13 +66,13 @@ class  Cpu extends Model
 			// 插入数据成功
 				$return['data'] = $row->id;
 				$return['code'] = 1;
-				$return['msg'] = '消息发布成功!!';
+				$return['msg'] = 'cpu信息录入成功!!';
 
 			} else {
 			// 插入数据失败
 				$return['data'] = '';
 				$return['code'] = 0;
-				$return['msg'] = '消息发布失败!!';
+				$return['msg'] = 'cpu信息录入失败!!';
 			}
 		} else {
 			// 未有数据传递
@@ -109,23 +91,16 @@ class  Cpu extends Model
 	 */
 	public function edit($data){
 		if($data && $data['id']+0) {
-			$edit = $this->find($data['newsid']);
-			$edit->tid 		= $data['tid'];
-			$edit->title 		= $data['title'];
-			$edit->content 		= $data['content'];
-			$edit->top_status 	= $data['top_status'];
-			$edit->home_status 	= $data['home_status'];
-			$edit->seoKeywords 	= $data['seoKeywords'];
-			$edit->seoTitle 		= $data['seoTitle'];
-			$edit->seoDescription 	= $data['seoDescription'];
-			$edit->digest 		= $data['digest'];
-			$row = $edit->save();
+			
+			$row = self::where('id', $data['id'])
+				->update($data);
+
 			if($row != false){
 				$return['code'] 	= 1;
-				$return['msg'] 	= '修改文章信息成功！！';
+				$return['msg'] 	= '修改cpu信息成功！！';
 			} else {
 				$return['code']	= 0;
-				$return['msg'] 	= '修改文章信息失败！！';
+				$return['msg'] 	= '修改cpu信息失败！！';
 			}
 		} else {
 			$return['code'] 	= 0;
@@ -134,7 +109,7 @@ class  Cpu extends Model
 		return $return;
 	}
 	/**
-	 * 删除文章信息
+	 * 删除cpu信息
 	 * @param  [type] $id [description]
 	 * @return [type]     [description]
 	 */
@@ -143,41 +118,18 @@ class  Cpu extends Model
 			$row = $this->where('id',$id)->delete();
 			if($row != false){
 				$return['code'] 	= 1;
-				$return['msg'] 	= '删除文章信息成功';
+				$return['msg'] 	= '删除cpu信息成功';
 			} else {
 				$return['code'] 	= 0;
-				$return['msg'] 	= '删除文章信息失败';
+				$return['msg'] 	= '删除cpu信息失败';
 			}
 		} else {
 			$return['code'] 	= 0;
-			$return['msg'] 	= '无法删除文章信息';
+			$return['msg'] 	= '无法删除cpu信息';
 		}
 
 		return $return;
 	}
 
-	/**
-	* 获取文章的信息
-	* @return array 返回相关的信息和数据
-	*/
-	public function get_news_type($id='') {
-		if($id){
-			$type = DB::table('tz_news_type')->find($id,['name']);
-			return $type;
-		} else {
-			$result = DB::table('tz_news_type')->select('id as tid','name as type_name')->get();
-			if($result) {
-				$return['data'] = $result;
-				$return['code'] = 1;
-				$return['msg'] = '文章类型获取成功!!';
-			} else {
-				$return['data'] = '';
-				$return['code'] = 0;
-				$return['msg'] = '文章类型获取失败!!';
-			}
-
-			return $return;
-		}
-	}
 
 }

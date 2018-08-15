@@ -51,7 +51,7 @@ class NewsController extends Controller
 		// 传递数据到对应的model层处理
 		$revert = $create->insert($article);
 		// 返回信息
-		dump($revert);
+		
 			return tz_ajax_echo($revert['data'],$revert['msg'],$revert['code']);
 
 		} else {

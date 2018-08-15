@@ -16,6 +16,7 @@ use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use App\Admin\Models\Idc\Ips;
 use App\Admin\Requests\IpsRequest;
+use App\Admin\Requests\IpsBatchRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -132,30 +133,22 @@ class IpsController extends Controller
     	return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
     }
 
-    
-    public function batch(Request $request){
+    /**
+     * IP地址批量添加的处理
+     * @param  IpsBatchRequest $request 进行相关字段的验证
+     * @return json                  返回相关的提示信息和状态
+     */
+    public function batch(IpsBatchRequest $request){
         if($request->isMethod('post')){
-            $batch = $request->only(['ip_part','start','end','vlan','ip_company','ip_status','ip_lock','ip_note','ip_comproom']);
-            $start = $batch['start'];
-            $end = $batch['end'];
-            $i = $start;
-            $time = time();
-            while($i<=$end){
-                $batch['ip'] = rtrim($batch['ip_part'],0).$i;
-                $this->batching($batch);
-                $i++;
-            }
-            $endtime = time();
-            echo $endtime - $time();
-            
+            $param = $request->only(['ip_part','origin','finish','vlan','ip_company','ip_status','ip_lock','ip_note','ip_comproom']);
+            $batch = new Ips();
+            $result = $batch->batch($param);
+            dump($result);
+            exit;
+            return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
         } else {
             return tz_ajax_echo([],'批量新增IP失败!!',0);
         }
     }
 
-
-    public function batching($batch){
-        $batching = new Ips();
-        
-    }
 }

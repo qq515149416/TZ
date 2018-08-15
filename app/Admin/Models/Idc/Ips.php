@@ -211,35 +211,34 @@ class Ips extends Model
     	
     }
 
-
-    // public function findroom() {
-
-    // }
-
-
-    public function batching($data){
+    
+    /**
+     * 进行IP的批量添加处理
+     * @param  array $data 需要添加的数据
+     * @return array       将相关的提示信息和状态进行返回
+     */
+    public function batch($data){
         if($data){
-            // 存在数据就用model进行数据写入操作
-            // $fill = $this->fill($data);
-            $row = $this->create($data);
-            if($row != false){
-                // 插入数据成功
-                $return['data'] = $row->id;
-                $return['code'] = 1;
-                $return['msg'] = '新增IP地址信息成功!!';
-
-            } else {
-                // 插入数据失败
-                $return['data'] = '';
-                $return['code'] = 0;
-                $return['msg'] = '新增IP地址信息失败!!';
+            // 起始
+            $origin = $data['origin'];
+            // 结束
+            $finish = $data['finish'];
+            // 进行循环IP地址
+            while($origin<=$finish){
+                $data['ip'] = rtrim($batch['ip_part'],0).$origin;
+                $result = $this->insert($data);
+                $return['data'] = $result['data'];
+                $return['code'] = $result['code'];
+                $return['msg'] = $result['msg'];
+                $origin++;
             }
+
         } else {
-            // 未有数据传递
             $return['data'] = '';
             $return['code'] = 0;
-            $return['msg'] = '请检查您要新增的信息是否正确!!';
+            $return['msg'] = '批量添加IP失败';
         }
+
         return $return;
     }
     

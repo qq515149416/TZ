@@ -78,7 +78,6 @@ class PostData extends React.Component {
               }
             </span>,
             <DialogComponent 
-                state={false}
                 operattext={postType == "add" ? "添加" : "修改"}
                 title={postType == "add" ? "添加"+this.props.operattext : "修改"+this.props.operattext}
                 post={this.post.bind(this)}

@@ -63,6 +63,7 @@ Route::group([
     $router->get('/resource/ip', 'Show\IpController@index');
     $router->get('/resource/machine_room', 'Show\MachineRoomController@index');
     $router->get('/resource/cabinet', 'Show\CabinetController@index');
+    $router->get('/article', 'Show\NewController@index');
 //人事
     Route::group([
         'prefix' => 'hr',
@@ -102,6 +103,14 @@ Route::group([
         $router->post('edit', 'News\NewsController@edit');
         $router->post('deleted', 'News\NewsController@deleted');
         $router->get('get_news_type', 'News\NewsController@get_news_type');
+    });
+
+    //消息管理
+    Route::group([
+        'prefix' => 'cpu',
+    ],function (Router $router) {
+        $router->get('cpu_list', 'Cpu\CpuController@index');
+        $router->post('insert', 'Cpu\CpuController@insert');
     });
 });
 

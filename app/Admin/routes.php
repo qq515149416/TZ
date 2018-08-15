@@ -105,7 +105,7 @@ Route::group([
         $router->get('get_news_type', 'News\NewsController@get_news_type');
     });
 
-    //消息管理
+    //cpu资源库管理
     Route::group([
         'prefix' => 'cpu',
     ],function (Router $router) {
@@ -114,5 +114,18 @@ Route::group([
         $router->post('deleted', 'Cpu\CpuController@deleted');
         $router->post('edit', 'Cpu\CpuController@edit');
     });
+
+    //harddisk资源库管理
+    Route::group([
+        'prefix' => 'harddisk',
+    ],function (Router $router) {
+        $router->get('harddisk_list', 'Harddisk\HarddiskController@index');
+        $router->post('insert', 'Harddisk\HarddiskController@insert');
+        $router->post('edit', 'Harddisk\HarddiskController@edit');
+        $router->post('deleted', 'Harddisk\HarddiskController@deleted');
+    });
+
+
+
 });
 

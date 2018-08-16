@@ -124,6 +124,16 @@ Route::group([
         $router->post('deleted', 'Harddisk\HarddiskController@deleted');
     });
 
+//内存资源库管理
+    Route::group([
+        'prefix' => 'memory',
+    ],function (Router $router) {
+        $router->get('memory_list', 'Memory\MemoryController@index');
+        $router->post('insert', 'Memory\MemoryController@insert');
+        $router->post('edit', 'Memory\MemoryController@edit');
+        $router->post('deleted', 'Memory\MemoryController@deleted');
+    });
+
 
 
 });

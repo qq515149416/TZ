@@ -16,6 +16,14 @@ class MachineController extends Controller
 {
     use ModelForm;
 
-
+    /**
+     * 查找架上机器
+     * @return [type] [description]
+     */
+    public function showRentMachine(){
+    	$showrentmachine = new MachineModel();
+    	$return = $showrentmachine->showRentMachine();
+    	return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
+    }
 
 }

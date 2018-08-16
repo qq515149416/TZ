@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use App\Admin\Models\Others\Contacts;
 use App\Admin\Requests\Test;
-use App\Admin\Requests\OaContacts;
+use App\Admin\Requests\Idc\OaContacts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 

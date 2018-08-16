@@ -15,8 +15,8 @@ namespace App\Admin\Controllers\Idc;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use App\Admin\Models\Idc\Ips;
-use App\Admin\Requests\IpsRequest;
-use App\Admin\Requests\IpsBatchRequest;
+use App\Admin\Requests\Idc\IpsRequest;
+use App\Admin\Requests\Idc\IpsBatchRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 

@@ -33,9 +33,9 @@ class IpsRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            
-            'ip' => 'required|ip',
+        return [    
+            'ip_start' => 'required|ip',
+            'ip_end' => 'sometimes|nullable|ip',
             'vlan' => 'required|integer',
         ];
     }
@@ -44,8 +44,9 @@ class IpsRequest extends FormRequest
     {
         
         return  [
-            'ip.required' => 'IP地址必须填写',
-            'ip.ip' => 'IP地址填写必须符合IP地址规范',
+            'ip_start.required' => 'IP地址必须填写',
+            'ip_start.ip' => 'IP地址的填写必须符合IP规范(例:192.168.1.1)',
+            'ip_end.ip' => 'IP地址的填写必须符合IP规范(例:192.168.1.251)',
             'vlan.required' => 'IP所属局域网必须填写',
             'vlan.integer' => 'IP所属局域网填写必须是整数',
         ];
@@ -55,6 +56,8 @@ class IpsRequest extends FormRequest
      * 重新定义数据字段返回的提示信息
      */
     public function failedValidation(Validator $validator) {
-        exit(tz_ajax_echo([],$validator->errors()->first(),0));
+        $msg = $validator->errors()->first();
+        header('Content-type:application/json');
+        exit('{"code": 0,"data":[],"msg":"'.$msg.'"}'); 
     }
 }

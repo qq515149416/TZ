@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use Encore\Admin\Facades\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use App\Admin\Requests\MachineRoom as MachineRoomValidate;
 use Psy\Util\Json;
@@ -14,6 +15,25 @@ use Psy\Util\Json;
 class MachineRoomController extends Controller
 {
     use ModelForm;
+
+    /**
+     * 测试方法
+     */
+    public function test()
+    {
+        dump('邮箱测试');
+//        Mail
+        $name = 'hello';
+        // Mail::send()的返回值为空，所以可以其他方法进行判断
+        Mail::send('emails.test', ['name' => $name], function ($message) {
+            $to = '568171152@qq.com';
+            $message->to($to)->subject('邮件测试');
+        });
+        // 返回的一个错误数组，利用此可以判断是否发送成功
+        dd(Mail::failures());
+
+
+    }
 
     /**
      * Display a listing of the resource.

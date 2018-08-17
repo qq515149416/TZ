@@ -36,16 +36,16 @@ class MachineModel extends Model
     			$result[$key]['used'] = $used_status[$value['used_status']];//使用状态的转换
     			$result[$key]['status'] = $machine_status[$value['machine_status']];//机器上下架的转换
     			$result[$key]['business'] = $business_type[$value['business_type']];//业务类型的转换
-    			// 机柜等的对应查询
-    			$cbinet = (array)$this->cbinet($value['cabinet']);//机柜信息的查询
-    			$ip = (array)$this->ips($value['ip_id']);//IP信息的查询
-    			$machineroom = (array)$this->machineroom($value['machineroom']);//机房信息的查询
+    			// // 机柜等的对应查询
+    			// $cbinet = (array)$this->cbinet($value['cabinet']);//机柜信息的查询
+    			// $ip = (array)$this->ips($value['ip_id']);//IP信息的查询
+    			$machineroom = (array)$this->machineroom($value['machineroom'],$value['cabinet'],$value['ip_id']);//机房信息的查询
     			// 进行对应的机柜等信息的转换或者显示
     			if(!empty($cabinet) && !empty($ip) && !empty($machineroom)){
-    				$result[$key]['cabinets'] = $cabinet['cabinet_id'];//机柜信息的返回
+    				$result[$key]['cabinets'] = $machineroom['cabinet_id'];//机柜信息的返回
     				//IP信息的返回
-    				$result[$key]['ip'] = $ip['ip'];
-    				$result[$key]['ip_company'] = $ip['ip_company'];
+    				$result[$key]['ip'] = $machineroom['ip'];
+    				$result[$key]['ip_company'] = $machineroom['ip_company'];
     				//机房的信息返回
     				$result[$key]['machineroom_name'] = $machineroom['machine_room_name'];
     			}
@@ -86,16 +86,16 @@ class MachineModel extends Model
     			$result[$key]['used'] = $used_status[$value['used_status']];//使用状态的转换
     			$result[$key]['status'] = $machine_status[$value['machine_status']];//机器上下架的转换
     			$result[$key]['business'] = $business_type[$value['business_type']];//业务类型的转换
-    			// 机柜等的对应查询
-    			$cbinet = (array)$this->cbinet($value['cabinet']);//机柜信息的查询
-    			$ip = (array)$this->ips($value['ip_id']);//IP信息的查询
-    			$machineroom = (array)$this->machineroom($value['machineroom']);//机房信息的查询
+    			// // 机柜等的对应查询
+    			// $cbinet = (array)$this->cbinet($value['cabinet']);//机柜信息的查询
+    			// $ip = (array)$this->ips($value['ip_id']);//IP信息的查询
+    			$machineroom = (array)$this->machineroom($value['machineroom'],$value['cabinet'],$value['ip_id']);//机房信息的查询
     			// 进行对应的机柜等信息的转换或者显示
     			if(!empty($cabinet) && !empty($ip) && !empty($machineroom)){
-    				$result[$key]['cabinets'] = $cabinet['cabinet_id'];//机柜信息的返回
+    				$result[$key]['cabinets'] = $machineroom['cabinet_id'];//机柜信息的返回
     				//IP信息的返回
-    				$result[$key]['ip'] = $ip['ip'];
-    				$result[$key]['ip_company'] = $ip['ip_company'];
+    				$result[$key]['ip'] = $machineroom['ip'];
+    				$result[$key]['ip_company'] = $machineroom['ip_company'];
     				//机房的信息返回
     				$result[$key]['machineroom_name'] = $machineroom['machine_room_name'];
     			}
@@ -136,16 +136,16 @@ class MachineModel extends Model
     			$result[$key]['used'] = $used_status[$value['used_status']];//使用状态的转换
     			$result[$key]['status'] = $machine_status[$value['machine_status']];//机器上下架的转换
     			$result[$key]['business'] = $business_type[$value['business_type']];//业务类型的转换
-    			// 机柜等的对应查询
-    			$cbinet = (array)$this->cbinet($value['cabinet']);//机柜信息的查询
-    			$ip = (array)$this->ips($value['ip_id']);//IP信息的查询
-    			$machineroom = (array)$this->machineroom($value['machineroom']);//机房信息的查询
+    			// // 机柜等的对应查询
+    			// $cbinet = (array)$this->cbinet($value['cabinet']);//机柜信息的查询
+    			// $ip = (array)$this->ips($value['ip_id']);//IP信息的查询
+    			$machineroom = (array)$this->machineroom($value['machineroom'],$value['cabinet'],$value['ip_id']);//机房信息的查询
     			// 进行对应的机柜等信息的转换或者显示
     			if(!empty($cabinet) && !empty($ip) && !empty($machineroom)){
-    				$result[$key]['cabinets'] = $cabinet['cabinet_id'];//机柜信息的返回
+    				$result[$key]['cabinets'] = $machineroom['cabinet_id'];//机柜信息的返回
     				//IP信息的返回
-    				$result[$key]['ip'] = $ip['ip'];
-    				$result[$key]['ip_company'] = $ip['ip_company'];
+    				$result[$key]['ip'] = $machineroom['ip'];
+    				$result[$key]['ip_company'] = $machineroom['ip_company'];
     				//机房的信息返回
     				$result[$key]['machineroom_name'] = $machineroom['machine_room_name'];
     			}
@@ -189,16 +189,16 @@ class MachineModel extends Model
     			$result[$key]['used'] = $used_status[$value['used_status']];//使用状态的转换
     			$result[$key]['status'] = $machine_status[$value['machine_status']];//机器上下架的转换
     			$result[$key]['business'] = $business_type[$value['business_type']];//业务类型的转换
-    			// 机柜等的对应查询
-    			$cbinet = (array)$this->cbinet($value['cabinet']);//机柜信息的查询
-    			$ip = (array)$this->ips($value['ip_id']);//IP信息的查询
-    			$machineroom = (array)$this->machineroom($value['machineroom']);//机房信息的查询
+    			// // 机柜等的对应查询
+    			// $cbinet = (array)$this->cbinet($value['cabinet']);//机柜信息的查询
+    			// $ip = (array)$this->ips($value['ip_id']);//IP信息的查询
+    			$machineroom = (array)$this->machineroom($value['machineroom'],$value['cabinet'],$value['ip_id']);//机房信息的查询
     			// 进行对应的机柜等信息的转换或者显示
     			if(!empty($cabinet) && !empty($ip) && !empty($machineroom)){
-    				$result[$key]['cabinets'] = $cabinet['cabinet_id'];//机柜信息的返回
+    				$result[$key]['cabinets'] = $machineroom['cabinet_id'];//机柜信息的返回
     				//IP信息的返回
-    				$result[$key]['ip'] = $ip['ip'];
-    				$result[$key]['ip_company'] = $ip['ip_company'];
+    				$result[$key]['ip'] = $machineroom['ip'];
+    				$result[$key]['ip_company'] = $machineroom['ip_company'];
     				//机房的信息返回
     				$result[$key]['machineroom_name'] = $machineroom['machine_room_name'];
     			}

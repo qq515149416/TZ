@@ -6,16 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
-	 // `cabinet_id` int(10) unsigned NOT NULL COMMENT '机器所在机柜，跟机柜的id关联',
+	 // `cabinet` int(10) unsigned NOT NULL COMMENT '机器所在机柜，跟机柜的id关联',
   // `ip_id` int(10) unsigned NOT NULL COMMENT 'IP地址，跟IP表的id关联',
-  // `machineroom_id` int(10) unsigned NOT NULL COMMENT '机器所属机房，跟机房表的id关联',
+  // `machineroom` int(10) unsigned NOT NULL COMMENT '机器所属机房，跟机房表的id关联',
 class MachineModel extends Model
 {
     use SoftDeletes;
     protected $table = 'idc_machine';
     public $timestamps = true;
     protected $dates = ['deleted_at'];
-
+    // 将DB查询的数据转换为数组
+    protected $fetchMode = PDO::FETCH_ASSOC;
     /**
      * 查找属于租用业务的机器
      * @return [type] [description]
@@ -217,6 +218,172 @@ class MachineModel extends Model
     	}
 
     	return $return;
+    }
+
+    /**
+     * 对机器信息进行添加处理
+     * @param  array $data 要新增的机器信息
+     * @return 返回新增的状态和提示信息
+     */
+    public function insertMachine($data){
+    	if($data){
+    		$row = $this->create($data);
+    		if($row != false){
+    			$return['data'] = $row->id;
+    			$return['code'] = 1;
+    			$return['msg'] = '新增机器信息成功！！';
+    		} else {
+    			$return['data'] = '';
+    			$return['code'] = 0;
+    			$return['msg'] = '新增机器信息失败！！';
+    		}
+    	} else {
+    		$return['data'] = '';
+			$return['code'] = 0;
+			$return['msg'] = '新增机器信息失败！';
+    	}
+    	return $return;
+    }
+
+
+    /**
+     * 对机器信息进行修改
+     * @param  array $editdata 要修改的数据
+     * @return array           返回提示信息和状态
+     */
+    public function editMachine($editdata){
+    	if($editdata){
+    		$row = $this->where('id',$editdata['id'])->update($editdata);
+    		if($row != false){
+    			$return['code'] = 1;
+    			$return['msg'] = '修改信息成功！！';
+    		} else {
+    			$return['code'] = 0;
+    			$return['msg'] = '修改信息失败！！';
+    		}
+    	} else {
+    		$return['code'] = 0;
+    		$return['msg'] = '请确保要修改的信息正确！！';
+    	}
+    }
+
+    /**
+     * 删除机器信息
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    public function deleteMachine($id){
+    	if($id){
+    		$row = $this->where('id',$id)->delete();
+    		if($row != false){
+    			$return['code'] = 1;
+    			$return['msg'] = '删除机器信息成功！！';
+    		} else {
+    			$return['code'] = 0;
+    			$return['msg'] = '删除机器信息失败！！';
+    		}
+    	} else {
+    		$return['code'] = 0;
+    		$return['msg'] = '无法删除机器信息！！';
+    	}
+    }
+
+
+    /**
+     * 机房信息的获取，当是展示机器的时候IP，机柜，机房等信息转换的时候需要传入对应的参数进行查询，如果只是简单获取机房数据（添加，修改时）无须传参，
+     * @param  integer $roomid  机房的id
+     * @param  integer $cabinet 机柜的id
+     * @param  integer $ip      IP表的id
+     * @return [type]           [description]
+     */
+    public function machineroom($roomid = 0,$cabinet = 0,$ip = 0){
+    	if($roomid != 0 && $cabinet != 0 && $ip != 0){
+    		// 当是IP，机柜，机房等信息转换时对应参数都传入
+    		$related = DB::table('idc_machineroom')//机房表
+    					->join('idc_cabinet','idc_machineroom.id','=','idc_cabinet.machineroom_id')//关联查询机柜表
+    					->join('idc_ips','idc_machineroom.id','=','idc_ips.ip_comproom')//关联查询IP表
+    					->where('idc_machineroom.id',$roomid)//机房表的条件
+    					->where('idc_cabinet.id',$cabinet)//机柜表的条件
+    					->where('idc_ips.id',$ip)//IP的条件
+    					->select('idc_machineroom.machine_room_name','idc_cabinet.cabinet_id','idc_ips.ip','idc_ips.ip_company')//所需获得的字段
+    					->first();
+    		return $related;//返回数据
+    	} else {
+    		// 当未传入参数时代表简单的查询机房数据
+    		$result = DB::table('idc_machineroom')->whereNull('deleted_at')->select('id as roomid','machine_room_id','machine_room_name')->get();
+	    	if($result) {
+	    		$return['data'] = $result;
+	    		$return['code'] = 1;
+	    		$return['msg'] = '机房信息获取成功!!';
+	    	} else {
+	    		$return['data'] = '';
+	    		$return['code'] = 0;
+	    		$return['msg'] = '机房信息获取失败!!';
+	    	}
+
+	    	return $return;
+    	}
+    }
+
+    /**
+     * 对应机房的机柜信息的获取
+     * @param   $roomid 机柜的机房字段machineroom_id
+     * @return array         返回相关的数据和状态提示信息
+     */
+    public function cabinets($roomid){
+   		if($roomid){
+   			$cabinets = DB::table('idc_cabinet')
+   							->where('machineroom_id',$roomid)
+   							->whereNull('deleted_at')
+   							->select('id as cabinetid','cabinet_id')
+   							->get();
+   			if($cabinets){
+   				$return['data'] = $cabinets;
+   				$return['code'] = 1;
+   				$return['msg'] = '机柜信息获取成功';
+   			} else {
+   				$return['data'] = '';
+   				$return['code'] = 0;
+   				$return['msg'] = '机柜信息获取失败';
+   			}
+   		} else {
+   			$return['data'] = '';
+			$return['code'] = 0;
+			$return['msg'] = '机柜信息无法获取';
+   		}
+   		return $return;
+    }
+
+    /**
+     * 对应机房的IP信息获取
+     * @param  array $data 机房id对应ip_comproom字段，所属运营商对应ip_company字段
+     * @return array       返回相关的数据和提示信息及状态
+     */
+    public function ips($data){
+    	if($data){
+    		$roomid = $data['roomid'];
+    		$company = $data['ip_company'];
+    		$ips = DB::table('idc_ips')
+    				->where('ip_comproom',$roomid)
+    				->where('ip_company',$company)
+    				->whereNull('deleted_at')
+    				->select('id as ipid','ip')
+   					->get();
+   			if($cabinets){
+   				$return['data'] = $ips;
+   				$return['code'] = 1;
+   				$return['msg'] = 'IP信息获取成功';
+   			} else {
+   				$return['data'] = '';
+   				$return['code'] = 0;
+   				$return['msg'] = 'IP信息获取失败';
+   			}
+    	} else {
+   			$return['data'] = '';
+			$return['code'] = 0;
+			$return['msg'] = 'IP信息无法获取';
+   		}
+   		return $return;
     }
 
 }

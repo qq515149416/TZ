@@ -30,6 +30,7 @@ class MachineModel extends Model
     		$used_status = [0=>'未使用',1=>'使用中',2=>'锁定',3=>'迁移'];//使用状态的转换数据
     		$machine_status = [0=>'上架',1=>'下架'];//机器上下架的转换数据
     		$business_type = [1=>'租用',2=>'托管',3=>'备用'];//业务类型的转换数据
+    		$ip_company = [0=>'电信',1=>'移动',2=>'联通'];
     		// 遍历查询到的数据并进行相应的转换
     		foreach($result as $key=>$value){
     			// 状态等的转换
@@ -44,7 +45,7 @@ class MachineModel extends Model
     			if(!empty($cabinet) && !empty($ip) && !empty($machineroom)){
     				$result[$key]['cabinets'] = $machineroom['cabinet_id'];//机柜信息的返回
     				//IP信息的返回
-    				$result[$key]['ip'] = $machineroom['ip'].'('.$machineroom['ip_company'].')';
+    				$result[$key]['ip'] = $machineroom['ip'].'('.$ip_company[$machineroom['ip_company']].')';
     				//机房的信息返回
     				$result[$key]['machineroom_name'] = $machineroom['machine_room_name'];
     			}
@@ -79,6 +80,7 @@ class MachineModel extends Model
     		$used_status = [0=>'未使用',1=>'使用中',2=>'锁定',3=>'迁移'];//使用状态的转换数据
     		$machine_status = [0=>'上架',1=>'下架'];//机器上下架的转换数据
     		$business_type = [1=>'租用',2=>'托管',3=>'备用'];//业务类型的转换数据
+    		$ip_company = [0=>'电信',1=>'移动',2=>'联通'];
     		// 遍历查询到的数据并进行相应的转换
     		foreach($result as $key=>$value){
     			// 状态等的转换
@@ -93,7 +95,7 @@ class MachineModel extends Model
     			if(!empty($cabinet) && !empty($ip) && !empty($machineroom)){
     				$result[$key]['cabinets'] = $machineroom['cabinet_id'];//机柜信息的返回
     				//IP信息的返回
-    				$result[$key]['ip'] = $machineroom['ip'].'('.$machineroom['ip_company'].')';
+    				$result[$key]['ip'] = $machineroom['ip'].'('.$ip_company[$machineroom['ip_company']].')';
     				//机房的信息返回
     				$result[$key]['machineroom_name'] = $machineroom['machine_room_name'];
     			}
@@ -128,6 +130,7 @@ class MachineModel extends Model
     		$used_status = [0=>'未使用',1=>'使用中',2=>'锁定',3=>'迁移'];//使用状态的转换数据
     		$machine_status = [0=>'上架',1=>'下架'];//机器上下架的转换数据
     		$business_type = [1=>'租用',2=>'托管',3=>'备用'];//业务类型的转换数据
+    		$ip_company = [0=>'电信',1=>'移动',2=>'联通'];
     		// 遍历查询到的数据并进行相应的转换
     		foreach($result as $key=>$value){
     			// 状态等的转换
@@ -142,7 +145,7 @@ class MachineModel extends Model
     			if(!empty($cabinet) && !empty($ip) && !empty($machineroom)){
     				$result[$key]['cabinets'] = $machineroom['cabinet_id'];//机柜信息的返回
     				//IP信息的返回
-    				$result[$key]['ip'] = $machineroom['ip'].'('.$machineroom['ip_company'].')';
+    				$result[$key]['ip'] = $machineroom['ip'].'('.$ip_company[$machineroom['ip_company']].')';
     				//机房的信息返回
     				$result[$key]['machineroom_name'] = $machineroom['machine_room_name'];
     			}
@@ -180,6 +183,7 @@ class MachineModel extends Model
     		$used_status = [0=>'未使用',1=>'使用中',2=>'锁定',3=>'迁移'];//使用状态的转换数据
     		$machine_status = [0=>'上架',1=>'下架'];//机器上下架的转换数据
     		$business_type = [1=>'租用',2=>'托管',3=>'备用'];//业务类型的转换数据
+    		$ip_company = [0=>'电信',1=>'移动',2=>'联通'];
     		// 遍历查询到的数据并进行相应的转换
     		foreach($result as $key=>$value){
     			// 状态等的转换
@@ -194,7 +198,8 @@ class MachineModel extends Model
     			if(!empty($cabinet) && !empty($ip) && !empty($machineroom)){
     				$result[$key]['cabinets'] = $machineroom['cabinet_id'];//机柜信息的返回
     				//IP信息的返回
-    				$result[$key]['ip'] = $machineroom['ip'].'('.$machineroom['ip_company'].')';
+    				
+    				$result[$key]['ip'] = $machineroom['ip'].'('.$ip_company[$machineroom['ip_company']].')';
     				// $result[$key]['ip_company'] = $machineroom['ip_company'];
     				//机房的信息返回
     				$result[$key]['machineroom_name'] = $machineroom['machine_room_name'];

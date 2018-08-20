@@ -51,10 +51,15 @@ class MachineController extends Controller
      * @return [type] [description]
      */
     public function showMachine(Request $request){
-    	$where = $request->all();
-    	$showmachine = new MachineModel();
-    	$return = $showmachine->showMachine($where);
-    	return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
+    	if($request->isMethod('get')){
+    		$where = $request->only(['business_type']);
+	    	$showmachine = new MachineModel();
+	    	$return = $showmachine->showMachine($where);
+	    	return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
+    	} else {
+    		return tz_ajax_echo([],'获取机器信息失败',0);
+    	}
+    	
     }
 
     /**

@@ -44,8 +44,7 @@ class MachineModel extends Model
     			if(!empty($cabinet) && !empty($ip) && !empty($machineroom)){
     				$result[$key]['cabinets'] = $machineroom['cabinet_id'];//机柜信息的返回
     				//IP信息的返回
-    				$result[$key]['ip'] = $machineroom['ip'];
-    				$result[$key]['ip_company'] = $machineroom['ip_company'];
+    				$result[$key]['ip'] = $machineroom['ip'].'('.$machineroom['ip_company'].')';
     				//机房的信息返回
     				$result[$key]['machineroom_name'] = $machineroom['machine_room_name'];
     			}
@@ -94,8 +93,7 @@ class MachineModel extends Model
     			if(!empty($cabinet) && !empty($ip) && !empty($machineroom)){
     				$result[$key]['cabinets'] = $machineroom['cabinet_id'];//机柜信息的返回
     				//IP信息的返回
-    				$result[$key]['ip'] = $machineroom['ip'];
-    				$result[$key]['ip_company'] = $machineroom['ip_company'];
+    				$result[$key]['ip'] = $machineroom['ip'].'('.$machineroom['ip_company'].')';
     				//机房的信息返回
     				$result[$key]['machineroom_name'] = $machineroom['machine_room_name'];
     			}
@@ -144,8 +142,7 @@ class MachineModel extends Model
     			if(!empty($cabinet) && !empty($ip) && !empty($machineroom)){
     				$result[$key]['cabinets'] = $machineroom['cabinet_id'];//机柜信息的返回
     				//IP信息的返回
-    				$result[$key]['ip'] = $machineroom['ip'];
-    				$result[$key]['ip_company'] = $machineroom['ip_company'];
+    				$result[$key]['ip'] = $machineroom['ip'].'('.$machineroom['ip_company'].')';
     				//机房的信息返回
     				$result[$key]['machineroom_name'] = $machineroom['machine_room_name'];
     			}
@@ -197,8 +194,8 @@ class MachineModel extends Model
     			if(!empty($cabinet) && !empty($ip) && !empty($machineroom)){
     				$result[$key]['cabinets'] = $machineroom['cabinet_id'];//机柜信息的返回
     				//IP信息的返回
-    				$result[$key]['ip'] = $machineroom['ip'];
-    				$result[$key]['ip_company'] = $machineroom['ip_company'];
+    				$result[$key]['ip'] = $machineroom['ip'].'('.$machineroom['ip_company'].')';
+    				// $result[$key]['ip_company'] = $machineroom['ip_company'];
     				//机房的信息返回
     				$result[$key]['machineroom_name'] = $machineroom['machine_room_name'];
     			}

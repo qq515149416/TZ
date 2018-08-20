@@ -24,7 +24,7 @@ class  Cpu extends Model
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
 	
-	protected $fillable = ['cpu_number', 'cpu_param','cpu_used','created_at','updated_at','service_num'];
+	protected $fillable = ['cpu_number', 'cpu_param','cpu_used','created_at','updated_at','service_num','room_id'];
 	// 测试
 
 	/**
@@ -33,7 +33,7 @@ class  Cpu extends Model
 	*/
 	public function index(){
 		// 用模型进行数据查询
-		$index = $this->all(['id','cpu_number','cpu_param','cpu_used','created_at','updated_at','service_num']);
+		$index = $this->all(['id','cpu_number','cpu_param','cpu_used','created_at','updated_at','service_num','room_id']);
 
 		$status = [
 			0 => '未使用',
@@ -41,9 +41,17 @@ class  Cpu extends Model
 			2 => '内部主机使用中',
 			3 => '托管主机使用中'
 		];
+		//获取机房名称并转换
+		$room = json_decode(json_encode($this->get_machineroom() ),true);
+		$room = $room['data'];
+		$room_arr = [];
+		foreach ($room as $k=> $v) {
+			$room_arr[$v['room_id']] = $v['room_name'];
+		}
 		
 		foreach ($index as $k => $v) {
 			$index[$k]['cpu_used'] = $status[$index[$k]['cpu_used']];
+			$index[$k]['room'] = $room_arr[$index[$k]['room_id']];
 		}
 		
 		if(!$index->isEmpty()){	
@@ -142,5 +150,28 @@ class  Cpu extends Model
 		return $return;
 	}
 
+	/**
+	* 获取机房的信息
+	* @return array 返回相关的信息和数据
+	*/
+	public function get_machineroom($id='') {
+		if($id){
+			$room = DB::table('idc_machineroom')->find($id,['machine_room_name']);
+			return $room;
+		} else {
+			$result = DB::table('idc_machineroom')->select('id as room_id','machine_room_name as room_name')->get();
+			if($result) {
+				$return['data'] = $result;
+				$return['code'] = 1;
+				$return['msg'] = '机房信息获取成功!!';
+			} else {
+				$return['data'] = '';
+				$return['code'] = 0;
+				$return['msg'] = '机房信息获取失败!!';
+			}
 
+			return $return;
+		}
+	}
+	
 }

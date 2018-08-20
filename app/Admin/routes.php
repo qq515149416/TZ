@@ -134,6 +134,19 @@ Route::group([
         $router->post('deleted', 'Memory\MemoryController@deleted');
     });
 
+    // 机器资源库
+    Route::group([
+        'prefix' => 'machine',
+    ], function(Router $router){
+        $router->get('showmachine', 'Idc\MachineController@showMachine');
+        $router->post('insertmachine', 'Idc\MachineController@insertMachine');
+        $router->post('editmachine', 'Idc\MachineController@editMachine');
+        $router->post('deletemachine', 'Idc\MachineController@deleteMachine');
+        $router->post('machineroom', 'Idc\MachineController@machineroom');
+        $router->post('cabinets', 'Idc\MachineController@cabinets');
+        $router->post('ips', 'Idc\MachineController@ips');
+    });
+
 
 
 });

@@ -91,7 +91,7 @@ class IpsController extends Controller
     	//判断提交的方式
     	if($request->isMethod('post')){
     		// 符合判断的进行数据提取
-    		$data = $request->only(['id','vlan', 'ip','ip_company','ip_status','ip_lock','ip_note','ip_comproom']);
+    		$data = $request->only(['id','vlan', 'ip_start','ip_company','ip_status','ip_lock','ip_note','ip_comproom']);
     		$doedit = new Ips();
     		// 模型层处理
     		$result = $doedit->doEdit($data);

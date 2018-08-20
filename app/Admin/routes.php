@@ -135,9 +135,9 @@ Route::group([
     });
 
     // 机器资源库
-    Router::group([
+    Route::group([
         'prefix' => 'machine',
-    ],function(Router $router){
+    ], function(Router $router){
         $router->get('showmachine', 'Idc\MachineController@showMachine');
         $router->post('insertmachine', 'Idc\MachineController@insertMachine');
         $router->post('editmachine', 'Idc\MachineController@editMachine');

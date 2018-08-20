@@ -1,14 +1,5 @@
 <?php
 
-// +----------------------------------------------------------------------
-// | Author: 街"角．回 忆 <2773495294@qq.com>
-// +----------------------------------------------------------------------
-// | Copyright (c) 2016-2018 by cmd
-// +----------------------------------------------------------------------
-// | Description: 处理IP的控制器
-// +----------------------------------------------------------------------
-// | @DateTime: 2018-08-01 14:20:56
-// +----------------------------------------------------------------------
 
 namespace App\Admin\Controllers\Idc;
 
@@ -91,7 +82,7 @@ class IpsController extends Controller
     	//判断提交的方式
     	if($request->isMethod('post')){
     		// 符合判断的进行数据提取
-    		$data = $request->only(['id','vlan', 'ip','ip_company','ip_status','ip_lock','ip_note','ip_comproom']);
+    		$data = $request->only(['id','vlan', 'ip_start','ip_company','ip_status','ip_lock','ip_note','ip_comproom']);
     		$doedit = new Ips();
     		// 模型层处理
     		$result = $doedit->doEdit($data);

@@ -11,21 +11,28 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Radio from '@material-ui/core/Radio';
 import FormLabel from '@material-ui/core/FormLabel';
+const E = require('wangeditor');
 const AllInputStyle = theme => ({
     button: {
         margin: theme.spacing.unit
     },
     textField: {
-        width: theme.breakpoints.values.sm
+        width: theme.breakpoints.values.sm + 100
     },
     menu: {
         width: theme.breakpoints.values.sm / 2,
     },
     dialog: {
-        maxWidth: theme.breakpoints.values.sm + 50
+        maxWidth: theme.breakpoints.values.sm + 150
     },
     formControl: {
         margin: theme.spacing.unit * 3,
+    },
+    richText: {
+        width: theme.breakpoints.values.sm + 100
+    },
+    dialogContent: {
+        height: 600
     }
 });
 class AllInput extends React.Component {
@@ -35,6 +42,7 @@ class AllInput extends React.Component {
             open: false,
             inputAttr: this.inputAttr()
         };
+        this.editor = null;
     }
     componentDidMount() {
         this.setState({
@@ -78,6 +86,22 @@ class AllInput extends React.Component {
                         }
                     });
                     
+                } else if(item.type=="rich_text") {
+                    // let editor = null;
+                    // if(document.getElementById("editor")) {
+                    //     editor = new E('#editor');
+                    //     editor.customConfig.onchange = (html) => {
+                    //         this[item.field] = {
+                    //             value: html
+                    //         }
+                    //     }
+                    //     editor.create();
+                    // }
+                    Object.assign(inputAttr,{
+                        [item.field]: {
+                            label: item.label
+                        }
+                    });
                 } else {
                     // this[item.field] = {
                     //     value : this.props.editData ? this.props.editData[item.field] : ""
@@ -130,6 +154,11 @@ class AllInput extends React.Component {
         const {classes} = this.props;
         const {inputAttr} = this.state;
         switch(inputTypeData.type) {
+            case "rich_text":
+                return (
+                    <div id="editor" className={classes.richText}>
+                    </div>
+                );
             case "text":
                 return (
                     <TextField
@@ -195,6 +224,16 @@ class AllInput extends React.Component {
             });
             this.dialogOpen = false;
         }
+        let editor = null;
+        if(document.getElementById("editor")) {
+            editor = new E('#editor');
+            editor.customConfig.onchange = (html) => {
+                this[this.props.inputType.find(item => item.type=="rich_text").field] = {
+                    value: html
+                }
+            }
+            editor.create();
+        }
     }
     render() {
         const {classes, title, inputType, operattext} = this.props;
@@ -203,14 +242,14 @@ class AllInput extends React.Component {
             open={this.state.open}
             onClose={this.handleClose}
             aria-labelledby="form-dialog-title"
-            maxWidth="sm"
+            maxWidth="md"
             onEntered={this.showDialog}
             PaperProps={{
                 className: classes.dialog
             }}
           >
             <DialogTitle id="form-dialog-title">{title}</DialogTitle>
-            <DialogContent>
+            <DialogContent className={classes.dialogContent}>
                 {
                     inputType.map(item => this.returnInput(item))
                 }              

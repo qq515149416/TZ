@@ -134,6 +134,7 @@ Route::group([
         $router->post('deleted', 'Memory\MemoryController@deleted');
     });
 
+<<<<<<< Updated upstream
     // 机器资源库
     Route::group([
         'prefix' => 'machine',
@@ -148,6 +149,14 @@ Route::group([
     });
 
 
+=======
+    //统计模块
+    Route::group([
+        'prefix' => 'statistics',
+    ],function (Router $router) {
+        $router->post('machine_statistics', 'Statistics\StatisticsController@machine_statistics');
+    });
+>>>>>>> Stashed changes
 
 });
 

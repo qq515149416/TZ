@@ -52,7 +52,7 @@ class  Harddisk extends Model
 			$index[$k]['harddisk_used'] = $status[$index[$k]['harddisk_used']];
 			$index[$k]['room'] = $room_arr[$index[$k]['room_id']];
 		}
-		var_dump($index);exit;
+		
 		if(!$index->isEmpty()){	
 			$return['data'] = $index;
 			$return['code'] = 1;

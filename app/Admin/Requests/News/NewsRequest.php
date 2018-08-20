@@ -10,7 +10,7 @@
 // | @DateTime: 2018-08-01 14:09:24
 // +----------------------------------------------------------------------
 
-namespace App\Admin\Requests;
+namespace App\Admin\Requests\News;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;

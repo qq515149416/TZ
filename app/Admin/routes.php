@@ -108,33 +108,33 @@ Route::group([
     Route::group([
         'prefix' => 'cpu',
     ],function (Router $router) {
-        $router->get('cpu_list', 'Cpu\CpuController@index');
-        $router->post('insert', 'Cpu\CpuController@insert');
-        $router->post('deleted', 'Cpu\CpuController@deleted');
-        $router->post('edit', 'Cpu\CpuController@edit');
+        $router->get('cpu_list', 'Idc\CpuController@index');
+        $router->post('insert', 'Idc\CpuController@insert');
+        $router->post('deleted', 'Idc\CpuController@deleted');
+        $router->post('edit', 'Idc\CpuController@edit');
     });
 
     //harddisk资源库管理
     Route::group([
         'prefix' => 'harddisk',
     ],function (Router $router) {
-        $router->get('harddisk_list', 'Harddisk\HarddiskController@index');
-        $router->post('insert', 'Harddisk\HarddiskController@insert');
-        $router->post('edit', 'Harddisk\HarddiskController@edit');
-        $router->post('deleted', 'Harddisk\HarddiskController@deleted');
+        $router->get('harddisk_list', 'Idc\HarddiskController@index');
+        $router->post('insert', 'Idc\HarddiskController@insert');
+        $router->post('edit', 'Idc\HarddiskController@edit');
+        $router->post('deleted', 'Idc\HarddiskController@deleted');
     });
 
 //内存资源库管理
     Route::group([
         'prefix' => 'memory',
     ],function (Router $router) {
-        $router->get('memory_list', 'Memory\MemoryController@index');
-        $router->post('insert', 'Memory\MemoryController@insert');
-        $router->post('edit', 'Memory\MemoryController@edit');
-        $router->post('deleted', 'Memory\MemoryController@deleted');
+        $router->get('memory_list', 'Idc\MemoryController@index');
+        $router->post('insert', 'Idc\MemoryController@insert');
+        $router->post('edit', 'Idc\MemoryController@edit');
+        $router->post('deleted', 'Idc\MemoryController@deleted');
     });
 
-<<<<<<< Updated upstream
+
     // 机器资源库
     Route::group([
         'prefix' => 'machine',
@@ -149,14 +149,14 @@ Route::group([
     });
 
 
-=======
+
     //统计模块
     Route::group([
         'prefix' => 'statistics',
     ],function (Router $router) {
         $router->post('machine_statistics', 'Statistics\StatisticsController@machine_statistics');
     });
->>>>>>> Stashed changes
+
 
 });
 

@@ -25,10 +25,13 @@ class MachineRoomController extends Controller
 //        Mail
         $name = 'hello';
         // Mail::send()的返回值为空，所以可以其他方法进行判断
-        Mail::send('emails.test', ['name' => $name], function ($message) {
-            $to = '568171152@qq.com';
-            $message->to($to)->subject('邮件测试');
-        });
+        for ($x = 0; $x <= 2; $x++) {
+            Mail::send('emails.test', ['name' => $name], function ($message,$x) {
+                $to = 'idckx_jun@yeah.net';
+                $message->to($to)->subject('邮件测试1'.$x);
+            });
+        }
+
         // 返回的一个错误数组，利用此可以判断是否发送成功
         dd(Mail::failures());
 

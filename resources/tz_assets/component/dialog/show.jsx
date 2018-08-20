@@ -40,8 +40,7 @@ class Show extends React.Component {
                 <DialogContentText id="alert-dialog-description">
                     {this.props.description}
                 </DialogContentText>
-                <DialogContentText id="alert-dialog-content">
-                    {this.props.content}
+                <DialogContentText id="alert-dialog-content" dangerouslySetInnerHTML = {{ __html:this.props.content }}>
                 </DialogContentText>
             </DialogContent>
             <DialogActions>

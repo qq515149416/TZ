@@ -31,10 +31,23 @@ class PostData extends React.Component {
     decompressionParam = () => {
         let returnObj = {};
         this.props.inputType.forEach(item => {
-            if(this.dialogComponent[item.field]) {
+            let status = true;
+            if(item.rule&&item.rule.type&&item.rule.type=="add") {
+                if(this.props.editData) {
+                    status = false;
+                }
+            }
+            if(item.rule&&item.rule.type&&item.rule.type=="edit") {
+                if(!this.props.editData) {
+                    status = false;
+                }
+            }
+            if(this.dialogComponent[item.field]&&status) {
                 returnObj[item.field] = this.dialogComponent[item.field].value;
             } else {
-                console.warn(this.dialogComponent[item.field],item.field);
+                if(status) {
+                    console.warn(this.dialogComponent[item.field],item.field);
+                }
             }
             
         });
@@ -42,7 +55,7 @@ class PostData extends React.Component {
     }
     post() {
         if(this.props.postType == "add") {
-            this.props.addData(this.decompressionParam(),(data,result) => {
+            this.props.addData(this.decompressionParam(),(data) => {
                 if(data) {
                     this.dialogComponent.handleClose();
                 }
@@ -52,7 +65,7 @@ class PostData extends React.Component {
         if(this.props.postType == "edit") {
             this.props.changeData(Object.assign(this.decompressionParam(),{
                 id: this.props.editData.id
-            }),(data,result) => {
+            }),(data) => {
                 if(data) {
                     this.dialogComponent.handleClose();
                 }

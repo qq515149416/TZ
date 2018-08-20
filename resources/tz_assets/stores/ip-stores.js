@@ -54,7 +54,8 @@ class IpsStores extends ActionBoundStores {
     }
     changeData(param) {
         return new Promise((resolve,reject) => {
-            delete param.ip;
+            // delete param.ip;
+            param.ip_start = param.ip;
             post("ips/alerting",param).then((res) => {
                 if(res.data.code==1) {
                     this.changeStoreData("ips",IpStores,Object.assign(param,{
@@ -125,11 +126,14 @@ class IpsStores extends ActionBoundStores {
                         updated_at: dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss")
                     }));
                     resolve(true);
+                }else if(res.data.code==2) {
+                    this.getData();
+                    resolve(true);
                 } else {
                     alert(res.data.msg);
                     resolve(false);
                 }
-            });
+            }).catch(reject);
         });
     }
     @action.bound 

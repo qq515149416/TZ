@@ -14,7 +14,7 @@ Route::group([
 
 
     //Jun   个人测试用
-    $router->post('jun/test', 'Idc\MachineRoomController@store');
+    $router->get('jun/test', 'Idc\MachineRoomController@test');
     // 测试使用
     $router->post('rules', 'Others\ContactsController@rulestest');
     $router->get('rules', 'Others\ContactsController@rulestest');
@@ -49,7 +49,6 @@ Route::group([
         $router->post('alerting', 'Idc\IpsController@doEdit');
         $router->post('remove', 'Idc\IpsController@deleted');
         $router->get('machineroom', 'Idc\IpsController@machineroom');
-        $router->post('batch','Idc\IpsController@batch');
     });
     
 
@@ -105,12 +104,37 @@ Route::group([
         $router->get('get_news_type', 'News\NewsController@get_news_type');
     });
 
-    //消息管理
+    //cpu资源库管理
     Route::group([
         'prefix' => 'cpu',
     ],function (Router $router) {
         $router->get('cpu_list', 'Cpu\CpuController@index');
         $router->post('insert', 'Cpu\CpuController@insert');
+        $router->post('deleted', 'Cpu\CpuController@deleted');
+        $router->post('edit', 'Cpu\CpuController@edit');
     });
+
+    //harddisk资源库管理
+    Route::group([
+        'prefix' => 'harddisk',
+    ],function (Router $router) {
+        $router->get('harddisk_list', 'Harddisk\HarddiskController@index');
+        $router->post('insert', 'Harddisk\HarddiskController@insert');
+        $router->post('edit', 'Harddisk\HarddiskController@edit');
+        $router->post('deleted', 'Harddisk\HarddiskController@deleted');
+    });
+
+//内存资源库管理
+    Route::group([
+        'prefix' => 'memory',
+    ],function (Router $router) {
+        $router->get('memory_list', 'Memory\MemoryController@index');
+        $router->post('insert', 'Memory\MemoryController@insert');
+        $router->post('edit', 'Memory\MemoryController@edit');
+        $router->post('deleted', 'Memory\MemoryController@deleted');
+    });
+
+
+
 });
 

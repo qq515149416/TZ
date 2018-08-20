@@ -1,20 +1,11 @@
 <?php
 
-// +----------------------------------------------------------------------
-// | Author: 街"角．回 忆 <2773495294@qq.com>
-// +----------------------------------------------------------------------
-// | Copyright (c) 2016-2018 by cmd
-// +----------------------------------------------------------------------
-// | Description: IP地址表的验证规则和提示信息
-// +----------------------------------------------------------------------
-// | @DateTime: 2018-08-01 14:09:24
-// +----------------------------------------------------------------------
-
-namespace App\Admin\Requests\Idc;
+namespace App\Admin\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
-class IpsRequest extends FormRequest
+
+class IpsBatchRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,20 +18,21 @@ class IpsRequest extends FormRequest
     }
 
     /**
-     * 规则.
+     * Get the validation rules that apply to the request.
      *
      * @return array
      */
     public function rules()
     {
-        return [    
+        return [
             'ip_start' => 'required|ip',
             'ip_end' => 'sometimes|nullable|ip',
             'vlan' => 'required|integer',
         ];
     }
 
-    public function messages()
+
+     public function messages()
     {
         
         return  [

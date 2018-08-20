@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class EmployeeInformation extends Model
 {
-    use use SoftDeletes;
+    use  SoftDeletes;
     protected $table = 'oa_staff';
     public $timestamps = true;
     protected $dates = ['deleted_at'];

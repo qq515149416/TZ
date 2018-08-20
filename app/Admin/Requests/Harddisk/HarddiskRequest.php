@@ -1,20 +1,20 @@
 <?php
 
 // +----------------------------------------------------------------------
-// | Author: 街"角．回 忆 <2773495294@qq.com>
+// | Author: kiri <420541662@qq.com>
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016-2018 by cmd
 // +----------------------------------------------------------------------
-// | Description: IP地址表的验证规则和提示信息
+// | Description: 硬盘资源库的验证规则和提示信息
 // +----------------------------------------------------------------------
-// | @DateTime: 2018-08-01 14:09:24
+// | @DateTime: 2018-08-01 14:43:24
 // +----------------------------------------------------------------------
 
-namespace App\Admin\Requests\Cpu;
+namespace App\Admin\Requests\Harddisk;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
-class CpuRequest extends FormRequest
+class HarddiskRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -33,15 +33,15 @@ class CpuRequest extends FormRequest
      */
     public function rules()
     {
-        $return = [
-            'cpu_number'   => "required|unique:idc_cpu",
-            'cpu_param'    => 'required',
-        ];
         //检测表单中是否存在id,并靠此决定验证规则
+        $return = [
+            'harddisk_number'   => "required|unique:idc_harddisk",
+            'harddisk_param'    => 'required',
+        ];
         $info = $this->all();
 
         if(isset($info['id'])){
-            $return['cpu_number'].=",cpu_number,{$info['id']}";
+            $return['harddisk_number'].=",harddisk_number,{$info['id']}";
         }
 
         return $return;
@@ -51,9 +51,9 @@ class CpuRequest extends FormRequest
     {
         
         return  [
-            'cpu_number.required' 	=> 'cpu编号必须填写',
-            'cpu_number.unique'       => '该编号已录入',
-            'cpu_param.required' 	=> 'cpu参数必须填写',
+            'harddisk_number.required' 	=> '硬盘编号必须填写',
+            'harddisk_number.unique'            => '该编号硬盘已录入',
+            'harddisk_param.required' 	=> '硬盘参数必须填写',
         ];
     }
 

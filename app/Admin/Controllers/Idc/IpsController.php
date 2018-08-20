@@ -15,7 +15,8 @@ namespace App\Admin\Controllers\Idc;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use App\Admin\Models\Idc\Ips;
-use App\Admin\Requests\IpsRequest;
+use App\Admin\Requests\Idc\IpsRequest;
+use App\Admin\Requests\Idc\IpsBatchRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -48,7 +49,7 @@ class IpsController extends Controller
     	// 判断传递的方式和提交方式
     	if($request->isMethod('post')) {
     		// 符合提交方式的进行数据的提取
-    		$param = $request->only(['vlan', 'ip','ip_company','ip_status','ip_lock','ip_note','ip_comproom']);
+    		$param = $request->only(['ip_start','ip_end','vlan','ip_company','ip_status','ip_lock','ip_note','ip_comproom']);
     		$create = new Ips();
     		// 传递数据到对应的model层处理
     		$revert = $create->insert($param);
@@ -132,30 +133,5 @@ class IpsController extends Controller
     	return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
     }
 
-    
-    public function batch(Request $request){
-        if($request->isMethod('post')){
-            $batch = $request->only(['ip_part','start','end','vlan','ip_company','ip_status','ip_lock','ip_note','ip_comproom']);
-            $start = $batch['start'];
-            $end = $batch['end'];
-            $i = $start;
-            $time = time();
-            while($i<=$end){
-                $batch['ip'] = rtrim($batch['ip_part'],0).$i;
-                $this->batching($batch);
-                $i++;
-            }
-            $endtime = time();
-            echo $endtime - $time();
-            
-        } else {
-            return tz_ajax_echo([],'批量新增IP失败!!',0);
-        }
-    }
 
-
-    public function batching($batch){
-        $batching = new Ips();
-        
-    }
 }

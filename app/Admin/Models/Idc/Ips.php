@@ -80,20 +80,57 @@ class Ips extends Model
     public function insert($data){
     	if($data){
     		// 存在数据就用model进行数据写入操作
-    		// $fill = $this->fill($data);
-    		$row = $this->create($data);
-    		if($row != false){
-    			// 插入数据成功
-    			$return['data'] = $row->id;
-    			$return['code'] = 1;
-    			$return['msg'] = '新增IP地址信息成功!!';
+            // 起始的IP
+            $ip_start = $data['ip_start'];
+            // 结束的IP
+            $ip_end = $data['ip_end'];
+            // 对起始IP进行拆分
+            $start_str = explode('.',$ip_start);
+            // 重新将起始IP的段重组
+            $startstr = $start_str[0].'.'.$start_str[1].'.'.$start_str[2];
+            //对结束的IP进行拆分  
+            $end_str = explode('.',$ip_end);
+            if(empty($end_str[0])){
+                // 结束IP的第一组的为空则代表进行一条IP插入
+                    $row = $this->create($data);
+                    if($row != false){
+                        // 插入数据成功
+                        $return['data'] = $row->id;
+                        $return['code'] = 1;
+                        $return['msg'] = '新增IP地址信息成功!!';
 
-    		} else {
-    			// 插入数据失败
-    			$return['data'] = '';
-    			$return['code'] = 0;
-    			$return['msg'] = '新增IP地址信息失败!!';
-    		}
+                    } else {
+                        // 插入数据失败
+                        $return['data'] = '';
+                        $return['code'] = 0;
+                        $return['msg'] = '新增IP地址信息失败!!';
+                    }
+            } else {
+                // 批量插入IP
+                $endstr = $end_str[0].'.'.$end_str[1].'.'.$end_str[2];
+                // 起始的数字
+                $start = (int)$start_str[3];
+                // 结束的数字
+                $end = (int)$end_str[3];
+                // 进行循环插入IP
+                while($start<=$end){
+                    $data['ip'] = $endstr.'.'.$start;
+                    $row = $this->create($data);
+                    $start++;
+                }
+                if($row != false){
+                    // 插入数据成功
+                    $return['data'] = '';
+                    $return['code'] = 2;
+                    $return['msg'] = '批量新增IP地址信息成功!!';
+                } else {
+                    // 插入数据失败
+                    $return['data'] = '';
+                    $return['code'] = 0;
+                    $return['msg'] = '新增IP地址信息失败!!';
+                }
+            }
+
     	} else {
     		// 未有数据传递
     		$return['data'] = '';
@@ -211,36 +248,5 @@ class Ips extends Model
     	
     }
 
-
-    // public function findroom() {
-
-    // }
-
-
-    public function batching($data){
-        if($data){
-            // 存在数据就用model进行数据写入操作
-            // $fill = $this->fill($data);
-            $row = $this->create($data);
-            if($row != false){
-                // 插入数据成功
-                $return['data'] = $row->id;
-                $return['code'] = 1;
-                $return['msg'] = '新增IP地址信息成功!!';
-
-            } else {
-                // 插入数据失败
-                $return['data'] = '';
-                $return['code'] = 0;
-                $return['msg'] = '新增IP地址信息失败!!';
-            }
-        } else {
-            // 未有数据传递
-            $return['data'] = '';
-            $return['code'] = 0;
-            $return['msg'] = '请检查您要新增的信息是否正确!!';
-        }
-        return $return;
-    }
     
 }

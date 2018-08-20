@@ -5,7 +5,7 @@ namespace App\Admin\Controllers\Hr;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use App\Admin\Models\Hr\EmployeeInformation;
-use App\Admin\Requests\EmployeeInformationRequest;
+use App\Admin\Requests\Idc\EmployeeInformationRequest;
 use Illuminate\Http\Request;
 
 /**

@@ -4,7 +4,7 @@ import { inject,observer } from "mobx-react";
 
 const columnData = [
     { id: 'title', numeric: true, disablePadding: false, label: '标题' },
-    { id: 'type_name.name', numeric: true, disablePadding: false, label: '文章类型' },
+    { id: 'type_name', numeric: true, disablePadding: false, label: '文章类型' },
     { id: 'top_status', numeric: true, disablePadding: false, label: '是否置顶显示' },
     { id: 'home_status', numeric: true, disablePadding: false, label: '是否首页显示' },
     { id: 'seoKeywords', numeric: true, disablePadding: false, label: 'seo关键词' },
@@ -118,6 +118,17 @@ class NewList extends React.Component {
       callbrak(state);
     });
   }
+  delData = (selectedData,callbrak) => {
+    const {newsStores} = this.props;
+    let delIng = selectedData.map(item => newsStores.delData(item));
+    callbrak(delIng);
+  }
+  changeData = (param,callbrak) => {
+    const {newsStores} = this.props;
+    newsStores.changeData(param).then((state) => {
+      callbrak(state);
+    });
+  }
   render() {
     inputType[inputType.findIndex(item => item.field=="tid")].defaultData = this.props.newsStores.types.map(item => {
       return {
@@ -133,6 +144,8 @@ class NewList extends React.Component {
         headTitlesData={columnData} 
         data={this.props.newsStores.articles}
         addData={this.addData.bind(this)} 
+        changeData={this.changeData.bind(this)} 
+        delData={this.delData.bind(this)}  
       />
     );
   }

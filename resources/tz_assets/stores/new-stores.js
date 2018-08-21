@@ -11,9 +11,10 @@ class NewStores {
     @observable seoKeywords = "";
     @observable seoDescription = "";
     @observable seoTitle = "";
-    @observable type_name = {};
+    @observable type_name = "";
     @observable content = "";
-    constructor({id, title, content, digest, top_status, home_status, seoKeywords, seoDescription, seoTitle,type_name}) {
+    @observable tid = 1;
+    constructor({id, title, content, digest, top_status, home_status, seoKeywords, seoDescription, seoTitle,type_name,tid}) {
         Object.assign(this,{
             id,
             title,
@@ -24,7 +25,8 @@ class NewStores {
             seoKeywords,
             seoDescription,
             seoTitle,
-            type_name
+            type_name,
+            tid
         });
     }
 }
@@ -45,6 +47,48 @@ class NewsStores extends ActionBoundStores {
     @observable types = [
 
     ];
+    stateText(state,codes) {
+        return codes[state];
+    }
+    delData(id) {
+        return new Promise((resolve,reject) => {
+            post("news/deleted",{
+                delete_id: id
+            }).then((res) => {
+                if(res.data.code==1) {
+                    this.delStoreData("articles",id);
+                    resolve(true);
+                } else {
+                    resolve(false);
+                }
+            }).catch(reject);
+        });
+    }
+    changeData(param) {
+        return new Promise((resolve,reject) => {
+            post("news/edit",param).then((res) => {
+                if(res.data.code==1) {
+                    this.changeStoreData("articles",NewStores,Object.assign(param,{
+                        top_status: this.stateText(String(param.top_status),{
+                            "0" : "不显示",
+                            "1": "显示"
+                        }),
+                        home_status: this.stateText(String(param.home_status),{
+                            "0" : "不显示",
+                            "1": "显示"
+                        }),
+                        created_at: dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss"),
+                        updated_at: dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss"),
+                        type_name: this.types.find(e => e.tid == param.tid).type_name
+                    }));
+                    resolve(true);
+                }else {
+                    alert(res.data.msg);
+                    resolve(false);
+                }
+            }).catch(reject);
+        });
+    }
     addData(data) {
         return new Promise((resolve,reject) => {
             post("news/insert",data).then((res) => {
@@ -55,12 +99,27 @@ class NewsStores extends ActionBoundStores {
                             "0" : "不显示",
                             "1": "显示"
                         }),
+                        home_status: this.stateText(String(data.home_status),{
+                            "0" : "不显示",
+                            "1": "显示"
+                        }),
+                        created_at: dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss"),
+                        updated_at: dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss"),
+                        type_name: this.types.find(e => e.tid == data.tid).type_name
+                    }));
+                    console.log(Object.assign(data,{
+                        id: res.data.data,
+                        top_status: this.stateText(String(data.top_status),{
+                            "0" : "不显示",
+                            "1": "显示"
+                        }),
                         home_status: this.stateText(String(data.ip_status),{
                             "0" : "不显示",
                             "1": "显示"
                         }),
                         created_at: dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss"),
-                        updated_at: dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss")
+                        updated_at: dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss"),
+                        type_name: this.types.find(e => e.tid == data.tid).type_name
                     }));
                     resolve(true);
                 } else {
@@ -90,7 +149,8 @@ class NewsStores extends ActionBoundStores {
                         seoDescription: item.seoDescription,
                         seoTitle: item.seoTitle,
                         type_name: item.type_name,
-                        content: item.content
+                        content: item.content,
+                        tid: item.tid
                     }
                 }));
             }

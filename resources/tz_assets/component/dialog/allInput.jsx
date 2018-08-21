@@ -82,6 +82,7 @@ class AllInput extends React.Component {
                     };
                     Object.assign(inputAttr,{
                         [item.field]: {
+                            label: item.label,
                             radioData: item.radioData
                         }
                     });
@@ -153,13 +154,29 @@ class AllInput extends React.Component {
     returnInput = inputTypeData => {
         const {classes} = this.props;
         const {inputAttr} = this.state;
+        let status = true;
+        if(inputTypeData.rule&&inputTypeData.rule.type&&inputTypeData.rule.type=="add") {
+            if(this.props.editData) {
+                status = false;
+            }
+        }
+        if(inputTypeData.rule&&inputTypeData.rule.type&&inputTypeData.rule.type=="edit") {
+            if(!this.props.editData) {
+                status = false;
+            }
+        }
         switch(inputTypeData.type) {
             case "rich_text":
-                return (
-                    <div id="editor" className={classes.richText}>
-                    </div>
-                );
+                if(status) {
+                    return (
+                        <div id="editor" className={classes.richText}>
+                        </div>
+                    );
+                } else {
+                    return null;
+                }
             case "text":
+            if(status) {
                 return (
                     <TextField
                         error={inputAttr[inputTypeData.field].error}
@@ -173,8 +190,12 @@ class AllInput extends React.Component {
                         inputRef = {(ref) => this[inputTypeData.field] = ref}
                         disabled={inputAttr[inputTypeData.field].disabled}
                     />
-                )
+                );
+            } else {
+                return null;
+            }
             case "select":
+            if(status) {
                 return (
                     <TextField
                         id="site"
@@ -200,10 +221,16 @@ class AllInput extends React.Component {
                        
                         
                     </TextField>
-                )
+                );
+            } else {
+                return null;
+            }
+                
             case "switch":
+            if(status) {
                 return (
                     <div>
+                        <h5>{inputAttr[inputTypeData.field].label}</h5>
                         {
                             inputAttr[inputTypeData.field].radioData.map(e => (
                                 <FormLabel>
@@ -215,6 +242,10 @@ class AllInput extends React.Component {
                         
                     </div>
                 );
+            } else {
+                return null;
+            }
+                
         }
     }
     showDialog = () => {
@@ -233,6 +264,11 @@ class AllInput extends React.Component {
                 }
             }
             editor.create();
+            if(this.props.editData&&this.props.editData.content) {
+                editor.txt.html(this.props.editData.content);
+            } else {
+                editor.txt.html("请输入内容....");
+            }
         }
     }
     render() {

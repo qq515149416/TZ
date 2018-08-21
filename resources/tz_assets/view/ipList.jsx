@@ -31,7 +31,24 @@ const inputType = [
     type: "text",
     rule: {
       term: "edit",
-      execute: "disabled"
+      execute: "disabled",
+      type: "edit"
+    }
+  },
+  {
+    field: "ip_start",
+    label: "IP起始段",
+    type: "text",
+    rule: {
+      type: "add"
+    }
+  },
+  {
+    field: "ip_end",
+    label: "IP结束段",
+    type: "text",
+    rule: {
+      type: "add"
     }
   },
   {

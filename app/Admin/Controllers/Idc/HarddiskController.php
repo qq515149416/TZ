@@ -14,8 +14,8 @@ namespace App\Admin\Controllers\Idc;
 
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
-use App\Admin\Models\Harddisk\Harddisk;
-use App\Admin\Requests\Harddisk\HarddiskRequest;
+use App\Admin\Models\Idc\Harddisk;
+use App\Admin\Requests\Idc\HarddiskRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 

@@ -45,6 +45,7 @@ class StatisticsController extends Controller
 
 	public function machine_statistics()
 	{
-		
+		// return 123;
+		$machineModel = new MachineModel();
 	}
 }

@@ -14,8 +14,8 @@ namespace App\Admin\Controllers\Idc;
 
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
-use App\Admin\Models\Memory\Memory;
-use App\Admin\Requests\Memory\MemoryRequest;
+use App\Admin\Models\Idc\Memory;
+use App\Admin\Requests\Idc\MemoryRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 

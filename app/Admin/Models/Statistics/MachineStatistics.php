@@ -23,7 +23,7 @@ class  MachineStatistics extends Model
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
 	
-	protected $fillable = ['tid', 'title','content','created_at','updated_at','top_status','home_status','seoKeywords','seoTitle','seoDescription','digest'];
+	protected $fillable = ['room_id', 'rent_inuse','rent_on_free','rent_off_free','tru_inuse','tru_on_free','tru_off_free','total'];
 	// 测试
 
 	/**

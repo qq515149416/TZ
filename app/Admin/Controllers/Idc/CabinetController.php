@@ -26,7 +26,6 @@ class CabinetController extends Controller
      *      id :机柜主键ID
      *      machineroom_id :机房ID
      *      machineroom_name:机房ID
-     *      machineroom_id :机柜编号
      *      use_state : 有无时使用  0:未使用  1:已使用
      *      machine_count : 机器数量
      *      machine_room_name :机房中文名

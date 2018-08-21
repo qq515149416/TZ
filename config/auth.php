@@ -18,6 +18,11 @@ return [
         'passwords' => 'users',
     ],
 
+//    'defaults' => [
+//        'guard' => 'web',
+//        'passwords' => 'users',
+//    ],
+
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards
@@ -38,7 +43,7 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'tz_users',
         ],
 
         'api' => [
@@ -65,9 +70,13 @@ return [
     */
 
     'providers' => [
-        'users' => [
+//        'users' => [
+//            'driver' => 'eloquent',
+//            'model' => App\User::class,
+//        ],
+        'tz_users' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => \App\Http\Models\TzUser::class,
         ],
 
         // 'users' => [

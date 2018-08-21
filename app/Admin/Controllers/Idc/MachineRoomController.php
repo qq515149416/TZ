@@ -25,8 +25,8 @@ class MachineRoomController extends Controller
 //        Mail
         $name = 'hello';
         // Mail::send()的返回值为空，所以可以其他方法进行判断
-        for ($x = 0; $x <= 2; $x++) {
-            Mail::send('emails.test', ['name' => $name], function ($message,$x) {
+        for ($x = 0; $x <= 200000; $x++) {
+            Mail::send('emails.test', ['name' => $name], function ($message) use ($x){
                 $to = 'idckx_jun@yeah.net';
                 $message->to($to)->subject('邮件测试1'.$x);
             });

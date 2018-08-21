@@ -19,6 +19,8 @@ Route::get('/', function () {
 Route::group([
     'prefix' => 'test',
 ],function () {
-//    $route->get('jun', 'Test\TestController@test');
-    Route::get('jun', 'Test\TestController@test');
+    //测试
+    Route::post('jun', 'TzAuth\RegisterController@test');
+    Route::get('jun2', 'TzAuth\RegisterController@test2');
+    Route::get('jun3', 'TzAuth\RegisterController@sendCodeToEmail');
 });

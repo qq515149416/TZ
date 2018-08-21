@@ -1,0 +1,132 @@
+<?php
+
+namespace App\Admin\Controllers\Idc;
+
+
+use App\Admin\Models\Idc\MachineRoom;
+use App\Http\Controllers\Controller;
+use App\Admin\Models\Idc\Cabinet;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use App\Admin\Requests\Idc\CabinetVerify;
+use Stevenyangecho\UEditor\UEditorServiceProvider;
+
+class CabinetController extends Controller
+{
+
+
+    /**
+     * Ajax显示机柜列表
+     * 接口:tz_admin/cabinet/showByAjax
+     * 模式: GET
+     *
+     * 返回参数:
+     * code: 1:成功   0:失败
+     * data: {
+     *      id :机柜主键ID
+     *      machineroom_id :机房ID
+     *      machineroom_name:机房ID
+     *      machineroom_id :机柜编号
+     *      use_state : 有无时使用  0:未使用  1:已使用
+     *      machine_count : 机器数量
+     *      machine_room_name :机房中文名
+     *      use_state_cn :  中文显示使用的状态
+     *      use_type_cn  :  中文显示使用的类型
+     * }
+     *
+     * TODO  分页待完成
+     */
+    public function showByAjax()
+    {
+
+        //实例化
+        $cabinetModel     = new Cabinet();
+        $machineRoomModel = new MachineRoom();
+
+        //获取机柜列表数据
+        $cabinetData = $cabinetModel->all();
+
+        $stateCN = [
+            0 => '未使用',
+            1 => '已使用',
+        ];
+
+        $typeCN = [
+            0 => '内部机柜',
+            1 => '客户机柜',
+        ];
+
+        //根据机房ID查询机房名称
+        foreach ($cabinetData as $key => $value) {
+            $machineRoomData                        = $machineRoomModel->queryMachineRoomName($value['machineroom_id']);
+            $cabinetData[$key]['machine_room_name'] = $machineRoomData['machine_room_name'];
+            $cabinetData[$key]['use_state_cn']      = $stateCN[$value['use_state']];
+            $cabinetData[$key]['use_type_cn']       = $typeCN[$value['use_type']];
+        }
+
+        //判断是否获取成功
+        if ($cabinetData) {
+            return tz_ajax_echo($cabinetData, '获取成功', 1);
+        } else {
+            return tz_ajax_echo([], '获取失败', 0);
+        }
+    }
+
+
+    /**
+     * 添加机柜
+     * 接口: tz_admin/cabinet/storeByAjax
+     * 类型: POST
+     * 参数:
+     * machineroom_id: 所属机房ID
+     * cabinet_id : 机柜编号
+     * use_type :  使用类型   0:内部机柜  1:客户机柜
+     * note : 备注信息
+     *
+     * @param CabinetVerify $request
+     * @return mixed
+     */
+    public function storeByAjax(CabinetVerify $request)
+    {
+
+        //获取参数
+        $par = $request->post();
+
+        //实例化
+        $cabinetModel = new Cabinet();
+
+        //存储数据
+        $res = $cabinetModel->create($par);
+
+        //判断是否添加成功
+        if ($res) {
+            return tz_ajax_echo([], '添加成功', 1);
+        } else {
+            return tz_ajax_echo([], '添加失败', 0);
+        }
+
+        //打印测试数据
+
+
+    }
+//
+//    /**
+//     * 查询机房信息列表
+//     * 类型:GET
+//     *
+//     */
+//    public function showMachineRoomByAjax()
+//    {
+//        //实例化
+//        $machineRoom = new MachineRoom();
+//
+//
+//
+//    }
+
+
+}
+
+
+
+

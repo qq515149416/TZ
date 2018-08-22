@@ -40,7 +40,7 @@ const toolbarStyles = theme => ({
     const { numSelected, classes, selectedData, getParentData } = props;
     let data = selectedData.map(item => getParentData().find((e) => e.id == item));
     const delData = () => {
-        let isDel = confirm(`是否要删除选中的${numSelected}个联系人？`);
+        let isDel = confirm(`是否要删除选中的${numSelected}个数据？`);
         if(isDel) {
             props.handleSelectAllEmptyClick();
             props.delData(selectedData,(delIng) => {

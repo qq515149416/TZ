@@ -96,10 +96,10 @@ class CabinetController extends Controller
 
         //存储数据
         $res = $cabinetModel->create($par);
-
+//        dd($res);
         //判断是否添加成功
         if ($res) {
-            return tz_ajax_echo([], '添加成功', 1);
+            return tz_ajax_echo([$res['id']], '添加成功', 1);
         } else {
             return tz_ajax_echo([], '添加失败', 0);
         }
@@ -108,6 +108,36 @@ class CabinetController extends Controller
 
 
     }
+
+    /**
+     * 删除机柜Ajax接口
+     * 参数:
+     *
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyByAjax(Request $request)
+    {
+//        //软删除
+//        $par = $request->post();
+//        //实例化
+//        $machineRoomModel = new MachineRoom();
+//
+//        //判断是否删除成功
+//        if ($machineRoomModel->destroy($par['id'])) {
+//            //软删除成功
+//            return tz_ajax_echo([], '删除成功', 1);
+//
+//        } else {
+//            //软删除失败
+//            return tz_ajax_echo([], '删除失败', 0);
+//
+//        }
+
+    }
+
+
 //
 //    /**
 //     * 查询机房信息列表

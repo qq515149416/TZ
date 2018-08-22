@@ -10,7 +10,7 @@
 // | @DateTime: 2018-08-01 14:43:24
 // +----------------------------------------------------------------------
 
-namespace App\Admin\Requests\Harddisk;
+namespace App\Admin\Requests\Idc;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;

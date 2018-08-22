@@ -15,8 +15,7 @@ class MachineModel extends Model
     protected $table = 'idc_machine';
     public $timestamps = true;
     protected $dates = ['deleted_at'];
-    // 将DB查询的数据转换为数组
-    protected $fetchMode = PDO::FETCH_ASSOC;
+    
     /**
      * 查找属于租用业务的机器
      * @return [type] [description]

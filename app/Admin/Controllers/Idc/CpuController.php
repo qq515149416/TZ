@@ -14,8 +14,8 @@ namespace App\Admin\Controllers\Idc;
 
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
-use App\Admin\Models\Cpu\Cpu;
-use App\Admin\Requests\Cpu\CpuRequest;
+use App\Admin\Models\Idc\Cpu;
+use App\Admin\Requests\Idc\CpuRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 

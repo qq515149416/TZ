@@ -19,6 +19,8 @@ class VerifyCsrfToken extends Middleware
         //此处用于排除CSRF  用户开发测试
         'tz_admin/jun/*',
         'tz_admin/machine_room/*',
-        'tz_admin/cabinet/*'
+        'tz_admin/cabinet/*',
+        'test/*'
+
     ];
 }

@@ -14,3 +14,13 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+//测试组
+Route::group([
+    'prefix' => 'test',
+],function () {
+    //测试
+    Route::post('jun', 'TzAuth\RegisterController@test');
+    Route::get('jun2', 'TzAuth\RegisterController@test2');
+    Route::get('jun3', 'TzAuth\RegisterController@sendCodeToEmail');
+});

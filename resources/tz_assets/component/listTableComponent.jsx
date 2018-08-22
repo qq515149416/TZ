@@ -18,7 +18,23 @@ function getSorting(order, orderBy) {
     return order === 'desc'
       ? (a, b) => (b[orderBy] < a[orderBy] ? -1 : 1)
       : (a, b) => (a[orderBy] < b[orderBy] ? -1 : 1);
+}
+//计算字符串长度包含中文
+function getByteLen(val) {
+  var len = 0;
+  for (var i = 0; i < val.length; i++) {
+       var a = val.charAt(i);
+       if (a.match(/[^\x00-\xff]/ig) != null) 
+      {
+          len += 2;
+      }
+      else
+      {
+          len += 1;
+      }
   }
+  return len;
+}
 const styles = theme => ({
     root: {
       width: '100%',
@@ -153,7 +169,7 @@ const styles = theme => ({
                             if(item.id=="operat") {
                               return null;
                             }
-                            if(index==0&&original.length>5) {
+                            if(index==0&&getByteLen(this.props.data[index][item.id]) > 12) {
                               return (
                                 <TableCell component="th" scope="row" padding="none">
                                   {item.id.indexOf(".") > -1 ? n[item.id.split(".")[0]][item.id.split(".")[1]] : n[item.id]}

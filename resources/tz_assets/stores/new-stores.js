@@ -77,7 +77,6 @@ class NewsStores extends ActionBoundStores {
                             "0" : "不显示",
                             "1": "显示"
                         }),
-                        created_at: dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss"),
                         updated_at: dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss"),
                         type_name: this.types.find(e => e.tid == param.tid).type_name
                     }));

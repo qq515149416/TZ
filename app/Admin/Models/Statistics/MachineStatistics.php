@@ -9,7 +9,7 @@
 // +----------------------------------------------------------------------
 // | @DateTime: 2018-08-20 17:02:37
 // +----------------------------------------------------------------------
-namespace App\Admin\Models\MachineStatistics;
+namespace App\Admin\Models\Statistics;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -23,36 +23,175 @@ class  MachineStatistics extends Model
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
 	
-	protected $fillable = ['room_id', 'rent_inuse','rent_on_free','rent_off_free','tru_inuse','tru_on_free','tru_off_free','total'];
-	// 测试
+	protected $fillable = ['room_id', 'rent_inuse','rent_on_free','rent_off_free','tru_inuse','tru_on_free','tru_off_free','total','month'];
 
 	/**
-	* 查询文章表的数据
+	* 统计机器的方法
 	* @return 将数据及相关的信息返回到控制器
 	*/
-	public function index(){
+
+	public function statistics()
+	{	
+		//生成区分月份的字段
+		$time = date("y-m");	
+
+		//获取所有机房数据
+		$machineroom = $this->getMachineRoom();
+		//获取所有机器数据
+		$machine = $this->getMachine();
+
+		if($machineroom == false||$machine == false){
+			$return['data'] = '';
+			$return['code'] = 0;
+			$return['msg'] = '数据更新失败!!';
+			return $return;
+		}
+
+		//处理数据
+
+		//生成各个机房的空数组
+		$data = [];
+		for($i = 0;$i < count($machineroom);$i++){
+			$data[$machineroom[$i]['roomid']]['room_id'] 		= $machineroom[$i]['roomid'];
+			$data[$machineroom[$i]['roomid']]['rent_inuse']		= 0;
+			$data[$machineroom[$i]['roomid']]['rent_on_free']	= 0;
+			$data[$machineroom[$i]['roomid']]['rent_off_free']	= 0;
+			$data[$machineroom[$i]['roomid']]['tru_inuse']		= 0;
+			$data[$machineroom[$i]['roomid']]['tru_on_free']		= 0;
+			$data[$machineroom[$i]['roomid']]['tru_off_free']		= 0;
+			$data[$machineroom[$i]['roomid']]['total']		= 0;
+			$data[$machineroom[$i]['roomid']]['month']		= $time;
+		}
+		$data['total']=[
+			'room_id'	=> 0,
+			'rent_inuse'	=> 0,
+			'rent_on_free'	=> 0,
+			'rent_off_free'	=> 0,
+			'tru_inuse'	=> 0,
+			'tru_on_free'	=> 0,
+			'tru_off_free'	=> 0,
+			'total'		=> 0,
+			'month'		=> $time,
+		];
+
+		//开始统计数据
+		for($j = 0;$j < count($machine);$j++){
+			$data[$machine[$j]['machineroom']]['total']++;
+			$data['total']['total']++;
+			if($machine[$j]['business_type'] == 1){
+				if($machine[$j]['used_status'] == 1){
+					$data[$machine[$j]['machineroom']]['rent_inuse']++;
+					$data['total']['rent_inuse']++;
+				}else{
+					if($machine[$j]['machine_status'] == 0){
+						$data[$machine[$j]['machineroom']]['rent_on_free']++;	
+						$data['total']['rent_on_free']++;
+					}else{
+						$data[$machine[$j]['machineroom']]['rent_off_free']++;
+						$data['total']['rent_off_free']++;	
+					}
+				}
+			}else{
+				if($machine[$j]['used_status'] == 1){
+					$data[$machine[$j]['machineroom']]['tru_inuse']++;
+					$data['total']['tru_inuse']++;
+				}else{
+					if($machine[$j]['machine_status'] == 0){
+						$data[$machine[$j]['machineroom']]['tru_on_free']++;
+						$data['total']['tru_on_free']++;	
+					}else{
+						$data[$machine[$j]['machineroom']]['tru_off_free']++;
+						$data['total']['tru_off_free']++;	
+					}
+				}
+			}
+		}
+
+		$res = $this->insert($data);
+		if($res == false){
+			$return['data'] = '';
+			$return['code'] = 0;
+			$return['msg'] = '数据更新失败!!';
+		}else{
+			$return['data'] = '';
+			$return['code'] = 1;
+			$return['msg'] = '数据更新成功!!';
+		}
+
+		return $return;
+	}
+
+	//获取所有机房数据的方法
+	public function getMachineRoom()
+	{
+		$machineroom = DB::table('idc_machineroom')->select('id as roomid','machine_room_name')->get();
+		$machineroom = json_decode(json_encode($machineroom),true);
+		return $machineroom;
+	}
+	//获取所有机器的方法
+	public function getMachine()
+	{
+		$machine = DB::table('idc_machine')->select('used_status','machine_status','business_type','machineroom')->get();
+		$machine = json_decode(json_encode($machine),true);
+		return $machine;
+	}
+
+	//插入统计数据的方法
+	//	$data[
+	//		'key' => ['room_id' => ?? , 'rent_inuse' => ?? , .....]
+	//	]
+	public function insert($data)
+	{
+		foreach($data as $key => $value){
+
+			$res = $this->updateOrCreate(
+				[
+					'room_id' 	=> $value['room_id'],
+					'month'		=> $value['month'],
+				],
+
+				[
+					'rent_inuse' 	=> $value['rent_inuse'] , 
+					'rent_on_free' 	=> $value['rent_on_free'] , 
+					'rent_off_free' 	=> $value['rent_off_free'] , 
+					'tru_inuse' 	=> $value['tru_inuse'] , 
+					'tru_on_free' 	=> $value['tru_on_free'] , 
+					'tru_off_free' 	=> $value['tru_off_free'] , 
+					'total'		=> $value['total'],
+					'month'		=> $value['month'],
+				]);
+			if($res == false){			
+				return false;
+			}		
+		}
+		return true;
+	}
+
+
+	/**
+	* 查询统计表的数据
+	* @param  $month : 需要查询的月份
+	* @return 将该月数据及相关的信息返回到控制器
+	*/
+	public function getStatistics($month){
 		// 用模型进行数据查询
-		$index = $this->all(['id','tid','title','content','top_status','home_status','seoKeywords','seoTitle','seoDescription','digest','created_at','updated_at']);
+		$index = $this->where("month",$month)->get();
 
 		if(!$index->isEmpty()){
 		// 判断存在数据就对部分需要转换的数据进行数据转换的操作
-			$status 	= [0=>'不显示',1=>'显示'];		
-			$type = json_decode(json_encode($this->get_news_type() ),true);
-			$type = $type['data'];
-			$type_arr = [];
-			foreach ($type as $k=> $v) {
-				$type_arr[$v['tid']] = $v['type_name'];
-			}
 		
+			$room = json_decode(json_encode($this->getMachineRoom() ),true);
+			$room_arr = [];
+			foreach ($room as $k=> $v) {
+				$room_arr[$v['roomid']] = $v['machine_room_name'];
+			}
+			$room_arr[0] = '合计';
+
 			foreach($index as $key=>$value) {
 			// 对应的字段的数据转换
-			// return 123;
-				$index[$key]['type_name'] 	= $type_arr[$value['tid']];
-				$index[$key]['top_status'] 	= $status[$value['top_status']];
-				$index[$key]['home_status'] 	= $status[$value['home_status']];
-				
+				$index[$key]['room_name'] 	= $room_arr[$value['room_id']];				
 			}
-
+			$index = json_decode(json_encode($index),true);
 			$return['data'] = $index;
 			$return['code'] = 1;
 			$return['msg'] = '获取信息成功！！';
@@ -61,121 +200,12 @@ class  MachineStatistics extends Model
 			$return['code'] = 0;
 			$return['msg'] = '暂无数据';
 		}
+
 		// 返回
 		return $return;
 	}
 
 
-	/**
-	* 对文章信息进行添加处理
-	* @param  array $data 要添加的数据
-	* @return array      返回的信息和状态
-	*/
-	public function insert($data){
-
-		if($data){
-			// 存在数据就用model进行数据写入操作
-			// $fill = $this->fill($data);
-		
-			$row = $this->create($data);
-
-			if($row != false){
-			// 插入数据成功
-				$return['data'] = $row->id;
-				$return['code'] = 1;
-				$return['msg'] = '消息发布成功!!';
-
-			} else {
-			// 插入数据失败
-				$return['data'] = '';
-				$return['code'] = 0;
-				$return['msg'] = '消息发布失败!!';
-			}
-		} else {
-			// 未有数据传递
-			$return['data'] = '';
-			$return['code'] = 0;
-			$return['msg'] = '请检查您要新增的信息是否正确!!';
-		}
-		return $return;
-
-	}
-  	 /**
-	 * 对要修改的信息进行处理
-	 * @param  array $data 要修改的数据
-	 * @return array       返回信息和状态
-	 */
-	public function edit($data){
-		if($data && $data['id']+0) {
-			$edit = $this->find($data['id']);
-			$edit->tid 		= $data['tid'];
-			$edit->title 		= $data['title'];
-			$edit->content 		= $data['content'];
-			$edit->top_status 	= $data['top_status'];
-			$edit->home_status 	= $data['home_status'];
-			$edit->seoKeywords 	= $data['seoKeywords'];
-			$edit->seoTitle 		= $data['seoTitle'];
-			$edit->seoDescription 	= $data['seoDescription'];
-			$edit->digest 		= $data['digest'];
-			$row = $edit->save();
-			if($row != false){
-				$return['code'] 	= 1;
-				$return['msg'] 	= '修改文章信息成功！！';
-			} else {
-				$return['code']	= 0;
-				$return['msg'] 	= '修改文章信息失败！！';
-			}
-		} else {
-			$return['code'] 	= 0;
-			$return['msg'] 	= '请确保信息正确';
-		}
-		return $return;
-	}
-	/**
-	 * 删除文章信息
-	 * @param  [type] $id [description]
-	 * @return [type]     [description]
-	 */
-	public function dele($id) {
-		if($id) {
-			$row = $this->where('id',$id)->delete();
-			if($row != false){
-				$return['code'] 	= 1;
-				$return['msg'] 	= '删除文章信息成功';
-			} else {
-				$return['code'] 	= 0;
-				$return['msg'] 	= '删除文章信息失败';
-			}
-		} else {
-			$return['code'] 	= 0;
-			$return['msg'] 	= '无法删除文章信息';
-		}
-
-		return $return;
-	}
-
-	/**
-	* 获取文章的信息
-	* @return array 返回相关的信息和数据
-	*/
-	public function get_news_type($id='') {
-		if($id){
-			$type = DB::table('tz_news_type')->find($id,['name']);
-			return $type;
-		} else {
-			$result = DB::table('tz_news_type')->select('id as tid','name as type_name')->get();
-			if($result) {
-				$return['data'] = $result;
-				$return['code'] = 1;
-				$return['msg'] = '文章类型获取成功!!';
-			} else {
-				$return['data'] = '';
-				$return['code'] = 0;
-				$return['msg'] = '文章类型获取失败!!';
-			}
-
-			return $return;
-		}
-	}
-
+	
+  	
 }

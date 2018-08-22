@@ -43,7 +43,7 @@ class IpsController extends Controller
     		$param = $request->only(['ip_start','ip_end','vlan','ip_company','ip_status','ip_lock','ip_note','ip_comproom']);
     		$create = new Ips();
     		// 传递数据到对应的model层处理
-    		$revert = $create->insert($param);
+    		$revert = $create->insertIps($param);
     		// 返回信息
     		return tz_ajax_echo($revert['data'],$revert['msg'],$revert['code']);
     	} else {

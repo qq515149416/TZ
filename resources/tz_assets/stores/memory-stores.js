@@ -49,8 +49,6 @@ class MemorysStores extends ActionBoundStores {
                 if(res.data.code==1) {
                     this.changeStoreData("memorys",MemoryStores,Object.assign(param,{
                         room: this.comprooms.find(item => item.roomid==param.room_id).machine_room_name,
-                        memory_used: "未使用",
-                        created_at: dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss"),
                         updated_at: dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss")
                     }));
                     resolve(true);

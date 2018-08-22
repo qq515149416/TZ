@@ -49,8 +49,6 @@ class HarddisksStores extends ActionBoundStores {
                 if(res.data.code==1) {
                     this.changeStoreData("harddisks",HarddiskStores,Object.assign(param,{
                         room: this.comprooms.find(item => item.roomid==param.room_id).machine_room_name,
-                        harddisk_used: "未使用",
-                        created_at: dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss"),
                         updated_at: dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss")
                     }));
                     resolve(true);

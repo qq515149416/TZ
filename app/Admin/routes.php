@@ -61,6 +61,9 @@ Route::group([
     $router->get('/machine_room/show', 'Show\TestController@index');
     $router->get('/resource/ip', 'Show\IpController@index');
     $router->get('/resource/machine_room', 'Show\MachineRoomController@index');
+    $router->get('/resource/cpu', 'Show\CpuController@index');
+    $router->get('/resource/harddisk', 'Show\HarddiskController@index');
+    $router->get('/resource/memory', 'Show\MemoryController@index');
     $router->get('/resource/cabinet', 'Show\CabinetController@index');
     $router->get('/article', 'Show\NewController@index');
 //人事

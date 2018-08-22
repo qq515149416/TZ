@@ -118,7 +118,8 @@ class AllInput extends React.Component {
                             error: false,
                             label: item.label,
                             defaultValue: this.props.editData ? this.props.editData[item.field] : "",
-                            disabled: disabled
+                            disabled: disabled,
+                            helperText: item.helperText
                         }
                     });
                 }
@@ -189,6 +190,7 @@ class AllInput extends React.Component {
                         defaultValue={inputAttr[inputTypeData.field].defaultValue}
                         inputRef = {(ref) => this[inputTypeData.field] = ref}
                         disabled={inputAttr[inputTypeData.field].disabled}
+                        helperText={inputAttr[inputTypeData.field].helperText ? inputAttr[inputTypeData.field].helperText : null}
                     />
                 );
             } else {

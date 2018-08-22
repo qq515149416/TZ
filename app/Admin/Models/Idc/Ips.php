@@ -84,6 +84,8 @@ class Ips extends Model
             if(empty($ip_end)){
                 unset($ip_end);
                 // 结束IP的第一组的为空则代表进行一条IP插入
+                    $data['ip'] = $ip_start;
+                    unset($ip_start);
                     $row = $this->create($data);
                     if($row != false){
                         // 插入数据成功
@@ -104,7 +106,7 @@ class Ips extends Model
                 $endstr = $end_str[0].'.'.$end_str[1].'.'.$end_str[2];
                 if($startstr != $endstr){
                     $return['data'] = '';
-                    $return['code'] = 2;
+                    $return['code'] = 0;
                     $return['msg'] = 'IP段需要一致才可以批量(192.168.1.1,192.168.1.25)';
                 } else {
                         // 起始的数字

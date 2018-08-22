@@ -196,7 +196,7 @@ class IpList extends React.Component {
         value: item.roomid,
         text: item.machine_room_name
       }
-    })
+    });
     return (
       <ListTableComponent 
         title="ip资源库"

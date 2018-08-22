@@ -41,7 +41,8 @@ const inputType = [
     type: "text",
     rule: {
       type: "add"
-    }
+    },
+    helperText: "如果只要添加一个ip只写IP起始段即可"
   },
   {
     field: "ip_end",

@@ -157,7 +157,7 @@ Route::group([
     Route::group([
         'prefix' => 'statistics',
     ],function (Router $router) {
-        $router->post('machine_statistics', 'Statistics\StatisticsController@machine_statistics');
+        $router->post('statisticsList', 'Statistics\StatisticsController@index');
     });
 
 

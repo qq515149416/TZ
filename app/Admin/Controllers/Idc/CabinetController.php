@@ -111,47 +111,31 @@ class CabinetController extends Controller
 
     /**
      * 删除机柜Ajax接口
+     * /tz_admin/cabinet/destroyByAjax
      * 参数:
-     *
+     * id :要删除的机柜的主键id
      *
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroyByAjax(Request $request)
     {
-//        //软删除
-//        $par = $request->post();
-//        //实例化
-//        $machineRoomModel = new MachineRoom();
-//
-//        //判断是否删除成功
-//        if ($machineRoomModel->destroy($par['id'])) {
-//            //软删除成功
-//            return tz_ajax_echo([], '删除成功', 1);
-//
-//        } else {
-//            //软删除失败
-//            return tz_ajax_echo([], '删除失败', 0);
-//
-//        }
+        //软删除
+        $par = $request->post();
+        //实例化
+        $cabineModel = new Cabinet();
+
+        //判断是否删除成功
+        if ($cabineModel->destroy($par['id'])) {
+            //软删除成功
+            return tz_ajax_echo([], '删除成功', 1);
+        } else {
+            //软删除失败
+            return tz_ajax_echo([], '删除失败', 0);
+
+        }
 
     }
-
-
-//
-//    /**
-//     * 查询机房信息列表
-//     * 类型:GET
-//     *
-//     */
-//    public function showMachineRoomByAjax()
-//    {
-//        //实例化
-//        $machineRoom = new MachineRoom();
-//
-//
-//
-//    }
 
 
 }

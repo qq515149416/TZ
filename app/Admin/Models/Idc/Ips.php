@@ -82,10 +82,10 @@ class Ips extends Model
             $startstr = $start_str[0].'.'.$start_str[1].'.'.$start_str[2];
             
             if(empty($ip_end)){
-                unset($ip_end);
+                // unset($ip_end);
                 // 结束IP的第一组的为空则代表进行一条IP插入
                     $data['ip'] = $ip_start;
-                    unset($ip_start);
+                    // unset($ip_start);
                     $row = $this->create($data);
                     if($row != false){
                         // 插入数据成功

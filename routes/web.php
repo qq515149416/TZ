@@ -18,6 +18,7 @@ Route::get('/', function () {
 //测试组
 Route::group([
     'prefix' => 'test',
+    'middleware'=>'UserOperationLog'
 ],function () {
     //测试
     Route::post('jun', 'TzAuth\RegisterController@test');

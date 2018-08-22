@@ -9,7 +9,7 @@
 // +----------------------------------------------------------------------
 // | @DateTime: 2018-08-014 17:21:37
 // +----------------------------------------------------------------------
-namespace App\Admin\Models\Cpu;
+namespace App\Admin\Models\Idc;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

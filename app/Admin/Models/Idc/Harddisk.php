@@ -9,7 +9,7 @@
 // +----------------------------------------------------------------------
 // | @DateTime: 2018-08-015 14:34:37
 // +----------------------------------------------------------------------
-namespace App\Admin\Models\Harddisk;
+namespace App\Admin\Models\Idc;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

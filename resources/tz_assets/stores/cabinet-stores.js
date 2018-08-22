@@ -5,7 +5,7 @@ const dateFormat = require('dateformat');
 class CabinetStores {
     @observable id =  1;
     @observable machineroom_id =  "";
-    @observable machineroom_name ="";
+    @observable cabinet_id ="";
     @observable use_state = "";
     @observable machine_count = "";
     @observable machine_room_name = "";
@@ -13,11 +13,11 @@ class CabinetStores {
     @observable use_type_cn = "";
     @observable created_at = "";
     @observable updated_at = "";
-    constructor({id, machineroom_id, machineroom_name, use_state, machine_count, machine_room_name, use_state_cn, use_type_cn,created_at,updated_at}) {
+    constructor({id, machineroom_id, cabinet_id, use_state, machine_count, machine_room_name, use_state_cn, use_type_cn,created_at,updated_at}) {
         Object.assign(this,{
             id,
             machineroom_id,
-            machineroom_name,
+            cabinet_id,
             use_state,
             machine_count,
             machine_room_name,
@@ -56,11 +56,13 @@ class CabinetsStores extends ActionBoundStores {
                 if(res.data.code==1) {
                     this.addStoreData("cabinets",CabinetStores,Object.assign(data,{
                         id: res.data.data,
-                        use_type: this.stateText(String(data.use_type),{
+                        use_type_cn: this.stateText(String(data.use_type),{
                             "0" : "内部机柜",
                             "1": "客户机"
                         }),
-                        machineroom_name: this.comprooms.find(item => item.roomid==data.machineroom_id).machine_room_name,
+                        machine_count: 0,
+                        use_state_cn: "未使用",
+                        machine_room_name: this.comprooms.find(item => item.roomid==data.machineroom_id).machine_room_name,
                         created_at: dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss"),
                         updated_at: dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss")
                     }));
@@ -85,7 +87,7 @@ class CabinetsStores extends ActionBoundStores {
                     ...{
                         id: item.id,
                         machineroom_id: item.machineroom_id,
-                        machineroom_name: item.machineroom_name,
+                        cabinet_id: item.cabinet_id,
                         use_state: item.use_state,
                         machine_count: item.machine_count,
                         machine_room_name: item.machine_room_name,
@@ -95,6 +97,7 @@ class CabinetsStores extends ActionBoundStores {
                         updated_at: item.updated_at || dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss")
                     }
                 }));
+                console.log(this.cabinets);
             }
         });
     }

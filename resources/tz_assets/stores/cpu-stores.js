@@ -50,7 +50,6 @@ class CpusStores extends ActionBoundStores {
                     this.changeStoreData("cpus",CpuStores,Object.assign(param,{
                         room: this.comprooms.find(item => item.roomid==param.room_id).machine_room_name,
                         cpu_used: "未使用",
-                        created_at: dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss"),
                         updated_at: dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss")
                     }));
                     resolve(true);

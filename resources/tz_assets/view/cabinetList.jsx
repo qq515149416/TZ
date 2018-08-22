@@ -3,12 +3,11 @@ import ListTableComponent from "../component/listTableComponent.jsx";
 import { inject,observer } from "mobx-react";
 
 const columnData = [
-    { id: 'machineroom_name', numeric: true, disablePadding: true, label: '机房' },
+    { id: 'cabinet_id', numeric: true, disablePadding: true, label: '机柜编号' },
     { id: 'use_state_cn', numeric: true, disablePadding: false, label: '使用状态' },
     { id: 'machine_count', numeric: true, disablePadding: false, label: '机器数量' },
     { id: 'machine_room_name', numeric: true, disablePadding: false, label: '机房' },
-    { id: 'use_type_cn', numeric: true, disablePadding: false ,label: '使用类型' },
-    { id: 'operat', numeric: true, disablePadding: false, label: '操作' }
+    { id: 'use_type_cn', numeric: true, disablePadding: false ,label: '使用类型' }
 ];
 const inputType = [
   {

@@ -19,33 +19,56 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Admin\Requests\Statistics\StatisticsRequest;
 
-use App\Admin\Models\Idc\MachineModel;
+
 
 
 class StatisticsController extends Controller
 {
 	use ModelForm;
 
-	// /**
-	// * 查找文章表的相关信息
-	// * @return json 返回相关的信息
-	// */
-	// public function index(){
-	// 	$index = new Statistics();
-	// 	$statistics = $index->index();
-	// 	// dd($ips['data']);
-	// 	return tz_ajax_echo($statistics['data'],$statistics['msg'],$statistics['code']);
-	// }
+	/**
+	* 查找统计表的相关信息
+	* @return json 返回相关的信息
+	*/
+	public function index( StatisticsRequest $request){
+		$res = $this->machineStatistics();
+		if($res == 1){
+			$msg = '数据更新成功 , ';
+		}else{
+			$msg = '数据更新失败 , ';
+		}
+		if($request->isMethod('post')) {
+			$machineModel = new MachineStatistics();
+
+			$month = $request->only(['month']);
+			if(isset($month['month'])){
+				$month = $month['month'];
+			}else{
+				$month = date("y-m");
+			}	
+
+			$info = $machineModel->getStatistics($month);	
+
+			return tz_ajax_echo($info['data'],$msg.$info['msg'],$info['code']);
+		}else{
+			return tz_ajax_echo([],$msg.'信息获取失败!!',0);
+		}
+	}
 
 	/**
-	 * 按机房统计machine各地区使用状况并存入数据库
+	 * 按机房统计machine各地区使用状况并存入或更新数据库,按月份区分
 	 * @param 
-	 * @return json             将相关的信息进行返回前台
+	 * @return code,1为更新成功,0为失败
 	 */
 
-	public function machine_statistics()
+	public function machineStatistics()
 	{
-		// return 123;
-		$machineModel = new MachineModel();
+
+		$machineModel = new MachineStatistics();
+
+		$result = $machineModel->statistics();
+		
+		return $result['code'];
+
 	}
 }

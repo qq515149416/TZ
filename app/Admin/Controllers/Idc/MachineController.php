@@ -85,7 +85,7 @@ class MachineController extends Controller
      */
     public function editMachine(MachineRequest $request){
     	if($request->isMethod('post')){
-    		$editdata = $request->only(['id','machine_num','cpu','memory','harddisk','cabinet','ip_id','machineroom','bandwidth','protect','loginname','loginpass','machine_type','used_status','machine_status','own_business','business_end','business_type','machine_note'])
+    		$editdata = $request->only(['id','machine_num','cpu','memory','harddisk','cabinet','ip_id','machineroom','bandwidth','protect','loginname','loginpass','machine_type','used_status','machine_status','own_business','business_end','business_type','machine_note']);
     		$editmachine = new MachineModel();
     		$return = $editmachine->editMachine($editdata);
     		return tz_ajax_echo($return,$return['msg'],$return['code']);

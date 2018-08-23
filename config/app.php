@@ -167,6 +167,8 @@ return [
 //        Stevenyangecho\UEditor\UEditorServiceProvider::class,
         //验证码
         Mews\Captcha\CaptchaServiceProvider::class,
+        //支付宝支付
+        Yansongda\LaravelPay\PayServiceProvider::class,
 
     ],
 
@@ -222,6 +224,8 @@ return [
          */
         //验证码
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
+        //支付宝
+        'Pay' => Yansongda\LaravelPay\Facades\Pay::class,
 
     ],
 

@@ -60,4 +60,7 @@ class WorkOrderController extends Controller
     		return tz_ajax_echo([],'工单状态修改失败!!',0);
     	}
     }
+
+
+    
 }

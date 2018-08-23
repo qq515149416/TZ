@@ -57,6 +57,11 @@ class WorkTypeController extends Controller
     	}
     }
 
+    /**
+     * 删除对应的工单类型信息
+     * @param  Request $request [description]
+     * @return json           相关的信息提示和状态返回
+     */
     public function deleteWorkType(Request $request){
     	if($request->isMethod('post')){
     		$id = $request->get('delete_id');

@@ -160,6 +160,25 @@ Route::group([
         $router->post('statisticsList', 'Statistics\StatisticsController@index');
     });
 
+    //工单接口
+    Route::group([
+        'prefix' => 'workorder',
+    ],function(Router $router){
+        $router->get('show','Work\WorkOrderController@showWorkOrder');
+        $router->post('insert','Work\WorkOrderController@insertWorkOrder');
+        $router->post('edit','Work\WorkOrderController@editWorkOrder');
+    });
+
+    //工单类型接口
+    Route::group([
+        'prefix' => 'worktype',
+    ],function(Router $router){
+        $router->get('show','Work\WorkTypeController@showWorkType');
+        $router->post('insert','Work\WorkTypeController@insertWorkType');
+        $router->post('edit','Work\WorkTypeController@editWorkType');
+        $router->post('delete','Work\WorkTypeController@editWorkType');
+    });
+
 
 });
 

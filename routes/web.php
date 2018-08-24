@@ -35,7 +35,9 @@ Route::group([
     Route::get('getNewsDetails', 'News\NewsController@getNewsDetails');
 });
 
-//腾正Auth   (登录注册验证)
+/**
+ * 腾正Auth   (登录注册验证)
+ */
 Route::group([
     'prefix' => 'auth',
     'middleware'=>'UserOperationLog',
@@ -45,7 +47,9 @@ Route::group([
 });
 
 
-//用户后台组   (所有用户后台路由此组下)
+/**
+ * 用户后台组   (所有用户后台路由此组下)
+ */
 Route::group([
     'prefix' => 'home',
     'middleware'=>'UserOperationLog',

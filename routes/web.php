@@ -26,14 +26,11 @@ Route::group([
     Route::get('jun3', 'TzAuth\RegisterController@sendCodeToEmail');
 });
 
-
-
-//用户后台组   (用户后台路由在这里写)
+//news接口路径
 Route::group([
-    'prefix' => 'home',
-    'middleware'=>'UserOperationLog'
+    'prefix' => 'news',
 ],function () {
-
-
-
+    //测试
+    Route::get('getNews', 'News\NewsController@getNewsList');
+    Route::get('getNewsDetails', 'News\NewsController@getNewsDetails');
 });

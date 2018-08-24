@@ -17,14 +17,22 @@ class WorkOrderModel extends Model
     public $timestamps = true;
     protected $dates = ['deleted_at'];
 
+    /**
+     * 显示对应状态的工单列表
+     * @param  array $where 工单状态
+     * @return array        返回相关的数据信息和状态
+     */
     public function showWorkOrder($where){
-    	$result = $this->where($where)->get(['id','work_num','orders_num','business_num','customer_id','customer_name','machine_num','submit_id','submit_name','content','identity','work_status','work_department','complete_time','complete_id','complete_name','summary','work_note','created_at','updated_at']);
+    	$result = $this->where($where)->get(['id','work_num','customer_id','customer_name','machine_num','submit_id','submit_name','content','identity','work_status','work_type','work_department','complete_time','complete_id','complete_name','summary','work_note','created_at','updated_at']);
     	if(!$result->isEmpty()){
     		$identity = [1=>'内部提交',2=>'客户提交'];
     		$work_status = [0=>'待处理',1=>'处理中',2=>'工单完成',3=>'工单取消'];
     		foreach($result as $showkey=>$showvalue){
     			$result[$showkey]['identi'] = $identity[$showvalue['identity']];
-    			$result[$showkey]['workstatus'] = $work_status[$showvalue['work_status']];	
+    			$result[$showkey]['workstatus'] = $work_status[$showvalue['work_status']];
+                $worktype = (array)$this->workType($showvalue['work_type']);
+                $result[$showkey]['worktype'] = $worktype['type_name'];
+                $result[$showkey]['parenttype'] = $worktype['parenttype'];	
     		}
     	}
     }
@@ -117,4 +125,22 @@ class WorkOrderModel extends Model
     	$staff = DB::table('oa_staff')->where('admin_users_id',$admin_id)->value('fullname');
     	return $staff;
     }
+
+    /**
+     * 查找对应的工单类型及工单父级类型数据
+     * @param  int $id 类型的id
+     * @return array     返回对应的工单类型数据
+     */
+    public function workType($id){
+        $worktype = DB::table('tz_worktype')->find($id,['parent_id','type_name']);
+        $parent_id = $worktype->parent_id;
+        if(!empty($parent_id)){
+            $worktype['parenttype'] = DB::table('tz_worktype')->where('id',$parent_id)->value('type_name');
+        } else {
+            $worktype['parenttype'] = '';
+        }
+        return $worktype;
+    }
+
+    // 部门待定
 }

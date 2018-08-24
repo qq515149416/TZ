@@ -16,50 +16,51 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 class NewsRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
+	/**
+	 * Determine if the user is authorized to make this request.
+	 *
+	 * @return bool
+	 */
+	public function authorize()
+	{
+		return true;
+	}
 
-    /**
-     * 规则.
-     *
-     * @return array
-     */
-    public function rules()
-    {
-        return [
+	/**
+	 * 规则.
+	 *
+	 * @return array
+	 */
+	public function rules()
+	{
+		return [
 
-	'title'		=> 'required|max:50',
-	'content'	=> 'required|min:30',
-	'digest'		=> 'required'
-        ];
-    }
+			'title'		=> 'required|max:50',
+			'content'	=> 'required|min:30',
+			'digest'		=> 'required',
+			'list_order'	=> 'numeric',
+		];
+	}
 
-    public function messages()
-    {
-        
-        return  [
-            'title.required' 		=> '标题必须填写',
-            'title.max' 		=> '标题长度不得超过50字符',
-            'content.required' 	=> '内容必须填写',
-            'content.required' 	=> '内容长度必须大于30字符',
-            'digest.required' 		=> '摘要必须填写',
+	public function messages()
+	{
+		
+		return  [
+			'title.required' 		=> '标题必须填写',
+			'title.max' 		=> '标题长度不得超过50字符',
+			'content.required' 	=> '内容必须填写',
+			'content.required' 	=> '内容长度必须大于30字符',
+			'digest.required' 	=> '摘要必须填写',
+			'list_order.numeric'	=> '排序必须为数字',
+		];
+	}
 
-        ];
-    }
-
-    /**
-     * 重新定义数据字段返回的提示信息
-     */
-    public function failedValidation(Validator $validator) {
-        $msg = $validator->errors()->first();
-        header('Content-type:application/json');
-        exit('{"code": 0,"data":[],"msg":"'.$msg.'"}'); 
-    }
+	/**
+	 * 重新定义数据字段返回的提示信息
+	 */
+	public function failedValidation(Validator $validator) {
+		$msg = $validator->errors()->first();
+		header('Content-type:application/json');
+		exit('{"code": 0,"data":[],"msg":"'.$msg.'"}'); 
+	}
 }

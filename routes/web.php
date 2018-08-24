@@ -25,3 +25,15 @@ Route::group([
     Route::get('jun2', 'TzAuth\RegisterController@test2');
     Route::get('jun3', 'TzAuth\RegisterController@sendCodeToEmail');
 });
+
+
+
+//用户后台组   (用户后台路由在这里写)
+Route::group([
+    'prefix' => 'home',
+    'middleware'=>'UserOperationLog'
+],function () {
+
+
+
+});

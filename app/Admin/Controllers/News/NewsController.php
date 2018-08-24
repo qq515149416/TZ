@@ -45,7 +45,7 @@ class NewsController extends Controller
 		//验证提交方式
 		if($request->isMethod('post')) {
 		// 符合提交方式的进行数据的提取
-		$article = $request->only(['tid', 'title','content','top_status','home_status','seoKeywords','seoTitle','seoDescription','digest']);       
+		$article = $request->only(['tid', 'title','content','top_status','home_status','seoKeywords','seoTitle','seoDescription','digest','list_order']);       
 
 		$create = new News();
 		// 传递数据到对应的model层处理
@@ -69,7 +69,7 @@ class NewsController extends Controller
 		//判断提交的方式
 		if($request->isMethod('post')){
 			// 符合判断的进行数据提取
-			$data = $request->only(['id','tid', 'title','content','top_status','home_status','seoKeywords','seoTitle','seoDescription','digest']);
+			$data = $request->only(['id','tid', 'title','content','top_status','home_status','seoKeywords','seoTitle','seoDescription','digest','list_order']);
 			$edit = new News();
 			// 模型层处理
 			$result = $edit->edit($data);

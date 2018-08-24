@@ -1,11 +1,11 @@
 <?php
 
 // +----------------------------------------------------------------------
-// | Author: 街"角．回 忆 <2773495294@qq.com>
+// | Author: kiri <420541662@qq.com>
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016-2018 by cmd
 // +----------------------------------------------------------------------
-// | Description: 处理IP的模型
+// | Description: 处理新闻消息的模型
 // +----------------------------------------------------------------------
 // | @DateTime: 2018-08-01 14:21:37
 // +----------------------------------------------------------------------
@@ -24,7 +24,7 @@ class  News extends Model
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
 	
-	protected $fillable = ['tid', 'title','content','created_at','updated_at','top_status','home_status','seoKeywords','seoTitle','seoDescription','digest'];
+	protected $fillable = ['tid', 'title','content','created_at','updated_at','top_status','home_status','seoKeywords','seoTitle','seoDescription','digest','list_order'];
 	// 测试
 
 	/**
@@ -33,7 +33,7 @@ class  News extends Model
 	*/
 	public function index(){
 		// 用模型进行数据查询
-		$index = $this->all(['id','tid','title','content','top_status','home_status','seoKeywords','seoTitle','seoDescription','digest','created_at','updated_at']);
+		$index = $this->all(['id','tid','title','content','top_status','home_status','seoKeywords','seoTitle','seoDescription','digest','created_at','updated_at','list_order']);
 
 		if(!$index->isEmpty()){
 		// 判断存在数据就对部分需要转换的数据进行数据转换的操作
@@ -118,6 +118,7 @@ class  News extends Model
 			$edit->seoTitle 		= $data['seoTitle'];
 			$edit->seoDescription 	= $data['seoDescription'];
 			$edit->digest 		= $data['digest'];
+			$edit->list_order  	= $data['list_order'];
 			$row = $edit->save();
 			if($row != false){
 				$return['code'] 	= 1;

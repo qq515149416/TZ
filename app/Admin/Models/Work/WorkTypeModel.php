@@ -35,6 +35,7 @@ class WorkTypeModel extends Model
     		$return['code'] = 0;
     		$return['msg'] = '获取工单类型信息失败';
     	}
+        return $return;
     }
 
     /**
@@ -81,6 +82,7 @@ class WorkTypeModel extends Model
     		$return['code'] = 0;
     		$return['msg'] = '无法修改工单类型信息';
     	}
+        return $return;
     }
 
     /**
@@ -102,6 +104,7 @@ class WorkTypeModel extends Model
     		$return['code'] = 0;
     		$return['msg'] = '工单类型信息无法删除！！';
     	}
+        return $return;
     }
 
     /**

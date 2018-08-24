@@ -34,3 +34,12 @@ Route::group([
     Route::get('getNews', 'News\NewsController@getNewsList');
     Route::get('getNewsDetails', 'News\NewsController@getNewsDetails');
 });
+
+//用户后台组   (所有用户后台路由此组下)
+Route::group([
+    'prefix' => 'home',
+    'middleware'=>'UserOperationLog',
+],function () {
+
+
+});

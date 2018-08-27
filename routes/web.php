@@ -35,6 +35,7 @@ Route::group([
     Route::get('getNewsDetails', 'News\NewsController@getNewsDetails');
 });
 
+<<<<<<< Updated upstream
 /**
  * 腾正Auth   (登录注册验证)
  */
@@ -56,4 +57,16 @@ Route::group([
 ],function () {
 
 
+=======
+
+//支付接口
+Route::group([
+    'prefix' => 'pay',
+    'middleware'=>'UserOperationLog'
+],function () {
+    Route::get('index', 'Pay\PayController@index');
+    Route::get('notify', 'Pay\PayController@notify');
+    Route::get('rechargeReturn', 'Pay\PayController@rechargeReturn');
+    Route::get('form', 'Pay\PayController@form');
+>>>>>>> Stashed changes
 });

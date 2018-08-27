@@ -34,3 +34,4 @@ public/.uini
 !/app/Admin/Controllers/Show
 /temporary_file.code-workspace
 .gitignore
+public/logs/*

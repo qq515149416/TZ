@@ -35,7 +35,6 @@ Route::group([
     Route::get('getNewsDetails', 'News\NewsController@getNewsDetails');
 });
 
-<<<<<<< Updated upstream
 /**
  * 腾正Auth   (登录注册验证)
  */

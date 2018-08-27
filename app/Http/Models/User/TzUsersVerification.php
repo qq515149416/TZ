@@ -29,8 +29,8 @@ class  TzUsersVerification extends Model
     public function addMailToken($accounts,$token)
     {
 
-        //测试参数
-        $accounts = '568171152@qq.com';
+//        //测试参数
+//        $accounts = '568171152@qq.com';
 
         //根据条件更新
         $res = $this->updateOrCreate([

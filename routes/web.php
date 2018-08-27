@@ -15,7 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//测试组
+/**
+ * 测试组
+ */
 Route::group([
     'prefix' => 'test',
     'middleware'=>'UserOperationLog'
@@ -42,6 +44,10 @@ Route::group([
     'prefix' => 'auth',
     'middleware'=>'UserOperationLog',
 ],function () {
+    //发送邮箱验证码
+    Route::post('sendEmailCode', 'TzAuth\RegisterController@sendCodeToEmail');
+    //通过邮箱注册帐号
+    Route::post('registerByEmail', 'TzAuth\RegisterController@registerByEmail');
 
 
 });

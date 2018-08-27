@@ -34,3 +34,31 @@ Route::group([
     Route::get('getNews', 'News\NewsController@getNewsList');
     Route::get('getNewsDetails', 'News\NewsController@getNewsDetails');
 });
+
+/**
+ * 腾正Auth   (登录注册验证)
+ */
+Route::group([
+    'prefix' => 'auth',
+    'middleware'=>'UserOperationLog',
+],function () {
+
+
+});
+
+
+/**
+ * 用户后台组   (所有用户后台路由此组下)
+ */
+Route::group([
+    'prefix' => 'home',
+    'middleware'=>'UserOperationLog',
+],function () {
+//支付接口
+
+    Route::get('payIndex', 'Pay\PayController@index');
+    Route::get('payNotify', 'Pay\PayController@notify');
+    Route::get('payRechargeReturn', 'Pay\PayController@rechargeReturn');
+    Route::get('payForm', 'Pay\PayController@form');
+
+});

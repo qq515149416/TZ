@@ -24,7 +24,7 @@ class RegisterController extends Controller
 //        Auth::logout();
         Auth::attempt(['email' => '568171152@qq.com', 'password' => 'zhangjun'], true);
 //        dump(Auth::check());
-//        dump(Hash::make('zhangjun'));
+        dump(Hash::make('zhangjun'));
     }
 
     public function test2()
@@ -47,18 +47,22 @@ class RegisterController extends Controller
      */
     public function sendCodeToEmail()
     {
+
+        dd(password_verify('zhangjunn','$2y$10$yhU70fXqFHFvOZlZgHNUeOyYJftxC3qxdlt/m27wGN5G7z4ZciFru'));
+
         //生成随机验证码
-        $code = mt_rand(0, 99999);
+//        $code = mt_rand(0, 99999);
+        $token =csrf_token();
 
         //测试接受代码的邮箱
         $mail='568171152@qq.com';
 //        dump(Auth::check());
         //实例化
         $usersVerificationModel = new TzUsersVerification();
-        dd($usersVerificationModel->addMailToken());
+//        dd($usersVerificationModel->addMailToken());
 
         //发送邮件
-        Mail::send('emails.code', ['code' => $code], function ($message) use ($mail) {
+        Mail::send('emails.code', ['token' => $token], function ($message) use ($mail) {
             $to = $mail;
             $message->to($to)->subject('邮箱验证');
         });

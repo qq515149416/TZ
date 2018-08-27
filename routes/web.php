@@ -55,18 +55,11 @@ Route::group([
     'prefix' => 'home',
     'middleware'=>'UserOperationLog',
 ],function () {
-
-
-=======
-
 //支付接口
-Route::group([
-    'prefix' => 'pay',
-    'middleware'=>'UserOperationLog'
-],function () {
-    Route::get('index', 'Pay\PayController@index');
-    Route::get('notify', 'Pay\PayController@notify');
-    Route::get('rechargeReturn', 'Pay\PayController@rechargeReturn');
-    Route::get('form', 'Pay\PayController@form');
->>>>>>> Stashed changes
+
+    Route::get('payIndex', 'Pay\PayController@index');
+    Route::get('payNotify', 'Pay\PayController@notify');
+    Route::get('payRechargeReturn', 'Pay\PayController@rechargeReturn');
+    Route::get('payForm', 'Pay\PayController@form');
+
 });

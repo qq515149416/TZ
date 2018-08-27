@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Collection;
 class WorkOrderModel extends Model
 {
     use  SoftDeletes;
-    protected $table = 'tz_workorder';
+    protected $table = 'tz_work_order';
     public $timestamps = true;
     protected $dates = ['deleted_at'];
 

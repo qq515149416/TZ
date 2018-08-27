@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Collection;
 class WorkTypeModel extends Model
 {
     use SoftDeletes;
-    protected $table = 'tz_worktype';
+    protected $table = 'tz_work_type';
     public $timestamps = true;
     protected $dates = ['deleted_at'];
 

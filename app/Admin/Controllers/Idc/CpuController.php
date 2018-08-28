@@ -104,15 +104,5 @@ class CpuController extends Controller
 	}
 
 
-	 /**
-	* 查找文章类型的接口
-	* @return json 返回相关的信息
-	*/
-	public function get_news_type() {
-		$newsModel = new News();
-		$result = $newsModel->get_news_type();
-		return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
-	}
-
-
+	
 }

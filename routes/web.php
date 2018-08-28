@@ -60,6 +60,11 @@ Route::group([
     'prefix' => 'home',
     'middleware'=>'UserOperationLog',
 ],function () {
+//支付接口
 
+    Route::get('payIndex', 'Pay\PayController@index');
+    Route::get('payRechargeNotify', 'Pay\PayController@rechargeNotify');
+    Route::get('payRechargeReturn', 'Pay\PayController@rechargeReturn');
+    Route::get('payForm', 'Pay\PayController@form');
 
 });

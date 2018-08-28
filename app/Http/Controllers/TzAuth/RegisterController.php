@@ -68,7 +68,7 @@ class RegisterController extends Controller
 
             //添加帐号
             $addUserInfo = $TzUserModel->create([
-//                'name'     => $par['name'],
+//                'name'     => $par['name'], //用户名暂时不写入
                 'email'    => $par['email'],
                 'password' => Hash::make($par['password']),
                 'status'   => 2,  //状态为已验证

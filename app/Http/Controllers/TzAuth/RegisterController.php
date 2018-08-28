@@ -4,6 +4,7 @@ namespace App\Http\Controllers\TzAuth;
 
 use App\Http\Models\TzUser;
 use App\Http\Models\User\TzUsersVerification;
+use App\Http\Requests\TzAuth\RegisterByEmailRequest;
 use App\Http\Requests\TzAuth\SendEmailCodeRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -18,14 +19,11 @@ class RegisterController extends Controller
      */
     public function test(Request $request)
     {
-//        dump($request->all());
 
-//        dump(Auth::login(TzUser::find(2)));
-//        Auth::loginUsingId(2);
 //        Auth::logout();
-        Auth::attempt(['email' => '568171152@qq.com', 'password' => 'zhangjun'], true);
-//        dump(Auth::check());
-        dump(Hash::make('zhangjun'));
+        dump(Auth::check());
+        dump(Auth::user());
+
     }
 
     public function test2()
@@ -50,8 +48,9 @@ class RegisterController extends Controller
      * token :  邮箱验证码
      * password :密码
      *
+     *
      */
-    public function registerByEmail(Request $request)
+    public function registerByEmail(RegisterByEmailRequest $request)
     {
         //获取参数
         $par = $request->all();
@@ -60,23 +59,29 @@ class RegisterController extends Controller
         $usersVerificationModel = new TzUsersVerification();
 
         //判断邮箱验证码是否正确
-        $verificationData = $usersVerificationModel->where('accounts', '=', '568171152@qq.com')->first();
+        $verificationData = $usersVerificationModel->where('accounts', '=', $par['email'])->first();
 
         //验证码是否正确
-        if ($par['token'] == $verificationData['token']) {
+        if (($par['token'] == $verificationData['token']) && ($par['email'] == $verificationData['accounts'])) {
+            //实例化
+            $TzUserModel = new TzUser();
 
-            
-            dump('验证成功');
+            //添加帐号
+            $addUserInfo = $TzUserModel->create([
+//                'name'     => $par['name'],
+                'email'    => $par['email'],
+                'password' => Hash::make($par['password']),
+                'status'   => 2,  //状态为已验证
+            ]);
+            Auth::loginUsingId($addUserInfo['id']);
+//            dump(Auth::loginUsingId($addUserInfo['id'],true));
+//            dump(Auth::check());
+//            dump($addUserInfo);
+//            dump('验证成功');
+            return tz_ajax_echo([],'注册成功',1);
         } else {
-
-            dump('验证失败');
+            return tz_ajax_echo([],'注册失败,验证码失败',0);
         }
-
-        dump($par['token']);
-        dump($verificationData['token']);
-
-        dd($verificationData);
-
     }
 
     /**

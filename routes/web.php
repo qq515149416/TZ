@@ -44,6 +44,8 @@ Route::group([
     'prefix' => 'auth',
     'middleware'=>'UserOperationLog',
 ],function () {
+    //测试
+    Route::post('test', 'TzAuth\RegisterController@test');
     //发送邮箱验证码
     Route::post('sendEmailCode', 'TzAuth\RegisterController@sendCodeToEmail');
     //通过邮箱注册帐号

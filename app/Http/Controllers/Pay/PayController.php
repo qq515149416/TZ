@@ -71,12 +71,7 @@ class PayController extends Controller
 					return tz_ajax_echo([],'创建订单失败',0);
 				}
 				break;
-			case 2:
-				echo "Number 2";
-				break;
-			case 3:
-				echo "Number 3";
-				break;
+
 			default:
 				return tz_ajax_echo([],'请提供付款用途',0);
 		}
@@ -117,13 +112,13 @@ class PayController extends Controller
 		// 订单总金额：$data->total_amount
 	}
 
-	public function rechargeNotify()
+	public function rechargeNotify(Request $request)
 	{
 
 		$alipay = Pay::alipay($this->config);
 	
 		try{
-			$data = $alipay->verify(); // 是的，验签就这么简单！
+			$data = $alipay->verify($request->all()); // 是的，验签就这么简单！
 
 			$app_id				= $data->app_id;
 			$seller_id			= $data->seller_id;
@@ -134,16 +129,17 @@ class PayController extends Controller
 				return tz_ajax_echo('','app_id错误,请检查',0);
 			}
 
-			$info['trade_status']		= $data->trade_status;
-			if($info['trade_status'] != 'TRADE_FINISHED'){
-				return 'failed';
-			}
+			// $info['trade_status']		= $data->trade_status;
+			
+			// if($info['trade_status'] != 'TRADE_FINISHED' ){
+			// 	return 'failed';
+			// }
 			
 			$info['trade_no'] 		= $data->out_trade_no;
 			$info['voucher']			= $data->trade_no;
 			$info['recharge_amount']	= $data->total_amount;
 			$info['timestamp']		= $data->timestamp;
-
+		
 			$model = new Recharge();
 			$res = $model->returnInsert($info);
 			if($res['code'] != 1){

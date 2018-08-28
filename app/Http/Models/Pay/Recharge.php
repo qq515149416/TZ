@@ -30,10 +30,10 @@ class Recharge extends Model
 			if(count($test)>0){
 				$created_at = strtotime($test[0]['created_at']);
 				$time = time();	
-				if($time - $created_at <= 60){
+				if($time - $created_at <= 300){
 					$return['data'] = '';
 					$return['code'] = 0;
-					$return['msg'] = '一分钟内只能创建一张订单!!';
+					$return['msg'] = '5分钟内只能创建一张订单!!';
 					return $return;
 				}else{
 					$row = $this->where('id',$test[0]['id'])->delete();

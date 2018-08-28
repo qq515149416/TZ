@@ -24,6 +24,8 @@ class RegisterController extends Controller
         dump(Auth::check());
         dump(Auth::user());
 
+//        return response()->view()
+
     }
 
     public function test2()
@@ -74,10 +76,6 @@ class RegisterController extends Controller
                 'status'   => 2,  //状态为已验证
             ]);
             Auth::loginUsingId($addUserInfo['id']);
-//            dump(Auth::loginUsingId($addUserInfo['id'],true));
-//            dump(Auth::check());
-//            dump($addUserInfo);
-//            dump('验证成功');
             return tz_ajax_echo([],'注册成功',1);
         } else {
             return tz_ajax_echo([],'注册失败,验证码失败',0);

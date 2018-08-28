@@ -114,7 +114,6 @@ class PayController extends Controller
 
 	public function rechargeNotify(Request $request)
 	{
-
 		$alipay = Pay::alipay($this->config);
 	
 		try{
@@ -139,7 +138,7 @@ class PayController extends Controller
 			$info['voucher']			= $data->trade_no;
 			$info['recharge_amount']	= $data->total_amount;
 			$info['timestamp']		= $data->timestamp;
-		
+
 			$model = new Recharge();
 			$res = $model->returnInsert($info);
 			if($res['code'] != 1){

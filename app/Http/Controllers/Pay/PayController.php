@@ -53,10 +53,10 @@ class PayController extends Controller
 		switch ($info['pay_for'])
 		{
 			case 1:
-				// $this->config['return_url'] 	= 'http://tz.jungor.cn/home/payRechargeReturn';
-				// $this->config['notify_url'] 	= 'http://tz.jungor.cn/home/payRechargeNotify';
-				$this->config['return_url'] 	= 'http://localhost/home/payRechargeReturn';
-				$this->config['notify_url'] 	= 'http://localhost/home/payRechargeNotify';
+				 $this->config['return_url'] 	= 'http://tz.jungor.cn/home/payRechargeReturn';
+				 $this->config['notify_url'] 	= 'http://tz.jungor.cn/home/payRechargeNotify';
+				//$this->config['return_url'] 	= 'http://localhost/home/payRechargeReturn';
+				//$this->config['notify_url'] 	= 'http://localhost/home/payRechargeNotify';
 
 				$model = new Recharge();
 				$data['trade_no'] 		= $order['out_trade_no'];

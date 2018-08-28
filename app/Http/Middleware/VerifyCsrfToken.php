@@ -20,7 +20,9 @@ class VerifyCsrfToken extends Middleware
         'tz_admin/jun/*',
         'tz_admin/machine_room/*',
         'tz_admin/cabinet/*',
-        'test/*'
+        'test/*',
+        'auth/*'
+
 
     ];
 }

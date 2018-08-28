@@ -61,7 +61,7 @@ Route::group([
 //支付接口
 
     Route::get('payIndex', 'Pay\PayController@index');
-    Route::get('payRechargeNotify', 'Pay\PayController@rechargeNotify');
+    Route::post('payRechargeNotify', 'Pay\PayController@rechargeNotify');
     Route::get('payRechargeReturn', 'Pay\PayController@rechargeReturn');
     Route::get('payForm', 'Pay\PayController@form');
 

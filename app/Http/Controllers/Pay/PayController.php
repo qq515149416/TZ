@@ -28,6 +28,7 @@ class PayController extends Controller
 			
 		],
 		'mode' => 'dev', // optional,设置此参数，将进入沙箱模式
+		'timeout_express'	=> '5m',
 	];
 
 	/**
@@ -97,7 +98,7 @@ class PayController extends Controller
 		if($seller_id != $this->seller_id){
 			return tz_ajax_echo('','卖家id错误,请检查',0);
 		}
-		if($app_id != $this->app_id){
+		if($app_id != $this->config['app_id']){
 			return tz_ajax_echo('','app_id错误,请检查',0);
 		}
 
@@ -129,7 +130,7 @@ class PayController extends Controller
 			if($seller_id != $this->seller_id){
 				return tz_ajax_echo('','卖家id错误,请检查',0);
 			}
-			if($app_id != $this->app_id){
+			if($app_id != $this->config['app_id']){
 				return tz_ajax_echo('','app_id错误,请检查',0);
 			}
 

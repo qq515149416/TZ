@@ -4,6 +4,8 @@ namespace App\Http\Controllers\TzAuth;
 
 use App\Http\Models\TzUser;
 use App\Http\Models\User\TzUsersVerification;
+use App\Http\Requests\TzAuth\RegisterByEmailRequest;
+use App\Http\Requests\TzAuth\SendEmailCodeRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -17,14 +19,13 @@ class RegisterController extends Controller
      */
     public function test(Request $request)
     {
-//        dump($request->all());
 
-//        dump(Auth::login(TzUser::find(2)));
-//        Auth::loginUsingId(2);
 //        Auth::logout();
-        Auth::attempt(['email' => '568171152@qq.com', 'password' => 'zhangjun'], true);
-//        dump(Auth::check());
-        dump(Hash::make('zhangjun'));
+        dump(Auth::check());
+        dump(Auth::user());
+
+//        return response()->view()
+
     }
 
     public function test2()
@@ -41,25 +42,65 @@ class RegisterController extends Controller
 
     }
 
+    /**
+     * 通过邮箱注册帐号
+     *
+     * 参数:
+     * email: 邮箱帐号
+     * token :  邮箱验证码
+     * password :密码
+     *
+     *
+     */
+    public function registerByEmail(RegisterByEmailRequest $request)
+    {
+        //获取参数
+        $par = $request->all();
+
+        //实例化
+        $usersVerificationModel = new TzUsersVerification();
+
+        //判断邮箱验证码是否正确
+        $verificationData = $usersVerificationModel->where('accounts', '=', $par['email'])->first();
+
+        //验证码是否正确
+        if (($par['token'] == $verificationData['token']) && ($par['email'] == $verificationData['accounts'])) {
+            //实例化
+            $TzUserModel = new TzUser();
+
+            //添加帐号
+            $addUserInfo = $TzUserModel->create([
+//                'name'     => $par['name'], //用户名暂时不写入
+                'email'    => $par['email'],
+                'password' => Hash::make($par['password']),
+                'status'   => 2,  //状态为已验证
+            ]);
+            Auth::loginUsingId($addUserInfo['id']);
+            return tz_ajax_echo([],'注册成功',1);
+        } else {
+            return tz_ajax_echo([],'注册失败,验证码失败',0);
+        }
+    }
 
     /**
      * 发送邮箱验证码
+     *
+     * 参数:
+     * email: 发送验证码的邮箱
+     * captcha : 验证码
+     *
      */
-    public function sendCodeToEmail()
+    public function sendCodeToEmail(SendEmailCodeRequest $request)
     {
 
-        dd(password_verify('zhangjunn','$2y$10$yhU70fXqFHFvOZlZgHNUeOyYJftxC3qxdlt/m27wGN5G7z4ZciFru'));
+        //获取参数
+        $par = $request->all();
 
         //生成随机验证码
-//        $code = mt_rand(0, 99999);
-        $token =csrf_token();
+        $token = mt_rand(10000, 99999);
 
         //测试接受代码的邮箱
-        $mail='568171152@qq.com';
-//        dump(Auth::check());
-        //实例化
-        $usersVerificationModel = new TzUsersVerification();
-//        dd($usersVerificationModel->addMailToken());
+        $mail = $par['email'];
 
         //发送邮件
         Mail::send('emails.code', ['token' => $token], function ($message) use ($mail) {
@@ -68,22 +109,25 @@ class RegisterController extends Controller
         });
 
         // 返回的一个错误数组，利用此可以判断是否发送成功
-        if(count(Mail::failures()) < 1){
+        if (count(Mail::failures()) < 1) {
+            //实例化
+            $usersVerificationModel = new TzUsersVerification();
+            $usersVerificationModel->addMailToken($mail, $token);
 
-
-
-            return tz_ajax_echo([],'验证码发送成功',1);
-        }else{
-            return tz_ajax_echo([],'验证码发送失败',0);
+            return tz_ajax_echo([], '验证码发送成功', 1);
+        } else {
+            return tz_ajax_echo([], '验证码发送失败', 0);
         }
 
     }
+
+
+
 
 //return User::create([
 //'name' => $data['name'],
 //'email' => $data['email'],
 //'password' => Hash::make($data['password']),
 //]);
-
 
 }

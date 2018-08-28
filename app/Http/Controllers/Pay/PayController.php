@@ -35,51 +35,80 @@ class PayController extends Controller
 	*@param $pay_for	用于确认付款用途,1为充值
 	*@return 付款的链接
  	**/
+
 	public function index(PayRequest $request)
 	{
+		//获取支付信息
 		$info = $request->only(['pay_for', 'total_amount','subject']);       
 		$user_id = 2;
+
+		$order = [
+			'out_trade_no' 	=> 'tz_'.time().'-'.$user_id,	//本地订单号
+			'total_amount' 	=> $info['total_amount'],		//金额
+			'subject' 	=> $info['subject'],		//用途
+		];
+
+		//根据支付信息生成支付宝的调回地址及异步通知地址
+		//再顺便生成订单
 		switch ($info['pay_for'])
 		{
 			case 1:
-			$this->config['return_url'] 	= 'http://localhost/home/payRechargeReturn';
-			$this->config['notify_url'] 	= 'http://localhost/home/payRechargeNotify';
-			break;
+				 $this->config['return_url'] 	= 'http://tz.jungor.cn/home/payRechargeReturn';
+				 $this->config['notify_url'] 	= 'http://tz.jungor.cn/home/payRechargeNotify';
+				//$this->config['return_url'] 	= 'http://localhost/home/payRechargeReturn';
+				//$this->config['notify_url'] 	= 'http://localhost/home/payRechargeNotify';
+
+				$model = new Recharge();
+				$data['trade_no'] 		= $order['out_trade_no'];
+				$data['recharge_amount']	= $order['total_amount'];
+				$data['user_id']			= $user_id;
+				$data['recharge_way']		= '支付宝';
+				$data['trade_status']		= 0;
+
+				$makeOrder = $model->makeOrder($data);
+				if($makeOrder['code'] == 0){
+					return tz_ajax_echo([],'创建订单失败',0);
+				}
+				break;
 			case 2:
-			echo "Number 2";
-			break;
+				echo "Number 2";
+				break;
 			case 3:
-			echo "Number 3";
-			break;
+				echo "Number 3";
+				break;
 			default:
-			return tz_ajax_echo([],'请提供付款用途',0);
+				return tz_ajax_echo([],'请提供付款用途',0);
 		}
-		$order = [
-			'out_trade_no' 	=> time().'-'.$user_id,
-			'total_amount' 	=> $info['total_amount'],
-			'subject' 	=> $info['subject'],
-		];
 		
 		$alipay = Pay::alipay($this->config)->web($order);
-		
+
 		return $alipay;// laravel 框架中请直接 `return $alipay`
 	}
 
-	public function rechargeReturn(RechargeRequest $request)
-	{
-		$data = Pay::alipay($this->config)->verify(); // 是的，验签就这么简单！
-		
-		$arr = $request->all();
-		$info['trade_no'] 		= $arr['out_trade_no'];
-		$info['voucher']			= $arr['trade_no'];
-		$info['recharge_amount']	= $arr['total_amount'];
-		$info['timestamp']		= $data['timestamp'];
-		$brr = explode('-',$info['trade_no']);
-		$info['user_id']			= $brr[1];
-		$info['recharge_way']		= '支付宝';
 
+	public function rechargeReturn()
+	{
+		exit;
+		//验签
+		$data = Pay::alipay($this->config)->verify(); // 是的，验签就这么简单！
+
+		$app_id				= $data->app_id;
+		$seller_id			= $data->seller_id;
+		if($seller_id != $this->seller_id){
+			return tz_ajax_echo('','卖家id错误,请检查',0);
+		}
+		if($app_id != $this->app_id){
+			return tz_ajax_echo('','app_id错误,请检查',0);
+		}
+
+		//获取信息并根据订单号插入数据库
+		$info['trade_no'] 		= $data->out_trade_no;	//本地订单
+		$info['voucher']			= $data->trade_no;
+		$info['recharge_amount']	= $data->total_amount;
+		$info['timestamp']		= $data->timestamp;
+	
 		$model = new Recharge();
-		$res = $model->insert($info);
+		$res = $model->returnInsert($info);
 
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 		// 订单号：$data->out_trade_no
@@ -87,14 +116,38 @@ class PayController extends Controller
 		// 订单总金额：$data->total_amount
 	}
 
-	public function rechargeNotify(RechargeRequest $request)
+	public function rechargeNotify()
 	{
-		
+
 		$alipay = Pay::alipay($this->config);
 	
 		try{
 			$data = $alipay->verify(); // 是的，验签就这么简单！
+
+			$app_id				= $data->app_id;
+			$seller_id			= $data->seller_id;
+			if($seller_id != $this->seller_id){
+				return tz_ajax_echo('','卖家id错误,请检查',0);
+			}
+			if($app_id != $this->app_id){
+				return tz_ajax_echo('','app_id错误,请检查',0);
+			}
+
+			$info['trade_status']		= $data->trade_status;
+			if($info['trade_status'] != 'TRADE_FINISHED'){
+				return 'failed';
+			}
 			
+			$info['trade_no'] 		= $data->out_trade_no;
+			$info['voucher']			= $data->trade_no;
+			$info['recharge_amount']	= $data->total_amount;
+			$info['timestamp']		= $data->timestamp;
+
+			$model = new Recharge();
+			$res = $model->returnInsert($info);
+			if($res['code'] != 1){
+				return $res['msg'];
+			}
 			// 请自行对 trade_status 进行判断及其它逻辑进行判断，在支付宝的业务通知中，只有交易通知状态为 TRADE_SUCCESS 或 TRADE_FINISHED 时，支付宝才会认定为买家付款成功。
 			// 1、商户需要验证该通知数据中的out_trade_no是否为商户系统中创建的订单号；
 			// 2、判断total_amount是否确实为该订单的实际金额（即商户订单创建时的金额）；

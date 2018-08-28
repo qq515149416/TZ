@@ -128,11 +128,11 @@ class PayController extends Controller
 				return tz_ajax_echo('','app_id错误,请检查',0);
 			}
 
-			// $info['trade_status']		= $data->trade_status;
+			$info['trade_status']		= $data->trade_status;
 			
-			// if($info['trade_status'] != 'TRADE_FINISHED' ){
-			// 	return 'failed';
-			// }
+			if($info['trade_status'] != 'TRADE_FINISHED' ){
+				return 'failed';
+			}
 			
 			$info['trade_no'] 		= $data->out_trade_no;
 			$info['voucher']			= $data->trade_no;

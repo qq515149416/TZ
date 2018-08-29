@@ -39,10 +39,11 @@ class WorkOrderModel extends Model
         } else if($role['slug'] == 'hengyang' || $role['slug'] == 'huizhou' || $role['slug'] == 'xian'){
             // 各地运维人员可以看到对应地区的工单
             $where['process_department'] = $role['roleid'];
-        } else if($role['slug'] == 'net_dimension' || $role['slug'] == 'net_manager' || $role['slug'] == 'TZ_admin'){
-            // 网维或者网管或者管理账户可以看到所有的工单
-            $where['work_order_status'] = $where['work_order_status'];
-        }
+        } 
+        // else if($role['slug'] == 'net_dimension' || $role['slug'] == 'net_manager' || $role['slug'] == 'TZ_admin'){
+        //     // 网维或者网管或者管理账户可以看到所有的工单
+        //     $where['work_order_status'] = $where['work_order_status'];
+        // }
         // 进行数据查询
     	$result = $this->where($where)
                         ->get(['id','work_order_number','customer_id','customer_name','clerk_id','clerk_name','mac_num',
@@ -84,12 +85,14 @@ class WorkOrderModel extends Model
     public function insertWorkOrder($workdata){
     	if($workdata){
     		// 工单号的生成
-    		$worknumber = mt_rand(71,99).date('ymd',time()).substr(time(),5,5);
-    		$workdata['work_order_number'] = $worknumber;
+    		$worknumber = mt_rand(71,99).date('Ymd',time()).substr(time(),5,5);
+    		$workdata['work_order_number'] = (int)$worknumber;
+            // 查找业务员
     		$admin_id = Admin::user()->id;
-    		$workdata['clerk_id'] = $admin_id;
+    		$workdata['submitter_id'] = $admin_id;
             $fullname = (array)$this->staff($admin_id);
-    		$workdata['clerk_name'] = $fullname['fullname'];
+    		$workdata['submitter_name'] = $fullname['fullname'];
+            // 
     		$workdata['submitter'] = 2;
     		$row = $this->create($workdata);
     		if($row != false){
@@ -182,10 +185,6 @@ class WorkOrderModel extends Model
         return $worktype;
     }
 
-    // 部门待定
-    // public function department(){
-
-    // }
 
     /**
      * 查找当前登陆用户的角色标识和角色名称

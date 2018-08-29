@@ -38,7 +38,7 @@ class WhiteListController extends Controller
      */
     public function insertWhiteList(Request $request){
     	if($request->isMethod('post')){
-    		$insertdata = $request->only([]);
+    		$insertdata = $request->only(['white_ip','domain_name','record_number','submit_note']);
     		$insert = new WhiteListModel();
     		$return = $insert->insertWhiteList($insertdata);
     		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
@@ -54,7 +54,7 @@ class WhiteListController extends Controller
      */
     public function checkWhiteList(Request $request){
     	if($request->isMethod('post')){
-    		$checkdata = $request->only([]);
+    		$checkdata = $request->only(['white_status','check_note']);
     		$check = new WhiteListModel();
     		$return = $check->checkWhiteList($checkdata);
     		return tz_ajax_echo($return,$return['msg'],$return['code']);
@@ -63,7 +63,19 @@ class WhiteListController extends Controller
     	}
     }
 
-    public function deleteWhitelist(){
-
+    /**
+     * 删除对应的白名单信息
+     * @param  Request $request [description]
+     * @return json           相关的信息提示和状态返回
+     */
+    public function deleteWhitelist(Request $request){
+        if($request->isMethod('post')){
+            $id = $request->get('delete_id');
+            $delete = new WhiteListModel();
+            $result = $delete->deleteWhitelist($id);
+            return tz_ajax_echo($result,$result['msg'],$result['code']);
+        } else {
+            return tz_ajax_echo([],'无法对数据进行删除操作',0);
+        }
     }
 }

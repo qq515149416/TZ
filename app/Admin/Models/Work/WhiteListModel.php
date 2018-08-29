@@ -20,7 +20,7 @@ class WhiteListModel extends Model
      * @return [type]        [description]
      */
     public function showWhiteList($where){
-    	$result = $this->where($where)->get([]);
+    	$result = $this->where($where)->get(['id','white_number','domain_name','record_number','binding_machine','customer_id','customer_name','submit_id','submit_name','submit','submit_note','check_id','check_number','check_time','check_note','white_status','created_at']);
     	if(!$result->isEmpty()){
     		$submit = [1=>'客户提交',2=>'内部提交'];
     		$white_status = [0=>'审核中',1=>'审核通过',2=>'审核不通过',3=>'黑名单'];
@@ -102,6 +102,27 @@ class WhiteListModel extends Model
             $return['data'] = '';
             $return['code'] = 0;
             $return['msg'] = '无法对白名单进行审核';
+        }
+    }
+
+    /**
+     * 删除白名单信息
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    public function deleteWhitelist($id){
+        if($id){
+            $row = $this->where('id',$id)->delete();
+            if($row != false){
+                $return['code'] = 1;
+                $return['msg'] = '删除信息成功';
+            } else {
+                $return['code'] = 0;
+                $return['msg'] = '删除信息失败';
+            }
+        } else {
+            $return['code'] = 0;
+            $return['msg'] = '无法删除信息';
         }
     }
 

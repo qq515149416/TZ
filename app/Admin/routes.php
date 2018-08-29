@@ -167,6 +167,7 @@ Route::group([
         $router->get('show','Work\WorkOrderController@showWorkOrder');
         $router->post('insert','Work\WorkOrderController@insertWorkOrder');
         $router->post('edit','Work\WorkOrderController@editWorkOrder');
+        $router->post('delete','Work\WorkOrderController@deleteWorkOrder');
     });
 
     //工单类型接口
@@ -177,6 +178,16 @@ Route::group([
         $router->post('insert','Work\WorkTypeController@insertWorkType');
         $router->post('edit','Work\WorkTypeController@editWorkType');
         $router->post('delete','Work\WorkTypeController@editWorkType');
+    });
+
+    // 白名单接口
+    Route::group([
+        'prdfix' => 'whitelist'
+    ],function(Router $router){
+        $router->get('show','Work\WhiteListController@showWhiteList');
+        $router->post('insert','Work\WhiteListController@insertWhiteList');
+        $router->post('check','Work\WhiteListController@checkWhiteList');
+        $router->post('delete','Work\WhiteListController@deleteWhiteList');
     });
 
 

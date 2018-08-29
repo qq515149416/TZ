@@ -61,6 +61,22 @@ class WorkOrderController extends Controller
     	}
     }
 
+    /**
+     * 删除对应的工单信息
+     * @param  Request $request [description]
+     * @return json          相关的信息提示和状态返回
+     */
+    public function deleteWorkOrder(Request $request){
+        if($request->isMethod('post')){
+            $delete = $request->get('delete_id');
+            $deleted = new WorkOrderModel();
+            $result = $deleted->deleteWorkOrder($delete);
+            return tz_ajax_echo($result,$result['msg'],$result['code']);
+        } else {
+            return tz_ajax_echo([],'无法对数据进行删除',0);
+        }
+    }
+
 
     
 }

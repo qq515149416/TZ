@@ -63,10 +63,17 @@ Route::group([
     'middleware' => 'UserOperationLog',
 ], function () {
 //支付接口
-
+    //生成订单接口
     Route::get('payIndex', 'Pay\PayController@index');
+    //异步接收支付宝发出通知的接口
     Route::post('payRechargeNotify', 'Pay\PayController@rechargeNotify');
+    //用户支付完成后跳转页面
     Route::get('payRechargeReturn', 'Pay\PayController@rechargeReturn');
+    //调试用
     Route::get('payForm', 'Pay\PayController@form');
+    //获取指定充值单号所有信息
+    Route::get('getOrder', 'Pay\PayController@getOrder');
+    //单独获取指定充值单号支付情况
+    Route::get('checkRechargeOrder', 'Pay\PayController@checkRechargeOrder');
 
 });

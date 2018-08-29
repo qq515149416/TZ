@@ -165,8 +165,9 @@ class WorkOrderModel extends Model
      * @return string           返回对应账户的真实姓名
      */
     public function staff($admin_id) {
-    	$staff = DB::table('oa_staff')->find($admin_id,['work_number','fullname']);
-    	return $staff;
+    	$staff = DB::table('oa_staff')->where('admin_users_id',$admin_id)
+                    ->select('work_number','fullname')->first();
+        return $staff;
     }
 
     /**

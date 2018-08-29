@@ -105,6 +105,27 @@ class WhiteListModel extends Model
         }
     }
 
+    /**
+     * 删除白名单信息
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    public function deleteWhitelist($id){
+        if($id){
+            $row = $this->where('id',$id)->delete();
+            if($row != false){
+                $return['code'] = 1;
+                $return['msg'] = '删除信息成功';
+            } else {
+                $return['code'] = 0;
+                $return['msg'] = '删除信息失败';
+            }
+        } else {
+            $return['code'] = 0;
+            $return['msg'] = '无法删除信息';
+        }
+    }
+
 
     /**
      * 内部提交时根据用户账号的id查找出对应的账户的真实姓名

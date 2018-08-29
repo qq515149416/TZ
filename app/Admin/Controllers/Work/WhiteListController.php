@@ -63,7 +63,19 @@ class WhiteListController extends Controller
     	}
     }
 
-    public function deleteWhitelist(){
-
+    /**
+     * 删除对应的白名单信息
+     * @param  Request $request [description]
+     * @return json           相关的信息提示和状态返回
+     */
+    public function deleteWhitelist(Request $request){
+        if($request->isMethod('post')){
+            $id = $request->get('delete_id');
+            $delete = new WhiteListModel();
+            $result = $delete->deleteWhitelist($id);
+            return tz_ajax_echo($result,$result['msg'],$result['code']);
+        } else {
+            return tz_ajax_echo([],'无法对数据进行删除操作',0);
+        }
     }
 }

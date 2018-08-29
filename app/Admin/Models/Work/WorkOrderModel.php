@@ -92,7 +92,7 @@ class WorkOrderModel extends Model
     		$workdata['submitter_id'] = $admin_id;
             $fullname = (array)$this->staff($admin_id);
     		$workdata['submitter_name'] = $fullname['fullname'];
-            // 
+            // 提交方
     		$workdata['submitter'] = 2;
     		$row = $this->create($workdata);
     		if($row != false){
@@ -157,6 +157,27 @@ class WorkOrderModel extends Model
 			$return['msg'] = '工单无法修改!!';
     	}
     	return $return;
+    }
+
+    /**
+     * 删除工单信息
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    public function deleteWorkOrder($id){
+        if($id){
+            $row = $this->where('id',$id)->delete();
+            if($row != false){
+                $return['code'] = 1;
+                $return['msg'] = '删除信息成功!!';
+            } else {
+                $return['code'] = 0;
+                $return['msg'] = '删除信息失败!!';
+            }
+        } else {
+            $return['code'] = 0;
+            $return['msg'] = '无法删除信息!!';
+        }
     }
 
     /**

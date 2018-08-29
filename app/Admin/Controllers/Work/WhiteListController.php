@@ -38,7 +38,7 @@ class WhiteListController extends Controller
      */
     public function insertWhiteList(Request $request){
     	if($request->isMethod('post')){
-    		$insertdata = $request->only([]);
+    		$insertdata = $request->only(['white_ip','domain_name','record_number','submit_note']);
     		$insert = new WhiteListModel();
     		$return = $insert->insertWhiteList($insertdata);
     		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
@@ -54,7 +54,7 @@ class WhiteListController extends Controller
      */
     public function checkWhiteList(Request $request){
     	if($request->isMethod('post')){
-    		$checkdata = $request->only([]);
+    		$checkdata = $request->only(['white_status','check_note']);
     		$check = new WhiteListModel();
     		$return = $check->checkWhiteList($checkdata);
     		return tz_ajax_echo($return,$return['msg'],$return['code']);

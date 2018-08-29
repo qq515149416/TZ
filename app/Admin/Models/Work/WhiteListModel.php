@@ -20,7 +20,7 @@ class WhiteListModel extends Model
      * @return [type]        [description]
      */
     public function showWhiteList($where){
-    	$result = $this->where($where)->get([]);
+    	$result = $this->where($where)->get(['id','white_number','domain_name','record_number','binding_machine','customer_id','customer_name','submit_id','submit_name','submit','submit_note','check_id','check_number','check_time','check_note','white_status','created_at']);
     	if(!$result->isEmpty()){
     		$submit = [1=>'客户提交',2=>'内部提交'];
     		$white_status = [0=>'审核中',1=>'审核通过',2=>'审核不通过',3=>'黑名单'];

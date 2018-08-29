@@ -1,6 +1,6 @@
 <?php
 /**
- * 检测是否登录
+ * 检测是否登录 中间件
  */
 
 namespace App\Http\Middleware;
@@ -22,6 +22,7 @@ class CheckLogin
         if (!Auth::check()) {
 //            return redirect('login');
 //            return
+            dump('未登录');
         }
         return $next($request);
 

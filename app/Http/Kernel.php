@@ -60,7 +60,10 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
 
-        //用户操作日志中间件
-        'UserOperationLog'=>\App\Http\Middleware\UserOperationLog::class,
+        /**
+         * 自定义 路由中间件
+         */
+        'UserOperationLog'=>\App\Http\Middleware\UserOperationLog::class,//用户操作日志中间件
+        'CheckLogin' =>\App\Http\Middleware\CheckLogin::class,  //检测用户是否登录
     ];
 }

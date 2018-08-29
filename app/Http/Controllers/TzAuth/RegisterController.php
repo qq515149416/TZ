@@ -11,6 +11,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
+use Mews\Captcha\Captcha;
 
 class RegisterController extends Controller
 {
@@ -20,11 +22,14 @@ class RegisterController extends Controller
     public function test(Request $request)
     {
 
+        dump(captcha_src('tz'));
+        dump(Session::all());
 //        Auth::logout();
-        dump(Auth::check());
-        dump(Auth::user());
+//        dump(Auth::check());
+//        dump(Auth::user());
 
 //        return response()->view()
+//        return
 
     }
 

@@ -23,4 +23,25 @@ class LoginController extends Controller
         return Redirect::to('/');
     }
 
+    /**
+     * 通过邮箱登录
+     *
+     * 类型:GET
+     * 参数:
+     *      email: 用户邮箱
+     *      password :用户密码
+     *      captcha :图形验证码
+     *
+     * @param Request $request
+     */
+    public function loginByEmail(Request $request)
+    {
+        //获取参数
+        $res = $request->all();
+
+
+
+
+    }
+
 }

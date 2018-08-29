@@ -84,7 +84,7 @@ class PayController extends Controller
 
 	public function rechargeReturn()
 	{
-		exit;
+		
 		//验签
 		$data = Pay::alipay($this->config)->verify(); // 是的，验签就这么简单！
 
@@ -114,7 +114,6 @@ class PayController extends Controller
 
 	public function rechargeNotify(Request $request)
 	{
-
 		$alipay = Pay::alipay($this->config);
 	
 		try{
@@ -128,18 +127,12 @@ class PayController extends Controller
 			if($app_id != $this->config['app_id']){
 				return tz_ajax_echo('','app_id错误,请检查',0);
 			}
-
-			// $info['trade_status']		= $data->trade_status;
-			
-			// if($info['trade_status'] != 'TRADE_FINISHED' ){
-			// 	return 'failed';
-			// }
 			
 			$info['trade_no'] 		= $data->out_trade_no;
 			$info['voucher']			= $data->trade_no;
 			$info['recharge_amount']	= $data->total_amount;
 			$info['timestamp']		= $data->timestamp;
-		
+
 			$model = new Recharge();
 			$res = $model->returnInsert($info);
 			if($res['code'] != 1){

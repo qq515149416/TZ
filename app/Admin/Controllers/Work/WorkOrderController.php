@@ -21,7 +21,7 @@ class WorkOrderController extends Controller
      */
     public function showWorkOrder(Request $request){
     	if($request->isMethod('get')){
-    		$where = $request->only(['work_status']);
+    		$where = $request->only(['work_order_status']);
     		$showworkorder = new WorkOrderModel();
     		$return = $showworkorder->showWorkOrder($where);
     		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
@@ -36,7 +36,7 @@ class WorkOrderController extends Controller
      */
     public function insertWorkOrder(Request $request){
     	if($request->isMethod('post')){
-    		$data = $request->only(['customer_id','customer_name','machine_num','content']);
+    		$data = $request->only(['customer_id','customer_name','mac_num','mac_ip','work_order_content']);
     		$insertwork = new WorkOrderModel();
     		$return = $insertwork->insertWorkOrder($data);
     		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
@@ -52,7 +52,7 @@ class WorkOrderController extends Controller
      */
     public function editWorkOrder(Request $request){
     	if($request->isMethod('post')){
-    		$editdata = $request->only(['id','work_status','work_department','summary']);
+    		$editdata = $request->only(['id','work_order_status','process_department','summary']);
     		$editworkorder = new WorkOrderModel();
     		$return = $editworkorder->editWorkOrder($editdata);
     		return tz_ajax_echo($return,$return['msg'],$return['code']);

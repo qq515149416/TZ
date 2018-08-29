@@ -35,14 +35,8 @@ class Recharge extends Model
 					$return['code'] = 0;
 					$return['msg'] = '5分钟内只能创建一张订单!!';
 					return $return;
-				}else{
-					$row = $this->where('id',$test[0]['id'])->delete();
-					if($row == false){
-						$return['code'] 	= 0;
-						$return['msg'] 	= '删除旧订单失败失败';
-						return $return;
-					}
 				}
+				
 			}
 			
 			$row = $this->create($data);

@@ -27,7 +27,10 @@ class RegisterByEmailRequest extends FormRequest
     {
         return [
             //
-            'email' => 'required|email|unique:tz_users,email',
+            'email'                 => 'required|email|unique:tz_users,email',
+            'password'              => 'required|min:8|max:20|string|confirmed',
+            'password_confirmation' => 'required',
+
         ];
     }
 
@@ -39,9 +42,14 @@ class RegisterByEmailRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.require' => '邮箱帐号必须填写',
-            'email.email'   => '邮箱格式错误',
-            'email.unique'  => '此邮箱已被注册过',
+            'email.require'                  => '邮箱帐号必须填写',
+            'email.email'                    => '邮箱格式错误',
+            'email.unique'                   => '此邮箱已被注册过',
+            'password.required'              => '密码不能为空',
+            'password.min'                   => '密码在8到20位之间',
+            'password.max'                   => '密码在8到20位之间',
+            'password.confirmed'             => '密码两次输入不一致',
+            'password_confirmation.required' => '密码二次输入不能为空',
 
         ];
     }

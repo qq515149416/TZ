@@ -1,8 +1,15 @@
 <?php
 
-/**
- *
- */
+// +----------------------------------------------------------------------
+// | Author: kiri <420541662@qq.com>
+// +----------------------------------------------------------------------
+// | Copyright (c) 不知道啥
+// +----------------------------------------------------------------------
+// | Description: 支付宝支付模型
+// +----------------------------------------------------------------------
+// | @DateTime: 2018-08-27 10:19:24
+// +----------------------------------------------------------------------
+
 namespace App\Http\Models\Pay;
 
 use Illuminate\Database\Eloquent\Model;
@@ -25,10 +32,10 @@ class Recharge extends Model
 	public function makeOrder($data)
 	{
 		if ($data) {
-			$test = $this->select('created_at','id')->where("user_id",$data['user_id'])->where('trade_status',0)->get();
+			$test = $this->where("user_id",$data['user_id'])->where('trade_status',0)->max('created_at');
 			$test = json_decode(json_encode($test),true);
-			if(count($test)>0){
-				$created_at = strtotime($test[0]['created_at']);
+			if($test!=NULL){				
+				$created_at = strtotime($test);
 				$time = time();	
 				if($time - $created_at <= 300){
 					$return['data'] = '';
@@ -122,6 +129,37 @@ class Recharge extends Model
 			$return['code'] = 0;
 			$return['msg'] = '请检查您要新增的信息是否正确!!';
 		}
+		return $return;
+	}
+
+	/**
+	* 获取充值单情况的接口
+	*@param 	$trade_no 	充值订单号
+			$num		需求,1代表所有信息,2代表充值状况
+	* @return 订单的支付情况,
+	*/
+	public function checkOrder($trade_no,$num){
+		switch ($num) {
+			case 1:
+				$order = $this->where('trade_no',$trade_no)->get();
+				break;
+			
+			case 2:
+				$order = $this->select('trade_status','id')->where('trade_no',$trade_no)->get();
+				break;
+		}
+		
+	
+		if($order != false){		
+			$return['data'] 	= $order;
+			$return['code'] 	= 1;
+			$return['msg']	= '获取成功';
+		}else{
+			$return['data'] 	= '';
+			$return['code'] 	= 0;
+			$return['msg']	= '获取失败,无此订单号';
+		}
+
 		return $return;
 	}
 

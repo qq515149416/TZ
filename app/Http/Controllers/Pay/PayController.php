@@ -1,5 +1,15 @@
 <?php
 
+// +----------------------------------------------------------------------
+// | Author: kiri <420541662@qq.com>
+// +----------------------------------------------------------------------
+// | Copyright (c) 不知道啥
+// +----------------------------------------------------------------------
+// | Description: 支付宝支付控制器
+// +----------------------------------------------------------------------
+// | @DateTime: 2018-08-27 10:19:24
+// +----------------------------------------------------------------------
+
 namespace App\Http\Controllers\Pay;
 
 use App\Http\Models\Pay\Recharge;
@@ -32,21 +42,34 @@ class PayController extends Controller
 	];
 
 	/**
-	*生成支付宝付款订单的方法
-	*@param $pay_for	用于确认付款用途,1为充值
+	*生成支付宝付款订单的页面
+	*@param 	$pay_for 	用于确认付款用途,1为充值
+			$total_amount	订单金额
+			$subject 	商品名称
+			$trade_no 	本地订单号
 	*@return 付款的链接
  	**/
 
 	public function index(PayRequest $request)
 	{
 		//获取支付信息
-		$info = $request->only(['pay_for', 'total_amount','subject']);       
-		$user_id = 2;
+		$info = $request->only(['pay_for', 'total_amount','subject','trade_no']);   
+		//这里对接要改,获取user_id 
 
+		//调试状态   
+		$user_id = 2;
+		//实际获取
+		// $checkLogin = Auth::check();
+		// if($checkLogin == false){
+		// 	return tz_ajax_echo([],'请先登录',0);
+		// }
+		// $user_id = Auth::id();
+
+		//生成订单参数
 		$order = [
-			'out_trade_no' 	=> 'tz_'.time().'-'.$user_id,	//本地订单号
+			'out_trade_no' 	=> $info['trade_no'],		//本地订单号
 			'total_amount' 	=> $info['total_amount'],		//金额
-			'subject' 	=> $info['subject'],		//用途
+			'subject' 	=> $info['subject'],		//商品名称
 		];
 
 		//根据支付信息生成支付宝的调回地址及异步通知地址
@@ -54,8 +77,8 @@ class PayController extends Controller
 		switch ($info['pay_for'])
 		{
 			case 1:
-				 $this->config['return_url'] 	= 'http://tz.jungor.cn/home/payRechargeReturn';
-				 $this->config['notify_url'] 	= 'http://tz.jungor.cn/home/payRechargeNotify';
+				$this->config['return_url'] 	= 'http://tz.jungor.cn/home/payRechargeReturn';
+				$this->config['notify_url'] 	= 'http://tz.jungor.cn/home/payRechargeNotify';
 				//$this->config['return_url'] 	= 'http://localhost/home/payRechargeReturn';
 				//$this->config['notify_url'] 	= 'http://localhost/home/payRechargeNotify';
 
@@ -76,11 +99,14 @@ class PayController extends Controller
 				return tz_ajax_echo([],'请提供付款用途',0);
 		}
 		
+		//生成支付宝链接
 		$alipay = Pay::alipay($this->config)->web($order);
 
+		//跳转到支付宝链接
 		return $alipay;// laravel 框架中请直接 `return $alipay`
 	}
 
+	//用户支付完成后的跳转页面
 
 	public function rechargeReturn()
 	{
@@ -88,32 +114,44 @@ class PayController extends Controller
 		//验签
 		$data = Pay::alipay($this->config)->verify(); // 是的，验签就这么简单！
 
+		//验证app_id和seller_id
+		$return['code']	= 1;
 		$app_id				= $data->app_id;
 		$seller_id			= $data->seller_id;
 		if($seller_id != $this->seller_id){
-			return tz_ajax_echo('','卖家id错误,请检查',0);
+			$return['data'] 	= '';
+			$return['code']	= 0;
+			$return['msg']	= '卖家id错误,请检查';
 		}
 		if($app_id != $this->config['app_id']){
-			return tz_ajax_echo('','app_id错误,请检查',0);
+			$return['data'] 	= '';
+			$return['code']	= 0;
+			$return['msg']	= 'app_id错误,请检查';
 		}
 
-		//获取信息并根据订单号插入数据库
-		$info['trade_no'] 		= $data->out_trade_no;	//本地订单
-		$info['voucher']			= $data->trade_no;
-		$info['recharge_amount']	= $data->total_amount;
-		$info['timestamp']		= $data->timestamp;
-	
-		$model = new Recharge();
-		$res = $model->returnInsert($info);
-
-		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+		//如果通过验证,则获取信息并根据订单号插入数据库
+		if($return['code'] != 0){
+			$info['trade_no'] 		= $data->out_trade_no;	//本地订单
+			$info['voucher']			= $data->trade_no;
+			$info['recharge_amount']	= $data->total_amount;
+			$info['timestamp']		= $data->timestamp;
+		
+			$model = new Recharge();
+			$return = $model->returnInsert($info);
+		}
+		return $return;		
 		// 订单号：$data->out_trade_no
 		// 支付宝交易号：$data->trade_no
 		// 订单总金额：$data->total_amount
 	}
 
+
+	//支付宝用的ajax通知接收的方法
+
 	public function rechargeNotify(Request $request)
 	{
+		
+
 		$alipay = Pay::alipay($this->config);
 	
 		try{
@@ -151,6 +189,37 @@ class PayController extends Controller
 		}
 
 		return $alipay->success();// laravel 框架中请直接 `return $alipay->success()`
+	}
+
+	
+	/**
+	* 查询指定充值单的接口
+	*@param $trade_no 	充值订单号
+	* @return 订单信息,
+	*/
+	public function getOrder(Request $request){
+
+		$info 		= $request->only(['trade_no']);
+		$trade_no 	= $info['trade_no'];
+		$model 	= new Recharge();
+		$res 		= $model->checkOrder($trade_no,1);
+		
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
+
+	/**
+	* 查询指定充值单支付情况的接口
+	*@param $trade_no 	充值订单号
+	* @return 订单的支付情况,
+	*/
+	public function checkRechargeOrder(Request $request){
+
+		$info 		= $request->only(['trade_no']);
+		$trade_no 	= $info['trade_no'];
+		$model 	= new Recharge();
+		$res 		= $model->checkOrder($trade_no,2);
+		
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
 
 

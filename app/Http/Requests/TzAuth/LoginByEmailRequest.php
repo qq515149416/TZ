@@ -27,7 +27,9 @@ class LoginByEmailRequest extends FormRequest
     {
         return [
             //
-            'email' => 'required|email',
+            'email'    => 'required|email',
+            'password' => 'required',
+            'captcha'  => 'required|captcha',
         ];
     }
 
@@ -39,9 +41,11 @@ class LoginByEmailRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.require' => '邮箱帐号必须填写',
-            'email.email'   => '邮箱格式错误',
-
+            'email.require'   => '邮箱帐号必须填写',
+            'email.email'     => '邮箱格式错误',
+            'password'        => '密码不能为空',
+            'captcha.require' => '验证码不能为空',
+            'captcha.captcha' => '验证码错误',
         ];
     }
 
@@ -51,8 +55,8 @@ class LoginByEmailRequest extends FormRequest
      */
     public function failedValidation(Validator $validator)
     {
-        $msg = $validator->errors()->first();
         header('Content-type:application/json');
+        $msg = $validator->errors()->first();
         exit('{"code": 0,"data":[],"msg":"' . $msg . '"}');
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\TzAuth;
 
+use App\Http\Requests\TzAuth\LoginByEmailRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -32,16 +33,22 @@ class LoginController extends Controller
      *      password :用户密码
      *      captcha :图形验证码
      *
-     * @param Request $request
+     * @param LoginByEmailRequest $request
+     * @return mixed
      */
-    public function loginByEmail(Request $request)
+    public function loginByEmail(LoginByEmailRequest $request)
     {
-        //获取参数
-        $res = $request->all();
+        $res = $request->all(); //获取参数
 
+        //通过邮箱登录
+        $loginInfo = Auth::attempt(['email' => $res['email'], 'password' => $res['password']]);
 
-
-
+        //验证是否登成功
+        if (!$loginInfo) {
+            //登录失败
+            return tz_ajax_echo([], '密码错误', 0);
+        }
+        return tz_ajax_echo($loginInfo, '登录成功', 1);
     }
 
 }

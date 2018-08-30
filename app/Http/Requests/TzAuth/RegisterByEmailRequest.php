@@ -29,7 +29,7 @@ class RegisterByEmailRequest extends FormRequest
             //
             'email'                 => 'required|email|unique:tz_users,email',
             'password'              => 'required|min:8|max:20|string|confirmed',
-            'password_confirmation' => 'required',
+            'password_confirmation' => 'required',   //
 
         ];
     }

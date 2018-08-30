@@ -22,11 +22,11 @@ class RegisterController extends Controller
     public function test(Request $request)
     {
 
-        dump(captcha_src('tz'));
-//        dump(Session::all());
+//        dump(captcha_src('tz'));
+        dump(Session::all());
 //        Auth::logout();
-//        dump(Auth::check());
-//        dump(Auth::user());
+        dump(Auth::check());
+        dump(Auth::user());
 
 //        return response()->view()
 //        return

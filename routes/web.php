@@ -26,6 +26,7 @@ Route::group([
     Route::post('jun', 'TzAuth\RegisterController@test');
     Route::get('jun2', 'TzAuth\RegisterController@test2');
     Route::get('jun3', 'TzAuth\RegisterController@sendCodeToEmail');
+    Route::get('login', 'TzAuth\TestController@login');
 });
 
 //news接口路径

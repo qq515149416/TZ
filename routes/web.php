@@ -50,7 +50,8 @@ Route::group([
     Route::post('test', 'TzAuth\RegisterController@test'); //测试
     Route::post('sendEmailCode', 'TzAuth\RegisterController@sendCodeToEmail');  //发送邮箱验证码
     Route::post('registerByEmail', 'TzAuth\RegisterController@registerByEmail');  //通过邮箱注册帐号
-    Route::get('logout', 'TzAuth\LoginController@logout');  //用户登录
+    Route::get('logout', 'TzAuth\LoginController@logout');  //用户退出登录
+    Route::post('loginByEmail', 'TzAuth\LoginController@loginByEmail');  //通过邮箱登录帐号
 });
 
 

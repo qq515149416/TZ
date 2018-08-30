@@ -5,16 +5,15 @@
 // +----------------------------------------------------------------------
 // | Copyright (c) 不知道啥
 // +----------------------------------------------------------------------
-// | Description: 支付宝支付控制器
+// | Description: 支付宝充值支付控制器
 // +----------------------------------------------------------------------
 // | @DateTime: 2018-08-27 10:19:24
 // +----------------------------------------------------------------------
 
 namespace App\Http\Controllers\Pay;
 
-use App\Http\Models\Pay\Recharge;
-use App\Http\Requests\Pay\PayRequest;
-use App\Http\Requests\Pay\RechargeRequest;
+use App\Http\Models\Pay\AliRecharge;
+use App\Http\Requests\Pay\AliPayRequest;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -22,13 +21,13 @@ use App\Http\Controllers\Controller;
 use Yansongda\Pay\Pay;
 use Yansongda\Pay\Log;
 
-class PayController extends Controller
+class AliPayController extends Controller
 {
 	protected $seller_id = '2088102176242173';
 	protected $config = [
 		'app_id' => '2016091800542971',
-		'notify_url' => '',
-		'return_url' => '',
+		'notify_url' => 'http://tz.jungor.cn/home/payRechargeNotify',
+		'return_url' => 'http://localhost/home/payRechargeReturn',
 		'ali_public_key' => 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5U+SBLpzQbX72aDmeiUSDTouF2+THtikn28Oyul5fU8HmFPHbZKMYD+Fjmf8RUVBOHpad02FCvW+FlhOktq0JYEBU1tcgIb0af23mlaOcYdbSfIYXUKbg3T+vd2+0VV2apFDO0AsNqWhQL/2FEDBtMiTUfoEAnDxTCZWIdc4sGPsklLqDYv85Vv284LhrGep/hG7cMKdlqXz97godlno7dsBXdiHqVMjBAAryE+GdwEqktEVCJHfr33HtSrReTLztt1gzerpZhng9fGJDbCCuz8VWs/Nihzb1S8F5WzAXl7kyHQD/2gAptabF19vESnIN/vcbv/6YFELOj5MEO4wHwIDAQAB',
 		// 加密方式： **RSA2**  
 		'private_key' => 'MIIEogIBAAKCAQEAwsfcKs6Ngrx8/SYZDzkkk0LIDcB/XNPbOp2OYDKqvhwpAr2M/WWvuFXdRd62mb8iqepURtFyKxqlwbv/Ziez/54zJpJmdGveRJJG+uuDDdaTosn61VbHr/Tm94/KKO8qQUhfTpitUlttNN0fgCKTyoc4y2Y8F8XjDkNf02Chpm4j+oU4VfWlCx2pqXd2Ey44AoHNqRij2QVWWjrU7YfqlmDgVCwR6T/ce4y+aNFf4/fu4/XomRRL7fuqXPfFWpNeUo4cNnietNb7vAQ2Fdlqf+EexX36LTo1lIVh7HiGxS4j4qpsn0syWbKmNe7ikShqCVSQIWEN78AZHiFEs4EyqwIDAQABAoIBAAbIQshSzOaifY+rBfBbwwRFrQWdkFHBJr8RwWVkHkHkZSEtTH1+TvISO1Q1fxI3b5OPD0QwAtOxZ9gpHamG9GOQNKPBMUQYhXLJzSLrlHKk6BshAVTwYp+j3W79WMK4ITaIuJjaBB78A/91O6WQjqjcsIOUmb8SKufSPMH1eWt8FsEjB/eyqvtsGXGx/9SjBR3iR0/vlrYasa1fK61Hdd5YoJvqNC6j8mmfKTaaT/bXx4V60Jso4IY4YuYD7N1ouNozwQSb7CXERWVsdoJP9u7Fi5rJeQbzjJzs/9qKVPEiuh7jJFeErXoaUgrEw0KZ2a1hMPwko2U8yZv+rULRIAECgYEA5z4vVuJZmoxcmXISNZd3OE/DqPSlBh9tuDNg26GnJ2OHHyICk9JP85Xcr+0uiWD3QUaJJAwsxtbeNvN0LmHHMamA7vzT8MO44UN4M4LYclb0Y1sgFJtDaiyVY9AAOCzYiNeYba03q+Gieez2sYTUmzlThSJ7SH4JFyy60qjymqsCgYEA16JVTtwXlu/v27z0cx5Io5t6Btcgh1Ks9Pk12H0cUJHs8V+d7UecGoe6Dy67dFW1sxUypdC4cFNd8TxTBzqVLQFiEu8MebMlYIHC/KdeKlW+eIR/H6INuoZ+md8ylnOTY6sf/jLNouAw6fmtswbRa7rQ/O91apcpyYopDZUryAECgYBwLfGnM52GZQtTAUymJPmYHtHrd+tKohqHHp2hTrWZXSYiy0v2zDMvFwd9bRGDYb/xMbe7/hAG0hvxCn/VNGf+xp0e0xY6Gajp1uJMEvDP3zEltgJFHOFCc6hxSGmi1tag4/41Tq/QOWCpx3QRwD+nodLLpmOqUkI0tOVY5s7yiwKBgDhgGomJhSlTBZSfbBGEw1zy0w5ixABdHxbU6Lz2yKZP4HCinPliFW/iOESr5RpfJifxzNIJJY9IXHErYlGrgUDI8ckdcleG/KikhEPlxfqvfCKqEUpF5ez0KLk131XyVYBjRvQAeD6y+lbRjhYWHD5cEzNtr3b0mlo0otMIQvABAoGAV07K16VdyNpwiWAEAiBz/wdDwcBEqd7OvPcOQjZgxLiQAmFBquruvadwYf5NcseZlWnTrNVBkaEu4+J8g63Xltdzv+1JwGzj+2eG8ItgW6H3wT1VNRT6f5XfoMTPUasTdSiT7cKUq8o9/fNlRMvECFclRButC0CTNoUMRbf2CyU=',
@@ -47,13 +46,14 @@ class PayController extends Controller
 			$total_amount	订单金额
 			$subject 	商品名称
 			$trade_no 	本地订单号
-	*@return 付款的链接
+
+	*@return 创建订单的id
  	**/
 
-	public function index(PayRequest $request)
+	public function index(AliPayRequest $request)
 	{
 		//获取支付信息
-		$info = $request->only(['pay_for', 'total_amount','subject','trade_no']);   
+		$info = $request->only(['pay_for', 'total_amount','subject']);   
 		//这里对接要改,获取user_id 
 
 		//调试状态   
@@ -67,7 +67,7 @@ class PayController extends Controller
 
 		//生成订单参数
 		$order = [
-			'out_trade_no' 	=> $info['trade_no'],		//本地订单号
+			'out_trade_no' 	=> 'tz_'.time().'_'.$user_id,	//本地订单号
 			'total_amount' 	=> $info['total_amount'],		//金额
 			'subject' 	=> $info['subject'],		//商品名称
 		];
@@ -77,12 +77,12 @@ class PayController extends Controller
 		switch ($info['pay_for'])
 		{
 			case 1:
-				$this->config['return_url'] 	= 'http://tz.jungor.cn/home/payRechargeReturn';
-				$this->config['notify_url'] 	= 'http://tz.jungor.cn/home/payRechargeNotify';
-				//$this->config['return_url'] 	= 'http://localhost/home/payRechargeReturn';
-				//$this->config['notify_url'] 	= 'http://localhost/home/payRechargeNotify';
+				//$this->config['return_url'] 	= 'http://tz.jungor.cn/home/payRechargeReturn';
+				//$this->config['notify_url'] 	= 'http://tz.jungor.cn/home/payRechargeNotify';
+				// $this->config['return_url'] 	= 'http://localhost/home/payRechargeReturn';
+				// $this->config['notify_url'] 	= 'http://localhost/home/payRechargeNotify';
 
-				$model = new Recharge();
+				$model = new AliRecharge();
 				$data['trade_no'] 		= $order['out_trade_no'];
 				$data['recharge_amount']	= $order['total_amount'];
 				$data['user_id']			= $user_id;
@@ -90,15 +90,40 @@ class PayController extends Controller
 				$data['trade_status']		= 0;
 
 				$makeOrder = $model->makeOrder($data);
-				if($makeOrder['code'] == 0){
-					return tz_ajax_echo([],'创建订单失败',0);
-				}
+			
 				break;
 
 			default:
-				return tz_ajax_echo([],'请提供付款用途',0);
+				$makeOrder = [
+					'data'	=> '',
+					'msg'	=> '请提供付款用途',
+					'code'	=> 0,
+				];
 		}
 		
+		return $makeOrder;
+		
+	}
+
+	/**
+	* 跳转支付页面方法
+	*@param $trade_id 	充值订单号的id
+	*/
+	public function goToPay(Request $request)
+	{
+		$info		= $request->only(['trade_id']);
+		$trade_id 	= $info['trade_id'];
+
+		$model 	= new AliRecharge();
+		$res 		= $model->checkOrder($trade_id,3);
+		$info = json_decode(json_encode($res['data'][0]),true);
+
+		$order = [
+			'out_trade_no' 	=> $info['trade_no'],		//本地订单号
+			'total_amount' 	=> $info['recharge_amount'],	//金额
+			'subject' 	=> $info['subject'],		//商品名称
+		];
+
 		//生成支付宝链接
 		$alipay = Pay::alipay($this->config)->web($order);
 
@@ -106,8 +131,35 @@ class PayController extends Controller
 		return $alipay;// laravel 框架中请直接 `return $alipay`
 	}
 
-	//用户支付完成后的跳转页面
+	// /**
+	// * 退款的跳转页面
+	// *@param $trade_id 	充值订单号的id
+	// */
+	// public function refund(Request $request)
+	// {
+	// 	$info		= $request->only(['trade_id']);
+	// 	$trade_id 	= $info['trade_id'];
 
+	// 	$model 	= new AliRecharge();
+	// 	$res 		= $model->checkOrder($trade_id,3);
+	// 	$info = json_decode(json_encode($res['data'][0]),true);
+	// 	if($info['trade_status'] != 1){
+	// 		return tz_ajax_echo('','该订单尚未付款成功',0);
+	// 	}
+
+	// 	$order = [
+	// 		'trade_no'		=> $info['voucher'],
+	// 		'refund_amount' 	=> $info['recharge_amount'],	//金额
+	// 	];
+
+	// 	//生成支付宝链接
+	// 	$alipay = Pay::alipay($this->config)->refund($order);
+
+	// 	//跳转到支付宝链接
+	// 	return $alipay;// laravel 框架中请直接 `return $alipay`
+	// }
+
+	//用户支付完成后的跳转页面
 	public function rechargeReturn()
 	{
 		
@@ -136,9 +188,10 @@ class PayController extends Controller
 			$info['recharge_amount']	= $data->total_amount;
 			$info['timestamp']		= $data->timestamp;
 		
-			$model = new Recharge();
+			$model = new AliRecharge();
 			$return = $model->returnInsert($info);
 		}
+
 		return $return;		
 		// 订单号：$data->out_trade_no
 		// 支付宝交易号：$data->trade_no
@@ -171,7 +224,7 @@ class PayController extends Controller
 			$info['recharge_amount']	= $data->total_amount;
 			$info['timestamp']		= $data->timestamp;
 
-			$model = new Recharge();
+			$model = new AliRecharge();
 			$res = $model->returnInsert($info);
 			if($res['code'] != 1){
 				return $res['msg'];
@@ -191,7 +244,25 @@ class PayController extends Controller
 		return $alipay->success();// laravel 框架中请直接 `return $alipay->success()`
 	}
 
-	
+
+	/**
+	* 查询指定用户的所有充值单的接口
+	*@param $user_id 	用户id
+	* @return 订单信息,
+	*/
+	public function getOrderByUser(Request $request){
+		// $checkLogin = Auth::check();
+		// if($checkLogin == false){
+		// 	return tz_ajax_echo([],'请先登录',0);
+		// }
+		// $user_id = Auth::id();
+		$user_id = 2;
+		$model 	= new AliRecharge();
+		$res 		= $model->checkOrder($user_id,4);
+		dd($res);exit;
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
+
 	/**
 	* 查询指定充值单的接口
 	*@param $trade_no 	充值订单号
@@ -201,7 +272,7 @@ class PayController extends Controller
 
 		$info 		= $request->only(['trade_no']);
 		$trade_no 	= $info['trade_no'];
-		$model 	= new Recharge();
+		$model 	= new AliRecharge();
 		$res 		= $model->checkOrder($trade_no,1);
 		
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
@@ -216,7 +287,7 @@ class PayController extends Controller
 
 		$info 		= $request->only(['trade_no']);
 		$trade_no 	= $info['trade_no'];
-		$model 	= new Recharge();
+		$model 	= new AliRecharge();
 		$res 		= $model->checkOrder($trade_no,2);
 		
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);

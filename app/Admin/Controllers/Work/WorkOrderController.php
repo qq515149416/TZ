@@ -36,7 +36,7 @@ class WorkOrderController extends Controller
      */
     public function insertWorkOrder(Request $request){
     	if($request->isMethod('post')){
-    		$data = $request->only(['customer_id','customer_name','mac_num','mac_ip','work_order_content']);
+    		$data = $request->only(['customer_id','customer_name','mac_num','mac_ip','work_order_content','work_order_type']);
     		$insertwork = new WorkOrderModel();
     		$return = $insertwork->insertWorkOrder($data);
     		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);

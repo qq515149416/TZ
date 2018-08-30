@@ -64,17 +64,33 @@ Route::group([
     'middleware' => 'UserOperationLog',
 ], function () {
 //支付接口
-    //生成订单接口
-    Route::get('payIndex', 'Pay\PayController@index');
-    //异步接收支付宝发出通知的接口
-    Route::post('payRechargeNotify', 'Pay\PayController@rechargeNotify');
+    
+    Route::group([
+	    'middleware' => 'CheckLogin',
+	], function () {
+		//生成订单接口
+		Route::get('payIndex', 'Pay\AliPayController@index');
+		//获取指定用户的所有充值单信息
+    		Route::get('getOrderByUser', 'Pay\AliPayController@getOrderByUser');
+	});
+    
+    //跳转到支付页面的方法
+    Route::get('goToPay', 'Pay\AliPayController@goToPay');
+    //异步接收支付宝发出通知的接口,支付宝方用的
+    Route::post('payRechargeNotify', 'Pay\AliPayController@rechargeNotify');
     //用户支付完成后跳转页面
-    Route::get('payRechargeReturn', 'Pay\PayController@rechargeReturn');
-    //调试用
-    Route::get('payForm', 'Pay\PayController@form');
+    Route::get('payRechargeReturn', 'Pay\AliPayController@rechargeReturn');
+
+    
     //获取指定充值单号所有信息
-    Route::get('getOrder', 'Pay\PayController@getOrder');
+    Route::get('getOrder', 'Pay\AliPayController@getOrder');
     //单独获取指定充值单号支付情况
-    Route::get('checkRechargeOrder', 'Pay\PayController@checkRechargeOrder');
+    Route::get('checkRechargeOrder', 'Pay\AliPayController@checkRechargeOrder');
+
+    //退款页面
+    //Route::get('refund', 'Pay\PayController@refund');
+    
+    //调试用
+    Route::get('payForm', 'Pay\AliPayController@form');
 
 });

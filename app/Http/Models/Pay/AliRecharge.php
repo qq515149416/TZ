@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
 
-class Recharge extends Model
+class AliRecharge extends Model
 {
 
 	use SoftDeletes;
@@ -40,7 +40,7 @@ class Recharge extends Model
 				if($time - $created_at <= 300){
 					$return['data'] = '';
 					$return['code'] = 0;
-					$return['msg'] = '5分钟内只能创建一张订单!!';
+					$return['msg'] = '5分钟内只能创建一张订单!!!!!';
 					return $return;
 				}
 				
@@ -135,29 +135,34 @@ class Recharge extends Model
 	/**
 	* 获取充值单情况的接口
 	*@param 	$trade_no 	充值订单号
-			$num		需求,1代表所有信息,2代表充值状况
+			$num		需求,1代表所有信息,2代表订单的支付状况,3代表用id获取所有信息,4根据user_id获取该用户的所有订单
 	* @return 订单的支付情况,
 	*/
 	public function checkOrder($trade_no,$num){
 		switch ($num) {
 			case 1:
 				$order = $this->where('trade_no',$trade_no)->get();
-				break;
-			
+				break;		
 			case 2:
 				$order = $this->select('trade_status','id')->where('trade_no',$trade_no)->get();
+				break;
+			case 3:
+				$order = $this->where('id',$trade_no)->get();
+				break;
+			case 4:
+				$order = $this->where('user_id',$trade_no)->get();
 				break;
 		}
 		
 	
-		if($order != false){		
+		if(count($order) != 0){		
 			$return['data'] 	= $order;
 			$return['code'] 	= 1;
 			$return['msg']	= '获取成功';
 		}else{
 			$return['data'] 	= '';
 			$return['code'] 	= 0;
-			$return['msg']	= '获取失败,无此订单号';
+			$return['msg']	= '获取失败';
 		}
 
 		return $return;

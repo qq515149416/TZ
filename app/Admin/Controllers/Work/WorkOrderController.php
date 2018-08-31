@@ -16,7 +16,7 @@ class WorkOrderController extends Controller
     use ModelForm;
 
     /**
-     * 查找工单的信息
+     * 查找工单的信息(管理人员/网维人员/网管人员)
      * @return json           返回相关的数据和状态信息
      */
     public function showWorkOrder(Request $request){
@@ -28,6 +28,36 @@ class WorkOrderController extends Controller
     	} else {
     		return tz_ajax_echo([],'获取工单信息失败！！',0);
     	}	
+    }
+
+    /**
+     * 查找工单的信息(业务员)
+     * @return json           返回相关的数据和状态信息
+     */
+    public function clerkWorkOrder(Request $request){
+        if($request->isMethod('get')){
+            $where = $request->only(['work_order_status']);
+            $showworkorder = new WorkOrderModel();
+            $return = $showworkorder->showWorkOrder($where);
+            return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
+        } else {
+            return tz_ajax_echo([],'获取工单信息失败！！',0);
+        }   
+    }
+
+    /**
+     * 查找工单的信息(各地机房人员)
+     * @return json           返回相关的数据和状态信息
+     */
+    public function areaWorkOrder(Request $request){
+        if($request->isMethod('get')){
+            $where = $request->only(['work_order_status']);
+            $showworkorder = new WorkOrderModel();
+            $return = $showworkorder->showWorkOrder($where);
+            return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
+        } else {
+            return tz_ajax_echo([],'获取工单信息失败！！',0);
+        }   
     }
 
     /**

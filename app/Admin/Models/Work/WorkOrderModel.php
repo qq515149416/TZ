@@ -23,27 +23,13 @@ class WorkOrderModel extends Model
 // 西安运维：xian
 // 业务员：salesman
 // 管理人员：TZ_admin
+
     /**
-     * 显示对应状态的工单列表
+     * 显示对应状态的所有工单(管理人员/网维人员/网管人员查看)
      * @param  array $where 工单状态
      * @return array        返回相关的数据信息和状态
      */
     public function showWorkOrder($where){
-        // 获取当前登陆用户的id，当前用户可以查看到属于自己客户的信息
-        $user_id = Admin::user()->id;
-        $role = (array)$this->role($user_id);
-        //不同的角色标志不同的条件查询
-        if($role['slug'] == 'salesman'){
-            // 业务员查看到自己客户的工单
-            $where['clerk_id'] = $user_id;
-        } else if($role['slug'] == 'hengyang' || $role['slug'] == 'huizhou' || $role['slug'] == 'xian'){
-            // 各地运维人员可以看到对应地区的工单
-            $where['process_department'] = $role['roleid'];
-        } 
-        // else if($role['slug'] == 'net_dimension' || $role['slug'] == 'net_manager' || $role['slug'] == 'TZ_admin'){
-        //     // 网维或者网管或者管理账户可以看到所有的工单
-        //     $where['work_order_status'] = $where['work_order_status'];
-        // }
         // 进行数据查询
     	$result = $this->where($where)
                         ->get(['id','work_order_number','customer_id','customer_name','clerk_id','clerk_name','mac_num',
@@ -71,6 +57,92 @@ class WorkOrderModel extends Model
             $return['code'] = 1;
             $return['msg'] = '工单信息获取成功！！';
     	} else {
+            $return['data'] = '暂无对应工单数据！！';
+            $return['code'] = 0;
+            $return['msg'] = '暂无对应工单数据';
+        }
+    }
+
+    /**
+     * 显示对应状态的所属客户的工单列表(业务员查看)
+     * @param  array $where 工单状态
+     * @return array        返回相关的数据信息和状态
+     */
+    public function clerkWorkOrder($where){
+        // 获取当前登陆用户的id，当前用户可以查看到属于自己客户的信息
+        $user_id = Admin::user()->id;
+        $where['clerk_id'] = $user_id;
+        // 进行数据查询
+        $result = $this->where($where)
+                        ->get(['id','work_order_number','customer_id','customer_name','clerk_id','clerk_name','mac_num',
+                               'mac_ip','work_order_type','work_order_content','submitter_id','submitter_name',
+                               'submitter','work_order_status','process_department','complete_id','complete_number',
+                               'summary','complete_time','created_at','updated_at']);
+        if(!$result->isEmpty()){
+            // 查询到数据进行转换
+            $submitter = [1=>'客户',2=>'内部人员'];
+            $work_status = [0=>'待处理',1=>'处理中',2=>'工单完成',3=>'工单取消'];
+            foreach($result as $showkey=>$showvalue){
+                // 提交方的转换
+                $result[$showkey]['submit'] = $submitter[$showvalue['submitter']];
+                // 工单状态的转换
+                $result[$showkey]['workstatus'] = $work_status[$showvalue['work_order_status']];
+                // 工单类型
+                $worktype = (array)$this->workType($showvalue['work_order_type']);
+                $result[$showkey]['worktype'] = $worktype['type_name'];
+                $result[$showkey]['parenttype'] = $worktype['parenttype'];
+                // 当前处理部门
+                $department = (array)$this->role($showvalue['process_department']);
+                $result[$showkey]['department'] = $department['name'];  
+            }
+            $return['data'] = $result;
+            $return['code'] = 1;
+            $return['msg'] = '工单信息获取成功！！';
+        } else {
+            $return['data'] = '暂无对应工单数据！！';
+            $return['code'] = 0;
+            $return['msg'] = '暂无对应工单数据';
+        }
+    }
+
+    /**
+     * 显示对应状态的地区机房工单列表(地区机房人员查看)
+     * @param  array $where 工单状态
+     * @return array        返回相关的数据信息和状态
+     */
+    public function areaWorkOrder($where){
+        //获取当前登陆用户的id，当前用户可以查看到属于自己客户的信息
+        $user_id = Admin::user()->id;
+        $role = (array)$this->role($user_id);
+        //各地运维人员可以看到对应地区的工单
+        $where['process_department'] = $role['roleid'];
+        //进行数据查询
+        $result = $this->where($where)
+                        ->get(['id','work_order_number','customer_id','customer_name','clerk_id','clerk_name','mac_num',
+                               'mac_ip','work_order_type','work_order_content','submitter_id','submitter_name',
+                               'submitter','work_order_status','process_department','complete_id','complete_number',
+                               'summary','complete_time','created_at','updated_at']);
+        if(!$result->isEmpty()){
+            //查询到数据进行转换
+            $submitter = [1=>'客户',2=>'内部人员'];
+            $work_status = [0=>'待处理',1=>'处理中',2=>'工单完成',3=>'工单取消'];
+            foreach($result as $showkey=>$showvalue){
+                //提交方的转换
+                $result[$showkey]['submit'] = $submitter[$showvalue['submitter']];
+                //工单状态的转换
+                $result[$showkey]['workstatus'] = $work_status[$showvalue['work_order_status']];
+                //工单类型
+                $worktype = (array)$this->workType($showvalue['work_order_type']);
+                $result[$showkey]['worktype'] = $worktype['type_name'];
+                $result[$showkey]['parenttype'] = $worktype['parenttype'];
+                //当前处理部门
+                $department = (array)$this->role($showvalue['process_department']);
+                $result[$showkey]['department'] = $department['name'];  
+            }
+            $return['data'] = $result;
+            $return['code'] = 1;
+            $return['msg'] = '工单信息获取成功！！';
+        } else {
             $return['data'] = '暂无对应工单数据！！';
             $return['code'] = 0;
             $return['msg'] = '暂无对应工单数据';

@@ -23,9 +23,9 @@ class RegisterController extends Controller
     {
 
 //        dump(captcha_src('tz'));
-//        dump(Session::all());
+        dump(Session::all());
 //        Auth::logout();
-//        dump(Auth::check());
+        dump(Auth::check());
         dump(Auth::user());
 
 //        return response()->view()

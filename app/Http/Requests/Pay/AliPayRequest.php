@@ -15,7 +15,7 @@ namespace App\Http\Requests\Pay;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
-class PayRequest extends FormRequest
+class AliPayRequest extends FormRequest
 {
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -39,7 +39,6 @@ class PayRequest extends FormRequest
 			'pay_for'	=> 'required|numeric',
 			'total_amount'	=> 'required',
 			'subject'		=> 'required',
-			'trade_no'	=> 'required',
 		];
 	}
 
@@ -51,7 +50,6 @@ class PayRequest extends FormRequest
 			'pay_for.numeric' 	=> '支付用途必须为数字',
 			'total_amount.required'	=> '支付金额必须填写',
 			'subject.required'	=> '支付项目名称必须填写',
-			'trade_no.required'	=> '请填写订单号',
 		];
 	}
 

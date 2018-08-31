@@ -29,7 +29,7 @@ class LoginByEmailRequest extends FormRequest
             //
             'email'    => 'required|email',
             'password' => 'required',
-            'captcha'  => 'required|captcha',
+//            'captcha'  => 'required|captcha',
         ];
     }
 

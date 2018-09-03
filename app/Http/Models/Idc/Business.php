@@ -3,69 +3,42 @@
 // +----------------------------------------------------------------------
 // | Author: kiri <420541662@qq.com>
 // +----------------------------------------------------------------------
-// | Copyright (c) 不知道啥
+// | Copyright (c) 不知道啥2.0
 // +----------------------------------------------------------------------
-// | Description: 支付宝支付模型
+// | Description: 用户业务表模型
 // +----------------------------------------------------------------------
 // | @DateTime: 2018-08-27 10:19:24
 // +----------------------------------------------------------------------
 
-namespace App\Http\Models\Pay;
+namespace App\Http\Models\Idc;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
 
-class AliRecharge extends Model
+class Business extends Model
 {
 
 	use SoftDeletes;
 
-	protected $table = 'tz_recharge_flow'; //表
+	protected $table = 'tz_business'; //表
 	protected $primaryKey = 'id'; //主键
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
-	protected $fillable = ['user_id', 'recharge_amount','recharge_way','trade_no','voucher','timestamp','money_before','money_after','created_at','trade_status','deleted_at'];
+	protected $fillable = ['business_number', 'machine_number','resource_detail','money','length','renew_time','start_time','end_time','business_status','business_note','created_at','client_id','client_name'];
 
 
-	public function makeOrder($data)
+	public function getList($user_id)
 	{
-		if ($data) {
-			$test = $this->where("user_id",$data['user_id'])->where('trade_status',0)->max('created_at');
-			$test = json_decode(json_encode($test),true);
-			if($test!=NULL){				
-				$created_at = strtotime($test);
-				$time = time();	
-				if($time - $created_at <= 300){
-					$return['data'] = '';
-					$return['code'] = 0;
-					$return['msg'] = '5分钟内只能创建一张订单!!!!!';
-					return $return;
-				}
-				
-			}
-			
-			$row = $this->create($data);
-
-			if($row != false){
-				// 插入订单成功
-				$return['data'] = $row->id;
-				$return['code'] = 1;
-				$return['msg'] = '订单录入成功!!';
-			} else {
-			// 插入数据失败
-				$return['data'] = '';
-				$return['code'] = 0;
-				$return['msg'] = '订单录入失败!!';
-			}
-		}else{
-			// 未有数据传递
-			$return['data'] = '';
-			$return['code'] = 0;
-			$return['msg'] = '请检查您要新增的信息是否正确!!';
+		$business = $this->where('client_id',$user_id)->get();
+		$business_status = [ 1 => '使用中' , 2 => '锁定中' , 3 => '到期' , 4 => '取消' , 5 => '退款'];
+		
+		foreach ($business as $key => $value) {
+			$business[$key]['business_status'] = $business_status[$business[$key]['business_status']];
 		}
-		return $return;
+
+		return $business;
 	}
 
 	/**
@@ -135,7 +108,7 @@ class AliRecharge extends Model
 	/**
 	* 获取充值单情况的接口
 	*@param 	$trade_no 	充值订单号
-			$num		需求,1代表所有信息,2代表订单的支付状况,3代表用id获取所有信息,4根据user_id获取该用户的所有订单
+	*		$num		需求,1代表所有信息,2代表订单的支付状况,3代表用id获取所有信息,4根据user_id获取该用户的所有订单
 	* @return 订单的支付情况,
 	*/
 	public function checkOrder($trade_no,$num){

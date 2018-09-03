@@ -91,7 +91,7 @@ class OrdersModel extends Model
           		if($rwo != 0){
           			DB::commit();
           			$return['data'] = $row;
-					$return['code'] = 0;
+					$return['code'] = 1;
 					$return['msg'] = '业务编号生成成功！！';
 
           		} else {

@@ -198,6 +198,19 @@ Route::group([
  
     });
 
+    // 业务相关接口(业务员下订单/手动生成业务编号及业务数据并且提供财务人员/管理人员/业务员查看数据等)
+    Route::group([
+        'prefix' => 'business'
+    ],function(Router $router){
+        $router->get('machineroom','Business\OrdersController@machineroom');
+        $router->post('selectmachine','Business\OrdersController@selectmachine');
+        $router->post('insert','Business\OrdersController@insertOrders');
+        $router->post('business','Business\OrdersController@generateBusiness');
+        $router->post('finance','Business\OrdersController@financeOrders');
+        $router->post('admin','Business\OrdersController@adminOrders');
+        $router->post('clerk','Business\OrdersController@clerkOrders');
+        $router->post('showbusiness','Business\BusinessController@showBusiness');
+    });
 
 });
 

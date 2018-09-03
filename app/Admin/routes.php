@@ -182,7 +182,7 @@ Route::group([
 
     // 白名单接口
     Route::group([
-        'prefix' => 'whitelist'
+        'prefix' => 'whitelist',
     ],function(Router $router){
         $router->get('show','Work\WhiteListController@showWhiteList');
         $router->post('insert','Work\WhiteListController@insertWhiteList');
@@ -192,7 +192,7 @@ Route::group([
 
     // 客户管理接口
     Route::group([
-        'prefix' => 'customer'
+        'prefix' => 'customer',
     ],function(Router $router){
         $router->get('show','Customer\CustomerController@showCustomerList');
  
@@ -200,7 +200,7 @@ Route::group([
 
     // 业务相关接口(业务员下订单/手动生成业务编号及业务数据并且提供财务人员/管理人员/业务员查看数据等)
     Route::group([
-        'prefix' => 'business'
+        'prefix' => 'business',
     ],function(Router $router){
         $router->get('machineroom','Business\OrdersController@machineroom');
         $router->post('selectmachine','Business\OrdersController@selectmachine');

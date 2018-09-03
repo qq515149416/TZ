@@ -100,14 +100,14 @@ Route::group([
 
     //调试用
     Route::get('payForm', 'Pay\AliPayController@form');
-
+    Route::get('test', 'Pay\AliPayController@test');
 
     //用户idc路由
     Route::group([
 	    'prefix'     => 'idc',
 	], function () {
 		Route::group([
-	    		// 'middleware' => 'CheckLogin',
+	    		'middleware' => 'CheckLogin',
 		], function () {
 			Route::get('businessList', 'Idc\BusinessController@getBusinessList');		
 		});

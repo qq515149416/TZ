@@ -182,12 +182,20 @@ Route::group([
 
     // 白名单接口
     Route::group([
-        'prdfix' => 'whitelist'
+        'prefix' => 'whitelist'
     ],function(Router $router){
         $router->get('show','Work\WhiteListController@showWhiteList');
         $router->post('insert','Work\WhiteListController@insertWhiteList');
         $router->post('check','Work\WhiteListController@checkWhiteList');
         $router->post('delete','Work\WhiteListController@deleteWhiteList');
+    });
+
+    // 客户管理接口
+    Route::group([
+        'prefix' => 'customer'
+    ],function(Router $router){
+        $router->get('show','Customer\CustomerController@showCustomerList');
+ 
     });
 
 

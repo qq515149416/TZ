@@ -23,8 +23,8 @@ class BusinessController extends Controller
 
 
 	/**
-	* 获取登录中用户的业务列表的接口
-	* @return 订单的支付情况,
+	* 获取用户对应的业务实例信息
+	* @return json  返回相关的数据和状态提示及信息
 	*/
 	public function getBusinessList()
 	{
@@ -34,33 +34,26 @@ class BusinessController extends Controller
 		$user_id = Auth::id();
 		$businessModel = new Business();
 		$list = $businessModel->getList($user_id);
-		$list = json_decode(json_encode($list),true);
-		echo "<pre>";
-		print_r($list);
+		return tz_ajax_echo($list['data'],$list['msg'],$list['code']);
 
 	}
 
-	public function getNewsDetails(Request $request)
-	{
-		 $input = $request->all();
-		 if(!isset($input['id'])){
-			return tz_ajax_echo([],'请提供文章id',0);
+	/**
+	 * 进行续费操作
+	 * @param  Request $request [description]
+	 * @return json           返回相关的状态提示及信息
+	 */
+	public function renew(Request $request){
+		if($request->isMethod('post')){
+			$data = $request->only(['id','client_id','client_name','sales_id','slaes_name','business_number','machine_number','resource_detail','money','length','renew_time','start_time','end_time','business_status','business_note','order_type']);
+			$renew = new Business();
+			$result = $renew->renew($data);
+			return tz_ajax_echo($list['data'],$list['msg'],$list['code']);
+		} else {
+			return tz_ajax_echo('','无法进行续费',0);
 		}
-		$id = $input['id'];
-		$newsModel = new News();
-		$news = $newsModel->getNewsDetails($id);
-
-		if($news == NULL){
-			$return['data']	= '';
-			$return['msg']	= '无数据!';
-			$return['code']	= 0;
-		}else{
-			$return['data']	= $news;
-			$return['msg']	= '获取信息成功!!';
-			$return['code']	= 1;
-		}
-
-		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
 	}
+
+	
 
 }

@@ -28,127 +28,66 @@ class Business extends Model
 	protected $dates = ['deleted_at'];
 	protected $fillable = ['business_number', 'machine_number','resource_detail','money','length','renew_time','start_time','end_time','business_status','business_note','created_at','client_id','client_name'];
 
-
+	/**
+	 * 获取业务数据
+	 * @param  int $user_id 客户的id
+	 * @return array          返回相关的数据和状态提示信息
+	 */
 	public function getList($user_id)
-	{
-		$business = $this->where('client_id',$user_id)->get();
-		$business_status = [ 1 => '使用中' , 2 => '锁定中' , 3 => '到期' , 4 => '取消' , 5 => '退款'];
-		
-		foreach ($business as $key => $value) {
-			$business[$key]['business_status'] = $business_status[$business[$key]['business_status']];
-		}
-
-		return $business;
-	}
-
-	/**
-	* 支付宝跳回页面处理方法
-	* @return 将数据及相关的信息返回到控制器
-	*/
-	public function returnInsert($data)
-	{
-		$order = $this->select('user_id','trade_status')->where('trade_no',$data['trade_no'])->get();
-		if(count($order) == 0){
-			$return['data'] = '';
-			$return['code'] = 0;
-			$return['msg'] = '无此单号!!请联系客服!!';
-			return $return;
-		}
-
-		$trade_status = $order[0]['trade_status'];
-		if($trade_status == 1){
-			$return['data'] = '';
-			$return['code'] = 1;
-			$return['msg'] = '该订单已完成!!';
-			return $return;
-		}
-
-		$user_id = $order[0]['user_id'];
-
-		$data['money_before'] 	= floatval($this->getMoney($user_id)->money);
-		$data['money_after']	= floatval($data['money_before'] + $data['recharge_amount']);
-		$data['trade_status']	= 1;
-
-		if($data){
-			// 存在数据就用model进行数据写入操作
-			DB::beginTransaction();
-			$row = $this->where('trade_no',$data['trade_no'])->update($data);
-
-			if($row != false){
-				// 插入订单成功
-				$res = DB::table('tz_users')->where('id',$user_id)->update(['money' => $data['money_after']]); 
-				if($res == false){
-					//失败就回滚
-					DB::rollBack();
-					$return['data'] = '';
-					$return['code'] = 0;
-					$return['msg'] = '订单录入成功!!充值失败!!';
-				}else{
-					DB::commit();
-					$return['data'] = $row;
-					$return['code'] = 1;
-					$return['msg'] = '订单录入成功!!充值成功';
-				}
-				
-			} else {
-			// 插入数据失败
-				$return['data'] = '';
-				$return['code'] = 0;
-				$return['msg'] = '订单录入失败!!';
+	{	
+		$where['client_id'] = $user_id;
+		$where['business_status'] = ' < 3';
+		$business = $this->where($where)->get(['id','client_id','client_name','sales_id','slaes_name','business_number','machine_number','resource_detail','money','length','renew_time','start_time','end_time','business_status','business_note']);
+		$business_status = [0=>'未付款使用',1=>'付款使用',2=>'锁定',3=>'到期',4=>'取消',5=>'退款'];
+		if($business->isEmpty()){
+			foreach ($business as $key => $value) {
+				$business[$key]['business_status'] = $business_status[$business[$key]['business_status']];
 			}
+			$return['data'] = $business;
+			$return['code'] = 1;
+			$return['msg'] = '相关的业务实例获取成功';
 		} else {
-			// 未有数据传递
+			$return['data'] = '暂无相关的业务实例';
+			$return['code'] = 0;
+			$return['msg'] = '暂无相关的业务实例';
+		}
+		return $return;
+	}
+
+	/**
+	 * 进行业务续费操作
+	 * @param  array $where 续费的业务相关数据
+	 * @return array        返回相关的状态信息及提示
+	 */
+	public function renew($where){
+		if($where){
+			'id','client_id','client_name','sales_id','slaes_name','business_number',
+			'machine_number','resource_detail','money','length','renew_time',
+			'start_time','end_time','business_status','business_note'
+			// 续费订单的生成
+			$ordersn = mt_rand(11,40).date('Ymd',time()).substr(time(),5,5).2;
+			$renew['order_sn'] = (int)$ordersn;
+			$renew['business_sn'] = $where['business_number'];
+			$renew['customer_id'] = $where['client_id'];
+			$renew['customer_name'] = $where['client_name'];
+			$renew['business_id'] = $where['sales_id'];
+			$renew['business_name'] = $where['sales_name'];
+			$renew['resource_type'] = 1;
+			$renew['order_type'] = $where['order_type'];
+			$renew['machine_sn'] = $where['machine_number'];
+			$renew['after_resource'] = $where['resource_detail'];
+			$renew['price'] = $where['money'];
+			$renew['duration'] = $where['length'];
+			$renew['order_status'] = 0;
+			//待转换到订单相关控制器
+		} else {
 			$return['data'] = '';
 			$return['code'] = 0;
-			$return['msg'] = '请检查您要新增的信息是否正确!!';
-		}
-		return $return;
-	}
-
-	/**
-	* 获取充值单情况的接口
-	*@param 	$trade_no 	充值订单号
-	*		$num		需求,1代表所有信息,2代表订单的支付状况,3代表用id获取所有信息,4根据user_id获取该用户的所有订单
-	* @return 订单的支付情况,
-	*/
-	public function checkOrder($trade_no,$num){
-		switch ($num) {
-			case 1:
-				$order = $this->where('trade_no',$trade_no)->get();
-				break;		
-			case 2:
-				$order = $this->select('trade_status','id')->where('trade_no',$trade_no)->get();
-				break;
-			case 3:
-				$order = $this->where('id',$trade_no)->get();
-				break;
-			case 4:
-				$order = $this->where('user_id',$trade_no)->get();
-				break;
-		}
-		
-	
-		if(count($order) != 0){		
-			$return['data'] 	= $order;
-			$return['code'] 	= 1;
-			$return['msg']	= '获取成功';
-		}else{
-			$return['data'] 	= '';
-			$return['code'] 	= 0;
-			$return['msg']	= '获取失败';
+			$return['msg'] = '无法进行续费';
 		}
 
 		return $return;
 	}
 
-	/**
-	* 查询user表的余额数据
-	*@param $user_id	
-	* @return 余额
-	*/
-	public function getMoney($user_id)
-	{
-		$money = DB::table('tz_users')->find($user_id,['money']);
-		return $money;
-	}
+
 }

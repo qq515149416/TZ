@@ -106,7 +106,7 @@ class OrdersController extends Controller
     }
 
     /**
-     * 业务员查看工单
+     * 业务员查看订单
      * @return json 返回相关的数据信息和状态及提示
      */
     public function clerkOrders(){

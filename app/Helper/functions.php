@@ -27,3 +27,8 @@ function tz_ajax_echo($data = [], $info = "", $code = 0)
 {
     return response()->json(["code" => $code, "data" => $data, "msg" => $info]);
 }
+
+/**
+ * 计算时间是否过期工具
+ */
+//function tz_

@@ -8,6 +8,7 @@ use App\Http\Requests\TzAuth\SendEmailCodeRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 
 class ResetPasswordController extends Controller
@@ -19,13 +20,18 @@ class ResetPasswordController extends Controller
      * 类型:POST
      * 参数:
      *      password: 修改后的密码
-     *      xxxx  :邮箱验证码
+     *      token  :邮箱验证码
      */
     public function resetPasswordByEmail(Request $request)
     {
         $res = $request->all(); //获取参数
 
+        //实例化
+        $usersVerificationModel = new TzUsersVerification();
 
+        $testData = $usersVerificationModel->find(1); // 测试数据
+
+        dump($testData); //打印测试数据
     }
 
 
@@ -63,7 +69,6 @@ class ResetPasswordController extends Controller
         } else {
             return tz_ajax_echo([], '验证码发送失败', 0);
         }
-
 
     }
 

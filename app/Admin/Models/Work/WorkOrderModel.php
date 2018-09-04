@@ -61,6 +61,7 @@ class WorkOrderModel extends Model
             $return['code'] = 0;
             $return['msg'] = '暂无对应工单数据';
         }
+        return $return;
     }
 
     /**
@@ -103,6 +104,7 @@ class WorkOrderModel extends Model
             $return['code'] = 0;
             $return['msg'] = '暂无对应工单数据';
         }
+        return $return;
     }
 
     /**
@@ -147,6 +149,7 @@ class WorkOrderModel extends Model
             $return['code'] = 0;
             $return['msg'] = '暂无对应工单数据';
         }
+        return $return;
     }
 
     /**

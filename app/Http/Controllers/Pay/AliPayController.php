@@ -21,16 +21,18 @@ use App\Http\Controllers\Controller;
 use Yansongda\Pay\Pay;
 use Yansongda\Pay\Log;
 
+use Illuminate\Support\Facades\Auth;
+
 class AliPayController extends Controller
 {
 	protected $seller_id = '2088102176242173';
 	protected $config = [
-		'app_id' => '2016091800542971',
+		'app_id' => '',
 		'notify_url' => 'http://tz.jungor.cn/home/payRechargeNotify',
 		'return_url' => 'http://tz.jungor.cn/home/payRechargeReturn',
-		'ali_public_key' => 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5U+SBLpzQbX72aDmeiUSDTouF2+THtikn28Oyul5fU8HmFPHbZKMYD+Fjmf8RUVBOHpad02FCvW+FlhOktq0JYEBU1tcgIb0af23mlaOcYdbSfIYXUKbg3T+vd2+0VV2apFDO0AsNqWhQL/2FEDBtMiTUfoEAnDxTCZWIdc4sGPsklLqDYv85Vv284LhrGep/hG7cMKdlqXz97godlno7dsBXdiHqVMjBAAryE+GdwEqktEVCJHfr33HtSrReTLztt1gzerpZhng9fGJDbCCuz8VWs/Nihzb1S8F5WzAXl7kyHQD/2gAptabF19vESnIN/vcbv/6YFELOj5MEO4wHwIDAQAB',
+		'ali_public_key' => '',
 		// 加密方式： **RSA2**  
-		'private_key' => 'MIIEogIBAAKCAQEAwsfcKs6Ngrx8/SYZDzkkk0LIDcB/XNPbOp2OYDKqvhwpAr2M/WWvuFXdRd62mb8iqepURtFyKxqlwbv/Ziez/54zJpJmdGveRJJG+uuDDdaTosn61VbHr/Tm94/KKO8qQUhfTpitUlttNN0fgCKTyoc4y2Y8F8XjDkNf02Chpm4j+oU4VfWlCx2pqXd2Ey44AoHNqRij2QVWWjrU7YfqlmDgVCwR6T/ce4y+aNFf4/fu4/XomRRL7fuqXPfFWpNeUo4cNnietNb7vAQ2Fdlqf+EexX36LTo1lIVh7HiGxS4j4qpsn0syWbKmNe7ikShqCVSQIWEN78AZHiFEs4EyqwIDAQABAoIBAAbIQshSzOaifY+rBfBbwwRFrQWdkFHBJr8RwWVkHkHkZSEtTH1+TvISO1Q1fxI3b5OPD0QwAtOxZ9gpHamG9GOQNKPBMUQYhXLJzSLrlHKk6BshAVTwYp+j3W79WMK4ITaIuJjaBB78A/91O6WQjqjcsIOUmb8SKufSPMH1eWt8FsEjB/eyqvtsGXGx/9SjBR3iR0/vlrYasa1fK61Hdd5YoJvqNC6j8mmfKTaaT/bXx4V60Jso4IY4YuYD7N1ouNozwQSb7CXERWVsdoJP9u7Fi5rJeQbzjJzs/9qKVPEiuh7jJFeErXoaUgrEw0KZ2a1hMPwko2U8yZv+rULRIAECgYEA5z4vVuJZmoxcmXISNZd3OE/DqPSlBh9tuDNg26GnJ2OHHyICk9JP85Xcr+0uiWD3QUaJJAwsxtbeNvN0LmHHMamA7vzT8MO44UN4M4LYclb0Y1sgFJtDaiyVY9AAOCzYiNeYba03q+Gieez2sYTUmzlThSJ7SH4JFyy60qjymqsCgYEA16JVTtwXlu/v27z0cx5Io5t6Btcgh1Ks9Pk12H0cUJHs8V+d7UecGoe6Dy67dFW1sxUypdC4cFNd8TxTBzqVLQFiEu8MebMlYIHC/KdeKlW+eIR/H6INuoZ+md8ylnOTY6sf/jLNouAw6fmtswbRa7rQ/O91apcpyYopDZUryAECgYBwLfGnM52GZQtTAUymJPmYHtHrd+tKohqHHp2hTrWZXSYiy0v2zDMvFwd9bRGDYb/xMbe7/hAG0hvxCn/VNGf+xp0e0xY6Gajp1uJMEvDP3zEltgJFHOFCc6hxSGmi1tag4/41Tq/QOWCpx3QRwD+nodLLpmOqUkI0tOVY5s7yiwKBgDhgGomJhSlTBZSfbBGEw1zy0w5ixABdHxbU6Lz2yKZP4HCinPliFW/iOESr5RpfJifxzNIJJY9IXHErYlGrgUDI8ckdcleG/KikhEPlxfqvfCKqEUpF5ez0KLk131XyVYBjRvQAeD6y+lbRjhYWHD5cEzNtr3b0mlo0otMIQvABAoGAV07K16VdyNpwiWAEAiBz/wdDwcBEqd7OvPcOQjZgxLiQAmFBquruvadwYf5NcseZlWnTrNVBkaEu4+J8g63Xltdzv+1JwGzj+2eG8ItgW6H3wT1VNRT6f5XfoMTPUasTdSiT7cKUq8o9/fNlRMvECFclRButC0CTNoUMRbf2CyU=',
+		'private_key' => '',
 		'log' => [ // optional
 			'file' => './logs/alipay.log',
 			'level' => 'debug'
@@ -49,6 +51,13 @@ class AliPayController extends Controller
 
 	*@return 创建订单的id
  	**/
+ 	
+ 	public function __construct()
+ 	{
+ 		$this->config['private_key'] 	= env('ALI_PRIVATE_KEY');
+ 		$this->config['ali_public_key'] 	= env('ALI_PUBLIC_KEY');
+ 		$this->config['app_id'] 		= env('ALI_APP_ID');
+ 	}
 
 	public function index(AliPayRequest $request)
 	{

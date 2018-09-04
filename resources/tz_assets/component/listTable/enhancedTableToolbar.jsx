@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
+import PostData from "./postData.jsx";
 const toolbarStyles = theme => ({
     root: {
       paddingRight: theme.spacing.unit,
@@ -86,11 +87,13 @@ const toolbarStyles = theme => ({
               }
             </div>
           ]: (
-            <Tooltip title="筛选">
-              <IconButton aria-label="Filter list">
-                <FilterListIcon />
-              </IconButton>
-            </Tooltip>
+            <span>
+              {
+                props.addData && (
+                  <PostData operattext={props.operattext || this.props.title} inputType={props.inputType} addData={props.addData} postType="add" />
+                )
+              }
+            </span>
           )}
         </div>
       </Toolbar>

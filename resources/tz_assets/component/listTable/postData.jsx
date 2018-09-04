@@ -5,6 +5,8 @@ import Button from '@material-ui/core/Button';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
+import AddIcon from '@material-ui/icons/Add';
+
 // import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogComponent from "../dialogComponent.jsx";
 const PostDataStyle = theme => ({
@@ -78,9 +80,11 @@ class PostData extends React.Component {
             <span>
               {
                 postType == "add" ? (
-                <Button variant="contained" onClick={() => {console.log(this.dialogComponent);this.dialogComponent && this.dialogComponent.handleClickOpen();}} color="primary" className={classes.button}>
-                    添加{this.props.operattext}
-                </Button>
+                <Tooltip title="添加">
+                    <IconButton onClick={() => {this.dialogComponent && this.dialogComponent.handleClickOpen();}} aria-label="Add">
+                        <AddIcon />
+                    </IconButton>
+                </Tooltip>
                 ) : (
                     <Tooltip title="编辑">
                         <IconButton onClick={() => {this.dialogComponent && this.dialogComponent.handleClickOpen();}} aria-label="Edit">

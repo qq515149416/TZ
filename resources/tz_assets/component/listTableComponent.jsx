@@ -13,6 +13,7 @@ import PostData from "./listTable/postData.jsx";
 import EnhancedTableHead from "./listTable/enhancedTableHead.jsx";
 import EnhancedTableToolbar from "./listTable/enhancedTableToolbar.jsx";
 import ExpansionComponent from "./expansionComponent.jsx";
+import FilterTableToolbar from "./listTable/filterTableToolbar.jsx";
 
 function getSorting(order, orderBy) {
     return order === 'desc'
@@ -46,6 +47,11 @@ const styles = theme => ({
     tableWrapper: {
       overflowX: 'auto',
     },
+    paper: {
+      ...theme.mixins.gutters(),
+      paddingTop: theme.spacing.unit * 2,
+      paddingBottom: theme.spacing.unit * 2
+    }
   });
   @observer
   class EnhancedTable extends React.Component {
@@ -125,15 +131,25 @@ const styles = theme => ({
       // console.log(this.props.data);
      
       return [
-          <div>
+          <Paper className={classes.paper} elevation={1}>
             {
-              this.props.addData && (
-                <PostData operattext={this.props.operattext || this.props.title} inputType={this.props.inputType} addData={this.props.addData} postType="add" />
+              this.props.filterType && (
+                <FilterTableToolbar filterType={this.props.filterType} />
               )
             }
-          </div>,
+          </Paper>,
         <Paper className={classes.root}>
-          <EnhancedTableToolbar title={(this.props.title || "未定义")} numSelected={selected.length} getParentData={this.getData.bind(this)} handleSelectAllEmptyClick={this.handleSelectAllEmptyClick} delData={this.props.delData} selectedData={selected} />
+          <EnhancedTableToolbar 
+            title={(this.props.title || "未定义")} 
+            inputType={this.props.inputType} 
+            operattext={this.props.operattext} 
+            addData={this.props.addData} 
+            numSelected={selected.length} 
+            getParentData={this.getData.bind(this)} 
+            handleSelectAllEmptyClick={this.handleSelectAllEmptyClick} 
+            delData={this.props.delData} 
+            selectedData={selected} 
+          />
           <div className={classes.tableWrapper}>
             <Table className={classes.table} aria-labelledby="tableTitle">
               <EnhancedTableHead

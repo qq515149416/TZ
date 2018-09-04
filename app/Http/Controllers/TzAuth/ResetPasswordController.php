@@ -26,12 +26,21 @@ class ResetPasswordController extends Controller
     {
         $res = $request->all(); //获取参数
 
-        //实例化
+//        //实例化
         $usersVerificationModel = new TzUsersVerification();
-
+//
         $testData = $usersVerificationModel->find(1); // 测试数据
+//
+        dump($testData['created_at']); //打印测试数据
+        dump($time1=date("Y-m-d H:i:s"));
 
-        dump($testData); //打印测试数据
+        dump(strtotime($time1));
+
+        dump(5*60*60);
+
+        dump(strtotime($testData['created_at']));
+
+        dump(tz_time_expire($testData['created_at'],1));
     }
 
 

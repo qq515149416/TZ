@@ -54,7 +54,7 @@ Route::group([
         'prefix' => 'resetPassword',
     ], function () {
         Route::post('sendEmailCode', 'TzAuth\ResetPasswordController@sendEmailCode');  //发送邮箱
-        Route::post('resetPasswordByEmail', 'TzAuth\ResetPasswordController@sendEmailCode');  //通过邮箱帐号重置密码
+        Route::post('resetPasswordByEmail', 'TzAuth\ResetPasswordController@resetPasswordByEmail');  //通过邮箱帐号重置密码
 
     });
 

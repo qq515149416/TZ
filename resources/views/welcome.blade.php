@@ -4,8 +4,8 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>Laravel</title>
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <title>腾正科技</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
@@ -46,7 +46,7 @@
             }
 
             .title {
-                font-size: 84px;
+                font-size: 184px;
             }
 
             .links > a {
@@ -79,7 +79,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    广东腾正
+                    腾正科技
                 </div>
 
                 {{--<div class="links">--}}

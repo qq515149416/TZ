@@ -36,9 +36,7 @@ class MachineModel extends Model
     			$result[$key]['used'] = $used_status[$value['used_status']];//使用状态的转换
     			$result[$key]['status'] = $machine_status[$value['machine_status']];//机器上下架的转换
     			$result[$key]['business'] = $business_type[$value['business_type']];//业务类型的转换
-    			// // 机柜等的对应查询
-    			// $cbinet = (array)$this->cbinet($value['cabinet']);//机柜信息的查询
-    			// $ip = (array)$this->ips($value['ip_id']);//IP信息的查询
+    			//机柜等的对应查询
     			$machineroom = (array)$this->machineroom($value['machineroom'],$value['cabinet'],$value['ip_id']);//机房信息的查询
     			// 进行对应的机柜等信息的转换或者显示
     			if(!empty($cabinet) && !empty($ip) && !empty($machineroom)){
@@ -86,9 +84,7 @@ class MachineModel extends Model
     			$result[$key]['used'] = $used_status[$value['used_status']];//使用状态的转换
     			$result[$key]['status'] = $machine_status[$value['machine_status']];//机器上下架的转换
     			$result[$key]['business'] = $business_type[$value['business_type']];//业务类型的转换
-    			// // 机柜等的对应查询
-    			// $cbinet = (array)$this->cbinet($value['cabinet']);//机柜信息的查询
-    			// $ip = (array)$this->ips($value['ip_id']);//IP信息的查询
+    			//机柜等的对应查询
     			$machineroom = (array)$this->machineroom($value['machineroom'],$value['cabinet'],$value['ip_id']);//机房信息的查询
     			// 进行对应的机柜等信息的转换或者显示
     			if(!empty($cabinet) && !empty($ip) && !empty($machineroom)){
@@ -136,9 +132,7 @@ class MachineModel extends Model
     			$result[$key]['used'] = $used_status[$value['used_status']];//使用状态的转换
     			$result[$key]['status'] = $machine_status[$value['machine_status']];//机器上下架的转换
     			$result[$key]['business'] = $business_type[$value['business_type']];//业务类型的转换
-    			// // 机柜等的对应查询
-    			// $cbinet = (array)$this->cbinet($value['cabinet']);//机柜信息的查询
-    			// $ip = (array)$this->ips($value['ip_id']);//IP信息的查询
+    			//机柜等的对应查询
     			$machineroom = (array)$this->machineroom($value['machineroom'],$value['cabinet'],$value['ip_id']);//机房信息的查询
     			// 进行对应的机柜等信息的转换或者显示
     			if(!empty($cabinet) && !empty($ip) && !empty($machineroom)){
@@ -189,17 +183,13 @@ class MachineModel extends Model
     			$result[$key]['used'] = $used_status[$value['used_status']];//使用状态的转换
     			$result[$key]['status'] = $machine_status[$value['machine_status']];//机器上下架的转换
     			$result[$key]['business'] = $business_type[$value['business_type']];//业务类型的转换
-    			// // 机柜等的对应查询
-    			// $cbinet = (array)$this->cbinet($value['cabinet']);//机柜信息的查询
-    			// $ip = (array)$this->ips($value['ip_id']);//IP信息的查询
+    			//机柜等的对应查询
     			$machineroom = (array)$this->machineroom($value['machineroom'],$value['cabinet'],$value['ip_id']);//机房信息的查询
     			// 进行对应的机柜等信息的转换或者显示
     			if(!empty($cabinet) && !empty($ip) && !empty($machineroom)){
     				$result[$key]['cabinets'] = $machineroom['cabinet_id'];//机柜信息的返回
     				//IP信息的返回
-    				
     				$result[$key]['ip'] = $machineroom['ip'].'('.$ip_company[$machineroom['ip_company']].')';
-    				// $result[$key]['ip_company'] = $machineroom['ip_company'];
     				//机房的信息返回
     				$result[$key]['machineroom_name'] = $machineroom['machine_room_name'];
     			}
@@ -219,6 +209,58 @@ class MachineModel extends Model
     	}
 
     	return $return;
+    }
+
+
+    /**
+     * 选择机器(用于下订单时使用App\Admin\Controllers\Business\OrdersController)
+     * @return array 返回对应机房的机器信息
+     */
+    public function selectMachine($where){
+        // 查找对应机房为未使用的机器
+        $where['used_status'] = 0;
+        // 查找对应机房为上架的机器
+        $where['machine_status'] = 0;
+        // 进行条件查询业务类型为1的即租用的所有机器信息
+        $result = $this->where($where)->get(['id','machine_num','cpu','memory','harddisk','cabinet','ip_id','machineroom','bandwidth','protect','loginname','loginpass','machine_type','used_status','machine_status','business_type','machine_note','created_at','updated_at']);
+        // 判断是否查询到数据
+        if(!$result->isEmpty()){
+            // 查询到数据进行某些字段的数据转换
+            $used_status = [0=>'未使用',1=>'使用中',2=>'锁定',3=>'迁移'];//使用状态的转换数据
+            $machine_status = [0=>'上架',1=>'下架'];//机器上下架的转换数据
+            $business_type = [1=>'租用',2=>'托管',3=>'备用'];//业务类型的转换数据
+            $ip_company = [0=>'电信',1=>'移动',2=>'联通'];
+            // 遍历查询到的数据并进行相应的转换
+            foreach($result as $key=>$value){
+                // 状态等的转换
+                $result[$key]['used'] = $used_status[$value['used_status']];//使用状态的转换
+                $result[$key]['status'] = $machine_status[$value['machine_status']];//机器上下架的转换
+                $result[$key]['business'] = $business_type[$value['business_type']];//业务类型的转换
+                $machineroom = (array)$this->machineroom($value['machineroom'],$value['cabinet'],$value['ip_id']);//机房信息的查询
+                // 进行对应的机柜等信息的转换或者显示
+                if(!empty($cabinet) && !empty($ip) && !empty($machineroom)){
+                    $result[$key]['cabinets'] = $machineroom['cabinet_id'];//机柜信息的返回
+                    //IP信息的返回
+                    $result[$key]['ip'] = $machineroom['ip'].'('.$ip_company[$machineroom['ip_company']].')';
+                    //机房的信息返回
+                    $result[$key]['machineroom_name'] = $machineroom['machine_room_name'];
+                }
+
+            }
+
+            $return['data'] = $result;
+            $return['code'] = 1;
+            $return['msg'] = '获取信息成功！！';
+
+        } else {
+
+            $return['data'] = $result;
+            $return['code'] = 0;
+            $return['msg'] = '暂无数据';
+
+        }
+
+        return $return;
     }
 
     /**

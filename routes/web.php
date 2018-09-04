@@ -22,19 +22,13 @@ Route::group([
 	'prefix'     => 'test',
 	'middleware' => 'UserOperationLog'
 ], function () {
-<<<<<<< Updated upstream
+
     //测试
     Route::post('jun', 'TzAuth\RegisterController@test');
     Route::get('jun2', 'TzAuth\RegisterController@test2');
     Route::get('jun3', 'TzAuth\RegisterController@sendCodeToEmail');
     Route::get('login', 'TzAuth\TestController@login');   //TODO 上线前要删除   用户登录模拟登录
-=======
-	//测试
-	Route::post('jun', 'TzAuth\RegisterController@test');
-	Route::get('jun2', 'TzAuth\RegisterController@test2');
-	Route::get('jun3', 'TzAuth\RegisterController@sendCodeToEmail');
-	Route::get('login', 'TzAuth\TestController@login');
->>>>>>> Stashed changes
+    
 });
 
 //news接口路径

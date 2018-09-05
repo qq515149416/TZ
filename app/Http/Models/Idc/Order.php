@@ -32,7 +32,7 @@ class Order extends Model
 	public function getList($user_id)
 	{
 		//获取该用户的订单
-		$order = $this->where('customer_id',$user_id)->get(['order_sn', 'business_sn','before_money','after_money','business_id','resource_type','order_type','machine_sn','resource','price','duration','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at','payable_money']);
+		$order = $this->where('customer_id',$user_id)->orderby('created_at','desc')->get(['order_sn', 'business_sn','before_money','after_money','business_id','resource_type','order_type','machine_sn','resource','price','duration','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at','payable_money']);
 
 		if(count($order) == 0){
 			return false;
@@ -43,12 +43,18 @@ class Order extends Model
 		$order_type = [ '1' => '新购' , '2' => '续费' ];
 		$pay_type = [ '1' => '余额' , '2' => '支付宝' , '3' => '微信' , '4' => '其他'];
 		$order_status = [ '0' => '待支付' , '1' => '已支付' , '2' => '已支付' , '3' => '订单完成' , '4' => '取消' , '5' => '申请退款' , '6' => '退款完成'];
-
+		$info = $this->getName('*');
+		$admin_name = [];
+		foreach ($info as $k => $v) {
+			$admin_name[$v->id] = $v->username;
+		}
+	
 		foreach ($order as $key => $value) {
 			$order[$key]['resource_type'] = $resource_type[$order[$key]['resource_type']];
 			$order[$key]['order_type'] = $order_type[$order[$key]['order_type']];
 			$order[$key]['pay_type'] = $pay_type[$order[$key]['pay_type']];
 			$order[$key]['order_status'] = $order_status[$order[$key]['order_status']];
+			$order[$key]['business_name']	= $admin_name[$order[$key]['business_id']];
 		}
 
 		return $order;
@@ -158,5 +164,21 @@ class Order extends Model
 	{
 		$money = DB::table('tz_users')->find($user_id,['money']);
 		return $money;
+	}
+
+	/**
+	* 查询业务员的名字
+	*@param $admin_id	
+	* @return 名字
+	*/
+	public function getName($admin_id)
+	{
+		if($admin_id == '*'){
+			$name = DB::table('admin_users')->get(['id','username']);
+		}else{
+			$name = DB::table('admin_users')->find($admin_id,['id','username']);
+		}
+		
+		return $name;
 	}
 }

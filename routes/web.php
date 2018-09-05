@@ -23,12 +23,13 @@ Route::group([
 	'middleware' => 'UserOperationLog'
 ], function () {
 
-    //测试
-    Route::post('jun', 'TzAuth\RegisterController@test');
-    Route::get('jun2', 'TzAuth\RegisterController@test2');
-    Route::get('jun3', 'TzAuth\RegisterController@sendCodeToEmail');
-    Route::get('login', 'TzAuth\TestController@login');   //TODO 上线前要删除   用户登录模拟登录
-    
+	//测试
+	Route::post('jun', 'TzAuth\RegisterController@test');
+	Route::get('jun2', 'TzAuth\RegisterController@test2');
+	Route::get('jun3', 'TzAuth\RegisterController@sendCodeToEmail');
+	Route::get('login', 'TzAuth\TestController@login');//TODO 上线前要删除   用户登录模拟登录
+
+
 });
 
 //news接口路径
@@ -68,22 +69,8 @@ Route::group([
     Route::get('logout', 'TzAuth\LoginController@logout');  //用户退出登录
     Route::post('loginByEmail', 'TzAuth\LoginController@loginByEmail');  //通过邮箱登录帐号
 
-	Route::group(['middleware' => 'CheckLogin'], function () {
-
-	});
-
-	//重置密码组
-	Route::group([
-		'prefix' => 'resetPassword',
-	], function () {
-		Route::post('sendEmailCode', 'TzAuth\ResetPasswordController@sendEmailCode');  //发送邮箱
-	});
-
-	Route::post('test', 'TzAuth\RegisterController@test'); //测试
-	Route::post('sendEmailCode', 'TzAuth\RegisterController@sendCodeToEmail');  //发送邮箱验证码
-	Route::post('registerByEmail', 'TzAuth\RegisterController@registerByEmail');  //通过邮箱注册帐号
-	Route::get('logout', 'TzAuth\LoginController@logout');  //用户退出登录
-	Route::post('loginByEmail', 'TzAuth\LoginController@loginByEmail');  //通过邮箱登录帐号
+	
+	
 
 });
 

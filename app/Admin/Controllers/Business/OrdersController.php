@@ -44,14 +44,13 @@ class OrdersController extends Controller
     }
 
     /**
-     * 进行订单的创建
+     * 进行订单和业务的创建
      * @param  Request $request [description]
      * @return json           返回订单创建的提示信息
      */
     public function insertOrders(Request $request){
     	if($request->isMethod('post')){
-    		$insertdata = $request->only(['customer_id','customer_name','business_id','business_name','machine_sn','price','duration','order_note','after_resource','resource_type']);
-    		$insert = new OrdersModel();
+    		$insertdata = $request->only(['client_id','client_name','machine_number','resource_detail','money','length','business_note','resource_type']);
     		$result = $insert->insertOrders($insertdata);
     		return tz_ajax_echo($result['data'],$$result['msg'],$$result['code']);
     	} else {
@@ -60,18 +59,18 @@ class OrdersController extends Controller
     }
 
     /**
-     * 后台手动生成业务编号，针对后付费客户群体
+     * 业务员手动对业务状态修改,针对后付费客户全体
      * @param  Request $request [description]
      * @return json           返回生成业务编号的提示信息
      */
     public function generateBusiness(Request $request){
     	if($request->isMethod('post')){
-    		$data = $request->only(['order_sn','duration','machine_sn','id','price','resource','customer_id','customer_name','business_id','business_name']);
+    		$data = $request->only(['id']);
     		$generate = new OrdersModel();
     		$result = $generate->generateBusiness($data);
     		return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
     	} else {
-    		return tz_ajax_echo([],'无法生成业务编号',0);
+    		return tz_ajax_echo([],'业务无法启用',0);
     	}
     }
 

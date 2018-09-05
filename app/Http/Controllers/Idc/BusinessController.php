@@ -38,6 +38,7 @@ class BusinessController extends Controller
 
 	}
 
+
 	/**
 	 * 进行续费操作
 	 * @param  Request $request [description]
@@ -53,6 +54,7 @@ class BusinessController extends Controller
 			return tz_ajax_echo('','无法进行续费',0);
 		}
 	}
+
 
 	
 

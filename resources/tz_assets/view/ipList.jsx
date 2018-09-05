@@ -168,6 +168,62 @@ const inputType = [
     defaultData: []
   }
 ];
+
+const filterType = [
+  {
+    field: "ip_company",
+    label: "所属运营商",
+    options: [
+      {
+        view: "电信公司"
+      },
+      {
+        view: "移动公司"
+      },
+      {
+        view: "联通公司"
+      }
+    ],
+    type: "select"
+  },
+  {
+    field: "ip_status",
+    label: "使用状态",
+    options: [
+      {
+        view: "未使用"
+      },
+      {
+        view: "使用(子IP)"
+      },
+      {
+        view: "使用(内部机器主IP)"
+      },
+      {
+        view: "使用(托管主机的主IP)"
+      }
+    ],
+    type: "select"
+  },
+  {
+    field: "ip_lock",
+    label: "锁定状态",
+    options: [
+      {
+        view: "未锁定"
+      },
+      {
+        view: "锁定"
+      }
+    ],
+    type: "select"
+  },
+  {
+    field: "created_at",
+    label: "创建时间",
+    type: "date"
+  }
+];
 @inject("ipsStores")
 @observer 
 class IpList extends React.Component {
@@ -202,7 +258,8 @@ class IpList extends React.Component {
       <ListTableComponent 
         title="ip资源库"
         operattext="ip资源"
-        inputType={inputType} 
+        inputType={inputType}
+        filterType={filterType} 
         headTitlesData={columnData} 
         data={this.props.ipsStores.ips}  
         addData={this.addData.bind(this)} 

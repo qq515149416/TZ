@@ -106,6 +106,7 @@ class IpsStores extends ActionBoundStores {
                 if(res.data.code==1) {
                     this.addStoreData("ips",IpStores,Object.assign(data,{
                         id: res.data.data,
+                        ip: data.ip_start,
                         ip_company: this.stateText(String(data.ip_company),{
                             "0" : "电信公司",
                             "1": "移动公司",

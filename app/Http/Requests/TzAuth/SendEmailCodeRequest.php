@@ -30,8 +30,8 @@ class SendEmailCodeRequest extends FormRequest
         return [
             //
 //            'email'   => 'required|email|unique:tz_users,email',  //判断邮箱是否存在
-            'email'   => 'required|email',
-            'captcha' => 'required|captcha',  //因测试原因暂时关闭
+            'email' => 'required|email',
+//            'captcha' => 'required|captcha',  //TODO 因测试原因暂时关闭   上线前需要关闭注释
         ];
     }
 

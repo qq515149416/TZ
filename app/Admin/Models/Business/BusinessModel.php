@@ -109,7 +109,9 @@ class BusinessModel extends Model
    					$order['order_sn'] = (int)$order_sn;
     				$order['business_sn'] = $where['business_number'];
     				$order['customer_id'] = $where['client_id'];
+    				$order['customer_name'] = $where['client_name'];
     				$order['business_id'] = $where['sales_id'];
+    				$order['business_name'] = $where['sales_name'];
     				$order['resource_type'] = $where['business_type'];
     				$order['order_type'] = 1;
     				$order['machine_sn'] = $where['machine_number'];

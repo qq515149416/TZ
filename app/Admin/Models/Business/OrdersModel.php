@@ -53,11 +53,8 @@ class OrdersModel extends Model
      * @param  array $where 订单的状态
      * @return array        返回相关的数据信息和提示状态及信息
      */
-    public function clerkOrders($where){
-    	$clerk_id = Admin::user()->id;
-    	$where['business_id'] = $clerk_id;
-    	$result = $this->where($where)
-    				->get(['id','order_sn','business_sn','customer_id','customer_name','before_money','after_money','business_id','business_name','resource_type','order_type','machine_sn','price','duration','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at']);
+    public function showOrders($where){
+    	$result = $this->where($where)->get(['id','order_sn','customer_name','business_sn','business_name','before_money','after_money','resource_type','order_type','resource','price','duration','payable_money','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at']);
     	if(!$result->isEmpty()){
     		$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn'];
     		$order_type = [1=>'新购',2=>'续费'];

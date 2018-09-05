@@ -72,7 +72,7 @@ class OrderController extends Controller
 	* 订单支付的接口
 	* @return 支付结果,
 	*/
-	public function payOrder(OrderRequest $request)
+	public function payOrderByBalance(OrderRequest $request)
 	{
 		if(!Auth::check()){
 			return tz_ajax_echo('','请先登录',0);

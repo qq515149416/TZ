@@ -123,7 +123,7 @@ Route::group([
 			Route::get('businessList', 'Idc\BusinessController@getBusinessList');	
 			Route::get('orderList', 'Idc\OrderController@getOrderList');	
 			Route::get('delOrder', 'Idc\OrderController@delOrder');
-			Route::get('payOrder', 'Idc\OrderController@payOrder');								
+			Route::get('payOrderByBalance', 'Idc\OrderController@payOrderByBalance');								
 		});
 	});
 

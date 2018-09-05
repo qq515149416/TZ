@@ -90,6 +90,8 @@ class Order extends Model
 	}
 
 	public function payOrder($user_id,$id){
+		
+		$serial_number = $this->createNum($user_id.$id); //支付流水号
 		$row = $this->find($id);
 		$return['data']	= '';
 		if($row == NULL){
@@ -130,7 +132,8 @@ class Order extends Model
 		$row->pay_type		= 1;
 		$row->pay_price	= $payable_money;
 		$row->pay_time		= $pay_time;
-		$row->order_status	= 2;
+		$row->order_status	= 1;
+		$row->serial_number	= $serial_number;
 		$res = $row->save();
 		if(!$res){
 			$return['msg'] 	= '支付失败';
@@ -181,4 +184,20 @@ class Order extends Model
 		
 		return $name;
 	}
+
+
+	public function createNum($i){
+		$f=date('Ym');
+		$i+=1;
+		if($i<10){
+			return $f.'000'.$i;
+		}else if($i<100){
+			return $f.'00'.$i;
+		}else if($i<1000){
+			return $f.'0'.$i;
+		}else{
+			return $f.$i;
+		}
+	}
+
 }

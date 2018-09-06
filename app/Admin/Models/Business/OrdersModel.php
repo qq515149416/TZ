@@ -49,7 +49,7 @@ class OrdersModel extends Model
     }
     
     /**
-     * 业务人员查看订单
+     * 业务员和管理人员通过业务查看订单
      * @param  array $where 订单的状态
      * @return array        返回相关的数据信息和提示状态及信息
      */

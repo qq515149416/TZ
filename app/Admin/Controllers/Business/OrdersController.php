@@ -15,7 +15,7 @@ class OrdersController extends Controller
     use ModelForm;
 
     /**
-     * 财务查看订单接口
+     * 财务和管理人员查看订单接口
      * @return json 返回订单的相关数据和状态信息和状态
      */
     public function financeOrders(){
@@ -30,7 +30,7 @@ class OrdersController extends Controller
     } 
 
     /**
-     * 业务员查看订单
+     * 业务员和管理人员通过业务查看订单
      * @return json 返回相关的数据信息和状态及提示
      */
     public function showOrders(){
@@ -40,7 +40,7 @@ class OrdersController extends Controller
     		$result = $show->showOrders($data);
     		return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
     	} else {
-    		return tz_ajax_echo([],'无法获取客户的订单信息',0);
+    		return tz_ajax_echo([],'无法获取业务的订单信息',0);
     	}
     }
    

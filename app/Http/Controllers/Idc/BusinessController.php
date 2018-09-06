@@ -40,7 +40,7 @@ class BusinessController extends Controller
 	}
 
 	/**
-	 * 进行续费操作
+	 * 进行主机及机柜续费操作
 	 * @param  Request $request [description]
 	 * @return json           返回相关的状态提示及信息
 	 */

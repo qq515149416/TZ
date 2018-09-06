@@ -221,7 +221,7 @@ class Order extends Model
 	}
 
 	/**
-	 * 客户续费产生订单
+	 * 客户续费主机及机柜产生订单
 	 * @param  array $renew 续费订单所需要的数据
 	 * @return array        返回操作后的状态提示及信息
 	 */

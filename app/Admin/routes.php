@@ -205,7 +205,7 @@ Route::group([
         $router->get('machineroom','Business\BusinessController@machineroom');
         $router->post('selectmachine','Business\BusinessController@selectmachine');
         $router->post('insert','Business\BusinessController@insertBusiness');
-        $router->post('security','Business\BusinessController@securityBusiness');
+        $router->get('security','Business\BusinessController@securityBusiness');
         $router->post('check','Business\BusinessController@checkBusiness');
         $router->post('enable','Business\BusinessController@enableBusiness');
         $router->post('showbusiness','Business\BusinessController@showBusiness');

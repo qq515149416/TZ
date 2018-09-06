@@ -127,7 +127,7 @@ class BusinessModel extends Model
     					DB::commit();
 	    				$return['data'] = $order_sn;
 			    		$return['code'] = 1;
-			    		$return['msg'] = '审核成功,通知业务员及时联系客户进行支付单号:'.$order_sn;
+			    		$return['msg'] = '审核成功,通知业务员及时联系客户进行支付,单号:'.$order_sn;
     				} else {
     					DB::rollBack();
 	    				$return['data'] = '审核失败';

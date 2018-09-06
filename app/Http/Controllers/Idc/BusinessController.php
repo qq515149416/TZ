@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Idc;
 
 use App\Http\Controllers\Controller;
 use App\Http\Models\Idc\Business;
+use App\Http\Models\Idc\Order;
 use App\Http\Requests\Idc\BusinessRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,18 +39,17 @@ class BusinessController extends Controller
 
 	}
 
-
 	/**
 	 * 进行续费操作
 	 * @param  Request $request [description]
 	 * @return json           返回相关的状态提示及信息
 	 */
-	public function renew(Request $request){
+	public function renewOrders(Request $request){
 		if($request->isMethod('post')){
-			$data = $request->only(['id','client_id','client_name','sales_id','slaes_name','business_number','machine_number','resource_detail','money','length','renew_time','start_time','end_time','business_status','business_note','order_type']);
-			$renew = new Business();
-			$result = $renew->renew($data);
-			return tz_ajax_echo($list['data'],$list['msg'],$list['code']);
+			$data = $request->only(['id','client_id','client_name','sales_id','slaes_name','business_number','machine_number','resource_detail','money','length','endding_time','order_note','order_type','business_type']);
+			$renew = new Order();
+			$result = $renew->renewOrders($data);
+			return tz_ajax_echo($result,$result['msg'],$result['code']);
 		} else {
 			return tz_ajax_echo('','无法进行续费',0);
 		}

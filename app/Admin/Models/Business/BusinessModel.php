@@ -121,6 +121,7 @@ class BusinessModel extends Model
     				$order['end_time'] = $end_time;
     				$order['payable_money'] = bcmul((string)$order['price'],(string)$order['duration'],2);//应付金额
     				$order['created_at']  = Carbon::now()->toDateTimeString();
+                    $order['month'] = (int)date('Ym',time());
     				$order_row = DB::table('tz_orders')->insert($order);//生成订单
     				if($order_row != 0){
     					// 订单生成成功，事务进行提交处理

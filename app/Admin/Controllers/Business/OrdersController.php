@@ -33,11 +33,11 @@ class OrdersController extends Controller
      * 业务员和管理人员通过业务查看订单
      * @return json 返回相关的数据信息和状态及提示
      */
-    public function showOrders(){
+    public function clerkOrders(){
     	if($request->isMethod('post')){
     		$data = $request->only(['business_sn']);
     		$show = new OrdersModel();
-    		$result = $show->showOrders($data);
+    		$result = $show->clerkOrders($data);
     		return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
     	} else {
     		return tz_ajax_echo([],'无法获取业务的订单信息',0);

@@ -202,14 +202,15 @@ Route::group([
     Route::group([
         'prefix' => 'business',
     ],function(Router $router){
-        $router->get('machineroom','Business\OrdersController@machineroom');
-        $router->post('selectmachine','Business\OrdersController@selectmachine');
-        $router->post('insert','Business\OrdersController@insertOrders');
-        $router->post('business','Business\OrdersController@generateBusiness');
-        $router->post('finance','Business\OrdersController@financeOrders');
-        $router->post('admin','Business\OrdersController@adminOrders');
-        $router->post('clerk','Business\OrdersController@clerkOrders');
+        $router->get('machineroom','Business\BusinessController@machineroom');
+        $router->post('selectmachine','Business\BusinessController@selectmachine');
+        $router->post('insert','Business\BusinessController@insertBusiness');
+        $router->post('security','Business\BusinessController@securityBusiness');
+        $router->post('check','Business\BusinessController@checkBusiness');
+        $router->post('enable','Business\BusinessController@enableBusiness');
         $router->post('showbusiness','Business\BusinessController@showBusiness');
+        $router->post('finance','Business\OrdersController@financeOrders');
+        $router->post('clerk','Business\OrdersController@clerkOrders');
     });
 
 });

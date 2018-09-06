@@ -53,7 +53,7 @@ class OrdersModel extends Model
      * @param  array $where 订单的状态
      * @return array        返回相关的数据信息和提示状态及信息
      */
-    public function showOrders($where){
+    public function clerkOrders($where){
     	$result = $this->where($where)->get(['id','order_sn','customer_name','business_sn','business_name','before_money','after_money','resource_type','order_type','resource','price','duration','payable_money','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at']);
     	if(!$result->isEmpty()){
     		$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn'];

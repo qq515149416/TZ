@@ -164,7 +164,7 @@ Route::group([
     Route::group([
         'prefix' => 'pfmStatistics',
     ],function (Router $router) {
-        $router->get('pfmStatisticsList', 'Statistics\PfmStatisticsController@pfmStatistics');
+        $router->get('pfmStatisticsList', 'Statistics\PfmStatisticsController@index');
     });
 
 

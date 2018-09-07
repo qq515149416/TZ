@@ -5,9 +5,9 @@
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016-2018 by cmd
 // +----------------------------------------------------------------------
-// | Description: 机器统计表的模型
+// | Description: 业绩统计表的模型
 // +----------------------------------------------------------------------
-// | @DateTime: 2018-08-20 17:02:37
+// | @DateTime: 2018-09-06 17:02:37
 // +----------------------------------------------------------------------
 namespace App\Admin\Models\Statistics;
 
@@ -23,7 +23,7 @@ class  PfmStatistics extends Model
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
 	
-	protected $fillable = ['user_id', 'performance','total_money','this_arrears','all_arrears','month'];
+	protected $fillable = ['user_id', 'performance','total_money','this_arrears','all_arrears','month','updated_at'];
 
 	/**
 	* 统计业绩的方法
@@ -32,12 +32,19 @@ class  PfmStatistics extends Model
 
 	public function statistics($key)
 	{	
+		//获取查询月份订单
 		$order = $this->getOrder($key);
 		$order = json_decode(json_encode($order),true);
+
+		$return['data'] = [];
+
 		if(count($order) == 0){
-			return false;
+			$return['msg'] 	= '无数据';
+			$return['code'] 	= 0;
+			return $return;
 		}
 
+		//生成每个有业绩的业务员的空数组
 		$order_arr = [];
 		foreach ($order as $k => $v) {
 			if(!isset($order_arr[$v['user_id']])){
@@ -45,26 +52,45 @@ class  PfmStatistics extends Model
 				$order_arr[$v['user_id']]['total_money']		= 0;
 				$order_arr[$v['user_id']]['performance']		= 0;
 				$order_arr[$v['user_id']]['this_arrears']		= 0;
-				$order_arr[$v['user_id']]['all_arrears']		= $this->getAllArrears($v['user_id']);;
+				$order_arr[$v['user_id']]['all_arrears']		= $this->getAllArrears($v['user_id']);
 				$order_arr[$v['user_id']]['month']			= $key;
 			}
 		}
-
+		//总计
+		$order_arr['0'] = [
+			'user_id'			=> 0,
+			'total_money'		=> 0,
+			'performance'		=> 0,
+			'this_arrears'		=> 0,
+			'all_arrears'		=> $this->getAllArrears('*'),
+			'month'			=> $key,
+		];
+		//开始统计
 		foreach ($order as $k => $v) {
 			if($v['order_status'] != 4||$v['order_status'] != 5||$v['order_status'] != 6){
 				
+				$order_arr['0']['total_money']			= bcadd($order_arr['0']['total_money'],$v['payable_money'],2);
 				$order_arr[$v['user_id']]['total_money'] 		= bcadd($order_arr[$v['user_id']]['total_money'],$v['payable_money'],2);
 				if($v['order_status'] == 1||$v['order_status'] == 2||$v['order_status'] == 3){
+					$order_arr['0']['performance']		= bcadd($order_arr['0']['performance'],$v['payable_money'],2);
 					$order_arr[$v['user_id']]['performance'] 	= bcadd($order_arr[$v['user_id']]['performance'],$v['payable_money'],2);
 				}else{
+					$order_arr['0']['this_arrears']		= bcadd($order_arr['0']['this_arrears'],$v['payable_money'],2);
 					$order_arr[$v['user_id']]['this_arrears']	= bcadd($order_arr[$v['user_id']]['this_arrears'],$v['payable_money'],2);
 				}
 	
 			}		
 		}
-
+		//入库统计表
 		$res = $this->insert($order_arr);
-		var_dump($res);
+		if($res){
+			$return['msg'] 	= '统计成功';
+			$return['code'] 	= 1;
+		}else{
+			$return['msg'] 	= '统计失败';
+			$return['code'] 	= 0;
+		}
+		return $return;
 	}
 
 	/**
@@ -85,7 +111,12 @@ class  PfmStatistics extends Model
 
 	public function getAllArrears($user_id)
 	{
-		$order = DB::table('tz_orders')->where('business_id',$user_id)->where('order_status',0)->sum('payable_money');
+		if($user_id == '*'){
+			$order = DB::table('tz_orders')->where('order_status',0)->sum('payable_money');
+		}else{
+			$order = DB::table('tz_orders')->where('business_id',$user_id)->where('order_status',0)->sum('payable_money');
+		}
+		
 		return $order;
 	}
 
@@ -126,23 +157,21 @@ class  PfmStatistics extends Model
 	*/
 	public function getStatistics($month){
 		// 用模型进行数据查询
-		$index = $this->where("month",$month)->get();
+		$index = $this->where("month",$month)->get($this->fillable);
 
 		if(!$index->isEmpty()){
 		// 判断存在数据就对部分需要转换的数据进行数据转换的操作
-		
-			$room = json_decode(json_encode($this->getMachineRoom() ),true);
-			$room_arr = [];
-			foreach ($room as $k=> $v) {
-				$room_arr[$v['roomid']] = $v['machine_room_name'];
-			}
-			$room_arr[0] = '合计';
-
+			$index = json_decode(json_encode($index),true);
 			foreach($index as $key=>$value) {
 			// 对应的字段的数据转换
-				$index[$key]['room_name'] 	= $room_arr[$value['room_id']];				
+				if($value['user_id'] == 0){
+					$index[$key]['salesman'] = '本月总计';	
+				}else{
+					$index[$key]['salesman'] = $this->getSalesman($value['user_id']);	
+				}
+							
 			}
-			$index = json_decode(json_encode($index),true);
+			
 			$return['data'] = $index;
 			$return['code'] = 1;
 			$return['msg'] = '获取信息成功！！';
@@ -151,11 +180,20 @@ class  PfmStatistics extends Model
 			$return['code'] = 0;
 			$return['msg'] = '暂无数据';
 		}
-
 		// 返回
 		return $return;
 	}
 
+	public function getSalesman($user_id)
+	{
+		$salesman = DB::table('admin_users')->select('name')->find($user_id);
+
+		if($salesman != NULL){
+			return $salesman->name;
+		}else{
+			return '查无此人';
+		}
+	}
 
 	
   	

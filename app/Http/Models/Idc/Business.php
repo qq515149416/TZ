@@ -26,7 +26,6 @@ class Business extends Model
 	protected $primaryKey = 'id'; //主键
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
-	protected $fillable = ['business_number', 'machine_number','resource_detail','money','length','renew_time','start_time','end_time','business_status','business_note','created_at','client_id','client_name'];
 
 	/**
 	 * 获取业务数据
@@ -37,11 +36,16 @@ class Business extends Model
 	{	
 		$where['client_id'] = $user_id;
 		$where['business_status'] = ' < 3';
-		$business = $this->where($where)->get(['id','client_id','client_name','sales_id','slaes_name','business_number','machine_number','resource_detail','money','length','renew_time','start_time','end_time','business_status','business_note']);
-		$business_status = [0=>'未付款使用',1=>'付款使用',2=>'锁定',3=>'到期',4=>'取消',5=>'退款'];
+		$business = $this->where('client_id',$user_id)
+						->where('business_status','> 1')
+						->where('business_status','< 4')
+						->get(['id','business_number','business_type','machine_number','resource_detail','business_status','money','length','business_note']);
+		$business_status = [2=>'付款使用中',3=>'未付款使用'];
+		$business_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜'];
 		if($business->isEmpty()){
 			foreach ($business as $key => $value) {
-				$business[$key]['business_status'] = $business_status[$business[$key]['business_status']];
+				$business[$key]['business_status'] = $business_status[$value['business_status']];
+				$business[$key]['business_type'] = $business_type[$value['business_type']];
 			}
 			$return['data'] = $business;
 			$return['code'] = 1;
@@ -59,7 +63,7 @@ class Business extends Model
 	 * @param  array $where 续费的业务相关数据
 	 * @return array        返回相关的状态信息及提示
 	 */
-	public function renew($where){
+	public function renewBusiness($where){
 		if($where){
 			'id','client_id','client_name','sales_id','slaes_name','business_number',
 			'machine_number','resource_detail','money','length','renew_time',

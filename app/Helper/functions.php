@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Administrator
+ * User: 568171152@qq.com ZhangJun
  * Date: 2018/7/26
  * Time: 16:00
  */
@@ -26,4 +26,19 @@
 function tz_ajax_echo($data = [], $info = "", $code = 0)
 {
     return response()->json(["code" => $code, "data" => $data, "msg" => $info]);
+}
+
+/**
+ * 计算时间是否过期工具
+ *
+ * @author 张俊
+ * @param $time   string|int 所判断的时间
+ * @param $length  int 为时间计算过期的小时数
+ * @return bool    true:未过期    false:已过期
+ */
+function tz_time_expire($time, $length)
+{
+    $deadline = time();  //默认到期时间为现在时间
+    $lengthTime = $length * 60 * 60; //小时换算成时间戳
+    return ((strtotime($time)+$lengthTime) > $deadline)?true:false; //三元运算符 判断是否过期
 }

@@ -14,6 +14,9 @@
 Route::get('/', function () {
 	return view('welcome');
 });
+Route::get('/verification_code', function () {
+    return tz_ajax_echo(["src"=>captcha_src()],"获取成功",1);
+});
 
 /**
  * 测试组

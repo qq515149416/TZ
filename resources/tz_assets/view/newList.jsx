@@ -9,9 +9,9 @@ const columnData = [
     { id: 'home_status', numeric: true, disablePadding: false, label: '是否首页显示' },
     { id: 'seoKeywords', numeric: true, disablePadding: false, label: 'seo关键词' },
     { id: 'operat', numeric: true, disablePadding: false, extend: true, extendData: [
-        "title",
-        "digest",
-        "content"
+        {id: "title", label: "标题", type: "text"},
+        {id: "digest", label: "描述", type: "text"},
+        {id: "content", label: "内容" ,type: "content"},
     ], label: '操作' },
 ];
 const inputType = [

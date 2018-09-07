@@ -15,6 +15,7 @@ class IpStores {
     @observable created_at = "";
     @observable updated_at = "";
     constructor({id, ip, vlan, ip_company, ip_status, ip_lock, ip_note, ip_comproom,ip_comproomname,created_at,updated_at}) {
+        this.copyData = [];
         Object.assign(this,{
             id,
             ip,
@@ -51,6 +52,9 @@ class IpsStores extends ActionBoundStores {
     ];
     stateText(state,codes) {
         return codes[state];
+    }
+    filterData(param) {
+        this.filterStoreData("ips","select",param);
     }
     changeData(param) {
         return new Promise((resolve,reject) => {

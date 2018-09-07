@@ -160,6 +160,14 @@ Route::group([
         $router->post('statisticsList', 'Statistics\StatisticsController@index');
     });
 
+    //业绩统计
+    Route::group([
+        'prefix' => 'pfmStatistics',
+    ],function (Router $router) {
+        $router->get('pfmStatisticsList', 'Statistics\PfmStatisticsController@pfmStatistics');
+    });
+
+
     //工单接口
     Route::group([
         'prefix' => 'workorder',

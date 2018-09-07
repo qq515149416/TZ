@@ -131,6 +131,7 @@ class Order extends Model
 
 			DB::beginTransaction();
 
+
 			$row->before_money 	= $before_money;
 			$row->after_money 	= $after_money;
 			$row->pay_type		= 1;
@@ -138,6 +139,7 @@ class Order extends Model
 			$row->pay_time		= $pay_time;
 			$row->order_status	= 1;
 			$row->serial_number	= $serial_number;
+			$row->payable_money	= $payable_money;
 			$res = $row->save();
 			if(!$res){
 				$return['msg'] 	= '支付失败';
@@ -145,24 +147,6 @@ class Order extends Model
 				return $return;
 			}
 			$pay_money = DB::table('tz_users')->where('id',$user_id)->update(['money' => $after_money ]); 
-
-			if(!$pay_money){
-				//失败就回滚
-				DB::rollBack();
-				$return['code'] = 0;
-				$return['msg'] = '扣款失败!!';
-			}else{
-					if($business_status['business_status'] == 1 || $business_status['business_status'] == 3){
-						// 当业务状态为审核通过或者未付款使用时修改业务状态为付款使用
-						$business = DB::table('tz_business')->where('business_number',$row->business_sn)->update(['business_status'=>2]);
-						if($business == 0){
-							//失败就回滚
-							DB::rollBack();
-							$return['code'] = 0;
-							$return['msg'] = '支付失败!!';
-							return $return;
-						}
-					}	
 
 				DB::commit();
 				$return['data'] = $row;

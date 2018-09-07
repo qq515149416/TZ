@@ -43,5 +43,52 @@ class OrdersController extends Controller
     		return tz_ajax_echo([],'无法获取业务的订单信息',0);
     	}
     }
+
+    /**
+     * 增加资源时调用
+     * @return json 返回相关的数据信息和状态提示
+     */
+    public function resource(Request $request){
+        if($request->isMethod('post')){
+            $resource_data = $request->only(['resource_type','machineroom']);
+            $resource = new OrdersModel();
+            $return = $resource->resource($resource_data);
+            return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
+        } else {
+            return tz_ajax_echo([],'无法获取资源',0);
+        }
+    }
+
+    /**
+     * 进行资源添加生成订单
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function insertResource(Request $request){
+        if($request->isMethod('post')){
+            $insert_data = $request->only(['business_sn','customer_id','customer_name','resource_type','machine_sn','resource','price','duration','end_time']);
+            $insert = new OrdersModel();
+            $return = $insert->insertResource($insert_data);
+            return tz_ajax_echo($return['data'],$return['msg'],$return['code']); 
+        } else {
+            return tz_ajax_echo('','无法增加资源',0);
+        }
+    }
+
+    /**
+     * 当填完使用时长后进行到期时间计算比较，不符合不给予通过
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function endTime(Request $request){
+        if($request->isMethod('post')){
+            $time = $request->only('duration','endding_time');
+            $end_time = new OrdersModel();
+            $return = $end_time->endTime($time);
+            return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
+        } else {
+            return tz_ajax_echo('','无法计算资源到期时间',0);
+        }
+    }
    
 }

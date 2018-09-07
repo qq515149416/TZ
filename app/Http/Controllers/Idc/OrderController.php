@@ -95,12 +95,28 @@ class OrderController extends Controller
 	 */
 	public function resourceOrders(Request $request){
 		if($request->isMethod('post')){
-			$data = $this->only(['business_sn','resource_type']);
+			$data = $request->only(['business_sn','resource_type']);
 			$resource = new Order();
 			$resource_orders = $resource->resourceOrders($data);
 			return tz_ajax_echo($resource_orders['data'],$resource_orders['msg'],$resource_orders['code']);
 		} else {
 			return tz_ajax_echo('','无法获取资源订单信息',0);
+		}
+	}
+
+	/**
+	 * 对资源进行续费
+	 * @param  Request $request [description]
+	 * @return json           续费的反馈信息和提示
+	 */
+	public function renewResource(Request $request){
+		if($request->isMethod('post')){
+			$renew_data = $request->only(['customer_id','customer_name','business_sn','business_id','business_name','resource_type','machine_sn','resource','price','duration','end_time','order_note']);
+			$renew = new Order();
+			$renew_resource = $renew->renewResource($renew_data);
+			return tz_ajax_echo($renew_resource,$renew_resource['msg'],$renew_resource['code']);
+		} else {
+			return tz_ajax_echo('','无法进行资源续费',0);
 		}
 	}
 

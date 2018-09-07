@@ -33,7 +33,7 @@ class Order extends Model
 	public function getList($user_id)
 	{
 		//获取该用户的订单
-		$order = $this->where('customer_id',$user_id)->orderby('created_at','desc')->get(['order_sn', 'business_sn','before_money','after_money','business_id','resource_type','order_type','machine_sn','resource','price','duration','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at','payable_money']);
+		$order = $this->where('customer_id',$user_id)->orderby('created_at','desc')->get(['id','order_sn', 'business_sn','before_money','after_money','business_id','resource_type','order_type','machine_sn','resource','price','duration','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at','payable_money']);
 
 		if(count($order) == 0){
 			return false;
@@ -270,6 +270,42 @@ class Order extends Model
 	public function endBusiness($id){
 		$end_time = DB::table('tz_business')->find($id,['endding_time','length']);
 		return $end_time;
+	}
+
+	/**
+	 * 查找对应业务的增加的资源
+	 * @param  array $where 业务编号和资源类型
+	 * @return array        返回相关的资源数据和状态提示及信息
+	 */
+	public function resourceOrders($where){
+		if($where){
+			$resource_orders = $this->where($where)->get(['id','customer_id','customer_name','order_sn', 'business_sn','before_money','after_money','business_id','business_name','resource_type','order_type','machine_sn','resource','price','duration','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at','payable_money']);
+			if($resource_orders->isEmpty()){
+				//转换状态
+				$resource_type = [ '1' => '租用主机' , '2' => '托管主机' , '3' => '租用机柜' , '4' => 'IP' , '5' => 'CPU' , '6' => '硬盘' , '7' => '内存' , '8' => '带宽' , '9' => '防护' , '10' => 'cdn'];
+				$order_type = [ '1' => '新购' , '2' => '续费' ];
+				$pay_type = [ '1' => '余额' , '2' => '支付宝' , '3' => '微信' , '4' => '其他'];
+				$order_status = [ '0' => '待支付' , '1' => '已支付' , '2' => '已支付' , '3' => '订单完成' , '4' => '取消' , '5' => '申请退款' , '6' => '退款完成'];
+				foreach($resource_orders as $resource_key => $resource_value){
+					$resource_orders[$resource_key]['resource_type'] = $resource_type[$resource_value['resource_type']];
+					$resource_orders[$resource_key]['order_type'] = $order_type[$resource_value['order_type']];
+					$resource_orders[$resource_key]['pay_type'] = $pay_type[$resource_value['pay_type']];
+					$resource_orders[$resource_key]['order_status'] = $order_status[$resource_value['order_status']];
+				}
+				$return['data'] = $resource_orders;
+				$return['code'] = 1;
+				$return['msg'] = '获取对应增加的资源数据成功';
+			} else {
+				$return['data'] = '';
+				$return['code'] = 0;
+				$return['msg'] = '暂无对应增加的资源数据';
+			}
+		} else {
+			$return['data'] = '';
+			$return['code'] = 0;
+			$return['msg'] = '无法获取增加的资源数据';
+		}
+		return $return;
 	}
 
 }

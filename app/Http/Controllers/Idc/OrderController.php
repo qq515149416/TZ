@@ -87,4 +87,21 @@ class OrderController extends Controller
 
 		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
 	}
+
+	/**
+	 * 获取对应业务的增加资源的订单
+	 * @param  Request $request [description]
+	 * @return json           返回对应的信息和状态提示及信息
+	 */
+	public function resourceOrders(Request $request){
+		if($request->isMethod('post')){
+			$data = $this->only(['business_sn','resource_type']);
+			$resource = new Order();
+			$resource_orders = $resource->resourceOrders($data);
+			return tz_ajax_echo($resource_orders['data'],$resource_orders['msg'],$resource_orders['code']);
+		} else {
+			return tz_ajax_echo('','无法获取资源订单信息',0);
+		}
+	}
+
 }

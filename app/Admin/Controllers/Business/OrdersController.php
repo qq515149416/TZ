@@ -90,5 +90,54 @@ class OrdersController extends Controller
             return tz_ajax_echo('','无法计算资源到期时间',0);
         }
     }
+
+    /**
+     * 进行主机及机柜续费操作
+     * @param  Request $request [description]
+     * @return json           返回相关的状态提示及信息
+     */
+    public function renewOrders(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->only(['id','client_id','client_name','sales_id','slaes_name','business_number','machine_number','resource_detail','money','length','endding_time','order_note','order_type','business_type']);
+            $renew = new OrdersModel();
+            $result = $renew->renewOrders($data);
+            return tz_ajax_echo($result,$result['msg'],$result['code']);
+        } else {
+            return tz_ajax_echo('','无法进行续费',0);
+        }
+    }
+
+    /**
+     * 对资源进行续费
+     * @param  Request $request [description]
+     * @return json           续费的反馈信息和提示
+     */
+    public function renewResource(Request $request){
+        if($request->isMethod('post')){
+            $renew_data = $request->only(['customer_id','customer_name','business_sn','business_id','business_name','resource_type','machine_sn','resource','price','duration','end_time','order_note']);
+            $renew = new OrdersModel();
+            $renew_resource = $renew->renewResource($renew_data);
+            return tz_ajax_echo($renew_resource,$renew_resource['msg'],$renew_resource['code']);
+        } else {
+            return tz_ajax_echo('','无法进行资源续费',0);
+        }
+    }
+
+
+    /**
+     * 获取对应业务的增加资源的订单
+     * @param  Request $request [description]
+     * @return json           返回对应的信息和状态提示及信息
+     */
+    public function resourceOrders(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->only(['business_sn','resource_type']);
+            $resource = new OrdersModel();
+            $resource_orders = $resource->resourceOrders($data);
+            return tz_ajax_echo($resource_orders['data'],$resource_orders['msg'],$resource_orders['code']);
+        } else {
+            return tz_ajax_echo('','无法获取资源订单信息',0);
+        }
+    }
    
 }

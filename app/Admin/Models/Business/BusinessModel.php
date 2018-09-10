@@ -129,13 +129,13 @@ class BusinessModel extends Model
                             $machine['own_business'] = $order['business_sn'];
                             $machine['business_end'] = $order['end_time'];
                             $machine['used_status'] = 1;
-                            $row = DB::table('idc_machine')->where('machine_num',$order['business_sn'])->update($machine);
+                            $row = DB::table('idc_machine')->where('machine_num',$order['machine_sn'])->update($machine);
                         } else {
                             // 如果是租用机柜的，在订单生成成功时，将业务编号和到期时间及资源状态进行更新
                             $machine['own_business'] = $order['business_sn'];
                             $machine['business_end'] = $order['end_time'];
                             $machine['use_state'] = 1;
-                            $row = DB::table('idc_cabinet')->where('machine_num',$order['business_sn'])->update($machine);
+                            $row = DB::table('idc_cabinet')->where('cabinet_id',$order['machine_sn'])->update($machine);
                         }
                         if($row != 0){
                             // 订单生成成功且对应资源的业务编号及状态修改成功，事务进行提交处理

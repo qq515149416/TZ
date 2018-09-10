@@ -91,7 +91,6 @@ class Cabinet extends Model
 			$return['code'] = 0;
 			$return['msg'] = '机柜无法获取';
 		}
-
 		return $return;
 	}
 

@@ -127,7 +127,7 @@ class OrderController extends Controller
      */
     public function endTime(Request $request){
         if($request->isMethod('post')){
-            $time = $request->only('duration','endding_time');
+            $time = $request->only('duration','business_sn');
             $end_time = new OrdersModel();
             $return = $end_time->endTime($time);
             return tz_ajax_echo($return['data'],$return['msg'],$return['code']);

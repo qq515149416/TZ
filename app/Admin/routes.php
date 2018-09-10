@@ -71,6 +71,17 @@ Route::group([
         'prefix' => 'hr',
     ],function(Router $router){
         $router->get('showaccount', 'Hr\AccountController@showAccount');
+        $router->get('showMyself', 'Hr\AccountController@personalAccount');    
+        Route::group([
+        'prefix' => 'userInfo',
+        ],function(Router $router){
+            $router->get('showEmployee', 'Hr\EmployeeInformationController@showEmployee');
+            $router->post('insertEmployee', 'Hr\EmployeeInformationController@insertEmployee');    
+            $router->post('editEmployee', 'Hr\EmployeeInformationController@editEmployee');   
+            $router->post('deleteEmployee', 'Hr\EmployeeInformationController@deleteEmployee');
+            $router->get('employeePersonal', 'Hr\EmployeeInformationController@employeePersonal');
+            $router->post('employeeDetailed', 'Hr\EmployeeInformationController@employeeDetailed');
+        });   
     });
     
 

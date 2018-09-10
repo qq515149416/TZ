@@ -20,17 +20,20 @@ class ActionBoundStores {
             for(let key in this[storeAttr]) {
                 this.copyData[key] = this[storeAttr][key];
             }
+           } else {
+            this[storeAttr] = this.copyData;
            }
-           this[storeAttr] = this.copyData.filter(item => {
-               for(let key in param) {
-                    console.log(key!="startTime"&&key!="endTime",item[key],param[key]);
-                   if(key!="startTime"&&key!="endTime"&&item[key]==param[key]) {
-                       return item;
-                   }else if(key!="startTime"&&key!="endTime"&&param[key]=="all"&&item[key]) {
+           for(let key in param) {
+            if(key!="startTime"&&key!="endTime") {
+                this[storeAttr] = this[storeAttr].filter(item => {
+                    if(item[key]==param[key]) {
                         return item;
-                   }
-               }
-           });
+                    }else if(param[key]=="all") {
+                         return item;
+                    }
+                });
+            }
+           }
            console.log(this[storeAttr],param,"typeFilter");
            this[storeAttr] = this[storeAttr].filter(item => {
                 let create_time = Math.round(new Date(item.created_at).getTime()/1000);

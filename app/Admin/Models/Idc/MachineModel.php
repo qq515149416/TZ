@@ -236,12 +236,14 @@ class MachineModel extends Model
                 $result[$key]['used'] = $used_status[$value['used_status']];//使用状态的转换
                 $result[$key]['status'] = $machine_status[$value['machine_status']];//机器上下架的转换
                 $result[$key]['business'] = $business_type[$value['business_type']];//业务类型的转换
+                unset($value['business_type']);
                 $machineroom = (array)$this->machineroom($value['machineroom'],$value['cabinet'],$value['ip_id']);//机房信息的查询
                 // 进行对应的机柜等信息的转换或者显示
                 if(!empty($cabinet) && !empty($ip) && !empty($machineroom)){
                     $result[$key]['cabinets'] = $machineroom['cabinet_id'];//机柜信息的返回
                     //IP信息的返回
-                    $result[$key]['ip'] = $machineroom['ip'].'('.$ip_company[$machineroom['ip_company']].')';
+                    $result[$key]['ip'] = $machineroom['ip'];
+                    $result[$key]['ip_detail'] = $machineroom['ip'].'('.$ip_company[$machineroom['ip_company']].')';
                     //机房的信息返回
                     $result[$key]['machineroom_name'] = $machineroom['machine_room_name'];
                 }

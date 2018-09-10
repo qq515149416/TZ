@@ -99,21 +99,21 @@ class OrdersModel extends Model
 
             } elseif($resource_data['resource_type'] == 5){
                 $cpu = new Cpu();
-                $result = $cpu->selectCpu();
+                $result = $cpu->selectCpu($resource_data['machineroom']);
                 $return['data'] = $result;
                 $return['code'] = 1;
                 $return['msg'] = '资源数据获取成功';
 
             } elseif($resource_data['resource_type'] == 6){
                 $harddisk = new Harddisk();
-                $result = $harddisk->selectHarddisk();
+                $result = $harddisk->selectHarddisk($resource_data['machineroom']);
                 $return['data'] = $result;
                 $return['code'] = 1;
                 $return['msg'] = '资源数据获取成功';
 
             } elseif($resource_data['resource_type'] == 7){
                 $memory = new Memory();
-                $result = $memory->selectMemory();
+                $result = $memory->selectMemory($resource_data['machineroom']);
                 $return['data'] = $result;
                 $return['code'] = 1;
                 $return['msg'] = '资源数据获取成功';

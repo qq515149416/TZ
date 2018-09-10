@@ -178,7 +178,7 @@ class  Cpu extends Model
 	 * 客户增加CPU资源
 	 * @return array 返回相关资源的数据
 	 */
-	public function selectCpu(){
+	public function selectCpu($where){
 		$where['cpu_used'] = 0;
 		$cpu = $this->where($where)->get(['cpu_number','cpu_param']);
 		return $cpu;

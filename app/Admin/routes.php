@@ -210,15 +210,24 @@ Route::group([
     Route::group([
         'prefix' => 'business',
     ],function(Router $router){
+        // 业务
         $router->get('machineroom','Business\BusinessController@machineroom');
-        $router->post('selectmachine','Business\BusinessController@selectmachine');
+        $router->post('selectmachine','Business\BusinessController@selectMachine');
+        $router->post('selectcabinet','Business\BusinessController@selectCabinet');
         $router->post('insert','Business\BusinessController@insertBusiness');
         $router->get('security','Business\BusinessController@securityBusiness');
         $router->post('check','Business\BusinessController@checkBusiness');
         $router->post('enable','Business\BusinessController@enableBusiness');
         $router->post('showbusiness','Business\BusinessController@showBusiness');
+        // 订单
         $router->post('finance','Business\OrdersController@financeOrders');
         $router->post('clerk','Business\OrdersController@clerkOrders');
+        $router->post('resource','Business\OrdersController@resource');
+        $router->post('insertresource','Business\OrdersController@insertResource');
+        $router->post('end','Business\OrdersController@endTime');
+        $router->post('reneworders','Business\OrdersController@renewOrders');
+        $router->post('renewresource','Business\OrdersController@renewResource');
+        $router->post('resourceorders','Business\OrdersController@resourceOrders');
     });
 
 });

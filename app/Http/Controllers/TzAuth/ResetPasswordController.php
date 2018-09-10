@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\TzAuth;
 
 use App\Http\Models\User\TzUsersVerification;
-use App\Http\Requests\TzAuth\LoginByEmailRequest;
 use App\Http\Requests\TzAuth\SendEmailCodeRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Redirect;
+
 
 class ResetPasswordController extends Controller
 {
@@ -25,22 +23,16 @@ class ResetPasswordController extends Controller
     public function resetPasswordByEmail(Request $request)
     {
         $res = $request->all(); //获取参数
-
-//        //实例化
-        $usersVerificationModel = new TzUsersVerification();
-//
+        $usersVerificationModel = new TzUsersVerification();//实例化
         $testData = $usersVerificationModel->find(1); // 测试数据
 //
         dump($testData['created_at']); //打印测试数据
         dump($time1=date("Y-m-d H:i:s"));
-
         dump(strtotime($time1));
-
         dump(5*60*60);
-
         dump(strtotime($testData['created_at']));
-
         dump(tz_time_expire($testData['created_at'],1));
+
     }
 
 
@@ -57,9 +49,7 @@ class ResetPasswordController extends Controller
     public function sendEmailCode(SendEmailCodeRequest $request)
     {
         $par = $request->all();//获取参数
-
         $token = mt_rand(10000, 99999);//生成随机验证码
-
         $mail = $par['email']; //测试接受代码的邮箱
 
         //发送邮件
@@ -70,10 +60,8 @@ class ResetPasswordController extends Controller
 
         // 返回的一个错误数组，利用此可以判断是否发送成功
         if (count(Mail::failures()) < 1) {
-            //实例化
-            $usersVerificationModel = new TzUsersVerification();
+            $usersVerificationModel = new TzUsersVerification();//实例化
             $usersVerificationModel->addMailToken($mail, $token);  //添加邮箱作为帐号的验证码
-
             return tz_ajax_echo([], '验证码发送成功', 1);
         } else {
             return tz_ajax_echo([], '验证码发送失败', 0);

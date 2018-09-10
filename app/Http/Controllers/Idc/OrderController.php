@@ -120,4 +120,20 @@ class OrderController extends Controller
 		}
 	}
 
+	/**
+     * 当填完使用时长后进行到期时间计算比较，不符合不给予通过
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function endTime(Request $request){
+        if($request->isMethod('post')){
+            $time = $request->only('duration','business_sn');
+            $end_time = new OrdersModel();
+            $return = $end_time->endTime($time);
+            return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
+        } else {
+            return tz_ajax_echo('','无法计算资源到期时间',0);
+        }
+    }
+
 }

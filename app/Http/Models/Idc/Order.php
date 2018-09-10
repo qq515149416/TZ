@@ -241,9 +241,30 @@ class Order extends Model
 				$business['business_status'] = 3;
 				$business_row = DB::table('tz_business')->where('id',$renew['id'])->update($business);
 				if($business_row != 0){
-					DB::commit();
-					$return['code'] = 1;
-					$return['msg'] = '续费订单创建成功,为了不影响使用请及时支付,您的续费单号:'.$order_sn;
+					if($order['resource_type'] == 1 || $order['resource_type'] == 2){
+                            // 如果是租用/托管机器的，在订单生成成功时，将业务编号和到期时间及资源状态进行更新
+                            $machine['own_business'] = $order['business_sn'];
+                            $machine['business_end'] = $order['end_time'];
+                            $machine['used_status'] = 1;
+                            $row = DB::table('idc_machine')->where('machine_num',$order['machine_sn'])->update($machine);
+                        } else {
+                            // 如果是租用机柜的，在订单生成成功时，将业务编号和到期时间及资源状态进行更新
+                            $machine['own_business'] = $order['business_sn'];
+                            $machine['business_end'] = $order['end_time'];
+                            $machine['use_state'] = 1;
+                            $row = DB::table('idc_cabinet')->where('cabinet_id',$order['machine_sn'])->update($machine);
+                        }
+                        if($row != 0){
+                            // 订单生成成功且对应资源的业务编号及状态修改成功，事务进行提交处理
+                            DB::commit();
+							$return['code'] = 1;
+							$return['msg'] = '续费订单创建成功,为了不影响使用请及时支付,您的续费单号:'.$order_sn;
+                        } else {
+                            DB::rollBack();
+							$return['code'] = 0;
+							$return['msg'] = '续费失败，请重新操作';
+                        }
+					
 				} else {
 					DB::rollBack();
 					$return['code'] = 0;
@@ -307,5 +328,94 @@ class Order extends Model
 		}
 		return $return;
 	}
+
+	/**
+	 * 资源续费订单的创建
+	 * @param  array $renew 需要续费的资源数据
+	 * @return array        返回相关的数据信息状态及提示
+	 */
+	public function renewResource($renew){
+		if($renew){
+			//续费订单号的生成规则：前两位（11-40的随机数）+ 年月日 + 时间戳的后5位数 + 2（续费）
+			$order_sn = mt_rand(11,40).date('Ymd',time()).substr(time(),5,5).2;//续费订单号
+			$renew['order_sn'] = (int)$order_sn;
+			$renew['payable_money'] = bcmul((string)$order['price'],(string)$order['duration'],2);//应付金额
+			$renew['order_type'] = 2;
+			DB::beginTransaction();
+			$insert = DB::table('tz_orders')->insert($renew);//生成续费订单
+			if($insert != 0){
+				$machine['business_end'] = $renew['end_time'];
+
+                if($renew['resource_type'] == 4){
+                    //更新IP表的所属业务编号，资源状态和到期时间
+                    $machine['own_business'] = $renew['business_sn'];
+                    $machine['ip_status'] = 1;
+                    $result = DB::table('idc_ips')->where('ip',$renew['machine_sn'])->update($machine);
+                } elseif($renew['resource_type'] == 5){
+                    //更新CPU表的所属业务编号，资源状态和到期时间
+                    $machine['service_num'] = $renew['business_sn'];
+                    $machine['cpu_used'] = 1;
+                    $result = DB::table('idc_cpu')->where('cpu_number',$renew['machine_sn'])->update($machine);
+                } elseif($renew['resource_type'] == 6){
+                    //更新硬盘表的所属业务编号，资源状态和到期时间
+                    $machine['service_num'] = $renew['business_sn'];
+                    $machine['harddisk_used'] = 1;
+                    $result = DB::table('idc_harddisk')->where('harddisk_number',$renew['machine_sn'])->update($machine);
+                } elseif($renew['resource_type'] == 7){
+                    //更新内存表的所属业务编号，资源状态和到期时间
+                    $machine['service_num'] = $insert_data['business_sn'];
+                    $machine['memory_used'] = 1;
+                    $result = DB::table('idc_memory')->where('memory_number',$renew['machine_sn'])->update($machine);
+                }
+                if($result != 0){
+                    //所对应资源表的业务编号和到期时间，状态修改成功后进行事务提交
+                    DB::commit();
+                    $return['data'] = $order_sn;
+                    $return['code'] = 1;
+					$return['msg'] = '资源续费订单创建成功,为了不影响使用请及时支付,您的续费单号:'.$order_sn;
+                } else {
+                    DB::rollBack();
+                    $return['data'] = '';
+                    $return['code'] = 0;
+                    $return['msg'] = '资源续费失败';
+                }
+				
+			} else {
+				DB::rollBack();
+				$return['code'] = 0;
+				$return['msg'] = '资源续费失败，请重新操作';
+			}
+		} else {
+			$return['code'] = 0;
+			$return['msg'] = '无法对资源进行续费';
+		}
+		return $return;	
+	}
+
+	/**
+     * 比较资源到期时间和业务到期时间
+     * @param  array $time 资源时长和业务到期时间
+     * @return array       资源到期时间和状态提示及信息
+     */
+    public function endTime($time){
+        if($time){
+        	$endding_time = DB::table('tz_business')->where('business_number',$time['business_sn'])->value('endding_time');
+            $end_time = Carbon::parse('+'.$time['duration'].' months')->toDateTimeString();
+            if($end_time < $endding_time){
+                $return['data'] = $end_time;
+                $return['code'] = 1;
+                $return['msg'] = '资源到期时间在业务到期时间内';
+            } else {
+                $return['data'] = '';
+                $return['code'] = 0;
+                $return['msg'] = '资源到期时间超业务到期时间';
+            }
+        } else {
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg'] = '无法比较资源到期时间和业务到期时间';
+        }
+        return $return;
+    }
 
 }

@@ -151,12 +151,47 @@ class OrdersModel extends Model
             $$insert_data['business_id'] = $sales_id;
             $sales_name = (array)$this->staff($sales_id);
             $insert_data['business_name'] = $sales_name['fullname'];
-            $row = $this->create($insert_data);
+            DB::beginTransaction();//开启事务处理
+            $row = DB::table('tz_orders')->insert($insert_data);
             if($row != false){
-                $return['data'] = $order_sn;
-                $return['code'] = 1;
-                $return['msg'] = '资源增加成功，请提醒客户及时支付，订单号:'.$order_sn;
+                $machine['business_end'] = $insert_data['end_time'];
+
+                if($insert_data['resource_type'] == 4){
+                    //更新IP表的所属业务编号，资源状态和到期时间
+                    $machine['own_business'] = $insert_data['business_sn'];
+                    $machine['ip_status'] = 1;
+                    $result = DB::table('idc_ips')->where('ip',$insert_data['machine_sn'])->update($machine);
+                } elseif($insert_data['resource_type'] == 5){
+                    //更新CPU表的所属业务编号，资源状态和到期时间
+                    $machine['service_num'] = $insert_data['business_sn'];
+                    $machine['cpu_used'] = 1;
+                    $result = DB::table('idc_cpu')->where('cpu_number',$order['machine_sn'])->update($machine);
+                } elseif($insert_data['resource_type'] == 6){
+                    //更新硬盘表的所属业务编号，资源状态和到期时间
+                    $machine['service_num'] = $insert_data['business_sn'];
+                    $machine['harddisk_used'] = 1;
+                    $result = DB::table('idc_harddisk')->where('harddisk_number',$order['machine_sn'])->update($machine);
+                } elseif($insert_data['resource_type'] == 7){
+                    //更新内存表的所属业务编号，资源状态和到期时间
+                    $machine['service_num'] = $insert_data['business_sn'];
+                    $machine['memory_used'] = 1;
+                    $result = DB::table('idc_memory')->where('memory_number',$order['machine_sn'])->update($machine);
+                }
+                if($result != 0){
+                    //所对应资源表的业务编号和到期时间，状态修改成功后进行事务提交
+                    DB::commit();
+                    $return['data'] = $order_sn;
+                    $return['code'] = 1;
+                    $return['msg'] = '资源增加成功，请提醒客户及时支付，订单号:'.$order_sn;
+                } else {
+                    DB::rollBack();
+                    $return['data'] = '';
+                    $return['code'] = 0;
+                    $return['msg'] = '资源增加失败';
+                }
+                
             } else {
+                DB::rollBack();
                 $return['data'] = '';
                 $return['code'] = 0;
                 $return['msg'] = '资源增加失败';

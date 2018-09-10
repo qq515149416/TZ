@@ -15,7 +15,8 @@ namespace App\Http\Models\Idc;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
-
+use App\Http\Models\Idc\Business;
+use Illuminate\Support\Carbon;//使用该包做到期时间的计算
 
 class Order extends Model
 {
@@ -32,7 +33,7 @@ class Order extends Model
 	public function getList($user_id)
 	{
 		//获取该用户的订单
-		$order = $this->where('customer_id',$user_id)->get(['order_sn', 'business_sn','before_money','after_money','business_id','resource_type','order_type','machine_sn','resource','price','duration','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at','payable_money']);
+		$order = $this->where('customer_id',$user_id)->orderby('created_at','desc')->get(['id','order_sn', 'business_sn','before_money','after_money','business_id','resource_type','order_type','machine_sn','resource','price','duration','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at','payable_money']);
 
 		if(count($order) == 0){
 			return false;
@@ -43,12 +44,18 @@ class Order extends Model
 		$order_type = [ '1' => '新购' , '2' => '续费' ];
 		$pay_type = [ '1' => '余额' , '2' => '支付宝' , '3' => '微信' , '4' => '其他'];
 		$order_status = [ '0' => '待支付' , '1' => '已支付' , '2' => '已支付' , '3' => '订单完成' , '4' => '取消' , '5' => '申请退款' , '6' => '退款完成'];
-
+		$info = $this->getName('*');
+		$admin_name = [];
+		foreach ($info as $k => $v) {
+			$admin_name[$v->id] = $v->username;
+		}
+	
 		foreach ($order as $key => $value) {
 			$order[$key]['resource_type'] = $resource_type[$order[$key]['resource_type']];
 			$order[$key]['order_type'] = $order_type[$order[$key]['order_type']];
 			$order[$key]['pay_type'] = $pay_type[$order[$key]['pay_type']];
 			$order[$key]['order_status'] = $order_status[$order[$key]['order_status']];
+			$order[$key]['business_name']	= $admin_name[$order[$key]['business_id']];
 		}
 
 		return $order;
@@ -84,67 +91,73 @@ class Order extends Model
 	}
 
 	public function payOrder($user_id,$id){
+		
+		$serial_number = $this->createNum($user_id.$id); //支付流水号
 		$row = $this->find($id);
 		$return['data']	= '';
-		if($row == NULL){
-			$return['msg'] 	= '无此订单';
-			$return['code']	= 0;
-			return $return;
-		}
+		$business_status = (array)DB::table('tz_business')->where('business_number',$row->business_sn)
+									->select('business_status')->first();
+		if($business_status['business_status'] > 0 && $business_status['business_status'] < 6){//判断业务状态处于审核通过且退款之间，继续进行支付
+			if($row == NULL){
+				$return['msg'] 	= '无此订单';
+				$return['code']	= 0;
+				return $return;
+			}
 
-		$customer_id = $row->customer_id;
-		if($user_id != $customer_id){	
-			$return['msg'] 	= '只能支付自己的订单';
-			$return['code']	= 0;
-			return $return;
-		}
+			$customer_id = $row->customer_id;
+			if($user_id != $customer_id){	
+				$return['msg'] 	= '只能支付自己的订单';
+				$return['code']	= 0;
+				return $return;
+			}
 
-		$order_status = $row->order_status;
-		if( $order_status != 0 ){
-			$return['msg'] 	= '订单已支付或已取消';
-			$return['code']	= 0;
-			return $return;
-		}
-		//获取余额
-		$before_money 	= $this->getMoney($user_id)->money;
-		$payable_money = bcmul( (string)$row->price , (string)$row->duration , 2 );
-		$after_money		= $before_money - $payable_money;
-		if( $after_money < 0 ){
-			$return['msg'] 	= '余额不足,请充值';
-			$return['code']	= 0;
-			return $return;
-		}
+			$order_status = $row->order_status;
+			if( $order_status != 0 ){
+				$return['msg'] 	= '订单已支付或已取消';
+				$return['code']	= 0;
+				return $return;
+			}
+			//获取余额
+			$before_money 	= $this->getMoney($user_id)->money;
+			$payable_money = bcmul( (string)$row->price , (string)$row->duration , 2 );
+			$after_money		= $before_money - $payable_money;
+			if( $after_money < 0 ){
+				$return['msg'] 	= '余额不足,请充值';
+				$return['code']	= 0;
+				return $return;
+			}
 
-		$pay_time = date("Y-m-d h:i:s");
+			$pay_time = date("Y-m-d h:i:s");
 
-		DB::beginTransaction();
+			DB::beginTransaction();
 
-		$row->before_money 	= $before_money;
-		$row->after_money 	= $after_money;
-		$row->pay_type		= 1;
-		$row->pay_price	= $payable_money;
-		$row->pay_time		= $pay_time;
-		$row->order_status	= 2;
-		$res = $row->save();
-		if(!$res){
-			$return['msg'] 	= '支付失败';
-			$return['code']	= 0;
-			return $return;
-		}
-		$pay_money = DB::table('tz_users')->where('id',$user_id)->update(['money' => $after_money ]); 
 
-		if(!$pay_money){
-			//失败就回滚
-			DB::rollBack();
+			$row->before_money 	= $before_money;
+			$row->after_money 	= $after_money;
+			$row->pay_type		= 1;
+			$row->pay_price	= $payable_money;
+			$row->pay_time		= $pay_time;
+			$row->order_status	= 1;
+			$row->serial_number	= $serial_number;
+			$row->payable_money	= $payable_money;
+			$res = $row->save();
+			if(!$res){
+				$return['msg'] 	= '支付失败';
+				$return['code']	= 0;
+				return $return;
+			}
+			$pay_money = DB::table('tz_users')->where('id',$user_id)->update(['money' => $after_money ]); 
+
+				DB::commit();
+				$return['data'] = $row;
+				$return['code'] = 1;
+				$return['msg'] = '支付成功!!';
+			}
+		} else {
+			//判断业务状态不是处于审核通过且退款之间，无法进行支付
 			$return['code'] = 0;
-			$return['msg'] = '扣款失败!!';
-		}else{
-			DB::commit();
-			$return['data'] = $row;
-			$return['code'] = 1;
-			$return['msg'] = '支付成功!!';
+			$return['msg'] = '您无法发起支付';
 		}
-		
 		return $return;
 	}
 
@@ -159,4 +172,193 @@ class Order extends Model
 		$money = DB::table('tz_users')->find($user_id,['money']);
 		return $money;
 	}
+
+	/**
+	* 查询业务员的名字
+	*@param $admin_id	
+	* @return 名字
+	*/
+	public function getName($admin_id)
+	{
+		if($admin_id == '*'){
+			$name = DB::table('admin_users')->get(['id','username']);
+		}else{
+			$name = DB::table('admin_users')->find($admin_id,['id','username']);
+		}
+		
+		return $name;
+	}
+
+
+	public function createNum($i){
+		$f=date('Ym');
+		$i+=1;
+		if($i<10){
+			return $f.'000'.$i;
+		}else if($i<100){
+			return $f.'00'.$i;
+		}else if($i<1000){
+			return $f.'0'.$i;
+		}else{
+			return $f.$i;
+		}
+	}
+
+	/**
+	 * 客户续费主机及机柜产生订单
+	 * @param  array $renew 续费订单所需要的数据
+	 * @return array        返回操作后的状态提示及信息
+	 */
+	public function renewOrders($renew){
+		if($renew){
+			//续费订单号的生成规则：前两位（11-40的随机数）+ 年月日 + 时间戳的后5位数 + 2（续费） 
+			$order_sn = mt_rand(11,40).date('Ymd',time()).substr(time(),5,5).2;//续费订单号
+			$order['order_sn'] = (int)$order_sn;
+			$order['business_sn'] = $renew['business_number'];//续费的业务编号
+			$order['customer_id'] = $renew['client_id'];//客户id
+			$order['customer_name'] = $renew['client_name'];//客户
+			$order['business_id'] = $renew['sales_id'];//业务员id
+			$order['business_name'] = $renew['sales_name'];//业务员
+			$order['resource_type'] = $renew['business_type'];//资源类型
+			$order['order_type'] = $renew['order_type'];//订单类型
+			$order['machine_sn'] = $renew['machine_number'];//机器编号
+			$order['resource'] = $renew['machine_number'];//机器机柜等存储编号，其他资源存储对应数据
+			$order['price'] = $renew['money'];//续费单价
+			$order['duration'] = $renew['length'];//续费时长
+			$order['payable_money'] = bcmul((string)$order['price'],(string)$order['duration'],2);//应付金额
+			$order['order_status'] = 0;//续费订单状态
+			$order['order_note'] = $renew['order_note'];//续费备注
+			$end = (array)$this->endBusiness($renew['id']);//查找原来业务的到期时间
+			$endding_time = Carbon::parse($end['endding_time'])->modify('+'.$order['duration'].' months')->toDateTimeString();//在原到期时间基础上增加续费时长
+			$order['end_time'] = $endding_time;
+			$order['month'] = (int)date('Ym',time());
+			DB::beginTransaction();//开启事务处理
+			$order_row = DB::table('tz_orders')->insert($order);//生成续费订单
+			if($order_row != 0) {
+				// 续费订单生成成功，继续对业务的到期时间和累计时长修改
+				$business['length'] = (int)bcadd($end['length'],$renew['length'],0);
+				$business['endding_time'] = $endding_time;
+				$business['business_status'] = 3;
+				$business_row = DB::table('tz_business')->where('id',$renew['id'])->update($business);
+				if($business_row != 0){
+					DB::commit();
+					$return['code'] = 1;
+					$return['msg'] = '续费订单创建成功,为了不影响使用请及时支付,您的续费单号:'.$order_sn;
+				} else {
+					DB::rollBack();
+					$return['code'] = 0;
+					$return['msg'] = '续费失败，请重新操作';
+				}
+			} else {
+				DB::rollBack();
+				$return['code'] = 0;
+				$return['msg'] = '续费失败，请重新操作';
+			}
+		} else {
+			$return['code'] = 0;
+			$return['msg'] = '无法进行续费';
+		}
+		return $return;
+	}
+
+
+	/**
+	 * 查询对应业务的到期时间，方便在续费时对资源的到期时间重新计算
+	 * @param  int $id 业务单的id
+	 * @return array     返回业务单的到期时间和累计时长
+	 */
+	public function endBusiness($id){
+		$end_time = DB::table('tz_business')->find($id,['endding_time','length']);
+		return $end_time;
+	}
+
+	/**
+	 * 查找对应业务的增加的资源
+	 * @param  array $where 业务编号和资源类型
+	 * @return array        返回相关的资源数据和状态提示及信息
+	 */
+	public function resourceOrders($where){
+		if($where){
+			$resource_orders = $this->where($where)->get(['id','customer_id','customer_name','order_sn', 'business_sn','before_money','after_money','business_id','business_name','resource_type','order_type','machine_sn','resource','price','duration','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at','payable_money']);
+			if($resource_orders->isEmpty()){
+				//转换状态
+				$resource_type = [ '1' => '租用主机' , '2' => '托管主机' , '3' => '租用机柜' , '4' => 'IP' , '5' => 'CPU' , '6' => '硬盘' , '7' => '内存' , '8' => '带宽' , '9' => '防护' , '10' => 'cdn'];
+				$order_type = [ '1' => '新购' , '2' => '续费' ];
+				$pay_type = [ '1' => '余额' , '2' => '支付宝' , '3' => '微信' , '4' => '其他'];
+				$order_status = [ '0' => '待支付' , '1' => '已支付' , '2' => '已支付' , '3' => '订单完成' , '4' => '取消' , '5' => '申请退款' , '6' => '退款完成'];
+				foreach($resource_orders as $resource_key => $resource_value){
+					$resource_orders[$resource_key]['resource_type'] = $resource_type[$resource_value['resource_type']];
+					$resource_orders[$resource_key]['order_type'] = $order_type[$resource_value['order_type']];
+					$resource_orders[$resource_key]['pay_type'] = $pay_type[$resource_value['pay_type']];
+					$resource_orders[$resource_key]['order_status'] = $order_status[$resource_value['order_status']];
+				}
+				$return['data'] = $resource_orders;
+				$return['code'] = 1;
+				$return['msg'] = '获取对应增加的资源数据成功';
+			} else {
+				$return['data'] = '';
+				$return['code'] = 0;
+				$return['msg'] = '暂无对应增加的资源数据';
+			}
+		} else {
+			$return['data'] = '';
+			$return['code'] = 0;
+			$return['msg'] = '无法获取增加的资源数据';
+		}
+		return $return;
+	}
+
+	/**
+	 * 资源续费订单的创建
+	 * @param  array $renew 需要续费的资源数据
+	 * @return array        返回相关的数据信息状态及提示
+	 */
+	public function renewResource($renew){
+		if($renew){
+			//续费订单号的生成规则：前两位（11-40的随机数）+ 年月日 + 时间戳的后5位数 + 2（续费）
+			$order_sn = mt_rand(11,40).date('Ymd',time()).substr(time(),5,5).2;//续费订单号
+			$renew['order_sn'] = (int)$order_sn;
+			$renew['payable_money'] = bcmul((string)$order['price'],(string)$order['duration'],2);//应付金额
+			$renew['order_type'] = 2;
+			$insert = DB::table('tz_orders')->insert($renew);//生成续费订单
+			if($insert != 0){
+				$return['code'] = 1;
+				$return['msg'] = '资源续费订单创建成功,为了不影响使用请及时支付,您的续费单号:'.$order_sn;
+			} else {
+				$return['code'] = 0;
+				$return['msg'] = '资源续费失败，请重新操作';
+			}
+		} else {
+			$return['code'] = 0;
+			$return['msg'] = '无法对资源进行续费';
+		}
+		return $return;	
+	}
+
+	/**
+     * 比较资源到期时间和业务到期时间
+     * @param  array $time 资源时长和业务到期时间
+     * @return array       资源到期时间和状态提示及信息
+     */
+    public function endTime($time){
+        if($time){
+        	$endding_time = DB::table('tz_business')->where('business_number',$time['business_sn'])->value('endding_time');
+            $end_time = Carbon::parse('+'.$time['duration'].' months')->toDateTimeString();
+            if($end_time < $endding_time){
+                $return['data'] = $end_time;
+                $return['code'] = 1;
+                $return['msg'] = '资源到期时间在业务到期时间内';
+            } else {
+                $return['data'] = '';
+                $return['code'] = 0;
+                $return['msg'] = '资源到期时间超业务到期时间';
+            }
+        } else {
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg'] = '无法比较资源到期时间和业务到期时间';
+        }
+        return $return;
+    }
+
 }

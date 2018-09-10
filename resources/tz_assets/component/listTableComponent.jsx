@@ -131,13 +131,15 @@ const styles = theme => ({
       // console.log(this.props.data);
      
       return [
-          <Paper className={classes.paper} elevation={1}>
-            {
+          <div>
+             {
               this.props.filterType && (
-                <FilterTableToolbar filterType={this.props.filterType} />
+                <Paper className={classes.paper} elevation={1}>
+                      <FilterTableToolbar filterData={this.props.filterData} types={this.props.headTitlesData} filterType={this.props.filterType} />
+                </Paper>
               )
             }
-          </Paper>,
+          </div>,
         <Paper className={classes.root}>
           <EnhancedTableToolbar 
             title={(this.props.title || "未定义")} 
@@ -208,11 +210,10 @@ const styles = theme => ({
                                 (this.props.headTitlesData.find(item => item.id=="operat").extend && this.props.headTitlesData.find(item => item.id=="operat").extendData ) && (
                                   <ExpansionComponent 
                                       type="show"
-                                      data={{
-                                        title: n[this.props.headTitlesData.find(item => item.id=="operat").extendData[0]],
-                                        description: n[this.props.headTitlesData.find(item => item.id=="operat").extendData[1]],
-                                        content: n[this.props.headTitlesData.find(item => item.id=="operat").extendData[2]]
-                                      }}
+                                      data={this.props.headTitlesData.find(item => item.id=="operat").extendData.map(item => {
+                                        item.content = n[item.id];
+                                        return item;
+                                      })}
                                     />
                                 )
                               }

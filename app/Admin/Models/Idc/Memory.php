@@ -173,4 +173,14 @@ class  Memory extends Model
 		}
 	}
 
+	/**
+	 * 选择内存资源
+	 * @return array 返回对应的内存数据
+	 */
+	public function selectMemory(){
+		$where['memory_used'] = 0;
+		$memory = $this->where($where)->get(['memory_number','memory_param']);
+		return $memory;
+	}
+
 }

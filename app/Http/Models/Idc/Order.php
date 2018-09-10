@@ -33,7 +33,7 @@ class Order extends Model
 	public function getList($user_id)
 	{
 		//获取该用户的订单
-		$order = $this->where('customer_id',$user_id)->orderby('created_at','desc')->get(['order_sn', 'business_sn','before_money','after_money','business_id','resource_type','order_type','machine_sn','resource','price','duration','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at','payable_money']);
+		$order = $this->where('customer_id',$user_id)->orderby('created_at','desc')->get(['id','order_sn', 'business_sn','before_money','after_money','business_id','resource_type','order_type','machine_sn','resource','price','duration','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at','payable_money']);
 
 		if(count($order) == 0){
 			return false;
@@ -271,5 +271,94 @@ class Order extends Model
 		$end_time = DB::table('tz_business')->find($id,['endding_time','length']);
 		return $end_time;
 	}
+
+	/**
+	 * 查找对应业务的增加的资源
+	 * @param  array $where 业务编号和资源类型
+	 * @return array        返回相关的资源数据和状态提示及信息
+	 */
+	public function resourceOrders($where){
+		if($where){
+			$resource_orders = $this->where($where)->get(['id','customer_id','customer_name','order_sn', 'business_sn','before_money','after_money','business_id','business_name','resource_type','order_type','machine_sn','resource','price','duration','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at','payable_money']);
+			if($resource_orders->isEmpty()){
+				//转换状态
+				$resource_type = [ '1' => '租用主机' , '2' => '托管主机' , '3' => '租用机柜' , '4' => 'IP' , '5' => 'CPU' , '6' => '硬盘' , '7' => '内存' , '8' => '带宽' , '9' => '防护' , '10' => 'cdn'];
+				$order_type = [ '1' => '新购' , '2' => '续费' ];
+				$pay_type = [ '1' => '余额' , '2' => '支付宝' , '3' => '微信' , '4' => '其他'];
+				$order_status = [ '0' => '待支付' , '1' => '已支付' , '2' => '已支付' , '3' => '订单完成' , '4' => '取消' , '5' => '申请退款' , '6' => '退款完成'];
+				foreach($resource_orders as $resource_key => $resource_value){
+					$resource_orders[$resource_key]['resource_type'] = $resource_type[$resource_value['resource_type']];
+					$resource_orders[$resource_key]['order_type'] = $order_type[$resource_value['order_type']];
+					$resource_orders[$resource_key]['pay_type'] = $pay_type[$resource_value['pay_type']];
+					$resource_orders[$resource_key]['order_status'] = $order_status[$resource_value['order_status']];
+				}
+				$return['data'] = $resource_orders;
+				$return['code'] = 1;
+				$return['msg'] = '获取对应增加的资源数据成功';
+			} else {
+				$return['data'] = '';
+				$return['code'] = 0;
+				$return['msg'] = '暂无对应增加的资源数据';
+			}
+		} else {
+			$return['data'] = '';
+			$return['code'] = 0;
+			$return['msg'] = '无法获取增加的资源数据';
+		}
+		return $return;
+	}
+
+	/**
+	 * 资源续费订单的创建
+	 * @param  array $renew 需要续费的资源数据
+	 * @return array        返回相关的数据信息状态及提示
+	 */
+	public function renewResource($renew){
+		if($renew){
+			//续费订单号的生成规则：前两位（11-40的随机数）+ 年月日 + 时间戳的后5位数 + 2（续费）
+			$order_sn = mt_rand(11,40).date('Ymd',time()).substr(time(),5,5).2;//续费订单号
+			$renew['order_sn'] = (int)$order_sn;
+			$renew['payable_money'] = bcmul((string)$order['price'],(string)$order['duration'],2);//应付金额
+			$renew['order_type'] = 2;
+			$insert = DB::table('tz_orders')->insert($renew);//生成续费订单
+			if($insert != 0){
+				$return['code'] = 1;
+				$return['msg'] = '资源续费订单创建成功,为了不影响使用请及时支付,您的续费单号:'.$order_sn;
+			} else {
+				$return['code'] = 0;
+				$return['msg'] = '资源续费失败，请重新操作';
+			}
+		} else {
+			$return['code'] = 0;
+			$return['msg'] = '无法对资源进行续费';
+		}
+		return $return;	
+	}
+
+	/**
+     * 比较资源到期时间和业务到期时间
+     * @param  array $time 资源时长和业务到期时间
+     * @return array       资源到期时间和状态提示及信息
+     */
+    public function endTime($time){
+        if($time){
+        	$endding_time = DB::table('tz_business')->where('business_number',$time['business_sn'])->value('endding_time');
+            $end_time = Carbon::parse('+'.$time['duration'].' months')->toDateTimeString();
+            if($end_time < $endding_time){
+                $return['data'] = $end_time;
+                $return['code'] = 1;
+                $return['msg'] = '资源到期时间在业务到期时间内';
+            } else {
+                $return['data'] = '';
+                $return['code'] = 0;
+                $return['msg'] = '资源到期时间超业务到期时间';
+            }
+        } else {
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg'] = '无法比较资源到期时间和业务到期时间';
+        }
+        return $return;
+    }
 
 }

@@ -173,4 +173,15 @@ class  Harddisk extends Model
 		}
 	}
 
+
+	/**
+	 * 客户选择增加硬盘
+	 * @return array 相关资源数据
+	 */
+	public function selectHarddisk(){
+		$where['harddisk_used'] = 0;
+		$harddisk = $this->where($where)->get(['harddisk_number','harddisk_param']);
+		return $harddisk;
+	}
+
 }

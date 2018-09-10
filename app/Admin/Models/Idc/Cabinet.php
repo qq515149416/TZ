@@ -63,4 +63,33 @@ class Cabinet extends Model
 		return $return;
 	}
 
+	/**
+	 * 后台业务给客户下单时选择机柜
+	 * @param  array $where [description]
+	 * @return array       返回相关的机柜信息
+	 */
+	public function selectCabinet($where){
+		if($where){
+			$where['machineroom_id'] = $where['machineroom'];
+			unset($where['machineroom']);
+			$where['use_type'] = 1;
+			$data = $this->where($where)->get(['id as cabinetid','cabinet_id']);
+			if($data->isEmpty()){
+				$return['data'] = $data;
+				$return['code'] = 1;
+				$return['msg'] = '机柜获取成功';
+			} else {
+				$return['data'] = '';
+				$return['code'] = 0;
+				$return['msg'] = '机柜获取失败';
+			}
+		} else {
+			$return['data'] = '';
+			$return['code'] = 0;
+			$return['msg'] = '机柜无法获取';
+		}
+
+		return $return;
+	}
+
 }

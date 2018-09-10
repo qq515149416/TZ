@@ -27,7 +27,7 @@ class BusinessController extends Controller
     }
 
     /**
-     * 在产生业务前根据选择的机房，查找对应机房的机器/机柜(App\Admin\Models\Idc\MachineModel@selectMachine)
+     * 在产生业务前根据选择的机房，查找对应机房的机器(App\Admin\Models\Idc\MachineModel@selectMachine)
      * @param  Request $request [description]
      * @return json           返回对应机房的信息或者数据
      */
@@ -40,6 +40,22 @@ class BusinessController extends Controller
     	} else {
     		return tz_ajax_echo([],'无法获取机器',0);
     	}
+    }
+
+    /**
+     * 根据机房选择客户机柜(App\Admin\Models\Idc\Cabinet@selectCabinet)
+     * @param  Request $request [description]
+     * @return json           返回对应机房的机柜信息
+     */
+    public function selectCabinet(Request $request){
+        if($request->isMethod('post')){
+            $where = $request->only(['machineroom']);
+            $cabinet = new Cabinet();
+            $return = $cabinet->selectCabinet($where);
+            return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
+        } else {
+            return tz_ajax_echo([],'无法获取机柜',0);
+        }
     }
 
     /**

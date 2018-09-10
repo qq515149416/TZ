@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
+use App\Admin\Models\Idc\Ips;
+use App\Admin\Models\Idc\Cpu;
+use App\Admin\Models\Idc\Harddisk;
+use App\Admin\Models\Idc\Memory;
+use Illuminate\Support\Carbon;//使用该包做到期时间的计算
 
 /**
  * 后台订单模型
@@ -76,5 +81,127 @@ class OrdersModel extends Model
     	}
 
     	return $return;
+    }
+
+    /**
+     * 返回对应要增加的资源数据
+     * @param  array $resource_data 资源类型
+     * @return array                返回对应的资源数据和状态及提示信息
+     */
+    public function resource($resource_data){
+        if($resource_data){
+            if($resource_data['resource_type'] == 4){
+                $ips = new Ips();
+                $result = $ips->selectIps($resource_data['machineroom']);
+                $return['data'] = $result;
+                $return['code'] = 1;
+                $return['msg'] = '资源数据获取成功';
+
+            } elseif($resource_data['resource_type'] == 5){
+                $cpu = new Cpu();
+                $result = $cpu->selectCpu();
+                $return['data'] = $result;
+                $return['code'] = 1;
+                $return['msg'] = '资源数据获取成功';
+
+            } elseif($resource_data['resource_type'] == 6){
+                $harddisk = new Harddisk();
+                $result = $harddisk->selectHarddisk();
+                $return['data'] = $result;
+                $return['code'] = 1;
+                $return['msg'] = '资源数据获取成功';
+
+            } elseif($resource_data['resource_type'] == 7){
+                $memory = new Memory();
+                $result = $memory->selectMemory();
+                $return['data'] = $result;
+                $return['code'] = 1;
+                $return['msg'] = '资源数据获取成功';
+
+            } elseif($resource_data['resource_type'] == 10){
+                
+            } else {
+                $return['data'] = '';
+                $return['code'] = 0;
+                $return['msg'] = '无该资源数据';
+            }
+        } else {
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg'] = '无法获取资源数据';
+        }
+
+        return $return;
+       
+    }
+
+    /**
+     * 增加资源生成订单数据
+     * @param  array $insert_data 部分要增加的数据
+     * @return array              返回相关的订单号及状态提示及信息
+     */
+    public function insertResource($insert_data){
+        if($insert_data){
+            // 订单号的生成规则：前两位（11-40的随机数）+ 年月日（如:20180830） + 时间戳的后5位数 + 1（新购）/2（续费）
+            $order_sn = mt_rand(11,40).date('Ymd',time()).substr(time(),5,5).1;
+            $insert_data['order_sn'] = (int)$order_sn;
+            $insert_data['order_type'] = 1;
+            $insert_data['payable_money'] = bcmul((string)$insert_data['price'],(string)$insert_data['duration'],2);
+            $sales_id = Admin::user()->id;
+            $$insert_data['business_id'] = $sales_id;
+            $sales_name = (array)$this->staff($sales_id);
+            $insert_data['business_name'] = $sales_name['fullname'];
+            $row = $this->create($insert_data);
+            if($row != false){
+                $return['data'] = $order_sn;
+                $return['code'] = 1;
+                $return['msg'] = '资源增加成功，请提醒客户及时支付，订单号:'.$order_sn;
+            } else {
+                $return['data'] = '';
+                $return['code'] = 0;
+                $return['msg'] = '资源增加失败';
+            }
+        } else {
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg'] = '资源无法增加！！';
+        }
+        return $return;     
+    }
+
+    /**
+     * 给客户创建业务时查找对应业务员的真实姓名
+     * @param  int $admin_id 账户的id用于关联账户信息admin_users_id
+     * @return string           返回对应账户的真实姓名
+     */
+    public function staff($admin_id) {
+        $staff = DB::table('oa_staff')->where('admin_users_id',$admin_id)
+                    ->select('work_number','fullname')->first();
+        return $staff;
+    }
+
+    /**
+     * 比较资源到期时间和业务到期时间
+     * @param  array $time 资源时长和业务到期时间
+     * @return array       资源到期时间和状态提示及信息
+     */
+    public function endTime($time){
+        if($time){
+            $end_time = Carbon::parse('+'.$time['duration'].' months')->toDateTimeString();
+            if($end_time < $time['endding_time']){
+                $return['data'] = $end_time;
+                $return['code'] = 1;
+                $return['msg'] = '资源到期时间在业务到期时间内';
+            } else {
+                $return['data'] = '';
+                $return['code'] = 0;
+                $return['msg'] = '资源到期时间超业务到期时间';
+            }
+        } else {
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg'] = '无法比较资源到期时间和业务到期时间';
+        }
+        return $return;
     }
 }

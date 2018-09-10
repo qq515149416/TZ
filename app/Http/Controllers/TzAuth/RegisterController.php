@@ -55,15 +55,12 @@ class RegisterController extends Controller
      * token :  邮箱验证码
      * password :密码
      *
-     *
      */
     public function registerByEmail(RegisterByEmailRequest $request)
     {
-        //获取参数
-        $par = $request->all();
 
-        //实例化
-        $usersVerificationModel = new TzUsersVerification();
+        $par                    = $request->all();  //获取参数
+        $usersVerificationModel = new TzUsersVerification();  //实例化
 
         //判断邮箱验证码是否正确
         $verificationData = $usersVerificationModel->where('accounts', '=', $par['email'])->first();
@@ -81,9 +78,9 @@ class RegisterController extends Controller
                 'status'   => 2,  //状态为已验证
             ]);
             Auth::loginUsingId($addUserInfo['id']);
-            return tz_ajax_echo([],'注册成功',1);
+            return tz_ajax_echo([], '注册成功', 1);
         } else {
-            return tz_ajax_echo([],'注册失败,验证码失败',0);
+            return tz_ajax_echo([], '注册失败,验证码失败', 0);
         }
     }
 
@@ -98,14 +95,9 @@ class RegisterController extends Controller
     public function sendCodeToEmail(SendEmailCodeRequest $request)
     {
 
-        //获取参数
-        $par = $request->all();
-
-        //生成随机验证码
-        $token = mt_rand(10000, 99999);
-
-        //测试接受代码的邮箱
-        $mail = $par['email'];
+        $par   = $request->all();                  //获取参数
+        $token = mt_rand(10000, 99999);         //生成随机验证码
+        $mail  = $par['email'];                  //测试接受代码的邮箱
 
         //发送邮件
         Mail::send('emails.code', ['token' => $token], function ($message) use ($mail) {
@@ -114,14 +106,14 @@ class RegisterController extends Controller
         });
 
         // 返回的一个错误数组，利用此可以判断是否发送成功
-        if (count(Mail::failures()) < 1) {
+        if (count(Mail::failures()) < 1) {   //返回错误数大于1
             //实例化
             $usersVerificationModel = new TzUsersVerification();
             $usersVerificationModel->addMailToken($mail, $token);
 
-            return tz_ajax_echo([], '验证码发送成功', 1);
+            return tz_ajax_echo([], '验证码发送成功', 1);  //成功
         } else {
-            return tz_ajax_echo([], '验证码发送失败', 0);
+            return tz_ajax_echo([], '验证码发送失败', 0);  //失败
         }
 
     }

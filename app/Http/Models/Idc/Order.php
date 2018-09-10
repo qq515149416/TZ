@@ -308,4 +308,57 @@ class Order extends Model
 		return $return;
 	}
 
+	/**
+	 * 资源续费订单的创建
+	 * @param  array $renew 需要续费的资源数据
+	 * @return array        返回相关的数据信息状态及提示
+	 */
+	public function renewResource($renew){
+		if($renew){
+			//续费订单号的生成规则：前两位（11-40的随机数）+ 年月日 + 时间戳的后5位数 + 2（续费）
+			$order_sn = mt_rand(11,40).date('Ymd',time()).substr(time(),5,5).2;//续费订单号
+			$renew['order_sn'] = (int)$order_sn;
+			$renew['payable_money'] = bcmul((string)$order['price'],(string)$order['duration'],2);//应付金额
+			$renew['order_type'] = 2;
+			$insert = DB::table('tz_orders')->insert($renew);//生成续费订单
+			if($insert != 0){
+				$return['code'] = 1;
+				$return['msg'] = '资源续费订单创建成功,为了不影响使用请及时支付,您的续费单号:'.$order_sn;
+			} else {
+				$return['code'] = 0;
+				$return['msg'] = '资源续费失败，请重新操作';
+			}
+		} else {
+			$return['code'] = 0;
+			$return['msg'] = '无法对资源进行续费';
+		}
+		return $return;	
+	}
+
+	/**
+     * 比较资源到期时间和业务到期时间
+     * @param  array $time 资源时长和业务到期时间
+     * @return array       资源到期时间和状态提示及信息
+     */
+    public function endTime($time){
+        if($time){
+        	$endding_time = DB::table('tz_business')->where('business_number',$time['business_sn'])->value('endding_time');
+            $end_time = Carbon::parse('+'.$time['duration'].' months')->toDateTimeString();
+            if($end_time < $endding_time){
+                $return['data'] = $end_time;
+                $return['code'] = 1;
+                $return['msg'] = '资源到期时间在业务到期时间内';
+            } else {
+                $return['data'] = '';
+                $return['code'] = 0;
+                $return['msg'] = '资源到期时间超业务到期时间';
+            }
+        } else {
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg'] = '无法比较资源到期时间和业务到期时间';
+        }
+        return $return;
+    }
+
 }

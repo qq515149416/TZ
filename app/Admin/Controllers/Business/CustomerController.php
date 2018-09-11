@@ -22,7 +22,7 @@ class CustomerController extends Controller
     public function adminCustomer() {
         $admin = new CustomerModel();
         $admin_customer = $admin->adminCustomer();
-        return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
+        return tz_ajax_echo($admin_customer['data'],$admin_customer['msg'],$admin_customer['code']);
     }
 
     /**
@@ -30,8 +30,24 @@ class CustomerController extends Controller
      * @return json 返回相关的数据信息和状态提示及信息
      */
     public function clerkCustomer(){
-        $clerk = new clerkCustomer();
+        $clerk = new CustomerModel();
         $clerk_customer = $clerk->clerkCustomer();
-        return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
+        return tz_ajax_echo($clerk_customer['data'],$clerk_customer['msg'],$clerk_customer['code']);
+    }
+
+    /**
+     * 后台手动将客户拉入黑名单
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function pullBlackCustomer(Request $request){
+        if($request->isMethod('post')){
+            $status = $request->only(['status','id']);
+            $black = new CustomerModel();
+            $pull = $black->pullBlackCustomer($data);
+            return tz_ajax_echo($pull,$pull['msg'],$pull['code']);
+        } else {
+            return tz_ajax_echo('','无法将该客户拉黑',0);
+        }
     }
 }

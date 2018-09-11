@@ -75,4 +75,27 @@ class CustomerModel extends Model
     	$clerk = DB::table('oa_staff')->where('admin_users_id',$id)->value('fullname');
     	return $clerk;
     }
+
+    /**
+     * 后台手动将客户拉入黑名单
+     * @param  array $data 需要加入黑名单的客户的id和黑名单的状态
+     * @return array       返回相关的状态信息及提示
+     */
+    public function pullBlackCustomer($data){
+        if($data){
+            $row = $this->where('id'.$data['id'])->update($data);
+            if($row != false){
+                $return['code'] = 1;
+                $return['msg'] = '此客户已成功加入黑名单';
+            } else {
+                $return['code'] = 0;
+                $return['msg'] = '此客户加入黑名单失败';
+            }
+        } else {
+            $return['code'] = 0;
+            $return['msg'] = '无法将此客户加入黑名单';
+        }
+
+        return $return;
+    }
 }

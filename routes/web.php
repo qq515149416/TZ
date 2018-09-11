@@ -127,6 +127,10 @@ Route::group([
 			Route::get('orderList', 'Idc\OrderController@getOrderList');	
 			Route::get('delOrder', 'Idc\OrderController@delOrder');
 			Route::get('payOrderByBalance', 'Idc\OrderController@payOrderByBalance');								
+			Route::post('reneworders','Idc\BusinessController@renewOrders');
+			Route::post('resourceorders','Idc\OrderController@resourceOrders');
+			Route::post('renewresource','Idc\OrderController@renewResource');
+			Route::post('end','Idc\OrderController@endTime');
 		});
 	});
 

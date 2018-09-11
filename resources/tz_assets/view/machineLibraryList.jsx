@@ -189,13 +189,22 @@ class MachineLibraryList extends React.Component {
         inputType[inputType.findIndex(item => item.field=="machineroom")].model = {
             getSubordinateData: this.getCabinetData.bind(this)
         };
-        // inputType[inputType.findIndex(item => item.field=="cabinet")].model = {
-        //     getSubordinateData: this.getIpsData.bind(this)
-        // };
+        inputType[inputType.findIndex(item => item.field=="cabinet")].model = {
+            editGetSubordinateData: this.getCabinetData.bind(this)
+        };
+        inputType[inputType.findIndex(item => item.field=="ip_id")].model = {
+            editGetSubordinateData: this.getIpsData.bind(this)
+        };
         inputType[inputType.findIndex(item => item.field=="ip_company")].model = {
             getSubordinateData: this.getIpsData.bind(this)
         };
     }
+    changeData = (param,callbrak) => {
+        const {machineLibrarysStores} = this.props;
+        machineLibrarysStores.changeData(param).then((state) => {
+          callbrak(state);
+        });
+      }
     delData = (selectedData,callbrak) => {
         const {machineLibrarysStores} = this.props;
         let delIng = selectedData.map(item => machineLibrarysStores.delData(item));
@@ -208,9 +217,17 @@ class MachineLibraryList extends React.Component {
         });
       }
     getCabinetData(param) {
-        this.props.machineLibrarysStores.getCabinetsData({
-            roomid: param.machineroom.value
-        });
+        if(param.machineroom) {
+            this.props.machineLibrarysStores.getCabinetsData({
+                roomid: param.machineroom.value
+            });
+        }
+        if(param.machineroom&&param.ip_company) {
+            this.props.machineLibrarysStores.getIpsData({
+                roomid: param.machineroom.value,
+                ip_company: param.ip_company.value
+            });
+        }
     }
     getIpsData(param) {
         if(param.machineroom&&param.ip_company) {
@@ -248,6 +265,7 @@ class MachineLibraryList extends React.Component {
             data={this.props.machineLibrarysStores.machineLibrarys}  
             addData={this.addData.bind(this)} 
             delData={this.delData.bind(this)} 
+            // changeData={this.changeData.bind(this)} 
           />
         );
       }

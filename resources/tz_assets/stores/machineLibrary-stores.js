@@ -135,6 +135,19 @@ class MachineLibrarysStores extends ActionBoundStores {
     @observable ips = [
 
     ];
+    changeData(param) {
+        return new Promise((resolve,reject) => {
+            post("machine/editmachine",param).then((res) => {
+                if(res.data.code==1) {
+                    this.getData(param.business_type);
+                    resolve(true);
+                }else {
+                    alert(res.data.msg);
+                    resolve(false);
+                }
+            });
+        });
+    }
     addData(data) {
         return new Promise((resolve,reject) => {
             post("machine/insertmachine",data).then((res) => {

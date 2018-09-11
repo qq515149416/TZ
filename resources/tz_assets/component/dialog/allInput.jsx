@@ -133,7 +133,7 @@ class AllInput extends React.Component {
         };
         let currentItem = this.props.inputType.find(item=>item.field==name.split(".")[0]);
         if(currentItem.model) {
-            console.log(currentItem.model.getSubordinateData);
+            // console.log(currentItem.model.getSubordinateData);
             currentItem.model.getSubordinateData && currentItem.model.getSubordinateData(this);
         }
         this.setState(state => state.inputAttr[name.split(".")[0]][name.split(".")[1]] = event.target.value);
@@ -207,6 +207,14 @@ class AllInput extends React.Component {
             }
             case "select":
             if(status) {
+                // if(this.props.editData) {
+                //     if(inputAttr[inputTypeData.field].currency&&inputTypeData.defaultData.length==0) {
+                //         if(inputTypeData.model) {
+                //             inputTypeData.model.editGetSubordinateData && inputTypeData.model.editGetSubordinateData(this);
+                //         }
+                //         return null;
+                //     }
+                // }
                 return (
                     <TextField
                         id="site"

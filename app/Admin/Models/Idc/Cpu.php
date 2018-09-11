@@ -178,10 +178,24 @@ class  Cpu extends Model
 	 * 客户增加CPU资源
 	 * @return array 返回相关资源的数据
 	 */
-	public function selectCpu($where){
+	public function selectCpu($machineroom){
 		$where['cpu_used'] = 0;
-		$cpu = $this->where($where)->get(['cpu_number','cpu_param']);
+		$where['room_id'] = $machineroom;
+		$cpu = $this->where($where)->get(['cpu_number','cpu_param','room_id']);
+		foreach($cpu as $key => $value){
+			$cpu[$key]['machineroom'] = $this->machineroom($value['room_id']);
+		}
 		return $cpu;
+	}
+
+	/**
+	 * 转换机柜所在的机房数据
+	 * @param  int $id 机房表的id
+	 * @return string     返回机房的中文名
+	 */
+	public function machineroom($id){
+		$machineroom = DB::table('idc_machineroom')->where('id',$id)->value('machine_room_name');
+		return $machineroom;
 	}
 	
 }

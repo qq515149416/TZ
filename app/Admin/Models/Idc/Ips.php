@@ -265,7 +265,7 @@ class Ips extends Model
             $ip_company = [0=>'电信公司',1=>'移动公司',2=>'联通公司'];
             foreach($ips as $key=>$value){
                 $ips[$key]['ip_data'] = $value['ip'].$ip_company[$value['ip_company']];
-                $ips[$key]['machineroom'] = $this->machineroom($value['ip_comproom']); 
+                $ips[$key]['machineroom'] = $this->machineroom($value['ip_comproom'])['machine_room_name']; 
             }
             return $ips;
         } else {
@@ -274,15 +274,5 @@ class Ips extends Model
         
     }
 
-
-    /**
-     * 转换机柜所在的机房数据
-     * @param  int $id 机房表的id
-     * @return string     返回机房的中文名
-     */
-    public function machineroom($id){
-        $machineroom = DB::table('idc_machineroom')->where('id',$id)->value('machine_room_name');
-        return $machineroom;
-    }
     
 }

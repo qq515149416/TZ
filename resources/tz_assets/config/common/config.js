@@ -7,6 +7,8 @@ import CpusStores from "../../stores/cpu-stores";
 import HarddisksStores from "../../stores/harddisk-stores";
 import MemorysStores from "../../stores/memory-stores";
 import CabinetsStores from "../../stores/cabinet-stores";
+import MachineLibrarysStores from "../../stores/machineLibrary-stores";
+
 
 
 
@@ -21,7 +23,8 @@ export const stores = {
     cpusStores: new CpusStores(),
     harddisksStores: new HarddisksStores(),
     memorysStores: new MemorysStores(),
-    cabinetsStores: new CabinetsStores()
+    cabinetsStores: new CabinetsStores(),
+    machineLibrarysStores: new MachineLibrarysStores()
 }
 export const domIds = [
     "user_list",
@@ -32,5 +35,6 @@ export const domIds = [
     "cpu_list",
     "harddisk_list",
     "memory_list",
-    "cabinet_list"
+    "cabinet_list",
+    "machine_library"
 ];

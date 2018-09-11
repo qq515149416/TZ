@@ -187,7 +187,7 @@ const styles = theme => ({
                             if(item.id=="operat") {
                               return null;
                             }
-                            if(index==0&&getByteLen(this.props.data[index][item.id]) > 12) {
+                            if(index==0&&getByteLen(this.props.data[index][item.id]) > 13) {
                               return (
                                 <TableCell component="th" scope="row" padding="none">
                                   {item.id.indexOf(".") > -1 ? n[item.id.split(".")[0]][item.id.split(".")[1]] : n[item.id]}

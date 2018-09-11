@@ -66,6 +66,7 @@ Route::group([
     $router->get('/resource/memory', 'Show\MemoryController@index');
     $router->get('/resource/cabinet', 'Show\CabinetController@index');
     $router->get('/article', 'Show\NewController@index');
+    $router->get('/resource/machinelibrary', 'Show\MachineLibraryController@index');
 //人事
     Route::group([
         'prefix' => 'hr',
@@ -157,9 +158,9 @@ Route::group([
         $router->post('insertmachine', 'Idc\MachineController@insertMachine');
         $router->post('editmachine', 'Idc\MachineController@editMachine');
         $router->post('deletemachine', 'Idc\MachineController@deleteMachine');
-        $router->post('machineroom', 'Idc\MachineController@machineroom');
-        $router->post('cabinets', 'Idc\MachineController@cabinets');
-        $router->post('ips', 'Idc\MachineController@ips');
+        $router->get('machineroom', 'Idc\MachineController@machineroom');
+        $router->get('cabinets', 'Idc\MachineController@cabinets');
+        $router->get('ips', 'Idc\MachineController@ips');
     });
 
 

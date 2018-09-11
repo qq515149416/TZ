@@ -15,7 +15,7 @@ class MachineModel extends Model
     protected $table = 'idc_machine';
     public $timestamps = true;
     protected $dates = ['deleted_at'];
-    
+    protected $fillable = ['machine_num', 'cpu','harddisk','cabinet','memory','ip_id','machineroom','protect','bandwidth','loginname','loginpass','machine_type','used_status','machine_status','business_type','created_at','updated_at','deleted_at'];
     /**
      * 查找属于租用业务的机器
      * @return [type] [description]
@@ -186,7 +186,7 @@ class MachineModel extends Model
     			//机柜等的对应查询
     			$machineroom = (array)$this->machineroom($value['machineroom'],$value['cabinet'],$value['ip_id']);//机房信息的查询
     			// 进行对应的机柜等信息的转换或者显示
-    			if(!empty($cabinet) && !empty($ip) && !empty($machineroom)){
+    			if(!empty($machineroom)){
     				$result[$key]['cabinets'] = $machineroom['cabinet_id'];//机柜信息的返回
     				//IP信息的返回
     				$result[$key]['ip'] = $machineroom['ip'].'('.$ip_company[$machineroom['ip_company']].')';
@@ -195,7 +195,6 @@ class MachineModel extends Model
     			}
 
     		}
-
     		$return['data'] = $result;
     		$return['code'] = 1;
     		$return['msg'] = '获取信息成功！！';
@@ -328,7 +327,8 @@ class MachineModel extends Model
     	} else {
     		$return['code'] = 0;
     		$return['msg'] = '无法删除机器信息！！';
-    	}
+		}
+		return $return;
     }
 
 
@@ -412,7 +412,7 @@ class MachineModel extends Model
     				->whereNull('deleted_at')
     				->select('id as ipid','ip')
    					->get();
-   			if($cabinets){
+   			if($ips){
    				$return['data'] = $ips;
    				$return['code'] = 1;
    				$return['msg'] = 'IP信息获取成功';

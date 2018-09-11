@@ -131,12 +131,21 @@ class AllInput extends React.Component {
         this[name.split(".")[0]] = {
             value: event.target.value
         };
+        let currentItem = this.props.inputType.find(item=>item.field==name.split(".")[0]);
+        if(currentItem.model) {
+            console.log(currentItem.model.getSubordinateData);
+            currentItem.model.getSubordinateData && currentItem.model.getSubordinateData(this);
+        }
         this.setState(state => state.inputAttr[name.split(".")[0]][name.split(".")[1]] = event.target.value);
     };
     handleChecke = name => event => {
         this[name.split(".")[0]] = {
             value: event.target.value
         };
+        let currentItem = this.props.inputType.find(item=>item.field==name.split(".")[0]);
+        if(currentItem.model) {
+            currentItem.model.getSubordinateData && currentItem.model.getSubordinateData(this);
+        }
         const checkedIndex = this.state.inputAttr[name.split(".")[0]][name.split(".")[1]].findIndex(item=>item.value==event.target.value);
         this.setState(state => {
             state.inputAttr[name.split(".")[0]][name.split(".")[1]].forEach(item => {

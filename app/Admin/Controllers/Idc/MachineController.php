@@ -115,7 +115,6 @@ class MachineController extends Controller
      * @return json 返回机房的相关的数据
      */
     public function machineroom(){
-
     	$machineroom = new MachineModel();
     	$result = $machineroom->machineroom();
     	return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
@@ -127,7 +126,7 @@ class MachineController extends Controller
      * @return json           对应机房的机柜的数据
      */
     public function cabinets(Request $request){
-    	if($request->idMethod('post')){
+    	if($request->isMethod('get')){
     		$roomid = $request->get('roomid');
     		$cabinet = new MachineModel();
     		$result = $cabinet->cabinets($roomid);
@@ -143,7 +142,7 @@ class MachineController extends Controller
      * @return json           对应机房的IP信息
      */
     public function ips(Request $request){
-    	if($request->isMethod('post')){
+    	if($request->isMethod('get')){
     		$data = $request->only(['roomid','ip_company']);
     		$ips = new MachineModel();
     		$result = $ips->ips($data);

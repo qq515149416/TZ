@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use App\Admin\Models\Idc\Ips;
 use App\Admin\Requests\Idc\IpsRequest;
-use App\Admin\Requests\Idc\IpsBatchRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -31,6 +30,7 @@ class IpsController extends Controller
     	// dd($ips['data']);
     	return tz_ajax_echo($ips['data'],$ips['msg'],$ips['code']);
     }
+    
     /**
      * 新增IP地址的信息
      * @param  IpsRequest $request 进行字段验证

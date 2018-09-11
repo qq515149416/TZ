@@ -69,6 +69,7 @@ class AllInput extends React.Component {
                 }else if(item.type=="switch") {
                     if(this.props.editData) {
                         const currCode = this.props.editData ? ((item.model&&item.model.selectCode) ? item.model.selectCode(this.props.editData[item.field]):this.props.editData[item.field]) : item.radioData.find(e => e.checked).value;
+                        console.log(currCode,this.props.editData[item.field],item.field,this.props.editData);
                         item.radioData.forEach(e => {
                             if(e.value==currCode) {
                                 e.checked = true;
@@ -77,6 +78,7 @@ class AllInput extends React.Component {
                             }
                         });
                     }
+                    // console.log(item.radioData.find(e => e.checked));
                     this[item.field] = {
                         value : item.radioData.find(e => e.checked).value
                     };
@@ -207,14 +209,14 @@ class AllInput extends React.Component {
             }
             case "select":
             if(status) {
-                // if(this.props.editData) {
-                //     if(inputAttr[inputTypeData.field].currency&&inputTypeData.defaultData.length==0) {
-                //         if(inputTypeData.model) {
-                //             inputTypeData.model.editGetSubordinateData && inputTypeData.model.editGetSubordinateData(this);
-                //         }
-                //         return null;
-                //     }
-                // }
+                if(this.props.editData) {
+                    if(inputAttr[inputTypeData.field].currency&&inputTypeData.defaultData.length==0) {
+                        if(inputTypeData.model) {
+                            inputTypeData.model.editGetSubordinateData && inputTypeData.model.editGetSubordinateData(this);
+                        }
+                        return null;
+                    }
+                }
                 return (
                     <TextField
                         id="site"

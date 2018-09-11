@@ -47,19 +47,15 @@ class MachineModel extends Model
                     $result[$key]['ip_company'] = $machineroom['ip_company'];
     				//机房的信息返回
     				$result[$key]['machineroom_name'] = $machineroom['machine_room_name'];
-    			}
-
+    	       	}
     		}
     		$return['data'] = $result;
     		$return['code'] = 1;
     		$return['msg'] = '获取信息成功！！';
-
     	} else {
-
     		$return['data'] = $result;
     		$return['code'] = 0;
     		$return['msg'] = '暂无数据';
-
     	}
 
     	return $return;
@@ -100,19 +96,14 @@ class MachineModel extends Model
                     //机房的信息返回
                     $result[$key]['machineroom_name'] = $machineroom['machine_room_name'];
                 }
-
             }
-
             $return['data'] = $result;
             $return['code'] = 1;
             $return['msg'] = '获取信息成功！！';
-
         } else {
-
             $return['data'] = $result;
             $return['code'] = 0;
             $return['msg'] = '暂无数据';
-
         }
 
         return $return;
@@ -129,7 +120,7 @@ class MachineModel extends Model
     		$row = DB::table('idc_machine')->insertGetId($data);//将新增的机器信息插入数据库
     		if($row != 0){
                 // 如果新增机器成功则将机器编号更新到对应的IP库中
-                $ip_row = DB::table('idc_ips')->where('id',$data['ip_id'])->update(['mac_num'=>$data['machine_num']);
+                $ip_row = DB::table('idc_ips')->where('id',$data['ip_id'])->update(['mac_num'=>$data['machine_num'],'ip_status'=>2]);
     			if($ip_row != 0){
                     // 如果更新IP库的所属机器编号成功，进行所有数据的提交
                     DB::commit();
@@ -145,6 +136,7 @@ class MachineModel extends Model
                 }
                 
     		} else {
+                // 失败则回滚
                 DB::rollBack();
     			$return['data'] = '';
     			$return['code'] = 0;
@@ -165,11 +157,35 @@ class MachineModel extends Model
      */
     public function editMachine($editdata){
     	if($editdata){
-    		$row = $this->where('id',$editdata['id'])->update($editdata);
-    		if($row != false){
-    			$return['code'] = 1;
-    			$return['msg'] = '修改信息成功！！';
+            DB::beginTransaction();//开启事务
+    		$row = DB::table('idc_machine')->where('id',$editdata['id'])->update($editdata);
+    		if($row != 0){
+                // 先将原来所属IP的机器编号字段清除，状态修改
+                $original = DB::table('idc_ips')->where('mac_num',$editdata['machine_num'])->update(['mac_num'=>'','ip_status'=>0]);
+    			if($original != 0){
+                    // 原来的修改成功，将新的IP更新机器编号字段
+                    $ip = DB::table('idc_ips')->where('id',$editdata['ip_id'])->update(['mac_num'=>$editdata['machine_num'],'ip_status'=>2]);
+                    if($ip != 0){
+                        // 都更新成功，进行事务提交
+                        DB::commit();
+                        $return['code'] = 1;
+                        $return['msg'] = '修改信息成功！！';
+                    } else {
+                        // 新的IP所属机器编号更新失败，事务回滚
+                        DB::rollBack();
+                        $return['code'] = 0;
+                        $return['msg'] = '修改信息失败！！';
+                    }
+                } else {
+                    //原来的IP所属机器编号字段更新失败，事务回滚 
+                    DB::rollBack();
+                    $return['code'] = 0;
+                    $return['msg'] = '修改信息失败！！';
+                }
+                
     		} else {
+                // 更新机器信息失败事务回滚
+                DB::rollBack();
     			$return['code'] = 0;
     			$return['msg'] = '修改信息失败！！';
     		}
@@ -247,7 +263,9 @@ class MachineModel extends Model
     public function cabinets($roomid){
    		if($roomid){
    			$cabinets = DB::table('idc_cabinet')
-   							->where('machineroom_id',$roomid)
+   							// ->where('machineroom_id',$roomid)
+          //                   ->where('use_type',0)
+                            ->where(['machineroom_id'=>$roomid,'use_type'=>0])
    							->whereNull('deleted_at')
    							->select('id as cabinetid','cabinet_id')
    							->get();
@@ -278,8 +296,11 @@ class MachineModel extends Model
     		$roomid = $data['roomid'];
     		$company = $data['ip_company'];
     		$ips = DB::table('idc_ips')
-    				->where('ip_comproom',$roomid)
-    				->where('ip_company',$company)
+    				// ->where('ip_comproom',$roomid)
+    				// ->where('ip_company',$company)
+        //             ->where('ip_status',0)
+        //             ->where('ip_lock',0)
+                    ->where(['ip_comproom'=>$roomid,'ip_company'=>$company,'ip_status'=>0,'ip_lock'=>0])
     				->whereNull('deleted_at')
     				->select('id as ipid','ip','ip_company')
    					->get();

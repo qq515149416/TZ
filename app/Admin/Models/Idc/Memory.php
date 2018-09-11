@@ -177,10 +177,24 @@ class  Memory extends Model
 	 * 选择内存资源
 	 * @return array 返回对应的内存数据
 	 */
-	public function selectMemory(){
+	public function selectMemory($machineroom){
 		$where['memory_used'] = 0;
-		$memory = $this->where($where)->get(['memory_number','memory_param']);
+		$where['room_id'] = $machineroom;
+		$memory = $this->where($where)->get(['memory_number','memory_param','room_id']);
+		foreach($memory as $key => $value){
+			$memory[$key]['machineroom'] = $this->machineroom($value['room_id']);
+		}
 		return $memory;
+	}
+
+	/**
+	 * 转换机柜所在的机房数据
+	 * @param  int $id 机房表的id
+	 * @return string     返回机房的中文名
+	 */
+	public function machineroom($id){
+		$machineroom = DB::table('idc_machineroom')->where('id',$id)->value('machine_room_name');
+		return $machineroom;
 	}
 
 }

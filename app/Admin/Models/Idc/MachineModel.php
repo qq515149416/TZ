@@ -309,7 +309,8 @@ class MachineModel extends Model
     	} else {
     		$return['code'] = 0;
     		$return['msg'] = '请确保要修改的信息正确！！';
-    	}
+		}
+		return $return;
     }
 
     /**

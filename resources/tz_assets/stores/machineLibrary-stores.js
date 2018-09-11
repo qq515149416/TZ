@@ -14,6 +14,7 @@ class MachineLibraryStores {
     @observable cabinets = "";
     @observable ip_id = 1;
     @observable ip = "";
+    @observable ip_company = "";
     @observable bandwidth = "";
     @observable protect = "";
     @observable loginname = "";
@@ -42,6 +43,7 @@ class MachineLibraryStores {
         cabinets,
         ip_id,
         ip,
+        ip_company,
         bandwidth,
         protect,
         loginname,
@@ -71,6 +73,7 @@ class MachineLibraryStores {
             cabinets,
             ip_id,
             ip,
+            ip_company,
             bandwidth,
             protect,
             loginname,

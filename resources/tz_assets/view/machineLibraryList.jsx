@@ -265,7 +265,7 @@ class MachineLibraryList extends React.Component {
             data={this.props.machineLibrarysStores.machineLibrarys}  
             addData={this.addData.bind(this)} 
             delData={this.delData.bind(this)} 
-            // changeData={this.changeData.bind(this)} 
+            changeData={this.changeData.bind(this)} 
           />
         );
       }

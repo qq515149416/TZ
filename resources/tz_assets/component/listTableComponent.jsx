@@ -51,6 +51,17 @@ const styles = theme => ({
       ...theme.mixins.gutters(),
       paddingTop: theme.spacing.unit * 2,
       paddingBottom: theme.spacing.unit * 2
+    },
+    td: {
+      paddingLeft: 0,
+      paddingRight: 0,
+      textAlign: "center"
+    },
+    tdLast: {
+      textAlign: "center"
+    },
+    tdFirst: {
+      textAlign: "center"
     }
   });
   @observer
@@ -179,7 +190,7 @@ const styles = theme => ({
                         key={n.id}
                         selected={isSelected}
                       >
-                        <TableCell padding="checkbox">
+                        <TableCell className={classes.tdFirst} padding="checkbox">
                           <Checkbox checked={isSelected} />
                         </TableCell>
                         {
@@ -187,22 +198,22 @@ const styles = theme => ({
                             if(item.id=="operat") {
                               return null;
                             }
-                            if(index==0&&getByteLen(this.props.data[index][item.id]) > 13) {
+                            // if(index==0&&getByteLen(this.props.data[index][item.id]) > 13) {
+                            //   return (
+                            //     <TableCell component="th" scope="row" padding="none">
+                            //       {item.id.indexOf(".") > -1 ? n[item.id.split(".")[0]][item.id.split(".")[1]] : n[item.id]}
+                            //     </TableCell>
+                            //   )
+                            // } else {
                               return (
-                                <TableCell component="th" scope="row" padding="none">
-                                  {item.id.indexOf(".") > -1 ? n[item.id.split(".")[0]][item.id.split(".")[1]] : n[item.id]}
-                                </TableCell>
+                                <TableCell className={classes.td} numeric>{item.id.indexOf(".") > -1 ? n[item.id.split(".")[0]][item.id.split(".")[1]] : n[item.id]}</TableCell>
                               )
-                            } else {
-                              return (
-                                <TableCell numeric>{item.id.indexOf(".") > -1 ? n[item.id.split(".")[0]][item.id.split(".")[1]] : n[item.id]}</TableCell>
-                              )
-                            }
+                            // }
                           })
                         }
                         {
                           this.props.headTitlesData.find(item => item.id=="operat") ? (
-                            <TableCell numeric>
+                            <TableCell className={classes.tdLast} numeric>
                               {this.props.changeData && (
                                 <PostData operattext={this.props.operattext || this.props.title} inputType={this.props.inputType} postType="edit" editData={n} changeData={this.props.changeData} />
                               )}

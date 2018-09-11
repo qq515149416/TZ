@@ -260,11 +260,12 @@ class Ips extends Model
         $where['ip_comproom'] = $machineroom;
         $where['ip_status'] = 0;
         $where['ip_lock'] = 0;
-        $ips = $this->where($where)->get(['ip','ip_company']);
+        $ips = $this->where($where)->get(['ip','ip_company','ip_comproom']);
         if($ips->isEmpty()){
             $ip_company = [0=>'电信公司',1=>'移动公司',2=>'联通公司'];
             foreach($ips as $key=>$value){
-                $ips[$key]['ip_data'] = $value['ip'].$ip_company[$value['ip_company']]; 
+                $ips[$key]['ip_data'] = $value['ip'].$ip_company[$value['ip_company']];
+                $ips[$key]['machineroom'] = $this->machineroom($value['ip_comproom']); 
             }
             return $ips;
         } else {
@@ -273,5 +274,15 @@ class Ips extends Model
         
     }
 
+
+    /**
+     * 转换机柜所在的机房数据
+     * @param  int $id 机房表的id
+     * @return string     返回机房的中文名
+     */
+    public function machineroom($id){
+        $machineroom = DB::table('idc_machineroom')->where('id',$id)->value('machine_room_name');
+        return $machineroom;
+    }
     
 }

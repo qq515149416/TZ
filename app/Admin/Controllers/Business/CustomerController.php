@@ -50,4 +50,20 @@ class CustomerController extends Controller
             return tz_ajax_echo('','无法将该客户拉黑',0);
         }
     }
+
+    /**
+     * 后台手动替客户重置密码
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function resetPassword(Request $request){
+        if($request->isMethod('post')){
+            $password = $request->only(['password','id']);
+            $reset = new CustomerModel();
+            $reset_password = $reset->resetPassword($password);
+            return tz_ajax_echo($reset_password,$reset_password['msg'],$reset_password['code']);
+        } else {
+            return tz_ajax_echo('','无法重置密码',0);
+        }
+    }
 }

@@ -90,74 +90,103 @@ class Order extends Model
 		return $return;
 	}
 
+	/**
+	 * 客户自主对订单进行支付
+	 * @param  int $user_id 客户的id
+	 * @param  int $id      订单的id
+	 * @return array          返回相关的状态提示及信息
+	 */
 	public function payOrder($user_id,$id){
 		
 		$serial_number = $this->createNum($user_id.$id); //支付流水号
 		$row = $this->find($id);
 		$return['data']	= '';
-		$business_status = (array)DB::table('tz_business')->where('business_number',$row->business_sn)
-									->select('business_status')->first();
-		if($business_status['business_status'] > 0 && $business_status['business_status'] < 6){//判断业务状态处于审核通过且退款之间，继续进行支付
-			if($row == NULL){
+		// 是否存在此订单
+		if($row == NULL){
 				$return['msg'] 	= '无此订单';
 				$return['code']	= 0;
 				return $return;
-			}
-
-			$customer_id = $row->customer_id;
-			if($user_id != $customer_id){	
-				$return['msg'] 	= '只能支付自己的订单';
-				$return['code']	= 0;
-				return $return;
-			}
-
-			$order_status = $row->order_status;
-			if( $order_status != 0 ){
-				$return['msg'] 	= '订单已支付或已取消';
-				$return['code']	= 0;
-				return $return;
-			}
-			//获取余额
-			$before_money 	= $this->getMoney($user_id)->money;
-			$payable_money = bcmul( (string)$row->price , (string)$row->duration , 2 );
-			$after_money		= $before_money - $payable_money;
-			if( $after_money < 0 ){
-				$return['msg'] 	= '余额不足,请充值';
-				$return['code']	= 0;
-				return $return;
-			}
-
-			$pay_time = date("Y-m-d h:i:s");
-
-			DB::beginTransaction();
-
-
-			$row->before_money 	= $before_money;
-			$row->after_money 	= $after_money;
-			$row->pay_type		= 1;
-			$row->pay_price	= $payable_money;
-			$row->pay_time		= $pay_time;
-			$row->order_status	= 1;
-			$row->serial_number	= $serial_number;
-			$row->payable_money	= $payable_money;
-			$res = $row->save();
-			if(!$res){
-				$return['msg'] 	= '支付失败';
-				$return['code']	= 0;
-				return $return;
-			}
-			$pay_money = DB::table('tz_users')->where('id',$user_id)->update(['money' => $after_money ]); 
-
-				DB::commit();
+		}
+		// 是否是客户自己的订单
+		$customer_id = $row->customer_id;
+		if($user_id != $customer_id){	
+			$return['msg'] 	= '只能支付自己的订单';
+			$return['code']	= 0;
+			return $return;
+		}
+		// 订单的状态是否为未支付
+		$order_status = $row->order_status;
+		if( $order_status != 0 ){
+			$return['msg'] 	= '订单已支付或已取消';
+			$return['code']	= 0;
+			return $return;
+		}
+		//获取余额
+		$before_money = $this->getMoney($user_id)->money;
+		$payable_money = bcmul( (string)$row->price , (string)$row->duration , 2 );
+		$after_money = bcsub((string)$before_money,(string)$payable_money,2);
+		if( $after_money < 0 ){
+			$return['msg'] 	= '余额不足,请充值';
+			$return['code']	= 0;
+			return $return;
+		}
+		$pay_time = date("Y-m-d h:i:s");
+		DB::beginTransaction();
+		$row->before_money 	= $before_money;
+		$row->after_money 	= $after_money;
+		$row->pay_type		= 1;
+		$row->pay_price	= $payable_money;
+		$row->pay_time		= $pay_time;
+		$row->order_status	= 1;
+		$row->serial_number	= $serial_number;
+		$row->payable_money	= $payable_money;
+		$res = $row->save();			
+		if(!$res){
+			// 
+			DB::rollBack();
+			$return['msg'] 	= '支付失败';
+			$return['code']	= 0;
+			return $return;
+		} else {
+			// 订单支付成功后对客户的余额进行修改
+			$pay_money = DB::table('tz_users')->where('id',$user_id)->update(['money' => $after_money ]);
+			if($pay_money != 0){
+				// 客户余额修改成功
+				if($row->resource_type < 4) {
+					// 资源类型如果是机柜/主机，查找对应的业务状态
+					$business_status = DB::table('tz_business')->where('business_number',$row->business_sn)->value('business_status');
+					if($business_status > 0 && $business_status < 4){
+						// 业务状态是审核通过且是使用状态将状态修改为付款使用即2
+						$business['business_status'] = 2;
+						$business = DB::table('tz_business')->where('business_number',$row->business_sn)->update($business);
+						if($business != 0) {
+							// 修改使用状态成功，事务提交
+							DB::commit();
+						} else {
+							DB::rollBack();
+							$return['msg'] 	= '支付失败';
+							$return['code']	= 0;
+							return $return;
+						}
+					} else {
+						// 业务状态为使用状态之外的直接事务提交，无须修改业务状态
+						DB::commit();
+					}
+				} else {
+					// 资源类型除机柜/主机外的直接进行事务提交
+					DB::commit();
+				}
 				$return['data'] = $row;
 				$return['code'] = 1;
-				$return['msg'] = '支付成功!!';
+				$return['msg'] = '支付成功!!';	
+				
+			} else {
+				// 修改客户余额失败，进行事务回滚
+				DB::rollBack()
+				$return['msg'] 	= '支付失败';
+				$return['code']	= 0;	
 			}
-		} else {
-			//判断业务状态不是处于审核通过且退款之间，无法进行支付
-			$return['code'] = 0;
-			$return['msg'] = '您无法发起支付';
-		}
+		}	 		
 		return $return;
 	}
 

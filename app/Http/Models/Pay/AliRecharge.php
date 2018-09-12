@@ -158,11 +158,42 @@ class AliRecharge extends Model
 		if(count($order) != 0){		
 			$return['data'] 	= $order;
 			$return['code'] 	= 1;
-			$return['msg']	= '获取成功';
+			$return['msg']	= '获取订单信息成功';
 		}else{
 			$return['data'] 	= '';
 			$return['code'] 	= 0;
-			$return['msg']	= '获取失败';
+			$return['msg']	= '获取订单信息失败';
+		}
+
+		return $return;
+	}
+
+	public function makePay($trade_id,$user_id){
+	
+		$order = $this->select('trade_no','recharge_amount','subject','created_at','user_id')->find($trade_id);
+		
+		if($order!=NULL){	
+			$created_at = strtotime($order->created_at);
+			if(time()-$created_at >=300 ){
+				$return['data'] 	= $order;
+				$return['code'] 	= 2;
+				$return['msg']	= '订单已过期';
+				return $return;
+			}
+			$id = $order->user_id;
+			if($user_id != $id){
+				$return['data'] 	= '';
+				$return['code'] 	= 3;
+				$return['msg']	= '订单用户与登录用户不一致';
+				return $return;
+			}
+			$return['data'] 	= $order;
+			$return['code'] 	= 1;
+			$return['msg']	= '获取订单信息成功';
+		}else{
+			$return['data'] 	= '';
+			$return['code'] 	= 0;
+			$return['msg']	= '订单不存在或已过期';
 		}
 
 		return $return;
@@ -177,5 +208,11 @@ class AliRecharge extends Model
 	{
 		$money = DB::table('tz_users')->find($user_id,['money']);
 		return $money;
+	}
+
+	public function delOrder($trade_id)
+	{
+		$res = $this->where('id',$trade_id)->delete();
+		return $res;
 	}
 }

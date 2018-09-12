@@ -94,10 +94,13 @@ Route::group([
 		Route::get('payIndex', 'Pay\AliPayController@index');
 		//获取指定用户的所有充值单信息
 		Route::get('getOrderByUser', 'Pay\AliPayController@getOrderByUser');
+		//跳转到支付页面的方法
+		Route::get('goToPay', 'Pay\AliPayController@goToPay');
+		
+		Route::get('delOrder', 'Pay\AliPayController@delOrder');
 	});
 
-	//跳转到支付页面的方法
-	Route::get('goToPay', 'Pay\AliPayController@goToPay');
+	
 	//异步接收支付宝发出通知的接口,支付宝方用的
 	Route::post('payRechargeNotify', 'Pay\AliPayController@rechargeNotify');
 	//用户支付完成后跳转页面

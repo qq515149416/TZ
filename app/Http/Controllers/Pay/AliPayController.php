@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AliPayController extends Controller
 {
-	protected $seller_id = '2088102176242173';
+	protected $seller_id = '';
 	protected $config = [
 		'app_id' => '',
 		'notify_url' => 'http://tz.jungor.cn/home/payRechargeNotify',
@@ -36,10 +36,11 @@ class AliPayController extends Controller
 		'log' => [ // optional
 			'file' => './logs/alipay.log',
 			'level' => 'debug'
-			
+			// 'type' => 'single', // optional, 可选 daily.
+   //          			'max_file' => 30, // optional, 当 type 为 daily 时有效，默认 30 天
 		],
 		'mode' => 'dev', // optional,设置此参数，将进入沙箱模式
-		'timeout_express'	=> '5m',
+
 	];
 
 	/**
@@ -54,6 +55,7 @@ class AliPayController extends Controller
  	
  	public function __construct()
  	{
+ 		$this->seller_id			= env('SELLER_ID');
  		$this->config['private_key'] 	= env('ALI_PRIVATE_KEY');
  		$this->config['ali_public_key'] 	= env('ALI_PUBLIC_KEY');
  		$this->config['app_id'] 		= env('ALI_APP_ID');
@@ -65,14 +67,13 @@ class AliPayController extends Controller
 		$info = $request->only(['pay_for', 'total_amount','subject']);   
 		//这里对接要改,获取user_id 
 
-		//调试状态   
-		$user_id = 2;
+		
 		//实际获取
-		// $checkLogin = Auth::check();
-		// if($checkLogin == false){
-		// 	return tz_ajax_echo([],'请先登录',0);
-		// }
-		// $user_id = Auth::id();
+		$checkLogin = Auth::check();
+		if($checkLogin == false){
+			return tz_ajax_echo([],'请先登录',0);
+		}
+		$user_id = Auth::id();
 
 		//生成订单参数
 		$order = [
@@ -86,11 +87,7 @@ class AliPayController extends Controller
 		switch ($info['pay_for'])
 		{
 			case 1:
-				//$this->config['return_url'] 	= 'http://tz.jungor.cn/home/payRechargeReturn';
-				//$this->config['notify_url'] 	= 'http://tz.jungor.cn/home/payRechargeNotify';
-				// $this->config['return_url'] 	= 'http://localhost/home/payRechargeReturn';
-				// $this->config['notify_url'] 	= 'http://localhost/home/payRechargeNotify';
-
+				
 				$model = new AliRecharge();
 				$data['trade_no'] 		= $order['out_trade_no'];
 				$data['recharge_amount']	= $order['total_amount'];
@@ -120,24 +117,109 @@ class AliPayController extends Controller
 	*/
 	public function goToPay(Request $request)
 	{
-		$info		= $request->only(['trade_id']);
+		//实际获取
+		$checkLogin = Auth::check();
+		if($checkLogin == false){
+			return tz_ajax_echo([],'请先登录',0);
+		}
+		$user_id = Auth::id();
+
+		$info		= $request->only(['trade_id','way']);
+		if(!isset($info['trade_id']) || !isset($info['way']) ){
+			return tz_ajax_echo('','请提供完整信息',0); 
+		}
 		$trade_id 	= $info['trade_id'];
+		$way 		= $info['way'];
 
 		$model 	= new AliRecharge();
-		$res 		= $model->checkOrder($trade_id,3);
-		$info = json_decode(json_encode($res['data'][0]),true);
+		$res 		= $model->makePay($trade_id,$user_id);
+		if($res['code'] == 0||$res['code'] == 3){
+			return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+		}
+		
+
+		$info = json_decode(json_encode($res['data']),true);
+
+		if($res['code'] == 2){
+			$cancel =  Pay::alipay($this->config)->cancel($info['trade_no']);
+			if($cancel->code == '10000'){
+				$del = $model->delOrder($trade_id);
+				if($del == true){
+					$res['msg'].=',删除订单成功';
+				}else{
+					$res['msg'].=',删除订单失败';
+				}
+			}
+			return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+		}
 
 		$order = [
-			'out_trade_no' 	=> $info['trade_no'],		//本地订单号
-			'total_amount' 	=> $info['recharge_amount'],	//金额
-			'subject' 	=> $info['subject'],		//商品名称
+			'out_trade_no' 		=> $info['trade_no'],		//本地订单号
+			'total_amount' 		=> $info['recharge_amount'],	//金额
+			'subject' 		=> $info['subject'],		//商品名称
+			'timeout_express'	=> '5m',
 		];
-
 		//生成支付宝链接
-		$alipay = Pay::alipay($this->config)->web($order);
 
+		switch ($way) {
+			case 'web':
+				$alipay = Pay::alipay($this->config)->web($order);
+				break;		
+			case 'scan':
+				$alipay = Pay::alipay($this->config)->scan($order);
+				break;
+			default:
+				return tz_ajax_echo('','请选择正确的支付方式',0); 
+		}
+		
 		//跳转到支付宝链接
 		return $alipay;// laravel 框架中请直接 `return $alipay`
+	}
+
+	public function delOrder(Request $request)
+	{
+		//实际获取
+		$checkLogin = Auth::check();
+		if($checkLogin == false){
+			return tz_ajax_echo([],'请先登录',0);
+		}
+		$user_id = Auth::id();
+
+		$info = $request->only(['del_trade_id']);
+		if( !isset($info['del_trade_id']) ){
+			return tz_ajax_echo('','请提供完整信息',0); 
+		}
+		$trade_id = $info['del_trade_id'];
+
+		$model 	= new AliRecharge();
+		$res 		= $model->makePay($trade_id,$user_id);
+		
+		if($res['code'] == 0||$res['code'] == 3){
+			return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+		}
+		
+		$info = json_decode(json_encode($res['data']),true);
+
+		$cancel =  Pay::alipay($this->config)->cancel($info['trade_no']);	
+
+		$return['data']	= '';
+		if($cancel->code == '10000'){
+			$return['msg']	= '取消订单成功';
+
+			$del = $model->delOrder($trade_id);
+
+			if($del == true){
+				$return['msg'].=',删除订单成功';
+				$return['code'] = 1;
+			}else{
+				$return['msg'].=',删除订单失败';
+				$return['code'] = 0;
+			}
+		}else{
+			$return['msg']	= '取消订单失败';
+			$return['code']	= 0;
+		}
+		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
 	}
 
 	// /**
@@ -260,12 +342,12 @@ class AliPayController extends Controller
 	* @return 订单信息,
 	*/
 	public function getOrderByUser(Request $request){
-		// $checkLogin = Auth::check();
-		// if($checkLogin == false){
-		// 	return tz_ajax_echo([],'请先登录',0);
-		// }
-		// $user_id = Auth::id();
-		$user_id = 2;
+		$checkLogin = Auth::check();
+		if($checkLogin == false){
+			return tz_ajax_echo([],'请先登录',0);
+		}
+		$user_id = Auth::id();
+		
 		$model 	= new AliRecharge();
 		$res 		= $model->checkOrder($user_id,4);
 		dd($res);exit;

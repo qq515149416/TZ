@@ -118,7 +118,7 @@ class BusinessModel extends Model
     				$order['machine_sn'] = $where['machine_number'];
     				$order['price'] = $where['money'];//单价
     				$order['duration'] = $where['length'];//时长
-    				$order['resource'] = $where['machine_number'];
+    				$order['resource'] = $where['resource'];//机器的话为IP/机柜则为机柜编号
     				$order['end_time'] = $end_time;
     				$order['payable_money'] = bcmul((string)$order['price'],(string)$order['duration'],2);//应付金额
     				$order['created_at']  = Carbon::now()->toDateTimeString();

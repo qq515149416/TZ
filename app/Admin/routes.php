@@ -244,6 +244,7 @@ Route::group([
         $router->post('admin_customer','Business\CustomerController@adminCustomer');
         $router->post('clerk_customer','Business\CustomerController@clerkCustomer');
         $router->post('pull_black','Business\CustomerController@pullBlackCustomer');
+        $router->post('reset_password','Business\CustomerController@resetPassword');
     });
 
 });

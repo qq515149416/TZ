@@ -76,7 +76,6 @@ class RegisterController extends Controller
                 'email'    => $par['email'],
                 'password' => Hash::make($par['password']),
                 'status'   => 2,  //状态为已验证
-                'money'    => 999,
             ]);
             Auth::loginUsingId($addUserInfo['id']);
             return tz_ajax_echo([], '注册成功', 1);

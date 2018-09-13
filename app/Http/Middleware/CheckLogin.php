@@ -23,7 +23,6 @@ class CheckLogin
             dump('未登录');
             return redirect('/');
 //            return
-
         }
         return $next($request);
 

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\TzAuth;
 
+use App\Http\Models\TzUser;
 use App\Http\Models\User\TzUsersVerification;
 use App\Http\Requests\TzAuth\SendEmailCodeRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
 
@@ -17,22 +19,52 @@ class ResetPasswordController extends Controller
      *
      * 类型:POST
      * 参数:
+     *      email  :  邮箱帐号
      *      password: 修改后的密码
      *      token  :邮箱验证码
      */
     public function resetPasswordByEmail(Request $request)
     {
-        $res = $request->all(); //获取参数
-        $usersVerificationModel = new TzUsersVerification();//实例化
-        $testData = $usersVerificationModel->find(1); // 测试数据
-//
-        dump($testData['created_at']); //打印测试数据
-        dump($time1=date("Y-m-d H:i:s"));
-        dump(strtotime($time1));
-        dump(5*60*60);
-        dump(strtotime($testData['created_at']));
-        dump(tz_time_expire($testData['created_at'],1));
 
+        $tzUserModel = new TzUser(); //实例化
+
+        //根据用户邮箱更新 用户帐号密码
+        $testData = $tzUserModel->where('email', '15812816866@qq.com')->update([
+            'password' => Hash::make('zhangjun'),
+        ]);
+        dd($testData);
+
+        //------------------------------------测试数据--------------
+
+        $res                    = $request->all();    //获取参数
+        $usersVerificationModel = new TzUsersVerification();   //实例化
+        $verificationData       = $usersVerificationModel->where('accounts', $res['email'])->first(); //根据帐号获取相关验证码信息
+
+        //验证数据库账号与验证码是否匹配
+        if ((!$verificationData) || ($verificationData['token'] !== $res['token'])) {
+            return tz_ajax_echo(null, '验证码错误', 0);
+        }
+
+        //验证验证码是否已经过期
+        if (!tz_time_expire($verificationData['updated_at'], 2)) {
+            return tz_ajax_echo(null, '验证码已过期', 0);
+        }
+
+        //修改数据库中的密码
+//        if () {
+//        } else {
+//        }
+
+
+        //_______________________________测试数据____________________
+//        dump($verificationData['created_at']); //打印测试数据
+//        dump($time1 = date("Y-m-d H:i:s"));
+//        dump(strtotime($time1));
+//        dump(5 * 60 * 60);
+//        dump(strtotime($verificationData['created_at']));
+//        dump(tz_time_expire($verificationData['created_at'], 1));
+
+        //测试数据
     }
 
 
@@ -48,9 +80,9 @@ class ResetPasswordController extends Controller
      */
     public function sendEmailCode(SendEmailCodeRequest $request)
     {
-        $par = $request->all();//获取参数
+        $par   = $request->all();//获取参数
         $token = mt_rand(10000, 99999);//生成随机验证码
-        $mail = $par['email']; //测试接受代码的邮箱
+        $mail  = $par['email']; //测试接受代码的邮箱
 
         //发送邮件
         Mail::send('emails.code', ['token' => $token], function ($message) use ($mail) {
@@ -64,7 +96,7 @@ class ResetPasswordController extends Controller
             $usersVerificationModel->addMailToken($mail, $token);  //添加邮箱作为帐号的验证码
             return tz_ajax_echo([], '验证码发送成功', 1);
         } else {
-            return tz_ajax_echo([], '验证码发送失败', 0);
+            return tz_ajax_echo([], '验证码发送失败', 0);  //返回发送失败
         }
 
     }

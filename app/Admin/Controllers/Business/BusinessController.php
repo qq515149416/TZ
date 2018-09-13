@@ -80,8 +80,8 @@ class BusinessController extends Controller
      */
     public function securityBusiness(){
     	if($request->isMethod('get')){
-    		$check = new BusinessModel();
-    		$return = $check->checkBusiness();
+    		$security = new BusinessModel();
+    		$return = $security->securityBusiness();
     		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
     	} else {
     		return tz_ajax_echo([],'暂无数据',0);
@@ -94,7 +94,7 @@ class BusinessController extends Controller
      */
     public function checkBusiness(Request $request){
     	if($request->isMethod('post')){
-    		$data = $request->only(['business_number','id','business_status','client_id','client_name','sales_id','sales_name','business_type','machine_number','money','length','check_note']);
+    		$data = $request->only(['business_number','id','business_status','client_id','client_name','sales_id','sales_name','business_type','machine_number','resource','money','length','check_note']);
     		$check = new BusinessModel();
     		$return = $check->checkBusiness($data);
     		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);

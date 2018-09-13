@@ -16,152 +16,6 @@ class MachineModel extends Model
     public $timestamps = true;
     protected $dates = ['deleted_at'];
     protected $fillable = ['machine_num', 'cpu','harddisk','cabinet','memory','ip_id','machineroom','protect','bandwidth','loginname','loginpass','machine_type','used_status','machine_status','business_type','created_at','updated_at','deleted_at'];
-    /**
-     * 查找属于租用业务的机器
-     * @return [type] [description]
-     */
-    public function showRentMachine(){
-    	// 进行条件查询业务类型为1的即租用的所有机器信息
-    	$result = $this->where('business_type','=',1)->get(['id','machine_num','cpu','memory','harddisk','cabinet','ip_id','machineroom','bandwidth','protect','loginname','loginpass','machine_type','used_status','machine_status','own_business','business_end','business_type','machine_note','created_at','updated_at']);
-    	// 判断是否查询到数据
-    	if(!$result->isEmpty()){
-    		// 查询到数据进行某些字段的数据转换
-    		$used_status = [0=>'未使用',1=>'使用中',2=>'锁定',3=>'迁移'];//使用状态的转换数据
-    		$machine_status = [0=>'上架',1=>'下架'];//机器上下架的转换数据
-    		$business_type = [1=>'租用',2=>'托管',3=>'备用'];//业务类型的转换数据
-    		$ip_company = [0=>'电信',1=>'移动',2=>'联通'];
-    		// 遍历查询到的数据并进行相应的转换
-    		foreach($result as $key=>$value){
-    			// 状态等的转换
-    			$result[$key]['used'] = $used_status[$value['used_status']];//使用状态的转换
-    			$result[$key]['status'] = $machine_status[$value['machine_status']];//机器上下架的转换
-    			$result[$key]['business'] = $business_type[$value['business_type']];//业务类型的转换
-    			//机柜等的对应查询
-    			$machineroom = (array)$this->machineroom($value['machineroom'],$value['cabinet'],$value['ip_id']);//机房信息的查询
-    			// 进行对应的机柜等信息的转换或者显示
-    			if(!empty($cabinet) && !empty($ip) && !empty($machineroom)){
-    				$result[$key]['cabinets'] = $machineroom['cabinet_id'];//机柜信息的返回
-    				//IP信息的返回
-    				$result[$key]['ip'] = $machineroom['ip'].'('.$ip_company[$machineroom['ip_company']].')';
-    				//机房的信息返回
-    				$result[$key]['machineroom_name'] = $machineroom['machine_room_name'];
-    			}
-
-    		}
-
-    		$return['data'] = $result;
-    		$return['code'] = 1;
-    		$return['msg'] = '获取信息成功！！';
-
-    	} else {
-
-    		$return['data'] = $result;
-    		$return['code'] = 0;
-    		$return['msg'] = '暂无数据';
-
-    	}
-
-    	return $return;
-    }
-
-    /**
-     * 查找属于托管业务的机器
-     * @return [type] [description]
-     */
-    public function showDepositMachine(){
-    	// 进行条件查询业务类型为2的即托管的所有机器信息
-    	$result = $this->where('business_type','=',1)->get(['id','machine_num','cpu','memory','harddisk','cabinet','ip_id','machineroom','bandwidth','protect','loginname','loginpass','machine_type','used_status','machine_status','own_business','business_end','business_type','machine_note','created_at','updated_at']);
-    	// 判断是否查询到数据
-    	if(!$result->isEmpty()){
-    		// 查询到数据进行某些字段的数据转换
-    		$used_status = [0=>'未使用',1=>'使用中',2=>'锁定',3=>'迁移'];//使用状态的转换数据
-    		$machine_status = [0=>'上架',1=>'下架'];//机器上下架的转换数据
-    		$business_type = [1=>'租用',2=>'托管',3=>'备用'];//业务类型的转换数据
-    		$ip_company = [0=>'电信',1=>'移动',2=>'联通'];
-    		// 遍历查询到的数据并进行相应的转换
-    		foreach($result as $key=>$value){
-    			// 状态等的转换
-    			$result[$key]['used'] = $used_status[$value['used_status']];//使用状态的转换
-    			$result[$key]['status'] = $machine_status[$value['machine_status']];//机器上下架的转换
-    			$result[$key]['business'] = $business_type[$value['business_type']];//业务类型的转换
-    			//机柜等的对应查询
-    			$machineroom = (array)$this->machineroom($value['machineroom'],$value['cabinet'],$value['ip_id']);//机房信息的查询
-    			// 进行对应的机柜等信息的转换或者显示
-    			if(!empty($cabinet) && !empty($ip) && !empty($machineroom)){
-    				$result[$key]['cabinets'] = $machineroom['cabinet_id'];//机柜信息的返回
-    				//IP信息的返回
-    				$result[$key]['ip'] = $machineroom['ip'].'('.$ip_company[$machineroom['ip_company']].')';
-    				//机房的信息返回
-    				$result[$key]['machineroom_name'] = $machineroom['machine_room_name'];
-    			}
-
-    		}
-
-    		$return['data'] = $result;
-    		$return['code'] = 1;
-    		$return['msg'] = '获取信息成功！！';
-
-    	} else {
-
-    		$return['data'] = $result;
-    		$return['code'] = 0;
-    		$return['msg'] = '暂无数据';
-
-    	}
-
-    	return $return;
-    }
-
-    /**
-     * 查找属于备用的机器
-     * @return [type] [description]
-     */
-    public function showReserveMachine(){
-    	// 进行条件查询机器状态为3的即备用的所有机器信息
-    	$result = $this->where('business_type','=',3)->get(['id','machine_num','cpu','memory','harddisk','cabinet','ip_id','machineroom','bandwidth','protect','loginname','loginpass','machine_type','used_status','machine_status','own_business','business_end','business_type','machine_note','created_at','updated_at']);
-    	// 判断是否查询到数据
-    	if(!$result->isEmpty()){
-    		// 查询到数据进行某些字段的数据转换
-    		$used_status = [0=>'未使用',1=>'使用中',2=>'锁定',3=>'迁移'];//使用状态的转换数据
-    		$machine_status = [0=>'上架',1=>'下架'];//机器上下架的转换数据
-    		$business_type = [1=>'租用',2=>'托管',3=>'备用'];//业务类型的转换数据
-    		$ip_company = [0=>'电信',1=>'移动',2=>'联通'];
-    		// 遍历查询到的数据并进行相应的转换
-    		foreach($result as $key=>$value){
-    			// 状态等的转换
-    			$result[$key]['used'] = $used_status[$value['used_status']];//使用状态的转换
-    			$result[$key]['status'] = $machine_status[$value['machine_status']];//机器上下架的转换
-    			$result[$key]['business'] = $business_type[$value['business_type']];//业务类型的转换
-    			//机柜等的对应查询
-    			$machineroom = (array)$this->machineroom($value['machineroom'],$value['cabinet'],$value['ip_id']);//机房信息的查询
-    			// 进行对应的机柜等信息的转换或者显示
-    			if(!empty($cabinet) && !empty($ip) && !empty($machineroom)){
-    				$result[$key]['cabinets'] = $machineroom['cabinet_id'];//机柜信息的返回
-    				//IP信息的返回
-    				$result[$key]['ip'] = $machineroom['ip'].'('.$ip_company[$machineroom['ip_company']].')';
-    				//机房的信息返回
-    				$result[$key]['machineroom_name'] = $machineroom['machine_room_name'];
-    			}
-
-    		}
-
-    		$return['data'] = $result;
-    		$return['code'] = 1;
-    		$return['msg'] = '获取信息成功！！';
-
-    	} else {
-
-    		$return['data'] = $result;
-    		$return['code'] = 0;
-    		$return['msg'] = '暂无数据';
-
-    	}
-
-    	return $return;
-    }
-
-
-
 
     /**
      * 查找属于对应条件的机器
@@ -193,24 +47,19 @@ class MachineModel extends Model
                     $result[$key]['ip_company'] = $machineroom['ip_company'];
     				//机房的信息返回
     				$result[$key]['machineroom_name'] = $machineroom['machine_room_name'];
-    			}
-
+    	       	}
     		}
     		$return['data'] = $result;
     		$return['code'] = 1;
     		$return['msg'] = '获取信息成功！！';
-
     	} else {
-
     		$return['data'] = $result;
     		$return['code'] = 0;
     		$return['msg'] = '暂无数据';
-
     	}
 
     	return $return;
     }
-
 
     /**
      * 选择机器(用于下订单时使用App\Admin\Controllers\Business\OrdersController)
@@ -247,19 +96,14 @@ class MachineModel extends Model
                     //机房的信息返回
                     $result[$key]['machineroom_name'] = $machineroom['machine_room_name'];
                 }
-
             }
-
             $return['data'] = $result;
             $return['code'] = 1;
             $return['msg'] = '获取信息成功！！';
-
         } else {
-
             $return['data'] = $result;
             $return['code'] = 0;
             $return['msg'] = '暂无数据';
-
         }
 
         return $return;
@@ -272,12 +116,28 @@ class MachineModel extends Model
      */
     public function insertMachine($data){
     	if($data){
-    		$row = $this->create($data);
-    		if($row != false){
-    			$return['data'] = $row->id;
-    			$return['code'] = 1;
-    			$return['msg'] = '新增机器信息成功！！';
+            DB::beginTransaction();//开启事务
+    		$row = DB::table('idc_machine')->insertGetId($data);//将新增的机器信息插入数据库
+    		if($row != 0){
+                // 如果新增机器成功则将机器编号更新到对应的IP库中
+                $ip_row = DB::table('idc_ips')->where('id',$data['ip_id'])->update(['mac_num'=>$data['machine_num'],'ip_status'=>2]);
+    			if($ip_row != 0){
+                    // 如果更新IP库的所属机器编号成功，进行所有数据的提交
+                    DB::commit();
+                    $return['data'] = $row;
+                    $return['code'] = 1;
+                    $return['msg'] = '新增机器信息成功！！';
+                } else {
+                    // 失败则回滚
+                    DB::rollBack();
+                    $return['data'] = '';
+                    $return['code'] = 0;
+                    $return['msg'] = '新增机器信息失败！！';
+                }
+                
     		} else {
+                // 失败则回滚
+                DB::rollBack();
     			$return['data'] = '';
     			$return['code'] = 0;
     			$return['msg'] = '新增机器信息失败！！';
@@ -290,7 +150,6 @@ class MachineModel extends Model
     	return $return;
     }
 
-
     /**
      * 对机器信息进行修改
      * @param  array $editdata 要修改的数据
@@ -298,11 +157,35 @@ class MachineModel extends Model
      */
     public function editMachine($editdata){
     	if($editdata){
-    		$row = $this->where('id',$editdata['id'])->update($editdata);
-    		if($row != false){
-    			$return['code'] = 1;
-    			$return['msg'] = '修改信息成功！！';
+            DB::beginTransaction();//开启事务
+    		$row = DB::table('idc_machine')->where('id',$editdata['id'])->update($editdata);
+    		if($row != 0){
+                // 先将原来所属IP的机器编号字段清除，状态修改
+                $original = DB::table('idc_ips')->where('mac_num',$editdata['machine_num'])->update(['mac_num'=>'','ip_status'=>0]);
+    			if($original != 0){
+                    // 原来的修改成功，将新的IP更新机器编号字段
+                    $ip = DB::table('idc_ips')->where('id',$editdata['ip_id'])->update(['mac_num'=>$editdata['machine_num'],'ip_status'=>2]);
+                    if($ip != 0){
+                        // 都更新成功，进行事务提交
+                        DB::commit();
+                        $return['code'] = 1;
+                        $return['msg'] = '修改信息成功！！';
+                    } else {
+                        // 新的IP所属机器编号更新失败，事务回滚
+                        DB::rollBack();
+                        $return['code'] = 0;
+                        $return['msg'] = '修改信息失败！！';
+                    }
+                } else {
+                    //原来的IP所属机器编号字段更新失败，事务回滚 
+                    DB::rollBack();
+                    $return['code'] = 0;
+                    $return['msg'] = '修改信息失败！！';
+                }
+                
     		} else {
+                // 更新机器信息失败事务回滚
+                DB::rollBack();
     			$return['code'] = 0;
     			$return['msg'] = '修改信息失败！！';
     		}
@@ -380,7 +263,9 @@ class MachineModel extends Model
     public function cabinets($roomid){
    		if($roomid){
    			$cabinets = DB::table('idc_cabinet')
-   							->where('machineroom_id',$roomid)
+   							// ->where('machineroom_id',$roomid)
+          //                   ->where('use_type',0)
+                            ->where(['machineroom_id'=>$roomid,'use_type'=>0])
    							->whereNull('deleted_at')
    							->select('id as cabinetid','cabinet_id')
    							->get();
@@ -411,8 +296,11 @@ class MachineModel extends Model
     		$roomid = $data['roomid'];
     		$company = $data['ip_company'];
     		$ips = DB::table('idc_ips')
-    				->where('ip_comproom',$roomid)
-    				->where('ip_company',$company)
+    				// ->where('ip_comproom',$roomid)
+    				// ->where('ip_company',$company)
+        //             ->where('ip_status',0)
+        //             ->where('ip_lock',0)
+                    ->where(['ip_comproom'=>$roomid,'ip_company'=>$company,'ip_status'=>0,'ip_lock'=>0])
     				->whereNull('deleted_at')
     				->select('id as ipid','ip','ip_company')
    					->get();

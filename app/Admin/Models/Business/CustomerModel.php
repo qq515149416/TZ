@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * 所有客户信息
@@ -74,5 +75,51 @@ class CustomerModel extends Model
     public function clerk($id){
     	$clerk = DB::table('oa_staff')->where('admin_users_id',$id)->value('fullname');
     	return $clerk;
+    }
+
+    /**
+     * 后台手动将客户拉入黑名单
+     * @param  array $data 需要加入黑名单的客户的id和黑名单的状态
+     * @return array       返回相关的状态信息及提示
+     */
+    public function pullBlackCustomer($data){
+        if($data){
+            $row = $this->where('id'.$data['id'])->update($data);
+            if($row != false){
+                $return['code'] = 1;
+                $return['msg'] = '此客户已成功加入黑名单';
+            } else {
+                $return['code'] = 0;
+                $return['msg'] = '此客户加入黑名单失败';
+            }
+        } else {
+            $return['code'] = 0;
+            $return['msg'] = '无法将此客户加入黑名单';
+        }
+
+        return $return;
+    }
+
+    /**
+     * 后台手动替客户重置密码
+     * @param  [type] $password [description]
+     * @return [type]           [description]
+     */
+    public function resetPassword($password){
+        if($password){
+            $reset['password'] = Hash::make($password['password']);
+            $row = $this->where('id',$password['id'])->update($reset);
+            if($row != false){
+                $return['code'] = 1;
+                $return['msg'] = '密码重置成功，密码为用户名'.$password['password'];
+            } else {
+                $return['code'] = 0;
+                $return['msg'] = '密码重置失败';
+            }
+        } else {
+            $return['code'] = 0;
+            $return['msg'] = '密码无法重置';
+        }
+        return $return;
     }
 }

@@ -68,6 +68,8 @@ Route::group([
     $router->get('/article', 'Show\NewController@index');
     $router->get('/resource/machinelibrary', 'Show\MachineLibraryController@index');
     $router->get('/hr/employeeManagement', 'Show\EmployeeManagementController@index');
+    $router->get('/crm/clientele', 'Show\ClienteleController@index');
+
 //人事
     Route::group([
         'prefix' => 'hr',

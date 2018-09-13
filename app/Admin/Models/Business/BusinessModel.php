@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Carbon;//使用该包做到期时间的计算
+use Encore\Admin\Facades\Admin;
 
 /**
  * 后台业务模型

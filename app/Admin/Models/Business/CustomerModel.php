@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Hash;
+use Encore\Admin\Facades\Admin;
 
 /**
  * 所有客户信息
@@ -23,7 +24,14 @@ class CustomerModel extends Model
 	 * @return array 返回客户信息和状态提示及信息
 	 */
     public function adminCustomer(){
-    	$admin_customer = $this->get(['id','status','name','email','money','salesman_id','created_at','updated_at']);
+        $clerk_id = Admin::user()->id;
+        $slug = (array)$this->role($clerk_id);
+        if($slug['slug'] == 'TZ_admin'){
+            $where = [];
+        } else {
+            $where['salesman_id'] = $clerk_id;
+        }
+    	$admin_customer = $this->where($where)->get(['id','status','name','email','money','salesman_id','created_at','updated_at']);
     	if($admin_customer->isEmpty()){
     		$status = [0=>'拉黑',1=>'未验证',2=>'正常'];
     		foreach($admin_customer as $key=>$value){
@@ -31,31 +39,6 @@ class CustomerModel extends Model
     			$admin_customer[$key]['clerk_name'] = $this->clerk($value['salesman_id']);
     		}
     		$return['data'] = $admin_customer;
-    		$return['code'] = 1;
-    		$return['msg'] = '获取客户信息成功';
-    	} else {
-    		$return['data'] = '';
-    		$return['code'] = 0;
-    		$return['msg'] = '获取客户信息失败';
-    	}
-
-    	return $return;
-    }
-
-    /**
-     * 业务员查看对应客户
-     * @return array 返回客户信息和状态提示及信息
-     */
-    public function clerkCustomer(){
-    	$clerk_id = Admin::user()->id;
-    	$where['salesman_id'] = $clerk_id;
-    	$clerk_customer = $this->where($where)->get(['id','status','name','email','money','created_at','updated_at'])
-    	if($clerk_customer->isEmpty()){
-    		$status = [0=>'拉黑',1=>'未验证',2=>'正常'];
-    		foreach($clerk_customer as $key=>$value){
-    			$$clerk_customer[$key]['status'] = $status[$value['status']];
-    		}
-    		$return['data'] = $clerk_customer;
     		$return['code'] = 1;
     		$return['msg'] = '获取客户信息成功';
     	} else {
@@ -121,5 +104,19 @@ class CustomerModel extends Model
             $return['msg'] = '密码无法重置';
         }
         return $return;
+    }
+
+    /**
+     * 查找当前登陆用户的角色标识和角色名称
+     * @param  [type] $user_id [description]
+     * @return [type]          [description]
+     */
+    public function role($user_id){
+        $role = DB::table('admin_role_users')
+                    ->join('admin_roles','admin_role_users.role_id = admin_roles.id')
+                    ->where('user_id',$user_id)
+                    ->select('admin_roles.id as roleid','admin_roles.slug','admin_roles.name')
+                    ->first();
+        return $role;
     }
 }

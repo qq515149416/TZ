@@ -8,8 +8,7 @@ import HarddisksStores from "../../stores/harddisk-stores";
 import MemorysStores from "../../stores/memory-stores";
 import CabinetsStores from "../../stores/cabinet-stores";
 import MachineLibrarysStores from "../../stores/machineLibrary-stores";
-
-
+import EmployeeManagementsStores from "../../stores/employeeManagement-stores";
 
 
 
@@ -24,7 +23,8 @@ export const stores = {
     harddisksStores: new HarddisksStores(),
     memorysStores: new MemorysStores(),
     cabinetsStores: new CabinetsStores(),
-    machineLibrarysStores: new MachineLibrarysStores()
+    machineLibrarysStores: new MachineLibrarysStores(),
+    employeeManagementsStores: new EmployeeManagementsStores()
 }
 export const domIds = [
     "user_list",
@@ -36,5 +36,6 @@ export const domIds = [
     "harddisk_list",
     "memory_list",
     "cabinet_list",
-    "machine_library"
+    "machine_library",
+    "employeeManagement_list"
 ];

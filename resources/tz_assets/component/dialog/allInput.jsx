@@ -69,7 +69,7 @@ class AllInput extends React.Component {
                 }else if(item.type=="switch") {
                     if(this.props.editData) {
                         const currCode = this.props.editData ? ((item.model&&item.model.selectCode) ? item.model.selectCode(this.props.editData[item.field]):this.props.editData[item.field]) : item.radioData.find(e => e.checked).value;
-                        console.log(currCode,this.props.editData[item.field],item.field,this.props.editData);
+                        // console.log(currCode,this.props.editData[item.field],item.field,this.props.editData);
                         item.radioData.forEach(e => {
                             if(e.value==currCode) {
                                 e.checked = true;
@@ -135,7 +135,6 @@ class AllInput extends React.Component {
         };
         let currentItem = this.props.inputType.find(item=>item.field==name.split(".")[0]);
         if(currentItem.model) {
-            // console.log(currentItem.model.getSubordinateData);
             currentItem.model.getSubordinateData && currentItem.model.getSubordinateData(this);
         }
         this.setState(state => state.inputAttr[name.split(".")[0]][name.split(".")[1]] = event.target.value);
@@ -177,6 +176,7 @@ class AllInput extends React.Component {
                 status = false;
             }
         }
+        console.log(inputTypeData);
         switch(inputTypeData.type) {
             case "rich_text":
                 if(status) {
@@ -209,14 +209,7 @@ class AllInput extends React.Component {
             }
             case "select":
             if(status) {
-                if(this.props.editData) {
-                    if(inputAttr[inputTypeData.field].currency&&inputTypeData.defaultData.length==0) {
-                        if(inputTypeData.model) {
-                            inputTypeData.model.editGetSubordinateData && inputTypeData.model.editGetSubordinateData(this);
-                        }
-                        return null;
-                    }
-                }
+
                 return (
                     <TextField
                         id="site"
@@ -276,6 +269,7 @@ class AllInput extends React.Component {
             });
             this.dialogOpen = false;
         }
+     
         let editor = null;
         if(document.getElementById("editor")) {
             editor = new E('#editor');
@@ -290,6 +284,24 @@ class AllInput extends React.Component {
             } else {
                 editor.txt.html("请输入内容....");
             }
+        }
+        if(this.props.editData) {
+            this.props.inputType.forEach(item => {
+                if(item.model) {
+                    if(item.model.editGetSubordinateData) {
+                        item.model.editGetSubordinateData(this);
+                    }
+                }
+            });
+        }
+        if(!this.props.editData) {
+            this.props.inputType.forEach(item => {
+                if(item.rule&&item.rule.clear=="add") {
+                    if(item.type=="select") {
+                        item.defaultData=[];
+                    }
+                }
+            });
         }
     }
     render() {

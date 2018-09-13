@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Carbon;//使用该包做到期时间的计算
+use Encore\Admin\Facades\Admin;
 
 /**
  * 后台业务模型
@@ -17,6 +18,7 @@ class BusinessModel extends Model
     protected $table = 'tz_business';
     public $timestamps = true;
     protected $dates = ['deleted_at'];
+    protected $fillable = ['client_id','client_name','sales_id','slaes_name','order_number','business_number','business_type','machine_number','resource_detail','money','length','endding_time','business_status','business_note','remove_status','remove_reason','check_note','created_at','updated_at'];
 
     /**
      * 创建业务数据
@@ -117,18 +119,39 @@ class BusinessModel extends Model
     				$order['machine_sn'] = $where['machine_number'];
     				$order['price'] = $where['money'];//单价
     				$order['duration'] = $where['length'];//时长
-    				$order['resource'] = $where['machine_number'];
+    				$order['resource'] = $where['resource'];//机器的话为IP/机柜则为机柜编号
     				$order['end_time'] = $end_time;
     				$order['payable_money'] = bcmul((string)$order['price'],(string)$order['duration'],2);//应付金额
     				$order['created_at']  = Carbon::now()->toDateTimeString();
                     $order['month'] = (int)date('Ym',time());
     				$order_row = DB::table('tz_orders')->insert($order);//生成订单
     				if($order_row != 0){
-    					// 订单生成成功，事务进行提交处理
-    					DB::commit();
-	    				$return['data'] = $order_sn;
-			    		$return['code'] = 1;
-			    		$return['msg'] = '审核成功,通知业务员及时联系客户进行支付,单号:'.$order_sn;
+                        if($order['resource_type'] == 1 || $order['resource_type'] == 2){
+                            // 如果是租用/托管机器的，在订单生成成功时，将业务编号和到期时间及资源状态进行更新
+                            $machine['own_business'] = $order['business_sn'];
+                            $machine['business_end'] = $order['end_time'];
+                            $machine['used_status'] = 1;
+                            $row = DB::table('idc_machine')->where('machine_num',$order['machine_sn'])->update($machine);
+                        } else {
+                            // 如果是租用机柜的，在订单生成成功时，将业务编号和到期时间及资源状态进行更新
+                            $machine['own_business'] = $order['business_sn'];
+                            $machine['business_end'] = $order['end_time'];
+                            $machine['use_state'] = 1;
+                            $row = DB::table('idc_cabinet')->where('cabinet_id',$order['machine_sn'])->update($machine);
+                        }
+                        if($row != 0){
+                            // 订单生成成功且对应资源的业务编号及状态修改成功，事务进行提交处理
+                            DB::commit();
+                            $return['data'] = $order_sn;
+                            $return['code'] = 1;
+                            $return['msg'] = '审核成功,通知业务员及时联系客户进行支付,单号:'.$order_sn;
+                        } else {
+                            DB::rollBack();
+                            $return['data'] = '审核失败';
+                            $return['code'] = 0;
+                            $return['msg'] = '审核失败';
+                        }
+    					
     				} else {
     					DB::rollBack();
 	    				$return['data'] = '审核失败';

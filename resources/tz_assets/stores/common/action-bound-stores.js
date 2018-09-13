@@ -34,7 +34,7 @@ class ActionBoundStores {
                 });
             }
            }
-           console.log(this[storeAttr],param,"typeFilter");
+        //    console.log(this[storeAttr],param,"typeFilter");
            this[storeAttr] = this[storeAttr].filter(item => {
                 let create_time = Math.round(new Date(item.created_at).getTime()/1000);
                if(item.created_at&&param["startTime"]&&param["endTime"]) {
@@ -53,7 +53,7 @@ class ActionBoundStores {
                     return item;
                }
            });
-           console.log(this[storeAttr],param,"dateFilter");
+        //    console.log(this[storeAttr],param,"dateFilter");
            if(param["searchContent"]&&param["searchType"]) {
             this[storeAttr] = this[storeAttr].filter(item => {
                 if(param["searchType"]=="all") {
@@ -69,7 +69,7 @@ class ActionBoundStores {
                 }
             });
            }
-           console.log(this[storeAttr],param,"searchFilter");
+        //    console.log(this[storeAttr],param,"searchFilter");
         }else if(type=="reset") {
             if(this.copyData && this.copyData.length > 0) {
                 this[storeAttr] = this.copyData;

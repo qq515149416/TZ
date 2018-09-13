@@ -66,11 +66,26 @@ Route::group([
     $router->get('/resource/memory', 'Show\MemoryController@index');
     $router->get('/resource/cabinet', 'Show\CabinetController@index');
     $router->get('/article', 'Show\NewController@index');
+    $router->get('/resource/machinelibrary', 'Show\MachineLibraryController@index');
+    $router->get('/hr/employeeManagement', 'Show\EmployeeManagementController@index');
+    $router->get('/crm/clientele', 'Show\ClienteleController@index');
+
 //人事
     Route::group([
         'prefix' => 'hr',
     ],function(Router $router){
         $router->get('showaccount', 'Hr\AccountController@showAccount');
+        $router->get('showMyself', 'Hr\AccountController@personalAccount');    
+        Route::group([
+        'prefix' => 'userInfo',
+        ],function(Router $router){
+            $router->get('showEmployee', 'Hr\EmployeeInformationController@showEmployee');
+            $router->post('insertEmployee', 'Hr\EmployeeInformationController@insertEmployee');    
+            $router->post('editEmployee', 'Hr\EmployeeInformationController@editEmployee');   
+            $router->post('deleteEmployee', 'Hr\EmployeeInformationController@deleteEmployee');
+            $router->get('employeePersonal', 'Hr\EmployeeInformationController@employeePersonal');
+            $router->post('employeeDetailed', 'Hr\EmployeeInformationController@employeeDetailed');
+        });   
     });
     
 
@@ -146,9 +161,9 @@ Route::group([
         $router->post('insertmachine', 'Idc\MachineController@insertMachine');
         $router->post('editmachine', 'Idc\MachineController@editMachine');
         $router->post('deletemachine', 'Idc\MachineController@deleteMachine');
-        $router->post('machineroom', 'Idc\MachineController@machineroom');
-        $router->post('cabinets', 'Idc\MachineController@cabinets');
-        $router->post('ips', 'Idc\MachineController@ips');
+        $router->get('machineroom', 'Idc\MachineController@machineroom');
+        $router->get('cabinets', 'Idc\MachineController@cabinets');
+        $router->get('ips', 'Idc\MachineController@ips');
     });
 
 
@@ -210,15 +225,28 @@ Route::group([
     Route::group([
         'prefix' => 'business',
     ],function(Router $router){
+        // 业务
         $router->get('machineroom','Business\BusinessController@machineroom');
-        $router->post('selectmachine','Business\BusinessController@selectmachine');
+        $router->post('selectmachine','Business\BusinessController@selectMachine');
+        $router->post('selectcabinet','Business\BusinessController@selectCabinet');
         $router->post('insert','Business\BusinessController@insertBusiness');
         $router->get('security','Business\BusinessController@securityBusiness');
         $router->post('check','Business\BusinessController@checkBusiness');
         $router->post('enable','Business\BusinessController@enableBusiness');
         $router->post('showbusiness','Business\BusinessController@showBusiness');
+        // 订单
         $router->post('finance','Business\OrdersController@financeOrders');
         $router->post('clerk','Business\OrdersController@clerkOrders');
+        $router->post('resource','Business\OrdersController@resource');
+        $router->post('insertresource','Business\OrdersController@insertResource');
+        $router->post('end','Business\OrdersController@endTime');
+        $router->post('reneworders','Business\OrdersController@renewOrders');
+        $router->post('renewresource','Business\OrdersController@renewResource');
+        $router->post('resourceorders','Business\OrdersController@resourceOrders');
+        //客户信息
+        $router->get('admin_customer','Business\CustomerController@adminCustomer');
+        $router->post('pull_black','Business\CustomerController@pullBlackCustomer');
+        $router->post('reset_password','Business\CustomerController@resetPassword');
     });
 
 });

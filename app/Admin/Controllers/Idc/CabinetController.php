@@ -44,7 +44,7 @@ class CabinetController extends Controller
 
 		//获取机柜列表数据
 		$cabinetData = $cabinetModel->all();
-
+		//dump($cabinetData);
 		$stateCN = [
 			0 => '未使用',
 			1 => '已使用',

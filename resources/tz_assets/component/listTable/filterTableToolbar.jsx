@@ -100,9 +100,17 @@ class FilterTableToolbar extends React.Component {
                                         <em>全部内容</em>
                                         </MenuItem>
                                         {
-                                            item.options.map(e => (
-                                                <MenuItem value={e.view}>{e.view}</MenuItem>
-                                            ))
+                                            item.options.map(e => {
+                                                if(e.id) {
+                                                    return (
+                                                        <MenuItem value={e.id}>{e.view}</MenuItem>
+                                                    );
+                                                } else {
+                                                    return (
+                                                        <MenuItem value={e.view}>{e.view}</MenuItem>
+                                                    );
+                                                }
+                                            })
                                         }
                                     </Select>
                                 </FormControl>

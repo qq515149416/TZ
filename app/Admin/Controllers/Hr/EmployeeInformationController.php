@@ -5,8 +5,9 @@ namespace App\Admin\Controllers\Hr;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use App\Admin\Models\Hr\EmployeeInformation;
-use App\Admin\Requests\Idc\EmployeeInformationRequest;
+use App\Admin\Requests\Hr\EmployeeInformationRequest;
 use Illuminate\Http\Request;
+use Encore\Admin\Facades\Admin;
 
 /**
  * 员工信息
@@ -37,7 +38,7 @@ class EmployeeInformationController extends Controller
     		$return = $create->insertEmployee($data);
     		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
     	} else {
-    	    return tz_ajax_echo([],'新增员工信息失败',0);
+    	    return tz_ajax_echo([],'新增员 工信息失败',0);
     	}
     }
 
@@ -51,7 +52,7 @@ class EmployeeInformationController extends Controller
     		$edit = $request->only(['id','admin_users_id', 'fullname','sex','age','department','job','entrytime','work_number','phone','QQ','wechat','email','dimission','education','train','work','skill','detailed','family','note']);
     		$editinfor = new EmployeeInformation();
     		$return = $editinfor->editEmployee($edit);
-    		return tz_ajax_echo($return,$return['msg'],$return['code']);
+    		return tz_ajax_echo([],$return['msg'],$return['code']);
     	} else {
     		return tz_ajax_echo([],'修改员工信息失败',0);
     	}
@@ -67,7 +68,7 @@ class EmployeeInformationController extends Controller
     		$id = $request->get('delete_id');
     		$delete = new EmployeeInformation();
     		$result = $delete->deleteEmployee($id);
-    		return tz_ajax_echo($result,$result['msg'],$result['code']);
+    		return tz_ajax_echo('',$result['msg'],$result['code']);
     	} else {
     		return tz_ajax_echo([],'删除信息失败',0);
     	}

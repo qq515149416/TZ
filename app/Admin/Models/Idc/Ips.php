@@ -260,11 +260,12 @@ class Ips extends Model
         $where['ip_comproom'] = $machineroom;
         $where['ip_status'] = 0;
         $where['ip_lock'] = 0;
-        $ips = $this->where($where)->get(['ip','ip_company']);
+        $ips = $this->where($where)->get(['ip','ip_company','ip_comproom']);
         if($ips->isEmpty()){
             $ip_company = [0=>'电信公司',1=>'移动公司',2=>'联通公司'];
             foreach($ips as $key=>$value){
-                $ips[$key]['ip_data'] = $value['ip'].$ip_company[$value['ip_company']]; 
+                $ips[$key]['ip_data'] = $value['ip'].$ip_company[$value['ip_company']];
+                $ips[$key]['machineroom'] = $this->machineroom($value['ip_comproom'])['machine_room_name']; 
             }
             return $ips;
         } else {

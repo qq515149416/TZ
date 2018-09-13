@@ -18,6 +18,9 @@ const ShowStyle = theme => ({
     },
     title_content: {
         float: "left"
+    },
+    dialog: {
+        minWidth: theme.breakpoints.values.md
     }
 });
 class Show extends React.Component {
@@ -45,6 +48,9 @@ class Show extends React.Component {
             onClose={this.handleClose}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
+            PaperProps={{
+                className: classes.dialog
+            }}
             >
             <DialogTitle id="alert-dialog-title">查看更多</DialogTitle>
             <DialogContent>

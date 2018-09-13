@@ -5,6 +5,7 @@ namespace App\Admin\Controllers\Hr;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use App\Admin\Models\Hr\Account;
+use Encore\Admin\Facades\Admin;
 
 class AccountController extends Controller
 {

@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
@@ -17,18 +18,23 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 //     { id: 'updated_at', numeric: true, disablePadding: false, label: '更新时间' },
 //     { id: 'operat', numeric: true, disablePadding: false, label: '操作' }
 // ];
+const styles = theme => ({
+  td: {
+    textAlign: "center"
+  }
+});
 class EnhancedTableHead extends React.Component {
     createSortHandler = property => event => {
       this.props.onRequestSort(event, property);
     };
   
     render() {
-      const { onSelectAllClick, order, orderBy, numSelected, rowCount } = this.props;
+      const { onSelectAllClick, order, orderBy, numSelected, rowCount, classes} = this.props;
   
       return (
         <TableHead>
           <TableRow>
-            <TableCell padding="checkbox">
+            <TableCell className={classes.td} padding="checkbox">
               <Checkbox
                 indeterminate={numSelected > 0 && numSelected < rowCount}
                 checked={numSelected === rowCount}
@@ -42,6 +48,7 @@ class EnhancedTableHead extends React.Component {
                   numeric={column.numeric}
                   padding={column.disablePadding ? 'none' : 'default'}
                   sortDirection={orderBy === column.id ? order : false}
+                  className={classes.td}
                 >
                   <Tooltip
                     title="排序"
@@ -72,4 +79,7 @@ class EnhancedTableHead extends React.Component {
     orderBy: PropTypes.string.isRequired,
     rowCount: PropTypes.number.isRequired,
   };
-  export default EnhancedTableHead;
+  const EnhancedTableHeadComponent = (props) => {
+    return <EnhancedTableHead {...props} />
+  }
+  export default withStyles(styles)(EnhancedTableHead);

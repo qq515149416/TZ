@@ -7,8 +7,9 @@ import CpusStores from "../../stores/cpu-stores";
 import HarddisksStores from "../../stores/harddisk-stores";
 import MemorysStores from "../../stores/memory-stores";
 import CabinetsStores from "../../stores/cabinet-stores";
-
-
+import MachineLibrarysStores from "../../stores/machineLibrary-stores";
+import EmployeeManagementsStores from "../../stores/employeeManagement-stores";
+import ClientelesStores from "../../stores/clientele-stores";
 
 
 // 前端Models操作
@@ -21,7 +22,10 @@ export const stores = {
     cpusStores: new CpusStores(),
     harddisksStores: new HarddisksStores(),
     memorysStores: new MemorysStores(),
-    cabinetsStores: new CabinetsStores()
+    cabinetsStores: new CabinetsStores(),
+    machineLibrarysStores: new MachineLibrarysStores(),
+    employeeManagementsStores: new EmployeeManagementsStores(),
+    clientelesStores: new ClientelesStores()
 }
 export const domIds = [
     "user_list",
@@ -32,5 +36,8 @@ export const domIds = [
     "cpu_list",
     "harddisk_list",
     "memory_list",
-    "cabinet_list"
+    "cabinet_list",
+    "machine_library",
+    "employeeManagement_list",
+    "clientele"
 ];

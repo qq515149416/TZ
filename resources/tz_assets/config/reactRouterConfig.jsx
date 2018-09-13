@@ -10,6 +10,10 @@ import HarddiskList from "../view/harddiskList.jsx";
 import MemoryList from "../view/memoryList.jsx";
 import CabinetList from "../view/cabinetList.jsx";
 import MachineLibraryList from "../view/machineLibraryList.jsx";
+import EmployeeManagementList from "../view/employeeManagementList.jsx";
+import ClienteleList from "../view/clienteleList.jsx";
+
+
 
 
 export default () => [
@@ -22,5 +26,7 @@ export default () => [
     <Route path="/tz_admin/resource/harddisk" component={HarddiskList} />,
     <Route path="/tz_admin/resource/memory" component={MemoryList} />,
     <Route path="/tz_admin/resource/cabinet" component={CabinetList} />,
-    <Route path="/tz_admin/resource/machinelibrary" component={MachineLibraryList} />
+    <Route path="/tz_admin/resource/machinelibrary" component={MachineLibraryList} />,
+    <Route path="/tz_admin/hr/employeeManagement" component={EmployeeManagementList} />,
+    <Route path="/tz_admin/crm/clientele" component={ClienteleList} />
 ];

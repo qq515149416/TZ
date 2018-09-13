@@ -1,6 +1,18 @@
 import React from "react";
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import ListTableComponent from "../component/listTableComponent.jsx";
 import { inject,observer } from "mobx-react";
+import Paper from '@material-ui/core/Paper';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+const styles = theme => ({
+    listTableComponent: {
+        marginTop: 0,
+        borderRadius: "0 0 4px 4px",
+        boxShadow: "0px 4px 5px 0px rgba(0, 0, 0, 0.1), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12)"
+    }
+});
 const columnData = [
     { id: 'machine_num', numeric: true, disablePadding: true, label: '机器编号' },
     { id: 'cpu', numeric: true, disablePadding: true, label: 'CPU' },
@@ -11,12 +23,12 @@ const columnData = [
     { id: 'ip', numeric: true, disablePadding: true, label: 'IP' },
     { id: 'bandwidth', numeric: true, disablePadding: true, label: '带宽(M)' },
     { id: 'protect', numeric: true, disablePadding: true, label: '防护(G)' },
+    { id: 'used', numeric: true, disablePadding: true, label: '使用状态' },
+    { id: 'status', numeric: true, disablePadding: true, label: '机器状态' },
     { id: 'operat', numeric: true, disablePadding: false, extend: true, extendData: [
         {id: "loginname", label: "登陆名", type: "text"},
         {id: "loginpass", label: "登录密码", type: "text"},
         {id: "machine_type", label: "机器型号" ,type: "text"},
-        {id: "used", label: "使用状态" ,type: "text"},
-        {id: "status", label: "机器状态" ,type: "text"},
         {id: "own_business", label: "所属业务编号" ,type: "text"},
         {id: "business_end", label: "业务到期时间" ,type: "text"},
         {id: "business", label: "业务类型" ,type: "text"},
@@ -27,7 +39,11 @@ const inputType = [
     {
         field: "machine_num",
         label: "机器编号",
-        type: "text"
+        type: "text",
+        rule: {
+            term: "edit",
+            execute: "disabled"
+        }
     },
     {
         field: "cpu",
@@ -54,7 +70,10 @@ const inputType = [
         field: "cabinet",
         label: "选择机柜",
         type: "select",
-        defaultData: []
+        defaultData: [],
+        rule: {
+            clear: "add"
+        }
     },
     {
         field: "ip_company",
@@ -82,7 +101,10 @@ const inputType = [
         field: "ip_id",
         label: "选择IP",
         type: "select",
-        defaultData: []
+        defaultData: [],
+        rule: {
+            clear: "add"
+        }
     },
     {
         field: "bandwidth",
@@ -154,28 +176,6 @@ const inputType = [
         ]
     },
     {
-        field: "business_type",
-        label: "业务类型",
-        type: "switch",
-        radioData: [
-            {
-                checked: true,
-                value: "1",
-                label: "租用"
-            },
-            {
-                checked: false,
-                value: "2",
-                label: "托管"
-            },
-            {
-                checked: false,
-                value: "3",
-                label: "备用"
-            }
-        ]
-    },
-    {
         field: "machine_note",
         label: "备注",
         type: "text"
@@ -184,8 +184,14 @@ const inputType = [
 @inject("machineLibrarysStores")
 @observer 
 class MachineLibraryList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            value: 1
+        };
+    }
     componentDidMount() {
-        this.props.machineLibrarysStores.getData(1);
+        this.props.machineLibrarysStores.getData();
         inputType[inputType.findIndex(item => item.field=="machineroom")].model = {
             getSubordinateData: this.getCabinetData.bind(this)
         };
@@ -237,7 +243,17 @@ class MachineLibraryList extends React.Component {
             });
         }
     }
+    filterData = (param) => {
+        const {machineLibrarysStores} = this.props;
+        machineLibrarysStores.filterData(param);
+    }
+    handleChange = (event, value) => {
+        this.props.machineLibrarysStores.switchType(value);
+        this.setState({ value });
+        this.props.machineLibrarysStores.getData();
+    }
     render() {
+        const {classes} = this.props;
         inputType[inputType.findIndex(item => item.field=="machineroom")].defaultData = this.props.machineLibrarysStores.comprooms.map(item => {
             return {
               value: item.roomid,
@@ -256,8 +272,21 @@ class MachineLibraryList extends React.Component {
               text: item.ip
             }
         });
-        return (
-          <ListTableComponent 
+        return [
+            <Paper square>
+                <Tabs
+                value={this.state.value}
+                indicatorColor="primary"
+                textColor="primary"
+                onChange={this.handleChange}
+                >
+                <Tab label="租用" value={1} />
+                <Tab label="托管" value={2} />
+                <Tab label="备用" value={3} />
+                </Tabs>
+                </Paper>,
+            <ListTableComponent 
+            className={classes.listTableComponent}
             title="机器库"
             operattext="机器资源"
             inputType={inputType}
@@ -265,9 +294,15 @@ class MachineLibraryList extends React.Component {
             data={this.props.machineLibrarysStores.machineLibrarys}  
             addData={this.addData.bind(this)} 
             delData={this.delData.bind(this)} 
-            changeData={this.changeData.bind(this)} 
+            changeData={this.changeData.bind(this)}
           />
-        );
+        ];
       }
 }
-export default MachineLibraryList;
+MachineLibraryList.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+const MachineLibraryListComponent = (props) => {
+    return <MachineLibraryList {...props} />
+}
+export default withStyles(styles)(MachineLibraryListComponent);

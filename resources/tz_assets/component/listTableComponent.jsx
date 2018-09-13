@@ -151,7 +151,7 @@ const styles = theme => ({
               )
             }
           </div>,
-        <Paper className={classes.root}>
+        <Paper className={`${classes.root} ${this.props.className}`}>
           <EnhancedTableToolbar 
             title={(this.props.title || "未定义")} 
             inputType={this.props.inputType} 

@@ -138,24 +138,30 @@ class MachineLibrarysStores extends ActionBoundStores {
     @observable ips = [
 
     ];
+    @observable type = 1;
+    filterData(param) {
+        this.filterStoreData("machineLibrarys","select",param);
+    }
     changeData(param) {
+        param.business_type = this.type;
         return new Promise((resolve,reject) => {
             post("machine/editmachine",param).then((res) => {
                 if(res.data.code==1) {
-                    this.getData(param.business_type);
+                    this.getData(this.type);
                     resolve(true);
                 }else {
                     alert(res.data.msg);
                     resolve(false);
                 }
-            });
+            }).catch(reject);
         });
     }
     addData(data) {
+        data.business_type = this.type;
         return new Promise((resolve,reject) => {
             post("machine/insertmachine",data).then((res) => {
                 if(res.data.code==1) {
-                    this.getData(data.business_type);
+                    this.getData(this.type);
                     resolve(true);
                 } else {
                     alert(res.data.msg);
@@ -194,15 +200,20 @@ class MachineLibrarysStores extends ActionBoundStores {
             }
         });
     }
+    @action.bound
+    switchType(type) {
+        this.type = type;
+    }
     @action.bound 
-    getData(type) {
+    getData() {
+        this.machineLibrarys = [];
         get("machine/machineroom").then((res) => {
             if(res.data.code==1) {
                 this.comprooms = res.data.data.map(item => new ComproomStores(item));
             }
         });
         get("machine/showmachine",{
-            business_type: type
+            business_type: this.type
         }).then(res => {
             if(res.data.code==1) {
                 this.machineLibrarys = res.data.data.map(item => new MachineLibraryStores(item));

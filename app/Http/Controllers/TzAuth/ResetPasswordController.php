@@ -26,16 +26,6 @@ class ResetPasswordController extends Controller
     public function resetPasswordByEmail(Request $request)
     {
 
-        $tzUserModel = new TzUser(); //实例化
-
-        //根据用户邮箱更新 用户帐号密码
-        $testData = $tzUserModel->where('email', '15812816866@qq.com')->update([
-            'password' => Hash::make('zhangjun'),
-        ]);
-        dd($testData);
-
-        //------------------------------------测试数据--------------
-
         $res                    = $request->all();    //获取参数
         $usersVerificationModel = new TzUsersVerification();   //实例化
         $verificationData       = $usersVerificationModel->where('accounts', $res['email'])->first(); //根据帐号获取相关验证码信息
@@ -50,10 +40,21 @@ class ResetPasswordController extends Controller
             return tz_ajax_echo(null, '验证码已过期', 0);
         }
 
+        $tzUserModel = new TzUser(); //实例化
+
+        //根据用户邮箱更新 用户帐号密码
+        $updateState = $tzUserModel->where('email', $res['email'])->update([
+            'password' => Hash::make($res['password']),
+        ]);
+
         //修改数据库中的密码
-//        if () {
-//        } else {
-//        }
+        if ($updateState) {
+            //成功
+
+        } else {
+            //失败
+//            return
+        }
 
 
         //_______________________________测试数据____________________
@@ -63,8 +64,6 @@ class ResetPasswordController extends Controller
 //        dump(5 * 60 * 60);
 //        dump(strtotime($verificationData['created_at']));
 //        dump(tz_time_expire($verificationData['created_at'], 1));
-
-        //测试数据
     }
 
 

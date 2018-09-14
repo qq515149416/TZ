@@ -47,15 +47,14 @@ class ResetPasswordController extends Controller
             'password' => Hash::make($res['password']),
         ]);
 
-        //修改数据库中的密码
+        //判断密码是否修改成功
         if ($updateState) {
             //成功
-
+            return tz_ajax_echo(null, '密码修改成功', 1);
         } else {
             //失败
-//            return
+            return tz_ajax_echo(null, '密码修改失败', 0);
         }
-
 
         //_______________________________测试数据____________________
 //        dump($verificationData['created_at']); //打印测试数据

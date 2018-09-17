@@ -59,6 +59,7 @@ Route::group([
     $router->get('/user_list', 'Show\UserController@index');
     $router->get('/user_link_list', 'Show\LinkUserController@index');
     $router->get('/machine_room/show', 'Show\TestController@index');
+    $router->get('/machine_room/socket', 'Show\TestController@socket');
     $router->get('/resource/ip', 'Show\IpController@index');
     $router->get('/resource/machine_room', 'Show\MachineRoomController@index');
     $router->get('/resource/cpu', 'Show\CpuController@index');
@@ -183,6 +184,14 @@ Route::group([
     });
 
 
+    //工单问答
+    Route::group([
+        'prefix' => 'work_answer',
+    ],function(Router $router){
+        $router->get('show','Work\WorkAnswerController@showWorkAnswer');
+        $router->post('insert','Work\WorkAnswerController@insertWorkAnswer');
+    });
+
     //工单接口
     Route::group([
         'prefix' => 'workorder',
@@ -207,6 +216,7 @@ Route::group([
     Route::group([
         'prefix' => 'whitelist',
     ],function(Router $router){
+        $router->get('checkIP','Work\WhiteListController@checkIP');
         $router->get('show','Work\WhiteListController@showWhiteList');
         $router->post('insert','Work\WhiteListController@insertWhiteList');
         $router->post('check','Work\WhiteListController@checkWhiteList');

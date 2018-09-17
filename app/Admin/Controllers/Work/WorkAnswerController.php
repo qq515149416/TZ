@@ -29,4 +29,20 @@ class WorkAnswerController extends Controller
             return tz_ajax_echo([],'无法获取该工单问答信息!!',0);
         } 	
     }
+
+    /**
+     * 对工单进行问答数据的插入数据库
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function insertWorkAnswer(Request $request){
+        if($request->isMethod('post')){
+            $insert_data = $request->only(['work_number','answer_content']);
+            $insert = new WorkAnswerModel();
+            $insert_result = $insert->insertWorkAnswer($insert_data);
+            return tz_ajax_echo($insert_result['data'],$insert_data['msg'],$insert_data['code']);
+        } else {
+            return tz_ajax_echo([],'',0);
+        }
+    }
 }

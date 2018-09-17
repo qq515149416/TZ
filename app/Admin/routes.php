@@ -184,6 +184,14 @@ Route::group([
     });
 
 
+    //工单问答
+    Route::group([
+        'prefix' => 'work_answer',
+    ],function(Router $router){
+        $router->get('show','Work\WorkAnswerController@showWorkAnswer');
+        $router->post('insert','Work\WorkAnswerController@insertWorkAnswer');
+    });
+
     //工单接口
     Route::group([
         'prefix' => 'workorder',

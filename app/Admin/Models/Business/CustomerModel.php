@@ -67,7 +67,7 @@ class CustomerModel extends Model
      */
     public function pullBlackCustomer($data){
         if($data){
-            $row = $this->where('id'.$data['id'])->update($data);
+            $row = $this->where('id',$data['id'])->update($data);
             if($row != false){
                 $return['code'] = 1;
                 $return['msg'] = '此客户已成功加入黑名单';

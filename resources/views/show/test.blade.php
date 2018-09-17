@@ -95,7 +95,15 @@
     <script src="/js/jquery.min.js"></script>
     <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
     <script src="/js/bootstrap.min.js"></script>
+    <script src='//cdn.bootcss.com/socket.io/1.3.7/socket.io.js'></script>
     <script type="text/javascript">
+        var socket = io('http://127.0.0.1:9000');
+        // 触发服务端的chat message事件
+        socket.emit('chat message', '这个是消息内容...');
+        // 服务端通过emit('chat message from server', $msg)触发客户端的chat message from server事件
+        socket.on('chat message from server', function(msg){
+            console.log('get message:' + msg + ' from server');
+        });
         $(function() {
             var room_data = [
                 {

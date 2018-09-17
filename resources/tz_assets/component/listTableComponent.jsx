@@ -134,7 +134,7 @@ const styles = theme => ({
     };
   
     isSelected = id => this.state.selected.indexOf(id) !== -1;
-  
+
     render() {
       const { classes } = this.props;
       const {  order, orderBy, selected, rowsPerPage, page } = this.state;
@@ -225,6 +225,18 @@ const styles = theme => ({
                                         item.content = n[item.id];
                                         return item;
                                       })}
+                                    />
+                                )
+                              }
+                              {
+                                (this.props.headTitlesData.find(item => item.id=="operat").extend && this.props.headTitlesData.find(item => item.id=="operat").extendFn ) && (
+                                  <ExpansionComponent 
+                                      type="function"
+                                      tip_title={this.props.headTitlesData.find(item => item.id=="operat").tipData.title}
+                                      tip_content={this.props.headTitlesData.find(item => item.id=="operat").tipData.content}
+                                      fn={this.props.headTitlesData.find(item => item.id=="operat").extendFn}
+                                      data={n}
+                                      updata = {this.props.updata}
                                     />
                                 )
                               }

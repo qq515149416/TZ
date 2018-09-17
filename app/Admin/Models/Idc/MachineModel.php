@@ -6,9 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
-	 // `cabinet` int(10) unsigned NOT NULL COMMENT '机器所在机柜，跟机柜的id关联',
-  // `ip_id` int(10) unsigned NOT NULL COMMENT 'IP地址，跟IP表的id关联',
-  // `machineroom` int(10) unsigned NOT NULL COMMENT '机器所属机房，跟机房表的id关联',
+
 class MachineModel extends Model
 {
     use SoftDeletes;
@@ -263,8 +261,6 @@ class MachineModel extends Model
     public function cabinets($roomid){
    		if($roomid){
    			$cabinets = DB::table('idc_cabinet')
-   							// ->where('machineroom_id',$roomid)
-          //                   ->where('use_type',0)
                             ->where(['machineroom_id'=>$roomid,'use_type'=>0])
    							->whereNull('deleted_at')
    							->select('id as cabinetid','cabinet_id')
@@ -296,10 +292,6 @@ class MachineModel extends Model
     		$roomid = $data['roomid'];
     		$company = $data['ip_company'];
     		$ips = DB::table('idc_ips')
-    				// ->where('ip_comproom',$roomid)
-    				// ->where('ip_company',$company)
-        //             ->where('ip_status',0)
-        //             ->where('ip_lock',0)
                     ->where(['ip_comproom'=>$roomid,'ip_company'=>$company,'ip_status'=>0,'ip_lock'=>0])
     				->whereNull('deleted_at')
     				->select('id as ipid','ip','ip_company')

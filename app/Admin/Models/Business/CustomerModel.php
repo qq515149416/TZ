@@ -14,10 +14,10 @@ use Encore\Admin\Facades\Admin;
  */
 class CustomerModel extends Model
 {
-    use  SoftDeletes;
+    // use  SoftDeletes;
     protected $table = 'tz_users';
     public $timestamps = true;
-    protected $dates = ['deleted_at'];
+    // protected $dates = ['deleted_at'];
 
 	/**
 	 * 管理人员查看客户信息
@@ -32,7 +32,7 @@ class CustomerModel extends Model
             $where['salesman_id'] = $clerk_id;
         }
     	$admin_customer = $this->where($where)->get(['id','status','name','email','money','salesman_id','created_at','updated_at']);
-    	if($admin_customer->isEmpty()){
+    	if(!$admin_customer->isEmpty()){
     		$status = [0=>'拉黑',1=>'未验证',2=>'正常'];
     		foreach($admin_customer as $key=>$value){
     			$admin_customer[$key]['status'] = $status[$value['status']];
@@ -114,7 +114,7 @@ class CustomerModel extends Model
      */
     public function role($user_id){
         $role = DB::table('admin_role_users')
-                    ->join('admin_roles','admin_role_users.role_id = admin_roles.id')
+                    ->join('admin_roles','admin_role_users.role_id','=','admin_roles.id')
                     ->where('user_id',$user_id)
                     ->select('admin_roles.id as roleid','admin_roles.slug','admin_roles.name')
                     ->first();

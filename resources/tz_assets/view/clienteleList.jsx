@@ -2,6 +2,7 @@ import React from "react";
 import ListTableComponent from "../component/listTableComponent.jsx";
 import { inject,observer } from "mobx-react";
 import {post} from "../tool/http.js";
+import ResetPassword from "../component/dialog/resetPassword.jsx";
 const columnData = [
     // { id: 'name', numeric: true, disablePadding: false, label: '用户名' },
     { id: 'email', numeric: true, disablePadding: false, label: '邮箱地址' },
@@ -28,7 +29,9 @@ const columnData = [
     },tipData: {
         title: "拉黑操作",
         content: "是否要执行拉黑操作"
-    } , label: '操作' }
+    } ,extendElement: (data) => {
+        return <ResetPassword {...data} />;
+    }, label: '操作' }
 ];
 @inject("clientelesStores")
 @observer 

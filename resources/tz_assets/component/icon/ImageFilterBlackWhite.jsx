@@ -1,12 +1,9 @@
 import React from "react";
-import SvgIcon from '@material-ui/core/SvgIcon';
 
 class ImageFilterBlackWhite extends React.Component {
     render() {
         return (
-            <SvgIcon {...this.props}>
-                <path fill="#000000" d="M19,19L12,11V19H5L12,11V5H19M19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z" />
-            </SvgIcon>
+            <img width={24} height={24} src={require("./img/black.png")} alt="" />
         );
     }
 }

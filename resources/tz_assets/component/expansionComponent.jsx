@@ -55,7 +55,7 @@ class ExpansionComponent extends React.Component {
         }
         if(type=="function") {
             return [
-                <Tooltip title="操作">
+                <Tooltip title={this.props.tip_title}>
                     <IconButton onClick={this.confirm_show} aria-label="startFunction">
                         <ImageFilterBlackWhite />
                     </IconButton>

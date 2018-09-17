@@ -4,7 +4,7 @@ use PHPSocketIO\SocketIO;
 
 require dirname(dirname(__DIR__)).'\vendor\autoload.php';
 
-$io = new SocketIO(9120);
+$io = new SocketIO(8120);
 
 $io->on('connection',function($socket)use($io){
     

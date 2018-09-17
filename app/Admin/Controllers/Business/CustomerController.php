@@ -44,7 +44,7 @@ class CustomerController extends Controller
         if($request->isMethod('post')){
             $status = $request->only(['status','id']);
             $black = new CustomerModel();
-            $pull = $black->pullBlackCustomer($data);
+            $pull = $black->pullBlackCustomer($status);
             return tz_ajax_echo($pull,$pull['msg'],$pull['code']);
         } else {
             return tz_ajax_echo('','无法将该客户拉黑',0);

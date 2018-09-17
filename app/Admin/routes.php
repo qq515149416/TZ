@@ -207,6 +207,7 @@ Route::group([
     Route::group([
         'prefix' => 'whitelist',
     ],function(Router $router){
+        $router->get('checkIP','Work\WhiteListController@checkIP');
         $router->get('show','Work\WhiteListController@showWhiteList');
         $router->post('insert','Work\WhiteListController@insertWhiteList');
         $router->post('check','Work\WhiteListController@checkWhiteList');

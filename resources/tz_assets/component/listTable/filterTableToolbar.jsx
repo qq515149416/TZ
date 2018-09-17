@@ -33,6 +33,12 @@ const styles = theme => ({
       "&:before": {
           display: "none"
       }
+  },
+  button: {
+    margin: `0 ${theme.spacing.unit}px`,
+    height: 30,
+    position: "relative",
+    top: theme.spacing.unit * 2
   }
 });
 
@@ -45,7 +51,7 @@ class FilterTableToolbar extends React.Component {
         const {filterType} = this.props;
         for (let index of filterType) {
             if(index.type=="select") {
-                this.state[index.field] = `all_${index.field}`;
+                this.state[index.field] = "all";
             }
         }
         
@@ -53,8 +59,27 @@ class FilterTableToolbar extends React.Component {
     handleChange = event => {
         this.setState({ [event.target.name]: event.target.value });
     }
+    findData = event => {
+        let searchRule = {};
+        let startTime = new Date(this.startTime.value);
+        let endTime = new Date(this.endTime.value);
+        const {filterType} = this.props;
+        for (let index of filterType) {
+            if(index.type=="select") {
+                searchRule[index.field] = this.state[index.field];
+            }
+        }
+        if(this.search.value) {
+            searchRule["searchType"] = this.state.search;
+            searchRule["searchContent"] = this.search.value;
+        }
+        searchRule["startTime"] = Math.round(startTime.getTime()/1000);
+        searchRule["endTime"] = Math.round(endTime.getTime()/1000);
+        // console.log(searchRule);
+        this.props.filterData(searchRule);
+    } 
     render() {
-        const {classes,filterType} = this.props;
+        const {classes,filterType,types} = this.props;
         return (
             <form className={classes.root} autoComplete="off">
                 {
@@ -71,13 +96,21 @@ class FilterTableToolbar extends React.Component {
                                         id: `${item.field}`,
                                         }}
                                     >
-                                        <MenuItem value={"all_"+item.field}>
+                                        <MenuItem value={"all"}>
                                         <em>全部内容</em>
                                         </MenuItem>
                                         {
-                                            item.options.map(e => (
-                                                <MenuItem value={e.view}>{e.view}</MenuItem>
-                                            ))
+                                            item.options.map(e => {
+                                                if(e.id) {
+                                                    return (
+                                                        <MenuItem value={e.id}>{e.view}</MenuItem>
+                                                    );
+                                                } else {
+                                                    return (
+                                                        <MenuItem value={e.view}>{e.view}</MenuItem>
+                                                    );
+                                                }
+                                            })
                                         }
                                     </Select>
                                 </FormControl>
@@ -94,10 +127,12 @@ class FilterTableToolbar extends React.Component {
                                         InputLabelProps={{
                                         shrink: true,
                                         }}
+                                        inputRef={(ref) => this.startTime = ref}
                                     /> <span className={classes.decoration}> 至 </span> <TextField
                                         id="datetime-local"
                                         label="结束时间"
                                         type="datetime-local"
+                                        inputRef={(ref) => this.endTime = ref}
                                         InputLabelProps={{
                                         shrink: true,
                                         }}
@@ -111,6 +146,7 @@ class FilterTableToolbar extends React.Component {
                     <InputLabel htmlFor="input-with-icon-adornment">搜索</InputLabel>
                     <Input
                     id="search"
+                    inputRef={(ref) => this.search = ref}
                     startAdornment={
                         <InputAdornment position="start">
                             <Select
@@ -125,14 +161,26 @@ class FilterTableToolbar extends React.Component {
                                 <MenuItem value="all">
                                     <em>全部</em>
                                 </MenuItem>
-                                <MenuItem value="ex">
-                                    特别
-                                </MenuItem>
+                                {
+                                    types.map(item => {
+                                        if(item.id!="operat") {
+                                            return (
+                                                <MenuItem value={item.id}>
+                                                    {item.label}
+                                                </MenuItem>
+                                            );
+                                        }
+                                    })
+                                }
+                                
                             </Select>
                         </InputAdornment>
                     }
                     />
                 </FormControl>
+                <Button variant="contained" onClick={this.findData} color="primary" className={classes.button}>
+                    搜索
+                </Button>
             </form>
         );
     }

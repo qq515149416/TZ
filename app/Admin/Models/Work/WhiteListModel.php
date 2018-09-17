@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
+use Encore\Admin\Facades\Admin;
 
 class WhiteListModel extends Model
 {

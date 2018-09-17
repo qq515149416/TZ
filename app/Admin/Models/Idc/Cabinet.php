@@ -63,4 +63,45 @@ class Cabinet extends Model
 		return $return;
 	}
 
+	/**
+	 * 后台业务给客户下单时选择机柜
+	 * @param  array $where [description]
+	 * @return array       返回相关的机柜信息
+	 */
+	public function selectCabinet($where){
+		if($where){
+			$where['machineroom_id'] = $where['machineroom'];
+			unset($where['machineroom']);
+			$where['use_type'] = 1;
+			$data = $this->where($where)->get(['id as cabinetid','cabinet_id','machineroom_id']);
+			if($data->isEmpty()){
+				foreach($data as $key=>$value){
+					$data[$key]['machineroom'] = $this->machineroom($value['machineroom_id']);
+				}
+				$return['data'] = $data;
+				$return['code'] = 1;
+				$return['msg'] = '机柜获取成功';
+			} else {
+				$return['data'] = '';
+				$return['code'] = 0;
+				$return['msg'] = '机柜获取失败';
+			}
+		} else {
+			$return['data'] = '';
+			$return['code'] = 0;
+			$return['msg'] = '机柜无法获取';
+		}
+		return $return;
+	}
+
+	/**
+	 * 转换机柜所在的机房数据
+	 * @param  int $id 机房表的id
+	 * @return string     返回机房的中文名
+	 */
+	public function machineroom($id){
+		$machineroom = DB::table('idc_machineroom')->where('id',$id)->value('machine_room_name');
+		return $machineroom;
+	}
+
 }

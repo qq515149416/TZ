@@ -18,12 +18,9 @@ class DialogComponent extends React.Component {
             );
         }
         if(this.props.type=="show") {
-            const {title,description,content} = this.props.data;
             return (
                 <Show 
-                    title={title}
-                    description={description}
-                    content={content}
+                    data = {this.props.data}
                     getRef={ref => this.props.getRef(ref)}
                 />
             );

@@ -38,7 +38,16 @@ function tz_ajax_echo($data = [], $info = "", $code = 0)
  */
 function tz_time_expire($time, $length)
 {
-    $deadline = time();  //默认到期时间为现在时间
+    $deadline   = time();  //默认到期时间为现在时间
     $lengthTime = $length * 60 * 60; //小时换算成时间戳
-    return ((strtotime($time)+$lengthTime) > $deadline)?true:false; //三元运算符 判断是否过期
+    return ((strtotime($time) + $lengthTime) > $deadline) ? true : false; //三元运算符 判断是否过期
+}
+
+/**
+ *
+ */
+function tz_time_test()
+{
+
+
 }

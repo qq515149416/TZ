@@ -8,7 +8,20 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 const ShowStyle = theme => ({
-
+    title_container: {
+        overflow: "hidden",
+        marginBottom: theme.spacing.unit
+    },
+    title_type: {
+        fontWeight: "bold",
+        float: "left"
+    },
+    title_content: {
+        float: "left"
+    },
+    dialog: {
+        minWidth: theme.breakpoints.values.md
+    }
 });
 class Show extends React.Component {
     constructor(props) {
@@ -28,20 +41,41 @@ class Show extends React.Component {
         this.setState({ open: false });
     };
     render() {
+        const {classes} = this.props;
         return (
             <Dialog
             open={this.state.open}
             onClose={this.handleClose}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
+            PaperProps={{
+                className: classes.dialog
+            }}
             >
-            <DialogTitle id="alert-dialog-title">{this.props.title}</DialogTitle>
+            <DialogTitle id="alert-dialog-title">查看更多</DialogTitle>
             <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                    {this.props.description}
-                </DialogContentText>
-                <DialogContentText id="alert-dialog-content" dangerouslySetInnerHTML = {{ __html:this.props.content }}>
-                </DialogContentText>
+                {
+                    this.props.data.map(item => {
+                        if(item.type=="text") {
+                            return (
+                                <DialogContentText className={classes.title_container}>
+                                    <span className={classes.title_type}>{item.label}：</span>
+                                    <p className={classes.title_content}>
+                                        {item.content}
+                                    </p>
+                                </DialogContentText>
+                            );
+                        }else if(item.type=="content") {
+                            return (
+                                <DialogContentText className={classes.title_container}>
+                                    <span className={classes.title_type}>{item.label}：</span>
+                                    <div className={classes.title_content} dangerouslySetInnerHTML = {{ __html: item.content}}>
+                                    </div>
+                                </DialogContentText>
+                            );
+                        }
+                    })
+                }
             </DialogContent>
             <DialogActions>
                 <Button onClick={this.handleClose} color="primary">

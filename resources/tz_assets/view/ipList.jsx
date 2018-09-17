@@ -247,6 +247,10 @@ class IpList extends React.Component {
       callbrak(state);
     });
   }
+  filterData = (param) => {
+    const {ipsStores} = this.props;
+    ipsStores.filterData(param);
+  }
   render() {
     inputType[inputType.findIndex(item => item.field=="ip_comproom")].defaultData = this.props.ipsStores.comprooms.map(item => {
       return {
@@ -265,6 +269,7 @@ class IpList extends React.Component {
         addData={this.addData.bind(this)} 
         delData={this.delData.bind(this)}  
         changeData={this.changeData.bind(this)} 
+        filterData={this.filterData.bind(this)}
       />
     );
   }

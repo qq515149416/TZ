@@ -173,4 +173,29 @@ class  Harddisk extends Model
 		}
 	}
 
+
+	/**
+	 * 客户选择增加硬盘
+	 * @return array 相关资源数据
+	 */
+	public function selectHarddisk($machineroom){
+		$where['harddisk_used'] = 0;
+		$where['room_id'] = $machineroom;
+		$harddisk = $this->where($where)->get(['harddisk_number','harddisk_param','room_id']);
+		foreach($harddisk as $key => $value){
+			$harddisk[$key]['machineroom'] = $this->machineroom($value['room_id']);
+		}
+		return $harddisk;
+	}
+
+	/**
+	 * 转换机柜所在的机房数据
+	 * @param  int $id 机房表的id
+	 * @return string     返回机房的中文名
+	 */
+	public function machineroom($id){
+		$machineroom = DB::table('idc_machineroom')->where('id',$id)->value('machine_room_name');
+		return $machineroom;
+	}
+
 }

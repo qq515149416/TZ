@@ -29,6 +29,17 @@ const PostDataStyle = theme => ({
 class PostData extends React.Component {
     constructor(props) {
         super(props);
+        // if(this.props.postType == "add") {
+        //     if(this.props.inputType) {
+        //         this.props.inputType.forEach(item => {
+        //             if(item.rule&&item.rule.clear=="add") {
+        //                 if(item.type=="select") {
+        //                     item.defaultData=[];
+        //                 }
+        //             }
+        //         });
+        //     }
+        // }
     }
     decompressionParam = () => {
         let returnObj = {};

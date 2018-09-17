@@ -15,14 +15,15 @@ class ActionBoundStores {
     }
     @action.bound
     filterStoreData(storeAttr, type, param) {
+        
         if(type=="select") {
-           if(!this.copyData.length) {
-            for(let key in this[storeAttr]) {
-                this.copyData[key] = this[storeAttr][key];
+            if(!this.copyData.length) {
+                for(let key in this[storeAttr]) {
+                    this.copyData[key] = this[storeAttr][key];
+                }
+            } else {
+                this[storeAttr] = this.copyData;
             }
-           } else {
-            this[storeAttr] = this.copyData;
-           }
            for(let key in param) {
             if(key!="startTime"&&key!="endTime") {
                 this[storeAttr] = this[storeAttr].filter(item => {
@@ -55,19 +56,24 @@ class ActionBoundStores {
            });
         //    console.log(this[storeAttr],param,"dateFilter");
            if(param["searchContent"]&&param["searchType"]) {
-            this[storeAttr] = this[storeAttr].filter(item => {
-                if(param["searchType"]=="all") {
+            // console.log(this[storeAttr],param,"dateFilter");
+            if(param["searchType"]=="all") {
+                this[storeAttr] = this.copyData.filter(item => {
                     for(let key in item) {
+                        // console.log(item[key].indexOf(param["searchContent"]));
                         if(item[key].indexOf(param["searchContent"])!=-1) {
                             return item;
                         }
                     }
-                } else {
+                });
+            } else {
+                this[storeAttr] = this.copyData.filter(item => {
+                    // console.log(item[param["searchType"]].indexOf(param["searchContent"]));
                     if(item[param["searchType"]] && item[param["searchType"]].indexOf(param["searchContent"])!=-1) {
                         return item;
                     }
-                }
-            });
+                });
+            }
            }
         //    console.log(this[storeAttr],param,"searchFilter");
         }else if(type=="reset") {

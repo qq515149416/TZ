@@ -67,8 +67,7 @@ class RegisterController extends Controller
 
         //验证码是否正确
         if (($par['token'] == $verificationData['token']) && ($par['email'] == $verificationData['accounts'])) {
-            //实例化
-            $TzUserModel = new TzUser();
+            $TzUserModel = new TzUser();//实例化
 
             //添加帐号
             $addUserInfo = $TzUserModel->create([
@@ -77,10 +76,10 @@ class RegisterController extends Controller
                 'password' => Hash::make($par['password']),
                 'status'   => 2,  //状态为已验证
             ]);
-            Auth::loginUsingId($addUserInfo['id']);
-            return tz_ajax_echo([], '注册成功', 1);
+            Auth::loginUsingId($addUserInfo['id']);  //注册后自动登录
+            return tz_ajax_echo([], '注册成功', 1);   //注册成功
         } else {
-            return tz_ajax_echo([], '注册失败,验证码失败', 0);
+            return tz_ajax_echo([], '注册失败,验证码失败', 0);   //注册失败
         }
     }
 

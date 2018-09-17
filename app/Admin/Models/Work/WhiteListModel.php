@@ -105,30 +105,29 @@ class WhiteListModel extends Model
 			$insertdata['submit'] 		= 2;			// 提交方
 			$insertdata['white_status'] 	= 0;			//待审核
 
-			$check = $this->where('white_ip',$insertdata['white_ip'])->select('domain_name','white_status')->get();
+			$check = $this->where('domain_name',$insertdata['domain_name'])->select('white_status')->get();
 			foreach ($check as $k => $v) {
 				$return = [
 					'data'	=> '',
 					'code'	=> 0,
 				];
-				if($v->domain_name == $insertdata['domain_name']){
-					if($v->white_status == 0){
-						$return['msg']	= '该白名单审核已提交,请勿重复提交';
-						return $return;
-					}
-					if($v->white_status == 3){
-						$return['msg']	= '该审核已被拉黑';
-						return $return;
-					}
-					if($v->white_status == 1){
-						$return['msg']	= '该审核已通过,请勿重复提交';
-						return $return;
-					}
+				
+				if($v->white_status == 0){
+					$return['msg']	= '该域名审核申请单已提交,请勿重复提交,如需更换绑定IP请删除重新提交';
+					return $return;
 				}
+				if($v->white_status == 3){
+					$return['msg']	= '该域名已被拉黑';
+					return $return;
+				}
+				if($v->white_status == 1){
+					$return['msg']	= '该域名审核申请已通过,请勿重复提交';
+					return $return;
+				}		
 			}
 	
 			$row = $this->create($insertdata);
-			var_dump($row);exit;
+			
 			if($row != false){
 				$return['data'] = $row->id;
 				$return['code'] = 1;

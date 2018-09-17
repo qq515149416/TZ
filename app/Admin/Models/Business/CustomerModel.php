@@ -60,10 +60,6 @@ class CustomerModel extends Model
     	return $clerk;
     }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 9ec7bff032379807a05acc55163e22051a24164e
     /**
      * 后台手动将客户拉入黑名单
      * @param  array $data 需要加入黑名单的客户的id和黑名单的状态

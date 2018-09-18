@@ -34,16 +34,19 @@ class WhiteListRequest extends FormRequest
 	 */
 	public function rules()
 	{
+		//设定默认的规则,必须填如method(方法)
 		$return = [
 			'method'	=> 'required',
 		];
+		//获取传入参数
 		$info = $this->all();
+		//判断:如果有传入method,就获取method
 		if(isset($info['method'])){
 			$method = $info['method'];
 		}else{
 			$method = '';
 		}
-		
+		//判断选择,可用switch代替,根据method重新设定规则
 		if($method == 'checkIP'){
 			$return = [
 				'ip'		=> 'required|ip',
@@ -75,6 +78,7 @@ class WhiteListRequest extends FormRequest
 				'white_status'		=> 'required',
 			];
 		}
+		//规则成立
 		return $return;
 	}
 

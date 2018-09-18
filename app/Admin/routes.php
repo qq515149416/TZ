@@ -183,6 +183,13 @@ Route::group([
         $router->get('pfmStatisticsList', 'Statistics\PfmStatisticsController@index');
     });
 
+     //充值情况统计
+    Route::group([
+        'prefix' => 'rechargeStatistics',
+    ],function (Router $router) {
+        $router->get('list', 'Statistics\RechargeStatisticsController@index');
+    });
+
 
     //工单问答
     Route::group([

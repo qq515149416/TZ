@@ -121,7 +121,7 @@ Route::group([
 
 	//用户idc路由
 	Route::group([
-		'prefix'     => 'home',
+		'prefix'     => 'customer',
 	], function () {
 		Route::group([
 				'middleware' => 'CheckLogin',

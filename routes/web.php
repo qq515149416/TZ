@@ -121,19 +121,19 @@ Route::group([
 
 	//用户idc路由
 	Route::group([
-		'prefix'     => 'idc',
+		'prefix'     => 'customer',
 	], function () {
 		Route::group([
 				'middleware' => 'CheckLogin',
 		], function () {
-			Route::get('businessList', 'Idc\BusinessController@getBusinessList');	
-			Route::get('orderList', 'Idc\OrderController@getOrderList');	
-			Route::get('delOrder', 'Idc\OrderController@delOrder');
-			Route::get('payOrderByBalance', 'Idc\OrderController@payOrderByBalance');								
-			Route::post('reneworders','Idc\BusinessController@renewOrders');
-			Route::post('resourceorders','Idc\OrderController@resourceOrders');
-			Route::post('renewresource','Idc\OrderController@renewResource');
-			Route::post('end','Idc\OrderController@endTime');
+			Route::get('businessList', 'Customer\BusinessController@getBusinessList');	
+			Route::get('orderList', 'Customer\OrderController@getOrderList');	
+			Route::get('delOrder', 'Customer\OrderController@delOrder');
+			Route::get('payOrderByBalance', 'Customer\OrderController@payOrderByBalance');								
+			Route::post('reneworders','Customer\BusinessController@renewOrders');
+			Route::post('resourceorders','Customer\OrderController@resourceOrders');
+			Route::post('renewresource','Customer\OrderController@renewResource');
+			Route::post('end','Customer\OrderController@endTime');
 		});
 	});
 

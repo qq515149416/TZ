@@ -44,7 +44,7 @@ function tz_time_expire($time, $length)
 }
 
 /**
- *
+ * 测试时间参数
  */
 function tz_time_test()
 {

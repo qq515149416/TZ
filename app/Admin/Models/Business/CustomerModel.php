@@ -26,10 +26,10 @@ class CustomerModel extends Model
     public function adminCustomer(){
         $clerk_id = Admin::user()->id;
         $slug = (array)$this->role($clerk_id);
-        if($slug['slug'] == 'TZ_admin'){
-            $where = [];
-        } else {
+        if($slug['slug'] == 'salesman'){
             $where['salesman_id'] = $clerk_id;
+        } else {
+            $where = [];
         }
     	$admin_customer = $this->where($where)->get(['id','status','name','email','money','salesman_id','created_at','updated_at']);
     	if(!$admin_customer->isEmpty()){

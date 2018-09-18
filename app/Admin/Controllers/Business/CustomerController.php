@@ -25,15 +25,6 @@ class CustomerController extends Controller
         return tz_ajax_echo($admin_customer['data'],$admin_customer['msg'],$admin_customer['code']);
     }
 
-    /**
-     * 业务员查看自己客户的信息
-     * @return json 返回相关的数据信息和状态提示及信息
-     */
-    public function clerkCustomer(){
-        $clerk = new CustomerModel();
-        $clerk_customer = $clerk->clerkCustomer();
-        return tz_ajax_echo($clerk_customer['data'],$clerk_customer['msg'],$clerk_customer['code']);
-    }
 
     /**
      * 后台手动将客户拉入黑名单

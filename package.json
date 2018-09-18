@@ -23,10 +23,12 @@
         "bootstrap": "^4.0.0",
         "cross-env": "^5.1",
         "expose-loader": "^0.7.5",
+        "file-loader": "^2.0.0",
         "jquery": "^3.3.1",
         "laravel-mix": "^2.0",
         "lodash": "^4.17.4",
         "popper.js": "^1.12",
+        "url-loader": "^1.1.1",
         "vue": "^2.5.7",
         "webpack": "^4.16.2",
         "webpack-cli": "^3.1.0"

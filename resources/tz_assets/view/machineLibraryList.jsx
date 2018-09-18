@@ -222,24 +222,27 @@ class MachineLibraryList extends React.Component {
           callbrak(state);
         });
       }
-    getCabinetData(param) {
+    getCabinetData(param,type) {
         if(param.machineroom) {
             this.props.machineLibrarysStores.getCabinetsData({
-                roomid: param.machineroom.value
+                roomid: param.machineroom.value,
+                type
             });
         }
         if(param.machineroom&&param.ip_company) {
             this.props.machineLibrarysStores.getIpsData({
                 roomid: param.machineroom.value,
-                ip_company: param.ip_company.value
+                ip_company: param.ip_company.value,
+                type
             });
         }
     }
-    getIpsData(param) {
+    getIpsData(param,type) {
         if(param.machineroom&&param.ip_company) {
             this.props.machineLibrarysStores.getIpsData({
                 roomid: param.machineroom.value,
-                ip_company: param.ip_company.value
+                ip_company: param.ip_company.value,
+                type
             });
         }
     }

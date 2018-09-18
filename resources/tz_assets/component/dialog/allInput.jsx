@@ -135,7 +135,12 @@ class AllInput extends React.Component {
         };
         let currentItem = this.props.inputType.find(item=>item.field==name.split(".")[0]);
         if(currentItem.model) {
-            currentItem.model.getSubordinateData && currentItem.model.getSubordinateData(this);
+            if(this.props.editData) {
+                currentItem.model.getSubordinateData && currentItem.model.getSubordinateData(this,"edit");
+            }else {
+                currentItem.model.getSubordinateData && currentItem.model.getSubordinateData(this,"add");
+            }
+            
         }
         this.setState(state => state.inputAttr[name.split(".")[0]][name.split(".")[1]] = event.target.value);
     };
@@ -145,7 +150,11 @@ class AllInput extends React.Component {
         };
         let currentItem = this.props.inputType.find(item=>item.field==name.split(".")[0]);
         if(currentItem.model) {
-            currentItem.model.getSubordinateData && currentItem.model.getSubordinateData(this);
+            if(this.props.editData) {
+                currentItem.model.getSubordinateData && currentItem.model.getSubordinateData(this,"edit");
+            }else {
+                currentItem.model.getSubordinateData && currentItem.model.getSubordinateData(this,"add");
+            }
         }
         const checkedIndex = this.state.inputAttr[name.split(".")[0]][name.split(".")[1]].findIndex(item=>item.value==event.target.value);
         this.setState(state => {
@@ -176,7 +185,7 @@ class AllInput extends React.Component {
                 status = false;
             }
         }
-        console.log(inputTypeData);
+        // console.log(inputTypeData);
         switch(inputTypeData.type) {
             case "rich_text":
                 if(status) {
@@ -289,7 +298,7 @@ class AllInput extends React.Component {
             this.props.inputType.forEach(item => {
                 if(item.model) {
                     if(item.model.editGetSubordinateData) {
-                        item.model.editGetSubordinateData(this);
+                        item.model.editGetSubordinateData(this,"edit");
                     }
                 }
             });

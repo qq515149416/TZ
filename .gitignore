@@ -30,8 +30,7 @@ public/.uini
 /doc
 /storage
 /tests
-/app/Admin/Controllers/*
-!/app/Admin/Controllers/Show
+
 /temporary_file.code-workspace
 .gitignore
 public/logs/*

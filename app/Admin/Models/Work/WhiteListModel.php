@@ -22,11 +22,12 @@ class WhiteListModel extends Model
 	 * @return [type]        [description]
 	 */
 	public function checkIP($ip){
+		//前往IP库查找对应传入IP的状态
 		$ip = DB::table('idc_ips')->where('ip',$ip)->select('id','ip_status','ip_lock','own_business')->first();
 		$ip = json_decode(json_encode($ip),true);
 		$return['data']	= '';
 		$returm['code']	= 0;
-		
+		//判断IP的获取情况,返回失败信息
 		if($ip == NULL){	
 			$return['msg']	= 'IP地址不存在';		
 			return $return;
@@ -39,6 +40,7 @@ class WhiteListModel extends Model
 			$return['msg']	= '该IP尚未启用';		
 			return $return;
 		}
+		//用获取的业务编号,前往业务表查找对应的机器编号及客户ID
 		$business = DB::table('tz_business')->where('business_number',$ip['own_business'])->select('client_id','machine_number')->first();
 		if($business == NULL){
 			$return['msg']	= '业务编号不存在';		
@@ -47,7 +49,7 @@ class WhiteListModel extends Model
 		$info['machine_number']	= $business->machine_number;
 		$info['customer_id']		= $business->client_id;
 		$customer_id 	= $business->client_id;
-		
+		//根据获得的客户ID查找客户可用信息
 		$customer = DB::table('tz_users')->where('id',$customer_id)->select('name','email')->first();
 		if($business == NULL){
 			$return['msg']	= '客户id错误';		
@@ -67,8 +69,11 @@ class WhiteListModel extends Model
 	 * @return [type]        [description]
 	 */
 	public function showWhiteList($where){
+		//获取模型
 		$result = $this->where($where)->get(['id','white_number','domain_name','record_number','binding_machine','customer_id','customer_name','submit_id','submit_name','submit','submit_note','check_id','check_number','check_time','check_note','white_status','created_at']);
+		//返回
 		if(!$result->isEmpty()){
+			//转换信息
 			$submit = [1=>'客户提交',2=>'内部提交'];
 			$white_status = [0=>'审核中',1=>'审核通过',2=>'审核不通过',3=>'黑名单'];
 			foreach($result as $key=>$value){
@@ -105,7 +110,9 @@ class WhiteListModel extends Model
 			$insertdata['submit'] 		= 2;			// 提交方
 			$insertdata['white_status'] 	= 0;			//待审核
 
+			//查找是否存在已提交过的申请单
 			$check = $this->where('domain_name',$insertdata['domain_name'])->select('white_status')->get();
+			//根据审核状态返回信息
 			foreach ($check as $k => $v) {
 				$return = [
 					'data'	=> '',
@@ -152,11 +159,13 @@ class WhiteListModel extends Model
 	 */
 	public function checkWhiteList($checkdata){
 		if($checkdata){
+			//获取审核者信息
 			$admin_id = Admin::user()->id;
 			$checkdata['check_id'] = $admin_id;
 			$fullname = (array)$this->staff($admin_id);
 			$checkdata['check_number'] = $fullname['work_number'];
 			$checkdata['check_time'] = date('Y-m-d H:i:s',time());
+			//更新审核结果到申请单上
 			$row = $this->where('id',$checkdata['id'])->update($checkdata);
 			if($row != false) {
 				$return['data'] = '';

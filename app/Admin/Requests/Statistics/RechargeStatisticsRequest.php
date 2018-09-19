@@ -5,16 +5,17 @@
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016-2018 by cmd
 // +----------------------------------------------------------------------
-// | Description: 统计业绩用控制器的验证器,无卵用
+// | Description: 统计充值情况用控制器的验证器,无卵用
 // +----------------------------------------------------------------------
-// | @DateTime: 2018-09-06 15:47:56
+// | @DateTime: 2018-09-18 11:00:56
 // +----------------------------------------------------------------------
 
 namespace App\Admin\Requests\Statistics;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
-class PfmStatisticsRequest extends FormRequest
+
+class RechargeStatisticsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

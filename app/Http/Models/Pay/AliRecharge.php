@@ -95,6 +95,7 @@ class AliRecharge extends Model
 		$data['money_before'] 	= floatval($this->getMoney($user_id)->money);
 		$data['money_after']	= floatval($data['money_before'] + $data['recharge_amount']);
 		$data['trade_status']	= 1;
+		$data['month']		= date("Ym");
 
 		if($data){
 			// 存在数据就用model进行数据写入操作

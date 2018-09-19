@@ -31,6 +31,9 @@ const columnData = [
         content: "是否要执行拉黑操作"
     } ,extendElement: (data) => {
         return <ResetPassword {...data} />;
+    }, extendUrl: {
+        title: "添加业务",
+        link: "/tz_admin/business"
     }, label: '操作' }
 ];
 @inject("clientelesStores")

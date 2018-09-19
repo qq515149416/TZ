@@ -10,6 +10,8 @@ import CabinetsStores from "../../stores/cabinet-stores";
 import MachineLibrarysStores from "../../stores/machineLibrary-stores";
 import EmployeeManagementsStores from "../../stores/employeeManagement-stores";
 import ClientelesStores from "../../stores/clientele-stores";
+import BusinessStores from "../../stores/business-stores";
+
 
 
 // 前端Models操作
@@ -25,7 +27,8 @@ export const stores = {
     cabinetsStores: new CabinetsStores(),
     machineLibrarysStores: new MachineLibrarysStores(),
     employeeManagementsStores: new EmployeeManagementsStores(),
-    clientelesStores: new ClientelesStores()
+    clientelesStores: new ClientelesStores(),
+    businessStores: new BusinessStores()
 }
 export const domIds = [
     "user_list",
@@ -39,5 +42,6 @@ export const domIds = [
     "cabinet_list",
     "machine_library",
     "employeeManagement_list",
-    "clientele"
+    "clientele",
+    "business"
 ];

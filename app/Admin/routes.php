@@ -70,6 +70,8 @@ Route::group([
     $router->get('/resource/machinelibrary', 'Show\MachineLibraryController@index');
     $router->get('/hr/employeeManagement', 'Show\EmployeeManagementController@index');
     $router->get('/crm/clientele', 'Show\ClienteleController@index');
+    $router->get('/business', 'Show\BusinessController@index');
+
 
 //人事
     Route::group([
@@ -244,13 +246,13 @@ Route::group([
     ],function(Router $router){
         // 业务
         $router->get('machineroom','Business\BusinessController@machineroom');
-        $router->post('selectmachine','Business\BusinessController@selectMachine');
+        $router->get('selectmachine','Business\BusinessController@selectMachine');
         $router->post('selectcabinet','Business\BusinessController@selectCabinet');
         $router->post('insert','Business\BusinessController@insertBusiness');
         $router->get('security','Business\BusinessController@securityBusiness');
         $router->post('check','Business\BusinessController@checkBusiness');
         $router->post('enable','Business\BusinessController@enableBusiness');
-        $router->post('showbusiness','Business\BusinessController@showBusiness');
+        $router->get('showbusiness','Business\BusinessController@showBusiness');
         // 订单
         $router->post('finance','Business\OrdersController@financeOrders');
         $router->post('clerk','Business\OrdersController@clerkOrders');

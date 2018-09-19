@@ -12,8 +12,7 @@ import CabinetList from "../view/cabinetList.jsx";
 import MachineLibraryList from "../view/machineLibraryList.jsx";
 import EmployeeManagementList from "../view/employeeManagementList.jsx";
 import ClienteleList from "../view/clienteleList.jsx";
-
-
+import BusinesList from "../view/businesList.jsx";
 
 
 export default () => [
@@ -28,5 +27,6 @@ export default () => [
     <Route path="/tz_admin/resource/cabinet" component={CabinetList} />,
     <Route path="/tz_admin/resource/machinelibrary" component={MachineLibraryList} />,
     <Route path="/tz_admin/hr/employeeManagement" component={EmployeeManagementList} />,
-    <Route path="/tz_admin/crm/clientele" component={ClienteleList} />
+    <Route path="/tz_admin/crm/clientele" component={ClienteleList} />,
+    <Route path="/tz_admin/business" component={BusinesList} />
 ];

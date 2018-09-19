@@ -119,7 +119,7 @@ Route::group([
 	Route::get('payForm', 'Pay\AliPayController@form');
 	Route::get('test', 'Pay\AliPayController@test');
 
-	//用户idc路由
+	//用户相关订单和业务
 	Route::group([
 		'prefix'     => 'customer',
 	], function () {
@@ -134,6 +134,11 @@ Route::group([
 			Route::post('resourceorders','Customer\OrderController@resourceOrders');
 			Route::post('renewresource','Customer\OrderController@renewResource');
 			Route::post('end','Customer\OrderController@endTime');
+			Route::get('show_white_list','Customer\WhiteListController@showWhiteList');
+			Route::post('insert_white_list','Customer\WhiteListController@insertWhiteList');
+			Route::post('check_ip','Customer\WhiteListController@checkIp');
+			Route::post('check_domain_name','Customer\WhiteListController@checkDomainName');
+			Route::post('cancel_white_list','Customer\WhiteListController@cancelWhiteList');
 		});
 	});
 

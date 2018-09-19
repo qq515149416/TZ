@@ -9,15 +9,20 @@ use App\Admin\Models\Idc\Ips;
 use App\Admin\Requests\Idc\IpsRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
 class IpsController extends Controller
 {
     use ModelForm;
     // 测试
+    
     public function test(){
     	$test = new Ips();
     	$rtest = $test->test();
-    	return $rtest;
+        // dump(Request());
+        var_dump((int)Request('id'));
+        $a = Request()->getPathInfo();
+        $b = explode('/',$a);
+        $count = count($b);
+    	dump($a);// return $rtest;
     }
 
     /**

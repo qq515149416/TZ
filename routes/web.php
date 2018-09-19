@@ -119,7 +119,7 @@ Route::group([
 	Route::get('payForm', 'Pay\AliPayController@form');
 	Route::get('test', 'Pay\AliPayController@test');
 
-	//用户idc路由
+	//用户相关订单和业务
 	Route::group([
 		'prefix'     => 'customer',
 	], function () {

@@ -245,6 +245,15 @@ const styles = theme => ({
                                   this.props.headTitlesData.find(item => item.id=="operat").extendElement(n)
                                 )
                               }
+                              {
+                                (this.props.headTitlesData.find(item => item.id=="operat").extend && this.props.headTitlesData.find(item => item.id=="operat").extendUrl ) && (
+                                  <ExpansionComponent 
+                                      type="link"
+                                      title={this.props.headTitlesData.find(item => item.id=="operat").extendUrl.title}
+                                      link={this.props.headTitlesData.find(item => item.id=="operat").extendUrl.link+"?id="+n.id}
+                                    />
+                                )
+                              }
                             </TableCell>
                           ):null
                         }

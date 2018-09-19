@@ -12,6 +12,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import AddIcon from '@material-ui/icons/Add';
 class ExpansionComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -37,8 +38,21 @@ class ExpansionComponent extends React.Component {
             confirm: true
         });
     }
+    toLink = url => event => {
+        // console.log(url,event);
+        location.href =  url;
+    }
     render() {
         const {type} = this.props;
+        if(type=="link") {
+            return (
+                <Tooltip title={this.props.title}>
+                    <IconButton onClick={this.toLink(this.props.link)} aria-label="Link">
+                        <AddIcon />
+                    </IconButton>
+                </Tooltip>
+            );
+        }
         if(type=="show") {
             return [
                 <Tooltip title="查看">

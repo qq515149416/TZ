@@ -32,14 +32,12 @@ class BusinessController extends Controller
      * @return json           返回对应机房的信息或者数据
      */
     public function selectMachine(Request $request){
-    	if($request->isMethod('post')){
+
     		$where = $request->only(['machineroom','business_type']);
     		$machine = new MachineModel();
     		$return = $machine->selectMachine($where);
     		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
-    	} else {
-    		return tz_ajax_echo([],'无法获取机器',0);
-    	}
+    	
     }
 
     /**
@@ -125,13 +123,9 @@ class BusinessController extends Controller
      * @return json           返回相关操作的数据和状态及提示信息
      */
     public function showBusiness(Request $request){
-    	if($request->isMethod('post')){
     		$show = $request->only(['client_id']);
     		$show_business = new BusinessModel();
     		$return = $show_business->showBusiness($show);
     		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
-    	} else {
-    		return tz_ajax_echo([],'获取对应客户的业务数据失败',0);
-    	}
     }
 }

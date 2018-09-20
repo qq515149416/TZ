@@ -247,7 +247,7 @@ Route::group([
         // 业务
         $router->get('machineroom','Business\BusinessController@machineroom');
         $router->get('selectmachine','Business\BusinessController@selectMachine');
-        $router->post('selectcabinet','Business\BusinessController@selectCabinet');
+        $router->get('selectcabinet','Business\BusinessController@selectCabinet');
         $router->post('insert','Business\BusinessController@insertBusiness');
         $router->get('security','Business\BusinessController@securityBusiness');
         $router->post('check','Business\BusinessController@checkBusiness');

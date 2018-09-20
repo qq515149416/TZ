@@ -16,16 +16,20 @@ class AccountController extends Controller
     }
 
     /**
-     * 展示有关的员工账户
+     * 人事查看有关的员工账户
      * @return json 返回相关的账户信息
      */
     public function showAccount(){
     	$show = new Account();
     	$account = $show->showAccount();
     	return tz_ajax_echo($account['data'],$account['msg'],$account['code']);
+        
     }
 
-
+    /**
+     * 员工个人账户信息
+     * @return json 返回相关的账户信息
+     */
     public function personalAccount(){
     	$user_id = Admin::user()->id;
     	if($user_id){

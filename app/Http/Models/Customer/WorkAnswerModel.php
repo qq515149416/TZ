@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Admin\Models\Work;
+namespace App\Http\Models\Customer;
 
 use Illuminate\Database\Eloquent\Model;
-use Encore\Admin\Facades\Admin;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * 工单详情即问答详情
+ * 工单问答的数据
  */
 class WorkAnswerModel extends Model
 {
@@ -18,17 +18,17 @@ class WorkAnswerModel extends Model
     protected $fillable = ['work_number','answer_content','answer_worknum','answer_id','answer_role','created_at','deleted_at'];
 
     /**
-     * 根据工单号查询工单的详情
-     * @param  array $where 工单号
-     * @return array        工单的详情和状态提示及信息
+     * 根据工单号查找对应的详情
+     * @param  [type] $where [description]
+     * @return [type]        [description]
      */
     public function showWorkAnswer($where){
     	if($where){
-    		$answer = $this->where($where)->get(['work_number','answer_content','answer_worknum','answer_id','answer_role','created_at']);
+    		$answer = $this->where($where)->([['work_number','answer_content','answer_worknum','answer_id','answer_role','created_at']]);
     		if($answer->isEmpty()){
     			$return['data'] = $answer;
-	    		$return['msg'] = '获取工单详情成功';
-	    		$return['code'] = 1;
+    			$return['msg'] = '获取详情成功';
+    			$return['code'] = 1;
     		} else {
                 return['data'] = '';
                 $return['msg'] = '暂无详情';
@@ -36,48 +36,38 @@ class WorkAnswerModel extends Model
             }
     	} else {
     		$return['data'] = '';
-    		$return['msg'] = '无法获取该工单详情';
+    		$return['msg'] = '无法获取详情';
     		$return['code'] = 0;
     	}
+
     	return $return;
     }
 
     /**
-     * 对工单的问答数据进行插入数据库
+     * 工单问答数据插入
      * @param  array $insert_data 工单号，回答的内容
      * @return array              相关的状态提示及信息
      */
     public function insertWorkAnswer($insert_data){
     	if($insert_data){
-    		$uid = Admin::user()->id;
+    		$uid = Auth::user()->id;
     		$insert_data['answer_id'] = $uid;
-    		$insert_data['answer_worknum'] = $this->worknum($uid);
-    		$insert_data['answer_role'] = 2;
+    		$insert_data['answer_role'] = 1;
     		$row = $this->create($insert_data);
     		if($row != false){
     			$return['data'] = $insert_data['answer_content'];
-	    		$return['code'] = 1;
-	    		$return['msg'] = '';
+    			$return['code'] = 1;
+    			$return['msg'] = '';
     		} else {
     			$return['data'] = '';
-	    		$return['code'] = 0;
-	    		$return['msg'] = '';
+    			$return['code'] = 0;
+    			$return['msg'] = '';
     		}
     	} else {
     		$return['data'] = '';
     		$return['code'] = 0;
     		$return['msg'] = '';
     	}
-        return $return;
-    }
-
-    /**
-     * 获取内部工作人员的工号
-     * @param  int $uid 当前后台登陆用户的id
-     * @return string      对应的工单号
-     */
-    public function workNum($uid){
-        $worknum = DB::table('oa_staff')->where('admin_users_id',$uid)->value('work_number');
-        return $worknum;
+    	return $return;
     }
 }

@@ -4,7 +4,7 @@ namespace App\Admin\Models\Hr;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Collection;
 class Account extends Model
 {
 
@@ -13,7 +13,7 @@ class Account extends Model
     protected $dates = ['deleted_at'];
 
     /**
-     * 用于展示有关人员账号信息的数据查询
+     * 人事查看有关人员账号信息的数据查询
      * @return json 相关的数据和提示信息
      */
    	public function showAccount(){
@@ -72,16 +72,16 @@ class Account extends Model
    	 */
    	public function roles($id) {
    		if($id){
-   			$roles =  json_decode(DB::table('admin_role_users')
+   			$roles =  collect(DB::table('admin_role_users')
    						->join('admin_roles','admin_role_users.role_id', '=', 'admin_roles.id')
    						->where('admin_role_users.user_id',$id)
    						->select('admin_roles.id as roleid', 'admin_roles.name as rolename')
-   						->get(),true);
+   						->get())->all();
    			$string = '';
    			$str = '';
    			foreach($roles as $rolekey =>  $rolevalue){
    				// 将对应的角色名转换为一个一维数组
-   				$array = explode(',', $rolevalue['rolename']);
+   				$array = explode(',', $rolevalue->rolename);
    				// 将对应的一维数组的角色名转换为对应的字符串拼接
    				$str .= implode(',',$array).' ';
    			}

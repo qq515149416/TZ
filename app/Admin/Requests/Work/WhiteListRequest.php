@@ -33,73 +33,61 @@ class WhiteListRequest extends FormRequest
 	 * @return array
 	 */
 	public function rules()
-	{
-		//设定默认的规则,必须填如method(方法)
-		$return = [
-			'method'	=> 'required',
-		];
-		//获取传入参数
-		$info = $this->all();
-		//判断:如果有传入method,就获取method
-		if(isset($info['method'])){
-			$method = $info['method'];
-		}else{
-			$method = '';
-		}
-		//判断选择,可用switch代替,根据method重新设定规则
-		if($method == 'checkIP'){
-			$return = [
-				'ip'		=> 'required|ip',
+	{	
+		$path_info = Request()->getPathInfo();
+        $array_path = explode('/',$path_info);
+        $count_path = count($array_path);
+
+        if($array_path[$count_path-1] == 'checkIP'){
+            return [
+            	'ip' => 'required|ip',
+            ];
+        } elseif($array_path[$count_path-1] == 'show'){
+            return [
+                'white_status' => 'required|integer|min:0|max:4',
+            ];
+        } elseif($array_path[$count_path-1] == 'insert'){
+			return [
+                'white_ip' => 'required|ip',
+                'domain_name' => [
+                    'required',
+                    'regex:',
+                ],
+                'record_number' => 'required',
+                'binding_machine' => 'required',
+                'customer_id' => 'required|integer',
+                'customer_name' => 'required',
 			];
-		}
-		if($method == 'insertWhiteList'){
-			$return = [
-				'white_ip'		=> 'required|ip',
-				'domain_name'		=> 'required',
-				'record_number'	=> 'required',
-				'binding_machine'	=> 'required',
-				'customer_id'		=> 'required',
-				'customer_name'	=> 'required',
-			];
-		}
-		if($method == 'checkWhiteList'){
-			$return = [
-				'white_status'		=> 'required',
-				'id'			=> 'required',
-			];
-		}
-		if($method == 'deleteWhiteList'){
-			$return = [
-				'delete_id'		=> 'required',
-			];
-		}
-		if($method == 'showWhiteList'){
-			$return = [
-				'white_status'		=> 'required',
-			];
-		}
-		//规则成立
-		return $return;
+        } elseif($array_path[$count_path-1] == 'check'){
+        	return [
+                'white_status' => 'required|integer|min:0|max:4',
+                'id' => 'required|integer',
+            ];
+        }
+
 	}
 
 	public function messages()
 	{
 		
 		return  [
-			'method.required'		=> '请填写所需方法',
-			'ip.required' 			=> 'ip地址必须填写',
-			'ip.ip' 				=> 'ip地址格式错误',
-			'white_ip.required'		=> 'ip地址必须填写',
-			'white_ip.ip'			=> 'ip地址格式错误',
+			'ip.required' 			=> 'IP地址必须填写',
+			'ip.ip' 				=> 'IP地址必须符合IP规范(如:192.168.1.1)',
+			'white_status.required' => '白名单状态必须选择',
+			'white_status.integer' => '白名单状态必须为0~4的正整数',
+			'white_status.min' => '白名单状态必须为0~4的正整数',
+			'white_status.max' => '白名单状态必须为0~4的正整数',
+			'white_ip.required'		=> 'IP地址必须填写',
+			'white_ip.ip'			=> 'IP地址必须符合IP规范(如:192.168.1.1)',
 			'domain_name.required'		=> '域名必须填写',
 			'record_number.required'	=> '备案编号必须填写',
 			'binding_machine.required'	=> '机器编号必须填写',
-			'customer_id.required'		=> '客户id必须填写',
+			'customer_id.required'		=> '客户编号必须填写',
+			'customer_id.integer' => '客户编号必须为正整数',
 			'customer_name.required'	=> '客户姓名必须填写',
-			'white_status.required'		=> '审核状态必须填写',
-			'id.required'			=> '请提供所需审核的id',
-			'delete_id.required'		=> '请提供所需删除的id',
-			'white_status.required'		=> '请提供所需查询的审核单状态',
+			'id.required'			=> '请提供所需审核的编号',
+			'id.integer' => '审核所需的编号必须为正整数',
+			
 		];
 	}
 

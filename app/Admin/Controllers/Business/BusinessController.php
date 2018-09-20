@@ -32,12 +32,10 @@ class BusinessController extends Controller
      * @return json           返回对应机房的信息或者数据
      */
     public function selectMachine(Request $request){
-
-    		$where = $request->only(['machineroom','business_type']);
-    		$machine = new MachineModel();
-    		$return = $machine->selectMachine($where);
-    		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
-    	
+		$where = $request->only(['machineroom','business_type']);
+		$machine = new MachineModel();
+		$return = $machine->selectMachine($where);
+		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
     }
 
     /**
@@ -46,14 +44,10 @@ class BusinessController extends Controller
      * @return json           返回对应机房的机柜信息
      */
     public function selectCabinet(Request $request){
-        if($request->isMethod('post')){
-            $where = $request->only(['machineroom']);
-            $cabinet = new Cabinet();
-            $return = $cabinet->selectCabinet($where);
-            return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
-        } else {
-            return tz_ajax_echo([],'无法获取机柜',0);
-        }
+        $where = $request->only(['machineroom']);
+        $cabinet = new Cabinet();
+        $return = $cabinet->selectCabinet($where);
+        return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
     }
 
     /**
@@ -62,14 +56,10 @@ class BusinessController extends Controller
      * @return json           返回订单创建的提示信息
      */
     public function insertBusiness(Request $request){
-    	if($request->isMethod('post')){
-    		$insert = $request->only(['client_id','client_name','machine_number','resource_detail','money','length','business_note','business_type']);
-    		$business = new BusinessModel();
-    		$return = $business->insertBusiness($insert);
-    		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
-    	} else {
-    		return tz_ajax_echo([],'业务无法创建',0);
-    	}
+		$insert = $request->only(['client_id','client_name','machine_number','resource_detail','money','length','business_note','business_type']);
+		$business = new BusinessModel();
+		$return = $business->insertBusiness($insert);
+		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
     }
 // security安全
     /**
@@ -77,13 +67,9 @@ class BusinessController extends Controller
      * @return json 返回相关的数据和状态及提示信息
      */
     public function securityBusiness(){
-    	if($request->isMethod('get')){
-    		$security = new BusinessModel();
-    		$return = $security->securityBusiness();
-    		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
-    	} else {
-    		return tz_ajax_echo([],'暂无数据',0);
-    	}
+		$security = new BusinessModel();
+		$return = $security->securityBusiness();
+		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
     }
 
     /**
@@ -91,14 +77,10 @@ class BusinessController extends Controller
      * @return json 返回相关操作的数据和状态及提示信息
      */
     public function checkBusiness(Request $request){
-    	if($request->isMethod('post')){
-    		$data = $request->only(['business_number','id','business_status','client_id','client_name','sales_id','sales_name','business_type','machine_number','resource','money','length','check_note']);
-    		$check = new BusinessModel();
-    		$return = $check->checkBusiness($data);
-    		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
-    	} else {
-    		return tz_ajax_echo([],'该业务无法审核',0);
-    	}
+		$data = $request->only(['business_number','id','business_status','client_id','client_name','sales_id','sales_name','business_type','machine_number','resource','money','length','check_note']);
+		$check = new BusinessModel();
+		$return = $check->checkBusiness($data);
+		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
     }
 
     /**
@@ -107,14 +89,10 @@ class BusinessController extends Controller
      * @return json 			返回相关操作的数据和状态及提示信息
      */
     public function enableBusiness(Request $request){
-    	if($request->isMethod('post')){
     		$enable = $request->only(['id','business_status']);
     		$enable_business = new BusinessModel();
     		$return = $enable_business->enableBusiness($enable);
     		return tz_ajax_echo($return,$return['msg'],$return['code']);
-    	} else {
-    		return tz_ajax_echo([],'该业务无法启用',0);
-    	}
     }
 
     /**

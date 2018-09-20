@@ -62,7 +62,19 @@ class BusinessStores extends ActionBoundStores {
 
     ];
     addData(data) {
-        
+        return new Promise((resolve,reject) => {
+            post("business/insert",data).then(res => {
+                if(res.data.code==1) {
+                    this.addStoreData("business",BusinesStores,Object.assign(JSON.parse(data.resource_detail),{
+                        id: res.data.data
+                    }));
+                    resolve(true);
+                }else {
+                    alert(res.data.msg);
+                    resolve(false);
+                }
+            }).catch(reject);
+        });
     }
     @action.bound 
     getData(id) {

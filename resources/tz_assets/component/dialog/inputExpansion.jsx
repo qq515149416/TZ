@@ -1,6 +1,14 @@
 import React from "react";
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import IinkageOption from "../modal/linkageOption.jsx";
+
+const styles = theme => ({
+    decoration: {
+        margin: "0 5px"
+    },
+});
 
 class InputExpansion extends React.Component {
     constructor(props) {
@@ -16,21 +24,27 @@ class InputExpansion extends React.Component {
     }
     setCurrentData = (param,type) => {
         if(type=="machine") {
+            param.id = param.machine_num;
+            this.props.setComponentParam(param);
             this.setState({
                 machineText: param.machine_num
             });
         } else {
+            param.id = param.cabinet_id;
+            this.props.setComponentParam(param);
             this.setState({
                 cabinetText: param.cabinet_id
             });
         }
     }
     render() {
+        const {classes} = this.props;
         return (
             <div>
                 <Button variant="contained" onClick={this.handleOpen("machine")} color="primary">
                     {this.state.machineText}
                 </Button>
+                <span className={ classes.decoration }>/</span>
                 <Button variant="contained" onClick={this.handleOpen("cabinet")} color="primary">
                     {this.state.cabinetText}
                 </Button>
@@ -39,4 +53,9 @@ class InputExpansion extends React.Component {
         );
     }
 }
-export default InputExpansion;
+
+InputExpansion.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(InputExpansion);

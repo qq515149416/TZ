@@ -6,19 +6,35 @@ class InputExpansion extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            buttonText: "请选择"
+            machineText: "请选择机器",
+            cabinetText: "请选择机柜"
         };
     }
-    handleOpen = () => {
-        this.iinkageOption.handleOpen();
+    handleOpen = type => event => {
+        console.log(type);
+        this.iinkageOption.handleOpen(type);
+    }
+    setCurrentData = (param,type) => {
+        if(type=="machine") {
+            this.setState({
+                machineText: param.machine_num
+            });
+        } else {
+            this.setState({
+                cabinetText: param.cabinet_id
+            });
+        }
     }
     render() {
         return (
             <div>
-                <Button variant="contained" onClick={this.handleOpen} color="primary">
-                    {this.state.buttonText}
+                <Button variant="contained" onClick={this.handleOpen("machine")} color="primary">
+                    {this.state.machineText}
                 </Button>
-                <IinkageOption getRef={(ref) => this.iinkageOption = ref} />
+                <Button variant="contained" onClick={this.handleOpen("cabinet")} color="primary">
+                    {this.state.cabinetText}
+                </Button>
+                <IinkageOption setCurrentData={this.setCurrentData} getRef={(ref) => this.iinkageOption = ref} />
             </div>
         );
     }

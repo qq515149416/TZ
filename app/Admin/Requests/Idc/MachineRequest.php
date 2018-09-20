@@ -4,6 +4,8 @@ namespace App\Admin\Requests\Idc;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Request;
+
 class MachineRequest extends FormRequest
 {
     /**
@@ -22,24 +24,49 @@ class MachineRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {
-        return [
-            'machine_num' => 'required',
-            'cpu' => 'required',
-            'memory' => 'required',
-            'harddisk' => 'required',
-            'cabinet' => 'required|integer',
-            'ip_id' => 'required|integer',
-            'machineroom' => 'required|integer',
-            'bandwidth' => 'required|integer',
-            'protect' => 'required|integer',
-            'loginname' => 'required',
-            'loginpass' => 'required',
-            'machine_type' => 'required',
-            'used_status' => 'required|integer',
-            'machine_status' => 'required|integer',
-            'business_type' => 'required|integer',
-        ];
+    {   
+        $path_info = Request()->getPathInfo();
+        $array_path = explode('/',$path_info);
+        $count_path = count($array_path);
+
+        if($array_path[$count_path-1] == 'insertmachine'){
+            return [
+                'machine_num' => 'required|unique:idc_machine,machine_num',
+                'cpu' => 'required',
+                'memory' => 'required',
+                'harddisk' => 'required',
+                'cabinet' => 'required|integer',
+                'ip_id' => 'required|integer',
+                'machineroom' => 'required|integer',
+                'bandwidth' => 'required|integer',
+                'protect' => 'required|integer',
+                'loginname' => 'required',
+                'loginpass' => 'required',
+                'machine_type' => 'required',
+                'used_status' => 'required|integer',
+                'machine_status' => 'required|integer',
+                'business_type' => 'required|integer',
+            ];
+
+        } elseif($array_path[$count_path-1] == 'editmachine'){
+            $id = Request('id');
+            'machine_num' => 'sometimes|unique:idc_machine,machine_num'.$id,
+            'cpu' => 'sometimes',
+            'memory' => 'sometimes',
+            'harddisk' => 'sometimes',
+            'cabinet' => 'sometimes|integer',
+            'ip_id' => 'sometimes|integer',
+            'machineroom' => 'sometimes|integer',
+            'bandwidth' => 'sometimes|integer',
+            'protect' => 'sometimes|integer',
+            'loginname' => 'sometimes',
+            'loginpass' => 'sometimes',
+            'machine_type' => 'sometimes',
+            'used_status' => 'sometimes|integer',
+            'machine_status' => 'sometimes|integer',
+            'business_type' => 'sometimes|integer',
+        } 
+        
     }
 
     public function messages()
@@ -47,6 +74,7 @@ class MachineRequest extends FormRequest
         
         return  [
             'machine_num.required' => '机器编号必须填写',
+            'machine_num.unique' => '机器编号必须唯一',
             'cpu.required' => 'CPU信息必须填写',
             'memory.required' => '内存信息必须填写',
             'harddisk.required' => '硬盘信息必须填写',

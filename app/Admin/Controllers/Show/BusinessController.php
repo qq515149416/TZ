@@ -10,7 +10,7 @@ use Encore\Admin\Layout\Content;
 use Encore\Admin\Layout\Row;
 use App\Admin\Controllers\Show\tool\script;
 
-class CabinetController extends script
+class BusinessController extends script
 {
     public function index()
     {

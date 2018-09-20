@@ -187,6 +187,15 @@ class AllInput extends React.Component {
         }
         // console.log(inputTypeData);
         switch(inputTypeData.type) {
+            case "component":
+                if(status) {
+                    const {Component} = inputTypeData;
+                    return (
+                        <Component />
+                    );
+                } else {
+                    return null;
+                }
             case "rich_text":
                 if(status) {
                     return (
@@ -218,7 +227,6 @@ class AllInput extends React.Component {
             }
             case "select":
             if(status) {
-
                 return (
                     <TextField
                         id="site"

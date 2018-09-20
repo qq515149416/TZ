@@ -61,6 +61,9 @@ class BusinessStores extends ActionBoundStores {
     @observable business = [
 
     ];
+    addData(data) {
+        
+    }
     @action.bound 
     getData(id) {
         get("business/showbusiness",{

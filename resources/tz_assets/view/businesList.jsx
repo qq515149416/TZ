@@ -79,11 +79,15 @@ class BusinesList extends React.Component {
     }
   }
   addData = (param,callbrak) => {
-    param.resource_detail = JSON.stringify(param.machine_number);
-    param.machine_number = param.machine_number.id;
-    this.props.businessStores.addData(param).then((state) => {
-      callbrak(state);
-    });
+    if(location.search.indexOf("?id=")!=-1&&location.search.indexOf("&")==-1) {
+      param.client_id = location.search.substr(1).split("=")[1];
+      param.resource_detail = JSON.stringify(param.machine_number);
+      param.machine_number = param.machine_number.id;
+      this.props.businessStores.addData(param).then((state) => {
+        callbrak(state);
+      });
+    }
+  
   }
   render() {
     return (

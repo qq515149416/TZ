@@ -7,6 +7,7 @@ use Encore\Admin\Controllers\ModelForm;
 use App\Admin\Models\Business\BusinessModel;
 // 选择机房时使用
 use App\Admin\Models\Idc\MachineModel;
+use App\Admin\Models\Idc\Cabinet;
 use Illuminate\Http\Request;
 
 /**

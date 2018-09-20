@@ -79,8 +79,6 @@ class Account extends Model
    						->get())->all();
    			$string = '';
    			$str = '';
-            // dump($roles);
-            // exit;
    			foreach($roles as $rolekey =>  $rolevalue){
    				// 将对应的角色名转换为一个一维数组
    				$array = explode(',', $rolevalue->rolename);

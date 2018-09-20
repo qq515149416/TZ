@@ -161,7 +161,7 @@ class WorkOrderModel extends Model
     public function insertWorkOrder($workdata){
     	if($workdata){
     		// 工单号的生成
-    		$worknumber = mt_rand(71,99).date('Ymd',time()).substr(time(),5,5);
+    		$worknumber = mt_rand(71,99).date("ymd",time()).substr(time(),8,2);
     		$workdata['work_order_number'] = (int)$worknumber;
             // 查找业务员
     		$admin_id = Admin::user()->id;

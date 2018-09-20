@@ -28,7 +28,7 @@ class BusinessModel extends Model
     public function insertBusiness($insert){
     	if($insert){
     		//业务编号的生成规则：前两位（41-70的随机数）+ 年月日（如:20180830） + 时间戳的后5位数 + 3（业务编号产生）
-    		$business_sn = mt_rand(41,70).date('Ymd',time()).substr(time(),5,5).3;
+    		$business_sn = mt_rand(41,70).date("ymd",time()).substr(time(),8,2).3;
 			$insert['business_number'] = (int)$business_sn;
 			$insert['business_status'] = 0;
 			// 对应业务员的信息
@@ -100,7 +100,7 @@ class BusinessModel extends Model
 	    		//到期时间的计算
 	    		$end_time = Carbon::parse('+'.$data['duration'].' months')->toDateTimeString();
 	    		// 订单号的生成规则：前两位（11-40的随机数）+ 年月日（如:20180830） + 时间戳的后5位数 + 1（新购）/2（续费）
-   				$order_sn = mt_rand(11,40).date('Ymd',time()).substr(time(),5,5).1;
+   				$order_sn = mt_rand(11,40).date("ymd",time()).substr(time(),8,2).1;
    				$business['order_number'] = (int)$order_sn;
 	    		$business['start_time'] = $start_time;
 	    		$business['endding_time'] = $end_time;

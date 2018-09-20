@@ -21,7 +21,7 @@ class WorkAnswerController extends Controller
      */
     public function showWorkAnswer(Request $request){
         
-        $where = $request->only('work_number');
+        $where = $request->only(['work_number']);
         $show = new WorkAnswerModel();
         $return = $show->showWorkAnswer($where);
         return tz_ajax_echo($return['data'],$return['msg'],$return['code']);

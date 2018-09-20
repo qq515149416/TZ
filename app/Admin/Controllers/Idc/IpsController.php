@@ -32,7 +32,6 @@ class IpsController extends Controller
     public function index(){
     	$index = new Ips();
     	$ips = $index->index();
-    	// dd($ips['data']);
     	return tz_ajax_echo($ips['data'],$ips['msg'],$ips['code']);
     }
     
@@ -42,19 +41,15 @@ class IpsController extends Controller
      * @return json             将相关的信息进行返回前台
      */
     public function insert(IpsRequest $request){
-    	// 判断传递的方式和提交方式
-    	if($request->isMethod('post')) {
+    	
     		// 符合提交方式的进行数据的提取
-    		$param = $request->only(['ip_start','ip_end','vlan','ip_company','ip_status','ip_lock','ip_note','ip_comproom']);
-    		$create = new Ips();
-    		// 传递数据到对应的model层处理
-    		$revert = $create->insertIps($param);
-    		// 返回信息
-    		return tz_ajax_echo($revert['data'],$revert['msg'],$revert['code']);
-    	} else {
-    		// 不符合方式的
-    		return tz_ajax_echo([],'新增IP地址失败!!',0);
-    	}
+		$param = $request->only(['ip_start','ip_end','vlan','ip_company','ip_status','ip_lock','ip_note','ip_comproom']);
+		$create = new Ips();
+		// 传递数据到对应的model层处理
+		$revert = $create->insertIps($param);
+		// 返回信息
+		return tz_ajax_echo($revert['data'],$revert['msg'],$revert['code']);
+    	
     }
 
     /**
@@ -63,19 +58,17 @@ class IpsController extends Controller
      * @return json           返回相关的数据或提示信息
      */
     public function edit(Request $request){
-    	if($request->isMethod('get')){
-    		$id = $request->get('ip_id');
-    		if($id+0){
-    			$edit = new Ips();
-    			$result = $edit->edit($id+0);
-    			return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
-    		} else {
-    			return tz_ajax_echo([],'请确认操作无误！！',0);
-    		}
+    	
+		$id = $request->get('ip_id');
+		if($id+0){
+			$edit = new Ips();
+			$result = $edit->edit($id+0);
+			return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
+		} else {
+			return tz_ajax_echo([],'请确认操作无误！！',0);
+		}
     		
-    	} else {
-    		return tz_ajax_echo([],'获取IP信息失败！！',0);
-    	}
+    	
     }
 
     /**
@@ -84,19 +77,13 @@ class IpsController extends Controller
      * @return json             返回相关的信息
      */
     public function doEdit(IpsRequest $request) {
-    	//判断提交的方式
-    	if($request->isMethod('post')){
-    		// 符合判断的进行数据提取
-    		$data = $request->only(['id','vlan', 'ip_start','ip_company','ip_status','ip_lock','ip_note','ip_comproom']);
-    		$doedit = new Ips();
-    		// 模型层处理
-    		$result = $doedit->doEdit($data);
-    		// 返回信息
-    		return tz_ajax_echo($result,$result['msg'],$result['code']);
-    	} else {
-    		// 不符合条件的返回错误信息
-    		return tz_ajax_echo([],'修改IP地址信息失败！！！',0);
-    	}
+		// 符合判断的进行数据提取
+		$data = $request->only(['id','vlan', 'ip_start','ip_company','ip_status','ip_lock','ip_note','ip_comproom']);
+		$doedit = new Ips();
+		// 模型层处理
+		$result = $doedit->doEdit($data);
+		// 返回信息
+		return tz_ajax_echo($result,$result['msg'],$result['code']);
     }
 
     /**
@@ -105,18 +92,14 @@ class IpsController extends Controller
      * @return json           相关的信息和状态的返回
      */
     public function deleted(Request $request) {
-    	if($request->isMethod('post')) {
-    		$id = $request->get('delete_id');
-    		if($id+0) {
-    			$delete = new Ips();
-    			$result = $delete->dele($id);
-    			return tz_ajax_echo($result,$result['msg'],$result['code']);
-    		} else {
-    			return tz_ajax_echo([],'删除信息失败',0);
-    		}
-    	} else {
-    		return tz_ajax_echo([],'删除信息失败',0);
-    	}
+		$id = $request->get('delete_id');
+		if($id+0) {
+			$delete = new Ips();
+			$result = $delete->dele($id);
+			return tz_ajax_echo($result,$result['msg'],$result['code']);
+		} else {
+			return tz_ajax_echo([],'删除信息失败',0);
+		}
     }
 
     /**

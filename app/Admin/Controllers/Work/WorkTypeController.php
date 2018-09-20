@@ -31,14 +31,12 @@ class WorkTypeController extends Controller
      * @return json           相关的状态和提示信息返回
      */
     public function insertWorkType(Request $request){
-    	if($request->isMethod('post')){
+    	
     		$insertdata = $request->only(['type_name','parent_id','note']);
     		$insert = new WorkTypeModel();
     		$return = $insert->insertWorkType($insertdata);
     		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
-    	} else {
-    		return tz_ajax_echo([],'无法新增工单类型信息',0);
-    	}
+    	
     }
 
     /**
@@ -47,14 +45,12 @@ class WorkTypeController extends Controller
      * @return json         相关的状态和提示信息
      */
     public function editWorkType(Request $request){
-    	if($request->isMethod('post')){
+    	
     		$editdata = $request->only(['id','type_name','parent_id','note']);
     		$edit = new WorkTypeModel();
     		$return = $edit->editWorkType($editdata);
     		return tz_ajax_echo($return,$return['msg'],$return['code']);
-    	} else {
-    		return tz_ajax_echo([],'工单类型无法修改',0);
-    	}
+    	
     }
 
     /**
@@ -63,13 +59,11 @@ class WorkTypeController extends Controller
      * @return json           相关的信息提示和状态返回
      */
     public function deleteWorkType(Request $request){
-    	if($request->isMethod('post')){
+    	
     		$id = $request->get('delete_id');
     		$delete = new WorkTypeModel();
     		$result = $delete->deleteWorkType($id);
     		return tz_ajax_echo($result,$result['msg'],$result['code']);
-    	} else {
-    		return tz_ajax_echo([],'无法删除工单类型信息',0);
-    	}
+    	
     }
 }

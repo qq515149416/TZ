@@ -68,20 +68,16 @@ class ContactsController extends Controller
      * @return json               将相关的信息进行json返回
      */
     public function insert(OaContacts $request){
-      // 当传递过来的信息通过验证后会进行传输方式的判断和表单提交方式的判断
-        if($request->isMethod('post')){
-          // 符合判断的方式正确继续进行，获取提交信息
-            $data = $request->only(['contactname', 'qq','mobile','email','rank','site']);
-            // 实例化model
-            $create = new Contacts();
-            // 数据进行model层处理
-            $result = $create->insert($data);
-            // 返回信息
-            return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
-        } else {
-          // 不符合提交方式的
-          return  tz_ajax_echo([],'新增信息失败！！',0);
-        }
+      
+      // 符合判断的方式正确继续进行，获取提交信息
+        $data = $request->only(['contactname', 'qq','mobile','email','rank','site']);
+        // 实例化model
+        $create = new Contacts();
+        // 数据进行model层处理
+        $result = $create->insert($data);
+        // 返回信息
+        return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
+       
     }
 
     /**
@@ -91,18 +87,15 @@ class ContactsController extends Controller
      */
     public function edit(Request $request) {
       // 判断传输方式
-      if($request->isMethod('get')){
-        // 获取传递的参数
-        $id = $request->get('contacts_id');
-        $edit = new Contacts();
-        // 将参数传递到对应的model的方法并进行接收结果
-        $result = $edit->edit($id);
-        // 返回相关数据和信息提示
-        return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
-      } else {
-        // 不符合的传输方式
-        return  tz_ajax_echo([],'获取信息失败！！',0);
-      }
+     
+      // 获取传递的参数
+      $id = $request->get('contacts_id');
+      $edit = new Contacts();
+      // 将参数传递到对应的model的方法并进行接收结果
+      $result = $edit->edit($id);
+      // 返回相关数据和信息提示
+      return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
+      
     }
 
     /**
@@ -112,8 +105,7 @@ class ContactsController extends Controller
      * @return json               将相关的信息进行json返回
      */
     public function doEdit(OaContacts $request){
-      // 当传递过来的信息通过验证后会进行传输方式的判断和表单提交方式的判断
-      if($request->isMethod('post')){
+     
         // 符合判断的方式正确继续进行，获取提交信息
           $data = $request->only(['id','contactname', 'qq','mobile','email','rank','site']);
           // 实例化model
@@ -122,10 +114,7 @@ class ContactsController extends Controller
           $result = $create->doEdit($data);
           // 返回信息
           return tz_ajax_echo($result,$result['msg'],$result['code']);
-      } else {
-        // 不符合提交方式的
-        return  tz_ajax_echo([],'修改信息失败！！',0);
-      }
+     
     }
 
 
@@ -135,8 +124,7 @@ class ContactsController extends Controller
      * @return json           相关的信息返回
      */
     public function deleted(Request $request){
-      // 判断传输方式
-      if($request->isMethod('post')){
+      
         // 获取传递的参数
         $id = $request->get('delete_id');
         // echo $id;
@@ -145,9 +133,6 @@ class ContactsController extends Controller
         $result = $edit->dele($id);
         // 返回相关数据和信息提示
         return tz_ajax_echo($result,$result['msg'],$result['code']);
-      } else {
-        // 不符合的传输方式
-        return  tz_ajax_echo([],'获取信息失败！！',0);
-      }
+     
     }
 }

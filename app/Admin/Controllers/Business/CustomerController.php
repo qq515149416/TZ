@@ -32,14 +32,10 @@ class CustomerController extends Controller
      * @return [type]           [description]
      */
     public function pullBlackCustomer(Request $request){
-        if($request->isMethod('post')){
-            $status = $request->only(['status','id']);
-            $black = new CustomerModel();
-            $pull = $black->pullBlackCustomer($status);
-            return tz_ajax_echo($pull,$pull['msg'],$pull['code']);
-        } else {
-            return tz_ajax_echo('','无法将该客户拉黑',0);
-        }
+        $status = $request->only(['status','id']);
+        $black = new CustomerModel();
+        $pull = $black->pullBlackCustomer($status);
+       return tz_ajax_echo($pull,$pull['msg'],$pull['code']);     
     }
 
     /**
@@ -48,13 +44,9 @@ class CustomerController extends Controller
      * @return [type]           [description]
      */
     public function resetPassword(Request $request){
-        if($request->isMethod('post')){
-            $password = $request->only(['password','id']);
-            $reset = new CustomerModel();
-            $reset_password = $reset->resetPassword($password);
-            return tz_ajax_echo($reset_password,$reset_password['msg'],$reset_password['code']);
-        } else {
-            return tz_ajax_echo('','无法重置密码',0);
-        }
+        $password = $request->only(['password','id']);
+        $reset = new CustomerModel();
+        $reset_password = $reset->resetPassword($password);
+        return tz_ajax_echo($reset_password,$reset_password['msg'],$reset_password['code']);
     }
 }

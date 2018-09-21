@@ -52,16 +52,27 @@ class WorkOrderController extends Controller
 	 * @return json          相关的信息提示和状态返回
 	 */
 	public function deleteWorkOrder(WorkOrderRequest $request){
-		if($request->isMethod('post')){
-			$delete = $request->get('delete_id');
-			$deleted = new WorkOrderModel();
-			$result = $deleted->deleteWorkOrder($delete);
-			return tz_ajax_echo($result,$result['msg'],$result['code']);
-		} else {
-			return tz_ajax_echo([],'无法对数据进行删除',0);
-		}
+		$customer_id	= Auth::id();
+		$delete 		= $request->get('delete_id');
+		$deleted 	= new WorkOrderModel();
+		$result 		= $deleted->deleteWorkOrder($delete,$customer_id);
+
+		return tz_ajax_echo('',$result['msg'],$result['code']);
 	}
 
+	/**
+	 * 取消工单接口
+	 * @param  Request $request [description]
+	 * @return json          相关的信息提示和状态返回
+	 */
+	public function cancelWorkOrder(WorkOrderRequest $request){
+		$customer_id	= Auth::id();
+		$id 		= $request->get('cancel_id');
+		$model 	= new WorkOrderModel();
+		$result 		= $model->cancelWorkOrder($id,$customer_id);
+
+		return tz_ajax_echo('',$result['msg'],$result['code']);
+	}
 
 	
 }

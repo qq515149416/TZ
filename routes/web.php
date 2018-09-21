@@ -139,6 +139,8 @@ Route::group([
 			Route::post('check_ip','Customer\WhiteListController@checkIp');
 			Route::post('check_domain_name','Customer\WhiteListController@checkDomainName');
 			Route::post('cancel_white_list','Customer\WhiteListController@cancelWhiteList');
+			Route::get('show_work_answer','Customer\WorkAnswerController@showWorkAnswer');
+			Route::post('insert_work_answer','Customer\WorkAnswerController@insertWorkAnswer');
 		});
 	});
 

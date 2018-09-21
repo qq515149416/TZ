@@ -24,7 +24,7 @@ class WorkAnswerModel extends Model
      */
     public function showWorkAnswer($where){
     	if($where){
-    		$answer = $this->where($where)->([['work_number','answer_content','answer_worknum','answer_id','answer_role','created_at']]);
+    		$answer = $this->where($where)->(['work_number','answer_content','answer_worknum','answer_id','answer_role','created_at']);
     		if($answer->isEmpty()){
     			$return['data'] = $answer;
     			$return['msg'] = '获取详情成功';

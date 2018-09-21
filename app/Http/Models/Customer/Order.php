@@ -241,7 +241,7 @@ class Order extends Model
 	public function renewOrders($renew){
 		if($renew){
 			//续费订单号的生成规则：前两位（11-40的随机数）+ 年月日 + 时间戳的后5位数 + 2（续费） 
-			$order_sn = mt_rand(11,40).date("ymd",time()).substr(time(),8,2).2;//续费订单号
+			$order_sn = mt_rand(4,6).date("ymd",time()).substr(time(),8,2).mt_rand(4,6);//续费订单号
 			$order['order_sn'] = (int)$order_sn;
 			$order['business_sn'] = $renew['business_number'];//续费的业务编号
 			$order['customer_id'] = $renew['client_id'];//客户id
@@ -366,7 +366,7 @@ class Order extends Model
 	public function renewResource($renew){
 		if($renew){
 			//续费订单号的生成规则：前两位（11-40的随机数）+ 年月日 + 时间戳的后5位数 + 2（续费）
-			$order_sn = mt_rand(11,40).date("ymd",time()).substr(time(),8,2).2;//续费订单号
+			$order_sn = mt_rand(4,6).date("ymd",time()).substr(time(),8,2).mt_rand(4,6);//续费订单号
 			$renew['order_sn'] = (int)$order_sn;
 			$renew['payable_money'] = bcmul((string)$order['price'],(string)$order['duration'],2);//应付金额
 			$renew['order_type'] = 2;

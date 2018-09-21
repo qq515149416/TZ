@@ -4,6 +4,7 @@ namespace App\Http\Controllers\TzAuth;
 
 use App\Http\Models\TzUser;
 use App\Http\Models\User\TzUsersVerification;
+use App\Http\Requests\TzAuth\ResetPasswordByEmail;
 use App\Http\Requests\TzAuth\SendEmailCodeRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -23,7 +24,7 @@ class ResetPasswordController extends Controller
      *      password: 修改后的密码
      *      token  :邮箱验证码
      */
-    public function resetPasswordByEmail(Request $request)
+    public function resetPasswordByEmail(ResetPasswordByEmail $request)
     {
 
         $res                    = $request->all();    //获取参数
@@ -55,14 +56,7 @@ class ResetPasswordController extends Controller
             //失败
             return tz_ajax_echo(null, '密码修改失败', 0);
         }
-
-        //_______________________________测试数据____________________
-//        dump($verificationData['created_at']); //打印测试数据
-//        dump($time1 = date("Y-m-d H:i:s"));
-//        dump(strtotime($time1));
-//        dump(5 * 60 * 60);
-//        dump(strtotime($verificationData['created_at']));
-//        dump(tz_time_expire($verificationData['created_at'], 1));
+        
     }
 
 

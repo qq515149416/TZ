@@ -28,7 +28,7 @@ const inputType = [
   },
   {
     field: "client_name",
-    label: "资源单价",
+    label: "客户姓名",
     type: "text"
   },
   {
@@ -79,8 +79,15 @@ class BusinesList extends React.Component {
     }
   }
   addData = (param,callbrak) => {
-    // console.log(param);
-    this.props.businessStores.addData(param);
+    if(location.search.indexOf("?id=")!=-1&&location.search.indexOf("&")==-1) {
+      param.client_id = location.search.substr(1).split("=")[1];
+      param.resource_detail = JSON.stringify(param.machine_number);
+      param.machine_number = param.machine_number.id;
+      this.props.businessStores.addData(param).then((state) => {
+        callbrak(state);
+      });
+    }
+  
   }
   render() {
     return (

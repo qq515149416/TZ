@@ -144,4 +144,17 @@ Route::group([
 		});
 	});
 
+	//用户故障工单路由
+	Route::group([
+		'prefix'     => 'fault',
+	], function () {
+		Route::group([
+			'middleware' => 'CheckLogin',
+		], function () {
+			Route::get('workOrderList', 'Work\WorkOrderController@showWorkOrder');	
+			Route::post('insert', 'Work\WorkOrderController@insertWorkOrder');
+			Route::get('del', 'Work\WorkOrderController@deleteWorkOrder');
+		});
+
+	});
 });

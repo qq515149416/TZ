@@ -165,6 +165,11 @@ class AllInput extends React.Component {
             return state;
         });
     }
+    setComponentParam = (field,data) => {
+        this[field] = {
+            value: data
+        };
+    }
     handleClickOpen = () => {
         this.setState({ open: true });
     } 
@@ -191,7 +196,10 @@ class AllInput extends React.Component {
                 if(status) {
                     const {Component} = inputTypeData;
                     return (
-                        <Component />
+                        <div>
+                            <span>{inputTypeData.label}</span>
+                            <Component setComponentParam={(data) => this.setComponentParam(inputTypeData.field,data)} />
+                        </div>
                     );
                 } else {
                     return null;

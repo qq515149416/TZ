@@ -66,6 +66,7 @@ class LinkageOption extends React.Component {
         } else {
             get("business/selectcabinet",param).then(res => {
                 if(res.data.code==1) {
+                    // console.log(res.data.data);
                     this.setState({
                         cabinets: res.data.data
                     });
@@ -226,10 +227,12 @@ class LinkageOption extends React.Component {
                             <List>
                                 {
                                     this.state.cabinets.map(item => (
-                                        <ListItem onClick={this.setCheckBoxValue("cabinetChecked",item.cabinetid)} divider button>
-                                            <Checkbox
+                                        <ListItem onClick={() => this.setCheckBoxValue("cabinetChecked",item.cabinetid)} divider button>
+                                            <Radio
                                                 checked={this.state.cabinetChecked==item.cabinetid}
-                                                disableRipple
+                                                value="2"
+                                                name="cabinetChecked"
+                                                aria-label={"cabinet_id_"+item.cabinetid}
                                             />
                                             <ListItemText primary={item.cabinet_id} />
                                         </ListItem>

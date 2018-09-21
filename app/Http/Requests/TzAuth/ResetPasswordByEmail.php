@@ -29,9 +29,9 @@ class ResetPasswordByEmail extends FormRequest
     {
         return [
             //
-//            'email'   => 'required|email|unique:tz_users,email',  //判断邮箱是否存在
-            'email' => 'required|email',
-//            'captcha' => 'required|captcha',  //TODO 因测试原因暂时关闭   上线前需要关闭注释
+            'email'    => 'required|email',
+            'password' => 'required|min:8|max:20|string|confirmed',
+            'captcha'  => 'required|captcha',
         ];
     }
 
@@ -43,11 +43,15 @@ class ResetPasswordByEmail extends FormRequest
     public function messages()
     {
         return [
-            'email.required'   => '邮箱帐号必须填写',
-            'email.email'      => '邮箱格式错误',
-//            'email.unique'     => '邮箱已被注册过',
-            'captcha.required' => '验证码不能为空',
-            'captcha.captcha'  => '验证码错误',
+            'email.required'                 => '邮箱帐号必须填写',
+            'email.email'                    => '邮箱格式错误',
+            'password.required'              => '密码不能为空',
+            'password.min'                   => '密码在8到20位之间',
+            'password.max'                   => '密码在8到20位之间',
+            'password.confirmed'             => '密码两次输入不一致',
+            'password_confirmation.required' => '密码二次输入不能为空',
+            'captcha.required'               => '验证码不能为空',
+            'captcha.captcha'                => '验证码错误',
 
         ];
     }

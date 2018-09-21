@@ -153,7 +153,8 @@ Route::group([
 		], function () {
 			Route::get('workOrderList', 'Work\WorkOrderController@showWorkOrder');	
 			Route::post('insert', 'Work\WorkOrderController@insertWorkOrder');
-			Route::get('del', 'Work\WorkOrderController@deleteWorkOrder');
+			Route::post('del', 'Work\WorkOrderController@deleteWorkOrder');
+			Route::post('cancel', 'Work\WorkOrderController@cancelWorkOrder');
 		});
 
 	});

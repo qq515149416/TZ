@@ -37,6 +37,7 @@ class WorkOrderRequest extends FormRequest
 		$path_info = Request()->getPathInfo();
 		$arr = explode('/',$path_info);
 		$method = $arr[count($arr)-1];
+		$return = [];
 
 		switch ($method) {
 			case 'insert':
@@ -53,12 +54,16 @@ class WorkOrderRequest extends FormRequest
 					'delete_id'		=> 'required',
 				];
 				break;
-
+			case 'workOrderList':
+				$return = [
+					'work_order_status'	=> 'required',
+				];
+			
 			default:
 	
 				break;
 		}
-		
+
 		return $return;
 	}
 
@@ -72,6 +77,8 @@ class WorkOrderRequest extends FormRequest
 			'work_order_content.required'	=> '工单内容必须填写',
 			'work_order_type.required'	=> '工单类型必须填写',
 			'delete_id.required'		=> '请提供需要删除的工单id',
+			'work_order_status.required'	=> '请提供需要查询的工单状态',
+			'cancel_id.required'		=> '请提供需要取消的工单id'
 		];
 	}
 

@@ -5,6 +5,8 @@ namespace App\Admin\Models\Hr;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Hash;
+
 class Account extends Model
 {
 
@@ -92,4 +94,73 @@ class Account extends Model
    			return tz_ajax_echo('','信息错误',0);
    		}
    	}
+
+      /**
+       * 修改账户信息
+       * @param  array $edit_data --id账户id --username账户名 --账户密码
+       * @return array            返回相关的状态提示及信息
+       */
+      public function editAccount($edit_data){
+         if($edit_data){
+            $row = $this->where('id',$edit_data['id'])->update($edit_data);
+            if($row != false){
+               $return['code'] = 1;
+               $return['msg'] = '修改账户信息成功';
+            } else {
+               $return['code'] = 0;
+               $return['msg'] = '修改账户信息失败';
+            }
+         } else {
+            $return['code'] = 0;
+            $return['msg'] = '无法修改账户信息';
+         }
+         return $return;
+      }
+
+      /**
+       * 重置密码操作
+       * @param  array $reset_pass --usernam账户名(作为重置后的密码) --id对应账户的id
+       * @return [type]             [description]
+       */
+      public function resetAccountPass($reset_pass){
+         if($reset_pass){
+               $reset['password'] = bcrypt($reset_pass['username']);
+               $row = $this->where('id',$reset_pass['id'])->update($reset);
+               if($row != false){
+                  $return['code'] = 1;
+                  $return['msg'] = '密码重置成功，密码为登录账号';
+               } else {
+                  $return['code'] = 0;
+                  $return['msg'] = '密码重置失败';
+               }
+         } else {
+            $return['code'] = 0;
+            $return['msg'] = '密码无法重置';
+         }
+      }
+
+      /**
+       * 修改密码
+       * @param  array $edit_data --id 对应账户id --password 新密码
+       * @return [type]            [description]
+       */
+      public function editPassword($edit_data){
+         if($edit_data){
+            $edit_data['password'] = bcrypt($edit_data['password']);
+            $row = $this->where('id',$edit_data)->update($edit_data);
+            if($row != false){
+               $return['code'] = 1;
+               $return['msg'] = '密码修改成功';
+            } else {
+               $return['code'] = 0;
+               $return['msg'] = '密码修改失败';
+            }
+         } else {
+            $return['code'] = 0;
+            $return['msg'] = '密码无法修改';
+         }
+         return $return;
+      } 
+
+
 }

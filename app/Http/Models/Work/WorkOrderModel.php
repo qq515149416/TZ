@@ -33,7 +33,7 @@ class WorkOrderModel extends Model
 					   'summary','complete_time','created_at','updated_at']);
 		if(!$result->isEmpty()){
 			// 查询到数据进行转换
-			$submitter = [1=>'客户',2=>'内部人员'];
+			$submitter = [1=>'客户提交',2=>'内部提交'];
 			$work_status = [0=>'待处理',1=>'处理中',2=>'工单完成',3=>'工单取消'];
 			foreach($result as $showkey=>$showvalue){
 				// 提交方的转换
@@ -44,9 +44,7 @@ class WorkOrderModel extends Model
 				$worktype = (array)$this->workType($showvalue['work_order_type']);
 				$result[$showkey]['worktype'] = $worktype['type_name'];
 				$result[$showkey]['parenttype'] = $worktype['parenttype'];
-				// 当前处理部门
-				$department = (array)$this->role($showvalue['process_department']);
-				$result[$showkey]['department'] = $department['name'];	
+				
 			}
 			$return['data'] = $result;
 			$return['code'] = 1;
@@ -70,7 +68,7 @@ class WorkOrderModel extends Model
 	public function insertWorkOrder($workdata){
 		if($workdata){
 			// 工单号的生成
-			$worknumber = mt_rand(71,99).date('ymd',time()).;
+			$worknumber = mt_rand(71,99).date('ymd',time());
 			$workdata['work_order_number'] = (int)$worknumber;	
 			// 提交方
 			$workdata['submitter_id'] 	= $workdata['customer_id'];
@@ -101,71 +99,77 @@ class WorkOrderModel extends Model
 		return $return;
 	}
 
-	/**
-	 * 对工单的处理状态进行修改
-	 * @param  array $editdata 需要修改的数据
-	 * @return array           返回相关的状态和提示信息
-	 */
-	public function editWorkOrder($editdata){
-		if($editdata){
-			$edit = $this->find($editdata['id']);
-			// 当工单处理状态修改为2完成时
-			if($editdata['work_order_status'] == 2){
-				// 存入完成时间
-				$edit->complete_time = date('Y-m-d H:i:s',time());
-				$id = Admin::user()->id;
-				// 完成人员id
-				$edit->complete_id = $id;
-				// 完成人员工号
-				$number = (array)$this->staff($admin_id);
-				$edit->complete_number = $number['work_number'];
-				// 是否有报告总结的数据
-				if(!empty($editdata['summary'])){
-					$edit->summary = $editdata['summary'];
-				}
-				
-			}
-			// 修改状态
-			$edit->work_order_status = $editdata['work_order_status'];
-			// 是否转发下一个处理部门
-			if(!empty($editdata['process_department'])){
-				$edit->process_department = $editdata['process_department'];
-			}
-			$row = $edit->save();
-			if($row != false){
-				$return['code'] = 1;
-				$return['msg'] = '工单修改成功!!';
-			} else {
-				$return['code'] = 0;
-				$return['msg'] = '工单修改失败!!';
-			}
-
-		} else {
-			$return['code'] = 0;
-			$return['msg'] = '工单无法修改!!';
-		}
-		return $return;
-	}
 
 	/**
 	 * 删除工单信息
 	 * @param  [type] $id [description]
 	 * @return [type]     [description]
 	 */
-	public function deleteWorkOrder($id){
-		if($id){
-			$row = $this->where('id',$id)->delete();
-			if($row != false){
-				$return['code'] = 1;
-				$return['msg'] = '删除信息成功!!';
-			} else {
-				$return['code'] = 0;
-				$return['msg'] = '删除信息失败!!';
-			}
+	public function deleteWorkOrder($id,$customer_id){
+		$check = $this->find($id,['customer_id']);
+		if($check == NULL)
+		{
+			$return['code'] 	= 0;
+			$return['msg']	= '无此单号';
+			return $return;
+		}
+		if($customer_id != $check->customer_id)
+		{
+			$return['code'] 	= 0;
+			$return['msg']	= '只能删除属于自己的工单';
+			return $return;
+		}
+
+		$row = $this->where('id',$id)->delete();
+		if($row != false){
+			$return['code'] = 1;
+			$return['msg'] = '删除工单成功!!';
 		} else {
 			$return['code'] = 0;
-			$return['msg'] = '无法删除信息!!';
+			$return['msg'] = '删除工单失败!!';
 		}
+		
+		return $return;
+	}
+	/**
+	 * 删除工单信息
+	 * @param  [type] $id [description]
+	 * @return [type]     [description]
+	 */
+	public function cancelWorkOrder($id,$customer_id){
+		$check = $this->find($id,['customer_id','work_order_status']);
+		if($check == NULL)
+		{
+			$return['code'] 	= 0;
+			$return['msg']	= '无此单号';
+			return $return;
+		}
+		if($customer_id != $check->customer_id)
+		{
+			$return['code'] 	= 0;
+			$return['msg']	= '只能取消属于自己的工单';
+			return $return;
+		}
+		if($check->work_order_status == 3)
+		{
+			$return['code'] 	= 0;
+			$return['msg']	= '该工单已取消完毕!';
+			return $return;
+		}
+		$data = [
+			'work_order_status'	=> 3,
+		];
+		$row = $this->where('id',$id)->update($data);
+		// var_dump($check);exit;
+		if($row != false){
+			$return['code'] = 1;
+			$return['msg'] = '取消工单成功!!';
+		} else {
+			$return['code'] = 0;
+			$return['msg'] = '取消工单失败!!';
+		}
+		
+		return $return;
 	}
 
 	/**
@@ -185,9 +189,11 @@ class WorkOrderModel extends Model
 	 * @return array     返回对应的工单类型数据
 	 */
 	public function workType($id){
-		$worktype = DB::table('tz_worktype')->find($id,['parent_id','type_name']);
+		$worktype = DB::table('tz_work_type')->find($id,['parent_id','type_name']);
 		$parent_id = $worktype->parent_id;
-		if(!empty($parent_id)){
+		$worktype = json_decode(json_encode($worktype),true);
+	
+		if($parent_id != 0){
 			$worktype['parenttype'] = DB::table('tz_work_type')->where('id',$parent_id)->value('type_name');
 		} else {
 			$worktype['parenttype'] = '';

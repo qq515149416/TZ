@@ -100,7 +100,7 @@ class WhiteListModel extends Model
 	public function insertWhiteList($insertdata){
 		if($insertdata){
 			// 创建白名单编号
-			$whitenumber = mt_rand(71,99).substr(time(),5,5);
+			$whitenumber = mt_rand(41,70).date("ymd",time()).substr(time(),8,2);
 			$insertdata['white_number'] = (int)$whitenumber;
 			// 当前登陆用户的信息，作为提交者信息
 			$admin_id 			= Admin::user()->id;

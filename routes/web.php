@@ -32,7 +32,7 @@ Route::group([
 	Route::get('jun3', 'TzAuth\RegisterController@sendCodeToEmail');
 	Route::get('login', 'TzAuth\TestController@login');//TODO 上线前要删除   用户登录模拟登录
 
-
+    Route::get('redis','Test\RedisController@test'); //测试Redis 
 });
 
 //news接口路径

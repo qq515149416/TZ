@@ -56,7 +56,7 @@ class ResetPasswordController extends Controller
             //失败
             return tz_ajax_echo(null, '密码修改失败', 0);
         }
-        
+
     }
 
 

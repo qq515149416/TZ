@@ -96,6 +96,7 @@ class MachineController extends Controller
      * @return json           对应机房的IP信息
      */
     public function ips(Request $request){
+        
 		$data = $request->only(['roomid','ip_company','id']);
 		$ips = new MachineModel();
 		$result = $ips->ips($data);

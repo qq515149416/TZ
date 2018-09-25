@@ -306,23 +306,18 @@ class MachineModel extends Model
     	if($data){
     		$roomid = $data['roomid'];
     		$company = $data['ip_company'];
-
+            $orwhere = [];
+            $where = ['ip_comproom'=>$roomid,'ip_company'=>$company,'ip_status'=>0,'ip_lock'=>0];
             if(isset($data['id'])){
-                $ips = DB::table('idc_ips')
-                    ->where(['ip_comproom'=>$roomid,'ip_company'=>$company,'ip_status'=>0,'ip_lock'=>0])
-                    ->orWhere('id',$data['id'])
+                $orwhere['id'] = $data['id'];
+            } 
+    		$ips = DB::table('idc_ips')
+                    ->where($where)
+                    ->orWhere($orwhere)
                     ->whereNull('deleted_at')
                     ->select('id as ipid','ip','ip_company')
                     ->get();
-            } else {
-                $ips = DB::table('idc_ips')
-                    ->where(['ip_comproom'=>$roomid,'ip_company'=>$company,'ip_status'=>0,'ip_lock'=>0])
-                    ->whereNull('deleted_at')
-                    ->select('id as ipid','ip','ip_company')
-                    ->get();
-            }
-    		
-   			if($ips){
+   			if(!$ips->isEmpty()){
    				$return['data'] = $ips;
    				$return['code'] = 1;
    				$return['msg'] = 'IP信息获取成功';

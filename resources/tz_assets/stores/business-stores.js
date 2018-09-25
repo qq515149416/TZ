@@ -7,10 +7,11 @@ class BusinesStores {
     @observable client_id = 1;
     @observable client_name = "";
     @observable sales_id = 1;
-    @observable slaes_name = "";
+    @observable sales_name = "";
     @observable order_number = "";
     @observable business_number = "";
     @observable business_type = "";
+    @observable type = "";
     @observable machine_number = "";
     @observable resource_detail = "";
     @observable business_status = "";
@@ -19,12 +20,13 @@ class BusinesStores {
     @observable start_time = "";
     @observable endding_time = "";
     @observable business_note = "";
+    @observable status = "";
     constructor({
         id, 
         client_id, 
         client_name, 
         sales_id, 
-        slaes_name, 
+        sales_name, 
         order_number, 
         business_number, 
         business_type,
@@ -35,14 +37,16 @@ class BusinesStores {
         length,
         start_time,
         endding_time,
-        business_note
+        business_note,
+        type,
+        status
     }) {
         Object.assign(this,{
             id,
             client_id,
             client_name,
             sales_id,
-            slaes_name,
+            sales_name,
             order_number,
             business_number,
             business_type,
@@ -53,7 +57,9 @@ class BusinesStores {
             length,
             start_time,
             endding_time,
-            business_note
+            business_note,
+            type,
+            status
         });
     }
 }
@@ -65,9 +71,10 @@ class BusinessStores extends ActionBoundStores {
         return new Promise((resolve,reject) => {
             post("business/insert",data).then(res => {
                 if(res.data.code==1) {
-                    this.addStoreData("business",BusinesStores,Object.assign(JSON.parse(data.resource_detail),{
-                        id: res.data.data
-                    }));
+                    // this.addStoreData("business",BusinesStores,Object.assign(JSON.parse(data.resource_detail),{
+                    //     id: res.data.data
+                    // }));
+                    this.getData(data.client_id);
                     resolve(true);
                 }else {
                     alert(res.data.msg);

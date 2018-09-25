@@ -293,16 +293,20 @@ class MachineModel extends Model
     	if($data){
     		$roomid = $data['roomid'];
     		$company = $data['ip_company'];
-    		$ips = DB::table('idc_ips')
-    				// ->where('ip_comproom',$roomid)
-    				// ->where('ip_company',$company)
-                    // ->where('ip_status',0)
-                    // ->where('ip_lock',0)
-                    ->where(['ip_comproom'=>$roomid,'ip_company'=>$company,'ip_status'=>0,'ip_lock'=>0])
-    				->whereNull('deleted_at')
-    				->select('id as ipid','ip','ip_company')
+            if(isset($data['id'])){
+                $ips = DB::table('idc_ips')
+                    ->orWhere(['ip_comproom'=>$roomid,'ip_company'=>$company,'ip_status'=>0,'ip_lock'=>0,'id'=>$data['id']])
+                    ->whereNull('deleted_at')
+                    ->select('id as ipid','ip','ip_company')
                     ->get();
-            // dump($ips);
+            } else {
+                $ips = DB::table('idc_ips')
+                    ->orWhere(['ip_comproom'=>$roomid,'ip_company'=>$company,'ip_status'=>0,'ip_lock'=>0])
+                    ->whereNull('deleted_at')
+                    ->select('id as ipid','ip','ip_company')
+                    ->get();
+            }
+    		
    			if($ips){
    				$return['data'] = $ips;
    				$return['code'] = 1;

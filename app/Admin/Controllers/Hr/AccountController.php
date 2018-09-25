@@ -93,6 +93,11 @@ class AccountController extends Controller
         }
     }
 
+    /**
+     * 修改密码
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
     public function editPassword(Request $request){
         $edit_data = $request->only(['password','id']);
         $edit = new Account();

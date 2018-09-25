@@ -230,20 +230,40 @@ class MachineLibraryList extends React.Component {
             });
         }
         if(param.machineroom&&param.ip_company) {
-            this.props.machineLibrarysStores.getIpsData({
-                roomid: param.machineroom.value,
-                ip_company: param.ip_company.value,
-                type
-            });
+            if(type=="edit") {
+                this.props.machineLibrarysStores.getIpsData({
+                    roomid: param.machineroom.value,
+                    ip_company: param.ip_company.value,
+                    type,
+                    id: param.ip_id.value
+                });
+            } else {
+                this.props.machineLibrarysStores.getIpsData({
+                    roomid: param.machineroom.value,
+                    ip_company: param.ip_company.value,
+                    type
+                });
+            }
+            
         }
     }
     getIpsData(param,type) {
         if(param.machineroom&&param.ip_company) {
-            this.props.machineLibrarysStores.getIpsData({
-                roomid: param.machineroom.value,
-                ip_company: param.ip_company.value,
-                type
-            });
+            if(type=="edit") {
+                this.props.machineLibrarysStores.getIpsData({
+                    roomid: param.machineroom.value,
+                    ip_company: param.ip_company.value,
+                    type,
+                    id: param.ip_id.value
+                });
+            } else {
+                this.props.machineLibrarysStores.getIpsData({
+                    roomid: param.machineroom.value,
+                    ip_company: param.ip_company.value,
+                    type
+                });
+            }
+            
         }
     }
     filterData = (param) => {

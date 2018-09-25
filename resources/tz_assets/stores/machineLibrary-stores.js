@@ -194,6 +194,7 @@ class MachineLibrarysStores extends ActionBoundStores {
     }
     @action.bound 
     getCabinetsData(param) {
+        param.business_type = this.type;
         get("machine/cabinets",param).then((res) => {
             if(res.data.code==1) {
                 this.cabinets = res.data.data.map(item => new CabinetStores(item));

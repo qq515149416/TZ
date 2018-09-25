@@ -4,14 +4,26 @@ import InputExpansion from "../component/dialog/inputExpansion.jsx";
 import { inject,observer } from "mobx-react";
 const columnData = [
     { id: 'client_name', numeric: true, disablePadding: true, label: '客户' },
-    { id: 'slaes_name', numeric: true, disablePadding: true, label: '业务员' },
+    { id: 'sales_name', numeric: true, disablePadding: true, label: '业务员' },
     { id: 'business_number', numeric: true, disablePadding: true, label: '业务号' },
-    { id: 'business_type', numeric: true, disablePadding: true, label: '业务类型' },
+    { id: 'type', numeric: true, disablePadding: true, label: '业务类型' },
     { id: 'machine_number', numeric: true, disablePadding: true, label: '机器/机柜编号' },
-    { id: 'business_status', numeric: true, disablePadding: true, label: '业务状态' },
+    { id: 'status', numeric: true, disablePadding: true, label: '业务状态' },
     { id: 'operat', numeric: true, disablePadding: false, extend: true, extendData: [
         {id: "order_number", label: "订单号", type: "text"},
-        {id: "resource_detail", label: "资源详情", type: "text"},
+        {id: "resource_detail", label: "资源详情", type: "subordinate", subordinate: [
+          {id: "id", label: "机器编号", type: "text"},
+          {id: "cpu", label: "CPU", type: "text"},
+          {id: "memory", label: "内存", type: "text"},
+          {id: "harddisk", label: "硬盘", type: "text"},
+          {id: "bandwidth", label: "带宽", type: "text"},
+          {id: "protect", label: "防御", type: "text"},
+          {id: "loginname", label: "账号", type: "text"},
+          {id: "loginpass", label: "密码", type: "text"},
+          {id: "machine_type", label: "机器型号", type: "text"},
+          {id: "machine_note", label: "机器备注", type: "text"},
+          {id: "cabinet_id", label: "机柜编号", type: "text"}
+        ]},
         {id: "money", label: "单价" ,type: "text"},
         {id: "length", label: "时长" ,type: "text"},
         {id: "start_time", label: "业务开始时间" ,type: "text"},

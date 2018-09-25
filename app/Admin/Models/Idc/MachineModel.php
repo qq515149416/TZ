@@ -115,6 +115,7 @@ class MachineModel extends Model
     public function insertMachine($data){
     	if($data){
             DB::beginTransaction();//开启事务
+            $data['created_at'] = date('Y-m-d H:i:s',time());
     		$row = DB::table('idc_machine')->insertGetId($data);//将新增的机器信息插入数据库
     		if($row != 0){
                 // 如果新增机器成功则将机器编号更新到对应的IP库中
@@ -156,6 +157,7 @@ class MachineModel extends Model
     public function editMachine($editdata){
     	if($editdata){
             DB::beginTransaction();//开启事务
+            $editdata['updated_at'] = date('Y-m-d H:i:s',time());
     		$row = DB::table('idc_machine')->where('id',$editdata['id'])->update($editdata);
     		if($row != 0){
                 // 先将原来所属IP的机器编号字段清除，状态修改

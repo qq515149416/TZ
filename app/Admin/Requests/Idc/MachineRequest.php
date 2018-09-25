@@ -50,21 +50,23 @@ class MachineRequest extends FormRequest
 
         } elseif($array_path[$count_path-1] == 'editmachine'){
             $id = Request('id');
-            'machine_num' => 'sometimes|unique:idc_machine,machine_num'.$id,
-            'cpu' => 'sometimes',
-            'memory' => 'sometimes',
-            'harddisk' => 'sometimes',
-            'cabinet' => 'sometimes|integer',
-            'ip_id' => 'sometimes|integer',
-            'machineroom' => 'sometimes|integer',
-            'bandwidth' => 'sometimes|integer',
-            'protect' => 'sometimes|integer',
-            'loginname' => 'sometimes',
-            'loginpass' => 'sometimes',
-            'machine_type' => 'sometimes',
-            'used_status' => 'sometimes|integer',
-            'machine_status' => 'sometimes|integer',
-            'business_type' => 'sometimes|integer',
+            return [
+                'machine_num' => 'sometimes|unique:idc_machine,machine_num,'.$id,
+                'cpu' => 'sometimes',
+                'memory' => 'sometimes',
+                'harddisk' => 'sometimes',
+                'cabinet' => 'sometimes|integer',
+                'ip_id' => 'sometimes|integer',
+                'machineroom' => 'sometimes|integer',
+                'bandwidth' => 'sometimes|integer',
+                'protect' => 'sometimes|integer',
+                'loginname' => 'sometimes',
+                'loginpass' => 'sometimes',
+                'machine_type' => 'sometimes',
+                'used_status' => 'sometimes|integer',
+                'machine_status' => 'sometimes|integer',
+                'business_type' => 'sometimes|integer',
+            ];
         } 
         
     }

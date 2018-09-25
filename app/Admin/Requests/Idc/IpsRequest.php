@@ -62,13 +62,13 @@ class IpsRequest extends FormRequest
         return  [
             'ip_start.required' => 'IP地址必须填写',
             'ip_start.ip' => 'IP地址的填写必须符合IP规范(例:192.168.1.1)',
-            'ip_start.unique' => 'IP地址必须唯一'
+            'ip_start.unique' => 'IP地址必须唯一',
             'ip_end.ip' => 'IP地址的填写必须符合IP规范(例:192.168.1.251)',
             'vlan.required' => 'IP所属局域网必须填写',
             'vlan.integer' => 'IP所属局域网填写必须是整数',
             'ip_company.required' => 'IP所属运营商必须选择',
             'ip_company.integer' => 'IP所属运营商的编号必须是0~2的正整数',
-            'ip_company.min' => 'IP所属运营商的编号必须是0~2的正整数'
+            'ip_company.min' => 'IP所属运营商的编号必须是0~2的正整数',
             'ip_company.max' => 'IP所属运营商的编号必须是0~2的正整数',
             'ip_status.required' => 'IP使用状态必须选择',
             'ip_status.integer' => 'IP使用状态必须为正整数0~3的正整数',

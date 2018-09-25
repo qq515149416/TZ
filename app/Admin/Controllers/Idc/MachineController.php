@@ -83,7 +83,7 @@ class MachineController extends Controller
      */
     public function cabinets(Request $request){
     	
-		$roomid = $request->get('roomid');
+		$roomid = $request->only(['roomid','business_type']);
 		$cabinet = new MachineModel();
 		$result = $cabinet->cabinets($roomid);
 		return tz_ajax_echo($result['data'],$result['msg'],$result['code']);

@@ -261,9 +261,22 @@ class MachineModel extends Model
      * @return array         返回相关的数据和状态提示信息
      */
     public function cabinets($roomid){
+
    		if($roomid){
-   			$cabinets = DB::table('idc_cabinet')
-                            ->where(['machineroom_id'=>$roomid,'use_type'=>0])
+
+            $where = ['machineroom_id'=>$roomid['roomid']];
+            switch($roomid['business_type']) {
+                case 1:
+                    $where['use_type'] = 0;
+                    break;
+                case 2:
+                    $where['use_type'] = 1;
+                    break;
+                default:
+                    break;
+            } 			
+            $cabinets = DB::table('idc_cabinet')
+                            ->where($where)
    							->whereNull('deleted_at')
    							->select('id as cabinetid','cabinet_id')
    							->get();

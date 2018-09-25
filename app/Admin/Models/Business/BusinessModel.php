@@ -34,7 +34,7 @@ class BusinessModel extends Model
 			// 对应业务员的信息
 			$sales_id = Admin::user()->id;
 			$insert['sales_id'] = $sales_id;
-			$sales_name = (array)$this->staff($sales_id);
+			$sales_name = (array)$this->staff($sales_id);	
 			$insert['sales_name'] = $sales_name['fullname'];
 			$row = $this->create($insert);
 			if($row != false){

@@ -7,6 +7,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Collapse from '@material-ui/core/Collapse';
 const ShowStyle = theme => ({
     title_container: {
         overflow: "hidden",
@@ -27,7 +28,8 @@ class Show extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            open: false
+            open: false,
+            isnext: false
         };
     }
     componentDidMount() {
@@ -40,6 +42,9 @@ class Show extends React.Component {
     handleClose = () => {
         this.setState({ open: false });
     };
+    handleClick = () => {
+        this.setState(state => ({ isnext: !state.isnext }));
+    }
     render() {
         const {classes} = this.props;
         return (
@@ -70,6 +75,34 @@ class Show extends React.Component {
                                 <DialogContentText className={classes.title_container}>
                                     <span className={classes.title_type}>{item.label}：</span>
                                     <div className={classes.title_content} dangerouslySetInnerHTML = {{ __html: item.content}}>
+                                    </div>
+                                </DialogContentText>
+                            );
+                        }else if(item.type=="subordinate") {
+                            let content_data = JSON.parse(item.content);
+                            return (
+                                <DialogContentText className={classes.title_container}>
+                                    <div>
+                                        <span className={classes.title_type}>{item.label}：</span>
+                                        <Button onClick={this.handleClick} variant="contained" color="primary">
+                                            {this.state.isnext ? "点击隐藏" : "点击查看更多"}
+                                        </Button>
+                                    </div>
+                                    <div className={classes.title_content} style={{"clear": "both"}}>
+                                        <Collapse in={this.state.isnext}>
+                                            {
+                                                item.subordinate.map(e => (
+                                                    <p>
+                                                        {
+                                                            content_data[e.id] && [
+                                                                <span>{e.label}：</span>,
+                                                                <span>{content_data[e.id]}</span>
+                                                            ]
+                                                        }
+                                                    </p>
+                                                ))
+                                            }
+                                        </Collapse>
                                     </div>
                                 </DialogContentText>
                             );

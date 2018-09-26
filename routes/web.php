@@ -31,7 +31,7 @@ Route::group([
 	Route::get('jun2', 'TzAuth\RegisterController@test2');
 	Route::get('jun3', 'TzAuth\RegisterController@sendCodeToEmail');
 	Route::get('login', 'TzAuth\TestController@login');//TODO 上线前要删除   用户登录模拟登录
-
+    Route::get('userInfo', 'User\InfoController@test');
     Route::get('redis','Test\RedisController@test'); //测试Redis
 });
 
@@ -72,8 +72,8 @@ Route::group([
     Route::get('logout', 'TzAuth\LoginController@logout');  //用户退出登录
     Route::post('loginByEmail', 'TzAuth\LoginController@loginByEmail');  //通过邮箱登录帐号
 
-	
-	
+
+
 
 });
 
@@ -90,17 +90,17 @@ Route::group([
 	Route::group([
 		'middleware' => 'CheckLogin',
 	], function () {
-		//生成订单接口 
+		//生成订单接口
 		Route::get('payIndex', 'Pay\AliPayController@index');
 		//获取指定用户的所有充值单信息
 		Route::get('getOrderByUser', 'Pay\AliPayController@getOrderByUser');
 		//跳转到支付页面的方法
 		Route::get('goToPay', 'Pay\AliPayController@goToPay');
-		
+
 		Route::get('delOrder', 'Pay\AliPayController@delOrder');
 	});
 
-	
+
 	//异步接收支付宝发出通知的接口,支付宝方用的
 	Route::post('payRechargeNotify', 'Pay\AliPayController@rechargeNotify');
 	//用户支付完成后跳转页面
@@ -126,10 +126,10 @@ Route::group([
 		Route::group([
 				'middleware' => 'CheckLogin',
 		], function () {
-			Route::get('businessList', 'Customer\BusinessController@getBusinessList');	
-			Route::get('orderList', 'Customer\OrderController@getOrderList');	
+			Route::get('businessList', 'Customer\BusinessController@getBusinessList');
+			Route::get('orderList', 'Customer\OrderController@getOrderList');
 			Route::get('delOrder', 'Customer\OrderController@delOrder');
-			Route::get('payOrderByBalance', 'Customer\OrderController@payOrderByBalance');								
+			Route::get('payOrderByBalance', 'Customer\OrderController@payOrderByBalance');
 			Route::post('reneworders','Customer\BusinessController@renewOrders');
 			Route::post('resourceorders','Customer\OrderController@resourceOrders');
 			Route::post('renewresource','Customer\OrderController@renewResource');
@@ -151,11 +151,26 @@ Route::group([
 		Route::group([
 			'middleware' => 'CheckLogin',
 		], function () {
-			Route::get('workOrderList', 'Work\WorkOrderController@showWorkOrder');	
+			Route::get('workOrderList', 'Work\WorkOrderController@showWorkOrder');
 			Route::post('insert', 'Work\WorkOrderController@insertWorkOrder');
 			Route::post('del', 'Work\WorkOrderController@deleteWorkOrder');
 			Route::post('cancel', 'Work\WorkOrderController@cancelWorkOrder');
 		});
 
 	});
+
+    /**
+     * 用户信息
+     */
+    Route::group([
+        'prefix'     => 'user',
+    ], function () {
+        Route::group([
+            'middleware' => 'CheckLogin',
+        ], function () {
+            Route::get('getInfo', 'User\InfoController@getInfo');  //获取用户信息
+        });
+
+    });
+
 });

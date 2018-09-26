@@ -8,6 +8,7 @@ namespace App\Http\Controllers\Test;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Auth;
 
 class RedisController extends Controller
 {
@@ -25,7 +26,8 @@ class RedisController extends Controller
 //        dump($data2);
 //        dump('Redis');
 //        dump('Test');//
-
+        $info = Auth::user();
+        dump($info['name']);
 
     }
 

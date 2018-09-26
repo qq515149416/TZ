@@ -12,7 +12,7 @@ const columnData = [
     { id: 'operat', numeric: true, disablePadding: false, extend: true, extendData: [
         {id: "order_number", label: "订单号", type: "text"},
         {id: "resource_detail", label: "资源详情", type: "subordinate", subordinate: [
-          {id: "id", label: "机器编号", type: "text"},
+          {id: "machine_num", label: "机器编号", type: "text"},
           {id: "cpu", label: "CPU", type: "text"},
           {id: "memory", label: "内存", type: "text"},
           {id: "harddisk", label: "硬盘", type: "text"},

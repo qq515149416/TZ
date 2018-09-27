@@ -139,8 +139,6 @@ const styles = theme => ({
       const { classes } = this.props;
       const {  order, orderBy, selected, rowsPerPage, page } = this.state;
       const emptyRows = rowsPerPage - Math.min(rowsPerPage, this.props.data.length - page * rowsPerPage);
-      // console.log(this.props.data);
-     
       return [
           <div>
              {
@@ -178,7 +176,7 @@ const styles = theme => ({
                 {this.props.data
                   .sort(getSorting(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map(n => {
+                  .map((n,i,arr) => {
                     const isSelected = this.isSelected(n.id);
                     return (
                       <TableRow
@@ -218,15 +216,16 @@ const styles = theme => ({
                                 <PostData operattext={this.props.operattext || this.props.title} inputType={this.props.inputType} postType="edit" editData={n} changeData={this.props.changeData} />
                               )}
                               {
-                                (this.props.headTitlesData.find(item => item.id=="operat").extend && this.props.headTitlesData.find(item => item.id=="operat").extendData ) && (
-                                  <ExpansionComponent 
-                                      type="show"
-                                      data={this.props.headTitlesData.find(item => item.id=="operat").extendData.map(item => {
-                                        item.content = n[item.id];
-                                        return item;
-                                      })}
-                                    />
-                                )
+                                (this.props.headTitlesData.find(item => item.id=="operat").extend && this.props.headTitlesData.find(item => item.id=="operat").extendData ) && (<ExpansionComponent 
+                                  type="show"
+                                  data={this.props.headTitlesData.find(item => item.id=="operat").extendData.map((item,index) => {
+                                    // console.log(item,i,arr);
+                                    return {
+                                      ...item,
+                                      content: n[item.id]
+                                    };
+                                  })}
+                                />)
                               }
                               {
                                 (this.props.headTitlesData.find(item => item.id=="operat").extend && this.props.headTitlesData.find(item => item.id=="operat").extendFn ) && (

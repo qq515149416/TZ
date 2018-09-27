@@ -140,7 +140,8 @@ class Order extends Model
 		$row->order_status	= 1;
 		$row->serial_number	= $serial_number;
 		$row->payable_money	= $payable_money;
-		$res = $row->save();			
+		$res = $row->save();	
+		$return = [];		
 		if(!$res){
 			// 
 			DB::rollBack();

@@ -126,15 +126,13 @@ class AliPayController extends Controller
 		}
 		$user_id = Auth::id();
 
-		$info		= $request->only(['trade_id','way','url']);
-		if(!isset($info['trade_id']) || !isset($info['way'])||!isset($info['url']) ){
+		$info		= $request->only(['trade_id','way']);
+		if(!isset($info['trade_id']) || !isset($info['way'])  ){
 			return tz_ajax_echo('','请提供完整信息',0); 
 		}
 		$trade_id 	= $info['trade_id'];
 		$way 		= $info['way'];
-		$url 		= $info['url'];
-		$this->config['return_url'] 	= $this->config['return_url'].'?url='.urlencode($url);
-
+		
 		$model 	= new AliRecharge();
 		$res 		= $model->makePay($trade_id,$user_id);
 		if($res['code'] == 0||$res['code'] == 3){

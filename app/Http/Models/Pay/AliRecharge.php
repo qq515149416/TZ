@@ -37,7 +37,7 @@ class AliRecharge extends Model
 			if($test!=NULL){				
 				$created_at = strtotime($test);
 				$time = time();	
-				if($time - $created_at <= 300){
+				if($time - $created_at <= 3){
 					$return['data'] = '';
 					$return['code'] = 0;
 					$return['msg'] = '5分钟内只能创建一张订单!!!!!';

@@ -286,7 +286,7 @@ class AliPayController extends Controller
 			$return = $model->returnInsert($info);
 		}
 		
-		header("location:/auth/pay.html");	
+		header("location: http://localhost/auth/pay.html");	
 		// 订单号：$data->out_trade_no
 		// 支付宝交易号：$data->trade_no
 		// 订单总金额：$data->total_amount

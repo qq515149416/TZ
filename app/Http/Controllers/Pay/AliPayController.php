@@ -65,7 +65,7 @@ class AliPayController extends Controller
 	public function index(AliPayRequest $request)
 	{
 		//获取支付信息
-		$info = $request->only(['pay_for', 'total_amount','subject']);   
+		$info = $request->only(['pay_for', 'total_amount']);   
 		//这里对接要改,获取user_id 
 
 		
@@ -79,8 +79,8 @@ class AliPayController extends Controller
 		//生成订单参数
 		$order = [
 			'out_trade_no' 	=> 'tz_'.time().'_'.$user_id,	//本地订单号
-			'total_amount' 	=> $info['total_amount'],		//金额
-			'subject' 	=> $info['subject'],		//商品名称
+			'total_amount' 	=> $info['total_amount'],	//金额
+			'subject' 	=> '充值',			//商品名称
 		];
 
 		//根据支付信息生成支付宝的调回地址及异步通知地址
@@ -118,6 +118,7 @@ class AliPayController extends Controller
 	*/
 	public function goToPay(Request $request)
 	{
+		
 		//实际获取
 		$checkLogin = Auth::check();
 		if($checkLogin == false){
@@ -125,12 +126,14 @@ class AliPayController extends Controller
 		}
 		$user_id = Auth::id();
 
-		$info		= $request->only(['trade_id','way']);
-		if(!isset($info['trade_id']) || !isset($info['way']) ){
+		$info		= $request->only(['trade_id','way','url']);
+		if(!isset($info['trade_id']) || !isset($info['way'])||!isset($info['url']) ){
 			return tz_ajax_echo('','请提供完整信息',0); 
 		}
 		$trade_id 	= $info['trade_id'];
 		$way 		= $info['way'];
+		$url 		= $info['url'];
+		$this->config['return_url'] 	= $this->config['return_url'].'/'.$url;
 
 		$model 	= new AliRecharge();
 		$res 		= $model->makePay($trade_id,$user_id);
@@ -252,7 +255,7 @@ class AliPayController extends Controller
 	// }
 
 	//用户支付完成后的跳转页面
-	public function rechargeReturn()
+	public function rechargeReturn($url)
 	{
 		
 		//验签
@@ -285,7 +288,7 @@ class AliPayController extends Controller
 			$return = $model->returnInsert($info);
 		}
 
-		return $return;		
+		header("location:{$url}");	
 		// 订单号：$data->out_trade_no
 		// 支付宝交易号：$data->trade_no
 		// 订单总金额：$data->total_amount

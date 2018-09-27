@@ -106,6 +106,7 @@ Route::group([
 	//用户支付完成后跳转页面
 	Route::get('payRechargeReturn', 'Pay\AliPayController@rechargeReturn');
 
+	
 
 	//获取指定充值单号所有信息
 	Route::get('getOrder', 'Pay\AliPayController@getOrder');
@@ -143,7 +144,7 @@ Route::group([
 			Route::post('insert_work_answer','Customer\WorkAnswerController@insertWorkAnswer');
 		});
 	});
-
+	
 	//用户故障工单路由
 	Route::group([
 		'prefix'     => 'fault',

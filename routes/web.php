@@ -104,7 +104,7 @@ Route::group([
 	//异步接收支付宝发出通知的接口,支付宝方用的
 	Route::post('payRechargeNotify', 'Pay\AliPayController@rechargeNotify');
 	//用户支付完成后跳转页面
-	Route::get('payRechargeReturn/{url}', 'Pay\AliPayController@rechargeReturn');
+	Route::get('payRechargeReturn', 'Pay\AliPayController@rechargeReturn');
 
 
 	//获取指定充值单号所有信息

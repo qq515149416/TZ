@@ -133,7 +133,7 @@ class AliPayController extends Controller
 		$trade_id 	= $info['trade_id'];
 		$way 		= $info['way'];
 		$url 		= $info['url'];
-		$this->config['return_url'] 	= $this->config['return_url'].'/'.$url;
+		$this->config['return_url'] 	= $this->config['return_url'].'?'.$url;
 
 		$model 	= new AliRecharge();
 		$res 		= $model->makePay($trade_id,$user_id);
@@ -255,7 +255,7 @@ class AliPayController extends Controller
 	// }
 
 	//用户支付完成后的跳转页面
-	public function rechargeReturn($url)
+	public function rechargeReturn(Request $request)
 	{
 		
 		//验签
@@ -287,7 +287,14 @@ class AliPayController extends Controller
 			$model = new AliRecharge();
 			$return = $model->returnInsert($info);
 		}
-
+		$url = $request->only(['url']);
+		
+		if(isset($url['url'])){
+			$url = $url['url'];	
+		}else{
+			return '没接收到url';
+		}
+		
 		header("location:{$url}");	
 		// 订单号：$data->out_trade_no
 		// 支付宝交易号：$data->trade_no

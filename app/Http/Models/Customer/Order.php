@@ -183,7 +183,7 @@ class Order extends Model
 				
 			} else {
 				// 修改客户余额失败，进行事务回滚
-				DB::rollBack()
+				DB::rollBack();
 				$return['msg'] 	= '支付失败';
 				$return['code']	= 0;	
 			}

@@ -133,7 +133,7 @@ class AliPayController extends Controller
 		$trade_id 	= $info['trade_id'];
 		$way 		= $info['way'];
 		$url 		= $info['url'];
-		$this->config['return_url'] 	= $this->config['return_url'].'?'.$url;
+		$this->config['return_url'] 	= $this->config['return_url'].'?url='.urlencode($url);
 
 		$model 	= new AliRecharge();
 		$res 		= $model->makePay($trade_id,$user_id);
@@ -288,9 +288,9 @@ class AliPayController extends Controller
 			$return = $model->returnInsert($info);
 		}
 		$url = $request->only(['url']);
-		
+
 		if(isset($url['url'])){
-			$url = $url['url'];	
+			$url = urldecode($url['url']);	
 		}else{
 			return '没接收到url';
 		}

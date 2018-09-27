@@ -255,7 +255,7 @@ class AliPayController extends Controller
 	// }
 
 	//用户支付完成后的跳转页面
-	public function rechargeReturn(Request $request)
+	public function rechargeReturn()
 	{
 		
 		//验签
@@ -287,15 +287,8 @@ class AliPayController extends Controller
 			$model = new AliRecharge();
 			$return = $model->returnInsert($info);
 		}
-		$url = $request->only(['url']);
-
-		if(isset($url['url'])){
-			$url = urldecode($url['url']);	
-		}else{
-			return '没接收到url';
-		}
 		
-		header("location:{$url}");	
+		header("location:/auth/pay.html");	
 		// 订单号：$data->out_trade_no
 		// 支付宝交易号：$data->trade_no
 		// 订单总金额：$data->total_amount

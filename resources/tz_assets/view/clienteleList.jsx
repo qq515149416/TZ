@@ -11,25 +11,26 @@ const columnData = [
     { id: 'status', numeric: true, disablePadding: false, label: '状态' },
     { id: 'created_at', numeric: true, disablePadding: false, label: '创建时间' },
     { id: 'updated_at', numeric: true, disablePadding: false, label: '更新时间' },
-    { id: 'operat', numeric: true, disablePadding: false, extend: true, extendFn: (data) => {
-        return new Promise((resolve,reject) => {
-            post("business/pull_black",{
-                status: 0,
-                id: data.id
-            }).then((res) => {
-                if(res.data.code==1) {
-                    alert("拉黑成功");
-                    resolve(res.data);
-                } else {
-                    alert("拉黑失败");
-                    resolve(res.data);
-                }
-            }).catch(reject);
-        });
-    },tipData: {
+    { id: 'operat', numeric: true, disablePadding: false, extend: true,  extendConfirm: {
         title: "拉黑操作",
-        content: "是否要执行拉黑操作"
-    } ,extendElement: (data) => {
+        content: "是否要执行拉黑操作",
+        ok: (data) => {
+            return new Promise((resolve,reject) => {
+                post("business/pull_black",{
+                    status: 0,
+                    id: data.id
+                }).then((res) => {
+                    if(res.data.code==1) {
+                        alert("拉黑成功");
+                        resolve(res.data);
+                    } else {
+                        alert("拉黑失败");
+                        resolve(res.data);
+                    }
+                }).catch(reject);
+            });
+        }
+      } ,extendElement: (data) => {
         return <ResetPassword {...data} />;
     }, extendUrl: {
         title: "添加业务",

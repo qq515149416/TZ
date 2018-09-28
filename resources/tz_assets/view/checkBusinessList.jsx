@@ -1,5 +1,6 @@
 import React from "react";
 import ListTableComponent from "../component/listTableComponent.jsx";
+import {post} from "../tool/http.js";
 import { inject,observer } from "mobx-react";
 const columnData = [
     { id: 'client_name', numeric: true, disablePadding: true, label: '客户' },
@@ -28,7 +29,45 @@ const columnData = [
         {id: "start_time", label: "业务开始时间" ,type: "text"},
         {id: "endding_time", label: "业务结束时间" ,type: "text"},
         {id: "business_note", label: "业务备注" ,type: "text"}
-    ], label: '操作' }
+    ], extendConfirm: {
+      title: "审核操作",
+      content: "是否要通过此业务审核",
+      input: true,
+      ok: (data) => {
+        return new Promise((resolve,reject) => {
+            post("business/check",{
+                business_number: data.business_number,
+                business_status: 1,
+                check_note: data.note
+            }).then((res) => {
+                if(res.data.code==1) {
+                    alert("审核成功");
+                    resolve(res.data);
+                } else {
+                    alert(res.data.msg);
+                    resolve(res.data);
+                }
+            }).catch(reject);
+        });
+      },
+      cancel: (data) => {
+        return new Promise((resolve,reject) => {
+          post("business/check",{
+              business_number: data.business_number,
+              business_status: -2,
+              check_note: data.note
+          }).then((res) => {
+              if(res.data.code==1) {
+                  alert("审核成功");
+                  resolve(res.data);
+              } else {
+                  alert(res.data.msg);
+                  resolve(res.data);
+              }
+          }).catch(reject);
+      });
+      }
+    }, label: '操作' }
 ];
 const inputType = [
 ];
@@ -36,6 +75,9 @@ const inputType = [
 @observer 
 class CheckBusinessList extends React.Component {
   componentDidMount() {
+    this.props.businessStores.getAllData();
+  }
+  updata() {
     this.props.businessStores.getAllData();
   }
   render() {
@@ -46,6 +88,7 @@ class CheckBusinessList extends React.Component {
         inputType={inputType} 
         headTitlesData={columnData} 
         data={this.props.businessStores.business}  
+        updata={this.updata.bind(this)}
       />
     );
   }

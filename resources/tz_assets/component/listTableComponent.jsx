@@ -181,14 +181,13 @@ const styles = theme => ({
                     return (
                       <TableRow
                         hover
-                        onClick={event => this.handleClick(event, n.id)}
                         role="checkbox"
                         aria-checked={isSelected}
                         tabIndex={-1}
                         key={n.id}
                         selected={isSelected}
                       >
-                        <TableCell className={classes.tdFirst} padding="checkbox">
+                        <TableCell onClick={event => this.handleClick(event, n.id)} className={classes.tdFirst} padding="checkbox">
                           <Checkbox checked={isSelected} />
                         </TableCell>
                         {
@@ -228,12 +227,14 @@ const styles = theme => ({
                                 />)
                               }
                               {
-                                (this.props.headTitlesData.find(item => item.id=="operat").extend && this.props.headTitlesData.find(item => item.id=="operat").extendFn ) && (
+                                (this.props.headTitlesData.find(item => item.id=="operat").extend && this.props.headTitlesData.find(item => item.id=="operat").extendConfirm ) && (
                                   <ExpansionComponent 
-                                      type="function"
-                                      tip_title={this.props.headTitlesData.find(item => item.id=="operat").tipData.title}
-                                      tip_content={this.props.headTitlesData.find(item => item.id=="operat").tipData.content}
-                                      fn={this.props.headTitlesData.find(item => item.id=="operat").extendFn}
+                                      type="confirm"
+                                      tip_title={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.title}
+                                      tip_content={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.content}
+                                      ok={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.ok}
+                                      cancel={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.cancel}
+                                      input={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.input}
                                       data={n}
                                       updata = {this.props.updata}
                                     />

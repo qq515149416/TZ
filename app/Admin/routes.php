@@ -71,6 +71,7 @@ Route::group([
     $router->get('/hr/employeeManagement', 'Show\EmployeeManagementController@index');
     $router->get('/crm/clientele', 'Show\ClienteleController@index');
     $router->get('/business', 'Show\BusinessController@index');
+    $router->get('/checkbusiness', 'Show\CheckBusinessController@index');
 
 
 //人事

@@ -43,5 +43,6 @@ export const domIds = [
     "machine_library",
     "employeeManagement_list",
     "clientele",
-    "business"
+    "business",
+    "checkBusiness"
 ];

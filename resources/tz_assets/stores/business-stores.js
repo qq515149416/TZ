@@ -84,6 +84,14 @@ class BusinessStores extends ActionBoundStores {
         });
     }
     @action.bound 
+    getAllData() {
+        get("business/security").then(res => {
+            if(res.data.code==1) {
+                this.business = res.data.data.map(item => new BusinesStores(item));
+            }
+        });
+    }
+    @action.bound 
     getData(id) {
         get("business/showbusiness",{
             client_id: id
@@ -91,7 +99,7 @@ class BusinessStores extends ActionBoundStores {
             if(res.data.code==1) {
                 this.business = res.data.data.map(item => new BusinesStores(item));
             }
-        })
+        });
     }
 }
 export default BusinessStores;

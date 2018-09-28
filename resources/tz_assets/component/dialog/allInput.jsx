@@ -40,7 +40,8 @@ class AllInput extends React.Component {
         super(props);
         this.state = {
             open: false,
-            inputAttr: this.inputAttr()
+            inputAttr: this.inputAttr(),
+            componentPropsType: "machine" 
         };
         this.editor = null;
     }
@@ -149,6 +150,17 @@ class AllInput extends React.Component {
             value: event.target.value
         };
         let currentItem = this.props.inputType.find(item=>item.field==name.split(".")[0]);
+        this.props.inputType.forEach(inputTypeData => {
+            if(inputTypeData.rule&&inputTypeData.rule.type=="component") {
+                let currentValue =  inputTypeData.rule.execute.find(item => item.index == this[inputTypeData.rule.term].value);
+                // console.log(currentValue,this[inputTypeData.rule.term].value);
+                if(currentValue) {
+                    this.setState({
+                        componentPropsType: currentValue.value
+                    });
+                }
+            }
+        });
         if(currentItem.model) {
             if(this.props.editData) {
                 currentItem.model.getSubordinateData && currentItem.model.getSubordinateData(this,"edit");
@@ -195,10 +207,11 @@ class AllInput extends React.Component {
             case "component":
                 if(status) {
                     const {Component} = inputTypeData;
+                    
                     return (
                         <div>
                             <span>{inputTypeData.label}</span>
-                            <Component setComponentParam={(data) => this.setComponentParam(inputTypeData.field,data)} />
+                            <Component type={this.state.componentPropsType} setComponentParam={(data) => this.setComponentParam(inputTypeData.field,data)} />
                         </div>
                     );
                 } else {

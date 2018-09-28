@@ -101,7 +101,7 @@ class BusinessModel extends Model
                     //业务开始时间
                     $start_time = Carbon::now()->toDateTimeString();
                     //到期时间的计算
-                    $end_time = Carbon::parse('+'.$data['duration'].' months')->toDateTimeString();
+                    $end_time = Carbon::parse('+'.$check['length'].' months')->toDateTimeString();
                     // 订单号的生成规则：前两位（11-40的随机数）+ 年月日（如:20180830） + 时间戳的后5位数 + 1（新购）/2（续费）
                     $order_sn = mt_rand(4,6).date("ymd",time()).substr(time(),8,2).mt_rand(1,3);
                     $business['order_number'] = (int)$order_sn;
@@ -112,17 +112,17 @@ class BusinessModel extends Model
                     if($business_row != 0){
                         // 业务审核成功继续进行订单表的生成
                         $order['order_sn'] = (int)$order_sn;
-                        $order['business_sn'] = $check->business_number;
-                        $order['customer_id'] = $check->client_id;
-                        $order['customer_name'] = $check->client_name;
-                        $order['business_id'] = $check->sales_id;
-                        $order['business_name'] = $check->sales_name;
-                        $order['resource_type'] = $check->business_type;
+                        $order['business_sn'] = $check['business_number'];
+                        $order['customer_id'] = $check['client_id'];
+                        $order['customer_name'] = $check['client_name'];
+                        $order['business_id'] = $check['sales_id'];
+                        $order['business_name'] = $check['sales_name'];
+                        $order['resource_type'] = $check['business_type'];
                         $order['order_type'] = 1;
-                        $order['machine_sn'] = $check->machine_number;
-                        $order['price'] = $check->money;//单价
-                        $order['duration'] = $check->length;//时长
-                        $order['resource'] = $check->machine_number;//机器的话为IP/机柜则为机柜编号
+                        $order['machine_sn'] = $check['machine_number'];
+                        $order['price'] = $check['money'];//单价
+                        $order['duration'] = $check['length'];//时长
+                        $order['resource'] = $check['machine_number'];//机器的话为IP/机柜则为机柜编号
                         $order['end_time'] = $end_time;
                         $order['payable_money'] = bcmul((string)$order['price'],(string)$order['duration'],2);//应付金额
                         $order['created_at']  = Carbon::now()->toDateTimeString();

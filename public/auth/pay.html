@@ -14,14 +14,11 @@
                 trade_no: location.search.substr(1).split("=")[1]
             },function(data) {
                 if(data.code==1) {
-                    if(data.data.trade_status==1) {
-                        alert("支付成功");
-                        location.href = "http://"+location.hostname+"/tz";
-                    } else {
-                        alert("支付失败");
-                        location.href = "http://"+location.hostname+"/tz";
-                    }
+                    alert("支付成功");
+                } else {
+                    alert("支付失败，请重新充值");
                 }
+                location.href = "http://"+location.hostname+"/tz";
             });
         }
     </script>

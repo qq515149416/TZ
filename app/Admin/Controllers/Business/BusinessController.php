@@ -78,7 +78,7 @@ class BusinessController extends Controller
      * @return json 返回相关操作的数据和状态及提示信息
      */
     public function checkBusiness(Request $request){
-		$data = $request->only(['business_number','id','business_status','client_id','client_name','sales_id','sales_name','business_type','machine_number','resource','money','length','check_note']);
+		$data = $request->only(['business_number','business_status','check_note']);
 		$check = new BusinessModel();
 		$return = $check->checkBusiness($data);
 		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);

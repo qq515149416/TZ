@@ -41,13 +41,18 @@ class InputExpansion extends React.Component {
         const {classes} = this.props;
         return (
             <div>
-                <Button variant="contained" onClick={this.handleOpen("machine")} color="primary">
-                    {this.state.machineText}
-                </Button>
-                <span className={ classes.decoration }>/</span>
-                <Button variant="contained" onClick={this.handleOpen("cabinet")} color="primary">
-                    {this.state.cabinetText}
-                </Button>
+                {
+                    this.props.type=="machine" ? (
+                        <Button variant="contained" onClick={this.handleOpen("machine")} color="primary">
+                            {this.state.machineText}
+                        </Button>
+                    ) : (
+                        <Button variant="contained" onClick={this.handleOpen("cabinet")} color="primary">
+                            {this.state.cabinetText}
+                        </Button>
+                    )
+                }
+                {/* <span className={ classes.decoration }>/</span> */}
                 <IinkageOption setCurrentData={this.setCurrentData} getRef={(ref) => this.iinkageOption = ref} />
             </div>
         );

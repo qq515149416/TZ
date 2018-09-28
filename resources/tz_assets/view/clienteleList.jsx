@@ -3,6 +3,7 @@ import ListTableComponent from "../component/listTableComponent.jsx";
 import { inject,observer } from "mobx-react";
 import {post} from "../tool/http.js";
 import ResetPassword from "../component/dialog/resetPassword.jsx";
+
 const columnData = [
     // { id: 'name', numeric: true, disablePadding: false, label: '用户名' },
     { id: 'email', numeric: true, disablePadding: false, label: '邮箱地址' },
@@ -12,6 +13,11 @@ const columnData = [
     { id: 'created_at', numeric: true, disablePadding: false, label: '创建时间' },
     { id: 'updated_at', numeric: true, disablePadding: false, label: '更新时间' },
     { id: 'operat', numeric: true, disablePadding: false, extend: true,  extendConfirm: {
+        rule: {
+            term: "status",
+            execute: "拉黑",
+            type: "unequal"
+        },
         title: "拉黑操作",
         content: "是否要执行拉黑操作",
         ok: (data) => {

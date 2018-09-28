@@ -30,6 +30,11 @@ const columnData = [
         {id: "endding_time", label: "业务结束时间" ,type: "text"},
         {id: "business_note", label: "业务备注" ,type: "text"}
     ], extendConfirm: {
+      rule: {
+        term: "business_status",
+        execute: 0,
+        type: "equal"
+      },
       title: "审核操作",
       content: "是否要通过此业务审核",
       input: true,

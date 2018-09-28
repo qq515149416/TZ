@@ -13,6 +13,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import AddIcon from '@material-ui/icons/Add';
+import TextField from '@material-ui/core/TextField';
 class ExpansionComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -21,17 +22,34 @@ class ExpansionComponent extends React.Component {
         };
     }
     confirm_run = () => {
-        this.props.fn(this.props.data).then((data) => {
-            if(data.code==1) {
-                this.props.updata && this.props.updata();
-                this.confirm_hide();
-            }
-        });
+        if(this.props.ok) {
+            this.props.data.note = this.note.value;
+            this.props.ok(this.props.data).then((data) => {
+                if(data.code==1) {
+                    this.props.updata && this.props.updata();
+                    this.setState({
+                        confirm: false
+                    });
+                }
+            });
+        }
     }
-    confirm_hide = () => {
-        this.setState({
-            confirm: false
-        });
+    confirm_hide = type => event => {
+        if(type=="cancel" && this.props.cancel) {
+            this.props.data.note = this.note.value;
+            this.props.cancel(this.props.data).then((data) => {
+                if(data.code==1) {
+                    this.props.updata && this.props.updata();
+                    this.setState({
+                        confirm: false
+                    });
+                }
+            });
+        } else {
+            this.setState({
+                confirm: false
+            });
+        }
     }
     confirm_show = () => {
         this.setState({
@@ -67,7 +85,7 @@ class ExpansionComponent extends React.Component {
                 />
             ];
         }
-        if(type=="function") {
+        if(type=="confirm") {
             return [
                 <Tooltip title={this.props.tip_title}>
                     <IconButton onClick={this.confirm_show} aria-label="startFunction">
@@ -76,7 +94,7 @@ class ExpansionComponent extends React.Component {
                 </Tooltip>,
                 <Dialog
                 open={this.state.confirm}
-                onClose={this.confirm_hide}
+                onClose={this.confirm_hide("hide")}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
               >
@@ -85,9 +103,21 @@ class ExpansionComponent extends React.Component {
                   <DialogContentText id="alert-dialog-description">
                     {this.props.tip_content}
                   </DialogContentText>
+                  {
+                      this.props.input && (
+                        <DialogContentText id="alert-dialog-input">
+                            <TextField
+                                id="note"
+                                label="备注"
+                                margin="normal"
+                                inputRef={ref => this.note = ref}
+                            />
+                        </DialogContentText>
+                      )
+                  }
                 </DialogContent>
                 <DialogActions>
-                  <Button onClick={this.confirm_hide} color="primary" autoFocus>
+                  <Button onClick={this.confirm_hide("cancel")} color="primary" autoFocus>
                     取消
                   </Button>
                   <Button onClick={this.confirm_run} color="primary">

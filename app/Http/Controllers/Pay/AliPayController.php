@@ -352,7 +352,6 @@ class AliPayController extends Controller
 		
 		$model 	= new AliRecharge();
 		$res 		= $model->checkOrder($user_id,4);
-		dd($res);exit;
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
 

@@ -77,7 +77,7 @@ class OrdersController extends Controller
      * @return json           返回相关的状态提示及信息
      */
     public function renewOrders(Request $request){
-        $data = $request->only(['id','client_id','client_name','sales_id','slaes_name','business_number','machine_number','resource_detail','money','length','endding_time','order_note','order_type','business_type']);
+        $data = $request->only(['business_number','money','length','order_note']);
         $renew = new OrdersModel();
         $result = $renew->renewOrders($data);
         return tz_ajax_echo($result,$result['msg'],$result['code']);
@@ -89,7 +89,7 @@ class OrdersController extends Controller
      * @return json           续费的反馈信息和提示
      */
     public function renewResource(Request $request){
-        $renew_data = $request->only(['customer_id','customer_name','business_sn','business_id','business_name','resource_type','machine_sn','resource','price','duration','end_time','order_note']);
+        $renew_data = $request->only(['customer_id','customer_name','business_sn','resource_type','machine_sn','resource','price','duration','end_time','order_note']);
         $renew = new OrdersModel();
         $renew_resource = $renew->renewResource($renew_data);
         return tz_ajax_echo($renew_resource,$renew_resource['msg'],$renew_resource['code']);

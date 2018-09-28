@@ -4,9 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>支付确认页</title>
 </head>
 <body>
-    
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript">
+        if(location.search.indexOf("?order")!=-1) {
+            $.get("http://"+location.hostname+"/home/getOrder",{
+                trade_no: location.search.substr(1).split("=")[1]
+            },function(data) {
+                if(data.code==1) {
+                    if(data.data.trade_status==1) {
+                        alert("支付成功");
+                        location.href = "http://"+location.hostname+"/tz";
+                    } else {
+                        alert("支付失败");
+                        location.href = "http://"+location.hostname+"/tz";
+                    }
+                }
+            });
+        }
+    </script>
 </body>
 </html>

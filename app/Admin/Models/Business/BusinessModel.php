@@ -90,8 +90,8 @@ class BusinessModel extends Model
    public function checkBusiness($where){
         if($where){
             $check_where = ['business_number'=>$where['business_number']];
-            $check = DB::table('tz_business')->where($check_where)->select('client_id','client_name','sales_id','sales_name','business_type','machine_number','money','length')->first();
-            if(!$check->isEmpty()){
+            $check = DB::table('tz_business')->where($check_where)->select('client_id', 'business_number','client_name','sales_id','sales_name','business_type','machine_number','money','length')->first();
+            if(!empty($check)){
                 // 业务表审核时更新的字段
                 $business['business_status'] = $where['business_status'];
                 $business['check_note'] = $where['check_note'];
@@ -101,28 +101,29 @@ class BusinessModel extends Model
                     //业务开始时间
                     $start_time = Carbon::now()->toDateTimeString();
                     //到期时间的计算
-                    $end_time = Carbon::parse('+'.$check['length'].' months')->toDateTimeString();
+                    $end_time = Carbon::parse('+'.$check->length.' months')->toDateTimeString();
                     // 订单号的生成规则：前两位（11-40的随机数）+ 年月日（如:20180830） + 时间戳的后5位数 + 1（新购）/2（续费）
                     $order_sn = mt_rand(4,6).date("ymd",time()).substr(time(),8,2).mt_rand(1,3);
+                    
                     $business['order_number'] = (int)$order_sn;
                     $business['start_time'] = $start_time;
                     $business['endding_time'] = $end_time;
-                    $business['update_at'] = Carbon::now()->toDateTimeString();
+                    $business['updated_at'] = Carbon::now()->toDateTimeString();
                     $business_row = DB::table('tz_business')->where($check_where)->update($business);
                     if($business_row != 0){
                         // 业务审核成功继续进行订单表的生成
                         $order['order_sn'] = (int)$order_sn;
-                        $order['business_sn'] = $check['business_number'];
-                        $order['customer_id'] = $check['client_id'];
-                        $order['customer_name'] = $check['client_name'];
-                        $order['business_id'] = $check['sales_id'];
-                        $order['business_name'] = $check['sales_name'];
-                        $order['resource_type'] = $check['business_type'];
+                        $order['business_sn'] = $check->business_number;
+                        $order['customer_id'] = $check->client_id;
+                        $order['customer_name'] = $check->client_name;
+                        $order['business_id'] = $check->sales_id;
+                        $order['business_name'] = $check->sales_name;
+                        $order['resource_type'] = $check->business_type;
                         $order['order_type'] = 1;
-                        $order['machine_sn'] = $check['machine_number'];
-                        $order['price'] = $check['money'];//单价
-                        $order['duration'] = $check['length'];//时长
-                        $order['resource'] = $check['machine_number'];//机器的话为IP/机柜则为机柜编号
+                        $order['machine_sn'] = $check->machine_number;
+                        $order['price'] = $check->money;//单价
+                        $order['duration'] = $check->length;//时长
+                        $order['resource'] = $check->machine_number;//机器的话为IP/机柜则为机柜编号
                         $order['end_time'] = $end_time;
                         $order['payable_money'] = bcmul((string)$order['price'],(string)$order['duration'],2);//应付金额
                         $order['created_at']  = Carbon::now()->toDateTimeString();

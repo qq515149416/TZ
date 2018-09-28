@@ -134,7 +134,41 @@ const styles = theme => ({
     };
   
     isSelected = id => this.state.selected.indexOf(id) !== -1;
-
+    renderExpansionComponent = (data) => {
+      if(this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.rule && this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.rule.type=="equal") {
+        if(this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.rule.execute==data[this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.rule.term]) {
+          return (
+            <ExpansionComponent 
+              type="confirm"
+              tip_title={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.title}
+              tip_content={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.content}
+              ok={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.ok}
+              cancel={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.cancel}
+              input={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.input}
+              data={data}
+              updata = {this.props.updata}
+            />
+          );
+        }
+      }
+      if(this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.rule && this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.rule.type=="unequal") {
+        if(this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.rule.execute!=data[this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.rule.term]) {
+          return (
+            <ExpansionComponent 
+              type="confirm"
+              tip_title={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.title}
+              tip_content={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.content}
+              ok={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.ok}
+              cancel={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.cancel}
+              input={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.input}
+              data={data}
+              updata = {this.props.updata}
+            />
+          );
+        }
+      }
+      
+    }
     render() {
       const { classes } = this.props;
       const {  order, orderBy, selected, rowsPerPage, page } = this.state;
@@ -227,18 +261,7 @@ const styles = theme => ({
                                 />)
                               }
                               {
-                                (this.props.headTitlesData.find(item => item.id=="operat").extend && this.props.headTitlesData.find(item => item.id=="operat").extendConfirm ) && (
-                                  <ExpansionComponent 
-                                      type="confirm"
-                                      tip_title={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.title}
-                                      tip_content={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.content}
-                                      ok={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.ok}
-                                      cancel={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.cancel}
-                                      input={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.input}
-                                      data={n}
-                                      updata = {this.props.updata}
-                                    />
-                                )
+                                (this.props.headTitlesData.find(item => item.id=="operat").extend && this.props.headTitlesData.find(item => item.id=="operat").extendConfirm ) && this.renderExpansionComponent(n)
                               }
                               {
                                 (this.props.headTitlesData.find(item => item.id=="operat").extend && this.props.headTitlesData.find(item => item.id=="operat").extendElement ) && (

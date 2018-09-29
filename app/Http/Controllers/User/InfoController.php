@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class InfoController extends Controller
 {
+
     /**
      * 获取帐号信息
      *

@@ -20,12 +20,9 @@ class CheckLogin
     public function handle($request, Closure $next)
     {
         if (!Auth::check()) {
-            dump('未登录');
+           
             return redirect('/');
-//            return
         }
         return $next($request);
-
     }
-
 }

@@ -122,6 +122,16 @@ class BusinessModel extends Model
             }
             return $return;
         }
+        // 审核通过前验证业务机器是否未使用，如果是使用直接返回提示
+        $machine_where['machine_num'] = $check->machine_number;
+        $machine_where['used_status'] = 0;
+        $machine_status = DB::table('idc_machine')->where($machine_where)->select('id','machine_num','used_status')->first();
+        if(empty($machine_status)){
+            $return['data'] = '该业务机器已经被使用,请通知业务员重新选择机器';
+            $return['code'] = 0;
+            $return['msg'] = '该业务机器已经被使用,请通知业务员重新选择机器';
+            return $return;
+        }
         // 如果审核为通过则继续进行订单表的生成
         DB::beginTransaction();//开启事务处理
         //业务开始时间

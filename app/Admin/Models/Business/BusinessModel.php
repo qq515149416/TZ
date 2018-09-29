@@ -133,7 +133,7 @@ class BusinessModel extends Model
         $business['order_number'] = (int)$order_sn;
         $business['start_time'] = $start_time;
         $business['endding_time'] = $end_time;
-        $business['update_at'] = Carbon::now()->toDateTimeString();
+        $business['updated_at'] = Carbon::now()->toDateTimeString();
         $business_row = DB::table('tz_business')->where($check_where)->update($business);
         if($business_row == 0){
             // 业务审核失败

@@ -61,6 +61,7 @@ class OrderController extends Controller
 		$user_id = Auth::id();
 		$orderModel = new Order();
 		$info = $request->only('order_id');
+		// dump($info);
 		$order_id = $info['order_id'];
 	
 		$return = $orderModel->delOrder($user_id,$order_id);

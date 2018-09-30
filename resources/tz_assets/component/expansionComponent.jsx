@@ -23,7 +23,9 @@ class ExpansionComponent extends React.Component {
     }
     confirm_run = () => {
         if(this.props.ok) {
-            this.props.data.note = this.note.value;
+            if(this.note) {
+                this.props.data.note = this.note.value;
+            }
             this.props.ok(this.props.data).then((data) => {
                 if(data.code==1) {
                     this.props.updata && this.props.updata();
@@ -36,7 +38,9 @@ class ExpansionComponent extends React.Component {
     }
     confirm_hide = type => event => {
         if(type=="cancel" && this.props.cancel) {
-            this.props.data.note = this.note.value;
+            if(this.note) {
+                this.props.data.note = this.note.value;
+            }
             this.props.cancel(this.props.data).then((data) => {
                 if(data.code==1) {
                     this.props.updata && this.props.updata();

@@ -29,8 +29,8 @@ class AliPayController extends Controller
 	protected $config = [
 		'app_id' => '',
 		'notify_url' => 'http://tz.jungor.cn/home/payRechargeNotify',
-		'return_url' => 'http://tz.jungor.cn/home/payRechargeReturn',
-		//'return_url' => 'http://localhost/home/payRechargeReturn',
+		// 'return_url' => 'http://tz.jungor.cn/home/payRechargeReturn',
+		'return_url' => 'http://localhost/home/payRechargeReturn',
 		'ali_public_key' => '',
 		// 加密方式： **RSA2**  
 		'private_key' => '',

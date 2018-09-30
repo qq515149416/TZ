@@ -14,6 +14,7 @@ import EnhancedTableHead from "./listTable/enhancedTableHead.jsx";
 import EnhancedTableToolbar from "./listTable/enhancedTableToolbar.jsx";
 import ExpansionComponent from "./expansionComponent.jsx";
 import FilterTableToolbar from "./listTable/filterTableToolbar.jsx";
+const qs = require('qs');
 
 function getSorting(order, orderBy) {
     return order === 'desc'
@@ -273,7 +274,12 @@ const styles = theme => ({
                                   <ExpansionComponent 
                                       type="link"
                                       title={this.props.headTitlesData.find(item => item.id=="operat").extendUrl.title}
-                                      link={this.props.headTitlesData.find(item => item.id=="operat").extendUrl.link+"?id="+n.id}
+                                      link={this.props.headTitlesData.find(item => item.id=="operat").extendUrl.link+"?"+qs.stringify(Object.keys(n).reduce((result,item) => {
+                                        if(this.props.headTitlesData.find(item => item.id=="operat").extendUrl.param && this.props.headTitlesData.find(item => item.id=="operat").extendUrl.param.find(e => item==e)) {
+                                          result[item] = n[item];
+                                        }
+                                        return result;
+                                      },{}))}
                                     />
                                 )
                               }

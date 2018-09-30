@@ -72,7 +72,7 @@ Route::group([
     $router->get('/crm/clientele', 'Show\ClienteleController@index');
     $router->get('/business', 'Show\BusinessController@index');
     $router->get('/checkbusiness', 'Show\CheckBusinessController@index');
-
+    $router->get('/business/order', 'Show\OrderController@index');
 
 //人事
     Route::group([

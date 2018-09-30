@@ -1,8 +1,10 @@
 import React from "react";
 import ListTableComponent from "../component/listTableComponent.jsx";
 import InputExpansion from "../component/dialog/inputExpansion.jsx";
+import OrderShow from "../component/dialog/orderShow.jsx";
 import {post} from "../tool/http.js";
 import { inject,observer } from "mobx-react";
+const qs = require('qs');
 const columnData = [
     { id: 'client_name', numeric: true, disablePadding: true, label: '客户' },
     { id: 'sales_name', numeric: true, disablePadding: true, label: '业务员' },
@@ -54,7 +56,11 @@ const columnData = [
               }).catch(reject);
           });
       }
-    }, label: '操作' }
+    }, extendUrl: {
+      title: "全部订单",
+      link: "/tz_admin/business/order",
+      param: ["business_number"]
+  }, label: '操作' }
 ];
 const inputType = [
   {
@@ -129,14 +135,10 @@ const inputType = [
 @observer 
 class BusinesList extends React.Component {
   componentDidMount() {
-    if(location.search.indexOf("?id=")!=-1&&location.search.indexOf("&")==-1) {
-        this.props.businessStores.getData(location.search.substr(1).split("=")[1]);
-    }
+    this.props.businessStores.getData(qs.parse(location.search.substr(1)).id);
   }
   updata() {
-    if(location.search.indexOf("?id=")!=-1&&location.search.indexOf("&")==-1) {
-        this.props.businessStores.getData(location.search.substr(1).split("=")[1]);
-    }
+    this.props.businessStores.getData(qs.parse(location.search.substr(1)).id);
   }
   addData = (param,callbrak) => {
     if(location.search.indexOf("?id=")!=-1&&location.search.indexOf("&")==-1) {

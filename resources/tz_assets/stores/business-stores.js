@@ -14,6 +14,7 @@ class BusinesStores {
     @observable type = "";
     @observable machine_number = "";
     @observable resource_detail = "";
+    @observable resource_detail_json = {};
     @observable business_status = "";
     @observable money = 0;
     @observable length = 0;
@@ -39,7 +40,8 @@ class BusinesStores {
         endding_time,
         business_note,
         type,
-        status
+        status,
+        resource_detail_json
     }) {
         Object.assign(this,{
             id,
@@ -59,7 +61,8 @@ class BusinesStores {
             endding_time,
             business_note,
             type,
-            status
+            status,
+            resource_detail_json
         });
     }
 }
@@ -87,7 +90,9 @@ class BusinessStores extends ActionBoundStores {
     getAllData() {
         get("business/security").then(res => {
             if(res.data.code==1) {
-                this.business = res.data.data.map(item => new BusinesStores(item));
+                this.business = res.data.data.map(item => new BusinesStores(Object.assign(item,{
+                    resource_detail_json: JSON.parse(item.resource_detail)
+                })));
             }
         });
     }
@@ -97,7 +102,9 @@ class BusinessStores extends ActionBoundStores {
             client_id: id
         }).then(res => {
             if(res.data.code==1) {
-                this.business = res.data.data.map(item => new BusinesStores(item));
+                this.business = res.data.data.map(item => new BusinesStores(Object.assign(item,{
+                    resource_detail_json: JSON.parse(item.resource_detail)
+                })));
             }
         });
     }

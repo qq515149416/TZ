@@ -1,6 +1,7 @@
 import React from "react";
 import ListTableComponent from "../component/listTableComponent.jsx";
 import InputExpansion from "../component/dialog/inputExpansion.jsx";
+import {post} from "../tool/http.js";
 import { inject,observer } from "mobx-react";
 const columnData = [
     { id: 'client_name', numeric: true, disablePadding: true, label: '客户' },
@@ -29,7 +30,31 @@ const columnData = [
         {id: "start_time", label: "业务开始时间" ,type: "text"},
         {id: "endding_time", label: "业务结束时间" ,type: "text"},
         {id: "business_note", label: "业务备注" ,type: "text"}
-    ], label: '操作' }
+    ],extendConfirm: {
+      rule: {
+        term: "business_status",
+        execute: 1,
+        type: "equal"
+    },
+      title: "业务操作",
+      content: "是否要启用此业务？",
+      ok: (data) => {
+          return new Promise((resolve,reject) => {
+              post("business/enable",{
+                  business_status: 3,
+                  id: data.id
+              }).then((res) => {
+                  if(res.data.code==1) {
+                      alert("启用成功");
+                      resolve(res.data);
+                  } else {
+                      alert(res.data.msg);
+                      resolve(res.data);
+                  }
+              }).catch(reject);
+          });
+      }
+    }, label: '操作' }
 ];
 const inputType = [
   {
@@ -108,6 +133,11 @@ class BusinesList extends React.Component {
         this.props.businessStores.getData(location.search.substr(1).split("=")[1]);
     }
   }
+  updata() {
+    if(location.search.indexOf("?id=")!=-1&&location.search.indexOf("&")==-1) {
+        this.props.businessStores.getData(location.search.substr(1).split("=")[1]);
+    }
+  }
   addData = (param,callbrak) => {
     if(location.search.indexOf("?id=")!=-1&&location.search.indexOf("&")==-1) {
       param.client_id = location.search.substr(1).split("=")[1];
@@ -128,6 +158,7 @@ class BusinesList extends React.Component {
         headTitlesData={columnData} 
         data={this.props.businessStores.business}  
         addData={this.addData.bind(this)} 
+        updata={this.updata.bind(this)}
       />
     );
   }

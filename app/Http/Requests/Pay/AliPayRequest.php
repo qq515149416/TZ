@@ -36,9 +36,7 @@ class AliPayRequest extends FormRequest
 	{
 		return [
 
-			'pay_for'	=> 'required|numeric',
-			'total_amount'	=> 'required',
-			'subject'		=> 'required',
+
 		];
 	}
 
@@ -46,10 +44,7 @@ class AliPayRequest extends FormRequest
 	{
 		
 		return  [
-			'pay_for.required' 	=> '支付用途必须填写',
-			'pay_for.numeric' 	=> '支付用途必须为数字',
-			'total_amount.required'	=> '支付金额必须填写',
-			'subject.required'	=> '支付项目名称必须填写',
+
 		];
 	}
 

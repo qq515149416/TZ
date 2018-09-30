@@ -79,6 +79,7 @@ class OrdersStores extends ActionBoundStores {
     @action.bound 
     getData(data) {
         post("business/clerk",data).then(res => {
+            this.orders = [];
             if(res.data.code==1) {
                 this.orders = res.data.data.map(item => new OrderStores(item));
             }

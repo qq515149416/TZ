@@ -42,8 +42,7 @@ class AliRecharge extends Model
 					$return['code'] = 0;
 					$return['msg'] = '5分钟内只能创建一张订单!!!!!';
 					return $return;
-				}
-				
+				}			
 			}
 			
 			$row = $this->create($data);
@@ -74,7 +73,9 @@ class AliRecharge extends Model
 	*/
 	public function returnInsert($data)
 	{
+
 		$order = $this->select('user_id','trade_status')->where('trade_no',$data['trade_no'])->get();
+		
 		if(count($order) == 0){
 			$return['data'] = '';
 			$return['code'] = 0;

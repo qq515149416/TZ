@@ -34,16 +34,33 @@ class RechargeRequest extends FormRequest
 	 */
 	public function rules()
 	{
-		return [
-			'trade_no'	=> "unique:tz_recharge_flow,voucher",		
-		];
+		$path_info = Request()->getPathInfo();
+		$arr = explode('/',$path_info);
+		$method = $arr[count($arr)-1];
+		$return = [];
+
+		switch ($method) {
+			case 'goToPay':
+				$return = [
+					'trade_id'		=> 'required',
+					'way'			=> 'required',
+				];
+				break;
+
+			default:
+	
+				break;
+		}
+
+		return $return;
 	}
 
 	public function messages()
 	{
 		
 		return  [
-			'trade_no.unique'	=> '该订单已完成',
+			'trade_id.required'	=> '请提供所需支付充值订单号',
+			'way.required'		=> '请选择支付途径',
 		];
 	}
 

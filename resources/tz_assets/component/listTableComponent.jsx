@@ -135,6 +135,76 @@ const styles = theme => ({
     };
   
     isSelected = id => this.state.selected.indexOf(id) !== -1;
+    renderLinkComponent = (data) => {
+      let operat = this.props.headTitlesData.find(item => item.id=="operat");
+      if(operat.extendUrl.rule) {
+        if(operat.extendUrl.rule.type=="equal") {
+          if(data[operat.extendUrl.rule.term]==operat.extendUrl.rule.execute) {
+            return (
+              <ExpansionComponent 
+                  type="link"
+                  title={operat.extendUrl.title}
+                  link={operat.extendUrl.link+"?"+qs.stringify(Object.keys(data).reduce((result,item) => {
+                    if(operat.extendUrl.param && operat.extendUrl.param.find(e => item==e)) {
+                      result[item] = data[item];
+                    }
+                    return result;
+                  },{}))}
+                />
+            )
+          } else {
+            return null;
+          }
+        } else if(operat.extendUrl.rule.type=="more") {
+          if(data[operat.extendUrl.rule.term] > this.props.headTitlesData.find(item => item.id=="operat").extendUrl.rule.execute) {
+            return (
+              <ExpansionComponent 
+                  type="link"
+                  title={operat.extendUrl.title}
+                  link={operat.extendUrl.link+"?"+qs.stringify(Object.keys(data).reduce((result,item) => {
+                    if(operat.extendUrl.param && operat.extendUrl.param.find(e => item==e)) {
+                      result[item] = data[item];
+                    }
+                    return result;
+                  },{}))}
+                />
+            )
+          } else {
+            return null;
+          }
+        } else {
+          if(data[operat.extendUrl.rule.term]!=operat.extendUrl.rule.execute) {
+            return (
+              <ExpansionComponent 
+                  type="link"
+                  title={operat.extendUrl.title}
+                  link={operat.extendUrl.link+"?"+qs.stringify(Object.keys(data).reduce((result,item) => {
+                    if(operat.extendUrl.param && operat.extendUrl.param.find(e => item==e)) {
+                      result[item] = data[item];
+                    }
+                    return result;
+                  },{}))}
+                />
+            )
+          } else {
+            return null;
+          }
+        }
+        
+      }
+      return (
+        <ExpansionComponent 
+            type="link"
+            title={operat.extendUrl.title}
+            link={operat.extendUrl.link+"?"+qs.stringify(Object.keys(data).reduce((result,item) => {
+              if(operat.extendUrl.param && operat.extendUrl.param.find(e => item==e)) {
+                result[item] = data[item];
+              }
+              return result;
+            },{}))}
+          />
+      )
+    }
     renderExpansionComponent = (data) => {
       if(this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.rule && this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.rule.type=="equal") {
         if(this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.rule.execute==data[this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.rule.term]) {
@@ -271,16 +341,7 @@ const styles = theme => ({
                               }
                               {
                                 (this.props.headTitlesData.find(item => item.id=="operat").extend && this.props.headTitlesData.find(item => item.id=="operat").extendUrl ) && (
-                                  <ExpansionComponent 
-                                      type="link"
-                                      title={this.props.headTitlesData.find(item => item.id=="operat").extendUrl.title}
-                                      link={this.props.headTitlesData.find(item => item.id=="operat").extendUrl.link+"?"+qs.stringify(Object.keys(n).reduce((result,item) => {
-                                        if(this.props.headTitlesData.find(item => item.id=="operat").extendUrl.param && this.props.headTitlesData.find(item => item.id=="operat").extendUrl.param.find(e => item==e)) {
-                                          result[item] = n[item];
-                                        }
-                                        return result;
-                                      },{}))}
-                                    />
+                                  this.renderLinkComponent(n)
                                 )
                               }
                             </TableCell>

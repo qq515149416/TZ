@@ -59,7 +59,12 @@ const columnData = [
     }, extendUrl: {
       title: "全部订单",
       link: "/tz_admin/business/order",
-      param: ["business_number"]
+      param: ["business_number"],
+      rule: {
+        term: "business_status",
+        execute: 2,
+        type: "equal"
+    }
   }, label: '操作' }
 ];
 const inputType = [

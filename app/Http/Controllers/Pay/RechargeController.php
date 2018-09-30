@@ -12,77 +12,117 @@
 
 namespace App\Http\Controllers\Pay;
 
-use App\Http\Requests\Pay\AliPayRequest;
+use App\Http\Controllers\Pay\AliPayController;
+use App\Http\Models\Pay\AliRecharge;
+use App\Http\Requests\Pay\RechargeRequest;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use Yansongda\Pay\Pay;
-use Yansongda\Pay\Log;
-
 use Illuminate\Support\Facades\Auth;
 
-class AliPayController extends Controller
+class RechargeController extends Controller
 {
-	protected $seller_id = '';
-	protected $domain_name = '';
-	protected $config = [
-		'app_id' => '',
-		'notify_url' => '',
-		'return_url' => '',
-		'ali_public_key' => '',
-		// 加密方式： **RSA2**  
-		'private_key' => '',
-		'log' => [ // optional
-			'file' => './logs/alipay.log',
-			'level' => 'debug'
-			// 'type' => 'single', // optional, 可选 daily.
-   //          			'max_file' => 30, // optional, 当 type 为 daily 时有效，默认 30 天
-		],
-		'mode' => 'dev', // optional,设置此参数，将进入沙箱模式
-
-	];
-
+	
 	/**
 	*生成支付宝付款订单的页面
-	*@param 	$pay_for 	用于确认付款用途,1为充值
+	*@param 	
 			$total_amount	订单金额
-			$subject 	商品名称
+			
 			$trade_no 	本地订单号
 
 	*@return 创建订单的id
  	**/
  	
- 	public function __construct()
- 	{
- 		$this->seller_id			= env('SELLER_ID');
-		$this->domain_name		= env('Domain_name');
- 		$this->config['notify_url'] 	= env('Domain_name').'/home/recharge/payRechargeNotify';
- 		$this->config['return_url'] 	= env('Domain_name').'/home/recharge/payRechargeReturn';
- 		$this->config['private_key'] 	= env('ALI_PRIVATE_KEY');
- 		$this->config['ali_public_key'] 	= env('ALI_PUBLIC_KEY');
- 		$this->config['app_id'] 		= env('ALI_APP_ID');
- 	}
+ 	
+
+	public function index(RechargeRequest $request)
+	{
+		//获取支付信息
+		$info = $request->only(['total_amount']);   
+		//实际获取
+		$checkLogin = Auth::check();
+		if($checkLogin == false){
+			return tz_ajax_echo([],'请先登录',0);
+		}
+		$user_id = Auth::id();
+
+		//生成订单参数
+		$order = [
+			'out_trade_no' 	=> 'tz_'.time().'_'.$user_id,	//本地订单号
+			'total_amount' 	=> $info['total_amount'],	//金额
+			'subject' 	=> '充值余额',			//商品名称
+		];
+		
+		//再顺便生成订单
+
+		$model = new AliRecharge();
+		//我们的trade_no对于支付宝来说就是 out_trade_no
+		$data['trade_no'] 		= $order['out_trade_no'];
+		$data['recharge_amount']	= $order['total_amount'];
+		$data['user_id']			= $user_id;
+		$data['recharge_way']		= '支付宝';
+		$data['trade_status']		= 0;
+
+		$makeOrder = $model->makeOrder($data);
+							
+		return $makeOrder;		
+	}
 
 	/**
 	* 跳转支付页面方法
-	*@param $trade_id 	充值订单号的id
+	*@param 	$trade_id 	充值订单号的id		
+	*		$way 		支付途径:	web代表直接跳转	
+	*						scan代表获取二维码
 	*/
-	public function goToPay($order,$way)
+	public function goToPay(RechargeRequest $request)
 	{
-		//生成支付宝链接
-		switch ($way) {
-			case 'web':
-				$alipay = Pay::alipay($this->config)->web($order);
-				break;		
-			case 'scan':
-				$alipay = Pay::alipay($this->config)->scan($order);
-				break;
-			default:
-				return tz_ajax_echo('','请选择正确的支付方式',0); 
+		
+		//实际获取
+		$checkLogin = Auth::check();
+		if($checkLogin == false){
+			return tz_ajax_echo([],'请先登录',0);
+		}
+		$user_id = Auth::id();
+
+		$info		= $request->only(['trade_id','way']);
+		
+		$trade_id 	= $info['trade_id'];
+		$way 		= $info['way'];
+		
+		$model 	= new AliRecharge();
+		$res 		= $model->makePay($trade_id,$user_id);
+
+		if($res['code'] == 0||$res['code'] == 3){
+			return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 		}
 		
-		//跳转到支付宝链接
+		$info = json_decode(json_encode($res['data']),true);
+
+		$Pay = new AliPayController();
+		if($res['code'] == 2){
+			$cancel = $Pay->cancel($info['trade_no']);	
+			if($cancel->code == '10000'){
+				$del = $model->delOrder($trade_id);
+				if($del == true){
+					$res['msg'].=',删除订单成功,若已付款则会原路退还';
+				}else{
+					$res['msg'].=',删除订单失败,若已付款则会原路退还';
+				}
+			}
+			return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+		}
+
+		$order = [
+			'out_trade_no' 		=> $info['trade_no'],		//本地订单号
+			'total_amount' 		=> $info['recharge_amount'],	//金额
+			'subject' 		=> $info['subject'],		//商品名称
+			'timeout_express'	=> '5m',
+		];
+		//生成支付宝链接
+		$alipay = $Pay->goToPay($order,$way);
+		
+		//跳转到支付宝链接或返回结果
 		return $alipay;// laravel 框架中请直接 `return $alipay`
 	}
 
@@ -161,85 +201,50 @@ class AliPayController extends Controller
 	// }
 
 	//用户支付完成后的跳转页面
-	public function checkByReturn()
-	{	
+	public function rechargeReturn()
+	{
+		
 		//验签
-		$data = Pay::alipay($this->config)->verify(); // 是的，验签就这么简单！
+		$PayController = new AliPayController();
 
-		//验证app_id和seller_id
-		$return['data']	= $data;
-		$return['code']	= 1;
-		$app_id				= $data->app_id;
-		$seller_id			= $data->seller_id;
+		$return = $PayController->checkByReturn(); // 是的，验签就这么简单！
 
-		if($seller_id != $this->seller_id){
-			$return['data'] 	= '';
-			$return['code']	= 0;
-			$return['msg']	= '卖家id错误,请检查';
+		if($return['code'] == 0){
+			return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
 		}
-		if($app_id != $this->config['app_id']){
-			$return['data'] 	= '';
-			$return['code']	= 0;
-			$return['msg']	= 'app_id错误,请检查';
-		}
+		$data = $return['data'];
+		$info['trade_no'] 		= $data->out_trade_no;	//本地订单
+		$info['voucher']			= $data->trade_no;
+		$info['recharge_amount']	= $data->total_amount;
+		$info['timestamp']		= $data->timestamp;
 
-		//如果通过验证,则获取信息并根据订单号插入数据库
-		return $return;
+		$model = new AliRecharge();
+		$res = $model->returnInsert($info);
 
-		// 订单号：$data->out_trade_no
-		// 支付宝交易号：$data->trade_no
-		// 订单总金额：$data->total_amount
+		$domain_name = env('Domain_name');
+		return redirect("{$domain_name}/auth/pay.html?order=".$info['trade_no']);
 	}
 
 
 	//支付宝用的ajax通知接收的方法
 
-	public function checkByAjax(Request $request)
+	public function rechargeNotify(Request $request)
 	{
-		
-
-		$alipay = Pay::alipay($this->config);
-	
-		try{
-			$data = $alipay->verify($request->all()); // 是的，验签就这么简单！
-
-			$return['data']	= $data;
-			$return['code']	= 1;
-
-			$app_id				= $data->app_id;
-			$seller_id			= $data->seller_id;
-
-			if($seller_id != $this->seller_id){
-				$return['data'] 	= '';
-				$return['code']	= 0;
-				$return['msg']	= '卖家id错误,请检查';
+		$PayController = new AliPayController();
+		$res = $PayController->checkByAjax();
+		if($res['code'] == 1){
+			$data = $res['data'];	
+			$info['trade_no'] 		= $data->out_trade_no;
+			$info['voucher']			= $data->trade_no;
+			$info['recharge_amount']	= $data->total_amount;
+			$info['timestamp']		= $data->timestamp;
+			$model = new AliRecharge();
+			$insert = $model->returnInsert($info);
+			if($insert['code'] == 0){
+				$res['res'] = '';
 			}
-			if($app_id != $this->config['app_id']){
-				$return['data'] 	= '';
-				$return['code']	= 0;
-				$return['msg']	= 'app_id错误,请检查';
-			}
-					
-			// 请自行对 trade_status 进行判断及其它逻辑进行判断，在支付宝的业务通知中，只有交易通知状态为 TRADE_SUCCESS 或 TRADE_FINISHED 时，支付宝才会认定为买家付款成功。
-			// 1、商户需要验证该通知数据中的out_trade_no是否为商户系统中创建的订单号；
-			// 2、判断total_amount是否确实为该订单的实际金额（即商户订单创建时的金额）；
-			// 3、校验通知中的seller_id（或者seller_email) 是否为out_trade_no这笔单据的对应的操作方（有的时候，一个商户可能有多个seller_id/seller_email）；
-			// 4、验证app_id是否为该商户本身。
-			// 5、其它业务逻辑情况
-
-			Log::debug('Alipay notify', $data->all());
-			if($return['code'] == 1){
-				$retuan['res'] = $alipay->success();
-			}else{
-				$retuan['res'] = '';
-			}		
-		} catch (Exception $e) {
-			$return['data']	= '';
-			$return['code']	= 0;
-			$return['res'] 	= $e->getMessage();
-		}
-
-		return $return;// laravel 框架中请直接 `return $alipay->success()`
+		}	
+		return $res['res'];					
 	}
 
 
@@ -288,12 +293,6 @@ class AliPayController extends Controller
 		$res 		= $model->checkOrder($trade_no,2);
 		
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
-	}
-
-	//关闭订单接口
-	public function cancel($trade_no){
-		$cancel =  Pay::alipay($this->config)->cancel($trade_no);
-		return $cancel;
 	}
 
 

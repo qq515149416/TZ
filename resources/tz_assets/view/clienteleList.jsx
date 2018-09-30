@@ -40,7 +40,8 @@ const columnData = [
         return <ResetPassword {...data} />;
     }, extendUrl: {
         title: "添加业务",
-        link: "/tz_admin/business"
+        link: "/tz_admin/business",
+        param: ["id"]
     }, label: '操作' }
 ];
 @inject("clientelesStores")

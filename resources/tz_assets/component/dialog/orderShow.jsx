@@ -14,16 +14,18 @@ class OrderShow extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            order: false
+            order: false,
+            data: {}
         }
     }
     open = () => {
         post("business/clerk",{
-            business_sn: this.props.business_sn
+            business_sn: this.props.business_number
         }).then(res => {
             if(res.data.code==1) {
                 this.setState({
-                    order: true
+                    order: true,
+                    data: res.data.data
                 });
             }
         });
@@ -34,6 +36,7 @@ class OrderShow extends React.Component {
         });
     }
     render() {
+        const {data} = this.state;
         return [
             <Tooltip title="查看业务订单">
                     <IconButton onClick={this.open} aria-label="changePassword">
@@ -48,7 +51,63 @@ class OrderShow extends React.Component {
           <DialogTitle id="form-dialog-title">查看业务订单</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              此功能是后台替用户强制修改密码
+              <p>
+                订单号: {data.order_sn}
+              </p>
+              <p>
+                客户: {data.customer_name}
+              </p>
+              <p>
+                业务号: {data.business_sn}
+              </p>
+              <p>
+                业务员: {data.business_name}
+              </p>
+              <p>
+                支付前余额: {data.before_money}
+              </p>
+              <p>
+                支付后余额: {data.after_money}
+              </p>
+              <p>
+                资源类型: {data.resource_type}
+              </p>
+              <p>
+                订单类型: {data.order_type}
+              </p>
+              <p>
+                单价: {data.price}
+              </p>
+              <p>
+                时长: {data.duration}
+              </p>
+              <p>
+                应付金额: {data.payable_money}
+              </p>
+              <p>
+                到期时间: {data.end_time}
+              </p>
+              <p>
+                支付方式: {data.pay_type}
+              </p>
+              <p>
+                实付金额: {data.pay_price}
+              </p>
+              <p>
+                支付流水号: {data.serial_number}
+              </p>
+              <p>
+                支付时间: {data.pay_time}
+              </p>
+              <p>
+                订单状态: {data.order_status}
+              </p>
+              <p>
+                订单备注: {data.order_note}
+              </p>
+              <p>
+                创建时间: {data.created_at}
+              </p>
             </DialogContentText>
           </DialogContent>
           <DialogActions>

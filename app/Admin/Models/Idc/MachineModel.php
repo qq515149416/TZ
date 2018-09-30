@@ -86,7 +86,7 @@ class MachineModel extends Model
                 unset($value['business_type']);
                 $machineroom = (array)$this->machineroom($value['machineroom'],$value['cabinet'],$value['ip_id']);//机房信息的查询
                 // 进行对应的机柜等信息的转换或者显示
-                if(!empty($cabinet) && !empty($ip) && !empty($machineroom)){
+                if(!empty($machineroom)){
                     $result[$key]['cabinets'] = $machineroom['cabinet_id'];//机柜信息的返回
                     //IP信息的返回
                     $result[$key]['ip'] = $machineroom['ip'];

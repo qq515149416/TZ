@@ -18,7 +18,7 @@ class OrdersController extends Controller
      * 财务和管理人员查看订单接口
      * @return json 返回订单的相关数据和状态信息和状态
      */
-    public function financeOrders(){
+    public function financeOrders(Request $request){
 		$data = $request->only(['order_status']);
 		$finance = new OrdersModel();
 		$result = $finance->financeOrders($data);
@@ -29,8 +29,8 @@ class OrdersController extends Controller
      * 业务员和管理人员通过业务查看订单
      * @return json 返回相关的数据信息和状态及提示
      */
-    public function clerkOrders(){
-    	$data = $request->only(['business_sn']);
+    public function clerkOrders(Request $request){
+    	$data = $request->only(['business_sn','resource_type']);
 		$show = new OrdersModel();
 		$result = $show->clerkOrders($data);
 		return tz_ajax_echo($result['data'],$result['msg'],$result['code']);

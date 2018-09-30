@@ -14,7 +14,7 @@ import EmployeeManagementList from "../view/employeeManagementList.jsx";
 import ClienteleList from "../view/clienteleList.jsx";
 import BusinesList from "../view/businesList.jsx";
 import CheckBusinessList from "../view/checkBusinessList.jsx";
-
+import OrderList from "../view/orderList.jsx";
 
 export default () => [
     <Route path="/tz_admin/user_list" component={UsersList} />,
@@ -29,6 +29,7 @@ export default () => [
     <Route path="/tz_admin/resource/machinelibrary" component={MachineLibraryList} />,
     <Route path="/tz_admin/hr/employeeManagement" component={EmployeeManagementList} />,
     <Route path="/tz_admin/crm/clientele" component={ClienteleList} />,
-    <Route path="/tz_admin/business" component={BusinesList} />,
-    <Route path="/tz_admin/checkbusiness" component={CheckBusinessList} />
+    <Route path="/tz_admin/business" exact component={BusinesList} />,
+    <Route path="/tz_admin/checkbusiness" component={CheckBusinessList} />,
+    <Route path="/tz_admin/business/order" component={OrderList} />
 ];

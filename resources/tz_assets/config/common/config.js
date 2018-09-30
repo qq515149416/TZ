@@ -11,6 +11,8 @@ import MachineLibrarysStores from "../../stores/machineLibrary-stores";
 import EmployeeManagementsStores from "../../stores/employeeManagement-stores";
 import ClientelesStores from "../../stores/clientele-stores";
 import BusinessStores from "../../stores/business-stores";
+import OrdersStores from "../../stores/order-stores";
+
 
 
 
@@ -28,7 +30,8 @@ export const stores = {
     machineLibrarysStores: new MachineLibrarysStores(),
     employeeManagementsStores: new EmployeeManagementsStores(),
     clientelesStores: new ClientelesStores(),
-    businessStores: new BusinessStores()
+    businessStores: new BusinessStores(),
+    ordersStores: new OrdersStores()
 }
 export const domIds = [
     "user_list",
@@ -44,5 +47,6 @@ export const domIds = [
     "employeeManagement_list",
     "clientele",
     "business",
-    "checkBusiness"
+    "checkBusiness",
+    "order"
 ];

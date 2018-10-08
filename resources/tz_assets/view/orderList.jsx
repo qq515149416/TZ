@@ -106,12 +106,13 @@ class OrderList extends React.Component {
         };
     }
     addData = (param,callbrak) => {
+        console.log(param);
         param.business_sn = qs.parse(location.search.substr(1)).business_number;
         param.customer_id = qs.parse(location.search.substr(1)).client_id;
         param.customer_name = qs.parse(location.search.substr(1)).client_name;
-        this.props.ordersStores.addData(param).then((state) => {
-            callbrak(state);
-        });
+        // this.props.ordersStores.addData(param).then((state) => {
+        //     callbrak(state);
+        // });
       }
     getResourceData(param,type) {
         if(param.resource_type) {
@@ -139,8 +140,8 @@ class OrderList extends React.Component {
         const {classes} = this.props;
         inputType[inputType.findIndex(item => item.field=="resource")].defaultData = this.props.ordersStores.resource.map(item => {
             return {
-              value: item.label,
-              text: item.value
+              value: item,
+              text: item.label
             }
         });
         return [

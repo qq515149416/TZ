@@ -56,9 +56,9 @@ class AliPayController extends Controller
  	public function __construct()
  	{
  		$this->seller_id			= env('SELLER_ID');
-		$this->domain_name		= env('Domain_name');
- 		$this->config['notify_url'] 	= env('Domain_name').'/home/recharge/payRechargeNotify';
- 		$this->config['return_url'] 	= env('Domain_name').'/home/recharge/payRechargeReturn';
+		$this->domain_name		= env('APP_URL');
+ 		$this->config['notify_url'] 	= env('APP_URL').'/home/recharge/payRechargeNotify';
+ 		$this->config['return_url'] 	= env('APP_URL').'/home/recharge/payRechargeReturn';
  		$this->config['private_key'] 	= env('ALI_PRIVATE_KEY');
  		$this->config['ali_public_key'] 	= env('ALI_PUBLIC_KEY');
  		$this->config['app_id'] 		= env('ALI_APP_ID');
@@ -70,6 +70,7 @@ class AliPayController extends Controller
 	*/
 	public function goToPay($order,$way)
 	{
+	
 		//生成支付宝链接
 		switch ($way) {
 			case 'web':

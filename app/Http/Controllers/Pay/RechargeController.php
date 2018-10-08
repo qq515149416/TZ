@@ -113,7 +113,7 @@ class RechargeController extends Controller
 					$res['msg'].=',删除订单失败,若已付款则会原路退还';
 				}
 			}
-		
+
 			return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 		}
 
@@ -226,7 +226,7 @@ class RechargeController extends Controller
 		$model = new AliRecharge();
 		$res = $model->returnInsert($info);
 
-		$domain_name = env('Domain_name');
+		$domain_name = env('APP_URL');
 		return redirect("{$domain_name}/auth/pay.html?order=".$info['trade_no']);
 	}
 

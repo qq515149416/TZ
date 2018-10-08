@@ -145,8 +145,28 @@ const styles = theme => ({
                   type="link"
                   title={operat.extendUrl.title}
                   link={operat.extendUrl.link+"?"+qs.stringify(Object.keys(data).reduce((result,item) => {
-                    if(operat.extendUrl.param && operat.extendUrl.param.find(e => item==e)) {
-                      result[item] = data[item];
+                    if(operat.extendUrl.param && operat.extendUrl.param.find(e => {
+                      if(Object.prototype.toString.call(e)!="[object Object]") {
+                        return item==e;
+                      } else {
+                        
+                        return e.field==item;
+                      }
+                    })) {
+                      
+                      if(Object.prototype.toString.call(data[item])!="[object Object]") {
+                        result[item] = data[item];
+                      } else {
+                        Object.assign(result,{
+                          ...Object.keys(data[item]).reduce((result,attr) => {
+                            if(operat.extendUrl.param.find(e => e.value==attr)) {
+                              result[attr] = data[item][attr];
+                            }
+                            return result;
+                          },{})
+                        });
+                          
+                      }
                     }
                     return result;
                   },{}))}

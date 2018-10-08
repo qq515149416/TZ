@@ -184,6 +184,10 @@ class  Cpu extends Model
 		$cpu = $this->where($where)->get(['cpu_number','cpu_param','room_id']);
 		foreach($cpu as $key => $value){
 			$cpu[$key]['machineroom'] = $this->machineroom($value['room_id']);
+			$cpu[$key]['label'] = $value['cpu_number'];
+			$cpu[$key]['value'] = $value['cpu_param'];
+			unset($cpu[$key]['cpu_number']);
+			unset($cpu[$key]['cpu_param']);
 		}
 		return $cpu;
 	}

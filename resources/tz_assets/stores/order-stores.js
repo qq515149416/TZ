@@ -72,10 +72,48 @@ class OrderStores {
         });
     }
 }
+class ResourceStores {
+    @observable label = "";
+    @observable value = "";
+    constructor({label,value}) {
+        Object.assign(this,{
+            label,
+            value
+        });
+    }
+}
 class OrdersStores extends ActionBoundStores {
     @observable orders = [
 
     ];
+    @observable resource =[
+
+    ];
+    type = 1;
+    addData(data) {
+        return new Promise((resolve,reject) => {
+            post("business/insertresource",data).then(res => {
+                if(res.data.code==1) {
+                    // this.addStoreData("business",BusinesStores,Object.assign(JSON.parse(data.resource_detail),{
+                    //     id: res.data.data
+                    // }));
+                    this.getData(type);
+                    resolve(true);
+                }else {
+                    alert(res.data.msg);
+                    resolve(false);
+                }
+            }).catch(reject);
+        });
+    }
+    @action.bound 
+    getResourceData(param) {
+        post("business/resource",param).then((res) => {
+            if(res.data.code==1) {
+                this.resource = res.data.data.map(item => new ResourceStores(item));
+            }
+        });
+    }
     @action.bound 
     getData(data) {
         post("business/clerk",data).then(res => {

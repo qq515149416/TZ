@@ -184,6 +184,10 @@ class  Harddisk extends Model
 		$harddisk = $this->where($where)->get(['harddisk_number','harddisk_param','room_id']);
 		foreach($harddisk as $key => $value){
 			$harddisk[$key]['machineroom'] = $this->machineroom($value['room_id']);
+			$harddisk[$key]['label'] = $value['harddisk_number'];
+			$harddisk[$key]['value'] = $value['harddisk_param'];
+			unset($harddisk[$key]['harddisk_number']);
+			unset($harddisk[$key]['harddisk_param']);
 		}
 		return $harddisk;
 	}

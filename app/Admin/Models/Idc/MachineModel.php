@@ -140,9 +140,7 @@ class MachineModel extends Model
                 $return['data'] = '';
                 $return['code'] = 0;
                 $return['msg'] = '新增机器信息失败！！';
-            }
-                
-            
+            }             
     	} else {
     		$return['data'] = '';
 			$return['code'] = 0;

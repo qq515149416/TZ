@@ -13,6 +13,7 @@
 namespace App\Http\Controllers\Pay;
 
 use App\Http\Requests\Pay\AliPayRequest;
+use App\Http\Models\Pay\AliRecharge;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -188,15 +189,24 @@ class AliPayController extends Controller
 			}else{
 				$retuan['res'] = '';
 			}
+			$info['trade_no'] 		= $data->out_trade_no;
+			$info['voucher']			= $data->trade_no;
+			$info['recharge_amount']	= $data->total_amount;
+			$info['timestamp']		= $data->timestamp;
+			$model = new AliRecharge();
+			$insert = $model->returnInsert($info);
+
+			if($insert['code'] == 1){
+				return $alipay->success();
+			}
+
 			Log::debug('Alipay notify', $data->all());
 					
 		} catch (Exception $e) {
-			$return['data']	= '';
-			$return['code']	= 0;
-			$return['res'] 	= $e->getMessage();
+			$e->getMessage();
 		}
 
-		return $return;// laravel 框架中请直接 `return $alipay->success()`
+		// laravel 框架中请直接 `return $alipay->success()`
 	}
 
 

@@ -99,7 +99,7 @@ class OrdersModel extends Model
         switch ($resource_data['resource_type']) {
             case 4:
                 $ips = new Ips();
-                $result = $ips->selectIps($resource_data['machineroom']);
+                $result = $ips->selectIps($resource_data['machineroom'],$resource_data['company']);
                 $return['data'] = $result;
                 $return['code'] = 1;
                 $return['msg'] = 'IP资源数据获取成功';

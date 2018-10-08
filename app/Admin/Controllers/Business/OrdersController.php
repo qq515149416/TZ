@@ -41,7 +41,7 @@ class OrdersController extends Controller
      * @return json 返回相关的数据信息和状态提示
      */
     public function resource(Request $request){
-        $resource_data = $request->only(['resource_type','machineroom']);
+        $resource_data = $request->only(['resource_type','machineroom','company']);
         $resource = new OrdersModel();
         $return = $resource->resource($resource_data);
         return tz_ajax_echo($return['data'],$return['msg'],$return['code']);

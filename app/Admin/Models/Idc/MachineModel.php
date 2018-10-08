@@ -83,6 +83,7 @@ class MachineModel extends Model
                 $result[$key]['used'] = $used_status[$value['used_status']];//使用状态的转换
                 $result[$key]['status'] = $machine_status[$value['machine_status']];//机器上下架的转换
                 $result[$key]['business'] = $business_type[$value['business_type']];//业务类型的转换
+                $result[$key]['machineroom_id'] = $value['machineroom'];
                 unset($value['business_type']);
                 $machineroom = (array)$this->machineroom($value['machineroom'],$value['cabinet'],$value['ip_id']);//机房信息的查询
                 // 进行对应的机柜等信息的转换或者显示
@@ -92,7 +93,7 @@ class MachineModel extends Model
                     $result[$key]['ip'] = $machineroom['ip'];
                     $result[$key]['ip_detail'] = $machineroom['ip'].'('.$ip_company[$machineroom['ip_company']].')';
                     //机房的信息返回
-                    $result[$key]['machineroom_name'] = $machineroom['machine_room_name'];
+                    $result[$key]['machineroom'] = $machineroom['machine_room_name'];
                 }
             }
             $return['data'] = $result;
@@ -117,30 +118,29 @@ class MachineModel extends Model
             DB::beginTransaction();//开启事务
             $data['created_at'] = date('Y-m-d H:i:s',time());
     		$row = DB::table('idc_machine')->insertGetId($data);//将新增的机器信息插入数据库
-    		if($row != 0){
-                // 如果新增机器成功则将机器编号更新到对应的IP库中
-                $ip_row = DB::table('idc_ips')->where('id',$data['ip_id'])->update(['mac_num'=>$data['machine_num'],'ip_status'=>2]);
-    			if($ip_row != 0){
-                    // 如果更新IP库的所属机器编号成功，进行所有数据的提交
-                    DB::commit();
-                    $return['data'] = $row;
-                    $return['code'] = 1;
-                    $return['msg'] = '新增机器信息成功！！';
-                } else {
-                    // 失败则回滚
-                    DB::rollBack();
-                    $return['data'] = '';
-                    $return['code'] = 0;
-                    $return['msg'] = '新增机器信息失败！！';
-                }
-                
-    		} else {
-                // 失败则回滚
+    		if($row == 0){
+                //失败则回滚
                 DB::rollBack();
-    			$return['data'] = '';
-    			$return['code'] = 0;
-    			$return['msg'] = '新增机器信息失败！！';
-    		}
+                $return['data'] = '';
+                $return['code'] = 0;
+                $return['msg'] = '新增机器信息失败！！';
+                return $return;
+            }
+            //如果新增机器成功则将机器编号更新到对应的IP库中
+            $ip_row = DB::table('idc_ips')->where('id',$data['ip_id'])->update(['mac_num'=>$data['machine_num'],'ip_status'=>2]);
+    		if($ip_row != 0){
+                //如果更新IP库的所属机器编号成功，进行所有数据的提交
+                DB::commit();
+                $return['data'] = $row;
+                $return['code'] = 1;
+                $return['msg'] = '新增机器信息成功！！';
+            } else {
+                //失败则回滚
+                DB::rollBack();
+                $return['data'] = '';
+                $return['code'] = 0;
+                $return['msg'] = '新增机器信息失败！！';
+            }             
     	} else {
     		$return['data'] = '';
 			$return['code'] = 0;
@@ -159,36 +159,36 @@ class MachineModel extends Model
             DB::beginTransaction();//开启事务
             $editdata['updated_at'] = date('Y-m-d H:i:s',time());
     		$row = DB::table('idc_machine')->where('id',$editdata['id'])->update($editdata);
-    		if($row != 0){
-                // 先将原来所属IP的机器编号字段清除，状态修改
-                $original = DB::table('idc_ips')->where('mac_num',$editdata['machine_num'])->update(['mac_num'=>'','ip_status'=>0]);
-    			if($original != 0){
-                    // 原来的修改成功，将新的IP更新机器编号字段
-                    $ip = DB::table('idc_ips')->where('id',$editdata['ip_id'])->update(['mac_num'=>$editdata['machine_num'],'ip_status'=>2]);
-                    if($ip != 0){
-                        // 都更新成功，进行事务提交
-                        DB::commit();
-                        $return['code'] = 1;
-                        $return['msg'] = '修改信息成功！！';
-                    } else {
-                        // 新的IP所属机器编号更新失败，事务回滚
-                        DB::rollBack();
-                        $return['code'] = 0;
-                        $return['msg'] = '修改信息失败！！';
-                    }
-                } else {
-                    //原来的IP所属机器编号字段更新失败，事务回滚 
-                    DB::rollBack();
-                    $return['code'] = 0;
-                    $return['msg'] = '修改信息失败！！';
-                }
-                
-    		} else {
-                // 更新机器信息失败事务回滚
+    		if($row == 0){
+                //更新机器信息失败事务回滚
                 DB::rollBack();
-    			$return['code'] = 0;
-    			$return['msg'] = '修改信息失败！！';
-    		}
+                $return['code'] = 0;
+                $return['msg'] = '修改信息失败！！';
+                return $return;
+            }
+            //先将原来所属IP的机器编号字段清除，状态修改
+            $original = DB::table('idc_ips')->where('mac_num',$editdata['machine_num'])->update(['mac_num'=>'','ip_status'=>0]);
+			if($original == 0){
+                //原来的IP所属机器编号字段更新失败，事务回滚 
+                DB::rollBack();
+                $return['code'] = 0;
+                $return['msg'] = '修改信息失败！！';
+                return $return;
+            }
+            //原来的修改成功，将新的IP更新机器编号字段
+            $ip = DB::table('idc_ips')->where('id',$editdata['ip_id'])->update(['mac_num'=>$editdata['machine_num'],'ip_status'=>2]);
+            if($ip != 0){
+                // 都更新成功，进行事务提交
+                DB::commit();
+                $return['code'] = 1;
+                $return['msg'] = '修改信息成功！！';
+            } else {
+                //新的IP所属机器编号更新失败，事务回滚
+                DB::rollBack();
+                $return['code'] = 0;
+                $return['msg'] = '修改信息失败！！';
+            }        
+             
     	} else {
     		$return['code'] = 0;
     		$return['msg'] = '请确保要修改的信息正确！！';
@@ -241,13 +241,13 @@ class MachineModel extends Model
     	} else {
     		// 当未传入参数时代表简单的查询机房数据
     		$result = DB::table('idc_machineroom')->whereNull('deleted_at')->select('id as roomid','machine_room_id','machine_room_name')->get();
-	    	if($result) {
+	    	if(!$result->isEmpty()) {
 	    		$return['data'] = $result;
 	    		$return['code'] = 1;
 	    		$return['msg'] = '机房信息获取成功!!';
 	    	} else {
-	    		$return['data'] = '';
-	    		$return['code'] = 0;
+	    		$return['data'] = [];
+	    		$return['code'] = 1;
 	    		$return['msg'] = '机房信息获取失败!!';
 	    	}
 
@@ -280,13 +280,13 @@ class MachineModel extends Model
    							->whereNull('deleted_at')
    							->select('id as cabinetid','cabinet_id')
    							->get();
-   			if($cabinets){
+   			if(!$cabinets->isEmpty()){
    				$return['data'] = $cabinets;
    				$return['code'] = 1;
    				$return['msg'] = '机柜信息获取成功';
    			} else {
-   				$return['data'] = '';
-   				$return['code'] = 0;
+   				$return['data'] = [];
+   				$return['code'] = 1;
    				$return['msg'] = '机柜信息获取失败';
    			}
    		} else {
@@ -322,8 +322,8 @@ class MachineModel extends Model
    				$return['code'] = 1;
    				$return['msg'] = 'IP信息获取成功';
    			} else {
-   				$return['data'] = '';
-   				$return['code'] = 0;
+   				$return['data'] = [];
+   				$return['code'] = 1;
    				$return['msg'] = 'IP信息获取失败';
    			}
     	} else {

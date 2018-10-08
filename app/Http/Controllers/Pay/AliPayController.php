@@ -56,9 +56,9 @@ class AliPayController extends Controller
  	public function __construct()
  	{
  		$this->seller_id			= env('SELLER_ID');
-		$this->domain_name		= env('Domain_name');
- 		$this->config['notify_url'] 	= env('Domain_name').'/home/recharge/payRechargeNotify';
- 		$this->config['return_url'] 	= env('Domain_name').'/home/recharge/payRechargeReturn';
+		$this->domain_name		= env('APP_URL');
+ 		$this->config['notify_url'] 	= env('APP_URL').'/home/recharge/payRechargeNotify';
+ 		$this->config['return_url'] 	= env('APP_URL').'/home/recharge/payRechargeReturn';
  		$this->config['private_key'] 	= env('ALI_PRIVATE_KEY');
  		$this->config['ali_public_key'] 	= env('ALI_PUBLIC_KEY');
  		$this->config['app_id'] 		= env('ALI_APP_ID');
@@ -70,6 +70,7 @@ class AliPayController extends Controller
 	*/
 	public function goToPay($order,$way)
 	{
+	
 		//生成支付宝链接
 		switch ($way) {
 			case 'web':
@@ -86,52 +87,7 @@ class AliPayController extends Controller
 		return $alipay;// laravel 框架中请直接 `return $alipay`
 	}
 
-	public function delOrder(Request $request)
-	{
-		//实际获取
-		$checkLogin = Auth::check();
-		if($checkLogin == false){
-			return tz_ajax_echo([],'请先登录',0);
-		}
-		$user_id = Auth::id();
-
-		$info = $request->only(['del_trade_id']);
-		if( !isset($info['del_trade_id']) ){
-			return tz_ajax_echo('','请提供完整信息',0); 
-		}
-		$trade_id = $info['del_trade_id'];
-
-		$model 	= new AliRecharge();
-		$res 		= $model->makePay($trade_id,$user_id);
-		
-		if($res['code'] == 0||$res['code'] == 3){
-			return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
-		}
-		
-		$info = json_decode(json_encode($res['data']),true);
-
-		$cancel =  Pay::alipay($this->config)->cancel($info['trade_no']);	
-
-		$return['data']	= '';
-		if($cancel->code == '10000'){
-			$return['msg']	= '取消订单成功';
-
-			$del = $model->delOrder($trade_id);
-
-			if($del == true){
-				$return['msg'].=',删除订单成功';
-				$return['code'] = 1;
-			}else{
-				$return['msg'].=',删除订单失败';
-				$return['code'] = 0;
-			}
-		}else{
-			$return['msg']	= '取消订单失败';
-			$return['code']	= 0;
-		}
-		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
-	}
-
+	
 	// /**
 	// * 退款的跳转页面
 	// *@param $trade_id 	充值订单号的id
@@ -292,7 +248,9 @@ class AliPayController extends Controller
 
 	//关闭订单接口
 	public function cancel($trade_no){
+		
 		$cancel =  Pay::alipay($this->config)->cancel($trade_no);
+
 		return $cancel;
 	}
 

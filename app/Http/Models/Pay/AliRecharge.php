@@ -175,7 +175,12 @@ class AliRecharge extends Model
 		$order = $this->select('trade_no','recharge_amount','subject','created_at','user_id')->find($trade_id);
 		
 		if($order!=NULL){	
+			$return['data'] 	= $order;
+			$return['code'] 	= 1;
+			$return['msg']	= '获取订单信息成功';
+
 			$created_at = strtotime($order->created_at);
+		
 			if(time()-$created_at >=300 ){
 				$return['data'] 	= $order;
 				$return['code'] 	= 2;
@@ -189,9 +194,7 @@ class AliRecharge extends Model
 				$return['msg']	= '订单用户与登录用户不一致';
 				return $return;
 			}
-			$return['data'] 	= $order;
-			$return['code'] 	= 1;
-			$return['msg']	= '获取订单信息成功';
+			
 		}else{
 			$return['data'] 	= '';
 			$return['code'] 	= 0;

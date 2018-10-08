@@ -60,6 +60,7 @@ class AliPayController extends Controller
  		$this->seller_id			= env('SELLER_ID');
 		$this->domain_name		= env('APP_URL');
  		$this->config['notify_url'] 	= env('APP_URL').'/home/recharge/payRechargeNotify';
+ 		// $this->config['notify_url'] 	= 'http://tz.jungor.cn/home/recharge/payRechargeNotify';
  		$this->config['return_url'] 	= env('APP_URL').'/home/recharge/payRechargeReturn';
  		$this->config['private_key'] 	= env('ALI_PRIVATE_KEY');
  		$this->config['ali_public_key'] 	= env('ALI_PUBLIC_KEY');
@@ -72,7 +73,7 @@ class AliPayController extends Controller
 	*/
 	public function goToPay($order,$way)
 	{
-
+		echo $this->config['notify_url'] ;exit;
 		//生成支付宝链接
 		switch ($way) {
 			case 'web':
@@ -157,7 +158,7 @@ class AliPayController extends Controller
 		$alipay = Pay::alipay($this->config);
 	
 		try{
-			$data = $alipay->verify($request->all()); // 是的，验签就这么简单！
+			$data = $alipay->verify(); // 是的，验签就这么简单！
 
 			$app_id				= $data->app_id;
 			$seller_id			= $data->seller_id;

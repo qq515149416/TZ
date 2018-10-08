@@ -39,7 +39,49 @@ const columnData = [
     ], label: '操作' }
 ];
 const inputType = [
-
+    {
+        field: "resource_type",
+        label: "资源类型",
+        type: "switch",
+        radioData: [
+            {
+                checked: true,
+                value: 4,
+                label: "IP"
+            },
+            {
+                checked: false,
+                value: 5,
+                label: "CPU"
+            },
+            {
+                checked: false,
+                value: 6,
+                label: "硬盘"
+            },
+            {
+                checked: false,
+                value: 7,
+                label: "内存"
+            },
+            {
+                checked: false,
+                value: 8,
+                label: "带宽"
+            },
+            {
+                checked: false,
+                value: 9,
+                label: "防御"
+            }
+        ]
+    },
+    {
+        field: "resource",
+        label: "资源",
+        type: "select",
+        defaultData: []
+    }
 ];
 @inject("ordersStores")
 @observer 
@@ -54,6 +96,30 @@ class OrderList extends React.Component {
         this.props.ordersStores.getData({
             business_sn: qs.parse(location.search.substr(1)).business_number
         });
+        this.getResourceData({
+            resource_type: {
+                value: 4
+            }
+        },"init");
+        inputType[inputType.findIndex(item => item.field=="resource_type")].model = {
+            getSubordinateData: this.getResourceData.bind(this)
+        };
+    }
+    addData = (param,callbrak) => {
+        param.business_sn = qs.parse(location.search.substr(1)).business_number;
+        param.customer_id = qs.parse(location.search.substr(1)).client_id;
+        param.customer_name = qs.parse(location.search.substr(1)).client_name;
+        this.props.ordersStores.addData(param).then((state) => {
+            callbrak(state);
+        });
+      }
+    getResourceData(param,type) {
+        if(param.resource_type) {
+            this.props.ordersStores.getResourceData({
+                resource_type: param.resource_type.value,
+                machineroom: qs.parse(location.search.substr(1)).machineroom
+            });
+        }
     }
     handleChange = (event, value) => {
         if(value=="all") {
@@ -66,11 +132,17 @@ class OrderList extends React.Component {
                 resource_type: value
             });
         }
-        
+        this.props.ordersStores.type = value;
         this.setState({ value });
     }
     render() {
         const {classes} = this.props;
+        inputType[inputType.findIndex(item => item.field=="resource")].defaultData = this.props.ordersStores.resource.map(item => {
+            return {
+              value: item.label,
+              text: item.value
+            }
+        });
         return [
             <Paper square>
                 <Tabs
@@ -98,6 +170,7 @@ class OrderList extends React.Component {
             inputType={inputType} 
             headTitlesData={columnData} 
             data={this.props.ordersStores.orders}
+            addData={this.addData.bind(this)} 
           />
         ];
       }

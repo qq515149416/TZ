@@ -77,7 +77,7 @@ class RechargeController extends Controller
 	*/
 	public function goToPay(RechargeRequest $request)
 	{
-		
+
 		//实际获取
 		$checkLogin = Auth::check();
 		if($checkLogin == false){
@@ -100,8 +100,11 @@ class RechargeController extends Controller
 		$info = json_decode(json_encode($res['data']),true);
 
 		$Pay = new AliPayController();
+
 		if($res['code'] == 2){
-			$cancel = $Pay->cancel($info['trade_no']);	
+
+			$cancel = $Pay->cancel($info['trade_no']);
+
 			if($cancel->code == '10000'){
 				$del = $model->delOrder($trade_id);
 				if($del == true){
@@ -110,6 +113,7 @@ class RechargeController extends Controller
 					$res['msg'].=',删除订单失败,若已付款则会原路退还';
 				}
 			}
+
 			return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 		}
 
@@ -119,6 +123,7 @@ class RechargeController extends Controller
 			'subject' 		=> $info['subject'],		//商品名称
 			'timeout_express'	=> '5m',
 		];
+
 		//生成支付宝链接
 		$alipay = $Pay->goToPay($order,$way);
 		
@@ -221,7 +226,7 @@ class RechargeController extends Controller
 		$model = new AliRecharge();
 		$res = $model->returnInsert($info);
 
-		$domain_name = env('Domain_name');
+		$domain_name = env('APP_URL');
 		return redirect("{$domain_name}/auth/pay.html?order=".$info['trade_no']);
 	}
 

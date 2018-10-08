@@ -12,6 +12,7 @@ const columnData = [
     { id: 'type', numeric: true, disablePadding: true, label: '业务类型' },
     { id: 'machine_number', numeric: true, disablePadding: true, label: '机器/机柜编号' },
     { id: 'status', numeric: true, disablePadding: true, label: '业务状态' },
+    { id: 'resource_detail_json.machineroom_name', numeric: true, disablePadding: true, label: '所属机房' },
     { id: 'operat', numeric: true, disablePadding: false, extend: true, extendData: [
         {id: "order_number", label: "订单号", type: "text"},
         {id: "resource_detail", label: "资源详情", type: "subordinate", subordinate: [
@@ -59,7 +60,10 @@ const columnData = [
     }, extendUrl: {
       title: "全部订单",
       link: "/tz_admin/business/order",
-      param: ["business_number"],
+      param: ["business_number","client_id","client_name",{
+        field: "resource_detail_json",
+        value: ["machineroom"]
+      }],
       rule: {
         term: "business_status",
         execute: 2,

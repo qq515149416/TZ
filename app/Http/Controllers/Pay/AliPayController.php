@@ -59,8 +59,8 @@ class AliPayController extends Controller
  	{
  		$this->seller_id			= env('SELLER_ID');
 		$this->domain_name		= env('APP_URL');
- 		$this->config['notify_url'] 	= env('APP_URL').'/home/recharge/payRechargeNotify';
- 		// $this->config['notify_url'] 	= 'http://tz.jungor.cn/home/recharge/payRechargeNotify';
+ 		// $this->config['notify_url'] 	= env('APP_URL').'/home/recharge/payRechargeNotify';
+ 		$this->config['notify_url'] 	= 'http://tz.jungor.cn/home/recharge/payRechargeNotify';
  		$this->config['return_url'] 	= env('APP_URL').'/home/recharge/payRechargeReturn';
  		$this->config['private_key'] 	= env('ALI_PRIVATE_KEY');
  		$this->config['ali_public_key'] 	= env('ALI_PUBLIC_KEY');
@@ -73,7 +73,7 @@ class AliPayController extends Controller
 	*/
 	public function goToPay($order,$way)
 	{
-		echo $this->config['notify_url'] ;exit;
+	
 		//生成支付宝链接
 		switch ($way) {
 			case 'web':
@@ -155,6 +155,7 @@ class AliPayController extends Controller
 
 	public function checkByAjax()
 	{
+
 		$alipay = Pay::alipay($this->config);
 	
 		try{
@@ -162,23 +163,24 @@ class AliPayController extends Controller
 
 			$app_id				= $data->app_id;
 			$seller_id			= $data->seller_id;
+
+			$return['data']	= $data;
+			$return['code']	= 1;
+			$return['msg']	= $alipay->success();
+			
 			if($seller_id != $this->seller_id){
-				return tz_ajax_echo('','卖家id错误,请检查',0);
+				$return['data'] 	= '';
+				$return['code']	= 0;
+				$return['msg']	= '卖家id错误,请检查';
 			}
+
 			if($app_id != $this->config['app_id']){
-				return tz_ajax_echo('','app_id错误,请检查',0);
+				$return['data'] 	= '';
+				$return['code']	= 0;
+				$return['msg']	= 'app_id错误,请检查';
 			}
 			
-			$info['trade_no'] 		= $data->out_trade_no;
-			$info['voucher']			= $data->trade_no;
-			$info['recharge_amount']	= $data->total_amount;
-			$info['timestamp']		= $data->timestamp;
-
-			$model = new AliRecharge();
-			$res = $model->returnInsert($info);
-			if($res['code'] != 1){
-				return $res['msg'];
-			}
+			
 			// 请自行对 trade_status 进行判断及其它逻辑进行判断，在支付宝的业务通知中，只有交易通知状态为 TRADE_SUCCESS 或 TRADE_FINISHED 时，支付宝才会认定为买家付款成功。
 			// 1、商户需要验证该通知数据中的out_trade_no是否为商户系统中创建的订单号；
 			// 2、判断total_amount是否确实为该订单的实际金额（即商户订单创建时的金额）；
@@ -187,11 +189,14 @@ class AliPayController extends Controller
 			// 5、其它业务逻辑情况
 
 			Log::debug('Alipay notify', $data->all());
-		} catch (Exception $e) {
-			$e->getMessage();
-		}
 
-		return $alipay->success();// laravel 框架中请直接 `return $alipay->success()`
+		} catch (Exception $e) {
+			$return['data'] 	= '';
+			$return['code']	= 0;
+			$return['msg']	= $e->getMessage();
+		}
+		return $return;
+		// return $alipay->success();// laravel 框架中请直接 `return $alipay->success()`
 	}
 
 

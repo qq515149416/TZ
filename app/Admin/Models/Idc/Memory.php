@@ -183,10 +183,10 @@ class  Memory extends Model
 		$memory = $this->where($where)->get(['memory_number','memory_param','room_id']);
 		foreach($memory as $key => $value){
 			$memory[$key]['machineroom'] = $this->machineroom($value['room_id']);
-			$cpu[$key]['label'] = $value['memory_number'];
-			$cpu[$key]['value'] = $value['memory_param'];
-			unset($cpu[$key]['memory_number']);
-			unset($cpu[$key]['memory_param']);
+			$memory[$key]['label'] = $value['memory_number'];
+			$memory[$key]['value'] = $value['memory_param'];
+			unset($memory[$key]['memory_number']);
+			unset($memory[$key]['memory_param']);
 		}
 		return $memory;
 	}

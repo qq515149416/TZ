@@ -27,6 +27,7 @@ class AliPayController extends Controller
 	protected $seller_id = '';
 	protected $domain_name = '';
 	protected $config = [
+		'charset' => 'UTF-8',
 		'app_id' => '',
 		'notify_url' => '',
 		'return_url' => '',
@@ -70,7 +71,7 @@ class AliPayController extends Controller
 	*/
 	public function goToPay($order,$way)
 	{
-	
+
 		//生成支付宝链接
 		switch ($way) {
 			case 'web':
@@ -150,14 +151,14 @@ class AliPayController extends Controller
 
 	//支付宝用的ajax通知接收的方法
 
-	public function checkByAjax(Request $request)
+	public function checkByAjax()
 	{
 		
 
 		$alipay = Pay::alipay($this->config);
 	
 		try{
-			$data = $alipay->verify($request->all()); // 是的，验签就这么简单！
+			$data = $alipay->verify(); // 是的，验签就这么简单！
 
 			$return['data']	= $data;
 			$return['code']	= 1;
@@ -182,13 +183,13 @@ class AliPayController extends Controller
 			// 3、校验通知中的seller_id（或者seller_email) 是否为out_trade_no这笔单据的对应的操作方（有的时候，一个商户可能有多个seller_id/seller_email）；
 			// 4、验证app_id是否为该商户本身。
 			// 5、其它业务逻辑情况
-
-			Log::debug('Alipay notify', $data->all());
 			if($return['code'] == 1){
 				$retuan['res'] = $alipay->success();
 			}else{
 				$retuan['res'] = '';
-			}		
+			}
+			Log::debug('Alipay notify', $data->all());
+					
 		} catch (Exception $e) {
 			$return['data']	= '';
 			$return['code']	= 0;

@@ -270,6 +270,7 @@ class Order extends Model
 		$endding_time = Carbon::parse($renew_data->endding_time)->modify('+'.$order['duration'].' months')->toDateTimeString();//在原到期时间基础上增加续费时长
 		$order['end_time'] = $endding_time;
 		$order['month'] = (int)date('Ym',time());
+		$order['created_at'] = Carbon::now()->toDateTimeString();
 		DB::beginTransaction();//开启事务处理
 		$order_row = DB::table('tz_orders')->insert($order);//生成续费订单
 		if($order_row == 0) {
@@ -362,11 +363,23 @@ class Order extends Model
 			$return['msg'] = '无法对资源进行续费';
 			return $return;
 		}
+
+		//业务到期时间和资源到期时间比较
+        $end_time = Carbon::parse('+'.$renew['duration'].' months')->toDateTimeString();
+        $endding_time = DB::table('tz_business')->where('business_number',$renew['business_sn'])->value('endding_time');
+        if($end_time > $endding_time){
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg'] = '资源到期时间超业务到期时间，无法续费资源!';
+            return $return;
+        }
+        $renew['end_time'] = $end_time;
 		//续费订单号的生成规则：前两位（11-40的随机数）+ 年月日 + 时间戳的后5位数 + 2（续费）
 		$order_sn = mt_rand(4,6).date("Ymd",time()).substr(time(),8,2).mt_rand(4,6);//续费订单号
 		$renew['order_sn'] = $order_sn;
 		$renew['payable_money'] = bcmul((string)$order['price'],(string)$order['duration'],2);//应付金额
 		$renew['order_type'] = 2;
+		$renew['created_at'] = Carbon::now()->toDateTimeString();
 		DB::beginTransaction();
 		$insert = DB::table('tz_orders')->insert($renew);//生成续费订单
 		if($insert == 0){
@@ -417,30 +430,5 @@ class Order extends Model
 		return $return;	
 	}
 
-	/**
-     * 比较资源到期时间和业务到期时间
-     * @param  array $time 资源时长和业务到期时间
-     * @return array       资源到期时间和状态提示及信息
-     */
-    public function endTime($time){
-        if($time){
-        	$endding_time = DB::table('tz_business')->where('business_number',$time['business_sn'])->value('endding_time');
-            $end_time = Carbon::parse('+'.$time['duration'].' months')->toDateTimeString();
-            if($end_time < $endding_time){
-                $return['data'] = $end_time;
-                $return['code'] = 1;
-                $return['msg'] = '资源到期时间在业务到期时间内';
-            } else {
-                $return['data'] = '';
-                $return['code'] = 0;
-                $return['msg'] = '资源到期时间超业务到期时间';
-            }
-        } else {
-            $return['data'] = '';
-            $return['code'] = 0;
-            $return['msg'] = '无法比较资源到期时间和业务到期时间';
-        }
-        return $return;
-    }
 
 }

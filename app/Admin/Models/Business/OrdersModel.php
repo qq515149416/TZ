@@ -449,4 +449,34 @@ class OrdersModel extends Model
         }
         return $return;
     }
+
+    public function deleteOrders($delete_id){
+        $deltet_data = $this->find($delete_id['delete_id']);
+        if(!$deltet_data){
+            $return['code'] = 0;
+            $return['msg'] = '无法删除对应数据!';
+            return $return;
+        }
+
+        //查找业务关联订单
+        $order_data = DB::table('tz_orders')
+                        ->join('tz_business','tz_orders.business_sn','=','tz_business.business_number')
+                        ->where('tz_orders.id',$delete_id['delete_id'])
+                        ->select('tz_business.business_number')
+                        ->find();
+
+        //删除对应业务数据
+        $result = DB::table('tz_orders')->where('id',$delete_id['delete_id'])->delete();
+        if($result == false){
+            $return['code'] = 0;
+            $return['msg'] = '删除失败!';
+            return $return;
+        }
+        
+        $return['msg'] = '删除数据成功,关联业务号为:'.$order_data->business_number;
+        
+        $return['code'] = 1;
+        return $return;
+
+    }
 }

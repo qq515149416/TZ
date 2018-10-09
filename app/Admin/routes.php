@@ -254,6 +254,7 @@ Route::group([
         $router->post('check','Business\BusinessController@checkBusiness');
         $router->post('enable','Business\BusinessController@enableBusiness');
         $router->get('showbusiness','Business\BusinessController@showBusiness');
+        $router->get('deletebusiness','Business\BusinessController@deleteBusiness');
         // 订单
         $router->post('finance','Business\OrdersController@financeOrders');
         $router->post('clerk','Business\OrdersController@clerkOrders');
@@ -263,6 +264,7 @@ Route::group([
         $router->post('reneworders','Business\OrdersController@renewOrders');
         $router->post('renewresource','Business\OrdersController@renewResource');
         $router->post('resourceorders','Business\OrdersController@resourceOrders');
+        $router->get('deleteorders','Business\OrdersController@deleteOrders');
         //客户信息
         $router->get('admin_customer','Business\CustomerController@adminCustomer');
         $router->post('pull_black','Business\CustomerController@pullBlackCustomer');

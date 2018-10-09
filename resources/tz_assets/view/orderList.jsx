@@ -6,6 +6,8 @@ import { inject,observer } from "mobx-react";
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import RenewalFee from "../component/dialog/renewalFee.jsx";
+import SelectExpansion from "../component/dialog/selectExpansion.jsx";
 const qs = require('qs');
 const styles = theme => ({
     listTableComponent: {
@@ -36,7 +38,13 @@ const columnData = [
         {id: "order_status", label: "订单状态" ,type: "text"},
         {id: "order_note", label: "订单备注" ,type: "text"},
         {id: "created_at", label: "创建时间" ,type: "text"}
-    ], label: '操作' }
+    ],extendElement: (data) => {
+        if(data.order_status=="已支付") {
+          return <RenewalFee {...data} postUrl="business/renewresource" nameParam="order_sn" type="订单" />;
+        }else {
+          return null;
+        }
+    }, label: '操作' }
 ];
 const inputType = [
     {
@@ -79,8 +87,67 @@ const inputType = [
     {
         field: "resource",
         label: "资源",
+        type: "component",
+        defaultData: [],
+        Component: SelectExpansion,
+        param: {
+            buttonName: "选择资源"
+        },
+        rule: {
+            term: "resource_type",
+            execute: [
+              {
+                index: 4,
+                value: "ip_resource",
+                default: true
+              },
+              {
+                index: 5,
+                value: "cpu_resource"
+              },
+              {
+                index: 6,
+                value: "hardDisk_resource"
+              },
+              {
+                index: 7,
+                value: "ram_resource"
+              },
+              {
+                index: 8,
+                value: "bandwidth"
+              },
+              {
+                index: 9,
+                value: "defense"
+              }
+            ],
+            type: "component"
+          }
+    },
+    {
+        field: "price",
+        label: "单价",
+        type: "text"
+    },
+    {
+        field: "duration",
+        label: "时长",
         type: "select",
-        defaultData: []
+        defaultData: [
+            {
+                value: 1,
+                text: "一个月"
+            },
+            {
+                value: 6,
+                text: "半年"
+            },
+            {
+                value: 12,
+                text: "一年"
+            }
+        ]
     }
 ];
 @inject("ordersStores")
@@ -104,22 +171,34 @@ class OrderList extends React.Component {
         inputType[inputType.findIndex(item => item.field=="resource_type")].model = {
             getSubordinateData: this.getResourceData.bind(this)
         };
+        inputType[inputType.findIndex(item => item.field=="resource")].model = {
+            getSubordinateData: this.getResourceData.bind(this)
+        };
     }
     addData = (param,callbrak) => {
-        console.log(param);
         param.business_sn = qs.parse(location.search.substr(1)).business_number;
         param.customer_id = qs.parse(location.search.substr(1)).client_id;
         param.customer_name = qs.parse(location.search.substr(1)).client_name;
-        // this.props.ordersStores.addData(param).then((state) => {
-        //     callbrak(state);
-        // });
+        param.machine_sn = param.resource.label;
+        param.resource = param.resource.value;
+        this.props.ordersStores.addData(param).then((state) => {
+            callbrak(state);
+        });
       }
     getResourceData(param,type) {
-        if(param.resource_type) {
+        if(param.resource_type && param.resource_type.value > 4) {
             this.props.ordersStores.getResourceData({
                 resource_type: param.resource_type.value,
-                machineroom: qs.parse(location.search.substr(1)).machineroom
+                machineroom: qs.parse(location.search.substr(1)).machineroom_id
             });
+        } else if(param.resource_type && param.company!=undefined) {
+            this.props.ordersStores.getResourceData({
+                resource_type: param.resource_type.value,
+                company: param.company,
+                machineroom: qs.parse(location.search.substr(1)).machineroom_id
+            });
+        } else {
+            console.error("参数：",param,"有问题");
         }
     }
     handleChange = (event, value) => {

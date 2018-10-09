@@ -149,6 +149,16 @@ class OrdersModel extends Model
             $return['msg'] = '资源无法增加！！';
             return $return;
         }
+        //业务到期时间和资源到期时间比较
+        $end_time = Carbon::parse('+'.$insert_data['duration'].' months')->toDateTimeString();
+        $endding_time = DB::table('tz_business')->where('business_number',$insert_data['business_sn'])->value('endding_time');
+        if($end_time > $endding_time){
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg'] = '资源到期时间超业务到期时间，无法添加资源!';
+            return $return;
+        }
+        $insert_data['end_time'] = $end_time;
         // 订单号的生成规则：前两位（4-6的随机数）+ 年月日（如:20180830） + 时间戳的后2位数 + 1-3随机数
         $order_sn = mt_rand(4,6).date("Ymd",time()).substr(time(),8,2).mt_rand(1,3);
         $insert_data['order_sn'] = $order_sn;
@@ -159,6 +169,7 @@ class OrdersModel extends Model
         $sales_name = (array)$this->staff($sales_id);
         $insert_data['business_name'] = $sales_name['fullname'];
         $insert_data['month'] = (int)date('Ym',time());
+        $insert_data['created_at'] = Carbon::now()->toDateTimeString();
         DB::beginTransaction();//开启事务处理
         $row = DB::table('tz_orders')->insert($insert_data);
         if($row == false){
@@ -181,19 +192,19 @@ class OrdersModel extends Model
                 //更新CPU表的所属业务编号，资源状态和到期时间
                 $machine['service_num'] = $insert_data['business_sn'];
                 $machine['cpu_used'] = 1;
-                $result = DB::table('idc_cpu')->where('cpu_number',$order['machine_sn'])->update($machine);
+                $result = DB::table('idc_cpu')->where('cpu_number',$insert_data['machine_sn'])->update($machine);
                 break; 
             case 6:
                //更新硬盘表的所属业务编号，资源状态和到期时间
                 $machine['service_num'] = $insert_data['business_sn'];
                 $machine['harddisk_used'] = 1;
-                $result = DB::table('idc_harddisk')->where('harddisk_number',$order['machine_sn'])->update($machine);
+                $result = DB::table('idc_harddisk')->where('harddisk_number',$insert_data['machine_sn'])->update($machine);
                 break; 
             case 7:
                 //更新内存表的所属业务编号，资源状态和到期时间
                 $machine['service_num'] = $insert_data['business_sn'];
                 $machine['memory_used'] = 1;
-                $result = DB::table('idc_memory')->where('memory_number',$order['machine_sn'])->update($machine);
+                $result = DB::table('idc_memory')->where('memory_number',$insert_data['machine_sn'])->update($machine);
                 break;    
         }
         if($result != 0){
@@ -223,31 +234,6 @@ class OrdersModel extends Model
     }
 
     /**
-     * 比较资源到期时间和业务到期时间
-     * @param  array $time 资源时长和业务到期时间
-     * @return array       资源到期时间和状态提示及信息
-     */
-    public function endTime($time){
-        if($time){
-            $end_time = Carbon::parse('+'.$time['duration'].' months')->toDateTimeString();
-            if($end_time < $time['endding_time']){
-                $return['data'] = $end_time;
-                $return['code'] = 1;
-                $return['msg'] = '资源到期时间在业务到期时间内';
-            } else {
-                $return['data'] = '';
-                $return['code'] = 0;
-                $return['msg'] = '资源到期时间超业务到期时间';
-            }
-        } else {
-            $return['data'] = '';
-            $return['code'] = 0;
-            $return['msg'] = '无法比较资源到期时间和业务到期时间';
-        }
-        return $return;
-    }
-
-    /**
      * 客户续费主机及机柜产生订单
      * @param  array $renew 续费订单所需要的数据
      * @return array        返回操作后的状态提示及信息
@@ -260,7 +246,7 @@ class OrdersModel extends Model
         }
         //根据业务号查询需要审核的业务数据
         $renew_where = ['business_number'=>$renew['business_number']];
-        $renew_data = DB::table('tz_business')->where($check_where)->select('business_type','client_id', 'business_number','client_name','business_type','machine_number','endding_time')->first();
+        $renew_data = DB::table('tz_business')->where($check_where)->select('business_type','client_id', 'business_number','client_name','business_type','machine_number','endding_time','length')->first();
         if(empty($renew_data)) {
             $return['code'] = 0;
             $return['msg'] = '无对应业务数据,续费操作无法进行';
@@ -288,6 +274,7 @@ class OrdersModel extends Model
         $endding_time = Carbon::parse($renew_data->endding_time)->modify('+'.$order['duration'].' months')->toDateTimeString();//在原到期时间基础上增加续费时长
         $order['end_time'] = $endding_time;
         $order['month'] = (int)date('Ym',time());
+        $order['created_at'] = Carbon::now()->toDateTimeString();
         DB::beginTransaction();//开启事务处理
         $order_row = DB::table('tz_orders')->insert($order);//生成续费订单
         if($order_row == 0) {
@@ -297,7 +284,7 @@ class OrdersModel extends Model
             return $return;
         } 
         //续费订单生成成功，继续对业务的到期时间和累计时长修改
-        $business['length'] = (int)bcadd($end['length'],$renew['length'],0);
+        $business['length'] = (int)bcadd($renew_data->length,$renew['length'],0);
         $business['endding_time'] = $endding_time;
         $business['business_status'] = 3;
         $business_row = DB::table('tz_business')->where($renew_where)->update($business);
@@ -347,6 +334,17 @@ class OrdersModel extends Model
             $return['msg'] = '无法对资源进行续费';
             return $return;
         }
+        //业务到期时间和资源到期时间比较
+        $end_time = Carbon::parse('+'.$renew['duration'].' months')->toDateTimeString();
+        $endding_time = DB::table('tz_business')->where('business_number',$renew['business_sn'])->value('endding_time');
+        if($end_time > $endding_time){
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg'] = '资源到期时间超业务到期时间，无法续费资源!';
+            return $return;
+        }
+        $renew['end_time'] = $end_time;
+
         //续费订单号的生成规则：前两位（11-40的随机数）+ 年月日 + 时间戳的后5位数 + 2（续费）
         $order_sn = mt_rand(4,6).date("Ymd",time()).substr(time(),8,2).mt_rand(4,6);//续费订单号
         $renew['order_sn'] = $order_sn;
@@ -357,6 +355,7 @@ class OrdersModel extends Model
         $sales_name = (array)$this->staff($sales_id);
         $renew['business_name']=$sales_name['fullname'];
         $renew['month'] = (int)date('Ym',time());
+        $renew['created_at'] = Carbon::now()->toDateTimeString();
         DB::beginTransaction();
         $insert = DB::table('tz_orders')->insert($renew);//生成续费订单
 
@@ -448,5 +447,35 @@ class OrdersModel extends Model
             $return['msg'] = '无法获取增加的资源数据';
         }
         return $return;
+    }
+
+    public function deleteOrders($delete_id){
+        $deltet_data = $this->find($delete_id['delete_id']);
+        if(!$deltet_data){
+            $return['code'] = 0;
+            $return['msg'] = '无法删除对应数据!';
+            return $return;
+        }
+
+        //查找业务关联订单
+        $order_data = DB::table('tz_orders')
+                        ->join('tz_business','tz_orders.business_sn','=','tz_business.business_number')
+                        ->where('tz_orders.id',$delete_id['delete_id'])
+                        ->select('tz_business.business_number')
+                        ->find();
+
+        //删除对应业务数据
+        $result = DB::table('tz_orders')->where('id',$delete_id['delete_id'])->delete();
+        if($result == false){
+            $return['code'] = 0;
+            $return['msg'] = '删除失败!';
+            return $return;
+        }
+        
+        $return['msg'] = '删除数据成功,关联业务号为:'.$order_data->business_number;
+        
+        $return['code'] = 1;
+        return $return;
+
     }
 }

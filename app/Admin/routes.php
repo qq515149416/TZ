@@ -233,14 +233,6 @@ Route::group([
         $router->post('delete','Work\WhiteListController@deleteWhiteList');
     });
 
-    // 客户管理接口
-    Route::group([
-        'prefix' => 'customer',
-    ],function(Router $router){
-        $router->get('show','Customer\CustomerController@showCustomerList');
- 
-    });
-
     // 业务相关接口(业务员下订单/手动生成业务编号及业务数据并且提供财务人员/管理人员/业务员查看数据等)
     Route::group([
         'prefix' => 'business',
@@ -254,15 +246,16 @@ Route::group([
         $router->post('check','Business\BusinessController@checkBusiness');
         $router->post('enable','Business\BusinessController@enableBusiness');
         $router->get('showbusiness','Business\BusinessController@showBusiness');
+        $router->get('deletebusiness','Business\BusinessController@deleteBusiness');
         // 订单
         $router->post('finance','Business\OrdersController@financeOrders');
         $router->post('clerk','Business\OrdersController@clerkOrders');
         $router->post('resource','Business\OrdersController@resource');
         $router->post('insertresource','Business\OrdersController@insertResource');
-        $router->post('end','Business\OrdersController@endTime');
         $router->post('reneworders','Business\OrdersController@renewOrders');
         $router->post('renewresource','Business\OrdersController@renewResource');
         $router->post('resourceorders','Business\OrdersController@resourceOrders');
+        $router->get('deleteorders','Business\OrdersController@deleteOrders');
         //客户信息
         $router->get('admin_customer','Business\CustomerController@adminCustomer');
         $router->post('pull_black','Business\CustomerController@pullBlackCustomer');

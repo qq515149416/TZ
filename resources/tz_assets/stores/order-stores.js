@@ -89,7 +89,7 @@ class OrdersStores extends ActionBoundStores {
     @observable resource =[
 
     ];
-    type = 1;
+    type = null;
     addData(data) {
         return new Promise((resolve,reject) => {
             post("business/insertresource",data).then(res => {
@@ -97,7 +97,17 @@ class OrdersStores extends ActionBoundStores {
                     // this.addStoreData("business",BusinesStores,Object.assign(JSON.parse(data.resource_detail),{
                     //     id: res.data.data
                     // }));
-                    this.getData(type);
+                    if(this.type) {
+                        this.getData({
+                            business_sn: data.business_sn,
+                            resource_type: this.type
+                        });
+                    } else {
+                        this.getData({
+                            business_sn: data.business_sn
+                        });
+                    }
+                   
                     resolve(true);
                 }else {
                     alert(res.data.msg);

@@ -14,10 +14,10 @@ use Encore\Admin\Facades\Admin;
  */
 class CustomerModel extends Model
 {
-    // use  SoftDeletes;
+    
     protected $table = 'tz_users';
     public $timestamps = true;
-    // protected $dates = ['deleted_at'];
+    
 
 	/**
 	 * 管理人员查看客户信息

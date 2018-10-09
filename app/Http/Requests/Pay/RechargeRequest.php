@@ -46,7 +46,21 @@ class RechargeRequest extends FormRequest
 					'way'			=> 'required',
 				];
 				break;
-
+ 			case 'getOrder':
+				$return = [
+					'trade_no'		=> 'required',
+				];
+				break;
+			case 'checkRechargeOrder':
+				$return = [
+					'trade_no'		=> 'required',
+				];
+				break;
+			case 'delOrder':
+				$return = [
+					'del_trade_id'		=> 'required',
+				];
+				break;
 			default:
 	
 				break;
@@ -61,6 +75,8 @@ class RechargeRequest extends FormRequest
 		return  [
 			'trade_id.required'	=> '请提供所需支付充值订单号',
 			'way.required'		=> '请选择支付途径',
+			'trade_no.required'	=> '请提供所需查询充值单号',
+			'del_trade_id.required'	=> '请提供所需删除充值单号',
 		];
 	}
 

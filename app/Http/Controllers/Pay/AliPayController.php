@@ -46,21 +46,19 @@ class AliPayController extends Controller
 	];
 
 	/**
-	*生成支付宝付款订单的页面
-	*@param 	$pay_for 	用于确认付款用途,1为充值
-			$total_amount	订单金额
-			$subject 	商品名称
-			$trade_no 	本地订单号
-
-	*@return 创建订单的id
+	*从env获取敏感配置信息
+	*@param 	
  	**/
  	
  	public function __construct()
  	{
  		$this->seller_id			= env('SELLER_ID');
 		$this->domain_name		= env('APP_URL');
- 		// $this->config['notify_url'] 	= env('APP_URL').'/home/recharge/payRechargeNotify';
- 		$this->config['notify_url'] 	= 'http://tz.jungor.cn/home/recharge/payRechargeNotify';
+
+		//这条实际应用要换
+ 		$this->config['notify_url'] 	= env('APP_URL').'/home/recharge/payRechargeNotify';
+ 		//$this->config['notify_url'] 	= 'http://tz.jungor.cn/home/recharge/payRechargeNotify';
+
  		$this->config['return_url'] 	= env('APP_URL').'/home/recharge/payRechargeReturn';
  		$this->config['private_key'] 	= env('ALI_PRIVATE_KEY');
  		$this->config['ali_public_key'] 	= env('ALI_PUBLIC_KEY');
@@ -68,8 +66,9 @@ class AliPayController extends Controller
  	}
 
 	/**
-	* 跳转支付页面方法
-	*@param $trade_id 	充值订单号的id
+	* 按支付方式返回支付链接
+	*@param 	$order 	-订单信息 	$way 	支付方式: 	web直接跳转
+	*								scan返回二维码图片url
 	*/
 	public function goToPay($order,$way)
 	{
@@ -119,7 +118,10 @@ class AliPayController extends Controller
 	// 	return $alipay;// laravel 框架中请直接 `return $alipay`
 	// }
 
-	//用户支付完成后的跳转页面
+
+
+	//用户支付完成后的跳转的处理方法
+
 	public function checkByReturn()
 	{	
 		//验签
@@ -130,7 +132,7 @@ class AliPayController extends Controller
 		$return['code']	= 1;
 		$app_id				= $data->app_id;
 		$seller_id			= $data->seller_id;
-
+		
 		if($seller_id != $this->seller_id){
 			$return['data'] 	= '';
 			$return['code']	= 0;
@@ -142,7 +144,7 @@ class AliPayController extends Controller
 			$return['msg']	= 'app_id错误,请检查';
 		}
 
-		//如果通过验证,则获取信息并根据订单号插入数据库
+		//返回验证结果
 		return $return;
 
 		// 订单号：$data->out_trade_no
@@ -155,9 +157,10 @@ class AliPayController extends Controller
 
 	public function checkByAjax()
 	{
-
+		//获取配置信息
 		$alipay = Pay::alipay($this->config);
-	
+		
+
 		try{
 			$data = $alipay->verify(); // 是的，验签就这么简单！
 
@@ -167,7 +170,7 @@ class AliPayController extends Controller
 			$return['data']	= $data;
 			$return['code']	= 1;
 			$return['msg']	= $alipay->success();
-			
+
 			if($seller_id != $this->seller_id){
 				$return['data'] 	= '';
 				$return['code']	= 0;
@@ -195,59 +198,19 @@ class AliPayController extends Controller
 			$return['code']	= 0;
 			$return['msg']	= $e->getMessage();
 		}
+		//返回验签结果
 		return $return;
 		// return $alipay->success();// laravel 框架中请直接 `return $alipay->success()`
 	}
 
 
-	/**
-	* 查询指定用户的所有充值单的接口
-	*@param $user_id 	用户id
-	* @return 订单信息,
-	*/
-	public function getOrderByUser(Request $request){
-		$checkLogin = Auth::check();
-		if($checkLogin == false){
-			return tz_ajax_echo([],'请先登录',0);
-		}
-		$user_id = Auth::id();
-		
-		$model 	= new AliRecharge();
-		$res 		= $model->checkOrder($user_id,4);
-		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
-	}
+	
 
 	/**
-	* 查询指定充值单的接口
-	*@param $trade_no 	充值订单号
-	* @return 订单信息,
+	*关闭订单接口
+	*@param 	$trade_no 	订单号,就是属于支付宝的out_trade_no
 	*/
-	public function getOrder(Request $request){
 
-		$info 		= $request->only(['trade_no']);
-		$trade_no 	= $info['trade_no'];
-		$model 	= new AliRecharge();
-		$res 		= $model->checkOrder($trade_no,1);
-		
-		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
-	}
-
-	/**
-	* 查询指定充值单支付情况的接口
-	*@param $trade_no 	充值订单号
-	* @return 订单的支付情况,
-	*/
-	public function checkRechargeOrder(Request $request){
-
-		$info 		= $request->only(['trade_no']);
-		$trade_no 	= $info['trade_no'];
-		$model 	= new AliRecharge();
-		$res 		= $model->checkOrder($trade_no,2);
-		
-		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
-	}
-
-	//关闭订单接口
 	public function cancel($trade_no){
 		
 		$cancel =  Pay::alipay($this->config)->cancel($trade_no);
@@ -255,8 +218,16 @@ class AliPayController extends Controller
 		return $cancel;
 	}
 
+	/**
+	*查询订单接口
+	*@param 	$trade_no 	订单号,就是属于支付宝的out_trade_no
+	*/
 
-	public function form(){
-		return view('form');
+	public function check($trade_no){
+		
+		$check =  Pay::alipay($this->config)->find($trade_no);
+
+		return $check;
 	}
+
 }

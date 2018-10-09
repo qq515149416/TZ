@@ -94,7 +94,7 @@ Route::group([
 		], function () {
 			//生成订单接口
 			Route::get('payIndex', 'Pay\RechargeController@index');
-			//获取指定用户的所有充值单信息
+			//获取登录中用户的所有充值单信息
 			Route::get('getOrderByUser', 'Pay\RechargeController@getOrderByUser');
 			//跳转到支付页面的方法
 			Route::get('goToPay', 'Pay\RechargeController@goToPay');
@@ -110,7 +110,7 @@ Route::group([
 
 		//获取指定充值单号所有信息
 		Route::get('getOrder', 'Pay\RechargeController@getOrder');
-		//单独获取指定充值单号支付情况
+		//查询指定充值单号支付情况
 		Route::get('checkRechargeOrder', 'Pay\RechargeController@checkRechargeOrder');
 
 		//退款页面

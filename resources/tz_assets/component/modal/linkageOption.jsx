@@ -42,20 +42,20 @@ class LinkageOption extends React.Component {
         this.state = {
             open: false,
             currency: "",
-            selectedValue: "",
             machines: [],
             cabinets: [],
             machineSelected: "",
             type: "machine",
             cabinetChecked: 0
         };
+        this.type = "";
     }
     componentDidMount() {
         this.props.getRef && this.props.getRef(this);
         this.props.MachineRoomsStores.getData();
     }
     getMachineData = param => event => {
-        if(this.state.type=="machine") {
+        if(this.type.indexOf("machine") > -1) {
             get("business/selectmachine",param).then(res => {
                 if(res.data.code==1) {
                     this.setState({
@@ -76,13 +76,14 @@ class LinkageOption extends React.Component {
         
     }
     handleOpen = (type) => {
-        this.setState({ open: true, type });
+        this.type = type;
+        this.setState({ open: true });
     }
     handleClose = () => {
         this.setState({ open: false });
     }
     handleChange = name => event => {
-        if(this.state.type=="machine") {
+        if(this.type.indexOf("machine") > -1) {
             this.selectedData = this.state.machines.find(item => item.id==event.target.value);
         } else {
             this.selectedData = this.state.cabinets.find(item => item.cabinetid==event.target.value);
@@ -92,7 +93,7 @@ class LinkageOption extends React.Component {
         });
     }
     setCheckBoxValue = (name,value) => {
-        if(this.state.type=="machine") {
+        if(this.type.indexOf("machine")>-1) {
             this.selectedData = this.state.machines.find(item => item.id==value);
         } else {
             this.selectedData = this.state.cabinets.find(item => item.cabinetid==value);
@@ -101,8 +102,18 @@ class LinkageOption extends React.Component {
             [name]: value,
           });
     }
+    selectedMachineValue = (type) => {
+        switch(type) {
+            case "rent_machine":
+                return 1
+            case "hosting_machine":
+                return 2
+            default:
+                return 3
+        }
+    }
     selectedValue = () => {
-        this.props.setCurrentData(this.selectedData,this.state.type);
+        this.props.setCurrentData(this.selectedData,this.selectedMachineValue(this.type));
         this.handleClose();
     }
     render() {
@@ -130,32 +141,12 @@ class LinkageOption extends React.Component {
                         ))}
                     </TextField>
                     {
-                        this.state.type=="machine" ? [
-                            <label>
-                        <Radio
-                            checked={this.state.selectedValue === '1'}
-                            onChange={this.handleChange('selectedValue')}
-                            value="1"
-                            name="type"
-                            aria-label="A"
-                        />
-                        租用主机
-                    </label>,
-                    <label>
-                        <Radio
-                            checked={this.state.selectedValue === '2'}
-                            onChange={this.handleChange("selectedValue")}
-                            value="2"
-                            name="type"
-                            aria-label="B"
-                        />
-                        托管主机
-                    </label>,
+                        this.type.indexOf("machine") > -1 ? [
                     <Button variant="contained" onClick={this.getMachineData({
                         machineroom: this.state.currency,
-                        business_type: this.state.selectedValue
+                        business_type: this.selectedMachineValue(this.type)
                     })} color="primary">
-                        获取所属机房
+                        获取所属机器/机柜
                     </Button>,
                     <div>,
                     <Table>

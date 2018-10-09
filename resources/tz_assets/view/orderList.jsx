@@ -6,6 +6,7 @@ import { inject,observer } from "mobx-react";
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import SelectExpansion from "../component/dialog/selectExpansion.jsx";
 const qs = require('qs');
 const styles = theme => ({
     listTableComponent: {
@@ -79,8 +80,43 @@ const inputType = [
     {
         field: "resource",
         label: "资源",
-        type: "select",
-        defaultData: []
+        type: "component",
+        defaultData: [],
+        Component: SelectExpansion,
+        param: {
+            buttonName: "选择资源"
+        },
+        rule: {
+            term: "resource_type",
+            execute: [
+              {
+                index: 4,
+                value: "ip_resource",
+                default: true
+              },
+              {
+                index: 5,
+                value: "cpu_resource"
+              },
+              {
+                index: 6,
+                value: "hardDisk_resource"
+              },
+              {
+                index: 7,
+                value: "ram_resource"
+              },
+              {
+                index: 8,
+                value: "bandwidth"
+              },
+              {
+                index: 9,
+                value: "defense"
+              }
+            ],
+            type: "component"
+          }
     }
 ];
 @inject("ordersStores")
@@ -104,6 +140,9 @@ class OrderList extends React.Component {
         inputType[inputType.findIndex(item => item.field=="resource_type")].model = {
             getSubordinateData: this.getResourceData.bind(this)
         };
+        inputType[inputType.findIndex(item => item.field=="resource")].model = {
+            getSubordinateData: this.getResourceData.bind(this)
+        };
     }
     addData = (param,callbrak) => {
         console.log(param);
@@ -115,11 +154,19 @@ class OrderList extends React.Component {
         // });
       }
     getResourceData(param,type) {
-        if(param.resource_type) {
+        if(param.resource_type && param.resource_type.value > 4) {
             this.props.ordersStores.getResourceData({
                 resource_type: param.resource_type.value,
-                machineroom: qs.parse(location.search.substr(1)).machineroom
+                machineroom: qs.parse(location.search.substr(1)).machineroom_id
             });
+        } else if(param.resource_type && param.company!=undefined) {
+            this.props.ordersStores.getResourceData({
+                resource_type: param.resource_type.value,
+                company: param.company,
+                machineroom: qs.parse(location.search.substr(1)).machineroom_id
+            });
+        } else {
+            console.error("参数：",param,"有问题");
         }
     }
     handleChange = (event, value) => {

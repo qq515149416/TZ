@@ -19,11 +19,10 @@ class InputExpansion extends React.Component {
         };
     }
     handleOpen = type => event => {
-        console.log(type);
         this.iinkageOption.handleOpen(type);
     }
     setCurrentData = (param,type) => {
-        if(type=="machine") {
+        if(type==1||type==2) {
             param.id = param.machine_num;
             this.props.setComponentParam(param);
             this.setState({
@@ -42,12 +41,12 @@ class InputExpansion extends React.Component {
         return (
             <div>
                 {
-                    this.props.type=="machine" ? (
-                        <Button variant="contained" onClick={this.handleOpen("machine")} color="primary">
+                    this.props.type.indexOf("machine") > -1 ? (
+                        <Button variant="contained" onClick={this.handleOpen(this.props.type)} color="primary">
                             {this.state.machineText}
                         </Button>
                     ) : (
-                        <Button variant="contained" onClick={this.handleOpen("cabinet")} color="primary">
+                        <Button variant="contained" onClick={this.handleOpen(this.props.type)} color="primary">
                             {this.state.cabinetText}
                         </Button>
                     )

@@ -62,7 +62,7 @@ const columnData = [
       link: "/tz_admin/business/order",
       param: ["business_number","client_id","client_name",{
         field: "resource_detail_json",
-        value: ["machineroom"]
+        value: ["machineroom_id"]
       }],
       rule: {
         term: "business_status",
@@ -125,7 +125,8 @@ const inputType = [
       execute: [
         {
           index: "1",
-          value: "machine"
+          value: "rent_machine",
+          default: true
         },
         {
           index: "3",
@@ -133,7 +134,7 @@ const inputType = [
         },
         {
           index: "2",
-          value: "machine"
+          value: "hosting_machine"
         }
       ],
       type: "component"

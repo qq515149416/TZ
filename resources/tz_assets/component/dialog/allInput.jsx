@@ -41,7 +41,7 @@ class AllInput extends React.Component {
         this.state = {
             open: false,
             inputAttr: this.inputAttr(),
-            componentPropsType: "machine" 
+            componentPropsType: "" 
         };
         this.editor = null;
     }
@@ -188,6 +188,23 @@ class AllInput extends React.Component {
     handleClose = () => {
         this.setState({ open: false });
     };
+    componentPropsType = (inputTypeData) => {
+        if(this.state.componentPropsType) {
+            return this.state.componentPropsType;
+        } else {
+            if(inputTypeData.rule&&inputTypeData.rule.type=="component") {
+                let currentValue =  inputTypeData.rule.execute.find(item => item.default);
+                // console.log(currentValue,this[inputTypeData.rule.term].value);
+                if(currentValue) {
+                    return currentValue.value;
+                }else {
+                    return "";
+                }
+            }else {
+                return "";
+            }
+        }
+    }
     returnInput = inputTypeData => {
         const {classes} = this.props;
         const {inputAttr} = this.state;
@@ -202,16 +219,20 @@ class AllInput extends React.Component {
                 status = false;
             }
         }
+        // if(inputTypeData.rule&&inputTypeData.rule.term&&inputTypeData.rule.type=="hidden"&&this[inputTypeData.rule.term]) {
+        //     if(this[inputTypeData.rule.term].value!=inputTypeData.rule.execute) {
+        //         status = false;
+        //     }
+        // }
         // console.log(inputTypeData);
         switch(inputTypeData.type) {
             case "component":
                 if(status) {
                     const {Component} = inputTypeData;
-                    
                     return (
                         <div>
                             <span>{inputTypeData.label}</span>
-                            <Component type={this.state.componentPropsType} setComponentParam={(data) => this.setComponentParam(inputTypeData.field,data)} />
+                            <Component getData={(inputTypeData.model && inputTypeData.model.getSubordinateData)?inputTypeData.model.getSubordinateData:""} data={(inputTypeData.defaultData ? inputTypeData.defaultData : "")} param={(inputTypeData.param?inputTypeData.param:{})} type={this.componentPropsType(inputTypeData)} setComponentParam={(data) => this.setComponentParam(inputTypeData.field,data)} />
                         </div>
                     );
                 } else {

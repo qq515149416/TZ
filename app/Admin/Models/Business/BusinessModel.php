@@ -279,4 +279,45 @@ class BusinessModel extends Model
 	    	return $return;
     	}
     }
+
+    /**
+     * 根据业务id删除业务数据
+     * @param  [type] $delete_id [description]
+     * @return [type]            [description]
+     */
+    public function deleteBusiness($delete_id){
+        //查找对应业务数据
+        $deltet_data = $this->find($delete_id['delete_id']);
+        if(!$deltet_data){
+            $return['code'] = 0;
+            $return['msg'] = '无法删除对应数据!';
+            return $return;
+        }
+        //查找业务关联订单
+        $order_data = DB::table('tz_business')
+                        ->join('tz_orders','tz_business.business_number','=','tz_orders.business_sn')
+                        ->where('tz_business.id',$delete_id['delete_id'])
+                        ->select('tz_orders.order_sn')
+                        ->get();
+        //删除对应业务数据
+        $result = DB::table('tz_business')->where('id',$delete_id['delete_id'])->delete();
+        if($result == false){
+            $return['code'] = 0;
+            $return['msg'] = '删除失败!';
+            return $return;
+        }
+        //存在关联订单
+        if($order_data){
+            $return['msg'] = '删除数据成功,关联订单号为:';
+            foreach($order_data as $key => $value){
+                $return['msg'] = $return['msg'].$value->order_sn.',';
+            }
+            $return['msg'] = rtrim($return['msg'],',');
+        } else {
+            // 无关联订单
+            $return['msg'] = '删除数据成功';
+        }
+        $return['code'] = 1;
+        return $return;
+    }
 }

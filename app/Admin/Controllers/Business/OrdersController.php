@@ -53,22 +53,10 @@ class OrdersController extends Controller
      * @return [type]           [description]
      */
     public function insertResource(Request $request){
-        $insert_data = $request->only(['business_sn','customer_id','customer_name','resource_type','machine_sn','resource','price','duration','end_time']);
+        $insert_data = $request->only(['business_sn','customer_id','customer_name','resource_type','machine_sn','resource','price','duration']);
         $insert = new OrdersModel();
         $return = $insert->insertResource($insert_data);
         return tz_ajax_echo($return['data'],$return['msg'],$return['code']); 
-    }
-
-    /**
-     * 当填完使用时长后进行到期时间计算比较，不符合不给予通过
-     * @param  Request $request [description]
-     * @return [type]           [description]
-     */
-    public function endTime(Request $request){
-        $time = $request->only('duration','endding_time');
-        $end_time = new OrdersModel();
-        $return = $end_time->endTime($time);
-        return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
     }
 
     /**
@@ -89,7 +77,7 @@ class OrdersController extends Controller
      * @return json           续费的反馈信息和提示
      */
     public function renewResource(Request $request){
-        $renew_data = $request->only(['customer_id','customer_name','business_sn','resource_type','machine_sn','resource','price','duration','end_time','order_note']);
+        $renew_data = $request->only(['customer_id','customer_name','business_sn','resource_type','machine_sn','resource','price','duration','order_note']);
         $renew = new OrdersModel();
         $renew_resource = $renew->renewResource($renew_data);
         return tz_ajax_echo($renew_resource,$renew_resource['msg'],$renew_resource['code']);

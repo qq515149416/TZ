@@ -362,6 +362,17 @@ class Order extends Model
 			$return['msg'] = '无法对资源进行续费';
 			return $return;
 		}
+
+		//业务到期时间和资源到期时间比较
+        $end_time = Carbon::parse('+'.$renew['duration'].' months')->toDateTimeString();
+        $endding_time = DB::table('tz_business')->where('business_number',$renew['business_sn'])->value('endding_time');
+        if($end_time > $endding_time){
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg'] = '资源到期时间超业务到期时间，无法续费资源!';
+            return $return;
+        }
+        $renew['end_time'] = $end_time;
 		//续费订单号的生成规则：前两位（11-40的随机数）+ 年月日 + 时间戳的后5位数 + 2（续费）
 		$order_sn = mt_rand(4,6).date("Ymd",time()).substr(time(),8,2).mt_rand(4,6);//续费订单号
 		$renew['order_sn'] = $order_sn;

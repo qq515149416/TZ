@@ -264,6 +264,7 @@ Route::group([
         $router->post('reneworders','Business\OrdersController@renewOrders');
         $router->post('renewresource','Business\OrdersController@renewResource');
         $router->post('resourceorders','Business\OrdersController@resourceOrders');
+        $router->get('deleteorders','Business\OrdersController@deleteOrders');
         //客户信息
         $router->get('admin_customer','Business\CustomerController@adminCustomer');
         $router->post('pull_black','Business\CustomerController@pullBlackCustomer');

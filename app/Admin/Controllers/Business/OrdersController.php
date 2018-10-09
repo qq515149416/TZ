@@ -107,5 +107,17 @@ class OrdersController extends Controller
         $resource_orders = $resource->resourceOrders($data);
         return tz_ajax_echo($resource_orders['data'],$resource_orders['msg'],$resource_orders['code']);
     }
+
+    /**
+     * 订单后台删除
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function deleteOrders(Request $request){
+        $delete_id = $request->only(['delete_id']);
+        $delete = new OrdersModel();
+        $return = $delete->deleteOrders($delete_id);
+        return tz_ajax_echo($return,$return['msg'],$return['code']);
+    }
    
 }

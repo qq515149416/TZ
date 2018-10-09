@@ -25,7 +25,7 @@ class SelectExpansion extends React.Component {
         this.setState({
           [name]: event.target.value,
         });
-      }
+    }
     setCurrentData = (param,type) => {
         this.props.setComponentParam(param.value);
         this.setState({

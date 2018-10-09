@@ -32,6 +32,10 @@ const styles = theme => ({
     },
     bottom: {
         textAlign: "right"
+    },
+    list: {
+        overflow: 'auto',
+        maxHeight: 400,
     }
 });
 
@@ -42,7 +46,8 @@ class SelectModal extends React.Component {
         this.state = {
             open: false,
             type: "",
-            itemChecked: 0
+            itemChecked: 0,
+            lineChecked: 0
         };
         this.type = "";
     }
@@ -63,6 +68,17 @@ class SelectModal extends React.Component {
     }
     handleClose = () => {
         this.setState({ open: false });
+    }
+    handleChange = event => {
+        if(this.selectedMachineValue(this.type)==4) {
+            this.props.getData({
+                resource_type: {
+                    value: 4
+                },
+                company: event.target.value
+            });
+        }
+        this.setState({ lineChecked: event.target.value });
     }
     setCheckBoxValue = (name,value) => {
         this.selectedData = this.props.data.find(item => item.text==value);
@@ -104,28 +120,34 @@ class SelectModal extends React.Component {
                         this.selectedMachineValue(this.type) == 4 ? [
                             <FormLabel>
                                 <Radio
+                                    checked={this.state.lineChecked==0}
                                     value={0}
                                     name="ip_resource"
                                     aria-label={"ip_resource0"}
-                                />
+                                    onChange={this.handleChange}
+                                /> 电信
                             </FormLabel>,
                             <FormLabel>
                                 <Radio
+                                    checked={this.state.lineChecked==1}
                                     value={1}
                                     name="ip_resource"
-                                    aria-label={"ip_resource0"}
-                                />
+                                    aria-label={"ip_resource1"}
+                                    onChange={this.handleChange}
+                                /> 移动
                             </FormLabel>,
                             <FormLabel>
                                 <Radio
+                                    checked={this.state.lineChecked==2}
                                     value={2}
                                     name="ip_resource"
-                                    aria-label={"ip_resource0"}
-                                />
+                                    aria-label={"ip_resource2"}
+                                    onChange={this.handleChange}
+                                /> 联通
                             </FormLabel>
                         ]:null
                     }
-                    <List>
+                    <List className={classes.list}>
                         {
                             this.props.data.map(item => (
                                 <ListItem onClick={() => this.setCheckBoxValue("itemChecked",item.text)} divider button>

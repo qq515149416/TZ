@@ -169,6 +169,7 @@ class OrdersModel extends Model
         $sales_name = (array)$this->staff($sales_id);
         $insert_data['business_name'] = $sales_name['fullname'];
         $insert_data['month'] = (int)date('Ym',time());
+        $insert_data['created_at'] = Carbon::now()->toDateTimeString();
         DB::beginTransaction();//开启事务处理
         $row = DB::table('tz_orders')->insert($insert_data);
         if($row == false){
@@ -191,19 +192,19 @@ class OrdersModel extends Model
                 //更新CPU表的所属业务编号，资源状态和到期时间
                 $machine['service_num'] = $insert_data['business_sn'];
                 $machine['cpu_used'] = 1;
-                $result = DB::table('idc_cpu')->where('cpu_number',$order['machine_sn'])->update($machine);
+                $result = DB::table('idc_cpu')->where('cpu_number',$insert_data['machine_sn'])->update($machine);
                 break; 
             case 6:
                //更新硬盘表的所属业务编号，资源状态和到期时间
                 $machine['service_num'] = $insert_data['business_sn'];
                 $machine['harddisk_used'] = 1;
-                $result = DB::table('idc_harddisk')->where('harddisk_number',$order['machine_sn'])->update($machine);
+                $result = DB::table('idc_harddisk')->where('harddisk_number',$insert_data['machine_sn'])->update($machine);
                 break; 
             case 7:
                 //更新内存表的所属业务编号，资源状态和到期时间
                 $machine['service_num'] = $insert_data['business_sn'];
                 $machine['memory_used'] = 1;
-                $result = DB::table('idc_memory')->where('memory_number',$order['machine_sn'])->update($machine);
+                $result = DB::table('idc_memory')->where('memory_number',$insert_data['machine_sn'])->update($machine);
                 break;    
         }
         if($result != 0){
@@ -245,7 +246,7 @@ class OrdersModel extends Model
         }
         //根据业务号查询需要审核的业务数据
         $renew_where = ['business_number'=>$renew['business_number']];
-        $renew_data = DB::table('tz_business')->where($check_where)->select('business_type','client_id', 'business_number','client_name','business_type','machine_number','endding_time')->first();
+        $renew_data = DB::table('tz_business')->where($check_where)->select('business_type','client_id', 'business_number','client_name','business_type','machine_number','endding_time','length')->first();
         if(empty($renew_data)) {
             $return['code'] = 0;
             $return['msg'] = '无对应业务数据,续费操作无法进行';
@@ -273,6 +274,7 @@ class OrdersModel extends Model
         $endding_time = Carbon::parse($renew_data->endding_time)->modify('+'.$order['duration'].' months')->toDateTimeString();//在原到期时间基础上增加续费时长
         $order['end_time'] = $endding_time;
         $order['month'] = (int)date('Ym',time());
+        $order['created_at'] = Carbon::now()->toDateTimeString();
         DB::beginTransaction();//开启事务处理
         $order_row = DB::table('tz_orders')->insert($order);//生成续费订单
         if($order_row == 0) {
@@ -282,7 +284,7 @@ class OrdersModel extends Model
             return $return;
         } 
         //续费订单生成成功，继续对业务的到期时间和累计时长修改
-        $business['length'] = (int)bcadd($end['length'],$renew['length'],0);
+        $business['length'] = (int)bcadd($renew_data->length,$renew['length'],0);
         $business['endding_time'] = $endding_time;
         $business['business_status'] = 3;
         $business_row = DB::table('tz_business')->where($renew_where)->update($business);
@@ -353,6 +355,7 @@ class OrdersModel extends Model
         $sales_name = (array)$this->staff($sales_id);
         $renew['business_name']=$sales_name['fullname'];
         $renew['month'] = (int)date('Ym',time());
+        $renew['created_at'] = Carbon::now()->toDateTimeString();
         DB::beginTransaction();
         $insert = DB::table('tz_orders')->insert($renew);//生成续费订单
 

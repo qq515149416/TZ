@@ -149,6 +149,16 @@ class OrdersModel extends Model
             $return['msg'] = '资源无法增加！！';
             return $return;
         }
+        //业务到期时间和资源到期时间比较
+        $end_time = Carbon::parse('+'.$insert_data['duration'].' months')->toDateTimeString();
+        $endding_time = DB::table('tz_business')->where('business_number',$insert_data['business_sn'])->value('endding_time');
+        if($end_time > $endding_time){
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg'] = '资源到期时间超业务到期时间，无法添加资源!';
+            return $return;
+        }
+        $insert_data['end_time'] = $end_time;
         // 订单号的生成规则：前两位（4-6的随机数）+ 年月日（如:20180830） + 时间戳的后2位数 + 1-3随机数
         $order_sn = mt_rand(4,6).date("Ymd",time()).substr(time(),8,2).mt_rand(1,3);
         $insert_data['order_sn'] = $order_sn;
@@ -220,31 +230,6 @@ class OrdersModel extends Model
         $staff = DB::table('oa_staff')->where('admin_users_id',$admin_id)
                     ->select('work_number','fullname')->first();
         return $staff;
-    }
-
-    /**
-     * 比较资源到期时间和业务到期时间
-     * @param  array $time 资源时长和业务到期时间
-     * @return array       资源到期时间和状态提示及信息
-     */
-    public function endTime($time){
-        if($time){
-            $end_time = Carbon::parse('+'.$time['duration'].' months')->toDateTimeString();
-            if($end_time < $time['endding_time']){
-                $return['data'] = $end_time;
-                $return['code'] = 1;
-                $return['msg'] = '资源到期时间在业务到期时间内';
-            } else {
-                $return['data'] = '';
-                $return['code'] = 0;
-                $return['msg'] = '资源到期时间超业务到期时间';
-            }
-        } else {
-            $return['data'] = '';
-            $return['code'] = 0;
-            $return['msg'] = '无法比较资源到期时间和业务到期时间';
-        }
-        return $return;
     }
 
     /**
@@ -347,6 +332,17 @@ class OrdersModel extends Model
             $return['msg'] = '无法对资源进行续费';
             return $return;
         }
+        //业务到期时间和资源到期时间比较
+        $end_time = Carbon::parse('+'.$renew['duration'].' months')->toDateTimeString();
+        $endding_time = DB::table('tz_business')->where('business_number',$renew['business_sn'])->value('endding_time');
+        if($end_time > $endding_time){
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg'] = '资源到期时间超业务到期时间，无法续费资源!';
+            return $return;
+        }
+        $renew['end_time'] = $end_time;
+
         //续费订单号的生成规则：前两位（11-40的随机数）+ 年月日 + 时间戳的后5位数 + 2（续费）
         $order_sn = mt_rand(4,6).date("Ymd",time()).substr(time(),8,2).mt_rand(4,6);//续费订单号
         $renew['order_sn'] = $order_sn;

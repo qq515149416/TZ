@@ -246,10 +246,10 @@ class RechargeController extends Controller
 			$model = new AliRecharge();
 			$insert = $model->returnInsert($info);
 			if($insert['code'] == 0){
-				$res['res'] = '';
+				$res['msg'] = '储存失败';
 			}
 		}	
-		return $res['res'];					
+		return $res['msg'];					
 	}
 
 

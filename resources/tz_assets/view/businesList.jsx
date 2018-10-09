@@ -2,6 +2,7 @@ import React from "react";
 import ListTableComponent from "../component/listTableComponent.jsx";
 import InputExpansion from "../component/dialog/inputExpansion.jsx";
 import OrderShow from "../component/dialog/orderShow.jsx";
+import RenewalFee from "../component/dialog/renewalFee.jsx";
 import {post} from "../tool/http.js";
 import { inject,observer } from "mobx-react";
 const qs = require('qs');
@@ -57,7 +58,13 @@ const columnData = [
               }).catch(reject);
           });
       }
-    }, extendUrl: {
+    },extendElement: (data) => {
+      if(data.business_status==2) {
+        return <RenewalFee {...data} postUrl="business/reneworders" nameParam="machine_number" type="业务" />;
+      }else {
+        return null;
+      }
+  }, extendUrl: {
       title: "全部订单",
       link: "/tz_admin/business/order",
       param: ["business_number","client_id","client_name",{

@@ -6,6 +6,7 @@ import { inject,observer } from "mobx-react";
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import RenewalFee from "../component/dialog/renewalFee.jsx";
 import SelectExpansion from "../component/dialog/selectExpansion.jsx";
 const qs = require('qs');
 const styles = theme => ({
@@ -37,7 +38,13 @@ const columnData = [
         {id: "order_status", label: "订单状态" ,type: "text"},
         {id: "order_note", label: "订单备注" ,type: "text"},
         {id: "created_at", label: "创建时间" ,type: "text"}
-    ], label: '操作' }
+    ],extendElement: (data) => {
+        if(data.order_status=="已支付") {
+          return <RenewalFee {...data} postUrl="business/renewresource" nameParam="order_sn" type="订单" />;
+        }else {
+          return null;
+        }
+    }, label: '操作' }
 ];
 const inputType = [
     {

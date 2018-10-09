@@ -117,6 +117,30 @@ const inputType = [
             ],
             type: "component"
           }
+    },
+    {
+        field: "price",
+        label: "单价",
+        type: "text"
+    },
+    {
+        field: "duration",
+        label: "时长",
+        type: "select",
+        defaultData: [
+            {
+                value: 1,
+                text: "一个月"
+            },
+            {
+                value: 6,
+                text: "半年"
+            },
+            {
+                value: 12,
+                text: "一年"
+            }
+        ]
     }
 ];
 @inject("ordersStores")
@@ -145,13 +169,14 @@ class OrderList extends React.Component {
         };
     }
     addData = (param,callbrak) => {
-        console.log(param);
         param.business_sn = qs.parse(location.search.substr(1)).business_number;
         param.customer_id = qs.parse(location.search.substr(1)).client_id;
         param.customer_name = qs.parse(location.search.substr(1)).client_name;
-        // this.props.ordersStores.addData(param).then((state) => {
-        //     callbrak(state);
-        // });
+        param.machine_sn = param.resource.label;
+        param.resource = param.resource.value;
+        this.props.ordersStores.addData(param).then((state) => {
+            callbrak(state);
+        });
       }
     getResourceData(param,type) {
         if(param.resource_type && param.resource_type.value > 4) {

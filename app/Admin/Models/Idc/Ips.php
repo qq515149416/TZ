@@ -274,7 +274,7 @@ class Ips extends Model
             }
             return $ips;
         } else {
-            return '';
+            return [];
         }
         
     }

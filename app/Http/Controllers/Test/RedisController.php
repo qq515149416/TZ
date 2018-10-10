@@ -5,6 +5,7 @@
 
 namespace App\Http\Controllers\Test;
 
+use App\Jobs\Demo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redis;
@@ -26,8 +27,11 @@ class RedisController extends Controller
 //        dump($data2);
 //        dump('Redis');
 //        dump('Test');//
-        $info = Auth::user();
-        dump($info['name']);
+//        $info = Auth::user();
+//        dump($info['name']);
+        $podcast=1;
+        Demo::dispatch($podcast)->delay(now()->addMinutes(1));;
+
 
     }
 

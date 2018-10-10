@@ -331,25 +331,23 @@ class OrdersModel extends Model
                 return $return;
             }
         }
+        $machine['business_end'] = $order['end_time'];
         switch ($param['resource_type']) {
             case 1:
                 //如果是租用机器的，在订单生成成功时，将业务编号和到期时间及资源状态进行更新
                 $machine['own_business'] = $order['business_sn'];
-                $machine['business_end'] = $order['end_time'];
                 $machine['used_status'] = 1;
                 $result = DB::table('idc_machine')->where('machine_num',$order['machine_sn'])->update($machine);
                 break;
             case 2:
                 //如果是托管机器的，在订单生成成功时，将业务编号和到期时间及资源状态进行更新
                 $machine['own_business'] = $order['business_sn'];
-                $machine['business_end'] = $order['end_time'];
                 $machine['used_status'] = 1;
                 $result = DB::table('idc_machine')->where('machine_num',$order['machine_sn'])->update($machine);
                 break;
             case 3:
                 //如果是租用机柜的，在订单生成成功时，将业务编号和到期时间及资源状态进行更新
                 $machine['own_business'] = $order['business_sn'];
-                $machine['business_end'] = $order['end_time'];
                 $machine['use_state'] = 1;
                 $row = DB::table('idc_cabinet')->where('cabinet_id',$order['machine_sn'])->update($machine);
                 break;  

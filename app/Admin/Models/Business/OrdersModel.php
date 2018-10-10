@@ -337,43 +337,50 @@ class OrdersModel extends Model
                 //如果是租用机器的，在订单生成成功时，将业务编号和到期时间及资源状态进行更新
                 $machine['own_business'] = $order['business_sn'];
                 $machine['used_status'] = 1;
-                $result = DB::table('idc_machine')->where('machine_num',$order['machine_sn'])->update($machine);
+                $where = ['own_business'=>$order['business_sn'],'machine_num'=>$order['machine_sn']];
+                $result = DB::table('idc_machine')->where($where)->update($machine);
                 break;
             case 2:
                 //如果是托管机器的，在订单生成成功时，将业务编号和到期时间及资源状态进行更新
                 $machine['own_business'] = $order['business_sn'];
                 $machine['used_status'] = 1;
-                $result = DB::table('idc_machine')->where('machine_num',$order['machine_sn'])->update($machine);
+                $where = ['own_business'=>$order['business_sn'],'machine_num'=>$order['machine_sn']];
+                $result = DB::table('idc_machine')->where($where)->update($machine);
                 break;
             case 3:
                 //如果是租用机柜的，在订单生成成功时，将业务编号和到期时间及资源状态进行更新
                 $machine['own_business'] = $order['business_sn'];
                 $machine['use_state'] = 1;
-                $row = DB::table('idc_cabinet')->where('cabinet_id',$order['machine_sn'])->update($machine);
+                $where = ['own_business'=>$order['business_sn'],'cabinet_id'=>$order['machine_sn']];
+                $row = DB::table('idc_cabinet')->where($where)->update($machine);
                 break;  
             case 4:
                 //更新IP表的所属业务编号，资源状态和到期时间
                 $machine['own_business'] = $order['business_sn'];
                 $machine['ip_status'] = 1;
-                $result = DB::table('idc_ips')->where('ip',$order['machine_sn'])->update($machine);
+                $where = ['own_business'=>$order['business_sn'],'ip'=>$order['machine_sn']];
+                $result = DB::table('idc_ips')->where($where)->update($machine);
                 break;
             case 5:
                 //更新CPU表的所属业务编号，资源状态和到期时间
                 $machine['service_num'] = $order['business_sn'];
                 $machine['cpu_used'] = 1;
-                $result = DB::table('idc_cpu')->where('cpu_number',$order['machine_sn'])->update($machine);
+                $where = ['service_num'=>$order['business_sn'],'cpu_number'=>$order['machine_sn']];
+                $result = DB::table('idc_cpu')->where($where)->update($machine);
                 break;
             case 6:
                 //更新硬盘表的所属业务编号，资源状态和到期时间
                 $machine['service_num'] = $order['business_sn'];
                 $machine['harddisk_used'] = 1;
-                $result = DB::table('idc_harddisk')->where('harddisk_number',$order['machine_sn'])->update($machine);
+                $where = ['service_num'=>$order['business_sn'],'harddisk_number'=>$order['machine_sn']];
+                $result = DB::table('idc_harddisk')->where($where)->update($machine);
                 break;
             case 7:
                 //更新内存表的所属业务编号，资源状态和到期时间
                 $machine['service_num'] = $order['business_sn'];
                 $machine['memory_used'] = 1;
-                $result = DB::table('idc_memory')->where('memory_number',$order['machine_sn'])->update($machine);
+                $where = ['service_num'=>$order['business_sn'],'memory_number'=>$order['machine_sn']];
+                $result = DB::table('idc_memory')->where($where)->update($machine);
                 break;   
         }
 

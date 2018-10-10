@@ -166,7 +166,7 @@ class AliPayController extends Controller
 
 			$info = json_encode($data);
 			$info = $info.'------';
-			file_put_contents('test',$info);
+			file_put_contents('./test',$info);
 
 			$app_id				= $data->app_id;
 			$seller_id			= $data->seller_id;

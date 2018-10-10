@@ -18,9 +18,9 @@ class RedisController extends Controller
      */
     public function test()
     {
-//        Redis::set('name', 'guwenjie');
-//
-//        $data = Redis::get('name');
+        //存入Redis   键:name   值:123456
+
+//        Redis::set('name', '123456        $data = Redis::get('name');
 //        $data2 = Redis::info();
 //        dump($data);
 //        dump($data2);

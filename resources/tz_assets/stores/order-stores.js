@@ -6,6 +6,7 @@ class OrderStores {
     @observable id =  1;
     @observable order_sn =  "";
     @observable customer_name ="";
+    @observable customer_id ="";
     @observable business_sn = "";
     @observable business_name = "";
     @observable before_money = "";
@@ -23,16 +24,19 @@ class OrderStores {
     @observable pay_time = "";
     @observable order_status = "";
     @observable order_note = "";
+    @observable machine_sn = "";
     @observable created_at = "";
     constructor({
         id, 
         order_sn,
         customer_name,
+        customer_id,
         business_sn,
         business_name,
         before_money,
         after_money,
         resource_type,
+        resourcetype,
         order_type,
         resource,
         price,
@@ -45,17 +49,20 @@ class OrderStores {
         pay_time,
         order_status,
         order_note,
+        machine_sn,
         created_at
     }) {
         Object.assign(this,{
             id,
             order_sn,
             customer_name,
+            customer_id,
             business_sn,
             business_name,
             before_money,
             after_money,
             resource_type,
+            resourcetype,
             order_type,
             resource,
             price,
@@ -68,6 +75,7 @@ class OrderStores {
             pay_time,
             order_status,
             order_note,
+            machine_sn,
             created_at
         });
     }

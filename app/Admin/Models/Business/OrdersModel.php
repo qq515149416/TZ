@@ -60,14 +60,15 @@ class OrdersModel extends Model
      * @return array        返回相关的数据信息和提示状态及信息
      */
     public function clerkOrders($where){
-    	$result = $this->where($where)->get(['id','order_sn','customer_name','business_sn','business_name','before_money','after_money','resource_type','order_type','resource','price','duration','payable_money','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at']);
+        // $result = $this->where($where)->get(['id','order_sn','customer_name','customer_id','business_sn','business_name','before_money','after_money','resource_type','order_type','resource','price','duration','payable_money','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at']);
+        $result = $this->where($where)->get(['id','customer_id','customer_name','order_sn', 'business_sn','before_money','after_money','business_id','business_name','resource_type','order_type','machine_sn','resource','price','duration','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at','payable_money']);
     	if(!$result->isEmpty()){
     		$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn'];
     		$order_type = [1=>'新购',2=>'续费'];
     		$pay_type = [1=>'余额',2=>'支付宝',3=>'微信',4=>'其他'];
     		$order_status = [0=>'待支付',1=>'已支付',2=>'财务确认',3=>'订单完成',4=>'取消',5=>'申请退款',6=>'退款完成'];
     		foreach($result as $okey=>$ovalue){
-    			$result[$okey]['resource_type'] = $resource_type[$ovalue['resource_type']];
+    			$result[$okey]['resourcetype'] = $resource_type[$ovalue['resource_type']];
     			$result[$okey]['order_type'] = $order_type[$ovalue['order_type']];
     			$result[$okey]['pay_type'] = $pay_type[$ovalue['pay_type']];
     			$result[$okey]['order_status'] = $order_status[$ovalue['order_status']];
@@ -165,7 +166,7 @@ class OrdersModel extends Model
         $insert_data['order_type'] = 1;
         $insert_data['payable_money'] = bcmul((string)$insert_data['price'],(string)$insert_data['duration'],2);//计算价格
         $sales_id = Admin::user()->id;
-        $$insert_data['business_id'] = $sales_id;
+        $insert_data['business_id'] = $sales_id;
         $sales_name = (array)$this->staff($sales_id);
         $insert_data['business_name'] = $sales_name['fullname'];
         $insert_data['month'] = (int)date('Ym',time());
@@ -348,7 +349,7 @@ class OrdersModel extends Model
         //续费订单号的生成规则：前两位（11-40的随机数）+ 年月日 + 时间戳的后5位数 + 2（续费）
         $order_sn = mt_rand(4,6).date("Ymd",time()).substr(time(),8,2).mt_rand(4,6);//续费订单号
         $renew['order_sn'] = $order_sn;
-        $renew['payable_money'] = bcmul((string)$order['price'],(string)$order['duration'],2);//应付金额
+        $renew['payable_money'] = bcmul((string)$renew['price'],(string)$renew['duration'],2);//应付金额
         $renew['order_type'] = 2;
         $sales_id = Admin::user()->id;
         $renew['business_id']=$sales_id;
@@ -428,7 +429,7 @@ class OrdersModel extends Model
                 $pay_type = [ '1' => '余额' , '2' => '支付宝' , '3' => '微信' , '4' => '其他'];
                 $order_status = [ '0' => '待支付' , '1' => '已支付' , '2' => '已支付' , '3' => '订单完成' , '4' => '取消' , '5' => '申请退款' , '6' => '退款完成'];
                 foreach($resource_orders as $resource_key => $resource_value){
-                    $resource_orders[$resource_key]['resource_type'] = $resource_type[$resource_value['resource_type']];
+                    $resource_orders[$resource_key]['resourcetype'] = $resource_type[$resource_value['resource_type']];
                     $resource_orders[$resource_key]['order_type'] = $order_type[$resource_value['order_type']];
                     $resource_orders[$resource_key]['pay_type'] = $pay_type[$resource_value['pay_type']];
                     $resource_orders[$resource_key]['order_status'] = $order_status[$resource_value['order_status']];

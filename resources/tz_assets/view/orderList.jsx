@@ -20,7 +20,7 @@ const columnData = [
     { id: 'order_sn', numeric: true, disablePadding: true, label: '订单号' },
     { id: 'customer_name', numeric: true, disablePadding: true, label: '客户' },
     { id: 'business_name', numeric: true, disablePadding: true, label: '业务员' },
-    { id: 'resource_type', numeric: true, disablePadding: true, label: '资源类型' },
+    { id: 'resourcetype', numeric: true, disablePadding: true, label: '资源类型' },
     { id: 'order_type', numeric: true, disablePadding: true, label: '订单类型' },
     { id: 'price', numeric: true, disablePadding: true, label: '单价' },
     { id: 'duration', numeric: true, disablePadding: true, label: '时长' },

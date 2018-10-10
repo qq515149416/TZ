@@ -69,8 +69,7 @@ const toolbarStyles = theme => ({
               {numSelected} 选中
             </Typography>
           ) : (
-            <Typography variant="title" id="tableTitle">
-              {props.title}
+            <Typography variant="title" id="tableTitle" dangerouslySetInnerHTML={{__html: props.title}}>
             </Typography>
           )}
         </div>

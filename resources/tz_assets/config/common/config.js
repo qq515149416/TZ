@@ -12,8 +12,9 @@ import EmployeeManagementsStores from "../../stores/employeeManagement-stores";
 import ClientelesStores from "../../stores/clientele-stores";
 import BusinessStores from "../../stores/business-stores";
 import OrdersStores from "../../stores/order-stores";
-
-
+import FinancesStores from "../../stores/finance-stores";
+import StatisticalPerformancesStores from "../../stores/statisticalPerformance-stores";
+import WhitelistsStores from "../../stores/whitelist-stores";
 
 
 // 前端Models操作
@@ -31,7 +32,10 @@ export const stores = {
     employeeManagementsStores: new EmployeeManagementsStores(),
     clientelesStores: new ClientelesStores(),
     businessStores: new BusinessStores(),
-    ordersStores: new OrdersStores()
+    ordersStores: new OrdersStores(),
+    financesStores: new FinancesStores(),
+    statisticalPerformancesStores: new StatisticalPerformancesStores(),
+    whitelistsStores: new WhitelistsStores()
 }
 export const domIds = [
     "user_list",
@@ -48,5 +52,8 @@ export const domIds = [
     "clientele",
     "business",
     "checkBusiness",
-    "order"
+    "order",
+    "finance",
+    "statisticalPerformance",
+    "whitelist"
 ];

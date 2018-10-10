@@ -280,7 +280,7 @@ class Order extends Model
             return $return;
         }
         // 根据业务编号进行对应数据的查询
-        $business_where = ['business_number'=>$param['business_number'],'client_id'=>Auth::user()->id;];
+        $business_where = ['business_number'=>$param['business_number'],'client_id'=>Auth::user()->id];
         $business = DB::table('tz_business')->where($business_where)->select('business_number','business_type','sales_id', 'business_number','sales_name','business_type','machine_number','endding_time','length','money')->first();
         // 没有对应业务编号的业务数据直接返回
         if(!$business){
@@ -294,7 +294,7 @@ class Order extends Model
         
         if(isset($param['order_sn']) && $param['resource_type'] > 3){// 存在订单号并且资源类型除主机和机柜外的根据订单号进行续费订单数据的查询
             
-            $order_where = ['customer_id'=>Auth::user()->id;,'business_sn'=>$param['business_number'],'order_sn'=>$param['order_sn'],'resource_type'=>$param['resource_type']];
+            $order_where = ['customer_id'=>Auth::user()->id,'business_sn'=>$param['business_number'],'order_sn'=>$param['order_sn'],'resource_type'=>$param['resource_type']];
             $order_data = $this->where($order_where)->select('business_sn','business_id','business_name','machine_sn','resource','price','end_time')->first();
             // 查无对应订单，直接返回
             if(!$order_data){

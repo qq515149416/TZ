@@ -68,8 +68,6 @@ class OrdersController extends Controller
         $renew_data = $request->only(['business_number','order_sn','price','length','order_note','client_id','resource_type']);
         $renew = new OrdersModel();
         $renew_resource = $renew->renewResource($renew_data);
-        dump($renew_resource);
-        exit;
         return tz_ajax_echo($renew_resource,$renew_resource['msg'],$renew_resource['code']);
     }
 

@@ -164,6 +164,10 @@ class AliPayController extends Controller
 		try{
 			$data = $alipay->verify(); // 是的，验签就这么简单！
 
+			$info = json_encode($data);
+			$info = $info.'------';
+			file_put_contents('test',$info);
+
 			$app_id				= $data->app_id;
 			$seller_id			= $data->seller_id;
 

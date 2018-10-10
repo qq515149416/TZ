@@ -119,7 +119,6 @@ class RechargeController extends Controller
 	public function delOrder(RechargeRequest $request)
 	{
 		$res = $this->test1('abc');
-		exit;
 		//获取登录中用户id
 		$checkLogin = Auth::check();
 		if($checkLogin == false){
@@ -224,12 +223,10 @@ class RechargeController extends Controller
 		if($res['code'] == 1){
 			$data = $res['data'];	
 			$info['trade_no'] 		= $data->out_trade_no;
-			$info['voucher']			= $data->trade_no;
-			$info['recharge_amount']	= $data->total_amount;
-			$info['timestamp']		= $data->timestamp;
-			$model = new AliRecharge();
-			$insert = $model->returnInsert($info);
-			if($insert['code'] == 0){
+			
+			$insert = $this->checkAndInsert($info['trade_no']);
+
+			if($insert['code'] != 1){
 				$res['msg'] = '储存失败';
 			}
 		}	

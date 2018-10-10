@@ -72,7 +72,7 @@ class AliPayController extends Controller
 	*/
 	public function goToPay($order,$way)
 	{
-	
+		
 		//生成支付宝链接
 		switch ($way) {
 			case 'web':

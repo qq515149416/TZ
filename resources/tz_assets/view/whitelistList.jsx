@@ -135,6 +135,11 @@ class WhitelistList extends React.Component {
             callbrak(state);
         });
     }
+    delData = (selectedData,callbrak) => {
+        const {whitelistsStores} = this.props;
+        let delIng = selectedData.map(item => whitelistsStores.delData(item));
+        callbrak(delIng);
+    }
     handleChange = (event, value) => {
         this.props.whitelistsStores.getData({
             white_status: value
@@ -167,6 +172,7 @@ class WhitelistList extends React.Component {
             headTitlesData={columnData} 
             data={this.props.whitelistsStores.whitelists} 
             addData={this.addData.bind(this)} 
+            delData={this.delData.bind(this)} 
             updata={this.updata.bind(this)}
           />
         ];

@@ -6,6 +6,7 @@
 namespace App\Http\Controllers\Test;
 
 use App\Jobs\Demo;
+use App\Jobs\Email;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redis;
@@ -29,8 +30,16 @@ class RedisController extends Controller
 //        dump('Test');//
 //        $info = Auth::user();
 //        dump($info['name']);
-        $podcast=1;
-        Demo::dispatch($podcast)->delay(now()->addMinutes(1));;
+//        $podcast=99999999;
+
+        $podcast['emailTemplate']='deadline';
+        $podcast['email']='568171152@qq.com';
+        $podcast['subject']='腾正科技【续费提醒】';
+        $podcast['data']=null;
+
+//        Demo::dispatch($podcast)->delay(now()->addMinutes(1));
+//        Demo::dispatch($podcast);
+        Email::dispatch($podcast);
 
 
     }

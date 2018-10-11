@@ -26,17 +26,17 @@ class WorkOrderModel extends Model
     		'submitter'  => 1;
     		$status;
     	]
-    	$list = $this->where($where)->get(['id'',work_order_number','business_num','work_order_type','work_order_content','submitter_name','work_order_status','process_department','complete_time','created_at','updated_at']);
+    	$list = $this->where($where)->get(['id','work_order_number','business_num','work_order_type','work_order_content','submitter_name','work_order_status','process_department','complete_time','created_at','updated_at']);
     	if(!$list->isEmpty()){
     		// 查询到数据进行转换
-    		$work_status = [0=>'待处理',1=>'处理中',2=>'工单完成',3=>'工单取消'];
+    		$work_status = [0=>'待处理',1=>'处理中',2=>'完成',3=>'取消'];
     		foreach($list as $showkey=>$showvalue){
                 // 工单状态的转换
     		    $list[$showkey]['workstatus'] = $work_status[$showvalue['work_order_status']];
                 // 工单类型
                 $worktype = $this->workType($showvalue['work_order_type']);
-                $list[$showkey]['worktype'] = $worktype->type_name;
-                $list[$showkey]['parenttype'] = $worktype->parenttype;
+                $list[$showkey]['worktype'] = $worktype->parenttype?$worktype->parenttype.'->'.$worktype->type_name:$worktype->type_name;
+                // $list[$showkey]['parenttype'] = $worktype->parenttype;
                 // 当前处理部门
                 $list[$showkey]['department'] = $showvalue['process_department']?$this->role($showvalue['process_department'])->name:'网维部门';
                 $business = $this->businessDetail($showvalue['business_num']);

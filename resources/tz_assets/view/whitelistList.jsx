@@ -81,7 +81,10 @@ class WhitelistList extends React.Component {
         this.props.whitelistsStores.getIpParam(value);
     }
     addData = (param,callbrak) => {
-        console.log(param);
+        // console.log(param);
+        this.props.whitelistsStores.addData(param).then(state => {
+            callbrak(state);
+        });
     }
     handleChange = (event, value) => {
         this.props.whitelistsStores.getData({

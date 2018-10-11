@@ -15,6 +15,26 @@ class WhitelistsStores extends ActionBoundStores {
     @observable customer_id = "";
     @observable customer_name = "";
     type = 0;
+    addData(data) {
+        return new Promise((resolve,reject) => {
+            post("whitelist/insert",Object.assign(data,{
+                binding_machine: this.binding_machine,
+                customer_id: this.customer_id,
+                customer_name: this.customer_name,
+                method: "insertWhiteList"
+            })).then(res => {
+                if(res.data.code==1) {
+                    this.getData({
+                        white_status: this.type
+                    });
+                    resolve(true);
+                }else {
+                    alert(res.data.msg);
+                    resolve(false);
+                }
+            }).catch(reject);
+        });
+    }
     @action.bound 
     handleChange(param) {
         if(param.binding_machine) {
@@ -34,7 +54,10 @@ class WhitelistsStores extends ActionBoundStores {
             method: "checkIP"
         }).then((res) => {
             if(res.data.code==1) {
-                this.handleChange(res.data.data);
+                this.binding_machine = res.data.data.machine_number;
+                this.customer_name = res.data.data.email;
+                this.customer_id = res.data.data.customer_id;
+                // this.handleChange(res.data.data);
             }
         });
     }

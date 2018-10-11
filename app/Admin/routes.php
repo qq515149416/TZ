@@ -273,9 +273,8 @@ Route::group([
     Route::group([
         'prefix' => 'message',
     ],function(Router $router){
-
-
-
+        $router->post('sendUserByEmail','Message\DeadlineController@sendUserByEmail');  //向指定用户发送邮件信息
+        
     });
 
 

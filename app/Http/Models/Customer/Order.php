@@ -249,7 +249,7 @@ class Order extends Model
 				foreach($resource_orders as $resource_key => $resource_value){
 					$resource_orders[$resource_key]['resource_type'] = $resource_type[$resource_value['resource_type']];
 					$resource_orders[$resource_key]['order_type'] = $order_type[$resource_value['order_type']];
-					$resource_orders[$resource_key]['pay_type'] = $pay_type[$resource_value['pay_type']];
+					$resource_orders[$resource_key]['pay_type'] = $resource_value['pay_type'] ? $pay_type[$resource_value['pay_type']]:"";
 					$resource_orders[$resource_key]['order_status'] = $order_status[$resource_value['order_status']];
 				}
 				$return['data'] = $resource_orders;

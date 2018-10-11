@@ -20,7 +20,6 @@ class CheckLogin
     public function handle($request, Closure $next)
     {
         if (!Auth::check()) {
-
 //            return redirect('/');
             return tz_ajax_echo(null,'未登录',5000);
         }

@@ -29,5 +29,6 @@ class InfoController extends Controller
     {
         $info = Auth::user();
         return tz_ajax_echo($info,'获取成功',1);
+        
     }
 }

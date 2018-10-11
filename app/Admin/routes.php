@@ -73,6 +73,10 @@ Route::group([
     $router->get('/business', 'Show\BusinessController@index');
     $router->get('/checkbusiness', 'Show\CheckBusinessController@index');
     $router->get('/business/order', 'Show\OrderController@index');
+    $router->get('/finance', 'Show\FinanceController@index');
+    $router->get('/statisticalPerformance', 'Show\StatisticalPerformanceController@index');
+    $router->get('/whitelist', 'Show\WhitelistController@index');
+
 
 //人事
     Route::group([
@@ -260,6 +264,8 @@ Route::group([
         $router->get('admin_customer','Business\CustomerController@adminCustomer');
         $router->post('pull_black','Business\CustomerController@pullBlackCustomer');
         $router->post('reset_password','Business\CustomerController@resetPassword');
+
+        $router->post('recharge','Business\CustomerController@rechargeByAdmin');
     });
 
 

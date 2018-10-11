@@ -260,6 +260,8 @@ Route::group([
         $router->get('admin_customer','Business\CustomerController@adminCustomer');
         $router->post('pull_black','Business\CustomerController@pullBlackCustomer');
         $router->post('reset_password','Business\CustomerController@resetPassword');
+
+        $router->post('recharge','Business\CustomerController@rechargeByAdmin');
     });
 
 });

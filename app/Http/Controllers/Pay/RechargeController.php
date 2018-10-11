@@ -43,23 +43,17 @@ class RechargeController extends Controller
 		$user_id = Auth::id();
 
 		//生成订单参数
-		$order = [
-			'out_trade_no' 	=> 'tz_'.time().'_'.$user_id,	//本地订单号,需保证不重复
-			'product_code'	=> 'FAST_INSTANT_TRADE_PAY',	//销售产品码，与支付宝签约的产品码名称。 注：目前仅支持FAST_INSTANT_TRADE_PAY
-			'total_amount' 	=> $info['total_amount'],	//订单总金额，单位为元，精确到小数点后两位
-			'subject' 	=> '充值余额',			//商品名称
-		];
-		
-		//再顺便生成订单
+		//再生成订单
 
 		$model = new AliRecharge();
 		//我们的trade_no对于支付宝来说就是 out_trade_no
-		$data['trade_no'] 		= $order['out_trade_no'];
-		$data['recharge_amount']	= $order['total_amount'];
-		$data['user_id']			= $user_id;
-		$data['recharge_way']		= '支付宝';
+		$data['trade_no'] 		= 'tz_'.time().'_'.$user_id;		//本地订单号,需保证不重复
+		$data['recharge_amount']	= $info['total_amount'];		//订单总金额，单位为元，精确到小数点后两位
+		$data['subject']			= '充值余额';			//商品名称
+		$data['user_id']			= $user_id;	
+		$data['recharge_way']		= 1;
 		$data['trade_status']		= 0;
-
+		//$data['product_code']		=  'FAST_INSTANT_TRADE_PAY';	//销售产品码，与支付宝签约的产品码名称。 注：目前仅支持FAST_INSTANT_TRADE_PAY
 		$makeOrder = $model->makeOrder($data);
 							
 		return $makeOrder;		
@@ -100,14 +94,14 @@ class RechargeController extends Controller
 		$order = [
 			'out_trade_no' 		=> $info['trade_no'],		//本地订单号
 			'total_amount' 		=> $info['recharge_amount'],	//金额
-			'subject' 		=> $info['subject'],		//商品名称
+			'subject' 		=> '余额充值',			//商品名称
 			'timeout_express'	=> '5m',	
 			//该笔订单允许的最晚付款时间，逾期将关闭交易。取值范围：1m～15d。m-分钟，h-小时，d-天，1c-当天（1c-当天的情况下，无论交易何时创建，都在0点关闭）。 该参数数值不接受小数点， 如 1.5h，可转换为 90m。该参数在请求到支付宝时开始计时。			
 			'product_code'		=> 'FAST_INSTANT_TRADE_PAY',	//销售产品码，与支付宝签约的产品码名称。 注：目前仅支持FAST_INSTANT_TRADE_PAY
 
 			// 'auth_token'		=> 'XXXXXX',			//获取用户授权信息，可实现如免登功能。
 		];
-
+	
 		//生成支付宝链接
 		$alipay = $Pay->goToPay($order,$way);
 		
@@ -118,7 +112,7 @@ class RechargeController extends Controller
 
 	public function delOrder(RechargeRequest $request)
 	{
-		$res = $this->test1('abc');
+		
 		//获取登录中用户id
 		$checkLogin = Auth::check();
 		if($checkLogin == false){
@@ -127,37 +121,39 @@ class RechargeController extends Controller
 		$user_id = Auth::id();
 
 		//获取删除的id
-		$info = $request->only(['del_trade_id']);
-		$trade_id = $info['del_trade_id'];
+		$info 		= $request->only(['del_trade_id']);
+		$trade_id 	= $info['del_trade_id'];
 
 		$model 	= new AliRecharge();
-		$res 		= $model->makePay($trade_id,$user_id);
-		
-		if($res['code'] == 0||$res['code'] == 3){
-			return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+		$order 		= $model->checkOrder($trade_id,3);
+		if($order['code'] != 1){
+			return tz_ajax_echo($order['data'],$order['msg'],$order['code']);
 		}
-		
-		$info = json_decode(json_encode($res['data']),true);
 
-		$cancel =  Pay::alipay($this->config)->cancel($info['trade_no']);	
+		$order = json_decode(json_encode($order['data']),true);
+		$trade_no = $order[0]['trade_no'];
+		$check = $this->checkAndInsert($trade_no);
+		if($check['code'] != 1 && $check['code'] != 0){
+			return tz_ajax_echo('',$check['msg'].'订单状态异常,暂时无法删除',0);
+		}
+
+		$check_user_id = $order[0]['user_id'];
+		if($user_id != $check_user_id){
+			return tz_ajax_echo('','该订单不属于您,无法删除',0);
+		}
 
 		$return['data']	= '';
-		if($cancel->code == '10000'){
-			$return['msg']	= '取消订单成功';
+		
+		$del = $model->delOrder($trade_id);
 
-			$del = $model->delOrder($trade_id);
-
-			if($del == true){
-				$return['msg'].=',删除订单成功';
-				$return['code'] = 1;
-			}else{
-				$return['msg'].=',删除订单失败';
-				$return['code'] = 0;
-			}
+		if($del == true){
+			$return['msg']='删除订单成功';
+			$return['code'] = 1;
 		}else{
-			$return['msg']	= '取消订单失败';
-			$return['code']	= 0;
+			$return['msg']='删除订单失败';
+			$return['code'] = 0;
 		}
+		
 		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
 	}
 
@@ -206,6 +202,7 @@ class RechargeController extends Controller
 		//成功就获取订单参数
 		$data = $return['data'];
 		$trade_no 			= $data->out_trade_no;	//本地订单
+		$res = $this->checkAndInsert($trade_no);
 		//跳转确认页面
 		$domain_name = env('APP_URL');
 		return redirect("{$domain_name}/auth/pay.html?order=".$trade_no);
@@ -223,9 +220,17 @@ class RechargeController extends Controller
 		if($res['code'] == 1){
 			$data = $res['data'];	
 			$info['trade_no'] 		= $data->out_trade_no;
-			
-			$insert = $this->checkAndInsert($info['trade_no']);
+			//两个方法,一个是验证成功了之后直接更新数据库
 
+			// $info['voucher']			= $data->trade_no;
+			// $info['recharge_amount']	= $data->total_amount;
+			// $info['timestamp']		= $data->timestamp;
+			// $model = new AliRecharge();
+			// $insert = $model->returnInsert($info);
+
+			//另一个再调用一遍检查并更新接口,都可以一个消耗资源点,安全点,上面那个简单点
+
+			$insert = $this->checkAndInsert($info['trade_no']);
 			if($insert['code'] != 1){
 				$res['msg'] = '储存失败';
 			}
@@ -266,6 +271,7 @@ class RechargeController extends Controller
 		
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
+
 
 	/**
 	* 查询指定充值单支付情况的接口
@@ -331,8 +337,4 @@ class RechargeController extends Controller
 		return $return;
 	}
 
-
-	public function form(){
-		return view('form');
-	}
 }

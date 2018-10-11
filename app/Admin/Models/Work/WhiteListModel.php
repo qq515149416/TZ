@@ -26,7 +26,7 @@ class WhiteListModel extends Model
 		$ip = DB::table('idc_ips')->where('ip',$ip)->select('id','ip_status','ip_lock','own_business')->first();
 		$ip = json_decode(json_encode($ip),true);
 		$return['data']	= '';
-		$returm['code']	= 0;
+		$return['code']	= 0;
 		//判断IP的获取情况,返回失败信息
 		if($ip == NULL){	
 			$return['msg']	= 'IP地址不存在';		

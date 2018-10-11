@@ -119,4 +119,53 @@ class CustomerModel extends Model
                     ->first();
         return $role;
     }
+
+    public function rechargeByAdmin($data){
+        $clerk_id = Admin::user()->id;
+        $cus = $this->find($data['user_id']);
+        $yewuyuan_id = $cus->salesman_id;
+        $return = [
+        	'data'  => '',
+	'msg'   => '',
+	'code'  => 0,
+        ];
+
+        if($clerk_id != $yewuyuan_id){
+        	$return['msg'] = '此客户不属于您';
+        	return $return;
+        }
+
+        $data['recharge_way']       	= 3;
+        $data['trade_no']               	= 'tz_'.time().'_'.$data['user_id'];
+        $data['money_before']      	= $cus->money;
+        $data['money_after']      	= bcadd($data['money_before'],$data['recharge_amount'],2);
+        $data['trade_status']	= 1;
+        $data['subject']		= '余额充值';
+        $data['month']		= date("Ym");
+        $data['timestamp']		= date("Y-m-d H:i:s");
+        $data['salesman_id']	= $clerk_id;
+        $data['created_at']		= $data['timestamp'];
+        //开始事务
+        DB::beginTransaction();
+        $cus->money = $data['money_after'];
+        $update = $cus->save();
+        if($update != true){
+        	DB::rollBack();
+        	$return['msg'] = '更新余额失败';
+        	return $return;
+        }
+
+        $res = DB::table('tz_recharge_flow')->insert($data);
+
+        if($res != true){
+        	DB::rollBack();
+        	$return['msg'] = '充值流水记录创建失败';
+        	return $return;
+        }
+
+        DB::commit();
+        $return['msg'] = '充值成功!';
+        $return['code'] = 1;
+        return $return;
+    }
 }

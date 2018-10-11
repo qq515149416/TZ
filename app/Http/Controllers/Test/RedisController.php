@@ -32,15 +32,18 @@ class RedisController extends Controller
 //        dump($info['name']);
 //        $podcast=99999999;
 
-        $podcast['emailTemplate']='deadline';
-        $podcast['email']='568171152@qq.com';
-        $podcast['subject']='腾正科技【续费提醒】';
-        $podcast['data']=null;
+        $podcast['emailTemplate'] = 'deadline';
+        $podcast['email']         = '1227680727@qq.com';
+        $podcast['subject']       = '腾正科技【续费提醒】';
+        $podcast['data']          = null;
 
 //        Demo::dispatch($podcast)->delay(now()->addMinutes(1));
 //        Demo::dispatch($podcast);
-        Email::dispatch($podcast);
+//        for ($x=0; $x<=100; $x++) {
+//            Email::dispatch($podcast);
+//        }
 
+        Email::dispatch($podcast);
 
     }
 

@@ -262,5 +262,16 @@ Route::group([
         $router->post('reset_password','Business\CustomerController@resetPassword');
     });
 
+
+    //发送信息相关接口
+    Route::group([
+        'prefix' => 'message',
+    ],function(Router $router){
+
+
+
+    });
+
+
 });
 

@@ -158,14 +158,12 @@ class BusinesList extends React.Component {
     this.props.businessStores.getData(qs.parse(location.search.substr(1)).id);
   }
   addData = (param,callbrak) => {
-    if(location.search.indexOf("?id=")!=-1&&location.search.indexOf("&")==-1) {
-      param.client_id = location.search.substr(1).split("=")[1];
-      param.resource_detail = JSON.stringify(param.machine_number);
-      param.machine_number = param.machine_number.id;
-      this.props.businessStores.addData(param).then((state) => {
-        callbrak(state);
-      });
-    }
+    param.client_id = qs.parse(location.search.substr(1)).id;
+    param.resource_detail = JSON.stringify(param.machine_number);
+    param.machine_number = param.machine_number.id;
+    this.props.businessStores.addData(param).then((state) => {
+      callbrak(state);
+    });
   
   }
   render() {

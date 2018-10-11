@@ -257,8 +257,8 @@ class OrdersModel extends Model
         $order_sn = mt_rand(4,6).date("Ymd",time()).substr(time(),8,2).mt_rand(4,6);//续费订单号
         $order['order_sn'] = $order_sn;
         
-        if(isset($param['order_sn']) && $param['resource_type'] > 3){// 存在订单号并且资源类型除主机和机柜外的根据订单号进行续费订单数据的查询
-            
+        if(isset($param['order_sn']) && $param['resource_type'] > 3){
+            //存在订单号并且资源类型除主机和机柜外的根据订单号进行续费订单数据的查询
             $order_where = ['customer_id'=>$param['client_id'],'business_sn'=>$param['business_number'],'order_sn'=>$param['order_sn'],'resource_type'=>$param['resource_type']];
             $order_data = $this->where($order_where)->select('business_sn','customer_id','customer_name','machine_sn','resource','price','end_time')->first();
             // 查无对应订单，直接返回
@@ -276,55 +276,55 @@ class OrdersModel extends Model
                 $return['msg'] = '资源到期时间超业务到期时间，无法续费资源!';
                 return $return;
             }
-            $order['business_sn'] = $order_data->business_sn;
-            $order['customer_id'] = $order_data->customer_id;
-            $order['customer_name'] = $order_data->customer_name;
-            $order['machine_sn'] = $order_data->machine_sn;
-            $order['resource'] = $order_data->resource;
-            $order['price'] = $order_data->price;
-            dump($order['machine_sn']);
+            $order['business_sn'] = $order_data->business_sn;//业务编号
+            $order['customer_id'] = $order_data->customer_id;//客户id
+            $order['customer_name'] = $order_data->customer_name;//客户姓名
+            $order['machine_sn'] = $order_data->machine_sn;//机器或资源编号
+            $order['resource'] = $order_data->resource;//资源
+            $order['price'] = $order_data->price;//单价
 
-        } else {//资源类型为主机和机柜的直接进行新订单数据的生成
-            $order['business_sn'] = $business->business_number;
-            $order['customer_id'] = $business->client_id;
-            $order['customer_name'] = $business->client_name;
-            $order['machine_sn'] = $business->machine_number;
-            $order['resource'] = $business->machine_number;
-            $order['price'] = $business->money;
+        } else {
+            //资源类型为主机和机柜的直接进行新订单数据的生成
+            $order['business_sn'] = $business->business_number;//业务编号
+            $order['customer_id'] = $business->client_id;//客户id
+            $order['customer_name'] = $business->client_name;//客户姓名
+            $order['machine_sn'] = $business->machine_number;//机器或资源编号
+            $order['resource'] = $business->machine_number;//资源
+            $order['price'] = $business->money;//单价
             //在原到期时间基础上增加续费时长,生成新的到期时间
-            $end_time = Carbon::parse($business->endding_time)->modify('+'.$param['length'].' months')->toDateTimeString();
-            
+            $end_time = Carbon::parse($business->endding_time)->modify('+'.$param['length'].' months')->toDateTimeString();     
         }
         // 续费订单数据的组成
-        $order['duration'] = $param['length'];
-        $order['payable_money'] = bcmul((string)$order['price'],(string)$order['duration'],2);
+        $order['duration'] = $param['length'];//时长
+        $order['payable_money'] = bcmul((string)$order['price'],(string)$order['duration'],2);//应付金额
         $sales_id = Admin::user()->id;
-        $order['business_id'] = $sales_id;
-        $order['business_name'] = $this->staff($sales_id);
-        $order['resource_type'] = $param['resource_type'];
-        $order['order_type'] = 2;
-        $order['end_time'] = $end_time;
-        $order['order_status'] = 0;
-        $order['month'] = (int)date('Ym',time());
-        $order['created_at'] = Carbon::now()->toDateTimeString();
-        $order['order_note'] = $param['order_note'];
+        $order['business_id'] = $sales_id;//业务员id
+        $order['business_name'] = $this->staff($sales_id);//业务员姓名
+        $order['resource_type'] = $param['resource_type'];//资源类型
+        $order['order_type'] = 2;//订单类型续费
+        $order['end_time'] = $end_time;//订单到期时间
+        $order['order_status'] = 0;//订单状态未支付
+        $order['month'] = (int)date('Ym',time());//下单日期月份
+        $order['created_at'] = Carbon::now()->toDateTimeString();//订单创建时间
+        $order['order_note'] = $param['order_note'];//订单备注
         DB::beginTransaction();//开启事务处理
         $order_row = DB::table('tz_orders')->insert($order);//生成续费订单
-        // exit;
-        if($order_row == 0) {//续费订单生成失败直接返回
+        //续费订单生成失败直接返回
+        if($order_row == 0) {
             DB::rollBack();
             $return['code'] = 0;
             $return['msg'] = '续费失败，请重新操作';
             return $return;
         }
-
-        if($param['resource_type'] == 1 || $param['resource_type'] == 2 || $param['resource_type'] == 3) {//资源类型为主机和机柜的对原业务的到期时间和累计时长进行更新
+        //资源类型为主机和机柜的对原业务的到期时间和累计时长进行更新
+        if($param['resource_type'] == 1 || $param['resource_type'] == 2 || $param['resource_type'] == 3) {
             $business_alert['length'] = (int)bcadd($business->length,$param['length'],0);
             $business_alert['endding_time'] = $end_time;
             $business_alert['business_status'] = 3;
             $alert_where = ['business_number'=>$business->business_number];
             $business_row = DB::table('tz_business')->where($alert_where)->update($business_alert);
-            if($business_row == 0){//更新失败，直接返回
+            //更新失败，直接返回
+            if($business_row == 0){
                 DB::rollBack();
                 $return['code'] = 0;
                 $return['msg'] = '续费失败，请重新操作';
@@ -405,19 +405,18 @@ class OrdersModel extends Model
      * @return [type]            [description]
      */
     public function deleteOrders($delete_id){
-        $deltet_data = $this->find($delete_id['delete_id']);
-        if(!$deltet_data){
+        // 根据订单id查找对应的订单和关联的业务编号
+        $delete_data = DB::table('tz_orders')
+                        ->join('tz_business','tz_orders.business_sn','=','tz_business.business_number')
+                        ->where('tz_orders.id',$delete_id['delete_id'])
+                        ->select('tz_business.business_number','tz_orders.order_sn')
+                        ->find();
+        // 不存在需要删除的数据，直接返回
+        if(!$delete_data){
             $return['code'] = 0;
             $return['msg'] = '无法删除对应数据!';
             return $return;
         }
-
-        //查找业务关联订单
-        $order_data = DB::table('tz_orders')
-                        ->join('tz_business','tz_orders.business_sn','=','tz_business.business_number')
-                        ->where('tz_orders.id',$delete_id['delete_id'])
-                        ->select('tz_business.business_number')
-                        ->find();
 
         //删除对应业务数据
         $result = DB::table('tz_orders')->where('id',$delete_id['delete_id'])->delete();
@@ -426,9 +425,8 @@ class OrdersModel extends Model
             $return['msg'] = '删除失败!';
             return $return;
         }
-        
-        $return['msg'] = '删除数据成功,关联业务号为:'.$order_data->business_number;
-        
+        // 删除成功返回
+        $return['msg'] = '删除数据成功,关联业务号为:'.$delete_data->business_number; 
         $return['code'] = 1;
         return $return;
 

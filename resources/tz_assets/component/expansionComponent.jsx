@@ -14,11 +14,13 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
 class ExpansionComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            confirm: false
+            confirm: false,
+            currency: this.props.selectOptions ? this.props.selectOptions.find(item=>item.default).value : ""
         };
     }
     confirm_run = () => {
@@ -26,7 +28,7 @@ class ExpansionComponent extends React.Component {
             if(this.note) {
                 this.props.data.note = this.note.value;
             }
-            this.props.ok(this.props.data).then((data) => {
+            this.props.ok(this.props.data,this.state.currency).then((data) => {
                 if(data.code==1) {
                     this.props.updata && this.props.updata();
                     this.setState({
@@ -64,6 +66,11 @@ class ExpansionComponent extends React.Component {
         // console.log(url,event);
         location.href =  url;
     }
+    handleChange = name => event => {
+        this.setState({
+          [name]: event.target.value,
+        });
+      }
     render() {
         const {type} = this.props;
         if(type=="link") {
@@ -116,6 +123,27 @@ class ExpansionComponent extends React.Component {
                                 margin="normal"
                                 inputRef={ref => this.note = ref}
                             />
+                        </DialogContentText>
+                      )
+                  }
+                  {
+                      this.props.select && (
+                        <DialogContentText id="alert-dialog-select">
+                             <TextField
+                                id="item-select-currency"
+                                select
+                                label="选项"
+                                value={this.state.currency}
+                                onChange={this.handleChange('currency')}
+                                fullWidth
+                                margin="normal"
+                                >
+                                {this.props.selectOptions.map(option => (
+                                    <MenuItem key={option.value} value={option.value}>
+                                        {option.text}
+                                    </MenuItem>
+                                ))}
+                                </TextField>
                         </DialogContentText>
                       )
                   }

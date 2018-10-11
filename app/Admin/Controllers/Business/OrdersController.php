@@ -60,41 +60,17 @@ class OrdersController extends Controller
     }
 
     /**
-     * 进行主机及机柜续费操作
-     * @param  Request $request [description]
-     * @return json           返回相关的状态提示及信息
-     */
-    public function renewOrders(Request $request){
-        $data = $request->only(['business_number','money','length','order_note']);
-        $renew = new OrdersModel();
-        $result = $renew->renewOrders($data);
-        return tz_ajax_echo($result,$result['msg'],$result['code']);
-    }
-
-    /**
      * 对资源进行续费
      * @param  Request $request [description]
      * @return json           续费的反馈信息和提示
      */
     public function renewResource(Request $request){
-        $renew_data = $request->only(['customer_id','customer_name','business_sn','resource_type','machine_sn','resource','price','duration','order_note']);
+        $renew_data = $request->only(['business_number','order_sn','price','length','order_note','client_id','resource_type']);
         $renew = new OrdersModel();
         $renew_resource = $renew->renewResource($renew_data);
         return tz_ajax_echo($renew_resource,$renew_resource['msg'],$renew_resource['code']);
     }
 
-
-    /**
-     * 获取对应业务的增加资源的订单
-     * @param  Request $request [description]
-     * @return json           返回对应的信息和状态提示及信息
-     */
-    public function resourceOrders(Request $request){
-        $data = $request->only(['business_sn','resource_type']);
-        $resource = new OrdersModel();
-        $resource_orders = $resource->resourceOrders($data);
-        return tz_ajax_echo($resource_orders['data'],$resource_orders['msg'],$resource_orders['code']);
-    }
 
     /**
      * 订单后台删除

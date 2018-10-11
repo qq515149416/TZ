@@ -15,6 +15,11 @@ import ClienteleList from "../view/clienteleList.jsx";
 import BusinesList from "../view/businesList.jsx";
 import CheckBusinessList from "../view/checkBusinessList.jsx";
 import OrderList from "../view/orderList.jsx";
+import FinanceList from "../view/financeList.jsx";
+import StatisticalPerformanceList from "../view/statisticalPerformanceList.jsx";
+import WhitelistList from "../view/whitelistList.jsx";
+
+
 
 export default () => [
     <Route path="/tz_admin/user_list" component={UsersList} />,
@@ -31,5 +36,8 @@ export default () => [
     <Route path="/tz_admin/crm/clientele" component={ClienteleList} />,
     <Route path="/tz_admin/business" exact component={BusinesList} />,
     <Route path="/tz_admin/checkbusiness" component={CheckBusinessList} />,
-    <Route path="/tz_admin/business/order" component={OrderList} />
+    <Route path="/tz_admin/business/order" component={OrderList} />,
+    <Route path="/tz_admin/finance" component={FinanceList} />,
+    <Route path="/tz_admin/statisticalPerformance" component={StatisticalPerformanceList} />,
+    <Route path="/tz_admin/whitelist" component={WhitelistList} />
 ];

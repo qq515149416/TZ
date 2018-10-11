@@ -13,24 +13,35 @@ const columnData = [
     { id: 'created_at', numeric: true, disablePadding: false, label: '创建时间' },
     { id: 'updated_at', numeric: true, disablePadding: false, label: '更新时间' },
     { id: 'operat', numeric: true, disablePadding: false, extend: true,  extendConfirm: {
-        rule: {
-            term: "status",
-            execute: "拉黑",
-            type: "unequal"
-        },
-        title: "拉黑操作",
-        content: "是否要执行拉黑操作",
-        ok: (data) => {
+        title: "更改状态操作",
+        content: "是否要更改此用户状态",
+        select: true,
+        selectOptions: [
+            {
+                text: "拉黑",
+                value: 0
+            },
+            {
+                text: "正常",
+                value: 2,
+                default: true
+            },
+            {
+                text: "未验证",
+                value: 1
+            }
+        ],
+        ok: (data,param) => {
             return new Promise((resolve,reject) => {
                 post("business/pull_black",{
-                    status: 0,
+                    status: param,
                     id: data.id
                 }).then((res) => {
                     if(res.data.code==1) {
-                        alert("拉黑成功");
+                        alert(res.data.msg);
                         resolve(res.data);
                     } else {
-                        alert("拉黑失败");
+                        alert(res.data.msg);
                         resolve(res.data);
                     }
                 }).catch(reject);
@@ -41,7 +52,7 @@ const columnData = [
     }, extendUrl: {
         title: "添加业务",
         link: "/tz_admin/business",
-        param: ["id"]
+        param: ["id","email","money","status"]
     }, label: '操作' }
 ];
 @inject("clientelesStores")

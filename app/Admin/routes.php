@@ -73,6 +73,10 @@ Route::group([
     $router->get('/business', 'Show\BusinessController@index');
     $router->get('/checkbusiness', 'Show\CheckBusinessController@index');
     $router->get('/business/order', 'Show\OrderController@index');
+    $router->get('/finance', 'Show\FinanceController@index');
+    $router->get('/statisticalPerformance', 'Show\StatisticalPerformanceController@index');
+    $router->get('/whitelist', 'Show\WhitelistController@index');
+
 
 //人事
     Route::group([

@@ -26,7 +26,7 @@ class AliRecharge extends Model
 	protected $primaryKey = 'id'; //主键
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
-	protected $fillable = ['user_id', 'recharge_amount','recharge_way','trade_no','voucher','timestamp','money_before','money_after','created_at','trade_status','deleted_at'];
+	protected $fillable = ['user_id', 'recharge_amount','recharge_way','trade_no','voucher','timestamp','money_before','money_after','created_at','trade_status','deleted_at','subject','month'];
 
 
 	public function makeOrder($data)
@@ -94,7 +94,7 @@ class AliRecharge extends Model
 		$user_id = $order[0]['user_id'];
 
 		$data['money_before'] 	= floatval($this->getMoney($user_id)->money);
-		$data['money_after']	= floatval($data['money_before'] + $data['recharge_amount']);
+		$data['money_after']	= bcadd($data['money_before'] , $data['recharge_amount'],2);
 		$data['trade_status']	= 1;
 		$data['month']		= date("Ym");
 

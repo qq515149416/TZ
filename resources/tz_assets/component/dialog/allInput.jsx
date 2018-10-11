@@ -262,6 +262,11 @@ class AllInput extends React.Component {
                         inputRef = {(ref) => this[inputTypeData.field] = ref}
                         disabled={inputAttr[inputTypeData.field].disabled}
                         helperText={inputAttr[inputTypeData.field].helperText ? inputAttr[inputTypeData.field].helperText : null}
+                        onBlur={(event) => {
+                            if(inputTypeData.model && inputTypeData.model.getSubordinateData) {
+                                inputTypeData.model.getSubordinateData(event.target.value);
+                            }
+                        }}
                     />
                 );
             } else {

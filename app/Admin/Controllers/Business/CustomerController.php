@@ -5,8 +5,9 @@ namespace App\Admin\Controllers\Business;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use App\Admin\Models\Business\CustomerModel;
-use App\Admin\Requests\Business\BusinessRequest;
+
 use Illuminate\Http\Request;
+use App\Admin\Requests\Business\BusinessRequest;
 
 /**
  * 客户信息
@@ -49,4 +50,17 @@ class CustomerController extends Controller
         $reset_password = $reset->resetPassword($password);
         return tz_ajax_echo($reset_password,$reset_password['msg'],$reset_password['code']);
     }
+
+     /**
+     * 后台手动替客户充值余额
+     * @param  Request $request [description]
+     * @return 
+     */
+     public function rechargeByAdmin(BusinessRequest $request){
+
+        $data = $request->only(['user_id','recharge_amount','voucher','remarks']);
+        $model = new CustomerModel();
+        $res = $model->rechargeByAdmin($data);
+        return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+     }
 }

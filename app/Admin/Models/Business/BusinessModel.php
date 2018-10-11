@@ -196,6 +196,15 @@ class BusinessModel extends Model
             $machine['business_end'] = $order['end_time'];
             $machine['used_status'] = 1;
             $row = DB::table('idc_machine')->where('machine_num',$order['machine_sn'])->update($machine);
+            if(!$row){
+                DB::rollBack();
+                $return['data'] = '审核失败';
+                $return['code'] = 0;
+                $return['msg'] = '审核失败';
+                return $return;
+            }
+            $row = DB::table('idc_ips')->where('mac_num',$order['machine_sn'])->update(['own_business'=>$order['business_sn']]);
+            
         } else {
             // 如果是租用机柜的，在订单生成成功时，将业务编号和到期时间及资源状态进行更新
             $machine['own_business'] = $order['business_sn'];

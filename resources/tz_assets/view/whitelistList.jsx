@@ -6,6 +6,7 @@ import { inject,observer } from "mobx-react";
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import InputExpansionComponent from "../component/inputExpansionComponent.jsx";
 
 const styles = theme => ({
     listTableComponent: {
@@ -32,6 +33,32 @@ const columnData = [
     }
 ];
 const inputType = [
+    {
+        field: "white_ip",
+        label: "IP",
+        type: "text"
+    },
+    {
+        field: "domain_name",
+        label: "域名",
+        type: "text"
+    },
+    {
+        field: "record_number",
+        label: "备案编号",
+        type: "text"
+    },
+    {
+        field: "submit_note",
+        label: "备注",
+        type: "text"
+    },
+    {
+        field: "extentParam",
+        label: "",
+        type: "component",
+        Component: InputExpansionComponent
+    }
 ];
 @inject("whitelistsStores")
 @observer 
@@ -46,6 +73,15 @@ class WhitelistList extends React.Component {
         this.props.whitelistsStores.getData({
             white_status: this.state.value
         });
+        inputType[inputType.findIndex(item => item.field=="white_ip")].model = {
+            getSubordinateData: this.getIpData.bind(this)
+        };
+    }
+    getIpData = (value) => {
+        this.props.whitelistsStores.getIpParam(value);
+    }
+    addData = (param,callbrak) => {
+        console.log(param);
     }
     handleChange = (event, value) => {
         this.props.whitelistsStores.getData({
@@ -78,6 +114,7 @@ class WhitelistList extends React.Component {
             inputType={inputType} 
             headTitlesData={columnData} 
             data={this.props.whitelistsStores.whitelists} 
+            addData={this.addData.bind(this)} 
           />
         ];
       }

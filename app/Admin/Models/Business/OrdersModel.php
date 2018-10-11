@@ -410,7 +410,7 @@ class OrdersModel extends Model
                         ->join('tz_business','tz_orders.business_sn','=','tz_business.business_number')
                         ->where('tz_orders.id',$delete_id['delete_id'])
                         ->select('tz_business.business_number','tz_orders.order_sn')
-                        ->find();
+                        ->first();
         // 不存在需要删除的数据，直接返回
         if(!$delete_data){
             $return['code'] = 0;

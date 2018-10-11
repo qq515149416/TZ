@@ -171,7 +171,7 @@ class BusinesList extends React.Component {
   render() {
     return (
       <ListTableComponent 
-        title="业务管理"
+        title={`客户账号：${qs.parse(location.search.substr(1)).email}&nbsp;&nbsp;&nbsp;&nbsp;客户余额：${qs.parse(location.search.substr(1)).money}&nbsp;&nbsp;&nbsp;&nbsp;客户账号状态：${qs.parse(location.search.substr(1)).status}`}
         operattext="业务信息"
         inputType={inputType} 
         headTitlesData={columnData} 

@@ -58,8 +58,9 @@ class WhiteListController extends Controller
 	public function insertWhiteList(WhiteListRequest $request){
 		
 			$insertdata = $request->only(['white_ip','domain_name','record_number','binding_machine','customer_id','customer_name','submit_note']);
-			
+		
 			$insert = new WhiteListModel();
+
 			$return = $insert->insertWhiteList($insertdata);
 			return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
 		

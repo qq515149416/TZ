@@ -226,6 +226,22 @@ const styles = theme => ({
       )
     }
     renderExpansionComponent = (data) => {
+      if(!this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.rule) {
+        return (
+          <ExpansionComponent 
+            type="confirm"
+            tip_title={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.title}
+            tip_content={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.content}
+            ok={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.ok}
+            cancel={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.cancel}
+            input={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.input}
+            data={data}
+            updata = {this.props.updata}
+            select={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.select}
+            selectOptions={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.selectOptions}
+          />
+        );
+      }
       if(this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.rule && this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.rule.type=="equal") {
         if(this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.rule.execute==data[this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.rule.term]) {
           return (
@@ -238,6 +254,8 @@ const styles = theme => ({
               input={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.input}
               data={data}
               updata = {this.props.updata}
+              select={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.select}
+              selectOptions={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.selectOptions}
             />
           );
         }
@@ -254,6 +272,8 @@ const styles = theme => ({
               input={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.input}
               data={data}
               updata = {this.props.updata}
+              select={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.select}
+              selectOptions={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.selectOptions}
             />
           );
         }
@@ -270,6 +290,13 @@ const styles = theme => ({
               this.props.filterType && (
                 <Paper className={classes.paper} elevation={1}>
                       <FilterTableToolbar filterData={this.props.filterData} types={this.props.headTitlesData} filterType={this.props.filterType} />
+                </Paper>
+              )
+            }
+            {
+              this.props.customizeToolbar && (
+                <Paper className={classes.paper} elevation={1}>
+                      {this.props.customizeToolbar}
                 </Paper>
               )
             }

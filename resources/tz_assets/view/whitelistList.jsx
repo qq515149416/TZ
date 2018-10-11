@@ -6,10 +6,7 @@ import { inject,observer } from "mobx-react";
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-<<<<<<< HEAD
 import {post} from "../tool/http.js";
-=======
->>>>>>> b29daed17f77a5fb54bab05721aa6103a31893da
 import InputExpansionComponent from "../component/inputExpansionComponent.jsx";
 
 const styles = theme => ({
@@ -33,7 +30,6 @@ const columnData = [
         {id: "check_time", label: "审核时间" ,type: "text"},
         {id: "check_note", label: "审核备注" ,type: "text"},
         {id: "submit_note", label: "提交备注" ,type: "text"}
-<<<<<<< HEAD
     ],extendConfirm: {
         rule: {
             term: "white_status",
@@ -78,9 +74,6 @@ const columnData = [
             });
         }
     },label: '操作'
-=======
-    ],label: '操作'
->>>>>>> b29daed17f77a5fb54bab05721aa6103a31893da
     }
 ];
 const inputType = [
@@ -128,14 +121,11 @@ class WhitelistList extends React.Component {
             getSubordinateData: this.getIpData.bind(this)
         };
     }
-<<<<<<< HEAD
     updata() {
         this.props.whitelistsStores.getData({
             white_status: this.state.value
         });
     }
-=======
->>>>>>> b29daed17f77a5fb54bab05721aa6103a31893da
     getIpData = (value) => {
         this.props.whitelistsStores.getIpParam(value);
     }
@@ -177,10 +167,7 @@ class WhitelistList extends React.Component {
             headTitlesData={columnData} 
             data={this.props.whitelistsStores.whitelists} 
             addData={this.addData.bind(this)} 
-<<<<<<< HEAD
             updata={this.updata.bind(this)}
-=======
->>>>>>> b29daed17f77a5fb54bab05721aa6103a31893da
           />
         ];
       }

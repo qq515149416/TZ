@@ -26,17 +26,20 @@ class OrderController extends Controller
 	* 获取登录中用户的订单列表的接口
 	* @return 该用户所有订单,
 	*/
-	public function getOrderList()
+	public function getOrderList(Request $request)
 	{
 		//检测登录状态
 		if(!Auth::check()){
 			return tz_ajax_echo('','请先登录',0);
 		}
+		$type = $request->only(['resource_type']);
+		$user_id = Auth::user()->id;
+		$type['customer_id'] = $user_id;
 		//获取登录中用户id
-		$user_id = Auth::id();
+		
 		$orderModel = new Order();
 		//根据id获取所属订单
-		$list = $orderModel->getList($user_id);
+		$list = $orderModel->getList($type);
 
 		if($list == false){
 			$return['msg'] 	= '无订单记录';

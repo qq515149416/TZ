@@ -6,6 +6,7 @@ import { inject,observer } from "mobx-react";
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import {post} from "../tool/http.js";
 import InputExpansionComponent from "../component/inputExpansionComponent.jsx";
 
 const styles = theme => ({
@@ -29,7 +30,50 @@ const columnData = [
         {id: "check_time", label: "审核时间" ,type: "text"},
         {id: "check_note", label: "审核备注" ,type: "text"},
         {id: "submit_note", label: "提交备注" ,type: "text"}
-    ],label: '操作'
+    ],extendConfirm: {
+        rule: {
+            term: "white_status",
+            execute: 0,
+            type: "equal"
+        },
+        title: "更改审核状态操作",
+        content: "是否要更改此审核状态",
+        select: true,
+        input: true,
+        selectOptions: [
+            {
+                text: "审核通过",
+                value: 1
+            },
+            {
+                text: "审核不通过",
+                value: 2,
+                default: true
+            },
+            {
+                text: "黑名单",
+                value: 3
+            }
+        ],
+        ok: (data,param) => {
+            return new Promise((resolve,reject) => {
+                post("whitelist/check",{
+                    white_status: param,
+                    id: data.id,
+                    check_note: data.note,
+                    method: "checkWhiteList"
+                }).then((res) => {
+                    if(res.data.code==1) {
+                        alert(res.data.msg);
+                        resolve(res.data);
+                    } else {
+                        alert(res.data.msg);
+                        resolve(res.data);
+                    }
+                }).catch(reject);
+            });
+        }
+    },label: '操作'
     }
 ];
 const inputType = [
@@ -77,6 +121,11 @@ class WhitelistList extends React.Component {
             getSubordinateData: this.getIpData.bind(this)
         };
     }
+    updata() {
+        this.props.whitelistsStores.getData({
+            white_status: this.state.value
+        });
+    }
     getIpData = (value) => {
         this.props.whitelistsStores.getIpParam(value);
     }
@@ -85,6 +134,11 @@ class WhitelistList extends React.Component {
         this.props.whitelistsStores.addData(param).then(state => {
             callbrak(state);
         });
+    }
+    delData = (selectedData,callbrak) => {
+        const {whitelistsStores} = this.props;
+        let delIng = selectedData.map(item => whitelistsStores.delData(item));
+        callbrak(delIng);
     }
     handleChange = (event, value) => {
         this.props.whitelistsStores.getData({
@@ -118,6 +172,8 @@ class WhitelistList extends React.Component {
             headTitlesData={columnData} 
             data={this.props.whitelistsStores.whitelists} 
             addData={this.addData.bind(this)} 
+            delData={this.delData.bind(this)} 
+            updata={this.updata.bind(this)}
           />
         ];
       }

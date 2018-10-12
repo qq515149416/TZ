@@ -269,5 +269,15 @@ Route::group([
         $router->post('recharge','Business\CustomerController@rechargeByAdmin');
     });
 
+
+    //发送信息相关接口
+    Route::group([
+        'prefix' => 'message',
+    ],function(Router $router){
+        $router->post('sendUserByEmail','Message\DeadlineController@sendUserByEmail');  //向指定用户发送邮件信息
+        
+    });
+
+
 });
 

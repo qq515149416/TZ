@@ -15,6 +15,21 @@ class WhitelistsStores extends ActionBoundStores {
     @observable customer_id = "";
     @observable customer_name = "";
     type = 0;
+    delData(id) {
+        return new Promise((resolve,reject) => {
+            post("whitelist/delete",{
+                delete_id: id,
+                method: "deleteWhiteList"
+            }).then((res) => {
+                if(res.data.code==1) {
+                    this.delStoreData("whitelists",id);
+                    resolve(true);
+                } else {
+                    resolve(false);
+                }
+            }).catch(reject);
+        });
+    }
     addData(data) {
         return new Promise((resolve,reject) => {
             post("whitelist/insert",Object.assign(data,{

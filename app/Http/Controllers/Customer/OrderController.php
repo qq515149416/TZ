@@ -33,10 +33,6 @@ class OrderController extends Controller
 			return tz_ajax_echo('','请先登录',0);
 		}
 		$type = $request->only(['resource_type','business_sn']);
-		$user_id = Auth::user()->id;
-		$type['customer_id'] = $user_id;
-		//获取登录中用户id
-		
 		$orderModel = new Order();
 		//根据id获取所属订单
 		$list = $orderModel->getList($type);

@@ -32,7 +32,9 @@ class Order extends Model
 
 
 	public function getList($type)
-	{
+	{	
+		$user_id = Auth::user()->id;
+		$type['customer_id'] = $user_id;
 		//获取该用户的订单
 		$order = $this->where($type)->orderby('created_at','desc')->get(['id','order_sn', 'business_sn','before_money','after_money','business_id','resource_type','order_type','machine_sn','resource','price','duration','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at','payable_money']);
 

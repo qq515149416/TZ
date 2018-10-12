@@ -67,7 +67,7 @@ const columnData = [
   }, extendUrl: {
       title: "全部订单",
       link: "/tz_admin/business/order",
-      param: ["business_number","client_id","client_name",{
+      param: ["business_number","client_id","client_name","machine_number",{
         field: "resource_detail_json",
         value: ["machineroom_id"]
       }],

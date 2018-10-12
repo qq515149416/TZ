@@ -179,8 +179,14 @@ class OrderList extends React.Component {
         param.business_sn = qs.parse(location.search.substr(1)).business_number;
         param.customer_id = qs.parse(location.search.substr(1)).client_id;
         param.customer_name = qs.parse(location.search.substr(1)).client_name;
-        param.machine_sn = param.resource.label;
-        param.resource = param.resource.value;
+        if(param.resource_type>7) {
+            param.machine_sn = qs.parse(location.search.substr(1)).machine_number;
+            param.resource = param.resource;
+        } else {
+            param.machine_sn = param.resource.label;
+            param.resource = param.resource.value;
+        }   
+        
         this.props.ordersStores.addData(param).then((state) => {
             callbrak(state);
         });

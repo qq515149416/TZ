@@ -10,7 +10,7 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
     <script type="text/javascript">
         if(location.search.indexOf("?order")!=-1) {
-            $.get("http://"+location.hostname+"/home/getOrder",{
+            $.get("http://"+location.hostname+"/home/recharge/getOrder",{
                 trade_no: location.search.substr(1).split("=")[1]
             },function(data) {
                 if(data.code==1) {

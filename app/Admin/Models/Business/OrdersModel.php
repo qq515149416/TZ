@@ -204,7 +204,10 @@ class OrdersModel extends Model
                 $machine['service_num'] = $insert_data['business_sn'];
                 $machine['memory_used'] = 1;
                 $result = DB::table('idc_memory')->where('memory_number',$insert_data['machine_sn'])->update($machine);
-                break;    
+                break;
+            default:
+                $result = 1;
+                break;  
         }
         if($result != 0){
             //所对应资源表的业务编号和到期时间，状态修改成功后进行事务提交

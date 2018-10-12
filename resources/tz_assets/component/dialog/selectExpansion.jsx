@@ -22,6 +22,7 @@ class SelectExpansion extends React.Component {
         this.selectModal.handleOpen(type);
     }
     handleChange = name => event => {
+        this.props.setComponentParam(event.target.value);
         this.setState({
           [name]: event.target.value,
         });
@@ -46,6 +47,7 @@ class SelectExpansion extends React.Component {
                             id="standard-name"
                             label="多少带宽/防御"
                             value={this.state.inputContent}
+                            fullWidth
                             onChange={this.handleChange('inputContent')}
                             margin="normal"
                         />

@@ -32,7 +32,9 @@ class Order extends Model
 
 
 	public function getList($type)
-	{
+	{	
+		$user_id = Auth::user()->id;
+		$type['customer_id'] = $user_id;
 		//获取该用户的订单
 		$order = $this->where($type)->orderby('created_at','desc')->get(['id','order_sn', 'business_sn','before_money','after_money','business_id','resource_type','order_type','machine_sn','resource','price','duration','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at','payable_money']);
 
@@ -333,7 +335,7 @@ class Order extends Model
 		$order['duration'] = $param['length'];//续费时长
 		$order['payable_money'] = bcmul((string)$order['price'],(string)$order['duration'],2);//应付金额
 		$order['customer_id'] = Auth::user()->id;//客户id
-		$order['customer_name'] = Auth::user()->name;//客户姓名
+		$order['customer_name'] = Auth::user()->name?Auth::user()->name:'test';//客户姓名
 		$order['resource_type'] = $param['resource_type'];//资源类型
 		$order['order_type'] = 2;//订单类型续费
 		$order['end_time'] = $end_time;//订单到期时间
@@ -415,6 +417,9 @@ class Order extends Model
 				$machine['memory_used'] = 1;
 				$where = ['service_num'=>$order['business_sn'],'memory_number'=>$order['machine_sn']];
 				$result = DB::table('idc_memory')->where($where)->update($machine);
+				break;
+			default:
+				$result = 1;
 				break;   
 		}
 

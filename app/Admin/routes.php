@@ -23,7 +23,7 @@ Route::group([
     $router->get('test', 'Others\StaffController@test');
     $router->get('contacts/maillist', 'Others\ContactsController@test');
     $router->get('ip/test', 'Idc\IpsController@test');
-    $router->get('account/test','Hr\AccountController@test');
+    $router->get('account/test', 'Hr\AccountController@test');
 
     // 显示通讯录
     $router->get('staff/staff_list', 'Others\StaffController@index');
@@ -31,18 +31,18 @@ Route::group([
     // 联系人表
     Route::group([
         'prefix' => 'contacts',
-    ],function(Router $router){
+    ], function (Router $router) {
         $router->get('list', 'Others\ContactsController@index');
         $router->post('insert', 'Others\ContactsController@insert');
         $router->get('alert', 'Others\ContactsController@edit');
         $router->post('alerting', 'Others\ContactsController@doEdit');
         $router->post('remove', 'Others\ContactsController@deleted');
     });
-    
+
 //ip
     Route::group([
         'prefix' => 'ips',
-    ],function(Router $router){
+    ], function (Router $router) {
         $router->get('index', 'Idc\IpsController@index');
         $router->post('insert', 'Idc\IpsController@insert');
         $router->get('alert', 'Idc\IpsController@edit');
@@ -50,7 +50,7 @@ Route::group([
         $router->post('remove', 'Idc\IpsController@deleted');
         $router->get('machineroom', 'Idc\IpsController@machineroom');
     });
-    
+
 
     $router->post('rules', 'Others\ContactsController@rulestest');
     $router->get('rules', 'Others\ContactsController@rulestest');
@@ -81,31 +81,31 @@ Route::group([
 //人事
     Route::group([
         'prefix' => 'hr',
-    ],function(Router $router){
+    ], function (Router $router) {
         $router->get('showaccount', 'Hr\AccountController@showAccount');
-        $router->get('showMyself', 'Hr\AccountController@personalAccount');    
+        $router->get('showMyself', 'Hr\AccountController@personalAccount');
         Route::group([
-        'prefix' => 'userInfo',
-        ],function(Router $router){
+            'prefix' => 'userInfo',
+        ], function (Router $router) {
             $router->get('showEmployee', 'Hr\EmployeeInformationController@showEmployee');
-            $router->post('insertEmployee', 'Hr\EmployeeInformationController@insertEmployee');    
-            $router->post('editEmployee', 'Hr\EmployeeInformationController@editEmployee');   
+            $router->post('insertEmployee', 'Hr\EmployeeInformationController@insertEmployee');
+            $router->post('editEmployee', 'Hr\EmployeeInformationController@editEmployee');
             $router->post('deleteEmployee', 'Hr\EmployeeInformationController@deleteEmployee');
             $router->get('employeePersonal', 'Hr\EmployeeInformationController@employeePersonal');
             $router->post('employeeDetailed', 'Hr\EmployeeInformationController@employeeDetailed');
-        });   
+        });
     });
-    
+
 
     //机房管理
     Route::group([
         'prefix' => 'machine_room',
     ], function (Router $router) {
-    $router->get('showByAjax', 'Idc\MachineRoomController@showByAjax');
-    $router->get('show_select_list_by_ajax', 'Idc\MachineRoomController@showSelectListByAjax');
-    $router->post('storeByAjax', 'Idc\MachineRoomController@storeByAjax');
-    $router->post('destroyByAjax', 'Idc\MachineRoomController@destroyByAjax');
-    $router->post('updateByAjax', 'Idc\MachineRoomController@updateByAjax');
+        $router->get('showByAjax', 'Idc\MachineRoomController@showByAjax');
+        $router->get('show_select_list_by_ajax', 'Idc\MachineRoomController@showSelectListByAjax');
+        $router->post('storeByAjax', 'Idc\MachineRoomController@storeByAjax');
+        $router->post('destroyByAjax', 'Idc\MachineRoomController@destroyByAjax');
+        $router->post('updateByAjax', 'Idc\MachineRoomController@updateByAjax');
     });
 
     //机柜管理   分组增删改查
@@ -122,7 +122,7 @@ Route::group([
     //消息管理
     Route::group([
         'prefix' => 'news',
-    ],function (Router $router) {
+    ], function (Router $router) {
         $router->get('news_list', 'News\NewsController@index');
         $router->post('insert', 'News\NewsController@insert');
         $router->post('edit', 'News\NewsController@edit');
@@ -133,7 +133,7 @@ Route::group([
     //cpu资源库管理
     Route::group([
         'prefix' => 'cpu',
-    ],function (Router $router) {
+    ], function (Router $router) {
         $router->get('cpu_list', 'Idc\CpuController@index');
         $router->post('insert', 'Idc\CpuController@insert');
         $router->post('deleted', 'Idc\CpuController@deleted');
@@ -143,7 +143,7 @@ Route::group([
     //harddisk资源库管理
     Route::group([
         'prefix' => 'harddisk',
-    ],function (Router $router) {
+    ], function (Router $router) {
         $router->get('harddisk_list', 'Idc\HarddiskController@index');
         $router->post('insert', 'Idc\HarddiskController@insert');
         $router->post('edit', 'Idc\HarddiskController@edit');
@@ -153,7 +153,7 @@ Route::group([
 //内存资源库管理
     Route::group([
         'prefix' => 'memory',
-    ],function (Router $router) {
+    ], function (Router $router) {
         $router->get('memory_list', 'Idc\MemoryController@index');
         $router->post('insert', 'Idc\MemoryController@insert');
         $router->post('edit', 'Idc\MemoryController@edit');
@@ -164,7 +164,7 @@ Route::group([
     // 机器资源库
     Route::group([
         'prefix' => 'machine',
-    ], function(Router $router){
+    ], function (Router $router) {
         $router->get('showmachine', 'Idc\MachineController@showMachine');
         $router->post('insertmachine', 'Idc\MachineController@insertMachine');
         $router->post('editmachine', 'Idc\MachineController@editMachine');
@@ -175,25 +175,24 @@ Route::group([
     });
 
 
-
     //统计模块
     Route::group([
         'prefix' => 'statistics',
-    ],function (Router $router) {
+    ], function (Router $router) {
         $router->post('statisticsList', 'Statistics\StatisticsController@index');
     });
 
     //业绩统计
     Route::group([
         'prefix' => 'pfmStatistics',
-    ],function (Router $router) {
+    ], function (Router $router) {
         $router->get('pfmStatisticsList', 'Statistics\PfmStatisticsController@index');
     });
 
-     //充值情况统计
+    //充值情况统计
     Route::group([
         'prefix' => 'rechargeStatistics',
-    ],function (Router $router) {
+    ], function (Router $router) {
         $router->get('list', 'Statistics\RechargeStatisticsController@index');
     });
 
@@ -201,80 +200,87 @@ Route::group([
     //工单问答
     Route::group([
         'prefix' => 'work_answer',
-    ],function(Router $router){
-        $router->get('show','Work\WorkAnswerController@showWorkAnswer');
-        $router->post('insert','Work\WorkAnswerController@insertWorkAnswer');
+    ], function (Router $router) {
+        $router->get('show', 'Work\WorkAnswerController@showWorkAnswer');
+        $router->post('insert', 'Work\WorkAnswerController@insertWorkAnswer');
     });
 
     //工单接口
     Route::group([
         'prefix' => 'workorder',
-    ],function(Router $router){
-        $router->get('show','Work\WorkOrderController@showWorkOrder');
-        $router->post('insert','Work\WorkOrderController@insertWorkOrder');
-        $router->post('edit','Work\WorkOrderController@editWorkOrder');
-        $router->post('delete','Work\WorkOrderController@deleteWorkOrder');
+    ], function (Router $router) {
+        $router->get('show', 'Work\WorkOrderController@showWorkOrder');
+        $router->post('insert', 'Work\WorkOrderController@insertWorkOrder');
+        $router->post('edit', 'Work\WorkOrderController@editWorkOrder');
+        $router->post('delete', 'Work\WorkOrderController@deleteWorkOrder');
     });
 
     //工单类型接口
     Route::group([
         'prefix' => 'worktype',
-    ],function(Router $router){
-        $router->get('show','Work\WorkTypeController@showWorkType');
-        $router->post('insert','Work\WorkTypeController@insertWorkType');
-        $router->post('edit','Work\WorkTypeController@editWorkType');
-        $router->post('delete','Work\WorkTypeController@editWorkType');
+    ], function (Router $router) {
+        $router->get('show', 'Work\WorkTypeController@showWorkType');
+        $router->post('insert', 'Work\WorkTypeController@insertWorkType');
+        $router->post('edit', 'Work\WorkTypeController@editWorkType');
+        $router->post('delete', 'Work\WorkTypeController@editWorkType');
     });
 
     // 白名单接口
     Route::group([
         'prefix' => 'whitelist',
-    ],function(Router $router){
-        $router->get('checkIP','Work\WhiteListController@checkIP');
-        $router->get('show','Work\WhiteListController@showWhiteList');
-        $router->post('insert','Work\WhiteListController@insertWhiteList');
-        $router->post('check','Work\WhiteListController@checkWhiteList');
-        $router->post('delete','Work\WhiteListController@deleteWhiteList');
+    ], function (Router $router) {
+        $router->get('checkIP', 'Work\WhiteListController@checkIP');
+        $router->get('show', 'Work\WhiteListController@showWhiteList');
+        $router->post('insert', 'Work\WhiteListController@insertWhiteList');
+        $router->post('check', 'Work\WhiteListController@checkWhiteList');
+        $router->post('delete', 'Work\WhiteListController@deleteWhiteList');
     });
 
     // 业务相关接口(业务员下订单/手动生成业务编号及业务数据并且提供财务人员/管理人员/业务员查看数据等)
     Route::group([
         'prefix' => 'business',
-    ],function(Router $router){
+    ], function (Router $router) {
         // 业务
-        $router->get('machineroom','Business\BusinessController@machineroom');
-        $router->get('selectmachine','Business\BusinessController@selectMachine');
-        $router->get('selectcabinet','Business\BusinessController@selectCabinet');
-        $router->post('insert','Business\BusinessController@insertBusiness');
-        $router->get('security','Business\BusinessController@securityBusiness');
-        $router->post('check','Business\BusinessController@checkBusiness');
-        $router->post('enable','Business\BusinessController@enableBusiness');
-        $router->get('showbusiness','Business\BusinessController@showBusiness');
-        $router->get('deletebusiness','Business\BusinessController@deleteBusiness');
+        $router->get('machineroom', 'Business\BusinessController@machineroom');
+        $router->get('selectmachine', 'Business\BusinessController@selectMachine');
+        $router->get('selectcabinet', 'Business\BusinessController@selectCabinet');
+        $router->post('insert', 'Business\BusinessController@insertBusiness');
+        $router->get('security', 'Business\BusinessController@securityBusiness');
+        $router->post('check', 'Business\BusinessController@checkBusiness');
+        $router->post('enable', 'Business\BusinessController@enableBusiness');
+        $router->get('showbusiness', 'Business\BusinessController@showBusiness');
+        $router->get('deletebusiness', 'Business\BusinessController@deleteBusiness');
         // 订单
-        $router->post('finance','Business\OrdersController@financeOrders');
-        $router->post('clerk','Business\OrdersController@clerkOrders');
-        $router->post('resource','Business\OrdersController@resource');
-        $router->post('insertresource','Business\OrdersController@insertResource');
-        $router->post('reneworders','Business\OrdersController@renewOrders');
-        $router->post('renewresource','Business\OrdersController@renewResource');
-        $router->post('resourceorders','Business\OrdersController@resourceOrders');
-        $router->get('deleteorders','Business\OrdersController@deleteOrders');
+        $router->post('finance', 'Business\OrdersController@financeOrders');
+        $router->post('clerk', 'Business\OrdersController@clerkOrders');
+        $router->post('resource', 'Business\OrdersController@resource');
+        $router->post('insertresource', 'Business\OrdersController@insertResource');
+        $router->post('reneworders', 'Business\OrdersController@renewOrders');
+        $router->post('renewresource', 'Business\OrdersController@renewResource');
+        $router->post('resourceorders', 'Business\OrdersController@resourceOrders');
+        $router->get('deleteorders', 'Business\OrdersController@deleteOrders');
         //客户信息
-        $router->get('admin_customer','Business\CustomerController@adminCustomer');
-        $router->post('pull_black','Business\CustomerController@pullBlackCustomer');
-        $router->post('reset_password','Business\CustomerController@resetPassword');
+        $router->get('admin_customer', 'Business\CustomerController@adminCustomer');
+        $router->post('pull_black', 'Business\CustomerController@pullBlackCustomer');
+        $router->post('reset_password', 'Business\CustomerController@resetPassword');
 
-        $router->post('recharge','Business\CustomerController@rechargeByAdmin');
+        $router->post('recharge', 'Business\CustomerController@rechargeByAdmin');
     });
 
 
-    //发送信息相关接口
+    //发送信息 
     Route::group([
         'prefix' => 'message',
-    ],function(Router $router){
-        $router->post('sendUserByEmail','Message\DeadlineController@sendUserByEmail');  //向指定用户发送邮件信息
-        
+    ], function (Router $router) {
+
+        //
+        Route::group([
+            'prefix' => 'deadline',
+        ], function (Router $router) {
+
+
+        });
+
     });
 
 

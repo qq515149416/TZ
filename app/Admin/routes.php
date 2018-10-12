@@ -210,7 +210,9 @@ Route::group([
     Route::group([
         'prefix' => 'workorder',
     ],function(Router $router){
-        $router->get('show','Work\WorkOrderController@showWorkOrder');
+        $router->get('show','Work\WorkOrderController@showWorkOrder');//管理员和网维等人员查看
+        $router->get('clerk','Work\WorkOrderController@clerkWorkOrder');//业务员查看
+        $router->get('area','Work\WorkOrderController@areaWorkOrder');//地区机房人员查看
         $router->post('insert','Work\WorkOrderController@insertWorkOrder');
         $router->post('edit','Work\WorkOrderController@editWorkOrder');
         $router->post('delete','Work\WorkOrderController@deleteWorkOrder');
@@ -256,7 +258,6 @@ Route::group([
         $router->post('clerk','Business\OrdersController@clerkOrders');
         $router->post('resource','Business\OrdersController@resource');
         $router->post('insertresource','Business\OrdersController@insertResource');
-        $router->post('reneworders','Business\OrdersController@renewOrders');
         $router->post('renewresource','Business\OrdersController@renewResource');
         $router->post('resourceorders','Business\OrdersController@resourceOrders');
         $router->get('deleteorders','Business\OrdersController@deleteOrders');
@@ -267,6 +268,16 @@ Route::group([
 
         $router->post('recharge','Business\CustomerController@rechargeByAdmin');
     });
+
+
+    //发送信息相关接口
+    Route::group([
+        'prefix' => 'message',
+    ],function(Router $router){
+        $router->post('sendUserByEmail','Message\DeadlineController@sendUserByEmail');  //向指定用户发送邮件信息
+        
+    });
+
 
 });
 

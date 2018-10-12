@@ -52,14 +52,13 @@ class Email implements ShouldQueue
         Mail::send('emails.' . $data['emailTemplate'], [
             //发送内容
 //            'token' => $token,
-//            'userName'    => $data['userName'],     //用户名
-//            'exampleType' => $data['exampleType'],  //实例类型
-//            'exampleId'   => $data['exampleId'],    //实例ID
-//            'deadLine'    => $data['deadLine '],    //到期时间
+            'userName'    => $data['userName'],     //用户名
+            'exampleType' => $data['exampleType'],  //实例类型
+            'exampleId'   => $data['exampleId'],    //实例ID
+            'deadLine'    => $data['deadLine '],    //到期时间
         ], function ($message) use ($data) {
             $message->to($data['email'])->subject($data['subject']);
         });
-
 
     }
 }

@@ -38,7 +38,7 @@ Route::group([
         $router->post('alerting', 'Others\ContactsController@doEdit');
         $router->post('remove', 'Others\ContactsController@deleted');
     });
-    
+
 //ip
     Route::group([
         'prefix' => 'ips',
@@ -50,7 +50,7 @@ Route::group([
         $router->post('remove', 'Idc\IpsController@deleted');
         $router->get('machineroom', 'Idc\IpsController@machineroom');
     });
-    
+
 
     $router->post('rules', 'Others\ContactsController@rulestest');
     $router->get('rules', 'Others\ContactsController@rulestest');
@@ -83,19 +83,19 @@ Route::group([
         'prefix' => 'hr',
     ],function(Router $router){
         $router->get('showaccount', 'Hr\AccountController@showAccount');
-        $router->get('showMyself', 'Hr\AccountController@personalAccount');    
+        $router->get('showMyself', 'Hr\AccountController@personalAccount');
         Route::group([
         'prefix' => 'userInfo',
         ],function(Router $router){
             $router->get('showEmployee', 'Hr\EmployeeInformationController@showEmployee');
-            $router->post('insertEmployee', 'Hr\EmployeeInformationController@insertEmployee');    
-            $router->post('editEmployee', 'Hr\EmployeeInformationController@editEmployee');   
+            $router->post('insertEmployee', 'Hr\EmployeeInformationController@insertEmployee');
+            $router->post('editEmployee', 'Hr\EmployeeInformationController@editEmployee');
             $router->post('deleteEmployee', 'Hr\EmployeeInformationController@deleteEmployee');
             $router->get('employeePersonal', 'Hr\EmployeeInformationController@employeePersonal');
             $router->post('employeeDetailed', 'Hr\EmployeeInformationController@employeeDetailed');
-        });   
+        });
     });
-    
+
 
     //机房管理
     Route::group([
@@ -279,8 +279,8 @@ Route::group([
         Route::group([
             'prefix' => 'deadline',
         ], function (Router $router) {
-
-
+            $router->post('sendUser','Message\DeadlineController@sendUser');
+            $router->post('sendAllUser','Message\DeadlineController@sendAllUser');
         });
 
     });

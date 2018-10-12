@@ -39,7 +39,7 @@ class OrdersModel extends Model
     		foreach($result as $okey=>$ovalue){
     			$result[$okey]['resource_type'] = $resource_type[$ovalue['resource_type']];
     			$result[$okey]['order_type'] = $order_type[$ovalue['order_type']];
-    			$result[$okey]['pay_type'] = $pay_type[$ovalue['pay_type']];
+    			$result[$okey]['pay_type'] = $pay_type[$ovalue['pay_type']]?$pay_type[$ovalue['pay_type']]:'未支付';
     			$result[$okey]['order_status'] = $order_status[$ovalue['order_status']];
     		}
     		$return['data'] = $result;

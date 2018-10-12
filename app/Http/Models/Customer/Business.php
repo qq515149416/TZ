@@ -45,8 +45,8 @@ class Business extends Model
 		if(!$business->isEmpty()){
 			foreach ($business as $key => $value) {
 				$business[$key]['business_status'] = $business_status[$value['business_status']];
-				$business[$key]['business_type'] = $business_type[$value['business_type']];
 				$business[$key]['type'] = $value['business_type'];
+				$business[$key]['business_type'] = $business_type[$value['business_type']];	
 			}
 			$return['data'] = $business;
 			$return['code'] = 1;

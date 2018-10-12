@@ -53,7 +53,7 @@ class WhiteListModel extends Model
      */
     public function insertWhiteList($insert_data){
     	if($insert_data){
-    		$white_number = mt_rand(41,70).date("ymd",time()).substr(time(),8,2);
+    		$white_number = mt_rand(41,70).date("Ymd",time()).substr(time(),8,2);
     		$insert_data['white_number'] = (int)$white_number;
     		$insert_data['customer_id'] = Auth::id();
     		$insert_data['customer_name'] = Auth::user()->name;
@@ -85,9 +85,9 @@ class WhiteListModel extends Model
      * @return array              返回相关的状态提示及信息
      */
     public function checkDomainName($domain_name){
-    	$domain_name['customer_id'] = Auth::id();
+    	$domain_name['customer_id'] = Auth::user()->id;
     	$status = $this->where($domain_name)->select('white_status')->first();
-    	if($status->isEmpty()){
+    	if(!$status->isEmpty()){
 			$return['code'] = 1;
 			$return['msg'] = '该域名您已提交过,请勿重复提交';
     	} else {
@@ -109,7 +109,7 @@ class WhiteListModel extends Model
     	if(!$ip->isEmpty()){// 查找到对应的IP相关数据后，根据业务状态和客户id进行查找对应的业务信息
     		$business['business_status'] = ' > 1';
     		$business['business_status'] = ' < 5';
-    		$business['client_id'] = Auth::id();
+    		$business['client_id'] = Auth::user()->id;
     		if($ip->ip_status == 1){//IP使用状态为1即子IP时根据业务编号进行查找
     			$business['business_number'] = $ip->own_business;
     		} elseif($ip->ip_status == 2 || $ip->ip_status == 3) {//IP使用状态为主IP时即2或者3时，根据机器编号进行查找

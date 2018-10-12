@@ -126,8 +126,14 @@ class MachineModel extends Model
                 $return['msg'] = '新增机器信息失败！！';
                 return $return;
             }
-            //如果新增机器成功则将机器编号更新到对应的IP库中
-            $ip_row = DB::table('idc_ips')->where('id',$data['ip_id'])->update(['mac_num'=>$data['machine_num'],'ip_status'=>2]);
+            if($data['business_type'] == 1 || $data['business_type'] == 3){
+                //如果新增机器成功则将机器编号更新到对应的IP库中
+                $ip_row = DB::table('idc_ips')->where('id',$data['ip_id'])->update(['mac_num'=>$data['machine_num'],'ip_status'=>2]);
+            } elseif($data['business_type'] == 2) {
+                //如果新增机器成功则将机器编号更新到对应的IP库中
+                $ip_row = DB::table('idc_ips')->where('id',$data['ip_id'])->update(['mac_num'=>$data['machine_num'],'ip_status'=>3]);
+            }
+            
     		if($ip_row != 0){
                 //如果更新IP库的所属机器编号成功，进行所有数据的提交
                 DB::commit();

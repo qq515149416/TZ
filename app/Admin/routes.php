@@ -270,13 +270,21 @@ Route::group([
     });
 
 
-    //发送信息相关接口
+    //发送信息
     Route::group([
         'prefix' => 'message',
-    ],function(Router $router){
-        $router->post('sendUserByEmail','Message\DeadlineController@sendUserByEmail');  //向指定用户发送邮件信息
-        
+    ], function (Router $router) {
+
+        //
+        Route::group([
+            'prefix' => 'deadline',
+        ], function (Router $router) {
+
+
+        });
+
     });
+
 
 
 });

@@ -60,7 +60,7 @@ const columnData = [
       }
     },extendElement: (data) => {
       if(data.business_status==2) {
-        return <RenewalFee {...data} postUrl="business/reneworders" nameParam="machine_number" type="业务" />;
+        return <RenewalFee {...data} postUrl="business/renewresource" nameParam="machine_number" type="业务" />;
       }else {
         return null;
       }

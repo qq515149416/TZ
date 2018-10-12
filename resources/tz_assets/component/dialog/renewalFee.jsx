@@ -52,7 +52,14 @@ class RenewalFee extends React.Component {
             this.props.length = this.state.currency;
             this.props.order_note = this.note.value;
             post(this.props.postUrl,{
-               ...this.props
+            //    ...this.props,
+               business_number: this.props.business_sn?this.props.business_sn:this.props.business_number,
+               order_sn: this.props.order_sn ? this.props.order_sn : undefined,
+               price: this.props.money,
+               length: this.props.length,
+               order_note: this.props.order_note,
+               client_id: this.props.customer_id?this.props.customer_id:this.props.client_id,
+               resource_type: this.props.resource_type?this.props.resource_type:this.props.business_type
             }).then((data)=>{
                 if(data.data.code==1) {
                     alert("续费成功");

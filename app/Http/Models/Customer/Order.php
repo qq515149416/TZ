@@ -415,6 +415,9 @@ class Order extends Model
 				$machine['memory_used'] = 1;
 				$where = ['service_num'=>$order['business_sn'],'memory_number'=>$order['machine_sn']];
 				$result = DB::table('idc_memory')->where($where)->update($machine);
+				break;
+			default:
+				$result = 1;
 				break;   
 		}
 

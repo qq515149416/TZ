@@ -54,6 +54,7 @@ class Order extends Model
 		foreach ($order as $key => $value) {
 			$order[$key]['resource_type'] = $resource_type[$order[$key]['resource_type']];
 			$order[$key]['order_type'] = $order_type[$order[$key]['order_type']];
+			$order[$key]['type'] = $order[$key]['resource_type'];
 			$order[$key]['pay_type'] = $order[$key]['pay_type'] ? $pay_type[$order[$key]['pay_type']]:"";
 			$order[$key]['order_status'] = $order_status[$order[$key]['order_status']];
 			$order[$key]['business_name']	= $admin_name[$order[$key]['business_id']];

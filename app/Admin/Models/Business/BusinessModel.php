@@ -349,20 +349,23 @@ class BusinessModel extends Model
     {
 
 
-        $data = $this->where([                              //选定条件
-            'business_status' => 1,                         //业务状态为已审核
+        $data = $this
+            ->where([                              //选定条件
+                'business_status' => 1,                         //业务状态为已审核
 //            'client_id'       => $userId,                  //用户ID
-//        'endding_time'=>,
-        ])->get();
+            ])->where(
+                'endding_time','<','2020-10-12 15:29:20'   //添加过期时间作为条件
+            )
+            ->get();
 
 
 //        dump(strtotime("now"));
 
-        dump(date('Y-m-d H:i:s'));
+//        dump(date('Y-m-d H:i:s'));
 
 //        dump($data[1]['endding_time']);
 //        dump(strtotime('+7days', strtotime($data[1]['endding_time'])));
-//        return $data[1]['endding_time'];
+        return $data;
 
     }
 

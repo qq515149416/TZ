@@ -1,7 +1,7 @@
 import React from "react";
 import ListTableComponent from "../component/listTableComponent.jsx";
 import InputExpansion from "../component/dialog/inputExpansion.jsx";
-import OrderShow from "../component/dialog/orderShow.jsx";
+import StatisticsShowComponent from "../component/statisticsShowComponent.jsx";
 import RenewalFee from "../component/dialog/renewalFee.jsx";
 import {post} from "../tool/http.js";
 import { inject,observer } from "mobx-react";
@@ -146,6 +146,12 @@ const inputType = [
       ],
       type: "component"
     }
+  },
+  {
+    field: "showInfo",
+    label: "",
+    type: "component",
+    Component: StatisticsShowComponent
   }
 ];
 @inject("businessStores")
@@ -153,6 +159,43 @@ const inputType = [
 class BusinesList extends React.Component {
   componentDidMount() {
     this.props.businessStores.getData(qs.parse(location.search.substr(1)).id);
+    inputType[inputType.findIndex(item => item.field=="client_name")].model = {
+      getSubordinateData: this.setClientName.bind(this)
+    };
+    inputType[inputType.findIndex(item => item.field=="money")].model = {
+      getSubordinateData: this.setMoneyName.bind(this)
+    };
+    inputType[inputType.findIndex(item => item.field=="length")].model = {
+      getSubordinateData: this.setLengthName.bind(this)
+    };
+    inputType[inputType.findIndex(item => item.field=="business_type")].model = {
+      getSubordinateData: this.setBusinessTypeName.bind(this)
+    };
+    inputType[inputType.findIndex(item => item.field=="machine_number")].model = {
+      getSubordinateData: this.setMachineNumberName.bind(this)
+    };
+  }
+  setClientName(param,type) {
+    // console.log(param);
+    this.props.businessStores.changeStatistics("clientName",param); 
+  }
+  setMoneyName(param,type) {
+    this.props.businessStores.changeStatistics("unitPrice",param); 
+  }
+  setLengthName(param,type) {
+    this.props.businessStores.changeStatistics("length",param); 
+  }
+  setBusinessTypeName(param,type) {
+    let codeValue = {
+      1: "租用主机",
+      2: "托管主机",
+      3: "租用机柜"
+    };
+    this.props.businessStores.changeStatistics("businessType",codeValue[param.business_type.value]); 
+  }
+  setMachineNumberName(param,type) {
+    // console.log(param);
+    this.props.businessStores.changeStatistics("productName",param); 
   }
   updata() {
     this.props.businessStores.getData(qs.parse(location.search.substr(1)).id);
@@ -164,7 +207,6 @@ class BusinesList extends React.Component {
     this.props.businessStores.addData(param).then((state) => {
       callbrak(state);
     });
-  
   }
   render() {
     return (

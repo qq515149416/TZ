@@ -350,18 +350,33 @@ class BusinessModel extends Model
 //    public function selectOverdueBusiness($userId)
     public function selectOverdueBusiness()
     {
-
+        //提前发送的天数 ()
+        strtotime("+1 day");
 
         $data = $this
             ->where([                              //选定条件
-                'business_status' => 1,                         //业务状态为已审核
+                'business_status' => 2,                         //业务状态为已审核
 //            'client_id'       => $userId,                  //用户ID
-            ])->where(
-                'endding_time','<','2020-10-12 15:29:20'   //添加过期时间作为条件
+            ])
+            ->where(
+                'endding_time', '', ''
+            )
+            ->where(
+                'endding_time', '<', date('Y-m-d H:i:s', strtotime("+5 day"))  //添加过期时间作为条件
+//                'endding_time','>','1539587417'   //添加过期时间作为条件
             )
             ->get();
 
+        //判断  时间区间
+        $data = $this
+            ->where([                              //选定条件
+                'business_status' => 2,                         //业务状态为已审核
+//            'client_id'       => $userId,                  //用户ID
+            ])
+            ->whereBetween('endding_time', [date('Y-m-d H:i:s'), date('Y-m-d H:i:s', strtotime("+5 day"))])
+            ->get();
 
+//        whereBetween
 //        dump(strtotime("now"));
 
 //        dump(date('Y-m-d H:i:s'));

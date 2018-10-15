@@ -70,6 +70,19 @@ class BusinessStores extends ActionBoundStores {
     @observable business = [
 
     ];
+    @observable statistics = {
+        clientName: "",
+        unitPrice: 0,
+        length: 0,
+        businessType: "租用主机",
+        productName: "",
+        statisticsAmount: 0
+    };
+    @action.bound 
+    changeStatistics(attr,value) {
+        this.statistics.statisticsAmount = this.statistics.unitPrice * this.statistics.length;
+        this.statistics[attr] = value;
+    }
     addData(data) {
         return new Promise((resolve,reject) => {
             post("business/insert",data).then(res => {

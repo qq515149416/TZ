@@ -32,7 +32,9 @@ class Order extends Model
 
 
 	public function getList($type)
-	{
+	{	
+		$user_id = Auth::user()->id;
+		$type['customer_id'] = $user_id;
 		//获取该用户的订单
 		$order = $this->where($type)->orderby('created_at','desc')->get(['id','order_sn', 'business_sn','before_money','after_money','business_id','resource_type','order_type','machine_sn','resource','price','duration','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at','payable_money']);
 
@@ -234,42 +236,6 @@ class Order extends Model
 	}
 
 	/**
-	 * 查找对应业务的增加的资源
-	 * @param  array $where 业务编号和资源类型
-	 * @return array        返回相关的资源数据和状态提示及信息
-	 */
-	public function resourceOrders($where){
-		if($where){
-			$resource_orders = $this->where($where)->get(['id','customer_id','customer_name','order_sn', 'business_sn','before_money','after_money','business_id','business_name','resource_type','order_type','machine_sn','resource','price','duration','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at','payable_money']);
-			if($resource_orders->isEmpty()){
-				//转换状态
-				$resource_type = [ '1' => '租用主机' , '2' => '托管主机' , '3' => '租用机柜' , '4' => 'IP' , '5' => 'CPU' , '6' => '硬盘' , '7' => '内存' , '8' => '带宽' , '9' => '防护' , '10' => 'cdn'];
-				$order_type = [ '1' => '新购' , '2' => '续费' ];
-				$pay_type = [ '1' => '余额' , '2' => '支付宝' , '3' => '微信' , '4' => '其他'];
-				$order_status = [ '0' => '待支付' , '1' => '已支付' , '2' => '已支付' , '3' => '订单完成' , '4' => '取消' , '5' => '申请退款' , '6' => '退款完成'];
-				foreach($resource_orders as $resource_key => $resource_value){
-					$resource_orders[$resource_key]['resource_type'] = $resource_type[$resource_value['resource_type']];
-					$resource_orders[$resource_key]['order_type'] = $order_type[$resource_value['order_type']];
-					$resource_orders[$resource_key]['pay_type'] = $resource_value['pay_type'] ? $pay_type[$resource_value['pay_type']]:"";
-					$resource_orders[$resource_key]['order_status'] = $order_status[$resource_value['order_status']];
-				}
-				$return['data'] = $resource_orders;
-				$return['code'] = 1;
-				$return['msg'] = '获取对应增加的资源数据成功';
-			} else {
-				$return['data'] = '';
-				$return['code'] = 0;
-				$return['msg'] = '暂无对应增加的资源数据';
-			}
-		} else {
-			$return['data'] = '';
-			$return['code'] = 0;
-			$return['msg'] = '无法获取增加的资源数据';
-		}
-		return $return;
-	}
-
-	/**
 	 * 资源续费订单的创建
 	 * @param  array $param 需要续费的资源数据
 	 * @return array        返回相关的数据信息状态及提示
@@ -383,7 +349,18 @@ class Order extends Model
 				break;
 			case 3:
 				//如果是租用机柜的，在订单生成成功时，将业务编号和到期时间及资源状态进行更新
-				$machine['own_business'] = $order['business_sn'];
+				$cabinet = DB::table('idc_cabinet')->where(['cabinet_id'=>$order['machine_sn']])->value('own_business');
+				$business = strpos($cabinet,$order['business_sn']);
+				if($business){
+					$machine['own_business'] = $business;
+				} else {
+					DB::rollBack();
+					$return['data'] = '';
+					$return['code'] = 0;
+					$return['msg'] = '资源续费失败,请确认您此前购买过该机柜';
+					return $return;
+				}
+				
 				$machine['use_state'] = 1;
 				$where = ['own_business'=>$order['business_sn'],'cabinet_id'=>$order['machine_sn']];
 				$row = DB::table('idc_cabinet')->where($where)->update($machine);

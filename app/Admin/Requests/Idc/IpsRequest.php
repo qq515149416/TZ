@@ -45,7 +45,7 @@ class IpsRequest extends FormRequest
             $id = (int)Request('id');
             return [
                 'id' => 'required|integer',    
-                'ip_start' => 'sometimes|ip|unique:idc_ips,ip'.$id,
+                'ip_start' => 'sometimes|ip|unique:idc_ips,ip,'.$id,
                 'vlan' => 'sometimes|integer',
                 'ip_company' => 'sometimes|integer|min:0|max:2',
                 'ip_status' => 'sometimes|integer|min:0|max:3',

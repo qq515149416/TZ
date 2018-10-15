@@ -352,7 +352,18 @@ class OrdersModel extends Model
                 break;
             case 3:
                 //如果是租用机柜的，在订单生成成功时，将业务编号和到期时间及资源状态进行更新
-                $machine['own_business'] = $order['business_sn'];
+                $cabinet = DB::table('idc_cabinet')->where(['cabinet_id'=>$order['machine_sn']])->value('own_business');
+                $business = strpos($cabinet,$order['business_sn']);
+                if($business != false){
+                    $machine['own_business'] = $business;
+                } else {
+                    DB::rollBack();
+                    $return['data'] = '';
+                    $return['code'] = 0;
+                    $return['msg'] = '资源续费失败,请确认您此前购买过该机柜';
+                    return $return;
+                }
+                
                 $machine['use_state'] = 1;
                 $where = ['own_business'=>$order['business_sn'],'cabinet_id'=>$order['machine_sn']];
                 $row = DB::table('idc_cabinet')->where($where)->update($machine);

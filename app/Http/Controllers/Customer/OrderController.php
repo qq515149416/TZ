@@ -33,10 +33,6 @@ class OrderController extends Controller
 			return tz_ajax_echo('','请先登录',0);
 		}
 		$type = $request->only(['resource_type','business_sn']);
-		$user_id = Auth::user()->id;
-		$type['customer_id'] = $user_id;
-		//获取登录中用户id
-		
 		$orderModel = new Order();
 		//根据id获取所属订单
 		$list = $orderModel->getList($type);
@@ -90,20 +86,6 @@ class OrderController extends Controller
 		$return = $orderModel->payOrder($user_id,$order_id);
 
 		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
-	}
-
-	/**
-	 * 获取对应业务的增加资源的订单
-	 * @param  Request $request [description]
-	 * @return json           返回对应的信息和状态提示及信息
-	 */
-	public function resourceOrders(Request $request){
-		
-			$data = $request->only(['business_sn','resource_type']);
-			$resource = new Order();
-			$resource_orders = $resource->resourceOrders($data);
-			return tz_ajax_echo($resource_orders['data'],$resource_orders['msg'],$resource_orders['code']);
-		
 	}
 
 	/**

@@ -30,7 +30,7 @@ class Ips extends Model
      */
     public function index(){
     	// 用模型进行数据查询
-    	$index = $this->all(['id','vlan','ip','ip_company','ip_status','ip_lock','ip_note','ip_comproom','created_at','updated_at']);
+    	$index = $this->get(['id','vlan','ip','ip_company','ip_status','ip_lock','ip_note','ip_comproom','created_at','updated_at']);
     	if(!$index->isEmpty()){
     		// 判断存在数据就对部分需要转换的数据进行数据转换的操作
     		$ip_company = [0=>'电信公司',1=>'移动公司',2=>'联通公司'];
@@ -39,9 +39,7 @@ class Ips extends Model
 
     		foreach($index as $ipkey=>$ipvalue) {
     			// 对应的字段的数据转换
-    			// return 123;
     			$room = (array)$this->machineroom($ipvalue['ip_comproom']);
-                // dump($room);
     			$index[$ipkey]['ip_company'] = $ip_company[$ipvalue['ip_company']];
     			$index[$ipkey]['ip_status'] = $ip_status[$ipvalue['ip_status']];
     			$index[$ipkey]['ip_lock'] = $ip_lock[$ipvalue['ip_lock']];
@@ -51,7 +49,6 @@ class Ips extends Model
                 }
     			
     		}
-    		// dd($room);
     		$return['data'] = $index;
     		$return['code'] = 1;
     		$return['msg'] = '获取信息成功！！';
@@ -70,76 +67,69 @@ class Ips extends Model
      * @return array      返回的信息和状态
      */
     public function insertIps($data){
-    	if($data){
-    		// 存在数据就用model进行数据写入操作
-            // 起始的IP
-            $ip_start = $data['ip_start'];
-            // 结束的IP
-            $ip_end = $data['ip_end'];
-            // 对起始IP进行拆分
-            $start_str = explode('.',$ip_start);
-            // 重新将起始IP的段重组
-            $startstr = $start_str[0].'.'.$start_str[1].'.'.$start_str[2];
-            
-            if(empty($ip_end)){
-                // unset($ip_end);
-                // 结束IP的第一组的为空则代表进行一条IP插入
-                    $data['ip'] = $ip_start;
-                    // unset($ip_start);
-                    $row = $this->create($data);
-                    if($row != false){
-                        // 插入数据成功
-                        $return['data'] = $row->id;
-                        $return['code'] = 1;
-                        $return['msg'] = '新增IP地址信息成功!!';
+    	if(!$data){
+            // 未有数据传递
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg'] = '请检查您要新增的信息是否正确!!';
+            return $return;
+        }
+        // 起始的IP
+        $ip_start = $data['ip_start'];
+        // 结束的IP
+        $ip_end = $data['ip_end'];
+        if(empty($ip_end)){
+            // 结束IP的第一组的为空则代表进行一条IP插入
+                $data['ip'] = $ip_start;
+                // unset($ip_start);
+                $row = $this->create($data);
+                if($row != false){
+                    // 插入数据成功
+                    $return['data'] = $row->id;
+                    $return['code'] = 1;
+                    $return['msg'] = '新增IP地址信息成功!!';
 
-                    } else {
-                        // 插入数据失败
-                        $return['data'] = '';
-                        $return['code'] = 0;
-                        $return['msg'] = '新增IP地址信息失败!!';
-                    }
-            } else {
-                //对结束的IP进行拆分  
-                $end_str = explode('.',$ip_end);
-                // 批量插入IP
-                $endstr = $end_str[0].'.'.$end_str[1].'.'.$end_str[2];
-                if($startstr != $endstr){
+                } else {
+                    // 插入数据失败
                     $return['data'] = '';
                     $return['code'] = 0;
-                    $return['msg'] = 'IP段需要一致才可以批量(192.168.1.1,192.168.1.25)';
-                } else {
-                        // 起始的数字
-                    $start = (int)$start_str[3];
-                    // 结束的数字
-                    $end = (int)$end_str[3];
-                    // 进行循环插入IP
-                    while($start<=$end){
-                        $data['ip'] = $endstr.'.'.$start;
-                        $row = $this->create($data);
-                        $start++;
-                    }
-                    if($row != false){
-                        // 插入数据成功
-                        $return['data'] = '';
-                        $return['code'] = 2;
-                        $return['msg'] = '批量新增IP地址信息成功!!';
-                    } else {
-                        // 插入数据失败
-                        $return['data'] = '';
-                        $return['code'] = 0;
-                        $return['msg'] = '新增IP地址信息失败!!';
-                    }
+                    $return['msg'] = '新增IP地址信息失败!!';
                 }
-                
+        } else {
+            //截取开始时的IP段(如:192.168.1)
+            $startstr = substr($ip_start,0,strrpos($ip_start,'.'));
+            //截取结束时的IP段(如:192.168.1)
+            $endstr = substr($ip_end,0,strrpos($ip_end,'.'));
+            //批量插入IP
+            if($startstr != $endstr){
+                $return['data'] = '';
+                $return['code'] = 0;
+                $return['msg'] = 'IP段需要一致才可以批量(如:192.168.1.1,192.168.1.25)';
+            } else {
+                // 起始的数字
+                $start = ltrim(strrchr($ip_start,'.'),'.');;
+                // 结束的数字
+                $end = ltrim(strrchr($ip_end,'.'),'.');;
+                // 进行循环插入IP
+                while($start<=$end){
+                    $data['ip'] = $endstr.'.'.$start;
+                    $row = $this->create($data);
+                    $start++;
+                }
+                if($row != false){
+                    // 插入数据成功
+                    $return['data'] = '';
+                    $return['code'] = 2;
+                    $return['msg'] = '批量新增IP地址信息成功!!';
+                } else {
+                    // 插入数据失败
+                    $return['data'] = '';
+                    $return['code'] = 0;
+                    $return['msg'] = '新增IP地址信息失败!!';
+                }
             }
-
-    	} else {
-    		// 未有数据传递
-    		$return['data'] = '';
-    		$return['code'] = 0;
-    		$return['msg'] = '请检查您要新增的信息是否正确!!';
-    	}
+            
+        }
     	return $return;
     }
     

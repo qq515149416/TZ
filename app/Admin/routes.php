@@ -259,7 +259,6 @@ Route::group([
         $router->post('resource','Business\OrdersController@resource');
         $router->post('insertresource','Business\OrdersController@insertResource');
         $router->post('renewresource','Business\OrdersController@renewResource');
-        $router->post('resourceorders','Business\OrdersController@resourceOrders');
         $router->get('deleteorders','Business\OrdersController@deleteOrders');
         //客户信息
         $router->get('admin_customer','Business\CustomerController@adminCustomer');
@@ -279,8 +278,8 @@ Route::group([
         Route::group([
             'prefix' => 'deadline',
         ], function (Router $router) {
-            $router->post('sendUser','Message\DeadlineController@sendUser');
-            $router->post('sendAllUser','Message\DeadlineController@sendAllUser');
+            $router->post('sendUser','Message\DeadlineController@sendUser');        //单独用户
+            $router->post('sendAllUser','Message\DeadlineController@sendAllUser');  //手动发送所有用户
         });
 
     });

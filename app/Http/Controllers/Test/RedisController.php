@@ -45,6 +45,7 @@ class RedisController extends Controller
 
         Email::dispatch($podcast);
 
+        
     }
 
 }

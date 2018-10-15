@@ -279,8 +279,8 @@ Route::group([
         Route::group([
             'prefix' => 'deadline',
         ], function (Router $router) {
-            $router->post('sendUser','Message\DeadlineController@sendUser');
-            $router->post('sendAllUser','Message\DeadlineController@sendAllUser');
+            $router->post('sendUser','Message\DeadlineController@sendUser');        //单独用户
+            $router->post('sendAllUser','Message\DeadlineController@sendAllUser');  //手动发送所有用户
         });
 
     });

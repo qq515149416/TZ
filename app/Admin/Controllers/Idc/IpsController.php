@@ -41,10 +41,9 @@ class IpsController extends Controller
      * @return json             将相关的信息进行返回前台
      */
     public function insert(IpsRequest $request){
-    	
-    		// 符合提交方式的进行数据的提取
+    	// 符合提交方式的进行数据的提取
 		$param = $request->only(['ip_start','ip_end','vlan','ip_company','ip_status','ip_lock','ip_note','ip_comproom']);
-		$create = new Ips();
+        $create = new Ips();
 		// 传递数据到对应的model层处理
 		$revert = $create->insertIps($param);
 		// 返回信息

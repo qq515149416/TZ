@@ -341,14 +341,28 @@ class BusinessModel extends Model
     /**
      * 查找用户过期的业务
      *
+     * endding_time:业务结束 时间
      * @author ZhanJun
      */
+//    public function selectOverdueBusiness($userId)
     public function selectOverdueBusiness()
     {
-        $data = $this->where([
-            
-        ]);
-        return $data;
+
+
+        $data = $this->where([                              //选定条件
+            'business_status' => 1,                         //业务状态为已审核
+//            'client_id'       => $userId,                  //用户ID
+//        'endding_time'=>,
+        ])->get();
+
+
+//        dump(strtotime("now"));
+
+        dump(date('Y-m-d H:i:s'));
+
+//        dump($data[1]['endding_time']);
+//        dump(strtotime('+7days', strtotime($data[1]['endding_time'])));
+//        return $data[1]['endding_time'];
 
     }
 

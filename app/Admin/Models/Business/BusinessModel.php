@@ -108,19 +108,17 @@ class BusinessModel extends Model
             $return['msg']  = '该业务不存在,无法进行审核操作';
             return $return;
         }
-        // 当不是机柜时
-        if ($check->business_type != 3) {
-            // 当审核为通过时先对机器的使用状态进行判断
-            if ($where['business_status'] == 1) {
-                // 审核通过前验证业务机器是否未使用，如果是使用直接返回提示
-                $machine_where['machine_num'] = $check->machine_number;
-                $machine_where['used_status'] = 0;
-                $machine_status               = DB::table('idc_machine')->where($machine_where)->select('id', 'machine_num', 'used_status')->first();
-                if (empty($machine_status)) {
-                    $where['business_status'] = '-2';
-                    $where['check_note']      = '不通过原因:该业务对应的机器已经被使用，请重新选择机器!';
-                }
+        // 当不是机柜时且当审核为通过时先对机器的使用状态进行判断
+        if($check->business_type != 3 && $where['business_status'] == 1) {
+            // 审核通过前验证业务机器是否未使用，如果是使用直接返回提示
+            $machine_where['machine_num'] = $check->machine_number;
+            $machine_where['used_status'] = 0;
+            $machine_status               = DB::table('idc_machine')->where($machine_where)->select('id', 'machine_num', 'used_status')->first();
+            if (empty($machine_status)) {
+                $where['business_status'] = '-2';
+                $where['check_note']      = '不通过原因:该业务对应的机器已经被使用，请重新选择机器!';
             }
+            
         }
 
         // 业务表审核时更新的字段
@@ -210,7 +208,12 @@ class BusinessModel extends Model
 
         } else {
             // 如果是租用机柜的，在订单生成成功时，将业务编号和到期时间及资源状态进行更新
-            $machine['own_business'] = $order['business_sn'];
+            $own_business = DB::table('idc_cabinet')->where('cabinet_id', $order['machine_sn'])->value('own_business');
+            if($own_business){
+                $machine['own_business'] = $own_business.','.$order['business_sn'];
+            } else {
+                $machine['own_business'] = $order['business_sn'];
+            }
             $machine['business_end'] = $order['end_time'];
             $machine['use_state']    = 1;
             $row                     = DB::table('idc_cabinet')->where('cabinet_id', $order['machine_sn'])->update($machine);

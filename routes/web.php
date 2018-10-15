@@ -133,7 +133,6 @@ Route::group([
 			Route::get('orderList', 'Customer\OrderController@getOrderList');
 			Route::get('delOrder', 'Customer\OrderController@delOrder');
 			Route::get('payOrderByBalance', 'Customer\OrderController@payOrderByBalance');
-			Route::post('resourceorders','Customer\OrderController@resourceOrders');
 			Route::post('renewresource','Customer\OrderController@renewResource');
 			Route::post('end','Customer\OrderController@endTime');
 			Route::get('show_white_list','Customer\WhiteListController@showWhiteList');

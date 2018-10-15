@@ -89,20 +89,6 @@ class OrderController extends Controller
 	}
 
 	/**
-	 * 获取对应业务的增加资源的订单
-	 * @param  Request $request [description]
-	 * @return json           返回对应的信息和状态提示及信息
-	 */
-	public function resourceOrders(Request $request){
-		
-			$data = $request->only(['business_sn','resource_type']);
-			$resource = new Order();
-			$resource_orders = $resource->resourceOrders($data);
-			return tz_ajax_echo($resource_orders['data'],$resource_orders['msg'],$resource_orders['code']);
-		
-	}
-
-	/**
 	 * 对资源进行续费
 	 * @param  Request $request [description]
 	 * @return json           续费的反馈信息和提示

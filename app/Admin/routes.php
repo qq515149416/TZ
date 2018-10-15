@@ -259,7 +259,6 @@ Route::group([
         $router->post('resource','Business\OrdersController@resource');
         $router->post('insertresource','Business\OrdersController@insertResource');
         $router->post('renewresource','Business\OrdersController@renewResource');
-        $router->post('resourceorders','Business\OrdersController@resourceOrders');
         $router->get('deleteorders','Business\OrdersController@deleteOrders');
         //客户信息
         $router->get('admin_customer','Business\CustomerController@adminCustomer');

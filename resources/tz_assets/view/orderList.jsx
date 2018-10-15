@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
 import ListTableComponent from "../component/listTableComponent.jsx";
 import { inject,observer } from "mobx-react";
 import Paper from '@material-ui/core/Paper';
@@ -14,6 +15,10 @@ const styles = theme => ({
         marginTop: 0,
         borderRadius: "0 0 4px 4px",
         boxShadow: "0px 4px 5px 0px rgba(0, 0, 0, 0.1), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12)"
+    },
+    tabAppBar: {
+        backgroundColor: "transparent",
+        boxShadow: "none"
     }
 });
 const columnData = [
@@ -231,23 +236,27 @@ class OrderList extends React.Component {
         });
         return [
             <Paper square>
-                <Tabs
-                value={this.state.value}
-                indicatorColor="primary"
-                textColor="primary"
-                onChange={this.handleChange}
-                >
-                <Tab label="全部" value={"all"} />
-                <Tab label="租用主机" value={1} />
-                <Tab label="托管主机" value={2} />
-                <Tab label="租用机柜" value={3} />
-                <Tab label="IP" value={4} />
-                <Tab label="CPU" value={5} />
-                <Tab label="硬盘" value={6} />
-                <Tab label="内存" value={7} />
-                <Tab label="带宽" value={8} />
-                <Tab label="防护" value={9} />
-                </Tabs>
+                <AppBar className={classes.tabAppBar} position="static" color="default">
+                    <Tabs
+                    value={this.state.value}
+                    indicatorColor="primary"
+                    textColor="primary"
+                    onChange={this.handleChange}
+                    scrollable
+                    scrollButtons="auto"
+                    >
+                    <Tab label="全部" value={"all"} />
+                    <Tab label="租用主机" value={1} />
+                    <Tab label="托管主机" value={2} />
+                    <Tab label="租用机柜" value={3} />
+                    <Tab label="IP" value={4} />
+                    <Tab label="CPU" value={5} />
+                    <Tab label="硬盘" value={6} />
+                    <Tab label="内存" value={7} />
+                    <Tab label="带宽" value={8} />
+                    <Tab label="防护" value={9} />
+                    </Tabs>
+                </AppBar>
             </Paper>,
             <ListTableComponent 
             className={classes.listTableComponent}

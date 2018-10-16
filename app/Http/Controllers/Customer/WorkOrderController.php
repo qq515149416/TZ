@@ -65,5 +65,17 @@ class WorkOrderController extends Controller
 		return tz_ajax_echo('',$result['msg'],$result['code']);
 	}
 
+	/**
+	 * 获取工单类型
+	 * @param  Request $request [description]
+	 * @return [type]           [description]
+	 */
+	public function workType(Request $request){
+		$parent_id = $request->only(['parent_id']);
+		$work_type = new WorkOrderModel();
+		$result = $work_type->workType($parent_id);
+		return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
+	} 
+
 	
 }

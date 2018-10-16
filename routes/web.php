@@ -143,6 +143,7 @@ Route::group([
 			Route::post('insert_work_answer','Customer\WorkAnswerController@insertWorkAnswer');
 			Route::get('show_work_order','Customer\WorkOrderController@showWorkOrder');
 			Route::post('insert_work_order','Customer\WorkOrderController@insertWorkOrder');
+			Route::get('work_types','Customer\WorkOrderController@workTypes');
 		});
 	});
 	

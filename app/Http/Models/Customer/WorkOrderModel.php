@@ -113,7 +113,7 @@ class WorkOrderModel extends Model
      * @return array     返回对应的工单类型数据
      */
     public function workType($id){
-        $worktype = DB::table('tz_worktype')->find($id,['parent_id','type_name']);
+        $worktype = DB::table('tz_work_type')->find($id,['parent_id','type_name']);
         $parent_id = $worktype->parent_id;
         if(!empty($parent_id)){
             $worktype['parenttype'] = DB::table('tz_work_type')->where('id',$parent_id)->value('type_name');
@@ -148,5 +148,13 @@ class WorkOrderModel extends Model
     	$business_type = ['-1'=>'取消','-2'=>'审核不通过',0=>'审核中',1=>'审核通过',2=>'付款使用中',3=>'未付款使用',4=>'锁定中',5=>'到期',6=>'退款'];
     	$business->business_type = $business_type[$business->business_type];
     	return $business;
+    }
+
+    public function workTypes($parent_id = ['parent_id'=>0]){
+    	$work_type = DB::table('tz_work_type')->where($parent_id)->whereNotNull('deleted_at')->select('id','type_name')->get();
+    	$return['data'] = $work_type;
+    	$return['code'] = 1;
+    	$return['msg'] = '获取分类成功';
+    	return $return;
     }
 }

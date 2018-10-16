@@ -150,6 +150,11 @@ class WorkOrderModel extends Model
     	return $business;
     }
 
+    /**
+     * 获取工单类型
+     * @param  [type] $parent_id [description]
+     * @return [type]            [description]
+     */
     public function workTypes($parent_id = ['parent_id'=>0]){
     	$work_type = DB::table('tz_work_type')->where($parent_id)->whereNotNull('deleted_at')->select('id','type_name')->get();
     	$return['data'] = $work_type;

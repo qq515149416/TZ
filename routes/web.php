@@ -144,11 +144,11 @@ Route::group([
 
 			Route::get('show_work_order','Customer\WorkOrderController@showWorkOrder');
 			Route::post('insert_work_order','Customer\WorkOrderController@insertWorkOrder');
-<<<<<<< HEAD
+
 			Route::get('work_types','Customer\WorkOrderController@workTypes');
-=======
+
 			Route::post('makeTrade','Customer\OrderController@makeTrade');
->>>>>>> 07e442eebad99c7c0e5e3200131a0f22f5b2b2f8
+
 		});
 	});
 	

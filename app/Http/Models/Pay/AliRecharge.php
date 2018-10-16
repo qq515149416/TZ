@@ -98,39 +98,34 @@ class AliRecharge extends Model
 		$data['trade_status']	= 1;
 		$data['month']		= date("Ym");
 
-		if($data){
-			// 存在数据就用model进行数据写入操作
-			DB::beginTransaction();
-			$row = $this->where('trade_no',$data['trade_no'])->update($data);
+	
+		// 存在数据就用model进行数据写入操作
+		DB::beginTransaction();
+		$row = $this->where('trade_no',$data['trade_no'])->update($data);
 
-			if($row != false){
-				// 插入订单成功
-				$res = DB::table('tz_users')->where('id',$user_id)->update(['money' => $data['money_after']]); 
-				if($res == false){
-					//失败就回滚
-					DB::rollBack();
-					$return['data'] = '';
-					$return['code'] = 0;
-					$return['msg'] = '订单录入成功!!充值失败!!';
-				}else{
-					DB::commit();
-					$return['data'] = $row;
-					$return['code'] = 1;
-					$return['msg'] = '订单录入成功!!充值成功';
-				}
-				
-			} else {
-			// 插入数据失败
+		if($row != false){
+			// 插入订单成功
+			$res = DB::table('tz_users')->where('id',$user_id)->update(['money' => $data['money_after']]); 
+			if($res == false){
+				//失败就回滚
+				DB::rollBack();
 				$return['data'] = '';
 				$return['code'] = 0;
-				$return['msg'] = '订单录入失败!!';
+				$return['msg'] = '订单录入成功!!充值失败!!';
+			}else{
+				DB::commit();
+				$return['data'] = $row;
+				$return['code'] = 1;
+				$return['msg'] = '订单录入成功!!充值成功';
 			}
+			
 		} else {
-			// 未有数据传递
+		// 插入数据失败
 			$return['data'] = '';
 			$return['code'] = 0;
-			$return['msg'] = '请检查您要新增的信息是否正确!!';
+			$return['msg'] = '订单录入失败!!';
 		}
+	
 		return $return;
 	}
 
@@ -156,7 +151,9 @@ class AliRecharge extends Model
 				break;
 		}
 	
-		if(count($order) != 0){		
+		if(!$order->isEmpty()){	
+			
+
 			$return['data'] 	= $order;
 			$return['code'] 	= 1;
 			$return['msg']	= '获取订单信息成功';

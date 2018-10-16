@@ -67,8 +67,6 @@ class RechargeController extends Controller
 	*/
 	public function goToPay(RechargeRequest $request)
 	{
-
-		//实际获取
 		$checkLogin = Auth::check();
 		if($checkLogin == false){
 			return tz_ajax_echo([],'请先登录',0);
@@ -102,8 +100,13 @@ class RechargeController extends Controller
 			// 'auth_token'		=> 'XXXXXX',			//获取用户授权信息，可实现如免登功能。
 		];
 	
+		//生成支付宝跳转及ajax链接
+		$returnUrl	= env('APP_URL').'/home/recharge/payRechargeReturn';
+		$notifyUrl 	= env('APP_URL').'/home/recharge/payRechargeNotify';
+		//$notifyUrl 	= 'http://tz.jungor.cn/home/recharge/payRechargeNotify';
+
 		//生成支付宝链接
-		$alipay = $Pay->goToPay($order,$way);
+		$alipay = $Pay->goToPay($order,$way,$returnUrl,$notifyUrl);
 		
 		//跳转到支付宝链接或返回结果
 		return $alipay;// laravel 框架中请直接 `return $alipay`

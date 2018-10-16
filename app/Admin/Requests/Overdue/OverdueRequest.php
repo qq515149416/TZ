@@ -5,17 +5,17 @@
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016-2018 by cmd
 // +----------------------------------------------------------------------
-// | Description: 用户订单表验证规则
+// | Description: 白名单的验证规则和提示信息
 // +----------------------------------------------------------------------
-// | @DateTime: 2018-08-27 10:19:24
+// | @DateTime: 2018-09-13 14:09:24
 // +----------------------------------------------------------------------
 
-namespace App\Http\Requests\Customer;
+namespace App\Admin\Requests\Overdue;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
-class OrderRequest extends FormRequest
+class OverdueRequest extends FormRequest
 {
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -40,12 +40,12 @@ class OrderRequest extends FormRequest
 		$return = [];
 
 		switch ($method) {
-			case 'payOrderByBalance':
+			case 'showOverdueResDet':
 				$return = [
-					'serial_number'		=> 'required',
+					'resource_type' 		=> 'required',
 				];
 				break;
- 			
+			
 			default:
 	
 				break;
@@ -58,7 +58,8 @@ class OrderRequest extends FormRequest
 	{
 		
 		return  [
-			'serial_number.required'	=> '请提供所需支付的支付流水号',
+			'resource_type.required' 			=> '必须提供查询类型',
+			
 		];
 	}
 

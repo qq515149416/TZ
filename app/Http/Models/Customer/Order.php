@@ -100,92 +100,98 @@ class Order extends Model
 	 * @param  int $id      订单的id
 	 * @return array          返回相关的状态提示及信息
 	 */
-	public function payOrder($user_id,$id){
+	public function payOrderByBalance($user_id,$serial_number){
 		
-		$serial_number = $this->createNum($user_id.$id); //支付流水号
-		$row = $this->find($id);
+		// $serial_number = 'tz_'.time().'_'.$user_id;	 //支付流水号
+		
+		$row = $this->where('serial_number',$serial_number)->get(['customer_id','order_status','payable_money','pay_type','resource_type','business_sn']);
+
 		$return['data']	= '';
-		// 是否存在此订单
-		if($row == NULL){
-				$return['msg'] 	= '无此订单';
-				$return['code']	= 0;
+		$return['code']	= 0;
+		// 是否存在此支付流水
+		if($row->isEmpty()){
+			$return['msg'] 	= '无此支付流水号';
+			$return['code']	= 0;
+			return $return;
+		}
+		$row = json_decode(json_encode($row),true);
+		// dd($row);
+		$payable_money = '0.00';
+		for ($i=0; $i < count($row); $i++) { 
+			// 是否是客户自己的订单
+			if($user_id != $row[$i]['customer_id']){	
+				$return['msg'] 	= '只能支付自己的订单';
 				return $return;
-		}
-		// 是否是客户自己的订单
-		$customer_id = $row->customer_id;
-		if($user_id != $customer_id){	
-			$return['msg'] 	= '只能支付自己的订单';
-			$return['code']	= 0;
-			return $return;
-		}
-		// 订单的状态是否为未支付
-		$order_status = $row->order_status;
-		if( $order_status != 0 ){
-			$return['msg'] 	= '订单已支付或已取消';
-			$return['code']	= 0;
-			return $return;
+			}
+			// 订单的状态是否为未支付
+			if( $row[$i]['order_status'] != 7 ){
+				$return['msg'] 	= '订单已支付或已取消';
+				return $return;
+			}
+			$payable_money = bcadd((string)$payable_money,(string)$row[$i]['payable_money'],2);
 		}
 		//获取余额
 		$before_money = $this->getMoney($user_id)->money;
-		$payable_money = bcmul( (string)$row->price , (string)$row->duration , 2 );
+		//计算扣除应付金额后余额
 		$after_money = bcsub((string)$before_money,(string)$payable_money,2);
+	
 		if( $after_money < 0 ){
 			$return['msg'] 	= '余额不足,请充值';
-			$return['code']	= 0;
 			return $return;
 		}
 		$pay_time = date("Y-m-d h:i:s");
+		
+		$pay_type = $row[0]['pay_type'];
+		
+		//事务开始
 		DB::beginTransaction();
-		$row->before_money 	= $before_money;
-		$row->after_money 	= $after_money;
-		$row->pay_type		= 1;
-		$row->pay_price	= $payable_money;
-		$row->pay_time		= $pay_time;
-		$row->order_status	= 1;
-		$row->serial_number	= $serial_number;
-		$row->payable_money	= $payable_money;
-		$res = $row->save();	
-		$return = [];		
-		if(!$res){
-			// 
+		$updateData['before_money'] 	= $before_money;
+		$updateData['after_money']	= $after_money;
+		$updateData['pay_type']		= 1;
+		$updateData['pay_price']	= $payable_money;
+		$updateData['pay_time']	= $pay_time;
+		$updateData['order_status']	= 1;
+		$updateData['serial_number']	= $serial_number;
+		//对交易流水涉及的几条订单更新支付相关信息
+		$updateRes = $this->where('serial_number',$serial_number)->update($updateData);	
+		if($updateRes == false){
+			//更新失败回滚
 			DB::rollBack();
 			$return['msg'] 	= '支付失败';
-			$return['code']	= 0;
+			$return['code']	= 2;
 			return $return;
 		}
+
 		// 订单支付成功后对客户的余额进行修改
-		$pay_money = DB::table('tz_users')->where('id',$user_id)->update(['money' => $after_money ]);
-		if($pay_money == 0){
+		$payMoney = DB::table('tz_users')->where('id',$user_id)->update(['money' => $after_money ]);
+		if($payMoney == false){
 			// 修改客户余额失败，进行事务回滚
 			DB::rollBack();
-			$return['msg'] 	= '支付失败';
-			$return['code']	= 0;
+			$return['msg'] 	= '扣除余额失败,支付失败';
+			$return['code']	= 2;
 			return $return;	
 		}
-		// 客户余额修改成功
-		if($row->resource_type < 4) {
-			// 资源类型如果是机柜/主机，查找对应的业务状态
-			$business_status = DB::table('tz_business')->where('business_number',$row->business_sn)->value('business_status');
-			if($business_status > 0 && $business_status < 4){
-				// 业务状态是审核通过且是使用状态将状态修改为付款使用即2
-				$business['business_status'] = 2;
-				$business = DB::table('tz_business')->where('business_number',$row->business_sn)->update($business);
-				if($business == 0) {
-					DB::rollBack();
-					$return['msg'] 	= '支付失败';
-					$return['code']	= 0;
-					return $return;
-				}
-				// 修改使用状态成功，事务提交
-				DB::commit(); 
-			} else {
-				// 业务状态为使用状态之外的直接事务提交，无须修改业务状态
-				DB::commit();
-			}
-		} else {
-			// 资源类型除机柜/主机外的直接进行事务提交
-			DB::commit();
+
+		for ($j=0 ; $j < count($row); $j++) { 
+			if($row[$j]['resource_type'] < 4) {
+				// 资源类型如果是机柜/主机，查找对应的业务状态	
+				$business_status = DB::table('tz_business')->where('business_number',$row[$j]['business_sn'])->value('business_status');
+				if($business_status > 0 && $business_status < 4){
+					// 业务状态是审核通过且是使用状态将状态修改为付款使用即2
+					$business['business_status'] = 2;
+					$businessUp = DB::table('tz_business')->where('business_number',$row[$j]['business_sn'])->update($business);
+					if($businessUp == 0) {
+						DB::rollBack();
+						$return['msg'] 	= '更改资源使用状态失败,订单可能为正在付款使用中状态,支付失败';
+						$return['code']	= 3;
+						return $return;
+					}
+				} 
+			} 
 		}
+		DB::commit();
+		// 客户余额修改成功
+		
 		$return['data'] = $row;
 		$return['code'] = 1;
 		$return['msg'] = '支付成功!!';			 		
@@ -221,18 +227,42 @@ class Order extends Model
 	}
 
 
-	public function createNum($i){
-		$f=date('Ym');
-		$i+=1;
-		if($i<10){
-			return $f.'000'.$i;
-		}else if($i<100){
-			return $f.'00'.$i;
-		}else if($i<1000){
-			return $f.'0'.$i;
-		}else{
-			return $f.$i;
+	
+
+	/**
+	 * 查找对应业务的增加的资源
+	 * @param  array $where 业务编号和资源类型
+	 * @return array        返回相关的资源数据和状态提示及信息
+	 */
+	public function resourceOrders($where){
+		if($where){
+			$resource_orders = $this->where($where)->get(['id','customer_id','customer_name','order_sn', 'business_sn','before_money','after_money','business_id','business_name','resource_type','order_type','machine_sn','resource','price','duration','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at','payable_money']);
+			if($resource_orders->isEmpty()){
+				//转换状态
+				$resource_type = [ '1' => '租用主机' , '2' => '托管主机' , '3' => '租用机柜' , '4' => 'IP' , '5' => 'CPU' , '6' => '硬盘' , '7' => '内存' , '8' => '带宽' , '9' => '防护' , '10' => 'cdn'];
+				$order_type = [ '1' => '新购' , '2' => '续费' ];
+				$pay_type = [ '1' => '余额' , '2' => '支付宝' , '3' => '微信' , '4' => '其他'];
+				$order_status = [ '0' => '待支付' , '1' => '已支付' , '2' => '已支付' , '3' => '订单完成' , '4' => '取消' , '5' => '申请退款' , '6' => '退款完成' , '7' => '正在付款'];
+				foreach($resource_orders as $resource_key => $resource_value){
+					$resource_orders[$resource_key]['resource_type'] = $resource_type[$resource_value['resource_type']];
+					$resource_orders[$resource_key]['order_type'] = $order_type[$resource_value['order_type']];
+					$resource_orders[$resource_key]['pay_type'] = $resource_value['pay_type'] ? $pay_type[$resource_value['pay_type']]:"";
+					$resource_orders[$resource_key]['order_status'] = $order_status[$resource_value['order_status']];
+				}
+				$return['data'] = $resource_orders;
+				$return['code'] = 1;
+				$return['msg'] = '获取对应增加的资源数据成功';
+			} else {
+				$return['data'] = '';
+				$return['code'] = 0;
+				$return['msg'] = '暂无对应增加的资源数据';
+			}
+		} else {
+			$return['data'] = '';
+			$return['code'] = 0;
+			$return['msg'] = '无法获取增加的资源数据';
 		}
+		return $return;
 	}
 
 	/**
@@ -414,4 +444,47 @@ class Order extends Model
 	}
 
 
+	public function makeTrade($order_id = [],$user_id){
+		$return['data'] = '';
+		$return['code'] = 0;
+		$serial_number = 'tz_'.time().'_'.$user_id;
+		$order_status = 7;
+
+		DB::beginTransaction();//开启事务处理
+
+		for ($i=0; $i < count($order_id) ; $i++) { 
+			$order = $this->find($order_id[$i]);
+			if($order == NULL){
+				DB::rollBack();
+				$return['msg'] = '有订单不存在';
+				return $return;
+			}
+			if($order->customer_id != $user_id){
+				DB::rollBack();
+				$return['msg'] = '有订单不属于您';
+				return $return;
+			}
+			if($order->order_status != 0){
+				DB::rollBack();
+				$return['msg'] = '有订单已支付或正在支付或已取消';
+				return $return;
+			}
+			$order->serial_number = $serial_number;
+			$order->order_status = $order_status;
+			$order->pay_type = 0;
+			$update = $order->save();
+			if($update != true){
+				DB::rollBack();
+				$return['msg'] = '创建订单失败';
+				return $return;
+			}
+		}
+		DB::commit();
+		$return['data'] 	= $serial_number;
+		$return['msg']	= '创建订单成功';
+		$return['code']	= 1;
+
+		
+		return $return;
+	}
 }

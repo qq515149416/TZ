@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         //
-        \App\Console\Commands\Demo::class,  //测试用
+        \App\Console\Commands\Demo::class,  //测试用p
     ];
 
     /**

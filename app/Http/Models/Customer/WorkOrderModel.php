@@ -22,10 +22,13 @@ class WorkOrderModel extends Model
      */
     public function showWorkOrder($status){
     	$where = [
-    		'customer_id' => Auth::user()->id;
-    		'submitter'  => 1;
-    		$status;
-    	]
+    		'customer_id' => Auth::user()->id,
+    		'submitter'  => 1,	
+        ];
+    	if(isset($status['work_order_status'])){
+    		$where['work_order_status']= $status['work_order_status'];
+    	}
+    	
     	$list = $this->where($where)->get(['id','work_order_number','business_num','work_order_type','work_order_content','submitter_name','work_order_status','process_department','complete_time','created_at','updated_at']);
     	if(!$list->isEmpty()){
     		// 查询到数据进行转换

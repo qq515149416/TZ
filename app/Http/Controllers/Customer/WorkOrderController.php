@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Work;
+namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
-use App\Http\Models\Work\WorkOrderModel;
+use App\Http\Models\Customer\WorkOrderModel;
 use App\Http\Requests\Work\WorkOrderRequest;
 use Illuminate\Http\Request;
 

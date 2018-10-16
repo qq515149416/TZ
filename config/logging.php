@@ -76,6 +76,16 @@ return [
             'driver' => 'errorlog',
             'level' => 'debug',
         ],
+
+        // ============自定义日志写下面=================
+
+        /**
+         *  业务到题发送邮件日志
+         */
+        'RenewalReminder'  =>[
+            'driver' => 'single',
+            'path' => storage_path('logs/RenewalReminder.log'),
+        ],
     ],
 
 ];

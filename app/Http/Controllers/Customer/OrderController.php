@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+
+use App\Http\Controllers\Pay\AliPayController;
 use App\Http\Models\Customer\Order;
 use App\Http\Requests\Customer\OrderRequest;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -74,18 +77,65 @@ class OrderController extends Controller
 	*/
 	public function payOrderByBalance(OrderRequest $request)
 	{
+
 		if(!Auth::check()){
 			return tz_ajax_echo('','请先登录',0);
 		}
 		$user_id = Auth::id();
 		$orderModel = new Order();
 
-		$info = $request->only('order_id');
-		$order_id = $info['order_id'];
+		$info = $request->only('serial_number');
+		$serial_number = $info['serial_number'];
 	
-		$return = $orderModel->payOrder($user_id,$order_id);
-
+		$return = $orderModel->payOrderByBalance($user_id,$serial_number);
+		
 		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
+	}
+
+	/**
+	* 订单支付宝支付的接口
+	* @return 支付结果,
+	*/
+	// public function payOrderByAli(OrderRequest $request){
+	// 	if(!Auth::check()){
+	// 		return tz_ajax_echo('','请先登录',0);
+	// 	}
+	// 	$user_id = Auth::id();
+
+	// 	$info 		= $request->only(['serial_number','way']);
+	// 	$serial_number 	= $info['serial_number'];
+	// 	$way 		= $info['way'];
+
+	// 	$orderModel = new Order();
+	// }
+
+
+
+	public function makeTrade(OrderRequest $request)
+	{
+		$arr = $request->only(['order_id']);
+
+		$order_id = $arr['order_id'];
+		$user_id = Auth::id();
+
+		$orderModel = new Order();
+		$makeOrder = $orderModel->makeTrade($order_id,$user_id);
+
+		return tz_ajax_echo($makeOrder['data'],$makeOrder['msg'],$makeOrder['code']);
+	}
+
+	/**
+	 * 获取对应业务的增加资源的订单
+	 * @param  Request $request [description]
+	 * @return json           返回对应的信息和状态提示及信息
+	 */
+	public function resourceOrders(Request $request){
+		
+			$data = $request->only(['business_sn','resource_type']);
+			$resource = new Order();
+			$resource_orders = $resource->resourceOrders($data);
+			return tz_ajax_echo($resource_orders['data'],$resource_orders['msg'],$resource_orders['code']);
+		
 	}
 
 	/**

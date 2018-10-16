@@ -76,6 +76,7 @@ Route::group([
     $router->get('/finance', 'Show\FinanceController@index');
     $router->get('/statisticalPerformance', 'Show\StatisticalPerformanceController@index');
     $router->get('/whitelist', 'Show\WhitelistController@index');
+    $router->get('/work_order_type', 'Show\WorkOrderTypeController@index');
 
 
 //人事
@@ -270,6 +271,7 @@ Route::group([
     });
 
 
+
     //发送信息
     Route::group([
         'prefix' => 'message',
@@ -286,6 +288,21 @@ Route::group([
     });
 
 
+
+
+     Route::group([
+        'prefix' => 'overdue',
+    ],function(Router $router){
+        $router->get('showOverdueCabinet','Overdue\OverdueController@showOverdueCabinet');
+        $router->get('showOverdueMachine','Overdue\OverdueController@showOverdueMachine');
+        $router->get('showOverdueRes','Overdue\OverdueController@showOverdueRes');
+        $router->get('showUnpaidMachine','Overdue\OverdueController@showUnpaidMachine');
+        $router->get('showXiaJiaMachine','Overdue\OverdueController@showXiaJiaMachine');
+        $router->get('showUnpaidCabinet','Overdue\OverdueController@showUnpaidCabinet');
+        $router->get('showXiaJiaRes','Overdue\OverdueController@showXiaJiaRes');
+        $router->get('showOverdueResDet','Overdue\OverdueController@showOverdueResDet');
+        
+    }); 
 
 });
 

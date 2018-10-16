@@ -373,7 +373,7 @@ class BusinessModel extends Model
                 'business_status' => 2,                         //业务状态为已审核
 //            'client_id'       => $userId,                  //用户ID
             ])
-            ->whereBetween('endding_time', [date('Y-m-d H:i:s'), date('Y-m-d H:i:s', strtotime("+5 day"))])
+            ->whereBetween('endding_time', [date('Y-m-d H:i:s'), date('Y-m-d H:i:s', strtotime("+5 day"))]) //条件 :  时间区间为  过期前5天  到过期当天
             ->get();
 
 //        whereBetween

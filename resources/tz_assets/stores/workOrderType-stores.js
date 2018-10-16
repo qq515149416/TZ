@@ -11,6 +11,19 @@ class WorkOrderTypesStores extends ActionBoundStores {
     @observable workOrderTypes = [
 
     ];
+    delData(data) {
+        return new Promise((resolve,reject) => {
+            post("worktype/delete",data).then(res => {
+                if(res.data.code==1) {
+                    this.getData();
+                    resolve(true);
+                }else {
+                    alert(res.data.msg);
+                    resolve(false);
+                }
+            }).catch(reject);
+        });
+    }
     addData(data) {
         return new Promise((resolve,reject) => {
             post("worktype/insert",data).then(res => {
@@ -24,12 +37,36 @@ class WorkOrderTypesStores extends ActionBoundStores {
             }).catch(reject);
         });
     }
+    changeData(data) {
+        return new Promise((resolve,reject) => {
+            post("worktype/edit",data).then(res => {
+                if(res.data.code==1) {
+                    this.getData();
+                    resolve(true);
+                }else {
+                    alert(res.data.msg);
+                    resolve(false);
+                }
+            }).catch(reject);
+        });
+    }
+    @action.bound 
+    expand(id) {
+        this.workOrderTypes = this.workOrderTypes.map(item => {
+            if(item.id==id) {
+                item.more = !item.more;
+            }
+            return item;
+        });
+    }
     @action.bound 
     getData(param={}) {
         this.workOrderTypes = [];
         get("worktype/show",param).then((res) => {
             if(res.data.code==1) {
-                this.workOrderTypes = res.data.data.map(item => new WorkOrderTypeStores(item));
+                this.workOrderTypes = res.data.data.map(item => new WorkOrderTypeStores(Object.assign(item,{
+                    more: false
+                })));
             }
         });
     }

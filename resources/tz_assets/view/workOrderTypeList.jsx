@@ -15,6 +15,10 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import MenuItem from '@material-ui/core/MenuItem';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import IconButton from '@material-ui/core/IconButton';
+import BorderColorIcon from '@material-ui/icons/BorderColor';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { inject,observer } from "mobx-react";
 
 const styles = theme => ({
@@ -42,6 +46,9 @@ const styles = theme => ({
     },
     button: {
         marginTop: 5
+    },
+    operat: {
+        marginRight: 40
     }
 });
 
@@ -51,19 +58,17 @@ class WorkOrderTypeList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            open: [true,false],
+            addType: "add",
             dialogState: false,
-            currency: 0
+            currency: 0,
+            type_name: ""
         };
     }
     componentDidMount() {
         this.props.workOrderTypesStores.getData();
     }
-    handleClick = index => event => {
-        this.setState(state => {
-            state.open[index] = !state.open[index];
-            return state;
-        });
+    handleClick = id => event => {
+        this.props.workOrderTypesStores.expand(id);
     }
     handleChange = name => event => {
         this.setState({
@@ -76,21 +81,53 @@ class WorkOrderTypeList extends React.Component {
             return state;
         });
     }
-    openDialogState = event => {
+    openDialogState = param => event => {
+        let editData = {};
+        if(param.type=="edit") {
+            // console.log(param.data);
+            editData.type_name = param.data.type_name;
+            editData.currency = param.data.parent_id;
+            this.editId = param.data.id;
+        }
         this.setState(state => {
             state.dialogState = true;
-            return state;
+            state.addType = param.type;
+            return Object.assign(state,editData);
         });
     }
+    deleteData = data => event => {
+        let flag = confirm("是否要删除"+data.type_name+",此分类!");
+        if(flag) {
+            this.props.workOrderTypesStores.delData({
+                delete_id: data.id
+            }).then(state => {
+                if(state) {
+                   alert("删除成功");
+                }
+            });
+        }
+    }
     postAddType = event => {
-        this.props.workOrderTypesStores.addData({
-            type_name: this.typename.value,
-            parent_id: this.state.currency
-        }).then(state => {
-            if(state) {
-                this.closeDialogState();
-            }
-        });
+        if(this.state.addType=="edit") {
+            this.props.workOrderTypesStores.changeData({
+                id: this.editId,
+                type_name: this.typename.value,
+                parent_id: this.state.currency
+            }).then(state => {
+                if(state) {
+                    this.closeDialogState();
+                }
+            });
+        } else {
+            this.props.workOrderTypesStores.addData({
+                type_name: this.typename.value,
+                parent_id: this.state.currency
+            }).then(state => {
+                if(state) {
+                    this.closeDialogState();
+                }
+            });
+        }
     }
     render() {
         const { classes } = this.props;
@@ -100,30 +137,64 @@ class WorkOrderTypeList extends React.Component {
                     component="nav"
                     subheader={<ListSubheader className={classes.clearFix} component="div">
                         <span className={classes.fl}>工单类型管理</span>
-                        <Button variant="contained" onClick={this.openDialogState} className={`${classes.fr} ${classes.button}`} color="primary">
+                        <Button variant="contained" onClick={this.openDialogState({
+                            type: "add",
+                            data: null
+                        })} className={`${classes.fr} ${classes.button}`} color="primary">
                             类型提交
                         </Button>
                     </ListSubheader>}
                 >
-                    <ListItem button onClick={this.handleClick(0)}>
-                        <ListItemText primary="Inbox" />
-                        {this.state.open[0] ? <ExpandLess /> : <ExpandMore />}
-                    </ListItem>
-                    <Collapse in={this.state.open[0]} timeout="auto" unmountOnExit>
-                        <List component="div" disablePadding>
-                            <ListItem button className={classes.nested}>
-                                <ListItemText primary="Starred" />
-                            </ListItem>
-                        </List>
-                    </Collapse>
-                    <ListItem button onClick={this.handleClick(1)}>
-                        <ListItemText primary="Test" />
-                        {this.state.open[1] ? <ExpandLess /> : <ExpandMore />}
-                    </ListItem>
-                    <Collapse in={this.state.open[1]} timeout="auto" unmountOnExit>
-                        <List component="div" disablePadding>
-                        </List>
-                    </Collapse>
+                    {
+                        this.props.workOrderTypesStores.workOrderTypes.map((item,index,arr) => {
+                            if(item.parent_id==0) {
+                                return [
+                                    <ListItem button onClick={this.handleClick(item.id)}>
+                                        <ListItemText primary={item.type_name} />
+                                        <ListItemSecondaryAction className={classes.operat}>
+                                            <IconButton onClick={this.deleteData(item)} aria-label="Delete">
+                                                <DeleteIcon />
+                                            </IconButton>
+                                            <IconButton onClick={this.openDialogState({
+                                               type: "edit",
+                                               data: item
+                                            })} aria-label="Edit">
+                                                <BorderColorIcon />
+                                            </IconButton>
+                                        </ListItemSecondaryAction>
+                                        {item.more ? <ExpandLess /> : <ExpandMore />}
+                                    </ListItem>,
+                                    <Collapse in={item.more} timeout="auto" unmountOnExit>
+                                        <List component="div" disablePadding>
+                                            {
+                                                arr.map(e => {
+                                                    if(e.parent_id==item.id) {
+                                                        return (
+                                                            <ListItem button className={classes.nested}>
+                                                                <ListItemText primary={e.type_name} />
+                                                                <ListItemSecondaryAction className={classes.operat}>
+                                                                    <IconButton onClick={this.deleteData(e)} aria-label="Delete">
+                                                                        <DeleteIcon />
+                                                                    </IconButton>
+                                                                    <IconButton onClick={this.openDialogState({
+                                                                    type: "edit",
+                                                                    data: e
+                                                                    })} aria-label="Edit">
+                                                                        <BorderColorIcon />
+                                                                    </IconButton>
+                                                                </ListItemSecondaryAction>
+                                                            </ListItem>
+                                                        );
+                                                    }
+                                                })
+                                            }
+                                            
+                                        </List>
+                                    </Collapse>
+                                ];
+                            }
+                        })
+                    }
                 </List>
                 <Dialog
                     open={this.state.dialogState}
@@ -155,6 +226,8 @@ class WorkOrderTypeList extends React.Component {
                             id="typename"
                             label="工单类型名称"
                             fullWidth
+                            onChange={this.handleChange('type_name')}
+                            value={this.state.type_name}
                             inputRef={ref => this.typename = ref}
                         />
                     </DialogContent>

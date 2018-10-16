@@ -113,7 +113,7 @@ class WorkTypeModel extends Model
      * @return [type]            [description]
      */
     public function parentType($parent_id){
-    	$parent = DB::table('tz_worktype')->where('id',$parent_id)->value('type_name');
+    	$parent = DB::table('tz_work_type')->where('id',$parent_id)->value('type_name');
     	return $parent;
     }
 }

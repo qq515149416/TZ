@@ -76,6 +76,7 @@ Route::group([
     $router->get('/finance', 'Show\FinanceController@index');
     $router->get('/statisticalPerformance', 'Show\StatisticalPerformanceController@index');
     $router->get('/whitelist', 'Show\WhitelistController@index');
+    $router->get('/work_order_type', 'Show\WorkOrderTypeController@index');
 
 
 //人事

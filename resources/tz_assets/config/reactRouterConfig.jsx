@@ -18,7 +18,7 @@ import OrderList from "../view/orderList.jsx";
 import FinanceList from "../view/financeList.jsx";
 import StatisticalPerformanceList from "../view/statisticalPerformanceList.jsx";
 import WhitelistList from "../view/whitelistList.jsx";
-
+import WorkOrderTypeList from "../view/workOrderTypeList.jsx";
 
 
 export default () => [
@@ -39,5 +39,6 @@ export default () => [
     <Route path="/tz_admin/business/order" component={OrderList} />,
     <Route path="/tz_admin/finance" component={FinanceList} />,
     <Route path="/tz_admin/statisticalPerformance" component={StatisticalPerformanceList} />,
-    <Route path="/tz_admin/whitelist" component={WhitelistList} />
+    <Route path="/tz_admin/whitelist" component={WhitelistList} />,
+    <Route path="/tz_admin/work_order_type" component={WorkOrderTypeList} />
 ];

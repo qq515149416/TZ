@@ -30,12 +30,10 @@ class WorkOrderController extends Controller
 	 * @return json 将相关的状态和信息提示返回
 	 */
     public function insertWorkOrder(Request $request){
-    	
     		$data = $request->only(['business_num','work_order_content','work_order_type']);
     		$insertwork = new WorkOrderModel();
     		$return = $insertwork->insertWorkOrder($data);
     		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
-    	
     }
 
 	

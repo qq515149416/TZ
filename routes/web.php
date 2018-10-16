@@ -142,7 +142,7 @@ Route::group([
 			Route::get('show_work_answer','Customer\WorkAnswerController@showWorkAnswer');
 			Route::post('insert_work_answer','Customer\WorkAnswerController@insertWorkAnswer');
 			Route::get('show_work_order','Customer\WorkOrderController@showWorkOrder');
-			Route::post('insert_work_order','Customer\WorkAnswerController@insertWorkOrder');
+			Route::post('insert_work_order','Customer\WorkOrderController@insertWorkOrder');
 		});
 	});
 	

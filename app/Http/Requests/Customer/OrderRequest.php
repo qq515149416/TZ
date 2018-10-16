@@ -34,16 +34,31 @@ class OrderRequest extends FormRequest
 	 */
 	public function rules()
 	{
-		return [
+		$path_info = Request()->getPathInfo();
+		$arr = explode('/',$path_info);
+		$method = $arr[count($arr)-1];
+		$return = [];
 
-		];
+		switch ($method) {
+			case 'payOrderByBalance':
+				$return = [
+					'serial_number'		=> 'required',
+				];
+				break;
+ 			
+			default:
+	
+				break;
+		}
+
+		return $return;
 	}
 
 	public function messages()
 	{
 		
 		return  [
-			
+			'serial_number.required'	=> '请提供所需支付的支付流水号',
 		];
 	}
 

@@ -45,13 +45,21 @@ class RenewalReminder extends Command
 
         //遍历所有将要过期业务
         foreach ($data as $key => $value) {
-            $userData = $tzUserModel->find($value['client_id']);   //获取用户数据  (主要是用户邮箱)
+            $userData = $tzUserModel->find($value['client_id']);   //获取用户数据  (主要是用户的邮箱)  $userData['email']
 
+            //拼装发送邮件数组
+            $sendData = [
+                'email'     => $userData['email'], //发送用户的邮箱地址
+                'subject'   => '腾正科技',   //邮件标题
+                'userName'  => $userData['email'],     //用户名
+//                'exampleType' => $userData['exampleType'],  //实例类型   (暂时不用)
+                'exampleId' => $value['machine_number'],    //实例ID
+                'deadline'  => $value['endding_time']   //到期时间
+            ];
+
+            $this->sendEmail($sendData); //发送邮件
 
         }
-
-
-//        $this->sendEmail();
 
     }
 
@@ -70,21 +78,13 @@ class RenewalReminder extends Command
      */
     public function sendEmail($sendData = null)
     {
-//        $businessModel = new BusinessModel(); //实例化
-//        $tzUserModel   = new TzUser();
-
-        //===================测试数据================
-        $sendData['subject'] = '腾正科技';
-
-        //===================================
-
-
-        Mail::send('emails.test', [
+        //发送邮件
+        Mail::send('emails.deadline', [
             //发送内容
-//            'userName'    => $data['userName'],     //用户名
-//            'exampleType' => $data['exampleType'],  //实例类型
-//            'exampleId'   => $data['exampleId'],    //实例ID
-//            'deadLine'    => $data['deadLine '],    //到期时间
+            'userName'    => $sendData['userName'],     //用户名
+//            'exampleType' => $sendData['exampleType'],  //实例类型
+            'exampleId'   => $sendData['exampleId'],    //实例ID
+            'deadline'    => $sendData['deadline'],    //到期时间
         ], function ($message) use ($sendData) {
             $message->to($sendData['email'])->subject($sendData['subject']);
         });

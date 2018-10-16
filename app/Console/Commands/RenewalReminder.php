@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Admin\Models\Business\BusinessModel;
 use App\Http\Models\TzUser;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class RenewalReminder extends Command
@@ -58,7 +59,7 @@ class RenewalReminder extends Command
             ];
 
             $this->sendEmail($sendData); //发送邮件
-
+            Log::channel('RenewalReminder')->info('完成一次批量提醒');  //写入日志文件
         }
 
     }

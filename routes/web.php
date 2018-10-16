@@ -134,7 +134,6 @@ Route::group([
 			Route::get('delOrder', 'Customer\OrderController@delOrder');
 			Route::get('payOrderByBalance', 'Customer\OrderController@payOrderByBalance');
 			Route::post('renewresource','Customer\OrderController@renewResource');
-			Route::post('end','Customer\OrderController@endTime');
 			Route::get('show_white_list','Customer\WhiteListController@showWhiteList');
 			Route::post('insert_white_list','Customer\WhiteListController@insertWhiteList');
 			Route::post('check_ip','Customer\WhiteListController@checkIp');
@@ -142,6 +141,8 @@ Route::group([
 			Route::post('cancel_white_list','Customer\WhiteListController@cancelWhiteList');
 			Route::get('show_work_answer','Customer\WorkAnswerController@showWorkAnswer');
 			Route::post('insert_work_answer','Customer\WorkAnswerController@insertWorkAnswer');
+			Route::get('show_work_order','Customer\WorkOrderController@showWorkOrder');
+			Route::post('insert_work_order','Customer\WorkOrderController@insertWorkOrder');
 		});
 	});
 	

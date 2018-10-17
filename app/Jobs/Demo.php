@@ -30,6 +30,7 @@ class Demo implements ShouldQueue
         $this->podcast = $podcast;
     }
 
+
     /**
      * Execute the job.
      * 执行任务

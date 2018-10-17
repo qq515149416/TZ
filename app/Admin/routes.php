@@ -295,7 +295,7 @@ Route::group([
     ],function(Router $router){
         $router->get('showOverdueCabinet','Overdue\OverdueController@showOverdueCabinet');
         $router->get('showOverdueMachine','Overdue\OverdueController@showOverdueMachine');
-        $router->get('showOverdueRes','Overdue\OverdueController@showOverdueRes');
+        $router->get('showOverdueRes','Overdue\OverdueController@showOverdueRes');     
         $router->get('showUnpaidMachine','Overdue\OverdueController@showUnpaidMachine');
         $router->get('showXiaJiaMachine','Overdue\OverdueController@showXiaJiaMachine');
         $router->get('showUnpaidCabinet','Overdue\OverdueController@showUnpaidCabinet');

@@ -96,7 +96,7 @@ class WorkTypeModel extends Model
             $child = $this->where($where)->whereNull('deleted_at')->get(['id']);
             if(!$child->isEmpty()){
                 $return['code'] = 0;
-                $return['msg'] = '请先删除该类型下的之类！！';
+                $return['msg'] = '请先删除该类型下的分类！！';
             }
     		$row = $this->where('id',$id)->delete();
     		if($row != false){

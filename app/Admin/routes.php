@@ -217,6 +217,7 @@ Route::group([
         $router->post('insert','Work\WorkOrderController@insertWorkOrder');
         $router->post('edit','Work\WorkOrderController@editWorkOrder');
         $router->post('delete','Work\WorkOrderController@deleteWorkOrder');
+        $router->get('work_types','Work\WorkOrderController@workTypes');
     });
 
     //工单类型接口
@@ -226,7 +227,7 @@ Route::group([
         $router->get('show','Work\WorkTypeController@showWorkType');
         $router->post('insert','Work\WorkTypeController@insertWorkType');
         $router->post('edit','Work\WorkTypeController@editWorkType');
-        $router->post('delete','Work\WorkTypeController@editWorkType');
+        $router->post('delete','Work\WorkTypeController@deleteWorkType');
     });
 
     // 白名单接口
@@ -294,7 +295,7 @@ Route::group([
     ],function(Router $router){
         $router->get('showOverdueCabinet','Overdue\OverdueController@showOverdueCabinet');
         $router->get('showOverdueMachine','Overdue\OverdueController@showOverdueMachine');
-        $router->get('showOverdueRes','Overdue\OverdueController@showOverdueRes');
+        $router->get('showOverdueRes','Overdue\OverdueController@showOverdueRes');     
         $router->get('showUnpaidMachine','Overdue\OverdueController@showUnpaidMachine');
         $router->get('showXiaJiaMachine','Overdue\OverdueController@showXiaJiaMachine');
         $router->get('showUnpaidCabinet','Overdue\OverdueController@showUnpaidCabinet');

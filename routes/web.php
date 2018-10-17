@@ -144,7 +144,11 @@ Route::group([
 
 			Route::get('show_work_order','Customer\WorkOrderController@showWorkOrder');
 			Route::post('insert_work_order','Customer\WorkOrderController@insertWorkOrder');
+
+			Route::get('work_types','Customer\WorkOrderController@workTypes');
+
 			Route::post('makeTrade','Customer\OrderController@makeTrade');
+
 		});
 	});
 	

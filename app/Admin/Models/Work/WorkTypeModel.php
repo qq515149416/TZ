@@ -92,6 +92,13 @@ class WorkTypeModel extends Model
      */
     public function deleteWorkType($id){
     	if($id){
+            $where = ['parent_id'=>$id];
+            $child = $this->where($where)->whereNull('deleted_at')->get(['id']);
+            if(!$child->isEmpty()){
+                $return['code'] = 0;
+                $return['msg'] = '请先删除该类型下的分类！！';
+                return $return;
+            }
     		$row = $this->where('id',$id)->delete();
     		if($row != false){
     			$return['code'] = 1;

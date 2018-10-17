@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class WorkOrderModel extends Model
 {
@@ -155,9 +156,11 @@ class WorkOrderModel extends Model
      * @param  [type] $parent_id [description]
      * @return [type]            [description]
      */
-    public function workTypes($parent_id = ['parent_id'=>0]){
-    	dd($parent_id);
-    	$work_type = DB::table('tz_work_type')->where($parent_id)->whereNotNull('deleted_at')->select('id','type_name')->get();
+    public function workTypes($parent_id){
+    	if(!$parent_id){
+    		$parent_id['parent_id'] = 0; 
+    	}
+    	$work_type = DB::table('tz_work_type')->where($parent_id)->whereNull('deleted_at')->select('id','type_name')->get();
     	$return['data'] = $work_type;
     	$return['code'] = 1;
     	$return['msg'] = '获取分类成功';

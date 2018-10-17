@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
-
+use Illuminate\Support\Facades\Schema;
+use Encore\Admin\Facades\Admin;
 
 /**
  * 工单的模型
@@ -17,6 +18,7 @@ class WorkOrderModel extends Model
     protected $table = 'tz_work_order';
     public $timestamps = true;
     protected $dates = ['deleted_at'];
+    protected $fillable = [];
 // 网维人员：net dimension
 // 网管人员: net manager
 // 衡阳运维：hengyang
@@ -25,6 +27,12 @@ class WorkOrderModel extends Model
 // 业务员：salesman
 // 管理人员：TZ_admin
 
+    /**
+     * 用于自动获取数据库的字段名,并赋值到 protected $fillable
+     */
+    public function __construct(){
+        $this->fillable = Schema::getColumnListing('tz_work_order');
+    }
     /**
      * 显示对应状态的所有工单(管理人员/网维人员/网管人员查看)
      * @param  array $where 工单状态
@@ -184,7 +192,7 @@ class WorkOrderModel extends Model
             return $return;
 
         }
-        $where = ['sales_id'=>Admin::user()->id,'business_number'=>$work_data['business_num'],'business_status'=>'in (2,3,4)'];
+        $where = ['sales_id'=>Admin::user()->id,'business_number'=>$work_data['business_num'],'business_status'=>[2,3,4]];
         $business = DB::table('tz_business')->where($where)->select('client_id','business_number','sales_id')->first();
     	if(!$business){
             $return['data'] = '';

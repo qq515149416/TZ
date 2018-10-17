@@ -217,6 +217,7 @@ Route::group([
         $router->post('insert','Work\WorkOrderController@insertWorkOrder');
         $router->post('edit','Work\WorkOrderController@editWorkOrder');
         $router->post('delete','Work\WorkOrderController@deleteWorkOrder');
+        $router->get('work_types','Work\WorkOrderController@workTypes');
     });
 
     //工单类型接口

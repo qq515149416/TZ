@@ -36,8 +36,8 @@ class DeadlineController extends Controller
     public function sendUser(Request $request)
     {
         $podcast = 'test';
-        Demo::dispatch($podcast);
-        return '123';
+//        Demo::dispatch($podcast);
+        dd('123');
 
         $data['email'] = '568171152@qq.com';
         Mail::send('emails.test', [

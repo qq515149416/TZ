@@ -97,6 +97,7 @@ class WorkTypeModel extends Model
             if(!$child->isEmpty()){
                 $return['code'] = 0;
                 $return['msg'] = '请先删除该类型下的分类！！';
+                return $return;
             }
     		$row = $this->where('id',$id)->delete();
     		if($row != false){

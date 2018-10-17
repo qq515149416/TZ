@@ -227,7 +227,6 @@ Route::group([
         $router->post('insert','Work\WorkTypeController@insertWorkType');
         $router->post('edit','Work\WorkTypeController@editWorkType');
         $router->post('delete','Work\WorkTypeController@deleteWorkType');
-        $router->post('work_types','Work\WorkTypeController@WorkTypes');
     });
 
     // 白名单接口

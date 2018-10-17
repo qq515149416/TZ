@@ -156,6 +156,7 @@ class WorkOrderModel extends Model
      * @return [type]            [description]
      */
     public function workTypes($parent_id = ['parent_id'=>0]){
+    	dd($parent_id);
     	$work_type = DB::table('tz_work_type')->where($parent_id)->whereNotNull('deleted_at')->select('id','type_name')->get();
     	$return['data'] = $work_type;
     	$return['code'] = 1;

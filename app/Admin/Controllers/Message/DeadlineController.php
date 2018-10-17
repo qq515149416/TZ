@@ -37,7 +37,7 @@ class DeadlineController extends Controller
     {
         $podcast = 'test';
         Demo::dispatch($podcast);
-        die();
+        return '123';
 
         $data['email'] = '568171152@qq.com';
         Mail::send('emails.test', [

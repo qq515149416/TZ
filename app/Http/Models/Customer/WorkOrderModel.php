@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class WorkOrderModel extends Model
 {
@@ -15,7 +16,14 @@ class WorkOrderModel extends Model
     protected $table = 'tz_work_order';
     public $timestamps = true;
     protected $dates = ['deleted_at'];
+    protected $fillable = [];
 
+    /**
+     * 用于自动获取数据库的字段名,并赋值到 protected $fillable
+     */
+    public function __construct(){
+    	$this->fillable = Schema::getColumnListing('tz_work_order');
+    }
     /**
      * 展示工单
      * @param  array $status 工单的状态
@@ -73,9 +81,7 @@ class WorkOrderModel extends Model
     		$return['msg'] = '工单无法提交';
     		return $return;
     	}
-    	
-    	$where = ['client_id'=>Auth::user()->id,'business_number'=>$insert_data['business_num'],'business_status'=>'in (2,3,4)'];
-    	// $where_in = ['business_status'=>[2,3,4]];
+    	$where = ['client_id'=>Auth::user()->id,'business_number'=>$insert_data['business_num'],'business_status'=>[2,3,4]];
     	$business = DB::table('tz_business')->where($where)->select('client_id','business_number','sales_id')->first();
     	if(!$business){
     		$return['data'] = '';

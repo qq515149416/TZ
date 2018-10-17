@@ -57,10 +57,9 @@ class RenewalReminder extends Command
                 'exampleId' => $value['machine_number'],    //实例ID
                 'deadline'  => $value['endding_time']   //到期时间
             ];
-
             $this->sendEmail($sendData); //发送邮件
-            Log::channel('RenewalReminder')->info('完成一次批量提醒');  //写入日志文件
         }
+        Log::channel('RenewalReminder')->info('完成一次批量提醒');  //写入日志文件
 
     }
 
@@ -71,7 +70,6 @@ class RenewalReminder extends Command
     {
         $businessModel = new BusinessModel(); //实例化
         return $businessModel->selectOverdueBusiness();
-
     }
 
     /**
@@ -79,6 +77,7 @@ class RenewalReminder extends Command
      */
     public function sendEmail($sendData = null)
     {
+//        $sendData['email']='568171152@qq.com';
         //发送邮件
         Mail::send('emails.deadline', [
             //发送内容

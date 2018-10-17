@@ -61,6 +61,4 @@ class RefundController extends Controller
     	$delete_result = $delete->deleteRefund($delete_refund);
     	return tz_ajax_echo($delete_result,$delete_result['msg'],$delete_result['code']);
     }
-    
-   
-}
+}   

@@ -3,7 +3,9 @@ import ListTableComponent from "../component/listTableComponent.jsx";
 import InputExpansion from "../component/dialog/inputExpansion.jsx";
 import StatisticsShowComponent from "../component/statisticsShowComponent.jsx";
 import RenewalFee from "../component/dialog/renewalFee.jsx";
+import WorkOrderPost from "../component/dialog/workOrderPost.jsx";
 import {post} from "../tool/http.js";
+import extendElementsComponent from "../tool/extendElementsComponent";
 import { inject,observer } from "mobx-react";
 const qs = require('qs');
 const columnData = [
@@ -60,7 +62,11 @@ const columnData = [
       }
     },extendElement: (data) => {
       if(data.business_status==2) {
-        return <RenewalFee {...data} postUrl="business/renewresource" nameParam="machine_number" type="业务" />;
+        let Element = extendElementsComponent([
+          RenewalFee,
+          WorkOrderPost
+        ]);
+        return <Element {...data} postUrl="business/renewresource" nameParam="machine_number" type="业务" />;
       }else {
         return null;
       }

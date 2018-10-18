@@ -31,7 +31,7 @@ class ResetPasswordByEmail extends FormRequest
             //
             'email'    => 'required|email',
             'password' => 'required|min:8|max:20|string',
-            'captcha'  => 'required|captcha',
+//            'captcha'  => 'required|captcha',
         ];
     }
 

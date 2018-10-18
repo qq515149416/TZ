@@ -16,14 +16,8 @@ class WorkOrderModel extends Model
     protected $table = 'tz_work_order';
     public $timestamps = true;
     protected $dates = ['deleted_at'];
-    protected $fillable = [];
+    protected $fillable = ["work_order_number","business_num","customer_id","clerk_id","work_order_type","work_order_content","submitter_id","submitter_name","submitter","work_order_status","process_department","complete_id","complete_number","summary","complete_time","created_at","updated_at","deleted_at"];
 
-    /**
-     * 用于自动获取数据库的字段名,并赋值到 protected $fillable
-     */
-    public function __construct(){
-    	$this->fillable = Schema::getColumnListing('tz_work_order');
-    }
     /**
      * 展示工单
      * @param  array $status 工单的状态
@@ -47,7 +41,7 @@ class WorkOrderModel extends Model
     		    $list[$showkey]['workstatus'] = $work_status[$showvalue['work_order_status']];
                 // 工单类型
                 $worktype = $this->workType($showvalue['work_order_type']);
-                $list[$showkey]['worktype'] = $worktype->parenttype?$worktype->parenttype.'->'.$worktype->type_name:$worktype->type_name;
+                $list[$showkey]['worktype'] = $worktype->parenttype?$worktype->parenttype.''.$worktype->type_name:$worktype->type_name;
                 // $list[$showkey]['parenttype'] = $worktype->parenttype;
                 // 当前处理部门
                 $list[$showkey]['department'] = $showvalue['process_department']?$this->role($showvalue['process_department'])->name:'网维部门';
@@ -95,7 +89,7 @@ class WorkOrderModel extends Model
 		$insert_data['customer_id'] = Auth::user()->id;//客户id,方便对应客户查看对应业务的工单
 		$insert_data['clerk_id'] = $business->sales_id;//业务员id,方便业务员查看自己客户的工单
 		$insert_data['submitter_id'] = Auth::user()->id;//提交者id
-		$insert_data['submitter_name'] = Auth::user()->name;//提交者姓名
+		$insert_data['submitter_name'] = Auth::user()->name?Auth::user()->name:Auth::user()->email;//提交者姓名
 		$insert_data['submitter'] = 1;//提交方客户
 		$insert_data['work_order_status'] = 0;//工单状态
 		$insert_data['process_department'] = 0;//转发部门
@@ -123,9 +117,9 @@ class WorkOrderModel extends Model
         $worktype = DB::table('tz_work_type')->find($id,['parent_id','type_name']);
         $parent_id = $worktype->parent_id;
         if(!empty($parent_id)){
-            $worktype['parenttype'] = DB::table('tz_work_type')->where('id',$parent_id)->value('type_name');
+            $worktype->parenttype = DB::table('tz_work_type')->where('id',$parent_id)->value('type_name');
         } else {
-            $worktype['parenttype'] = '';
+            $worktype->parenttype = '';
         }
         return $worktype;
     }
@@ -152,7 +146,7 @@ class WorkOrderModel extends Model
      */
     public function businessDetail($business_number){
     	$business = DB::table('tz_business')->where('business_number',$business_number)->select('client_name','business_type','machine_number','resource_detail')->first();
-    	$business_type = ['-1'=>'取消','-2'=>'审核不通过',0=>'审核中',1=>'审核通过',2=>'付款使用中',3=>'未付款使用',4=>'锁定中',5=>'到期',6=>'退款'];
+    	$business_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜'];
     	$business->business_type = $business_type[$business->business_type];
     	return $business;
     }

@@ -2,7 +2,9 @@ import React from "react";
 import ListTableComponent from "../component/listTableComponent.jsx";
 import { inject,observer } from "mobx-react";
 import {post} from "../tool/http.js";
+import extendElementsComponent from "../tool/extendElementsComponent";
 import ResetPassword from "../component/dialog/resetPassword.jsx";
+import ManualRecharge from "../component/dialog/manualRecharge.jsx";
 
 const columnData = [
     // { id: 'name', numeric: true, disablePadding: false, label: '用户名' },
@@ -48,7 +50,11 @@ const columnData = [
             });
         }
       } ,extendElement: (data) => {
-        return <ResetPassword {...data} />;
+        let Element = extendElementsComponent([
+            ResetPassword,
+            ManualRecharge
+          ]);
+        return <Element postUrl="business/recharge" nameParam="email" {...data} />;
     }, extendUrl: {
         title: "添加业务",
         link: "/tz_admin/business",

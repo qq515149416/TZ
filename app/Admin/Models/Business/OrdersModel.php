@@ -35,7 +35,7 @@ class OrdersModel extends Model
     		$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn'];
     		$order_type = [1=>'新购',2=>'续费'];
     		$pay_type = [1=>'余额',2=>'支付宝',3=>'微信',4=>'其他'];
-    		$order_status = [0=>'待支付',1=>'已支付',2=>'财务确认',3=>'订单完成',4=>'取消',5=>'申请退款',6=>'退款完成'];
+    		$order_status = [0=>'待支付',1=>'已支付',2=>'财务确认',3=>'订单完成',4=>'到期',5=>'取消',6=>'申请退款',7=>'正在支付',8=>'退款完成'];
     		foreach($result as $okey=>$ovalue){
     			$result[$okey]['resource_type'] = $resource_type[$ovalue['resource_type']];
     			$result[$okey]['order_type'] = $order_type[$ovalue['order_type']];
@@ -65,7 +65,7 @@ class OrdersModel extends Model
     		$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn'];
     		$order_type = [1=>'新购',2=>'续费'];
     		$pay_type = [1=>'余额',2=>'支付宝',3=>'微信',4=>'其他'];
-    		$order_status = [0=>'待支付',1=>'已支付',2=>'财务确认',3=>'订单完成',4=>'取消',5=>'申请退款',6=>'退款完成'];
+    		$order_status = [0=>'待支付',1=>'已支付',2=>'财务确认',3=>'订单完成',4=>'到期',5=>'取消',6=>'申请退款',7=>'正在支付',8=>'退款完成'];
     		foreach($result as $okey=>$ovalue){
     			$result[$okey]['resourcetype'] = $resource_type[$ovalue['resource_type']];
     			$result[$okey]['order_type'] = $order_type[$ovalue['order_type']];

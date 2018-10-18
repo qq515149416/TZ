@@ -77,9 +77,9 @@ class FinanceList extends React.Component {
                 <Tab label="已支付" value={1} />
                 <Tab label="财务确认" value={2} />
                 <Tab label="订单完成" value={3} />
-                <Tab label="取消" value={4} />
-                <Tab label="申请退款" value={5} />
-                <Tab label="退款完成" value={6} />
+                <Tab label="取消" value={5} />
+                <Tab label="申请退款" value={6} />
+                <Tab label="退款完成" value={8} />
                 </Tabs>
             </Paper>,
             <ListTableComponent 

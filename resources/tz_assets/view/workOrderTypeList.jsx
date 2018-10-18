@@ -36,13 +36,7 @@ const styles = theme => ({
         float: "right"
     },
     clearFix: {
-        "&:before,&:after": {
-            content:"",
-            display: "table"
-        },
-        "&:after": {
-            clear: "both"
-        }
+        overflow: "hidden"
     },
     button: {
         marginTop: 5
@@ -135,7 +129,8 @@ class WorkOrderTypeList extends React.Component {
             <div className={classes.root}>
                 <List
                     component="nav"
-                    subheader={<ListSubheader className={classes.clearFix} component="div">
+                    subheader={<ListSubheader  component="div">
+                    <div className={classes.clearFix}>
                         <span className={classes.fl}>工单类型管理</span>
                         <Button variant="contained" onClick={this.openDialogState({
                             type: "add",
@@ -143,7 +138,8 @@ class WorkOrderTypeList extends React.Component {
                         })} className={`${classes.fr} ${classes.button}`} color="primary">
                             类型提交
                         </Button>
-                    </ListSubheader>}
+                    </div>
+                </ListSubheader>}
                 >
                     {
                         this.props.workOrderTypesStores.workOrderTypes.map((item,index,arr) => {

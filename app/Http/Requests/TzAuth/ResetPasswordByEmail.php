@@ -30,7 +30,7 @@ class ResetPasswordByEmail extends FormRequest
         return [
             //
             'email'    => 'required|email',
-            'password' => 'required|min:8|max:20|string|confirmed',
+            'password' => 'required|min:8|max:20|string',
             'captcha'  => 'required|captcha',
         ];
     }
@@ -48,8 +48,8 @@ class ResetPasswordByEmail extends FormRequest
             'password.required'              => '密码不能为空',
             'password.min'                   => '密码在8到20位之间',
             'password.max'                   => '密码在8到20位之间',
-            'password.confirmed'             => '密码两次输入不一致',
-            'password_confirmation.required' => '密码二次输入不能为空',
+//            'password.confirmed'             => '密码两次输入不一致',
+//            'password_confirmation.required' => '密码二次输入不能为空',
             'captcha.required'               => '验证码不能为空',
             'captcha.captcha'                => '验证码错误',
 

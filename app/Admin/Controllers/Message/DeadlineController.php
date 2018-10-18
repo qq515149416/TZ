@@ -40,7 +40,7 @@ class DeadlineController extends Controller
 //        dd('123');
 
         $data['email'] = '568171152@qq.com';
-        Mail::send('emails.test', [
+        Mail::queue('emails.test', [
             //发送内容
 //            'token' => $token,
 //            'userName'    => $data['userName'],     //用户名

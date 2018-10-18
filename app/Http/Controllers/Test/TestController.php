@@ -14,7 +14,10 @@ class TestController extends Controller
     //
     public function test()
     {
+        //测试专用测试
         dump('测试模块测试');
+
+        dump('ZhangJun');
     }
 
     /*

@@ -28,15 +28,12 @@ class WorkOrderModel extends Model
 // 管理人员：TZ_admin
 
     /**
-<<<<<<< HEAD
      * 用于自动获取数据库的字段名,并赋值到 protected $fillable
      */
     // public function __construct(){
     //     $this->fillable = Schema::getColumnListing('tz_work_order');
     // }
     /**
-=======
->>>>>>> 0f2cbf30116c657c6b22c10a061b49c15cda2300
      * 显示对应状态的所有工单(管理人员/网维人员/网管人员查看)
      * @param  array $where 工单状态
      * @return array        返回相关的数据信息和状态

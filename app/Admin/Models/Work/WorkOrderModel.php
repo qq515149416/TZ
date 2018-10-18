@@ -28,6 +28,12 @@ class WorkOrderModel extends Model
 // 管理人员：TZ_admin
 
     /**
+     * 用于自动获取数据库的字段名,并赋值到 protected $fillable
+     */
+    // public function __construct(){
+    //     $this->fillable = Schema::getColumnListing('tz_work_order');
+    // }
+    /**
      * 显示对应状态的所有工单(管理人员/网维人员/网管人员查看)
      * @param  array $where 工单状态
      * @return array        返回相关的数据信息和状态
@@ -50,17 +56,17 @@ class WorkOrderModel extends Model
                 $result[$showkey]['workstatus'] = $work_status[$showvalue['work_order_status']];
                 // 工单类型
                 $worktype = (array)$this->workType($showvalue['work_order_type']);
-                $result[$showkey]['worktype'] = $worktype['parenttype']?$worktype['parenttype'].'->'.$worktype['type_name']:$worktype['type_name'];
+                $list[$showkey]['worktype'] = $worktype->parenttype?'【'.$worktype->parenttype.'】 -- 【'.$worktype->type_name.'】':'【'.$worktype->type_name.'】';
                 // 当前处理部门
                 $department = $showvalue['process_department']?(array)$this->role($showvalue['process_department']):['name'=>'网维部门'];
                 $result[$showkey]['department'] = $department['name'];
                 // 对应的业务数据
                 $business = (array)$this->businessDetail($showvalue['business_num']);
-                $list[$showkey]['client_name'] = $business['client_name'];
-                $list[$showkey]['business_type'] = $business['business_type'];    
-                $list[$showkey]['machine_number'] = $business['machine_number'];
-                $list[$showkey]['resource_detail'] = $business['resource_detail'];
-                $list[$showkey]['sales_name'] = $business['sales_name'];  
+                $result[$showkey]['client_name'] = $business['client_name'];
+                $result[$showkey]['business_type'] = $business['business_type'];    
+                $result[$showkey]['machine_number'] = $business['machine_number'];
+                $result[$showkey]['resource_detail'] = $business['resource_detail'];
+                $result[$showkey]['sales_name'] = $business['sales_name'];  
             }
             $return['data'] = $result;
             $return['code'] = 1;
@@ -301,12 +307,12 @@ class WorkOrderModel extends Model
      * @return array     返回对应的工单类型数据
      */
     public function workType($id){
-        $worktype = DB::table('tz_worktype')->find($id,['parent_id','type_name']);
+        $worktype = DB::table('tz_work_type')->find($id,['parent_id','type_name']);
         $parent_id = $worktype->parent_id;
         if(!empty($parent_id)){
-            $worktype['parenttype'] = DB::table('tz_work_type')->where('id',$parent_id)->value('type_name');
+            $worktype->parenttype = DB::table('tz_work_type')->where('id',$parent_id)->value('type_name');
         } else {
-            $worktype['parenttype'] = '';
+            $worktype->parenttype = '';
         }
         return $worktype;
     }

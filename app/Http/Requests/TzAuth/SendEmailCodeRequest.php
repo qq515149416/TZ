@@ -31,7 +31,7 @@ class SendEmailCodeRequest extends FormRequest
             //
 //            'email'   => 'required|email|unique:tz_users,email',  //判断邮箱是否存在
             'email' => 'required|email',
-//            'captcha' => 'required|captcha',  //TODO 因测试原因暂时关闭   上线前需要关闭注释
+            'captcha' => 'required|captcha',  //TODO 因测试原因暂时关闭   上线前需要关闭注释
         ];
     }
 

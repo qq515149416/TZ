@@ -17,7 +17,7 @@ class ResetPasswordController extends Controller
 
     /**
      * 通过邮箱重置密码
-     *
+     * \auth\resetPassword\resetPasswordByEmail
      * 类型:POST
      * 参数:
      *      email  :  邮箱帐号
@@ -62,10 +62,11 @@ class ResetPasswordController extends Controller
 
     /**
      * 发送邮箱验证码
-     *
+     *  \auth\resetPassword\sendEmailCode
      * 类型:POST
      * 参数:
      *      email: 需要发送验证码的邮箱
+     *      captcha :图形验证码
      *
      * @param SendEmailCodeRequest $request
      * @return mixed
@@ -90,7 +91,7 @@ class ResetPasswordController extends Controller
         } else {
             return tz_ajax_echo([], '验证码发送失败', 0);  //返回发送失败
         }
-        
+
     }
 
 }

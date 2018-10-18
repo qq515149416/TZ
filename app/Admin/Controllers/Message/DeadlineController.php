@@ -35,9 +35,9 @@ class DeadlineController extends Controller
      */
     public function sendUser(Request $request)
     {
-        $podcast = 'test';
-        Demo::dispatch($podcast);
-        dd('123');
+//        $podcast = 'test';
+//        Demo::dispatch($podcast);
+//        dd('123');
 
         $data['email'] = '568171152@qq.com';
         Mail::send('emails.test', [
@@ -50,8 +50,8 @@ class DeadlineController extends Controller
         ], function ($message) use ($data) {
             $message->to($data['email'])->subject('tz');
         });
+        die();
 //        dump($info);
-        dump('send');  //打印测试
 //        $this->selectOverdueBusiness();
 
         $par           = $request->all();//获取参数

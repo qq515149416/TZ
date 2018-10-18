@@ -90,7 +90,7 @@ class ResetPasswordController extends Controller
         } else {
             return tz_ajax_echo([], '验证码发送失败', 0);  //返回发送失败
         }
-
+        
     }
 
 }

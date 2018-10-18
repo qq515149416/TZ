@@ -18,8 +18,8 @@ class WorkOrderPost extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currency: "",
-            currency2: "",
+            currency: 0,
+            currency2: 0,
             workOrder: false,
             workOrderTypes: [],
             workOrderSubTypes: []
@@ -35,7 +35,22 @@ class WorkOrderPost extends React.Component {
         });
     }
     workOrderPost = () => {
-
+        if(this.state.workOrderSubTypes.length>0&&!this.state.currency2) {
+            alert("请选择二级分类");
+            return ;
+        }
+        post("workorder/insert",{
+            business_num: this.props.business_number,
+            work_order_content: this.note.value,
+            work_order_type: this.selectTypeId
+        }).then(res => {
+            if(res.data.code==1) {
+                alert("工单提交成功");
+                this.close();
+            } else {
+                alert(res.data.msg);
+            }
+        })
     }
     open = () => {
         this.setState({
@@ -47,18 +62,25 @@ class WorkOrderPost extends React.Component {
             workOrder: false
         });
     }
-    handleChange = name => event => {
-        get("workorder/work_types",{
-            parent_id: event.target.value
-        }).then(res => {
-            if(res.data.code==1) {
-                if(res.data.data.length) {
+    handleChange = param => event => {
+        let {name,index} = param;
+        if(index==0) {
+            get("workorder/work_types",{
+                parent_id: event.target.value
+            }).then(res => {
+                if(res.data.code==1) {
+                    if(res.data.data.length==0) {
+                        this.selectTypeId = event.target.value;
+                    }
                     this.setState({
                         workOrderSubTypes: res.data.data
                     });
                 }
-            }
-        });
+            });
+        }
+        if(index==1) {
+            this.selectTypeId = event.target.value;
+        }
         this.setState({
           [name]: event.target.value,
         });
@@ -77,14 +99,18 @@ class WorkOrderPost extends React.Component {
           >
             <DialogTitle id="form-dialog-title">工单提交</DialogTitle>
             <DialogContent>
-                <Grid container spacing={5}>
+                <Grid container spacing={8}>
                     <Grid item xs={6}>
                         <TextField
                         id="workOrderType1"
                         select
                         label="工单类型"
                         value={this.state.currency}
-                        onChange={this.handleChange('currency')}
+                        fullWidth
+                        onChange={this.handleChange({
+                            name: 'currency',
+                            index: 0
+                        })}
                         margin="normal"
                         >
                             {
@@ -104,8 +130,12 @@ class WorkOrderPost extends React.Component {
                                 id="workOrderType2"
                                 select
                                 label="工单类型"
+                                fullWidth
                                 value={this.state.currency2}
-                                onChange={this.handleChange('currency2')}
+                                onChange={this.handleChange({
+                                    name: 'currency2',
+                                    index: 1
+                                })}
                                 margin="normal"
                                 >
                                     {
@@ -124,6 +154,7 @@ class WorkOrderPost extends React.Component {
                             margin="dense"
                             id="note"
                             label="备注"
+                            multiline
                             fullWidth
                             inputRef = {ref => this.note = ref}
                         />

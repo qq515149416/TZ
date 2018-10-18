@@ -41,7 +41,7 @@ class WorkOrderModel extends Model
     		    $list[$showkey]['workstatus'] = $work_status[$showvalue['work_order_status']];
                 // 工单类型
                 $worktype = $this->workType($showvalue['work_order_type']);
-                $list[$showkey]['worktype'] = $worktype->parenttype?$worktype->parenttype.''.$worktype->type_name:$worktype->type_name;
+                $list[$showkey]['worktype'] = $worktype->parenttype?'【'.$worktype->parenttype.'】 -- 【'.$worktype->type_name.'】':'【'.$worktype->type_name.'】';
                 // $list[$showkey]['parenttype'] = $worktype->parenttype;
                 // 当前处理部门
                 $list[$showkey]['department'] = $showvalue['process_department']?$this->role($showvalue['process_department'])->name:'网维部门';

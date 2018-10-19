@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import ListTableComponent from "../component/listTableComponent.jsx";
-import ChangeStatus from "../component/dialog/changeStatus.jsx";
+import {post} from "../tool/http.js";
 import { inject,observer } from "mobx-react";
 const qs = require('qs');
 
@@ -23,6 +23,7 @@ const columnData = [
     { id: 'submitter_name', numeric: true, disablePadding: true, label: '提交人' },
     { id: 'submit', numeric: true, disablePadding: true, label: '提交方' },
     { id: 'workstatus', numeric: true, disablePadding: true, label: '状态' },
+<<<<<<< HEAD
     { id: 'department', numeric: true, disablePadding: true, label: '处理部门' },
     { id: 'operat', numeric: true, disablePadding: false, extend: true, extendData: [
         {id: "business_num", label: "业务编号", type: "text"},
@@ -49,6 +50,9 @@ const columnData = [
     ],extendElement: (data) => {
         return <ChangeStatus {...data} postUrl="workorder/edit" nameParam="work_order_number" />;
     }, label: '操作' }
+=======
+    { id: 'department', numeric: true, disablePadding: true, label: '处理部门' }
+>>>>>>> 06f9d30c1716999a98561b67e2b9b02335ce0e2e
 ];
 const inputType = [
 
@@ -64,11 +68,6 @@ class WorkOrderList extends React.Component {
     }
     componentDidMount() {
         this.props.workOrdersStores.getData();
-    }
-    delData = (selectedData,callbrak) => {
-        const {workOrdersStores} = this.props;
-        let delIng = selectedData.map(item => workOrdersStores.delData(item));
-        callbrak(delIng);
     }
     handleChange = (event, value) => {
         this.props.workOrdersStores.type = value;
@@ -98,7 +97,6 @@ class WorkOrderList extends React.Component {
             inputType={inputType} 
             headTitlesData={columnData} 
             data={this.props.workOrdersStores.workOrders} 
-            delData={this.delData.bind(this)}
           />
         ];
       }

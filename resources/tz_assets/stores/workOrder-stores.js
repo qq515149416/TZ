@@ -14,20 +14,6 @@ class WorkOrdersStores extends ActionBoundStores {
 
     ];
     type = 0;
-    delData(id) {
-        return new Promise((resolve,reject) => {
-            post("workorder/delete",{
-                delete_id: id
-            }).then((res) => {
-                if(res.data.code==1) {
-                    this.delStoreData("workOrders",id);
-                    resolve(true);
-                } else {
-                    resolve(false);
-                }
-            }).catch(reject);
-        });
-    }
     @action.bound 
     getData(param={}) {
         this.workOrders = [];
@@ -35,9 +21,7 @@ class WorkOrdersStores extends ActionBoundStores {
             work_order_status: this.type
         })).then((res) => {
             if(res.data.code==1) {
-                this.workOrders = res.data.data.map(item => new WorkOrderStores(Object.assign(item,{
-                    resource_detail_json: JSON.parse(item.resource_detail)
-                })));
+                this.workOrders = res.data.data.map(item => new WorkOrderStores(item));
             }
         });
     }

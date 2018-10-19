@@ -5,6 +5,7 @@ namespace App\Admin\Controllers\Hr;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use App\Admin\Models\Hr\JobsModel;
+use App\Admin\Models\Hr\DepartmentModel;
 use Illuminate\Http\Request;
 
 /**
@@ -59,5 +60,15 @@ class AccountController extends Controller
         $delete = new JobsModel();
         $delete_result = $delete->deleteJobs($delete_id);
         return tz_ajax_echo($delete_result,$delete_result['msg'],$delete_result['code']);
+    }
+
+    /**
+     * 获取部门数据
+     * @return [type] [description]
+     */
+    public function depart(){
+        $depart = new DepartmentModel();
+        $depart_result = $depart->showDepart();
+        return tz_ajax_echo($depart_result['data'],$depart_result['msg'],$depart_result['code']);
     }
 }

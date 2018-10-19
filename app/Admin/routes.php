@@ -106,6 +106,7 @@ Route::group([
         $router->post('insert_jobs','Hr\JobsController@insertJobs');
         $router->post('edit_jobs','Hr\JobsController@editJobs');
         $router->post('delete_jobs','Hr\JobsController@deleteJobs');
+        $router->get('depart','Hr\JobsController@depart');
         
     });
 

@@ -31,6 +31,7 @@ class JobsModel extends Model
     		$slug = [1=>'普通',2=>'部门管理人员',3=>'业务员',4=>'机房人员'];
     		foreach($show_jobs as $jobs_key){
     			$show_jobs[$jobs_key]['slug_name'] = $slug[$show_jobs[$jobs_key]['slug']];
+    			$show_jobs[$jobs_key]['depart'] = $this->depart($show_jobs[$jobs_key]['depart_id']);
     		}
     		$return['data'] = $show_jobs;
     		$return['code'] = 1;
@@ -130,5 +131,15 @@ class JobsModel extends Model
     		$return['msg'] = '删除对应职位数据失败!';
     	}
     	return $return;
+    }
+
+    /**
+     * 转换部门
+     * @param  [type] $depart_id [description]
+     * @return [type]            [description]
+     */
+    public function depart($depart_id){
+    	$depart = DB::table('tz_department')->where(['id'=>$depart_id])->value('depart_name');
+    	return $depart;
     }
 }

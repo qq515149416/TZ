@@ -5,7 +5,6 @@ namespace App\Admin\Controllers\Hr;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use App\Admin\Models\Hr\DepartmentModel;
-use Encore\Admin\Facades\Admin;
 use Illuminate\Http\Request;
 
 /**
@@ -55,7 +54,7 @@ class DepartmentController extends Controller
      * @return [type]           [description]
      */
     public function deleteDepart(Request $request){
-        $delete_id = $request['delete_id'];
+        $delete_id = $request->only(['delete_id']);
         $delete = new DepartmentModel();
         $delete_result = $delete->deleteDepart($delete_id);
         return tz_ajax_echo($delete_result,$delete_result['msg'],$delete_result['code']);

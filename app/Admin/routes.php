@@ -86,16 +86,20 @@ Route::group([
     ],function(Router $router){
         $router->get('showaccount', 'Hr\AccountController@showAccount');
         $router->get('showMyself', 'Hr\AccountController@personalAccount');
-        Route::group([
-        'prefix' => 'userInfo',
-        ],function(Router $router){
-            $router->get('showEmployee', 'Hr\EmployeeInformationController@showEmployee');
-            $router->post('insertEmployee', 'Hr\EmployeeInformationController@insertEmployee');
-            $router->post('editEmployee', 'Hr\EmployeeInformationController@editEmployee');
-            $router->post('deleteEmployee', 'Hr\EmployeeInformationController@deleteEmployee');
-            $router->get('employeePersonal', 'Hr\EmployeeInformationController@employeePersonal');
-            $router->post('employeeDetailed', 'Hr\EmployeeInformationController@employeeDetailed');
-        });
+        $router->get('showEmployee', 'Hr\EmployeeInformationController@showEmployee');
+        $router->post('insertEmployee', 'Hr\EmployeeInformationController@insertEmployee');
+        $router->post('editEmployee', 'Hr\EmployeeInformationController@editEmployee');
+        $router->post('deleteEmployee', 'Hr\EmployeeInformationController@deleteEmployee');
+        $router->get('employeePersonal', 'Hr\EmployeeInformationController@employeePersonal');
+        $router->post('employeeDetailed', 'Hr\EmployeeInformationController@employeeDetailed');
+        /**
+         * 部门
+         */
+        $router->get('show_depart','Hr\DepartmentController@showDepart');
+        $router->post('insert_depart','Hr\DepartmentController@insertDepart');
+        $router->post('edit_depart','Hr\DepartmentController@editDepart');
+        $router->post('delete_depart','Hr\DepartmentController@deleteDepart');
+        
     });
 
 
@@ -103,11 +107,11 @@ Route::group([
     Route::group([
         'prefix' => 'machine_room',
     ], function (Router $router) {
-    $router->get('showByAjax', 'Idc\MachineRoomController@showByAjax');
-    $router->get('show_select_list_by_ajax', 'Idc\MachineRoomController@showSelectListByAjax');
-    $router->post('storeByAjax', 'Idc\MachineRoomController@storeByAjax');
-    $router->post('destroyByAjax', 'Idc\MachineRoomController@destroyByAjax');
-    $router->post('updateByAjax', 'Idc\MachineRoomController@updateByAjax');
+        $router->get('showByAjax', 'Idc\MachineRoomController@showByAjax');
+        $router->get('show_select_list_by_ajax', 'Idc\MachineRoomController@showSelectListByAjax');
+        $router->post('storeByAjax', 'Idc\MachineRoomController@storeByAjax');
+        $router->post('destroyByAjax', 'Idc\MachineRoomController@destroyByAjax');
+        $router->post('updateByAjax', 'Idc\MachineRoomController@updateByAjax');
     });
 
     //机柜管理   分组增删改查

@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import ListTableComponent from "../component/listTableComponent.jsx";
-import {post} from "../tool/http.js";
+import ChangeStatus from "../component/dialog/changeStatus.jsx";
 import { inject,observer } from "mobx-react";
 const qs = require('qs');
 
@@ -23,7 +23,32 @@ const columnData = [
     { id: 'submitter_name', numeric: true, disablePadding: true, label: '提交人' },
     { id: 'submit', numeric: true, disablePadding: true, label: '提交方' },
     { id: 'workstatus', numeric: true, disablePadding: true, label: '状态' },
-    { id: 'department', numeric: true, disablePadding: true, label: '处理部门' }
+    { id: 'department', numeric: true, disablePadding: true, label: '处理部门' },
+    { id: 'operat', numeric: true, disablePadding: false, extend: true, extendData: [
+        {id: "business_num", label: "业务编号", type: "text"},
+        {id: "sales_name", label: "业务员" ,type: "text"},
+        {id: "work_order_content", label: "工单内容" ,type: "text"},
+        {id: "complete_number", label: "完成人员工号" ,type: "text"},
+        {id: "summary", label: "总结" ,type: "text"},
+        {id: "complete_time", label: "完成时间" ,type: "text"},
+        {id: "business_type", label: "业务类型" ,type: "text"},
+        {id: "machine_number", label: "机器编号" ,type: "text"},
+        {id: "resource_detail", label: "资源详情", type: "subordinate", subordinate: [
+            {id: "machine_num", label: "机器编号", type: "text"},
+            {id: "cpu", label: "CPU", type: "text"},
+            {id: "memory", label: "内存", type: "text"},
+            {id: "harddisk", label: "硬盘", type: "text"},
+            {id: "bandwidth", label: "带宽", type: "text"},
+            {id: "protect", label: "防御", type: "text"},
+            {id: "loginname", label: "账号", type: "text"},
+            {id: "loginpass", label: "密码", type: "text"},
+            {id: "machine_type", label: "机器型号", type: "text"},
+            {id: "machine_note", label: "机器备注", type: "text"},
+            {id: "cabinet_id", label: "机柜编号", type: "text"}
+          ]}
+    ],extendElement: (data) => {
+        return <ChangeStatus {...data} postUrl="workorder/edit" nameParam="work_order_number" />;
+    }, label: '操作' }
 ];
 const inputType = [
 
@@ -39,6 +64,11 @@ class WorkOrderList extends React.Component {
     }
     componentDidMount() {
         this.props.workOrdersStores.getData();
+    }
+    delData = (selectedData,callbrak) => {
+        const {workOrdersStores} = this.props;
+        let delIng = selectedData.map(item => workOrdersStores.delData(item));
+        callbrak(delIng);
     }
     handleChange = (event, value) => {
         this.props.workOrdersStores.type = value;
@@ -68,6 +98,7 @@ class WorkOrderList extends React.Component {
             inputType={inputType} 
             headTitlesData={columnData} 
             data={this.props.workOrdersStores.workOrders} 
+            delData={this.delData.bind(this)}
           />
         ];
       }

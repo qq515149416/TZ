@@ -55,10 +55,11 @@ class WorkOrderModel extends Model
                 // 工单状态的转换
                 $result[$showkey]['workstatus'] = $work_status[$showvalue['work_order_status']];
                 // 工单类型
-                $worktype = (array)$this->workType($showvalue['work_order_type']);
-                $list[$showkey]['worktype'] = $worktype->parenttype?'【'.$worktype->parenttype.'】 -- 【'.$worktype->type_name.'】':'【'.$worktype->type_name.'】';
+                $worktype = $this->workType($showvalue['work_order_type']);
+                $result[$showkey]['worktype'] = $worktype->parenttype?'【'.$worktype->parenttype.'】 -- 【'.$worktype->type_name.'】':'【'.$worktype->type_name.'】';
                 // 当前处理部门
-                $department = $showvalue['process_department']?(array)$this->role($showvalue['process_department']):['name'=>'网维部门'];
+                // $department = $showvalue['process_department']?(array)$this->role($showvalue['process_department']):['name'=>'网维部门'];
+                $department = ['name'=>'网维部门'];
                 $result[$showkey]['department'] = $department['name'];
                 // 对应的业务数据
                 $business = (array)$this->businessDetail($showvalue['business_num']);
@@ -288,6 +289,7 @@ class WorkOrderModel extends Model
             $return['code'] = 0;
             $return['msg'] = '无法删除信息!!';
         }
+        return $return;
     }
 
     /**
@@ -339,7 +341,7 @@ class WorkOrderModel extends Model
      */
     public function businessDetail($business_number){
         $business = DB::table('tz_business')->where('business_number',$business_number)->select('client_name','business_type','machine_number','resource_detail','sales_name')->first();
-        $business_type = ['-1'=>'取消','-2'=>'审核不通过',0=>'审核中',1=>'审核通过',2=>'付款使用中',3=>'未付款使用',4=>'锁定中',5=>'到期',6=>'退款'];
+        $business_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜'];
         $business->business_type = $business_type[$business->business_type];
         return $business;
     }

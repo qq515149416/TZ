@@ -26,7 +26,7 @@ class DepartmentModel extends Model
     	if(!$show_depart->isEmpty()){
     		$sign = [1=>'普通',2=>'工单初始部门',3=>'工单处理部门'];
     		foreach($show_depart as $depart_key){
-    			$show_depart[$depart_key]['sign_name'] = $show_depart[$depart_key]['sign'];
+    			$show_depart[$depart_key]['sign_name'] = $sign[$show_depart[$depart_key]['sign']];
     		}
     		$return['data'] = $show_depart;
     		$return['code'] = 1;
@@ -108,7 +108,7 @@ class DepartmentModel extends Model
     		$return['msg'] = '无法删除部门数据!';
     		return $return;
     	}
-    	$data = $this->find($delete_param['id']);
+    	$data = $this->find($delete_param['delete_id']);
     	if(empty($data)){
     		$return['data'] = '';
     		$return['code'] = 0;

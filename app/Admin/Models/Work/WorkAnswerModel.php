@@ -40,7 +40,6 @@ class WorkAnswerModel extends Model
             $business->work_order_type = $this->workType($business->work_order_type);
     		$answer = $this->where($where)->get(['work_number','answer_content','answer_id','answer_name','answer_role','created_at']);
     		$answer['business'] = $business;
-            dd($answer);
             if($answer->isEmpty()){
     			$return['data'] = $answer;
 	    		$return['msg'] = '获取工单详情成功';

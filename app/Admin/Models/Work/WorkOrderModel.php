@@ -240,7 +240,7 @@ class WorkOrderModel extends Model
     			// 完成人员id
     			$edit->complete_id = $id;
     			// 完成人员工号
-                $number = (array)$this->staff($admin_id);
+                $number = (array)$this->staff($id);
     			$edit->complete_number = $number['work_number'];
     			// 是否有报告总结的数据
     			if(!empty($editdata['summary'])){

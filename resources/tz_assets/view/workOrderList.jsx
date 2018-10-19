@@ -23,7 +23,6 @@ const columnData = [
     { id: 'submitter_name', numeric: true, disablePadding: true, label: '提交人' },
     { id: 'submit', numeric: true, disablePadding: true, label: '提交方' },
     { id: 'workstatus', numeric: true, disablePadding: true, label: '状态' },
-<<<<<<< HEAD
     { id: 'department', numeric: true, disablePadding: true, label: '处理部门' },
     { id: 'operat', numeric: true, disablePadding: false, extend: true, extendData: [
         {id: "business_num", label: "业务编号", type: "text"},
@@ -50,9 +49,6 @@ const columnData = [
     ],extendElement: (data) => {
         return <ChangeStatus {...data} postUrl="workorder/edit" nameParam="work_order_number" />;
     }, label: '操作' }
-=======
-    { id: 'department', numeric: true, disablePadding: true, label: '处理部门' }
->>>>>>> 06f9d30c1716999a98561b67e2b9b02335ce0e2e
 ];
 const inputType = [
 

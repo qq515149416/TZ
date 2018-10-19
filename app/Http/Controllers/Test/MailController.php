@@ -22,10 +22,10 @@ class MailController extends Controller
      */
     public function handle()
     {
-        
-        Redis::set('name', 'guwenjie');
-        $values = Redis::get('name');
-        dd($values);
+
+//        Redis::set('name', 'guwenjie');
+//        $values = Redis::get('name');
+//        dd($values);
 
         $res= Mail::to('568171152@qq.com')->queue(new Deadline());
         dump($res);

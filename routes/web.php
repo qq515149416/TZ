@@ -141,14 +141,17 @@ Route::group([
 			Route::post('cancel_white_list','Customer\WhiteListController@cancelWhiteList');
 			Route::get('show_work_answer','Customer\WorkAnswerController@showWorkAnswer');
 			Route::post('insert_work_answer','Customer\WorkAnswerController@insertWorkAnswer');
-
 			Route::get('show_work_order','Customer\WorkOrderController@showWorkOrder');
 			Route::post('insert_work_order','Customer\WorkOrderController@insertWorkOrder');
-
 			Route::get('work_types','Customer\WorkOrderController@workTypes');
-
 			Route::post('makeTrade','Customer\OrderController@makeTrade');
-
+			/**
+			 * 退款相关
+			 */
+			Route::post('show_refund','Customer\RefundController@showRefund');
+			Route::post('insert_refund','Customer\RefundController@insertRefund');
+			Route::post('cancel_refund','Customer\RefundController@cancelRefund');
+			Route::post('delete_refund','Customer\RefundController@deleteRefund');
 		});
 	});
 	

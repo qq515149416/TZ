@@ -6,6 +6,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import ListTableComponent from "../component/listTableComponent.jsx";
 import ChangeStatus from "../component/dialog/changeStatus.jsx";
+import Communication from "../component/dialog/communication.jsx";
 import { inject,observer } from "mobx-react";
 const qs = require('qs');
 
@@ -47,7 +48,11 @@ const columnData = [
             {id: "cabinet_id", label: "机柜编号", type: "text"}
           ]}
     ],extendElement: (data) => {
-        return <ChangeStatus {...data} postUrl="workorder/edit" nameParam="work_order_number" />;
+        if(data.work_order_status==1) {
+            return <Communication {...data} />;
+        } else {
+            return <ChangeStatus {...data} postUrl="workorder/edit" nameParam="work_order_number" />;
+        }
     }, label: '操作' }
 ];
 const inputType = [

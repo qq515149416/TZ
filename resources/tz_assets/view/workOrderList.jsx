@@ -44,7 +44,7 @@ const columnData = [
             {id: "loginpass", label: "密码", type: "text"},
             {id: "machine_type", label: "机器型号", type: "text"},
             {id: "machine_note", label: "机器备注", type: "text"},
-            {id: "cabinet_id", label: "机柜编号", type: "text"}
+            {id: "cabinet_id", label: "机柜编号", type: "text"},
           ]}
     ],extendElement: (data) => {
         return <ChangeStatus {...data} postUrl="workorder/edit" nameParam="work_order_number" />;

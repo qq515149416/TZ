@@ -68,15 +68,9 @@ const styles = {
               <ChangeStatus {...this.props} postUrl="workorder/edit" nameParam="work_order_number" />
             </Toolbar>
           </AppBar>
-          <List>
-            <ListItem button>
-              <ListItemText primary="Phone ringtone" secondary="Titania" />
-            </ListItem>
-            <Divider />
-            <ListItem button>
-              <ListItemText primary="Default notification ringtone" secondary="Tethys" />
-            </ListItem>
-          </List>
+          <div>
+              
+          </div>
         </Dialog>
       ];
     }

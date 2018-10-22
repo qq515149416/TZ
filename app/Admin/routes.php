@@ -9,8 +9,8 @@ Route::group([
     'namespace'  => config('admin.route.namespace'),
     'middleware' => config('admin.route.middleware'),
 ], function (Router $router) {
-
     $router->get('/', 'HomeController@index');
+   
 
 
     //Jun   个人测试用
@@ -78,7 +78,7 @@ Route::group([
     $router->get('/whitelist', 'Show\WhitelistController@index');
     $router->get('/work_order_type', 'Show\WorkOrderTypeController@index');
     $router->get('/work_order', 'Show\WorkOrderTypeController@index');
-
+    $router->get('/system_info', 'Show\SystemInformationController@index');
 
 //人事
     Route::group([

@@ -9,8 +9,8 @@ Route::group([
     'namespace'  => config('admin.route.namespace'),
     'middleware' => config('admin.route.middleware'),
 ], function (Router $router) {
-
     $router->get('/', 'HomeController@index');
+   
 
 
     //Jun   个人测试用
@@ -78,14 +78,26 @@ Route::group([
     $router->get('/whitelist', 'Show\WhitelistController@index');
     $router->get('/work_order_type', 'Show\WorkOrderTypeController@index');
     $router->get('/work_order', 'Show\WorkOrderTypeController@index');
-
+    $router->get('/system_info', 'Show\SystemInformationController@index');
 
 //人事
     Route::group([
         'prefix' => 'hr',
     ],function(Router $router){
-        $router->get('showaccount', 'Hr\AccountController@showAccount');
-        $router->get('showMyself', 'Hr\AccountController@personalAccount');
+        /**
+         * 账户
+         */
+        $router->get('show_account', 'Hr\AccountController@showAccount');
+        $router->get('show_self', 'Hr\AccountController@personalAccount');
+        $router->post('edit_self', 'Hr\AccountController@editAccount');
+        $router->post('reset_pass', 'Hr\AccountController@resetAccountPass');
+        $router->post('confirm_pass', 'Hr\AccountController@confirmPass');
+        $router->post('old_pass', 'Hr\AccountController@oldPass');
+        $router->post('edit_pass', 'Hr\AccountController@editPassword');
+        $router->post('insert_account', 'Hr\AccountController@insertAccount');
+        /**
+         * 员工信息
+         */
         $router->get('showEmployee', 'Hr\EmployeeInformationController@showEmployee');
         $router->post('insertEmployee', 'Hr\EmployeeInformationController@insertEmployee');
         $router->post('editEmployee', 'Hr\EmployeeInformationController@editEmployee');

@@ -45,7 +45,7 @@ class AccountController extends Controller
      * @return json           返回相关的账户修改状态提示及信息
      */
     public function editAccount(Request $request){
-        $edit_data = $request->only(['username','id']);
+        $edit_data = $request->only(['username','id','name']);
         $edit = new Account();
         $edit_result = $edit->editAccount($edit_data);
         return tz_ajax_echo($edit_result,$edit_result['msg'],$edit_result['code']);
@@ -85,7 +85,7 @@ class AccountController extends Controller
      */
     public function oldPass(Request $request){
         $old_pass = $request->only(['oldpassword','id']);
-        $password = Account::where('id',$old_pass)->select('password')->first();
+        $password = Account::where('id',Admin::user()->id)->select('password')->first();
         if(Hash::check($old_pass['oldpassword'],$password->password){
             return tz_ajax_echo('','原密码正确',1);
         } else {
@@ -103,5 +103,17 @@ class AccountController extends Controller
         $edit = new Account();
         $edit_result = $edit->editPassword($edit_data);
         return tz_ajax_echo($edit_result,$edit_result['msg'],$edit_result['code']);
+    }
+
+    /**
+     * 人事添加账户
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function insertAccount(Request $request){
+        $insert_data = ['username','name','avatar','remember_token'];
+        $insert = new Account();
+        $insert_result = $insert->insertAccount($insert_data);
+        return tz_ajax_echo($insert_result['data'],$insert_result['msg'],$insert['code']);
     }
 }

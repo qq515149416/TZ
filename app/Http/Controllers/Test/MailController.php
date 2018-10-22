@@ -19,8 +19,9 @@ class MailController extends Controller
     public function handle()
     {
 
+        $sendData['test'] = 'susu';
         Mail::to('568171152@qq.com')
-            ->send(new Deadline());
+            ->queue(new Deadline($sendData));
 //        Demo::dispatch('123');
 //        die();
 //         return '123';

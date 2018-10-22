@@ -11,15 +11,18 @@ class Deadline extends Mailable
 {
     use Queueable, SerializesModels;
 
+    protected $sendData;
+
     /**
      * Create a new message instance.
      * 创建一个新的消息实例
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($sendData)
     {
         //
+        $this->sendData = $sendData;
     }
 
     /**
@@ -30,6 +33,15 @@ class Deadline extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+
+
+        return $this->view('emails.deadline')
+            ->subject('腾正科技')
+            ->with([
+                'userName'  => $this->sendData['userName'],     //用户名
+//            'exampleType' => $this->sendData['exampleType'],  //实例类型
+                'exampleId' => $this->sendData['exampleId'],    //实例ID
+                'deadline'  => $this->sendData['deadline'],    //到期时间
+            ]);
     }
 }

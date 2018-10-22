@@ -161,7 +161,7 @@ Route::group([
 			Route::get('payOrderByAli','Customer\OrderController@payOrderByAli');
 			Route::get('aliReturn','Customer\OrderController@aliReturn');
 			Route::get('aliNotify','Customer\OrderController@aliNotify');
-			Route::get('checkOrder','Customer\OrderController@aliNotify');
+			Route::get('checkOrder','Customer\OrderController@checkOrder');
 
 		});
 	});

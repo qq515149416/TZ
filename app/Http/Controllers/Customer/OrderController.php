@@ -81,7 +81,7 @@ class OrderController extends Controller
 	public function payOrderByBalance(OrderRequest $request)
 	{
 		
-		$orderModel = new Order();
+		$orderModel = new PayOrder();
 
 		$info = $request->only('serial_number');
 		$serial_number = $info['serial_number'];
@@ -115,7 +115,7 @@ class OrderController extends Controller
 		
 		$payModel = new PayOrder();
 		$makeOrder = $payModel->makeTrade($order_id,$coupon_id,$user_id);
-
+		var_dump($makeOrder) ;exit;
 		return tz_ajax_echo($makeOrder['data'],$makeOrder['msg'],$makeOrder['code']);
 	}
 
@@ -191,7 +191,7 @@ class OrderController extends Controller
 		$serial_number 	= $info['serial_number'];
 		$way 		= $info['way'];
 
-		$orderModel = new Order();
+		$orderModel = new PayOrder();
 		$res = $orderModel->makePay($serial_number,$user_id);
 		if($res['code'] != 1){
 			return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
@@ -200,7 +200,7 @@ class OrderController extends Controller
 		$Pay = new AliPayController();
 		$order = [
 			'out_trade_no' 		=> $serial_number,			//本地订单号
-			'total_amount' 		=> $res['data']['payable_money'],	//金额
+			'total_amount' 		=> $res['data']['actual_payment'],	//金额
 			'subject' 		=> $res['data']['subject'],		//商品名称
 			'timeout_express'	=> '1c',	
 			//该笔订单允许的最晚付款时间，逾期将关闭交易。取值范围：1m～15d。m-分钟，h-小时，d-天，1c-当天（1c-当天的情况下，无论交易何时创建，都在0点关闭）。 该参数数值不接受小数点， 如 1.5h，可转换为 90m。该参数在请求到支付宝时开始计时。			
@@ -234,7 +234,7 @@ class OrderController extends Controller
 		}
 		//成功就获取订单参数
 		$data = $return['data'];
-		$serial_number 		= $data->out_trade_no;	//本地订单
+		$serial_number = $data->out_trade_no;	//本地订单
 
 		$res = $this->checkAliPayAndInsert($serial_number);
 		//跳转确认页面
@@ -260,6 +260,13 @@ class OrderController extends Controller
 		return $res['msg'];					
 	}
 
+	public function checkOrder(OrderRequest $request){
+		$serial_number = $request->only(['serial_number']);
+		$res = $this->checkAliPayAndInsert($serial_number);
+
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
+
 	public function checkAliPayAndInsert($serial_number){
 		
 		//实例化模型,询问支付宝该流水号是否买单
@@ -275,19 +282,20 @@ class OrderController extends Controller
 			];
 		}	
 
-		$model 	= new Order();
+		$model 	= new PayOrder();
 
 		//根据支付宝参数获取支付信息
 		$info['serial_number'] 		= $serial_number;			//支付流水
-		$info['voucher']		= $res->trade_no;			//支付宝凭证
+		$info['voucher']			= $res->trade_no;			//支付宝凭证
 		$info['pay_time']		= $res->send_pay_date;			//支付宝支付时间
 		$info['pay_type']		= 2;					//支付宝对应支付类型
-
+		$info['total_amount']		= $res->total_amount;			//支付宝收到金额
+	
 		$checkAndInsert 		= $model->checkAliPayAndInsert($info);
+
 		$return['msg'] 	= $return['msg'].$checkAndInsert['msg'];
 		$return['code']	= $checkAndInsert['code'];
 		$return['data'] = $checkAndInsert['data'];
-
 		if($checkAndInsert['code'] == 2){
 			$res = $PayController->cancel($serial_number);
 			if($res->code == '10000'){

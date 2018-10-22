@@ -99,6 +99,14 @@ Route::group([
         $router->post('insert_depart','Hr\DepartmentController@insertDepart');
         $router->post('edit_depart','Hr\DepartmentController@editDepart');
         $router->post('delete_depart','Hr\DepartmentController@deleteDepart');
+        /**
+         * 职位
+         */
+        $router->get('show_jobs','Hr\JobsController@showJobs');
+        $router->post('insert_jobs','Hr\JobsController@insertJobs');
+        $router->post('edit_jobs','Hr\JobsController@editJobs');
+        $router->post('delete_jobs','Hr\JobsController@deleteJobs');
+        $router->get('depart','Hr\JobsController@depart');
         
     });
 

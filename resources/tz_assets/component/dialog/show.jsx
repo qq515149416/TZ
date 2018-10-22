@@ -22,6 +22,9 @@ const ShowStyle = theme => ({
     },
     dialog: {
         minWidth: theme.breakpoints.values.md
+    },
+    dialogContent: {
+        // height: 600
     }
 });
 class Show extends React.Component {
@@ -58,7 +61,7 @@ class Show extends React.Component {
             }}
             >
             <DialogTitle id="alert-dialog-title">查看更多</DialogTitle>
-            <DialogContent>
+            <DialogContent className={classes.dialogContent}>
                 {
                     this.props.data.map(item => {
                         if(item.type=="text") {

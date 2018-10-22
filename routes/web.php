@@ -86,6 +86,101 @@ Route::group([
     'middleware' => 'UserOperationLog',
 ], function () {
 //支付接口
+
+	Route::group([
+		'prefix' => 'recharge',
+	], function () {
+		Route::group([
+			'middleware' => 'CheckLogin',
+		], function () {
+			//生成订单接口
+			Route::get('payIndex', 'Pay\RechargeController@index');
+			//获取登录中用户的所有充值单信息
+			Route::get('getOrderByUser', 'Pay\RechargeController@getOrderByUser');
+			//跳转到支付页面的方法
+			Route::get('goToPay', 'Pay\RechargeController@goToPay');
+
+			Route::get('delOrder', 'Pay\RechargeController@delOrder');
+		});
+
+
+		//异步接收支付宝发出通知的接口,支付宝方用的
+		Route::post('payRechargeNotify', 'Pay\RechargeController@rechargeNotify');
+		//用户支付完成后跳转页面
+		Route::get('payRechargeReturn', 'Pay\RechargeController@rechargeReturn');
+
+		//获取指定充值单号所有信息
+		Route::get('getOrder', 'Pay\RechargeController@getOrder');
+		//查询指定充值单号支付情况
+		Route::get('checkRechargeOrder', 'Pay\RechargeController@checkRechargeOrder');
+
+		//退款页面
+		//Route::get('refund', 'Pay\PayController@refund');
+
+		//调试用
+		Route::get('payForm', 'Pay\AliPayController@form');
+		Route::get('test', 'Pay\AliPayController@test');
+	});
+	
+
+	//用户相关订单和业务
+	Route::group([
+		'prefix'     => 'customer',
+	], function () {
+		Route::group([
+				'middleware' => 'CheckLogin',
+		], function () {
+			Route::get('businessList', 'Customer\BusinessController@getBusinessList');
+			Route::get('orderList', 'Customer\OrderController@getOrderList');
+			Route::get('delOrder', 'Customer\OrderController@delOrder');
+			Route::get('payOrderByBalance', 'Customer\OrderController@payOrderByBalance');
+			Route::post('renewresource','Customer\OrderController@renewResource');
+			Route::get('show_white_list','Customer\WhiteListController@showWhiteList');
+			Route::post('insert_white_list','Customer\WhiteListController@insertWhiteList');
+			Route::post('check_ip','Customer\WhiteListController@checkIp');
+			Route::post('check_domain_name','Customer\WhiteListController@checkDomainName');
+			Route::post('cancel_white_list','Customer\WhiteListController@cancelWhiteList');
+			Route::get('show_work_answer','Customer\WorkAnswerController@showWorkAnswer');
+			Route::post('insert_work_answer','Customer\WorkAnswerController@insertWorkAnswer');
+			Route::get('show_work_order','Customer\WorkOrderController@showWorkOrder');
+			Route::post('insert_work_order','Customer\WorkOrderController@insertWorkOrder');
+			Route::get('work_types','Customer\WorkOrderController@workTypes');
+			Route::post('makeTrade','Customer\OrderController@makeTrade');
+
+			/**
+			 * 退款相关
+			 */
+			Route::post('show_refund','Customer\RefundController@showRefund');
+			Route::post('insert_refund','Customer\RefundController@insertRefund');
+			Route::post('cancel_refund','Customer\RefundController@cancelRefund');
+			Route::post('delete_refund','Customer\RefundController@deleteRefund');
+
+			Route::get('showTrade','Customer\OrderController@showTrade');
+			//以下测试
+		
+			Route::get('payOrderByAli','Customer\OrderController@payOrderByAli');
+			Route::get('aliReturn','Customer\OrderController@aliReturn');
+			Route::get('aliNotify','Customer\OrderController@aliNotify');
+			Route::get('checkOrder','Customer\OrderController@aliNotify');
+
+		});
+	});
+	
+	//用户故障工单路由
+	Route::group([
+		'prefix'     => 'fault',
+	], function () {
+		Route::group([
+			'middleware' => 'CheckLogin',
+		], function () {
+			Route::get('workOrderList', 'Work\WorkOrderController@showWorkOrder');
+			Route::post('insert', 'Work\WorkOrderController@insertWorkOrder');
+			Route::post('del', 'Work\WorkOrderController@deleteWorkOrder');
+			Route::post('cancel', 'Work\WorkOrderController@cancelWorkOrder');
+		});
+
+	});
+
     Route::group([
         'prefix' => 'recharge',
     ], function () {
@@ -166,6 +261,7 @@ Route::group([
         });
 
     });
+
 
     /**
      * 用户信息

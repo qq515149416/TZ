@@ -66,8 +66,8 @@ class AliPayController extends Controller
 	*/
 	public function goToPay($order,$way,$returnUrl,$notifyUrl)
 	{
-		$this->config['notify_url'] 	= $returnUrl;
- 		$this->config['return_url'] 	= $notifyUrl;
+		$this->config['return_url'] 	= $returnUrl;
+ 		$this->config['notify_url'] 	= $notifyUrl;
 		//生成支付宝链接
 		switch ($way) {
 			case 'web':

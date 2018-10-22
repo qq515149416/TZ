@@ -1,21 +1,20 @@
 <?php
 
-namespace App\Admin\Controllers\Business;
+namespace App\Http\Controllers\Customer;
 
-use App\Http\Controllers\Controller;
-use Encore\Admin\Controllers\ModelForm;
-use App\Admin\Models\Business\RefundModel;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Models\Customer\RefundModel;
+use Illuminate\Support\Facades\Auth;
 
 /**
- * 后台退款单控制器
+ * 前台退款相关接口
  */
 class RefundController extends Controller
 {
-    use ModelForm;
-
+    //
     /**
-     * 后台业务员/管理人员通过订单查看退款详情
+     * 客户通过订单查看退款详情
      * @param  Request $request [description]
      * @return [type]           [description]
      */
@@ -23,18 +22,6 @@ class RefundController extends Controller
     	$order_num = $request->only(['refund_order']);
     	$refund = new RefundModel();
     	$refund_result = $refund->showRefund($order_num);
-    	return tz_ajax_echo($refund_result['data'],$refund_result['msg'],$refund_result['code']);
-    }
-
-    /**
-     * 财务根据订单查看退款单
-     * @param  Request $request [description]
-     * @return [type]           [description]
-     */
-    public function financeRefund(Request $request){
-    	$order_num = $request->only(['refund_order']);
-    	$refund = new RefundModel();
-    	$refund_result = $refund->financeRefund($order_num);
     	return tz_ajax_echo($refund_result['data'],$refund_result['msg'],$refund_result['code']);
     }
 
@@ -73,4 +60,4 @@ class RefundController extends Controller
     	$delete_result = $delete->deleteRefund($delete_refund);
     	return tz_ajax_echo($delete_result,$delete_result['msg'],$delete_result['code']);
     }
-}   
+}

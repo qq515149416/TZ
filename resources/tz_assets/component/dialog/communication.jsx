@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItem from '@material-ui/core/ListItem';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
+// import ListItemText from '@material-ui/core/ListItemText';
+// import ListItem from '@material-ui/core/ListItem';
+// import List from '@material-ui/core/List';
+// import Divider from '@material-ui/core/Divider';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -16,6 +16,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import Tooltip from '@material-ui/core/Tooltip';
 import ChangeStatus from "./changeStatus.jsx";
+import TextField from '@material-ui/core/TextField';
 
 const styles = {
     appBar: {
@@ -24,6 +25,18 @@ const styles = {
     flex: {
       flex: 1,
     },
+    content: {
+        height: 550
+    },
+    textField: {
+        margin: 0
+    },
+    send: {
+        textAlign: "right"
+    },
+    sendButton: {
+        marginTop: 5
+    }
   };
   
   function Transition(props) {
@@ -68,9 +81,24 @@ const styles = {
               <ChangeStatus {...this.props} postUrl="workorder/edit" nameParam="work_order_number" />
             </Toolbar>
           </AppBar>
-          <div>
-              
+          <div className={classes.content}>
+
           </div>
+          <TextField
+                id="content"
+            // label="Multiline"
+                multiline
+                rows="4"
+                className={classes.textField}
+                margin="normal"
+                fullWidth
+                placeholder="请填写要回复的内容"
+            />
+            <div className={classes.send}>
+                <Button variant="contained" className={classes.sendButton} color="primary">
+                    回复
+                </Button>
+            </div>
         </Dialog>
       ];
     }

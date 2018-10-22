@@ -146,6 +146,7 @@ Route::group([
 			Route::post('insert_work_order','Customer\WorkOrderController@insertWorkOrder');
 			Route::get('work_types','Customer\WorkOrderController@workTypes');
 			Route::post('makeTrade','Customer\OrderController@makeTrade');
+
 			/**
 			 * 退款相关
 			 */
@@ -153,6 +154,15 @@ Route::group([
 			Route::post('insert_refund','Customer\RefundController@insertRefund');
 			Route::post('cancel_refund','Customer\RefundController@cancelRefund');
 			Route::post('delete_refund','Customer\RefundController@deleteRefund');
+
+			Route::get('showTrade','Customer\OrderController@showTrade');
+			//以下测试
+		
+			Route::get('payOrderByAli','Customer\OrderController@payOrderByAli');
+			Route::get('aliReturn','Customer\OrderController@aliReturn');
+			Route::get('aliNotify','Customer\OrderController@aliNotify');
+			Route::get('checkOrder','Customer\OrderController@aliNotify');
+
 		});
 	});
 	

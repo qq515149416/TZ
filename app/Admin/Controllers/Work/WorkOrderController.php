@@ -8,6 +8,7 @@ use App\Admin\Models\Work\WorkOrderModel;
 use App\Admin\Models\Hr\DepartmentModel;
 use App\Admin\Requests\Work\WorkOrderRequest;
 use Illuminate\Http\Request;
+use Encore\Admin\Facades\Admin;
 
 /**
  * 工单的控制器
@@ -15,6 +16,18 @@ use Illuminate\Http\Request;
 class WorkOrderController extends Controller
 {
     use ModelForm;
+
+    /**
+     * 查询登陆的账户个人信息是否完整
+     */
+    // public function  __construct(){
+    //     $user_id = Admin::user()->id;
+    //     $staff = new DepartmentModel();
+    //     $staff_result = $staff->staff($user_id);
+    //     if(empty($staff_result)){
+    //         return tz_ajax_echo([],'请完善您的个人信息',2);
+    //     }
+    // }
 
     /**
      * 查找工单的信息(管理人员/网维人员/网管人员)

@@ -35,9 +35,7 @@ class PayOrder extends Model
 	 * @param  int $id      订单的id
 	 * @return array          返回相关的状态提示及信息
 	 */
-	public function payOrderByBalance($user_id,$serial_number){
-		
-		// $serial_number = 'tz_'.time().'_'.$user_id;	 //支付流水号
+	public function payTradeByBalance($user_id,$serial_number){
 		
 		$row = $this->where('serial_number',$serial_number)->first();
 	
@@ -114,7 +112,7 @@ class PayOrder extends Model
 			if($row[$j]['resource_type'] < 4) {
 				// 资源类型如果是机柜/主机，查找对应的业务状态	
 				$business_status = DB::table('tz_business')->where('business_number',$row[$j]['business_sn'])->value('business_status');
-				if($business_status > 0 && $business_status < 4){
+				if($business_status > 0 && $business_status < 4 && $business_status != 2){
 					// 业务状态是审核通过且是使用状态将状态修改为付款使用即2
 					$business['business_status'] = 2;
 					$businessUp = DB::table('tz_business')->where('business_number',$row[$j]['business_sn'])->update($business);
@@ -133,9 +131,7 @@ class PayOrder extends Model
 		$return['data'] = $row;
 		$return['msg'] = '余额支付成功!!';
 		$return['code'] = 1;	
-		
-		
-				 		
+		 		
 		return $return;
 	}
 
@@ -304,18 +300,116 @@ class PayOrder extends Model
 
 	}
 
+	/**
+	 * 根据登录账号获取所有支付流水号
+	 * @param  $order_id[]		-订单id的数组; $coupon_id	-优惠券id
+	 * @return 支付订单号
+	 */
+	public function showTrade($user_id){
+		$return['data'] = '';
+		$return['code'] = 0;
+		$list = $this			
+		->orderBy('tz_orders_flow.created_at','asc')
+		->get(['id','serial_number','subject','payable_money','actual_payment','preferential_amount','pay_type','pay_status','pay_time','before_money','after_money','coupon_id','created_at']);	
+		if($list->isEmpty()){
+			$return['msg'] = '无支付订单记录';
+			return $return;
+		}
 
-	// public function showTrade($user_id){
-	// 	$row = $this
-	// 	->where('customer_id',$user_id)
-	// 	->where('order_status',7)
-	// 	->select(DB::raw('serial_number as trade, id'))
-	// 	->get();
-	// 	$row = json_decode(json_encode($row),true);
-	// 	dd($row);
-	// 	return $row;
-	// }
+		$list = json_decode(json_encode($list),true);
+		for ($i=0; $i < count($list); $i++) { 
+			$status = [ '1' => '已支付' , '0' => '未支付' ];
+			$type = [ '0' => '未选择' , '1' => '余额' , '2' => '支付宝' , '3' => '微信' , '4' => '其他' ];
+			$list[$i]['pay_type'] = $type[$list[$i]['pay_type']];
+			$list[$i]['pay_status'] = $status[$list[$i]['pay_status']];
 
+			$list[$i]['order'] = DB::table('tz_orders')->where('serial_number',$list[$i]['serial_number'])->get(['resource_type','order_type','machine_sn','resource','price','duration','payable_money']);
+			if($list[$i]['order']->isEmpty()){
+				$return['data'] = $list[$i]['serial_number'];
+				$return['msg'] = '获取此订单信息失败';
+				return $return;
+			}
+
+			$list[$i]['order'] = json_decode(json_encode($list[$i]['order']),true);
+			for ($j=0; $j < count($list[$i]['order']); $j++) { 
+				$order_type = [ '1' => '新购' , '2' => '续费'];
+				$resource_type = [
+					1	=> '租用主机',
+					2	=> '托管主机',
+					3	=> '租用机柜',
+					4	=> 'IP',
+					5	=> 'CPU',
+					6	=> '硬盘',
+					7	=> '内存',
+					8	=> '带宽',
+					9	=> '防护',
+					10	=> 'cdn',
+				];
+				$list[$i]['order'][$j]['order_type'] = $order_type[$list[$i]['order'][$j]['order_type']];
+				$list[$i]['order'][$j]['resource_type'] = $resource_type[$list[$i]['order'][$j]['resource_type']];		
+			}
+		}
+		$return['data'] 	= $list;
+		$return['msg']	= '获取成功';
+		$return['code']	= 1;
+
+		return $return;
+	}
+	/**
+	 * 根据登录账号获取未支付的支付流水号
+	 * @param  $order_id[]		-订单id的数组; $coupon_id	-优惠券id
+	 * @return 支付订单号
+	 */
+	public function showUnpaidTrade($user_id){
+		$return['data'] = '';
+		$return['code'] = 0;
+		$list = $this	
+		->where('pay_status',0)		
+		->orderBy('created_at','asc')
+		->get(['id','serial_number','subject','payable_money','actual_payment','preferential_amount','pay_type','pay_status','pay_time','before_money','after_money','coupon_id','created_at']);	
+		if($list->isEmpty()){
+			$return['msg'] = '无未支付的支付订单记录';
+			return $return;
+		}
+		$list = json_decode(json_encode($list),true);
+		for ($i=0; $i < count($list); $i++) { 
+			$status = [ '1' => '已支付' , '0' => '未支付' ];
+			$type = [ '0' => '未选择' , '1' => '余额' , '2' => '支付宝' , '3' => '微信' , '4' => '其他' ];
+			$list[$i]['pay_type'] = $type[$list[$i]['pay_type']];
+			$list[$i]['pay_status'] = $status[$list[$i]['pay_status']];
+			$list[$i]['order'] = DB::table('tz_orders')->where('serial_number',$list[$i]['serial_number'])->get(['resource_type','order_type','machine_sn','resource','price','duration','payable_money']);
+			if($list[$i]['order']->isEmpty()){
+				$return['data'] = $list[$i]['serial_number'];
+				$return['msg'] = '获取此订单信息失败';
+				return $return;
+			}
+
+			$list[$i]['order'] = json_decode(json_encode($list[$i]['order']),true);
+			for ($j=0; $j < count($list[$i]['order']); $j++) { 
+				$order_type = [ '1' => '新购' , '2' => '续费'];
+				$resource_type = [
+					1	=> '租用主机',
+					2	=> '托管主机',
+					3	=> '租用机柜',
+					4	=> 'IP',
+					5	=> 'CPU',
+					6	=> '硬盘',
+					7	=> '内存',
+					8	=> '带宽',
+					9	=> '防护',
+					10	=> 'cdn',
+				];
+				$list[$i]['order'][$j]['order_type'] = $order_type[$list[$i]['order'][$j]['order_type']];
+				$list[$i]['order'][$j]['resource_type'] = $resource_type[$list[$i]['order'][$j]['resource_type']];		
+			}
+		}
+		$return['data'] 	= $list;
+		$return['msg']	= '获取成功';
+		$return['code']	= 1;
+
+		return $return;
+	}
+	
 	public function makePay($serial_number,$user_id){
 		$row = $this->select(['id','customer_id','pay_status','actual_payment','pay_type','subject'])->where('serial_number',$serial_number)->first();
 
@@ -352,20 +446,18 @@ class PayOrder extends Model
 	public function checkAliPayAndInsert($data)
 	{
 		//判断流水号为已付款后进入此方法
-		
+	
 		//查找该流水所属的订单号
 		$order = $this->where('serial_number',$data['serial_number'])->first(['id','pay_status','pay_type','actual_payment']);
 		
 		$return['data'] = '';
 		//如果没就返回没有该订单
 		if($order == NULL){
-			$return['code'] = 0;
+			$return['code'] = 5;
 			$return['msg'] = '无此单号!!请联系客服!!';
 			return $return;
 		}
-
-		//判断支付状态
-		
+		//判断支付状态	
 		if($order['pay_status'] == 1){		
 			//如果订单状态是已支付的,就判断是否为当前支付方式支付,如果不是,就返回code2,去退款
 			if($order['pay_type'] != $data['pay_type']){
@@ -411,11 +503,12 @@ class PayOrder extends Model
 
 		$row = DB::table('tz_orders')->where('serial_number',$data['serial_number'])->get(['business_sn','resource_type']);
 		$row = json_decode(json_encode($row),true);
+
 		for ($j=0 ; $j < count($row); $j++) { 
 			if($row[$j]['resource_type'] < 4) {
 				// 资源类型如果是机柜/主机，查找对应的业务状态	
 				$business_status = DB::table('tz_business')->where('business_number',$row[$j]['business_sn'])->value('business_status');
-				if($business_status > 0 && $business_status < 4){
+				if($business_status > 0 && $business_status < 4 && $business_status != 2){
 					// 业务状态是审核通过且是使用状态将状态修改为付款使用即2
 					$business['business_status'] = 2;
 					$businessUp = DB::table('tz_business')->where('business_number',$row[$j]['business_sn'])->update($business);
@@ -437,5 +530,13 @@ class PayOrder extends Model
 		return $return;
 	}
 
+	public function checkPayStatus($serial_number){
+		$check = $this->where('serial_number',$serial_number)->first(['id','serial_number','pay_status']);
+		return $check;
+	}
 	
+	public function delTrade($serial_number){
+		$res = $this->where('serial_number',$serial_number)->delete();
+		return $res;
+	}
 }

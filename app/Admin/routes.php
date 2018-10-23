@@ -98,12 +98,13 @@ Route::group([
         /**
          * 员工信息
          */
-        $router->get('showEmployee', 'Hr\EmployeeInformationController@showEmployee');
-        $router->post('insertEmployee', 'Hr\EmployeeInformationController@insertEmployee');
-        $router->post('editEmployee', 'Hr\EmployeeInformationController@editEmployee');
-        $router->post('deleteEmployee', 'Hr\EmployeeInformationController@deleteEmployee');
-        $router->get('employeePersonal', 'Hr\EmployeeInformationController@employeePersonal');
-        $router->post('employeeDetailed', 'Hr\EmployeeInformationController@employeeDetailed');
+        $router->get('show_employee', 'Hr\EmployeeInformationController@showEmployee');
+        $router->post('insert_employee', 'Hr\EmployeeInformationController@insertEmployee');
+        $router->post('edit_employee', 'Hr\EmployeeInformationController@editEmployee');
+        $router->post('delete_employee', 'Hr\EmployeeInformationController@deleteEmployee');
+        $router->get('employee_personal', 'Hr\EmployeeInformationController@employeePersonal');
+        $router->get('department', 'Hr\EmployeeInformationController@department');
+        $router->post('jobs', 'Hr\EmployeeInformationController@jobs');
         /**
          * 部门
          */

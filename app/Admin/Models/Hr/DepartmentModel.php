@@ -24,13 +24,14 @@ class DepartmentModel extends Model
     public function showDepart(){
     	$show_depart = $this->get(['id','depart_number','depart_name','sign','created_at','updated_at']);
     	if(!$show_depart->isEmpty()){
-    		$sign = [1=>'普通',2=>'工单初始部门',3=>'工单处理部门'];
-    		foreach($show_depart as $depart_key){
-    			$show_depart[$depart_key]['sign_name'] = $sign[$show_depart[$depart_key]['sign']];
-    		}
-    		$return['data'] = $show_depart;
-    		$return['code'] = 1;
-    		$return['msg'] = '获取部门数据成功';
+            $sign = [1=>'普通',2=>'工单初始部门',3=>'工单处理部门'];
+            foreach($show_depart as $depart_key){
+                $show_depart[$depart_key]['sign_name'] = $sign[$show_depart[$depart_key]['sign']];
+            }
+        }	
+		$return['data'] = $show_depart;
+		$return['code'] = 1;
+		$return['msg'] = '获取部门数据成功';
     	} else {
     		$return['data'] = [];
     		$return['code'] = 0;

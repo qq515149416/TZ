@@ -25,7 +25,9 @@ class JobsModel extends Model
     public function showJobs($depart_id){
     	if($depart_id){
     		$where = $depart_id;
-    	}
+    	} else {
+            $where = [];
+        }
     	$show_jobs = $this->where($where)->get(['id','job_number','job_name','depart_id','slug','created_at','updated_at']);
     	if(!$show_jobs->isEmpty()){
     		$slug = [1=>'普通',2=>'部门管理人员',3=>'业务员',4=>'机房人员'];

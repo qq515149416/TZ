@@ -237,9 +237,8 @@ Route::group([
     Route::group([
         'prefix' => 'workorder',
     ],function(Router $router){
-        $router->get('show','Work\WorkOrderController@showWorkOrder');//管理员和网维等人员查看
-        $router->get('clerk','Work\WorkOrderController@clerkWorkOrder');//业务员查看
-        $router->get('area','Work\WorkOrderController@areaWorkOrder');//地区机房人员查看
+        $router->get('show','Work\WorkOrderController@showWorkOrder');
+        $router->get('department','Work\WorkOrderController@department');
         $router->post('insert','Work\WorkOrderController@insertWorkOrder');
         $router->post('edit','Work\WorkOrderController@editWorkOrder');
         $router->post('delete','Work\WorkOrderController@deleteWorkOrder');

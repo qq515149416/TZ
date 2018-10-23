@@ -28,10 +28,10 @@ class DepartmentModel extends Model
             foreach($show_depart as $depart_key){
                 $show_depart[$depart_key]['sign_name'] = $sign[$show_depart[$depart_key]['sign']];
             }
-        }	
-		$return['data'] = $show_depart;
-		$return['code'] = 1;
-		$return['msg'] = '获取部门数据成功';
+	        $return['data'] = $show_depart;
+            $return['code'] = 1;
+            $return['msg'] = '获取部门数据成功';
+		
     	} else {
     		$return['data'] = [];
     		$return['code'] = 0;

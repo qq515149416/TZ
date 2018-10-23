@@ -9,7 +9,10 @@ const styles = theme => ({
     root: {
       flexGrow: 1,
       width: '100%',
-      backgroundColor: theme.palette.background.paper,
+      backgroundColor: "transparent",
+    },
+    tab: {
+        backgroundColor: "#fff"
     }
 });
 
@@ -29,7 +32,7 @@ class TabComponent extends React.Component {
         // const {value} = this.state;
         return (
             <div className={classes.root}>
-        <AppBar position="static" color="default">
+        <AppBar position="static" className={classes.tab} color="default">
           <Tabs
             value={type}
             onChange={this.handleChange}

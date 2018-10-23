@@ -21,8 +21,8 @@ import WhitelistList from "../view/whitelistList.jsx";
 import WorkOrderTypeList from "../view/workOrderTypeList.jsx";
 import WorkOrderList from "../view/workOrderList.jsx";
 import Home from "../view/home.jsx";
-
-
+import DepartmentList from "../view/departmentList.jsx";
+import PositionList from "../view/positionList.jsx";
 
 
 export default () => [
@@ -46,5 +46,7 @@ export default () => [
     <Route path="/tz_admin/whitelist" component={WhitelistList} />,
     <Route path="/tz_admin/work_order_type" component={WorkOrderTypeList} />,
     <Route path="/tz_admin/work_order" component={WorkOrderList} />,
-    <Route path="/tz_admin" component={Home} exact />
+    <Route path="/tz_admin" component={Home} exact />,
+    <Route path="/tz_admin/hr/department" component={DepartmentList} />,
+    <Route path="/tz_admin/hr/position" component={PositionList} />
 ];

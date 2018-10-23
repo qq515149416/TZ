@@ -9,13 +9,18 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {get} from "../tool/http";
 import TabComponent from "../component/tabComponent.jsx";
-
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
 
 const styles = theme => ({
     root: {
       width: '100%',
     //   marginTop: theme.spacing.unit * 3,
       overflowX: 'auto',
+      marginTop: 0,
+      borderRadius: "0 0 4px 4px",
+      boxShadow: "0px 4px 5px 0px rgba(0, 0, 0, 0.1), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12)"
     },
     table: {
       minWidth: 700,
@@ -99,6 +104,27 @@ const types = {
             { id: 'resource_type', label: '资源类型' },
             { id: 'self_number', label: '自身编号' }
         ]
+    },
+    overdueResDet: {
+        url: "overdue/showOverdueResDet",
+        subOption: [
+            {value: 4, label: 'IP', default: true},
+            {value: 5, label: 'CPU', default: false},
+            {value: 6, label: '硬盘', default: false},
+            {value: 7, label: '内存', default: false},
+            {value: 8, label: '带宽', default: false},
+            {value: 9, label: '防护', default: false},
+            {value: 10, label: 'CDN', default: false}
+        ],
+        columnData: [
+            { id: 'business_number', label: '业务编号' },
+            { id: 'cabinet_num', label: '机柜编号' },
+            { id: 'machine_num', label: '机器编号' },
+            { id: 'customer_name', label: '客户名称' },
+            { id: 'end_time', label: '到期时间' },
+            { id: 'resource_type', label: '资源类型' },
+            { id: 'self_number', label: '自身编号' }
+        ]
     }
 };
 
@@ -107,7 +133,8 @@ class Home extends React.Component {
         super(props);
         this.state = {
             type: "overdueCabinet",
-            data: []
+            data: [],
+            subOption: {}
         };
     }
     componentDidMount() {
@@ -118,7 +145,17 @@ class Home extends React.Component {
         this.setState({
             data: []
         });
-        get(types[type].url).then(res => {
+        const param={};
+        if(types[type].subOption && types[type].subOption.length) {
+            param.resource_type = types[type].subOption.find(item => item.default).value;
+            this.setState(state => {
+                types[type].subOption.forEach(item => {
+                    state.subOption[item.value] = item.default;
+                });
+                return state;
+            });
+        }
+        get(types[type].url,param).then(res => {
             if(res.data.code==1) {
                 this.setState({
                     data: res.data.data
@@ -134,6 +171,30 @@ class Home extends React.Component {
             type: value
         });
     }
+    handleSubChange = value => event => {
+        const {type} = this.state;
+        get(types[type].url,{
+            resource_type: value
+        }).then(res => {
+            if(res.data.code==1) {
+                // this.setState({
+                //     data: res.data.data
+                // });
+                this.setState(state => {
+                    for(let key in state.subOption) {
+                        state.subOption[key] = false;
+                    }
+                    state.subOption[value] = true;
+                    state.data = res.data.data;
+                    return state;
+                });
+            } else {
+                // console.warn(res.data.msg);
+                alert(res.data.msg);
+            }
+        });
+        
+    };
     render() {
         const { classes } = this.props;
         const {type,data} = this.state;
@@ -145,9 +206,30 @@ class Home extends React.Component {
                 {label: "未支付使用的机器", value: "unpaidMachine"},
                 {label: "最近下架机器", value: "xiaJiaMachine"},
                 {label: "未支付使用的机柜", value: "unpaidCabinet"},
-                {label: "下架资源", value: "xiaJiaRes"}
+                {label: "下架资源", value: "xiaJiaRes"},
+                {label: "近过期资源", value: "overdueResDet"}
             ]} type={type} onChange={this.handleChange}>
                 <Paper className={classes.root}>
+                {
+                    (types[type].subOption && types[type].subOption.length) && (
+                        <FormGroup row>
+                            {
+                                types[type].subOption.map(item => (
+                                    <FormControlLabel
+                                    control={
+                                        <Radio
+                                            checked={this.state.subOption[item.value]}
+                                            onChange={this.handleSubChange(item.value)}
+                                            value={item.value}
+                                        />
+                                    }
+                                    label={item.label}
+                                    />
+                                ))
+                            }
+                        </FormGroup>
+                    ) 
+                }
                 <Table className={classes.table}>
                     <TableHead>
                     <TableRow>

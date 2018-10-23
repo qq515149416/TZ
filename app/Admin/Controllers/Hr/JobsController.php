@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 /**
  * 职位
  */
-class AccountController extends Controller
+class JobsController extends Controller
 {
     use ModelForm;
 

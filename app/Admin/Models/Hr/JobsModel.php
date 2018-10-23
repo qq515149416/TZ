@@ -22,8 +22,8 @@ class JobsModel extends Model
      * @param  [type] $depart_id [description]
      * @return [type]            [description]
      */
-    public function showJobs($depart_id){
-    	if($depart_id){
+    public function showJobs($depart_id = 0 ){
+    	if($depart_id != 0){
     		$where = $depart_id;
     	} else {
             $where = [];

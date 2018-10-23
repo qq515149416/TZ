@@ -125,7 +125,7 @@ class Account extends Model
        */
     public function resetAccountPass($reset_pass){
         if($reset_pass){
-           $reset['password'] = bcrypt($reset_pass['username']);
+           $reset['password'] = Hash::make($reset_pass['username']);
            $row = $this->where('id',$reset_pass['id'])->update($reset);
            if($row != false){
               $return['code'] = 1;
@@ -147,7 +147,7 @@ class Account extends Model
        */
     public function editPassword($edit_data){
         if($edit_data){
-            $edit_data['password'] = bcrypt($edit_data['password']);
+            $edit_data['password'] = Hash::make($edit_data['password']);
             $row = $this->where('id',$edit_data)->update($edit_data);
             if($row != false){
                $return['code'] = 1;

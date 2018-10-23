@@ -342,7 +342,8 @@ class BusinessModel extends Model
 
 
     /**
-     * 查找用户过期的业务
+     * 查找用户准备过期的业务
+     * (过期前5天)
      *
      * endding_time:业务结束 时间
      * @author ZhanJun

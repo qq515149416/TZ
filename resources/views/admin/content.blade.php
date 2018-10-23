@@ -42,7 +42,7 @@
         @include('admin::partials.success')
         @include('admin::partials.exception')
         @include('admin::partials.toastr')
-
+        
         {!! $content !!}
 
     </section>

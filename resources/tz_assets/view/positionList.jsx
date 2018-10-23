@@ -24,7 +24,7 @@ const inputType = [
         type: "text"
     },
     {
-        field: "sign",
+        field: "slug",
         label: "职位标志",
         type: "switch",
         radioData: [
@@ -52,6 +52,11 @@ const inputType = [
                 checked: false,
                 value: "5",
                 label: "财务人员"
+            },
+            {
+                checked: false,
+                value: "6",
+                label: "信安人员"
             }
         ]
     },
@@ -67,8 +72,11 @@ const inputType = [
 @observer 
 class PositionList extends React.Component {
     componentDidMount() {
-        this.props.positionsStores.getData();
-        this.props.positionsStores.getDepartmentsData();
+        this.props.positionsStores.getDepartmentsData().then(state => {
+            if(state) {
+                this.props.positionsStores.getData();
+            }
+        });
     }
     addData = (param,callbrak) => {
         this.props.positionsStores.addData(param).then((state) => {

@@ -17,7 +17,7 @@ class PositionsStores extends ActionBoundStores {
     @observable positions = [
 
     ];
-    @observable departments = [
+    departments = [
 
     ];
     sign_state = {
@@ -25,7 +25,8 @@ class PositionsStores extends ActionBoundStores {
         "2": "部门主管",
         "3": "业务员",
         "4": "机房人员",
-        "5": "财务人员"
+        "5": "财务人员",
+        "6": "信安人员"
     };
     changeData(param) {
         return new Promise((resolve,reject) => {
@@ -33,7 +34,7 @@ class PositionsStores extends ActionBoundStores {
                 if(res.data.code==1) {
                     // this.getData();
                     this.changeStoreData("positions",PositionStores,Object.assign(param,{
-                        sign_name: this.sign_state[param.sign],
+                        slug_name: this.sign_state[param.slug],
                         created_at: dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss"),
                         updated_at: dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss"),
                         depart: this.departments.find(item => item.id == param.depart_id).depart_name
@@ -66,7 +67,7 @@ class PositionsStores extends ActionBoundStores {
                 if(res.data.code==1) {
                     this.addStoreData("positions",PositionStores,Object.assign(data,{
                         id: res.data.data,
-                        sign_name: this.sign_state[data.sign],
+                        slug_name: this.sign_state[data.slug],
                         created_at: dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss"),
                         updated_at: dateFormat(new Date(),"yyyy-mm-dd hh:MM:ss"),
                         depart: this.departments.find(item => item.id == data.depart_id).depart_name
@@ -79,14 +80,17 @@ class PositionsStores extends ActionBoundStores {
             }).catch(reject);
         });
     }
-    @action.bound 
     getDepartmentsData(param={}) {
         this.departments = [];
-        get("hr/depart").then((res) => {
-            if(res.data.code==1) {
-                this.departments = res.data.data.map(item => new DepartmentStores(item));
-            }
+        return new Promise((resolve,reject) => {
+            get("hr/depart").then((res) => {
+                if(res.data.code==1) {
+                    this.departments = res.data.data.map(item => new DepartmentStores(item));
+                }
+                resolve(true);
+            }).catch(reject);
         });
+       
     }
     @action.bound 
     getData(param={}) {
@@ -94,6 +98,7 @@ class PositionsStores extends ActionBoundStores {
         get("hr/show_jobs").then((res) => {
             if(res.data.code==1) {
                 this.positions = res.data.data.map(item => new PositionStores(item));
+                console.log(this.positions);
             }
         });
     }

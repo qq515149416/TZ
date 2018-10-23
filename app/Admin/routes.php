@@ -79,7 +79,7 @@ Route::group([
     $router->get('/work_order_type', 'Show\WorkOrderTypeController@index');
     $router->get('/work_order', 'Show\WorkOrderTypeController@index');
     $router->get('/system_info', 'Show\SystemInformationController@index');
-    $router->get('/hr/department', 'Show\DepartmentController@index');
+    $router->get('/hr/departmentview', 'Show\DepartmentController@index');
     $router->get('/hr/position', 'Show\PositionController@index');
 
 //人事

@@ -47,6 +47,6 @@ export default () => [
     <Route path="/tz_admin/work_order_type" component={WorkOrderTypeList} />,
     <Route path="/tz_admin/work_order" component={WorkOrderList} />,
     <Route path="/tz_admin" component={Home} exact />,
-    <Route path="/tz_admin/hr/department" component={DepartmentList} />,
+    <Route path="/tz_admin/hr/departmentview" component={DepartmentList} />,
     <Route path="/tz_admin/hr/position" component={PositionList} />
 ];

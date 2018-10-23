@@ -46,7 +46,8 @@ class OverdueAlterStatus extends Command
      */
     public function handle()
     {
-        $this->info($this->selectOverdue());  //
+//        $this->info($this->selectOverdue());  //
+        $this->info($this->alterStatus());  //修改业务状态
 
     }
 
@@ -70,13 +71,26 @@ class OverdueAlterStatus extends Command
 
     /**
      * 修改业务状态
+     *
+     *业务状态字段  remove_status  1:到期自动下架
+     *
      */
     public function alterStatus()
     {
         $businessModel = new BusinessModel(); //实例化
 
+        $data = $businessModel
+            ->where(
+                'endding_time', '<', date('Y-m-d H:i:s')  //当 当前时间大于 过期时间时
+            )
+            ->where([
+                'remove_status' => 0
+            ])
+            ->update([
+                'remove_status' => '2'  //业务状态改为
+            ]);
 
-
+        return $data;  //返回修改个数
     }
 
 }

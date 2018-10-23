@@ -21,7 +21,10 @@ class MailController extends Controller
     {
 
         $testM= new OverdueAlterStatus();
-        dump($testM->selectOverdue());
+//        dump($testM->selectOverdue());
+
+        dump($testM->alterStatus());
+
 
 //        $sendData['test'] = 'susu';
 //        Mail::to('568171152@qq.com')

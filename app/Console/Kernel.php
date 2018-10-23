@@ -23,7 +23,7 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @param  \Illuminate\Console\Scheduling\Schedule $schedule
      * @return void
      */
     protected function schedule(Schedule $schedule)
@@ -34,9 +34,7 @@ class Kernel extends ConsoleKernel
 //        $schedule->command('demo:demo')->everyMinute();  //Demo
 
         $schedule->command('business:send-email-notice')->dailyAt('13:00');   //每天 13:00 定时向所有用户发送准备到期续费提醒邮件
-//        $schedule->command('business:send-email-notice')->dailyAt('13:00');   //每隔8小时 自动对过期业务修改状态为到期
-
-
+        $schedule->command('business:check-business-status')->hourly();            //每隔8小时 自动对过期业务修改状态为到期
 
     }
 
@@ -47,7 +45,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

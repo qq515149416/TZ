@@ -19,32 +19,25 @@ class WorkOrderModel extends Model
     public $timestamps = true;
     protected $dates = ['deleted_at'];
     protected $fillable = ["work_order_number","business_num","customer_id","clerk_id","work_order_type","work_order_content","submitter_id","submitter_name","submitter","work_order_status","process_department","complete_id","complete_number","summary","complete_time","created_at","updated_at","deleted_at"];
-// 网维人员：net dimension
-// 网管人员: net manager
-// 衡阳运维：hengyang
-// 惠州运维：huizhou
-// 西安运维：xian
-// 业务员：salesman
-// 管理人员：TZ_admin
 
-    /**
-     * 用于自动获取数据库的字段名,并赋值到 protected $fillable
-     */
-    // public function __construct(){
-    //     $this->fillable = Schema::getColumnListing('tz_work_order');
-    // }
     /**
      * 显示对应状态的所有工单(管理人员/网维人员/网管人员查看)
      * @param  array $where 工单状态
      * @return array        返回相关的数据信息和状态
      */
     public function showWorkOrder($where){
+        $user_id = Admin::user()->id;
+        $staff = $this->staff($user_id);
+        if($staff->slug == 3){
+            $where['clerk_id'] = $user_id;
+        } elseif($staff->slug == 4){
+            $where['process_department'] = $staff->department;
+        }
         // 进行数据查询
         $result = $this->where($where)
-                        ->get(['id','work_order_number','business_num','customer_id','clerk_id',
-                               'work_order_type','work_order_content','submitter_id','submitter_name',
-                               'submitter','work_order_status','process_department','complete_id','complete_number',
-                               'summary','complete_time','created_at','updated_at']);
+                        ->get(['id','work_order_number','business_num','customer_id','clerk_id','work_order_type',
+                              'work_order_content','submitter_id','submitter_name','submitter','work_order_status',
+                              'process_department','complete_id','complete_number','summary','complete_time','created_at','updated_at']);
         if(!$result->isEmpty()){
             // 查询到数据进行转换
             $submitter = [1=>'客户',2=>'内部人员'];
@@ -58,116 +51,14 @@ class WorkOrderModel extends Model
                 $worktype = $this->workType($showvalue['work_order_type']);
                 $result[$showkey]['worktype'] = $worktype->parenttype?'【'.$worktype->parenttype.'】 -- 【'.$worktype->type_name.'】':'【'.$worktype->type_name.'】';
                 // 当前处理部门
-                // $department = $showvalue['process_department']?(array)$this->role($showvalue['process_department']):['name'=>'网维部门'];
-                $department = ['name'=>'网维部门'];
-                $result[$showkey]['department'] = $department['name'];
+                $result[$showkey]['department'] = $this->department($showvalue['process_department'])->department_name;
                 // 对应的业务数据
-                $business = (array)$this->businessDetail($showvalue['business_num']);
-                $result[$showkey]['client_name'] = $business['client_name'];
-                $result[$showkey]['business_type'] = $business['business_type'];    
-                $result[$showkey]['machine_number'] = $business['machine_number'];
-                $result[$showkey]['resource_detail'] = $business['resource_detail'];
-                $result[$showkey]['sales_name'] = $business['sales_name'];  
-            }
-            $return['data'] = $result;
-            $return['code'] = 1;
-            $return['msg'] = '工单信息获取成功！！';
-        } else {
-            $return['data'] = '暂无对应工单数据！！';
-            $return['code'] = 0;
-            $return['msg'] = '暂无对应工单数据';
-        }
-        return $return;
-    }
-
-    /**
-     * 显示对应状态的所属客户的工单列表(业务员查看)
-     * @param  array $where 工单状态
-     * @return array        返回相关的数据信息和状态
-     */
-    public function clerkWorkOrder($where){
-        // 获取当前登陆用户的id，当前用户可以查看到属于自己客户的信息
-        $user_id = Admin::user()->id;
-        $where['clerk_id'] = $user_id;
-        // 进行数据查询
-        $result = $this->where($where)
-                        ->get(['id','work_order_number','business_num','customer_id','clerk_id',
-                               'work_order_type','work_order_content','submitter_id','submitter_name',
-                               'submitter','work_order_status','process_department','complete_id','complete_number',
-                               'summary','complete_time','created_at','updated_at']);
-        if(!$result->isEmpty()){
-            // 查询到数据进行转换
-            $submitter = [1=>'客户',2=>'内部人员'];
-            $work_status = [0=>'待处理',1=>'处理中',2=>'完成',3=>'取消'];
-            foreach($result as $showkey=>$showvalue){
-                // 提交方的转换
-                $result[$showkey]['submit'] = $submitter[$showvalue['submitter']];
-                // 工单状态的转换
-                $result[$showkey]['workstatus'] = $work_status[$showvalue['work_order_status']];
-                // 工单类型
-                $worktype = (array)$this->workType($showvalue['work_order_type']);
-                $result[$showkey]['worktype'] = $worktype->parenttype?'【'.$worktype->parenttype.'】 -- 【'.$worktype->type_name.'】':'【'.$worktype->type_name.'】';
-                // 当前处理部门
-                $department = $showvalue['process_department']?(array)$this->role($showvalue['process_department']):['name'=>'网维部门'];
-                $result[$showkey]['department'] = $department['name'];
-                // 对应的业务数据
-                $business = (array)$this->businessDetail($showvalue['business_num']);
-                $list[$showkey]['client_name'] = $business['client_name'];
-                $list[$showkey]['business_type'] = $business['business_type'];    
-                $list[$showkey]['machine_number'] = $business['machine_number'];
-                $list[$showkey]['resource_detail'] = $business['resource_detail'];
-                $list[$showkey]['sales_name'] = $business['sales_name'];  
-            }
-            $return['data'] = $result;
-            $return['code'] = 1;
-            $return['msg'] = '工单信息获取成功！！';
-        } else {
-            $return['data'] = '暂无对应工单数据！！';
-            $return['code'] = 0;
-            $return['msg'] = '暂无对应工单数据';
-        }
-        return $return;
-    }
-
-    /**
-     * 显示对应状态的地区机房工单列表(地区机房人员查看)
-     * @param  array $where 工单状态
-     * @return array        返回相关的数据信息和状态
-     */
-    public function areaWorkOrder($where){
-        //获取当前登陆用户的id，当前用户可以查看到属于自己客户的信息
-        $user_id = Admin::user()->id;
-        $role = (array)$this->role($user_id);
-        //各地运维人员可以看到对应地区的工单
-        $where['process_department'] = $role['roleid'];
-        // 进行数据查询
-        $result = $this->where($where)
-                        ->get(['id','work_order_number','business_num','customer_id','clerk_id',
-                               'work_order_type','work_order_content','submitter_id','submitter_name',
-                               'submitter','work_order_status','process_department','complete_id','complete_number',
-                               'summary','complete_time','created_at','updated_at']);
-        if(!$result->isEmpty()){
-            // 查询到数据进行转换
-            $submitter = [1=>'客户',2=>'内部人员'];
-            $work_status = [0=>'待处理',1=>'处理中',2=>'完成',3=>'取消'];
-            foreach($result as $showkey=>$showvalue){
-                // 提交方的转换
-                $result[$showkey]['submit'] = $submitter[$showvalue['submitter']];
-                // 工单状态的转换
-                $result[$showkey]['workstatus'] = $work_status[$showvalue['work_order_status']];
-                // 工单类型
-                $worktype = (array)$this->workType($showvalue['work_order_type']);
-                $result[$showkey]['worktype'] = $worktype['parenttype']?$worktype['parenttype'].'->'.$worktype['type_name']:$worktype['type_name'];
-                // 当前处理部门
-                $department = $showvalue['process_department']?(array)$this->role($showvalue['process_department']):['name'=>'网维部门'];
-                $result[$showkey]['department'] = $department['name'];
-                // 对应的业务数据
-                $business = (array)$this->businessDetail($showvalue['business_num']);
-                $list[$showkey]['client_name'] = $business['client_name'];
-                $list[$showkey]['business_type'] = $business['business_type'];    
-                $list[$showkey]['machine_number'] = $business['machine_number'];
-                $list[$showkey]['resource_detail'] = $business['resource_detail'];
-                $list[$showkey]['sales_name'] = $business['sales_name']; 
+                $business = $this->businessDetail($showvalue['business_num']);
+                $result[$showkey]['client_name'] = $business->client_name;
+                $result[$showkey]['business_type'] = $business->business_type;    
+                $result[$showkey]['machine_number'] = $business->machine_number;
+                $result[$showkey]['resource_detail'] = $business->resource_detail;
+                $result[$showkey]['sales_name'] = $business->sales_name;  
             }
             $return['data'] = $result;
             $return['code'] = 1;
@@ -207,10 +98,10 @@ class WorkOrderModel extends Model
         $work_data['customer_id'] = $business->client_id;//客户id,方便对应客户查看对应业务的工单
         $work_data['clerk_id'] = Admin::user()->id;//业务员id,方便业务员查看自己客户的工单
         $work_data['submitter_id'] = Admin::user()->id;//提交者id
-        $work_data['submitter_name'] = $this->staff(Admin::user()->id)->fullname;//提交者姓名
+        $work_data['submitter_name'] = Admin::user()->name?Admin::user()->name:Admin::user()->username;//提交者姓名
         $work_data['submitter'] = 2;//提交方客户
         $work_data['work_order_status'] = 0;//工单状态
-        $work_data['process_department'] = 0;//转发部门
+        $work_data['process_department'] = $this->department()->id;//转发部门
         $row = $this->create($work_data);
         if($row != false){
             $return['data'] = $row->id;
@@ -298,8 +189,12 @@ class WorkOrderModel extends Model
      * @return string           返回对应账户的真实姓名
      */
     public function staff($admin_id) {
-    	$staff = DB::table('oa_staff')->where('admin_users_id',$admin_id)
-                    ->select('work_number','fullname')->first();
+    	$staff = DB::table('oa_staff')
+                    ->join('tz_department','oa_staff.department','=','tz_department.id')
+                    ->join('tz_jobs','oa_staff.job','=','tz_jobs.id')
+                    ->where(['admin_users_id'=>$admin_id])
+                    ->select('oa_staff.work_number','oa_staff.department','tz_department.sign','tz_jobs.slug')
+                    ->first();
         return $staff;
     }
 
@@ -319,19 +214,19 @@ class WorkOrderModel extends Model
         return $worktype;
     }
 
-
     /**
-     * 查找当前登陆用户的角色标识和角色名称
-     * @param  [type] $user_id [description]
-     * @return [type]          [description]
+     * 部门转换
+     * @param  [type] $depart_id [description]
+     * @return [type]            [description]
      */
-    public function role($user_id){
-        $role = DB::table('admin_role_users')
-                    ->join('admin_roles','admin_role_users.role_id = admin_roles.id')
-                    ->where('user_id',$user_id)
-                    ->select('admin_roles.id as roleid','admin_roles.slug','admin_roles.name')
-                    ->first();
-        return $role;
+    public function department($depart_id = 0){
+        if($depart_id != 0){
+            $where['id'] =  $depart_id;
+        } else {
+            $where['sign'] = 2;
+        }
+        $depart = DB::table('tz_department')->where($where)->select('id','depart_number','depart_name')->first();
+        return $depart;
     }
 
     /**

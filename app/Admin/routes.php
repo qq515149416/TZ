@@ -98,12 +98,13 @@ Route::group([
         /**
          * 员工信息
          */
-        $router->get('showEmployee', 'Hr\EmployeeInformationController@showEmployee');
-        $router->post('insertEmployee', 'Hr\EmployeeInformationController@insertEmployee');
-        $router->post('editEmployee', 'Hr\EmployeeInformationController@editEmployee');
-        $router->post('deleteEmployee', 'Hr\EmployeeInformationController@deleteEmployee');
-        $router->get('employeePersonal', 'Hr\EmployeeInformationController@employeePersonal');
-        $router->post('employeeDetailed', 'Hr\EmployeeInformationController@employeeDetailed');
+        $router->get('show_employee', 'Hr\EmployeeInformationController@showEmployee');
+        $router->post('insert_employee', 'Hr\EmployeeInformationController@insertEmployee');
+        $router->post('edit_employee', 'Hr\EmployeeInformationController@editEmployee');
+        $router->post('delete_employee', 'Hr\EmployeeInformationController@deleteEmployee');
+        $router->get('employee_personal', 'Hr\EmployeeInformationController@employeePersonal');
+        $router->get('department', 'Hr\EmployeeInformationController@department');
+        $router->post('jobs', 'Hr\EmployeeInformationController@jobs');
         /**
          * 部门
          */
@@ -236,9 +237,8 @@ Route::group([
     Route::group([
         'prefix' => 'workorder',
     ],function(Router $router){
-        $router->get('show','Work\WorkOrderController@showWorkOrder');//管理员和网维等人员查看
-        $router->get('clerk','Work\WorkOrderController@clerkWorkOrder');//业务员查看
-        $router->get('area','Work\WorkOrderController@areaWorkOrder');//地区机房人员查看
+        $router->get('show','Work\WorkOrderController@showWorkOrder');
+        $router->get('department','Work\WorkOrderController@department');
         $router->post('insert','Work\WorkOrderController@insertWorkOrder');
         $router->post('edit','Work\WorkOrderController@editWorkOrder');
         $router->post('delete','Work\WorkOrderController@deleteWorkOrder');

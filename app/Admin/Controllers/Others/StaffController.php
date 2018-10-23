@@ -4,7 +4,7 @@ namespace App\Admin\Controllers\Others;
 
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
-use App\Admin\Models\Others\Staff as staffmodel;
+use App\Admin\Models\Others\Staff;
 
 class StaffController extends Controller
 {
@@ -21,10 +21,8 @@ class StaffController extends Controller
      * @return json 返回相关信息
      */
     public function index() {
-    	$index = new staffmodel();
+    	$index = new Staff();
     	$staff = $index->index();
-    	// echo 123;
     	return tz_ajax_echo($staff['data'],$staff['msg'],$staff['code']);
-        // return "{test: 123}"; 
     }
 }

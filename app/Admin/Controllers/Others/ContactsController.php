@@ -9,6 +9,7 @@ use App\Admin\Requests\Test;
 use App\Admin\Requests\Idc\OaContacts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Schema;
 
 class ContactsController extends Controller
 {

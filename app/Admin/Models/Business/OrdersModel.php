@@ -28,18 +28,20 @@ class OrdersModel extends Model
      * @param  array $where 订单的状态
      * @return array        返回相关的数据信息和提示状态及信息
      */
+    //['id','order_sn','customer_name','business_sn','business_name','before_money','after_money','resource_type','order_type','resource','price','duration','payable_money','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at']
     public function financeOrders($where){
     	$result = $this->where($where)
-    				->get(['id','order_sn','customer_name','business_sn','business_name','before_money','after_money','resource_type','order_type','resource','price','duration','payable_money','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at']);
-    	if(!$result->isEmpty()){
+    				->get(['id','order_sn','customer_name','business_sn','business_name','resource_type','order_type','resource','price','duration','payable_money','end_time','serial_number','pay_time','order_status','order_note','created_at']);
+    	// 'before_money','after_money','pay_type','pay_price',
+        if(!$result->isEmpty()){
     		$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn'];
     		$order_type = [1=>'新购',2=>'续费'];
-    		$pay_type = [1=>'余额',2=>'支付宝',3=>'微信',4=>'其他'];
+    		// $pay_type = [1=>'余额',2=>'支付宝',3=>'微信',4=>'其他'];
     		$order_status = [0=>'待支付',1=>'已支付',2=>'财务确认',3=>'订单完成',4=>'到期',5=>'取消',6=>'申请退款',7=>'正在支付',8=>'退款完成'];
     		foreach($result as $okey=>$ovalue){
     			$result[$okey]['resource_type'] = $resource_type[$ovalue['resource_type']];
     			$result[$okey]['order_type'] = $order_type[$ovalue['order_type']];
-    			$result[$okey]['pay_type'] = $pay_type[$ovalue['pay_type']]?$pay_type[$ovalue['pay_type']]:'未支付';
+    			// $result[$okey]['pay_type'] = $pay_type[$ovalue['pay_type']]?$pay_type[$ovalue['pay_type']]:'未支付';
     			$result[$okey]['order_status'] = $order_status[$ovalue['order_status']];
     		}
     		$return['data'] = $result;
@@ -60,16 +62,16 @@ class OrdersModel extends Model
      * @return array        返回相关的数据信息和提示状态及信息
      */
     public function clerkOrders($where){
-        $result = $this->where($where)->get(['id','customer_id','customer_name','order_sn', 'business_sn','before_money','after_money','business_id','business_name','resource_type','order_type','machine_sn','resource','price','duration','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at','payable_money']);
+        $result = $this->where($where)->get(['id','order_sn','customer_name','business_sn','business_name','resource_type','order_type','resource','price','duration','payable_money','end_time','serial_number','pay_time','order_status','order_note','created_at']);
     	if(!$result->isEmpty()){
     		$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn'];
     		$order_type = [1=>'新购',2=>'续费'];
-    		$pay_type = [1=>'余额',2=>'支付宝',3=>'微信',4=>'其他'];
+    		// $pay_type = [1=>'余额',2=>'支付宝',3=>'微信',4=>'其他'];
     		$order_status = [0=>'待支付',1=>'已支付',2=>'财务确认',3=>'订单完成',4=>'到期',5=>'取消',6=>'申请退款',7=>'正在支付',8=>'退款完成'];
     		foreach($result as $okey=>$ovalue){
     			$result[$okey]['resourcetype'] = $resource_type[$ovalue['resource_type']];
     			$result[$okey]['order_type'] = $order_type[$ovalue['order_type']];
-    			$result[$okey]['pay_type'] = $pay_type[$ovalue['pay_type']];
+    			// $result[$okey]['pay_type'] = $pay_type[$ovalue['pay_type']];
     			$result[$okey]['order_status'] = $order_status[$ovalue['order_status']];
     		}
     		$return['data'] = $result;
@@ -166,7 +168,7 @@ class OrdersModel extends Model
         $insert_data['payable_money'] = bcmul((string)$insert_data['price'],(string)$insert_data['duration'],2);//计算价格
         $sales_id = Admin::user()->id;
         $insert_data['business_id'] = $sales_id;
-        $insert_data['business_name'] = $this->staff($sales_id);
+        $insert_data['business_name'] = Admin::user()->name?Admin::user()->name:Admin::user()->username;
         $insert_data['month'] = (int)date('Ym',time());
         $insert_data['created_at'] = Carbon::now()->toDateTimeString();
         DB::beginTransaction();//开启事务处理
@@ -302,7 +304,7 @@ class OrdersModel extends Model
         $order['payable_money'] = bcmul((string)$order['price'],(string)$order['duration'],2);//应付金额
         $sales_id = Admin::user()->id;
         $order['business_id'] = $sales_id;//业务员id
-        $order['business_name'] = $this->staff($sales_id);//业务员姓名
+        $order['business_name'] = Admin::user()->name?Admin::user()->name:Admin::user()->username;//业务员姓名
         $order['resource_type'] = $param['resource_type'];//资源类型
         $order['order_type'] = 2;//订单类型续费
         $order['end_time'] = $end_time;//订单到期时间

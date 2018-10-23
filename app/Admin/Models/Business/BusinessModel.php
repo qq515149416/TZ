@@ -35,8 +35,7 @@ class BusinessModel extends Model
             // 对应业务员的信息
             $sales_id             = Admin::user()->id;
             $insert['sales_id']   = $sales_id;
-            $sales_name           = (array)$this->staff($sales_id);
-            $insert['sales_name'] = $sales_name['fullname'];
+            $insert['sales_name'] = Admin::user()->name?Admin::user()->name:Admin::user()->username;
             $row                  = $this->create($insert);
             if ($row != false) {
                 $return['data'] = $row->id;
@@ -152,7 +151,7 @@ class BusinessModel extends Model
         $end_time = Carbon::parse('+' . $check->length . ' months')->toDateTimeString();
         // 订单号的生成规则：前两位（4-6的随机数）+ 年月日（如:20180830） + 时间戳的后2位数 + 1-3随机数
         $order_sn                 = mt_rand(4, 6) . date("Ymd", time()) . substr(time(), 8, 2) . mt_rand(1, 3);
-        $business['order_number'] = (int)$order_sn;
+        $business['order_number'] = $order_sn;
         $business['start_time']   = $start_time;
         $business['endding_time'] = $end_time;
         $business['updated_at']   = Carbon::now()->toDateTimeString();

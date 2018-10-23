@@ -30,7 +30,7 @@ class JobsModel extends Model
         }
     	$show_jobs = $this->where($where)->get(['id','job_number','job_name','depart_id','slug','created_at','updated_at']);
     	if(!$show_jobs->isEmpty()){
-    		$slug = [1=>'普通',2=>'部门管理人员',3=>'业务员',4=>'机房人员'];
+    		$slug = [1=>'普通',2=>'部门管理人员',3=>'业务员',4=>'机房人员',5=>'财务人员',6=>'信安人员'];
     		foreach($show_jobs as $jobs_key=>$jobs_value){
     			$show_jobs[$jobs_key]['slug_name'] = $slug[$show_jobs[$jobs_key]['slug']];
     			$show_jobs[$jobs_key]['depart'] = $this->depart($show_jobs[$jobs_key]['depart_id']);

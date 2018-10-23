@@ -20,6 +20,8 @@ import StatisticalPerformanceList from "../view/statisticalPerformanceList.jsx";
 import WhitelistList from "../view/whitelistList.jsx";
 import WorkOrderTypeList from "../view/workOrderTypeList.jsx";
 import WorkOrderList from "../view/workOrderList.jsx";
+import Home from "../view/home.jsx";
+
 
 
 
@@ -44,4 +46,5 @@ export default () => [
     <Route path="/tz_admin/whitelist" component={WhitelistList} />,
     <Route path="/tz_admin/work_order_type" component={WorkOrderTypeList} />,
     <Route path="/tz_admin/work_order" component={WorkOrderList} />,
+    <Route path="/tz_admin" component={Home} exact />
 ];

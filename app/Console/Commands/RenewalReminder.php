@@ -82,6 +82,8 @@ class RenewalReminder extends Command
     public function sendEmail($sendData = null)
     {
 //        //发送邮件
+
+        //===================正常发送邮件==============================
 //        Mail::send('emails.deadline', [
 //            //发送内容
 //            'userName'    => $sendData['userName'],     //用户名
@@ -92,6 +94,9 @@ class RenewalReminder extends Command
 //            $message->to($sendData['email'])->subject($sendData['subject']);
 //        });
 
+
+
+        //================队列类型==========================
         Mail::to($sendData['email'])
             ->queue(new Deadline($sendData));
 

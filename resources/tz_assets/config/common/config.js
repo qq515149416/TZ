@@ -63,5 +63,6 @@ export const domIds = [
     "statisticalPerformance",
     "whitelist",
     "workOrderType",
-    "workOrder"
+    "workOrder",
+    "home"
 ];

@@ -15,7 +15,9 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         //
 //        \App\Console\Commands\Demo::class,  //测试用
-        \App\Console\Commands\RenewalReminder::class,  //测试用
+        \App\Console\Commands\RenewalReminder::class,  //发送过期业务到客户邮箱
+        \App\Console\Commands\OverdueAlterStatus::class,  //修改过期业务状态
+
     ];
 
     /**
@@ -32,6 +34,10 @@ class Kernel extends ConsoleKernel
 //        $schedule->command('demo:demo')->everyMinute();  //Demo
 
         $schedule->command('business:send-email-notice')->dailyAt('13:00');   //每天 13:00 定时向所有用户发送准备到期续费提醒邮件
+//        $schedule->command('business:send-email-notice')->dailyAt('13:00');   //每隔8小时 自动对过期业务修改状态为到期
+
+
+
     }
 
     /**

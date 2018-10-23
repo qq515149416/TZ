@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Test;
 
+use App\Console\Commands\OverdueAlterStatus;
 use App\Http\Models\TzUser;
 use App\Mail\Deadline;
 use Illuminate\Http\Request;
@@ -19,9 +20,12 @@ class MailController extends Controller
     public function handle()
     {
 
-        $sendData['test'] = 'susu';
-        Mail::to('568171152@qq.com')
-            ->queue(new Deadline($sendData));
+        $testM= new OverdueAlterStatus();
+        dump($testM->selectOverdue());
+
+//        $sendData['test'] = 'susu';
+//        Mail::to('568171152@qq.com')
+//            ->queue(new Deadline($sendData));
 //        Demo::dispatch('123');
 //        die();
 //         return '123';

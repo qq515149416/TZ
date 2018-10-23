@@ -297,7 +297,11 @@ class RechargeController extends Controller
 		$res = $PayController->check($trade_no);
 
 		if($res->trade_status != 'TRADE_SUCCESS'&&$res->trade_status != 'TRADE_FINISHED'){
-			return tz_ajax_echo('','用户尚未付款',0);
+			return [
+				'data'	=> '',
+				'code'	=> 0,
+				'msg'	=> '用户尚未付款',
+			];
 		}else{
 			$return = [
 				'data'	=> '',

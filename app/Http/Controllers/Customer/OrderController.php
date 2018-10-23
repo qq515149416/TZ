@@ -78,28 +78,42 @@ class OrderController extends Controller
 	* 订单支付的接口
 	* @return 支付结果,
 	*/
-	public function payOrderByBalance(OrderRequest $request)
-	{
-		
+	public function payTradeByBalance(OrderRequest $request)
+	{	
 		$orderModel = new PayOrder();
-
 		$info = $request->only('serial_number');
 		$serial_number = $info['serial_number'];
 		$user_id = Auth::id();
 	
-		$return = $orderModel->payOrderByBalance($user_id,$serial_number);
+		$return = $orderModel->payTradeByBalance($user_id,$serial_number);
 		
 		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
 	}
 
-
+	/**
+	 * 根据登录账号获取所有支付流水号
+	 * @param  $order_id[]		-订单id的数组; $coupon_id	-优惠券id
+	 * @return 支付订单号
+	 */
 	public function showTrade(){
 		$user_id = Auth::id();
-		$orderModel = new Order();
+		$orderModel = new PayOrder();
 		$order = $orderModel->showTrade($user_id);
-		dd($order);
 		return tz_ajax_echo($order['data'],$order['msg'],$order['code']);
 	}
+
+	/**
+	 * 根据登录账号获取未支付的支付流水号
+	 * @param  $order_id[]		-订单id的数组; $coupon_id	-优惠券id
+	 * @return 支付订单号
+	 */
+	public function showUnpaidTrade(){
+		$user_id = Auth::id();
+		$orderModel = new PayOrder();
+		$order = $orderModel->showUnpaidTrade($user_id);
+		return tz_ajax_echo($order['data'],$order['msg'],$order['code']);
+	}
+
 	/**
 	 * 通过传入id生成支付订单接口
 	 * @param  $order_id[]		-订单id的数组; $coupon_id	-优惠券id
@@ -115,7 +129,7 @@ class OrderController extends Controller
 		
 		$payModel = new PayOrder();
 		$makeOrder = $payModel->makeTrade($order_id,$coupon_id,$user_id);
-		var_dump($makeOrder) ;exit;
+	
 		return tz_ajax_echo($makeOrder['data'],$makeOrder['msg'],$makeOrder['code']);
 	}
 
@@ -174,6 +188,69 @@ class OrderController extends Controller
 		
 	}
 
+	public function checkTrade(OrderRequest $request){
+		$info = $request->only(['serial_number']);
+		$serial_number = $info['serial_number'];
+		
+		$model = new PayOrder();
+		$check = $model->checkPayStatus($serial_number);
+		if($check == NULL){
+			return tz_ajax_echo('','查找不到该支付流水号',0);
+		}
+		$return['data'] = $check;
+		if($check['pay_status'] != 1){
+			$ali = $this->checkAliPayAndInsert($serial_number);
+			
+			if($ali['code'] != 0){
+				$return['data'] = $model->checkPayStatus($serial_number);
+				$return['msg'] = $ali['msg'];
+				$return['code'] = $ali['code'];
+			}else{
+				//还有别的支付方式往这加
+				$return['msg'] = '尚未支付';
+				$return['code']	= 0;	
+			}	
+		}else{
+			$return['msg'] = '支付成功';
+			$return['code'] = 1;
+		}
+		
+		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
+	}
+	/**
+	 * 取消支付流水订单
+	 * @param  Request 	$
+	 * @return json           续费的反馈信息和提示
+	 */
+	public function delTrade(OrderRequest $request){
+		
+		$info = $request->only(['serial_number']);
+		$serial_number = $info['serial_number'];
+		$return['data'] = '';
+		$return['code'] = 0;
+		$model = new PayOrder();
+		$check = $model->checkPayStatus($serial_number);
+		if($check == NULL){
+			return tz_ajax_echo('','查找不到该支付流水号',0);
+		}
+		if($check['pay_status'] != 1){
+			$ali = $this->checkAliPayAndInsert($serial_number);
+			if($ali['code'] != 0 && $ali['code'] != 1){
+				$return['msg'] = '订单状态异常,暂时无法删除';
+				return $return;
+			}
+		}
+		$del = $model->delTrade($serial_number);
+		if($del == true){
+			$return['msg']='删除订单成功';
+			$return['code'] = 1;
+		}else{
+			$return['msg']='删除订单失败';
+		}
+		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
+	}
+
+
 	/****以下为支付宝接口****/
 
 
@@ -181,7 +258,7 @@ class OrderController extends Controller
 	* 订单支付宝支付的接口
 	* @return 支付结果,
 	*/
-	public function payOrderByAli(OrderRequest $request){
+	public function payTradeByAli(OrderRequest $request){
 		if(!Auth::check()){
 			return tz_ajax_echo('','请先登录',0);
 		}
@@ -260,22 +337,20 @@ class OrderController extends Controller
 		return $res['msg'];					
 	}
 
-	public function checkOrder(OrderRequest $request){
-		$serial_number = $request->only(['serial_number']);
-		$res = $this->checkAliPayAndInsert($serial_number);
-
-		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
-	}
+	
 
 	public function checkAliPayAndInsert($serial_number){
 		
 		//实例化模型,询问支付宝该流水号是否买单
 		$PayController = new AliPayController();
 		$res = $PayController->check($serial_number);
-
 		//判断支付状态,未支付就直接返回未支付,已支付就继续往下走
 		if($res->trade_status != 'TRADE_SUCCESS'&&$res->trade_status != 'TRADE_FINISHED'){
-			return tz_ajax_echo('','用户尚未付款',0);
+			return [
+				'data'	=> '',
+				'code'	=> 0,
+				'msg'	=> '用户尚未付款',
+			];
 		}else{
 			$return = [
 				'msg'	=> '用户已付款',
@@ -302,6 +377,7 @@ class OrderController extends Controller
 				$return['msg'].= '如已付款,款项会原路返回';
 			}
 		}
+
 		return $return;
 	}
 	/****支付宝接口结束****/

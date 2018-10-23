@@ -66,7 +66,7 @@ class WorkAnswerModel extends Model
     	if($insert_data){
     		$uid = Admin::user()->id;
     		$insert_data['answer_id'] = $uid;
-            $insert_data['answer_name'] = Admin::user()->name;
+            $insert_data['answer_name'] = Admin::user()->name?Admin::user()->name:Admin::user()->username;
     		$insert_data['answer_role'] = 2;
     		$row = $this->create($insert_data);
     		if($row != false){

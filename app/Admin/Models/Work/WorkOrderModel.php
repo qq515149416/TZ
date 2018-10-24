@@ -26,13 +26,13 @@ class WorkOrderModel extends Model
      * @return array        返回相关的数据信息和状态
      */
     public function showWorkOrder($where){
-        $user_id = Admin::user()->id;
-        $staff = $this->staff($user_id);
-        if($staff->slug == 3){
-            $where['clerk_id'] = $user_id;
-        } elseif($staff->slug == 4){
-            $where['process_department'] = $staff->department;
-        }
+        // $user_id = Admin::user()->id;
+        // $staff = $this->staff($user_id);
+        // if($staff->slug == 3){
+        //     $where['clerk_id'] = $user_id;
+        // } elseif($staff->slug == 4){
+        //     $where['process_department'] = $staff->department;
+        // }
         // 进行数据查询
         $result = $this->where($where)
                         ->get(['id','work_order_number','business_num','customer_id','clerk_id','work_order_type',
@@ -51,7 +51,7 @@ class WorkOrderModel extends Model
                 $worktype = $this->workType($showvalue['work_order_type']);
                 $result[$showkey]['worktype'] = $worktype->parenttype?'【'.$worktype->parenttype.'】 -- 【'.$worktype->type_name.'】':'【'.$worktype->type_name.'】';
                 // 当前处理部门
-                $result[$showkey]['department'] = $this->department($showvalue['process_department'])->department_name;
+                //$result[$showkey]['department'] = $this->department($showvalue['process_department'])->department_name;
                 // 对应的业务数据
                 $business = $this->businessDetail($showvalue['business_num']);
                 $result[$showkey]['client_name'] = $business->client_name;
@@ -101,7 +101,7 @@ class WorkOrderModel extends Model
         $work_data['submitter_name'] = Admin::user()->name?Admin::user()->name:Admin::user()->username;//提交者姓名
         $work_data['submitter'] = 2;//提交方客户
         $work_data['work_order_status'] = 0;//工单状态
-        $work_data['process_department'] = $this->department()->id;//转发部门
+        //$work_data['process_department'] = $this->department()->id;//转发部门
         $row = $this->create($work_data);
         if($row != false){
             $return['data'] = $row->id;
@@ -132,7 +132,7 @@ class WorkOrderModel extends Model
     			$edit->complete_id = $id;
     			// 完成人员工号
                 $number = (array)$this->staff($id);
-    			$edit->complete_number = $number['work_number'];
+    			$edit->complete_number = isset($number['work_number'])?$number['work_number']:123345;
     			// 是否有报告总结的数据
     			if(!empty($editdata['summary'])){
     				$edit->summary = $editdata['summary'];

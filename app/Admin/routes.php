@@ -56,6 +56,26 @@ Route::group([
     $router->get('rules', 'Others\ContactsController@rulestest');
     $router->get('vi', 'Others\ContactsController@vi');
     // 前端显示
+    // Route::group([
+    //     'prefix'     => config('admin.route.prefix'),
+    //     'namespace'  => 'App\Admin\Controllers',
+    //     'middleware' => config('admin.route.middleware')
+    // ],function(Router $router){
+       
+    //     $router->group([], function ($router) {
+
+    //         /* @var \Illuminate\Routing\Router $router */
+            
+    //         // $router->resource('auth/roles', 'RoleController');
+    //         // $router->resource('auth/permissions', 'PermissionController');
+    //         // $router->resource('auth/menu', 'MenuController', ['except' => ['create']]);
+    //         // $router->resource('auth/logs', 'LogController', ['only' => ['index', 'destroy']]);
+    //     });
+    // });
+    $router->group([], function ($router) {
+        $router->resource('auth/users', 'User\UserExtendController');
+    });
+    
     $router->get('/user_list', 'Show\UserController@index');
     $router->get('/user_link_list', 'Show\LinkUserController@index');
     $router->get('/machine_room/show', 'Show\TestController@index');

@@ -33,6 +33,18 @@
 }
 .page[data-v-01510a06] {
     margin-top: 10px;
+    float: left;
+}
+.clear[data-v-01510a06]:before,.clear[data-v-01510a06]:after {
+    content:"";
+    display:table;
+}
+.clear[data-v-01510a06]:after { 
+    clear:both;
+}
+.all-pay[data-v-01510a06] {
+     margin-top: 10px;
+     float: right;
 }
 
 .page[data-v-e41ebd86] {
@@ -60,4 +72,4 @@ html {
   height: 100%;
 }
 
-/*# sourceMappingURL=index_7fd6838b74fb4ab44b44.css.map*/
+/*# sourceMappingURL=index_0c9a3efb8f140b5120e2.css.map*/

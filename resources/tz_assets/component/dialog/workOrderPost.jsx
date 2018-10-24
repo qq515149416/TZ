@@ -121,7 +121,9 @@ class WorkOrderPost extends React.Component {
                         margin="normal"
                         >
                             {
-                                this.props.workOrderTypesStores.workOrderTypes.map(item => (
+                                this.props.workOrderTypesStores.workOrderTypes.filter(item => {
+                                    return item.parent_id == 0;
+                                }).map(item => (
                                     <MenuItem key={item.id} value={item.id}>
                                         {item.type_name}
                                     </MenuItem>

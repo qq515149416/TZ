@@ -27,30 +27,39 @@ class BusinessModel extends Model
      */
     public function insertBusiness($insert)
     {
-        if ($insert) {
-            //业务编号的生成规则：前两位（1-3的随机数）+ 年月日（如:20180830） + 时间戳的后5位数 + 7-9随机数（业务编号产生）
-            $business_sn               = mt_rand(1, 3) . date("Ymd", time()) . substr(time(), 8, 2) . mt_rand(7, 9);
-            $insert['business_number'] = $business_sn;
-            $insert['business_status'] = 0;
-            // 对应业务员的信息
-            $sales_id             = Admin::user()->id;
-            $insert['sales_id']   = $sales_id;
-            $insert['sales_name'] = Admin::user()->name?Admin::user()->name:Admin::user()->username;
-            $row                  = $this->create($insert);
-            if ($row != false) {
-                $return['data'] = $row->id;
-                $return['code'] = 1;
-                $return['msg']  = '业务创建成功，待审核';
-            } else {
-                $return['data'] = '';
-                $return['code'] = 0;
-                $return['msg']  = '业务创建失败';
-            }
-        } else {
+        if (!$insert) {
             $return['data'] = '';
             $return['code'] = 0;
             $return['msg']  = '业务无法创建！！';
+            return $return;
         }
+        //业务编号的生成规则：前两位（1-3的随机数）+ 年月日（如:20180830） + 时间戳的后5位数 + 7-9随机数（业务编号产生）
+        $business_sn               = mt_rand(1, 3) . date("Ymd", time()) . substr(time(), 8, 2) . mt_rand(7, 9);
+        $insert['business_number'] = $business_sn;
+        $insert['business_status'] = 0;
+        $client = DB::table('tz_users')->where(['id'=>$insert['client_id'],'status'=>2])->select('id','name','email')->first();
+        if(!$client){
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg']  = '客户不存在或账号未验证/异常,请确认后再创建业务!';
+            return $return;
+        }
+        $insert['client_name'] = $client->name?$client->name:$client->email;
+        // 对应业务员的信息
+        $sales_id             = Admin::user()->id;
+        $insert['sales_id']   = $sales_id;
+        $insert['sales_name'] = Admin::user()->name?Admin::user()->name:Admin::user()->username;
+        $row                  = $this->create($insert);
+        if ($row != false) {
+            $return['data'] = $row->id;
+            $return['code'] = 1;
+            $return['msg']  = '业务创建成功，待审核';
+        } else {
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg']  = '业务创建失败';
+        }
+         
         return $return;
 
     }
@@ -119,7 +128,6 @@ class BusinessModel extends Model
             }
             
         }
-
         // 业务表审核时更新的字段
         $business['business_status'] = $where['business_status'];
         $business['check_note']      = $where['check_note'];
@@ -130,7 +138,7 @@ class BusinessModel extends Model
                 $return['data'] = '';
                 $return['code'] = 1;
                 if (isset($where['check_note'])) {
-                    $return['msg'] = '审核不通过,原因:' + $where['check_note'];
+                    $return['msg'] = '审核不通过,原因:'.$where['check_note'];
                 } else {
                     $return['msg'] = '审核不通过';
                 }

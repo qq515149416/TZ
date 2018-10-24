@@ -57,7 +57,7 @@ class BusinessController extends Controller
      * @return json           返回订单创建的提示信息
      */
     public function insertBusiness(Request $request){
-		$insert = $request->only(['client_id','client_name','machine_number','resource_detail','money','length','business_note','business_type']);
+		$insert = $request->only(['client_id','machine_number','resource_detail','money','length','business_note','business_type']);
 		$business = new BusinessModel();
 		$return = $business->insertBusiness($insert);
 		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);

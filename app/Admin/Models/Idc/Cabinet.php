@@ -76,7 +76,7 @@ class Cabinet extends Model
 			$data = $this->where($where)->get(['id as cabinetid','cabinet_id','machineroom_id']);
 			if(!$data->isEmpty()){
 				foreach($data as $key=>$value){
-					$data[$key]['machineroom'] = $this->machineroom($value['machineroom_id']);
+					$data[$key]['machineroom_name'] = $this->machineroom($value['machineroom_id']);
 				}
 				$return['data'] = $data;
 				$return['code'] = 1;

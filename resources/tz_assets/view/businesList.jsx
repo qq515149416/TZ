@@ -214,6 +214,11 @@ class BusinesList extends React.Component {
       callbrak(state);
     });
   }
+  delData = (selectedData,callbrak) => {
+    const {businessStores} = this.props;
+    let delIng = selectedData.map(item => businessStores.delData(item));
+    callbrak(delIng);
+  }
   render() {
     return (
       <ListTableComponent 
@@ -224,6 +229,7 @@ class BusinesList extends React.Component {
         data={this.props.businessStores.business}  
         addData={this.addData.bind(this)} 
         updata={this.updata.bind(this)}
+        delData={this.delData.bind(this)} 
       />
     );
   }

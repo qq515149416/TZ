@@ -180,6 +180,11 @@ class OrderList extends React.Component {
             getSubordinateData: this.getResourceData.bind(this)
         };
     }
+    delData = (selectedData,callbrak) => {
+        const {ordersStores} = this.props;
+        let delIng = selectedData.map(item => ordersStores.delData(item));
+        callbrak(delIng);
+    }
     addData = (param,callbrak) => {
         param.business_sn = qs.parse(location.search.substr(1)).business_number;
         param.customer_id = qs.parse(location.search.substr(1)).client_id;
@@ -266,6 +271,7 @@ class OrderList extends React.Component {
             headTitlesData={columnData} 
             data={this.props.ordersStores.orders}
             addData={this.addData.bind(this)} 
+            delData={this.delData.bind(this)} 
           />
         ];
       }

@@ -20,14 +20,18 @@ class WorkOrderController extends Controller
     /**
      * 查询登陆的账户个人信息是否完整
      */
-    // public function  __construct(){
-    //     $user_id = Admin::user()->id;
-    //     $staff = new DepartmentModel();
-    //     $staff_result = $staff->staff($user_id);
-    //     if(empty($staff_result)){
-    //         return tz_ajax_echo([],'请完善您的个人信息',2);
-    //     }
-    // }
+    public function  __construct(){
+        // $user_id = Admin::user()->id;
+        dd(Admin::user());
+        $staff = new DepartmentModel();
+        $id = DB::table('admin_users')->where(['id'=>$user_id])->first();
+        dd($id);
+        $staff_result = $staff->staff($user_id);
+        
+        if(empty($staff_result)){
+            return tz_ajax_echo([],'请完善您的个人信息',2);
+        }
+    }
 
     /**
      * 查找工单的信息(管理人员/网维人员/网管人员)

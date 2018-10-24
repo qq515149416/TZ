@@ -98,7 +98,7 @@ class PayOrder extends Model
 			return $return;	
 		}
 		//对交易流水涉及的几条订单更新支付相关信息
-		$updateOrder = DB::table('tz_orders')->where('serial_number',$serial_number)->update(['order_status' => 1 , 'pay_time' => $pay_time]);
+		$updateOrder = DB::table('tz_orders')->where('serial_number',$serial_number)->update(['order_status' => 1 , 'pay_time' => $pay_time ,'month' => date("Ym")]);
 		if(!$updateOrder){
 			DB::rollBack();
 			$return['msg'] 	= '更新订单状态失败,支付失败';
@@ -223,10 +223,9 @@ class PayOrder extends Model
 			//更新订单内信息
 			$updateInfo['serial_number'] = $serial_number;
 			$updateInfo['order_status'] = $order_status;
-
 			//重新计算单一订单应付金额
 			$updateInfo['payable_money'] = bcmul($order->price,$order->duration,2);
-
+			$updateInfo['achievement'] = $updateInfo['payable_money'];
 			//计算支付流水应付金额
 			$payable_money = bcadd($payable_money,$updateInfo['payable_money'],2);
 			//拼接商品名
@@ -234,16 +233,29 @@ class PayOrder extends Model
 			$customer_id = $order->customer_id;
 
 			$update = DB::table('tz_orders')->where('id',$order_id[$i])->update($updateInfo);
-			if($update == 0){
+			if(!$update){
 				DB::rollBack();
 				$return['msg'] = '更新支付状态失败';
 				return $return;
 			}
 		}
-
+		//拼商品名
 		$subject = substr($subject, 0, -3);
+		//计算实际支付金额
 		$actual_payment = $this->countCoupon($payable_money,$coupon_id);
+		//计算优惠的额度
 		$preferential_amount = bcsub($payable_money,$actual_payment,2);
+
+		//本订单最后一条的业绩要减去优惠券减少的额度
+		$last_achievement = DB::table('tz_orders')->where('id',$order_id[count($order_id)-1])->value('achievement');
+		$last_achievement = bcsub($last_achievement, $preferential_amount);
+		$up_last_achievement = DB::table('tz_orders')->where('id',$order_id[count($order_id)-1])->update([ 'achievement' =>  $last_achievement]);
+		if(!$up_last_achievement){
+			DB::rollBack();
+			$return['msg'] = '业绩更新失败';
+			return $return;
+		}
+
 		$flow = [
 			'serial_number'		=> $serial_number,
 			'subject'		=> $subject,
@@ -493,7 +505,7 @@ class PayOrder extends Model
 			return $return;
 		} 
 		//对交易流水涉及的几条订单更新支付相关信息
-		$updateOrder = DB::table('tz_orders')->where('serial_number',$data['serial_number'])->update(['order_status' => 1 , 'pay_time' => $data['pay_time']]);
+		$updateOrder = DB::table('tz_orders')->where('serial_number',$data['serial_number'])->update(['order_status' => 1 , 'pay_time' => $data['pay_time'] , 'month' => date("Ym")]);
 		if(!$updateOrder){
 			DB::rollBack();
 			$return['msg'] 	= '更新订单状态失败,支付失败';
@@ -536,6 +548,18 @@ class PayOrder extends Model
 	}
 	
 	public function delTrade($serial_number){
+		$check = $this->checkPayStatus($serial_number);
+		// $pay_status
+		if($check['pay_status'] == 0){
+			$updateData['order_status'] = 0;
+			$updateData['serial_number'] = null;
+			$updateData['achievement'] = 0;
+			$update = DB::table('tz_orders')->where('serial_number',$serial_number)->update($updateData);
+			if(!$update){
+				$res == false;
+				return $res;
+			} 	
+		}
 		$res = $this->where('serial_number',$serial_number)->delete();
 		return $res;
 	}

@@ -85,11 +85,11 @@ const columnData = [
   }, label: '操作' }
 ];
 const inputType = [
-  {
-    field: "client_name",
-    label: "客户姓名",
-    type: "text"
-  },
+  // {
+  //   field: "client_name",
+  //   label: "客户姓名",
+  //   type: "text"
+  // },
   {
     field: "money",
     label: "资源单价",
@@ -165,9 +165,9 @@ const inputType = [
 class BusinesList extends React.Component {
   componentDidMount() {
     this.props.businessStores.getData(qs.parse(location.search.substr(1)).id);
-    inputType[inputType.findIndex(item => item.field=="client_name")].model = {
-      getSubordinateData: this.setClientName.bind(this)
-    };
+    // inputType[inputType.findIndex(item => item.field=="client_name")].model = {
+    //   getSubordinateData: this.setClientName.bind(this)
+    // };
     inputType[inputType.findIndex(item => item.field=="money")].model = {
       getSubordinateData: this.setMoneyName.bind(this)
     };
@@ -181,10 +181,10 @@ class BusinesList extends React.Component {
       getSubordinateData: this.setMachineNumberName.bind(this)
     };
   }
-  setClientName(param,type) {
-    // console.log(param);
-    this.props.businessStores.changeStatistics("clientName",param); 
-  }
+  // setClientName(param,type) {
+  //   // console.log(param);
+  //   this.props.businessStores.changeStatistics("clientName",param); 
+  // }
   setMoneyName(param,type) {
     this.props.businessStores.changeStatistics("unitPrice",param); 
   }

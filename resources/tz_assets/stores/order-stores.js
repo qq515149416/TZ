@@ -20,6 +20,20 @@ class OrdersStores extends ActionBoundStores {
 
     ];
     type = null;
+    delData(id) {
+        return new Promise((resolve,reject) => {
+            post("business/deleteorders",{
+                delete_id: id
+            }).then((res) => {
+                if(res.data.code==1) {
+                    this.delStoreData("orders",id);
+                    resolve(true);
+                } else {
+                    resolve(false);
+                }
+            }).catch(reject);
+        });
+    }
     addData(data) {
         return new Promise((resolve,reject) => {
             post("business/insertresource",data).then(res => {

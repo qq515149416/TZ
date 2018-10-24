@@ -38,11 +38,23 @@ const columnData = [
       title: "审核操作",
       content: "是否要通过此业务审核",
       input: true,
-      ok: (data) => {
+      select: true,
+        selectOptions: [
+            {
+                text: "审核通过",
+                value: 1
+            },
+            {
+                text: "审核不通过",
+                value: -2,
+                default: true
+            }
+    ],
+      ok: (data,param) => {
         return new Promise((resolve,reject) => {
             post("business/check",{
                 business_number: data.business_number,
-                business_status: 1,
+                business_status: param,
                 check_note: data.note
             }).then((res) => {
                 if(res.data.code==1) {
@@ -55,23 +67,23 @@ const columnData = [
             }).catch(reject);
         });
       },
-      cancel: (data) => {
-        return new Promise((resolve,reject) => {
-          post("business/check",{
-              business_number: data.business_number,
-              business_status: -2,
-              check_note: data.note
-          }).then((res) => {
-              if(res.data.code==1) {
-                  alert("审核成功");
-                  resolve(res.data);
-              } else {
-                  alert(res.data.msg);
-                  resolve(res.data);
-              }
-          }).catch(reject);
-      });
-      }
+    //   cancel: (data) => {
+    //     return new Promise((resolve,reject) => {
+    //       post("business/check",{
+    //           business_number: data.business_number,
+    //           business_status: -2,
+    //           check_note: data.note
+    //       }).then((res) => {
+    //           if(res.data.code==1) {
+    //               alert("审核成功");
+    //               resolve(res.data);
+    //           } else {
+    //               alert(res.data.msg);
+    //               resolve(res.data);
+    //           }
+    //       }).catch(reject);
+    //   });
+    //   }
     }, label: '操作' }
 ];
 const inputType = [

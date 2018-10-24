@@ -56,9 +56,9 @@ class WhiteListModel extends Model
     		$white_number = mt_rand(41,70).date("Ymd",time()).substr(time(),8,2);
     		$insert_data['white_number'] = (int)$white_number;
     		$insert_data['customer_id'] = Auth::id();
-    		$insert_data['customer_name'] = Auth::user()->name;
+    		$insert_data['customer_name'] = Auth::user()->name?Auth::user()->name:Auth::user()->email;
     		$insert_data['submit_id'] = Auth::id();
-    		$insert_data['submit_name'] = Auth::user()->name;
+    		$insert_data['submit_name'] = Auth::user()->name?Auth::user()->name:Auth::user()->email;
     		$insert_data['submit'] = 1;
     		$insert_data['white_status'] = 0;
     		$row = $this->create($insert_data);

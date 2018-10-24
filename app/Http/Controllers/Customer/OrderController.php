@@ -240,7 +240,7 @@ class OrderController extends Controller
 				return $return;
 			}
 		}
-		$del = $model->delTrade($serial_number);
+		$del = $model->delTrade($serial_number,$check['pay_status']);
 		if($del == true){
 			$return['msg']='删除订单成功';
 			$return['code'] = 1;

@@ -6,6 +6,7 @@ module.exports = {
       path: path.resolve(__dirname, 'public/tz_assets'),
       publicPath: "/tz_assets/"
     },
+    mode: "production",
     module: {
         rules: [
             {

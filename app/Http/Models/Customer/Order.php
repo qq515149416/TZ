@@ -231,7 +231,7 @@ class Order extends Model
 		$order['duration'] = $param['length'];//续费时长
 		$order['payable_money'] = bcmul((string)$order['price'],(string)$order['duration'],2);//应付金额
 		$order['customer_id'] = Auth::user()->id;//客户id
-		$order['customer_name'] = Auth::user()->name?Auth::user()->name:'test';//客户姓名
+		$order['customer_name'] = Auth::user()->name?Auth::user()->name:Auth::user()->email;//客户姓名
 		$order['resource_type'] = $param['resource_type'];//资源类型
 		$order['order_type'] = 2;//订单类型续费
 		$order['end_time'] = $end_time;//订单到期时间

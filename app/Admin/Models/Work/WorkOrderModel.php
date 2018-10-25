@@ -112,7 +112,7 @@ class WorkOrderModel extends Model
         $work_data['submitter_name'] = Admin::user()->name?Admin::user()->name:Admin::user()->username;//提交者姓名
         $work_data['submitter'] = 2;//提交方客户
         $work_data['work_order_status'] = 0;//工单状态
-        $work_data['process_department'] = $this->department()->id;//转发部门
+        //$work_data['process_department'] = $this->department()->id;//转发部门
         $row = $this->create($work_data);
         if($row != false){
             $return['data'] = $row->id;
@@ -143,7 +143,7 @@ class WorkOrderModel extends Model
     			$edit->complete_id = $id;
     			// 完成人员工号
                 $number = (array)$this->staff($id);
-    			$edit->complete_number = $number['work_number'];
+    			$edit->complete_number = isset($number['work_number'])?$number['work_number']:123345;
     			// 是否有报告总结的数据
     			if(!empty($editdata['summary'])){
     				$edit->summary = $editdata['summary'];

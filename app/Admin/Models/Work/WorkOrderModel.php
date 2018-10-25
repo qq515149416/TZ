@@ -21,18 +21,29 @@ class WorkOrderModel extends Model
     protected $fillable = ["work_order_number","business_num","customer_id","clerk_id","work_order_type","work_order_content","submitter_id","submitter_name","submitter","work_order_status","process_department","complete_id","complete_number","summary","complete_time","created_at","updated_at","deleted_at"];
 
     /**
+     * 用于检验后台用户信息是否完整
+     */
+    // public function __construct(){
+    //     $user_id = Admin::user()->id;
+    //     $staff = DB::table('oa_staff')->where(['admin_users_id'=>$user_id])->select('id','department','job','work_number')->first();
+    //     if(empty($staff)){
+
+    //     }
+    // }
+
+    /**
      * 显示对应状态的所有工单(管理人员/网维人员/网管人员查看)
      * @param  array $where 工单状态
      * @return array        返回相关的数据信息和状态
      */
     public function showWorkOrder($where){
-        $user_id = Admin::user()->id;
-        $staff = $this->staff($user_id);
-        if($staff->slug == 3){
-            $where['clerk_id'] = $user_id;
-        } elseif($staff->slug == 4){
-            $where['process_department'] = $staff->department;
-        }
+        // $user_id = Admin::user()->id;
+        // $staff = $this->staff($user_id);
+        // if($staff->slug == 3){
+        //     $where['clerk_id'] = $user_id;
+        // } elseif($staff->slug == 4){
+        //     $where['process_department'] = $staff->department;
+        // }
         // 进行数据查询
         $result = $this->where($where)
                         ->get(['id','work_order_number','business_num','customer_id','clerk_id','work_order_type',
@@ -51,7 +62,7 @@ class WorkOrderModel extends Model
                 $worktype = $this->workType($showvalue['work_order_type']);
                 $result[$showkey]['worktype'] = $worktype->parenttype?'【'.$worktype->parenttype.'】 -- 【'.$worktype->type_name.'】':'【'.$worktype->type_name.'】';
                 // 当前处理部门
-                $result[$showkey]['department'] = $this->department($showvalue['process_department'])->department_name;
+                $result[$showkey]['department'] = $this->department($showvalue['process_department'])->depart_name;
                 // 对应的业务数据
                 $business = $this->businessDetail($showvalue['business_num']);
                 $result[$showkey]['client_name'] = $business->client_name;

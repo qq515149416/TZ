@@ -43,7 +43,7 @@ class WorkOrderModel extends Model
                 $worktype = $this->workType($showvalue['work_order_type']);
                 $list[$showkey]['worktype'] = $worktype->parenttype?'【'.$worktype->parenttype.'】 -- 【'.$worktype->type_name.'】':'【'.$worktype->type_name.'】';
                 // 当前处理部门
-                // $list[$showkey]['department'] = $this->department($showvalue['process_department'])->department_name;
+                $list[$showkey]['department'] = $this->department($showvalue['process_department'])->depart_name;
                 $business = $this->businessDetail($showvalue['business_num']);
                 $list[$showkey]['client_name'] = $business->client_name;
                 $list[$showkey]['business_type'] = $business->business_type;	

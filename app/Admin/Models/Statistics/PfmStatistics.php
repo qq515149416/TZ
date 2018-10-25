@@ -32,21 +32,13 @@ class  PfmStatistics extends Model
 
 	public function statistics($key)
 	{	
-
-
-		//获取本月开始及结束的时间戳再换成date
-		// $beginThismonth=date("Y-m-d H:i:s",mktime(0,0,0,date('m'),1,date('Y')));
-		// //获取本月结束的时间戳
-		// $endThismonth=date("Y-m-d H:i:s",mktime(23,59,59,date('m'),date('t'),date('Y')));
-
-
 		//获取查询月份订单
-		$order = DB::table('tz_orders')->select('payable_money','business_id as user_id','order_status')->where('month',$month)->get();
+		$order = $this->getOrder($key);
 		$order = json_decode(json_encode($order),true);
-		dd($order);
+
 		$return['data'] = [];
 
-		if($order->isEmpty()){
+		if(count($order) == 0){
 			$return['msg'] 	= '无数据';
 			$return['code'] 	= 0;
 			return $return;
@@ -61,7 +53,7 @@ class  PfmStatistics extends Model
 				$order_arr[$v['user_id']]['performance']		= 0;
 				$order_arr[$v['user_id']]['this_arrears']		= 0;
 				$order_arr[$v['user_id']]['all_arrears']		= $this->getAllArrears($v['user_id']);
-				$order_arr[$v['user_id']]['month']		= $key;
+				$order_arr[$v['user_id']]['month']			= $key;
 			}
 		}
 		//总计
@@ -74,7 +66,6 @@ class  PfmStatistics extends Model
 			'month'			=> $key,
 		];
 		//开始统计
-		dd($order);
 		foreach ($order as $k => $v) {
 			if($v['order_status'] != 4||$v['order_status'] != 5||$v['order_status'] != 6){
 				
@@ -102,7 +93,16 @@ class  PfmStatistics extends Model
 		return $return;
 	}
 
-	
+	/**
+	* 获取订单的方法
+	* @return 将数据及相关的信息返回
+	*/
+
+	public function getOrder($month)
+	{
+		$order = DB::table('tz_orders')->select('payable_money','business_id as user_id','order_status')->where('month',$month)->get();
+		return $order;
+	}
 
 	/**
 	* 获取业务所有欠款

@@ -55,6 +55,7 @@ class PfmStatisticsController extends Controller
 		$info = $pfmModel->getStatistics($month);	
 
 		return tz_ajax_echo($info['data'],$msg.$info['msg'],$info['code']);
+
 	}
 
 

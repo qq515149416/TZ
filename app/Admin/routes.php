@@ -56,26 +56,6 @@ Route::group([
     $router->get('rules', 'Others\ContactsController@rulestest');
     $router->get('vi', 'Others\ContactsController@vi');
     // 前端显示
-    // Route::group([
-    //     'prefix'     => config('admin.route.prefix'),
-    //     'namespace'  => 'App\Admin\Controllers',
-    //     'middleware' => config('admin.route.middleware')
-    // ],function(Router $router){
-       
-    //     $router->group([], function ($router) {
-
-    //         /* @var \Illuminate\Routing\Router $router */
-            
-    //         // $router->resource('auth/roles', 'RoleController');
-    //         // $router->resource('auth/permissions', 'PermissionController');
-    //         // $router->resource('auth/menu', 'MenuController', ['except' => ['create']]);
-    //         // $router->resource('auth/logs', 'LogController', ['only' => ['index', 'destroy']]);
-    //     });
-    // });
-    $router->group([], function ($router) {
-        $router->resource('auth/users', 'User\UserExtendController');
-    });
-    
     $router->get('/user_list', 'Show\UserController@index');
     $router->get('/user_link_list', 'Show\LinkUserController@index');
     $router->get('/machine_room/show', 'Show\TestController@index');
@@ -301,14 +281,14 @@ Route::group([
         $router->post('check','Business\BusinessController@checkBusiness');
         $router->post('enable','Business\BusinessController@enableBusiness');
         $router->get('showbusiness','Business\BusinessController@showBusiness');
-        $router->post('deletebusiness','Business\BusinessController@deleteBusiness');
+        $router->get('deletebusiness','Business\BusinessController@deleteBusiness');
         // 订单
         $router->post('finance','Business\OrdersController@financeOrders');
         $router->post('clerk','Business\OrdersController@clerkOrders');
         $router->post('resource','Business\OrdersController@resource');
         $router->post('insertresource','Business\OrdersController@insertResource');
         $router->post('renewresource','Business\OrdersController@renewResource');
-        $router->post('deleteorders','Business\OrdersController@deleteOrders');
+        $router->get('deleteorders','Business\OrdersController@deleteOrders');
         //客户信息
         $router->get('admin_customer','Business\CustomerController@adminCustomer');
         $router->post('pull_black','Business\CustomerController@pullBlackCustomer');

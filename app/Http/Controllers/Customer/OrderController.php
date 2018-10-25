@@ -98,7 +98,7 @@ class OrderController extends Controller
 	public function showTrade(){
 		$user_id = Auth::id();
 		$orderModel = new PayOrder();
-		$order = $orderModel->showTrade($user_id);
+		$order = $orderModel->showTrade($user_id,'all');
 		return tz_ajax_echo($order['data'],$order['msg'],$order['code']);
 	}
 
@@ -110,7 +110,22 @@ class OrderController extends Controller
 	public function showUnpaidTrade(){
 		$user_id = Auth::id();
 		$orderModel = new PayOrder();
-		$order = $orderModel->showUnpaidTrade($user_id);
+		$order = $orderModel->showTrade($user_id,'unpaid');
+		return tz_ajax_echo($order['data'],$order['msg'],$order['code']);
+	}
+
+	/**
+	 * 根据传入支付流水号获取该支付流水号信息
+	 * @param  $serial_number
+	 * @return 支付订单号
+	 */
+	public function showSelectTrade(OrderRequest $request){
+		$user_id = Auth::id();
+		$orderModel = new PayOrder();
+		$info = $request->only(['serial_number']);
+		$serial_number = $info['serial_number'];
+
+		$order = $orderModel->showTrade($serial_number,'serial_number',$user_id);
 		return tz_ajax_echo($order['data'],$order['msg'],$order['code']);
 	}
 
@@ -129,7 +144,6 @@ class OrderController extends Controller
 		
 		$payModel = new PayOrder();
 		$makeOrder = $payModel->makeTrade($order_id,$coupon_id,$user_id);
-	
 		return tz_ajax_echo($makeOrder['data'],$makeOrder['msg'],$makeOrder['code']);
 	}
 
@@ -240,7 +254,7 @@ class OrderController extends Controller
 				return $return;
 			}
 		}
-		$del = $model->delTrade($serial_number,$check['pay_status']);
+		$del = $model->delTrade($serial_number);
 		if($del == true){
 			$return['msg']='删除订单成功';
 			$return['code'] = 1;
@@ -316,7 +330,7 @@ class OrderController extends Controller
 		$res = $this->checkAliPayAndInsert($serial_number);
 		//跳转确认页面
 		$domain_name = env('APP_URL');
-		return redirect("{$domain_name}/auth/pay.html?order=".$serial_number);
+		return redirect("{$domain_name}/auth/pay.html?serial_number=".$serial_number);
 	}
 
 	public function aliNotify()

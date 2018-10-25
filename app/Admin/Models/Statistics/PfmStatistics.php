@@ -30,7 +30,7 @@ class  PfmStatistics extends Model
 	* @return 将数据及相关的信息返回到控制器
 	*/
 
-	public function statistics($key)
+	public function statistics($month)
 	{	
 
 
@@ -46,12 +46,13 @@ class  PfmStatistics extends Model
 		dd($order);
 		$return['data'] = [];
 
-		if($order->isEmpty()){
+		if(count($order) == 0){
 			$return['msg'] 	= '无数据';
 			$return['code'] 	= 0;
 			return $return;
 		}
-
+		
+		$order = json_decode(json_encode($order),true);
 		//生成每个有业绩的业务员的空数组
 		$order_arr = [];
 		foreach ($order as $k => $v) {
@@ -66,12 +67,12 @@ class  PfmStatistics extends Model
 		}
 		//总计
 		$order_arr['0'] = [
-			'user_id'			=> 0,
+			'user_id'		=> 0,
 			'total_money'		=> 0,
 			'performance'		=> 0,
 			'this_arrears'		=> 0,
-			'all_arrears'		=> $this->getAllArrears('*'),
-			'month'			=> $key,
+			'all_arrears'		=> 'test',
+			'month'			=> $month,
 		];
 		//开始统计
 		dd($order);
@@ -88,15 +89,26 @@ class  PfmStatistics extends Model
 					$order_arr[$v['user_id']]['this_arrears']	= bcadd($order_arr[$v['user_id']]['this_arrears'],$v['payable_money'],2);
 				}
 	
+		foreach ($order as $k => $v) {	
+			if($v['achievement'] == NULL){
+				$return['data']	= $v['id'];
+				$return['msg'] 	= '该id数据有误';
+				$return['code'] 	= 0;
+				return $return;
 			}		
+			$order_arr['0']['total_money']			= bcadd($order_arr['0']['total_money'],$v['achievement'],2);
+			$order_arr[$v['user_id']]['total_money'] 		= bcadd($order_arr[$v['user_id']]['total_money'],$v['achievement'],2);
+			$order_arr['0']['performance']			= bcadd($order_arr['0']['performance'],$v['achievement'],2);
+			$order_arr[$v['user_id']]['performance'] 		= bcadd($order_arr[$v['user_id']]['performance'],$v['achievement'],2);
 		}
+		dd($order_arr);
 		//入库统计表
 		$res = $this->insert($order_arr);
 		if($res){
-			$return['msg'] 	= '统计成功';
+			$return['msg'] 	= '数据统计成功';
 			$return['code'] 	= 1;
 		}else{
-			$return['msg'] 	= '统计失败';
+			$return['msg'] 	= '数据统计失败';
 			$return['code'] 	= 0;
 		}
 		return $return;
@@ -109,16 +121,9 @@ class  PfmStatistics extends Model
 	* @return 
 	*/
 
-	public function getAllArrears($user_id)
-	{
-		if($user_id == '*'){
-			$order = DB::table('tz_orders')->where('order_status',0)->sum('payable_money');
-		}else{
-			$order = DB::table('tz_orders')->where('business_id',$user_id)->where('order_status',0)->sum('payable_money');
-		}
-		
-		return $order;
 	}
+
+	
 
 	//插入统计数据的方法
 	//	$data[

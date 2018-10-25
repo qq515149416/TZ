@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>支付确认页</title>
+</head>
+<body>
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript">
+        if(location.search.indexOf("?order")!=-1) {
+            $.get("http://"+location.hostname+"/home/recharge/getOrder",{
+                trade_no: location.search.substr(1).split("=")[1]
+            },function(data) {
+                if(data.code==1) {
+                    alert("支付成功");
+                } else {
+                    alert("支付失败，请重新充值");
+                }
+                location.href = "http://"+location.hostname+"/tz";
+            });
+        }
+    </script>
+</body>
+</html>

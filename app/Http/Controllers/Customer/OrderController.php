@@ -330,7 +330,7 @@ class OrderController extends Controller
 		$res = $this->checkAliPayAndInsert($serial_number);
 		//跳转确认页面
 		$domain_name = env('APP_URL');
-		return redirect("{$domain_name}/auth/pay.html?order=".$serial_number);
+		return redirect("{$domain_name}/auth/pay.html?serial_number=".$serial_number);
 	}
 
 	public function aliNotify()

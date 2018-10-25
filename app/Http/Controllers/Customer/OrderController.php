@@ -129,7 +129,6 @@ class OrderController extends Controller
 		
 		$payModel = new PayOrder();
 		$makeOrder = $payModel->makeTrade($order_id,$coupon_id,$user_id);
-	
 		return tz_ajax_echo($makeOrder['data'],$makeOrder['msg'],$makeOrder['code']);
 	}
 

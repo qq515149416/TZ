@@ -334,7 +334,7 @@ class PayOrder extends Model
 			$type = [ '0' => '未选择' , '1' => '余额' , '2' => '支付宝' , '3' => '微信' , '4' => '其他' ];
 			$list[$i]['pay_type'] = $type[$list[$i]['pay_type']];
 			$list[$i]['pay_status'] = $status[$list[$i]['pay_status']];
-
+			echo $list[$i]['serial_number'];
 			$list[$i]['order'] = DB::table('tz_orders')->where('serial_number',$list[$i]['serial_number'])->get(['resource_type','order_type','machine_sn','resource','price','duration','payable_money']);
 			if($list[$i]['order']->isEmpty()){
 				$return['data'] = $list[$i]['serial_number'];

@@ -44,10 +44,10 @@ class PfmStatisticsController extends Controller
 
 		//更新统计数据
 		$res = $this->pfmStatistics($month);
-		if($res['code'] == 1){
-			$msg = '数据更新成功 , ';
+		if($res['code'] != 1){
+			return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 		}else{
-			$msg = '数据更新失败 , ';
+			$msg = $res['msg'].',';
 		}
 		
 		//获取统计数据

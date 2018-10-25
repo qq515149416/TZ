@@ -129,7 +129,6 @@ class OrderController extends Controller
 		
 		$payModel = new PayOrder();
 		$makeOrder = $payModel->makeTrade($order_id,$coupon_id,$user_id);
-	
 		return tz_ajax_echo($makeOrder['data'],$makeOrder['msg'],$makeOrder['code']);
 	}
 
@@ -240,7 +239,7 @@ class OrderController extends Controller
 				return $return;
 			}
 		}
-		$del = $model->delTrade($serial_number,$check['pay_status']);
+		$del = $model->delTrade($serial_number);
 		if($del == true){
 			$return['msg']='删除订单成功';
 			$return['code'] = 1;

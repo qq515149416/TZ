@@ -68,11 +68,33 @@
    margin-top: 10px;
 }
 .conversation-content[data-v-70b738d6] {
-    height: 600px;
+    height: 550px;
+    overflow: auto;
+}
+.operat[data-v-70b738d6] {
+    text-align: right;
+}
+.send[data-v-70b738d6] {
+    margin-top: 10px;
+}
+.conversation-content-item[data-v-70b738d6] {
+    margin: 5px 0;
+}
+.conversation-content-item .date[data-v-70b738d6],.conversation-content-item .content[data-v-70b738d6] {
+    display: block;
+}
+.conversation-content-item.self .date[data-v-70b738d6] {
+    color: blue;
+}
+.conversation-content-item.allochromatic .date[data-v-70b738d6] {
+    color: green;
+}
+.conversation-content-item .content[data-v-70b738d6] {
+    margin-left: 10px;
 }
 body,
 html {
   height: 100%;
 }
 
-/*# sourceMappingURL=index_229d9a260bc8756e2791.css.map*/
+/*# sourceMappingURL=index_ff0950a6ec607d6fadb7.css.map*/

@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import ListTableComponent from "../component/listTableComponent.jsx";
 import InputExpansion from "../component/dialog/inputExpansion.jsx";
 import StatisticsShowComponent from "../component/statisticsShowComponent.jsx";
@@ -7,7 +9,27 @@ import WorkOrderPost from "../component/dialog/workOrderPost.jsx";
 import {post} from "../tool/http.js";
 import extendElementsComponent from "../tool/extendElementsComponent";
 import { inject,observer } from "mobx-react";
+const classNames = require('classnames');
+const dateFormat = require('dateformat');
 const qs = require('qs');
+
+const styles = theme => ({
+    fastExpired: {
+        background: "orange"
+    },
+    expired: {
+        background: "crimson"
+    },
+    tableHover: {
+       "&:hover": {
+            backgroundColor: "#3c8dbc !important"
+       }
+    },
+    textStyle: {
+        fontSize: 16
+    }
+});
+
 const columnData = [
     { id: 'client_name', numeric: true, disablePadding: true, label: '客户' },
     { id: 'sales_name', numeric: true, disablePadding: true, label: '业务员' },
@@ -161,7 +183,7 @@ const inputType = [
   }
 ];
 @inject("businessStores")
-@observer 
+@observer
 class BusinesList extends React.Component {
   componentDidMount() {
     this.props.businessStores.getData(qs.parse(location.search.substr(1)).id);
@@ -183,13 +205,13 @@ class BusinesList extends React.Component {
   }
   // setClientName(param,type) {
   //   // console.log(param);
-  //   this.props.businessStores.changeStatistics("clientName",param); 
+  //   this.props.businessStores.changeStatistics("clientName",param);
   // }
   setMoneyName(param,type) {
-    this.props.businessStores.changeStatistics("unitPrice",param); 
+    this.props.businessStores.changeStatistics("unitPrice",param);
   }
   setLengthName(param,type) {
-    this.props.businessStores.changeStatistics("length",param); 
+    this.props.businessStores.changeStatistics("length",param);
   }
   setBusinessTypeName(param,type) {
     let codeValue = {
@@ -197,11 +219,11 @@ class BusinesList extends React.Component {
       2: "托管主机",
       3: "租用机柜"
     };
-    this.props.businessStores.changeStatistics("businessType",codeValue[param.business_type.value]); 
+    this.props.businessStores.changeStatistics("businessType",codeValue[param.business_type.value]);
   }
   setMachineNumberName(param,type) {
     // console.log(param);
-    this.props.businessStores.changeStatistics("productName",param); 
+    this.props.businessStores.changeStatistics("productName",param);
   }
   updata() {
     this.props.businessStores.getData(qs.parse(location.search.substr(1)).id);
@@ -220,18 +242,36 @@ class BusinesList extends React.Component {
     callbrak(delIng);
   }
   render() {
+      const {classes} = this.props;
     return (
-      <ListTableComponent 
+      <ListTableComponent
         title={`客户账号：${qs.parse(location.search.substr(1)).email}&nbsp;&nbsp;&nbsp;&nbsp;客户余额：${qs.parse(location.search.substr(1)).money}&nbsp;&nbsp;&nbsp;&nbsp;客户账号状态：${qs.parse(location.search.substr(1)).status}`}
         operattext="业务信息"
-        inputType={inputType} 
-        headTitlesData={columnData} 
-        data={this.props.businessStores.business}  
-        addData={this.addData.bind(this)} 
+        inputType={inputType}
+        headTitlesData={columnData}
+        data={this.props.businessStores.business}
+        addData={this.addData.bind(this)}
         updata={this.updata.bind(this)}
-        delData={this.delData.bind(this)} 
+        delData={this.delData.bind(this)}
+        tableRowStyle={data => {
+            let endTime = Math.round(new Date(data.endding_time).getTime()/1000);
+            let nowTime = Math.round(new Date().getTime()/1000);
+            console.log((endTime - nowTime),1000*60*60*24*3,data.client_name);
+            return {
+                classes: {
+                    root: classNames({
+                        [classes.fastExpired]:  (endTime > nowTime && (endTime - nowTime) < 60*60*24*3),
+                        [classes.expired]: endTime < nowTime
+                    }),
+                    hover: classes.tableHover
+                }
+            };
+        }}
       />
     );
   }
 }
-export default BusinesList;
+BusinesList.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+export default withStyles(styles)(BusinesList);

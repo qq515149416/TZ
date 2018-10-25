@@ -26,7 +26,7 @@ function getByteLen(val) {
   var len = 0;
   for (var i = 0; i < val.length; i++) {
        var a = val.charAt(i);
-       if (a.match(/[^\x00-\xff]/ig) != null) 
+       if (a.match(/[^\x00-\xff]/ig) != null)
       {
           len += 2;
       }
@@ -69,7 +69,7 @@ const styles = theme => ({
   class EnhancedTable extends React.Component {
     constructor(props) {
       super(props);
-  
+
       this.state = {
         order: 'asc',
         orderBy: 'calories',
@@ -87,11 +87,11 @@ const styles = theme => ({
     handleRequestSort = (event, property) => {
       const orderBy = property;
       let order = 'desc';
-  
+
       if (this.state.orderBy === property && this.state.order === 'desc') {
         order = 'asc';
       }
-  
+
       this.setState({ order, orderBy });
     };
     handleSelectAllEmptyClick = () => {
@@ -104,12 +104,12 @@ const styles = theme => ({
       }
       this.setState({ selected: [] });
     };
-  
+
     handleClick = (event, id) => {
       const { selected } = this.state;
       const selectedIndex = selected.indexOf(id);
       let newSelected = [];
-  
+
       if (selectedIndex === -1) {
         newSelected = newSelected.concat(selected, id);
       } else if (selectedIndex === 0) {
@@ -122,18 +122,18 @@ const styles = theme => ({
           selected.slice(selectedIndex + 1),
         );
       }
-  
+
       this.setState({ selected: newSelected });
     };
-  
+
     handleChangePage = (event, page) => {
       this.setState({ page });
     };
-  
+
     handleChangeRowsPerPage = event => {
       this.setState({ rowsPerPage: event.target.value });
     };
-  
+
     isSelected = id => this.state.selected.indexOf(id) !== -1;
     renderLinkComponent = (data) => {
       let operat = this.props.headTitlesData.find(item => item.id=="operat");
@@ -141,7 +141,7 @@ const styles = theme => ({
         if(operat.extendUrl.rule.type=="equal") {
           if(data[operat.extendUrl.rule.term]==operat.extendUrl.rule.execute) {
             return (
-              <ExpansionComponent 
+              <ExpansionComponent
                   type="link"
                   title={operat.extendUrl.title}
                   link={operat.extendUrl.link+"?"+qs.stringify(Object.keys(data).reduce((result,item) => {
@@ -149,11 +149,11 @@ const styles = theme => ({
                       if(Object.prototype.toString.call(e)!="[object Object]") {
                         return item==e;
                       } else {
-                        
+
                         return e.field==item;
                       }
                     })) {
-                      
+
                       if(Object.prototype.toString.call(data[item])!="[object Object]") {
                         result[item] = data[item];
                       } else {
@@ -165,7 +165,7 @@ const styles = theme => ({
                             return result;
                           },{})
                         });
-                          
+
                       }
                     }
                     return result;
@@ -178,7 +178,7 @@ const styles = theme => ({
         } else if(operat.extendUrl.rule.type=="more") {
           if(data[operat.extendUrl.rule.term] > this.props.headTitlesData.find(item => item.id=="operat").extendUrl.rule.execute) {
             return (
-              <ExpansionComponent 
+              <ExpansionComponent
                   type="link"
                   title={operat.extendUrl.title}
                   link={operat.extendUrl.link+"?"+qs.stringify(Object.keys(data).reduce((result,item) => {
@@ -195,7 +195,7 @@ const styles = theme => ({
         } else {
           if(data[operat.extendUrl.rule.term]!=operat.extendUrl.rule.execute) {
             return (
-              <ExpansionComponent 
+              <ExpansionComponent
                   type="link"
                   title={operat.extendUrl.title}
                   link={operat.extendUrl.link+"?"+qs.stringify(Object.keys(data).reduce((result,item) => {
@@ -210,10 +210,10 @@ const styles = theme => ({
             return null;
           }
         }
-        
+
       }
       return (
-        <ExpansionComponent 
+        <ExpansionComponent
             type="link"
             title={operat.extendUrl.title}
             link={operat.extendUrl.link+"?"+qs.stringify(Object.keys(data).reduce((result,item) => {
@@ -228,7 +228,7 @@ const styles = theme => ({
     renderExpansionComponent = (data) => {
       if(!this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.rule) {
         return (
-          <ExpansionComponent 
+          <ExpansionComponent
             type="confirm"
             tip_title={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.title}
             tip_content={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.content}
@@ -245,7 +245,7 @@ const styles = theme => ({
       if(this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.rule && this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.rule.type=="equal") {
         if(this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.rule.execute==data[this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.rule.term]) {
           return (
-            <ExpansionComponent 
+            <ExpansionComponent
               type="confirm"
               tip_title={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.title}
               tip_content={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.content}
@@ -263,7 +263,7 @@ const styles = theme => ({
       if(this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.rule && this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.rule.type=="unequal") {
         if(this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.rule.execute!=data[this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.rule.term]) {
           return (
-            <ExpansionComponent 
+            <ExpansionComponent
               type="confirm"
               tip_title={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.title}
               tip_content={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.content}
@@ -278,7 +278,7 @@ const styles = theme => ({
           );
         }
       }
-      
+
     }
     render() {
       const { classes } = this.props;
@@ -302,16 +302,16 @@ const styles = theme => ({
             }
           </div>,
         <Paper className={`${classes.root} ${this.props.className}`}>
-          <EnhancedTableToolbar 
-            title={(this.props.title || "未定义")} 
-            inputType={this.props.inputType} 
-            operattext={this.props.operattext} 
-            addData={this.props.addData} 
-            numSelected={selected.length} 
-            getParentData={this.getData.bind(this)} 
-            handleSelectAllEmptyClick={this.handleSelectAllEmptyClick} 
-            delData={this.props.delData} 
-            selectedData={selected} 
+          <EnhancedTableToolbar
+            title={(this.props.title || "未定义")}
+            inputType={this.props.inputType}
+            operattext={this.props.operattext}
+            addData={this.props.addData}
+            numSelected={selected.length}
+            getParentData={this.getData.bind(this)}
+            handleSelectAllEmptyClick={this.handleSelectAllEmptyClick}
+            delData={this.props.delData}
+            selectedData={selected}
           />
           <div className={classes.tableWrapper}>
             <Table className={classes.table} aria-labelledby="tableTitle">
@@ -330,6 +330,10 @@ const styles = theme => ({
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((n,i,arr) => {
                     const isSelected = this.isSelected(n.id);
+                    let styleParma = {};
+                    if(this.props.tableRowStyle) {
+                        styleParma = this.props.tableRowStyle(n);
+                    }
                     return (
                       <TableRow
                         hover
@@ -338,6 +342,7 @@ const styles = theme => ({
                         tabIndex={-1}
                         key={n.id}
                         selected={isSelected}
+                        {...styleParma}
                       >
                         <TableCell onClick={event => this.handleClick(event, n.id)} className={classes.tdFirst} padding="checkbox">
                           <Checkbox checked={isSelected} />
@@ -367,7 +372,7 @@ const styles = theme => ({
                                 <PostData operattext={this.props.operattext || this.props.title} inputType={this.props.inputType} postType="edit" editData={n} changeData={this.props.changeData} />
                               )}
                               {
-                                (this.props.headTitlesData.find(item => item.id=="operat").extend && this.props.headTitlesData.find(item => item.id=="operat").extendData ) && (<ExpansionComponent 
+                                (this.props.headTitlesData.find(item => item.id=="operat").extend && this.props.headTitlesData.find(item => item.id=="operat").extendData ) && (<ExpansionComponent
                                   type="show"
                                   data={this.props.headTitlesData.find(item => item.id=="operat").extendData.map((item,index) => {
                                     // console.log(item,i,arr);

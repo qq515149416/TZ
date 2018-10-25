@@ -11,15 +11,17 @@ import IconButton from '@material-ui/core/IconButton';
 import ChangeStatusIcon from "../icon/changeStatus.jsx";
 import MenuItem from '@material-ui/core/MenuItem';
 import {post} from "../../tool/http";
-import { inject } from "mobx-react";
+import { inject,observer } from "mobx-react";
 
 @inject("workOrdersStores")
+@observer
 class ChangeStatus extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             currency: "",
-            changeStatus: false
+            changeStatus: false,
+            department: 0
         };
         this.status = [
             {
@@ -28,7 +30,7 @@ class ChangeStatus extends React.Component {
             },
             {
                 label: "处理中",
-                value: 1  
+                value: 1
             },
             {
                 label: "完成",
@@ -56,7 +58,7 @@ class ChangeStatus extends React.Component {
             post(this.props.postUrl,{
                 id: this.props.id,
                 work_order_status: this.state.currency,
-                process_department: 3,
+                process_department: this.state.department,
                 summary: this.summary?this.summary.value:""
             }).then((data)=>{
                 if(data.data.code==1) {
@@ -88,6 +90,27 @@ class ChangeStatus extends React.Component {
         >
           <DialogTitle id="form-dialog-title">更改状态和所属部门</DialogTitle>
           <DialogContent>
+          <TextField
+                id="department"
+                select
+                label="所属部门"
+                value={this.state.department}
+                fullWidth
+                onChange={this.handleChange('department')}
+                margin="normal"
+                >
+                <MenuItem key={0} value={0}>
+                    <em>None</em>
+                </MenuItem>
+                {
+                    this.props.workOrdersStores.department.map(item => (
+                        <MenuItem key={item.id} value={item.id}>
+                            {item.depart_name}
+                        </MenuItem>
+                    ))
+                }
+
+            </TextField>
             <TextField
                 id="status"
                 select
@@ -104,7 +127,7 @@ class ChangeStatus extends React.Component {
                         </MenuItem>
                     ))
                 }
-                
+
             </TextField>
             {
                 this.state.currency==2 && (

@@ -19,9 +19,9 @@ class ChangeStatus extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currency: "",
+            currency: this.props.work_order_status,
             changeStatus: false,
-            department: 0
+            department: this.props.process_department
         };
         this.status = [
             {

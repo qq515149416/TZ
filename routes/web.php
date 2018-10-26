@@ -159,6 +159,7 @@ Route::group([
 			Route::post('makeTrade','Customer\OrderController@makeTrade');
 			Route::get('showTrade','Customer\OrderController@showTrade');
 			Route::get('showUnpaidTrade','Customer\OrderController@showUnpaidTrade');
+			Route::get('showSelectTrade','Customer\OrderController@showSelectTrade');
 			Route::get('payTradeByAli','Customer\OrderController@payTradeByAli');
 			Route::get('aliReturn','Customer\OrderController@aliReturn');
 			Route::get('aliNotify','Customer\OrderController@aliNotify');

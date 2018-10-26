@@ -13,7 +13,9 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import WorkOrderIcon from "../icon/workOrder.jsx";
 import {get,post} from "../../tool/http";
+import { inject,observer } from "mobx-react";
 
+@inject("workOrderTypesStores")
 class WorkOrderPost extends React.Component {
     constructor(props) {
         super(props);
@@ -21,18 +23,13 @@ class WorkOrderPost extends React.Component {
             currency: 0,
             currency2: 0,
             workOrder: false,
-            workOrderTypes: [],
             workOrderSubTypes: []
         };
     }
     componentDidMount() {
-        get("workorder/work_types").then(res => {
-            if(res.data.code==1) {
-                this.setState({
-                    workOrderTypes: res.data.data
-                });
-            }
-        });
+        if(!this.props.workOrderTypesStores.workOrderTypes.length) {
+            this.props.workOrderTypesStores.getData();
+        }
     }
     workOrderPost = () => {
         if(this.state.workOrderSubTypes.length>0&&!this.state.currency2) {
@@ -65,17 +62,27 @@ class WorkOrderPost extends React.Component {
     handleChange = param => event => {
         let {name,index} = param;
         if(index==0) {
-            get("workorder/work_types",{
-                parent_id: event.target.value
-            }).then(res => {
-                if(res.data.code==1) {
-                    if(res.data.data.length==0) {
-                        this.selectTypeId = event.target.value;
-                    }
-                    this.setState({
-                        workOrderSubTypes: res.data.data
-                    });
-                }
+            // get("workorder/work_types",{
+            //     parent_id: event.target.value
+            // }).then(res => {
+            //     if(res.data.code==1) {
+            //         if(res.data.data.length==0) {
+            //             this.selectTypeId = event.target.value;
+            //         }
+            //         this.setState({
+            //             workOrderSubTypes: res.data.data
+            //         });
+            //     }
+            // });
+            if(this.props.workOrderTypesStores.workOrderTypes.filter(item => {
+                return item.parent_id == event.target.value;
+            }).length) {
+                this.selectTypeId = event.target.value;
+            }
+            this.setState({
+                workOrderSubTypes: this.props.workOrderTypesStores.workOrderTypes.filter(item => {
+                    return item.parent_id == event.target.value;
+                })
             });
         }
         if(index==1) {
@@ -114,7 +121,9 @@ class WorkOrderPost extends React.Component {
                         margin="normal"
                         >
                             {
-                                this.state.workOrderTypes.map(item => (
+                                this.props.workOrderTypesStores.workOrderTypes.filter(item => {
+                                    return item.parent_id == 0;
+                                }).map(item => (
                                     <MenuItem key={item.id} value={item.id}>
                                         {item.type_name}
                                     </MenuItem>

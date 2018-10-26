@@ -93,7 +93,7 @@ class MachineModel extends Model
                     $result[$key]['ip'] = $machineroom['ip'];
                     $result[$key]['ip_detail'] = $machineroom['ip'].'('.$ip_company[$machineroom['ip_company']].')';
                     //机房的信息返回
-                    $result[$key]['machineroom'] = $machineroom['machine_room_name'];
+                    $result[$key]['machineroom_name'] = $machineroom['machine_room_name'];
                 }
             }
             $return['data'] = $result;

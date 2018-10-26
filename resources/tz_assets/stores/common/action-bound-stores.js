@@ -11,7 +11,7 @@ class ActionBoundStores {
     }
     @action.bound
     changeStoreData(storeAttr,EditStore,param) {
-        this[storeAttr][this[storeAttr].findIndex((item) => item.id==param.id)] = new EditStore(Object.assign(this[storeAttr][this[storeAttr].findIndex((item) => item.id==param.id)],param));
+        this[storeAttr][this[storeAttr].findIndex((item) => item.id==param.id)] = (Object.assign(this[storeAttr][this[storeAttr].findIndex((item) => item.id==param.id)],param));
     }
     @action.bound
     filterStoreData(storeAttr, type, param) {

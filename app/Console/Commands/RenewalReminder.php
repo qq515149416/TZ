@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Admin\Models\Business\BusinessModel;
 use App\Http\Models\TzUser;
+use App\Mail\Deadline;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -59,8 +60,9 @@ class RenewalReminder extends Command
             ];
 
             $this->sendEmail($sendData); //发送邮件
-            Log::channel('RenewalReminder')->info('完成一次批量提醒');  //写入日志文件
+
         }
+        Log::channel('RenewalReminder')->info('完成一次批量提醒');  //写入日志文件
 
     }
 
@@ -79,17 +81,24 @@ class RenewalReminder extends Command
      */
     public function sendEmail($sendData = null)
     {
-        //发送邮件
-        Mail::send('emails.deadline', [
-            //发送内容
-            'userName'    => $sendData['userName'],     //用户名
-//            'exampleType' => $sendData['exampleType'],  //实例类型
-            'exampleId'   => $sendData['exampleId'],    //实例ID
-            'deadline'    => $sendData['deadline'],    //到期时间
-        ], function ($message) use ($sendData) {
-            $message->to($sendData['email'])->subject($sendData['subject']);
-        });
+//        //发送邮件
 
+        //===================正常发送邮件==============================
+//        Mail::send('emails.deadline', [
+//            //发送内容
+//            'userName'    => $sendData['userName'],     //用户名
+////            'exampleType' => $sendData['exampleType'],  //实例类型
+//            'exampleId'   => $sendData['exampleId'],    //实例ID
+//            'deadline'    => $sendData['deadline'],    //到期时间
+//        ], function ($message) use ($sendData) {
+//            $message->to($sendData['email'])->subject($sendData['subject']);
+//        });
+
+
+
+        //================队列类型==========================
+        Mail::to($sendData['email'])
+            ->queue(new Deadline($sendData));
 
     }
 }

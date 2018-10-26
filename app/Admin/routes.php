@@ -9,8 +9,8 @@ Route::group([
     'namespace'  => config('admin.route.namespace'),
     'middleware' => config('admin.route.middleware'),
 ], function (Router $router) {
-
     $router->get('/', 'HomeController@index');
+   
 
 
     //Jun   个人测试用
@@ -78,24 +78,51 @@ Route::group([
     $router->get('/whitelist', 'Show\WhitelistController@index');
     $router->get('/work_order_type', 'Show\WorkOrderTypeController@index');
     $router->get('/work_order', 'Show\WorkOrderTypeController@index');
-
+    $router->get('/system_info', 'Show\SystemInformationController@index');
+    $router->get('/hr/departmentview', 'Show\DepartmentController@index');
+    $router->get('/hr/position', 'Show\PositionController@index');
 
 //人事
     Route::group([
         'prefix' => 'hr',
     ],function(Router $router){
-        $router->get('showaccount', 'Hr\AccountController@showAccount');
-        $router->get('showMyself', 'Hr\AccountController@personalAccount');
-        Route::group([
-        'prefix' => 'userInfo',
-        ],function(Router $router){
-            $router->get('showEmployee', 'Hr\EmployeeInformationController@showEmployee');
-            $router->post('insertEmployee', 'Hr\EmployeeInformationController@insertEmployee');
-            $router->post('editEmployee', 'Hr\EmployeeInformationController@editEmployee');
-            $router->post('deleteEmployee', 'Hr\EmployeeInformationController@deleteEmployee');
-            $router->get('employeePersonal', 'Hr\EmployeeInformationController@employeePersonal');
-            $router->post('employeeDetailed', 'Hr\EmployeeInformationController@employeeDetailed');
-        });
+        /**
+         * 账户
+         */
+        $router->get('show_account', 'Hr\AccountController@showAccount');
+        $router->get('show_self', 'Hr\AccountController@personalAccount');
+        $router->post('edit_self', 'Hr\AccountController@editAccount');
+        $router->post('reset_pass', 'Hr\AccountController@resetAccountPass');
+        $router->post('confirm_pass', 'Hr\AccountController@confirmPass');
+        $router->post('old_pass', 'Hr\AccountController@oldPass');
+        $router->post('edit_pass', 'Hr\AccountController@editPassword');
+        $router->post('insert_account', 'Hr\AccountController@insertAccount');
+        /**
+         * 员工信息
+         */
+        $router->get('show_employee', 'Hr\EmployeeInformationController@showEmployee');
+        $router->post('insert_employee', 'Hr\EmployeeInformationController@insertEmployee');
+        $router->post('edit_employee', 'Hr\EmployeeInformationController@editEmployee');
+        $router->post('delete_employee', 'Hr\EmployeeInformationController@deleteEmployee');
+        $router->get('employee_personal', 'Hr\EmployeeInformationController@employeePersonal');
+        $router->get('department', 'Hr\EmployeeInformationController@department');
+        $router->post('jobs', 'Hr\EmployeeInformationController@jobs');
+        /**
+         * 部门
+         */
+        $router->get('show_depart','Hr\DepartmentController@showDepart');
+        $router->post('insert_depart','Hr\DepartmentController@insertDepart');
+        $router->post('edit_depart','Hr\DepartmentController@editDepart');
+        $router->post('delete_depart','Hr\DepartmentController@deleteDepart');
+        /**
+         * 职位
+         */
+        $router->get('show_jobs','Hr\JobsController@showJobs');
+        $router->post('insert_jobs','Hr\JobsController@insertJobs');
+        $router->post('edit_jobs','Hr\JobsController@editJobs');
+        $router->post('delete_jobs','Hr\JobsController@deleteJobs');
+        $router->get('depart','Hr\JobsController@depart');
+        
     });
 
 
@@ -103,11 +130,11 @@ Route::group([
     Route::group([
         'prefix' => 'machine_room',
     ], function (Router $router) {
-    $router->get('showByAjax', 'Idc\MachineRoomController@showByAjax');
-    $router->get('show_select_list_by_ajax', 'Idc\MachineRoomController@showSelectListByAjax');
-    $router->post('storeByAjax', 'Idc\MachineRoomController@storeByAjax');
-    $router->post('destroyByAjax', 'Idc\MachineRoomController@destroyByAjax');
-    $router->post('updateByAjax', 'Idc\MachineRoomController@updateByAjax');
+        $router->get('showByAjax', 'Idc\MachineRoomController@showByAjax');
+        $router->get('show_select_list_by_ajax', 'Idc\MachineRoomController@showSelectListByAjax');
+        $router->post('storeByAjax', 'Idc\MachineRoomController@storeByAjax');
+        $router->post('destroyByAjax', 'Idc\MachineRoomController@destroyByAjax');
+        $router->post('updateByAjax', 'Idc\MachineRoomController@updateByAjax');
     });
 
     //机柜管理   分组增删改查
@@ -212,9 +239,8 @@ Route::group([
     Route::group([
         'prefix' => 'workorder',
     ],function(Router $router){
-        $router->get('show','Work\WorkOrderController@showWorkOrder');//管理员和网维等人员查看
-        $router->get('clerk','Work\WorkOrderController@clerkWorkOrder');//业务员查看
-        $router->get('area','Work\WorkOrderController@areaWorkOrder');//地区机房人员查看
+        $router->get('show','Work\WorkOrderController@showWorkOrder');
+        $router->get('department','Work\WorkOrderController@department');
         $router->post('insert','Work\WorkOrderController@insertWorkOrder');
         $router->post('edit','Work\WorkOrderController@editWorkOrder');
         $router->post('delete','Work\WorkOrderController@deleteWorkOrder');

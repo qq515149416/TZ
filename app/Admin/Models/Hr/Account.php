@@ -13,6 +13,7 @@ class Account extends Model
    	protected $table = 'admin_users';
    	public $timestamps = true;
     protected $dates = ['deleted_at'];
+    protected $fillable = ['id','username','password','name'];
 
     /**
      * 人事查看有关人员账号信息的数据查询
@@ -101,7 +102,7 @@ class Account extends Model
        * @return array            返回相关的状态提示及信息
        */
       public function editAccount($edit_data){
-         if($edit_data){
+        if($edit_data){
             $row = $this->where('id',$edit_data['id'])->update($edit_data);
             if($row != false){
                $return['code'] = 1;
@@ -110,11 +111,11 @@ class Account extends Model
                $return['code'] = 0;
                $return['msg'] = '修改账户信息失败';
             }
-         } else {
+        } else {
             $return['code'] = 0;
             $return['msg'] = '无法修改账户信息';
-         }
-         return $return;
+        }
+        return $return;
       }
 
       /**
@@ -122,31 +123,31 @@ class Account extends Model
        * @param  array $reset_pass --usernam账户名(作为重置后的密码) --id对应账户的id
        * @return [type]             [description]
        */
-      public function resetAccountPass($reset_pass){
-         if($reset_pass){
-               $reset['password'] = bcrypt($reset_pass['username']);
-               $row = $this->where('id',$reset_pass['id'])->update($reset);
-               if($row != false){
-                  $return['code'] = 1;
-                  $return['msg'] = '密码重置成功，密码为登录账号';
-               } else {
-                  $return['code'] = 0;
-                  $return['msg'] = '密码重置失败';
-               }
-         } else {
+    public function resetAccountPass($reset_pass){
+        if($reset_pass){
+           $reset['password'] = Hash::make($reset_pass['username']);
+           $row = $this->where('id',$reset_pass['id'])->update($reset);
+           if($row != false){
+              $return['code'] = 1;
+              $return['msg'] = '密码重置成功，密码为登录账号';
+           } else {
+              $return['code'] = 0;
+              $return['msg'] = '密码重置失败';
+           }
+        } else {
             $return['code'] = 0;
             $return['msg'] = '密码无法重置';
-         }
-      }
+        }
+    }
 
       /**
        * 修改密码
        * @param  array $edit_data --id 对应账户id --password 新密码
        * @return [type]            [description]
        */
-      public function editPassword($edit_data){
-         if($edit_data){
-            $edit_data['password'] = bcrypt($edit_data['password']);
+    public function editPassword($edit_data){
+        if($edit_data){
+            $edit_data['password'] = Hash::make($edit_data['password']);
             $row = $this->where('id',$edit_data)->update($edit_data);
             if($row != false){
                $return['code'] = 1;
@@ -155,12 +156,39 @@ class Account extends Model
                $return['code'] = 0;
                $return['msg'] = '密码修改失败';
             }
-         } else {
+        } else {
             $return['code'] = 0;
             $return['msg'] = '密码无法修改';
-         }
-         return $return;
-      } 
+        }
+        return $return;
+    } 
+
+    /**
+     * 人事添加账户
+     * @param  [type] $insert_data [description]
+     * @return [type]              [description]
+     */
+    public function insertAccount($insert_data){
+        if(!$insert_data){
+            $return['data'] = [];
+            $return['code'] = 0;
+            $return['msg'] = '无法添加账户信息';
+            return $return;
+        }
+        $insert_data['password'] = Hash::make($insert_data['username']);
+        $row = $this->create($insert_data);
+        if($row != false){
+            $return['data'] = $row->id;
+            $return['code'] = 1;
+            $return['msg'] = '账户添加成功,登陆账号为:'.$row->username.',密码为登陆账号';
+        } else {
+            $return['data'] = [];
+            $return['code'] = 0;
+            $return['msg'] = '添加账户失败';
+        }
+        return $return;
+    }
+
 
 
 }

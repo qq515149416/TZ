@@ -17,8 +17,8 @@ import StatisticalPerformancesStores from "../../stores/statisticalPerformance-s
 import WhitelistsStores from "../../stores/whitelist-stores";
 import WorkOrderTypesStores from "../../stores/workOrderType-stores";
 import WorkOrdersStores from "../../stores/workOrder-stores";
-
-
+import DepartmentsStores from "../../stores/department-stores";
+import PositionsStores from "../../stores/position-stores";
 
 
 // 前端Models操作
@@ -42,6 +42,8 @@ export const stores = {
     whitelistsStores: new WhitelistsStores(),
     workOrderTypesStores: new WorkOrderTypesStores(),
     workOrdersStores: new WorkOrdersStores(),
+    departmentsStores: new DepartmentsStores(),
+    positionsStores: new PositionsStores()
 }
 export const domIds = [
     "user_list",
@@ -63,5 +65,8 @@ export const domIds = [
     "statisticalPerformance",
     "whitelist",
     "workOrderType",
-    "workOrder"
+    "workOrder",
+    "home",
+    "department",
+    "position"
 ];

@@ -3,7 +3,7 @@
 // +----------------------------------------------------------------------
 // | Author: kiri <420541662@qq.com>
 // +----------------------------------------------------------------------
-// | Copyright (c) 不知道啥2.0
+// | Copyright (c) 不知道啥
 // +----------------------------------------------------------------------
 // | Description: 用户订单表模型
 // +----------------------------------------------------------------------
@@ -36,8 +36,8 @@ class Order extends Model
 		$user_id = Auth::user()->id;
 		$type['customer_id'] = $user_id;
 		//获取该用户的订单
-		$order = $this->where($type)->orderby('created_at','desc')->get(['id','order_sn', 'business_sn','before_money','after_money','business_id','resource_type','order_type','machine_sn','resource','price','duration','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at','payable_money']);
-
+		//$order = $this->where($type)->orderby('created_at','desc')->get(['id','order_sn', 'business_sn','before_money','after_money','business_id','resource_type','order_type','machine_sn','resource','price','duration','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at','payable_money']);
+		$order = $this->where($type)->orderby('created_at','desc')->get(['id','order_sn', 'business_sn','business_id','resource_type','order_type','machine_sn','resource','price','duration','end_time','serial_number','pay_time','order_status','order_note','created_at','payable_money']);
 		if(count($order) == 0){
 			return false;
 		}
@@ -45,8 +45,10 @@ class Order extends Model
 		//转换状态
 		$resource_type = [ '1' => '租用主机' , '2' => '托管主机' , '3' => '租用机柜' , '4' => 'IP' , '5' => 'CPU' , '6' => '硬盘' , '7' => '内存' , '8' => '带宽' , '9' => '防护' , '10' => 'cdn'];
 		$order_type = [ '1' => '新购' , '2' => '续费' ];
-		$pay_type = [ '1' => '余额' , '2' => '支付宝' , '3' => '微信' , '4' => '其他'];
-		$order_status = [0=>'待支付',1=>'已支付',2=>'财务确认',3=>'订单完成',4=>'到期',5=>'取消',6=>'申请退款',7=>'正在支付',8=>'退款完成'];
+
+		// $pay_type = [ '1' => '余额' , '2' => '支付宝' , '3' => '微信' , '4' => '其他'];
+		$order_status = [ '0' => '待支付' , '1' => '已支付' , '2' => '已支付' , '3' => '订单完成' , '4' => '到期' , '5' => '取消' , '6' => '申请退款','7' => '正在支付', '8' => '退款完成'];
+
 		$info = $this->getName('*');
 		$admin_name = [];
 		foreach ($info as $k => $v) {
@@ -57,7 +59,7 @@ class Order extends Model
 			$order[$key]['type'] = $order[$key]['resource_type'];
 			$order[$key]['resource_type'] = $resource_type[$order[$key]['resource_type']];
 			$order[$key]['order_type'] = $order_type[$order[$key]['order_type']];
-			$order[$key]['pay_type'] = $order[$key]['pay_type'] ? $pay_type[$order[$key]['pay_type']]:"未支付";
+			// $order[$key]['pay_type'] = $order[$key]['pay_type'] ? $pay_type[$order[$key]['pay_type']]:"未支付";
 			$order[$key]['order_status'] = $order_status[$order[$key]['order_status']];
 			$order[$key]['business_name']	= $admin_name[$order[$key]['business_id']];
 		}
@@ -82,6 +84,11 @@ class Order extends Model
 			$return['code']	= 0;
 			return $return;
 		}
+		if($row->order_status == 7){
+			$return['msg'] 	= '订单正在付款,请取消后再删除';
+			$return['code']	= 0;
+			return $return;
+		}
 		$res = $row->delete();
 
 		if(!$res){
@@ -94,110 +101,7 @@ class Order extends Model
 		return $return;
 	}
 
-	/**
-	 * 客户自主对订单进行支付
-	 * @param  int $user_id 客户的id
-	 * @param  int $id      订单的id
-	 * @return array          返回相关的状态提示及信息
-	 */
-	public function payOrderByBalance($user_id,$serial_number){
-		
-		// $serial_number = 'tz_'.time().'_'.$user_id;	 //支付流水号
-		
-		$row = $this->where('serial_number',$serial_number)->get(['customer_id','order_status','payable_money','pay_type','resource_type','business_sn']);
-
-		$return['data']	= '';
-		$return['code']	= 0;
-		// 是否存在此支付流水
-		if($row->isEmpty()){
-			$return['msg'] 	= '无此支付流水号';
-			$return['code']	= 0;
-			return $return;
-		}
-		$row = json_decode(json_encode($row),true);
-		// dd($row);
-		$payable_money = '0.00';
-		for ($i=0; $i < count($row); $i++) { 
-			// 是否是客户自己的订单
-			if($user_id != $row[$i]['customer_id']){	
-				$return['msg'] 	= '只能支付自己的订单';
-				return $return;
-			}
-			// 订单的状态是否为未支付
-			if( $row[$i]['order_status'] != 7 ){
-				$return['msg'] 	= '订单已支付或已取消';
-				return $return;
-			}
-			$payable_money = bcadd((string)$payable_money,(string)$row[$i]['payable_money'],2);
-		}
-		//获取余额
-		$before_money = $this->getMoney($user_id)->money;
-		//计算扣除应付金额后余额
-		$after_money = bcsub((string)$before_money,(string)$payable_money,2);
 	
-		if( $after_money < 0 ){
-			$return['msg'] 	= '余额不足,请充值';
-			return $return;
-		}
-		$pay_time = date("Y-m-d h:i:s");
-		
-		$pay_type = $row[0]['pay_type'];
-		
-		//事务开始
-		DB::beginTransaction();
-		$updateData['before_money'] 	= $before_money;
-		$updateData['after_money']	= $after_money;
-		$updateData['pay_type']		= 1;
-		$updateData['pay_price']	= $payable_money;
-		$updateData['pay_time']	= $pay_time;
-		$updateData['order_status']	= 1;
-		$updateData['serial_number']	= $serial_number;
-		//对交易流水涉及的几条订单更新支付相关信息
-		$updateRes = $this->where('serial_number',$serial_number)->update($updateData);	
-		if($updateRes == false){
-			//更新失败回滚
-			DB::rollBack();
-			$return['msg'] 	= '支付失败';
-			$return['code']	= 2;
-			return $return;
-		}
-
-		// 订单支付成功后对客户的余额进行修改
-		$payMoney = DB::table('tz_users')->where('id',$user_id)->update(['money' => $after_money ]);
-		if($payMoney == false){
-			// 修改客户余额失败，进行事务回滚
-			DB::rollBack();
-			$return['msg'] 	= '扣除余额失败,支付失败';
-			$return['code']	= 2;
-			return $return;	
-		}
-
-		for ($j=0 ; $j < count($row); $j++) { 
-			if($row[$j]['resource_type'] < 4) {
-				// 资源类型如果是机柜/主机，查找对应的业务状态	
-				$business_status = DB::table('tz_business')->where('business_number',$row[$j]['business_sn'])->value('business_status');
-				if($business_status > 0 && $business_status < 4){
-					// 业务状态是审核通过且是使用状态将状态修改为付款使用即2
-					$business['business_status'] = 2;
-					$businessUp = DB::table('tz_business')->where('business_number',$row[$j]['business_sn'])->update($business);
-					if($businessUp == 0) {
-						DB::rollBack();
-						$return['msg'] 	= '更改资源使用状态失败,订单可能为正在付款使用中状态,支付失败';
-						$return['code']	= 3;
-						return $return;
-					}
-				} 
-			} 
-		}
-		DB::commit();
-		// 客户余额修改成功
-		
-		$return['data'] = $row;
-		$return['code'] = 1;
-		$return['msg'] = '支付成功!!';			 		
-		return $return;
-	}
-
 
 	/**
 	* 查询user表的余额数据
@@ -242,7 +146,7 @@ class Order extends Model
 				$resource_type = [ '1' => '租用主机' , '2' => '托管主机' , '3' => '租用机柜' , '4' => 'IP' , '5' => 'CPU' , '6' => '硬盘' , '7' => '内存' , '8' => '带宽' , '9' => '防护' , '10' => 'cdn'];
 				$order_type = [ '1' => '新购' , '2' => '续费' ];
 				$pay_type = [ '1' => '余额' , '2' => '支付宝' , '3' => '微信' , '4' => '其他'];
-				$order_status = [0=>'待支付',1=>'已支付',2=>'财务确认',3=>'订单完成',4=>'到期',5=>'取消',6=>'申请退款',7=>'正在支付',8=>'退款完成'];
+				$order_status = [ '0' => '待支付' , '1' => '已支付' , '2' => '已支付' , '3' => '订单完成' , '4' => '取消' , '5' => '申请退款' , '6' => '退款完成' , '7' => '正在付款'];
 				foreach($resource_orders as $resource_key => $resource_value){
 					$resource_orders[$resource_key]['resource_type'] = $resource_type[$resource_value['resource_type']];
 					$resource_orders[$resource_key]['order_type'] = $order_type[$resource_value['order_type']];
@@ -329,7 +233,7 @@ class Order extends Model
 		$order['duration'] = $param['length'];//续费时长
 		$order['payable_money'] = bcmul((string)$order['price'],(string)$order['duration'],2);//应付金额
 		$order['customer_id'] = Auth::user()->id;//客户id
-		$order['customer_name'] = Auth::user()->name?Auth::user()->name:'test';//客户姓名
+		$order['customer_name'] = Auth::user()->name?Auth::user()->name:Auth::user()->email;//客户姓名
 		$order['resource_type'] = $param['resource_type'];//资源类型
 		$order['order_type'] = 2;//订单类型续费
 		$order['end_time'] = $end_time;//订单到期时间
@@ -444,47 +348,24 @@ class Order extends Model
 	}
 
 
-	public function makeTrade($order_id = [],$user_id){
-		$return['data'] = '';
-		$return['code'] = 0;
-		$serial_number = 'tz_'.time().'_'.$user_id;
-		$order_status = 7;
 
-		DB::beginTransaction();//开启事务处理
 
-		for ($i=0; $i < count($order_id) ; $i++) { 
-			$order = $this->find($order_id[$i]);
-			if($order == NULL){
-				DB::rollBack();
-				$return['msg'] = '有订单不存在';
-				return $return;
-			}
-			if($order->customer_id != $user_id){
-				DB::rollBack();
-				$return['msg'] = '有订单不属于您';
-				return $return;
-			}
-			if($order->order_status != 0){
-				DB::rollBack();
-				$return['msg'] = '有订单已支付或正在支付或已取消';
-				return $return;
-			}
-			$order->serial_number = $serial_number;
-			$order->order_status = $order_status;
-			$order->pay_type = 0;
-			$update = $order->save();
-			if($update != true){
-				DB::rollBack();
-				$return['msg'] = '创建订单失败';
-				return $return;
-			}
+	public function checkOrder($serial_number){
+	
+		$order = $this->where('serial_number',$serial_number)->get(['order_status','pay_type','id']);
+				
+		if(!$order->isEmpty()){			
+			$return['data'] 	= $order;
+			$return['code'] 	= 1;
+			$return['msg']	= '获取订单信息成功';
+		}else{
+			$return['data'] 	= '';
+			$return['code'] 	= 0;
+			$return['msg']	= '获取订单信息失败';
 		}
-		DB::commit();
-		$return['data'] 	= $serial_number;
-		$return['msg']	= '创建订单成功';
-		$return['code']	= 1;
 
-		
 		return $return;
 	}
+
+	
 }

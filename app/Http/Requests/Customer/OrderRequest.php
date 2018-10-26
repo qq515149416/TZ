@@ -45,6 +45,12 @@ class OrderRequest extends FormRequest
 					'serial_number'		=> 'required',
 				];
 				break;
+			case 'makeTrade':
+				$return = [
+					'order_id'		=> 'required|array',
+					'coupon_id'		=> 'required',
+				];
+				break;
  			
 			default:
 	
@@ -59,6 +65,9 @@ class OrderRequest extends FormRequest
 		
 		return  [
 			'serial_number.required'	=> '请提供所需支付的支付流水号',
+			'order_id.required'		=> '请提供所需支付订单id',
+			'order_id.array'			=> '订单id必须为数组格式',
+			'coupon_id.required'		=> '请提供优惠券id,0为不使用',
 		];
 	}
 

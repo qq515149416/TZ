@@ -111,7 +111,7 @@ class WhiteListModel extends Model
 		$insertdata['white_number'] = $whitenumber;
 		// 当前登陆用户的信息，作为提交者信息
 		$admin_id 			= Admin::user()->id;
-		$fullname 			= Admin::user()->name;
+		$fullname 			= Admin::user()->name?Admin::user()->name:Admin::user()->username;
 		$insertdata['submit_id'] 		= $admin_id;			
 		$insertdata['submit_name'] 	= $fullname;	
 		$insertdata['submit'] 		= 2;			// 提交方
@@ -213,7 +213,7 @@ class WhiteListModel extends Model
 	 */
 	public function staff($admin_id) {
 		$staff = DB::table('oa_staff')->where('admin_users_id',$admin_id)
-					->select('work_number','fullname')->first();
+					->select('work_number')->first();
 		return $staff;
 	}
 }

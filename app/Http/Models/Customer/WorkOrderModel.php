@@ -42,9 +42,8 @@ class WorkOrderModel extends Model
                 // 工单类型
                 $worktype = $this->workType($showvalue['work_order_type']);
                 $list[$showkey]['worktype'] = $worktype->parenttype?'【'.$worktype->parenttype.'】 -- 【'.$worktype->type_name.'】':'【'.$worktype->type_name.'】';
-                // $list[$showkey]['parenttype'] = $worktype->parenttype;
                 // 当前处理部门
-                $list[$showkey]['department'] = $showvalue['process_department']?$this->role($showvalue['process_department'])->name:'网维部门';
+                $list[$showkey]['department'] = $this->department($showvalue['process_department'])->depart_name;
                 $business = $this->businessDetail($showvalue['business_num']);
                 $list[$showkey]['client_name'] = $business->client_name;
                 $list[$showkey]['business_type'] = $business->business_type;	
@@ -92,7 +91,7 @@ class WorkOrderModel extends Model
 		$insert_data['submitter_name'] = Auth::user()->name?Auth::user()->name:Auth::user()->email;//提交者姓名
 		$insert_data['submitter'] = 1;//提交方客户
 		$insert_data['work_order_status'] = 0;//工单状态
-		$insert_data['process_department'] = 0;//转发部门
+		$insert_data['process_department'] = $this->department()->id;//转发部门
 		$row = $this->create($insert_data);
 		if($row != false){
 			$return['data'] = $row->id;
@@ -126,17 +125,18 @@ class WorkOrderModel extends Model
 
 
     /**
-     * 查找当前登陆用户的角色标识和角色名称
-     * @param  [type] $user_id [description]
-     * @return [type]          [description]
+     * 部门转换
+     * @param  [type] $depart_id [description]
+     * @return [type]            [description]
      */
-    public function role($user_id){
-        $role = DB::table('admin_role_users')
-                    ->join('admin_roles','admin_role_users.role_id = admin_roles.id')
-                    ->where('user_id',$user_id)
-                    ->select('admin_roles.id as roleid','admin_roles.slug','admin_roles.name')
-                    ->first();
-        return $role;
+    public function department($depart_id = 0){
+        if($depart_id != 0){
+            $where['id'] =  $depart_id;
+        } else {
+            $where['sign'] = 2;
+        }
+        $depart = DB::table('tz_department')->where($where)->select('id','depart_number','depart_name')->first();
+        return $depart;
     }
 
     /**

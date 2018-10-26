@@ -15,7 +15,7 @@ class RefundController extends Controller
     use ModelForm;
 
     /**
-     * 客户通过订单查看退款详情
+     * 后台业务员/管理人员通过订单查看退款详情
      * @param  Request $request [description]
      * @return [type]           [description]
      */
@@ -23,6 +23,18 @@ class RefundController extends Controller
     	$order_num = $request->only(['refund_order']);
     	$refund = new RefundModel();
     	$refund_result = $refund->showRefund($order_num);
+    	return tz_ajax_echo($refund_result['data'],$refund_result['msg'],$refund_result['code']);
+    }
+
+    /**
+     * 财务根据订单查看退款单
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function financeRefund(Request $request){
+    	$order_num = $request->only(['refund_order']);
+    	$refund = new RefundModel();
+    	$refund_result = $refund->financeRefund($order_num);
     	return tz_ajax_echo($refund_result['data'],$refund_result['msg'],$refund_result['code']);
     }
 

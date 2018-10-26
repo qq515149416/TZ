@@ -43,6 +43,8 @@ class LoginController extends Controller
             return tz_ajax_echo([], '密码错误', 0); //登录失败
         }
         return tz_ajax_echo($loginInfo, '登录成功', 1);  //登录成功
+//        return tz_ajax_echo($loginInfo, '登录成功', 1);  //登录成功
+//        return redirect('/tz/index.html');
     }
 
 }

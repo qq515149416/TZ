@@ -16,7 +16,7 @@ class WorkAnswerModel extends Model
     protected $table = 'tz_work_answer';
     public $timestamps = true;
     protected $dates = ['deleted_at'];
-    protected $fillable = ['work_number','answer_content','answer_worknum','answer_id','answer_role','created_at','deleted_at'];
+    protected $fillable = ['work_number','answer_content','answer_worknum','answer_id','answer_role','created_at','deleted_at','updated_at'];
 
     /**
      * 根据工单号查找对应的详情
@@ -71,7 +71,7 @@ class WorkAnswerModel extends Model
     		$insert_data['answer_role'] = 1;
     		$row = $this->create($insert_data);
     		if($row != false){
-    			$return['data'] = $insert_data['answer_content'];
+    			$return['data'] = $row;
     			$return['code'] = 1;
     			$return['msg'] = '';
     		} else {

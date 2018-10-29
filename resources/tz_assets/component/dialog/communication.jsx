@@ -20,7 +20,7 @@ import TextField from '@material-ui/core/TextField';
 import { get,post } from '../../tool/http';
 import io from 'socket.io-client';
 const classNames = require('classnames');
-const socket = io("http://127.0.0.1:8120");
+const socket = io("http://"+location.hostname+":8120");
 
 const styles = {
     appBar: {
@@ -30,7 +30,8 @@ const styles = {
       flex: 1,
     },
     content_container: {
-        height: 550
+        height: 550,
+        overflow: "auto"
     },
     textField: {
         margin: 0,
@@ -100,6 +101,7 @@ const styles = {
             answer_content: this.send_content.value
         }).then(res => {
             if(res.data.code==1) {
+                this.send_content.value = "";
                 // socket.emit(`to_id:${this.props.customer_id}work_num:${this.props.work_order_number}`,res.data.data);
                 socket.emit("admin_to_client",Object.assign(res.data.data,{
                     to_id: this.props.customer_id
@@ -150,8 +152,8 @@ const styles = {
                 this.state.contents.map(item => (
                     <div className={`${classes.conversation_content_item}`}>
                         <span className={`${classes.block} ${classNames({
-                            [classes.self]: item.answer_id==this.props.customer_id,
-                            [classes.allochromatic]: item.answer_id!=this.props.customer_id
+                            [classes.self]: item.answer_role==2,
+                            [classes.allochromatic]: item.answer_role==1
                         })} ${classes.date}`}>{item.created_at}</span>
                         <span className={`${classes.block} ${classes.content}`}>{item.answer_content}</span>
                     </div>

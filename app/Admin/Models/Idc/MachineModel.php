@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Illuminate\Support\Facades\Schema;
 
 class MachineModel extends Model
 {
@@ -366,7 +369,7 @@ class MachineModel extends Model
         $cabinet = DB::table('idc_cabinet')->whereNull('deleted_at')->select('id','machineroom_id','cabinet_id','use_type')->get();
         $use_type = [0=>'内部机柜',1=>'客户机柜'];
         foreach($cabinet as $key => $value){
-            $cabinet[$key] = $value->id.'--'.$this->machineRooms($value->machineroom_id).'--'.$value->cabinet_id.'('.$use_type[$value->use_type].')';
+            $cabinet[$key] =$this->machineRooms($value->machineroom_id).'--'.$value->id.'--'.$value->cabinet_id.'('.$use_type[$value->use_type].')';
         }
         $cabinet = $cabinet->toArray();
         return $cabinet;
@@ -380,10 +383,132 @@ class MachineModel extends Model
         $ips = DB::table('idc_ips')->where(['ip_status'=>0])->whereNull('deleted_at')->select('id','ip','ip_company','ip_comproom')->get();
         $ip_company = [0=>'电信',1=>'移动',2=>'联通'];
         foreach($ips as $key => $value){
-            $ips[$key] = $value->id.'--'.$this->machineRooms($value->ip_comproom).'--'.$value->ip.'('.$ip_company[$value->ip_company].')';
+            $ips[$key] = $this->machineRooms($value->ip_comproom).'--'.$value->id.'--'.$value->ip.'('.$ip_company[$value->ip_company].')';
         }
         $ips = $ips->toArray();
         return $ips;
+    }
+
+    /**
+     * 处理批量添加机器
+     * @param  [type] $file [description]
+     * @return [type]       [description]
+     */
+    public function handleExcel($file){
+        if(!$file){
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg'] = '请上传文件!!';
+            return $return;
+        }
+        $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader('Xlsx');//读取excel文件
+        $spreadsheet = $reader->load($file->getRealPath());//加载文件
+        $worksheet = $spreadsheet->getActiveSheet();//获取表格的活动区域
+        $highest_colum = $worksheet->getHighestColumn();//获取总的列数
+        $highest_colum_num = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($highest_colum)-7;//将总列数转换为数字
+        $highest_colum = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($highest_colum_num);//数字转换为列
+        for($colum = 'A';$colum <= $highest_colum;$colum++){//转换列名
+            switch($worksheet->getCell($colum.'4')->getVlue()){
+                case '机器编号':
+                    $colum_value[$colum] = 'machine_num';
+                    break;
+                case 'CPU':
+                    $colum_value[$colum] = 'cpu';
+                    break;
+                case '内存':
+                    $colum_value[$colum] = 'memory';
+                    break;
+                case '硬盘':
+                    $colum_value[$colum] = 'harddisk';
+                    break;
+                case '机房':
+                    $colum_value[$colum] = 'machineroom';
+                    break;
+                case '机柜':
+                    $colum_value[$colum] = 'cabinet';
+                    break;
+                case 'IP':
+                    $colum_value[$colum] = 'ip_id';
+                    break;
+                case '带宽(M)':
+                    $colum_value[$colum] = 'bandwidth';
+                    break;
+                case '防护(G)':
+                    $colum_value[$colum] = 'protect';
+                    break;
+                case '登录名':
+                    $colum_value[$colum] = 'loginname';
+                    break;
+                case '登录密码':
+                    $colum_value[$colum] = 'loginpass';
+                    break;
+                case '机器型号':
+                    $colum_value[$colum] = 'machine_type';
+                    break;
+                case '使用状态':
+                    $colum_value[$colum] = 'used_status';
+                    break;
+                case '业务类型':
+                    $colum_value[$colum] = 'business_type';
+                    break;
+                case '上下架':
+                    $colum_value[$colum] = 'machine_status';
+                    break;
+                case '备注':
+                    $colum_value[$colum] = 'machine_note';
+                    break;
+            }
+        }
+        $mysql = Schema::getColumnListing($this->table);//获取数据库中的字段
+        if(empty($colum_value) && count(array_intersect($colum_value,$mysql) != 16)){//判断列名是否与数据库一致
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg'] = '请从网站下载正确的模板填写!!';
+            return $return;
+        }
+        $higehest_row = $worksheet->getHighestRow($highest_colum);//获取需添加字段的总行数
+        for($row = 5;$row<=$higehest_row;$row++){
+            for($colum_key = 'A';$colum_key<=$highest_colum;$colum_key){
+                $insert_data[$row-5][$colum_value[$colum]] = $worksheet->getCell($colum_key.$row)->getValue();
+                $insert_data[$row-5]['created_at'] = date('Y-m-d H:i:s',time());
+            }
+        }
+        if(!$insert_data){
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg'] = '请确认您有数据需要导入!!';
+            return $return;
+        }
+        DB::beginTransaction();//开启事务
+        foreach($insert_data as $insert_key => $insert_value){
+            $row = DB::table($this->table)->insertGetId($insert_value);
+            if($row == false){
+                DB::rollBack();
+                $return['data'] = '';
+                $return['code'] = 0;
+                $return['msg'] = '批量添加机器失败,失败原因为:编号'.$insert_value['machine_num'].'的机器信息有误,从此机器开始修改并重新提交信息,此机器前的所有信息已提交成功无须重新提交';
+                return $return;
+            }
+            if($insert_value['business_type'] == 1 || $insert_value['business_type'] == 3){
+                //如果新增机器成功则将机器编号更新到对应的IP库中
+                $ip_row = DB::table('idc_ips')->where('id',$insert_value['ip_id'])->update(['mac_num'=>$insert_value['machine_num'],'ip_status'=>2]);
+            } elseif($insert_value['business_type'] == 2) {
+                //如果新增机器成功则将机器编号更新到对应的IP库中
+                $ip_row = DB::table('idc_ips')->where('id',$insert_value['ip_id'])->update(['mac_num'=>$insert_value['machine_num'],'ip_status'=>3]);
+            }
+            if($ip_row == false){
+                DB::rollBack();
+                $return['data'] = '';
+                $return['code'] = 0;
+                $return['msg'] = '批量添加机器失败,失败原因为:编号'.$insert_value['machine_num'].'的机器IP信息有误,从此机器开始修改并重新提交信息,此机器前的所有信息已提交成功无须重新提交';
+                return $return;
+            }
+            DB::commit();
+            $return['data'] = $row.','.$return['data'];
+            $return['code'] = 1;
+            $return['msg'] = '批量添加机器成功';   
+        }
+        return $return;
     }
 
 }

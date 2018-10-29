@@ -114,7 +114,7 @@ class MachineController extends Controller
         $spreadsheet = new Spreadsheet();
         $worksheet = $spreadsheet->getActiveSheet();
         $worksheet->setTitle('机器批量导入表格');
-        $worksheet->setCellValueByColumnAndRow(1, 1, '机器批量导入表格');
+        $worksheet->setCellValueByColumnAndRow(1, 1, '机器批量导入表格(此为测试功能)');
         $row_value = ['机器编号','CPU','内存','硬盘','机房','机柜','IP','带宽(M)','防护(G)','登录名','登录密码','机器型号','使用状态','业务类型','上下架','备注'];//填写的字段
         $row = $worksheet->fromArray($row_value,NULL,'A4');//分配字段从A4开始填写（横向）
         $highest_row = $worksheet->getHighestRow();//总行数
@@ -150,7 +150,7 @@ class MachineController extends Controller
             ],
         ];
         $colum = ++$highest_colum;//说明字段的开始列数
-        $note_value = ['机房(id-名称)','机柜(id-所属机房-机柜编号(适用范围))','IP(id-所属机房-IP详情)','使用状态','业务类型','上下架'];//说明字段
+        $note_value = ['机房(id-名称)','机柜(所属机房-id-机柜编号(适用范围))','IP(所属机房-id-IP详情)','使用状态','业务类型','上下架'];//说明字段
         $row_note = $worksheet->fromArray($note_value,NULL,$colum.'4');//分配说明字段（横向）
         $highest_colum = $worksheet->getHighestColumn();//总的列数
         $row->getStyle('A4:'.$highest_colum.'4')->applyFromArray($row_font);//设置字段样式
@@ -159,7 +159,7 @@ class MachineController extends Controller
             $worksheet->getColumnDimension($i)->setWidth(30);
         }
         $worksheet->mergeCells($colum.'1:'.$highest_colum.'3')->getStyle($colum.'1:'.$highest_colum.'3')->applyFromArray($title_font);//合并说明字段
-        $worksheet->getCell($colum.'1')->setValue('字段填写对照表');
+        $worksheet->getCell($colum.'1')->setValue('字段填写对照表(注意:由于数据的随时变化,为了准确性,每次批量前都请重新下载模板)');
         $model = new MachineModel();
         /**
          * 机房数据
@@ -216,6 +216,28 @@ class MachineController extends Controller
         $spa->disconnectWorksheets();
         unset($spa);
         exit;
+    }
+
+    /**
+     * 处理excel批量添加机器
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function handleExcel(Request $request){
+        $file = $request->file('handle_excel');
+        if(!$file){
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg'] = '请上传文件!';
+        }
+        if($file->getClientOriginalExtension() != 'xlsx'){//判断上传文件的后缀
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg'] = '仅支持类型为xlsx的文件!';
+        }
+        $excel = new MachineModel();
+        $return = $excel->handleExcel($file);
+        return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
     }
 
 }

@@ -340,4 +340,50 @@ class MachineModel extends Model
    		return $return;
     }
 
+    /**
+     * 查找机房信息
+     * @return [type] [description]
+     */
+    public function machineRooms($id = 0){
+        if($id != 0){
+            $machineroom = DB::table('idc_machineroom')->where(['id'=>$id])->value('machine_room_name');
+        } else {
+            $machineroom = DB::table('idc_machineroom')->whereNull('deleted_at')->select('id','machine_room_name')->get();
+            foreach($machineroom as $key => $value){
+                $machineroom[$key] = $value->id.'--'.$value->machine_room_name;
+            }
+            $machineroom = $machineroom->toArray();
+        }
+        
+        return $machineroom;
+    }
+
+    /**
+     * 获取机柜
+     * @return [type] [description]
+     */
+    public function cabinet(){
+        $cabinet = DB::table('idc_cabinet')->whereNull('deleted_at')->select('id','machineroom_id','cabinet_id','use_type')->get();
+        $use_type = [0=>'内部机柜',1=>'客户机柜'];
+        foreach($cabinet as $key => $value){
+            $cabinet[$key] = $value->id.'--'.$this->machineRooms($value->machineroom_id).'--'.$value->cabinet_id.'('.$use_type[$value->use_type].')';
+        }
+        $cabinet = $cabinet->toArray();
+        return $cabinet;
+    }
+
+    /**
+     * 获取IP
+     * @return [type] [description]
+     */
+    public function ip(){
+        $ips = DB::table('idc_ips')->where(['ip_status'=>0])->whereNull('deleted_at')->select('id','ip','ip_company','ip_comproom')->get();
+        $ip_company = [0=>'电信',1=>'移动',2=>'联通'];
+        foreach($ips as $key => $value){
+            $ips[$key] = $value->id.'--'.$this->machineRooms($value->ip_comproom).'--'.$value->ip.'('.$ip_company[$value->ip_company].')';
+        }
+        $ips = $ips->toArray();
+        return $ips;
+    }
+
 }

@@ -201,6 +201,7 @@ Route::group([
         $router->get('machineroom', 'Idc\MachineController@machineroom');
         $router->get('cabinets', 'Idc\MachineController@cabinets');
         $router->get('ips', 'Idc\MachineController@ips');
+        $router->get('excel_template','Idc\MachineController@excelTemplate');
     });
 
 

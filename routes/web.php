@@ -181,7 +181,6 @@ Route::group([
 			Route::post('del', 'Work\WorkOrderController@deleteWorkOrder');
 			Route::post('cancel', 'Work\WorkOrderController@cancelWorkOrder');
 		});
-
 	});
 
     Route::group([

@@ -307,7 +307,7 @@ class PayOrder extends Model
 	 * @param  $user_id
 	 * @return 支付订单号
 	 */
-	public function showTrade($key,$way,$key2){
+	public function showTrade($key,$way,$key2 = ''){
 		$return['data'] = '';
 		$return['code'] = 0;
 		switch ($way) {
@@ -510,7 +510,19 @@ class PayOrder extends Model
 	}
 	
 	public function delTrade($serial_number){
-		$res = $this->where('serial_number',$serial_number)->delete();
-		return $res;
+		$check = $this->checkPayStatus($serial_number); 
+		// $pay_status 
+		if($check['pay_status'] == 0){ 
+			$updateData['order_status'] = 0; 
+			$updateData['serial_number'] = null; 
+			$updateData['achievement'] = 0; 
+			$update = DB::table('tz_orders')->where('serial_number',$serial_number)->update($updateData); 
+			if(!$update){ 
+				$res == false; 
+				return $res; 
+			}    
+		} 
+		$res = $this->where('serial_number',$serial_number)->delete(); 
+		return $res; 
 	}
 }

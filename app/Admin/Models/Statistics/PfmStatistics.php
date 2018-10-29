@@ -102,9 +102,9 @@ class  PfmStatistics extends Model
 			}
 			$order_arr[ $unpaid[$j]['user_id'] ]['all_arrears'] 		= bcadd($order_arr[ $unpaid[$j]['user_id'] ]['all_arrears'],$unpaid[$j]['arrears'],2);
 			$order_arr[ $unpaid[$j]['user_id'] ]['total_money']	= bcadd($order_arr[ $unpaid[$j]['user_id'] ]['achievement'],$order_arr[ $unpaid[$j]['user_id'] ]['this_arrears'],2);
-			$order_arr['0']['all_arrears'] 	= bcadd($order_arr['0']['all_arrears'],$unpaid[$j]['arrears'],2);
+			$order_arr['0']['all_arrears'] 	= bcadd($order_arr['0']['all_arrears'],$unpaid[$j]['arrears'],2);	
 		}
-		
+		$order_arr['0']['total_money'] 	= bcadd($order_arr['0']['this_arrears'],$order_arr['0']['achievement'],2);
 		//入库统计表
 		$res = $this->insert($order_arr);
 		if($res){

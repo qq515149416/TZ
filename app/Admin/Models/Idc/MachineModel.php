@@ -408,7 +408,7 @@ class MachineModel extends Model
         $highest_colum_num = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($highest_colum)-7;//将总列数转换为数字
         $highest_colum = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($highest_colum_num);//数字转换为列
         for($colum = 'A';$colum <= $highest_colum;$colum++){//转换列名
-            switch($worksheet->getCell($colum.'4')->getVlue()){
+            switch($worksheet->getCell($colum.'4')->getValue()){
                 case '机器编号':
                     $colum_value[$colum] = 'machine_num';
                     break;
@@ -466,10 +466,10 @@ class MachineModel extends Model
             $return['msg'] = '请从网站下载正确的模板填写!!';
             return $return;
         }
-        $higehest_row = $worksheet->getHighestRow($highest_colum);//获取需添加字段的总行数
+        $higehest_row = $worksheet->getHighestRow('A');//获取需添加字段的总行数
         for($row = 5;$row<=$higehest_row;$row++){
-            for($colum_key = 'A';$colum_key<=$highest_colum;$colum_key){
-                $insert_data[$row-5][$colum_value[$colum]] = $worksheet->getCell($colum_key.$row)->getValue();
+            for($colum_key = 'A';$colum_key<=$highest_colum;$colum_key++){
+                $insert_data[$row-5][$colum_value[$colum_key]] = $worksheet->getCell($colum_key.$row)->getValue();
                 $insert_data[$row-5]['created_at'] = date('Y-m-d H:i:s',time());
             }
         }
@@ -479,34 +479,36 @@ class MachineModel extends Model
             $return['msg'] = '请确认您有数据需要导入!!';
             return $return;
         }
-        DB::beginTransaction();//开启事务
-        foreach($insert_data as $insert_key => $insert_value){
-            $row = DB::table($this->table)->insertGetId($insert_value);
-            if($row == false){
+        $return['data'] = ''; 
+        for($i=0;$i<count($insert_data);$i++){
+            DB::beginTransaction();//开启事务
+            $row = DB::table($this->table)->insertGetId($insert_data[$i]);
+            if($row != 0){
+                if($insert_data[$i]['business_type'] == 1 || $insert_data[$i]['business_type'] == 3){
+                    //如果新增机器成功则将机器编号更新到对应的IP库中
+                    $ip_row = DB::table('idc_ips')->where('id',$insert_data[$i]['ip_id'])->update(['mac_num'=>$insert_data[$i]['machine_num'],'ip_status'=>2]);
+                } elseif($insert_value['business_type'] == 2) {
+                    //如果新增机器成功则将机器编号更新到对应的IP库中
+                    $ip_row = DB::table('idc_ips')->where('id',$insert_data[$i]['ip_id'])->update(['mac_num'=>$insert_data[$i]['machine_num'],'ip_status'=>3]);
+                }
+                if($ip_row != 0){
+                    DB::commit();
+                    $return['data'] = rtrim($row.','.$return['data'],',');
+                    $return['code'] = 1;
+                    $return['msg'] = '批量添加机器成功';
+                } else {
+                    DB::rollBack();
+                    $return['data'] = '';
+                    $return['code'] = 0;
+                    $return['msg'] = '批量添加机器失败,失败原因为:编号'.$insert_data[$i]['machine_num'].'的机器IP信息有误,从此机器开始修改并重新提交信息,此机器前的所有信息已提交成功无须重新提交';
+                    return $return;
+                }
+            } else {
                 DB::rollBack();
                 $return['data'] = '';
                 $return['code'] = 0;
-                $return['msg'] = '批量添加机器失败,失败原因为:编号'.$insert_value['machine_num'].'的机器信息有误,从此机器开始修改并重新提交信息,此机器前的所有信息已提交成功无须重新提交';
-                return $return;
-            }
-            if($insert_value['business_type'] == 1 || $insert_value['business_type'] == 3){
-                //如果新增机器成功则将机器编号更新到对应的IP库中
-                $ip_row = DB::table('idc_ips')->where('id',$insert_value['ip_id'])->update(['mac_num'=>$insert_value['machine_num'],'ip_status'=>2]);
-            } elseif($insert_value['business_type'] == 2) {
-                //如果新增机器成功则将机器编号更新到对应的IP库中
-                $ip_row = DB::table('idc_ips')->where('id',$insert_value['ip_id'])->update(['mac_num'=>$insert_value['machine_num'],'ip_status'=>3]);
-            }
-            if($ip_row == false){
-                DB::rollBack();
-                $return['data'] = '';
-                $return['code'] = 0;
-                $return['msg'] = '批量添加机器失败,失败原因为:编号'.$insert_value['machine_num'].'的机器IP信息有误,从此机器开始修改并重新提交信息,此机器前的所有信息已提交成功无须重新提交';
-                return $return;
-            }
-            DB::commit();
-            $return['data'] = $row.','.$return['data'];
-            $return['code'] = 1;
-            $return['msg'] = '批量添加机器成功';   
+                $return['msg'] = '批量添加机器失败,失败原因为:编号'.$insert_data[$i]['machine_num'].'的机器信息有误,从此机器开始修改并重新提交信息,此机器前的所有信息已提交成功无须重新提交';
+            }     
         }
         return $return;
     }

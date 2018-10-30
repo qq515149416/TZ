@@ -237,6 +237,7 @@ class MachineController extends Controller
         }
         $excel = new MachineModel();
         $return = $excel->handleExcel($file);
+        dd($return);
         return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
     }
 

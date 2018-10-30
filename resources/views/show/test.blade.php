@@ -91,11 +91,17 @@
         </div>
       </div>
       <div id="div">
-<tr><td>123</td></tr>
-<tr><td>456</td></tr>
-<tr><td>789</td></tr>
-          <input type="text" id="content" value="test">
-          <button type="button" id="button">提交</button>
+    <form action="/tz_admin/machine/handle_excel" method="post" enctype="multipart/form-data">
+        {{ csrf_field() }}
+        <input type="file" name="handle_excel">
+        <input type="submit" value="上传">
+    </form>
+    <a href="/tz_admin/machine/excel_template">下载模板</a>
+        <tr><td>123</td></tr>
+        <tr><td>456</td></tr>
+        <tr><td>789</td></tr>
+        <input type="text" id="content" value="test">
+        <button type="button" id="button">提交</button>
       </div>
 <script src='//cdn.bootcss.com/socket.io/1.3.7/socket.io.js'></script>
     <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->

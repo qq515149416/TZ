@@ -129,12 +129,27 @@ class MachineModel extends Model
                 $return['msg'] = '新增机器信息失败！！';
                 return $return;
             }
+            $ip = DB::table('idc_ips')->where(['id'=>$data['ip_id']])->select('ip_status')->first();
+            if(!$ip){//不存在此IP
+                DB::rollBack();
+                $return['data'] = '';
+                $return['code'] = 0;
+                $return['msg'] = '新增机器信息失败,失败原因为:所选IP不存在!!';
+                return $return;
+            }
+            if($ip->ip_status != 0){//此IP已被使用
+                DB::rollBack();
+                $return['data'] = '';
+                $return['code'] = 0;
+                $return['msg'] = '新增机器信息失败,失败原因为:所选IP已经在使用!!';
+                return $return;
+            }
             if($data['business_type'] == 1 || $data['business_type'] == 3){
                 //如果新增机器成功则将机器编号更新到对应的IP库中
-                $ip_row = DB::table('idc_ips')->where('id',$data['ip_id'])->update(['mac_num'=>$data['machine_num'],'ip_status'=>2]);
+                $ip_row = DB::table('idc_ips')->where(['id'=>$data['ip_id']])->update(['mac_num'=>$data['machine_num'],'ip_status'=>2]);
             } elseif($data['business_type'] == 2) {
                 //如果新增机器成功则将机器编号更新到对应的IP库中
-                $ip_row = DB::table('idc_ips')->where('id',$data['ip_id'])->update(['mac_num'=>$data['machine_num'],'ip_status'=>3]);
+                $ip_row = DB::table('idc_ips')->where(['id'=>$data['ip_id']]])->update(['mac_num'=>$data['machine_num'],'ip_status'=>3]);
             }
             
     		if($ip_row != 0){
@@ -390,6 +405,118 @@ class MachineModel extends Model
     }
 
     /**
+     * 下载excel模板
+     * @return [type] [description]
+     */
+    public function excelTemplate(){
+        $spreadsheet = new Spreadsheet();
+        $worksheet = $spreadsheet->getActiveSheet();
+        $worksheet->setTitle('机器批量导入表格');
+        $worksheet->setCellValueByColumnAndRow(1, 1, '机器批量导入表格(此为测试功能)');
+        $row_value = ['机器编号','CPU','内存','硬盘','机房','机柜','IP','带宽(M)','防护(G)','登录名','登录密码','机器型号','使用状态','业务类型','上下架','备注'];//填写的字段
+        $row = $worksheet->fromArray($row_value,NULL,'A4');//分配字段从A4开始填写（横向）
+        $highest_row = $worksheet->getHighestRow();//总行数
+        $highest_colum = $worksheet->getHighestColumn();//总列数
+        //标题样式
+        $title_font = [
+            'font' => [
+                'bold' => true,//加粗
+                'size' => '24px',//字体大小
+            ],
+            'alignment' => [//内容居中
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+            ],
+        ];
+        $worksheet->mergeCells('A1:'.$highest_colum.'1')->getStyle('A1:'.$highest_colum.'1')->applyFromArray($title_font);//设置标题样式
+        //说明内容
+        $worksheet->getCell('A2')->setValue("填写说明:填写机房时请参照右边的机房信息,填写对应id(例如A机房的id为1,此时填1);填写机柜时请填写对应机房的机柜id(例如A机房的B机柜的id为2,此时填2);填写IP时请填写对应机房的IP的id(例如:A机房的192.168.1.13的id为3,此时填3);填写防护(单位:G)和带宽(单位:M)只须填写数字即可,填写使用状态,业务类型,上下架时请参照右边对应所需的数字,以上字段请参照右边的对照表");
+        $worksheet->getStyle('A2')->getFont()->applyFromArray(['bold'=>TRUE,'size'=>'12px']);//说明内容样式
+        $worksheet->getRowDimension('2')->setRowHeight(31);//说明内容行高
+        $worksheet->mergeCells('A2:'.$highest_colum.'3')->getStyle('A2:'.$highest_colum.'3')->getAlignment()->setWrapText(true);//说明内容自动换行
+        //设置字段宽度
+        for($i='A';$i<=$highest_colum;$i++){
+            $worksheet->getColumnDimension($i)->setWidth(12);
+        }
+        $colum = ++$highest_colum;//字段名的列数 
+        //列名样式
+        $row_font = [
+            'font' => [
+                'size' => '11px',//字体大小
+            ],
+            'alignment' => [//内容居中
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+            ],
+        ];
+        $colum = ++$highest_colum;//说明字段的开始列数
+        $note_value = ['机房(id-名称)','机柜(所属机房-id-机柜编号(适用范围))','IP(所属机房-id-IP详情)','使用状态','业务类型','上下架'];//说明字段
+        $row_note = $worksheet->fromArray($note_value,NULL,$colum.'4');//分配说明字段（横向）
+        $highest_colum = $worksheet->getHighestColumn();//总的列数
+        $row->getStyle('A4:'.$highest_colum.'4')->applyFromArray($row_font);//设置字段样式
+        //设置说明字段样式
+        for($i=$colum;$i<=$highest_colum;$i++){
+            $worksheet->getColumnDimension($i)->setWidth(30);
+        }
+        $worksheet->mergeCells($colum.'1:'.$highest_colum.'3')->getStyle($colum.'1:'.$highest_colum.'3')->applyFromArray($title_font);//合并说明字段
+        $worksheet->getCell($colum.'1')->setValue('字段填写对照表(注意:由于数据的随时变化,为了准确性,每次批量前都请重新下载模板)');
+        // $model = new MachineModel();
+        /**
+         * 机房数据
+         * @var [type]
+         */
+        $machineroom = $this->machineRooms();
+        $machineroom = array_chunk($machineroom,1);
+        $worksheet->fromArray($machineroom,NULL,$colum.'5');
+        /**
+         * 机柜数据
+         * @var [type]
+         */
+        $cabinet = $this->cabinet();
+        $cabinet = array_chunk($cabinet,1);
+        $worksheet->fromArray($cabinet,NULL,++$colum.'5');
+        /**
+         * IP数据
+         * @var [type]
+         */
+        $ips = $this->ip();
+        $ips = array_chunk($ips,1);
+        $worksheet->fromArray($ips,NULL,++$colum.'5');
+        /**
+         * 使用状态
+         * @var [type]
+         */
+        $use = ['0--未使用','1--使用中','2--锁定'];
+        $use = array_chunk($use,1);
+        $worksheet->fromArray($use,NULL,++$colum.'5');
+        /**
+         * 业务类型
+         * @var [type]
+         */
+        $business = ['1--租用','2--托管','3--备用'];
+        $business = array_chunk($business,1);
+        $worksheet->fromArray($business,NULL,++$colum.'5');
+        /**
+         * 上下架
+         * @var [type]
+         */
+        $machine_status = ['0--上架','1--下架'];
+        $machine_status = array_chunk($machine_status,1);
+        $worksheet->fromArray($machine_status,NULL,++$colum.'5');
+        /**
+         * 下载模板
+         * @var [type]
+         */
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $filename = '机器批量导入表格模板.xlsx';
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="'.$filename.'"');
+        header('Cache-Control: max-age=0');
+        $writer->save('php://output');
+        $spa->disconnectWorksheets();
+        unset($spa);
+        exit;
+    }
+
+    /**
      * 处理批量添加机器
      * @param  [type] $file [description]
      * @return [type]       [description]
@@ -483,32 +610,47 @@ class MachineModel extends Model
         for($i=0;$i<count($insert_data);$i++){
             DB::beginTransaction();//开启事务
             $row = DB::table($this->table)->insertGetId($insert_data[$i]);
-            if($row != 0){
-                if($insert_data[$i]['business_type'] == 1 || $insert_data[$i]['business_type'] == 3){
-                    //如果新增机器成功则将机器编号更新到对应的IP库中
-                    $ip_row = DB::table('idc_ips')->where('id',$insert_data[$i]['ip_id'])->update(['mac_num'=>$insert_data[$i]['machine_num'],'ip_status'=>2]);
-                } elseif($insert_value['business_type'] == 2) {
-                    //如果新增机器成功则将机器编号更新到对应的IP库中
-                    $ip_row = DB::table('idc_ips')->where('id',$insert_data[$i]['ip_id'])->update(['mac_num'=>$insert_data[$i]['machine_num'],'ip_status'=>3]);
-                }
-                if($ip_row != 0){
-                    DB::commit();
-                    $return['data'] = rtrim($row.','.$return['data'],',');
-                    $return['code'] = 1;
-                    $return['msg'] = '批量添加机器成功';
-                } else {
-                    DB::rollBack();
-                    $return['data'] = '';
-                    $return['code'] = 0;
-                    $return['msg'] = '批量添加机器失败,失败原因为:编号'.$insert_data[$i]['machine_num'].'的机器IP信息有误,从此机器开始修改并重新提交信息,此机器前的所有信息已提交成功无须重新提交';
-                    return $return;
-                }
-            } else {
+            if($row == 0){
                 DB::rollBack();
                 $return['data'] = '';
                 $return['code'] = 0;
                 $return['msg'] = '批量添加机器失败,失败原因为:编号'.$insert_data[$i]['machine_num'].'的机器信息有误,从此机器开始修改并重新提交信息,此机器前的所有信息已提交成功无须重新提交';
-            }     
+                return $return;
+            }
+            $ip = DB::table('idc_ips')->where(['id'=>$insert_data[$i]['ip_id']])->select('ip_status')->first();
+            if(!$ip){//不存在此IP
+                DB::rollBack();
+                $return['data'] = '';
+                $return['code'] = 0;
+                $return['msg'] = '批量添加机器失败,失败原因为:编号'.$insert_data[$i]['machine_num'].'的机器所选IP不存在,从此机器开始修改并重新提交信息,此机器前的所有信息已提交成功无须重新提交';
+                return $return;
+            }
+            if($ip->ip_status != 0){//此IP已被使用
+                DB::rollBack();
+                $return['data'] = '';
+                $return['code'] = 0;
+                $return['msg'] = '批量添加机器失败,失败原因为:编号'.$insert_data[$i]['machine_num'].'的机器所选IP已经在使用,从此机器开始修改并重新提交信息,此机器前的所有信息已提交成功无须重新提交';
+                return $return;
+            }
+            if($insert_data[$i]['business_type'] == 1 || $insert_data[$i]['business_type'] == 3){
+                //如果新增机器成功则将机器编号更新到对应的IP库中
+                $ip_row = DB::table('idc_ips')->where(['id'=>$insert_data[$i]['ip_id']])->update(['mac_num'=>$insert_data[$i]['machine_num'],'ip_status'=>2]);
+            } elseif($insert_value['business_type'] == 2) {
+                //如果新增机器成功则将机器编号更新到对应的IP库中
+                $ip_row = DB::table('idc_ips')->where(['id'=>$insert_data[$i]['ip_id']])->update(['mac_num'=>$insert_data[$i]['machine_num'],'ip_status'=>3]);
+            }
+            if($ip_row != 0){
+                DB::commit();
+                $return['data'] = rtrim($row.','.$return['data'],',');
+                $return['code'] = 1;
+                $return['msg'] = '批量添加机器成功';
+            } else {
+                DB::rollBack();
+                $return['data'] = '';
+                $return['code'] = 0;
+                $return['msg'] = '批量添加机器失败,失败原因为:编号'.$insert_data[$i]['machine_num'].'的机器IP信息有误,从此机器开始修改并重新提交信息,此机器前的所有信息已提交成功无须重新提交';
+                return $return;
+            }      
         }
         return $return;
     }

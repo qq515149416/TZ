@@ -159,6 +159,16 @@ Route::group([
         $router->get('get_news_type', 'News\NewsController@get_news_type');
     });
 
+    //新闻类型接口
+    Route::group([
+        'prefix' => 'news_type',
+    ],function(Router $router){
+        $router->get('show','News\NewsTypeController@showNewsType');
+        $router->post('insert','News\NewsTypeController@insertNewsType');
+        $router->post('edit','News\NewsTypeController@editNewsType');
+        $router->post('delete','News\NewsTypeController@deleteNewsType');
+    });
+
     //cpu资源库管理
     Route::group([
         'prefix' => 'cpu',

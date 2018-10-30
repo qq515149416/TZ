@@ -10,7 +10,7 @@ Route::group([
     'middleware' => config('admin.route.middleware'),
 ], function (Router $router) {
     $router->get('/', 'HomeController@index');
-   
+
 
 
     //Jun   个人测试用
@@ -81,6 +81,7 @@ Route::group([
     $router->get('/system_info', 'Show\SystemInformationController@index');
     $router->get('/hr/departmentview', 'Show\DepartmentController@index');
     $router->get('/hr/position', 'Show\PositionController@index');
+    $router->get('/hr/usermanagement', 'Show\UserManagementController@index');
 
 //人事
     Route::group([
@@ -122,7 +123,7 @@ Route::group([
         $router->post('edit_jobs','Hr\JobsController@editJobs');
         $router->post('delete_jobs','Hr\JobsController@deleteJobs');
         $router->get('depart','Hr\JobsController@depart');
-        
+
     });
 
 
@@ -323,14 +324,14 @@ Route::group([
     ],function(Router $router){
         $router->get('showOverdueCabinet','Overdue\OverdueController@showOverdueCabinet');
         $router->get('showOverdueMachine','Overdue\OverdueController@showOverdueMachine');
-        $router->get('showOverdueRes','Overdue\OverdueController@showOverdueRes');     
+        $router->get('showOverdueRes','Overdue\OverdueController@showOverdueRes');
         $router->get('showUnpaidMachine','Overdue\OverdueController@showUnpaidMachine');
         $router->get('showXiaJiaMachine','Overdue\OverdueController@showXiaJiaMachine');
         $router->get('showUnpaidCabinet','Overdue\OverdueController@showUnpaidCabinet');
         $router->get('showXiaJiaRes','Overdue\OverdueController@showXiaJiaRes');
         $router->get('showOverdueResDet','Overdue\OverdueController@showOverdueResDet');
-        
-    }); 
+
+    });
 
 });
 

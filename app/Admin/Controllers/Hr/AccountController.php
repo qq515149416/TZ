@@ -7,7 +7,7 @@ use Encore\Admin\Controllers\ModelForm;
 use App\Admin\Models\Hr\Account;
 use Encore\Admin\Facades\Admin;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Http\Request;
 class AccountController extends Controller
 {
     use ModelForm;
@@ -24,7 +24,7 @@ class AccountController extends Controller
     	$show = new Account();
     	$account = $show->showAccount();
     	return tz_ajax_echo($account['data'],$account['msg'],$account['code']);
-        
+
     }
 
     /**
@@ -36,7 +36,7 @@ class AccountController extends Controller
 		$infor = new Account();
 		$personal = $infor->personalAccount($user_id);
 		return tz_ajax_echo($personal['data'],$personal['msg'],$personal['code']);
-    	
+
     }
 
     /**
@@ -86,7 +86,7 @@ class AccountController extends Controller
     public function oldPass(Request $request){
         $old_pass = $request->only(['oldpassword','id']);
         $password = Account::where('id',Admin::user()->id)->select('password')->first();
-        if(Hash::check($old_pass['oldpassword'],$password->password){
+        if(Hash::check($old_pass['oldpassword'],$password->password)) {
             return tz_ajax_echo('','原密码正确',1);
         } else {
             return tz_ajax_echo('','原密码错误',0);
@@ -111,9 +111,9 @@ class AccountController extends Controller
      * @return [type]           [description]
      */
     public function insertAccount(Request $request){
-        $insert_data = ['username','name','avatar','remember_token'];
+        $insert_data = $request->only(['username','name','avatar','remember_token']);
         $insert = new Account();
         $insert_result = $insert->insertAccount($insert_data);
-        return tz_ajax_echo($insert_result['data'],$insert_result['msg'],$insert['code']);
+        return tz_ajax_echo($insert_result['data'],$insert_result['msg'],$insert_result['code']);
     }
 }

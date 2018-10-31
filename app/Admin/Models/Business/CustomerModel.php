@@ -168,4 +168,69 @@ class CustomerModel extends Model
         $return['code'] = 1;
         return $return;
     }
+
+    /**
+     * 转移业务员时选择业务员
+     * @return [type] [description]
+     */
+    public function selectClerk(){
+        $clrek = DB::table('tz_jobs')
+                ->join('tz_department','tz_jobs.depart_id','=','tz_department.id')
+                ->join('oa_staff','tz_department.id','=','oa_staff.department')
+                ->join('admin_users','oa_staff.admin_users_id','=','admin_users.id')
+                ->whereIn('tz_jobs.slug',[2,3]])
+                ->where(['oa_staff.dimission'=>0])
+                ->whereNull('oa_staff.deleted_at')
+                ->select('tz_department.depart_name','admin_users.name','admin_users.id')
+                ->groupBy('tz_department.depart_name')
+                ->get();
+        if(empty($clerk)){
+            $return['data'] = [];
+            $return['code'] = 0;
+            $return['msg'] = '无法获取业务员相关信息';
+        } else {
+            $return['data'] = $clrek;
+            $return['code'] = 1;
+            $return['msg'] = '获取业务员相关信息成功';
+        }
+        return $return;
+    }
+
+    /**
+     * 转移客户
+     * @param  [type] $edit_param [description]
+     * @return [type]             [description]
+     */
+    public function editClerk($edit_param){
+        if(!$edit_param){
+            $return['code'] = 0;
+            $return['msg'] = '无法转移客户';
+            return $return;
+        }
+        $users = $this->find($edit_param['customer_id']);
+        if(empty($users)){
+            $return['code'] = 0;
+            $return['msg'] = '无对应客户';
+            return $return;
+        }
+        $clerk = DB::table('oa_staff')
+                    ->join('admin_users','oa_staff.admin_users_id','=','admin_users.id')
+                    ->where(['oa_staff.admin_users_id'=>$edit_param['clerk_id'],'oa_staff.dimission'=>0])
+                    ->select('admin_users.name')
+                    ->first();
+        if(empty($clerk)){
+            $return['code'] = 0;
+            $return['msg'] = '该业务员不存在或已离职';
+            return $return;
+        }
+        $row = $this->where(['id'=>$edit_param['customer_id']])->update(['salesman_id'=>$edit_param['clerk_id']]);
+        if($row != false){
+            $return['code'] = 1;
+            $return['msg'] = '客户已转到'.$clerk->name.'名下';
+        } else {
+            $return['code'] = 0;
+            $return['msg'] = '该客户转移失败';
+        }
+        return $return;
+    }
 }

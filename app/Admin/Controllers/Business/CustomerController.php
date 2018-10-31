@@ -56,11 +56,20 @@ class CustomerController extends Controller
      * @param  Request $request [description]
      * @return 
      */
-     public function rechargeByAdmin(BusinessRequest $request){
-
+    public function rechargeByAdmin(BusinessRequest $request){
         $data = $request->only(['user_id','recharge_amount','voucher','remarks']);
         $model = new CustomerModel();
         $res = $model->rechargeByAdmin($data);
         return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
-     }
+    }
+
+    /**
+     * 转移业务员时选择业务员
+     * @return [type] [description]
+     */
+    public function selectClerk(){
+        $clerk = new CustomerModel();
+        $clerk_result = $clerk->selectClerk();
+        return tz_ajax_echo($clerk_result['data'],$clerk_result['msg'],$clerk_result['code']);
+    }
 }

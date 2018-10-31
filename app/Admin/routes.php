@@ -308,6 +308,9 @@ Route::group([
         $router->post('reset_password','Business\CustomerController@resetPassword');
 
         $router->post('recharge','Business\CustomerController@rechargeByAdmin');
+
+        $router->get('select_clerk','Business\CustomerController@selectClerk');
+        $router->post('edit_clerk','Business\CustomerController@editClerk');
     });
 
 

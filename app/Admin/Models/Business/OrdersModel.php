@@ -30,19 +30,25 @@ class OrdersModel extends Model
      */
     //['id','order_sn','customer_name','business_sn','business_name','before_money','after_money','resource_type','order_type','resource','price','duration','payable_money','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at']
     public function financeOrders($where){
-    	$result = $this->where($where)
-    				->get(['id','order_sn','customer_name','business_sn','business_name','resource_type','order_type','resource','price','duration','payable_money','end_time','serial_number','pay_time','order_status','order_note','created_at']);
+    	$result = DB::table('tz_orders')
+                    ->join('tz_orders_flow','tz_orders.serial_number','=','tz_orders_flow.serial_number')
+                    ->where($where)
+                    ->select('tz_orders.id','tz_orders.order_sn','tz_orders.customer_name','tz_orders.business_sn','tz_orders.business_name','tz_orders.resource_type','tz_orders.order_type','tz_orders.resource','tz_orders.price','tz_orders.duration','tz_orders.payable_money','tz_orders.end_time','tz_orders.serial_number','tz_orders.pay_time','tz_orders.order_status','tz_orders.order_note','tz_orders.created_at','tz_orders_flow.pay_type')
+                    ->get();
+        // dd($result);
+        //$this->where($where)
+    				//->get(['id','order_sn','customer_name','business_sn','business_name','resource_type','order_type','resource','price','duration','payable_money','end_time','serial_number','pay_time','order_status','order_note','created_at']);
     	// 'before_money','after_money','pay_type','pay_price',
-        if(!$result->isEmpty()){
+        if(!empty($result)){
     		$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn'];
     		$order_type = [1=>'新购',2=>'续费'];
-    		// $pay_type = [1=>'余额',2=>'支付宝',3=>'微信',4=>'其他'];
+    		$pay_type = [0=>'未选择',1=>'余额',2=>'支付宝',3=>'微信',4=>'其他'];
     		$order_status = [0=>'待支付',1=>'已支付',2=>'财务确认',3=>'订单完成',4=>'到期',5=>'取消',6=>'申请退款',7=>'正在支付',8=>'退款完成'];
     		foreach($result as $okey=>$ovalue){
-    			$result[$okey]['resource_type'] = $resource_type[$ovalue['resource_type']];
-    			$result[$okey]['order_type'] = $order_type[$ovalue['order_type']];
-    			// $result[$okey]['pay_type'] = $pay_type[$ovalue['pay_type']]?$pay_type[$ovalue['pay_type']]:'未支付';
-    			$result[$okey]['order_status'] = $order_status[$ovalue['order_status']];
+    			$ovalue->resource_type = $resource_type[$ovalue->resource_type];
+    			$ovalue->order_type = $order_type[$ovalue->order_type];
+    			$ovalue->pay_type = $pay_type[$ovalue->pay_type];
+    			$ovalue->order_status = $order_status[$ovalue->order_status];
     		}
     		$return['data'] = $result;
     		$return['code'] = 1;
@@ -62,17 +68,27 @@ class OrdersModel extends Model
      * @return array        返回相关的数据信息和提示状态及信息
      */
     public function clerkOrders($where){
-        $result = $this->where($where)->get(['id','order_sn','customer_name','business_sn','business_name','resource_type','order_type','resource','price','duration','payable_money','end_time','serial_number','pay_time','order_status','order_note','created_at']);
+        $result = DB::table('tz_orders')
+                    ->join('tz_orders_flow','tz_orders.serial_number','=','tz_orders_flow.serial_number')
+                    ->where($where)
+                    ->select('tz_orders.id','tz_orders.order_sn','tz_orders.customer_name','tz_orders.business_sn','tz_orders.business_name','tz_orders.resource_type','tz_orders.order_type','tz_orders.resource','tz_orders.price','tz_orders.duration','tz_orders.payable_money','tz_orders.end_time','tz_orders.serial_number','tz_orders.pay_time','tz_orders.order_status','tz_orders.order_note','tz_orders.created_at','tz_orders_flow.pay_type')
+                    ->get();
+        //$this->where($where)->get(['id','order_sn','customer_name','business_sn','business_name','resource_type','order_type','resource','price','duration','payable_money','end_time','serial_number','pay_time','order_status','order_note','created_at']);
     	if(!$result->isEmpty()){
     		$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn'];
     		$order_type = [1=>'新购',2=>'续费'];
-    		// $pay_type = [1=>'余额',2=>'支付宝',3=>'微信',4=>'其他'];
+    		$pay_type = [0=>'未选择',1=>'余额',2=>'支付宝',3=>'微信',4=>'其他'];
+            // $pay_type = [1=>'余额',2=>'支付宝',3=>'微信',4=>'其他'];
     		$order_status = [0=>'待支付',1=>'已支付',2=>'财务确认',3=>'订单完成',4=>'到期',5=>'取消',6=>'申请退款',7=>'正在支付',8=>'退款完成'];
     		foreach($result as $okey=>$ovalue){
-    			$result[$okey]['resourcetype'] = $resource_type[$ovalue['resource_type']];
-    			$result[$okey]['order_type'] = $order_type[$ovalue['order_type']];
-    			// $result[$okey]['pay_type'] = $pay_type[$ovalue['pay_type']];
-    			$result[$okey]['order_status'] = $order_status[$ovalue['order_status']];
+                $ovalue->resourcetype = $resource_type[$ovalue->resource_type];
+                $ovalue->order_type = $order_type[$ovalue->order_type];
+                $ovalue->pay_type = $pay_type[$ovalue->pay_type];
+                $ovalue->order_status = $order_status[$ovalue->order_status];
+    			// $result[$okey]['resourcetype'] = $resource_type[$ovalue['resource_type']];
+    			// $result[$okey]['order_type'] = $order_type[$ovalue['order_type']];
+    			// // $result[$okey]['pay_type'] = $pay_type[$ovalue['pay_type']];
+    			// $result[$okey]['order_status'] = $order_status[$ovalue['order_status']];
     		}
     		$return['data'] = $result;
     		$return['code'] = 1;

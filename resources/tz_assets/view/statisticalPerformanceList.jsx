@@ -16,7 +16,7 @@ const columnData = [
     { id: 'salesman', numeric: true, disablePadding: false, label: '业务员' },
     { id: 'all_arrears', numeric: true, disablePadding: false, label: '总的欠款' },
     { id: 'this_arrears', numeric: true, disablePadding: false, label: '当月欠款' },
-    { id: 'performance', numeric: true, disablePadding: false, label: '订单业绩' },
+    { id: 'achievement', numeric: true, disablePadding: false, label: '订单业绩' },
     { id: 'total_money', numeric: true, disablePadding: false, label: '总消费额' },
     { id: 'updated_at', numeric: true, disablePadding: false, label: '统计时间' },
     { id: 'month', numeric: true, disablePadding: false, label: '统计的月份' }
@@ -24,7 +24,7 @@ const columnData = [
 const inputType = [
 ];
 @inject("statisticalPerformancesStores")
-@observer 
+@observer
 class StatisticalPerformanceList extends React.Component {
     constructor(props) {
         super(props);
@@ -35,12 +35,12 @@ class StatisticalPerformanceList extends React.Component {
     render() {
         const {classes} = this.props;
         return (
-            <ListTableComponent 
+            <ListTableComponent
             title="业绩统计"
             operattext="业绩管理"
-            inputType={inputType} 
-            headTitlesData={columnData} 
-            data={this.props.statisticalPerformancesStores.statisticalPerformances} 
+            inputType={inputType}
+            headTitlesData={columnData}
+            data={this.props.statisticalPerformancesStores.statisticalPerformances}
             customizeToolbar={<CustomizeTableToolbar getData={this.props.statisticalPerformancesStores.getData} />}
           />
         );

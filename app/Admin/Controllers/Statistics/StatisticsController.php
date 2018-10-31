@@ -37,22 +37,19 @@ class StatisticsController extends Controller
 		}else{
 			$msg = '数据更新失败 , ';
 		}
-		if($request->isMethod('post')) {
-			$machineModel = new MachineStatistics();
+		
+		$machineModel = new MachineStatistics();
 
-			$month = $request->only(['month']);
-			if(isset($month['month'])){
-				$month = $month['month'];
-			}else{
-				$month = date("y-m");
-			}	
-
-			$info = $machineModel->getStatistics($month);	
-
-			return tz_ajax_echo($info['data'],$msg.$info['msg'],$info['code']);
+		$month = $request->only(['month']);
+		if(isset($month['month'])){
+			$month = $month['month'];
 		}else{
-			return tz_ajax_echo([],$msg.'信息获取失败!!',0);
-		}
+			$month = date("y-m");
+		}	
+
+		$info = $machineModel->getStatistics($month);	
+
+		return tz_ajax_echo($info['data'],$msg.$info['msg'],$info['code']);		
 	}
 
 	/**

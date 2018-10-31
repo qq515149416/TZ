@@ -135,7 +135,7 @@ class  PfmStatistics extends Model
 			$order_arr[0]['total_money'] = bcsub($order_arr[0]['total_money'],$coupon[$k]['preferential_amount'],2);
 			$order_arr[0]['achievement'] = bcsub($order_arr[0]['achievement'],$coupon[$k]['preferential_amount'],2);
 		}
-		dd($order_arr);
+
 		$res = $this->insert($order_arr);
 		if($res){
 			$return['msg'] 	= '数据统计成功';

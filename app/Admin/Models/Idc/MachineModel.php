@@ -413,7 +413,7 @@ class MachineModel extends Model
         $worksheet = $spreadsheet->getActiveSheet();
         $worksheet->setTitle('机器批量导入表格');
         $worksheet->setCellValueByColumnAndRow(1, 1, '机器批量导入表格(此为测试功能)');
-        $row_value = ['机器编号','CPU','内存','硬盘','机房','机柜','IP','带宽(M)','防护(G)','登录名','登录密码','机器型号','使用状态','业务类型','上下架','备注'];//填写的字段
+        $row_value = ['机器编号(必填)','CPU(必填)','内存(必填)','硬盘(必填)','机房(必填)','机柜(必填)','IP(必填)','带宽(M)(必填)','防护(G)(必填)','登录名(必填)','登录密码(必填)','机器型号(必填)','使用状态(必填)','业务类型(必填)','上下架(必填)','备注'];//填写的字段
         $row = $worksheet->fromArray($row_value,NULL,'A4');//分配字段从A4开始填写（横向）
         $highest_row = $worksheet->getHighestRow();//总行数
         $highest_colum = $worksheet->getHighestColumn();//总列数
@@ -528,7 +528,7 @@ class MachineModel extends Model
             $return['msg'] = '请上传文件!!';
             return $return;
         }
-        $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader('Xlsx');//读取excel文件
+        $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader('xlsx');//读取excel文件
         $spreadsheet = $reader->load($file->getRealPath());//加载文件
         $worksheet = $spreadsheet->getActiveSheet();//获取表格的活动区域
         $highest_colum = $worksheet->getHighestColumn();//获取总的列数
@@ -536,49 +536,49 @@ class MachineModel extends Model
         $highest_colum = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($highest_colum_num);//数字转换为列
         for($colum = 'A';$colum <= $highest_colum;$colum++){//转换列名
             switch($worksheet->getCell($colum.'4')->getValue()){
-                case '机器编号':
+                case '机器编号(必填)':
                     $colum_value[$colum] = 'machine_num';
                     break;
-                case 'CPU':
+                case 'CPU(必填)':
                     $colum_value[$colum] = 'cpu';
                     break;
-                case '内存':
+                case '内存(必填)':
                     $colum_value[$colum] = 'memory';
                     break;
-                case '硬盘':
+                case '硬盘(必填)':
                     $colum_value[$colum] = 'harddisk';
                     break;
-                case '机房':
+                case '机房(必填)':
                     $colum_value[$colum] = 'machineroom';
                     break;
-                case '机柜':
+                case '机柜(必填)':
                     $colum_value[$colum] = 'cabinet';
                     break;
-                case 'IP':
+                case 'IP(必填)':
                     $colum_value[$colum] = 'ip_id';
                     break;
-                case '带宽(M)':
+                case '带宽(M)(必填)':
                     $colum_value[$colum] = 'bandwidth';
                     break;
-                case '防护(G)':
+                case '防护(G)(必填)':
                     $colum_value[$colum] = 'protect';
                     break;
-                case '登录名':
+                case '登录名(必填)':
                     $colum_value[$colum] = 'loginname';
                     break;
-                case '登录密码':
+                case '登录密码(必填)':
                     $colum_value[$colum] = 'loginpass';
                     break;
-                case '机器型号':
+                case '机器型号(必填)':
                     $colum_value[$colum] = 'machine_type';
                     break;
-                case '使用状态':
+                case '使用状态(必填)':
                     $colum_value[$colum] = 'used_status';
                     break;
-                case '业务类型':
+                case '业务类型(必填)':
                     $colum_value[$colum] = 'business_type';
                     break;
-                case '上下架':
+                case '上下架(必填)':
                     $colum_value[$colum] = 'machine_status';
                     break;
                 case '备注':

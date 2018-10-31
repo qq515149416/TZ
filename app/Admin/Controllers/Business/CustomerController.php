@@ -72,4 +72,16 @@ class CustomerController extends Controller
         $clerk_result = $clerk->selectClerk();
         return tz_ajax_echo($clerk_result['data'],$clerk_result['msg'],$clerk_result['code']);
     }
+
+    /**
+     * 修改客户所绑定的业务员
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function editClerk(Request $request){
+        $clerk_id = $request->only(['clerk_id','customer_id']);
+        $edit = new CustomerModel();
+        $edit_result = $edit->editClerk();
+        return tz_ajax_echo($edit_result,$edit_result['msg'],$edit_result['code']);
+    }
 }

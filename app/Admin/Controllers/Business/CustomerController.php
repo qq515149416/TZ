@@ -84,4 +84,16 @@ class CustomerController extends Controller
         $edit_result = $edit->editClerk();
         return tz_ajax_echo($edit_result,$edit_result['msg'],$edit_result['code']);
     }
+
+    /**
+     * 绑定业务员(业务员直接输入客户提供的Email)
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function insertClerk(Request $request){
+        $customer = $request->only(['email']);
+        $insert = new CustomerModel();
+        $insert_result = $insert->insertClerk($customer);
+        return tz_ajax_echo($insert_result,$insert_result['msg'],$insert_result['code']); 
+    }
 }

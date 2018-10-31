@@ -311,6 +311,7 @@ Route::group([
 
         $router->get('select_clerk','Business\CustomerController@selectClerk');
         $router->post('edit_clerk','Business\CustomerController@editClerk');
+        $router->post('insert_clerk','Business\CustomerController@insertClerk');
     });
 
 

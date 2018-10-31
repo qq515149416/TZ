@@ -233,4 +233,42 @@ class CustomerModel extends Model
         }
         return $return;
     }
+
+    /**
+     * 绑定业务员
+     * @param  [type] $email [description]
+     * @return [type]        [description]
+     */
+    public function insertClerk($email){
+        if(!$email){
+            $return['code'] = 0;
+            $return['msg'] = '无法绑定客户';
+            return $return;
+        }
+        $customer = $this->where(['email'=>$email['email']])->select('id','name','salesman_id','email','status')->first();
+        if(empty($customer)){//客户不存在
+            $return['code'] = 0;
+            $return['msg'] = '此客户不存在,请确认客户注册邮箱正确,或与客户联系核实!';
+            return $return;
+        }
+        if($customer->salesman_id){//客户已绑定过业务员
+            $return['code'] = 0;
+            $return['msg'] = '此客户已绑定业务员,请与客户确认';
+            return $return;
+        }
+        if($customer->status == 0){//客户已被加入黑名单
+            $return['code'] = 0;
+            $return['msg'] = '此客户已经被加入黑名单,请与管理员确认';
+            return $return;
+        }
+        $update = $this->where(['email'=>$email['email']])->update(['salesman_id'=>Admin::user()->id]);
+        if($update != false){
+            $return['code'] = 1;
+            $return['msg'] = '客户:'.$customer->name.'(邮箱:'.$customer->email.')'.'已绑定到你名下';
+        } else {
+            $return['code'] = 0;
+            $return['msg'] = '客户绑定失败';
+        }
+        return $return;
+    }
 }

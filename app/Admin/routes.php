@@ -202,6 +202,7 @@ Route::group([
         $router->get('cabinets', 'Idc\MachineController@cabinets');
         $router->get('ips', 'Idc\MachineController@ips');
         $router->get('excel_template','Idc\MachineController@excelTemplate');
+        $router->post('handle_excel','Idc\MachineController@handleExcel');
     });
 
 

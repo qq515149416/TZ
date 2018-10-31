@@ -309,7 +309,8 @@ Route::group([
 
         $router->post('recharge','Business\CustomerController@rechargeByAdmin');
 
-        $router->get('select_clerk','Business\CustomerController@selectClerk');
+        $router->get('depart','Business\CustomerController@depart');
+        $router->post('select_clerk','Business\CustomerController@selectClerk');
         $router->post('edit_clerk','Business\CustomerController@editClerk');
         $router->post('insert_clerk','Business\CustomerController@insertClerk');
     });

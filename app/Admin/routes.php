@@ -211,7 +211,7 @@ Route::group([
     Route::group([
         'prefix' => 'statistics',
     ],function (Router $router) {
-        $router->post('statisticsList', 'Statistics\StatisticsController@index');
+        $router->get('statisticsList', 'Statistics\StatisticsController@index');
     });
 
     //业绩统计

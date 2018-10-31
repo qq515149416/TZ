@@ -36,29 +36,30 @@ class  MachineStatistics extends Model
 		$time = date("y-m");	
 
 		//获取所有机房数据
-		$machineroom = $this->getMachineRoom();
+		$machineroom = DB::table('idc_machineroom')->select('id as roomid','machine_room_name')->get();
 		//获取所有机器数据
-		$machine = $this->getMachine();
-
-		if($machineroom == false||$machine == false){
+		$machine = DB::table('idc_machine')->select('used_status','machine_status','business_type','machineroom')->get();
+		
+		if($machineroom->isEmpty()||$machine->isEmpty()){
 			$return['data'] = '';
 			$return['code'] = 0;
 			$return['msg'] = '数据更新失败!!';
 			return $return;
 		}
-
+		$machineroom = json_decode($machineroom,true);
+		$machine = json_decode($machine,true);
 		//处理数据
 
 		//生成各个机房的空数组
 		$data = [];
 		for($i = 0;$i < count($machineroom);$i++){
 			$data[$machineroom[$i]['roomid']]['room_id'] 		= $machineroom[$i]['roomid'];
-			$data[$machineroom[$i]['roomid']]['rent_inuse']		= 0;
+			$data[$machineroom[$i]['roomid']]['rent_inuse']	= 0;
 			$data[$machineroom[$i]['roomid']]['rent_on_free']	= 0;
 			$data[$machineroom[$i]['roomid']]['rent_off_free']	= 0;
 			$data[$machineroom[$i]['roomid']]['tru_inuse']		= 0;
-			$data[$machineroom[$i]['roomid']]['tru_on_free']		= 0;
-			$data[$machineroom[$i]['roomid']]['tru_off_free']		= 0;
+			$data[$machineroom[$i]['roomid']]['tru_on_free']	= 0;
+			$data[$machineroom[$i]['roomid']]['tru_off_free']	= 0;
 			$data[$machineroom[$i]['roomid']]['total']		= 0;
 			$data[$machineroom[$i]['roomid']]['month']		= $time;
 		}
@@ -106,7 +107,6 @@ class  MachineStatistics extends Model
 				}
 			}
 		}
-
 		$res = $this->insert($data);
 		if($res == false){
 			$return['data'] = '';

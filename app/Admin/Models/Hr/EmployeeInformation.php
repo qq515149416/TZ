@@ -60,7 +60,7 @@ class EmployeeInformation extends Model
 			$return['msg'] = '获取个人信息成功!';
 		} else {
 			$return['data'] = [];
-			$return['code'] = 1;
+			$return['code'] = 0;
 			$return['msg'] = '获取个人信息失败!';
 		}
 		return $return;

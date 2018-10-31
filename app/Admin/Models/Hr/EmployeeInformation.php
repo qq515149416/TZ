@@ -20,8 +20,8 @@ class EmployeeInformation extends Model
 	*
 	* @var array
 	*/
-	protected $fillable = ['id','admin_users_id','sex','age','department','job','entrytime','work_number','phone','QQ','wechat','email','dimission','education','work','skill','detailed','note','created_at','updated_at','deleted_at'];
-	
+	protected $fillable = ['id','admin_users_id','fullname','sex','age','department','job','entrytime','work_number','phone','QQ','wechat','email','dimission','education','work','skill','detailed','note','created_at','updated_at','deleted_at'];
+
 	/**
 	 * 获取个人信息
 	 * @param  array $account_id 账户id
@@ -33,9 +33,9 @@ class EmployeeInformation extends Model
 		$method = $arr[count($arr)-1];
 		$name = '';
 		if($account_id){//查找对应的账户的个人信息
-			$where = ['admin_users_id'=>$account_id['account_id']];
+            $where = ['admin_users_id'=>$account_id['account_id']];
 			$data = ['id','admin_users_id','sex','age','department','job','entrytime','work_number','phone','QQ','wechat','email','dimission','education','work','skill','detailed','note','created_at','updated_at'];
-		} elseif($method == 'employee_personal'){//个人信息
+        } elseif($method == 'employee_personal'){//个人信息
 			$where = ['admin_users_id'=>Admin::user()->id];
 			$data = ['id','admin_users_id','sex','age','department','job','entrytime','work_number','phone','QQ','wechat','email','dimission','education','work','skill','detailed','note','created_at','updated_at'];
 			$name = Admin::user()->name;
@@ -44,12 +44,13 @@ class EmployeeInformation extends Model
 			$where = [];
 			$data = ['id','admin_users_id','sex','age','department','job','entrytime','work_number','phone','QQ','wechat','email','dimission','created_at','updated_at'];
 		}
-		$show = $this->where($where)->get($data);
+        $show = $this->where($where)->get($data);
+        // dd($show);
 		if(!$show->isEmpty()){
 			$dimission = [0=>'在职',1=>'离职'];
 			$sex = [0=>'女性',1=>'男性',2=>'保密'];
-			foreach($show as $showkey){
-				$show[$showkey]['department_name'] = $this->department($show[$showkey]['department']);//获取部门
+			foreach($show as $showkey=>$showval){
+                $show[$showkey]['department_name'] = $this->department($show[$showkey]['department']);//获取部门
 				$show[$showkey]['job_name'] = $this->jobs($show[$showkey]['job']);//获取职位
 				$show[$showkey]['dimiss'] = $dimission[$show[$showkey]['dimission']];//转换在职状态
 				$show[$showkey]['sex_tran'] = $sex[$show[$showkey]['sex']];//性别转换
@@ -109,7 +110,8 @@ class EmployeeInformation extends Model
 		} else {
 			$return['code'] = 0;
 			$return['msg'] = '请输入正确的修改信息';
-		}
+        }
+        return $return;
 	}
 
 	/**
@@ -140,7 +142,7 @@ class EmployeeInformation extends Model
 	 * @return [type]     [description]
 	 */
 	public function department($depart_id){
-		$department_name = DB::table('tz_department')->where(['id'=>$depart_id])->value('department_name');
+		$department_name = DB::table('tz_department')->where(['id'=>$depart_id])->value('depart_name');
 		return $department_name;
 	}
 

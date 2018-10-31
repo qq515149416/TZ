@@ -149,7 +149,7 @@ class MachineModel extends Model
                 $ip_row = DB::table('idc_ips')->where(['id'=>$data['ip_id']])->update(['mac_num'=>$data['machine_num'],'ip_status'=>2]);
             } elseif($data['business_type'] == 2) {
                 //如果新增机器成功则将机器编号更新到对应的IP库中
-                $ip_row = DB::table('idc_ips')->where(['id'=>$data['ip_id']]])->update(['mac_num'=>$data['machine_num'],'ip_status'=>3]);
+                $ip_row = DB::table('idc_ips')->where(['id'=>$data['ip_id']])->update(['mac_num'=>$data['machine_num'],'ip_status'=>3]);
             }
             
     		if($ip_row != 0){
@@ -505,14 +505,15 @@ class MachineModel extends Model
          * 下载模板
          * @var [type]
          */
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        
         $filename = '机器批量导入表格模板.xlsx';
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="'.$filename.'"');
         header('Cache-Control: max-age=0');
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer->save('php://output');
-        $spa->disconnectWorksheets();
-        unset($spa);
+        $spreadsheet->disconnectWorksheets();
+        unset($spreadsheet);
         exit;
     }
 

@@ -222,7 +222,7 @@ Route::group([
     Route::group([
         'prefix' => 'statistics',
     ],function (Router $router) {
-        $router->post('statisticsList', 'Statistics\StatisticsController@index');
+        $router->get('statisticsList', 'Statistics\StatisticsController@index');
     });
 
     //业绩统计
@@ -308,6 +308,10 @@ Route::group([
         $router->post('reset_password','Business\CustomerController@resetPassword');
 
         $router->post('recharge','Business\CustomerController@rechargeByAdmin');
+
+        $router->get('select_clerk','Business\CustomerController@selectClerk');
+        $router->post('edit_clerk','Business\CustomerController@editClerk');
+        $router->post('insert_clerk','Business\CustomerController@insertClerk');
     });
 
 

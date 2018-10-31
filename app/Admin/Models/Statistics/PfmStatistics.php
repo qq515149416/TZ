@@ -32,26 +32,38 @@ class  PfmStatistics extends Model
 
 	public function statistics($month)
 	{		
+		//获取优惠券优惠的金额
+		$coupon = DB::table('tz_orders_flow as a')
+			->leftjoin('tz_users as b','a.customer_id','=','b.id')
+			->select(DB::raw('sum(a.preferential_amount) as preferential_amount, b.salesman_id'))
+			->where('a.month',$month)
+			->groupBy('a.customer_id')
+			->get();	
+	
 		//获取查询月份订单
 		$already = DB::table('tz_orders')
 			->select(DB::raw('sum(achievement) as achievement, business_id as user_id'))
-			->whereIn('order_status',[1,4])
+			->whereIn('order_status',[1,2,3,4])
 			->where('month',$month)
 			->groupBy('business_id')
 			->get();	
-
-		$unpaid = DB::table('tz_orders')
-			->select(DB::raw('sum(payable_money) as arrears, business_id as user_id , month'))
-			->whereIn('order_status',[0,7])
-			->groupBy('business_id','month')
+		//获取未付款订单
+		$unpaid = DB::table('tz_orders as a')
+			->leftjoin('tz_business as b','a.business_sn','=','b.business_number')
+			->select(DB::raw('sum(a.payable_money) as arrears, a.business_id as user_id , a.month'))
+			->whereIn('a.order_status',[0,7])
+			->where('b.business_status',3)
+			->groupBy('a.business_id','a.month')
 			->get();	
+
 		
 		$return['data'] = [];
-		if($already->isEmpty() && $this_month_unpaid->isEmpty() &&$all_unpaid->isEmpty() ){
-			$return['msg'] 	= '无数据';
+		if($already->isEmpty() ){
+			$return['msg'] 	= '获取数据失败';
 			$return['code'] 	= 0;
 			return $return;
 		}
+		$coupon = json_decode($coupon,true);
 		$already = json_decode($already,true);
 		$unpaid = json_decode($unpaid,true);
 		
@@ -102,10 +114,28 @@ class  PfmStatistics extends Model
 			}
 			$order_arr[ $unpaid[$j]['user_id'] ]['all_arrears'] 		= bcadd($order_arr[ $unpaid[$j]['user_id'] ]['all_arrears'],$unpaid[$j]['arrears'],2);
 			$order_arr[ $unpaid[$j]['user_id'] ]['total_money']	= bcadd($order_arr[ $unpaid[$j]['user_id'] ]['achievement'],$order_arr[ $unpaid[$j]['user_id'] ]['this_arrears'],2);
-			$order_arr['0']['all_arrears'] 	= bcadd($order_arr['0']['all_arrears'],$unpaid[$j]['arrears'],2);
+			$order_arr['0']['all_arrears'] 	= bcadd($order_arr['0']['all_arrears'],$unpaid[$j]['arrears'],2);	
 		}
-		
+		$order_arr['0']['total_money'] 	= bcadd($order_arr['0']['this_arrears'],$order_arr['0']['achievement'],2);
 		//入库统计表
+		
+		for ($k=0; $k < count($coupon); $k++) { 
+			if(!isset( $order_arr[ $coupon[$k]['salesman_id'] ] )){
+				$order_arr[ $coupon[$k]['salesman_id'] ] = [
+					'user_id'		=> $coupon[$k]['salesman_id'],
+					'total_money'		=> 0,
+					'achievement'		=> 0,
+					'this_arrears'		=> 0,
+					'all_arrears'		=> 0,
+					'month'			=> $month,
+				];
+			}
+			$order_arr[ $coupon[$k]['salesman_id'] ]['achievement'] = bcsub($order_arr[ $coupon[$k]['salesman_id'] ]['achievement'],$coupon[$k]['preferential_amount'],2);
+			$order_arr[ $coupon[$k]['salesman_id'] ]['total_money'] = bcsub($order_arr[ $coupon[$k]['salesman_id'] ]['total_money'],$coupon[$k]['preferential_amount'],2);
+			$order_arr[0]['total_money'] = bcsub($order_arr[0]['total_money'],$coupon[$k]['preferential_amount'],2);
+			$order_arr[0]['achievement'] = bcsub($order_arr[0]['achievement'],$coupon[$k]['preferential_amount'],2);
+		}
+
 		$res = $this->insert($order_arr);
 		if($res){
 			$return['msg'] 	= '数据统计成功';

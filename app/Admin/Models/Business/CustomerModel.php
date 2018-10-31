@@ -25,8 +25,17 @@ class CustomerModel extends Model
 	 */
     public function adminCustomer(){
         $clerk_id = Admin::user()->id;
-        $slug = (array)$this->role($clerk_id);
-        if($slug['slug'] == 'salesman'){
+        $slug = DB::table('oa_staff')->join('tz_jobs','oa_staff.job','=','tz_jobs.id')
+                ->where(['oa_staff.admin_users_id'=> $clerk_id])
+                ->select('tz_jobs.slug')
+                ->first();
+        if(empty($slug)){
+            $return['data'] = [];
+            $return['code'] = 0;
+            $return['msg'] = '请先完善您的个人信息';
+            return $return;
+        }
+        if($slug->slug == 3){
             $where['salesman_id'] = $clerk_id;
         } else {
             $where = [];

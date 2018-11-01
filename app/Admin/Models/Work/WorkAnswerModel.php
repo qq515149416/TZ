@@ -72,7 +72,7 @@ class WorkAnswerModel extends Model
     		$insert_data['answer_role'] = 2;
     		$row = $this->create($insert_data);
     		if($row != false){
-    			$return['data'] = $insert_data['answer_content'];
+    			$return['data'] = $row;
 	    		$return['code'] = 1;
 	    		$return['msg'] = '';
     		} else {

@@ -8,6 +8,8 @@ use App\Admin\Models\Idc\MachineModel;
 use App\Admin\Requests\Idc\MachineRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 /**
  * 机器的相关操作接口
@@ -102,6 +104,37 @@ class MachineController extends Controller
 		$result = $ips->ips($data);
 		return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
     	
+    }
+
+    /**
+     * 下载excel模板
+     * @return [type] [description]
+     */
+    public function excelTemplate(){
+        $excel = new MachineModel();
+        $excel->excelTemplate();
+    }
+
+    /**
+     * 处理excel批量添加机器
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function handleExcel(Request $request){
+        $file = $request->file('handle_excel');
+        if(!$file){
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg'] = '请上传文件!';
+        }
+        if($file->getClientOriginalExtension() != 'xlsx'){//判断上传文件的后缀
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg'] = '仅支持类型为xlsx的文件!';
+        }
+        $excel = new MachineModel();
+        $return = $excel->handleExcel($file);
+        return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
     }
 
 }

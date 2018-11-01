@@ -23,7 +23,7 @@ class  PfmStatistics extends Model
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
 	
-	protected $fillable = ['user_id', 'performance','total_money','this_arrears','all_arrears','month','updated_at'];
+	protected $fillable = ['user_id', 'achievement','total_money','this_arrears','all_arrears','month','updated_at'];
 
 	/**
 	* 统计业绩的方法
@@ -31,78 +31,125 @@ class  PfmStatistics extends Model
 	*/
 
 	public function statistics($month)
-	{	
-
-
-		//获取本月开始及结束的时间戳再换成date
-		// $beginThismonth=date("Y-m-d H:i:s",mktime(0,0,0,date('m'),1,date('Y')));
-		// //获取本月结束的时间戳
-		// $endThismonth=date("Y-m-d H:i:s",mktime(23,59,59,date('m'),date('t'),date('Y')));
-
-
+	{		
+		//获取优惠券优惠的金额
+		$coupon = DB::table('tz_orders_flow as a')
+			->select(DB::raw('sum(a.preferential_amount) as preferential_amount, a.business_id'))
+			->where('a.month',$month)
+			->groupBy('a.business_id')
+			->get();	
+	
 		//获取查询月份订单
-		$order = DB::table('tz_orders')->select('payable_money','business_id as user_id','order_status')->where('month',$month)->get();
-		$order = json_decode(json_encode($order),true);
-		dd($order);
-		$return['data'] = [];
+		$already = DB::table('tz_orders')
+			->select(DB::raw('sum(achievement) as achievement, business_id as user_id'))
+			->whereIn('order_status',[1,2,3,4])
+			->where('month',$month)
+			->groupBy('business_id')
+			->get();	
+		//获取未付款订单
+		$unpaid = DB::table('tz_orders as a')
+			->leftjoin('tz_business as b','a.business_sn','=','b.business_number')
+			->select(DB::raw('sum(a.payable_money) as arrears, a.business_id as user_id , a.month'))
+			->whereIn('a.order_status',[0,7])
+			->where('b.business_status',3)
+			->groupBy('a.business_id','a.month')
+			->get();	
 
-		if(count($order) == 0){
-			$return['msg'] 	= '无数据';
+		
+		$return['data'] = [];
+		if($already->isEmpty() ){
+			$return['msg'] 	= '获取数据失败';
 			$return['code'] 	= 0;
 			return $return;
 		}
+		$coupon = json_decode($coupon,true);
+		$already = json_decode($already,true);
+		$unpaid = json_decode($unpaid,true);
 		
-		$order = json_decode(json_encode($order),true);
-		//生成每个有业绩的业务员的空数组
 		$order_arr = [];
-		foreach ($order as $k => $v) {
-			if(!isset($order_arr[$v['user_id']])){
-				$order_arr[$v['user_id']]['user_id']		= $v['user_id'];
-				$order_arr[$v['user_id']]['total_money']		= 0;
-				$order_arr[$v['user_id']]['performance']		= 0;
-				$order_arr[$v['user_id']]['this_arrears']		= 0;
-				$order_arr[$v['user_id']]['all_arrears']		= $this->getAllArrears($v['user_id']);
-				$order_arr[$v['user_id']]['month']		= $key;
-			}
-		}
-		//总计
 		$order_arr['0'] = [
 			'user_id'		=> 0,
 			'total_money'		=> 0,
-			'performance'		=> 0,
+			'achievement'		=> 0,
 			'this_arrears'		=> 0,
-			'all_arrears'		=> 'test',
+			'all_arrears'		=> 0,
+			'preferential_amount'	=> 0,
 			'month'			=> $month,
 		];
 		//开始统计
-		dd($order);
-		foreach ($order as $k => $v) {
-			if($v['order_status'] != 4||$v['order_status'] != 5||$v['order_status'] != 6){
-				
-				$order_arr['0']['total_money']			= bcadd($order_arr['0']['total_money'],$v['payable_money'],2);
-				$order_arr[$v['user_id']]['total_money'] 		= bcadd($order_arr[$v['user_id']]['total_money'],$v['payable_money'],2);
-				if($v['order_status'] == 1||$v['order_status'] == 2||$v['order_status'] == 3){
-					$order_arr['0']['performance']		= bcadd($order_arr['0']['performance'],$v['payable_money'],2);
-					$order_arr[$v['user_id']]['performance'] 	= bcadd($order_arr[$v['user_id']]['performance'],$v['payable_money'],2);
-				}else{
-					$order_arr['0']['this_arrears']		= bcadd($order_arr['0']['this_arrears'],$v['payable_money'],2);
-					$order_arr[$v['user_id']]['this_arrears']	= bcadd($order_arr[$v['user_id']]['this_arrears'],$v['payable_money'],2);
-				}
-	
-		foreach ($order as $k => $v) {	
-			if($v['achievement'] == NULL){
-				$return['data']	= $v['id'];
-				$return['msg'] 	= '该id数据有误';
-				$return['code'] 	= 0;
-				return $return;
-			}		
-			$order_arr['0']['total_money']			= bcadd($order_arr['0']['total_money'],$v['achievement'],2);
-			$order_arr[$v['user_id']]['total_money'] 		= bcadd($order_arr[$v['user_id']]['total_money'],$v['achievement'],2);
-			$order_arr['0']['performance']			= bcadd($order_arr['0']['performance'],$v['achievement'],2);
-			$order_arr[$v['user_id']]['performance'] 		= bcadd($order_arr[$v['user_id']]['performance'],$v['achievement'],2);
+		for ($i=0; $i < count($already); $i++) { 
+			if(!isset( $order_arr[ $already[$i]['user_id'] ] )){
+				$order_arr[ $already[$i]['user_id'] ] = [
+					'user_id'		=> $already[$i]['user_id'],
+					'total_money'		=> 0,
+					'achievement'		=> 0,
+					'this_arrears'		=> 0,
+					'all_arrears'		=> 0,
+					'preferential_amount'	=> 0,
+					'month'			=> $month,
+				];
+			}
+
+			$order_arr[ $already[$i]['user_id'] ] ['achievement'] 	= $already[$i]['achievement'];
+			$order_arr[ $already[$i]['user_id'] ] ['month'] 		= $month;
+			$order_arr[ $already[$i]['user_id'] ] ['total_money'] 	= $already[$i]['achievement'];
+
+			$order_arr['0']['achievement'] = bcadd($order_arr['0']['achievement'],$already[$i]['achievement'],2);
 		}
-		dd($order_arr);
+
+		for ($j=0; $j < count($unpaid); $j++) { 
+			if(!isset( $order_arr[ $unpaid[$j]['user_id'] ] )){
+				$order_arr[ $unpaid[$j]['user_id'] ] = [
+					'user_id'		=> $unpaid[$j]['user_id'],
+					'total_money'		=> 0,
+					'achievement'		=> 0,
+					'this_arrears'		=> 0,
+					'all_arrears'		=> 0,
+					'preferential_amount'	=> 0,
+					'month'			=> $month,
+				];
+			}
+			
+			if($unpaid[$j]['month'] == $month){
+				$order_arr[ $unpaid[$j]['user_id'] ]['this_arrears'] 	= $unpaid[$j]['arrears'];
+				$order_arr['0']['this_arrears']	= bcadd($order_arr['0']['this_arrears'],$unpaid[$j]['arrears'],2);
+			}
+			$order_arr[ $unpaid[$j]['user_id'] ]['all_arrears'] 		= bcadd($order_arr[ $unpaid[$j]['user_id'] ]['all_arrears'],$unpaid[$j]['arrears'],2);
+			$order_arr[ $unpaid[$j]['user_id'] ]['total_money']	= bcadd($order_arr[ $unpaid[$j]['user_id'] ]['achievement'],$order_arr[ $unpaid[$j]['user_id'] ]['this_arrears'],2);
+			$order_arr['0']['all_arrears'] 	= bcadd($order_arr['0']['all_arrears'],$unpaid[$j]['arrears'],2);	
+		}
+		$order_arr['0']['total_money'] 	= bcadd($order_arr['0']['this_arrears'],$order_arr['0']['achievement'],2);
 		//入库统计表
+		
+		for ($k=0; $k < count($coupon); $k++) { 
+			if(!isset( $order_arr[ $coupon[$k]['business_id'] ] )){
+				$order_arr[ $coupon[$k]['business_id'] ] = [
+					'user_id'		=> $coupon[$k]['business_id'],
+					'total_money'		=> 0,
+					'achievement'		=> 0,
+					'this_arrears'		=> 0,
+					'all_arrears'		=> 0,
+					'preferential_amount'	=> 0,
+					'month'			=> $month,
+				];
+			}
+			
+			if($coupon[$k]['business_id'] == 0){
+				$order_arr[ $coupon[$k]['business_id'] ]['achievement'] = bcsub($order_arr[ $coupon[$k]['business_id'] ]['achievement'],$coupon[$k]['preferential_amount'],2);
+				$order_arr[ $coupon[$k]['business_id'] ]['total_money'] = bcsub($order_arr[ $coupon[$k]['business_id'] ]['total_money'],$coupon[$k]['preferential_amount'],2);	
+				$order_arr[ $coupon[$k]['business_id'] ]['preferential_amount']	= bcadd($order_arr[ $coupon[$k]['business_id'] ]['preferential_amount'],$coupon[$k]['preferential_amount'],2);
+			}else{
+				$order_arr[ $coupon[$k]['business_id'] ]['achievement'] = bcsub($order_arr[ $coupon[$k]['business_id'] ]['achievement'],$coupon[$k]['preferential_amount'],2);
+				$order_arr[ $coupon[$k]['business_id'] ]['total_money'] = bcsub($order_arr[ $coupon[$k]['business_id'] ]['total_money'],$coupon[$k]['preferential_amount'],2);	
+				$order_arr[ $coupon[$k]['business_id'] ]['preferential_amount']	= bcadd($order_arr[ $coupon[$k]['business_id'] ]['preferential_amount'],$coupon[$k]['preferential_amount'],2);
+
+				$order_arr[0]['achievement'] = bcsub($order_arr[0]['achievement'],$coupon[$k]['preferential_amount'],2);
+				$order_arr[0]['total_money'] = bcsub($order_arr[0]['total_money'],$coupon[$k]['preferential_amount'],2);
+				$order_arr[0]['preferential_amount']	= bcadd($order_arr[0]['preferential_amount'],$coupon[$k]['preferential_amount'],2);
+			}
+			
+		}
+		
 		$res = $this->insert($order_arr);
 		if($res){
 			$return['msg'] 	= '数据统计成功';
@@ -113,17 +160,6 @@ class  PfmStatistics extends Model
 		}
 		return $return;
 	}
-
-	
-
-	/**
-	* 获取业务所有欠款
-	* @return 
-	*/
-
-	}
-
-	
 
 	//插入统计数据的方法
 	//	$data[
@@ -142,7 +178,7 @@ class  PfmStatistics extends Model
 				[
 					'user_id' 	=> $value['user_id'] , 
 					'total_money' 	=> $value['total_money'] , 
-					'performance' 	=> $value['performance'] , 
+					'achievement' 	=> $value['achievement'] , 
 					'this_arrears' 	=> $value['this_arrears'] , 
 					'all_arrears' 	=> $value['all_arrears'] , 
 					'month'		=> $value['month'],
@@ -200,6 +236,4 @@ class  PfmStatistics extends Model
 		}
 	}
 
-	
-  	
 }

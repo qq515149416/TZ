@@ -78,6 +78,9 @@ class PayOrder extends Model
 		$updateData['pay_type']	= 1;
 		$updateData['pay_time']	= $pay_time;
 		$updateData['pay_status']	= 1;
+		$updateData['month']		= date("Ym");
+		$updateData['business_id']	= DB::table('tz_users')->where('id',$row['customer_id'])->value('salesman_id');
+						
 		//对支付流水订单更新支付信息
 		$updateRes = $this->where('id',$row['id'])->update($updateData);
 		if(!$updateRes){
@@ -97,18 +100,17 @@ class PayOrder extends Model
 			$return['code']	= 2;
 			return $return;	
 		}
-		//对交易流水涉及的几条订单更新支付相关信息
-		$updateOrder = DB::table('tz_orders')->where('serial_number',$serial_number)->update(['order_status' => 1 , 'pay_time' => $pay_time]);
-		if(!$updateOrder){
-			DB::rollBack();
-			$return['msg'] 	= '更新订单状态失败,支付失败';
-			$return['code']	= 2;
-			return $return;
-		}
+		
 
 		$row = DB::table('tz_orders')->where('serial_number',$serial_number)->get();
 		$row = json_decode(json_encode($row),true);
 		for ($j=0 ; $j < count($row); $j++) { 
+			if($row[$j]['order_status'] != 7){
+				DB::rollBack();
+				$return['msg'] 	= '有订单不是正在付款状态,请核实数据库';
+				$return['code']	= 3;
+				return $return;
+			}
 			if($row[$j]['resource_type'] < 4) {
 				// 资源类型如果是机柜/主机，查找对应的业务状态	
 				$business_status = DB::table('tz_business')->where('business_number',$row[$j]['business_sn'])->value('business_status');
@@ -124,6 +126,14 @@ class PayOrder extends Model
 					}
 				} 
 			} 
+		}
+		//对交易流水涉及的几条订单更新支付相关信息
+		$updateOrder = DB::table('tz_orders')->where('serial_number',$serial_number)->update(['order_status' => 1 , 'pay_time' => $pay_time , 'month' => date("Ym") ]);
+		if(!$updateOrder){
+			DB::rollBack();
+			$return['msg'] 	= '更新订单状态失败,支付失败';
+			$return['code']	= 2;
+			return $return;
 		}
 
 		DB::commit();
@@ -225,8 +235,12 @@ class PayOrder extends Model
 			$updateInfo['order_status'] = $order_status;
 
 			//重新计算单一订单应付金额
+			/*
+			*如需添加单一商品优惠券,在此添加计算
+			*/
 			$updateInfo['payable_money'] = bcmul($order->price,$order->duration,2);
-
+			$updateInfo['achievement'] = $updateInfo['payable_money'];
+		
 			//计算支付流水应付金额
 			$payable_money = bcadd($payable_money,$updateInfo['payable_money'],2);
 			//拼接商品名
@@ -286,12 +300,12 @@ class PayOrder extends Model
 	 * @return true/false
 	 */
 	public function countCoupon($payable_money,$coupon_id){
-		if($coupon_id == 0){
+		//if($coupon_id == 0){
 			$youhuizhekou = '0.00';
-		}else{
-			$youhuizhekou = '20.00';
-		}
-		
+		// }else{
+		// 	$youhuizhekou = '20.00';
+		// }
+	
 		$actual_payment = bcsub($payable_money,$youhuizhekou,2);
 		if($actual_payment < 0){
 			$actual_payment = 0;
@@ -307,7 +321,7 @@ class PayOrder extends Model
 	 * @param  $user_id
 	 * @return 支付订单号
 	 */
-	public function showTrade($key,$way,$key2){
+	public function showTrade($key,$way,$key2 = ''){
 		$return['data'] = '';
 		$return['code'] = 0;
 		switch ($way) {
@@ -456,6 +470,9 @@ class PayOrder extends Model
 		$updateData['pay_type']	= $data['pay_type'];
 		$updateData['pay_time']	= $data['pay_time'];
 		$updateData['voucher']		= $data['voucher'];
+		$updateData['month']		= date("Ym");
+		$customer_id 			= $this->where('serial_number',$data['serial_number'])->value('customer_id');
+		$updateData['business_id']	= DB::table('tz_users')->where('id',$customer_id)->value('salesman_id');
 		//
 		DB::beginTransaction();
 		$row = $this->where('serial_number',$data['serial_number'])->update($updateData);
@@ -466,19 +483,17 @@ class PayOrder extends Model
 			$return['msg'] = '订单录入失败!!';
 			return $return;
 		} 
-		//对交易流水涉及的几条订单更新支付相关信息
-		$updateOrder = DB::table('tz_orders')->where('serial_number',$data['serial_number'])->update(['order_status' => 1 , 'pay_time' => $data['pay_time']]);
-		if(!$updateOrder){
-			DB::rollBack();
-			$return['msg'] 	= '更新订单状态失败,支付失败';
-			$return['code']	= 4;
-			return $return;
-		}
-
+		
 		$row = DB::table('tz_orders')->where('serial_number',$data['serial_number'])->get(['business_sn','resource_type']);
 		$row = json_decode(json_encode($row),true);
 
 		for ($j=0 ; $j < count($row); $j++) { 
+			if($row[$j]['order_status'] != 7){
+				DB::rollBack();
+				$return['msg'] 	= '有订单不是正在付款状态,请核实数据库';
+				$return['code']	= 3;
+				return $return;
+			}
 			if($row[$j]['resource_type'] < 4) {
 				// 资源类型如果是机柜/主机，查找对应的业务状态	
 				$business_status = DB::table('tz_business')->where('business_number',$row[$j]['business_sn'])->value('business_status');
@@ -495,6 +510,15 @@ class PayOrder extends Model
 				} 
 			} 
 		}
+		//对交易流水涉及的几条订单更新支付相关信息
+		$updateOrder = DB::table('tz_orders')->where('serial_number',$data['serial_number'])->update(['order_status' => 1 , 'pay_time' => $data['pay_time'] , 'month' => date("Ym")]);
+		if(!$updateOrder){
+			DB::rollBack();
+			$return['msg'] 	= '更新订单状态失败,支付失败';
+			$return['code']	= 4;
+			return $return;
+		}
+
 		DB::commit();
 
 		$return['msg'] = '支付并录入成功!!';
@@ -510,7 +534,19 @@ class PayOrder extends Model
 	}
 	
 	public function delTrade($serial_number){
-		$res = $this->where('serial_number',$serial_number)->delete();
-		return $res;
+		$check = $this->checkPayStatus($serial_number); 
+		// $pay_status 
+		if($check['pay_status'] == 0){ 
+			$updateData['order_status'] = 0; 
+			$updateData['serial_number'] = null; 
+			$updateData['achievement'] = 0; 
+			$update = DB::table('tz_orders')->where('serial_number',$serial_number)->update($updateData); 
+			if(!$update){ 
+				$res == false; 
+				return $res; 
+			}    
+		} 
+		$res = $this->where('serial_number',$serial_number)->delete(); 
+		return $res; 
 	}
 }

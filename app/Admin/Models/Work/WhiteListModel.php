@@ -82,7 +82,7 @@ class WhiteListModel extends Model
 		if(!$result->isEmpty()){
 			//转换信息
 			$submit = [1=>'客户提交',2=>'内部提交'];
-			$white_status = [0=>'审核中',1=>'审核通过',2=>'审核不通过',3=>'黑名单'];
+			$white_status = [0=>'审核中',1=>'审核通过',2=>'审核不通过',3=>'黑名单',4=>'取消'];
 			foreach($result as $key=>$value){
 				$result[$key]['submittran'] = $submit[$value['submit']];
 				$result[$key]['status'] = $white_status[$value['white_status']];

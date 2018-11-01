@@ -25,8 +25,17 @@ class CustomerModel extends Model
 	 */
     public function adminCustomer(){
         $clerk_id = Admin::user()->id;
-        $slug = (array)$this->role($clerk_id);
-        if($slug['slug'] == 'salesman'){
+        $slug = DB::table('oa_staff')->join('tz_jobs','oa_staff.job','=','tz_jobs.id')
+                ->where(['oa_staff.admin_users_id'=> $clerk_id])
+                ->select('tz_jobs.slug')
+                ->first();
+        if(empty($slug)){
+            $return['data'] = [];
+            $return['code'] = 0;
+            $return['msg'] = '请先完善您的个人信息';
+            return $return;
+        }
+        if($slug->slug == 3){
             $where['salesman_id'] = $clerk_id;
         } else {
             $where = [];
@@ -166,6 +175,106 @@ class CustomerModel extends Model
         DB::commit();
         $return['msg'] = '充值成功!';
         $return['code'] = 1;
+        return $return;
+    }
+
+    /**
+     * 转移业务员时选择业务员
+     * @return [type] [description]
+     */
+    public function selectClerk($depart){
+        $clerk = DB::table('oa_staff')
+                    ->join('admin_users','oa_staff.admin_users_id','=','admin_users.id')
+                    ->join('tz_jobs','oa_staff.job','=','tz_jobs.id')
+                    ->where(['oa_staff.department'=>$depart['depart_id']])
+                    ->whereIn('tz_jobs.slug',[2,3])
+                    ->select('admin_users.id','admin_users.name')
+                    ->get(); 
+        if(empty($clerk)){
+            $return['data'] = [];
+            $return['code'] = 0;
+            $return['msg'] = '无法获取业务员相关信息';
+        } else {
+            $return['data'] = $clerk;
+            $return['code'] = 1;
+            $return['msg'] = '获取业务员相关信息成功';
+        }
+        return $return;
+    }
+
+    /**
+     * 转移客户
+     * @param  [type] $edit_param [description]
+     * @return [type]             [description]
+     */
+    public function editClerk($edit_param){
+        if(!$edit_param){
+            $return['code'] = 0;
+            $return['msg'] = '无法转移客户';
+            return $return;
+        }
+        $users = $this->find($edit_param['customer_id']);
+        if(empty($users)){
+            $return['code'] = 0;
+            $return['msg'] = '无对应客户';
+            return $return;
+        }
+        $clerk = DB::table('oa_staff')
+                    ->join('admin_users','oa_staff.admin_users_id','=','admin_users.id')
+                    ->where(['oa_staff.admin_users_id'=>$edit_param['clerk_id'],'oa_staff.dimission'=>0])
+                    ->select('admin_users.name')
+                    ->first();
+        if(empty($clerk)){
+            $return['code'] = 0;
+            $return['msg'] = '该业务员不存在或已离职';
+            return $return;
+        }
+        $row = $this->where(['id'=>$edit_param['customer_id']])->update(['salesman_id'=>$edit_param['clerk_id']]);
+        if($row != false){
+            $return['code'] = 1;
+            $return['msg'] = '客户已转到'.$clerk->name.'名下';
+        } else {
+            $return['code'] = 0;
+            $return['msg'] = '该客户转移失败';
+        }
+        return $return;
+    }
+
+    /**
+     * 绑定业务员
+     * @param  [type] $email [description]
+     * @return [type]        [description]
+     */
+    public function insertClerk($email){
+        if(!$email){
+            $return['code'] = 0;
+            $return['msg'] = '无法绑定客户';
+            return $return;
+        }
+        $customer = $this->where(['email'=>$email['email']])->select('id','name','salesman_id','email','status')->first();
+        if(empty($customer)){//客户不存在
+            $return['code'] = 0;
+            $return['msg'] = '此客户不存在,请确认客户注册邮箱正确,或与客户联系核实!';
+            return $return;
+        }
+        if($customer->salesman_id){//客户已绑定过业务员
+            $return['code'] = 0;
+            $return['msg'] = '此客户已绑定业务员,请与客户确认';
+            return $return;
+        }
+        if($customer->status == 0){//客户已被加入黑名单
+            $return['code'] = 0;
+            $return['msg'] = '此客户已经被加入黑名单,请与管理员确认';
+            return $return;
+        }
+        $update = $this->where(['email'=>$email['email']])->update(['salesman_id'=>Admin::user()->id]);
+        if($update != false){
+            $return['code'] = 1;
+            $return['msg'] = '客户:'.$customer->name.'(邮箱:'.$customer->email.')'.'已绑定到你名下';
+        } else {
+            $return['code'] = 0;
+            $return['msg'] = '客户绑定失败';
+        }
         return $return;
     }
 }

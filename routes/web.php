@@ -155,7 +155,7 @@ Route::group([
 			Route::post('cancel_refund','Customer\RefundController@cancelRefund');
 			Route::post('delete_refund','Customer\RefundController@deleteRefund');
 
-			//以下测试
+			//以下订单
 			Route::post('makeTrade','Customer\OrderController@makeTrade');
 			Route::get('showTrade','Customer\OrderController@showTrade');
 			Route::get('showUnpaidTrade','Customer\OrderController@showUnpaidTrade');
@@ -181,7 +181,6 @@ Route::group([
 			Route::post('del', 'Work\WorkOrderController@deleteWorkOrder');
 			Route::post('cancel', 'Work\WorkOrderController@cancelWorkOrder');
 		});
-
 	});
 
     Route::group([

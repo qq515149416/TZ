@@ -20,12 +20,12 @@ class WorkAnswerController extends Controller
      * @return json 返回相关的数据状态和提示信息
      */
     public function showWorkAnswer(Request $request){
-        
+
         $where = $request->only(['work_number']);
         $show = new WorkAnswerModel();
         $return = $show->showWorkAnswer($where);
         return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
-        	
+
     }
 
     /**
@@ -34,11 +34,11 @@ class WorkAnswerController extends Controller
      * @return [type]           [description]
      */
     public function insertWorkAnswer(Request $request){
-        
+
         $insert_data = $request->only(['work_number','answer_content']);
         $insert = new WorkAnswerModel();
         $insert_result = $insert->insertWorkAnswer($insert_data);
-        return tz_ajax_echo($insert_result['data'],$insert_data['msg'],$insert_data['code']);
-        
+        return tz_ajax_echo($insert_result['data'],$insert_result['msg'],$insert_result['code']);
+
     }
 }

@@ -6,6 +6,8 @@ import { inject,observer } from "mobx-react";
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import UploadExcelComponent from "../component/uploadExcelComponent.jsx";
+
 const styles = theme => ({
     listTableComponent: {
         marginTop: 0,
@@ -182,7 +184,7 @@ const inputType = [
     }
 ];
 @inject("machineLibrarysStores")
-@observer 
+@observer
 class MachineLibraryList extends React.Component {
     constructor(props) {
         super(props);
@@ -244,7 +246,7 @@ class MachineLibraryList extends React.Component {
                     type
                 });
             }
-            
+
         }
     }
     getIpsData(param,type) {
@@ -263,7 +265,7 @@ class MachineLibraryList extends React.Component {
                     type
                 });
             }
-            
+
         }
     }
     filterData = (param) => {
@@ -308,16 +310,17 @@ class MachineLibraryList extends React.Component {
                 <Tab label="备用" value={3} />
                 </Tabs>
                 </Paper>,
-            <ListTableComponent 
+            <ListTableComponent
             className={classes.listTableComponent}
             title="机器库"
             operattext="机器资源"
             inputType={inputType}
-            headTitlesData={columnData} 
-            data={this.props.machineLibrarysStores.machineLibrarys}  
-            addData={this.addData.bind(this)} 
-            delData={this.delData.bind(this)} 
+            headTitlesData={columnData}
+            data={this.props.machineLibrarysStores.machineLibrarys}
+            addData={this.addData.bind(this)}
+            delData={this.delData.bind(this)}
             changeData={this.changeData.bind(this)}
+            customizeToolbar={<UploadExcelComponent />}
           />
         ];
       }

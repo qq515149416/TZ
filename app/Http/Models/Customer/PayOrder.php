@@ -305,7 +305,7 @@ class PayOrder extends Model
 		// }else{
 		// 	$youhuizhekou = '20.00';
 		// }
-		
+	
 		$actual_payment = bcsub($payable_money,$youhuizhekou,2);
 		if($actual_payment < 0){
 			$actual_payment = 0;
@@ -472,7 +472,7 @@ class PayOrder extends Model
 		$updateData['voucher']		= $data['voucher'];
 		$updateData['month']		= date("Ym");
 		$customer_id 			= $this->where('serial_number',$data['serial_number'])->value('customer_id');
-		$updateData['business_id']	= DB::table('tz_users')->where('id',$row['customer_id'])->value('salesman_id');
+		$updateData['business_id']	= DB::table('tz_users')->where('id',$customer_id)->value('salesman_id');
 		//
 		DB::beginTransaction();
 		$row = $this->where('serial_number',$data['serial_number'])->update($updateData);

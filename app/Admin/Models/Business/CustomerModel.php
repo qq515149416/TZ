@@ -14,10 +14,10 @@ use Encore\Admin\Facades\Admin;
  */
 class CustomerModel extends Model
 {
-    
+
     protected $table = 'tz_users';
     public $timestamps = true;
-    
+
 
 	/**
 	 * 管理人员查看客户信息
@@ -149,7 +149,7 @@ class CustomerModel extends Model
         $data['money_before']      	= $cus->money;
         $data['money_after']      	= bcadd($data['money_before'],$data['recharge_amount'],2);
         $data['trade_status']	= 1;
-        $data['subject']		= '余额充值';
+        $data['subject']		= '充值余额';
         $data['month']		= date("Ym");
         $data['timestamp']		= date("Y-m-d H:i:s");
         $data['salesman_id']	= $clerk_id;
@@ -178,6 +178,54 @@ class CustomerModel extends Model
         return $return;
     }
 
+    public function getRechargeFlow($way,$key = ''){   
+        switch ($way) {
+             case 'my_all':
+                  $clerk_id = Admin::user()->id;
+                  $flow = $this
+                        ->leftjoin('tz_recharge_flow as b','tz_users.id','=','b.user_id')
+                        ->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.salesman_id'))
+                        ->where('b.trade_status',1)
+                        ->where('tz_users.salesman_id',$clerk_id)
+                        ->orderBy('b.timestamp','desc')
+                        ->get();    
+                 break;
+             case 'customer_id':
+                  $flow = $this
+                        ->leftjoin('tz_recharge_flow as b','tz_users.id','=','b.user_id')
+                        ->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.salesman_id'))
+                        ->where('b.trade_status',1)
+                        ->where('tz_users.id',$key)
+                        ->orderBy('b.timestamp','desc')
+                        ->get();    
+                 break;
+             default:
+                    $flow = '';
+                 break;
+         } 
+       
+        if($flow->isEmpty()){
+            $return['data'] = '';
+            $return['msg'] = '无数据';
+            $return['code'] = 0;
+            return $return;
+        }
+        $flow = json_decode($flow,true);   
+        $recharge_way = [ 1 => '支付宝' , 2 => '微信' , 3 => '工作人员手动充值' ];
+        for ($i=0; $i < count($flow); $i++) { 
+            if($flow[$i]['salesman_id'] == 0){
+                $flow[$i]['salesman_name'] = '自助充值';
+            }else{
+                $flow[$i]['salesman_name'] = DB::table('admin_users')->where('id',$flow[$i]['salesman_id'])->value('name');
+            }
+            $flow[$i]['recharge_way'] = $recharge_way[$flow[$i]['recharge_way']];
+        }
+        $return['data'] = $flow;
+        $return['msg'] = '获取成功';
+        $return['code'] = 1;
+        return $return;
+    }
+
     /**
      * 转移业务员时选择业务员
      * @return [type] [description]
@@ -189,7 +237,7 @@ class CustomerModel extends Model
                     ->where(['oa_staff.department'=>$depart['depart_id']])
                     ->whereIn('tz_jobs.slug',[2,3])
                     ->select('admin_users.id','admin_users.name')
-                    ->get(); 
+                    ->get();
         if(empty($clerk)){
             $return['data'] = [];
             $return['code'] = 0;

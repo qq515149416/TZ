@@ -151,7 +151,7 @@ class MachineModel extends Model
                 //如果新增机器成功则将机器编号更新到对应的IP库中
                 $ip_row = DB::table('idc_ips')->where(['id'=>$data['ip_id']])->update(['mac_num'=>$data['machine_num'],'ip_status'=>3]);
             }
-            
+
     		if($ip_row != 0){
                 //如果更新IP库的所属机器编号成功，进行所有数据的提交
                 DB::commit();
@@ -164,7 +164,7 @@ class MachineModel extends Model
                 $return['data'] = '';
                 $return['code'] = 0;
                 $return['msg'] = '新增机器信息失败！！';
-            }             
+            }
     	} else {
     		$return['data'] = '';
 			$return['code'] = 0;
@@ -193,7 +193,7 @@ class MachineModel extends Model
             //先将原来所属IP的机器编号字段清除，状态修改
             $original = DB::table('idc_ips')->where('mac_num',$editdata['machine_num'])->update(['mac_num'=>'','ip_status'=>0]);
 			if($original == 0){
-                //原来的IP所属机器编号字段更新失败，事务回滚 
+                //原来的IP所属机器编号字段更新失败，事务回滚
                 DB::rollBack();
                 $return['code'] = 0;
                 $return['msg'] = '修改信息失败！！';
@@ -211,8 +211,8 @@ class MachineModel extends Model
                 DB::rollBack();
                 $return['code'] = 0;
                 $return['msg'] = '修改信息失败！！';
-            }        
-             
+            }
+
     	} else {
     		$return['code'] = 0;
     		$return['msg'] = '请确保要修改的信息正确！！';
@@ -298,7 +298,7 @@ class MachineModel extends Model
                     break;
                 default:
                     break;
-            } 			
+            }
             $cabinets = DB::table('idc_cabinet')
                             ->where($where)
    							->whereNull('deleted_at')
@@ -334,7 +334,7 @@ class MachineModel extends Model
             $where = ['ip_comproom'=>$roomid,'ip_company'=>$company,'ip_status'=>0,'ip_lock'=>0];
             if(isset($data['id'])){
                 $orwhere['id'] = $data['id'];
-            } 
+            }
     		$ips = DB::table('idc_ips')
                     ->where($where)
                     ->orWhere($orwhere)
@@ -372,7 +372,7 @@ class MachineModel extends Model
             }
             $machineroom = $machineroom->toArray();
         }
-        
+
         return $machineroom;
     }
 
@@ -437,7 +437,7 @@ class MachineModel extends Model
         for($i='A';$i<=$highest_colum;$i++){
             $worksheet->getColumnDimension($i)->setWidth(12);
         }
-        $colum = ++$highest_colum;//字段名的列数 
+        $colum = ++$highest_colum;//字段名的列数
         //列名样式
         $row_font = [
             'font' => [
@@ -505,7 +505,7 @@ class MachineModel extends Model
          * 下载模板
          * @var [type]
          */
-        
+
         $filename = '机器批量导入表格模板.xlsx';
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="'.$filename.'"');
@@ -529,7 +529,7 @@ class MachineModel extends Model
             $return['msg'] = '请上传文件!!';
             return $return;
         }
-        $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader('xlsx');//读取excel文件
+        $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader('Xlsx');//读取excel文件
         $spreadsheet = $reader->load($file->getRealPath());//加载文件
         $worksheet = $spreadsheet->getActiveSheet();//获取表格的活动区域
         $highest_colum = $worksheet->getHighestColumn();//获取总的列数
@@ -607,7 +607,7 @@ class MachineModel extends Model
             $return['msg'] = '请确认您有数据需要导入!!';
             return $return;
         }
-        $return['data'] = ''; 
+        $return['data'] = '';
         for($i=0;$i<count($insert_data);$i++){
             DB::beginTransaction();//开启事务
             $row = DB::table($this->table)->insertGetId($insert_data[$i]);
@@ -651,7 +651,7 @@ class MachineModel extends Model
                 $return['code'] = 0;
                 $return['msg'] = '批量添加机器失败,失败原因为:编号'.$insert_data[$i]['machine_num'].'的机器IP信息有误,从此机器开始修改并重新提交信息,此机器前的所有信息已提交成功无须重新提交';
                 return $return;
-            }      
+            }
         }
         return $return;
     }

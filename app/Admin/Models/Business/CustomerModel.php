@@ -190,6 +190,7 @@ class CustomerModel extends Model
                         ->orderBy('b.timestamp','desc')
                         ->get();    
                  break;
+                 
              case 'customer_id':
                   $flow = $this
                         ->leftjoin('tz_recharge_flow as b','tz_users.id','=','b.user_id')
@@ -199,6 +200,26 @@ class CustomerModel extends Model
                         ->orderBy('b.timestamp','desc')
                         ->get();    
                  break;
+
+            case '*':
+                  $flow = $this
+                        ->leftjoin('tz_recharge_flow as b','tz_users.id','=','b.user_id')
+                        ->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.salesman_id'))
+                        ->where('b.trade_status',1)
+                        ->orderBy('b.timestamp','desc')
+                        ->get();    
+                 break;
+
+            case 'byMonth':
+                  $flow = $this
+                        ->leftjoin('tz_recharge_flow as b','tz_users.id','=','b.user_id')
+                        ->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.salesman_id'))
+                        ->where('b.trade_status',1)
+                        ->where('b.month',$key)
+                        ->orderBy('b.timestamp','desc')
+                        ->get();    
+                 break;
+
              default:
                     $flow = '';
                  break;

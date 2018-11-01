@@ -505,7 +505,7 @@ class MachineModel extends Model
          * 下载模板
          * @var [type]
          */
-        
+
         $filename = '机器批量导入表格模板.xlsx';
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="'.$filename.'"');
@@ -529,7 +529,7 @@ class MachineModel extends Model
             $return['msg'] = '请上传文件!!';
             return $return;
         }
-        $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader('xlsx');//读取excel文件
+        $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader('Xlsx');//读取excel文件
         $spreadsheet = $reader->load($file->getRealPath());//加载文件
         $worksheet = $spreadsheet->getActiveSheet();//获取表格的活动区域
         $highest_colum = $worksheet->getHighestColumn();//获取总的列数

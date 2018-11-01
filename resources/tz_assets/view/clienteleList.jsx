@@ -61,8 +61,15 @@ const columnData = [
         param: ["id","email","money","status"]
     }, label: '操作' }
 ];
+const inputType = [
+    {
+        field: "email",
+        label: "用户邮箱",
+        type: "text"
+      }
+];
 @inject("clientelesStores")
-@observer 
+@observer
 class ClienteleList extends React.Component {
     componentDidMount() {
         this.props.clientelesStores.getData();
@@ -70,13 +77,20 @@ class ClienteleList extends React.Component {
     updata() {
         this.props.clientelesStores.getData();
     }
+    addData = (param,callbrak) => {
+        this.props.clientelesStores.bingSalesman(param).then((state) => {
+          callbrak(state);
+        });
+    }
     render() {
         return (
-          <ListTableComponent 
+          <ListTableComponent
             title="CRM管理"
             operattext="客户"
-            headTitlesData={columnData} 
-            data={this.props.clientelesStores.clienteles}  
+            headTitlesData={columnData}
+            inputType={inputType}
+            data={this.props.clientelesStores.clienteles}
+            addData={this.addData.bind(this)}
             updata={this.updata.bind(this)}
           />
         );

@@ -1,4 +1,5 @@
 const path = require('path');
+const package = require("./package.json");
 module.exports = {
     entry: './resources/tz_assets/app.js',
     output: {

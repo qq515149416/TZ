@@ -34,7 +34,7 @@ class UploadExcelComponent extends React.Component {
             <div>
                 <Button className={classes.button} onClick={this.getExcelTemplate} variant="contained" color="primary">下载excel模板</Button>
                 <Button className={classes.button} onClick={this.postExcel} variant="contained" color="primary">上传excel数据</Button>
-                <input type="file" ref={(ref) => this.file = ref} style={{display: "none"}}/>
+                <input type="file" ref={(ref) => this.file = ref} accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style={{display: "none"}}/>
             </div>
         );
     }

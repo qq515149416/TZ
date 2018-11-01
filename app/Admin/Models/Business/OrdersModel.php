@@ -85,10 +85,6 @@ class OrdersModel extends Model
                 $ovalue->order_type = $order_type[$ovalue->order_type];
                 $ovalue->pay_type = $pay_type[$ovalue->pay_type];
                 $ovalue->order_status = $order_status[$ovalue->order_status];
-    			// $result[$okey]['resourcetype'] = $resource_type[$ovalue['resource_type']];
-    			// $result[$okey]['order_type'] = $order_type[$ovalue['order_type']];
-    			// // $result[$okey]['pay_type'] = $pay_type[$ovalue['pay_type']];
-    			// $result[$okey]['order_status'] = $order_status[$ovalue['order_status']];
     		}
     		$return['data'] = $result;
     		$return['code'] = 1;
@@ -240,17 +236,6 @@ class OrdersModel extends Model
             $return['msg'] = '资源增加失败';
         }  
         return $return;     
-    }
-
-    /**
-     * 给客户创建业务时查找对应业务员的真实姓名
-     * @param  int $admin_id 账户的id用于关联账户信息admin_users_id
-     * @return string           返回对应账户的真实姓名
-     */
-    public function staff($admin_id) {
-        $staff = DB::table('oa_staff')->where('admin_users_id',$admin_id)
-                    ->value('fullname');
-        return $staff;
     }
 
     /**

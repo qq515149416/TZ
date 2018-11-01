@@ -40,12 +40,17 @@ const inputType = [
                 checked: false,
                 value: "3",
                 label: "工单处理部门"
+            },
+            {
+                checked: false,
+                value: "4",
+                label: "业务部门"
             }
         ]
     }
 ];
 @inject("departmentsStores")
-@observer 
+@observer
 class DepartmentList extends React.Component {
     componentDidMount() {
         this.props.departmentsStores.getData();
@@ -68,15 +73,15 @@ class DepartmentList extends React.Component {
     }
     render() {
         return (
-          <ListTableComponent 
+          <ListTableComponent
             title="部门管理"
             operattext="部门"
-            inputType={inputType} 
-            headTitlesData={columnData} 
-            data={this.props.departmentsStores.departments} 
+            inputType={inputType}
+            headTitlesData={columnData}
+            data={this.props.departmentsStores.departments}
             addData={this.addData.bind(this)}
             changeData={this.changeData.bind(this)}
-            delData={this.delData.bind(this)} 
+            delData={this.delData.bind(this)}
           />
         );
       }

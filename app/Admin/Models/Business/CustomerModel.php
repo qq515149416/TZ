@@ -14,10 +14,10 @@ use Encore\Admin\Facades\Admin;
  */
 class CustomerModel extends Model
 {
-    
+
     protected $table = 'tz_users';
     public $timestamps = true;
-    
+
 
 	/**
 	 * 管理人员查看客户信息
@@ -187,7 +187,7 @@ class CustomerModel extends Model
                 ->join('tz_department','tz_jobs.depart_id','=','tz_department.id')
                 ->join('oa_staff','tz_department.id','=','oa_staff.department')
                 ->join('admin_users','oa_staff.admin_users_id','=','admin_users.id')
-                ->whereIn('tz_jobs.slug',[2,3]])
+                ->whereIn('tz_jobs.slug',[2,3])
                 ->where(['oa_staff.dimission'=>0])
                 ->whereNull('oa_staff.deleted_at')
                 ->select('tz_department.depart_name','admin_users.name','admin_users.id')

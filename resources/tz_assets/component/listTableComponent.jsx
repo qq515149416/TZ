@@ -293,13 +293,6 @@ const styles = theme => ({
                 </Paper>
               )
             }
-            {
-              this.props.customizeToolbar && (
-                <Paper className={classes.paper} elevation={1}>
-                      {this.props.customizeToolbar}
-                </Paper>
-              )
-            }
           </div>,
         <Paper className={`${classes.root} ${this.props.className}`}>
           <EnhancedTableToolbar
@@ -313,6 +306,17 @@ const styles = theme => ({
             delData={this.props.delData}
             selectedData={selected}
           />
+          {
+              this.props.customizeToolbar && (
+                <Paper className={classes.paper} style={{
+                    boxShadow: "none",
+                    paddingTop: 0,
+                    paddingBottom: 0
+                }} elevation={1}>
+                      {this.props.customizeToolbar()}
+                </Paper>
+              )
+            }
           <div className={classes.tableWrapper}>
             <Table className={classes.table} aria-labelledby="tableTitle">
               <EnhancedTableHead

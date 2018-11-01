@@ -24,6 +24,8 @@ import Home from "../view/home.jsx";
 import DepartmentList from "../view/departmentList.jsx";
 import PositionList from "../view/positionList.jsx";
 import UserList from "../view/userList.jsx";
+import RechargeList from "../view/rechargeList.jsx";
+
 
 
 export default () => [
@@ -50,5 +52,6 @@ export default () => [
     <Route path="/tz_admin" component={Home} exact />,
     <Route path="/tz_admin/hr/departmentview" component={DepartmentList} />,
     <Route path="/tz_admin/hr/position" component={PositionList} />,
-    <Route path="/tz_admin/hr/usermanagement" component={UserList} />
+    <Route path="/tz_admin/hr/usermanagement" component={UserList} />,
+    <Route path="/tz_admin/checkrecharge" component={RechargeList} />
 ];

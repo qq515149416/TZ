@@ -82,6 +82,7 @@ Route::group([
     $router->get('/hr/departmentview', 'Show\DepartmentController@index');
     $router->get('/hr/position', 'Show\PositionController@index');
     $router->get('/hr/usermanagement', 'Show\UserManagementController@index');
+    $router->get('/checkrecharge', 'Show\RechargeController@index');
 
 //人事
     Route::group([
@@ -310,7 +311,7 @@ Route::group([
         $router->post('recharge','Business\CustomerController@rechargeByAdmin');
         $router->get('showRecharge','Business\CustomerController@getRecharge');
         $router->get('showAllRecharge','Business\CustomerController@getAllRecharge');
-        
+
         $router->get('depart','Business\CustomerController@depart');
         $router->post('select_clerk','Business\CustomerController@selectClerk');
         $router->post('edit_clerk','Business\CustomerController@editClerk');

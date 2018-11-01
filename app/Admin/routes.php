@@ -26,7 +26,7 @@ Route::group([
     $router->get('account/test','Hr\AccountController@test');
 
     // 显示通讯录
-    $router->get('staff/staff_list', 'Others\StaffController@index');
+    $router->get('staff/staff_list', 'Hr\EmployeeInformationController@showEmployee');
 
     // 联系人表
     Route::group([

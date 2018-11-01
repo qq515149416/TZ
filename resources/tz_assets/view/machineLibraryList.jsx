@@ -320,7 +320,7 @@ class MachineLibraryList extends React.Component {
             addData={this.addData.bind(this)}
             delData={this.delData.bind(this)}
             changeData={this.changeData.bind(this)}
-            customizeToolbar={() => <UploadExcelComponent />}
+            customizeToolbar={<UploadExcelComponent />}
           />
         ];
       }

@@ -48,13 +48,13 @@ class EmployeeInformation extends Model
         // dd($show);
 		if(!$show->isEmpty()){
 			$dimission = [0=>'在职',1=>'离职'];
-			$sex = [0=>'女性',1=>'男性',2=>'保密'];
+			$sex = [0=>'女',1=>'男',2=>'保密'];
 			foreach($show as $showkey=>$showval){
                 $show[$showkey]['department_name'] = $this->department($show[$showkey]['department']);//获取部门
 				$show[$showkey]['job_name'] = $this->jobs($show[$showkey]['job']);//获取职位
 				$show[$showkey]['dimiss'] = $dimission[$show[$showkey]['dimission']];//转换在职状态
 				$show[$showkey]['sex_tran'] = $sex[$show[$showkey]['sex']];//性别转换
-				$show[$showkey]['fullname'] = $name?$name:$this->name($show[$showkey]['admin_users_id']);//获取名字
+				$show[$showkey]['fullname'] = $this->name($show[$showkey]['admin_users_id']);//获取名字
 			}
 			$return['data'] = $show;
 			$return['code'] = 1;
@@ -163,5 +163,6 @@ class EmployeeInformation extends Model
 	 */
 	public function name($user_id){
 		$name = DB::table('admin_users')->where(['id'=>$user_id])->value('name');
+		return $name;
 	}
 }

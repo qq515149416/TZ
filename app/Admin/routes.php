@@ -308,8 +308,8 @@ Route::group([
         $router->post('reset_password','Business\CustomerController@resetPassword');
 
         $router->post('recharge','Business\CustomerController@rechargeByAdmin');
-        $router->get('showMyRecharge','Business\CustomerController@getRechargeByAdminUser');
-        $router->get('showThisRecharge','Business\CustomerController@getRechargeByCustomerId');
+        $router->get('showRecharge','Business\CustomerController@getRecharge');
+        $router->get('showAllRecharge','Business\CustomerController@getAllRecharge');
         
         $router->get('depart','Business\CustomerController@depart');
         $router->post('select_clerk','Business\CustomerController@selectClerk');

@@ -182,23 +182,20 @@ class CustomerModel extends Model
      * 转移业务员时选择业务员
      * @return [type] [description]
      */
-    public function selectClerk(){
-        $clrek = DB::table('tz_jobs')
-                ->join('tz_department','tz_jobs.depart_id','=','tz_department.id')
-                ->join('oa_staff','tz_department.id','=','oa_staff.department')
-                ->join('admin_users','oa_staff.admin_users_id','=','admin_users.id')
-                ->whereIn('tz_jobs.slug',[2,3])
-                ->where(['oa_staff.dimission'=>0])
-                ->whereNull('oa_staff.deleted_at')
-                ->select('tz_department.depart_name','admin_users.name','admin_users.id')
-                ->groupBy('tz_department.depart_name')
-                ->get();
+    public function selectClerk($depart){
+        $clerk = DB::table('oa_staff')
+                    ->join('admin_users','oa_staff.admin_users_id','=','admin_users.id')
+                    ->join('tz_jobs','oa_staff.job','=','tz_jobs.id')
+                    ->where(['oa_staff.department'=>$depart['depart_id']])
+                    ->whereIn('tz_jobs.slug',[2,3])
+                    ->select('admin_users.id','admin_users.name')
+                    ->get();
         if(empty($clerk)){
             $return['data'] = [];
             $return['code'] = 0;
             $return['msg'] = '无法获取业务员相关信息';
         } else {
-            $return['data'] = $clrek;
+            $return['data'] = $clerk;
             $return['code'] = 1;
             $return['msg'] = '获取业务员相关信息成功';
         }

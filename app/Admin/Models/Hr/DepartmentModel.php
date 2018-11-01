@@ -21,10 +21,15 @@ class DepartmentModel extends Model
      * 获取部门数据
      * @return [type] [description]
      */
-    public function showDepart(){
-    	$show_depart = $this->get(['id','depart_number','depart_name','sign','created_at','updated_at']);
+    public function showDepart($param = []){
+        if(count($param)>0){
+            $where['sign'] = 4;
+        } else {
+            $where = [];
+        }
+    	$show_depart = $this->where($where)->get(['id','depart_number','depart_name','sign','created_at','updated_at']);
 		if(!$show_depart->isEmpty()){
-    		$sign = [1=>'普通',2=>'工单初始部门',3=>'工单处理部门'];
+    		$sign = [1=>'普通',2=>'工单初始部门',3=>'工单处理部门',4=>'业务部门'];
     		foreach($show_depart as $depart_key=>$depart_value){
     			$show_depart[$depart_key]['sign_name'] = $sign[$show_depart[$depart_key]['sign']];
 			}

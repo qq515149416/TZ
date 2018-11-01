@@ -5,7 +5,7 @@ namespace App\Admin\Controllers\Business;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use App\Admin\Models\Business\CustomerModel;
-
+use App\Admin\Models\Hr\DepartmentModel;
 use Illuminate\Http\Request;
 use App\Admin\Requests\Business\BusinessRequest;
 
@@ -64,12 +64,24 @@ class CustomerController extends Controller
     }
 
     /**
+     * 转移业务员时选择部门
+     * @return [type] [description]
+     */
+    public function depart(Request $request){
+        $param = $request->only(['transfer']);
+        $clerk = new DepartmentModel();
+        $clerk_result = $clerk->showDepart($param);
+        return tz_ajax_echo($clerk_result['data'],$clerk_result['msg'],$clerk_result['code']);
+    }
+
+     /**
      * 转移业务员时选择业务员
      * @return [type] [description]
      */
-    public function selectClerk(){
+    public function selectClerk(Request $request){
+        $depart_id = $request->only(['depart_id']);
         $clerk = new CustomerModel();
-        $clerk_result = $clerk->selectClerk();
+        $clerk_result = $clerk->selectClerk($depart_id);
         return tz_ajax_echo($clerk_result['data'],$clerk_result['msg'],$clerk_result['code']);
     }
 

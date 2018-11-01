@@ -27,7 +27,6 @@ class EmployeeInformationController extends Controller
         $admin_users_id = $request->only(['account_id']);
         $show = new EmployeeInformation();
         $show_result = $show->showEmployee($admin_users_id);
-        dd($show_result);
         return tz_ajax_echo($show_result['data'],$show_result['msg'],$show_result['code']);
     }
 

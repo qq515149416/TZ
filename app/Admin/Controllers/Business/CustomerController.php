@@ -63,32 +63,52 @@ class CustomerController extends Controller
         return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
     }
 
-    /**
-     * 后台业务员获取属于自己的客户的充值流水信息接口
-     * @param  Request $request [description]
-     * @return 
-     */
-    public function getRechargeByAdminUser(){
-        
-        $model = new CustomerModel();
-        $res = $model->getRechargeFlow('my_all');
 
-        return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
-    }
 
     /**
      * 后台根据客户id获取对应客户充值单接口
      * @param  Request $request [description]
      * @return 
      */
-    public function getRechargeByCustomerId(BusinessRequest $request){
+    public function getRecharge(BusinessRequest $request){
+    
         $info = $request->only(['customer_id']);
-        $customer_id = $info['customer_id'];
+        if(isset($info['customer_id'])){
+            $way = 'customer_id';
+            $customer_id = $info['customer_id'];
+        }else{
+              $way = 'my_all';
+              $customer_id = '';
+        }
+        
         $model = new CustomerModel();
-        $res = $model->getRechargeFlow('customer_id',$customer_id);
+        $res = $model->getRechargeFlow($way,$customer_id);
 
         return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
     }
+
+    /**
+     * 后台获取所有客户充值单接口
+     * @param  Request $request [description]
+     * @return 
+     */
+    public function getAllRecharge(BusinessRequest $request){
+
+        $info = $request->only(['month']);
+        if(isset($info['month'])){
+            $way = 'byMonth';
+            $key = $info['month'];
+        }else{
+            $way = '*';
+            $key = '';
+        }
+
+        $model = new CustomerModel();
+        $res = $model->getRechargeFlow($way,$key);
+
+        return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+    }
+
 
     /**
      * 转移业务员时选择部门

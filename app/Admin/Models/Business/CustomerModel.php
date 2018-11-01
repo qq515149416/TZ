@@ -65,7 +65,10 @@ class CustomerModel extends Model
      * @return string     返回对应业务员的姓名
      */
     public function clerk($id){
-    	$clerk = DB::table('oa_staff')->where('admin_users_id',$id)->value('fullname');
+    	$clerk = DB::table('admin_users')->where(['id'=>$id])->value('name');
+        if(empty($clerk)){
+            $clerk = '未绑定业务员';
+        }
     	return $clerk;
     }
 
@@ -113,20 +116,6 @@ class CustomerModel extends Model
             $return['msg'] = '密码无法重置';
         }
         return $return;
-    }
-
-    /**
-     * 查找当前登陆用户的角色标识和角色名称
-     * @param  [type] $user_id [description]
-     * @return [type]          [description]
-     */
-    public function role($user_id){
-        $role = DB::table('admin_role_users')
-                    ->join('admin_roles','admin_role_users.role_id','=','admin_roles.id')
-                    ->where('user_id',$user_id)
-                    ->select('admin_roles.id as roleid','admin_roles.slug','admin_roles.name')
-                    ->first();
-        return $role;
     }
 
     public function rechargeByAdmin($data){

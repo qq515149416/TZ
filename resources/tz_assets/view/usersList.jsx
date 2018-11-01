@@ -12,9 +12,7 @@ const columnData = [
   { id: 'wechat', numeric: true, disablePadding: false, label: '微信' },
   { id: 'QQ', numeric: true, disablePadding: false, label: 'QQ' },
   { id: 'email', numeric: true, disablePadding: false, label: '邮箱' },
-  { id: 'phone', numeric: true, disablePadding: false, label: '手机号' },
-  { id: 'created_at', numeric: true, disablePadding: false, label: '创建时间' },
-  { id: 'updated_at', numeric: true, disablePadding: false, label: '更新时间' },
+  { id: 'phone', numeric: true, disablePadding: false, label: '手机号' }
 ];
 const inputType = [];
 @inject("usersInfoStores")

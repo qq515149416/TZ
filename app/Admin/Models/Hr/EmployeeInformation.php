@@ -48,7 +48,7 @@ class EmployeeInformation extends Model
         // dd($show);
 		if(!$show->isEmpty()){
 			$dimission = [0=>'在职',1=>'离职'];
-			$sex = [0=>'女性',1=>'男性',2=>'保密'];
+			$sex = [0=>'女',1=>'男',2=>'保密'];
 			foreach($show as $showkey=>$showval){
                 $show[$showkey]['department_name'] = $this->department($show[$showkey]['department']);//获取部门
 				$show[$showkey]['job_name'] = $this->jobs($show[$showkey]['job']);//获取职位

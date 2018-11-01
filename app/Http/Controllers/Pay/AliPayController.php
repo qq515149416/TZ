@@ -213,7 +213,7 @@ class AliPayController extends Controller
 
 	public function cancel($trade_no){
 		
-		$cancel =  Pay::alipay($this->config)->cancel($trade_no);
+		$cancel =  Pay::alipay($this->config)->close($trade_no);
 
 		return $cancel;
 	}

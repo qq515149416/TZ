@@ -37,13 +37,17 @@ class WorkOrderModel extends Model
      * @return array        返回相关的数据信息和状态
      */
     public function showWorkOrder($where){
-        // $user_id = Admin::user()->id;
-        // $staff = $this->staff($user_id);
-        // if($staff->slug == 3){
-        //     $where['clerk_id'] = $user_id;
-        // } elseif($staff->slug == 4){
-        //     $where['process_department'] = $staff->department;
-        // }
+        /**
+         * 根据不同角色进行查看不同的内容
+         * @var [type]
+         */
+        $user_id = Admin::user()->id;
+        $staff = $this->staff($user_id);
+        if($staff->slug == 3){
+            $where['clerk_id'] = $user_id;
+        } elseif($staff->slug == 4){
+            $where['process_department'] = $staff->department;
+        }
         // 进行数据查询
         $result = $this->where($where)
                         ->get(['id','work_order_number','business_num','customer_id','clerk_id','work_order_type',

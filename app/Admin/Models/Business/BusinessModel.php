@@ -248,7 +248,7 @@ class BusinessModel extends Model
     public function enableBusiness($enable)
     {
         if ($enable) {
-            $row = $this->where('id', $enable['id'])->update($enable);
+            $row = $this->where(['id'=>$enable['id']])->update($enable);
             if ($row != false) {
                 $return['code'] = 1;
                 $return['msg']  = '业务启用成功';
@@ -263,18 +263,6 @@ class BusinessModel extends Model
         return $return;
     }
 
-
-    /**
-     * 给客户创建业务时查找对应业务员的真实姓名
-     * @param  int $admin_id 账户的id用于关联账户信息admin_users_id
-     * @return string           返回对应账户的真实姓名
-     */
-    public function staff($admin_id)
-    {
-        $staff = DB::table('oa_staff')->where('admin_users_id', $admin_id)
-            ->select('work_number', 'fullname')->first();
-        return $staff;
-    }
 
     /**
      * 业务员和管理员查看对应客户的业务数据

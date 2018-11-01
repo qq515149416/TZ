@@ -20,6 +20,8 @@ import WorkOrdersStores from "../../stores/workOrder-stores";
 import DepartmentsStores from "../../stores/department-stores";
 import PositionsStores from "../../stores/position-stores";
 import UsersStores from "../../stores/user-stores";
+import RechargesStores from "../../stores/recharge-stores";
+
 
 // 前端Models操作
 export const stores = {
@@ -44,7 +46,8 @@ export const stores = {
     workOrdersStores: new WorkOrdersStores(),
     departmentsStores: new DepartmentsStores(),
     positionsStores: new PositionsStores(),
-    usersStores: new UsersStores()
+    usersStores: new UsersStores(),
+    rechargesStores: new RechargesStores()
 }
 export const domIds = [
     "user_list",
@@ -70,5 +73,6 @@ export const domIds = [
     "home",
     "department",
     "position",
-    "user"
+    "user",
+    "recharge"
 ];

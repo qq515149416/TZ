@@ -173,17 +173,17 @@ class CustomerModel extends Model
                   $clerk_id = Admin::user()->id;
                   $flow = $this
                         ->leftjoin('tz_recharge_flow as b','tz_users.id','=','b.user_id')
-                        ->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.salesman_id'))
+                        ->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.salesman_id'))
                         ->where('b.trade_status',1)
                         ->where('tz_users.salesman_id',$clerk_id)
                         ->orderBy('b.timestamp','desc')
                         ->get();    
                  break;
-                 
+
              case 'customer_id':
                   $flow = $this
                         ->leftjoin('tz_recharge_flow as b','tz_users.id','=','b.user_id')
-                        ->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.salesman_id'))
+                        ->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.salesman_id'))
                         ->where('b.trade_status',1)
                         ->where('tz_users.id',$key)
                         ->orderBy('b.timestamp','desc')
@@ -193,7 +193,7 @@ class CustomerModel extends Model
             case '*':
                   $flow = $this
                         ->leftjoin('tz_recharge_flow as b','tz_users.id','=','b.user_id')
-                        ->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.salesman_id'))
+                        ->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.salesman_id'))
                         ->where('b.trade_status',1)
                         ->orderBy('b.timestamp','desc')
                         ->get();    
@@ -202,7 +202,7 @@ class CustomerModel extends Model
             case 'byMonth':
                   $flow = $this
                         ->leftjoin('tz_recharge_flow as b','tz_users.id','=','b.user_id')
-                        ->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.salesman_id'))
+                        ->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.salesman_id'))
                         ->where('b.trade_status',1)
                         ->where('b.month',$key)
                         ->orderBy('b.timestamp','desc')
@@ -229,6 +229,7 @@ class CustomerModel extends Model
                 $flow[$i]['salesman_name'] = DB::table('admin_users')->where('id',$flow[$i]['salesman_id'])->value('name');
             }
             $flow[$i]['recharge_way'] = $recharge_way[$flow[$i]['recharge_way']];
+            $flow[$i]['customer_name'] = $flow[$i]['customer_name'] ? $flow[$i]['customer_name'] : $flow[$i]['email'];
         }
         $return['data'] = $flow;
         $return['msg'] = '获取成功';

@@ -313,7 +313,7 @@ const styles = theme => ({
                     paddingTop: 0,
                     paddingBottom: 0
                 }} elevation={1}>
-                      {this.props.customizeToolbar()}
+                      {this.props.customizeToolbar}
                 </Paper>
               )
             }

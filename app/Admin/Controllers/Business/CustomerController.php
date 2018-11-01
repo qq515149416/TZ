@@ -64,6 +64,33 @@ class CustomerController extends Controller
     }
 
     /**
+     * 后台业务员获取属于自己的客户的充值流水信息接口
+     * @param  Request $request [description]
+     * @return 
+     */
+    public function getRechargeByAdminUser(){
+        
+        $model = new CustomerModel();
+        $res = $model->getRechargeFlow('my_all');
+
+        return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+    }
+
+    /**
+     * 后台根据客户id获取对应客户充值单接口
+     * @param  Request $request [description]
+     * @return 
+     */
+    public function getRechargeByCustomerId(BusinessRequest $request){
+        $info = $request->only(['customer_id']);
+        $customer_id = $info['customer_id'];
+        $model = new CustomerModel();
+        $res = $model->getRechargeFlow('customer_id',$customer_id);
+
+        return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+    }
+
+    /**
      * 转移业务员时选择部门
      * @return [type] [description]
      */

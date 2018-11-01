@@ -34,10 +34,9 @@ class  PfmStatistics extends Model
 	{		
 		//获取优惠券优惠的金额
 		$coupon = DB::table('tz_orders_flow as a')
-			->leftjoin('tz_users as b','a.customer_id','=','b.id')
-			->select(DB::raw('sum(a.preferential_amount) as preferential_amount, b.salesman_id'))
+			->select(DB::raw('sum(a.preferential_amount) as preferential_amount, a.business_id'))
 			->where('a.month',$month)
-			->groupBy('a.customer_id')
+			->groupBy('a.business_id')
 			->get();	
 	
 		//获取查询月份订单
@@ -74,6 +73,7 @@ class  PfmStatistics extends Model
 			'achievement'		=> 0,
 			'this_arrears'		=> 0,
 			'all_arrears'		=> 0,
+			'preferential_amount'	=> 0,
 			'month'			=> $month,
 		];
 		//开始统计
@@ -85,6 +85,7 @@ class  PfmStatistics extends Model
 					'achievement'		=> 0,
 					'this_arrears'		=> 0,
 					'all_arrears'		=> 0,
+					'preferential_amount'	=> 0,
 					'month'			=> $month,
 				];
 			}
@@ -104,6 +105,7 @@ class  PfmStatistics extends Model
 					'achievement'		=> 0,
 					'this_arrears'		=> 0,
 					'all_arrears'		=> 0,
+					'preferential_amount'	=> 0,
 					'month'			=> $month,
 				];
 			}
@@ -120,22 +122,34 @@ class  PfmStatistics extends Model
 		//入库统计表
 		
 		for ($k=0; $k < count($coupon); $k++) { 
-			if(!isset( $order_arr[ $coupon[$k]['salesman_id'] ] )){
-				$order_arr[ $coupon[$k]['salesman_id'] ] = [
-					'user_id'		=> $coupon[$k]['salesman_id'],
+			if(!isset( $order_arr[ $coupon[$k]['business_id'] ] )){
+				$order_arr[ $coupon[$k]['business_id'] ] = [
+					'user_id'		=> $coupon[$k]['business_id'],
 					'total_money'		=> 0,
 					'achievement'		=> 0,
 					'this_arrears'		=> 0,
 					'all_arrears'		=> 0,
+					'preferential_amount'	=> 0,
 					'month'			=> $month,
 				];
 			}
-			$order_arr[ $coupon[$k]['salesman_id'] ]['achievement'] = bcsub($order_arr[ $coupon[$k]['salesman_id'] ]['achievement'],$coupon[$k]['preferential_amount'],2);
-			$order_arr[ $coupon[$k]['salesman_id'] ]['total_money'] = bcsub($order_arr[ $coupon[$k]['salesman_id'] ]['total_money'],$coupon[$k]['preferential_amount'],2);
-			$order_arr[0]['total_money'] = bcsub($order_arr[0]['total_money'],$coupon[$k]['preferential_amount'],2);
-			$order_arr[0]['achievement'] = bcsub($order_arr[0]['achievement'],$coupon[$k]['preferential_amount'],2);
-		}
+			
+			if($coupon[$k]['business_id'] == 0){
+				$order_arr[ $coupon[$k]['business_id'] ]['achievement'] = bcsub($order_arr[ $coupon[$k]['business_id'] ]['achievement'],$coupon[$k]['preferential_amount'],2);
+				$order_arr[ $coupon[$k]['business_id'] ]['total_money'] = bcsub($order_arr[ $coupon[$k]['business_id'] ]['total_money'],$coupon[$k]['preferential_amount'],2);	
+				$order_arr[ $coupon[$k]['business_id'] ]['preferential_amount']	= bcadd($order_arr[ $coupon[$k]['business_id'] ]['preferential_amount'],$coupon[$k]['preferential_amount'],2);
+			}else{
+				$order_arr[ $coupon[$k]['business_id'] ]['achievement'] = bcsub($order_arr[ $coupon[$k]['business_id'] ]['achievement'],$coupon[$k]['preferential_amount'],2);
+				$order_arr[ $coupon[$k]['business_id'] ]['total_money'] = bcsub($order_arr[ $coupon[$k]['business_id'] ]['total_money'],$coupon[$k]['preferential_amount'],2);	
+				$order_arr[ $coupon[$k]['business_id'] ]['preferential_amount']	= bcadd($order_arr[ $coupon[$k]['business_id'] ]['preferential_amount'],$coupon[$k]['preferential_amount'],2);
 
+				$order_arr[0]['achievement'] = bcsub($order_arr[0]['achievement'],$coupon[$k]['preferential_amount'],2);
+				$order_arr[0]['total_money'] = bcsub($order_arr[0]['total_money'],$coupon[$k]['preferential_amount'],2);
+				$order_arr[0]['preferential_amount']	= bcadd($order_arr[0]['preferential_amount'],$coupon[$k]['preferential_amount'],2);
+			}
+			
+		}
+		
 		$res = $this->insert($order_arr);
 		if($res){
 			$return['msg'] 	= '数据统计成功';

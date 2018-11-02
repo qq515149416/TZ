@@ -67,9 +67,10 @@ class OrdersModel extends Model
      * @return array        返回相关的数据信息和提示状态及信息
      */
     public function clerkOrders($where){
+        // ['tz_orders.business_sn'=>$where['business_sn'],'tz_orders.resource_type'=>$where['resource_type']]
         $result = DB::table('tz_orders')
                     ->join('tz_orders_flow','tz_orders.serial_number','=','tz_orders_flow.serial_number')
-                    ->where(['tz_orders.business_sn'=>$where['business_sn']])
+                    ->where($where)
                     ->select('tz_orders.id','tz_orders.order_sn','tz_orders.customer_name','tz_orders.business_sn','tz_orders.business_name','tz_orders.resource_type','tz_orders.order_type','tz_orders.resource','tz_orders.price','tz_orders.duration','tz_orders.payable_money','tz_orders.end_time','tz_orders.serial_number','tz_orders.pay_time','tz_orders.order_status','tz_orders.order_note','tz_orders.created_at','tz_orders_flow.pay_type','tz_orders_flow.before_money','tz_orders_flow.after_money')
                     ->get();
         //$this->where($where)->get(['id','order_sn','customer_name','business_sn','business_name','resource_type','order_type','resource','price','duration','payable_money','end_time','serial_number','pay_time','order_status','order_note','created_at']);

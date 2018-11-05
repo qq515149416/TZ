@@ -67,7 +67,7 @@ class PastDueOrders extends Command
         
         $data = $model
             ->where(
-                'create_at', '<', $pastTime  //当 创建时间小于 过期时间时
+                'created_at', '<', $pastTime  //当 创建时间小于 过期时间时
             )
             ->where([
                 'trade_status' => 0

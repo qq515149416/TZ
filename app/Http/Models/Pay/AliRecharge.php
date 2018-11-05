@@ -37,10 +37,10 @@ class AliRecharge extends Model
 			if($test!=NULL){				
 				$created_at = strtotime($test);
 				$time = time();	
-				if($time - $created_at <= 3){
+				if($time - $created_at <= 120){
 					$return['data'] = '';
 					$return['code'] = 0;
-					$return['msg'] = '5分钟内只能创建一张订单!!!!!';
+					$return['msg'] = '2分钟内只能创建一张订单!!!!!';
 					return $return;
 				}			
 			}
@@ -138,22 +138,21 @@ class AliRecharge extends Model
 	public function checkOrder($trade_no,$num){
 		switch ($num) {
 			case 1:
-				$order = $this->where('trade_no',$trade_no)->get();
+				$order = $this->where('trade_no',$trade_no)->first();
 				break;		
 			case 2:
-				$order = $this->select('trade_status','id')->where('trade_no',$trade_no)->get();
+				$order = $this->select('trade_status','id')->where('trade_no',$trade_no)->first();
 				break;
 			case 3:
-				$order = $this->where('id',$trade_no)->get();
+				$order = $this->where('id',$trade_no)->first();
 				break;
 			case 4:
 				$order = $this->where('user_id',$trade_no)->get();
 				break;
 		}
 	
-		if(!$order->isEmpty()){	
+		if(!empty($order)){	
 			
-
 			$return['data'] 	= $order;
 			$return['code'] 	= 1;
 			$return['msg']	= '获取订单信息成功';
@@ -182,7 +181,7 @@ class AliRecharge extends Model
 				return $return;
 			}else{
 				$created_at = strtotime($order->created_at);
-				if(time()-$created_at >=300 ){
+				if(time()-$created_at >=7130 ){
 					$return['data'] 	= $order;
 					$return['code'] 	= 2;
 					$return['msg']	= '订单已过期';
@@ -201,7 +200,6 @@ class AliRecharge extends Model
 			$return['code'] 	= 0;
 			$return['msg']	= '订单不存在或已过期';
 		}
-
 		return $return;
 	}
 

@@ -207,16 +207,29 @@ class AliPayController extends Controller
 	
 
 	/**
-	*关闭订单接口
+	*取消订单接口(会退款)
 	*@param 	$trade_no 	订单号,就是属于支付宝的out_trade_no
 	*/
 
 	public function cancel($trade_no){
 		
+		$cancel =  Pay::alipay($this->config)->cancel($trade_no);
+
+		return $cancel;
+	}
+
+	/**
+	*关闭订单接口
+	*@param 	$trade_no 	订单号,就是属于支付宝的out_trade_no
+	*/
+
+	public function close($trade_no){
+		
 		$cancel =  Pay::alipay($this->config)->close($trade_no);
 
 		return $cancel;
 	}
+
 
 	/**
 	*查询订单接口

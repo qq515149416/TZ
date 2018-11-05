@@ -66,7 +66,12 @@ class RechargeController extends Controller
 	*						scan代表获取二维码
 	*/
 	public function goToPay(RechargeRequest $request)
-	{
+	{	
+		// $info = '2018-08-07';
+		// $time = $info.' 00:00:00';
+		// $time = strtotime($time);
+		// $b = date("Y-m-d H:i:s",$time);
+		// dd($b);
 		$checkLogin = Auth::check();
 		if($checkLogin == false){
 			return tz_ajax_echo([],'请先登录',0);
@@ -86,14 +91,18 @@ class RechargeController extends Controller
 		}
 		
 		$info = json_decode(json_encode($res['data']),true);
-
+		$created_at = strtotime($info['created_at']);
+		$end_time = $created_at+7200;
+		$timeout_express = $end_time-time();
+		$m = bcsub(bcdiv($timeout_express,'60'),1); 
+		$m = "{$m}m";
 		$Pay = new AliPayController();
 
 		$order = [
 			'out_trade_no' 		=> $info['trade_no'],		//本地订单号
 			'total_amount' 		=> $info['recharge_amount'],	//金额
 			'subject' 		=> '余额充值',			//商品名称
-			'timeout_express'	=> '5m',	
+			'timeout_express'	=> $m,	
 			//该笔订单允许的最晚付款时间，逾期将关闭交易。取值范围：1m～15d。m-分钟，h-小时，d-天，1c-当天（1c-当天的情况下，无论交易何时创建，都在0点关闭）。 该参数数值不接受小数点， 如 1.5h，可转换为 90m。该参数在请求到支付宝时开始计时。			
 			'product_code'		=> 'FAST_INSTANT_TRADE_PAY',	//销售产品码，与支付宝签约的产品码名称。 注：目前仅支持FAST_INSTANT_TRADE_PAY
 
@@ -115,7 +124,6 @@ class RechargeController extends Controller
 
 	public function delOrder(RechargeRequest $request)
 	{
-		
 		//获取登录中用户id
 		$checkLogin = Auth::check();
 		if($checkLogin == false){
@@ -133,14 +141,14 @@ class RechargeController extends Controller
 			return tz_ajax_echo($order['data'],$order['msg'],$order['code']);
 		}
 
-		$order = json_decode(json_encode($order['data']),true);
-		$trade_no = $order[0]['trade_no'];
+		$order = json_decode($order['data'],true);
+		$trade_no = $order['trade_no'];
 		$check = $this->checkAndInsert($trade_no);
 		if($check['code'] != 1 && $check['code'] != 0){
 			return tz_ajax_echo('',$check['msg'].'订单状态异常,暂时无法删除',0);
 		}
 
-		$check_user_id = $order[0]['user_id'];
+		$check_user_id = $order['user_id'];
 		if($user_id != $check_user_id){
 			return tz_ajax_echo('','该订单不属于您,无法删除',0);
 		}
@@ -320,14 +328,13 @@ class RechargeController extends Controller
 			return tz_ajax_echo('','用户已付款,本地查找不到订单,联系工作人员',2);
 		}
 
-		if($check['data'][0]['trade_status'] != 1){
+		if($check['data']['trade_status'] != 1){
 			$info['trade_no'] 		= $trade_no;	//本地订单
 			$info['voucher']			= $res->trade_no;
 			$info['recharge_amount']	= $res->total_amount;
 			$info['timestamp']		= $res->send_pay_date;
 
 			//更新数据库信息
-			$model = new AliRecharge();
 			$update = $model->returnInsert($info);
 			$return['msg'] = $return['msg'].','.$update['msg'];
 

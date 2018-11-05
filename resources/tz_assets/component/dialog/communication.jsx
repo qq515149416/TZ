@@ -30,7 +30,7 @@ const styles = {
       flex: 1,
     },
     content_container: {
-        height: 550,
+        height: window.innerHeight - 64 - 110,
         overflow: "auto"
     },
     textField: {
@@ -90,12 +90,20 @@ const styles = {
                         state.contents.push(content);
                         return state;
                     });
+                    setTimeout(() => {
+                        this.container.scrollTop = this.content_container.offsetHeight;
+                    },500);
                 });
             }
         })
     }
-
-    sendContent = event => {
+    keyDownSendContent = (event) => {
+        // console.log(event);
+        if(event.keyCode==13) {
+            this.sendContent();
+        }
+    }
+    sendContent = () => {
         post("work_answer/insert",{
             work_number: this.props.work_order_number,
             answer_content: this.send_content.value
@@ -110,10 +118,17 @@ const styles = {
                     state.contents.push(res.data.data);
                     return state;
                 });
+                setTimeout(() => {
+                    this.container.scrollTop = this.content_container.offsetHeight;
+                },500);
             }
         })
     }
-
+    bindKeyEvent = () => {
+        this.send_content.removeEventListener("keydown",this.keyDownSendContent);
+        this.send_content.addEventListener("keydown",this.keyDownSendContent);
+        this.container.scrollTop = this.content_container.offsetHeight;
+    }
     handleClickOpen = () => {
       this.setState({ open: true });
     };
@@ -135,6 +150,7 @@ const styles = {
           open={this.state.open}
           onClose={this.handleClose}
           TransitionComponent={Transition}
+          onEntered={this.bindKeyEvent}
         >
           <AppBar className={classes.appBar}>
             <Toolbar>
@@ -147,19 +163,20 @@ const styles = {
               <ChangeStatus {...this.props} postUrl="workorder/edit" nameParam="work_order_number" />
             </Toolbar>
           </AppBar>
-          <div className={classes.content_container}>
-            {
-                this.state.contents.map(item => (
-                    <div className={`${classes.conversation_content_item}`}>
-                        <span className={`${classes.block} ${classNames({
-                            [classes.self]: item.answer_role==2,
-                            [classes.allochromatic]: item.answer_role==1
-                        })} ${classes.date}`}>{item.created_at}</span>
-                        <span className={`${classes.block} ${classes.content}`}>{item.answer_content}</span>
-                    </div>
-                ))
-            }
-
+          <div className={classes.content_container} ref={(ref) => this.container = ref}>
+            <div ref={(ref) => this.content_container = ref}>
+                {
+                    this.state.contents.map(item => (
+                        <div className={`${classes.conversation_content_item}`}>
+                            <span className={`${classes.block} ${classNames({
+                                [classes.self]: item.answer_role==2,
+                                [classes.allochromatic]: item.answer_role==1
+                            })} ${classes.date}`}>{item.created_at}</span>
+                            <span className={`${classes.block} ${classes.content}`}>{item.answer_content}</span>
+                        </div>
+                    ))
+                }
+            </div>
           </div>
           <TextField
                 id="content"

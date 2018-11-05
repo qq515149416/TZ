@@ -117,7 +117,6 @@ class BusinessController extends Controller
         $delete_id = $request->only(['delete_id']);
         $delete = new BusinessModel();
         $return = $delete->deleteBusiness($delete_id);
-        
         return tz_ajax_echo($return,$return['msg'],$return['code']);
     }
 }

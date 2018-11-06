@@ -80,6 +80,7 @@ class Order extends Model
 		}
 	
 		foreach ($order as $key => $value) {
+			
 			$value->type = $value->resource_type;
 			$value->resource_type = $resource_type[$value->resource_type];
 			$value->order_type = $order_type[$value->order_type];
@@ -225,7 +226,7 @@ class Order extends Model
 		if(isset($param['order_sn']) && $param['resource_type'] > 3){
 			// 存在订单号并且资源类型除主机和机柜外的根据订单号进行续费订单数据的查询
 			$order_where = ['customer_id'=>Auth::user()->id,'business_sn'=>$param['business_number'],'order_sn'=>$param['order_sn'],'resource_type'=>$param['resource_type']];
-			$order_data = $this->where($order_where)->select('business_sn','business_id','business_name','machine_sn','resource','price','end_time')->first();
+			$order_data = $this->where($order_where)->select('order_sn','business_sn','business_id','business_name','machine_sn','resource','price','end_time')->first();
 			// 查无对应订单，直接返回
 			if(!$order_data){
 				$return['code'] = 0;
@@ -277,7 +278,14 @@ class Order extends Model
 		if($order_row == 0) {
 			DB::rollBack();
 			$return['code'] = 0;
-			$return['msg'] = '续费失败，请重新操作';
+			$return['msg'] = '续费失败，请重新操作!';
+			return $return;
+		}
+		$old_order = DB::table('tz_orders')->where(['order_sn'=>$order_data->order_sn])->update(['order_status'=>3]);
+		if($old_order == 0){
+			DB::rollBack();
+			$return['code'] = 0;
+			$return['msg'] = '续费失败，请重新操作!!';
 			return $return;
 		}
 		//资源类型为主机和机柜的对原业务的到期时间和累计时长进行更新
@@ -291,7 +299,7 @@ class Order extends Model
 			if($business_row == 0){
 				DB::rollBack();
 				$return['code'] = 0;
-				$return['msg'] = '续费失败，请重新操作';
+				$return['msg'] = '续费失败，请重新操作!!!';
 				return $return;
 			}
 		}

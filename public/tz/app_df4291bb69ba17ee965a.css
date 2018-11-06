@@ -13,7 +13,6 @@ html .login-panel {
   width: 428px;
   margin: 0 auto;
   position: relative;
-  top: 126px;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   border-radius: 4px;
@@ -83,6 +82,11 @@ html .login-panel .login-panel-body input.form-control:focus {
   border: 1px solid #faa90f;
   box-shadow: 0 0 5px rgba(250, 169, 15, 0.3);
 }
+body .login-panel .login-panel-body select.form-control:focus,
+html .login-panel .login-panel-body select.form-control:focus {
+  border: 1px solid #faa90f;
+  box-shadow: 0 0 5px rgba(250, 169, 15, 0.3);
+}
 body .login-panel .login-panel-body .error-remind.show,
 html .login-panel .login-panel-body .error-remind.show {
   display: block;
@@ -115,6 +119,12 @@ body .login-panel .login-panel-body input.full-text,
 html .login-panel .login-panel-body input.full-text,
 body .login-panel .login-panel-body input.block-text,
 html .login-panel .login-panel-body input.block-text {
+  box-shadow: none;
+  border: 1px solid #c1cbd6;
+  border-radius: 2px;
+}
+body .login-panel .login-panel-body select.form-control,
+html .login-panel .login-panel-body select.form-control {
   box-shadow: none;
   border: 1px solid #c1cbd6;
   border-radius: 2px;
@@ -7047,4 +7057,4 @@ button.close {
   }
 }
 
-/*# sourceMappingURL=app_22115b354c696a64c434.css.map*/
+/*# sourceMappingURL=app_df4291bb69ba17ee965a.css.map*/

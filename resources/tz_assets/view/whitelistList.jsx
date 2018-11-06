@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import ListTableComponent from "../component/listTableComponent.jsx";
 import { inject,observer } from "mobx-react";
-import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+// import Paper from '@material-ui/core/Paper';
+// import Tabs from '@material-ui/core/Tabs';
+// import Tab from '@material-ui/core/Tab';
 import {post} from "../tool/http.js";
 import InputExpansionComponent from "../component/inputExpansionComponent.jsx";
+import TabComponent from "../component/tabComponent.jsx";
 
 const styles = theme => ({
     listTableComponent: {
@@ -142,17 +143,15 @@ class WhitelistList extends React.Component {
         let delIng = selectedData.map(item => whitelistsStores.delData(item));
         callbrak(delIng);
     }
-    handleChange = (event, value) => {
+    handleChange = (value) => {
         this.props.whitelistsStores.getData({
             white_status: value
         });
         this.props.whitelistsStores.type = value;
         this.setState({ value });
     }
-    render() {
-        const {classes} = this.props;
-        return [
-            <Paper square>
+    /*
+        <Paper square>
                 <Tabs
                 value={this.state.value}
                 indicatorColor="primary"
@@ -165,19 +164,47 @@ class WhitelistList extends React.Component {
                 <Tab label="黑名单" value={3} />
                 <Tab label="取消" value={4} />
                 </Tabs>
-            </Paper>,
-            <ListTableComponent
-            className={classes.listTableComponent}
-            title="白名单"
-            operattext="白名单操作"
-            inputType={inputType}
-            headTitlesData={columnData}
-            data={this.props.whitelistsStores.whitelists}
-            addData={this.addData.bind(this)}
-            delData={this.delData.bind(this)}
-            updata={this.updata.bind(this)}
-          />
-        ];
+            </Paper>
+
+    */
+    render() {
+        const {classes} = this.props;
+        return (
+            <TabComponent onChange={this.handleChange} type={this.state.value} types={[
+                {
+                    label: "审核中",
+                    value: 0
+                },
+                {
+                    label: "审核通过",
+                    value: 1
+                },
+                {
+                    label: "审核不通过",
+                    value: 2
+                },
+                {
+                    label: "黑名单",
+                    value: 3
+                },
+                {
+                    label: "取消",
+                    value: 4
+                }
+            ]}>
+                <ListTableComponent
+                    className={classes.listTableComponent}
+                    title="白名单"
+                    operattext="白名单操作"
+                    inputType={inputType}
+                    headTitlesData={columnData}
+                    data={this.props.whitelistsStores.whitelists}
+                    addData={this.addData.bind(this)}
+                    delData={this.delData.bind(this)}
+                    updata={this.updata.bind(this)}
+                />
+            </TabComponent>
+        );
       }
 }
 WhitelistList.propTypes = {

@@ -155,7 +155,6 @@ class AliPayController extends Controller
 		//获取配置信息
 		$alipay = Pay::alipay($this->config);
 		
-
 		try{
 			$data = $alipay->verify(); // 是的，验签就这么简单！
 

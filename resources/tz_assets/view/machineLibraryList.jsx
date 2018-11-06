@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import ListTableComponent from "../component/listTableComponent.jsx";
 import { inject,observer } from "mobx-react";
-import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+// import Paper from '@material-ui/core/Paper';
+// import Tabs from '@material-ui/core/Tabs';
+// import Tab from '@material-ui/core/Tab';
 import UploadExcelComponent from "../component/uploadExcelComponent.jsx";
+import TabComponent from "../component/tabComponent.jsx";
 
 const styles = theme => ({
     listTableComponent: {
@@ -272,7 +273,7 @@ class MachineLibraryList extends React.Component {
         const {machineLibrarysStores} = this.props;
         machineLibrarysStores.filterData(param);
     }
-    handleChange = (event, value) => {
+    handleChange = (value) => {
         this.props.machineLibrarysStores.switchType(value);
         this.setState({ value });
         this.props.machineLibrarysStores.getData();
@@ -297,7 +298,7 @@ class MachineLibraryList extends React.Component {
               text: item.ip
             }
         });
-        return [
+        /*
             <Paper square>
                 <Tabs
                 value={this.state.value}
@@ -309,8 +310,25 @@ class MachineLibraryList extends React.Component {
                 <Tab label="托管" value={2} />
                 <Tab label="备用" value={3} />
                 </Tabs>
-                </Paper>,
-            <ListTableComponent
+                </Paper>
+
+        */
+        return (
+            <TabComponent onChange={this.handleChange} type={this.state.value} types={[
+                {
+                    label: "租用",
+                    value: 1
+                },
+                {
+                    label: "托管",
+                    value: 2
+                },
+                {
+                    label: "备用",
+                    value: 3
+                }
+            ]}>
+                 <ListTableComponent
             className={classes.listTableComponent}
             title="机器库"
             operattext="机器资源"
@@ -322,7 +340,8 @@ class MachineLibraryList extends React.Component {
             changeData={this.changeData.bind(this)}
             customizeToolbar={<UploadExcelComponent />}
           />
-        ];
+            </TabComponent>
+        );
       }
 }
 MachineLibraryList.propTypes = {

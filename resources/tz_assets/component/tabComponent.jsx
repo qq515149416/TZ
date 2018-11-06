@@ -13,6 +13,9 @@ const styles = theme => ({
     },
     tab: {
         backgroundColor: "#fff"
+    },
+    tab_item_text: {
+        fontSize: "14px"
     }
 });
 
@@ -43,7 +46,9 @@ class TabComponent extends React.Component {
           >
             {
                 this.props.types.map(item => (
-                    <Tab label={item.label} value={item.value} />
+                    <Tab classes={{
+                        label: classes.tab_item_text
+                    }} label={item.label} value={item.value} />
                 ))
             }
           </Tabs>

@@ -15,7 +15,7 @@ namespace App\Admin\Requests\Business;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
-class BusinessRequest extends FormRequest
+class RechargeRequest extends FormRequest
 {
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -39,19 +39,19 @@ class BusinessRequest extends FormRequest
 		$method = $arr[count($arr)-1];
 		$return = [];
 
-		// switch ($method) {
-		// 	case 'recharge':
-		// 		$return = [
-		// 			'user_id'		=> 'required',
-		// 			'recharge_amount'	=> 'required|integer|min:1.00',
-		// 			'recharge_way'		=> 'required',		
-		// 		];
-		// 		break;
+		switch ($method) {
+			case 'recharge':
+				$return = [
+					'user_id'		=> 'required',
+					'recharge_amount'	=> 'required|integer|min:1.00',
+					'recharge_way'		=> 'required',		
+				];
+				break;
 			
-		// 	default:
+			default:
 	
-		// 		break;
-		// }
+				break;
+		}
 
 		return $return;
 	}

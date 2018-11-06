@@ -77,7 +77,11 @@ class ExpansionComponent extends React.Component {
             return (
                 <Tooltip title={this.props.title}>
                     <IconButton onClick={this.toLink(this.props.link)} aria-label="Link">
-                        <AddIcon />
+                        {
+                            this.props.icon ? this.props.icon : (
+                                <AddIcon />
+                            )
+                        }
                     </IconButton>
                 </Tooltip>
             );
@@ -89,7 +93,7 @@ class ExpansionComponent extends React.Component {
                         <MoreHorizIcon />
                     </IconButton>
                 </Tooltip>,
-                <DialogComponent 
+                <DialogComponent
                     type="show"
                     getRef={ref => this.dialogComponent = ref}
                     data={this.props.data}

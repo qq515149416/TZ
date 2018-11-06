@@ -28,9 +28,9 @@ const inputType = [
 @observer
 class RechargeList extends React.Component {
     componentDidMount() {
-        if(location.search.indexOf("?customer_id") > -1) {
+        if(location.search.indexOf("?id") > -1) {
             this.props.rechargesStores.getData({
-                customer_id: qs.parse(location.search.substr(1)).customer_id
+                customer_id: qs.parse(location.search.substr(1)).id
             });
         } else {
             this.props.rechargesStores.getData();

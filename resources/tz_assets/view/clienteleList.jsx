@@ -5,6 +5,7 @@ import {post} from "../tool/http.js";
 import extendElementsComponent from "../tool/extendElementsComponent";
 import ResetPassword from "../component/dialog/resetPassword.jsx";
 import ManualRecharge from "../component/dialog/manualRecharge.jsx";
+import RechargeRecord from "../component/icon/rechargeRecord.jsx";
 
 const columnData = [
     // { id: 'name', numeric: true, disablePadding: false, label: '用户名' },
@@ -54,11 +55,19 @@ const columnData = [
             ManualRecharge
           ]);
         return <Element postUrl="business/recharge" nameParam="email" {...data} />;
-    }, extendUrl: {
-        title: "添加业务",
-        link: "/tz_admin/business",
-        param: ["id","email","money","status"]
-    }, label: '操作' }
+    }, extendUrl: [
+        {
+            title: "添加业务",
+            link: "/tz_admin/business",
+            param: ["id","email","money","status"]
+        },
+        {
+            title: "充值记录",
+            link: "/tz_admin/checkrecharge",
+            param: ["id"],
+            icon: <RechargeRecord />
+        }
+    ], label: '操作' }
 ];
 const inputType = [
     {

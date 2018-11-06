@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Models\Customer\WhiteListModel;
 use App\Http\Requests\Customer\WhiteListRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
+
 
 /**
  * 前台客户有关的白名单的控制器

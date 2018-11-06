@@ -1,5 +1,6 @@
 import { observable, action, extendObservable} from "mobx";
 import {get,post} from "../tool/http.js";
+const qs = require('qs');
 
 class RechargeStores {
     constructor(data) {
@@ -13,7 +14,11 @@ class RechargesStores {
     ];
     @action.bound
     getData(param={}) {
-        get("business/showRecharge").then((res) => {
+        let BASE_URL = "business/showRecharge";
+        if(location.search.indexOf("?type=all") > -1) {
+            BASE_URL = "business/showAllRecharge";
+        }
+        get(BASE_URL,param).then((res) => {
             if(res.data.code==1) {
                 this.recharge = res.data.data.map(item => new RechargeStores(item));
             }

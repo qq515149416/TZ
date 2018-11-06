@@ -42,12 +42,27 @@ class RechargeRequest extends FormRequest
 		switch ($method) {
 			case 'recharge':
 				$return = [
-					'user_id'		=> 'required',
+					'user_id'		=> 'required|exists:tz_users,id',
 					'recharge_amount'	=> 'required|integer|min:1.00',
 					'recharge_way'		=> 'required',		
 				];
 				break;
-			
+			case 'showAuditRechargeBig':
+				$return = [
+					'audit_status'		=> 'required|between:-1,1|integer',			
+				];
+				break;
+			case 'showAuditRechargeSmall':
+				$return = [
+					'audit_status'		=> 'required|between:-1,1|integer',			
+				];
+				break;
+			case 'auditRecharge':
+				$return = [
+					'audit_status'		=> 'required|between:-1,1|integer',	
+					'trade_id'		=> 'required|integer|exists:tz_recharge_admin,id',		
+				];
+				break;
 			default:
 	
 				break;
@@ -61,10 +76,17 @@ class RechargeRequest extends FormRequest
 		
 		return  [
 			'user_id.required'		=> '请提供所需充值客户id',
+			'user_id.exists'			=> '用户id不存在',
 			'recharge_amount.required'	=> '请填写充值金额',
 			'recharge_amount.integer'	=> '充值金额必须为整数',
 			'recharge_amount.min'		=> '充值金额最少为1元',
 			'recharge_way.required'	=> '请选择付款方式',
+			'audit_status.required'		=> '请选择充值审核单状态',
+			'audit_status.between'		=> '审核单状态请在-1、0 、1之间选择',
+			'audit_status.integer'		=> '审核单状态请在-1、0 、1之间选择',
+			'trade_id.required'		=> '请提供所需审核的充值审核单id',
+			'trade_id.integer'		=> 'id为整数',
+			'trade_id.exists'			=> '充值审核单不存在',
 		];
 	}
 

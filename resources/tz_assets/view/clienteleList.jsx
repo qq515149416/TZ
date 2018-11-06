@@ -15,6 +15,7 @@ const columnData = [
     { id: 'status', numeric: true, disablePadding: false, label: '状态' },
     { id: 'created_at', numeric: true, disablePadding: false, label: '创建时间' },
     { id: 'operat', numeric: true, disablePadding: false, extend: true,  extendConfirm: {
+        last: true,
         title: "更改状态操作",
         content: "是否要更改此用户状态",
         select: true,

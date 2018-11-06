@@ -74,6 +74,7 @@ Route::group([
     Route::post('registerByEmail', 'TzAuth\RegisterController@registerByEmail');  //通过邮箱注册帐号
     Route::get('logout', 'TzAuth\LoginController@logout');  //用户退出登录
     Route::post('loginByEmail', 'TzAuth\LoginController@loginByEmail');  //通过邮箱登录帐号
+    Route::get('getAllSalesman', 'TzAuth\RegisterController@getAllSalesman');  //获取所有业务员
 
 
 });

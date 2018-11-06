@@ -307,6 +307,38 @@ class BusinessModel extends Model
             $return['msg']  = '无法删除对应数据!';
             return $return;
         }
+        DB::beginTransaction();//开启事务处理DB::commit();DB::rollBack();
+        if($deltet_data->business_status > 0){//当删除的业务数据为审核通过时，对对应资源进行释放操作
+            switch ($deltet_data->business_type) {
+            case 1:
+                $updated['own_business'] = '';
+                $updated['business_end'] = NULL;
+                $updated['used_status'] = 0;
+                $row = DB::table('idc_machine')->where(['machine_num'=>$deltet_data->machine_number,'own_business'=>$deltet_data->business_number])->update($updated);
+                break;
+            case 2:
+                $updated['own_business'] = '';
+                $updated['business_end'] = NULL;
+                $updated['used_status'] = 0;
+                $row = DB::table('idc_machine')->where(['machine_num'=>$deltet_data->machine_number,'own_business'=>$deltet_data->business_number])->update($updated);
+                break;
+            case 3:
+                $cabinet = DB::table('idc_cabinet')->where(['cabinet_id'=>$deltet_data->machine_number])->select('own_business')->first();
+                $array = explode(',',$cabinet->own_business);//先将原本的业务数据转换为数组
+                $key = array_search($deltet_data->business_number,$array);//查找要删除的业务编号在数组的位置的键
+                array_splice($array,$key,1);//根据查找的对应键进行删除
+                $own_business = implode(',',$array);//将数组转换为字符串
+                $row = DB::table('idc_cabinet')->where(['cabinet_id'=>$deltet_data->machine_number])->update(['own_business'=>$own_business]);
+                break;
+            }
+            if($row == false){
+                DB::rollBack();
+                $return['code'] = 0;
+                $return['msg']  = '资源未释放,删除失败!';
+                return $return;
+            }
+        }
+        
         //查找业务关联订单
         $order_data = DB::table('tz_business')
             ->join('tz_orders', 'tz_business.business_number', '=', 'tz_orders.business_sn')
@@ -314,12 +346,14 @@ class BusinessModel extends Model
             ->select('tz_orders.order_sn')
             ->get();
         //删除对应业务数据
-        $result = DB::table('tz_business')->where('id', $delete_id['delete_id'])->delete();
+        $result = DB::table('tz_business')->where('id', $delete_id['delete_id'])->update(['deleted_at'=>date('Y-m-d H:i:s')]);
         if ($result == false) {
+            DB::rollBack();
             $return['code'] = 0;
             $return['msg']  = '删除失败!';
             return $return;
         }
+        DB::commit();
         //存在关联订单
         if ($order_data) {
             $return['msg'] = '删除数据成功,关联订单号为:';

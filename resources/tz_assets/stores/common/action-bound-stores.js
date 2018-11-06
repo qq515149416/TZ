@@ -15,7 +15,7 @@ class ActionBoundStores {
     }
     @action.bound
     filterStoreData(storeAttr, type, param) {
-        
+
         if(type=="select") {
             if(!this.copyData.length) {
                 for(let key in this[storeAttr]) {
@@ -61,7 +61,7 @@ class ActionBoundStores {
                 this[storeAttr] = this.copyData.filter(item => {
                     for(let key in item) {
                         // console.log(item[key].indexOf(param["searchContent"]));
-                        if(item[key].indexOf(param["searchContent"])!=-1) {
+                        if(typeof item[key] == "string" && item[key].indexOf(param["searchContent"])!=-1) {
                             return item;
                         }
                     }

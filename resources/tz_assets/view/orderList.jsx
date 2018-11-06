@@ -4,11 +4,12 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import ListTableComponent from "../component/listTableComponent.jsx";
 import { inject,observer } from "mobx-react";
-import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+// import Paper from '@material-ui/core/Paper';
+// import Tabs from '@material-ui/core/Tabs';
+// import Tab from '@material-ui/core/Tab';
 import RenewalFee from "../component/dialog/renewalFee.jsx";
 import SelectExpansion from "../component/dialog/selectExpansion.jsx";
+import TabComponent from "../component/tabComponent.jsx";
 const qs = require('qs');
 const styles = theme => ({
     listTableComponent: {
@@ -221,7 +222,7 @@ class OrderList extends React.Component {
             console.error("参数：",param,"有问题");
         }
     }
-    handleChange = (event, value) => {
+    handleChange = (value) => {
         if(value=="all") {
             this.props.ordersStores.getData({
                 business_sn: qs.parse(location.search.substr(1)).business_number
@@ -243,8 +244,9 @@ class OrderList extends React.Component {
               text: item.label
             }
         });
-        return [
-            <Paper square>
+        //TabComponent
+        /*
+        <Paper square>
                 <AppBar className={classes.tabAppBar} position="static" color="default">
                     <Tabs
                     value={this.state.value}
@@ -266,18 +268,64 @@ class OrderList extends React.Component {
                     <Tab label="防护" value={9} />
                     </Tabs>
                 </AppBar>
-            </Paper>,
-            <ListTableComponent
-            className={classes.listTableComponent}
-            title="业务订单管理"
-            operattext="业务订单操作"
-            inputType={inputType}
-            headTitlesData={columnData}
-            data={this.props.ordersStores.orders}
-            addData={this.addData.bind(this)}
-            delData={this.delData.bind(this)}
-          />
-        ];
+            </Paper>
+
+        */
+        return (
+            <TabComponent onChange={this.handleChange} type={this.state.value} types={[
+                {
+                    label: "全部",
+                    value: "all"
+                },
+                {
+                    label: "租用主机",
+                    value: 1
+                },
+                {
+                    label: "托管主机",
+                    value: 2
+                },
+                {
+                    label: "租用机柜",
+                    value: 3
+                },
+                {
+                    label: "IP",
+                    value: 4
+                },
+                {
+                    label: "CPU",
+                    value: 5
+                },
+                {
+                    label: "硬盘",
+                    value: 6
+                },
+                {
+                    label: "内存",
+                    value: 7
+                },
+                {
+                    label: "带宽",
+                    value: 8
+                },
+                {
+                    label: "防护",
+                    value: 9
+                }
+            ]}>
+                <ListTableComponent
+                    className={classes.listTableComponent}
+                    title="业务订单管理"
+                    operattext="业务订单操作"
+                    inputType={inputType}
+                    headTitlesData={columnData}
+                    data={this.props.ordersStores.orders}
+                    addData={this.addData.bind(this)}
+                    delData={this.delData.bind(this)}
+                />
+            </TabComponent>
+        );
       }
 }
 OrderList.propTypes = {

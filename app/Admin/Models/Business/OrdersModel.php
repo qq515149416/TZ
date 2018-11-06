@@ -31,8 +31,9 @@ class OrdersModel extends Model
     //['id','order_sn','customer_name','business_sn','business_name','before_money','after_money','resource_type','order_type','resource','price','duration','payable_money','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at']
     public function financeOrders($where){
     	$result = DB::table('tz_orders')
-                    ->join('tz_orders_flow','tz_orders.serial_number','=','tz_orders_flow.serial_number')
+                    ->leftJoin('tz_orders_flow','tz_orders.serial_number','=','tz_orders_flow.serial_number')
                     ->where($where)
+                    ->orderBy('tz_orders.created_at','desc')
                     ->select('tz_orders.id','tz_orders.order_sn','tz_orders.customer_name','tz_orders.business_sn','tz_orders.business_name','tz_orders.resource_type','tz_orders.order_type','tz_orders.resource','tz_orders.price','tz_orders.duration','tz_orders.payable_money','tz_orders.end_time','tz_orders.serial_number','tz_orders.pay_time','tz_orders.order_status','tz_orders.order_note','tz_orders.created_at','tz_orders_flow.pay_type','tz_orders_flow.before_money','tz_orders_flow.after_money')
                     ->get();
         //$this->where($where)
@@ -44,9 +45,10 @@ class OrdersModel extends Model
     		$pay_type = [0=>'未选择',1=>'余额',2=>'支付宝',3=>'微信',4=>'其他'];
     		$order_status = [0=>'待支付',1=>'已支付',2=>'财务确认',3=>'订单完成',4=>'到期',5=>'取消',6=>'申请退款',7=>'正在支付',8=>'退款完成'];
     		foreach($result as $okey=>$ovalue){
+                $ovalue->type = $ovalue->resource_type;
     			$ovalue->resource_type = $resource_type[$ovalue->resource_type];
     			$ovalue->order_type = $order_type[$ovalue->order_type];
-    			$ovalue->pay_type = $pay_type[$ovalue->pay_type];
+    			$ovalue->pay_type = $ovalue->pay_type?$pay_type[$ovalue->pay_type]:'';
     			$ovalue->order_status = $order_status[$ovalue->order_status];
     		}
     		$return['data'] = $result;
@@ -69,8 +71,9 @@ class OrdersModel extends Model
     public function clerkOrders($where){
         // ['tz_orders.business_sn'=>$where['business_sn'],'tz_orders.resource_type'=>$where['resource_type']]
         $result = DB::table('tz_orders')
-                    ->join('tz_orders_flow','tz_orders.serial_number','=','tz_orders_flow.serial_number')
+                    ->leftJoin('tz_orders_flow','tz_orders.serial_number','=','tz_orders_flow.serial_number')
                     ->where($where)
+                    ->orderBy('tz_orders.created_at','desc')
                     ->select('tz_orders.id','tz_orders.order_sn','tz_orders.customer_name','tz_orders.business_sn','tz_orders.business_name','tz_orders.resource_type','tz_orders.order_type','tz_orders.resource','tz_orders.price','tz_orders.duration','tz_orders.payable_money','tz_orders.end_time','tz_orders.serial_number','tz_orders.pay_time','tz_orders.order_status','tz_orders.order_note','tz_orders.created_at','tz_orders_flow.pay_type','tz_orders_flow.before_money','tz_orders_flow.after_money')
                     ->get();
         //$this->where($where)->get(['id','order_sn','customer_name','business_sn','business_name','resource_type','order_type','resource','price','duration','payable_money','end_time','serial_number','pay_time','order_status','order_note','created_at']);
@@ -81,9 +84,10 @@ class OrdersModel extends Model
             // $pay_type = [1=>'余额',2=>'支付宝',3=>'微信',4=>'其他'];
     		$order_status = [0=>'待支付',1=>'已支付',2=>'财务确认',3=>'订单完成',4=>'到期',5=>'取消',6=>'申请退款',7=>'正在支付',8=>'退款完成'];
     		foreach($result as $okey=>$ovalue){
+                $ovalue->type = $ovalue->resource_type; 
                 $ovalue->resourcetype = $resource_type[$ovalue->resource_type];
                 $ovalue->order_type = $order_type[$ovalue->order_type];
-                $ovalue->pay_type = $pay_type[$ovalue->pay_type];
+                $ovalue->pay_type = $ovalue->pay_type?$pay_type[$ovalue->pay_type]:'';
                 $ovalue->order_status = $order_status[$ovalue->order_status];
     		}
     		$return['data'] = $result;
@@ -322,6 +326,16 @@ class OrdersModel extends Model
             $return['msg'] = '续费失败，请重新操作';
             return $return;
         }
+        if(isset($param['order_sn']) && $param['resource_type'] > 3){
+            $old_order = DB::table('tz_orders')->where(['order_sn'=>$order_data->order_sn])->update(['order_status'=>3]);
+            if($old_order == 0){
+                DB::rollBack();
+                $return['code'] = 0;
+                $return['msg'] = '续费失败，请重新操作!!';
+                return $return;
+            }
+        }
+
         //资源类型为主机和机柜的对原业务的到期时间和累计时长进行更新
         if($param['resource_type'] == 1 || $param['resource_type'] == 2 || $param['resource_type'] == 3) {
             $business_alert['length'] = (int)bcadd($business->length,$param['length'],0);

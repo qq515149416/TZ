@@ -48,15 +48,17 @@ class Order extends Model
 			$where['tz_orders.resource_type'] = $type['resource_type'];
 		}
 		$order = DB::table('tz_orders')
-                    ->join('tz_orders_flow','tz_orders.serial_number','=','tz_orders_flow.serial_number')
+                    ->leftJoin('tz_orders_flow','tz_orders.serial_number','=','tz_orders_flow.serial_number')
                     ->where($where)
-                    ->where(function($query) use($type){
-                    	if(isset($type['business_sn']) && !isset($type['resource_type'])){
-                    		$query->where('tz_orders.resource_type','>',3);
-                    	}
-                    })
+                    ->orderBy('tz_orders.created_at','desc')
+                    // ->where(function($query) use($type){
+                    // 	if(isset($type['business_sn']) && !isset($type['resource_type'])){
+                    // 		$query->where('tz_orders.resource_type','>',3);
+                    // 	}
+                    // })
         			->select('tz_orders.id','tz_orders.order_sn','tz_orders.business_sn','tz_orders.business_id','tz_orders.resource_type','tz_orders.order_type','tz_orders.machine_sn','tz_orders.resource','tz_orders.price','tz_orders.duration','tz_orders.payable_money','tz_orders.end_time','tz_orders.serial_number','tz_orders.pay_time','tz_orders.order_status','tz_orders.order_note','tz_orders.created_at','tz_orders_flow.pay_type','tz_orders_flow.before_money','tz_orders_flow.after_money')
         			->get();
+        // dd($order);
 		//获取该用户的订单
 		//$order = $this->where($type)->orderby('created_at','desc')->get(['id','order_sn', 'business_sn','before_money','after_money','business_id','resource_type','order_type','machine_sn','resource','price','duration','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at','payable_money']);
 		//$order = $this->where($type)->orderby('created_at','desc')->get(['id','order_sn', 'business_sn','business_id','resource_type','order_type','machine_sn','resource','price','duration','end_time','serial_number','pay_time','order_status','order_note','created_at','payable_money']);
@@ -78,10 +80,11 @@ class Order extends Model
 		}
 	
 		foreach ($order as $key => $value) {
+
 			$value->type = $value->resource_type;
 			$value->resource_type = $resource_type[$value->resource_type];
 			$value->order_type = $order_type[$value->order_type];
-			$value->pay_type = $pay_type[$value->pay_type];
+			$value->pay_type = $value->pay_type?$pay_type[$value->pay_type]:'';
 			$value->order_status = $order_status[$value->order_status];
 			$value->business_name	= $admin_name[$value->business_id];
 		}
@@ -205,11 +208,16 @@ class Order extends Model
 		}
 		// 根据业务编号进行对应数据的查询
 		$business_where = ['business_number'=>$param['business_number'],'client_id'=>Auth::user()->id];
-		$business = DB::table('tz_business')->where($business_where)->select('business_number','business_type','sales_id', 'business_number','sales_name','business_type','machine_number','endding_time','length','money')->first();
+		$business = DB::table('tz_business')->where($business_where)->select('business_number','business_type','sales_id', 'business_number','sales_name','business_type','machine_number','endding_time','length','money','business_status')->first();
 		// 没有对应业务编号的业务数据直接返回
 		if(!$business){
 			$return['code'] = 0;
 			$return['msg'] = '无绑定业务,无法进行续费';
+			return $return;
+		}
+		if($business->business_status == 3){
+			$return['code'] = 0;
+			$return['msg'] = '无法进行续费操作,此业务下有订单未支付,请支付后再续费';
 			return $return;
 		}
 		//续费订单号的生成规则：前两位（4-6的随机数）+ 年月日 + 时间戳的后2位数 + 4-6的随机数 
@@ -218,7 +226,7 @@ class Order extends Model
 		if(isset($param['order_sn']) && $param['resource_type'] > 3){
 			// 存在订单号并且资源类型除主机和机柜外的根据订单号进行续费订单数据的查询
 			$order_where = ['customer_id'=>Auth::user()->id,'business_sn'=>$param['business_number'],'order_sn'=>$param['order_sn'],'resource_type'=>$param['resource_type']];
-			$order_data = $this->where($order_where)->select('business_sn','business_id','business_name','machine_sn','resource','price','end_time')->first();
+			$order_data = $this->where($order_where)->select('order_sn','business_sn','business_id','business_name','machine_sn','resource','price','end_time')->first();
 			// 查无对应订单，直接返回
 			if(!$order_data){
 				$return['code'] = 0;
@@ -226,6 +234,7 @@ class Order extends Model
 				return $return;
 			}
 			//在原到期时间基础上增加续费时长,生成新的到期时间
+			// dd($order_data->end_time);
 			$end_time = Carbon::parse($order_data->end_time)->modify('+'.$param['length'].' months')->toDateTimeString();
 			//续费到期时间超业务到期时间直接返回 
 			if($end_time > $business->endding_time){
@@ -269,8 +278,17 @@ class Order extends Model
 		if($order_row == 0) {
 			DB::rollBack();
 			$return['code'] = 0;
-			$return['msg'] = '续费失败，请重新操作';
+			$return['msg'] = '续费失败，请重新操作!';
 			return $return;
+		}
+		if(isset($param['order_sn']) && $param['resource_type'] > 3){
+			$old_order = DB::table('tz_orders')->where(['order_sn'=>$order_data->order_sn])->update(['order_status'=>3]);
+			if($old_order == 0){
+				DB::rollBack();
+				$return['code'] = 0;
+				$return['msg'] = '续费失败，请重新操作!!';
+				return $return;
+			}
 		}
 		//资源类型为主机和机柜的对原业务的到期时间和累计时长进行更新
 		if($param['resource_type'] == 1 || $param['resource_type'] == 2 || $param['resource_type'] == 3) {
@@ -283,7 +301,7 @@ class Order extends Model
 			if($business_row == 0){
 				DB::rollBack();
 				$return['code'] = 0;
-				$return['msg'] = '续费失败，请重新操作';
+				$return['msg'] = '续费失败，请重新操作!!!';
 				return $return;
 			}
 		}
@@ -319,14 +337,18 @@ class Order extends Model
 				
 				$machine['use_state'] = 1;
 				$where = ['own_business'=>$order['business_sn'],'cabinet_id'=>$order['machine_sn']];
-				$row = DB::table('idc_cabinet')->where($where)->update($machine);
+				$result = DB::table('idc_cabinet')->where($where)->update($machine);
 				break;  
 			case 4:
 				//更新IP表的所属业务编号，资源状态和到期时间
 				$machine['own_business'] = $order['business_sn'];
 				$machine['ip_status'] = 1;
+				// dd($machine);
 				$where = ['own_business'=>$order['business_sn'],'ip'=>$order['machine_sn']];
+				// $result = DB::table('idc_ips')->where($where)->get();
+				// dd($result);
 				$result = DB::table('idc_ips')->where($where)->update($machine);
+
 				break;
 			case 5:
 				//更新CPU表的所属业务编号，资源状态和到期时间

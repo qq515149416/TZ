@@ -51,6 +51,18 @@
     margin-top: 10px;
 }
 
+.page[data-v-6944fb32] {
+    margin-top: 10px;
+    float: left;
+}
+.clear[data-v-6944fb32]:before,.clear[data-v-6944fb32]:after {
+    content:"";
+    display:table;
+}
+.clear[data-v-6944fb32]:after { 
+    clear:both;
+}
+
 .header[data-v-70b738d6] {
     margin-bottom: 10px;
     overflow: hidden;
@@ -93,4 +105,4 @@ html {
   height: 100%;
 }
 
-/*# sourceMappingURL=index_22115b354c696a64c434.css.map*/
+/*# sourceMappingURL=index_78e4cc696b80b442f66f.css.map*/

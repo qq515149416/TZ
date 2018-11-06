@@ -26,44 +26,39 @@ class AliRecharge extends Model
 	protected $primaryKey = 'id'; //主键
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
-	protected $fillable = ['user_id', 'recharge_amount','recharge_way','trade_no','voucher','timestamp','money_before','money_after','created_at','trade_status','deleted_at','subject','month','salesman_id'];
+	protected $fillable = ['user_id', 'recharge_amount','recharge_way','trade_no','voucher','timestamp','money_before','money_after','created_at','trade_status','deleted_at','month'];
 
 
 	public function makeOrder($data)
 	{
-		if ($data) {
-			$test = $this->where("user_id",$data['user_id'])->where('trade_status',0)->max('created_at');
-			$test = json_decode(json_encode($test),true);
-			if($test!=NULL){				
-				$created_at = strtotime($test);
-				$time = time();	
-				if($time - $created_at <= 120){
-					$return['data'] = '';
-					$return['code'] = 0;
-					$return['msg'] = '2分钟内只能创建一张订单!!!!!';
-					return $return;
-				}			
-			}
-			
-			$row = $this->create($data);
-
-			if($row != false){
-				// 插入订单成功
-				$return['data'] = $row->id;
-				$return['code'] = 1;
-				$return['msg'] = '订单录入成功!!';
-			} else {
-			// 插入数据失败
+		
+		$test = $this->where("user_id",$data['user_id'])->where('trade_status',0)->max('created_at');
+		$test = json_decode(json_encode($test),true);
+		if($test!=NULL){				
+			$created_at = strtotime($test);
+			$time = time();	
+			if($time - $created_at <= 120){
 				$return['data'] = '';
 				$return['code'] = 0;
-				$return['msg'] = '订单录入失败!!';
-			}
-		}else{
-			// 未有数据传递
+				$return['msg'] = '2分钟内只能创建一张订单!!!!!';
+				return $return;
+			}			
+		}
+		
+		$row = $this->create($data);
+
+		if($row != false){
+			// 插入订单成功
+			$return['data'] = $row->id;
+			$return['code'] = 1;
+			$return['msg'] = '订单录入成功!!';
+		} else {
+		// 插入数据失败
 			$return['data'] = '';
 			$return['code'] = 0;
-			$return['msg'] = '请检查您要新增的信息是否正确!!';
+			$return['msg'] = '订单录入失败!!';
 		}
+		
 		return $return;
 	}
 
@@ -106,7 +101,6 @@ class AliRecharge extends Model
 		$data['money_after']	= bcadd($data['money_before'] , $data['recharge_amount'],2);
 		$data['trade_status']	= 1;
 		$data['month']		= date("Ym");
-		$data['salesman_id']	= 0;
 	
 		// 存在数据就用model进行数据写入操作
 		DB::beginTransaction();
@@ -155,7 +149,10 @@ class AliRecharge extends Model
 				$order = $this->where('id',$trade_no)->first();
 				break;
 			case 4:
-				$order = $this->where('user_id',$trade_no)->get();
+				$order = $this
+				->where('user_id',$trade_no)
+				->orderBy('created_at','desc')
+				->get();
 				break;
 		}
 	
@@ -175,7 +172,7 @@ class AliRecharge extends Model
 
 	public function makePay($trade_id,$user_id){
 	
-		$order = $this->select('trade_no','recharge_amount','subject','created_at','user_id','trade_status')->find($trade_id);
+		$order = $this->select('trade_no','recharge_amount','created_at','user_id','trade_status')->find($trade_id);
 		
 		if($order!=NULL){	
 			$return['data'] 	= $order;

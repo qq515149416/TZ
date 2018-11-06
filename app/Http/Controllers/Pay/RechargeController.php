@@ -67,11 +67,7 @@ class RechargeController extends Controller
 	*/
 	public function goToPay(RechargeRequest $request)
 	{	
-		// $info = '2018-08-07';
-		// $time = $info.' 00:00:00';
-		// $time = strtotime($time);
-		// $b = date("Y-m-d H:i:s",$time);
-		// dd($b);
+		
 		$checkLogin = Auth::check();
 		if($checkLogin == false){
 			return tz_ajax_echo([],'请先登录',0);
@@ -143,7 +139,7 @@ class RechargeController extends Controller
 
 		$order = json_decode($order['data'],true);
 		$trade_no = $order['trade_no'];
-		$check = $this->checkAndInsert($trade_no);
+		$check = $this->AliCheckAndInsert($trade_no);
 		if($check['code'] != 1 && $check['code'] != 0){
 			return tz_ajax_echo('',$check['msg'].'订单状态异常,暂时无法删除',0);
 		}
@@ -198,56 +194,7 @@ class RechargeController extends Controller
 
 
 
-	//用户支付完成后的跳转处理页面
-	public function rechargeReturn()
-	{
-		
-		//实例化阿里支付控制器
-		$PayController = new AliPayController();
-		//获取验签结果
-		$return = $PayController->checkByReturn(); 
-		//失败就返回失败结果
-		if($return['code'] == 0){
-			return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
-		}
-		//成功就获取订单参数
-		$data = $return['data'];
-		$trade_no 			= $data->out_trade_no;	//本地订单
-		$res = $this->checkAndInsert($trade_no);
-		//跳转确认页面
-		$domain_name = env('APP_URL');
-		return redirect("{$domain_name}/auth/pay.html?order=".$trade_no);
-	}
-
-
-	//支付宝用的ajax通知接收的方法
-
-	public function rechargeNotify()
-	{
-		//验签
-		$PayController = new AliPayController();
-		$res = $PayController->checkByAjax();
-		//成功就更新数据库信息
-		if($res['code'] == 1){
-			$data = $res['data'];	
-			$info['trade_no'] 		= $data->out_trade_no;
-			//两个方法,一个是验证成功了之后直接更新数据库
-
-			// $info['voucher']			= $data->trade_no;
-			// $info['recharge_amount']	= $data->total_amount;
-			// $info['timestamp']		= $data->timestamp;
-			// $model = new AliRecharge();
-			// $insert = $model->returnInsert($info);
-
-			//另一个再调用一遍检查并更新接口,都可以一个消耗资源点,安全点,上面那个简单点
-
-			$insert = $this->checkAndInsert($info['trade_no']);
-			if($insert['code'] != 1){
-				$res['msg'] = '储存失败';
-			}
-		}	
-		return $res['msg'];					
-	}
+	
 
 
 	/**
@@ -290,16 +237,61 @@ class RechargeController extends Controller
 	* @return 订单的支付情况,
 	*/
 	public function checkRechargeOrder(RechargeRequest $request){
-
+		
 		$info 		= $request->only(['trade_no']);
 		$trade_no 	= $info['trade_no'];
 		
-		$return = $this->checkAndInsert($trade_no);
+		$return = $this->AliCheckAndInsert($trade_no);
 		
 		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
 	}
 
-	protected function checkAndInsert($trade_no){
+
+
+
+	//用户支付完成后的跳转处理页面
+	public function AliRechargeReturn()
+	{
+		
+		//实例化阿里支付控制器
+		$PayController = new AliPayController();
+		//获取验签结果
+		$return = $PayController->checkByReturn(); 
+		//失败就返回失败结果
+		if($return['code'] == 0){
+			return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
+		}
+		//成功就获取订单参数
+		$data = $return['data'];
+		$trade_no 			= $data->out_trade_no;	//本地订单
+		$res = $this->AliCheckAndInsert($trade_no);
+		//跳转确认页面
+		$domain_name = env('APP_URL');
+		return redirect("{$domain_name}/auth/pay.html?order=".$trade_no);
+	}
+
+
+	//支付宝用的ajax通知接收的方法
+
+	public function AliRechargeNotify()
+	{
+		//验签
+		$PayController = new AliPayController();
+		$res = $PayController->checkByAjax();
+		//成功就更新数据库信息
+		if($res['code'] == 1){
+			$data = $res['data'];	
+			$info['trade_no'] 		= $data->out_trade_no;
+			
+			$insert = $this->AliCheckAndInsert($info['trade_no']);
+			if($insert['code'] != 1){
+				$res['msg'] = '储存失败';
+			}
+		}	
+		return $res['msg'];					
+	}
+
+	protected function AliCheckAndInsert($trade_no){
 
 		$PayController = new AliPayController();
 		$res = $PayController->check($trade_no);
@@ -320,34 +312,24 @@ class RechargeController extends Controller
 
 		$model 	= new AliRecharge();
 
-		$check 		= $model->checkOrder($trade_no,2);
-		$check 		= json_decode(json_encode($check),true);
-		$return['data']	= $check['data'];
+		$info['trade_no'] 		= $trade_no;	//本地订单
+		$info['voucher']			= $res->trade_no;
+		$info['recharge_amount']	= $res->total_amount;
+		$info['timestamp']		= $res->send_pay_date;
+		$info['recharge_way']		= 1;
 
-		if($check['code'] == 0){
-			return tz_ajax_echo('','用户已付款,本地查找不到订单,联系工作人员',2);
-		}
-
-		if($check['data']['trade_status'] != 1){
-			$info['trade_no'] 		= $trade_no;	//本地订单
-			$info['voucher']			= $res->trade_no;
-			$info['recharge_amount']	= $res->total_amount;
-			$info['timestamp']		= $res->send_pay_date;
-
-			//更新数据库信息
-			$update = $model->returnInsert($info);
-			$return['msg'] = $return['msg'].','.$update['msg'];
-
-			if($update['code'] != 1){		
-				return tz_ajax_echo('',$return['msg'],3);
+		//更新数据库信息
+		$update = $model->returnInsert($info);
+		//写到这个逻辑
+		$return['msg'] = $return['msg'].','.$update['msg'];
+		
+		if($update['code'] == 2){
+			$cancel = $PayController->cancel($serial_number);
+			if($cancel->code == '10000'){
+				$return['msg'].= '如已付款,款项会原路返回';
 			}
-
-			$check 		= $model->checkOrder($trade_no,2);
-			$check 		= json_decode(json_encode($check),true);
-			$return['data']	= $check['data'];
-		}else{
-			$return['msg'].= ',订单已完成';
-		}
+		}		
+		
 		return $return;
 	}
 

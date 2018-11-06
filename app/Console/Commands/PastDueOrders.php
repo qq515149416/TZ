@@ -69,9 +69,7 @@ class PastDueOrders extends Command
             ->where(
                 'created_at', '<', $pastTime  //当 创建时间小于 过期时间时
             )
-            ->where([
-                'trade_status' => 0
-            ])
+            ->where('trade_status',0)
             ->delete();
 
         return $data;  //返回修改个数

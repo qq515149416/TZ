@@ -74,24 +74,33 @@ class AliRecharge extends Model
 	public function returnInsert($data)
 	{
 
-		$order = $this->select('user_id','trade_status')->where('trade_no',$data['trade_no'])->get();
-		
-		if(count($order) == 0){
-			$return['data'] = '';
+		$order = $this->where('trade_no',$data['trade_no'])->first();
+
+		$return['data'] = '';
+		if($order == NULL){
 			$return['code'] = 0;
 			$return['msg'] = '无此单号!!请联系客服!!';
 			return $return;
 		}
 
-		$trade_status = $order[0]['trade_status'];
-		if($trade_status == 1){
-			$return['data'] = '';
-			$return['code'] = 1;
-			$return['msg'] = '该订单已完成!!';
+		if($order['trade_status'] == 1){
+			if($order['recharge_way'] != $data['recharge_way']){
+				$return['code'] = 2;
+				$return['msg'] = '该订单已由其他支付方式付款完成!!';
+			}else{
+				$return['code'] = 1;
+				$return['msg'] = '该订单已完成!!';	
+			}	
 			return $return;
 		}
 
-		$user_id = $order[0]['user_id'];
+		if($order['recharge_amount'] != $data['recharge_amount']){
+			$return['code'] = 2;
+			$return['msg'] = '支付金额与数据库不匹配';
+			return $return;
+		}
+
+		$user_id = $order['user_id'];
 
 		$data['money_before'] 	= floatval($this->getMoney($user_id)->money);
 		$data['money_after']	= bcadd($data['money_before'] , $data['recharge_amount'],2);
@@ -117,8 +126,7 @@ class AliRecharge extends Model
 				$return['data'] = $row;
 				$return['code'] = 1;
 				$return['msg'] = '订单录入成功!!充值成功';
-			}
-			
+			}		
 		} else {
 		// 插入数据失败
 			$return['data'] = '';
@@ -141,7 +149,7 @@ class AliRecharge extends Model
 				$order = $this->where('trade_no',$trade_no)->first();
 				break;		
 			case 2:
-				$order = $this->select('trade_status','id')->where('trade_no',$trade_no)->first();
+				$order = $this->select('trade_status','recharge_amount','recharge_way','id')->where('trade_no',$trade_no)->first();
 				break;
 			case 3:
 				$order = $this->where('id',$trade_no)->first();

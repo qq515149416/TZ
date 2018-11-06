@@ -120,8 +120,8 @@ class CustomerModel extends Model
 
     public function rechargeByAdmin($data){
         $clerk_id = Admin::user()->id;
-        $cus = $this->find($data['user_id']);
-        $yewuyuan_id = $cus->salesman_id;
+        $yewuyuan_id = $this->where('id',$data['user_id'])->value('salesman_id');
+
         $return = [
         	'data'  => '',
 	'msg'   => '',
@@ -133,37 +133,31 @@ class CustomerModel extends Model
         	return $return;
         }
 
-        $data['recharge_way']       	= 3;
         $data['trade_no']               	= 'tz_'.time().'_'.$data['user_id'];
-        $data['money_before']      	= $cus->money;
-        $data['money_after']      	= bcadd($data['money_before'],$data['recharge_amount'],2);
-        $data['trade_status']	= 1;
-        $data['subject']		= '充值余额';
-        $data['month']		= date("Ym");
-        $data['timestamp']		= date("Y-m-d H:i:s");
-        $data['salesman_id']	= $clerk_id;
-        $data['created_at']		= $data['timestamp'];
+        //$data['money_before']      	= $cus->money;
+        //$data['money_after']      	= bcadd($data['money_before'],$data['recharge_amount'],2);
+        $data['audit_status']	= 0;
+        $data['recharge_uid']	= $clerk_id;
+        $data['created_at']		= date("Y-m-d H:i:s",time());
         //开始事务
-        DB::beginTransaction();
-        $cus->money = $data['money_after'];
-        $update = $cus->save();
-        if($update != true){
-        	DB::rollBack();
-        	$return['msg'] = '更新余额失败';
-        	return $return;
+
+        // DB::beginTransaction();
+        // $cus->money = $data['money_after'];
+        // $update = $cus->save();
+        // if($update != true){
+        // 	DB::rollBack();
+        // 	$return['msg'] = '更新余额失败';
+        // 	return $return;
+        // }
+
+        $res = DB::table('tz_recharge_admin')->insert($data);
+
+        if($res != true){  	
+        	$return['msg'] = '充值审核单创建失败';
+        }else{
+            $return['msg'] = '充值审核单创建成功!';
+            $return['code'] = 1;
         }
-
-        $res = DB::table('tz_recharge_flow')->insert($data);
-
-        if($res != true){
-        	DB::rollBack();
-        	$return['msg'] = '充值流水记录创建失败';
-        	return $return;
-        }
-
-        DB::commit();
-        $return['msg'] = '充值成功!';
-        $return['code'] = 1;
         return $return;
     }
 

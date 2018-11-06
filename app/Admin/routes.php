@@ -308,9 +308,9 @@ Route::group([
         $router->post('pull_black','Business\CustomerController@pullBlackCustomer');
         $router->post('reset_password','Business\CustomerController@resetPassword');
 
-        $router->post('recharge','Business\CustomerController@rechargeByAdmin');
-        $router->get('showRecharge','Business\CustomerController@getRecharge');
-        $router->get('showAllRecharge','Business\CustomerController@getAllRecharge');
+        $router->post('recharge','Business\RechargeController@rechargeByAdmin');
+        $router->get('showRecharge','Business\RechargeController@getRecharge');
+        $router->get('showAllRecharge','Business\RechargeController@getAllRecharge');
 
         $router->get('depart','Business\CustomerController@depart');
         $router->post('select_clerk','Business\CustomerController@selectClerk');

@@ -326,12 +326,14 @@ class OrdersModel extends Model
             $return['msg'] = '续费失败，请重新操作';
             return $return;
         }
-        $old_order = DB::table('tz_orders')->where(['order_sn'=>$order_data->order_sn])->update(['order_status'=>3]);
-        if($old_order == 0){
-            DB::rollBack();
-            $return['code'] = 0;
-            $return['msg'] = '续费失败，请重新操作!!';
-            return $return;
+        if(isset($param['order_sn']) && $param['resource_type'] > 3){
+            $old_order = DB::table('tz_orders')->where(['order_sn'=>$order_data->order_sn])->update(['order_status'=>3]);
+            if($old_order == 0){
+                DB::rollBack();
+                $return['code'] = 0;
+                $return['msg'] = '续费失败，请重新操作!!';
+                return $return;
+            }
         }
 
         //资源类型为主机和机柜的对原业务的到期时间和累计时长进行更新

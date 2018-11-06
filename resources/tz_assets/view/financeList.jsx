@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import ListTableComponent from "../component/listTableComponent.jsx";
 import { inject,observer } from "mobx-react";
-import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+// import Paper from '@material-ui/core/Paper';
+// import Tabs from '@material-ui/core/Tabs';
+// import Tab from '@material-ui/core/Tab';
+import TabComponent from "../component/tabComponent.jsx";
 
 const styles = theme => ({
     listTableComponent: {
@@ -40,7 +41,7 @@ const columnData = [
 const inputType = [
 ];
 @inject("financesStores")
-@observer 
+@observer
 class FinanceList extends React.Component {
     constructor(props) {
         super(props);
@@ -51,7 +52,7 @@ class FinanceList extends React.Component {
     componentDidMount() {
         this.props.financesStores.getData();
     }
-    handleChange = (event, value) => {
+    handleChange = (value) => {
         if(value=="all") {
             this.props.financesStores.getData();
         } else {
@@ -64,7 +65,7 @@ class FinanceList extends React.Component {
     }
     render() {
         const {classes} = this.props;
-        return [
+        /*
             <Paper square>
                 <Tabs
                 value={this.state.value}
@@ -72,25 +73,62 @@ class FinanceList extends React.Component {
                 textColor="primary"
                 onChange={this.handleChange}
                 >
-                <Tab label="全部" value={"all"} />
-                <Tab label="待支付" value={0} />
-                <Tab label="已支付" value={1} />
-                <Tab label="财务确认" value={2} />
-                <Tab label="订单完成" value={3} />
-                <Tab label="取消" value={5} />
-                <Tab label="申请退款" value={6} />
-                <Tab label="退款完成" value={8} />
+                <Tab className={classes.tab} label="全部" value={"all"} />
+                <Tab className={classes.tab} label="待支付" value={0} />
+                <Tab className={classes.tab} label="已支付" value={1} />
+                <Tab className={classes.tab} label="财务确认" value={2} />
+                <Tab className={classes.tab} label="订单完成" value={3} />
+                <Tab className={classes.tab} label="取消" value={5} />
+                <Tab className={classes.tab} label="申请退款" value={6} />
+                <Tab className={classes.tab} label="退款完成" value={8} />
                 </Tabs>
-            </Paper>,
-            <ListTableComponent 
+            </Paper>
+        */
+        return (
+            <TabComponent onChange={this.handleChange} type={this.state.value} types={[
+                {
+                    label: "全部",
+                    value: "all"
+                },
+                {
+                    label: "待支付",
+                    value: 0
+                },
+                {
+                    label: "已支付",
+                    value: 1
+                },
+                {
+                    label: "财务确认",
+                    value: 2
+                },
+                {
+                    label: "订单完成",
+                    value: 3
+                },
+                {
+                    label: "取消",
+                    value: 5
+                },
+                {
+                    label: "申请退款",
+                    value: 6
+                },
+                {
+                    label: "退款完成",
+                    value: 8
+                }
+            ]}>
+                <ListTableComponent
             className={classes.listTableComponent}
             title="财务统计"
             operattext="财务管理"
-            inputType={inputType} 
-            headTitlesData={columnData} 
-            data={this.props.financesStores.finances} 
+            inputType={inputType}
+            headTitlesData={columnData}
+            data={this.props.financesStores.finances}
           />
-        ];
+            </TabComponent>
+        );
       }
 }
 FinanceList.propTypes = {

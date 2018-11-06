@@ -51,7 +51,7 @@ const types = {
     overdueRes: {
          url: "overdue/showOverdueRes",
          columnData: [
-            { id: 'business_number', label: '业务编号' },
+            { id: 'business_sn', label: '业务编号' },
             { id: 'cabinet_num', label: '机柜编号' },
             { id: 'machine_num', label: '机器编号' },
             { id: 'customer_name', label: '客户名称' },
@@ -193,7 +193,7 @@ class Home extends React.Component {
                 alert(res.data.msg);
             }
         });
-        
+
     };
     render() {
         const { classes } = this.props;
@@ -228,7 +228,7 @@ class Home extends React.Component {
                                 ))
                             }
                         </FormGroup>
-                    ) 
+                    )
                 }
                 <Table className={classes.table}>
                     <TableHead>

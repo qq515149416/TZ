@@ -47,16 +47,15 @@ class RechargeController extends Controller
 
 		$model = new AliRecharge();
 		//我们的trade_no对于支付宝来说就是 out_trade_no
-		$data['trade_no'] 		= 'tz_'.time().'_'.$user_id;		//本地订单号,需保证不重复
+		$data['trade_no'] 		= 'tz_'.time().'_'.$user_id;	//本地订单号,需保证不重复
 		$data['recharge_amount']	= $info['total_amount'];		//订单总金额，单位为元，精确到小数点后两位
-		$data['subject']			= '充值余额';			//商品名称
 		$data['user_id']			= $user_id;	
 		$data['recharge_way']		= 1;
 		$data['trade_status']		= 0;
 		//$data['product_code']		=  'FAST_INSTANT_TRADE_PAY';	//销售产品码，与支付宝签约的产品码名称。 注：目前仅支持FAST_INSTANT_TRADE_PAY
 		$makeOrder = $model->makeOrder($data);
 							
-		return $makeOrder;		
+		return tz_ajax_echo($makeOrder['data'],$makeOrder['msg'],$makeOrder['code']);		
 	}
 
 	/**
@@ -237,7 +236,7 @@ class RechargeController extends Controller
 	* @return 订单的支付情况,
 	*/
 	public function checkRechargeOrder(RechargeRequest $request){
-		
+
 		$info 		= $request->only(['trade_no']);
 		$trade_no 	= $info['trade_no'];
 		
@@ -305,7 +304,6 @@ class RechargeController extends Controller
 		}else{
 			$return = [
 				'data'	=> '',
-				'code'	=> 1,
 				'msg'	=> '用户已付款',
 			];
 		}	
@@ -320,9 +318,9 @@ class RechargeController extends Controller
 
 		//更新数据库信息
 		$update = $model->returnInsert($info);
-		//写到这个逻辑
+	
 		$return['msg'] = $return['msg'].','.$update['msg'];
-		
+		$return['code'] = $update['code'];
 		if($update['code'] == 2){
 			$cancel = $PayController->cancel($serial_number);
 			if($cancel->code == '10000'){

@@ -295,7 +295,7 @@ Route::group([
         $router->post('check','Business\BusinessController@checkBusiness');
         $router->post('enable','Business\BusinessController@enableBusiness');
         $router->get('showbusiness','Business\BusinessController@showBusiness');
-        $router->get('deletebusiness','Business\BusinessController@deleteBusiness');
+        $router->post('deletebusiness','Business\BusinessController@deleteBusiness');
         // 订单
         $router->post('finance','Business\OrdersController@financeOrders');
         $router->post('clerk','Business\OrdersController@clerkOrders');
@@ -308,9 +308,9 @@ Route::group([
         $router->post('pull_black','Business\CustomerController@pullBlackCustomer');
         $router->post('reset_password','Business\CustomerController@resetPassword');
 
-        $router->post('recharge','Business\CustomerController@rechargeByAdmin');
-        $router->get('showRecharge','Business\CustomerController@getRecharge');
-        $router->get('showAllRecharge','Business\CustomerController@getAllRecharge');
+        $router->post('recharge','Business\RechargeController@rechargeByAdmin');
+        $router->get('showRecharge','Business\RechargeController@getRecharge');
+        $router->get('showAllRecharge','Business\RechargeController@getAllRecharge');
 
         $router->get('depart','Business\CustomerController@depart');
         $router->post('select_clerk','Business\CustomerController@selectClerk');
@@ -338,7 +338,7 @@ Route::group([
 
 
 
-     Route::group([
+    Route::group([
         'prefix' => 'overdue',
     ],function(Router $router){
         $router->get('showOverdueCabinet','Overdue\OverdueController@showOverdueCabinet');

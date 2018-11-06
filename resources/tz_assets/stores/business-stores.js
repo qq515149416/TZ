@@ -11,6 +11,7 @@ class BusinessStores extends ActionBoundStores {
     @observable business = [
 
     ];
+    status = {"1": "审核通过", "-2": "审核不通过"};
     @observable statistics = {
         clientName: "",
         unitPrice: 0,
@@ -24,8 +25,19 @@ class BusinessStores extends ActionBoundStores {
         this.statistics.statisticsAmount = this.statistics.unitPrice * this.statistics.length;
         this.statistics[attr] = value;
     }
-    checkAll(id) {
-
+    checkAll(data) {
+        return new Promise((resolve,reject) => {
+            post("business/check",data).then((res) => {
+                if(res.data.code==1) {
+                    this.changeStoreData("business",BusinesStores,Object.assign(data,{
+                        status: this.status[data.business_status+""]
+                    }));
+                    resolve(true);
+                } else {
+                    resolve(false);
+                }
+            }).catch(reject);
+        });
     }
     delData(id) {
         return new Promise((resolve,reject) => {

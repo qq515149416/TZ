@@ -246,6 +246,7 @@ const styles = theme => ({
             updata = {this.props.updata}
             select={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.select}
             selectOptions={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.selectOptions}
+            icon={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.icon}
           />
         );
       }
@@ -263,6 +264,7 @@ const styles = theme => ({
               updata = {this.props.updata}
               select={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.select}
               selectOptions={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.selectOptions}
+              icon={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.icon}
             />
           );
         }
@@ -281,6 +283,7 @@ const styles = theme => ({
               updata = {this.props.updata}
               select={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.select}
               selectOptions={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.selectOptions}
+              icon={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.icon}
             />
           );
         }
@@ -311,6 +314,7 @@ const styles = theme => ({
             getParentData={this.getData.bind(this)}
             handleSelectAllEmptyClick={this.handleSelectAllEmptyClick}
             delData={this.props.delData}
+            checkAll={this.props.checkAll}
             selectedData={selected}
           />
           {
@@ -395,7 +399,9 @@ const styles = theme => ({
                                 />)
                               }
                               {
-                                (this.props.headTitlesData.find(item => item.id=="operat").extend && this.props.headTitlesData.find(item => item.id=="operat").extendConfirm ) && this.renderExpansionComponent(n)
+                                (this.props.headTitlesData.find(item => item.id=="operat").extend && this.props.headTitlesData.find(item => item.id=="operat").extendConfirm && !this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.last ) && (
+                                    this.renderExpansionComponent(n)
+                                )
                               }
                               {
                                 (this.props.headTitlesData.find(item => item.id=="operat").extend && this.props.headTitlesData.find(item => item.id=="operat").extendElement ) && (
@@ -405,6 +411,11 @@ const styles = theme => ({
                               {
                                 (this.props.headTitlesData.find(item => item.id=="operat").extend && this.props.headTitlesData.find(item => item.id=="operat").extendUrl ) && (
                                   this.renderLinkComponent(n)
+                                )
+                              }
+                              {
+                                (this.props.headTitlesData.find(item => item.id=="operat").extend && this.props.headTitlesData.find(item => item.id=="operat").extendConfirm && this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.last ) && (
+                                    this.renderExpansionComponent(n)
                                 )
                               }
                             </TableCell>

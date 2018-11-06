@@ -118,8 +118,13 @@ class RegisterController extends Controller
     }
 
 
-
-
+    /**
+     * 查询所有业务员
+     */
+    public function selectAllSalesman()
+    {
+        
+    }
 
 
 }

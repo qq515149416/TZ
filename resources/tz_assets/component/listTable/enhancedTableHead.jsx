@@ -20,17 +20,33 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 // ];
 const styles = theme => ({
   td: {
-    textAlign: "center"
+    textAlign: "center",
+    fontFamily: [
+        'Microsoft YaHei',
+      'SimHei',
+      'SimSun',
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+    fontSize: 14,
   }
 });
 class EnhancedTableHead extends React.Component {
     createSortHandler = property => event => {
       this.props.onRequestSort(event, property);
     };
-  
+
     render() {
       const { onSelectAllClick, order, orderBy, numSelected, rowCount, classes} = this.props;
-  
+
       return (
         <TableHead>
           <TableRow>

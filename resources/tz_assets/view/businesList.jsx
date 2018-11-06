@@ -9,6 +9,7 @@ import WorkOrderPost from "../component/dialog/workOrderPost.jsx";
 import {post} from "../tool/http.js";
 import extendElementsComponent from "../tool/extendElementsComponent";
 import { inject,observer } from "mobx-react";
+import Enable from "../component/icon/enable.jsx";
 const classNames = require('classnames');
 const dateFormat = require('dateformat');
 const qs = require('qs');
@@ -66,6 +67,7 @@ const columnData = [
     },
       title: "业务操作",
       content: "是否要启用此业务？",
+      icon: <Enable />,
       ok: (data) => {
           return new Promise((resolve,reject) => {
               post("business/enable",{

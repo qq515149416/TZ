@@ -2,6 +2,7 @@ import React from "react";
 import ListTableComponent from "../component/listTableComponent.jsx";
 import {post} from "../tool/http.js";
 import { inject,observer } from "mobx-react";
+import Approval from "../component/icon/approval.jsx";
 const columnData = [
     { id: 'client_name', numeric: true, disablePadding: true, label: '客户' },
     { id: 'sales_name', numeric: true, disablePadding: true, label: '业务员' },
@@ -35,6 +36,7 @@ const columnData = [
         execute: 0,
         type: "equal"
       },
+      icon: <Approval />,
       title: "审核操作",
       content: "是否要通过此业务审核",
       input: true,
@@ -89,22 +91,28 @@ const columnData = [
 const inputType = [
 ];
 @inject("businessStores")
-@observer 
+@observer
 class CheckBusinessList extends React.Component {
   componentDidMount() {
     this.props.businessStores.getAllData();
+  }
+  checkAll(selectedData,callbrak) {
+    const {businessStores} = this.props;
+    let delIng = selectedData.map(item => businessStores.checkAll(item));
+    callbrak(delIng);
   }
   updata() {
     this.props.businessStores.getAllData();
   }
   render() {
     return (
-      <ListTableComponent 
+      <ListTableComponent
         title="业务管理"
         operattext="业务信息"
-        inputType={inputType} 
-        headTitlesData={columnData} 
-        data={this.props.businessStores.business}  
+        inputType={inputType}
+        headTitlesData={columnData}
+        data={this.props.businessStores.business}
+        checkAll={this.checkAll.bind(this)}
         updata={this.updata.bind(this)}
       />
     );

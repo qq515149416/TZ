@@ -45,6 +45,7 @@ class OrdersModel extends Model
     		$pay_type = [0=>'未选择',1=>'余额',2=>'支付宝',3=>'微信',4=>'其他'];
     		$order_status = [0=>'待支付',1=>'已支付',2=>'财务确认',3=>'订单完成',4=>'到期',5=>'取消',6=>'申请退款',7=>'正在支付',8=>'退款完成'];
     		foreach($result as $okey=>$ovalue){
+                $ovalue->type = $ovalue->resource_type;
     			$ovalue->resource_type = $resource_type[$ovalue->resource_type];
     			$ovalue->order_type = $order_type[$ovalue->order_type];
     			$ovalue->pay_type = $ovalue->pay_type?$pay_type[$ovalue->pay_type]:'';
@@ -83,6 +84,7 @@ class OrdersModel extends Model
             // $pay_type = [1=>'余额',2=>'支付宝',3=>'微信',4=>'其他'];
     		$order_status = [0=>'待支付',1=>'已支付',2=>'财务确认',3=>'订单完成',4=>'到期',5=>'取消',6=>'申请退款',7=>'正在支付',8=>'退款完成'];
     		foreach($result as $okey=>$ovalue){
+                $ovalue->type = $ovalue->resource_type; 
                 $ovalue->resourcetype = $resource_type[$ovalue->resource_type];
                 $ovalue->order_type = $order_type[$ovalue->order_type];
                 $ovalue->pay_type = $ovalue->pay_type?$pay_type[$ovalue->pay_type]:'';

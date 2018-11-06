@@ -45,7 +45,11 @@ const columnData = [
         {id: "created_at", label: "创建时间" ,type: "text"}
     ],extendElement: (data) => {
         if(data.order_status=="已支付") {
-          return <RenewalFee {...data} postUrl="business/renewresource" nameParam="order_sn" type="订单" />;
+            if(data.type > 3) {
+                return <RenewalFee {...data} postUrl="business/renewresource" nameParam="order_sn" type="订单" />;
+            } else {
+                return null;
+            }
         }else {
           return null;
         }
@@ -156,7 +160,7 @@ const inputType = [
     }
 ];
 @inject("ordersStores")
-@observer 
+@observer
 class OrderList extends React.Component {
     constructor(props) {
         super(props);
@@ -195,8 +199,8 @@ class OrderList extends React.Component {
         } else {
             param.machine_sn = param.resource.label;
             param.resource = param.resource.value;
-        }   
-        
+        }
+
         this.props.ordersStores.addData(param).then((state) => {
             callbrak(state);
         });
@@ -263,15 +267,15 @@ class OrderList extends React.Component {
                     </Tabs>
                 </AppBar>
             </Paper>,
-            <ListTableComponent 
+            <ListTableComponent
             className={classes.listTableComponent}
             title="业务订单管理"
             operattext="业务订单操作"
-            inputType={inputType} 
-            headTitlesData={columnData} 
+            inputType={inputType}
+            headTitlesData={columnData}
             data={this.props.ordersStores.orders}
-            addData={this.addData.bind(this)} 
-            delData={this.delData.bind(this)} 
+            addData={this.addData.bind(this)}
+            delData={this.delData.bind(this)}
           />
         ];
       }

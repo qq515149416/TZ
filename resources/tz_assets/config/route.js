@@ -10,7 +10,26 @@ const theme = createMuiTheme({
     palette: {
         primary: blue,
         secondary: deepOrange
-    }
+    },
+    typography: {
+    // Use the system font instead of the default Roboto font.
+    fontFamily: [
+        '微软雅黑',
+      '黑体',
+      '宋体',
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+    fontSize: 16
+  }
 });
 // mobx错误捕获
 onError(error => {

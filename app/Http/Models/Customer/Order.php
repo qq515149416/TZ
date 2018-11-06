@@ -80,6 +80,7 @@ class Order extends Model
 		}
 	
 		foreach ($order as $key => $value) {
+			
 			$value->type = $value->resource_type;
 			$value->resource_type = $resource_type[$value->resource_type];
 			$value->order_type = $order_type[$value->order_type];

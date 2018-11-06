@@ -92,19 +92,21 @@ const columnData = [
       }else {
         return null;
       }
-  }, extendUrl: {
-      title: "全部订单",
-      link: "/tz_admin/business/order",
-      param: ["business_number","client_id","client_name","machine_number",{
-        field: "resource_detail_json",
-        value: ["machineroom_id"]
-      }],
-      rule: {
-        term: "business_status",
-        execute: 2,
-        type: "equal"
+  }, extendUrl: [
+    {
+        title: "全部订单",
+        link: "/tz_admin/business/order",
+        param: ["business_number","client_id","client_name","machine_number",{
+          field: "resource_detail_json",
+          value: ["machineroom_id"]
+        }],
+        rule: {
+          term: "business_status",
+          execute: 2,
+          type: "equal"
+      }
     }
-  }, label: '操作' }
+  ], label: '操作' }
 ];
 const inputType = [
   // {

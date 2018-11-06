@@ -4,6 +4,7 @@ import { inject,observer } from "mobx-react";
 import {post} from "../tool/http.js";
 import ResumeComponent from "../component/dialog/resumeComponent.jsx";
 import ResumeIcon from "../component/icon/resume.jsx";
+import Reset from "../component/icon/reset.jsx";
 
 const columnData = [
     { id: 'id', numeric: true, disablePadding: false, label: 'ID' },
@@ -14,6 +15,7 @@ const columnData = [
     { id: 'operat', numeric: true, disablePadding: false, label: '操作', extend: true,  extendConfirm: {
         title: "更改账号密码",
         content: "是否要更改此用户账号密码",
+        icon: <Reset />,
         ok: (data) => {
             return new Promise((resolve,reject) => {
                 post("hr/reset_pass",{

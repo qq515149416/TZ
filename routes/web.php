@@ -35,6 +35,7 @@ Route::group([
     Route::get('redis', 'Test\RedisController@test'); //测试Redis
     Route::post('mail', 'Test\MailController@handle'); //测试邮件
 
+    Route::get('time', 'Test\TimeController@time'); //测试时间
 });
 
 //news接口路径
@@ -105,9 +106,9 @@ Route::group([
 
 
 		//异步接收支付宝发出通知的接口,支付宝方用的
-		Route::post('payRechargeNotify', 'Pay\RechargeController@rechargeNotify');
+		Route::post('payRechargeNotify', 'Pay\RechargeController@AliRechargeNotify');
 		//用户支付完成后跳转页面
-		Route::get('payRechargeReturn', 'Pay\RechargeController@rechargeReturn');
+		Route::get('payRechargeReturn', 'Pay\RechargeController@AliRechargeReturn');
 
 		//获取指定充值单号所有信息
 		Route::get('getOrder', 'Pay\RechargeController@getOrder');
@@ -117,9 +118,7 @@ Route::group([
 		//退款页面
 		//Route::get('refund', 'Pay\PayController@refund');
 
-		//调试用
-		Route::get('payForm', 'Pay\AliPayController@form');
-		Route::get('test', 'Pay\AliPayController@test');
+
 	});
 	
 
@@ -183,41 +182,7 @@ Route::group([
 		});
 	});
 
-    Route::group([
-        'prefix' => 'recharge',
-    ], function () {
-        Route::group([
-            'middleware' => 'CheckLogin',
-        ], function () {
-            //生成订单接口
-            Route::get('payIndex', 'Pay\RechargeController@index');
-            //获取登录中用户的所有充值单信息
-            Route::get('getOrderByUser', 'Pay\RechargeController@getOrderByUser');
-            //跳转到支付页面的方法
-            Route::get('goToPay', 'Pay\RechargeController@goToPay');
-
-            Route::get('delOrder', 'Pay\RechargeController@delOrder');
-        });
-
-
-        //异步接收支付宝发出通知的接口,支付宝方用的
-        Route::post('payRechargeNotify', 'Pay\RechargeController@rechargeNotify');
-        //用户支付完成后跳转页面
-        Route::get('payRechargeReturn', 'Pay\RechargeController@rechargeReturn');
-
-        //获取指定充值单号所有信息
-        Route::get('getOrder', 'Pay\RechargeController@getOrder');
-        //查询指定充值单号支付情况
-        Route::get('checkRechargeOrder', 'Pay\RechargeController@checkRechargeOrder');
-
-        //退款页面
-        //Route::get('refund', 'Pay\PayController@refund');
-
-        //调试用
-        Route::get('payForm', 'Pay\AliPayController@form');
-        Route::get('test', 'Pay\AliPayController@test');
-    });
-
+  
 
     /**
      * 用户信息

@@ -19,10 +19,13 @@ class BusinessStores extends ActionBoundStores {
         productName: "",
         statisticsAmount: 0
     };
-    @action.bound 
+    @action.bound
     changeStatistics(attr,value) {
         this.statistics.statisticsAmount = this.statistics.unitPrice * this.statistics.length;
         this.statistics[attr] = value;
+    }
+    checkAll(id) {
+
     }
     delData(id) {
         return new Promise((resolve,reject) => {
@@ -54,7 +57,7 @@ class BusinessStores extends ActionBoundStores {
             }).catch(reject);
         });
     }
-    @action.bound 
+    @action.bound
     getAllData() {
         get("business/security").then(res => {
             if(res.data.code==1) {
@@ -64,7 +67,7 @@ class BusinessStores extends ActionBoundStores {
             }
         });
     }
-    @action.bound 
+    @action.bound
     getData(id) {
         get("business/showbusiness",{
             client_id: id

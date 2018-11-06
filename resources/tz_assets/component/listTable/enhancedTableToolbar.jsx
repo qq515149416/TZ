@@ -36,7 +36,7 @@ const toolbarStyles = theme => ({
       flex: '0 0 auto',
     },
   });
-  
+
   let EnhancedTableToolbar = props => {
     const { numSelected, classes, selectedData, getParentData } = props;
     let data = selectedData.map(item => getParentData().find((e) => e.id == item));
@@ -98,10 +98,10 @@ const toolbarStyles = theme => ({
       </Toolbar>
     );
   };
-  
+
   EnhancedTableToolbar.propTypes = {
     classes: PropTypes.object.isRequired,
     numSelected: PropTypes.number.isRequired,
   };
-  
+
  export default withStyles(toolbarStyles)(EnhancedTableToolbar);

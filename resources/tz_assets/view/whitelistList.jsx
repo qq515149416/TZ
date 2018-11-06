@@ -23,13 +23,15 @@ const columnData = [
     { id: 'record_number', numeric: true, disablePadding: false, label: '备案编号' },
     { id: 'status', numeric: true, disablePadding: false, label: '审核状态' },
     { id: 'submit_name', numeric: true, disablePadding: false, label: '提交人' },
-    { id: 'submittran', numeric: true, disablePadding: false, label: '提交方式' },
-    { id: 'white_number', numeric: true, disablePadding: false, label: '业务编号' },
+    // { id: 'submittran', numeric: true, disablePadding: false, label: '提交方式' },
+    // { id: 'white_number', numeric: true, disablePadding: false, label: '业务编号' },
     { id: 'operat', numeric: true, disablePadding: false, extend: true, extendData: [
         {id: "check_number", label: "审核人员工号", type: "text"},
         {id: "check_time", label: "审核时间" ,type: "text"},
         {id: "check_note", label: "审核备注" ,type: "text"},
-        {id: "submit_note", label: "提交备注" ,type: "text"}
+        {id: "submit_note", label: "提交备注" ,type: "text"},
+        {id: "submittran", label: "提交方式" ,type: "text"},
+        {id: "white_number", label: "业务编号" ,type: "text"},
     ],extendConfirm: {
         rule: {
             term: "white_status",
@@ -105,7 +107,7 @@ const inputType = [
     }
 ];
 @inject("whitelistsStores")
-@observer 
+@observer
 class WhitelistList extends React.Component {
     constructor(props) {
         super(props);
@@ -164,15 +166,15 @@ class WhitelistList extends React.Component {
                 <Tab label="取消" value={4} />
                 </Tabs>
             </Paper>,
-            <ListTableComponent 
+            <ListTableComponent
             className={classes.listTableComponent}
             title="白名单"
             operattext="白名单操作"
-            inputType={inputType} 
-            headTitlesData={columnData} 
-            data={this.props.whitelistsStores.whitelists} 
-            addData={this.addData.bind(this)} 
-            delData={this.delData.bind(this)} 
+            inputType={inputType}
+            headTitlesData={columnData}
+            data={this.props.whitelistsStores.whitelists}
+            addData={this.addData.bind(this)}
+            delData={this.delData.bind(this)}
             updata={this.updata.bind(this)}
           />
         ];

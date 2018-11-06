@@ -56,7 +56,8 @@ const styles = theme => ({
     td: {
       paddingLeft: 0,
       paddingRight: 0,
-      textAlign: "center"
+      textAlign: "center",
+      fontSize: 16,
     },
     tdLast: {
       textAlign: "center"

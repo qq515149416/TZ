@@ -40,7 +40,7 @@ class CustomerModel extends Model
         } else {
             $where = [];
         }
-    	$admin_customer = $this->where($where)->get(['id','status','name','email','money','salesman_id','created_at','updated_at']);
+    	$admin_customer = $this->orderBy('created_at','desc')->where($where)->get(['id','status','name','email','money','salesman_id','created_at','updated_at']);
     	if(!$admin_customer->isEmpty()){
     		$status = [0=>'拉黑',1=>'未验证',2=>'正常'];
     		foreach($admin_customer as $key=>$value){
@@ -82,7 +82,18 @@ class CustomerModel extends Model
             $row = $this->where('id',$data['id'])->update($data);
             if($row != false){
                 $return['code'] = 1;
-                $return['msg'] = '此客户已成功加入黑名单';
+                switch ($data['status']) {
+                    case 0:
+                        $return['msg'] = '此客户已成功加入黑名单';
+                        break;
+                    case 1:
+                        $return['msg'] = '此客户状态已修改为未验证状态';
+                        break;
+                    case 2:
+                        $return['msg'] = '此客户已恢复正常';
+                        break;
+                }
+                
             } else {
                 $return['code'] = 0;
                 $return['msg'] = '此客户加入黑名单失败';

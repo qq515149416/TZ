@@ -49,12 +49,12 @@ class RechargeRequest extends FormRequest
 				break;
 			case 'showAuditRechargeBig':
 				$return = [
-					'audit_status'		=> 'required|between:-1,1|integer',			
+					'audit_status'		=> 'required',			
 				];
 				break;
 			case 'showAuditRechargeSmall':
 				$return = [
-					'audit_status'		=> 'required|between:-1,1|integer',			
+					'audit_status'		=> 'required',			
 				];
 				break;
 			case 'auditRecharge':

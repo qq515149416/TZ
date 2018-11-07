@@ -63,12 +63,12 @@ class RechargeModel extends Model
 		$data['recharge_uid']	= $clerk_id;
 	
 		$res = $this->create($data);
-	
 		if($res == false){  	
 			$return['msg'] = '充值审核单创建失败';
 		}else{
-			$return['msg'] = '充值审核单创建成功!';
-			$return['code'] = 1;
+			$return['data']	= $res->id;
+			$return['msg'] 	= '充值审核单创建成功!';
+			$return['code'] 	= 1;
 		}
 		return $return;
 	}
@@ -83,7 +83,8 @@ class RechargeModel extends Model
 			case '*':
 				$list = $this
 				->leftjoin('admin_users as b','tz_recharge_admin.recharge_uid','=','b.id')
-				->select(DB::raw('tz_recharge_admin.id,tz_recharge_admin.user_id,tz_recharge_admin.recharge_amount,tz_recharge_admin.recharge_way,tz_recharge_admin.trade_no,tz_recharge_admin.recharge_uid,tz_recharge_admin.created_at,tz_recharge_admin.audit_status,tz_recharge_admin.remarks,b.name as recharger'))
+				->leftjoin('tz_users as c','tz_recharge_admin.user_id','=','c.id')
+				->select(DB::raw('tz_recharge_admin.id,tz_recharge_admin.user_id,tz_recharge_admin.recharge_amount,tz_recharge_admin.recharge_way,tz_recharge_admin.trade_no,tz_recharge_admin.recharge_uid,tz_recharge_admin.created_at,tz_recharge_admin.audit_status,tz_recharge_admin.remarks,b.name as recharger,c.name as customer_name,c.email as customer_email'))
 				->get();
 
 				break;
@@ -91,7 +92,8 @@ class RechargeModel extends Model
 			default:
 				$list = $this
 				->leftjoin('admin_users as b','tz_recharge_admin.recharge_uid','=','b.id')
-				->select(DB::raw('tz_recharge_admin.id,tz_recharge_admin.user_id,tz_recharge_admin.recharge_amount,tz_recharge_admin.recharge_way,tz_recharge_admin.trade_no,tz_recharge_admin.recharge_uid,tz_recharge_admin.created_at,tz_recharge_admin.audit_status,tz_recharge_admin.remarks,b.name as recharger'))
+				->leftjoin('tz_users as c','tz_recharge_admin.user_id','=','c.id')
+				->select(DB::raw('tz_recharge_admin.id,tz_recharge_admin.user_id,tz_recharge_admin.recharge_amount,tz_recharge_admin.recharge_way,tz_recharge_admin.trade_no,tz_recharge_admin.recharge_uid,tz_recharge_admin.created_at,tz_recharge_admin.audit_status,tz_recharge_admin.remarks,b.name as recharger,c.name as customer_name,c.email as customer_email'))
 				->where('tz_recharge_admin.audit_status',$need)
 				->get();
 
@@ -105,6 +107,11 @@ class RechargeModel extends Model
 				'code'	=> 0,
 			];
 		}else{
+			$list = json_decode($list,true);
+			$recharge_way = [ '1' => '银行' , '2' => '第三方平台' ];
+			for ($i=0; $i < count($list); $i++) { 
+				$list[$i]['recharge_way'] = $recharge_way[$list[$i]['recharge_way']];
+			}
 			$return = [
 				'data'	=> $list,
 				'msg'	=> '获取成功',
@@ -125,7 +132,8 @@ class RechargeModel extends Model
 			case '*':
 				$list = $this
 				->leftjoin('admin_users as b','tz_recharge_admin.recharge_uid','=','b.id')
-				->select(DB::raw('tz_recharge_admin.id,tz_recharge_admin.user_id,tz_recharge_admin.recharge_amount,tz_recharge_admin.recharge_way,tz_recharge_admin.trade_no,tz_recharge_admin.recharge_uid,tz_recharge_admin.created_at,tz_recharge_admin.audit_status,tz_recharge_admin.remarks,b.name as recharger'))
+				->leftjoin('tz_users as c','tz_recharge_admin.user_id','=','c.id')
+				->select(DB::raw('tz_recharge_admin.id,tz_recharge_admin.user_id,tz_recharge_admin.recharge_amount,tz_recharge_admin.recharge_way,tz_recharge_admin.trade_no,tz_recharge_admin.recharge_uid,tz_recharge_admin.created_at,tz_recharge_admin.audit_status,tz_recharge_admin.remarks,b.name as recharger,c.name as customer_name,c.email as customer_email'))
 				->where('tz_recharge_admin.recharge_uid',$user_id)
 				->get();
 
@@ -134,7 +142,8 @@ class RechargeModel extends Model
 			default:
 				$list = $this
 				->leftjoin('admin_users as b','tz_recharge_admin.recharge_uid','=','b.id')
-				->select(DB::raw('tz_recharge_admin.id,tz_recharge_admin.user_id,tz_recharge_admin.recharge_amount,tz_recharge_admin.recharge_way,tz_recharge_admin.trade_no,tz_recharge_admin.recharge_uid,tz_recharge_admin.created_at,tz_recharge_admin.audit_status,tz_recharge_admin.remarks,b.name as recharger'))
+				->leftjoin('tz_users as c','tz_recharge_admin.user_id','=','c.id')
+				->select(DB::raw('tz_recharge_admin.id,tz_recharge_admin.user_id,tz_recharge_admin.recharge_amount,tz_recharge_admin.recharge_way,tz_recharge_admin.trade_no,tz_recharge_admin.recharge_uid,tz_recharge_admin.created_at,tz_recharge_admin.audit_status,tz_recharge_admin.remarks,b.name as recharger,c.name as customer_name,c.email as customer_email'))
 				->where('tz_recharge_admin.audit_status',$need)
 				->where('tz_recharge_admin.recharge_uid',$user_id)
 				->get();
@@ -149,6 +158,11 @@ class RechargeModel extends Model
 				'code'	=> 0,
 			];
 		}else{
+			$list = json_decode($list,true);
+			$recharge_way = [ '1' => '银行' , '2' => '第三方平台' ];
+			for ($i=0; $i < count($list); $i++) { 
+				$list[$i]['recharge_way'] = $recharge_way[$list[$i]['recharge_way']];
+			}
 			$return = [
 				'data'	=> $list,
 				'msg'	=> '获取成功',
@@ -203,6 +217,7 @@ class RechargeModel extends Model
 			$return['msg'] 	= '审核成功,已驳回此充值单';
 			$return['code'] 	= 1;
 			return $return;
+			exit;
 		}
 
 		$money_before = DB::table('tz_users')->where('id',$trade->user_id)->value('money');

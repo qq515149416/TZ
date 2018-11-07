@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import ListTableComponent from "../component/listTableComponent.jsx";
 import TabComponent from "../component/tabComponent.jsx";
+import { post } from "../tool/http.js";
 import { inject,observer } from "mobx-react";
+import Approval from "../component/icon/approval.jsx";
 const qs = require('qs');
 
 const styles = theme => ({
@@ -25,6 +27,7 @@ if(location.search.indexOf("?type=check") == -1) {
         },
         title: "审核操作",
         content: "是否要审核这条充值记录",
+        icon: <Approval />,
         select: true,
         selectOptions: [
             {
@@ -98,6 +101,11 @@ class ReviewRechargeList extends React.Component {
         });
         this.setState({ value });
     }
+    updata() {
+        this.props.reviewRechargesStores.getData({
+            audit_status: this.state.value,
+        });
+    }
     render() {
         const { classes } = this.props;
         return (
@@ -122,6 +130,7 @@ class ReviewRechargeList extends React.Component {
             inputType={inputType}
             headTitlesData={columnData}
             data={this.props.reviewRechargesStores.reviewRecharges}
+            updata={this.updata.bind(this)}
           />
             </TabComponent>
         );

@@ -3,9 +3,14 @@ use Workerman\Worker;
 use PHPSocketIO\SocketIO;
 
 require __DIR__.'/../vendor/autoload.php';
-
-$io = new SocketIO(8120);
-
+$https_connection = array(
+    'ssl' => array(
+        'local_cert'  => __DIR__.'/server.crt',//证书
+        'local_pk'    => __DIR__.'/server.key',//密钥
+        'verify_peer' => false,
+    )
+);
+$io = new SocketIO(8120,$https_connection);
 $io->on('connection',function($socket)use($io){
 	// 后台发送到前台
     $socket->on('admin_to_client',function($message)use($io){

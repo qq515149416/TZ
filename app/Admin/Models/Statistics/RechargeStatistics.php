@@ -23,7 +23,7 @@ class  RechargeStatistics extends Model
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
 	
-	protected $fillable = ['customer_id', 'recharge_amount','month','updated_at'];
+	protected $fillable = ['customer_id', 'recharge_amount','month','updated_at','artificial_amount','self_amount'];
 
 	/**
 	* 统计业绩的方法
@@ -33,39 +33,47 @@ class  RechargeStatistics extends Model
 	public function statistics($month)
 	{	
 		//获取查询月份订单
-		$order = $this->getOrder($month);
-		$order = json_decode(json_encode($order),true);
+		$order = DB::table('tz_recharge_flow')->select('user_id','recharge_way','recharge_amount as money')->where('month',$month)->where('trade_status',1)->get();
 
-		$return['data'] = [];
-		$return['code'] 	= 0;
-
-		if(count($order) == 0){
+		if($order->isEmpty()){
 			$return['msg'] 	= '无数据';		
 			return $return;
 		}
 
-		//生成每个有业绩的业务员的空数组
+		$order = json_decode(json_encode($order),true);
+
+		$return['data'] = [];
+		$return['code'] 	= 0;
+		//生成每个有充值的用户的空数组
 		$order_arr = [];
-		foreach ($order as $k => $v) {
-			if(!isset($order_arr[$v['user_id']])){
-				$order_arr[$v['user_id']]['customer_id']		= $v['user_id'];
-				$order_arr[$v['user_id']]['recharge_amount']	= 0;
-				$order_arr[$v['user_id']]['month']		= $month;
-			}
-		}
 		//总计
 		$order_arr['0'] = [
 			'customer_id'		=> 0,
 			'recharge_amount'	=> 0,
+			'artificial_amount'	=> 0,
+			'self_amount'		=> 0,
 			'month'			=> $month,
 		];
-		//开始统计
-		foreach ($order as $k => $v) {				
+		foreach ($order as $k => $v) {
+			if(!isset($order_arr[$v['user_id']])){
+				$order_arr[$v['user_id']]['customer_id']		= $v['user_id'];
+				$order_arr[$v['user_id']]['recharge_amount']	= 0;
+				$order_arr[$v['user_id']]['artificial_amount']	= 0;
+				$order_arr[$v['user_id']]['self_amount']		= 0;
+				$order_arr[$v['user_id']]['month']		= $month;
+			}
+			if($v['recharge_way'] == 3){
+				$order_arr[$v['user_id']]['artificial_amount']	= bcadd($order_arr[$v['user_id']]['artificial_amount'],$v['money'],2);
+				$order_arr[0]['artificial_amount']	= bcadd($order_arr[0]['artificial_amount'],$v['money'],2);
+			}else{
+				$order_arr[$v['user_id']]['self_amount']	= bcadd($order_arr[$v['user_id']]['self_amount'],$v['money'],2);
+				$order_arr[0]['self_amount']		= bcadd($order_arr[0]['self_amount'],$v['money'],2);
+			}
 			$order_arr['0']['recharge_amount']		= bcadd($order_arr['0']['recharge_amount'],$v['money'],2);
-			$order_arr[$v['user_id']]['recharge_amount'] 	= bcadd($order_arr[$v['user_id']]['recharge_amount'],$v['money'],2);				
+			$order_arr[$v['user_id']]['recharge_amount'] 	= bcadd($order_arr[$v['user_id']]['recharge_amount'],$v['money'],2);		
 		}
-
 		//入库统计表
+	
 		$res = $this->insert($order_arr);
 		if($res){
 			$return['msg'] 	= '统计成功';
@@ -77,18 +85,7 @@ class  RechargeStatistics extends Model
 		return $return;
 	}
 
-	/**
-	* 获取订单的方法
-	* @return 将数据及相关的信息返回
-	*/
 
-	public function getOrder($month)
-	{
-		$order = DB::table('tz_recharge_flow')->select('user_id','recharge_amount as money')->where('month',$month)->where('trade_status',1)->get();
-		return $order;
-	}
-
-	
 	//插入统计数据的方法
 	//	$data[
 	//		'key' => ['room_id' => ?? , 'rent_inuse' => ?? , .....]
@@ -107,6 +104,8 @@ class  RechargeStatistics extends Model
 				[
 					'customer_id' 		=> $value['customer_id'] , 
 					'recharge_amount' 	=> $value['recharge_amount'] , 
+					'artificial_amount' 	=> $value['artificial_amount'] , 
+					'self_amount' 		=> $value['self_amount'] , 
 					'month'			=> $value['month'],
 				]);
 			if($res == false){			
@@ -134,8 +133,11 @@ class  RechargeStatistics extends Model
 				if($value['customer_id'] == 0){
 					$index[$key]['customer'] = '本月总计';	
 				}else{
-					$index[$key]['customer'] = $this->getCustomer($value['customer_id']);	
-				}				
+					$index[$key]['customer'] = DB::table('tz_users')->where('id',$value['customer_id'])->value('name');
+					if($index[$key]['customer'] == null){
+						$index[$key]['customer'] = DB::table('tz_users')->where('id',$value['customer_id'])->value('email');
+					}
+				}
 			}
 			
 			$return['data'] = $index;
@@ -149,18 +151,5 @@ class  RechargeStatistics extends Model
 		// 返回
 		return $return;
 	}
-
-	public function getCustomer($customer_id)
-	{
-		$customer = DB::table('tz_users')->select('name')->find($customer_id);
-
-		if($customer != NULL){
-			return $customer->name;
-		}else{
-			return '查无此人';
-		}
-	}
-
 	
-  	
 }

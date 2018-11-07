@@ -20,7 +20,7 @@ import TextField from '@material-ui/core/TextField';
 import { get,post } from '../../tool/http';
 import io from 'socket.io-client';
 const classNames = require('classnames');
-const socket = io("http://"+location.hostname+":8120");
+const socket = io(location.protocol+"//"+location.hostname+":8120");
 
 const styles = {
     appBar: {

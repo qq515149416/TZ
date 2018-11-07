@@ -101,6 +101,11 @@ class ReviewRechargeList extends React.Component {
         });
         this.setState({ value });
     }
+    updata() {
+        this.props.reviewRechargesStores.getData({
+            audit_status: this.state.value,
+        });
+    }
     render() {
         const { classes } = this.props;
         return (
@@ -125,6 +130,7 @@ class ReviewRechargeList extends React.Component {
             inputType={inputType}
             headTitlesData={columnData}
             data={this.props.reviewRechargesStores.reviewRecharges}
+            updata={this.updata.bind(this)}
           />
             </TabComponent>
         );

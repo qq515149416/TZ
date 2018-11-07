@@ -28,7 +28,7 @@ const theme = createMuiTheme({
       '"Segoe UI Emoji"',
       '"Segoe UI Symbol"',
     ].join(','),
-    htmlFontSize: "16px"
+    htmlFontSize: 14
   }
 });
 // mobx错误捕获

@@ -21,6 +21,8 @@ import DepartmentsStores from "../../stores/department-stores";
 import PositionsStores from "../../stores/position-stores";
 import UsersStores from "../../stores/user-stores";
 import RechargesStores from "../../stores/recharge-stores";
+import ReviewRechargesStores from "../../stores/reviewRecharge-stores";
+
 
 
 // 前端Models操作
@@ -47,7 +49,8 @@ export const stores = {
     departmentsStores: new DepartmentsStores(),
     positionsStores: new PositionsStores(),
     usersStores: new UsersStores(),
-    rechargesStores: new RechargesStores()
+    rechargesStores: new RechargesStores(),
+    reviewRechargesStores: new ReviewRechargesStores(),
 }
 export const domIds = [
     "user_list",
@@ -74,5 +77,6 @@ export const domIds = [
     "department",
     "position",
     "user",
-    "recharge"
+    "recharge",
+    "reviewRecharge",
 ];

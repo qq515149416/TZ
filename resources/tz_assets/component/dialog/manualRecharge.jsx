@@ -15,7 +15,7 @@ class ManualRecharge extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currency: "",
+            currency: 1,
             manualRecharge: false
         }
     }
@@ -35,7 +35,7 @@ class ManualRecharge extends React.Component {
             post(this.props.postUrl,{
                 user_id: this.props.id,
                 recharge_amount: this.recharge_amount.value,
-                voucher: this.recharge_method.value,
+                recharge_way: this.state.currency,
                 remarks: this.note.value
             }).then((data)=>{
                 if(data.data.code==1) {
@@ -73,14 +73,30 @@ class ManualRecharge extends React.Component {
               fullWidth
               inputRef = {ref => this.recharge_amount = ref}
             />
-            <TextField
+            {/* <TextField
               margin="dense"
               id="note"
               label="充值方式"
               helperText="如'微信'/'支付宝'/'农业银行'/'工商银行'"
               fullWidth
               inputRef = {ref => this.recharge_method = ref}
-            />
+            /> */}
+            <TextField
+            id="recharge_way"
+            select
+            label="付款方式"
+            fullWidth
+            value={this.state.currency}
+            onChange={this.handleChange('currency')}
+            margin="normal"
+            >
+                <MenuItem value={1}>
+                   银行
+                </MenuItem>
+                <MenuItem value={2}>
+                   第三方平台
+                </MenuItem>
+            </TextField>
             <TextField
               margin="dense"
               id="note"

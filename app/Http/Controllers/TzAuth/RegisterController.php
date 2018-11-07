@@ -124,6 +124,13 @@ class RegisterController extends Controller
     /**
      * 查询所有业务员
      *
+     *[
+     *  {
+     *      "id": 业务员ID
+     *      "username": 登录名
+     *      "name": 显示名
+     *  },
+     * ]
      *
      */
     public function getAllSalesman()
@@ -134,11 +141,8 @@ class RegisterController extends Controller
 
         $salemanJobId = $tzJobsModel->getAllSalesmanJobId();  //获取所有销售员职位ID
         $adminUserId  = $oaStaffModel->getAdminUserIdByJob($salemanJobId); //根据职位ID获取后台账户ID
-
         $salemanData = $adminUsersModel->getAdminUserName($adminUserId);  //获取业务员数据
-
-//        dump($data);
-        return tz_ajax_echo($salemanData,'业务员列表获取成功',1);
+        return tz_ajax_echo($salemanData, '业务员列表获取成功', 1);
 
     }
 

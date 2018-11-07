@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\TzAuth;
 
 use App\Http\Models\TzUser;
+use App\Http\Models\User\AdminUsers;
+use App\Http\Models\User\OaStaff;
+use App\Http\Models\User\TzJobs;
 use App\Http\Models\User\TzUsersVerification;
 use App\Http\Requests\TzAuth\RegisterByEmailRequest;
 use App\Http\Requests\TzAuth\SendEmailCodeRequest;
@@ -12,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
-use Mews\Captcha\Captcha;
+
 
 class RegisterController extends Controller
 {
@@ -120,9 +123,26 @@ class RegisterController extends Controller
 
     /**
      * 查询所有业务员
+     *
+     *[
+     *  {
+     *      "id": 业务员ID
+     *      "username": 登录名
+     *      "name": 显示名
+     *  },
+     * ]
+     *
      */
-    public function selectAllSalesman()
+    public function getAllSalesman()
     {
+        $tzJobsModel     = new TzJobs();  //实例化  职位表
+        $oaStaffModel    = new OaStaff(); // 实例化 员工表
+        $adminUsersModel = new AdminUsers(); // 实例化 后台用户表
+
+        $salemanJobId = $tzJobsModel->getAllSalesmanJobId();  //获取所有销售员职位ID
+        $adminUserId  = $oaStaffModel->getAdminUserIdByJob($salemanJobId); //根据职位ID获取后台账户ID
+        $salemanData = $adminUsersModel->getAdminUserName($adminUserId);  //获取业务员数据
+        return tz_ajax_echo($salemanData, '业务员列表获取成功', 1);
 
     }
 

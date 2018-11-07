@@ -313,7 +313,7 @@ Route::group([
         $router->post('recharge','Business\RechargeController@rechargeByAdmin');
         $router->get('showAuditRechargeBig','Business\RechargeController@showAuditRechargeBig');
         $router->get('showAuditRechargeSmall','Business\RechargeController@showAuditRechargeSmall');
-        $router->get('auditRecharge','Business\RechargeController@auditRecharge');
+        $router->post('auditRecharge','Business\RechargeController@auditRecharge');
         $router->get('showRecharge','Business\RechargeController@getRecharge');
         $router->get('showAllRecharge','Business\RechargeController@getAllRecharge');
 

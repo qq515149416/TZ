@@ -40,7 +40,6 @@ class WhiteListModel extends Model
 			$return['msg']	= '该IP尚未启用';		
 			return $return;
 		}
-		// var_dump($ip);exit;
 		//用获取的业务编号,前往业务表查找对应的机器编号及客户ID
 		$business = DB::table('tz_business')->where('business_number',$ip['own_business'])->select('client_id','machine_number','business_status')->first();
 		if($business == NULL){

@@ -27,10 +27,10 @@ Route::group([
 ], function () {
 
     //测试
-    Route::post('jun', 'TzAuth\RegisterController@test');
+    Route::get('testbind', 'TzAuth\RegisterController@bindSalesman');  //测试绑定业务员
     Route::get('jun2', 'TzAuth\RegisterController@test2');
     Route::get('jun3', 'TzAuth\RegisterController@sendCodeToEmail');
-    Route::get('login', 'TzAuth\TestController@login');//TODO 上线前要删除   用户登录模拟登录
+//    Route::get('login', 'TzAuth\TestController@login');//TODO 上线前要删除   用户登录模拟登录
     Route::get('userInfo', 'User\InfoController@test');
     Route::get('redis', 'Test\RedisController@test'); //测试Redis
     Route::post('mail', 'Test\MailController@handle'); //测试邮件

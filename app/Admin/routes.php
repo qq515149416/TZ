@@ -83,6 +83,8 @@ Route::group([
     $router->get('/hr/position', 'Show\PositionController@index');
     $router->get('/hr/usermanagement', 'Show\UserManagementController@index');
     $router->get('/checkrecharge', 'Show\RechargeController@index');
+    $router->get('/reviewRecharge', 'Show\ReviewRechargeController@index');
+
 
 //人事
     Route::group([

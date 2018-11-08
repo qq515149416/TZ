@@ -90,7 +90,7 @@ function simulation_request($url,$request_data,$method = 'get'){
 			curl_setopt($init, CURLOPT_TIMEOUT, 60);//超时
 			curl_setopt($init, CURLOPT_HTTPHEADER, array(
 					'Content-Type: application/json',
-					'Content-Length: ' . strlen($post_data);
+					'Content-Length: ' . strlen($post_data)
 			));
 			$result = curl_exec($init);//运行curl
 			curl_close($init);

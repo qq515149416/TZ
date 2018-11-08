@@ -25,20 +25,6 @@ class RegisterController extends Controller
     public function test(Request $request)
     {
 
-//        dump(captcha_src('tz'));
-        dump(Session::all());
-//        Auth::logout();
-        dump(Auth::check());
-        dump(Auth::user());
-
-//        return response()->view()
-//        return
-
-    }
-
-    public function test2()
-    {
-        dump(Auth::check());
 
     }
 
@@ -75,10 +61,11 @@ class RegisterController extends Controller
             //添加帐号
             $addUserInfo = $TzUserModel->create([
 //                'name'     => $par['name'], //用户名暂时不写入
-                'email'    => $par['email'],
-                'password' => Hash::make($par['password']),
+                'email'    => $par['email'],  //邮箱
+                'password' => Hash::make($par['password']),  //密码
                 'status'   => 2,  //状态为已验证
             ]);
+            $this->bindSalesman($addUserInfo['id'], $par['salesman']); //绑定业务员
             Auth::loginUsingId($addUserInfo['id']);  //注册后自动登录
             return tz_ajax_echo([], '注册成功', 1);   //注册成功
         } else {
@@ -141,10 +128,26 @@ class RegisterController extends Controller
 
         $salemanJobId = $tzJobsModel->getAllSalesmanJobId();  //获取所有销售员职位ID
         $adminUserId  = $oaStaffModel->getAdminUserIdByJob($salemanJobId); //根据职位ID获取后台账户ID
-        $salemanData = $adminUsersModel->getAdminUserName($adminUserId);  //获取业务员数据
+        $salemanData  = $adminUsersModel->getAdminUserName($adminUserId);  //获取业务员数据
         return tz_ajax_echo($salemanData, '业务员列表获取成功', 1);
 
     }
 
+
+    /**
+     * 注册中绑定业务员
+     *
+     * @param int $userId 用户ID
+     * @param int $salesmanUserId 业务员后台用户ID
+     * @return mixed   true:成功   false:失败
+     */
+    private function bindSalesman($userId, $salesmanUserId)
+    {
+        $TzUserModel       = new TzUser(); //实例化腾正用户模型
+        $user              = $TzUserModel->find($userId);  //根据用户ID 获取用户数据
+        $user->salesman_id = $salesmanUserId;    //修改用数据中的业务员ID
+        $bool              = $user->save();           //保存
+        return $bool;
+    }
 
 }

@@ -4,10 +4,12 @@ namespace App\Http\Controllers\TzAuth;
 
 use App\Http\Models\TzUser;
 use App\Http\Models\User\TzUsersVerification;
+use App\Http\Requests\TzAuth\AlterPasswordRequest;
 use App\Http\Requests\TzAuth\ResetPasswordByEmail;
 use App\Http\Requests\TzAuth\SendEmailCodeRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
@@ -91,7 +93,46 @@ class ResetPasswordController extends Controller
         } else {
             return tz_ajax_echo([], '验证码发送失败', 0);  //返回发送失败
         }
-        
+
+    }
+
+
+    /**
+     * 修改密码
+     * 接口: /
+     *
+     * 参数 :
+     *  old_password:原密码
+     *  password: 新密码
+     *  password_confirmation :重新输入新密码
+     *
+     *  状态码
+     *      1:成功
+     *      0:失败
+     */
+    public function alterPassword(AlterPasswordRequest $request)
+    {
+        //检查有无登录
+        if (!Auth::check()) {
+            return tz_ajax_echo(null,'未登录',5000);
+        }
+
+        $par = $request->all();//获取参数
+        $userData=Auth::user();//获取用户数据
+        $tzUserModel = new TzUser(); //实例化
+
+        //修改密码
+        $updateState = $tzUserModel->where('id', $userData['id'])->update([
+            'password' => Hash::make($par['password']),
+        ]);
+
+        //判断密码是否修改成功
+        if ($updateState) {
+            return tz_ajax_echo(null, '密码修改成功', 1); //成功
+        } else {
+            return tz_ajax_echo(null, '密码修改失败', 0);//失败
+        }
+
     }
 
 }

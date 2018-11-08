@@ -12,7 +12,8 @@ const styles = theme => ({
         boxShadow: "0px 4px 5px 0px rgba(0, 0, 0, 0.1), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12)"
     }
 });
-const columnData = [
+let title = "业绩统计";
+let columnData = [
     { id: 'salesman', numeric: true, disablePadding: false, label: '业务员' },
     { id: 'all_arrears', numeric: true, disablePadding: false, label: '总的欠款' },
     { id: 'this_arrears', numeric: true, disablePadding: false, label: '当月欠款' },
@@ -21,6 +22,18 @@ const columnData = [
     { id: 'updated_at', numeric: true, disablePadding: false, label: '统计时间' },
     { id: 'month', numeric: true, disablePadding: false, label: '统计的月份' }
 ];
+if(location.search.indexOf("?type=recharge") > -1) {
+    columnData = [
+        { id: 'customer', numeric: true, disablePadding: false, label: '客户' },
+        { id: 'month', numeric: true, disablePadding: false, label: '月份' },
+        { id: 'recharge_amount', numeric: true, disablePadding: false, label: '充值总额' },
+        { id: 'artificial_amount', numeric: true, disablePadding: false, label: '手动充值金额' },
+        { id: 'self_amount', numeric: true, disablePadding: false, label: '自助充值金额' },
+        { id: 'updated_at', numeric: true, disablePadding: false, label: '统计时间' }
+    ];
+    title = "充值统计";
+}
+
 const inputType = [
 ];
 @inject("statisticalPerformancesStores")
@@ -36,7 +49,7 @@ class StatisticalPerformanceList extends React.Component {
         const {classes} = this.props;
         return (
             <ListTableComponent
-            title="业绩统计"
+            title={title}
             operattext="业绩管理"
             inputType={inputType}
             headTitlesData={columnData}

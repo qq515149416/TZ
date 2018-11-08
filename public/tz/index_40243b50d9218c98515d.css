@@ -24,6 +24,9 @@
 .userinfo[data-v-2575e255] {
     color: #fff;
 }
+.userinfo[data-v-2575e255]:hover {
+    color: #f00;
+}
 .userinfolist p[data-v-2575e255] {
     padding-left: 20px;
 }
@@ -100,9 +103,39 @@
 .conversation-content-item .content[data-v-70b738d6] {
     margin-left: 10px;
 }
+
+.security_item[data-v-4f9bf53a] {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 5px;
+    border-bottom: 1px solid #ccc;
+}
+.security_item .info .icon[data-v-4f9bf53a] {
+    float: left;
+}
+.security_item .info .icon img[data-v-4f9bf53a] {
+    width: 50px;
+    height: 50px;
+}
+.security_item .info .title[data-v-4f9bf53a] {
+    display: block;
+    margin-left: 60px;
+    font-size: 16px;
+    color: #333;
+}
+.security_item .info .description[data-v-4f9bf53a] {
+    display: block;
+    margin-left: 60px;
+    font-size: 14px;
+    color: #ccc;
+}
+.security_item .operat[data-v-4f9bf53a] {
+    font-size: 14px;
+    line-height: 40px;
+}
 body,
 html {
   height: 100%;
 }
 
-/*# sourceMappingURL=index_a35719669f0e214a246e.css.map*/
+/*# sourceMappingURL=index_40243b50d9218c98515d.css.map*/

@@ -99,7 +99,7 @@ class ResetPasswordController extends Controller
 
     /**
      * 修改密码
-     * 接口: /
+     * 接口: /auth/resetPassword/alterPassword
      *
      * 参数 :
      *  old_password:原密码

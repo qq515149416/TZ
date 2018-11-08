@@ -51,3 +51,55 @@ function tz_time_test()
 
 
 }
+
+/**
+ * 模拟请求
+ * @param  string $url          需要请求的url
+ * @param  array/string $request_data 需要传递的值
+ * @param  string $method       传输方式,默认为get
+ * @return [type]               返回信息
+ */
+function simulation_request($url,$request_data,$method = 'get'){
+	if(!$url){
+		return '需传递访问的url';
+	}
+
+	if(!$request_data){
+		return '需传递的数据';
+	}
+	$post_url = $url;//需要访问的url
+	$post_data = $request_data;//需要传递的数据
+	switch ($method) {
+		case 'get':
+			$init = curl_init();
+			curl_setopt($init, CURLOPT_URL, $post_url);//url处理
+			curl_setopt($init, CURLOPT_HEADER, 0);//header头
+			curl_setopt($init, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($init, CURLOPT_SSL_VERIFYPEER, false);//跳过证书检查
+			curl_setopt($init, CURLOPT_SSL_VERIFYHOST, false);//从证书检验算法是否存在
+			$result = curl_exec($init);//运行curl
+			curl_close($init);
+			break;
+
+		case 'post':
+			$init = curl_init($post_url);//初始化
+			curl_setopt($init,CURLOPT_CUSTOMREQUEST,'POST');//post提交方式
+			curl_setopt($init,CURLOPT_POSTFIELDS,$post_data);//传输数据
+			curl_setopt($init,CURLOPT_RETURNTRANSFER,true);//
+			curl_setopt($init,CURLOPT_SSL_VERIFYPEER,FALSE);//跳过证书检查
+			curl_setopt($init, CURLOPT_TIMEOUT, 60);//超时
+			curl_setopt($init, CURLOPT_HTTPHEADER, array(
+					'Content-Type: application/json',
+					'Content-Length: ' . strlen($post_data)
+			));
+			$result = curl_exec($init);//运行curl
+			curl_close($init);
+			break;
+
+		default:
+			
+			break;
+	}
+	return $result;
+
+}

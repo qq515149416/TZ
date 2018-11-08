@@ -26,10 +26,10 @@ Route::group([
     'middleware' => 'UserOperationLog'
 ], function () {
 
-    //测试
+    //测试 DefenseIp\TestController
     Route::get('testbind', 'TzAuth\RegisterController@bindSalesman');  //测试绑定业务员
     Route::post('jun', 'TzAuth\ResetPasswordController@alterPassword');   //测试修改密码
-    Route::get('jun3', 'TzAuth\RegisterController@sendCodeToEmail');
+    Route::get('ipTest', 'DefenseIp\TestController@test');    //高防IP测试
     Route::get('login', 'TzAuth\TestController@login');//TODO 上线前要删除   用户登录模拟登录
     Route::get('userInfo', 'User\InfoController@test');
     Route::get('redis', 'Test\RedisController@test'); //测试Redis

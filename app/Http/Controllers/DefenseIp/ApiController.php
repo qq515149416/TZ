@@ -5,7 +5,7 @@ namespace App\Http\Controllers\DefenseIp;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class TestController extends Controller
+class ApiController extends Controller
 {
 
 
@@ -113,6 +113,5 @@ class TestController extends Controller
      *    0: 获取成功
      *    1: 获取失败  (多数为日期错误)
      */
-
 
 }

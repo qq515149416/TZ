@@ -9,6 +9,7 @@ import ChangeStatus from "../component/dialog/changeStatus.jsx";
 import Communication from "../component/dialog/communication.jsx";
 import TabComponent from "../component/tabComponent.jsx";
 import { inject,observer } from "mobx-react";
+import { get } from "../tool/http.js";
 const qs = require('qs');
 
 const styles = theme => ({
@@ -65,10 +66,38 @@ class WorkOrderList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: 0
+            value: 1,
+            types: [
+                {
+                    label: "处理中",
+                    value: 1
+                },
+                {
+                    label: "完成",
+                    value: 2
+                },
+                {
+                    label: "取消",
+                    value: 3
+                }
+            ]
         };
     }
     componentDidMount() {
+        get("pwdDepartment").then(res => {
+            if(res.data.code == 1) {
+                if(res.data.data.sign==2) {
+                    this.setState(state => {
+                        state["types"].unshift({
+                            label: "待处理",
+                            value: 0
+                        });
+                        state["value"] = 0;
+                        return state;
+                    });
+                }
+            }
+        })
         this.props.workOrdersStores.getData();
     }
     delData = (selectedData,callbrak) => {
@@ -100,24 +129,7 @@ class WorkOrderList extends React.Component {
 
         */
         return (
-            <TabComponent onChange={this.handleChange} type={this.state.value} types={[
-                {
-                    label: "待处理",
-                    value: 0
-                },
-                {
-                    label: "处理中",
-                    value: 1
-                },
-                {
-                    label: "完成",
-                    value: 2
-                },
-                {
-                    label: "取消",
-                    value: 3
-                }
-            ]}>
+            <TabComponent onChange={this.handleChange} type={this.state.value} types={this.state.types}>
                 <ListTableComponent
                     className={classes.listTableComponent}
                     title="工单列表"

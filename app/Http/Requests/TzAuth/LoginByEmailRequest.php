@@ -29,7 +29,7 @@ class LoginByEmailRequest extends FormRequest
             //
             'email'    => 'required|email',  //邮箱
             'password' => 'required',  //密码
-            'captcha'  => 'required|captcha',  //验证码  TODO  上线前需要关闭 注释
+//            'captcha'  => 'required|captcha',  //验证码  TODO  上线前需要关闭 注释
         ];
     }
 

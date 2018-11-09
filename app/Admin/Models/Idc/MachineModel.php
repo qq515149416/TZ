@@ -413,7 +413,7 @@ class MachineModel extends Model
         $worksheet = $spreadsheet->getActiveSheet();
         $worksheet->setTitle('机器批量导入表格');
         $worksheet->setCellValueByColumnAndRow(1, 1, '机器批量导入表格(此为测试功能)');
-        $row_value = ['机器编号(必填)','CPU(必填)','内存(必填)','硬盘(必填)','机房(必填)','机柜(必填)','IP(必填)','带宽(M)(必填)','防护(G)(必填)','登录名(必填)','登录密码(必填)','机器型号(必填)','使用状态(必填)','业务类型(必填)','上下架(必填)','备注'];//填写的字段
+        $row_value = ['机器编号(必填)','CPU(必填)','内存(必填)','硬盘(必填)','机房(选填)','登录名(选填)','登录密码(选填)','机器型号(必填)','备注'];//填写的字段
         $row = $worksheet->fromArray($row_value,NULL,'A4');//分配字段从A4开始填写（横向）
         $highest_row = $worksheet->getHighestRow();//总行数
         $highest_colum = $worksheet->getHighestColumn();//总列数
@@ -421,7 +421,7 @@ class MachineModel extends Model
         $title_font = [
             'font' => [
                 'bold' => true,//加粗
-                'size' => '24px',//字体大小
+                'size' => '20px',//字体大小
             ],
             'alignment' => [//内容居中
                 'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
@@ -429,13 +429,13 @@ class MachineModel extends Model
         ];
         $worksheet->mergeCells('A1:'.$highest_colum.'1')->getStyle('A1:'.$highest_colum.'1')->applyFromArray($title_font);//设置标题样式
         //说明内容
-        $worksheet->getCell('A2')->setValue("填写说明:填写机房时请参照右边的机房信息,填写对应id(例如A机房的id为1,此时填1);填写机柜时请填写对应机房的机柜id(例如A机房的B机柜的id为2,此时填2);填写IP时请填写对应机房的IP的id(例如:A机房的192.168.1.13的id为3,此时填3);填写防护(单位:G)和带宽(单位:M)只须填写数字即可,填写使用状态,业务类型,上下架时请参照右边对应所需的数字,以上字段请参照右边的对照表");
+        $worksheet->getCell('A2')->setValue("填写说明:填写机房时请参照右边的机房信息,填写对应id(例如A机房的id为1,此时填1);以上字段请参照右边的对照表");
         $worksheet->getStyle('A2')->getFont()->applyFromArray(['bold'=>TRUE,'size'=>'12px']);//说明内容样式
-        $worksheet->getRowDimension('2')->setRowHeight(31);//说明内容行高
+        $worksheet->getRowDimension('2')->setRowHeight(12);//说明内容行高
         $worksheet->mergeCells('A2:'.$highest_colum.'3')->getStyle('A2:'.$highest_colum.'3')->getAlignment()->setWrapText(true);//说明内容自动换行
         //设置字段宽度
         for($i='A';$i<=$highest_colum;$i++){
-            $worksheet->getColumnDimension($i)->setWidth(12);
+            $worksheet->getColumnDimension($i)->setWidth(16);
         }
         $colum = ++$highest_colum;//字段名的列数
         //列名样式
@@ -448,17 +448,18 @@ class MachineModel extends Model
             ],
         ];
         $colum = ++$highest_colum;//说明字段的开始列数
-        $note_value = ['机房(id-名称)','机柜(所属机房-id-机柜编号(适用范围))','IP(所属机房-id-IP详情)','使用状态','业务类型','上下架'];//说明字段
+        $note_value = ['机房(id-名称)'];//说明字段
         $row_note = $worksheet->fromArray($note_value,NULL,$colum.'4');//分配说明字段（横向）
         $highest_colum = $worksheet->getHighestColumn();//总的列数
         $row->getStyle('A4:'.$highest_colum.'4')->applyFromArray($row_font);//设置字段样式
         //设置说明字段样式
         for($i=$colum;$i<=$highest_colum;$i++){
-            $worksheet->getColumnDimension($i)->setWidth(30);
+            $worksheet->getColumnDimension($i)->setWidth(35);
         }
-        $worksheet->mergeCells($colum.'1:'.$highest_colum.'3')->getStyle($colum.'1:'.$highest_colum.'3')->applyFromArray($title_font);//合并说明字段
+        $worksheet->mergeCells($colum.'1:'.$highest_colum.'3')->getStyle($colum.'1')->getFont()->applyFromArray(['bold'=>TRUE,'size'=>'12px']);//合并说明字段
         $worksheet->getCell($colum.'1')->setValue('字段填写对照表(注意:由于数据的随时变化,为了准确性,每次批量前都请重新下载模板)');
-        // $model = new MachineModel();
+        $worksheet->mergeCells($colum.'1:'.$highest_colum.'3')->getStyle($colum.'1:'.$highest_colum.'3')->getAlignment()->setWrapText(true);
+       
         /**
          * 机房数据
          * @var [type]
@@ -466,41 +467,41 @@ class MachineModel extends Model
         $machineroom = $this->machineRooms();
         $machineroom = array_chunk($machineroom,1);
         $worksheet->fromArray($machineroom,NULL,$colum.'5');
-        /**
-         * 机柜数据
-         * @var [type]
-         */
-        $cabinet = $this->cabinet();
-        $cabinet = array_chunk($cabinet,1);
-        $worksheet->fromArray($cabinet,NULL,++$colum.'5');
-        /**
-         * IP数据
-         * @var [type]
-         */
-        $ips = $this->ip();
-        $ips = array_chunk($ips,1);
-        $worksheet->fromArray($ips,NULL,++$colum.'5');
-        /**
-         * 使用状态
-         * @var [type]
-         */
-        $use = ['0--未使用','1--使用中','2--锁定'];
-        $use = array_chunk($use,1);
-        $worksheet->fromArray($use,NULL,++$colum.'5');
-        /**
-         * 业务类型
-         * @var [type]
-         */
-        $business = ['1--租用','2--托管','3--备用'];
-        $business = array_chunk($business,1);
-        $worksheet->fromArray($business,NULL,++$colum.'5');
-        /**
-         * 上下架
-         * @var [type]
-         */
-        $machine_status = ['0--上架','1--下架'];
-        $machine_status = array_chunk($machine_status,1);
-        $worksheet->fromArray($machine_status,NULL,++$colum.'5');
+        // /**
+        //  * 机柜数据
+        //  * @var [type]
+        //  */
+        // $cabinet = $this->cabinet();
+        // $cabinet = array_chunk($cabinet,1);
+        // $worksheet->fromArray($cabinet,NULL,++$colum.'5');
+        // /**
+        //  * IP数据
+        //  * @var [type]
+        //  */
+        // $ips = $this->ip();
+        // $ips = array_chunk($ips,1);
+        // $worksheet->fromArray($ips,NULL,++$colum.'5');
+        // /**
+        //  * 使用状态
+        //  * @var [type]
+        //  */
+        // $use = ['0--未使用','1--使用中','2--锁定'];
+        // $use = array_chunk($use,1);
+        // $worksheet->fromArray($use,NULL,++$colum.'5');
+        // /**
+        //  * 业务类型
+        //  * @var [type]
+        //  */
+        // $business = ['1--租用','2--托管','3--备用'];
+        // $business = array_chunk($business,1);
+        // $worksheet->fromArray($business,NULL,++$colum.'5');
+        // /**
+        //  * 上下架
+        //  * @var [type]
+        //  */
+        // $machine_status = ['0--上架','1--下架'];
+        // $machine_status = array_chunk($machine_status,1);
+        // $worksheet->fromArray($machine_status,NULL,++$colum.'5');
         /**
          * 下载模板
          * @var [type]
@@ -533,7 +534,7 @@ class MachineModel extends Model
         $spreadsheet = $reader->load($file->getRealPath());//加载文件
         $worksheet = $spreadsheet->getActiveSheet();//获取表格的活动区域
         $highest_colum = $worksheet->getHighestColumn();//获取总的列数
-        $highest_colum_num = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($highest_colum)-7;//将总列数转换为数字
+        $highest_colum_num = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($highest_colum)-2;//将总列数转换为数字
         $highest_colum = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($highest_colum_num);//数字转换为列
         for($colum = 'A';$colum <= $highest_colum;$colum++){//转换列名
             switch($worksheet->getCell($colum.'4')->getValue()){
@@ -549,46 +550,46 @@ class MachineModel extends Model
                 case '硬盘(必填)':
                     $colum_value[$colum] = 'harddisk';
                     break;
-                case '机房(必填)':
+                case '机房(选填)':
                     $colum_value[$colum] = 'machineroom';
                     break;
-                case '机柜(必填)':
-                    $colum_value[$colum] = 'cabinet';
-                    break;
-                case 'IP(必填)':
-                    $colum_value[$colum] = 'ip_id';
-                    break;
-                case '带宽(M)(必填)':
-                    $colum_value[$colum] = 'bandwidth';
-                    break;
-                case '防护(G)(必填)':
-                    $colum_value[$colum] = 'protect';
-                    break;
-                case '登录名(必填)':
+                // case '机柜(必填)':
+                //     $colum_value[$colum] = 'cabinet';
+                //     break;
+                // case 'IP(必填)':
+                //     $colum_value[$colum] = 'ip_id';
+                //     break;
+                // case '带宽(M)(必填)':
+                //     $colum_value[$colum] = 'bandwidth';
+                //     break;
+                // case '防护(G)(必填)':
+                //     $colum_value[$colum] = 'protect';
+                //     break;
+                case '登录名(选填)':
                     $colum_value[$colum] = 'loginname';
                     break;
-                case '登录密码(必填)':
+                case '登录密码(选填)':
                     $colum_value[$colum] = 'loginpass';
                     break;
                 case '机器型号(必填)':
                     $colum_value[$colum] = 'machine_type';
                     break;
-                case '使用状态(必填)':
-                    $colum_value[$colum] = 'used_status';
-                    break;
-                case '业务类型(必填)':
-                    $colum_value[$colum] = 'business_type';
-                    break;
-                case '上下架(必填)':
-                    $colum_value[$colum] = 'machine_status';
-                    break;
+                // case '使用状态(必填)':
+                //     $colum_value[$colum] = 'used_status';
+                //     break;
+                // case '业务类型(必填)':
+                //     $colum_value[$colum] = 'business_type';
+                //     break;
+                // case '上下架(必填)':
+                //     $colum_value[$colum] = 'machine_status';
+                //     break;
                 case '备注':
                     $colum_value[$colum] = 'machine_note';
                     break;
             }
         }
         $mysql = Schema::getColumnListing($this->table);//获取数据库中的字段
-        if(empty($colum_value) && count(array_intersect($colum_value,$mysql) != 16)){//判断列名是否与数据库一致
+        if(empty($colum_value) && count(array_intersect($colum_value,$mysql) != 9)){//判断列名是否与数据库一致
             $return['data'] = '';
             $return['code'] = 0;
             $return['msg'] = '请从网站下载正确的模板填写!!';

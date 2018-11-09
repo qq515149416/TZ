@@ -2,30 +2,35 @@
 
 namespace App\Http\Controllers\DefenseIp;
 
+use App\Http\Models\DefenseIp\BusinessModel;
+use App\Http\Models\DefenseIp\StoreModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class TestController extends Controller
 {
 
+
+
+
     /**
      * 测试方法
      */
     public function test()
     {
-        dump('123');
-        dump(config('tz_defense_ip.username'));
+//        $InfoM = new InfoController();
+
+        dump(StoreModel::find(1)->get()->toArray());
         die();
 
-        $host   = '5.5.5.12';
-        $target = '6.6.6.6';
-//        $data   = json_decode($this->createTarget($host, $target), true);  //添加主机地址
-//        $data   = json_decode($this->getState($host, '2018-12-08'), true);  //删除主机地址
-//        $data   = json_decode($this->deleteTarget($host), true);  //获取图表
+        $setM = new SetController();
 
-        $tModel= new ApiController();
+        $setM->setTarget();
 
-        dump($tModel->createTarget($host,$target));
+//        dump($InfoM->statistics());
+//        $InfoM->statistics();
+//        $g = new ApiController();
+//        dump($g->updateTarget('1.1.1.1','2.2.2.2'));
     }
 
 

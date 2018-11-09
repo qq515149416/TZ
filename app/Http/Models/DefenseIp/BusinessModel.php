@@ -5,11 +5,11 @@ namespace App\Http\Models\DefenseIp;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class SellModel extends Model
+class BusinessModel extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'tz_defenseip_sell'; //表
+    protected $table = 'tz_defenseip_business'; //表
     protected $primaryKey = 'id'; //主键
     protected $dates = ['deleted_at']; //删除时间
 
@@ -18,7 +18,9 @@ class SellModel extends Model
      */
     public function test()
     {
+        $data=$this->find(1)->get()->toArray();
 
+        return $data;
     }
 
 }

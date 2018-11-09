@@ -50,6 +50,22 @@ class ApiController extends Controller
 
 
     /**
+     * 修改目标地址
+     */
+    public function updateTarget($host, $target)
+    {
+
+        $deleteUrl = $this->host . '/openapi/giphost?type=delete&host=' . $host . '&user=' . $this->username . '&password=' . $this->password;
+        $createUrl = $this->host . '/openapi/giphost?type=create&host=' . $host . '&target=' . $target . '&user=' . $this->username . '&password=' . $this->password;
+
+        $this->executeCurl($deleteUrl);  //先执行删除
+        $res = $this->executeCurl($createUrl); //再执行添加
+
+        return $res;
+    }
+
+
+    /**
      * 获取图表数据
      *
      * @param $host

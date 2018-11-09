@@ -59,8 +59,7 @@ class WhiteListRequest extends FormRequest
 					],
 					'record_number' => 'required',
 					'binding_machine' => 'required',
-					'customer_id' => 'required|integer',
-					'customer_name' => 'required',
+					'customer_id' => 'required|integer|exists:tz_users,id',
 					];
 				break;
 			case 'check':
@@ -92,8 +91,9 @@ class WhiteListRequest extends FormRequest
 			'domain_name.required'	=> '域名必须填写',
 			'record_number.required'	=> '备案编号必须填写',
 			'binding_machine.required'	=> '机器编号必须填写',
-			'customer_id.required'		=> '客户编号必须填写',
-			'customer_id.integer' 		=> '客户编号必须为正整数',
+			'customer_id.required'		=> '客户id必须填写',
+			'customer_id.integer' 		=> '客户id必须为正整数',
+			'customer_id.exists' 		=> '客户id不存在',
 			'customer_name.required'	=> '客户姓名必须填写',
 			'id.required'			=> '请提供所需审核的编号',
 			'id.integer' 			=> '审核所需的编号必须为正整数',

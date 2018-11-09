@@ -42,7 +42,7 @@ class WorkOrderPost extends React.Component {
             work_order_type: this.selectTypeId
         }).then(res => {
             if(res.data.code==1) {
-                alert("工单提交成功");
+                alert(res.data.msg);
                 this.setState({
                     currency: 0,
                     currency2: 0

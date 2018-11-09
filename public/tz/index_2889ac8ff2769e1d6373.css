@@ -133,9 +133,25 @@
     font-size: 14px;
     line-height: 40px;
 }
+
+.page[data-v-223ed029] {
+    margin-top: 10px;
+    float: left;
+}
+.clear[data-v-223ed029]:before,.clear[data-v-223ed029]:after {
+    content:"";
+    display:table;
+}
+.clear[data-v-223ed029]:after { 
+    clear:both;
+}
+.operat[data-v-223ed029] {
+     text-align: right;
+     margin-bottom: 10px;
+}
 body,
 html {
   height: 100%;
 }
 
-/*# sourceMappingURL=index_40243b50d9218c98515d.css.map*/
+/*# sourceMappingURL=index_2889ac8ff2769e1d6373.css.map*/

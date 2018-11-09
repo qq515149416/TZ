@@ -42,7 +42,11 @@ class WorkOrderPost extends React.Component {
             work_order_type: this.selectTypeId
         }).then(res => {
             if(res.data.code==1) {
-                alert("工单提交成功");
+                alert(res.data.msg);
+                this.setState({
+                    currency: 0,
+                    currency2: 0
+                });
                 this.close();
             } else {
                 alert(res.data.msg);
@@ -74,7 +78,7 @@ class WorkOrderPost extends React.Component {
             //         });
             //     }
             // });
-            if(this.props.workOrderTypesStores.workOrderTypes.filter(item => {
+            if(!this.props.workOrderTypesStores.workOrderTypes.filter(item => {
                 return item.parent_id == event.target.value;
             }).length) {
                 this.selectTypeId = event.target.value;
@@ -129,7 +133,7 @@ class WorkOrderPost extends React.Component {
                                     </MenuItem>
                                 ))
                             }
-                            
+
                         </TextField>
                     </Grid>
                     <Grid item xs={6}>

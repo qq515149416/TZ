@@ -76,7 +76,6 @@ Route::group([
     $router->get('/finance', 'Show\FinanceController@index');
     $router->get('/statisticalPerformance', 'Show\StatisticalPerformanceController@index');
     $router->get('/whitelist', 'Show\WhitelistController@index');
-    $router->get('/work_order_type', 'Show\WorkOrderTypeController@index');
     $router->get('/work_order', 'Show\WorkOrderTypeController@index');
     $router->get('/system_info', 'Show\SystemInformationController@index');
     $router->get('/hr/departmentview', 'Show\DepartmentController@index');
@@ -84,6 +83,9 @@ Route::group([
     $router->get('/hr/usermanagement', 'Show\UserManagementController@index');
     $router->get('/checkrecharge', 'Show\RechargeController@index');
     $router->get('/reviewRecharge', 'Show\ReviewRechargeController@index');
+    $router->get('/pwdDepartment', 'Show\WorkOrderTypeController@getPwdDepart');
+    $router->get('/work_order_type', 'Show\WorkOrderTypeController@index');
+
 
 
 //人事
@@ -232,7 +234,8 @@ Route::group([
     Route::group([
         'prefix' => 'pfmStatistics',
     ],function (Router $router) {
-        $router->get('pfmStatisticsList', 'Statistics\PfmStatisticsController@index');
+        $router->get('pfmBig', 'Statistics\PfmStatisticsController@index');
+        $router->get('pfmSmall', 'Statistics\PfmStatisticsController@pfmSmall');
     });
 
      //充值情况统计

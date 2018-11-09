@@ -13,18 +13,15 @@ use Illuminate\Support\Facades\DB;
 
 class WorkOrderTypeController extends script
 {
+    public function getPwdDepart() {
+        return tz_ajax_echo(DB::table('oa_staff')
+        ->join('tz_department','oa_staff.department','=','tz_department.id')
+        ->where('oa_staff.admin_users_id',Admin::user()->id)
+        ->select('tz_department.id','tz_department.depart_number','tz_department.depart_name','tz_department.sign')
+        ->first(),"获取成功",1);
+    }
     public function index()
-    {	
-    	$department = DB::table('oa_staff')
-        					->join('tz_department','oa_staff.department','=','tz_department.id')
-        					->where('oa_staff.admin_users_id',Admin::user()->id)
-        					->select('tz_department.id','tz_department.depart_number','tz_department.depart_name','tz_department.sign')
-            				->first();
-       	// Admin::user()->depart_id = $department->id;
-       	// Admin::user()->depart_number = $department->depart_number;
-       	// Admin::user()->depart_name = $department->depart_name;
-       	// Admin::user()->sign = $department->sign;
-            				session(['depart'=>$department]);
+    {
         return Admin::content(function (Content $content) {
             $content->header('工单列表');
             $content->description('工单操作');

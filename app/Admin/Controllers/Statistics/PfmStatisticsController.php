@@ -33,53 +33,20 @@ class PfmStatisticsController extends Controller
 	* @return 	json 返回相关的信息
 	*/
 	public function index( PfmStatisticsRequest $request){
-		//获取查询月份
-		$par = $request->only('month');
-		//如无传值,则查当月
-		if(isset($par['month'])){
-			$month = $par['month'];
-		}else{
-			$month = date("Ym");
-		}
-
-		//更新统计数据
-		$res = $this->pfmStatistics($month);
-		if($res['code'] != 1){
-			return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
-		}else{
-			$msg = $res['msg'].',';
-		}
 		
-		//获取统计数据
+		$par = $request->only(['begin','end']);
 		$pfmModel = new PfmStatistics();
-		$info = $pfmModel->getStatistics($month);	
+		$return = $pfmModel->getStatistics($par['begin'],$par['end']);
 
-		return tz_ajax_echo($info['data'],$msg.$info['msg'],$info['code']);
-
+		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
 	}
 
-
-	/**
-	 * 按月份统计业务员业绩
-	 * @param 	$month
-	 * @return code,1为更新成功,0为失败
-	 */
-
-	public function pfmStatistics($month)
-	{
-		//如需单独调用此接口,放出下面的,再改下参数
-		// $par = $request->only('month');
-		// if(isset($par['month'])){
-		// 	$month = $par['month'];
-		// }else{
-		// 	return tz_ajax_echo([],'参数错误!!',0);
-		// }
-
+	public function pfmSmall(PfmStatisticsRequest $request){
+		$par = $request->only(['begin','end']);
+		$user_id = Admin::user()->id;
 		$pfmModel = new PfmStatistics();
-		$result = $pfmModel->statistics($month);
+		$return = $pfmModel->getStatisticsSmall($par['begin'],$par['end'],$user_id);
 
-		return $result;
-
+		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
 	}
-
 }

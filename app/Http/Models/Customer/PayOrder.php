@@ -26,7 +26,7 @@ class PayOrder extends Model
 	protected $primaryKey = 'id'; //主键
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
-	protected $fillable = ['serial_number', 'subject','customer_id','payable_money','actual_payment','preferential_amount','pay_type','pay_status','pay_time','before_money','after_money','voucher','coupon_id'];
+	protected $fillable = ['serial_number', 'subject','customer_id','payable_money','actual_payment','preferential_amount','pay_type','pay_status','pay_time','before_money','after_money','voucher','coupon_id','business_id'];
 
 	
 	/**
@@ -79,7 +79,6 @@ class PayOrder extends Model
 		$updateData['pay_time']	= $pay_time;
 		$updateData['pay_status']	= 1;
 		$updateData['month']		= date("Ym");
-		$updateData['business_id']	= DB::table('tz_users')->where('id',$row['customer_id'])->value('salesman_id');
 						
 		//对支付流水订单更新支付信息
 		$updateRes = $this->where('id',$row['id'])->update($updateData);
@@ -210,10 +209,10 @@ class PayOrder extends Model
 			1 	=> '新购',
 			2 	=> '续费',
 		];
-
+		$bijiao = 0;
 		for ($i=0; $i < count($order_id) ; $i++) { 
 
-			$order = DB::table('tz_orders')->where('id',$order_id[$i])->first();
+			$order = DB::table('tz_orders')->where('id',$order_id[$i])->where('customer_id',$user_id)->first();
 
 			if($order == NULL){
 				DB::rollBack();
@@ -240,13 +239,17 @@ class PayOrder extends Model
 			*/
 			$updateInfo['payable_money'] = bcmul($order->price,$order->duration,2);
 			$updateInfo['achievement'] = $updateInfo['payable_money'];
-		
+			
 			//计算支付流水应付金额
 			$payable_money = bcadd($payable_money,$updateInfo['payable_money'],2);
 			//拼接商品名
 			$subject.= $brr[$order->order_type].$arr[$order->resource_type].'、';
 			$customer_id = $order->customer_id;
-
+			if($bijiao < $updateInfo['achievement']){
+				$bijiao = $updateInfo['achievement'];
+				$business_id = $order->business_id;
+			}
+			
 			$update = DB::table('tz_orders')->where('id',$order_id[$i])->update($updateInfo);
 			if($update == 0){
 				DB::rollBack();
@@ -254,7 +257,7 @@ class PayOrder extends Model
 				return $return;
 			}
 		}
-
+	
 		$subject = substr($subject, 0, -3);
 		$actual_payment = $this->countCoupon($payable_money,$coupon_id);
 		$preferential_amount = bcsub($payable_money,$actual_payment,2);
@@ -269,6 +272,7 @@ class PayOrder extends Model
 			'pay_status'		=> 0,
 			'coupon_id'		=> $coupon_id,
 			'created_at'		=> date('Y-m-d H:i:s',time()),
+			'business_id'		=> $business_id,
 		];
 		$creatFlow = $this->create($flow);
 		if($creatFlow == false){
@@ -472,7 +476,7 @@ class PayOrder extends Model
 		$updateData['voucher']		= $data['voucher'];
 		$updateData['month']		= date("Ym");
 		$customer_id 			= $this->where('serial_number',$data['serial_number'])->value('customer_id');
-		$updateData['business_id']	= DB::table('tz_users')->where('id',$customer_id)->value('salesman_id');
+		
 		//
 		DB::beginTransaction();
 		$row = $this->where('serial_number',$data['serial_number'])->update($updateData);

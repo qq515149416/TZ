@@ -13,7 +13,7 @@ class StatisticalPerformancesStores extends ActionBoundStores {
     ];
     @action.bound
     getData(param={}) {
-        let url = 'pfmStatistics/pfmStatisticsList';
+        let url = 'pfmStatistics/pfmBig';
         if(location.search.indexOf("?type=recharge") > -1) {
             url = 'rechargeStatistics/list';
         }

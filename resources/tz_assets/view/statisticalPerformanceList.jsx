@@ -14,13 +14,18 @@ const styles = theme => ({
 });
 let title = "业绩统计";
 let columnData = [
-    { id: 'salesman', numeric: true, disablePadding: false, label: '业务员' },
-    { id: 'all_arrears', numeric: true, disablePadding: false, label: '总的欠款' },
-    { id: 'this_arrears', numeric: true, disablePadding: false, label: '当月欠款' },
-    { id: 'achievement', numeric: true, disablePadding: false, label: '订单业绩' },
-    { id: 'total_money', numeric: true, disablePadding: false, label: '总消费额' },
-    { id: 'updated_at', numeric: true, disablePadding: false, label: '统计时间' },
-    { id: 'month', numeric: true, disablePadding: false, label: '统计的月份' }
+    { id: 'user_name', numeric: true, disablePadding: false, label: '业务员' },
+    { id: 'new_achievement', numeric: true, disablePadding: false, label: '新购金额' },
+    { id: 'old_achievement', numeric: true, disablePadding: false, label: '续费金额' },
+    { id: 'new_arrears', numeric: true, disablePadding: false, label: '新购未付款' },
+    { id: 'old_arrears', numeric: true, disablePadding: false, label: '续费未付款' },
+    { id: 'total_money', numeric: true, disablePadding: false, label: '总消费金额' },
+    { id: 'achievement', numeric: true, disablePadding: false, label: '有效业绩' },
+    { id: 'operat', numeric: true, disablePadding: false, extend: true, extendData: [
+        {id: "all_arrears", label: "历史订单总额", type: "text"},
+        {id: "preferential_amount", label: "优惠券扣除金额", type: "text"},
+        {id: "this_arrears", label: "订单总额", type: "text"}
+    ], label: '操作'}
 ];
 if(location.search.indexOf("?type=recharge") > -1) {
     columnData = [

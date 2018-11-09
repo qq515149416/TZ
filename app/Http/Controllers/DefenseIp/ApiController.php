@@ -21,27 +21,15 @@ class ApiController extends Controller
         $this->username = config('tz_defense_ip.username');  //加载配置文件中的API用户名
         $this->password = config('tz_defense_ip.password');  //加载配置文件中的API密码
         $this->host     = config('tz_defense_ip.host');  //加载配置文件中的API地址
-    }
 
 
-    /**
-     * 测试方法
-     */
-    public function test()
-    {
-        $host   = '5.5.5.12';
-        $target = '6.6.6.6';
-//        $data   = json_decode($this->createTarget($host, $target), true);  //添加主机地址
-//        $data   = json_decode($this->getState($host, '2018-12-08'), true);  //删除主机地址
-        $data   = json_decode($this->deleteTarget($host), true);  //获取图表
-        dump($data);
     }
 
 
     /**
      *  添加目标地址
      */
-    private function createTarget($host, $target)
+    public function createTarget($host, $target)
     {
         //API 接口
         $url = $this->host . '/openapi/giphost?type=create&host=' . $host . '&target=' . $target . '&user=' . $this->username . '&password=' . $this->password;
@@ -53,7 +41,7 @@ class ApiController extends Controller
     /**
      * 删除目标地址
      */
-    private function deleteTarget($host)
+    public function deleteTarget($host)
     {
         $url = $this->host . '/openapi/giphost?type=delete&host=' . $host . '&user=' . $this->username . '&password=' . $this->password;
         $res = $this->executeCurl($url);
@@ -68,9 +56,9 @@ class ApiController extends Controller
      * @param $date
      * @return mixed
      */
-    private function getState($host,$date)
+    public function getState($host, $date)
     {
-        $url=  $this->host . '/openapi/giphoststate?host=' . $host . '&user=' . $this->username . '&password=' . $this->password.'&date='.$date;
+        $url = $this->host . '/openapi/giphoststate?host=' . $host . '&user=' . $this->username . '&password=' . $this->password . '&date=' . $date;
         $res = $this->executeCurl($url);
         return $res;
     }
@@ -78,7 +66,7 @@ class ApiController extends Controller
     /**
      * 执行CURL
      */
-    private function executeCurl($url)
+    protected function executeCurl($url)
     {
         $ch = curl_init();//初始化curl
         curl_setopt($ch, CURLOPT_URL, $url);//设置url属性
@@ -89,6 +77,13 @@ class ApiController extends Controller
         return $output;
     }
 
+    /**
+     * 对状态进行判断     TODO  状态判断
+     */
+    protected function state()
+    {
+
+    }
 
 
     /**

@@ -76,7 +76,9 @@ class WhiteListModel extends Model
 	 */
 	public function showWhiteList($where){
 		//获取模型
-		$result = $this->where($where)->get(['id','white_number','domain_name','record_number','binding_machine','customer_id','customer_name','submit_id','submit_name','submit','submit_note','check_id','check_number','check_time','check_note','white_status','created_at']);
+		$result = $this->where($where)
+			->orderBy('created_at','desc')
+			->get(['id','white_number','domain_name','record_number','binding_machine','customer_id','customer_name','submit_id','submit_name','submit','submit_note','check_id','check_number','check_time','check_note','white_status','created_at']);
 		//返回
 		if(!$result->isEmpty()){
 			//转换信息

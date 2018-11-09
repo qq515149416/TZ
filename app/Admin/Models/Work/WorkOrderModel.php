@@ -121,9 +121,28 @@ class WorkOrderModel extends Model
         $work_data['submitter_name'] = Admin::user()->name?Admin::user()->name:Admin::user()->username;//提交者姓名
         $work_data['submitter'] = 2;//提交方客户
         $work_data['work_order_status'] = 0;//工单状态
-        //$work_data['process_department'] = $this->department()->id;//转发部门
+        $work_data['process_department'] = $this->department()->id;//转发部门
         $row = $this->create($work_data);
         if($row != false){
+            $submitter = [1=>'客户',2=>'内部人员'];
+            $work_status = [0=>'待处理',1=>'处理中',2=>'完成',3=>'取消'];
+             // 提交方的转换
+            $row->submit = $submitter[$row->submitter];
+            // 工单状态的转换
+            $row->workstatus = $work_status[$row->work_order_status];
+            // 工单类型
+            $worktype = $this->workType($row->work_order_type);
+            $row->worktype = $worktype->parenttype?'【'.$worktype->parenttype.'】 -- 【'.$worktype->type_name.'】':'【'.$worktype->type_name.'】';
+            // 当前处理部门
+            $row->department = $this->department($row->process_department)->depart_name;
+            // 对应的业务数据
+            $business = $this->businessDetail($row->business_num);
+            $row->client_name = $business->client_name;
+            $row->business_type = $business->business_type;    
+            $row->machine_number = $business->machine_number;
+            $row->resource_detail = $business->resource_detail;
+            $row->sales_name = $business->sales_name;
+            // simulation_request('http://127.0.0.1:8121',$row,'post');
             $return['data'] = $row->id;
             $return['code'] = 1;
             $return['msg'] = '工单提交成功,工单号:'.$row->work_order_number;

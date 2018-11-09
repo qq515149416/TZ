@@ -234,7 +234,8 @@ Route::group([
     Route::group([
         'prefix' => 'pfmStatistics',
     ],function (Router $router) {
-        $router->get('pfmStatisticsList', 'Statistics\PfmStatisticsController@index');
+        $router->get('pfmBig', 'Statistics\PfmStatisticsController@index');
+        $router->get('pfmSmall', 'Statistics\PfmStatisticsController@pfmSmall');
     });
 
      //充值情况统计

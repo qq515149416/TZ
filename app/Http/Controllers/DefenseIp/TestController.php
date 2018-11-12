@@ -19,14 +19,15 @@ class TestController extends Controller
     public function test()
     {
 //        $InfoM = new InfoController();
+//        $InfoM->showList();
 
-        dump(StoreModel::find(1)->get()->toArray());
-        die();
 
+//        dump(StoreModel::find(2));
+//        die();
+//
         $setM = new SetController();
-
         $setM->setTarget();
-
+//        return '123';
 //        dump($InfoM->statistics());
 //        $InfoM->statistics();
 //        $g = new ApiController();

@@ -33,7 +33,6 @@ const columnData = [
     { id: 'payable_money', numeric: true, disablePadding: true, label: '应付金额' },
     { id: 'end_time', numeric: true, disablePadding: true, label: '到期时间' },
     { id: 'pay_type', numeric: true, disablePadding: true, label: '支付方式' },
-    { id: 'pay_price', numeric: true, disablePadding: true, label: '实付金额' },
     { id: 'operat', numeric: true, disablePadding: false, extend: true, extendData: [
         {id: "business_sn", label: "业务号", type: "text"},
         {id: "before_money", label: "支付前余额", type: "text"},

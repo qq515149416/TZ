@@ -371,6 +371,16 @@ Route::group([
 
             $router->get('test','Defenseip\StoreController@form');
         });
+
+        Route::group([
+            'prefix' => 'package',
+        ], function (Router $router) {
+            $router->post('insert','Defenseip\PackageController@insert');
+            $router->get('del','Defenseip\PackageController@del');
+            $router->get('edit','Defenseip\PackageController@edit');
+            $router->get('show','Defenseip\PackageController@show');
+        });
+
        
     });
 

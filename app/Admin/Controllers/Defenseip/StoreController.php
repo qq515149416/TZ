@@ -7,7 +7,6 @@ use Encore\Admin\Controllers\ModelForm;
 use App\Admin\Models\Defenseip\StoreModel;
 use Illuminate\Http\Request;
 use App\Admin\Requests\Defenseip\StoreRequest;
-use Encore\Admin\Facades\Admin;
 
 
 class StoreController extends Controller

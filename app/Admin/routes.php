@@ -361,12 +361,17 @@ Route::group([
     Route::group([
         'prefix' => 'defenseip',
     ],function(Router $router){
-        $router->post('insert','Defenseip\StoreController@insert');
-        $router->get('del','Defenseip\StoreController@del');
-        $router->get('edit','Defenseip\StoreController@edit');
-        $router->get('show','Defenseip\StoreController@show');
+        Route::group([
+            'prefix' => 'store',
+        ], function (Router $router) {
+            $router->post('insert','Defenseip\StoreController@insert');
+            $router->get('del','Defenseip\StoreController@del');
+            $router->get('edit','Defenseip\StoreController@edit');
+            $router->get('show','Defenseip\StoreController@show');
 
-        $router->get('test','Defenseip\StoreController@form');
+            $router->get('test','Defenseip\StoreController@form');
+        });
+       
     });
 
 });

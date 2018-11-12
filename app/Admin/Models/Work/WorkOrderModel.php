@@ -124,25 +124,25 @@ class WorkOrderModel extends Model
         $work_data['process_department'] = $this->department()->id;//转发部门
         $row = $this->create($work_data);
         if($row != false){
-            $submitter = [1=>'客户',2=>'内部人员'];
-            $work_status = [0=>'待处理',1=>'处理中',2=>'完成',3=>'取消'];
-             // 提交方的转换
-            $row->submit = $submitter[$row->submitter];
-            // 工单状态的转换
-            $row->workstatus = $work_status[$row->work_order_status];
-            // 工单类型
-            $worktype = $this->workType($row->work_order_type);
-            $row->worktype = $worktype->parenttype?'【'.$worktype->parenttype.'】 -- 【'.$worktype->type_name.'】':'【'.$worktype->type_name.'】';
-            // 当前处理部门
-            $row->department = $this->department($row->process_department)->depart_name;
-            // 对应的业务数据
-            $business = $this->businessDetail($row->business_num);
-            $row->client_name = $business->client_name;
-            $row->business_type = $business->business_type;    
-            $row->machine_number = $business->machine_number;
-            $row->resource_detail = $business->resource_detail;
-            $row->sales_name = $business->sales_name;
-            // simulation_request('http://127.0.0.1:8121',$row,'post');
+            // $submitter = [1=>'客户',2=>'内部人员'];
+            // $work_status = [0=>'待处理',1=>'处理中',2=>'完成',3=>'取消'];
+            //  // 提交方的转换
+            // $row->submit = $submitter[$row->submitter];
+            // // 工单状态的转换
+            // $row->workstatus = $work_status[$row->work_order_status];
+            // // 工单类型
+            // $worktype = $this->workType($row->work_order_type);
+            // $row->worktype = $worktype->parenttype?'【'.$worktype->parenttype.'】 -- 【'.$worktype->type_name.'】':'【'.$worktype->type_name.'】';
+            // // 当前处理部门
+            // $row->department = $this->department($row->process_department)->depart_name;
+            // // 对应的业务数据
+            // $business = $this->businessDetail($row->business_num);
+            // $row->client_name = $business->client_name;
+            // $row->business_type = $business->business_type;    
+            // $row->machine_number = $business->machine_number;
+            // $row->resource_detail = $business->resource_detail;
+            // $row->sales_name = $business->sales_name;
+            // curl('http://127.0.0.1:8121',$row);
             $return['data'] = $row->id;
             $return['code'] = 1;
             $return['msg'] = '工单提交成功,工单号:'.$row->work_order_number;
@@ -162,6 +162,30 @@ class WorkOrderModel extends Model
     public function editWorkOrder($editdata){
     	if($editdata){
     		$edit = $this->find($editdata['id']);
+            $user_id = Admin::user()->id;
+            $staff = $this->staff($user_id);
+            if($staff->slug != 2){
+                if($edit->work_order_status == 2){
+                    $return['code'] = 0;
+                    $return['msg'] = '工单是已完成的,您无权对其进行再次操作!!';
+                    return $return;
+                }
+                if($edit->work_order_status == 3){
+                    $return['code'] = 0;
+                    $return['msg'] = '工单是已取消的,您无权对其进行再次操作!!';
+                    return $return;
+                }
+                if($edit->work_order_status == 1 && $editdata['work_order_status']==0){
+                    $return['code'] = 0;
+                    $return['msg'] = '您无权对处理中的工单的状态修改为待处理!!';
+                    return $return;
+                }
+                if($edit->work_order_status == 1 && $editdata['work_order_status']==3){
+                    $return['code'] = 0;
+                    $return['msg'] = '您无权对处理中的工单的状态修改为取消!!';
+                    return $return;
+                }
+            }
     		// 当工单处理状态修改为2完成时
     		if($editdata['work_order_status'] == 2){
     			// 存入完成时间

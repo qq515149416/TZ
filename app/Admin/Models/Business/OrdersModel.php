@@ -197,6 +197,33 @@ class OrdersModel extends Model
             $return['msg'] = '资源增加失败';
             return $return;
         }
+        // 'business_sn','customer_id','customer_name','resource_type','machine_sn','resource','price','duration'
+        if($insert_data['price'] == '0.00'){
+            $order_flow['serial_number'] = 'tz_'.time().'_'.$insert_data['customer_id'];
+            $resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn'];
+            $order_flow['subject'] = '赠送'.$resource_type[$insert_data['resource_type']];
+            $order_flow['customer_id'] = $insert_data['customer_id'];
+            $order_flow['business_id'] = Admin::user()->id;
+            $order_flow['payable_money'] = $insert_data['price'];
+            $order_flow['actual_payment'] = $insert_data['price'];
+            $order_flow['preferential_amount'] = '0.00';
+            $order_flow['pay_type'] = 1;
+            $order_flow['pay_status'] = 1;
+            $order_flow['pay_time'] = date('Y-m-d H:i:s',time());
+            $money = DB::table('tz_users')->where(['id'=>$insert_data['customer_id']])->value('money');
+            $order_flow['before_money'] = $money;
+            $order_flow['after_money'] = bcsub($money,$insert_data['price'],2);
+            $order_flow['month'] = (int)date('Ym',time());
+            $order_flow['created_at'] = date('Y-m-d H:i:s',time());
+            $flow_row = DB::table('tz_orders_flow')->insert($order_flow);
+            if($flow_row == 0){
+                DB::rollBack();
+                $return['data'] = '';
+                $return['code'] = 0;
+                $return['msg'] = '资源增加失败';
+            }
+
+        }
         $machine['business_end'] = $insert_data['end_time'];
         switch ($insert_data['resource_type']) {
             case 4:

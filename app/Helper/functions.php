@@ -53,53 +53,75 @@ function tz_time_test()
 }
 
 /**
- * 模拟请求
- * @param  string $url          需要请求的url
- * @param  array/string $request_data 需要传递的值
- * @param  string $method       传输方式,默认为get
- * @return [type]               返回信息
+ * curl模拟请求
+ * @param  [type]  $url   请求的url地址
+ * @param  string  $params 需要传递的参数
+ * @param  integer $return 是否返回
+ * @param  array   $header 头部信息
+ * @param  array   $cookie cookie
+ * @param  array   $option 其他参数
+ * @return [type]          [description]
  */
-function simulation_request($url,$request_data,$method = 'get'){
-	if(!$url){
-		return '需传递访问的url';
+function curl($url, $params ='', $return = 1, $header = array(), $cookie = array(), $option = array())
+{
+	$ch = curl_init($url); // 初始化curl并设置链接
+	// curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 8);
+	// 设置是否为post传递
+	curl_setopt($ch, CURLOPT_POST, (bool)$params);
+	// 对于https 设定为不验证证书和host
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, $return);//设置是否返回信息
+
+	if($cookie)
+	{
+		$key = array_keys($cookie);
+		curl_setopt($ch, $key[0]=='jar' ? CURLOPT_COOKIEJAR : CURLOPT_COOKIEFILE, $cookie['file']);
 	}
 
-	if(!$request_data){
-		return '需传递的数据';
+	if($params)
+	{
+		if(is_array($params))
+		{
+			$params = http_build_query($params);
+		}
+		// POST 数据
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 	}
-	$post_url = $url;//需要访问的url
-	$post_data = $request_data;//需要传递的数据
-	switch ($method) {
-		case 'get':
-			$init = curl_init();
-			curl_setopt($init, CURLOPT_URL, $post_url);//url处理
-			curl_setopt($init, CURLOPT_HEADER, 0);//header头
-			curl_setopt($init, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($init, CURLOPT_SSL_VERIFYPEER, false);//跳过证书检查
-			curl_setopt($init, CURLOPT_SSL_VERIFYHOST, false);//从证书检验算法是否存在
-			$result = curl_exec($init);//运行curl
-			curl_close($init);
-			break;
 
-		case 'post':
-			$init = curl_init($post_url);//初始化
-			curl_setopt($init,CURLOPT_CUSTOMREQUEST,'POST');//post提交方式
-			curl_setopt($init,CURLOPT_POSTFIELDS,$post_data);//传输数据
-			curl_setopt($init,CURLOPT_RETURNTRANSFER,true);//
-			curl_setopt($init,CURLOPT_SSL_VERIFYPEER,FALSE);//跳过证书检查
-			curl_setopt($init, CURLOPT_TIMEOUT, 60);//超时
-			curl_setopt($init, CURLOPT_HTTPHEADER, array(
-					'Content-Type: application/json',
-					'Content-Length: ' . strlen($post_data)
-			));
-			$result = curl_exec($init);//运行curl
-			curl_close($init);
-			break;
-
-		default:
-			
-			break;
+	if($header)
+	{
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $header); //设置头信息的地方
 	}
-	return $result;
+	else
+	{
+		PHP_SAPI != 'cli' && isset($_SERVER['HTTP_USER_AGENT']) && curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+	}
 
+	foreach($option as $key => $val)
+	{
+		curl_setopt($ch, $key, $val);
+	}
+
+	$response = curl_exec($ch); // 执行并接收返回信息
+
+	if(curl_errno($ch))
+	{
+		// 出错则显示错误信息
+		exit(curl_error($ch));
+	}
+
+	if(! empty($option[CURLOPT_HEADER]))
+	{
+		// 获得响应结果里的：头大小
+		$header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+		// 根据头大小去获取头信息内容
+		$_EVN['CURL_HEADER'] = substr($response, 0, $header_size);
+		$response = substr($response, $header_size);
+	}
+
+	curl_close($ch); // 关闭curl链接
+	return $response;
 }

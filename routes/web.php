@@ -213,7 +213,7 @@ Route::group([
             'middleware' => 'CheckLogin',
         ], function () {
             Route::get('getInfo', 'DefenseIp\InfoController@showList');  //获取高防IP 列表
-            Route::post('getInfo', 'DefenseIp\InfoController@showList');  //获取高防IP 列表
+            Route::post('setTarget', 'DefenseIp\SetController@setTarget');  //配置目标IP
         });
 
     });

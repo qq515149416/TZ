@@ -94,6 +94,29 @@ class WorkOrderModel extends Model
 		$insert_data['process_department'] = $this->department()->id;//转发部门
 		$row = $this->create($insert_data);
 		if($row != false){
+            /**
+             * 当提交工单成功的时候使用curl进行模拟传值，发送数据到实时推送接口
+             * @var [type]
+             */
+            $submitter = [1=>'客户',2=>'内部人员'];
+            $work_status = [0=>'待处理',1=>'处理中',2=>'完成',3=>'取消'];
+            // 提交方的转换
+            $row->submit = $submitter[$row->submitter];
+            // 工单状态的转换
+            $row->workstatus = $work_status[$row->work_order_status];
+            // 工单类型
+            $worktype = $this->workType($row->work_order_type);
+            $row->worktype = $worktype->parenttype?'【'.$worktype->parenttype.'】 -- 【'.$worktype->type_name.'】':'【'.$worktype->type_name.'】';
+            // 当前处理部门
+            $row->department = $this->department($row->process_department)->depart_name;
+            // 对应的业务数据
+            $business = $this->businessDetail($row->business_num);
+            $row->client_name = $business->client_name;
+            $row->business_type = $business->business_type;    
+            $row->machine_number = $business->machine_number;
+            $row->resource_detail = $business->resource_detail;
+            $row->sales_name = $business->sales_name;
+            curl('http://127.0.0.1:8121',$row);
 			$return['data'] = $row->id;
 			$return['code'] = 1;
 			$return['msg'] = '工单提交成功,等待工作人员处理,您的工单号:'.$row->work_order_number;

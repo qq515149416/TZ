@@ -361,15 +361,27 @@ Route::group([
     Route::group([
         'prefix' => 'defenseip',
     ],function(Router $router){
-        $router->post('insert','Defenseip\StoreController@insert');
-        $router->get('showOverdueMachine','Overdue\OverdueController@showOverdueMachine');
-        $router->get('showOverdueRes','Overdue\OverdueController@showOverdueRes');
-        $router->get('showUnpaidMachine','Overdue\OverdueController@showUnpaidMachine');
-        $router->get('showXiaJiaMachine','Overdue\OverdueController@showXiaJiaMachine');
-        $router->get('showUnpaidCabinet','Overdue\OverdueController@showUnpaidCabinet');
-        $router->get('showXiaJiaRes','Overdue\OverdueController@showXiaJiaRes');
-        $router->get('showOverdueResDet','Overdue\OverdueController@showOverdueResDet');
+        Route::group([
+            'prefix' => 'store',
+        ], function (Router $router) {
+            $router->post('insert','Defenseip\StoreController@insert');
+            $router->get('del','Defenseip\StoreController@del');
+            $router->get('edit','Defenseip\StoreController@edit');
+            $router->get('show','Defenseip\StoreController@show');
 
+            $router->get('test','Defenseip\StoreController@form');
+        });
+
+        Route::group([
+            'prefix' => 'package',
+        ], function (Router $router) {
+            $router->post('insert','Defenseip\PackageController@insert');
+            $router->get('del','Defenseip\PackageController@del');
+            $router->get('edit','Defenseip\PackageController@edit');
+            $router->get('show','Defenseip\PackageController@show');
+        });
+
+       
     });
 
 });

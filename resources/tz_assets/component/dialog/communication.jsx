@@ -61,6 +61,10 @@ const styles = {
     },
     date: {
         marginLeft: 10
+    },
+    changeStatus: {
+        marginTop: 5,
+        float: "left",
     }
   };
 
@@ -104,6 +108,9 @@ const styles = {
         }
     }
     sendContent = () => {
+        if(this.send_content) {
+            return ;
+        }
         post("work_answer/insert",{
             work_number: this.props.work_order_number,
             answer_content: this.send_content.value
@@ -125,9 +132,11 @@ const styles = {
         })
     }
     bindKeyEvent = () => {
-        this.send_content.removeEventListener("keydown",this.keyDownSendContent);
-        this.send_content.addEventListener("keydown",this.keyDownSendContent);
-        this.container.scrollTop = this.content_container.offsetHeight;
+        if(this.send_content) {
+            this.send_content.removeEventListener("keydown",this.keyDownSendContent);
+            this.send_content.addEventListener("keydown",this.keyDownSendContent);
+            this.container.scrollTop = this.content_container.offsetHeight;
+        }
     }
     handleClickOpen = () => {
       this.setState({ open: true });
@@ -160,7 +169,6 @@ const styles = {
               <Typography variant="h6" color="inherit" className={classes.flex}>
             由{this.props.submitter_name}发起{this.props.machine_number}主机的{this.props.worktype}问题
               </Typography>
-              <ChangeStatus {...this.props} postUrl="workorder/edit" nameParam="work_order_number" />
             </Toolbar>
           </AppBar>
           <div className={classes.content_container} ref={(ref) => this.container = ref}>
@@ -178,22 +186,36 @@ const styles = {
                 }
             </div>
           </div>
-          <TextField
-                id="content"
-            // label="Multiline"
-                multiline
-                rows="4"
-                className={classes.textField}
-                margin="normal"
-                fullWidth
-                placeholder="请填写要回复的内容"
-                inputRef={ref => this.send_content = ref}
-            />
-            <div className={classes.send}>
-                <Button variant="contained" onClick={this.sendContent} className={classes.sendButton} color="primary">
-                    回复
-                </Button>
-            </div>
+          {
+              this.props.work_order_status < 2 && [
+                <TextField
+                    id="content"
+                // label="Multiline"
+                    multiline
+                    rows="4"
+                    className={classes.textField}
+                    margin="normal"
+                    fullWidth
+                    placeholder="请填写要回复的内容"
+                    inputRef={ref => this.send_content = ref}
+                />,
+                <div className={classes.send}>
+                    {
+                        this.props.work_order_status < 2 && (
+                            <ChangeStatus {...this.props} buttonElement={(open) => (
+                                <Button variant="contained" className={classes.changeStatus} onClick={open} color="primary">
+                                    更改状态
+                                </Button>
+                            )} postUrl="workorder/edit" nameParam="work_order_number" />
+                        )
+                    }
+                    <Button variant="contained" onClick={this.sendContent} className={classes.sendButton} color="primary">
+                        回复
+                    </Button>
+                </div>
+              ]
+          }
+
         </Dialog>
       ];
     }

@@ -50,11 +50,13 @@ const columnData = [
             {id: "cabinet_id", label: "机柜编号", type: "text"}
           ]}
     ],extendElement: (data) => {
-        if(data.work_order_status==1) {
-            return <Communication {...data} />;
-        } else {
-            return <ChangeStatus {...data} postUrl="workorder/edit" nameParam="work_order_number" />;
-        }
+
+        return <Communication {...data} />;
+        // if(data.work_order_status < 2) {
+
+        // } else {
+        //     return <ChangeStatus {...data} postUrl="workorder/edit" nameParam="work_order_number" />;
+        // }
     }, label: '操作' }
 ];
 const inputType = [

@@ -21,7 +21,7 @@ const columnData = [
     { id: 'resource_type', numeric: true, disablePadding: false, label: '资源类型' },
     { id: 'order_type', numeric: true, disablePadding: false, label: '订单类型' },
     { id: 'pay_type', numeric: true, disablePadding: false, label: '支付方式' },
-    { id: 'pay_price', numeric: true, disablePadding: false, label: '实付金额' },
+    { id: 'payable_money', numeric: true, disablePadding: false, label: '应付金额' },
     { id: 'pay_time', numeric: true, disablePadding: false, label: '支付时间' },
     { id: 'order_status', numeric: true, disablePadding: false, label: '订单状态' },
     { id: 'operat', numeric: true, disablePadding: false, extend: true, extendData: [

@@ -85,8 +85,7 @@ Route::group([
     $router->get('/reviewRecharge', 'Show\ReviewRechargeController@index');
     $router->get('/pwdDepartment', 'Show\WorkOrderTypeController@getPwdDepart');
     $router->get('/work_order_type', 'Show\WorkOrderTypeController@index');
-
-
+    $router->get('/defenseip', 'Show\DefenseipController@index');
 
 //人事
     Route::group([
@@ -381,7 +380,7 @@ Route::group([
             $router->get('show','Defenseip\PackageController@show');
         });
 
-       
+
     });
 
 });

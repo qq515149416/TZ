@@ -15,7 +15,9 @@
         "phpoffice/phpspreadsheet": "^1.4",
         "predis/predis": "^1.1",
         "workerman/phpsocket.io": "^1.1",
-        "yansongda/laravel-pay": "^2.0"
+        "yansongda/laravel-pay": "^2.0",
+        "ext-json" : "*",
+        "ext-curl" : "*"
     },
     "require-dev": {
         "filp/whoops": "^2.0",

@@ -41,10 +41,10 @@ class LoginByEmailRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.require'   => '邮箱帐号必须填写',
+            'email.required'   => '邮箱帐号必须填写',
             'email.email'     => '邮箱格式错误',
             'password'        => '密码不能为空',
-            'captcha.require' => '验证码不能为空',
+            'captcha.required' => '验证码不能为空',
             'captcha.captcha' => '验证码错误',
         ];
     }

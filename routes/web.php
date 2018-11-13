@@ -33,7 +33,8 @@ Route::group([
     //测试 DefenseIp\TestController
     Route::get('testbind', 'TzAuth\RegisterController@bindSalesman');  //测试绑定业务员
     Route::post('jun', 'TzAuth\ResetPasswordController@alterPassword');   //测试修改密码
-    Route::get('ipTest', 'DefenseIp\TestController@test');    //高防IP测试
+    Route::post('ipTest', 'DefenseIp\InfoController@checkStatus');    //检查状态
+//    Route::post('ipTest', 'DefenseIp\SetController@setTarget');    //高防IP测试
     Route::get('login', 'TzAuth\TestController@login');//TODO 上线前要删除   用户登录模拟登录
     Route::get('userInfo', 'User\InfoController@test');
     Route::get('redis', 'Test\RedisController@test'); //测试Redis
@@ -200,5 +201,24 @@ Route::group([
         });
 
     });
+
+
+    /**
+     * 高防IP组
+     */
+    Route::group([
+        'prefix' => 'defenseIp',
+    ], function () {
+        Route::group([
+            'middleware' => 'CheckLogin',
+        ], function () {
+            Route::get('getInfo', 'DefenseIp\InfoController@showList');  //获取高防IP 列表
+            Route::post('getInfo', 'DefenseIp\InfoController@showList');  //获取高防IP 列表
+        });
+
+    });
+
+
+
 
 });

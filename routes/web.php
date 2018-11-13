@@ -170,6 +170,8 @@ Route::group([
             Route::get('checkTrade', 'Customer\OrderController@checkTrade');
             Route::get('delTrade', 'Customer\OrderController@delTrade');
 
+            //高防ip相关订单接口
+            Route::get('buyNow', 'DefenseIp\OrderController@buyNow');
         });
     });
 

@@ -49,6 +49,7 @@ class StoreModel extends Model
 				'code'	=> 1,
 			];
 		}
+		return $return;
 	}
 
 	public function del($del_id){

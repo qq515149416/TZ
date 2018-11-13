@@ -4,11 +4,11 @@ use PHPSocketIO\SocketIO;
 
 require __DIR__.'/../vendor/autoload.php';
 $https_connection = array(
-    'ssl' => array(
-        'local_cert'  => __DIR__.'/server.crt',//证书
-        'local_pk'    => __DIR__.'/server.key',//密钥
-        'verify_peer' => false,
-    )
+    // 'ssl' => array(
+    //     'local_cert'  => __DIR__.'/server.crt',//证书
+    //     'local_pk'    => __DIR__.'/server.key',//密钥
+    //     'verify_peer' => false,
+    // )
 );
 // ,$https_connection
 $io = new SocketIO(8120,$https_connection);
@@ -36,7 +36,7 @@ $io->on('workerStart', function(){
 	$listen_worker = new Worker('http://0.0.0.0:8121');
 	// 当http客户端发来数据时触发
 	$listen_worker->onMessage = function($http_connection, $data){
-		global $depart_map; 
+		global $depart_map;
 		$_POST = $_POST ? $_POST : $_GET;
 		global $io;
 		$to_department = @$_POST['process_department'];

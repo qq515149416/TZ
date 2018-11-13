@@ -1,0 +1,50 @@
+import { observable, action, extendObservable} from "mobx";
+import {get,post} from "../tool/http.js";
+import ActionBoundStores from "./common/action-bound-stores.js";
+class DefenseipStores {
+    constructor(data) {
+        extendObservable(this,data);
+    }
+}
+
+class DefenseipsStores extends ActionBoundStores {
+    @observable defenseips = [
+
+    ];
+    changeData(param) {
+        return new Promise((resolve,reject) => {
+            post("defenseip/store/edit",param).then((res) => {
+                if(res.data.code==1) {
+                    this.getData();
+                    resolve(true);
+                }else {
+                    alert(res.data.msg);
+                    resolve(false);
+                }
+            }).catch(reject);
+        });
+    }
+    addData(data) {
+        return new Promise((resolve,reject) => {
+            post("defenseip/store/insert",data).then((res) => {
+                if(res.data.code==1) {
+                    this.getData();
+                    resolve(true);
+                } else {
+                    alert(res.data.msg);
+                    resolve(false);
+                }
+            }).catch(reject);
+        });
+    }
+    @action.bound
+    getData(param={}) {
+        this.defenseips = [];
+        get("defenseip/store/show",param).then((res) => {
+            if(res.data.code==1) {
+                this.defenseips = res.data.data.map(item => new DefenseipStores(item));
+            }
+        });
+    }
+}
+export default DefenseipsStores;

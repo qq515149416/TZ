@@ -11,29 +11,29 @@ class TestController extends Controller
 {
 
 
-
-
     /**
      * 测试方法
+     *  01?!010@$%203**
      */
     public function test()
     {
-//        $InfoM = new InfoController();
+        $InfoM = new InfoController();
+        dump($InfoM->showList());
 
-        dump(StoreModel::find(1)->get()->toArray());
-        die();
 
-        $setM = new SetController();
+//        dump(StoreModel::find(2));
+//        die();
+//
+//        $setM = new SetController();
+//        $setM->setTarget();
 
-        $setM->setTarget();
 
+//        return '123';
 //        dump($InfoM->statistics());
 //        $InfoM->statistics();
 //        $g = new ApiController();
 //        dump($g->updateTarget('1.1.1.1','2.2.2.2'));
     }
-
-
 
 
 }

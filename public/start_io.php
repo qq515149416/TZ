@@ -3,20 +3,20 @@ use Workerman\Worker;
 use PHPSocketIO\SocketIO;
 
 require __DIR__.'/../vendor/autoload.php';
-// $https_connection = array(
-//     'ssl' => array(
-//         'local_cert'  => __DIR__.'/server.crt',//证书
-//         'local_pk'    => __DIR__.'/server.key',//密钥
-//         'verify_peer' => false,
-//     )
-// );
+$https_connection = array(
+    'ssl' => array(
+        'local_cert'  => __DIR__.'/server.crt',//证书
+        'local_pk'    => __DIR__.'/server.key',//密钥
+        'verify_peer' => false,
+    )
+);
 // ,$https_connection
-$io = new SocketIO(8120);
+$io = new SocketIO(8120,$https_connection);
 $io->on('connection',function($socket)use($io){
 	$socket->on('login',function($depart_id)use($socket){
 		global $depart_map;
 		$depart_id = (string)$depart_id;
-		++$depart_map[$depart_id];//表示有多少部门连接
+		++$depart_map[$depart_id];//表示有多少连接
 		$socket->join($depart_id);
 		$socket->depart_id = $depart_id;
 	});
@@ -31,15 +31,21 @@ $io->on('connection',function($socket)use($io){
 });
 
 // 启动监听另一个端口，通过这个端口可以给任意相关部门推送信息
-$io->on('workerStart',function(){
+$io->on('workerStart', function(){
 	// 监听一个https端口
 	$listen_worker = new Worker('http://0.0.0.0:8121');
+	// 当http客户端发来数据时触发
 	$listen_worker->onMessage = function($http_connection, $data){
 		global $depart_map; 
 		$_POST = $_POST ? $_POST : $_GET;
 		global $io;
 		$to_department = @$_POST['process_department'];
 		$io->to($to_department)->emit('new_work_order',$_POST);
+		if($to_department && !isset($depart_map[$to_department])){
+			return $http_connection->send('faile');
+		} else {
+			return $http_connection->send('ok');
+		}
 	};
 	$listen_worker->listen();//执行监听
 

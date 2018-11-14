@@ -38,8 +38,8 @@ class SetController extends Controller
     public function setTarget(Request $request)
     {
         $this->userId = Auth::id();  //获取登录的用户ID
-        $busId    = $request['business_id'];//获取参数,高防IP业务ID
-        $targetIp = trim($request['target_ip']);  //获取参数,去除左右两边空格
+        $busId        = $request['business_id'];//获取参数,高防IP业务ID
+        $targetIp     = trim($request['target_ip']);  //获取参数,去除左右两边空格
 
         $apiModel     = new ApiController();//实例化
         $businessData = BusinessModel::find($busId)->toArray();  //根据业务ID 获取业务数据

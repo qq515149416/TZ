@@ -125,7 +125,7 @@ class RefundModel extends Model
     	if($order_row != false){
     		DB::commit();
     		$return['code'] = 1;
-    		$refund['msg'] = '申请退款成功,将退还到账户余额,请耐心等待工作人员处理!';
+    		$refund['msg'] = '申请退款成功(单号:'.$refund_num.'),将退还到账户余额,请耐心等待工作人员处理!';
     	} else {
     		DB::rollBack();
     		$return['code'] = 0;
@@ -194,6 +194,32 @@ class RefundModel extends Model
             $return['msg'] = '此退款单,已'.$refund_status[$refund_order->refund_status].'无法再次审核';
             return $return;
         }
+        DB::beginTransaction();
+        if($check_param['refund_status'] != 1){//当审核为不同意退款时，直接对退款和订单的状态进行更新
+            $refund_row = DB::table('tz_refund')->where(['refund_num'=>$check_param['refund_num']])->update($check_param);
+            if($refund_row == 0){
+                DB::rollBack();
+                $return['code'] = 0;
+                $return['msg'] = '退款记录编号:'.$check_param['refund_num'].'审核失败';
+                return $return;
+            }
+            $order_row = DB::table('tz_orders')->where(['order_sn'=>$refund_order->refund_order])->update(['order_status'=>2]);
+            if($order_row == 0){
+                DB::rollBack();
+                $return['code'] = 0;
+                $return['msg'] = '退款记录编号:'.$check_param['refund_num'].'审核失败';
+                return $return;
+            } else {
+                DB::commit();
+                $return['code'] = 0;
+                $return['msg'] = '退款记录编号:'.$check_param['refund_num'].'申请已驳回';
+                return $return;
+            }
+        }
+        /**
+         * 当同意退款操作时
+         * @var [type]
+         */
         $refund_money = $this->countRefund($refund_order->refund_order,$refund_order->created_at);//调用统计可退还金额的方法countRefund();返回可退款金额
         
     

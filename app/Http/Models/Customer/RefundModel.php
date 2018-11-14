@@ -63,7 +63,7 @@ class RefundModel extends Model
     		$return['msg'] = '无法申请退款';
     		return $return;
     	}
-    	$order = DB::table('tz_orders')->where(['order_sn'=>$refund_order['refund_order']])->select('order_sn','pay_price','business_sn','order_status','business_id','business_name','resource_type','end_time','created_at')->first();
+    	$order = DB::table('tz_orders')->where(['order_sn'=>$refund_order['refund_order']])->select('order_sn','price','duration','business_sn','order_status','business_id','business_name','resource_type','end_time','created_at')->first();
     	if(!$order){//不存在此订单
     		$return['code'] = 0;
     		$return['msg'] = '无对应订单,无法申请退款';
@@ -87,7 +87,7 @@ class RefundModel extends Model
             $return['msg'] = '该订单,无法申请退款,原因:订单未完成支付';
             return $return;
         }
-        $order_flow_same = DB::table('tz_orders')->where(['serial_number'=>$order->serial_number])->where('order_sn','<>',$refund_order['refund_order'])->select('order_sn','pay_price','business_sn','order_status','business_id','business_name','resource_type','end_time','created_at','serial_number')->get();
+        $order_flow_same = DB::table('tz_orders')->where(['serial_number'=>$order->serial_number])->where('order_sn','<>',$refund_order['refund_order'])->select('order_sn','business_sn','order_status','business_id','business_name','resource_type','end_time','created_at','serial_number')->get();
         if(!empty($order_flow_same)){
             foreach($order_flow_same as $same=>$value){
                $status[$same] = $value->order_status;
@@ -97,14 +97,15 @@ class RefundModel extends Model
          * 计算可退款金额
          * @var [type]
          */
+        $pay_price = bcmul($order->price,$order->duration,2);//计算单笔订单支付金额(乘法)
         $start = Carbon::parse($order->created_at);//订单的开始时间
         $end = Carbon::parse($order->end_time);//订单的到期时间
         $days = $end->diffInDays($start);//开始到结束的时间差
-        $price_day = bcdiv($order->pay_price,$days,2);//每天的单价(除法)
+        $price_day = bcdiv($pay_price,$days,2);//每天的单价(除法)
         $now = Carbon::parse();//提交申请的时间
         $use_day = $now->diffInDays($start);//已使用的时间
         $use_money = bcmul($price_day,$use_day,2);//使用应支付的金额(乘法)
-        $refund_money = bcsub($order->pay_price,$use_money,2);//可退款金额(减法)
+        $refund_money = bcsub($pay_price,$use_money,2);//可退款金额(减法)
         if(array_search(6, $status) == false || array_search(8, $status) == false && bccomp($refund_money,$order_flow->preferential_amount) > '-1'){
             //当不存在有订单退款,且剩余可退款金额不小于优惠额度时进行优惠扣除得到实际可退款金额
             $refund_money = bcsub($refund_money,$order_flow->preferential_amount,2);

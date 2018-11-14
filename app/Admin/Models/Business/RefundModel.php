@@ -119,14 +119,15 @@ class RefundModel extends Model
     	 * 计算可退款金额
     	 * @var [type]
     	 */
+        $pay_price = bcmul($order->price,$order->duration,2);//计算单笔订单支付金额(乘法)
     	$start = Carbon::parse($order->created_at);//订单的开始时间
     	$end = Carbon::parse($order->end_time);//订单的到期时间
     	$days = $end->diffInDays($start);//开始到结束的时间差
-    	$price_day = bcdiv($order->pay_price,$days,2);//每天的单价(除法)
+    	$price_day = bcdiv($pay_price,$days,2);//每天的单价(除法)
     	$now = Carbon::parse();//提交申请的时间
     	$use_day = $now->diffInDays($start);//已使用的时间
     	$use_money = bcmul($price_day,$use_day,2);//使用应支付的金额(乘法)
-    	$refund_money = bcsub($order->pay_price,$use_money,2);//可退款金额(减法)
+    	$refund_money = bcsub($pay_price,$use_money,2);//可退款金额(减法)
 
     	/**
     	 * 退款的数据

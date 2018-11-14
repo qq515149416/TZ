@@ -66,13 +66,13 @@ class WorkAnswerModel extends Model
     public function insertWorkAnswer($insert_data){
     	if($insert_data){
             $work_order = DB::table('tz_work_order')->where(['work_order_number'=>$insert_data['work_number']])->select('work_order_status')->first();
-    		if($work_order->work_order_status == 2){
+    		if($work_order->work_order_status == 2){//工单为完成时无法再进行操作
                 $return['data'] = '';
                 $return['code'] = 0;
                 $return['msg'] = '工单已完成,无法再进行联系';
                 return $return;
             }
-            if($work_order->work_order_status == 3){
+            if($work_order->work_order_status == 3){//工单为取消时无法再进行操作
                 $return['data'] = '';
                 $return['code'] = 0;
                 $return['msg'] = '工单已取消,无法再进行联系';

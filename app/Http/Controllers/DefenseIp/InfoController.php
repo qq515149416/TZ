@@ -53,16 +53,20 @@ class InfoController extends Controller
 
     /**
      *  判断业务时间状态
+     *
+     * @param $endTime   '业务到期时间'
+     * @return string    '返回业务中文状态'
      */
     protected function checkStatus($endTime)
     {
-//        $endTime  = '2018-11-14 16:53:14';
+//        $endTime  = '2018-11-14 16:53:14';   //获取业务过期时间
         $nowDate  = Carbon::now();  //获取现在时间
-        $willDate = Carbon::now()->addDay(config('tz_time.deadline.long'));
+        $willDate = Carbon::now()->addDay(config('tz_time.deadline.long')); //获取将要过期的时间限期
 
         //判断是否过期
         if ($endTime > $nowDate) {
             //未过期
+            //判断是否准备过期
             if ($endTime < $willDate) {
                 return '即将到期';
             }
@@ -75,7 +79,9 @@ class InfoController extends Controller
 
 
     /**
-     * 统计高防IP  TODO 为未完成
+     * 统计高防IP数据流量   TODO 为未完成
+     * 用于绘制流量图表
+     *
      */
     public function statistics()
     {

@@ -40,7 +40,7 @@ class OrderRequest extends FormRequest
 		$return = [];
 
 		switch ($method) {
-			case 'buyNow':
+			case 'buyDefenseIpNow':
 				$return = [
 					'package_id'		=> 'required|exists:tz_defenseip_package,id',
 					'buy_time'		=> 'required|integer|min:1',

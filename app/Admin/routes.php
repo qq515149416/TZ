@@ -366,7 +366,7 @@ Route::group([
         ], function (Router $router) {
             $router->post('insert','Defenseip\StoreController@insert');
             $router->get('del','Defenseip\StoreController@del');
-            $router->get('edit','Defenseip\StoreController@edit');
+            $router->post('edit','Defenseip\StoreController@edit');
             $router->get('show','Defenseip\StoreController@show');
 
             $router->get('test','Defenseip\StoreController@form');
@@ -377,7 +377,7 @@ Route::group([
         ], function (Router $router) {
             $router->post('insert','Defenseip\PackageController@insert');
             $router->get('del','Defenseip\PackageController@del');
-            $router->get('edit','Defenseip\PackageController@edit');
+            $router->post('edit','Defenseip\PackageController@edit');
             $router->get('show','Defenseip\PackageController@show');
         });
 

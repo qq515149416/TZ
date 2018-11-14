@@ -29,7 +29,10 @@ class DefenseipsStores extends ActionBoundStores {
         return new Promise((resolve,reject) => {
             post("defenseip/store/edit",param).then((res) => {
                 if(res.data.code==1) {
-                    this.getData();
+                    this.getData({
+                        status: 0,
+                        site: 1
+                    });
                     resolve(true);
                 }else {
                     alert(res.data.msg);
@@ -42,7 +45,10 @@ class DefenseipsStores extends ActionBoundStores {
         return new Promise((resolve,reject) => {
             post("defenseip/store/insert",data).then((res) => {
                 if(res.data.code==1) {
-                    this.getData();
+                    this.getData({
+                        status: 0,
+                        site: 1
+                    });
                     resolve(true);
                 } else {
                     alert(res.data.msg);

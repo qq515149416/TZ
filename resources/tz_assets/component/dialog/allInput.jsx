@@ -41,7 +41,7 @@ class AllInput extends React.Component {
         this.state = {
             open: false,
             inputAttr: this.inputAttr(),
-            componentPropsType: "" 
+            componentPropsType: ""
         };
         this.editor = null;
     }
@@ -89,7 +89,7 @@ class AllInput extends React.Component {
                             radioData: item.radioData
                         }
                     });
-                    
+
                 } else if(item.type=="rich_text") {
                     // let editor = null;
                     // if(document.getElementById("editor")) {
@@ -141,7 +141,7 @@ class AllInput extends React.Component {
             }else {
                 currentItem.model.getSubordinateData && currentItem.model.getSubordinateData(this,"add");
             }
-            
+
         }
         this.setState(state => state.inputAttr[name.split(".")[0]][name.split(".")[1]] = event.target.value);
     };
@@ -184,7 +184,7 @@ class AllInput extends React.Component {
     }
     handleClickOpen = () => {
         this.setState({ open: true });
-    } 
+    }
     handleClose = () => {
         this.setState({ open: false });
     };
@@ -232,7 +232,14 @@ class AllInput extends React.Component {
                     return (
                         <div>
                             <span>{inputTypeData.label}</span>
-                            <Component getData={(inputTypeData.model && inputTypeData.model.getSubordinateData)?inputTypeData.model.getSubordinateData:""} data={(inputTypeData.defaultData ? inputTypeData.defaultData : "")} param={(inputTypeData.param?inputTypeData.param:{})} type={this.componentPropsType(inputTypeData)} setComponentParam={(data) => this.setComponentParam(inputTypeData.field,data)} />
+                            <Component
+                                editData={this.props.editData ? this.props.editData : null}
+                                getData={(inputTypeData.model && inputTypeData.model.getSubordinateData)?inputTypeData.model.getSubordinateData:""}
+                                data={(inputTypeData.defaultData ? inputTypeData.defaultData : "")}
+                                param={(inputTypeData.param?inputTypeData.param:{})}
+                                type={this.componentPropsType(inputTypeData)}
+                                setComponentParam={(data) => this.setComponentParam(inputTypeData.field,data)}
+                            />
                         </div>
                     );
                 } else {
@@ -296,14 +303,14 @@ class AllInput extends React.Component {
                                 </MenuItem>
                             ))
                         }
-                       
-                        
+
+
                     </TextField>
                 );
             } else {
                 return null;
             }
-                
+
             case "switch":
             if(status) {
                 return (
@@ -317,13 +324,13 @@ class AllInput extends React.Component {
                                 </FormLabel>
                             ))
                         }
-                        
+
                     </div>
                 );
             } else {
                 return null;
             }
-                
+
         }
     }
     showDialog = () => {
@@ -333,7 +340,7 @@ class AllInput extends React.Component {
             });
             this.dialogOpen = false;
         }
-     
+
         let editor = null;
         if(document.getElementById("editor")) {
             editor = new E('#editor');
@@ -385,7 +392,7 @@ class AllInput extends React.Component {
             <DialogContent className={classes.dialogContent}>
                 {
                     inputType.map(item => this.returnInput(item))
-                }              
+                }
             </DialogContent>
             <DialogActions>
               <Button onClick={this.handleClose} color="primary">

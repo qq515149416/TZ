@@ -44,7 +44,7 @@ class SetController extends Controller
         $apiModel     = new ApiController();//实例化
         $businessData = BusinessModel::find($busId)->toArray();  //根据业务ID 获取业务数据
 
-        //判 断业务是否为用户本人
+        //判断业务是否为用户本人
         if (!($businessData['user_id'] == $this->userId)) {
             return tz_ajax_echo([], '非本人资源', 0); //非本人业务
         }

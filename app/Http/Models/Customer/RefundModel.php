@@ -93,6 +93,7 @@ class RefundModel extends Model
                $status[$same] = $value->order_status;
             }
         }
+        
         /**
          * 计算可退款金额
          * @var [type]

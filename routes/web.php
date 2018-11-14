@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('http://www.tzidc.com/');
 });
 Route::get('/gaofangip', function () {
     \View::addExtension('html','php');
@@ -171,6 +171,8 @@ Route::group([
             Route::get('checkTrade', 'Customer\OrderController@checkTrade');
             Route::get('delTrade', 'Customer\OrderController@delTrade');
 
+            //高防ip相关订单接口
+            Route::get('buyDefenseIpNow', 'DefenseIp\OrderController@buyNow');
         });
     });
 

@@ -22,7 +22,7 @@ import PositionsStores from "../../stores/position-stores";
 import UsersStores from "../../stores/user-stores";
 import RechargesStores from "../../stores/recharge-stores";
 import ReviewRechargesStores from "../../stores/reviewRecharge-stores";
-
+import DefenseipsStores from "../../stores/defenseip-stores";
 
 
 // 前端Models操作
@@ -51,6 +51,7 @@ export const stores = {
     usersStores: new UsersStores(),
     rechargesStores: new RechargesStores(),
     reviewRechargesStores: new ReviewRechargesStores(),
+    defenseipsStores: new DefenseipsStores(),
 }
 export const domIds = [
     "user_list",
@@ -79,4 +80,5 @@ export const domIds = [
     "user",
     "recharge",
     "reviewRecharge",
+    "defenseip",
 ];

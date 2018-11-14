@@ -91,5 +91,8 @@
                 {{--</div>--}}
             </div>
         </div>
+        <script type="text/javascript">
+            location.href = "http://www.tzidc.com/";
+        </script>
     </body>
 </html>

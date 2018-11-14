@@ -11,6 +11,20 @@ class DefenseipsStores extends ActionBoundStores {
     @observable defenseips = [
 
     ];
+    delData(id) {
+        return new Promise((resolve,reject) => {
+            get("defenseip/store/del",{
+                del_id: id
+            }).then((res) => {
+                if(res.data.code==1) {
+                    this.delStoreData("defenseips",id);
+                    resolve(true);
+                } else {
+                    resolve(false);
+                }
+            }).catch(reject);
+        });
+    }
     changeData(param) {
         return new Promise((resolve,reject) => {
             post("defenseip/store/edit",param).then((res) => {

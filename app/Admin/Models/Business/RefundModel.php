@@ -88,54 +88,7 @@ class RefundModel extends Model
     		$return['msg'] = '无法申请退款';
     		return $return;
     	}
-    	$order = DB::table('tz_orders')->where(['order_sn'=>$refund_order['refund_order']])->select('order_sn','price','duration','business_sn','order_status','business_id','business_name','resource_type','end_time','created_at')->first();
-        if(!$order){//不存在此订单
-            $return['code'] = 0;
-            $return['msg'] = '无对应订单,无法申请退款';
-            return $return;
-        }
-        if($order->order_status < 1 || $order->order_status > 2) {//订单状态处于待支付或者订单完成以上的，不给予退款
-            $status = [0=>'待支付',1=>'已支付',2=>'财务确认',3=>'订单完成',4=>'到期',5=>'取消',6=>'申请退款',7=>'正在支付',8=>'退款完成']; 
-            $return['code'] = 0;
-            $return['msg'] = '该订单,无法申请退款,原因:已'.$status[$order->order_status];
-            return $return;
-        }
-        //获取支付流水单
-        $order_flow = DB::table('tz_orders_flow')->where(['serial_number'=>$order->serial_number])->select('actual_payment','preferential_amount','pay_status')->first();
-        if(empty($order_flow)){//不存在支付流水单
-            $return['code'] = 0;
-            $return['msg'] = '该订单,无法申请退款,原因:无支付信息';
-            return $return;
-        }
-        if($order_flow->pay_status == 0){//支付流水单未完成支付
-            $return['code'] = 0;
-            $return['msg'] = '该订单,无法申请退款,原因:订单未完成支付';
-            return $return;
-        }
-        $order_flow_same = DB::table('tz_orders')->where(['serial_number'=>$order->serial_number])->where('order_sn','<>',$refund_order['refund_order'])->select('order_sn','business_sn','order_status','business_id','business_name','resource_type','end_time','created_at','serial_number')->get();
-        if(!empty($order_flow_same)){
-            foreach($order_flow_same as $same=>$value){
-               $status[$same] = $value->order_status;
-            }
-        }
-        
-        /**
-         * 计算可退款金额
-         * @var [type]
-         */
-        $pay_price = bcmul($order->price,$order->duration,2);//计算单笔订单支付金额(乘法)
-        $start = Carbon::parse($order->created_at);//订单的开始时间
-        $end = Carbon::parse($order->end_time);//订单的到期时间
-        $days = $end->diffInDays($start);//开始到结束的时间差
-        $price_day = bcdiv($pay_price,$days,2);//每天的单价(除法)
-        $now = Carbon::parse();//提交申请的时间
-        $use_day = $now->diffInDays($start);//已使用的时间
-        $use_money = bcmul($price_day,$use_day,2);//使用应支付的金额(乘法)
-        $refund_money = bcsub($pay_price,$use_money,2);//可退款金额(减法)
-        if(array_search(6, $status) == false || array_search(8, $status) == false && bccomp($refund_money,$order_flow->preferential_amount) > '-1'){
-            //当不存在有订单退款,且剩余可退款金额不小于优惠额度时进行优惠扣除得到实际可退款金额
-            $refund_money = bcsub($refund_money,$order_flow->preferential_amount,2);
-        }
+        $order = $this->countRefund($refund_order['refund_order']);//调用统计可退还金额的方法countRefund();返回数组
 
     	/**
     	 * 退款的数据
@@ -153,8 +106,8 @@ class RefundModel extends Model
     	$refund['resource_type'] = $order->resource_type;//资源类型
     	$refund['refund_reason'] = $refund_order['refund_reason'];//退款原因
     	$refund['refund_status'] = 0;
-    	$refund['created_at'] = $now;
-    	$refund['refund_money'] = $refund_money;//可退款金额
+    	$refund['created_at'] = $order->now;
+    	$refund['refund_money'] = $order->refund_money;//可退款金额
     	DB::beginTransaction();//DB::rollBack();DB::commit();
     	$row = DB::table('tz_refund')->insertGetId($refund);
     	if($row == false){
@@ -227,6 +180,25 @@ class RefundModel extends Model
     	return $return;
     }
 
+    public function checkRefund($check_param){
+        'refund_num','refund_status','refund_note'
+        $refund_order = $this->where(['refund_num'=>$check_param['refund_num']])->select('refund_order','refund_business','refund_customer_id','refund_status','created_at')->first();
+        if(empty($refund_order)){//不存在对应的退款记录申请
+            $return['code'] = 0;
+            $return['msg'] = '无此退款记录';
+            return $return;
+        }
+        if($refund_order->refund_status != 0){//退款记录申请已审核过
+            $refund_status = [0=>'处理中',1=>'成功',2=>'失败',3=>'取消'];
+            $return['code'] = 0;
+            $return['msg'] = '此退款单,已'.$refund_status[$refund_order->refund_status].'无法再次审核';
+            return $return;
+        }
+        $refund_money = $this->countRefund($refund_order->refund_order,$refund_order->created_at);//调用统计可退还金额的方法countRefund();返回可退款金额
+        
+    
+    }
+
     /**
      * 删除退款记录
      * @param  array $delete_refund 对应的退款号
@@ -243,7 +215,7 @@ class RefundModel extends Model
     	$refund = $this->where($where)->select('id')->first();
     	if(empty($refund)){
     		$return['code'] = 0;
-    		$return['msg'] = '无法删除,该退款等待受理/已受理中';
+    		$return['msg'] = '无法删除,该退款等待受理/已受理';
     		return $return;
     	}
     	$row = $this->where($where)->delete();
@@ -255,5 +227,74 @@ class RefundModel extends Model
     		$return['msg'] = '删除此退款记录失败!';
     	}
     	return $return;
+    }
+
+    /**
+     * 计算订单可退款金额
+     * @param  string $order_num 订单编号
+     * @return array/string            返回错误信息/可退金额
+     */
+    public function countRefund($order_num,$apply_time = 0){
+        $order = DB::table('tz_orders')->where(['order_sn'=>$order_num])->select('order_sn','price','duration','business_sn','order_status','business_id','business_name','resource_type','end_time','created_at')->first();
+        if(!$order){//不存在此订单
+            $return['code'] = 0;
+            $return['msg'] = '无对应订单,无法申请退款';
+            return $return;
+        }
+        if($order->order_status < 1 || $order->order_status > 2) {//订单状态处于待支付或者订单完成以上的，不给予退款
+            $status = [0=>'待支付',1=>'已支付',2=>'财务确认',3=>'订单完成',4=>'到期',5=>'取消',6=>'申请退款',7=>'正在支付',8=>'退款完成']; 
+            $return['code'] = 0;
+            $return['msg'] = '该订单,无法申请退款,原因:已'.$status[$order->order_status];
+            return $return;
+        }
+        //获取支付流水单
+        $order_flow = DB::table('tz_orders_flow')->where(['serial_number'=>$order->serial_number])->select('actual_payment','preferential_amount','pay_status')->first();
+        if(empty($order_flow)){//不存在支付流水单
+            $return['code'] = 0;
+            $return['msg'] = '该订单,无法申请退款,原因:无支付信息';
+            return $return;
+        }
+        if($order_flow->pay_status == 0){//支付流水单未完成支付
+            $return['code'] = 0;
+            $return['msg'] = '该订单,无法申请退款,原因:订单未完成支付';
+            return $return;
+        }
+        $order_flow_same = DB::table('tz_orders')->where(['serial_number'=>$order->serial_number])->where('order_sn','<>',$order_num)->select('order_sn','business_sn','order_status','business_id','business_name','resource_type','end_time','created_at','serial_number')->get();
+        if(!empty($order_flow_same)){
+            foreach($order_flow_same as $same=>$value){
+               $status[$same] = $value->order_status;
+            }
+        }
+        
+        /**
+         * 计算可退款金额
+         * @var [type]
+         */
+        $pay_price = bcmul($order->price,$order->duration,2);//计算单笔订单支付金额(乘法)
+        $start = Carbon::parse($order->created_at);//订单的开始时间
+        $end = Carbon::parse($order->end_time);//订单的到期时间
+        $days = $end->diffInDays($start);//开始到结束的时间差
+        $price_day = bcdiv($pay_price,$days,2);//每天的单价(除法)
+        if($apply_time!=0){
+            $now = $apply_time;
+        } else {
+            $now = Carbon::parse();//提交申请的时间
+            $order->now = $now;
+        }
+        
+        $use_day = $now->diffInDays($start);//已使用的时间
+        $use_money = bcmul($price_day,$use_day,2);//使用应支付的金额(乘法)
+        $refund_money = bcsub($pay_price,$use_money,2);//可退款金额(减法)
+        if(array_search(6, $status) == false || array_search(8, $status) == false && bccomp($refund_money,$order_flow->preferential_amount) > '-1'){
+            //当不存在有订单退款,且剩余可退款金额不小于优惠额度时进行优惠扣除得到实际可退款金额
+            $refund_money = bcsub($refund_money,$order_flow->preferential_amount,2);
+        }
+        if($apply_time==0){
+            $order->refund_money = $refund_money;
+            return $oeder;
+        } else {
+            return $refund_money
+        }
+        
     }
 }

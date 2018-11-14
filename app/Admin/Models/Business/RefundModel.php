@@ -180,6 +180,11 @@ class RefundModel extends Model
     	return $return;
     }
 
+    /**
+     * 进行退款审核操作/退款到余额
+     * @param  [type] $check_param [description]
+     * @return [type]              [description]
+     */
     public function checkRefund($check_param){
         'refund_num','refund_status','refund_note'
         $refund_order = $this->where(['refund_num'=>$check_param['refund_num']])->select('refund_order','refund_business','refund_customer_id','refund_status','created_at')->first();
@@ -216,11 +221,37 @@ class RefundModel extends Model
                 return $return;
             }
         }
+
         /**
          * 当同意退款操作时
          * @var [type]
          */
         $refund_money = $this->countRefund($refund_order->refund_order,$refund_order->created_at);//调用统计可退还金额的方法countRefund();返回可退款金额
+        $cutomer = DB::table('tz_users')->where(['id'=>$refund_order->refund_customer_id])->first();
+        $check_param['before_balance'] = $customer->money;//退款前余额
+        $check_param['after_balance'] = bcadd($refund_money,$customer->money,2);//退款后余额
+        $check_param['refund_money'] = $refund_money;
+        $refund_row = DB::table('tz_refund')->where(['refund_num'=>$check_param['refund_num']])->update($check_param);
+        if($refund_row == 0){
+            DB::rollBack();
+            $return['code'] = 0;
+            $return['msg'] = '退款记录编号:'.$check_param['refund_num'].'退款失败';
+            return $return;
+        }
+        $customer_row = DB::table('tz_users')->where(['id'=>$refund_order->refund_customer_id])->update(['money'=>$check_param['after_balance']]);
+        if($customer_row == 0){
+            DB::rollBack();
+            $return['code'] = 0;
+            $return['msg'] = '退款记录编号:'.$check_param['refund_num'].'退款到客户余额失败';
+            return $return;
+        }
+        $order_row = DB::table('tz_orders')->where(['order_sn'=>$refund_order->refund_order])->update(['order_status'=>8]);
+        if($order_row == 0){
+            DB::rollBack();
+            $return['code'] = 0;
+            $return['msg'] = '退款记录编号:'.$check_param['refund_num'].'修改关联订单状态失败';
+            return $return;
+        }
         
     
     }

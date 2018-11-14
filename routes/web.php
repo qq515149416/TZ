@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('http://www.tzidc.com/');
 });
 Route::get('/gaofangip', function () {
     \View::addExtension('html','php');

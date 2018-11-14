@@ -69,6 +69,11 @@ class DefenseipList extends React.Component {
             site: 1
         });
     }
+    delData = (selectedData,callbrak) => {
+        const {defenseipsStores} = this.props;
+        let delIng = selectedData.map(item => defenseipsStores.delData(item));
+        callbrak(delIng);
+    }
     addData = (param,callbrak) => {
         this.props.defenseipsStores.addData(param).then((state) => {
             callbrak(state);
@@ -108,6 +113,7 @@ class DefenseipList extends React.Component {
                     headTitlesData={columnData}
                     addData={this.addData.bind(this)}
                     changeData={this.changeData.bind(this)}
+                    delData={this.delData.bind(this)}
                     data={this.props.defenseipsStores.defenseips}
                 />
           </TabComponent>

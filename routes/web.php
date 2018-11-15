@@ -140,6 +140,7 @@ Route::group([
             Route::get('delOrder', 'Customer\OrderController@delOrder');
             Route::get('payTradeByBalance', 'Customer\OrderController@payTradeByBalance');
             Route::post('renewresource', 'Customer\OrderController@renewResource');
+            Route::post('all_renew','Customer\OrderController@allRenew');
             Route::get('show_white_list', 'Customer\WhiteListController@showWhiteList');
             Route::post('insert_white_list', 'Customer\WhiteListController@insertWhiteList');
             Route::post('check_ip', 'Customer\WhiteListController@checkIp');
@@ -150,8 +151,7 @@ Route::group([
             Route::get('show_work_order', 'Customer\WorkOrderController@showWorkOrder');
             Route::post('insert_work_order', 'Customer\WorkOrderController@insertWorkOrder');
             Route::get('work_types', 'Customer\WorkOrderController@workTypes');
-            Route::post('all_renew','Customer\WorkOrderController@allRenew');
-            Route::get('tests','Customer\WorkOrderController@tests');
+
             /**
              * 退款相关
              */
@@ -171,8 +171,6 @@ Route::group([
             Route::get('checkTrade', 'Customer\OrderController@checkTrade');
             Route::get('delTrade', 'Customer\OrderController@delTrade');
 
-            //高防ip相关订单接口
-            Route::get('buyDefenseIpNow', 'DefenseIp\OrderController@buyNow');
         });
     });
 
@@ -216,6 +214,9 @@ Route::group([
         ], function () {
             Route::get('getInfo', 'DefenseIp\InfoController@showList');  //获取高防IP 列表
             Route::post('setTarget', 'DefenseIp\SetController@setTarget');  //配置目标IP
+
+            Route::get('buyDefenseIpNow', 'DefenseIp\OrderController@buyNow'); //购买套餐
+            Route::get('renewDefenseIp', 'DefenseIp\OrderController@renew'); //购买套餐
         });
 
     });

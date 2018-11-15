@@ -60,7 +60,7 @@ const columnData = [
         {
             title: "添加业务",
             link: "/tz_admin/business",
-            param: ["id","email","money","status"]
+            param: ["id","email","money","status","clerk_name"]
         },
         {
             title: "充值记录",

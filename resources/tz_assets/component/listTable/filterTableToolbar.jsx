@@ -54,7 +54,7 @@ class FilterTableToolbar extends React.Component {
                 this.state[index.field] = "all";
             }
         }
-        
+
     }
     handleChange = event => {
         this.setState({ [event.target.name]: event.target.value });
@@ -67,6 +67,8 @@ class FilterTableToolbar extends React.Component {
         for (let index of filterType) {
             if(index.type=="select") {
                 searchRule[index.field] = this.state[index.field];
+            } else if(index.type=="date") {
+                searchRule["timeAttrName"] = index.field;
             }
         }
         if(this.search.value) {
@@ -77,7 +79,7 @@ class FilterTableToolbar extends React.Component {
         searchRule["endTime"] = Math.round(endTime.getTime()/1000);
         // console.log(searchRule);
         this.props.filterData(searchRule);
-    } 
+    }
     render() {
         const {classes,filterType,types} = this.props;
         return (
@@ -136,7 +138,7 @@ class FilterTableToolbar extends React.Component {
                                         InputLabelProps={{
                                         shrink: true,
                                         }}
-                                    /> 
+                                    />
                                 </FormControl>
                             );
                         }
@@ -172,7 +174,7 @@ class FilterTableToolbar extends React.Component {
                                         }
                                     })
                                 }
-                                
+
                             </Select>
                         </InputAdornment>
                     }

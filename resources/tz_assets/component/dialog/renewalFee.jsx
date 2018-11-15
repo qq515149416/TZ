@@ -26,7 +26,7 @@ class RenewalFee extends React.Component {
             },
             {
                 label: "半年",
-                value: 6  
+                value: 6
             },
             {
                 label: "一年",
@@ -94,6 +94,7 @@ class RenewalFee extends React.Component {
             </DialogContentText>
             <TextField
             id="renewalFee_duration"
+            fullWidth
             select
             label="时长"
             value={this.state.currency}
@@ -107,7 +108,7 @@ class RenewalFee extends React.Component {
                         </MenuItem>
                     ))
                 }
-                
+
             </TextField>
             <TextField
               margin="dense"

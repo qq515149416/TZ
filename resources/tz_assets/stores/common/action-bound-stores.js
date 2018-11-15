@@ -25,7 +25,7 @@ class ActionBoundStores {
                 this[storeAttr] = this.copyData;
             }
            for(let key in param) {
-            if(key!="startTime"&&key!="endTime") {
+            if(key!="startTime"&&key!="endTime"&&key!="timeAttrName") {
                 this[storeAttr] = this[storeAttr].filter(item => {
                     if(item[key]==param[key]) {
                         return item;
@@ -35,18 +35,18 @@ class ActionBoundStores {
                 });
             }
            }
-        //    console.log(this[storeAttr],param,"typeFilter");
            this[storeAttr] = this[storeAttr].filter(item => {
-                let create_time = Math.round(new Date(item.created_at).getTime()/1000);
-               if(item.created_at&&param["startTime"]&&param["endTime"]) {
+                let create_time = Math.round(new Date(item[param.timeAttrName]).getTime()/1000);
+                // console.log(item[param.timeAttrName],param["startTime"],param["endTime"]);
+               if(item[param.timeAttrName]&&param["startTime"]&&param["endTime"]) {
                     if(create_time>param["startTime"]&&create_time<param["endTime"]) {
                         return item;
                     }
-               }else if(item.created_at&&param["startTime"]) {
+               }else if(item[param.timeAttrName]&&param["startTime"]) {
                     if(create_time>param["startTime"]) {
                         return item;
                     }
-               }else if(item.created_at&&param["endTime"]) {
+               }else if(item[param.timeAttrName]&&param["endTime"]) {
                     if(create_time<param["endTime"]) {
                         return item;
                     }

@@ -54,7 +54,7 @@ class InfoController extends Controller
     /**
      *  判断业务时间状态
      *
-     * @param $endTime   '业务到期时间'
+     * @param $endTime '业务到期时间'
      * @return string    '返回业务中文状态'
      */
     protected function checkStatus($endTime)
@@ -94,6 +94,28 @@ class InfoController extends Controller
 //            dump($value['end_at']);
 //        }
 //
+
+    }
+
+
+    /**
+     * 测试模型关联
+     */
+    public function test()
+    {
+
+//        $busM = new BusinessModel();
+////        $data = $busM->test()->get();
+//        $data = $busM->find(20)->test();
+//        dump($data);
+        $nowTime = Carbon::now();  //获取当前时间
+
+        $endData = BusinessModel::where('end_at', '<', $nowTime)//条件为当前时间大于结束时间时
+        ->join('tz_defenseip_store', 'tz_defenseip_business.ip_id', '=', 'tz_defenseip_store.id')
+            ->get()
+            ->toArray();  //获取数据比并转换成数组形式
+
+        dump($endData);
 
     }
 

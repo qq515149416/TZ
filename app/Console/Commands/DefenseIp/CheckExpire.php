@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\DefenseIp;
 
+use App\Http\Controllers\DefenseIp\ApiController;
 use App\Http\Models\DefenseIp\BusinessModel;
 use App\Http\Models\DefenseIp\StoreModel;
 use Carbon\Carbon;
@@ -47,26 +48,50 @@ class CheckExpire extends Command
 
 
 //        $this->info($this->updateStoreStatus(19,1));
+        $this->info($this->getEndBusiness());
 
-        $this->getEndBusiness();
+
+//        $this->check();
 
         $this->info('END');//输出结束
     }
 
 
+    /**
+     * 开始检查
+     */
+    protected function check()
+    {
 
+        $apiC    = new ApiController();
+        $endData = $this->getEndBusiness();// 获取过期业务数据
+        foreach ($endData as $key => $value) {
+//            $this->info($key);
+            $this->info(json_encode($value)); //将数据转换成 json数据
+        }
+
+    }
 
 
     /**
      * 获取过期业务数据
      */
+    /**
+     * @return mixed
+     */
     protected function getEndBusiness()
     {
         $nowTime = Carbon::now();  //获取当前时间
-        $endData = BusinessModel::where('end_at', '<', $nowTime)//条件为当前时间大于结束时间时
-        ->get()->toArray();  //获取数据比并转换成数组形式
-        return $endData;
+//        $endData = BusinessModel::where('end_at', '<', $nowTime)//条件为当前时间大于结束时间时
+//        ->get()->toArray();  //获取数据比并转换成数组形式
+//        return $endData;
 
+        $endData = BusinessModel::where('end_at', '<', $nowTime)//条件为当前时间大于结束时间时
+        ->join('tz_defenseip_store', 'tz_defenseip_business.ip_id', '=', 'tz_defenseip_store.id')  //关联数组
+            ->get()
+            ->toArray();  //获取数据比并转换成数组形式
+
+        return $endData;
     }
 
 
@@ -89,6 +114,16 @@ class CheckExpire extends Command
         }
     }
 
+
+//    /**
+//     * 发送数据到API
+//     */
+//    protected function sendApi()
+//    {
+//
+//        ApiController::class->
+//
+//    }
 
     /**
      * 获取时间

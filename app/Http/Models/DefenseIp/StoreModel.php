@@ -12,6 +12,8 @@ class StoreModel extends Model
     protected $table = 'tz_defenseip_store'; //表
     protected $primaryKey = 'id'; //主键
     protected $dates = ['deleted_at']; //删除时间
+//    protected $fillable = ['id', 'ip'];
+
 
     /**
      *

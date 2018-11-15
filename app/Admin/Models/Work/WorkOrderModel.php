@@ -124,6 +124,7 @@ class WorkOrderModel extends Model
         $work_data['process_department'] = $this->department()->id;//转发部门
         $row = $this->create($work_data);
         if($row != false){
+
             /**
              * 当提交工单成功的时候使用curl进行模拟传值，发送数据到实时推送接口
              * @var [type]
@@ -142,14 +143,16 @@ class WorkOrderModel extends Model
             // 对应的业务数据
             $business = $this->businessDetail($row->business_num);
             $row->client_name = $business->client_name;
-            $row->business_type = $business->business_type;    
+            $row->business_type = $business->business_type;
             $row->machine_number = $business->machine_number;
             $row->resource_detail = $business->resource_detail;
             $row->sales_name = $business->sales_name;
+            $row = $row->toArray();
             curl('http://127.0.0.1:8121',$row);
-            $return['data'] = $row->id;
+            $return['data'] = $row['id'];
             $return['code'] = 1;
-            $return['msg'] = '工单提交成功,工单号:'.$row->work_order_number;
+            $return['msg'] = '工单提交成功,工单号:'.$row['work_order_number'];        
+            
         } else {
             $return['data'] = '';
             $return['code'] = 0;
@@ -234,11 +237,12 @@ class WorkOrderModel extends Model
                     // 对应的业务数据
                     $business = $this->businessDetail($edit_after->business_num);
                     $edit_after->client_name = $business->client_name;
-                    $edit_after->business_type = $business->business_type;    
+                    $edit_after->business_type = $business->business_type;
                     $edit_after->machine_number = $business->machine_number;
                     $edit_after->resource_detail = $business->resource_detail;
                     $edit_after->sales_name = $business->sales_name;
-                    curl('http://127.0.0.1:8121',$row);
+                    $edit_after = $edit_after->toArray();
+                    curl('http://127.0.0.1:8121',$edit_after);
                 }
     			$return['code'] = 1;
     			$return['msg'] = '工单修改成功!!';

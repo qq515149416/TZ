@@ -27,7 +27,9 @@ class DefenseipsStores extends ActionBoundStores {
     }
     changeData(param) {
         return new Promise((resolve,reject) => {
-            post("defenseip/store/edit",param).then((res) => {
+            post("defenseip/store/edit",Object.assign(param,{
+                edit_id: param.id
+            })).then((res) => {
                 if(res.data.code==1) {
                     this.getData({
                         status: 0,

@@ -18,9 +18,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import ChangeStatus from "./changeStatus.jsx";
 import TextField from '@material-ui/core/TextField';
 import { get,post } from '../../tool/http';
-import io from 'socket.io-client';
 const classNames = require('classnames');
-const socket = io(location.protocol+"//"+location.hostname+":8120");
 
 const styles = {
     appBar: {
@@ -73,11 +71,16 @@ const styles = {
   }
 
   class Communication extends React.Component {
+    // 声明需要使用的Context属性
+    static contextTypes = {
+        socket: PropTypes.object
+    }
     state = {
       open: false,
       contents: []
     };
     componentDidMount() {
+        const { socket } = this.context;
         get("work_answer/show",{
             work_number: this.props.work_order_number
         }).then(res => {
@@ -108,7 +111,8 @@ const styles = {
         }
     }
     sendContent = () => {
-        if(this.send_content) {
+        const { socket } = this.context;
+        if(!this.send_content) {
             return ;
         }
         post("work_answer/insert",{

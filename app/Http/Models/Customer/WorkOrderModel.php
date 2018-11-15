@@ -116,10 +116,11 @@ class WorkOrderModel extends Model
             $row->machine_number = $business->machine_number;
             $row->resource_detail = $business->resource_detail;
             $row->sales_name = $business->sales_name;
+            $row = $row->toArray();
             curl('http://127.0.0.1:8121',$row);
-			$return['data'] = $row->id;
+			$return['data'] = $row['id'];
 			$return['code'] = 1;
-			$return['msg'] = '工单提交成功,等待工作人员处理,您的工单号:'.$row->work_order_number;
+			$return['msg'] = '工单提交成功,等待工作人员处理,您的工单号:'.$row['work_order_number'];
 		} else {
 			$return['data'] = '';
     		$return['code'] = 0;

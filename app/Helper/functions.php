@@ -106,7 +106,7 @@ function curl($url, $params ='', $return = 1, $header = array(), $cookie = array
 	}
 
 	$response = curl_exec($ch); // 执行并接收返回信息
-
+	
 	if(curl_errno($ch))
 	{
 		// 出错则显示错误信息

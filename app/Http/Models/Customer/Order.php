@@ -416,5 +416,18 @@ class Order extends Model
 		return $return;
 	}
 
+
+	public function allRenew($business){
+		if(!$business){
+			$return['data'] = '';
+			$return['code'] = 0;
+			$return['msg']	= '无法获取该业务下的所有资源信息';
+			return $return;
+		}
+		dd($business);
+		// $all = $this->where($business)->get();
+		// dd($all);
+	}
+
 	
 }

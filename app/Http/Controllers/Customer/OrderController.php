@@ -397,4 +397,17 @@ class OrderController extends Controller
 	}
 	/****支付宝接口结束****/
 
+	public function allRenew(Request $request){
+		$business = $request->only(['business_sn']);
+		dd($business);
+		// $order = new Order();
+		// $all_result = $order->allRenew($business);
+		// // dd($all_result['data']);
+		// return tz_ajax_echo($all_result['data'],$all_result['msg'],$all_result['code']);
+	}
+
+	public function tests(){
+		dd('test');
+	}
+
 }

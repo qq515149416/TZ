@@ -46,6 +46,12 @@ class OrderRequest extends FormRequest
 					'buy_time'		=> 'required|integer|min:1',
 				];
 				break;
+			case 'renewDefenseIp':
+				$return = [
+					'business_id'		=> 'required|exists:tz_defenseip_business,id',
+					'buy_time'		=> 'required|integer|min:1',
+				];
+				break;
  			
 			default:
 	
@@ -64,6 +70,8 @@ class OrderRequest extends FormRequest
 			'buy_time.required'	=> '请选择购买时长',
 			'buy_time.integer'	=> '购买时长为整数',
 			'buy_time.min'		=> '购买时长最少一个月',
+			'business_id.required'	=> '请选择续费业务',
+			'business_id.exists'	=> '业务不存在',
 		];
 	}
 

@@ -4,11 +4,11 @@ use PHPSocketIO\SocketIO;
 
 require __DIR__.'/../vendor/autoload.php';
 $https_connection = array(
-    'ssl' => array(
-        'local_cert'  => __DIR__.'/server.crt',//证书
-        'local_pk'    => __DIR__.'/server.key',//密钥
-        'verify_peer' => false,
-    )
+    // 'ssl' => array(
+    //     'local_cert'  => __DIR__.'/server.crt',//证书
+    //     'local_pk'    => __DIR__.'/server.key',//密钥
+    //     'verify_peer' => false,
+    // )
 );
 // ,$https_connection
 $io = new SocketIO(8120,$https_connection);

@@ -13,7 +13,6 @@ use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
 {
-
 	/**
 	 *  新购 高防IP 接口  /  选取购买信息后,生成订单信息 
 	 */
@@ -24,7 +23,21 @@ class OrderController extends Controller
 		$package_id = $par['package_id'];
 		$buy_time = $par['buy_time'];
 		$makeOrder = $model->buyNow($package_id,$buy_time);
-		dd($makeOrder);
+		
+		return tz_ajax_echo($makeOrder['data'],$makeOrder['msg'],$makeOrder['code']);
 	}
 	
+	/**
+	 *  续费 高防IP 接口  /  选取业务后,生成订单信息 
+	 */
+	public function renew(OrderRequest $request){
+		$par = $request->only(['business_id','buy_time']);
+		$model = new OrderModel();
+
+		$business_id = $par['business_id'];
+		$buy_time = $par['buy_time'];
+		$makeOrder = $model->renew($business_id,$buy_time);
+		
+		return tz_ajax_echo($makeOrder['data'],$makeOrder['msg'],$makeOrder['code']);
+	}
 }

@@ -226,15 +226,20 @@ class Order extends Model
 		if(isset($param['order_sn']) && $param['resource_type'] > 3){
 			// 存在订单号并且资源类型除主机和机柜外的根据订单号进行续费订单数据的查询
 			$order_where = ['customer_id'=>Auth::user()->id,'business_sn'=>$param['business_number'],'order_sn'=>$param['order_sn'],'resource_type'=>$param['resource_type']];
-			$order_data = $this->where($order_where)->select('order_sn','business_sn','business_id','business_name','machine_sn','resource','price','end_time')->first();
+			$order_data = $this->where($order_where)->select('order_sn','business_sn','business_id','business_name','machine_sn','resource','price','end_time','order_status')->first();
 			// 查无对应订单，直接返回
 			if(!$order_data){
 				$return['code'] = 0;
 				$return['msg'] = '无对应的资源续费订单,无法进行资源续费';
 				return $return;
 			}
+			if($order_data->order_status < 1 || $order_data->order_status > 2){
+				$return['code'] = 0;
+				$return['msg'] = '此资源无法进行续费,因为资源未支付/已不符合续费条件';
+				return $return;
+			}
+			
 			//在原到期时间基础上增加续费时长,生成新的到期时间
-			// dd($order_data->end_time);
 			$end_time = Carbon::parse($order_data->end_time)->modify('+'.$param['length'].' months')->toDateTimeString();
 			//续费到期时间超业务到期时间直接返回 
 			if($end_time > $business->endding_time){
@@ -409,6 +414,19 @@ class Order extends Model
 		}
 
 		return $return;
+	}
+
+
+	public function allRenew($business){
+		if(!$business){
+			$return['data'] = '';
+			$return['code'] = 0;
+			$return['msg']	= '无法获取该业务下的所有资源信息';
+			return $return;
+		}
+		dd($business);
+		// $all = $this->where($business)->get();
+		// dd($all);
 	}
 
 	

@@ -26,12 +26,12 @@ class WorkOrderModel extends Model
     public function showWorkOrder($status){
     	$where = [
     		'customer_id' => Auth::user()->id,
-    		'submitter'  => 1,	
+    		'submitter'  => 1,
         ];
     	if(isset($status['work_order_status'])){
     		$where['work_order_status']= $status['work_order_status'];
     	}
-    	
+
     	$list = $this->where($where)->get(['id','work_order_number','business_num','work_order_type','work_order_content','submitter_name','work_order_status','process_department','complete_time','created_at','updated_at']);
     	if(!$list->isEmpty()){
     		// 查询到数据进行转换
@@ -46,9 +46,9 @@ class WorkOrderModel extends Model
                 $list[$showkey]['department'] = $this->department($showvalue['process_department'])->depart_name;
                 $business = $this->businessDetail($showvalue['business_num']);
                 $list[$showkey]['client_name'] = $business->client_name;
-                $list[$showkey]['business_type'] = $business->business_type;	
+                $list[$showkey]['business_type'] = $business->business_type;
                 $list[$showkey]['machine_number'] = $business->machine_number;
-                $list[$showkey]['resource_detail'] = $business->resource_detail;	
+                $list[$showkey]['resource_detail'] = $business->resource_detail;
     		}
             $return['data'] = $list;
             $return['code'] = 1;
@@ -75,7 +75,8 @@ class WorkOrderModel extends Model
     		return $return;
     	}
     	$where = ['client_id'=>Auth::user()->id,'business_number'=>$insert_data['business_num'],'business_status'=>[2,3,4]];
-    	$business = DB::table('tz_business')->where($where)->select('client_id','business_number','sales_id')->first();
+        $business = DB::table('tz_business')->where($where)->select('client_id','business_number','sales_id','sales_name')->first();
+        // dd($business);
     	if(!$business){
     		$return['data'] = '';
     		$return['code'] = 0;
@@ -112,21 +113,23 @@ class WorkOrderModel extends Model
             // 对应的业务数据
             $business = $this->businessDetail($row->business_num);
             $row->client_name = $business->client_name;
-            $row->business_type = $business->business_type;    
+            $row->business_type = $business->business_type;
             $row->machine_number = $business->machine_number;
             $row->resource_detail = $business->resource_detail;
+            // dd($business);
             $row->sales_name = $business->sales_name;
+            $row = $row->toArray();
             curl('http://127.0.0.1:8121',$row);
-			$return['data'] = $row->id;
+			$return['data'] = $row['id'];
 			$return['code'] = 1;
-			$return['msg'] = '工单提交成功,等待工作人员处理,您的工单号:'.$row->work_order_number;
+			$return['msg'] = '工单提交成功,等待工作人员处理,您的工单号:'.$row['work_order_number'];
 		} else {
 			$return['data'] = '';
     		$return['code'] = 0;
     		$return['msg'] = '工单提交失败';
 		}
-    
-    		
+
+
     	return $return;
     }
 
@@ -168,7 +171,7 @@ class WorkOrderModel extends Model
      * @return                   对应的业务数据
      */
     public function businessDetail($business_number){
-    	$business = DB::table('tz_business')->where('business_number',$business_number)->select('client_name','business_type','machine_number','resource_detail')->first();
+    	$business = DB::table('tz_business')->where('business_number',$business_number)->select('client_name','business_type','machine_number','resource_detail','sales_name')->first();
     	$business_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜'];
     	$business->business_type = $business_type[$business->business_type];
     	return $business;
@@ -181,7 +184,7 @@ class WorkOrderModel extends Model
      */
     public function workTypes($parent_id){
     	if(!$parent_id){
-    		$parent_id['parent_id'] = 0; 
+    		$parent_id['parent_id'] = 0;
     	}
     	$work_type = DB::table('tz_work_type')->where($parent_id)->whereNull('deleted_at')->select('id','type_name')->get();
     	$return['data'] = $work_type;

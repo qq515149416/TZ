@@ -20,6 +20,7 @@ class ChecksComponent extends React.Component {
     }
 
     handleChange = name => event => {
+        this.props.setComponentParam(event.target.value);
         this.setState({
             [name]: event.target.value,
         });

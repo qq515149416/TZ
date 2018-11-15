@@ -5,6 +5,7 @@ import { Provider, onError } from "mobx-react";
 import blue from '@material-ui/core/colors/blue';
 import deepOrange from '@material-ui/core/colors/deepOrange';
 import {stores} from "./common/config.js";
+import Socket from "./socket.jsx";
 
 const theme = createMuiTheme({
     palette: {
@@ -45,7 +46,9 @@ const Main = (Render) => {
         <BrowserRouter>
             <Provider {...stores}>
                 <MuiThemeProvider theme={theme}>
-                    <Render />
+                    <Socket>
+                        <Render />
+                    </Socket>
                 </MuiThemeProvider>
             </Provider>
         </BrowserRouter>

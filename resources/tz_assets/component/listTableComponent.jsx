@@ -298,7 +298,7 @@ const styles = theme => ({
           <div>
              {
               this.props.filterType && (
-                <Paper className={classes.paper} elevation={1}>
+                <Paper className={`${classes.paper} ${this.props.listFilterComponentClassName}`} elevation={1}>
                       <FilterTableToolbar filterData={this.props.filterData} types={this.props.headTitlesData} filterType={this.props.filterType} />
                 </Paper>
               )

@@ -171,8 +171,6 @@ Route::group([
             Route::get('checkTrade', 'Customer\OrderController@checkTrade');
             Route::get('delTrade', 'Customer\OrderController@delTrade');
 
-            //高防ip相关订单接口
-            Route::get('buyDefenseIpNow', 'DefenseIp\OrderController@buyNow');
         });
     });
 
@@ -216,6 +214,9 @@ Route::group([
         ], function () {
             Route::get('getInfo', 'DefenseIp\InfoController@showList');  //获取高防IP 列表
             Route::post('setTarget', 'DefenseIp\SetController@setTarget');  //配置目标IP
+
+            Route::get('buyDefenseIpNow', 'DefenseIp\OrderController@buyNow'); //购买套餐
+            Route::get('renewDefenseIp', 'DefenseIp\OrderController@renew'); //购买套餐
         });
 
     });

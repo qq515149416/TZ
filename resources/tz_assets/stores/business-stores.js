@@ -11,6 +11,9 @@ class BusinessStores extends ActionBoundStores {
     @observable business = [
 
     ];
+    @observable business_all = [
+
+    ];
     status = {"1": "审核通过", "-2": "审核不通过"};
     @observable statistics = {
         clientName: "",
@@ -20,6 +23,9 @@ class BusinessStores extends ActionBoundStores {
         productName: "",
         statisticsAmount: 0
     };
+    filterData(param) {
+        this.filterStoreData("business","select",param);
+    }
     @action.bound
     changeStatistics(attr,value) {
         this.statistics.statisticsAmount = this.statistics.unitPrice * this.statistics.length;
@@ -88,8 +94,19 @@ class BusinessStores extends ActionBoundStores {
                 this.business = res.data.data.map(item => new BusinesStores(Object.assign(item,{
                     resource_detail_json: JSON.parse(item.resource_detail)
                 })));
+                this.business_all = res.data.data.map(item => new BusinesStores(Object.assign(item,{
+                    resource_detail_json: JSON.parse(item.resource_detail)
+                })));
             }
         });
+    }
+    @action.bound
+    findData({ business_status }) {
+        if(business_status!="all") {
+            this.business = this.business_all.filter(item => item.business_status == business_status);
+        } else {
+            this.business = this.business_all;
+        }
     }
 }
 export default BusinessStores;

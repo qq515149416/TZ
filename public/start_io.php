@@ -44,7 +44,7 @@ $io->on('workerStart', function(){
 		if($to_department && !isset($depart_map[$to_department])){
 			return $http_connection->send('faile');
 		} else {
-			return $http_connection->send('ok');
+			return $http_connection->send(' ');
 		}
 	};
 	$listen_worker->listen();//执行监听

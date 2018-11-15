@@ -47,6 +47,12 @@ class WorkOrdersStores extends ActionBoundStores {
         }
     }
     @action.bound
+    addData(data) {
+        this.workOrders.push(new WorkOrderStores(Object.assign(data,{
+            resource_detail_json: JSON.parse(data.resource_detail)
+        })));
+    }
+    @action.bound
     getData(param={}) {
         this.workOrders = [];
         get("workorder/show",Object.assign(param,{

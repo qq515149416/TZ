@@ -70,9 +70,9 @@ function curl($url, $params ='', $return = 1, $header = array(), $cookie = array
 	// 设置是否为post传递
 	curl_setopt($ch, CURLOPT_POST, (bool)$params);
 	// 对于https 设定为不验证证书和host
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, $return);//设置是否返回信息
+	// curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+	// curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+	// curl_setopt($ch, CURLOPT_RETURNTRANSFER, $return);//设置是否返回信息
 
 	if($cookie)
 	{
@@ -85,7 +85,7 @@ function curl($url, $params ='', $return = 1, $header = array(), $cookie = array
 		if(is_array($params))
 		{
 			$params = http_build_query($params);
-		}
+        }
 		// POST 数据
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
@@ -104,7 +104,6 @@ function curl($url, $params ='', $return = 1, $header = array(), $cookie = array
 	{
 		curl_setopt($ch, $key, $val);
 	}
-
 	$response = curl_exec($ch); // 执行并接收返回信息
 
 	if(curl_errno($ch))

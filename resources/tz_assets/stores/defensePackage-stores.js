@@ -1,23 +1,26 @@
 import { observable, action, extendObservable} from "mobx";
 import {get,post} from "../tool/http.js";
 import ActionBoundStores from "./common/action-bound-stores.js";
-class DefenseipStores {
+
+
+
+class DefensePackageStores {
     constructor(data) {
         extendObservable(this,data);
     }
 }
 
-class DefenseipsStores extends ActionBoundStores {
-    @observable defenseips = [
+class DefensePackagesStores extends ActionBoundStores {
+    @observable defensePackages = [
 
     ];
     delData(id) {
         return new Promise((resolve,reject) => {
-            get("defenseip/store/del",{
+            get("defenseip/package/del",{
                 del_id: id
             }).then((res) => {
                 if(res.data.code==1) {
-                    this.delStoreData("defenseips",id);
+                    this.delStoreData("defensePackages",id);
                     resolve(true);
                 } else {
                     resolve(false);
@@ -27,12 +30,11 @@ class DefenseipsStores extends ActionBoundStores {
     }
     changeData(param) {
         return new Promise((resolve,reject) => {
-            post("defenseip/store/edit",Object.assign(param,{
+            post("defenseip/package/edit",Object.assign(param,{
                 edit_id: param.id
             })).then((res) => {
                 if(res.data.code==1) {
                     this.getData({
-                        status: 0,
                         site: 1
                     });
                     resolve(true);
@@ -45,10 +47,9 @@ class DefenseipsStores extends ActionBoundStores {
     }
     addData(data) {
         return new Promise((resolve,reject) => {
-            post("defenseip/store/insert",data).then((res) => {
+            post("defenseip/package/insert",data).then((res) => {
                 if(res.data.code==1) {
                     this.getData({
-                        status: 0,
                         site: 1
                     });
                     resolve(true);
@@ -61,12 +62,12 @@ class DefenseipsStores extends ActionBoundStores {
     }
     @action.bound
     getData(param={}) {
-        this.defenseips = [];
-        get("defenseip/store/show",param).then((res) => {
+        this.defensePackages = [];
+        get("defenseip/package/show",param).then((res) => {
             if(res.data.code==1) {
-                this.defenseips = res.data.data.map(item => new DefenseipStores(item));
+                this.defensePackages = res.data.data.map(item => new DefensePackageStores(item));
             }
         });
     }
 }
-export default DefenseipsStores;
+export default DefensePackagesStores;

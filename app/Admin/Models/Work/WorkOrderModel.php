@@ -142,7 +142,7 @@ class WorkOrderModel extends Model
             // 对应的业务数据
             $business = $this->businessDetail($row->business_num);
             $row->client_name = $business->client_name;
-            $row->business_type = $business->business_type;    
+            $row->business_type = $business->business_type;
             $row->machine_number = $business->machine_number;
             $row->resource_detail = $business->resource_detail;
             $row->sales_name = $business->sales_name;
@@ -234,7 +234,7 @@ class WorkOrderModel extends Model
                     // 对应的业务数据
                     $business = $this->businessDetail($edit_after->business_num);
                     $edit_after->client_name = $business->client_name;
-                    $edit_after->business_type = $business->business_type;    
+                    $edit_after->business_type = $business->business_type;
                     $edit_after->machine_number = $business->machine_number;
                     $edit_after->resource_detail = $business->resource_detail;
                     $edit_after->sales_name = $business->sales_name;

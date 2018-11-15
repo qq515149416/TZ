@@ -93,7 +93,7 @@ class RefundModel extends Model
                $status[$same] = $value->order_status;
             }
         }
-        
+
         /**
          * 计算可退款金额
          * @var [type]
@@ -187,7 +187,7 @@ class RefundModel extends Model
     	}
     	// 更改订单状态
     	$order_where = ['order_sn'=>$refund->refund_order,'order_status'=>6,'customer_id'=>Auth::user()->id,'resource'=>$refund->resource_type];
-    	$oreder_row = DB::table('tz_orders')->where($order_where)->update(['order_status'=>3]);
+    	$oreder_row = DB::table('tz_orders')->where($order_where)->update(['order_status'=>2]);
     	if($order_row != false){
     		DB::commit();
     		$return['code'] = 1;

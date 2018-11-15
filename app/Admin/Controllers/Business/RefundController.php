@@ -51,6 +51,18 @@ class RefundController extends Controller
     }
 
     /**
+     * 审核退款单
+     * @param  Request $request refund_num退款单号 refund_status审核状态通过/不通过 refund_note不通过备注
+     * @return [type]           [description]
+     */
+    public function checkRefund(Request $request){ 
+        $check_param = $request->only(['refund_num','refund_status','refund_note']);
+        $check = new RefundModel();
+        $check_result = $check->checkRefund($check_param);
+        return tz_ajax_echo($check_result,$check_result['msg'],$check_result['code']);
+    }
+
+    /**
      * 申请取消退款
      * @param  Request $request [description]
      * @return [type]           [description]

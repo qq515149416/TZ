@@ -48,28 +48,46 @@ class CheckExpire extends Command
 
 
 //        $this->info($this->updateStoreStatus(19,1));
-        $this->info($this->getEndBusiness());
+//        $this->info($this->getEndBusiness());
 
 
-//        $this->check();
+        $this->check();
 
         $this->info('END');//输出结束
     }
 
 
     /**
-     * 开始检查
+     * 检查过期业务  并将过期业务根据通过API控制器修改修改后台
+     *
      */
     protected function check()
     {
 
-        $apiC    = new ApiController();
-        $endData = $this->getEndBusiness();// 获取过期业务数据
-        foreach ($endData as $key => $value) {
-//            $this->info($key);
-            $this->info(json_encode($value)); //将数据转换成 json数据
-        }
+        $apiC            = new ApiController();   //实例化
+        $endData         = $this->getEndBusiness();// 获取过期业务数据
+        $alterSucceedSum = 0;//修改成功计数
+        $alterFalseSum   = 0;//修改失败技术
 
+        //遍历操作
+        foreach ($endData as $key => $value) {
+            $apiMsg = json_decode($apiC->deleteTarget($value['ip']), true);//发送api请求并将返回信息转成数组
+            $this->info($apiMsg['code']);
+
+            //统计接口使用状态
+            switch ($apiMsg['code']) {
+                case 0:  //状态码:0  成功
+                    $alterSucceedSum++;
+                    break;
+                case 1:   //状态码:1  失败
+                    $alterFalseSum++;
+                    break;
+                default:  //未知
+                    break;
+            }
+        }
+        $this->info('修改成功数:' . $alterSucceedSum);
+        $this->info('修改失败数:' . $alterFalseSum);
     }
 
 
@@ -82,15 +100,9 @@ class CheckExpire extends Command
     protected function getEndBusiness()
     {
         $nowTime = Carbon::now();  //获取当前时间
-//        $endData = BusinessModel::where('end_at', '<', $nowTime)//条件为当前时间大于结束时间时
-//        ->get()->toArray();  //获取数据比并转换成数组形式
-//        return $endData;
-
         $endData = BusinessModel::where('end_at', '<', $nowTime)//条件为当前时间大于结束时间时
-        ->join('tz_defenseip_store', 'tz_defenseip_business.ip_id', '=', 'tz_defenseip_store.id')  //关联数组
-            ->get()
-            ->toArray();  //获取数据比并转换成数组形式
-
+        ->join('tz_defenseip_store', 'tz_defenseip_business.ip_id', '=', 'tz_defenseip_store.id')//关联数组
+        ->get()->toArray();  //获取数据比并转换成数组形式
         return $endData;
     }
 

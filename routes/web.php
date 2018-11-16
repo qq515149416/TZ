@@ -33,7 +33,7 @@ Route::group([
     //测试 DefenseIp\TestController
     Route::get('testbind', 'TzAuth\RegisterController@bindSalesman');  //测试绑定业务员
     Route::post('jun', 'TzAuth\ResetPasswordController@alterPassword');   //测试修改密码
-    Route::post('ipTest', 'DefenseIp\InfoController@checkStatus');    //检查状态
+    Route::post('ipTest', 'DefenseIp\InfoController@test');    //检查状态
 //    Route::post('ipTest', 'DefenseIp\SetController@setTarget');    //高防IP测试
     Route::get('login', 'TzAuth\TestController@login');//TODO 上线前要删除   用户登录模拟登录
     Route::get('userInfo', 'User\InfoController@test');

@@ -13,14 +13,15 @@ class BusinessModel extends Model
     protected $primaryKey = 'id'; //主键
     protected $dates = ['deleted_at']; //删除时间
 
-    /**
-     *
-     */
-    public function test()
-    {
-        $data=$this->find(1)->get()->toArray();
+//    /**
+//     *
+//     */
+//    public function test()
+//    {
+//       return $this->hasOne('App\Http\Models\DefenseIp\StoreModel','id','ip_id');
+//    }
 
-        return $data;
-    }
+
+
 
 }

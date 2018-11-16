@@ -42,7 +42,7 @@ $io->on('workerStart', function(){
 		$to_department = @$_POST['process_department'];
 		$io->to($to_department)->emit('new_work_order',$_POST);
 		if($to_department && !isset($depart_map[$to_department])){
-			return $http_connection->send('faile');
+			return $http_connection->send(' ');
 		} else {
 			return $http_connection->send(' ');
 		}

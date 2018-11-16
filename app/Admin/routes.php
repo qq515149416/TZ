@@ -19,6 +19,7 @@ Route::group([
     $router->post('rules', 'Others\ContactsController@rulestest');
     $router->get('rules', 'Others\ContactsController@rulestest');
     $router->get('vi', 'Others\ContactsController@vi');
+    $router->post('vtest', 'Others\ContactsController@vtest');
     $router->get('ctset', 'Others\ContactsController@test');
     $router->get('test', 'Others\StaffController@test');
     $router->get('contacts/maillist', 'Others\ContactsController@test');

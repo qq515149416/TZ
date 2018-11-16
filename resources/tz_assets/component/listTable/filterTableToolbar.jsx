@@ -99,7 +99,7 @@ class FilterTableToolbar extends React.Component {
                                         }}
                                     >
                                         <MenuItem value={"all"}>
-                                        <em>全部内容</em>
+                                        <b>全部内容</b>
                                         </MenuItem>
                                         {
                                             item.options.map(e => {

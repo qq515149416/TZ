@@ -406,8 +406,19 @@ class OrderController extends Controller
 		$business = $request->only(['business_sn']);
 		$order = new Order();
 		$all_result = $order->allRenew($business);
-		dd($all_result['data']);
 		return tz_ajax_echo($all_result['data'],$all_result['msg'],$all_result['code']);
+	}
+
+	/**
+	 * 进行续费操作
+	 * @param  Request $request [description]
+	 * @return [type]           [description]
+	 */
+	public function insertAllRenew(Request $request){
+		$renew = $request->only(['orders','length','order_note','business_number']);
+		$insert = new Order();
+		$insert_result = $insert->insertAllRenew($renew);
+		return tz_ajax_echo($insert_result['data'],$insert_result['msg'],$insert_result['code']);
 	}
 
 }

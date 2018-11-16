@@ -367,7 +367,6 @@ class OrdersModel extends Model
         if($param['resource_type'] == 1 || $param['resource_type'] == 2 || $param['resource_type'] == 3) {
             $business_alert['length'] = (int)bcadd($business->length,$param['length'],0);
             $business_alert['endding_time'] = $end_time;
-            $business_alert['business_status'] = 3;
             $alert_where = ['business_number'=>$business->business_number];
             $business_row = DB::table('tz_business')->where($alert_where)->update($business_alert);
             //更新失败，直接返回

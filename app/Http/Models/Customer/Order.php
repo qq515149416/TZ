@@ -416,7 +416,11 @@ class Order extends Model
 		return $return;
 	}
 
-
+	/**
+	 * 获取当前业务下的所有其他资源订单信息
+	 * @param  [type] $business [description]
+	 * @return [type]           [description]
+	 */
 	public function allRenew($business){
 		if(!$business){
 			$return['data'] = '';
@@ -424,9 +428,21 @@ class Order extends Model
 			$return['msg']	= '无法获取该业务下的所有资源信息';
 			return $return;
 		}
-		dd($business);
-		// $all = $this->where($business)->get();
-		// dd($all);
+		$all = $this->where($business)->whereIn('order_type',[1,2])->where('price','>','0.00')->where('resource_type','>',3)->orderBy('resource_type','asc')->get(['order_sn','resource_type','machine_sn','resource','price','end_time']);
+		if(!$all->isEmpty()){
+			foreach($all as $key=>$value){
+				$resource_type = [ '1' => '租用主机' , '2' => '托管主机' , '3' => '租用机柜' , '4' => 'IP' , '5' => 'CPU' , '6' => '硬盘' , '7' => '内存' , '8' => '带宽' , '9' => '防护' , '10' => 'cdn'];
+				$all[$key]['resource'] = $resource_type[$value['resource_type']];
+			}
+			$return['data'] = $all;
+			$return['code'] = 1;
+			$return['msg']	= '该业务下的其他资源信息获取成功';
+		} else {
+			$return['data'] = '';
+			$return['code'] = 0;
+			$return['msg']	= '该业务下暂无其他资源信息';
+		}
+		return $return;
 	}
 
 	

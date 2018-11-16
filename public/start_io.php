@@ -13,13 +13,6 @@ $https_connection = array(
 // ,$https_connection
 $io = new SocketIO(8120,$https_connection);
 $io->on('connection',function($socket)use($io){
-	$socket->on('login',function($depart_id)use($socket){
-		global $depart_map;
-		$depart_id = (string)$depart_id;
-		++$depart_map[$depart_id];//表示有多少连接
-		$socket->join($depart_id);
-		$socket->depart_id = $depart_id;
-	});
 	// 后台发送到前台
     $socket->on('admin_to_client',function($message)use($io){
         $io->emit('to_id:'.$message['to_id'].'work_num:'.$message['work_number'],$message);
@@ -28,6 +21,15 @@ $io->on('connection',function($socket)use($io){
     $socket->on('client_to_admin',function($message)use($io){
     	$io->emit('work_num:'.$message['work_number'],$message);
     });
+});
+
+$io->on('connect',function($socket){
+	$socket->on('login',function($depart_id)use($socket){
+		global $depart_map;
+		$depart_id = (string)$depart_id;
+		$socket->join($depart_id);
+		$socket->depart_id = $depart_id;
+	});
 });
 
 // 启动监听另一个端口，通过这个端口可以给任意相关部门推送信息
@@ -41,11 +43,8 @@ $io->on('workerStart', function(){
 		global $io;
 		$to_department = @$_POST['process_department'];
 		$io->to($to_department)->emit('new_work_order',$_POST);
-		if($to_department && !isset($depart_map[$to_department])){
-			return $http_connection->send(' ');
-		} else {
-			return $http_connection->send(' ');
-		}
+		return $http_connection->send(' ');
+		
 	};
 	$listen_worker->listen();//执行监听
 

@@ -382,6 +382,16 @@ Route::group([
         });
 
 
+        /**
+         *  高发IP下架处理
+         */
+        Route::group([
+            'prefix' => 'remove',
+        ], function (Router $router) {
+            $router->get('selectExpireList','Defenseip\RemoveController@selectExpireList');  //查询过期业务
+            
+        });
+
     });
 
 });

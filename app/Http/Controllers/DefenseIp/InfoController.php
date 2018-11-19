@@ -7,6 +7,7 @@ namespace App\Http\Controllers\DefenseIp;
 
 use App\Http\Models\DefenseIp\BusinessModel;
 use App\Http\Models\DefenseIp\StoreModel;
+use App\Http\Models\DefenseIp\XADefenseDataModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -78,22 +79,19 @@ class InfoController extends Controller
     }
 
 
+
+
     /**
-     * 统计高防IP数据流量   TODO 为未完成
+     * 统计高防IP数据流量
      * 用于绘制流量图表
+     * 参数:
+     *    date:数据日期
      *
      */
-    public function statistics()
+    public function getStatistics(Request $request)
     {
 
-
-//        $businessList = BusinessModel::where('user_id', '=', $this->userId)->get()->toArray();  //获取业务数据
-//
-//        //遍历统计
-//        foreach ($businessList as $key => $value) {
-//            dump($value['end_at']);
-//        }
-//
+        
 
     }
 
@@ -103,7 +101,14 @@ class InfoController extends Controller
      */
     public function test()
     {
-        phpinfo();die();
+
+
+        $XADefenseDataModel = new XADefenseDataModel();
+
+        dump($XADefenseDataModel->getByIp());
+
+
+        die();
 //        $busM = new BusinessModel();
 ////        $data = $busM->test()->get();
 //        $data = $busM->find(20)->test();

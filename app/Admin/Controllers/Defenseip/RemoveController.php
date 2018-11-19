@@ -45,6 +45,8 @@ class RemoveController extends Controller
      */
     public function updataStatus()
     {
+
+        
     }
 
     /**

@@ -190,17 +190,15 @@ class OrderController extends Controller
 	}
 
 	/**
-	 * 对资源进行续费
+	 * 进行续费操作
 	 * @param  Request $request [description]
 	 * @return json           续费的反馈信息和提示
 	 */
 	public function renewResource(Request $request){
-		
-			$renew_data = $request->only(['business_number','order_sn','price','length','order_note','resource_type']);
-			$renew = new Order();
-			$renew_resource = $renew->renewResource($renew_data);
-			return tz_ajax_echo($renew_resource,$renew_resource['msg'],$renew_resource['code']);
-		
+		$renew_data = $request->only(['orders','length','order_note','business_number']);
+		$renew = new Order();
+		$renew_resource = $renew->renewResource($renew_data);
+		return tz_ajax_echo($renew_resource['data'],$renew_resource['msg'],$renew_resource['code']);
 	}
 
 	public function checkTrade(OrderRequest $request){
@@ -409,16 +407,17 @@ class OrderController extends Controller
 		return tz_ajax_echo($all_result['data'],$all_result['msg'],$all_result['code']);
 	}
 
+
 	/**
-	 * 进行续费操作
-	 * @param  Request $request [description]
+	 * 展示之前续费新生成的订单
+	 * @param  Request $request renew_order -- 续费产生的订单id组合
 	 * @return [type]           [description]
 	 */
-	public function insertAllRenew(Request $request){
-		$renew = $request->only(['orders','length','order_note','business_number']);
-		$insert = new Order();
-		$insert_result = $insert->insertAllRenew($renew);
-		return tz_ajax_echo($insert_result['data'],$insert_result['msg'],$insert_result['code']);
+	public function showRenewOrder(Request $request){
+		$renew_order = $request->only(['renew_order']);//获取续费的订单id
+		$show_renew = new Order();
+		$show_renew_result = $show_renew->showRenewOrder($renew_order['renew_order']);
+		return tz_ajax_echo($show_renew_result['data'],$show_renew_result['msg'],$show_renew_result['code']);
 	}
 
 }

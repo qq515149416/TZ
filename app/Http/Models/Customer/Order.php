@@ -30,6 +30,18 @@ class Order extends Model
 	protected $dates = ['deleted_at'];
 	protected $fillable = ['order_sn', 'business_sn','customer_id','before_money','after_money','business_id','resource_type','order_type','machine_sn','resource','price','duration','end_time','pay_type','pay_price','serial_number','pay_time','order_status','refund_money','refund_time','refund_note','order_note','created_at','payable_money'];
 
+	/**
+	 * 用于在获取续费的资源时分类
+	 * @param  array $array 需要分类的数据
+	 * @param  int $state 分类的条件
+	 * @return [type]        [description]
+	 */
+	private function filter($array,$state){
+        $this->state = $state;
+        return array_filter($array,function($var) {
+            return $var->resource_type == $this->state;
+        });
+    }
 
 	public function getList($type)
 	{	
@@ -229,7 +241,8 @@ class Order extends Model
 				$resource_type = [ '1' => '租用主机' , '2' => '托管主机' , '3' => '租用机柜' , '4' => 'IP' , '5' => 'CPU' , '6' => '硬盘' , '7' => '内存' , '8' => '带宽' , '9' => '防护' , '10' => 'cdn'];
 				$all[$key]['resource'] = $resource_type[$value['resource_type']];
 			}
-			$return['data'] = $all;
+			$orders = ['IP'=>$this->filter($all->toArray(),4),'cpu'=>$this->filter($all->toArray(),5),'harddisk'=>$this->filter($all->toArray(),6),'memory'=>$this->filter($all->toArray(),7),'bandwidth'=>$this->filter($all->toArray(),8),'protected'=>$this->filter($all->toArray(),9),'cdn'=>$this->filter($all->toArray(),10)];
+			$return['data'] = $orders;
 			$return['code'] = 1;
 			$return['msg']	= '该业务下的其他资源信息获取成功';
 		} else {

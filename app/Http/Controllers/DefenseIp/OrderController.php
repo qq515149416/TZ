@@ -27,9 +27,16 @@ class OrderController extends Controller
 			return tz_ajax_echo('','获取失败',0);
 		};
 
-		$site = [ '1' => '西安',];
 		for ($i=0; $i < count($list); $i++) { 
-			$list[$i]['site'] = $site[$list[$i]['site']];
+			switch ($list[$i]['site']) {
+				case '1':
+					$list[$i]['site'] = '西安';
+					break;
+				
+				default:
+					$list[$i]['site'] = '不知道啥地区,数据库别瞎几把写,暂时只有1是西安';
+					break;
+			}
 		}
 		return tz_ajax_echo($list,'获取成功',1);
 	}

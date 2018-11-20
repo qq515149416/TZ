@@ -64,88 +64,6 @@ class PayOrder extends Model
 
 	
 
-	/**
-	 * 根据登录账号获取所有支付流水号
-	 * @param  $user_id
-	 * @return 支付订单号
-	 */
-	public function showTrade($key,$way,$key2 = ''){
-		$return['data'] = '';
-		$return['code'] = 0;
-		switch ($way) {
-			case 'all':
-				$list = $this		
-				->where('customer_id',$key)	
-				->orderBy('created_at','asc')
-				->get(['id','serial_number','subject','payable_money','actual_payment','preferential_amount','pay_type','pay_status','pay_time','before_money','after_money','coupon_id','created_at']);
-				break;
-			
-			case 'unpaid':
-				$list = $this	
-				->where('pay_status',0)	
-				->where('customer_id',$key)	
-				->orderBy('created_at','asc')
-				->get(['id','serial_number','subject','payable_money','actual_payment','preferential_amount','pay_type','pay_status','pay_time','before_money','after_money','coupon_id','created_at']);
-				break;
-
-			case 'serial_number':
-				$list = $this	
-				->where('customer_id',$key2)
-				->where('serial_number',$key)		
-				->orderBy('created_at','asc')
-				->get(['id','serial_number','subject','payable_money','actual_payment','preferential_amount','pay_type','pay_status','pay_time','before_money','after_money','coupon_id','created_at']);
-				break;
-
-			default:
-				$list = false;
-				break;
-		}
-		
-		if($list->isEmpty()){
-			$return['msg'] = '无支付订单记录';
-			return $return;
-		}
-
-		$list = json_decode(json_encode($list),true);
-		for ($i=0; $i < count($list); $i++) { 
-			$status = [ '1' => '已支付' , '0' => '未支付' ];
-			$type = [ '0' => '未选择' , '1' => '余额' , '2' => '支付宝' , '3' => '微信' , '4' => '其他' ];
-			$list[$i]['pay_type'] = $type[$list[$i]['pay_type']];
-			$list[$i]['pay_status'] = $status[$list[$i]['pay_status']];
-			$list[$i]['order'] = DB::table('tz_orders')->where('serial_number',$list[$i]['serial_number'])->get(['resource_type','order_type','machine_sn','resource','price','duration','payable_money']);
-			if($list[$i]['order']->isEmpty()){
-				$return['data'] = $list[$i]['serial_number'];
-				$return['msg'] = '获取此订单信息失败';
-				return $return;
-			}
-
-			$list[$i]['order'] = json_decode(json_encode($list[$i]['order']),true);
-			for ($j=0; $j < count($list[$i]['order']); $j++) { 
-				$order_type = [ '1' => '新购' , '2' => '续费'];
-				$resource_type = [
-					1	=> '租用主机',
-					2	=> '托管主机',
-					3	=> '租用机柜',
-					4	=> 'IP',
-					5	=> 'CPU',
-					6	=> '硬盘',
-					7	=> '内存',
-					8	=> '带宽',
-					9	=> '防护',
-					10	=> 'cdn',
-					11 	=> '高防IP',
-				];
-				$list[$i]['order'][$j]['order_type'] = $order_type[$list[$i]['order'][$j]['order_type']];
-				$list[$i]['order'][$j]['resource_type'] = $resource_type[$list[$i]['order'][$j]['resource_type']];		
-			}
-		}
-		$return['data'] 	= $list;
-		$return['msg']	= '获取成功';
-		$return['code']	= 1;
-
-		return $return;
-	}
-	
 	
 	
 
@@ -378,9 +296,10 @@ class PayOrder extends Model
 					$return['code']	= 3;
 					return $return;
 				}
-			}		
+			}
+			$return['data'] = ['end' => $end];		
 		}
-		$return['data'] = ['end' => $end];
+		
 		$return['msg'] = '更新成功!!';
 		$return['code'] = 1;			
 		return $return;

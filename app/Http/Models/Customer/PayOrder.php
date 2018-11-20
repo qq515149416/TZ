@@ -112,7 +112,9 @@ class PayOrder extends Model
 			$updateInfo['serial_number'] = $serial_number;
 			$updateInfo['order_status'] = 1;
 			$updateInfo['pay_time'] = $pay_time;
-			$updateInfo['end_time'] = $processing['data']['end'];
+			if(isset($processing['data']['end'])){
+				$updateInfo['end_time'] = $processing['data']['end'];
+			}
 			//重新计算单一订单应付金额
 			/*
 			*如需添加单一商品优惠券,在此添加计算

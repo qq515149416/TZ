@@ -39,11 +39,7 @@ class Order extends Model
 	private function filter($array,$state){
         $this->state = $state;
         return array_filter($array,function($var) {
-<<<<<<< HEAD
-            return $var["resource_type"] == $this->state;
-=======
             return $var['resource_type'] == $this->state;
->>>>>>> f0333a9079fdc2f04765e172134f57d01664f706
         });
     }
 

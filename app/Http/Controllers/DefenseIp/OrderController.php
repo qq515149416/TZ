@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\DefenseIp;
 
 use App\Http\Models\DefenseIp\OrderModel;
+use App\Http\Models\DefenseIp\PackageModel;
 use App\Http\Requests\DefenseIp\OrderRequest;
 
 use Illuminate\Http\Request;
@@ -13,6 +14,27 @@ use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
 {
+	/**
+	 *  显示可购买套餐
+	 */
+	public function showPackage(OrderRequest $request){
+		$model = new PackageModel();
+
+		$list = $model
+			->get()
+			->toArray();
+		if(count($list) == 0){
+			return tz_ajax_echo('','获取失败',0);
+		};
+
+		$site = [ '1' => '西安',];
+		for ($i=0; $i < count($list); $i++) { 
+			$list[$i]['site'] = $site[$list[$i]['site']];
+		}
+		return tz_ajax_echo($list,'获取成功',1);
+	}
+
+
 	/**
 	 *  新购 高防IP 接口  /  选取购买信息后,生成订单信息 
 	 */

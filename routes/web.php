@@ -163,7 +163,7 @@ Route::group([
             Route::post('delete_refund', 'Customer\RefundController@deleteRefund');
 
             //以下订单
-            Route::get('payOrderByBalance', 'Customer\OrderController@payOrderByBalance');
+            Route::post('payOrderByBalance', 'Customer\OrderController@payOrderByBalance');
 
         });
     });

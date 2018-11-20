@@ -341,6 +341,9 @@ const styles = theme => ({
               />
               <TableBody>
                 {this.props.data
+                  .sort((a,b) => {
+                      return b.id - a.id
+                  })
                   .sort(getSorting(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((n,i,arr) => {

@@ -322,7 +322,7 @@ class Order extends Model
 				$return['msg'] = '业务续费失败';
 				return $return;
 			}
-			$business_row = DB::table('tz_business')->where($business_where)->update(['endding_time'=>$end_time,'length'=>$length]);
+			$business_row = DB::table('tz_business')->where($business_where)->update(['endding_time'=>$endding_time,'length'=>$length]);
 			if($business_row == 0){
 				DB::rollBack();
 				$return['data'] = '';

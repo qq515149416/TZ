@@ -79,20 +79,28 @@ class InfoController extends Controller
     }
 
 
-
-
     /**
      * 统计高防IP数据流量
      * 用于绘制流量图表
      * 参数:
      *    date:数据日期
-     *
+     *    ip   :需要查询的ip地址
      */
     public function getStatistics(Request $request)
     {
 
-        
+        $res       = $request->all();  //获取所有传参
+        $startDate = Carbon::parse($res['date'])->timestamp;  //开始时间戳
+        $endDate   = Carbon::parse($res['date'])->addDay(1)->timestamp; //结束时间戳
+        dump('开始时间戳:' . $startDate);
+        dump('结束时间戳:' . $endDate);
 
+        $XADefenseDataModel = new XADefenseDataModel(); //实例化流量数据模型
+
+        dump(Carbon::now());
+//        dump($XADefenseDataModel->getByIp($res['ip'], $startDate, $endDate)); //获取数据
+        $dd=$XADefenseDataModel->getByIp($res['ip'], $startDate, $endDate); //获取数据
+        dump(Carbon::now());
     }
 
 

@@ -44,11 +44,12 @@ $io->on('workerStart', function(){
 		$to_department = @$_POST['process_department'];
 		$io->to($to_department)->emit('new_work_order',$_POST);
 		return $http_connection->send(' ');
-		
+
 	};
 	$listen_worker->listen();//执行监听
 
 });
+
 
 if(!defined('GLOBAL_START'))
 {

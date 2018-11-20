@@ -26,7 +26,8 @@ class VerifyCsrfToken extends Middleware
         'home/recharge/payRechargeNotify',  //用于支付宝 回调
         'home/customer/aliNotify',                  //用于支付宝 回调
 
-        'tz_admin/message/*',   //TODO  记得删除
 
+        'tz_admin/message/*',   //TODO  记得删除
+        'home/defenseIp/*',     //TODO   记得删除
     ];
 }

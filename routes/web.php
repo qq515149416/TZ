@@ -214,6 +214,7 @@ Route::group([
             'middleware' => 'CheckLogin',
         ], function () {
             Route::get('getInfo', 'DefenseIp\InfoController@showList');  //获取高防IP 列表
+            Route::post('getStatistics', 'DefenseIp\InfoController@getStatistics');  //获取流量数据
             Route::post('setTarget', 'DefenseIp\SetController@setTarget');  //配置目标IP
 
             Route::get('buyDefenseIpNow', 'DefenseIp\OrderController@buyNow'); //购买套餐

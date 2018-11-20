@@ -138,7 +138,6 @@ Route::group([
             Route::get('businessList', 'Customer\BusinessController@getBusinessList');
             Route::get('orderList', 'Customer\OrderController@getOrderList');
             Route::get('delOrder', 'Customer\OrderController@delOrder');
-            Route::get('payTradeByBalance', 'Customer\OrderController@payTradeByBalance');
             Route::post('renewresource', 'Customer\OrderController@renewResource');
             Route::get('show_white_list', 'Customer\WhiteListController@showWhiteList');
             Route::post('insert_white_list', 'Customer\WhiteListController@insertWhiteList');
@@ -161,15 +160,7 @@ Route::group([
             Route::post('delete_refund', 'Customer\RefundController@deleteRefund');
 
             //以下订单
-            Route::post('makeTrade', 'Customer\OrderController@makeTrade');
-            Route::get('showTrade', 'Customer\OrderController@showTrade');
-            Route::get('showUnpaidTrade', 'Customer\OrderController@showUnpaidTrade');
-            Route::get('showSelectTrade', 'Customer\OrderController@showSelectTrade');
-            Route::get('payTradeByAli', 'Customer\OrderController@payTradeByAli');
-            Route::get('aliReturn', 'Customer\OrderController@aliReturn');
-            Route::get('aliNotify', 'Customer\OrderController@aliNotify');
-            Route::get('checkTrade', 'Customer\OrderController@checkTrade');
-            Route::get('delTrade', 'Customer\OrderController@delTrade');
+            Route::get('payOrderByBalance', 'Customer\OrderController@payOrderByBalance');
 
         });
     });
@@ -215,8 +206,9 @@ Route::group([
             Route::get('getInfo', 'DefenseIp\InfoController@showList');  //获取高防IP 列表
             Route::post('setTarget', 'DefenseIp\SetController@setTarget');  //配置目标IP
 
+            Route::get('showPackage', 'DefenseIp\OrderController@showPackage'); //前台显示套餐
             Route::get('buyDefenseIpNow', 'DefenseIp\OrderController@buyNow'); //购买套餐
-            Route::get('renewDefenseIp', 'DefenseIp\OrderController@renew'); //购买套餐
+            Route::get('renewDefenseIp', 'DefenseIp\OrderController@renew'); //续费套餐
         });
 
     });

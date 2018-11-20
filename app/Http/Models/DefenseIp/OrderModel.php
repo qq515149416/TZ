@@ -51,7 +51,9 @@ class OrderModel extends Model
 			$return['code']	= 0;
 			return $return;
 		}
-		$data['order_sn'] 		= 'GN'.'_'.time().'_'.$user_id;
+		$time = time();
+		$data['order_sn'] 		= 'GN_'.$time.'_'.$user_id;
+		$data['business_sn']		= 'G_'.$time.'_'.$user_id;
 		$data['customer_id']		= $user_id;
 		$data['customer_name']	= Auth::user()->name;
 		if($data['customer_name'] == null){
@@ -91,10 +93,43 @@ class OrderModel extends Model
 				'code'	=> 0,
 			];
 		}
+		if($business->status == 2|| $business->status == 3){
+			return [
+				'data'	=> '',
+				'msg'	=> '业务已下架,无法续费',
+				'code'	=> 0,
+			];
+		}
+		$checkOrder = $this
+				->where('business_sn',$business->business_number)
+				->where('order_type',2)
+				->where('order_status',0)
+				->first();
+				
+		if($checkOrder != null){
+			$checkOrder->duration 	= $buy_time;
+			$checkOrder->payable_money 	= bcmul($checkOrder->price,$checkOrder->duration,2);
+			$res = $checkOrder->save();
+			if($res == true){
+				return [
+					'data'	=> '',
+					'msg'	=> '续费订单已存在,更新成功',
+					'code'	=> 1,
+				];
+			}else{
+				return [
+					'data'	=> '',
+					'msg'	=> '续费订单已存在,更新失败',
+					'code'	=> 0,
+				];
+			}
+		}	
+		
+
 		$second_buy_time = bcsub( time() , 60);
 		$second_buy_time = date("Y-m-d H:i:s",$second_buy_time); 
 
-		$check_time = $this->where('order_type',2)->where('resource_type',11)->where('customer_id',$user_id)->where('created_at','>',$second_buy_time)->value('id');
+		$check_time = $this->where('order_type',2)->where('resource_type',11)->where('customer_id',$user_id)->where('created_at','>',$second_buy_time)->value('id');                     
 
 		if($check_time != null){
 			return[
@@ -105,6 +140,7 @@ class OrderModel extends Model
 		}
 
 		$data['order_sn'] 		= 'GO'.'_'.time().'_'.$user_id;
+		$data['business_sn']		= $business->business_number;
 		$data['customer_id']		= $user_id;
 		$data['customer_name']	= Auth::user()->name;
 		if($data['customer_name'] == null){
@@ -113,6 +149,7 @@ class OrderModel extends Model
 		$data['business_id']		= Auth::user()->salesman_id;
 		$data['business_name']		= DB::table('admin_users')->where('id',$data['business_id'])->value('name');
 		$data['resource_type']		= 11;
+		$data['resource']		= DB::table('tz_defenseip_store')->where('id',$business->ip_id)->value('ip');
 		$data['order_type']		= 2;
 		$data['price']			= $business->price;
 		$data['machine_sn']		= $business->package_id;
@@ -133,4 +170,7 @@ class OrderModel extends Model
 		}
 		return $return;
 	}
+
+	
+
 }

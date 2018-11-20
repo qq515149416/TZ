@@ -139,8 +139,9 @@ Route::group([
             Route::get('orderList', 'Customer\OrderController@getOrderList');
             Route::get('delOrder', 'Customer\OrderController@delOrder');
             Route::get('payTradeByBalance', 'Customer\OrderController@payTradeByBalance');
-            Route::post('renewresource', 'Customer\OrderController@renewResource');
-            Route::post('all_renew','Customer\OrderController@allRenew');
+            Route::post('renewresource', 'Customer\OrderController@renewResource');//续费
+            Route::post('all_renew','Customer\OrderController@allRenew');//获取业务下续费的资源
+            Route::get('show_renew_order','Customer\OrderController@showRenewOrder');//展示续费的订单
             Route::get('show_white_list', 'Customer\WhiteListController@showWhiteList');
             Route::post('insert_white_list', 'Customer\WhiteListController@insertWhiteList');
             Route::post('check_ip', 'Customer\WhiteListController@checkIp');
@@ -213,6 +214,7 @@ Route::group([
             'middleware' => 'CheckLogin',
         ], function () {
             Route::get('getInfo', 'DefenseIp\InfoController@showList');  //获取高防IP 列表
+            Route::post('getStatistics', 'DefenseIp\InfoController@getStatistics');  //获取流量数据
             Route::post('setTarget', 'DefenseIp\SetController@setTarget');  //配置目标IP
 
             Route::get('buyDefenseIpNow', 'DefenseIp\OrderController@buyNow'); //购买套餐

@@ -78,6 +78,25 @@ return [
             'prefix' => '',
         ],
 
+
+        /**
+         * 高防IP流量数据专用数据库
+         */
+        'mysql_xagf' => [
+            'driver' => 'mysql',
+            'host' => env('XAGF_DB_HOST', '127.0.0.1'),
+            'port' => env('XAGF_DB_PORT', '3306'),
+            'database' => env('XAGF_DB_DATABASE', 'forge'),
+            'username' => env('XAGF_DB_USERNAME', 'forge'),
+            'password' => env('XAGF_DB_PASSWORD', ''),
+            'unix_socket' => env('XAGF_DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+            'engine' => null,
+        ],
+
     ],
 
     /*

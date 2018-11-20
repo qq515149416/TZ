@@ -478,8 +478,8 @@ class Order extends Model
 	 * @param  array $renew_order 刚刚续费的订单id
 	 * @return array              返回获取数据的信息
 	 */
-	public function showRenewOrder($renew_order){
-		if(!$renew_order){//当未传递续费订单的id时，从session中获取
+	public function showRenewOrder($renew_order = []){
+		if($renew_order != session(Auth::user()->id)){//当未传递续费订单的id时，从session中获取
 			$renew_order = session(Auth::user()->id);
 		}
 		if(!$renew_order){//session也未找到新续费的订单id数据时，直接返回

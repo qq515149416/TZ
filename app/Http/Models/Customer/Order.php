@@ -267,6 +267,7 @@ class Order extends Model
 			$return['msg']	= '无法进行续费,请确认后重新操作';
 			return $return;
 		}
+		$order_str = '';//用于记录创建的续费订单的订单号
 		$renew_order = [];//用于存储新增的订单的id，用于存储进session，方便后续调用订单
 		DB::beginTransaction();//开启事务处理
 		if(isset($renew['business_number'])){//传递了业务编号的进行业务查找和续费
@@ -370,6 +371,7 @@ class Order extends Model
 				$return['msg'] = '资源续费失败!!';
 				return $return;
 			}
+			$order_str = $business_order.','.$order_str;
 			array_push($renew_order,$business_order);
 		}
 		if(isset($renew['orders'])){
@@ -461,6 +463,7 @@ class Order extends Model
 					$return['msg'] = '资源续费失败!!';
 					return $return;
 				}
+				$order_str = $business_order.','.$order_str;
 				array_push($renew_order,$business_order);
 			}
 		}
@@ -469,7 +472,7 @@ class Order extends Model
 		session(Auth::user()->id,$renew_order); 
 		$return['data'] = $renew_order;
 		$return['code'] = 1;
-		$return['msg'] = '资源续费订单创建成功';//为了不影响使用请及时支付,您的续费单号:'.$order_sn;
+		$return['msg'] = '资源续费订单创建成功,订单号:'.rtrim($order_str,',');//为了不影响使用请及时支付,您的续费单号:'.$order_sn;
 		return $return;	
 	}
 	

@@ -58,20 +58,7 @@ class OrdersController extends Controller
         $return = $insert->insertResource($insert_data);
         return tz_ajax_echo($return['data'],$return['msg'],$return['code']); 
     }
-
-    /**
-     * 对资源进行续费
-     * @param  Request $request [description]
-     * @return json           续费的反馈信息和提示
-     */
-    public function renewResource(Request $request){
-        $renew_data = $request->only(['business_number','order_sn','price','length','order_note','client_id','resource_type']);
-        $renew = new OrdersModel();
-        $renew_resource = $renew->renewResource($renew_data);
-        return tz_ajax_echo($renew_resource,$renew_resource['msg'],$renew_resource['code']);
-    }
-
-
+  
     /**
      * 订单后台删除
      * @param  Request $request [description]
@@ -83,5 +70,41 @@ class OrdersController extends Controller
         $return = $delete->deleteOrders($delete_id);
         return tz_ajax_echo($return,$return['msg'],$return['code']);
     }
-   
+
+    /**
+     * 获取该业务下的其他资源订单数据
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function allRenew(Request $request){
+        $business = $request->only(['business_sn']);
+        $order = new Order();
+        $all_result = $order->allRenew($business);
+        return tz_ajax_echo($all_result['data'],$all_result['msg'],$all_result['code']);
+    }
+
+    /**
+     * 进行续费操作
+     * @param  Request $request [description]
+     * @return json           续费的反馈信息和提示
+     */
+    public function renewResource(Request $request){
+        $renew_data = $request->only(['orders','length','order_note','business_number']);
+        $renew = new Order();
+        $renew_resource = $renew->renewResource($renew_data);
+        return tz_ajax_echo($renew_resource['data'],$renew_resource['msg'],$renew_resource['code']);
+    }
+
+    /**
+     * 展示之前续费新生成的订单
+     * @param  Request $request renew_order -- 续费产生的订单id组合
+     * @return [type]           [description]
+     */
+    public function showRenewOrder(Request $request){
+        $renew_order = $request->only(['renew_order']);//获取续费的订单id
+        $show_renew = new Order();
+        $show_renew_result = $show_renew->showRenewOrder($renew_order['renew_order']);
+        return tz_ajax_echo($show_renew_result['data'],$show_renew_result['msg'],$show_renew_result['code']);
+    }
+
 }

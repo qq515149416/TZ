@@ -473,7 +473,7 @@ class Order extends Model
 		$return['data'] = $renew_order;
 		$return['code'] = 1;
 		$return['msg'] = '资源续费订单创建成功,订单号:'.rtrim($order_str,',');//为了不影响使用请及时支付,您的续费单号:'.$order_sn;
-		return $return;	
+		return $return;
 
 	}
 

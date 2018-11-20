@@ -140,7 +140,7 @@ Route::group([
             Route::get('delOrder', 'Customer\OrderController@delOrder');
             Route::get('payTradeByBalance', 'Customer\OrderController@payTradeByBalance');
             Route::post('renewresource', 'Customer\OrderController@renewResource');//续费
-            Route::post('all_renew','Customer\OrderController@allRenew');//获取业务下续费的资源
+            Route::get('all_renew','Customer\OrderController@allRenew');//获取业务下续费的资源
             Route::get('show_renew_order','Customer\OrderController@showRenewOrder');//展示续费的订单
             Route::get('show_white_list', 'Customer\WhiteListController@showWhiteList');
             Route::post('insert_white_list', 'Customer\WhiteListController@insertWhiteList');

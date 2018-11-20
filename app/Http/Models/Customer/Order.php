@@ -422,35 +422,35 @@ class Order extends Model
 					$return['msg'] = '业务续费失败!';
 					return $return;
 				}
-				$machine['business_end'] = $order['end_time'];
+				$resource['business_end'] = $order['end_time'];
 				switch ($order['resource_type']) {
 					case 4:
 					//更新IP表的所属业务编号，资源状态和到期时间
-					$machine['own_business'] = $order['business_sn'];
-					$machine['ip_status'] = 1;
+					$resource['own_business'] = $order['business_sn'];
+					$resource['ip_status'] = 1;
 					$where = ['own_business'=>$order['business_sn'],'ip'=>$order['machine_sn']];
-					$result = DB::table('idc_ips')->where($where)->update($machine);
+					$result = DB::table('idc_ips')->where($where)->update($resource);
 					break;
 					case 5:
 						//更新CPU表的所属业务编号，资源状态和到期时间
-						$machine['service_num'] = $order['business_sn'];
-						$machine['cpu_used'] = 1;
+						$resource['service_num'] = $order['business_sn'];
+						$resource['cpu_used'] = 1;
 						$where = ['service_num'=>$order['business_sn'],'cpu_number'=>$order['machine_sn']];
-						$result = DB::table('idc_cpu')->where($where)->update($machine);
+						$result = DB::table('idc_cpu')->where($where)->update($resource);
 						break;
 					case 6:
 						//更新硬盘表的所属业务编号，资源状态和到期时间
-						$machine['service_num'] = $order['business_sn'];
-						$machine['harddisk_used'] = 1;
+						$resource['service_num'] = $order['business_sn'];
+						$resource['harddisk_used'] = 1;
 						$where = ['service_num'=>$order['business_sn'],'harddisk_number'=>$order['machine_sn']];
-						$result = DB::table('idc_harddisk')->where($where)->update($machine);
+						$result = DB::table('idc_harddisk')->where($where)->update($resource);
 						break;
 					case 7:
 						//更新内存表的所属业务编号，资源状态和到期时间
-						$machine['service_num'] = $order['business_sn'];
-						$machine['memory_used'] = 1;
+						$resource['service_num'] = $order['business_sn'];
+						$resource['memory_used'] = 1;
 						$where = ['service_num'=>$order['business_sn'],'memory_number'=>$order['machine_sn']];
-						$result = DB::table('idc_memory')->where($where)->update($machine);
+						$result = DB::table('idc_memory')->where($where)->update($resource);
 						break;
 					default:
 						$result = 1;

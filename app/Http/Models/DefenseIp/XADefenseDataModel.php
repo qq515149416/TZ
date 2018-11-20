@@ -23,24 +23,25 @@ class XADefenseDataModel extends Model
 
     /**
      * 根据IP查询相关数据
+     *
      */
-    public function getByIp($ip=0)
+    public function getByIp($ip=0,$startDate,$endDate)
     {
 
         //============测试数据=================
         $ip = '113.141.160.136';
 
-
         //==============END===============
 
-
-        $Con = new Carbon();
-
         $data=$this
+//            ->whereBetween('time',[$startDate,$endDate ])
             ->where('ipaddress','=',$ip)
-            ->where()
+            ->whereBetween('time',[$startDate,$endDate ])
             ->get()
-            ->toArray();
+//            ->toArray();
+            ->toJson();
+
+
         return $data;
 
     }

@@ -87,7 +87,7 @@ class OverdueAlterStatus extends Command
                 'remove_status' => 0
             ])
             ->update([
-                'remove_status' => '2'  //业务状态改为
+                'remove_status' => '1'  //业务状态改为
             ]);
 
         return $data;  //返回修改个数

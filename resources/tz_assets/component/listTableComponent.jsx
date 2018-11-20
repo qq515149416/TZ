@@ -298,7 +298,7 @@ const styles = theme => ({
           <div>
              {
               this.props.filterType && (
-                <Paper className={classes.paper} elevation={1}>
+                <Paper className={`${classes.paper} ${this.props.listFilterComponentClassName}`} elevation={1}>
                       <FilterTableToolbar filterData={this.props.filterData} types={this.props.headTitlesData} filterType={this.props.filterType} />
                 </Paper>
               )
@@ -341,6 +341,9 @@ const styles = theme => ({
               />
               <TableBody>
                 {this.props.data
+                  .sort((a,b) => {
+                      return b.id - a.id
+                  })
                   .sort(getSorting(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((n,i,arr) => {

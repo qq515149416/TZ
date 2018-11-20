@@ -12,9 +12,16 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
+
 class ContactsController extends Controller
 {
     use ModelForm;
+    private function filter($arr,$state){
+        $this->state = $state;
+        return array_filter($arr,function($var) {
+            return $var->resource_type == $this->state;
+        });
+    }
     /**
      * 测试
      */
@@ -49,8 +56,40 @@ class ContactsController extends Controller
     /**
      * 测试
      */
-    public function vi() {
-    	return view('show/test');
+    public function vi(Request $request) {
+       $order = DB::table('tz_orders')->where(['business_sn'=>'320181008169'])->get();
+        // dd($order);
+        $resource = ['IP'=>$this->filter($order->toArray(),4)];
+
+        dd($resource);
+     //    curl('http://127.0.0.1:8121',$request->only(['process_department']));
+    	// return view('show/test');
+    }
+    public function vtest(Request $request) {
+        $session = [];
+        array_push($session,1);
+        array_push($session,2);
+        array_push($session,3);
+        dd($session);
+      // $request->only(['process_department'];
+        // echo 'http://'.$_SERVER['SERVER_ADDR'].':8121';
+      curl('http://127.0.0.1:8121',$request->only(['process_department']));
+      // dd(1);
+    //    // dd(simulation_request('http://www.cmd96.cn:8121/tz_admin/vi',['process_department'=>40],'post'));
+    // echo "<form action='http://127.0.0.1:8121/index.html' method='post' enctype='multipart/form-data'>
+    //     <!-- {{ csrf_field() }} -->
+    //     <input type='hidden' name='to' value='8'>
+    //     <input type='text' name='process_department'>
+    //     <input type='submit' value='上传'>
+    // </form>";
+    // echo "<form action='http://www.baidu.com' method='post' enctype='multipart/form-data'>
+    //     <!-- {{ csrf_field() }} -->
+    //     <input type='hidden' name='to' value='8'>
+    //     <input type='text' name='process_department'>
+    //     <input type='submit' value='上传'>
+    // </form>";
+        // phpinfo();
+        return view('show/test');
     }
 
     /**

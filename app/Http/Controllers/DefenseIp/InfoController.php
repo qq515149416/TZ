@@ -7,6 +7,7 @@ namespace App\Http\Controllers\DefenseIp;
 
 use App\Http\Models\DefenseIp\BusinessModel;
 use App\Http\Models\DefenseIp\StoreModel;
+use App\Http\Models\DefenseIp\XADefenseDataModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -54,12 +55,12 @@ class InfoController extends Controller
     /**
      *  判断业务时间状态
      *
-     * @param $endTime   '业务到期时间'
+     * @param $endTime '业务到期时间'
      * @return string    '返回业务中文状态'
      */
     protected function checkStatus($endTime)
     {
-//        $endTime  = '2018-11-14 16:53:14';   //获取业务过期时间
+//        $endTime  = ;   //获取业务过期时间
         $nowDate  = Carbon::now();  //获取现在时间
         $willDate = Carbon::now()->addDay(config('tz_time.deadline.long')); //获取将要过期的时间限期
 
@@ -79,21 +80,55 @@ class InfoController extends Controller
 
 
     /**
-     * 统计高防IP数据流量   TODO 为未完成
+     * 统计高防IP数据流量
      * 用于绘制流量图表
-     *
+     * 参数:
+     *    date:数据日期
+     *    ip   :需要查询的ip地址
      */
-    public function statistics()
+    public function getStatistics(Request $request)
+    {
+
+        $res       = $request->all();  //获取所有传参
+        $startDate = Carbon::parse($res['date'])->timestamp;  //开始时间戳
+        $endDate   = Carbon::parse($res['date'])->addDay(1)->timestamp; //结束时间戳
+        dump('开始时间戳:' . $startDate);
+        dump('结束时间戳:' . $endDate);
+
+        $XADefenseDataModel = new XADefenseDataModel(); //实例化流量数据模型
+
+        dump(Carbon::now());
+//        dump($XADefenseDataModel->getByIp($res['ip'], $startDate, $endDate)); //获取数据
+        $dd=$XADefenseDataModel->getByIp($res['ip'], $startDate, $endDate); //获取数据
+        dump(Carbon::now());
+    }
+
+
+    /**
+     * 测试模型关联
+     */
+    public function test()
     {
 
 
-//        $businessList = BusinessModel::where('user_id', '=', $this->userId)->get()->toArray();  //获取业务数据
-//
-//        //遍历统计
-//        foreach ($businessList as $key => $value) {
-//            dump($value['end_at']);
-//        }
-//
+        $XADefenseDataModel = new XADefenseDataModel();
+
+        dump($XADefenseDataModel->getByIp());
+
+
+        die();
+//        $busM = new BusinessModel();
+////        $data = $busM->test()->get();
+//        $data = $busM->find(20)->test();
+//        dump($data);
+        $nowTime = Carbon::now();  //获取当前时间
+
+        $endData = BusinessModel::where('end_at', '<', $nowTime)//条件为当前时间大于结束时间时
+        ->join('tz_defenseip_store', 'tz_defenseip_business.ip_id', '=', 'tz_defenseip_store.id')
+            ->get()
+            ->toArray();  //获取数据比并转换成数组形式
+
+        dump($endData);
 
     }
 

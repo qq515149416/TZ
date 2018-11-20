@@ -5,20 +5,20 @@ import { inject,observer } from "mobx-react";
 const columnData = [
     { id: 'ip', numeric: true, disablePadding: true, label: 'IP地址' },
     { id: 'vlan', numeric: true, disablePadding: false, label: 'vlan' },
-    { 
-      id: 'ip_company', 
-      numeric: true, 
-      disablePadding: false, 
+    {
+      id: 'ip_company',
+      numeric: true,
+      disablePadding: false,
       label: '所属运营商'
     },
     { id: 'ip_status', numeric: true, disablePadding: false, label: '使用状态' },
     { id: 'ip_lock', numeric: true, disablePadding: false, label: '锁定状态' },
     { id: 'ip_note', numeric: true, disablePadding: false ,label: '备注信息' },
-    { 
-      id: 'ip_comproomname', 
-      numeric: true, 
-      disablePadding: false, 
-      label: '所属机房' 
+    {
+      id: 'ip_comproomname',
+      numeric: true,
+      disablePadding: false,
+      label: '所属机房'
     },
     // { id: 'created_at', numeric: true, disablePadding: false, label: '创建时间' },
     // { id: 'updated_at', numeric: true, disablePadding: false, label: '更新时间' },
@@ -225,7 +225,7 @@ const filterType = [
   }
 ];
 @inject("ipsStores")
-@observer 
+@observer
 class IpList extends React.Component {
   componentDidMount() {
     this.props.ipsStores.getData();
@@ -259,16 +259,16 @@ class IpList extends React.Component {
       }
     });
     return (
-      <ListTableComponent 
+      <ListTableComponent
         title="ip资源库"
         operattext="ip资源"
         inputType={inputType}
-        filterType={filterType} 
-        headTitlesData={columnData} 
-        data={this.props.ipsStores.ips}  
-        addData={this.addData.bind(this)} 
-        delData={this.delData.bind(this)}  
-        changeData={this.changeData.bind(this)} 
+        filterType={filterType}
+        headTitlesData={columnData}
+        data={this.props.ipsStores.ips}
+        addData={this.addData.bind(this)}
+        delData={this.delData.bind(this)}
+        changeData={this.changeData.bind(this)}
         filterData={this.filterData.bind(this)}
       />
     );

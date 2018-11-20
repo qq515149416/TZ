@@ -39,7 +39,7 @@ class Order extends Model
 	private function filter($array,$state){
         $this->state = $state;
         return array_filter($array,function($var) {
-            return $var->resource_type == $this->state;
+            return $var['resource_type'] == $this->state;
         });
     }
 
@@ -239,7 +239,7 @@ class Order extends Model
 		if(!$all->isEmpty()){
 			foreach($all as $key=>$value){
 				$resource_type = [ '1' => '租用主机' , '2' => '托管主机' , '3' => '租用机柜' , '4' => 'IP' , '5' => 'CPU' , '6' => '硬盘' , '7' => '内存' , '8' => '带宽' , '9' => '防护' , '10' => 'cdn'];
-				$all[$key]['resource'] = $resource_type[$value['resource_type']];
+				$all[$key]['resourcetype'] = $resource_type[$value['resource_type']];
 			}
 			$orders = ['IP'=>$this->filter($all->toArray(),4),'cpu'=>$this->filter($all->toArray(),5),'harddisk'=>$this->filter($all->toArray(),6),'memory'=>$this->filter($all->toArray(),7),'bandwidth'=>$this->filter($all->toArray(),8),'protected'=>$this->filter($all->toArray(),9),'cdn'=>$this->filter($all->toArray(),10)];
 			$return['data'] = $orders;
@@ -479,7 +479,7 @@ class Order extends Model
 	 * @return array              返回获取数据的信息
 	 */
 	public function showRenewOrder($renew_order = []){
-		if($renew_order != session(Auth::user()->id)){//当未传递续费订单的id时，从session中获取
+		if($renew_order != session(Auth::user()->id)){//当未传递续费订单的id/与session的不一致时，从session中获取
 			$renew_order = session(Auth::user()->id);
 		}
 		if(!$renew_order){//session也未找到新续费的订单id数据时，直接返回

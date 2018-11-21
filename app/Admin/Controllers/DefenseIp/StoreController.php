@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Admin\Controllers\Defenseip;
+namespace App\Admin\Controllers\DefenseIp;
 
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
-use App\Admin\Models\Defenseip\StoreModel;
+use App\Admin\Models\DefenseIp\StoreModel;
 use Illuminate\Http\Request;
-use App\Admin\Requests\Defenseip\StoreRequest;
+use App\Admin\Requests\DefenseIp\StoreRequest;
 
 
 class StoreController extends Controller

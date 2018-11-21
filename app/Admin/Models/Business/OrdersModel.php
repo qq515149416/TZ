@@ -193,6 +193,11 @@ class OrdersModel extends Model
         // 订单号的生成规则：前两位（4-6的随机数）+ 年月日（如:20180830） + 时间戳的后2位数 + 1-3随机数
         $order_sn = mt_rand(4,6).date("Ymd",time()).substr(time(),8,2).mt_rand(1,3);
         $insert_data['order_sn'] = $order_sn;
+        if($insert_data['resource_type'] == 8){//带宽的时候生成专属的带宽序号
+            $insert_data['machine_sn'] = 'BW'.date("Ymd",time()).substr(time(),8,2);
+        } elseif($insert_data['resource_type'] == 9){//防护的时候生成专属的防护序号
+            $insert_data['machine_sn'] = 'DEF'.date("Ymd",time()).substr(time(),8,2);
+        }
         $insert_data['order_type'] = 1;
         $insert_data['payable_money'] = bcmul((string)$insert_data['price'],(string)$insert_data['duration'],2);//计算价格
         $sales_id = Admin::user()->id;

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Http\Requests\Customer;
+namespace App\Admin\Requests\DefenseIp;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
@@ -31,19 +31,20 @@ class OrderRequest extends FormRequest
 		$return = [];
 
 		switch ($method) {
-			case 'payOrderByBalance':
+			case 'buyDefenseIpNow':
 				$return = [
-					'business_sn'		=> 'required',
-					'coupon_id'		=> 'required',
+					'package_id'		=> 'required|exists:tz_defenseip_package,id',
+					'buy_time'		=> 'required|integer|min:1',
+					'customer_id'		=> 'required|exists:tz_users,id'
 				];
 				break;
-			
-			case 'getOrderById':
+			case 'renewDefenseIp':
 				$return = [
-					'order_id'		=> 'required|exists:tz_orders,id',
+					'business_id'		=> 'required|exists:tz_defenseip_business,id',
+					'buy_time'		=> 'required|integer|min:1',
 				];
 				break;
-			
+ 			
 			default:
 	
 				break;
@@ -56,10 +57,15 @@ class OrderRequest extends FormRequest
 	{
 		
 		return  [
-			'business_sn.required'		=> '请提供所需支付的业务编号',
-			'coupon_id.required'		=> '请提供优惠券id,0为不使用',
-			'order_id.required'		=> '请提供所需查询的订单id',
-			'order_id.exists'		=> '无此订单id',
+			'package_id.required'	=> '请选择套餐',
+			'package_id.exists'	=> '套餐不存在',
+			'buy_time.required'	=> '请选择购买时长',
+			'buy_time.integer'	=> '购买时长为整数',
+			'buy_time.min'		=> '购买时长最少一个月',
+			'business_id.required'	=> '请选择续费业务',
+			'business_id.exists'	=> '业务不存在',
+			'customer_id.required'	=> '请提供客户id',
+			'customer_id.exists'	=> '客户id不存在',
 		];
 	}
 

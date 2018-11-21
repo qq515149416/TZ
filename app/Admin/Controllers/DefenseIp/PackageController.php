@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Admin\Controllers\Defenseip;
+namespace App\Admin\Controllers\DefenseIp;
 
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
-use App\Admin\Models\Defenseip\PackageModel;
+use App\Admin\Models\DefenseIp\PackageModel;
 use Illuminate\Http\Request;
-use App\Admin\Requests\Defenseip\PackageRequest;
+use App\Admin\Requests\DefenseIp\PackageRequest;
 
 class PackageController extends Controller
 {

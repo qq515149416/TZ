@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Admin\Controllers\Defenseip;
+namespace App\Admin\Controllers\DefenseIp;
 
 use App\Http\Controllers\Controller;
 use App\Http\Models\DefenseIp\BusinessModel;

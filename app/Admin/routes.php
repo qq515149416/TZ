@@ -306,6 +306,11 @@ Route::group([
         $router->post('finance','Business\OrdersController@financeOrders');
         $router->post('clerk','Business\OrdersController@clerkOrders');
         $router->post('resource','Business\OrdersController@resource');
+
+        $router->post('renewresource', 'Business\OrdersController@renewResource');//续费
+        $router->get('all_renew','Business\OrdersController@allRenew');//获取业务下续费的资源
+        $router->get('show_renew_order','Business\OrdersController@showRenewOrder');//展示续费的订单
+
         $router->post('insertresource','Business\OrdersController@insertResource');
         $router->post('renewresource','Business\OrdersController@renewResource');
         $router->get('deleteorders','Business\OrdersController@deleteOrders');

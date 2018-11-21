@@ -661,8 +661,9 @@ class OrdersModel extends Model
                 $all_price = bcadd($all_price,$total_price,2);
             }
         }
-        $order['all_price'] = $all_price;
-        $return['data'] = $order;
+        $orders['all_price'] = $all_price;
+        $orders['orders'] =  $order;
+        $return['data'] = $orders;
         $return['code'] = 1;
         $return['msg'] = '资源续费订单获取成功';
         return $return;

@@ -666,8 +666,9 @@ class Order extends Model
 			}
 		}
 
-		$order['all_price'] = $all_price;
-		$return['data'] = $order;
+		$orders['all_price'] = $all_price;
+		$orders['orders'] =  $order;
+		$return['data'] = $orders;
 		$return['code'] = 1;
 		$return['msg'] = '资源续费订单获取成功';
 		return $return;

@@ -39,9 +39,14 @@ class Order extends Model
 	 */
 	private function filter($array,$state){
         $this->state = $state;
-        return array_filter($array,function($var) {
+        $result = [];
+        $arr = array_filter($array,function($var) {
             return $var['resource_type'] == $this->state;
         });
+        foreach ($arr as $key => $value) {
+        	array_push($result,$value);
+        }
+        return $result;
     }
 
 	public function getList($type)
@@ -336,6 +341,7 @@ class Order extends Model
 				$resource[$key]['resourcetype'] = $resource_type[$value['resource_type']];
 			}
 			$orders = ['IP'=>$this->filter($resource,4),'cpu'=>$this->filter($resource,5),'harddisk'=>$this->filter($resource,6),'memory'=>$this->filter($resource,7),'bandwidth'=>$this->filter($resource,8),'protected'=>$this->filter($resource,9),'cdn'=>$this->filter($resource,10)];
+			
 			$return['data'] = $orders;
 			$return['code'] = 1;
 			$return['msg']	= '该业务下的其他资源信息获取成功';

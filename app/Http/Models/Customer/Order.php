@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Models\Customer\Business;
 use Illuminate\Support\Carbon;//使用该包做到期时间的计算
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class Order extends Model
 {
@@ -367,7 +368,7 @@ class Order extends Model
 				$return['msg'] = '资源续费失败!!';
 				return $return;
 			}
-			$order_str = $business_order.','.$order_str;
+			$order_str = $order['order_sn'].','.$order_str;
 			array_push($renew_order,$business_order);
 		}
 		if(isset($renew['orders'])){
@@ -421,11 +422,11 @@ class Order extends Model
 				$resource['business_end'] = $order['end_time'];
 				switch ($order['resource_type']) {
 					case 4:
-					//更新IP表的所属业务编号，资源状态和到期时间
-					$resource['own_business'] = $order['business_sn'];
-					$resource['ip_status'] = 1;
-					$where = ['own_business'=>$order['business_sn'],'ip'=>$order['machine_sn']];
-					$result = DB::table('idc_ips')->where($where)->update($resource);
+						//更新IP表的所属业务编号，资源状态和到期时间
+						$resource['own_business'] = $order['business_sn'];
+						$resource['ip_status'] = 1;
+						$where = ['own_business'=>$order['business_sn'],'ip'=>$order['machine_sn']];
+						$result = DB::table('idc_ips')->where($where)->update($resource);
 					break;
 					case 5:
 						//更新CPU表的所属业务编号，资源状态和到期时间
@@ -459,13 +460,14 @@ class Order extends Model
 					$return['msg'] = '资源续费失败!!';
 					return $return;
 				}
-				$order_str = $business_order.','.$order_str;
+				$order_str = $order['order_sn'].','.$order_str;
 				array_push($renew_order,$business_order);
 			}
 		}
 		//所对应资源表的业务编号和到期时间，状态修改成功后进行事务提交
+		Session::put([Auth::user()->id=>$renew_order]);
+		Session::save();
 		DB::commit();
-		session(Auth::user()->id,$renew_order);
 		$return['data'] = $renew_order;
 		$return['code'] = 1;
 		$return['msg'] = '资源续费订单创建成功,订单号:'.rtrim($order_str,',');//为了不影响使用请及时支付,您的续费单号:'.$order_sn;
@@ -479,9 +481,10 @@ class Order extends Model
 	 * @return array              返回获取数据的信息
 	 */
 	public function showRenewOrder($renew_order = []){
-		if($renew_order != session(Auth::user()->id)){//当未传递续费订单的id/与session的不一致时，从session中获取
-			$renew_order = session(Auth::user()->id);
-		}
+		// dd($renew_order);
+		if(!$renew_order){//当未传递续费订单的id/与session的不一致时，从session中获取
+			$renew_order = Session::get(Auth::user()->id);
+		 }
 		if(!$renew_order){//session也未找到新续费的订单id数据时，直接返回
 			$return['data'] = '';
 			$return['code'] = 0;

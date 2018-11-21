@@ -183,6 +183,22 @@ class Order extends Model
 				$list->resource_type = 'cdn';
 				break;	
 			case '11':
+				$package = DB::table('tz_defenseip_package')
+						->select(['protection_value','site'])
+						->where('id',$list->machine_sn)
+						->first();
+				if($package == null){
+					return false;
+				}
+				switch ($package->site) {
+					case '1':
+						$list->site = '西安';
+						break;
+					default:
+						$list->site = '套餐地区错误,请核对数据库';
+						break;
+				}
+				$list->protection_value = $package->protection_value;
 				$list->resource_type = '高防IP';
 				break;		
 			default:

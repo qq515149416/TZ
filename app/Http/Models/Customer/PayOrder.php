@@ -91,6 +91,7 @@ class PayOrder extends Model
 		$serial_number = 'tz_'.time().'_'.$user_id;
 		$payable_money = '0.00';
 		$pay_time = date("Y-m-d h:i:s");
+		$order_id_arr = [];
 
 		DB::beginTransaction();//开启事务处理
 
@@ -134,8 +135,9 @@ class PayOrder extends Model
 				$return['code']	= 0;
 				return $return;
 			}
-
+			$order_id_arr[] = $unpaidOrder[$i]['id'];
 		}
+
 		//计算实际支付金额
 		$actual_payment = $this->countCoupon($payable_money,$coupon_id);
 		//优惠券抵扣了的金额
@@ -153,6 +155,7 @@ class PayOrder extends Model
 		
 		$flow = [
 			'serial_number'		=> $serial_number,
+			'order_id'		=> json_encode($order_id_arr),
 			'customer_id'		=> $customer_id,
 			'payable_money'	=> $payable_money,
 			'actual_payment'	=> $actual_payment,

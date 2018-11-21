@@ -372,9 +372,8 @@ class OrdersModel extends Model
         if(isset($renew['business_number'])){//传递了业务编号的进行业务查找和续费
             $business_where = [
                 'business_number'=>$renew['business_number'],
-                'client_id' => Auth::user()->id,
             ];
-            $business = DB::table('tz_business')->where($business_where)->select('business_number','business_type','sales_id','sales_name','sales_name','business_type','machine_number','endding_time','length','money','business_status')->first();
+            $business = DB::table('tz_business')->where($business_where)->select('business_number','business_type','client_id','client_name','business_type','machine_number','endding_time','length','money','business_status')->first();
             if(!$business){
                 $return['data'] = '';
                 $return['code'] = 0;
@@ -398,10 +397,10 @@ class OrdersModel extends Model
             $order['end_time'] = $endding_time;//订单到期时间
             $order['duration'] = $renew['length'];//订单时长
             $order['business_sn'] = $renew['business_number'];//订单关联业务
-            $order['customer_id'] = Auth::user()->id;//订单关联客户
-            $order['customer_name'] = Auth::user()->name?Auth::user()->name:Auth::user()->email;
-            $order['business_id'] = $business->sales_id;//订单绑定业务员
-            $order['business_name'] = $business->sales_name;
+            $order['customer_id'] = $business->client_id;//订单关联客户
+            $order['customer_name'] = $business->client_name;
+            $order['business_id'] = Admin::user()->id;//订单绑定业务员
+            $order['business_name'] = Admin::user()->name?Admin::user()->name:Admin::user()->username;
             $order['resource_type'] = $business->business_type;//资源类型
             $order['order_type'] = 2;//订单类型为续费
             $order['machine_sn'] = $business->machine_number;//订单机器编号
@@ -480,12 +479,9 @@ class OrdersModel extends Model
             array_push($renew_order,$business_order);
         }
         if(isset($renew['orders'])){
-            $order_where = [
-                'customer_id' => Auth::user()->id,
-            ];
             foreach($renew['orders'] as $key=>$value){
                 $order_where['order_sn'] = $value;
-                $order_result = $this->where($order_where)->select('business_sn','business_id','business_name','resource_type','machine_sn','resource','price','end_time','order_status')->first();
+                $order_result = $this->where($order_where)->select('business_sn','customer_id','customer_name','resource_type','machine_sn','resource','price','end_time','order_status')->first();
                 if($order_result->order_status < 1 || $order_result->order_status > 2){
                     $order_status = [0=>'待支付',1=>'支付',2=>'支付',3=>'续费过',4=>'到期',5=>'取消',6=>'申请退款',8=>'退款完成'];
                     DB::rollBack();
@@ -505,10 +501,10 @@ class OrdersModel extends Model
                 $order['end_time'] = $end_time;
                 $order['duration'] = $renew['length'];//订单时长
                 $order['business_sn'] = $order_result->business_sn;//订单关联业务
-                $order['customer_id'] = Auth::user()->id;//订单关联客户
-                $order['customer_name'] = Auth::user()->name?Auth::user()->name:Auth::user()->email;
-                $order['business_id'] = $order_result->business_id;//订单绑定业务员
-                $order['business_name'] = $order_result->business_name;
+                $order['customer_id'] = $order_result->customer_id;//订单关联客户
+                $order['customer_name'] = $order_result->customer_name;
+                $order['business_id'] = Admin::user()->id;//订单绑定业务员
+                $order['business_name'] = Admin::user()->name?Admin::user()->name:Admin::user()->username;
                 $order['resource_type'] = $order_result->resource_type;//资源类型
                 $order['order_type'] = 2;//订单类型为续费
                 $order['machine_sn'] = $order_result->machine_sn;//订单机器编号
@@ -590,7 +586,7 @@ class OrdersModel extends Model
             }
         }
         //所对应资源表的业务编号和到期时间，状态修改成功后进行事务提交
-        Session::put([Auth::user()->id=>$renew_order]);
+        Session::put([Admin::user()->id=>$renew_order]);
         Session::save();
         DB::commit();
         $return['data'] = $renew_order;
@@ -650,8 +646,6 @@ class OrdersModel extends Model
             $return['msg']  = '无法获取支付信息';
             return $return;
         }
-
-
         $renew_order['order_status'] = 0;
         $order = $this->where($renew_order)->select('id','order_sn','resource_type','order_type','machine_sn','resource','price','duration','end_time','order_status','order_note','created_at')->get();
         $all_price = 0;
@@ -667,7 +661,6 @@ class OrdersModel extends Model
                 $all_price = bcadd($all_price,$total_price,2);
             }
         }
-
         $order['all_price'] = $all_price;
         $return['data'] = $order;
         $return['code'] = 1;

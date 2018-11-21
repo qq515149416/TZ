@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Admin\Models\Defenseip;
+namespace App\Admin\Models\DefenseIp;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

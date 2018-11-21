@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Admin\Requests\Defenseip;
+namespace App\Admin\Requests\DefenseIp;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
-class StoreRequest extends FormRequest
+class PackageRequest extends FormRequest
 {
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -29,37 +29,42 @@ class StoreRequest extends FormRequest
 		$method = $arr[count($arr)-1];
 		$return = [];
 		$par = $this->only(['edit_id']);
-
+		
 		switch ($method) {
 			case 'insert':
 				$return = [
-					'ip'			=> 'required|array',
+					'name'			=> 'unique:tz_defenseip_package',
+					'site'			=> 'required|integer',
 					'protection_value'	=> 'required|integer',
-					'site'			=> 'required',		
+					'price'			=> 'required|numeric',
 				];
 				break;
 			case 'del':
 				$return = [
-					'del_id'			=> 'required|integer|exists:tz_defenseip_store,id',
+					'del_id'			=> 'required|exists:tz_defenseip_package,id',	
 				];
 				break;
+			
 			case 'edit':
 				if(!isset($par['edit_id'])){
 					return ['edit_id'	 => 'required'];
 				}
 				$return = [
-					'edit_id'			=> 'required|integer|exists:tz_defenseip_store,id',
-					'ip'			=> 'required|ip|unique:tz_defenseip_store,ip,'.$par['edit_id'],
+					'edit_id'			=> 'required|exists:tz_defenseip_package,id',
+					'name'			=> 'required|unique:tz_defenseip_package,name,'.$par['edit_id'],
 					'site'			=> 'required|integer',
 					'protection_value'	=> 'required|integer',
+					'price'			=> 'required|numeric',
+					'description'		=> 'required',
 				];
 				break;
 			case 'show':
+				
 				$return = [
-					'status'			=> 'required',
-					'site'			=> 'required'
+					'site'			=> 'required',	
 				];
 				break;
+
 			default:
 	
 				break;
@@ -72,21 +77,18 @@ class StoreRequest extends FormRequest
 	{
 		
 		return  [
-			'ip.required'			=> '请填写ip地址',
-			'ip.unique'			=> 'ip地址已存在',
-			'protection_value.required'	=> '请填写ip防护值',
-			'protection_value.integer'	=> '防护值需为整数,单位为G', 
-			'site.required'			=> '请填写所属机房,1为西安',
-			'ip.array'			=> 'ip请用数组格式传值',
-			'del_id.required'		=> '请提供需删除的ip的id',
-			'edit_id.required'		=> '请提供需编辑的ip的id',
-			'edit_id.integer'			=> 'id格式错误',
-			'ip.required'			=> 'ip必须填写',
-			'ip.ip'				=> 'ip格式错误',
-			'edit_id.exists'			=> '需编辑的id不存在',
+			'site.required'			=> '请选择地区',
+			'site.integer'			=> '地区格式错误',
+			'protection_value.required'	=> '请填写防护值',
+			'price.required'			=> '请填写价格',
+			'price.numeric'			=> '价格格式错误',
+			'del_id.required'		=> '请提供需删除的套餐的id',
 			'del_id.exists'			=> '需删除的id不存在',
-			'status.required'		=> '请提供所需查询的使用状态',
-			'site.required'			=> '请提供所需查询的地区',
+			'edit_id.required'		=> '请提供需编辑的套餐的id',
+			'edit_id.exists'			=> '需编辑的id不存在',
+			'name.unique'			=> '该套餐名已存在',
+			'name.required'		=> '请填写套餐名',
+			'description.required'		=> '请填写套餐描述',
 		];
 	}
 

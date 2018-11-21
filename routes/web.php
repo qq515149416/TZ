@@ -138,6 +138,7 @@ Route::group([
             Route::get('businessList', 'Customer\BusinessController@getBusinessList');
             Route::get('orderList', 'Customer\OrderController@getOrderList');
             Route::get('delOrder', 'Customer\OrderController@delOrder');
+            Route::get('getOrderById', 'Customer\OrderController@getOrderById');
 
             Route::post('renewresource', 'Customer\OrderController@renewResource');//续费
             Route::get('all_renew','Customer\OrderController@allRenew');//获取业务下续费的资源

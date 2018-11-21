@@ -156,7 +156,8 @@ class OrderController extends Controller
 	public function showRenewOrder(Request $request){
 		$renew_order = $request->only(['renew_order']);//获取续费的订单id
 		$show_renew = new Order();
-		$show_renew_result = $show_renew->showRenewOrder($renew_order['renew_order']);
+		$renew = isset($renew_order['renew_order'])?$renew_order['renew_order']:$renew_order;
+		$show_renew_result = $show_renew->showRenewOrder($renew);
 		return tz_ajax_echo($show_renew_result['data'],$show_renew_result['msg'],$show_renew_result['code']);
 	}
 

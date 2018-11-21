@@ -1,5 +1,5 @@
 <?php
-
+//前台,生成高防IP订单的控制器
 
 namespace App\Http\Controllers\DefenseIp;
 

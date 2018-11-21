@@ -370,23 +370,29 @@ Route::group([
         Route::group([
             'prefix' => 'store',
         ], function (Router $router) {
-            $router->post('insert','Defenseip\StoreController@insert');
-            $router->get('del','Defenseip\StoreController@del');
-            $router->post('edit','Defenseip\StoreController@edit');
-            $router->get('show','Defenseip\StoreController@show');
+            $router->post('insert','DefenseIp\StoreController@insert');
+            $router->get('del','DefenseIp\StoreController@del');
+            $router->post('edit','DefenseIp\StoreController@edit');
+            $router->get('show','DefenseIp\StoreController@show');
 
-            $router->get('test','Defenseip\StoreController@form');
+            $router->get('test','DefenseIp\StoreController@form');
         });
 
         Route::group([
             'prefix' => 'package',
         ], function (Router $router) {
-            $router->post('insert','Defenseip\PackageController@insert');
-            $router->get('del','Defenseip\PackageController@del');
-            $router->post('edit','Defenseip\PackageController@edit');
-            $router->get('show','Defenseip\PackageController@show');
+            $router->post('insert','DefenseIp\PackageController@insert');
+            $router->get('del','DefenseIp\PackageController@del');
+            $router->post('edit','DefenseIp\PackageController@edit');
+            $router->get('show','DefenseIp\PackageController@show');
         });
 
+        Route::group([
+            'prefix' => 'order',
+        ], function (Router $router) {
+            $router->get('buyDefenseIpNow','DefenseIp\OrderController@buyNowByAdmin');
+        });
+     
 
         /**
          *  高发IP下架处理

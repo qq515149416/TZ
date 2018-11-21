@@ -54,6 +54,18 @@ class OrderController extends Controller
 		return tz_ajax_echo($list,$return['msg'],$return['code']);
 	}
 
+	public function getOrderById(OrderRequest $request)
+	{
+		$par = $request->only('order_id');
+		$order_id = $par['order_id'];
+		$model = new Order();
+		$list = $model->getOrderById($order_id);
+		if($list == false){
+			return tz_ajax_echo('','获取失败',0);
+		}
+		return tz_ajax_echo($list,'获取成功',1);
+	}
+
 	/**
 	* 删除订单的接口
 	* @return 删除结果,
@@ -161,5 +173,6 @@ class OrderController extends Controller
 		$show_renew_result = $show_renew->showRenewOrder($renew_order);
 		return tz_ajax_echo($show_renew_result['data'],$show_renew_result['msg'],$show_renew_result['code']);
 	}
+
 
 }

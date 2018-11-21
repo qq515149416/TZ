@@ -105,6 +105,110 @@ class Order extends Model
 		return $order;
 	}
 
+	public function getOrderById($order_id)
+	{
+		$list = $this->find($order_id);
+		if($list == null){
+			return false;
+		}
+		switch ($list->order_status) {
+			case '0':
+				$list->order_status = '待支付';
+				break;
+			case '1':
+				$list->order_status = '已支付';
+				break;
+			case '2':
+				$list->order_status = '财务确认';
+				break;
+			case '3':
+				$list->order_status = '订单完成';
+				break;
+			case '4':
+				$list->order_status = '到期';
+				break;
+			case '5':
+				$list->order_status = '取消';
+				break;
+			case '6':
+				$list->order_status = '申请退款,';
+				break;
+			case '8':
+				$list->order_status = '退款完成';
+				break;
+			default:
+				$list->order_status = '无此状态,请核对数据库';
+				break;
+		}
+		switch ($list->order_type) {
+			case '1':
+				$list->order_type = '新购';
+				break;
+			case '2':
+				$list->order_type = '续费';
+				break;
+			default:
+				$list->order_type = '无此状态,请核对数据库';
+				break;
+		}
+		switch ($list->resource_type) {
+			case '1':
+				$list->resource_type = '租用主机';
+				break;
+			case '2':
+				$list->resource_type = '托管主机';
+				break;
+			case '3':
+				$list->resource_type = '租用机柜';
+				break;
+			case '4':
+				$list->resource_type = 'IP';
+				break;
+			case '5':
+				$list->resource_type = 'CPU';
+				break;
+			case '6':
+				$list->resource_type = '硬盘';
+				break;
+			case '7':
+				$list->resource_type = '内存';
+				break;
+			case '8':
+				$list->resource_type = '带宽';
+				break;
+			case '9':
+				$list->resource_type = '防护';
+				break;
+			case '10':
+				$list->resource_type = 'cdn';
+				break;	
+			case '11':
+				$package = DB::table('tz_defenseip_package')
+						->select(['protection_value','site'])
+						->where('id',$list->machine_sn)
+						->first();
+				if($package == null){
+					return false;
+				}
+				switch ($package->site) {
+					case '1':
+						$list->site = '西安';
+						break;
+					default:
+						$list->site = '套餐地区错误,请核对数据库';
+						break;
+				}
+				$list->protection_value = $package->protection_value;
+				$list->resource_type = '高防IP';
+				break;		
+			default:
+				$list->resource_type = '无此类型,请核对数据库';
+				break;
+		}
+		return $list;
+	}
+
+
 	public function delOrder($user_id,$id){
 		//获取模型
 		$row = $this->find($id);

@@ -64,17 +64,9 @@ class Order extends Model
                     ->leftJoin('tz_orders_flow','tz_orders.serial_number','=','tz_orders_flow.serial_number')
                     ->where($where)
                     ->orderBy('tz_orders.created_at','desc')
-                    // ->where(function($query) use($type){
-                    // 	if(isset($type['business_sn']) && !isset($type['resource_type'])){
-                    // 		$query->where('tz_orders.resource_type','>',3);
-                    // 	}
-                    // })
-        			->select('tz_orders.id','tz_orders.order_sn','tz_orders.business_sn','tz_orders.business_id','tz_orders.end_time','tz_orders.resource_type','tz_orders.order_type','tz_orders.machine_sn','tz_orders.resource','tz_orders.price','tz_orders.duration','tz_orders.payable_money','tz_orders.end_time','tz_orders.serial_number','tz_orders.pay_time','tz_orders.order_status','tz_orders.order_note','tz_orders.created_at','tz_orders_flow.pay_type','tz_orders_flow.before_money','tz_orders_flow.after_money')
+        			->select('tz_orders.id','tz_orders.order_sn','tz_orders.business_sn','tz_orders.business_id','tz_orders.end_time','tz_orders.resource_type','tz_orders.order_type','tz_orders.machine_sn','tz_orders.resource','tz_orders.price','tz_orders.duration','tz_orders.payable_money','tz_orders.end_time','tz_orders.serial_number','tz_orders.pay_time','tz_orders.order_status','tz_orders.order_note','tz_orders.created_at','tz_orders_flow.before_money','tz_orders_flow.after_money')
         			->get();
-        // dd($order);
-		//获取该用户的订单
-		//$order = $this->where($type)->orderby('created_at','desc')->get(['id','order_sn', 'business_sn','before_money','after_money','business_id','resource_type','order_type','machine_sn','resource','price','duration','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at','payable_money']);
-		//$order = $this->where($type)->orderby('created_at','desc')->get(['id','order_sn', 'business_sn','business_id','resource_type','order_type','machine_sn','resource','price','duration','end_time','serial_number','pay_time','order_status','order_note','created_at','payable_money']);
+        
 		if(count($order) == 0){
 			return false;
 		}
@@ -82,8 +74,6 @@ class Order extends Model
 		//转换状态
 		$resource_type = [ '1' => '租用主机' , '2' => '托管主机' , '3' => '租用机柜' , '4' => 'IP' , '5' => 'CPU' , '6' => '硬盘' , '7' => '内存' , '8' => '带宽' , '9' => '防护' , '10' => 'cdn' , '11' => '高防IP'];
 		$order_type = [ '1' => '新购' , '2' => '续费' ];
-
-		$pay_type = [0=>'未选择',1=>'余额',2=>'支付宝',3=>'微信',4=>'其他'];
 		$order_status = [ '0' => '待支付' , '1' => '已支付' , '2' => '已支付' , '3' => '订单完成' , '4' => '到期' , '5' => '取消' , '6' => '申请退款', '8' => '退款完成'];
 
 		$info = $this->getName('*');
@@ -97,7 +87,6 @@ class Order extends Model
 			$value->type = $value->resource_type;
 			$value->resource_type = $resource_type[$value->resource_type];
 			$value->order_type = $order_type[$value->order_type];
-			$value->pay_type = $value->pay_type?$pay_type[$value->pay_type]:'';
 			$value->order_status = $order_status[$value->order_status];
 			$value->business_name	= $admin_name[$value->business_id];
 		}
@@ -278,17 +267,15 @@ class Order extends Model
 	 */
 	public function resourceOrders($where){
 		if($where){
-			$resource_orders = $this->where($where)->get(['id','customer_id','customer_name','order_sn', 'business_sn','before_money','after_money','business_id','business_name','resource_type','order_type','machine_sn','resource','price','duration','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at','payable_money']);
+			$resource_orders = $this->where($where)->get(['id','customer_id','customer_name','order_sn', 'business_sn','before_money','after_money','business_id','business_name','resource_type','order_type','machine_sn','resource','price','duration','end_time','pay_price','serial_number','pay_time','order_status','order_note','created_at','payable_money']);
 			if($resource_orders->isEmpty()){
 				//转换状态
 				$resource_type = [ '1' => '租用主机' , '2' => '托管主机' , '3' => '租用机柜' , '4' => 'IP' , '5' => 'CPU' , '6' => '硬盘' , '7' => '内存' , '8' => '带宽' , '9' => '防护' , '10' => 'cdn',11=>'高防IP'];
 				$order_type = [ '1' => '新购' , '2' => '续费' ];
-				$pay_type = [ '1' => '余额' , '2' => '支付宝' , '3' => '微信' , '4' => '其他'];
 				$order_status = [ '0' => '待支付' , '1' => '已支付' , '2' => '已支付' , '3' => '订单完成' , '4' => '取消' , '5' => '申请退款' , '6' => '退款完成' , '7' => '正在付款','8' => '退款完成'];
 				foreach($resource_orders as $resource_key => $resource_value){
 					$resource_orders[$resource_key]['resource_type'] = $resource_type[$resource_value['resource_type']];
 					$resource_orders[$resource_key]['order_type'] = $order_type[$resource_value['order_type']];
-					$resource_orders[$resource_key]['pay_type'] = $resource_value['pay_type'] ? $pay_type[$resource_value['pay_type']]:"";
 					$resource_orders[$resource_key]['order_status'] = $order_status[$resource_value['order_status']];
 				}
 				$return['data'] = $resource_orders;

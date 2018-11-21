@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 
 class InfoController extends Controller
@@ -45,8 +46,10 @@ class InfoController extends Controller
 
         //遍历添加查询IP资源数组
         foreach ($listData as $key => $value) {
-            $listData[$key]['defense_ip'] = StoreModel::find($value['ip_id'])->toArray()['ip']; //列表数组中添加高防IP
-            $listData[$key]['status_cn']  = $this->checkStatus($value['end_at']);  //追加业务状态
+            $storeData                          = StoreModel::find($value['ip_id'])->toArray();
+            $listData[$key]['defense_ip']       = $storeData['ip']; //列表数组中添加高防IP
+            $listData[$key]['status_cn']        = $this->checkStatus($value['end_at']);  //追加业务状态
+            $listData[$key]['protection_value'] = $storeData['protection_value'];  //防御值
         }
         return tz_ajax_echo($listData, '获取高防IP列表成功', 1);
     }
@@ -92,15 +95,13 @@ class InfoController extends Controller
         $res       = $request->all();  //获取所有传参
         $startDate = Carbon::parse($res['date'])->timestamp;  //开始时间戳
         $endDate   = Carbon::parse($res['date'])->addDay(1)->timestamp; //结束时间戳
-        dump('开始时间戳:' . $startDate);
-        dump('结束时间戳:' . $endDate);
+//        dump('开始时间戳:' . $startDate);
+//        dump('结束时间戳:' . $endDate);
 
         $XADefenseDataModel = new XADefenseDataModel(); //实例化流量数据模型
 
-        dump(Carbon::now());
-//        dump($XADefenseDataModel->getByIp($res['ip'], $startDate, $endDate)); //获取数据
-        $dd=$XADefenseDataModel->getByIp($res['ip'], $startDate, $endDate); //获取数据
-        dump(Carbon::now());
+        $data = $XADefenseDataModel->getByIp($res['ip'], $startDate, $endDate); //获取数据
+        return tz_ajax_echo($data, '成功', 1);
     }
 
 
@@ -109,7 +110,8 @@ class InfoController extends Controller
      */
     public function test()
     {
-
+        dump(Session::all());
+        die();
 
         $XADefenseDataModel = new XADefenseDataModel();
 
@@ -133,3 +135,18 @@ class InfoController extends Controller
     }
 
 }
+
+
+//change master to master_host='192.168.126.128',
+//master_port=3306,
+//master_user='jun',
+//master_password='zhangjun',
+//master_log_file='master-bin.000001',
+//master_log_pos=342;
+//
+//change master to master_host='192.168.126.128', //Master 服务器Ip
+//master_port=3306,
+//master_user='root',
+//master_password='root',
+//master_log_file='master-bin.000002',//Master服务器产生的日志
+//master_log_pos=107;

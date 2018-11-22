@@ -330,6 +330,8 @@ Route::group([
         $router->post('select_clerk','Business\CustomerController@selectClerk');
         $router->post('edit_clerk','Business\CustomerController@editClerk');
         $router->post('insert_clerk','Business\CustomerController@insertClerk');
+
+        $router->post('payOrderByAdmin','Business\OrdersController@payOrderByAdmin');        //业务员替客户支付
     });
 
 

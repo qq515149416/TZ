@@ -85,9 +85,18 @@ class InfoController extends Controller
     /**
      * 统计高防IP数据流量
      * 用于绘制流量图表
+     *
+     * 接口:/home/defenseIp/getStatistics
+     *
      * 参数:
-     *    date:数据日期
+     *    business_id:业务ID
+     *    date:数据日期  例如:2018-11-19
      *    ip   :需要查询的ip地址
+     *
+     * 返回:
+     *    time:时间戳
+     *    bandwidth_down:入流量  单位:(M)
+     *    upstream_bandwidth_up:出流量  单位:(M)
      */
     public function getStatistics(Request $request)
     {
@@ -101,7 +110,12 @@ class InfoController extends Controller
         $XADefenseDataModel = new XADefenseDataModel(); //实例化流量数据模型
 
         $data = $XADefenseDataModel->getByIp($res['ip'], $startDate, $endDate); //获取数据
-        return tz_ajax_echo($data, '成功', 1);
+
+        //判断有无获取到数据
+        if (!$data) {
+            return tz_ajax_echo([], '无流量数据', 0);
+        }
+        return tz_ajax_echo($data, '获取流量数据成功', 1);
     }
 
 
@@ -119,7 +133,6 @@ class InfoController extends Controller
         $XADefenseDataModel = new XADefenseDataModel();
 
         dump($XADefenseDataModel->getByIp());
-
 
 
         die();

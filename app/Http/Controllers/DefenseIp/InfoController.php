@@ -110,12 +110,16 @@ class InfoController extends Controller
      */
     public function test()
     {
+
+        die();   //关闭测试
+
         dump(Session::all());
         die();
 
         $XADefenseDataModel = new XADefenseDataModel();
 
         dump($XADefenseDataModel->getByIp());
+
 
 
         die();
@@ -136,17 +140,3 @@ class InfoController extends Controller
 
 }
 
-
-//change master to master_host='192.168.126.128',
-//master_port=3306,
-//master_user='jun',
-//master_password='zhangjun',
-//master_log_file='master-bin.000001',
-//master_log_pos=342;
-//
-//change master to master_host='192.168.126.128', //Master 服务器Ip
-//master_port=3306,
-//master_user='root',
-//master_password='root',
-//master_log_file='master-bin.000002',//Master服务器产生的日志
-//master_log_pos=107;

@@ -29,6 +29,7 @@ class SetController extends Controller
 
     /**
      * 设定目标IP
+     *  接口:/home/defenseIp/setTarget
      *
      * 参数:
      *      business_id:高防IP业务ID

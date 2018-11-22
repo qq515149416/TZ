@@ -83,7 +83,9 @@ class RemoveController extends Controller
         $business_id = $par['business_id'];
         $admin_user_id = Admin::user()->id;
         $status = $par['status'];
-
+        if($status != 1 && $status != 3){
+            return tz_ajax_echo('','审核状态只能选1(不下架)或3(下架)',0);
+        }
         $model = new BusinessModel();
         $examineRes = $model->$examine($business_id,$status,$admin_user_id);
         dd($examineRes);

@@ -399,7 +399,7 @@ Route::group([
              $router->get('selectExpireList','Defenseip\RemoveController@selectExpireList');  //查询过期业务
 
              $router->get('subExamine','DefenseIp\RemoveController@subExamine');            //提交审核
-             $router->get('goExamine','DefenseIp\RemoveController@goExamine');            //提交审核
+             $router->get('goExamine','DefenseIp\RemoveController@goExamine');                //进行审核
              
         });
 

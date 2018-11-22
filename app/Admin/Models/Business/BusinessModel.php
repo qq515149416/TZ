@@ -411,7 +411,7 @@ class BusinessModel extends Model
             return $return;
         }
 
-        if($business_result->remove_status < 0){//业务已处于下架状态的
+        if($business_result->remove_status > 0){//业务已处于下架状态的
             $return['code'] = 0;
             $return['msg'] = '此业务正在下架中，请勿重复申请操作!';
             return $return;

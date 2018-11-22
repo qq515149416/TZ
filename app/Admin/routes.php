@@ -331,7 +331,7 @@ Route::group([
         $router->post('edit_clerk','Business\CustomerController@editClerk');
         $router->post('insert_clerk','Business\CustomerController@insertClerk');
 
-        $router->get('payOrderByAdmin','Business\OrdersController@payOrderByAdmin');        //业务员替客户支付
+        $router->post('payOrderByAdmin','Business\OrdersController@payOrderByAdmin');        //业务员替客户支付
     });
 
 

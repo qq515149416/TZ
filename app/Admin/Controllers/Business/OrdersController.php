@@ -24,7 +24,7 @@ class OrdersController extends Controller
 		$finance = new OrdersModel();
 		$result = $finance->financeOrders($data);
 		return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
-    } 
+    }
 
     /**
      * 业务员和管理人员通过业务查看订单
@@ -57,9 +57,9 @@ class OrdersController extends Controller
         $insert_data = $request->only(['business_sn','customer_id','customer_name','resource_type','machine_sn','resource','price','duration']);
         $insert = new OrdersModel();
         $return = $insert->insertResource($insert_data);
-        return tz_ajax_echo($return['data'],$return['msg'],$return['code']); 
+        return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
     }
-  
+
     /**
      * 订单后台删除
      * @param  Request $request [description]
@@ -79,7 +79,7 @@ class OrdersController extends Controller
      */
     public function allRenew(Request $request){
         $business = $request->only(['business_sn']);
-        $order = new Order();
+        $order = new OrdersModel();
         $all_result = $order->allRenew($business);
         return tz_ajax_echo($all_result['data'],$all_result['msg'],$all_result['code']);
     }
@@ -91,7 +91,7 @@ class OrdersController extends Controller
      */
     public function renewResource(Request $request){
         $renew_data = $request->only(['orders','length','order_note','business_number']);
-        $renew = new Order();
+        $renew = new OrdersModel();
         $renew_resource = $renew->renewResource($renew_data);
         return tz_ajax_echo($renew_resource['data'],$renew_resource['msg'],$renew_resource['code']);
     }
@@ -107,7 +107,7 @@ class OrdersController extends Controller
     //     $show_renew_result = $show_renew->showRenewOrder($renew_order['renew_order']);
     //     return tz_ajax_echo($show_renew_result['data'],$show_renew_result['msg'],$show_renew_result['code']);
     // }
-    
+
     /**
      * 展示之前续费新生成的订单
      * @param  Request $request renew_order -- 续费产生的订单id组合
@@ -115,7 +115,7 @@ class OrdersController extends Controller
      */
     public function showRenewOrder(Request $request){
         $renew_order = $request->only(['business_sn']);//获取续费的订单id
-        $show_renew = new Order();
+        $show_renew = new OrdersModel();
         //$renew = isset($renew_order['renew_order'])?$renew_order['renew_order']:$renew_order;
         $show_renew_result = $show_renew->showRenewOrder($renew_order);
         return tz_ajax_echo($show_renew_result['data'],$show_renew_result['msg'],$show_renew_result['code']);
@@ -126,7 +126,7 @@ class OrdersController extends Controller
     * 业务员替客户对业务进行付款
     * @return json 返回相关的信息
     */
-    
+
     public function payOrderByAdmin(OrdersRequest $request){
         $par = $request->only(['business_number','coupon_id']);
         $business_number = $par['business_number'];

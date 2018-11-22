@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use App\Admin\Models\Business\OrdersModel;
 use Illuminate\Http\Request;
+use App\Admin\Requests\Business\OrdersRequest;
 
 /**
  * 后台订单控制器
@@ -118,6 +119,23 @@ class OrdersController extends Controller
         //$renew = isset($renew_order['renew_order'])?$renew_order['renew_order']:$renew_order;
         $show_renew_result = $show_renew->showRenewOrder($renew_order);
         return tz_ajax_echo($show_renew_result['data'],$show_renew_result['msg'],$show_renew_result['code']);
+    }
+
+
+    /**
+    * 业务员替客户对业务进行付款
+    * @return json 返回相关的信息
+    */
+    
+    public function payOrderByAdmin(OrdersRequest $request){
+        $par = $request->only(['business_number','coupon_id']);
+        $business_number = $par['business_number'];
+        $coupon_id = $par['coupon_id'];
+
+        $model = new OrdersModel();
+        $pay = $model->payOrderByBalance($business_number,$coupon_id);
+        dd($pay);
+        return tz_ajax_echo($pay['data'],$pay['msg'],$pay['code']);
     }
 
 }

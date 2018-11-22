@@ -56,8 +56,8 @@ class BusinessRequest extends FormRequest
 		
 		return  [
 			'business_id.required'			=> '请选择申请下架的业务id',
-			'business_id.exists'			=> '不存在此业务id'
-			'status.required'			=> '请选择审核结果'
+			'business_id.exists'			=> '不存在此业务id',
+			'status.required'			=> '请选择审核结果',
 		];
 	}
 

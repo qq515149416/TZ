@@ -137,4 +137,16 @@ class OrdersController extends Controller
         return tz_ajax_echo($pay['data'],$pay['msg'],$pay['code']);
     }
 
+    /**
+     * 对某个资源进行申请下架接口
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function applyRemoveResource(Request $request){
+        $remove_resource = $request->only(['order_sn','remove_reason']);
+        $remove = new OrdersModel();
+        $remove_result = $remove->applyRemoveResource($remove_resource);
+        return tz_ajax_echo($remove_result,$remove_result['msg'],$remove_result['code']);
+    }
+
 }

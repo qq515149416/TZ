@@ -952,4 +952,24 @@ class OrdersModel extends Model
         $return['code'] = 1;
         return $return;
     }
+
+    /**
+     * 对资源进行下架申请
+     * @param  [type] $order [description]
+     * @return [type]        [description]
+     */
+    public function applyRemoveResource($order){
+        if(!$order){
+            $return['code'] = 0;
+            $return['msg'] = '无法下架资源';
+            return $return;
+        }
+        $order_result = $this->where(['order_sn'=>$order['order_sn']])->select('order_sn','remove_status','machine_sn','end_time')->first();
+        if(empty($order_result)){
+            $return['code'] = 0;
+            $return['msg'] = '无此资源的信息,无法下架!';
+            return $return;
+        }
+        
+    }
 }

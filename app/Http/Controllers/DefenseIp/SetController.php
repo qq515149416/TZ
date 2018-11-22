@@ -43,7 +43,13 @@ class SetController extends Controller
         $targetIp     = trim($request['target_ip']);  //获取参数,去除左右两边空格
 
         $apiModel     = new ApiController();//实例化
-        $businessData = BusinessModel::find($busId)->toArray();  //根据业务ID 获取业务数据
+        $businessData = BusinessModel::find($busId); //根据业务ID获取相关业务数据
+
+        //判断有误相关的业务数据
+        if (!$businessData) {
+            return tz_ajax_echo([],'没有找到相关的业务',0);
+        }
+        $businessData = $businessData->toArray();  //将业务数据转换成数组
 
         //判断业务是否为用户本人
         if (!($businessData['user_id'] == $this->userId)) {

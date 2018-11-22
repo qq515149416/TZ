@@ -392,4 +392,44 @@ class BusinessModel extends Model
 
     }
 
+    /**
+     * 进行业务的申请下架
+     * @param  [type] $business [description]
+     * @return [type]           [description]
+     */
+    public function applyRemove($business){
+        if(!$business){
+            $return['code'] = 0;
+            $return['msg'] = '业务下架无法申请';
+            return $return;
+        }
+        $business_result = $this->where(['business_number'=>$business['business_number']])->select('remove_status','business_number','business_type','machine_number')->first();
+        if(empty($business_result)){
+            $return['code'] = 0;
+            $return['msg'] = '无此业务，无法申请下架';
+            return $return;
+        }
+        if($business_result->remove_status < 0){
+            $return['code'] = 0;
+            $return['msg'] = '此业务正在下架中，请勿重复申请';
+            return $return;
+        }
+        $remove['remove_reason'] = $business['remove_reason'];
+        $remove['remove_status'] = 1;
+        DB::beginTransaction();
+        $business_remove = DB::table('tz_business')->where(['business_number'=>$business['business_number']])->update($remove);
+        if($business_remove == 0){
+            $return['code'] = 0;
+            $return['msg'] = '业务申请下架失败';
+            return $return;
+        }
+        $resource = DB::table('tz_orders')->where(['business_number'=>$business['business_number']])->where('price','>','0.00')->where('resource_type','>',3)->orderBy('end_time','desc')->get(['order_sn','resource_type','machine_sn','resource','price','end_time'])->groupBy('machine_sn')->toArray();
+        $resource_keys = array_keys($resource);//获取分组后的资源编号
+        foreach($resource_keys as $key=>$value){
+            $business['machine_sn'] = $value;
+            $resource[$key] = DB::table('tz_orders')->where(['business_number'=>$business['business_number']])->orderBy('end_time','desc')->select('order_sn','resource_type','machine_sn','resource','price','end_time','order_status')->first();
+        }
+
+    }
+
 }

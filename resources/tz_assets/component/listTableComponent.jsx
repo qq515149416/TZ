@@ -341,10 +341,10 @@ const styles = theme => ({
               />
               <TableBody>
                 {this.props.data
-                  .sort((a,b) => {
-                      return b.id - a.id
-                  })
                   .sort(getSorting(order, orderBy))
+                  .sort((a,b) => {
+                        return b.id - a.id
+                    })
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((n,i,arr) => {
                     const isSelected = this.isSelected(n.id);

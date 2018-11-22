@@ -76,8 +76,8 @@ const columnData = [
       ok: (data) => {
           return new Promise((resolve,reject) => {
               post("business/payOrderByAdmin",{
-                    business_sn: data.business_number,
-                    coupon_id: 0
+                business_number: data.business_number,
+                coupon_id: 0
               }).then((res) => {
                   if(res.data.code==1) {
                         alert(res.data.msg);

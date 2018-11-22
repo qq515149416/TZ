@@ -331,7 +331,7 @@ class BusinessModel extends Model
                 $row = DB::table('idc_cabinet')->where(['cabinet_id'=>$deltet_data->machine_number])->update(['own_business'=>$own_business]);
                 break;
             }
-            if($row == false){
+            if($row == 0){
                 DB::rollBack();
                 $return['code'] = 0;
                 $return['msg']  = '资源未释放,删除失败!';
@@ -347,7 +347,7 @@ class BusinessModel extends Model
             ->get();
         //删除对应业务数据
         $result = DB::table('tz_business')->where('id', $delete_id['delete_id'])->update(['deleted_at'=>date('Y-m-d H:i:s')]);
-        if ($result == false) {
+        if ($result == 0) {
             DB::rollBack();
             $return['code'] = 0;
             $return['msg']  = '删除失败!';
@@ -398,37 +398,61 @@ class BusinessModel extends Model
      * @return [type]           [description]
      */
     public function applyRemove($business){
-        if(!$business){
+        if(!$business){//没有传递下架所需的任何信息
             $return['code'] = 0;
             $return['msg'] = '业务下架无法申请';
             return $return;
         }
+
         $business_result = $this->where(['business_number'=>$business['business_number']])->select('remove_status','business_number','business_type','machine_number')->first();
-        if(empty($business_result)){
+        if(empty($business_result)){//不存在业务
             $return['code'] = 0;
             $return['msg'] = '无此业务，无法申请下架';
             return $return;
         }
-        if($business_result->remove_status < 0){
+
+        if($business_result->remove_status < 0){//业务已处于下架状态的
             $return['code'] = 0;
-            $return['msg'] = '此业务正在下架中，请勿重复申请';
+            $return['msg'] = '此业务正在下架中，请勿重复申请操作!';
             return $return;
         }
-        $remove['remove_reason'] = $business['remove_reason'];
-        $remove['remove_status'] = 1;
-        DB::beginTransaction();
-        $business_remove = DB::table('tz_business')->where(['business_number'=>$business['business_number']])->update($remove);
-        if($business_remove == 0){
+
+        $remove['remove_reason'] = $business['remove_reason'];//下架缘由
+        $remove['remove_status'] = 1;//申请下架的状态
+        DB::beginTransaction();//开启事务
+        $business_remove = DB::table('tz_business')->where(['business_number'=>$business['business_number']])->update($remove);//更新业务的下架状态
+        if($business_remove == 0){//更新失败
+            DB::rollBack();
             $return['code'] = 0;
             $return['msg'] = '业务申请下架失败';
             return $return;
         }
-        $resource = DB::table('tz_orders')->where(['business_number'=>$business['business_number']])->where('price','>','0.00')->where('resource_type','>',3)->orderBy('end_time','desc')->get(['order_sn','resource_type','machine_sn','resource','price','end_time'])->groupBy('machine_sn')->toArray();
-        $resource_keys = array_keys($resource);//获取分组后的资源编号
-        foreach($resource_keys as $key=>$value){
-            $business['machine_sn'] = $value;
-            $resource[$key] = DB::table('tz_orders')->where(['business_number'=>$business['business_number']])->orderBy('end_time','desc')->select('order_sn','resource_type','machine_sn','resource','price','end_time','order_status')->first();
+        //查找业务关联的资源
+        $resources = DB::table('tz_orders')->where(['business_number'=>$business['business_number']])->where('price','>','0.00')->where('resource_type','>',3)->orderBy('end_time','desc')->get(['order_sn','resource_type','machine_sn','resource','price','end_time'])->groupBy('machine_sn')->toArray();
+        if(!empty($resources)){//存在业务关联的资源，进一步进行查找资源的最新情况
+            $resource_keys = array_keys($resources);//获取分组后的资源编号
+            foreach($resource_keys as $key=>$value){//获取业务关联的最新资源
+                $business['machine_sn'] = $value;
+                $resource[$key] = DB::table('tz_orders')->where(['business_number'=>$business['business_number']])->where('remove_status','<',1)->orderBy('end_time','desc')->select('order_sn','resource_type','machine_sn','resource','price','end_time','order_status')->first();
+            }
+            if(!empty($resource)){//存在关联业务则继续对关联的资源进行同步下架
+                foreach($resource as $resource_key=>$resource_value){
+                    $order_remove['remove_reason'] = '关联业务申请下架，关联业务资源同步下架';
+                    $order_remove['remove_status'] = 1;
+                    $order_row = DB::table()->where(['order_sn'=>$resource_value->order_sn])->update($order_remove);
+                    if($order_row == 0){//关联业务的资源同步下架失败
+                        DB::rollBack();
+                        $return['code'] = 0;
+                        $return['msg'] = '业务关联资源申请下架失败';
+                        return $return;
+                    }
+                }
+            }
         }
+        DB::commit();
+        $return['code'] = 1;
+        $return['msg'] = '业务:'.$business['business_number'].'申请下架成功,等待处理';
+        return $return;
 
     }
 

@@ -61,7 +61,7 @@ class RemoveController extends Controller
     }
 
      /**
-     * 高防IP业务员提交下架审核
+     * 高防IP业务员提交下架申请
      */
     public function subExamine(BusinessRequest $request)
     {
@@ -75,8 +75,9 @@ class RemoveController extends Controller
         return tz_ajax_echo($tijiao['data'],$tijiao['msg'],$tijiao['code']);
     }
 
-
-
+    /**
+     * 高防IP对下架申请进行审核
+     */
     public function goExamine(BusinessRequest $request)
     {
         $par = $request->only(['business_id','status']);
@@ -87,7 +88,16 @@ class RemoveController extends Controller
             return tz_ajax_echo('','审核状态只能选1(不下架)或3(下架)',0);
         }
         $model = new BusinessModel();
-        $examineRes = $model->$examine($business_id,$status,$admin_user_id);
-        dd($examineRes);
+        $examineRes = $model->examine($business_id,$status,$admin_user_id);
+
+        return tz_ajax_echo('',$examineRes['msg'],$examineRes['code']);
+    }
+
+    public function showExamine()
+    {
+        $model = new BusinessModel();
+        $list = $model->showExamine();
+
+         return tz_ajax_echo($list['data'],$list['msg'],$list['code']);
     }
 }

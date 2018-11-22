@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Pay\AliPayController;
 
 
-use App\Http\Models\Customer\Order;		//这个是订单表模型,相当于加入购物车
+use App\Http\Models\Customer\Order;		//这个是订单表模型
 use App\Http\Models\Customer\PayOrder;		//这个是支付订单模型,买单用
 use App\Http\Requests\Customer\OrderRequest;
 

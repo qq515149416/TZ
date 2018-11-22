@@ -12,7 +12,7 @@ class OrderModel extends Model
 {
 
 	use SoftDeletes;
-	
+
 
 	protected $table = 'tz_orders'; //表
 	protected $primaryKey = 'id'; //主键
@@ -21,14 +21,14 @@ class OrderModel extends Model
 	protected $fillable = ['order_sn', 'business_sn','customer_id','customer_name','business_id','business_name','resource_type','order_type','machine_sn','resource','price','duration','payable_money','achievement','end_time','serial_number','pay_time'];
 
 	/**
-	 *  新购 高防IP 接口  /  选取购买信息后,生成订单信息 
+	 *  新购 高防IP 接口  /  选取购买信息后,生成订单信息
 	 */
 
 	public function buyNow($package_id,$buy_time){
-	
+
 		$user_id = Auth::id();
 		$second_buy_time = bcsub( time() , 60);
-		$second_buy_time = date("Y-m-d H:i:s",$second_buy_time); 
+		$second_buy_time = date("Y-m-d H:i:s",$second_buy_time);
 
 		$check_time = $this->where('order_type',1)->where('resource_type',11)->where('customer_id',$user_id)->where('created_at','>',$second_buy_time)->value('id');
 		if($check_time != null){
@@ -67,7 +67,7 @@ class OrderModel extends Model
 		$data['machine_sn']		= $package_id;
 		$data['duration']		= $buy_time;
 		$data['payable_money']		= bcmul($data['price'],$data['duration'],2);
-		$data['order_status']		= 0; 
+		$data['order_status']		= 0;
 		$insert = $this->create($data);
 
 		if($insert != false){
@@ -85,7 +85,7 @@ class OrderModel extends Model
 	public function renew($business_id,$buy_time){
 		$user_id = Auth::id();
 		$business = DB::table('tz_defenseip_business')->where('user_id',$user_id)->where("id",$business_id)->first();
-		
+
 		if($business == null){
 			return [
 				'data'	=> '',
@@ -105,31 +105,31 @@ class OrderModel extends Model
 				->where('order_type',2)
 				->where('order_status',0)
 				->first();
-				
+
 		if($checkOrder != null){
 			$checkOrder->duration 	= $buy_time;
 			$checkOrder->payable_money 	= bcmul($checkOrder->price,$checkOrder->duration,2);
 			$res = $checkOrder->save();
 			if($res == true){
 				return [
-					'data'	=> '',
+					'data'	=> $checkOrder->id,
 					'msg'	=> '续费订单已存在,更新成功',
 					'code'	=> 1,
 				];
 			}else{
 				return [
-					'data'	=> '',
+					'data'	=> $checkOrder->id,
 					'msg'	=> '续费订单已存在,更新失败',
 					'code'	=> 0,
 				];
 			}
-		}	
-		
+		}
+
 
 		$second_buy_time = bcsub( time() , 60);
-		$second_buy_time = date("Y-m-d H:i:s",$second_buy_time); 
+		$second_buy_time = date("Y-m-d H:i:s",$second_buy_time);
 
-		$check_time = $this->where('order_type',2)->where('resource_type',11)->where('customer_id',$user_id)->where('created_at','>',$second_buy_time)->value('id');                     
+		$check_time = $this->where('order_type',2)->where('resource_type',11)->where('customer_id',$user_id)->where('created_at','>',$second_buy_time)->value('id');
 
 		if($check_time != null){
 			return[
@@ -155,7 +155,7 @@ class OrderModel extends Model
 		$data['machine_sn']		= $business->package_id;
 		$data['duration']		= $buy_time;
 		$data['payable_money']		= bcmul($data['price'],$data['duration'],2);
-		$data['order_status']		= 0; 
+		$data['order_status']		= 0;
 
 		$insert = $this->create($data);
 
@@ -171,6 +171,6 @@ class OrderModel extends Model
 		return $return;
 	}
 
-	
+
 
 }

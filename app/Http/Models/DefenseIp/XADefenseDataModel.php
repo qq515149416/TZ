@@ -40,3 +40,13 @@ class XADefenseDataModel extends Model
     }
 
 }
+
+//log-bin=/home/mysql-bin
+//server-id=1
+//innodb_flush_log_at_trx_commit=1
+//sync_binlog=1
+//binlog-do-db=test
+
+//stop slave;
+//change master to
+//master_user='repl_user',master_password='123456',master_host='192.168.153.128',master_port=3306,master_log_file='mysql-bin.000007',master_log_pos=154;

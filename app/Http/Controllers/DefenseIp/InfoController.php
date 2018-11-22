@@ -85,9 +85,18 @@ class InfoController extends Controller
     /**
      * 统计高防IP数据流量
      * 用于绘制流量图表
+     *
+     * 接口:/home/defenseIp/getStatistics
+     *
      * 参数:
-     *    date:数据日期
+     *    business_id:业务ID
+     *    date:数据日期  例如:2018-11-19
      *    ip   :需要查询的ip地址
+     *
+     * 返回:
+     *    time:时间戳
+     *    bandwidth_down:入流量  单位:(M)
+     *    upstream_bandwidth_up:出流量  单位:(M)
      */
     public function getStatistics(Request $request)
     {
@@ -101,7 +110,12 @@ class InfoController extends Controller
         $XADefenseDataModel = new XADefenseDataModel(); //实例化流量数据模型
 
         $data = $XADefenseDataModel->getByIp($res['ip'], $startDate, $endDate); //获取数据
-        return tz_ajax_echo($data, '成功', 1);
+
+        //判断有无获取到数据
+        if (!$data) {
+            return tz_ajax_echo([], '无流量数据', 0);
+        }
+        return tz_ajax_echo($data, '获取流量数据成功', 1);
     }
 
 
@@ -110,6 +124,9 @@ class InfoController extends Controller
      */
     public function test()
     {
+
+        die();   //关闭测试
+
         dump(Session::all());
         die();
 
@@ -136,17 +153,3 @@ class InfoController extends Controller
 
 }
 
-
-//change master to master_host='192.168.126.128',
-//master_port=3306,
-//master_user='jun',
-//master_password='zhangjun',
-//master_log_file='master-bin.000001',
-//master_log_pos=342;
-//
-//change master to master_host='192.168.126.128', //Master 服务器Ip
-//master_port=3306,
-//master_user='root',
-//master_password='root',
-//master_log_file='master-bin.000002',//Master服务器产生的日志
-//master_log_pos=107;

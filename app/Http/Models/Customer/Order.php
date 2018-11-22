@@ -83,7 +83,6 @@ class Order extends Model
 		$resource_type = [ '1' => '租用主机' , '2' => '托管主机' , '3' => '租用机柜' , '4' => 'IP' , '5' => 'CPU' , '6' => '硬盘' , '7' => '内存' , '8' => '带宽' , '9' => '防护' , '10' => 'cdn' , '11' => '高防IP'];
 		$order_type = [ '1' => '新购' , '2' => '续费' ];
 
-		$pay_type = [0=>'未选择',1=>'余额',2=>'支付宝',3=>'微信',4=>'其他'];
 		$order_status = [ '0' => '待支付' , '1' => '已支付' , '2' => '已支付' , '3' => '订单完成' , '4' => '到期' , '5' => '取消' , '6' => '申请退款', '8' => '退款完成'];
 
 		$info = $this->getName('*');
@@ -97,7 +96,6 @@ class Order extends Model
 			$value->type = $value->resource_type;
 			$value->resource_type = $resource_type[$value->resource_type];
 			$value->order_type = $order_type[$value->order_type];
-			$value->pay_type = $value->pay_type?$pay_type[$value->pay_type]:'';
 			$value->order_status = $order_status[$value->order_status];
 			$value->business_name	= $admin_name[$value->business_id];
 		}

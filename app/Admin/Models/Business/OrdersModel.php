@@ -55,13 +55,11 @@ class OrdersModel extends Model
         if(!empty($result)){
     		$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn'];
     		$order_type = [1=>'新购',2=>'续费'];
-    		$pay_type = [0=>'未选择',1=>'余额',2=>'支付宝',3=>'微信',4=>'其他'];
     		$order_status = [0=>'待支付',1=>'已支付',2=>'财务确认',3=>'订单完成',4=>'到期',5=>'取消',6=>'申请退款',7=>'正在支付',8=>'退款完成'];
     		foreach($result as $okey=>$ovalue){
                 $ovalue->type = $ovalue->resource_type;
     			$ovalue->resource_type = $resource_type[$ovalue->resource_type];
     			$ovalue->order_type = $order_type[$ovalue->order_type];
-    			$ovalue->pay_type = $ovalue->pay_type?$pay_type[$ovalue->pay_type]:'';
     			$ovalue->order_status = $order_status[$ovalue->order_status];
     		}
     		$return['data'] = $result;
@@ -610,5 +608,289 @@ class OrdersModel extends Model
         $return['code'] = 1;
         $return['msg'] = '资源续费订单获取成功';
         return $return; 
+    }
+
+
+    public function payOrderByBalance($business_number,$coupon_id){
+        $return['data'] = '';
+        $admin_user_id = Admin::user()->id;
+
+        $unpaidOrder = $this
+                ->where('order_status',0)
+                ->where('business_sn',$business_number)
+                ->get()
+                ->toArray();
+        if(count($unpaidOrder) == 0){
+            $return['msg']  = '无此业务未付款订单';
+            $return['code'] = 0;
+            return $return;
+        }
+
+        $serial_number = 'tz_'.time().'_admin_'.$admin_user_id;
+        $payable_money = '0.00';
+        $pay_time = date("Y-m-d h:i:s");
+        $order_id_arr = [];
+
+        DB::beginTransaction();//开启事务处理
+
+        for ($i=0; $i < count($unpaidOrder); $i++) { 
+            $business_id = DB::table('tz_users')->where('id',$unpaidOrder[$i]['customer_id'])->value('salesman_id');
+            if($business_id != $admin_user_id){
+                $return['msg']  = '该业务所属客户不属于您';
+                $return['code'] = 0;
+                return $return;
+            }
+
+            if($unpaidOrder[$i]['resource_type'] == 11){
+                $return['msg']  = '业务员无法替客户为高防IP业务订单进行支付';
+                $return['code'] = 0;
+                return $return;
+            }
+
+            $checkCoupon = $this->checkCoupon($unpaidOrder[$i]['id'],$coupon_id);
+            if($checkCoupon != true){
+                $return['msg']  = '该优惠券不可用';
+                $return['code'] = 0;
+                return $return;
+            }
+  
+            $processing = $this->paySuccess($unpaidOrder[$i]['id'],$pay_time);
+            if($processing['code'] != 1){
+                DB::rollBack();
+                return $processing;
+            } 
+            
+            //更新订单内信息
+            $updateInfo['serial_number'] = $serial_number;
+            $updateInfo['order_status'] = 1;
+            $updateInfo['pay_time'] = $pay_time;
+            if(isset($processing['data']['end'])){
+                $updateInfo['end_time'] = $processing['data']['end'];
+            }
+            //重新计算单一订单应付金额
+            /*
+            *如需添加单一商品优惠券,在此添加计算
+            */
+            $updateInfo['payable_money'] = bcmul($unpaidOrder[$i]['price'],$unpaidOrder[$i]['duration'],2);
+            
+            //计算支付流水应付金额
+            $payable_money = bcadd($payable_money,$updateInfo['payable_money'],2);
+
+            $customer_id = $unpaidOrder[$i]['customer_id'];
+            $business_id = $unpaidOrder[$i]['business_id'];
+
+            $update = DB::table('tz_orders')->where('id',$unpaidOrder[$i]['id'])->update($updateInfo);
+            if($update == 0){
+                DB::rollBack();
+                $return['msg'] = '更新支付状态失败';
+                $return['code'] = 0;
+                return $return;
+            }
+            $order_id_arr[] = $unpaidOrder[$i]['id'];
+            $user_id = $unpaidOrder[$i]['customer_id'];
+        }
+
+        //计算实际支付金额
+        $actual_payment = $this->countCoupon($payable_money,$coupon_id);
+        //优惠券抵扣了的金额
+        $preferential_amount = bcsub($payable_money,$actual_payment,2);
+        //获取余额
+        $before_money = DB::table('tz_users')->where('id',$user_id)->value('money');
+        //计算扣除应付金额后余额
+        $after_money = bcsub((string)$before_money,(string)$actual_payment,2);
+
+        if( $after_money < 0 ){
+            $return['msg']  = '余额不足,请充值';
+            $return['code'] = 0;
+            return $return;
+        }
+        
+        $flow = [
+            'serial_number'     => $serial_number,
+            'order_id'      => json_encode($order_id_arr),
+            'customer_id'       => $customer_id,
+            'payable_money' => $payable_money,
+            'actual_payment'    => $actual_payment,
+            'preferential_amount'   => $preferential_amount,
+            'coupon_id'     => $coupon_id,
+            'created_at'        => date('Y-m-d H:i:s',time()),
+            'business_id'       => $business_id,
+            'before_money'      => $before_money,
+            'after_money'       => $after_money,
+            'pay_time'      => $pay_time,
+        ];
+        $creatFlow = DB::table('tz_orders_flow')->insert($flow);
+        if($creatFlow == false){
+            DB::rollBack();
+            $return['msg'] = '创建支付流水失败';
+            $return['code'] = 0;
+            return $return;
+        }
+
+        // 订单支付成功后对客户的余额进行修改
+        $payMoney = DB::table('tz_users')->where('id',$user_id)->update(['money' => $after_money ]);
+        if($payMoney == false){
+            // 修改客户余额失败，进行事务回滚
+            DB::rollBack();
+            $return['msg']  = '扣除余额失败,支付失败';
+            $return['code'] = 0;
+            return $return; 
+        }
+        DB::commit();
+        $return['msg']  = '余额支付成功';
+        $return['code'] = 1;
+            
+        return $return;
+    }
+    
+
+    /**
+     * 预留的检测优惠券是否可用方法
+     * @param  $order_id[]      -订单id的数组; $coupon_id    -优惠券id
+     * @return true/false
+     */
+    public function checkCoupon($order_id,$coupon_id){
+
+        return true;
+
+    }
+
+    /**
+     * 预留的优惠券使用计算方法
+     * @param  $payable_money       -订单应付金额; $coupon_id -优惠券id
+     * @return true/false
+     */
+    public function countCoupon($payable_money,$coupon_id){
+        //if($coupon_id == 0){
+            $youhuizhekou = '0.00';
+        // }else{
+        //  $youhuizhekou = '20.00';
+        // }
+    
+        $actual_payment = bcsub($payable_money,$youhuizhekou,2);
+        if($actual_payment < 0){
+            $actual_payment = 0;
+        }
+        return $actual_payment;
+
+    }
+
+    /**
+    *支付订单改状态方法
+    **/
+    protected function paySuccess($order_id,$pay_time){
+        $return['data'] = '';
+        $row = $this->find($order_id)->toArray();
+    
+        if($row['resource_type'] < 4) {
+            // 资源类型如果是机柜/主机，查找对应的业务状态   
+            $business_status = DB::table('tz_business')->where('business_number',$row['business_sn'])->value('business_status');
+            if($business_status > 0 && $business_status < 4 && $business_status != 2){
+                // 业务状态是审核通过且是使用状态将状态修改为付款使用即2
+                $business['business_status'] = 2;
+                $businessUp = DB::table('tz_business')->where('business_number',$row['business_sn'])->update($business);
+                if($businessUp == 0) {
+                    $return['msg']  = '更改资源使用状态失败,订单可能为正在付款使用中状态,支付失败';
+                    $return['code'] = 3;
+                    return $return;
+                }
+            } 
+        } elseif($row['resource_type'] == 11){
+            //如果是高防IP
+            if($row['order_type'] == 1){
+                //如果是新购的高防IP
+                $checkBusiness = DB::table('tz_defenseip_business')
+                    ->where('business_number',$row['business_sn'])
+                    ->first();
+                if($checkBusiness != null){
+                    $return['msg']  = '业务已存在,请勿重复付款!';
+                    $return['code'] = 2;
+                    return $return;
+                }
+
+                $package = DB::table('tz_defenseip_package')
+                    ->select(['site','protection_value','price'])
+                    ->where('id',$row['machine_sn'])
+                    ->first();
+                if($package == null){
+                    $return['msg']  = '该套餐已下架!';
+                    $return['code'] = 2;
+                    return $return;
+                }
+                $sale_ip = DB::table('tz_defenseip_store')
+                        ->select(['id','ip'])
+                        ->where('site',$package->site)
+                        ->where('protection_value',$package->protection_value)
+                        ->where('status',0)
+                        ->first();
+                if($sale_ip == null){
+                    $return['msg']  = '该套餐IP库存不足!';
+                    $return['code'] = 2;
+                    return $return;
+                }
+                $update_ip =  DB::table('tz_defenseip_store')->where('id',$sale_ip->id)->update(['status' => 1]);
+                if($update_ip == 0){
+                    $return['msg']  = '更新ip使用状态失败!';
+                    $return['code'] = 3;
+                    return $return;
+                }
+                $end = Carbon::now()->addMonth($row['duration'])->toDateTimeString();
+        
+                $business = [
+                    'business_number'   => $row['business_sn'],
+                    'user_id'       => $row['customer_id'],
+                    'package_id'        => $row['machine_sn'],
+                    'ip_id'         => $sale_ip->id,
+                    'price'         => $package->price,
+                    'status'            => 1,
+                    'end_at'            => $end,
+                    'created_at'        => date("Y-m-d H:i:s"),
+                ];
+                $build_business = DB::table('tz_defenseip_business')->insert($business);
+        
+                if($build_business != true){
+                    $return['msg']  = '创建高防ip业务失败!';
+                    $return['code'] = 3;
+                    return $return;
+                }
+                $update_order = DB::table('tz_orders')
+                        ->where('id',$row['id'])
+                        ->update([
+                            'resource'  => $sale_ip->ip,
+                            ]);
+                if($update_order == 0){
+                    $return['msg']  = '更新订单状态失败!';
+                    $return['code'] = 3;
+                    return $return;
+                }
+            }else{
+                $business = DB::table('tz_defenseip_business')
+                        ->where('business_number',$row['business_sn'])
+                        ->first();
+                //判断业务是否已下架
+                if($business->status == 2||$business->status == 3)
+                {
+                    $return['msg']  = '业务已下架,无法续费!';
+                    $return['code'] = 4;
+                    return $return;
+                }
+
+                $end = Carbon::parse($business->end_at)->addMonth($row['duration'])->toDateTimeString();
+                $upEnd = DB::table('tz_defenseip_business')
+                        ->where('business_number',$row['business_sn'])
+                        ->update(['end_at'=>$end]);
+          
+                if($upEnd != 1){
+                    $return['msg']  = '更新业务结束时间失败!';
+                    $return['code'] = 3;
+                    return $return;
+                }
+            }
+            $return['data'] = ['end' => $end];      
+        }
+        
+        $return['msg'] = '更新成功!!';
+        $return['code'] = 1;            
+        return $return;
     }
 }

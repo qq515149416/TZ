@@ -134,7 +134,6 @@ class OrdersController extends Controller
 
         $model = new OrdersModel();
         $pay = $model->payOrderByBalance($business_number,$coupon_id);
-        dd($pay);
         return tz_ajax_echo($pay['data'],$pay['msg'],$pay['code']);
     }
 

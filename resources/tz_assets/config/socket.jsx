@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import io from 'socket.io-client';
-const socket = io(location.protocol+"//"+location.hostname+":8120");
+const socket = io(location.protocol+"//175.6.244.98:8120");
 
 class Socket extends React.Component {
     // 声明Context对象属性

@@ -1002,4 +1002,25 @@ class OrdersModel extends Model
         return $return;
 
     }
+
+    /**
+     * 获取资源下架记录
+     * @return [type] [description]
+     */
+    public function resourceRemoveHistory(){
+        $history = $this->where('resource_type','>',3)->where(['remove_status'=>6])->orderBy('updated_at','desc')->get(['business_sn','customer_name','resource_type','business_name','machine_sn','resource']);
+        if(!$history->isEmpty()){
+            $resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn',11=>'高防IP'];
+            foreach($history as $history_key => $history_value){
+                $history[$history_key]['resourcetype'] = $resource_type[$history_value['resource_type']];
+            }
+            $return['data'] = $history;
+            $return['code'] = 1;
+            $return['msg'] = '获取资源下架记录数据成功';
+        } else {
+            $return['data'] = [];
+            $return['code'] = 0;
+            $return['msg'] = '暂无下架资源数据';
+        }
+    }
 }

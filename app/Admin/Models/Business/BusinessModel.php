@@ -519,8 +519,15 @@ class BusinessModel extends Model
                     break;
             }
         }
-        DB::beginTransaction();
-        $remove = DB::table('tz_business')->where(['business_number'=>$edit['business_number']])->update($update);
+        $remove = $this->where(['business_number'=>$edit['business_number']])->update($update);
+        if($remove == false){
+            $return['code'] = 0;
+            $return['msg'] = '下架状态修改失败';     
+        } else {
+            $return['code'] = 0;
+            $return['msg'] = '下架状态修改成功'; 
+        }
+        return $return;
 
     }
 

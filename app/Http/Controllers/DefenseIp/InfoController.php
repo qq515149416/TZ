@@ -104,8 +104,7 @@ class InfoController extends Controller
         $res       = $request->all();  //获取所有传参
         $startDate = Carbon::parse($res['date'])->timestamp;  //开始时间戳
         $endDate   = Carbon::parse($res['date'])->addDay(1)->timestamp; //结束时间戳
-//        dump('开始时间戳:' . $startDate);
-//        dump('结束时间戳:' . $endDate);
+
 
         $XADefenseDataModel = new XADefenseDataModel(); //实例化流量数据模型
 
@@ -121,6 +120,8 @@ class InfoController extends Controller
 
     /**
      * 测试模型关联
+     *
+     *
      */
     public function test()
     {

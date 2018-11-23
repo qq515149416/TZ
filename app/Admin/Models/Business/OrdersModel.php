@@ -1028,4 +1028,17 @@ class OrdersModel extends Model
             $return['msg'] = '暂无下架资源数据';
         }
     }
+
+    /**
+     * 资源下架处理操作
+     * @param  [type] $edit [description]
+     * @return [type]       [description]
+     */
+    public function editRemoveResource($edit){
+        if(!$edit){
+            $return['code'] = 0;
+            $return['msg'] = '你无法对资源进行下架处理';
+            return $return;
+        }
+    }
 }

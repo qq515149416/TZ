@@ -119,4 +119,26 @@ class BusinessController extends Controller
         $return = $delete->deleteBusiness($delete_id);
         return tz_ajax_echo($return,$return['msg'],$return['code']);
     }
+
+    /**
+     * 申请下架的接口
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function applyRemove(Request $request){
+        $business = $request->only(['business_number','remove_reason']);
+        $remove = new BusinessModel();
+        $remove_result = $remove->applyRemove($business);
+        return tz_ajax_echo($remove_result,$remove_result['msg'],$remove_result['code']);
+    }
+
+    /**
+     * 机器下架记录
+     * @return [type] [description]
+     */
+    public function removeHistory(){
+        $history = new BusinessModel();
+        $history_result = $history->removeHistory();
+        return tz_ajax_echo($history_result['data'],$history_result['msg'],$history_result['code']);
+    }
 }

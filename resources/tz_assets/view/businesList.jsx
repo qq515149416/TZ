@@ -70,22 +70,17 @@ const columnData = [
         {id: "endding_time", label: "业务结束时间" ,type: "text"},
         {id: "business_note", label: "业务备注" ,type: "text"}
     ],extendConfirm: {
-      rule: {
-        term: "business_status",
-        execute: 1,
-        type: "equal"
-    },
-      title: "业务操作",
-      content: "是否要启用此业务？",
+      title: "业务订单支付",
+      content: "支付会支付业务下所有的订单",
       icon: <Enable />,
       ok: (data) => {
           return new Promise((resolve,reject) => {
-              post("business/enable",{
-                  business_status: 3,
-                  id: data.id
+              post("business/payOrderByAdmin",{
+                business_number: data.business_number,
+                coupon_id: 0
               }).then((res) => {
                   if(res.data.code==1) {
-                      alert("启用成功");
+                        alert(res.data.msg);
                       resolve(res.data);
                   } else {
                       alert(res.data.msg);

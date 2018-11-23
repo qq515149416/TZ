@@ -6,6 +6,7 @@ import extendElementsComponent from "../tool/extendElementsComponent";
 import ResetPassword from "../component/dialog/resetPassword.jsx";
 import ManualRecharge from "../component/dialog/manualRecharge.jsx";
 import RechargeRecord from "../component/icon/rechargeRecord.jsx";
+import PersonnelTransfer from "../component/dialog/personnelTransfer.jsx";
 
 const columnData = [
     // { id: 'name', numeric: true, disablePadding: false, label: '用户名' },
@@ -53,7 +54,8 @@ const columnData = [
       } ,extendElement: (data) => {
         let Element = extendElementsComponent([
             ResetPassword,
-            ManualRecharge
+            ManualRecharge,
+            PersonnelTransfer
           ]);
         return <Element postUrl="business/recharge" nameParam="email" {...data} />;
     }, extendUrl: [

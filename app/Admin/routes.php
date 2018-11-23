@@ -389,21 +389,19 @@ Route::group([
             $router->get('show','DefenseIp\PackageController@show');
         });
 
-        Route::group([
-            'prefix' => 'order',
-        ], function (Router $router) {
-            $router->get('buyDefenseIpNow','DefenseIp\OrderController@buyNowByAdmin');
-        });
-     
 
         /**
-         *  高发IP下架处理
+         *  高防IP下架处理
          */
         Route::group([
             'prefix' => 'remove',
         ], function (Router $router) {
-            $router->get('selectExpireList','Defenseip\RemoveController@selectExpireList');  //查询过期业务
-            
+             $router->get('selectExpireList','Defenseip\RemoveController@selectExpireList');  //查询过期业务
+
+             $router->get('subExamine','DefenseIp\RemoveController@subExamine');            //提交审核
+             $router->get('goExamine','DefenseIp\RemoveController@goExamine');                //进行审核
+             $router->get('showExamine','DefenseIp\RemoveController@showExamine');                //查看正在审核的下架申请
+             
         });
 
     });

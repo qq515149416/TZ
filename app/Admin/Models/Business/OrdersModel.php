@@ -12,7 +12,7 @@ use App\Admin\Models\Idc\Harddisk;
 use App\Admin\Models\Idc\Memory;
 use Illuminate\Support\Carbon;//使用该包做到期时间的计算
 use Encore\Admin\Facades\Admin;
-
+use Illuminate\Support\Facades\Session;
 /**
  * 后台订单模型
  */
@@ -53,7 +53,7 @@ class OrdersModel extends Model
     				//->get(['id','order_sn','customer_name','business_sn','business_name','resource_type','order_type','resource','price','duration','payable_money','end_time','serial_number','pay_time','order_status','order_note','created_at']);
     	// 'before_money','after_money','pay_type','pay_price',
         if(!empty($result)){
-    		$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn'];
+    		$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn',11=>'高防IP'];
     		$order_type = [1=>'新购',2=>'续费'];
     		$order_status = [0=>'待支付',1=>'已支付',2=>'财务确认',3=>'订单完成',4=>'到期',5=>'取消',6=>'申请退款',7=>'正在支付',8=>'退款完成'];
     		foreach($result as $okey=>$ovalue){
@@ -73,7 +73,7 @@ class OrdersModel extends Model
 
     	return $return;
     }
-    
+
     /**
      * 业务员和管理人员通过业务查看订单
      * @param  array $where 订单的状态
@@ -87,13 +87,13 @@ class OrdersModel extends Model
                     ->orderBy('tz_orders.created_at','desc')
                     ->select('tz_orders.id','tz_orders.order_sn','tz_orders.customer_name','tz_orders.business_sn','tz_orders.business_name','tz_orders.resource_type','tz_orders.order_type','tz_orders.resource','tz_orders.price','tz_orders.duration','tz_orders.payable_money','tz_orders.end_time','tz_orders.serial_number','tz_orders.pay_time','tz_orders.order_status','tz_orders.order_note','tz_orders.created_at','tz_orders_flow.before_money','tz_orders_flow.after_money')
                     ->get();
-        
+
     	if(!$result->isEmpty()){
     		$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn'];
     		$order_type = [1=>'新购',2=>'续费'];
     		$order_status = [0=>'待支付',1=>'已支付',2=>'财务确认',3=>'订单完成',4=>'到期',5=>'取消',6=>'申请退款',7=>'正在支付',8=>'退款完成'];
     		foreach($result as $okey=>$ovalue){
-                $ovalue->type = $ovalue->resource_type; 
+                $ovalue->type = $ovalue->resource_type;
                 $ovalue->resourcetype = $resource_type[$ovalue->resource_type];
                 $ovalue->order_type = $order_type[$ovalue->order_type];
                 $ovalue->order_status = $order_status[$ovalue->order_status];
@@ -159,7 +159,7 @@ class OrdersModel extends Model
         }
 
         return $return;
-       
+
     }
 
     /**
@@ -249,13 +249,13 @@ class OrdersModel extends Model
                 $machine['service_num'] = $insert_data['business_sn'];
                 $machine['cpu_used'] = 1;
                 $result = DB::table('idc_cpu')->where('cpu_number',$insert_data['machine_sn'])->update($machine);
-                break; 
+                break;
             case 6:
                //更新硬盘表的所属业务编号，资源状态和到期时间
                 $machine['service_num'] = $insert_data['business_sn'];
                 $machine['harddisk_used'] = 1;
                 $result = DB::table('idc_harddisk')->where('harddisk_number',$insert_data['machine_sn'])->update($machine);
-                break; 
+                break;
             case 7:
                 //更新内存表的所属业务编号，资源状态和到期时间
                 $machine['service_num'] = $insert_data['business_sn'];
@@ -264,7 +264,7 @@ class OrdersModel extends Model
                 break;
             default:
                 $result = 1;
-                break;  
+                break;
         }
         if($result != 0){
             //所对应资源表的业务编号和到期时间，状态修改成功后进行事务提交
@@ -277,11 +277,11 @@ class OrdersModel extends Model
             $return['data'] = '';
             $return['code'] = 0;
             $return['msg'] = '资源增加失败';
-        }  
-        return $return;     
+        }
+        return $return;
     }
 
-    
+
 
     /**
      * 删除订单
@@ -310,7 +310,7 @@ class OrdersModel extends Model
             return $return;
         }
         // 删除成功返回
-        $return['msg'] = '删除数据成功,关联业务号为:'.$delete_data->business_number; 
+        $return['msg'] = '删除数据成功,关联业务号为:'.$delete_data->business_number;
         $return['code'] = 1;
         return $return;
 
@@ -428,7 +428,7 @@ class OrdersModel extends Model
                 $return['msg'] = '业务续费失败!';
                 return $return;
             }
-            
+
             switch ($order['resource_type']) {
                 case 1:
                     $machine = [];
@@ -532,7 +532,7 @@ class OrdersModel extends Model
                     $return['msg'] = '业务续费失败!请重新操作';
                     return $return;
                 }
-                
+
                 switch ($order['resource_type']) {
                     case 4:
                         $resource = [];
@@ -595,7 +595,7 @@ class OrdersModel extends Model
         return $return;
 
     }
-    
+
     // /**
     //  * 展示刚刚续费的订单
     //  * @param  array $renew_order 刚刚续费的订单id
@@ -625,15 +625,15 @@ class OrdersModel extends Model
     //             array_push($orders,$order);
     //             $total_price = bcmul($order->price,$order->duration,2);
     //             $all_price = bcadd($all_price,$total_price,2);
-    //         } 
+    //         }
     //     }
     //     $orders['all_price'] = $all_price;
     //     $return['data'] = $orders;
     //     $return['code'] = 1;
     //     $return['msg'] = '资源续费订单获取成功';
-    //     return $return; 
+    //     return $return;
     // }
-    
+
     /**
      * 展示刚刚续费的订单
      * @param  array $renew_order 刚刚续费的订单id
@@ -692,7 +692,7 @@ class OrdersModel extends Model
 
         DB::beginTransaction();//开启事务处理
 
-        for ($i=0; $i < count($unpaidOrder); $i++) { 
+        for ($i=0; $i < count($unpaidOrder); $i++) {
             $business_id = DB::table('tz_users')->where('id',$unpaidOrder[$i]['customer_id'])->value('salesman_id');
             if($business_id != $admin_user_id){
                 $return['msg']  = '该业务所属客户不属于您';
@@ -712,13 +712,13 @@ class OrdersModel extends Model
                 $return['code'] = 0;
                 return $return;
             }
-  
+
             $processing = $this->paySuccess($unpaidOrder[$i]['id'],$pay_time);
             if($processing['code'] != 1){
                 DB::rollBack();
                 return $processing;
-            } 
-            
+            }
+
             //更新订单内信息
             $updateInfo['serial_number'] = $serial_number;
             $updateInfo['order_status'] = 1;
@@ -731,7 +731,7 @@ class OrdersModel extends Model
             *如需添加单一商品优惠券,在此添加计算
             */
             $updateInfo['payable_money'] = bcmul($unpaidOrder[$i]['price'],$unpaidOrder[$i]['duration'],2);
-            
+
             //计算支付流水应付金额
             $payable_money = bcadd($payable_money,$updateInfo['payable_money'],2);
 
@@ -763,7 +763,7 @@ class OrdersModel extends Model
             $return['code'] = 0;
             return $return;
         }
-        
+
         $flow = [
             'serial_number'     => $serial_number,
             'order_id'      => json_encode($order_id_arr),
@@ -793,15 +793,15 @@ class OrdersModel extends Model
             DB::rollBack();
             $return['msg']  = '扣除余额失败,支付失败';
             $return['code'] = 0;
-            return $return; 
+            return $return;
         }
         DB::commit();
         $return['msg']  = '余额支付成功';
         $return['code'] = 1;
-            
+
         return $return;
     }
-    
+
 
     /**
      * 预留的检测优惠券是否可用方法
@@ -825,7 +825,7 @@ class OrdersModel extends Model
         // }else{
         //  $youhuizhekou = '20.00';
         // }
-    
+
         $actual_payment = bcsub($payable_money,$youhuizhekou,2);
         if($actual_payment < 0){
             $actual_payment = 0;
@@ -840,9 +840,9 @@ class OrdersModel extends Model
     protected function paySuccess($order_id,$pay_time){
         $return['data'] = '';
         $row = $this->find($order_id)->toArray();
-    
+
         if($row['resource_type'] < 4) {
-            // 资源类型如果是机柜/主机，查找对应的业务状态   
+            // 资源类型如果是机柜/主机，查找对应的业务状态
             $business_status = DB::table('tz_business')->where('business_number',$row['business_sn'])->value('business_status');
             if($business_status > 0 && $business_status < 4 && $business_status != 2){
                 // 业务状态是审核通过且是使用状态将状态修改为付款使用即2
@@ -853,7 +853,7 @@ class OrdersModel extends Model
                     $return['code'] = 3;
                     return $return;
                 }
-            } 
+            }
         } elseif($row['resource_type'] == 11){
             //如果是高防IP
             if($row['order_type'] == 1){
@@ -894,7 +894,7 @@ class OrdersModel extends Model
                     return $return;
                 }
                 $end = Carbon::now()->addMonth($row['duration'])->toDateTimeString();
-        
+
                 $business = [
                     'business_number'   => $row['business_sn'],
                     'user_id'       => $row['customer_id'],
@@ -906,7 +906,7 @@ class OrdersModel extends Model
                     'created_at'        => date("Y-m-d H:i:s"),
                 ];
                 $build_business = DB::table('tz_defenseip_business')->insert($business);
-        
+
                 if($build_business != true){
                     $return['msg']  = '创建高防ip业务失败!';
                     $return['code'] = 3;
@@ -938,18 +938,68 @@ class OrdersModel extends Model
                 $upEnd = DB::table('tz_defenseip_business')
                         ->where('business_number',$row['business_sn'])
                         ->update(['end_at'=>$end]);
-          
+
                 if($upEnd != 1){
                     $return['msg']  = '更新业务结束时间失败!';
                     $return['code'] = 3;
                     return $return;
                 }
             }
-            $return['data'] = ['end' => $end];      
+            $return['data'] = ['end' => $end];
         }
-        
+
         $return['msg'] = '更新成功!!';
-        $return['code'] = 1;            
+        $return['code'] = 1;
         return $return;
+    }
+
+    /**
+     * 对资源进行下架申请
+     * @param  [type] $order [description]
+     * @return [type]        [description]
+     */
+    public function applyRemoveResource($order){
+        if(!$order){
+            $return['code'] = 0;
+            $return['msg'] = '无法下架资源';
+            return $return;
+        }
+        $order_result = $this->where(['order_sn'=>$order['order_sn']])->select('order_sn','remove_status','machine_sn','end_time','business_sn')->first();
+        if(empty($order_result)){
+            $return['code'] = 0;
+            $return['msg'] = '无此资源的信息,无法下架!';
+            return $return;
+        }
+        if($order_result->remove_status > 0){
+            $return['code'] = 0;
+            $return['msg'] = '此资源正在下架中,请勿重复提交申请';
+            return $return;
+        }
+        $end_time = $this->where(['machine_sn'=>$order_result->machine_sn,'business_sn'=>$order_result->business_sn])->orderBy('end_time','desc')->select('end_time','remove_status')->first();
+        if(!empty($end_time)){
+            if($end_time->remove_status > 0){
+                $return['code'] = 0;
+                $return['msg'] = '此资源正在下架中,请勿重复提交申请';
+                return $return;
+            }
+            if($order_result->end_time != $end_time->end_time){
+                $return['code'] = 0;
+                $return['msg'] = '此资源的信息不是最新，请查找最新';
+                return $return;
+            }
+        }
+        $remove['remove_status'] = 1;
+        $remove['remove_reason'] = $order['remove_reason'];
+        $update = $this->where(['order_sn'=>$order['order_sn']])->update($remove);
+        if($update == false){
+            $return['code'] = 0;
+            $return['msg'] = '资源申请下架失败';
+            
+        } else {
+            $return['code'] = 1;
+            $return['msg'] = '资源申请下架成功';
+        }
+        return $return;
+
     }
 }

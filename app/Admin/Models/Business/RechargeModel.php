@@ -85,7 +85,7 @@ class RechargeModel extends Model
 				->leftjoin('admin_users as b','tz_recharge_admin.recharge_uid','=','b.id')
 				->leftjoin('tz_users as c','tz_recharge_admin.user_id','=','c.id')
 				->select(DB::raw('tz_recharge_admin.id,tz_recharge_admin.user_id,tz_recharge_admin.recharge_amount,tz_recharge_admin.recharge_way,tz_recharge_admin.trade_no,tz_recharge_admin.recharge_uid,tz_recharge_admin.created_at,tz_recharge_admin.audit_status,tz_recharge_admin.remarks,b.name as recharger,c.name as customer_name,c.email as customer_email'))
-				->orderBy('created_at','desc')
+				->orderBy('tz_recharge_admin.created_at','desc')
 				->get();
 
 				break;
@@ -96,7 +96,7 @@ class RechargeModel extends Model
 				->leftjoin('tz_users as c','tz_recharge_admin.user_id','=','c.id')
 				->select(DB::raw('tz_recharge_admin.id,tz_recharge_admin.user_id,tz_recharge_admin.recharge_amount,tz_recharge_admin.recharge_way,tz_recharge_admin.trade_no,tz_recharge_admin.recharge_uid,tz_recharge_admin.created_at,tz_recharge_admin.audit_status,tz_recharge_admin.remarks,b.name as recharger,c.name as customer_name,c.email as customer_email'))
 				->where('tz_recharge_admin.audit_status',$need)
-				->orderBy('created_at','desc')
+				->orderBy('tz_recharge_admin.created_at','desc')
 				->get();
 
 				break;
@@ -137,7 +137,7 @@ class RechargeModel extends Model
 				->leftjoin('tz_users as c','tz_recharge_admin.user_id','=','c.id')
 				->select(DB::raw('tz_recharge_admin.id,tz_recharge_admin.user_id,tz_recharge_admin.recharge_amount,tz_recharge_admin.recharge_way,tz_recharge_admin.trade_no,tz_recharge_admin.recharge_uid,tz_recharge_admin.created_at,tz_recharge_admin.audit_status,tz_recharge_admin.remarks,b.name as recharger,c.name as customer_name,c.email as customer_email'))
 				->where('tz_recharge_admin.recharge_uid',$user_id)
-				->orderBy('created_at','desc')
+				->orderBy('tz_recharge_admin.created_at','desc')
 				->get();
 
 				break;
@@ -149,7 +149,7 @@ class RechargeModel extends Model
 				->select(DB::raw('tz_recharge_admin.id,tz_recharge_admin.user_id,tz_recharge_admin.recharge_amount,tz_recharge_admin.recharge_way,tz_recharge_admin.trade_no,tz_recharge_admin.recharge_uid,tz_recharge_admin.created_at,tz_recharge_admin.audit_status,tz_recharge_admin.remarks,b.name as recharger,c.name as customer_name,c.email as customer_email'))
 				->where('tz_recharge_admin.audit_status',$need)
 				->where('tz_recharge_admin.recharge_uid',$user_id)
-				->orderBy('created_at','desc')
+				->orderBy('tz_recharge_admin.created_at','desc')
 				->get();
 
 				break;
@@ -272,7 +272,7 @@ class RechargeModel extends Model
 				  $clerk_id = Admin::user()->id;
 				  $flow = DB::table('tz_users')
 						->leftjoin('tz_recharge_flow as b','tz_users.id','=','b.user_id')
-						->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after'))
+						->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.id'))
 						->where('b.trade_status',1)
 						->where('tz_users.salesman_id',$clerk_id)
 						->orderBy('b.timestamp','desc')
@@ -282,7 +282,7 @@ class RechargeModel extends Model
 			 case 'customer_id':
 				  $flow = DB::table('tz_users')
 						->leftjoin('tz_recharge_flow as b','tz_users.id','=','b.user_id')
-						->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after'))
+						->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.id'))
 						->where('b.trade_status',1)
 						->where('tz_users.id',$key)
 						->orderBy('b.timestamp','desc')
@@ -292,7 +292,7 @@ class RechargeModel extends Model
 			case '*':
 				  $flow = DB::table('tz_users')
 						->leftjoin('tz_recharge_flow as b','tz_users.id','=','b.user_id')
-						->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after'))
+						->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.id'))
 						->where('b.trade_status',1)
 						->orderBy('b.timestamp','desc')
 						->get();    
@@ -301,7 +301,7 @@ class RechargeModel extends Model
 			case 'byMonth':
 				  $flow = DB::table('tz_users')
 						->leftjoin('tz_recharge_flow as b','tz_users.id','=','b.user_id')
-						->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after'))
+						->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.id'))
 						->where('b.trade_status',1)
 						->where('b.month',$key)
 						->orderBy('b.timestamp','desc')

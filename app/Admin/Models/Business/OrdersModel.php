@@ -964,12 +964,42 @@ class OrdersModel extends Model
             $return['msg'] = '无法下架资源';
             return $return;
         }
-        $order_result = $this->where(['order_sn'=>$order['order_sn']])->select('order_sn','remove_status','machine_sn','end_time')->first();
+        $order_result = $this->where(['order_sn'=>$order['order_sn']])->select('order_sn','remove_status','machine_sn','end_time','business_sn')->first();
         if(empty($order_result)){
             $return['code'] = 0;
             $return['msg'] = '无此资源的信息,无法下架!';
             return $return;
         }
-        
+        if($order_result->remove_status > 0){
+            $return['code'] = 0;
+            $return['msg'] = '此资源正在下架中,请勿重复提交申请';
+            return $return;
+        }
+        $end_time = $this->where(['machine_sn'=>$order_result->machine_sn,'business_sn'=>$order_result->business_sn])->orderBy('end_time','desc')->select('end_time','remove_status')->first();
+        if(!empty($end_time)){
+            if($end_time->remove_status > 0){
+                $return['code'] = 0;
+                $return['msg'] = '此资源正在下架中,请勿重复提交申请';
+                return $return;
+            }
+            if($order_result->end_time != $end_time->end_time){
+                $return['code'] = 0;
+                $return['msg'] = '此资源的信息不是最新，请查找最新';
+                return $return;
+            }
+        }
+        $remove['remove_status'] = 1;
+        $remove['remove_reason'] = $order['remove_reason'];
+        $update = $this->where(['order_sn'=>$order['order_sn']])->update($remove);
+        if($update == false){
+            $return['code'] = 0;
+            $return['msg'] = '资源申请下架失败';
+            
+        } else {
+            $return['code'] = 1;
+            $return['msg'] = '资源申请下架成功';
+        }
+        return $return;
+
     }
 }

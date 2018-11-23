@@ -100,4 +100,17 @@ class RemoveController extends Controller
 
          return tz_ajax_echo($list['data'],$list['msg'],$list['code']);
     }
+
+    /**
+     * 通过套餐id获取所有该套餐业务
+     */
+    public function showBusinessByPackage(BusinessRequest $request)
+    {
+        $par = $request->only(['package_id']);
+        $package_id = $par['package_id'];
+
+        $model = new BusinessModel();
+        $list = $model->showBusinessByPackage($package_id);
+        return tz_ajax_echo($list['data'],$list['msg'],$list['code']);
+    }
 }

@@ -400,6 +400,7 @@ Route::group([
 
              $router->get('subExamine','DefenseIp\RemoveController@subExamine');            //提交审核
              $router->get('goExamine','DefenseIp\RemoveController@goExamine');                //进行审核
+             $router->get('showExamine','DefenseIp\RemoveController@showExamine');                //查看正在审核的下架申请
              
         });
 

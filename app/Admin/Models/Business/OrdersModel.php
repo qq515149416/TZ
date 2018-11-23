@@ -952,4 +952,75 @@ class OrdersModel extends Model
         $return['code'] = 1;
         return $return;
     }
+
+    /**
+     * 对资源进行下架申请
+     * @param  [type] $order [description]
+     * @return [type]        [description]
+     */
+    public function applyRemoveResource($order){
+        if(!$order){
+            $return['code'] = 0;
+            $return['msg'] = '无法下架资源';
+            return $return;
+        }
+        $order_result = $this->where(['order_sn'=>$order['order_sn']])->select('order_sn','remove_status','machine_sn','end_time','business_sn')->first();
+        if(empty($order_result)){
+            $return['code'] = 0;
+            $return['msg'] = '无此资源的信息,无法下架!';
+            return $return;
+        }
+        if($order_result->remove_status > 0){
+            $return['code'] = 0;
+            $return['msg'] = '此资源正在下架中,请勿重复提交申请';
+            return $return;
+        }
+        $end_time = $this->where(['machine_sn'=>$order_result->machine_sn,'business_sn'=>$order_result->business_sn])->orderBy('end_time','desc')->select('end_time','remove_status')->first();
+        if(!empty($end_time)){
+            if($end_time->remove_status > 0){
+                $return['code'] = 0;
+                $return['msg'] = '此资源正在下架中,请勿重复提交申请';
+                return $return;
+            }
+            if($order_result->end_time != $end_time->end_time){
+                $return['code'] = 0;
+                $return['msg'] = '此资源的信息不是最新，请查找最新';
+                return $return;
+            }
+        }
+        $remove['remove_status'] = 1;
+        $remove['remove_reason'] = $order['remove_reason'];
+        $update = $this->where(['order_sn'=>$order['order_sn']])->update($remove);
+        if($update == false){
+            $return['code'] = 0;
+            $return['msg'] = '资源申请下架失败';
+            
+        } else {
+            $return['code'] = 1;
+            $return['msg'] = '资源申请下架成功';
+        }
+        return $return;
+
+    }
+
+    /**
+     * 获取资源下架记录
+     * @return [type] [description]
+     */
+    public function resourceRemoveHistory(){
+        $history = $this->where('resource_type','>',3)->where(['remove_status'=>6])->orderBy('updated_at','desc')->get(['business_sn','customer_name','resource_type','business_name','machine_sn','resource']);
+        if(!$history->isEmpty()){
+            $resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn',11=>'高防IP'];
+            foreach($history as $history_key => $history_value){
+                $history[$history_key]['resourcetype'] = $resource_type[$history_value['resource_type']];
+            }
+            $return['data'] = $history;
+            $return['code'] = 1;
+            $return['msg'] = '获取资源下架记录数据成功';
+        } else {
+            $return['data'] = [];
+            $return['code'] = 0;
+            $return['msg'] = '暂无下架资源数据';
+        }
+    }
 }

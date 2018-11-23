@@ -411,7 +411,7 @@ class BusinessModel extends Model
             return $return;
         }
 
-        if($business_result->remove_status < 0){//业务已处于下架状态的
+        if($business_result->remove_status > 0){//业务已处于下架状态的
             $return['code'] = 0;
             $return['msg'] = '此业务正在下架中，请勿重复申请操作!';
             return $return;
@@ -454,6 +454,28 @@ class BusinessModel extends Model
         $return['msg'] = '业务:'.$business['business_number'].'申请下架成功,等待处理';
         return $return;
 
+    }
+
+    /**
+     * 机器下架历史记录
+     * @return [type] [description]
+     */
+    public function removeHistory(){
+        $history = $this->where(['remove_status'=>6])->orderBy('updated_at','desc')->get(['client_name','sales_name','business_number','machine_number','business_type','business_note','remove_reason','resource_detail']);
+        if(!$history->isEmpty()){
+            $business_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜'];
+            foreach($history as $history_key => $history_value){
+                $history[$history_key]['resource_type'] = $business_type[$history_value['business_type']];
+            }
+            $return['data'] = $history;
+            $return['code'] = 1;
+            $return['msg'] = '获取机器下架记录数据成功';
+        } else {
+            $return['data'] = [];
+            $return['code'] = 0;
+            $return['msg'] = '暂无机器下架记录数据';
+        }
+        return $return;
     }
 
 }

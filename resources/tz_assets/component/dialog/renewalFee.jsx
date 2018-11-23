@@ -1,5 +1,6 @@
 import React from "react";
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -11,13 +12,36 @@ import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import RenewalFeeIcon from "../icon/renewalFee.jsx";
 import MenuItem from '@material-ui/core/MenuItem';
-import {post} from "../../tool/http";
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import { post, get } from "../../tool/http";
+
+const styles = theme => ({
+    heading: {
+      fontSize: theme.typography.pxToRem(15),
+      fontWeight: theme.typography.fontWeightRegular,
+    },
+});
 class RenewalFee extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currency: "",
-            renewalFee: false
+            currency: 1,
+            renewalFee: false,
+            resources: {
+                IP: [],
+                bandwidth: [],
+                cdn: [],
+                cpu: [],
+                harddisk: [],
+                memory: [],
+                protected: [],
+            }
         }
         this.renewalFeeDates = [
             {
@@ -33,6 +57,21 @@ class RenewalFee extends React.Component {
                 value: 12
             }
         ];
+    }
+    componentDidMount() {
+        if(!this.props.order_sn) {
+            get("business/all_renew",{
+                business_sn: this.props.business_number
+            }).then(res => {
+                if(res.data.code==1) {
+                    this.setState({
+                        resources: {
+                            ...res.data.data
+                        }
+                    });
+                }
+            })
+        }
     }
     open = () => {
         this.setState({
@@ -76,6 +115,8 @@ class RenewalFee extends React.Component {
         });
     }
     render() {
+        const { classes } = this.props;
+        const { resources } = this.state;
         return [
             <Tooltip title="续费">
                     <IconButton onClick={this.open} aria-label="renewalFee">
@@ -91,7 +132,7 @@ class RenewalFee extends React.Component {
           <DialogContent>
             <DialogContentText>
                 {
-                    this.props.type > 3 ? this.props.resource + this.props.resourcetype+"资源的订单" : [
+                    this.props.order_sn ? this.props.resource + this.props.resourcetype+"资源的订单" : [
                         <p>业务编号：{this.props.business_number}</p>,
                         <p>机器编号：{this.props.machine_number}</p>,
                         <p>IP：{this.props.resource_detail_json.ip}</p>,
@@ -99,6 +140,26 @@ class RenewalFee extends React.Component {
                     ]
                 }
             </DialogContentText>
+            <ExpansionPanel>
+                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                    <Typography className={classes.heading}>IP</Typography>
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails>
+                    <Grid container>
+                        {
+                            resources.IP.map(item => (
+                                <Grid key={item.id} item>
+                                    <Paper>
+                                        <p>资源名称：{item.machine_sn}</p>
+                                        <p>价格：{item.price}</p>
+                                        <p>详细：{item.resource}</p>
+                                    </Paper>
+                                </Grid>
+                            ))
+                        }
+                    </Grid>
+                </ExpansionPanelDetails>
+            </ExpansionPanel>
             <TextField
             id="renewalFee_duration"
             fullWidth
@@ -137,4 +198,7 @@ class RenewalFee extends React.Component {
         ];
     }
 }
-export default RenewalFee;
+RenewalFee.propTypes = {
+    classes: PropTypes.object.isRequired,
+}
+export default withStyles(styles)(RenewalFee);

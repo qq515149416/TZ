@@ -90,7 +90,14 @@ class RenewalFee extends React.Component {
           <DialogTitle id="form-dialog-title">续费</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              续费业务和资源的订单
+                {
+                    this.props.type > 3 ? this.props.resource + this.props.resourcetype+"资源的订单" : [
+                        <p>业务编号：{this.props.business_number}</p>,
+                        <p>机器编号：{this.props.machine_number}</p>,
+                        <p>IP：{this.props.resource_detail_json.ip}</p>,
+                        <p>单价：{this.props.money}</p>
+                    ]
+                }
             </DialogContentText>
             <TextField
             id="renewalFee_duration"

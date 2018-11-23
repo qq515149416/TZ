@@ -59,8 +59,13 @@ class BusinessModel extends Model
     	];
     }
 
+
+    /*
+    *下架审核的方法
+    */
     public function examine($business_id,$status,$admin_user_id)
     {
+    	//获取审核对象
     	$business = $this->where('status',2)->find($business_id);
     	if($business == null){
     		return [
@@ -72,8 +77,10 @@ class BusinessModel extends Model
 
     	 DB::beginTransaction();//开启事务处理
 
+    	 //更新审核结果
     	$business->status = $status;
     	$res = $business->save();
+    	//如果没成功就返回0
     	if($res != true)
     	{
     		return [
@@ -82,33 +89,46 @@ class BusinessModel extends Model
     			'code'	=> 0,
     		];
     	}
+    	//成功的话,就看他审核结果,如果是1(正在使用),就什么都不改变,直接提交事务,返回成功
     	if($status == 1){
     		DB::commit();
     		return [
     			'data'	=> '',
-    			'msg'	=> '审核成功',
+    			'msg'	=> '审核成功,业务将继续使用',
     			'code'	=> 1,
     		];
-    	}else{
-    		$apiController = new ApiController();
-	    	$ip = DB::table('tz_defenseip_store')->where('id',$business->ip_id)->value('ip');
-	    	$delRes = $apiController->deleteTarget($ip);
-	    	if($delRes == 0){
-	    		DB::commit();
-	    		return [
-		    		'data'	=> '',
-				'msg'	=> '审核成功,解绑成功,业务已下架',
-				'code'	=> 1,
-		    	];
-	    	}else{
-	    		DB::rollBack();
-	    		return [
-		    		'data'	=> '',
-				'msg'	=> '解绑失败,业务审核失败',
-				'code'	=> 0,
-		    	];
-	    	}	
+    	}
+    	//如果不是1,就是3(确定下架),就调用解绑接口,把客户ip和高防ip解绑
+	$apiController = new ApiController();
+    	$ip = DB::table('tz_defenseip_store')->where('id',$business->ip_id)->value('ip');
+
+    	$delRes = $apiController->deleteTarget($ip);
+    	//解绑失败的话,事务回滚,回到待审核状态
+    	if($delRes != 0){
+    		DB::rollBack();
+    		return [
+	    		'data'	=> '',
+			'msg'	=> '解绑失败,业务审核失败',
+			'code'	=> 0,
+	    	];
+    	}
+    	//解绑成功后,需要把ip释放出来回到未使用状态
+    	$release_ip = DB::table('tz_defenseip_store')->where('id',$business->ip_id)->update(['status' => 0]);
+    	if($release_ip != 1){
+    		DB::rollBack();
+    		return [
+	    		'data'	=> '',
+			'msg'	=> '释放高防IP失败,请检查数据库',
+			'code'	=> 0,
+	    	];
     	}	
+    	//释放完IP之后提交事务并返回成功信息
+    	DB::commit();
+	return [
+		'data'	=> '',
+		'msg'	=> '审核成功,业务已下架',
+		'code'	=> 1,
+	];
     }
 
     public function showExamine()

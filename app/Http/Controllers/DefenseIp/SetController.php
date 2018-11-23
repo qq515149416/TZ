@@ -29,12 +29,16 @@ class SetController extends Controller
 
     /**
      * 设定目标IP
-     *  接口:/home/defenseIp/setTarget
+     * 用于设定高防IP的防护IP
      *
+     * 接口:/home/defenseIp/setTarget
+     * 接口类型:POST
      * 参数:
      *      business_id:高防IP业务ID
      *      target_ip :高防目标IP
      *
+     * 返回参数:  ....
+     * 状态码:   ....
      */
     public function setTarget(Request $request)
     {
@@ -68,7 +72,7 @@ class SetController extends Controller
             return tz_ajax_echo([], '成功', 1);
         } else {
             //失败
-            return tz_ajax_echo([], '成功', 0);
+            return tz_ajax_echo([], '失败', 0);
         }
     }
 

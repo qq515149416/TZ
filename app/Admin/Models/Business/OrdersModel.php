@@ -1066,13 +1066,10 @@ class OrdersModel extends Model
                 case 3:
                     $update_status['remove_status'] = 4;
                     break;
-                case 4:
-                    $update_status['remove_status'] = 5;
-                    break;
             }
         }
         DB::beginTransaction();//开启事务处理
-        if($order->remove_status == 5){
+        if($order->remove_status == 3){
             switch($order->resource_type){
                 case 4://ip
                     $ip['ip_status'] = 0;
@@ -1108,7 +1105,7 @@ class OrdersModel extends Model
                 $return['msg'] = '资源下架修改失败!';
                 return $return;
             }
-            $update_status['remove_status'] = 6;
+            $update_status['remove_status'] = 4;
         }
         $status = DB::table('tz_orders')->where(['order_sn'=>$edit['order_sn']])->update($update_status);
         if($status == 0){

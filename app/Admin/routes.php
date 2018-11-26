@@ -323,6 +323,10 @@ Route::group([
         $router->post('enable','Business\BusinessController@enableBusiness');
         $router->get('showbusiness','Business\BusinessController@showBusiness');
         $router->post('deletebusiness','Business\BusinessController@deleteBusiness');
+
+        $router->post('apply_remove','Business\BusinessController@applyRemove');//申请业务下架
+        $router->post('remove_history','Business\BusinessController@deleteBusiness');
+        $router->post('deletebusiness','Business\BusinessController@deleteBusiness');
         // 订单
         $router->post('finance','Business\OrdersController@financeOrders');
         $router->post('clerk','Business\OrdersController@clerkOrders');

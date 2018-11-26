@@ -10,7 +10,13 @@ const columnData = [
     { id: 'site', numeric: true, disablePadding: false, label: '地区' },
     { id: 'protection_value', numeric: true, disablePadding: false, label: '防御值' },
     { id: 'price', numeric: true, disablePadding: false, label: '价格' },
-    { id: 'operat', numeric: true, disablePadding: false, label: '操作' }
+    { id: 'operat', numeric: true, disablePadding: false, label: '操作', extend: true, extendUrl: [
+        {
+            title: "相关业务",
+            link: "/tz_admin/defenseBusines",
+            param: ["id"]
+        }
+      ] }
 ];
 
 const inputType = [

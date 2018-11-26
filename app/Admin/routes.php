@@ -12,10 +12,10 @@ Route::group([
     $router->get('/', 'HomeController@index');
 
 
-
-    //Jun   个人测试用
+    /**
+     * 测试路由
+     */
     $router->get('jun/test', 'Idc\MachineRoomController@test');
-    // 测试使用
     $router->post('rules', 'Others\ContactsController@rulestest');
     $router->get('rules', 'Others\ContactsController@rulestest');
     $router->get('vi', 'Others\ContactsController@vi');
@@ -24,15 +24,17 @@ Route::group([
     $router->get('test', 'Others\StaffController@test');
     $router->get('contacts/maillist', 'Others\ContactsController@test');
     $router->get('ip/test', 'Idc\IpsController@test');
-    $router->get('account/test','Hr\AccountController@test');
+    $router->get('account/test', 'Hr\AccountController@test');
 
     // 显示通讯录
     $router->get('staff/staff_list', 'Hr\EmployeeInformationController@showEmployee');
 
-    // 联系人表
+    /**
+     * 联系人
+     */
     Route::group([
         'prefix' => 'contacts',
-    ],function(Router $router){
+    ], function (Router $router) {
         $router->get('list', 'Others\ContactsController@index');
         $router->post('insert', 'Others\ContactsController@insert');
         $router->get('alert', 'Others\ContactsController@edit');
@@ -40,10 +42,12 @@ Route::group([
         $router->post('remove', 'Others\ContactsController@deleted');
     });
 
-//ip
+    /**
+     * IP
+     */
     Route::group([
         'prefix' => 'ips',
-    ],function(Router $router){
+    ], function (Router $router) {
         $router->get('index', 'Idc\IpsController@index');
         $router->post('insert', 'Idc\IpsController@insert');
         $router->get('alert', 'Idc\IpsController@edit');
@@ -88,15 +92,18 @@ Route::group([
     $router->get('/work_order_type', 'Show\WorkOrderTypeController@index');
     $router->get('/defenseip', 'Show\DefenseipController@index');
     $router->get('/defensePackage', 'Show\DefensePackageController@index');
+    $router->get('/defenseBusines', 'Show\DefenseBusinessController@index');
 
-//人事
+    /**
+     * HR
+     */
     Route::group([
         'prefix' => 'hr',
-    ],function(Router $router){
+    ], function (Router $router) {
         /**
          * 账户
          */
-        $router->get('show_account', 'Hr\AccountController@showAccount');       
+        $router->get('show_account', 'Hr\AccountController@showAccount');
         $router->get('show_self', 'Hr\AccountController@personalAccount');
         $router->post('edit_self', 'Hr\AccountController@editAccount');
         $router->post('reset_pass', 'Hr\AccountController@resetAccountPass');
@@ -117,18 +124,18 @@ Route::group([
         /**
          * 部门
          */
-        $router->get('show_depart','Hr\DepartmentController@showDepart');
-        $router->post('insert_depart','Hr\DepartmentController@insertDepart');
-        $router->post('edit_depart','Hr\DepartmentController@editDepart');
-        $router->post('delete_depart','Hr\DepartmentController@deleteDepart');
+        $router->get('show_depart', 'Hr\DepartmentController@showDepart');
+        $router->post('insert_depart', 'Hr\DepartmentController@insertDepart');
+        $router->post('edit_depart', 'Hr\DepartmentController@editDepart');
+        $router->post('delete_depart', 'Hr\DepartmentController@deleteDepart');
         /**
          * 职位
          */
-        $router->get('show_jobs','Hr\JobsController@showJobs');
-        $router->post('insert_jobs','Hr\JobsController@insertJobs');
-        $router->post('edit_jobs','Hr\JobsController@editJobs');
-        $router->post('delete_jobs','Hr\JobsController@deleteJobs');
-        $router->get('depart','Hr\JobsController@depart');
+        $router->get('show_jobs', 'Hr\JobsController@showJobs');
+        $router->post('insert_jobs', 'Hr\JobsController@insertJobs');
+        $router->post('edit_jobs', 'Hr\JobsController@editJobs');
+        $router->post('delete_jobs', 'Hr\JobsController@deleteJobs');
+        $router->get('depart', 'Hr\JobsController@depart');
 
     });
 
@@ -139,11 +146,11 @@ Route::group([
     Route::group([
         'prefix' => 'machine_room',
     ], function (Router $router) {
-        $router->get('showByAjax', 'Idc\MachineRoomController@showByAjax');                                            //获取机房列表
-        $router->get('show_select_list_by_ajax', 'Idc\MachineRoomController@showSelectListByAjax');         //单独获取机房名字及id
-        $router->post('storeByAjax', 'Idc\MachineRoomController@storeByAjax');                                          //添加机房                              
-        $router->post('destroyByAjax', 'Idc\MachineRoomController@destroyByAjax');                                  //删除机房
-        $router->post('updateByAjax', 'Idc\MachineRoomController@updateByAjax');                                   //编辑机房
+        $router->get('showByAjax', 'Idc\MachineRoomController@showByAjax');//获取机房列表
+        $router->get('show_select_list_by_ajax', 'Idc\MachineRoomController@showSelectListByAjax');//单独获取机房名字及id
+        $router->post('storeByAjax', 'Idc\MachineRoomController@storeByAjax');//添加机房
+        $router->post('destroyByAjax', 'Idc\MachineRoomController@destroyByAjax');//删除机房
+        $router->post('updateByAjax', 'Idc\MachineRoomController@updateByAjax');//编辑机房
     });
 
     /**
@@ -152,24 +159,24 @@ Route::group([
     Route::group([
         'prefix' => 'cabinet',
     ], function (Router $router) {
-        $router->get('showByAjax', 'Idc\CabinetController@showByAjax');                                                       //获取机柜列表
-        $router->post('storeByAjax', 'Idc\CabinetController@storeByAjax');                                                     //添加机柜                                                    
-        $router->post('destroyByAjax', 'Idc\CabinetController@destroyByAjax');                                             //删除机柜
-        $router->post('updateByAjax', 'Idc\CabinetController@updateByAjax');                                              //编辑机柜
+        $router->get('showByAjax', 'Idc\CabinetController@showByAjax');//获取机柜列表
+        $router->post('storeByAjax', 'Idc\CabinetController@storeByAjax');//添加机柜
+        $router->post('destroyByAjax', 'Idc\CabinetController@destroyByAjax');//删除机柜
+        $router->post('updateByAjax', 'Idc\CabinetController@updateByAjax');//编辑机柜
 
     });
 
-     /**
+    /**
      * 消息管理
      */
     Route::group([
         'prefix' => 'news',
-    ],function (Router $router) {
-        $router->get('news_list', 'News\NewsController@index');                              //消息列表
-        $router->post('insert', 'News\NewsController@insert');                                 //发布消息
-        $router->post('edit', 'News\NewsController@edit');                                       //编辑消息
-        $router->post('deleted', 'News\NewsController@deleted');                            //删除消息
-        $router->get('get_news_type', 'News\NewsController@get_news_type');        //获取消息类型列表
+    ], function (Router $router) {
+        $router->get('news_list', 'News\NewsController@index');//消息列表
+        $router->post('insert', 'News\NewsController@insert');//发布消息
+        $router->post('edit', 'News\NewsController@edit');//编辑消息
+        $router->post('deleted', 'News\NewsController@deleted'); //删除消息
+        $router->get('get_news_type', 'News\NewsController@get_news_type');//获取消息类型列表
     });
 
     /**
@@ -177,11 +184,11 @@ Route::group([
      */
     Route::group([
         'prefix' => 'news_type',
-    ],function(Router $router){
-        $router->get('show','News\NewsTypeController@showNewsType');                //获取消息类型
-        $router->post('insert','News\NewsTypeController@insertNewsType');            //添加消息类型
-        $router->post('edit','News\NewsTypeController@editNewsType');                  //编辑消息类型
-        $router->post('delete','News\NewsTypeController@deleteNewsType');           //删除消息类型
+    ], function (Router $router) {
+        $router->get('show', 'News\NewsTypeController@showNewsType');//获取消息类型
+        $router->post('insert', 'News\NewsTypeController@insertNewsType');//添加消息类型
+        $router->post('edit', 'News\NewsTypeController@editNewsType');//编辑消息类型
+        $router->post('delete', 'News\NewsTypeController@deleteNewsType');//删除消息类型
     });
 
     /**
@@ -189,11 +196,11 @@ Route::group([
      */
     Route::group([
         'prefix' => 'cpu',
-    ],function (Router $router) {
-        $router->get('cpu_list', 'Idc\CpuController@index');            //获取cpu列表
-        $router->post('insert', 'Idc\CpuController@insert');            //添加cpu
-        $router->post('deleted', 'Idc\CpuController@deleted');       //删除cpu
-        $router->post('edit', 'Idc\CpuController@edit');                   //编辑cpu
+    ], function (Router $router) {
+        $router->get('cpu_list', 'Idc\CpuController@index');//获取cpu列表
+        $router->post('insert', 'Idc\CpuController@insert');//添加cpu
+        $router->post('deleted', 'Idc\CpuController@deleted');//删除cpu
+        $router->post('edit', 'Idc\CpuController@edit');//编辑cpu
     });
 
     /**
@@ -201,11 +208,11 @@ Route::group([
      */
     Route::group([
         'prefix' => 'harddisk',
-    ],function (Router $router) {
-        $router->get('harddisk_list', 'Idc\HarddiskController@index');          //获取硬盘列表
-        $router->post('insert', 'Idc\HarddiskController@insert');                   //添加硬盘
-        $router->post('edit', 'Idc\HarddiskController@edit');                         //编辑
-        $router->post('deleted', 'Idc\HarddiskController@deleted');              //删除
+    ], function (Router $router) {
+        $router->get('harddisk_list', 'Idc\HarddiskController@index');//获取硬盘列表
+        $router->post('insert', 'Idc\HarddiskController@insert');//添加硬盘
+        $router->post('edit', 'Idc\HarddiskController@edit');//编辑
+        $router->post('deleted', 'Idc\HarddiskController@deleted');//删除
     });
 
     /**
@@ -213,28 +220,28 @@ Route::group([
      */
     Route::group([
         'prefix' => 'memory',
-    ],function (Router $router) {
-        $router->get('memory_list', 'Idc\MemoryController@index');          //内存列表
-        $router->post('insert', 'Idc\MemoryController@insert');                  //添加内存
-        $router->post('edit', 'Idc\MemoryController@edit');                        //编辑内存
-        $router->post('deleted', 'Idc\MemoryController@deleted');            //删除内存信息
+    ], function (Router $router) {
+        $router->get('memory_list', 'Idc\MemoryController@index');//内存列表
+        $router->post('insert', 'Idc\MemoryController@insert');//添加内存
+        $router->post('edit', 'Idc\MemoryController@edit');//编辑内存
+        $router->post('deleted', 'Idc\MemoryController@deleted');//删除内存信息
     });
 
-     /**
+    /**
      * 机器资源库
      */
     Route::group([
         'prefix' => 'machine',
-    ], function(Router $router){
-        $router->get('showmachine', 'Idc\MachineController@showMachine');               
-        $router->post('insertmachine', 'Idc\MachineController@insertMachine');           
-        $router->post('editmachine', 'Idc\MachineController@editMachine');                  
-        $router->post('deletemachine', 'Idc\MachineController@deleteMachine');          
-        $router->get('machineroom', 'Idc\MachineController@machineroom');               
+    ], function (Router $router) {
+        $router->get('showmachine', 'Idc\MachineController@showMachine');
+        $router->post('insertmachine', 'Idc\MachineController@insertMachine');
+        $router->post('editmachine', 'Idc\MachineController@editMachine');
+        $router->post('deletemachine', 'Idc\MachineController@deleteMachine');
+        $router->get('machineroom', 'Idc\MachineController@machineroom');
         $router->get('cabinets', 'Idc\MachineController@cabinets');
         $router->get('ips', 'Idc\MachineController@ips');
-        $router->get('excel_template','Idc\MachineController@excelTemplate');
-        $router->post('handle_excel','Idc\MachineController@handleExcel');
+        $router->get('excel_template', 'Idc\MachineController@excelTemplate');
+        $router->post('handle_excel', 'Idc\MachineController@handleExcel');
     });
 
     /**
@@ -242,8 +249,8 @@ Route::group([
      */
     Route::group([
         'prefix' => 'statistics',
-    ],function (Router $router) {
-        $router->get('statisticsList', 'Statistics\StatisticsController@index');                //机器统计
+    ], function (Router $router) {
+        $router->get('statisticsList', 'Statistics\StatisticsController@index');//机器统计
     });
 
     /**
@@ -251,9 +258,9 @@ Route::group([
      */
     Route::group([
         'prefix' => 'pfmStatistics',
-    ],function (Router $router) {
-        $router->get('pfmBig', 'Statistics\PfmStatisticsController@index');                     //财务用业绩统计
-        $router->get('pfmSmall', 'Statistics\PfmStatisticsController@pfmSmall');           //业务员用业绩统计
+    ], function (Router $router) {
+        $router->get('pfmBig', 'Statistics\PfmStatisticsController@index');//财务用业绩统计
+        $router->get('pfmSmall', 'Statistics\PfmStatisticsController@pfmSmall');//业务员用业绩统计
     });
 
     /**
@@ -261,39 +268,45 @@ Route::group([
      */
     Route::group([
         'prefix' => 'rechargeStatistics',
-    ],function (Router $router) {
-        $router->get('list', 'Statistics\RechargeStatisticsController@index');                    //充值统计
+    ], function (Router $router) {
+        $router->get('list', 'Statistics\RechargeStatisticsController@index');//充值统计
     });
 
 
-    //工单问答
+    /**
+     * 工单问答
+     */
     Route::group([
         'prefix' => 'work_answer',
-    ],function(Router $router){
-        $router->get('show','Work\WorkAnswerController@showWorkAnswer');
-        $router->post('insert','Work\WorkAnswerController@insertWorkAnswer');
+    ], function (Router $router) {
+        $router->get('show', 'Work\WorkAnswerController@showWorkAnswer');
+        $router->post('insert', 'Work\WorkAnswerController@insertWorkAnswer');
     });
 
-    //工单接口
+    /**
+     * 工单接口
+     */
     Route::group([
         'prefix' => 'workorder',
-    ],function(Router $router){
-        $router->get('show','Work\WorkOrderController@showWorkOrder');
-        $router->get('department','Work\WorkOrderController@department');
-        $router->post('insert','Work\WorkOrderController@insertWorkOrder');
-        $router->post('edit','Work\WorkOrderController@editWorkOrder');
-        $router->post('delete','Work\WorkOrderController@deleteWorkOrder');
-        $router->get('work_types','Work\WorkOrderController@workTypes');
+    ], function (Router $router) {
+        $router->get('show', 'Work\WorkOrderController@showWorkOrder');
+        $router->get('department', 'Work\WorkOrderController@department');
+        $router->post('insert', 'Work\WorkOrderController@insertWorkOrder');
+        $router->post('edit', 'Work\WorkOrderController@editWorkOrder');
+        $router->post('delete', 'Work\WorkOrderController@deleteWorkOrder');
+        $router->get('work_types', 'Work\WorkOrderController@workTypes');
     });
 
-    //工单类型接口
+    /**
+     * 工单类型
+     */
     Route::group([
         'prefix' => 'worktype',
-    ],function(Router $router){
-        $router->get('show','Work\WorkTypeController@showWorkType');
-        $router->post('insert','Work\WorkTypeController@insertWorkType');
-        $router->post('edit','Work\WorkTypeController@editWorkType');
-        $router->post('delete','Work\WorkTypeController@deleteWorkType');
+    ], function (Router $router) {
+        $router->get('show', 'Work\WorkTypeController@showWorkType');
+        $router->post('insert', 'Work\WorkTypeController@insertWorkType');
+        $router->post('edit', 'Work\WorkTypeController@editWorkType');
+        $router->post('delete', 'Work\WorkTypeController@deleteWorkType');
     });
 
     /**
@@ -301,19 +314,24 @@ Route::group([
      */
     Route::group([
         'prefix' => 'whitelist',
-    ],function(Router $router){
-        $router->get('checkIP','Work\WhiteListController@checkIP');                         //检测IP使用状态并获取该IP使用客户信息接口
-        $router->get('show','Work\WhiteListController@showWhiteList');                 //根据审核状态显示白名单申请单接口
-        $router->post('insert','Work\WhiteListController@insertWhiteList');             //生成白名单申请单
-        $router->post('check','Work\WhiteListController@checkWhiteList');              //白名单申请单 审核接口
-        $router->post('delete','Work\WhiteListController@deleteWhiteList');             //白名单申请单 删除接口
+    ], function (Router $router) {
+        $router->get('checkIP', 'Work\WhiteListController@checkIP');//检测IP使用状态并获取该IP使用客户信息接口
+        $router->get('show', 'Work\WhiteListController@showWhiteList');//根据审核状态显示白名单申请单接口
+        $router->post('insert', 'Work\WhiteListController@insertWhiteList');//生成白名单申请单
+        $router->post('check', 'Work\WhiteListController@checkWhiteList');//白名单申请单 审核接口
+        $router->post('delete', 'Work\WhiteListController@deleteWhiteList');//白名单申请单 删除接口
     });
 
-    // 业务相关接口(业务员下订单/手动生成业务编号及业务数据并且提供财务人员/管理人员/业务员查看数据等)
+
+    /**
+     * 业务模块
+     * 业务相关接口(业务员下订单/手动生成业务编号及业务数据并且提供财务人员/管理人员/业务员查看数据等)
+     */
     Route::group([
         'prefix' => 'business',
-    ],function(Router $router){
+    ], function (Router $router) {
         // 业务
+
         $router->get('machineroom','Business\BusinessController@machineroom');
         $router->get('selectmachine','Business\BusinessController@selectMachine');
         $router->get('selectcabinet','Business\BusinessController@selectCabinet');
@@ -323,55 +341,72 @@ Route::group([
         $router->post('enable','Business\BusinessController@enableBusiness');
         $router->get('showbusiness','Business\BusinessController@showBusiness');
         $router->post('deletebusiness','Business\BusinessController@deleteBusiness');
+
+        $router->post('apply_remove','Business\BusinessController@applyRemove');//申请业务下架
+        $router->post('remove_history','Business\BusinessController@deleteBusiness');
+        $router->post('deletebusiness','Business\BusinessController@deleteBusiness');
+
+        $router->get('machineroom', 'Business\BusinessController@machineroom');
+        $router->get('selectmachine', 'Business\BusinessController@selectMachine');
+        $router->get('selectcabinet', 'Business\BusinessController@selectCabinet');
+        $router->post('insert', 'Business\BusinessController@insertBusiness');
+        $router->get('security', 'Business\BusinessController@securityBusiness');
+        $router->post('check', 'Business\BusinessController@checkBusiness');
+        $router->post('enable', 'Business\BusinessController@enableBusiness');
+        $router->get('showbusiness', 'Business\BusinessController@showBusiness');
+        $router->post('deletebusiness', 'Business\BusinessController@deleteBusiness');
+
         // 订单
-        $router->post('finance','Business\OrdersController@financeOrders');
-        $router->post('clerk','Business\OrdersController@clerkOrders');
-        $router->post('resource','Business\OrdersController@resource');
+        $router->post('finance', 'Business\OrdersController@financeOrders');
+        $router->post('clerk', 'Business\OrdersController@clerkOrders');
+        $router->post('resource', 'Business\OrdersController@resource');
 
         $router->post('renewresource', 'Business\OrdersController@renewResource');//续费
-        $router->get('all_renew','Business\OrdersController@allRenew');//获取业务下续费的资源
-        $router->get('show_renew_order','Business\OrdersController@showRenewOrder');//展示续费的订单
+        $router->get('all_renew', 'Business\OrdersController@allRenew');//获取业务下续费的资源
+        $router->get('show_renew_order', 'Business\OrdersController@showRenewOrder');//展示续费的订单
 
-        $router->post('insertresource','Business\OrdersController@insertResource');
-        $router->post('renewresource','Business\OrdersController@renewResource');
-        $router->get('deleteorders','Business\OrdersController@deleteOrders');
+        $router->post('insertresource', 'Business\OrdersController@insertResource');
+        $router->post('renewresource', 'Business\OrdersController@renewResource');
+        $router->get('deleteorders', 'Business\OrdersController@deleteOrders');
         //客户信息
-        $router->get('admin_customer','Business\CustomerController@adminCustomer');
-        $router->post('pull_black','Business\CustomerController@pullBlackCustomer');
-        $router->post('reset_password','Business\CustomerController@resetPassword');
+        $router->get('admin_customer', 'Business\CustomerController@adminCustomer');
+        $router->post('pull_black', 'Business\CustomerController@pullBlackCustomer');
+        $router->post('reset_password', 'Business\CustomerController@resetPassword');
 
-        $router->post('recharge','Business\RechargeController@rechargeByAdmin');                                            //后台业务员替客户充值
-        $router->get('showAuditRechargeBig','Business\RechargeController@showAuditRechargeBig');               //财务用业务员手动充值记录
-        $router->get('showAuditRechargeSmall','Business\RechargeController@showAuditRechargeSmall');       //业务员用业务员手动充值记录
-        $router->post('auditRecharge','Business\RechargeController@auditRecharge');                                        //财务用审核手动充值
-        $router->get('showRecharge','Business\RechargeController@getRecharge');                                             //查看自己用户的充值流水信息
-        $router->get('showAllRecharge','Business\RechargeController@getAllRecharge');                                     //财务用查看所有客户充值流水信息接口 
+        $router->post('recharge', 'Business\RechargeController@rechargeByAdmin');//后台业务员替客户充值
+        $router->get('showAuditRechargeBig', 'Business\RechargeController@showAuditRechargeBig');//财务用业务员手动充值记录
+        $router->get('showAuditRechargeSmall', 'Business\RechargeController@showAuditRechargeSmall');//业务员用业务员手动充值记录
+        $router->post('auditRecharge', 'Business\RechargeController@auditRecharge');//财务用审核手动充值
+        $router->get('showRecharge', 'Business\RechargeController@getRecharge');//查看自己用户的充值流水信息
+        $router->get('showAllRecharge', 'Business\RechargeController@getAllRecharge');//财务用查看所有客户充值流水信息接口
 
-        $router->get('depart','Business\CustomerController@depart');
-        $router->post('select_clerk','Business\CustomerController@selectClerk');
-        $router->post('edit_clerk','Business\CustomerController@editClerk');
-        $router->post('insert_clerk','Business\CustomerController@insertClerk');
+        $router->get('depart', 'Business\CustomerController@depart');
+        $router->post('select_clerk', 'Business\CustomerController@selectClerk');
+        $router->post('edit_clerk', 'Business\CustomerController@editClerk');
+        $router->post('insert_clerk', 'Business\CustomerController@insertClerk');
 
-        $router->post('payOrderByAdmin','Business\OrdersController@payOrderByAdmin');        //业务员替客户支付
+        $router->post('payOrderByAdmin', 'Business\OrdersController@payOrderByAdmin');//业务员替客户支付
     });
 
 
-
-    //发送信息
+    /**
+     * 消息系统
+     */
     Route::group([
         'prefix' => 'message',
     ], function (Router $router) {
 
-        //
+        /**
+         * 续费提醒
+         */
         Route::group([
             'prefix' => 'deadline',
         ], function (Router $router) {
-            $router->post('sendUser','Message\DeadlineController@sendUser');        //单独用户
-            $router->post('sendAllUser','Message\DeadlineController@sendAllUser');  //手动发送所有用户
+            $router->post('sendUser', 'Message\DeadlineController@sendUser');//单独用户
+            $router->post('sendAllUser', 'Message\DeadlineController@sendAllUser');//手动发送所有用户
         });
 
     });
-
 
 
     /**
@@ -379,15 +414,15 @@ Route::group([
      */
     Route::group([
         'prefix' => 'overdue',
-    ],function(Router $router){
-        $router->get('showOverdueCabinet','Overdue\OverdueController@showOverdueCabinet');                      //查找5天内到期的机柜
-        $router->get('showOverdueMachine','Overdue\OverdueController@showOverdueMachine');                   //查找5天内到期的机器
-        $router->get('showOverdueRes','Overdue\OverdueController@showOverdueRes');                                   //查找5天内到期资源
-        $router->get('showUnpaidMachine','Overdue\OverdueController@showUnpaidMachine');                       //查找未支付使用中的机器
-        $router->get('showXiaJiaMachine','Overdue\OverdueController@showXiaJiaMachine');                             //查找最近下架的机器
-        $router->get('showUnpaidCabinet','Overdue\OverdueController@showUnpaidCabinet');                          //查找未支付使用中的机柜
-        $router->get('showXiaJiaRes','Overdue\OverdueController@showXiaJiaRes');                                              //查找下架资源
-        $router->get('showOverdueResDet','Overdue\OverdueController@showOverdueResDet');                         //按类型查找接近过期资源
+    ], function (Router $router) {
+        $router->get('showOverdueCabinet', 'Overdue\OverdueController@showOverdueCabinet');//查找5天内到期的机柜
+        $router->get('showOverdueMachine', 'Overdue\OverdueController@showOverdueMachine');//查找5天内到期的机器
+        $router->get('showOverdueRes', 'Overdue\OverdueController@showOverdueRes');//查找5天内到期资源
+        $router->get('showUnpaidMachine', 'Overdue\OverdueController@showUnpaidMachine'); //查找未支付使用中的机器
+        $router->get('showXiaJiaMachine', 'Overdue\OverdueController@showXiaJiaMachine');//查找最近下架的机器
+        $router->get('showUnpaidCabinet', 'Overdue\OverdueController@showUnpaidCabinet');//查找未支付使用中的机柜
+        $router->get('showXiaJiaRes', 'Overdue\OverdueController@showXiaJiaRes');//查找下架资源
+        $router->get('showOverdueResDet', 'Overdue\OverdueController@showOverdueResDet');//按类型查找接近过期资源
 
     });
 
@@ -396,23 +431,30 @@ Route::group([
      */
     Route::group([
         'prefix' => 'defenseip',
-    ],function(Router $router){
+    ], function (Router $router) {
+
+        /**
+         * 资源
+         */
         Route::group([
-            'prefix' => 'store',                                                                            //资源库
+            'prefix' => 'store',
         ], function (Router $router) {
-            $router->post('insert','DefenseIp\StoreController@insert');          //高防IP添加
-            $router->get('del','DefenseIp\StoreController@del');                    //删除
-            $router->post('edit','DefenseIp\StoreController@edit');               //编辑
-            $router->get('show','DefenseIp\StoreController@show');             //获取资源信息              
+            $router->post('insert', 'DefenseIp\StoreController@insert');//高防IP添加
+            $router->get('del', 'DefenseIp\StoreController@del');//删除
+            $router->post('edit', 'DefenseIp\StoreController@edit'); //编辑
+            $router->get('show', 'DefenseIp\StoreController@show');//获取资源信息
         });
 
+        /**
+         * 套餐
+         */
         Route::group([
-            'prefix' => 'package',                                                                         //套餐
+            'prefix' => 'package',
         ], function (Router $router) {
-            $router->post('insert','DefenseIp\PackageController@insert');        //添加套餐
-            $router->get('del','DefenseIp\PackageController@del');                  //删除套餐
-            $router->post('edit','DefenseIp\PackageController@edit');              //编辑套餐
-            $router->get('show','DefenseIp\PackageController@show');            //获取套餐信息
+            $router->post('insert', 'DefenseIp\PackageController@insert');//添加套餐
+            $router->get('del', 'DefenseIp\PackageController@del');//删除套餐
+            $router->post('edit', 'DefenseIp\PackageController@edit');//编辑套餐
+            $router->get('show', 'DefenseIp\PackageController@show'); //获取套餐信息
         });
 
 
@@ -422,13 +464,13 @@ Route::group([
         Route::group([
             'prefix' => 'remove',
         ], function (Router $router) {
-             $router->get('selectExpireList','DefenseIp\RemoveController@selectExpireList');  //查询过期业务
-             $router->get('showBusinessByPackage','DefenseIp\RemoveController@showBusinessByPackage');  //查询某套餐所有业务
-             
-             $router->get('subExamine','DefenseIp\RemoveController@subExamine');            //提交审核
-             $router->get('goExamine','DefenseIp\RemoveController@goExamine');                //进行审核
-             $router->get('showExamine','DefenseIp\RemoveController@showExamine');                //查看正在审核的下架申请
-             
+            $router->get('selectExpireList', 'DefenseIp\RemoveController@selectExpireList');  //查询过期业务
+            $router->get('showBusinessByPackage', 'DefenseIp\RemoveController@showBusinessByPackage');  //查询某套餐所有业务
+
+            $router->get('subExamine', 'DefenseIp\RemoveController@subExamine');//提交审核
+            $router->get('goExamine', 'DefenseIp\RemoveController@goExamine');//进行审核
+            $router->get('showExamine', 'DefenseIp\RemoveController@showExamine');//查看正在审核的下架申请
+
         });
 
     });

@@ -24,6 +24,8 @@ import RechargesStores from "../../stores/recharge-stores";
 import ReviewRechargesStores from "../../stores/reviewRecharge-stores";
 import DefenseipsStores from "../../stores/defenseip-stores";
 import DefensePackagesStores from "../../stores/defensePackage-stores";
+import DefenseBusinessStores from "../../stores/defenseBusiness-stores";
+
 
 // 前端Models操作
 export const stores = {
@@ -53,6 +55,7 @@ export const stores = {
     reviewRechargesStores: new ReviewRechargesStores(),
     defenseipsStores: new DefenseipsStores(),
     defensePackagesStores: new DefensePackagesStores(),
+    defenseBusinessStores: new DefenseBusinessStores(),
 }
 export const domIds = [
     "user_list",
@@ -83,4 +86,5 @@ export const domIds = [
     "reviewRecharge",
     "defenseip",
     "defensePackage",
+    "defenseBusiness",
 ];

@@ -503,6 +503,7 @@ class BusinessModel extends Model
         if($edit['remove_status'] == '-1'){
             $update['remove_reason'] = $business->remove_reason.$edit['remove_reason'];
             $update['remove_status'] = $edit['remove_status'];
+            $update['machineroom'] = 0;
         } else {
             switch ($business->remove_status) {
                 case 1:

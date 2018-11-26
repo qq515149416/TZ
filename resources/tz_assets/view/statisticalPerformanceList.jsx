@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import ListTableComponent from "../component/listTableComponent.jsx";
 import { inject,observer } from "mobx-react";
 import CustomizeTableToolbar from "../component/listTable/customizeTableToolbar.jsx";
+import TabComponent from "../component/tabComponent.jsx";
 
 const styles = theme => ({
     listTableComponent: {
@@ -46,21 +47,81 @@ const inputType = [
 class StatisticalPerformanceList extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            value: 1
+        }
     }
     componentDidMount() {
         this.props.statisticalPerformancesStores.getData();
     }
+    handleChange = (value) => {
+        this.props.statisticalPerformancesStores.business_type = value;
+        switch(value) {
+            case 1:
+                columnData = [
+                    { id: 'user_name', numeric: true, disablePadding: false, label: '业务员' },
+                    { id: 'new_achievement', numeric: true, disablePadding: false, label: '新购金额' },
+                    { id: 'old_achievement', numeric: true, disablePadding: false, label: '续费金额' },
+                    { id: 'new_arrears', numeric: true, disablePadding: false, label: '新购未付款' },
+                    { id: 'old_arrears', numeric: true, disablePadding: false, label: '续费未付款' },
+                    { id: 'total_money', numeric: true, disablePadding: false, label: '总消费金额' },
+                    { id: 'achievement', numeric: true, disablePadding: false, label: '有效业绩' },
+                    { id: 'operat', numeric: true, disablePadding: false, extend: true, extendData: [
+                        {id: "all_arrears", label: "历史订单总额", type: "text"},
+                        {id: "preferential_amount", label: "优惠券扣除金额", type: "text"},
+                        {id: "this_arrears", label: "订单总额", type: "text"}
+                    ], label: '操作'}
+                ];
+            break;
+            case 2:
+                columnData = [
+                    { id: 'user_name', numeric: true, disablePadding: false, label: '业务员' },
+                    { id: 'new_achievement', numeric: true, disablePadding: false, label: '新购金额' },
+                    { id: 'old_achievement', numeric: true, disablePadding: false, label: '续费金额' },
+                    { id: 'total_money', numeric: true, disablePadding: false, label: '总消费金额' },
+                    { id: 'preferential_amount', numeric: true, disablePadding: false, label: '优惠金额' }
+                ];
+            break;
+        }
+        this.setState({ value });
+    }
+
     render() {
         const {classes} = this.props;
+        if(location.search.indexOf("?type=recharge") > -1) {
+            return (
+                <ListTableComponent
+                    title={title}
+                    operattext="业绩管理"
+                    inputType={inputType}
+                    className={classes.listTableComponent}
+                    headTitlesData={columnData}
+                    data={this.props.statisticalPerformancesStores.statisticalPerformances}
+                    customizeToolbar={<CustomizeTableToolbar getData={this.props.statisticalPerformancesStores.getData} />}
+                />
+            );
+        }
         return (
+            <TabComponent onChange={this.handleChange} type={this.state.value} types={[
+                {
+                    label: "idc业务",
+                    value: 1
+                },
+                {
+                    label: "高防IP业务",
+                    value: 2
+                }
+            ]}>
             <ListTableComponent
             title={title}
             operattext="业绩管理"
             inputType={inputType}
+            className={classes.listTableComponent}
             headTitlesData={columnData}
             data={this.props.statisticalPerformancesStores.statisticalPerformances}
             customizeToolbar={<CustomizeTableToolbar getData={this.props.statisticalPerformancesStores.getData} />}
           />
+          </TabComponent>
         );
       }
 }

@@ -14,6 +14,7 @@ class DefenseBusinessStores extends ActionBoundStores {
     ];
     @action.bound
     getData(id) {
+        this.defenseBusiness = [];
         get("defenseip/remove/showBusinessByPackage",{
             package_id: id
         }).then(res => {

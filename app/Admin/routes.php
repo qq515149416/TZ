@@ -331,6 +331,21 @@ Route::group([
         'prefix' => 'business',
     ], function (Router $router) {
         // 业务
+
+        $router->get('machineroom','Business\BusinessController@machineroom');
+        $router->get('selectmachine','Business\BusinessController@selectMachine');
+        $router->get('selectcabinet','Business\BusinessController@selectCabinet');
+        $router->post('insert','Business\BusinessController@insertBusiness');
+        $router->get('security','Business\BusinessController@securityBusiness');
+        $router->post('check','Business\BusinessController@checkBusiness');
+        $router->post('enable','Business\BusinessController@enableBusiness');
+        $router->get('showbusiness','Business\BusinessController@showBusiness');
+        $router->post('deletebusiness','Business\BusinessController@deleteBusiness');
+
+        $router->post('apply_remove','Business\BusinessController@applyRemove');//申请业务下架
+        $router->post('remove_history','Business\BusinessController@deleteBusiness');
+        $router->post('deletebusiness','Business\BusinessController@deleteBusiness');
+
         $router->get('machineroom', 'Business\BusinessController@machineroom');
         $router->get('selectmachine', 'Business\BusinessController@selectMachine');
         $router->get('selectcabinet', 'Business\BusinessController@selectCabinet');
@@ -340,6 +355,7 @@ Route::group([
         $router->post('enable', 'Business\BusinessController@enableBusiness');
         $router->get('showbusiness', 'Business\BusinessController@showBusiness');
         $router->post('deletebusiness', 'Business\BusinessController@deleteBusiness');
+
         // 订单
         $router->post('finance', 'Business\OrdersController@financeOrders');
         $router->post('clerk', 'Business\OrdersController@clerkOrders');

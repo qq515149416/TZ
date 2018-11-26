@@ -166,6 +166,7 @@ class PayOrder extends Model
 			'before_money'		=> $before_money,
 			'after_money'		=> $after_money,
 			'pay_time'		=> $pay_time,
+			'business_number'	=> $business_sn,
 		];
 		$creatFlow = DB::table('tz_orders_flow')->insert($flow);
 		if($creatFlow == false){
@@ -264,12 +265,23 @@ class PayOrder extends Model
 					'created_at'		=> date("Y-m-d H:i:s"),
 				];
 				$build_business = DB::table('tz_defenseip_business')->insert($business);
-		
 				if($build_business != true){
 					$return['msg'] 	= '创建高防ip业务失败!';
 					$return['code']	= 3;
 					return $return;
 				}
+
+				$relevance = [
+					'type'		=> 2,
+					'business_id'	=> $business['business_number'],
+				];
+				$build_relevance = DB::table('tz_business_relevance')->insert($relevance);
+				if($build_relevance != true){
+					$return['msg'] 	= '创建高防ip业务关联失败!';
+					$return['code']	= 3;
+					return $return;
+				}
+
 				$update_order = DB::table('tz_orders')
 						->where('id',$row['id'])
 						->update([

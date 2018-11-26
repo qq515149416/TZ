@@ -141,4 +141,16 @@ class BusinessController extends Controller
         $history_result = $history->removeHistory();
         return tz_ajax_echo($history_result['data'],$history_result['msg'],$history_result['code']);
     }
+
+    /**
+     * 修改下架的状态
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function editRemoveStatus(Request $request){
+        $edit = $request->only(['remove_reason','business_number','remove_status','machineroom']);
+        $do_edit = new BusinessModel();
+        $edit_result = $do_edit->editRemoveStatus($edit);
+        return tz_ajax_echo($edit_result,$edit_result['msg'],$edit_result['code']);
+    }
 }

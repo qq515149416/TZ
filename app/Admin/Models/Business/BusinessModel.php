@@ -556,6 +556,7 @@ class BusinessModel extends Model
                 $return['code'] = 0;
                 $return['msg'] = '业务相关机器下架状态修改失败'; 
             }
+            $update['remove_status'] = 6;
         }
         $remove = DB::table('tz_business')->where(['business_number'=>$edit['business_number']])->update($update);
         if($remove == 0){

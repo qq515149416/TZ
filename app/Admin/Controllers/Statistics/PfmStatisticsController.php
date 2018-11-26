@@ -34,19 +34,42 @@ class PfmStatisticsController extends Controller
 	*/
 	public function index( PfmStatisticsRequest $request){
 		
-		$par = $request->only(['begin','end']);
+		$par = $request->only(['begin','end','business_type']);
 		$pfmModel = new PfmStatistics();
-		$return = $pfmModel->getStatistics($par['begin'],$par['end']);
-
+		switch ($par['business_type']) {
+			//区分查询的业务类型,1-idc;2-高防ip
+			case '1':
+				$return = $pfmModel->getIdcStatisticsBig($par['begin'],$par['end']);
+				break;
+			case '2':
+				$return = $pfmModel->getDefenseipStatisticsBig($par['begin'],$par['end']);
+				break;
+			default:
+				return tz_ajax_echo('','请选择正确业务类型',0);
+				break;
+		}
+		
 		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
 	}
 
 	public function pfmSmall(PfmStatisticsRequest $request){
-		$par = $request->only(['begin','end']);
+		$par = $request->only(['begin','end','business_type']);
 		$user_id = Admin::user()->id;
-		$pfmModel = new PfmStatistics();
-		$return = $pfmModel->getStatisticsSmall($par['begin'],$par['end'],$user_id);
 
+		$pfmModel = new PfmStatistics();
+
+		switch ($par['business_type']) {
+			//区分查询的业务类型,1-idc;2-高防ip
+			case '1':
+				$return = $pfmModel->getIdcStatisticsSmall($par['begin'],$par['end'],$user_id);
+				break;
+			case '2':
+				$return = $pfmModel->getDefenseipStatisticsSmall($par['begin'],$par['end'],$user_id);
+				break;
+			default:
+				return tz_ajax_echo('','请选择正确业务类型',0);
+				break;
+		}
 		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
 	}
 }

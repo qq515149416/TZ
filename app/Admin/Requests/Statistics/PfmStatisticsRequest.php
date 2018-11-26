@@ -44,6 +44,7 @@ class PfmStatisticsRequest extends FormRequest
 				$return = [
 					'begin'       	=> 'required|integer',
 					'end'   		=> 'required|integer',
+					'business_type'	=> 'required',
 				];
 				break;
 		
@@ -51,6 +52,7 @@ class PfmStatisticsRequest extends FormRequest
 				$return = [
 					'begin'       	=> 'required|integer',
 					'end'   		=> 'required|integer',
+					'business_type'	=> 'required',
 				];
 				break;
 		}
@@ -65,6 +67,7 @@ class PfmStatisticsRequest extends FormRequest
 			'begin.integer'				=> '请传时间戳',
 			'end.required'				=> '请选择结束时间',
 			'end.integer'				=> '请传时间戳',
+			'business_type.required'		=> '请选择业务类型',
 		];
 	}
 

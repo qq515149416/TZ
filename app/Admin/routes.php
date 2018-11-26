@@ -331,34 +331,27 @@ Route::group([
     ], function (Router $router) {
         // 业务
 
-        $router->get('machineroom','Business\BusinessController@machineroom');
-        $router->get('selectmachine','Business\BusinessController@selectMachine');
-        $router->get('selectcabinet','Business\BusinessController@selectCabinet');
-        $router->post('insert','Business\BusinessController@insertBusiness');
-        $router->get('security','Business\BusinessController@securityBusiness');
-        $router->post('check','Business\BusinessController@checkBusiness');
-        $router->post('enable','Business\BusinessController@enableBusiness');
-        $router->get('showbusiness','Business\BusinessController@showBusiness');
-        $router->post('deletebusiness','Business\BusinessController@deleteBusiness');
+        $router->get('machineroom','Business\BusinessController@machineroom');//新购业务时获取机房
+        $router->get('selectmachine','Business\BusinessController@selectMachine');//新购业务时选择机器
+        $router->get('selectcabinet','Business\BusinessController@selectCabinet');//新购业务时选择机柜
+        $router->post('insert','Business\BusinessController@insertBusiness');//产生业务
+        $router->get('security','Business\BusinessController@securityBusiness');//信安查看业务
+        $router->post('check','Business\BusinessController@checkBusiness');//信安审核业务
+        $router->post('enable','Business\BusinessController@enableBusiness');//启用业务（开发预留）
+        $router->get('showbusiness','Business\BusinessController@showBusiness');//展示业务数据
+        $router->post('deletebusiness','Business\BusinessController@deleteBusiness');//删除业务数据（开发预留）
 
         $router->post('apply_remove','Business\BusinessController@applyRemove');//申请业务下架
-        $router->post('remove_history','Business\BusinessController@deleteBusiness');
-        $router->post('deletebusiness','Business\BusinessController@deleteBusiness');
-
-        $router->get('machineroom', 'Business\BusinessController@machineroom');
-        $router->get('selectmachine', 'Business\BusinessController@selectMachine');
-        $router->get('selectcabinet', 'Business\BusinessController@selectCabinet');
-        $router->post('insert', 'Business\BusinessController@insertBusiness');
-        $router->get('security', 'Business\BusinessController@securityBusiness');
-        $router->post('check', 'Business\BusinessController@checkBusiness');
-        $router->post('enable', 'Business\BusinessController@enableBusiness');
-        $router->get('showbusiness', 'Business\BusinessController@showBusiness');
-        $router->post('deletebusiness', 'Business\BusinessController@deleteBusiness');
+        $router->get('remove_history','Business\BusinessController@removeHistory');//业务下架历史记录
+        $router->post('edit_remove_status','Business\BusinessController@editRemoveStatus');//修改业务下架状态
 
         // 订单
         $router->post('finance', 'Business\OrdersController@financeOrders');
         $router->post('clerk', 'Business\OrdersController@clerkOrders');
         $router->post('resource', 'Business\OrdersController@resource');
+        $router->post('apply_remove_resource', 'Business\OrdersController@applyRemoveResource');//申请资源下架
+        $router->get('resource_remove_history', 'Business\OrdersController@resourceRemoveHistory');//获取资源下架历史记录
+        $router->post('edit_remove_resource', 'Business\OrdersController@editRemoveResource');//修改资源下架
 
         $router->post('renewresource', 'Business\OrdersController@renewResource');//续费
         $router->get('all_renew', 'Business\OrdersController@allRenew');//获取业务下续费的资源

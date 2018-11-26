@@ -43,6 +43,11 @@ class BusinessRequest extends FormRequest
 					'status'			=> 'required',
 				];
 				break;
+			case 'showBusinessByPackage':
+				$return = [
+					'package_id'		=> 'required',
+				];
+				break;
 			default:
 	
 				break;
@@ -58,6 +63,7 @@ class BusinessRequest extends FormRequest
 			'business_id.required'			=> '请选择申请下架的业务id',
 			'business_id.exists'			=> '不存在此业务id',
 			'status.required'			=> '请选择审核结果',
+			'package_id.required'			=> '请提供套餐id',
 		];
 	}
 

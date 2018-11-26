@@ -172,4 +172,45 @@ class BusinessModel extends Model
 		'code'	=> 1,
     	];
     }
+
+    public function showBusinessByPackage($package_id)
+    {
+        $list = $this->where('package_id',$package_id)->get()->toArray();
+        if(count($list) == 0){
+            return [
+                'data'  =>  '',
+                'msg'   => '获取失败或无数据',
+                'code'  => 0,
+            ];
+        }
+        for ($i=0; $i < count($list); $i++) { 
+            $list[$i]['user_name'] = DB::table('tz_users')->where('id',$list[$i]['user_id'])->value('name');
+            if($list[$i]['user_name'] == null){
+                $list[$i]['user_name'] = DB::table('tz_users')->where('id',$list[$i]['user_id'])->value('email');
+            }
+            $list[$i]['ip'] = DB::table('tz_defenseip_store')->where('id',$list[$i]['ip_id'])->value('ip');
+            switch ($list[$i]['status']) { 
+                case '0':
+                    $list[$i]['status'] = '预留状态';
+                    break;
+                case '1':
+                    $list[$i]['status'] = '正在使用';
+                    break;
+                case '2':
+                    $list[$i]['status'] = '申请下架';
+                    break;
+                case '3':
+                    $list[$i]['status'] = '已下架';
+                    break;
+                default:
+                    $list[$i]['status'] = '无此状态,请核对数据库';
+                    break;
+            }
+        }
+        return [
+            'data'  =>  $list,
+            'msg'   => '获取成功',
+            'code'  => 1,
+        ];
+    }
 }

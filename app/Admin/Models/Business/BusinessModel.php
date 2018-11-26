@@ -478,4 +478,58 @@ class BusinessModel extends Model
         return $return;
     }
 
+    /**
+     * 处理下架，修改下架的状态
+     * @param  [type] $edit [description]
+     * @return [type]       [description]
+     */
+    public function editRemoveStatus($edit){
+        if(!$edit){//当未传递任何参数，直接返回，直接返回
+            $return['code'] = 0;
+            $return['msg'] = '你无法进行下架处理';
+            return $return;
+        }
+        $business = $this->where(['business_number'=>$edit['business_number']])->select('remove_status','remove_reason')->first();
+        if(empty($business)){//不存在需要下架的业务，直接返回
+            $return['code'] = 0;
+            $return['msg'] = '无对应业务';
+            return $return;
+        }
+        if($business->remove_status < 1 || $business->remove_status = 6){//当业务未提交申请或已下架，直接返回
+            $return['code'] = 0;
+            $return['msg'] = '业务已完成下架/暂未提交下架申请';
+            return $return;
+        }
+        if($edit['remove_status'] == '-1'){
+            $update['remove_reason'] = $business->remove_reason.$edit['remove_reason'];
+            $update['remove_status'] = $edit['remove_status'];
+            $update['machineroom'] = 0;
+        } else {
+            switch ($business->remove_status) {
+                case 1:
+                    $update['remove_status'] = 2;
+                    break;
+                case 2:
+                    $update['remove_status'] = 3;
+                    break;
+                case 3:
+                    $update['remove_status'] = 4;
+                    break;
+                case 4:
+                    $update['remove_status'] = 5;
+                    break;
+            }
+        }
+        $remove = $this->where(['business_number'=>$edit['business_number']])->update($update);
+        if($remove == false){
+            $return['code'] = 0;
+            $return['msg'] = '业务下架状态修改失败';     
+        } else {
+            $return['code'] = 1;
+            $return['msg'] = '业务下架状态修改成功'; 
+        }
+        return $return;
+
+    }
+
 }

@@ -31,9 +31,14 @@ class OrdersModel extends Model
      */
     private function filter($array,$state){
         $this->state = $state;
-        return array_filter($array,function($var) {
+        $result = [];
+        $arr = array_filter($array,function($var) {
             return $var['resource_type'] == $this->state;
         });
+        foreach ($arr as $key => $value) {
+            array_push($result,$value);
+        }
+        return $result;
     }
 
     /**
@@ -337,7 +342,7 @@ class OrdersModel extends Model
         // dd($resource);
         if(!empty($resource)){
             foreach($resource as $key=>$value){
-                $resource_type = [ '1' => '租用主机' , '2' => '托管主机' , '3' => '租用机柜' , '4' => 'IP' , '5' => 'CPU' , '6' => '硬盘' , '7' => '内存' , '8' => '带宽' , '9' => '防护' , '10' => 'cdn',11=>'高防IP'];
+                $resource_type = [ '1' => '租用主机' , '2' => '托管主机' , '3' => '租用机柜' , '4' => 'IP' , '5' => 'CPU' , '6' => '硬盘' , '7' => '内存' , '8' => '带宽' , '9' => '防护' , '10' => 'cdn','11'=>'高防IP'];
                 $resource[$key]['resourcetype'] = $resource_type[$value['resource_type']];
             }
             $orders = ['IP'=>$this->filter($resource,4),'cpu'=>$this->filter($resource,5),'harddisk'=>$this->filter($resource,6),'memory'=>$this->filter($resource,7),'bandwidth'=>$this->filter($resource,8),'protected'=>$this->filter($resource,9),'cdn'=>$this->filter($resource,10)];
@@ -1001,5 +1006,79 @@ class OrdersModel extends Model
         }
         return $return;
 
+    }
+
+    /**
+     * 获取资源下架记录
+     * @return [type] [description]
+     */
+    public function resourceRemoveHistory(){
+        $history = $this->where('resource_type','>',3)->where(['remove_status'=>6])->orderBy('updated_at','desc')->get(['business_sn','customer_name','resource_type','business_name','machine_sn','resource']);
+        if(!$history->isEmpty()){
+            $resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn',11=>'高防IP'];
+            foreach($history as $history_key => $history_value){
+                $history[$history_key]['resourcetype'] = $resource_type[$history_value['resource_type']];
+            }
+            $return['data'] = $history;
+            $return['code'] = 1;
+            $return['msg'] = '获取资源下架记录数据成功';
+        } else {
+            $return['data'] = [];
+            $return['code'] = 0;
+            $return['msg'] = '暂无下架资源数据';
+        }
+    }
+
+    /**
+     * 资源下架处理操作
+     * @param  [type] $edit [description]
+     * @return [type]       [description]
+     */
+    public function editRemoveResource($edit){
+        if(!$edit){
+            $return['code'] = 0;
+            $return['msg'] = '你无法对资源进行下架处理';
+            return $return;
+        }
+        $order = $this->where(['order_sn'=>$edit['order_sn']])->select('remove_status','remove_reason')->first();
+        if(empty($order)){
+            $return['code'] = 0;
+            $return['msg'] = '无对应资源信息';
+            return $return;
+        }
+        if($order->remove_status < 1 || $order->remove_status = 6){
+            $return['code'] = 0;
+            $return['msg'] = '资源已完成下架/暂未提交下架申请';
+            return $return;
+        }
+        if($edit['remove_status'] == '-1'){
+            $update_status['remove_reason'] = $order->remove_reason.$edit['remove_reason'];
+            $update_status['remove_status'] = $edit['remove_status'];
+            $update_status['machineroom'] = 0;
+        } else {
+            switch($order->remove_status){
+                case 1:
+                    $update_status['remove_status'] = 2;
+                    break;
+                case 2:
+                    $update_status['remove_status'] = 3;
+                    break;
+                case 3:
+                    $update_status['remove_status'] = 4;
+                    break;
+                case 4:
+                    $update_status['remove_status'] = 5;
+                    break;
+            }
+        }
+        $status = $this->where(['order_sn']=>$edit['order_sn'])->update($update_status);
+        if($status == false){
+            $return['code'] = 0;
+            $return['msg'] = '资源下架修改失败';
+        } else {
+            $return['code'] = 1;
+            $return['msg'] = '资源下架修改成功';
+        }
+        return $return;
     }
 }

@@ -202,31 +202,30 @@ class  PfmStatistics extends Model
 	public function getStatistics($begin,$end){
 		$begin = date("Y-m-d H:i:s",$begin);
 		$end = date("Y-m-d H:i:s",$end);
-	
 		//获取优惠券优惠的金额
 		$coupon = DB::table('tz_orders_flow as a')
 			->select(DB::raw('sum(a.preferential_amount) as preferential_amount, a.business_id'))
-			->where('a.pay_status',1)
 			->where('a.pay_time','>',$begin)
 			->where('a.pay_time','<',$end)
 			->groupBy('a.business_id')
 			->get();	
-		
+	
 		//获取查询月份订单
 		$already = DB::table('tz_orders')
-			->select(DB::raw('sum(achievement) as achievement, business_id as user_id,order_type'))
+			->select(DB::raw('sum(payable_money) as achievement, business_id as user_id,order_type'))
 			->whereIn('order_status',[1,2,3,4])
 			->where('pay_time','>',$begin)
 			->where('pay_time','<',$end)
 			->groupBy('business_id','order_type')
 			->get();	
-		//获取未付款订单
+
+		//获取idc业务欠费订单
 		$unpaid = DB::table('tz_orders as a')
-			->leftjoin('tz_business as b','a.business_sn','=','b.business_number')
 			->select(DB::raw('a.payable_money as arrears, a.business_id as user_id , a.created_at ,a.order_type'))
-			->whereIn('a.order_status',[0,7])
-			->where('b.business_status',3)
+			->where('a.order_status',0)
+			->whereIn('a.resource_type',[1,2,3,4,5,6,7,8,9])
 			->get();	
+		dd($unpaid);
 
 		if($already->isEmpty() && $coupon->isEmpty() && $unpaid->isEmpty()){
 			$return['msg'] 	= '获取数据失败';

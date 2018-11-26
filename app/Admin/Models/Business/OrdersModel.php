@@ -1052,7 +1052,7 @@ class OrdersModel extends Model
             return $return;
         }
         if($edit['remove_status'] == '-1'){
-            $update_status['remove_reason'] = $order->remove_reason.$edit['remove_reason'];
+            $update_status['remove_reason'] = $order->remove_reason.'驳回原因:'.$edit['remove_reason'];
             $update_status['remove_status'] = $edit['remove_status'];
             $update_status['machineroom'] = 0;
         } else {
@@ -1108,6 +1108,7 @@ class OrdersModel extends Model
                 $return['msg'] = '资源下架修改失败!';
                 return $return;
             }
+            $update_status['remove_status'] = 6;
         }
         $status = DB::table('tz_orders')->where(['order_sn'=>$edit['order_sn']])->update($update_status);
         if($status == 0){

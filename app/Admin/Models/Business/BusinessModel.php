@@ -525,7 +525,7 @@ class BusinessModel extends Model
             $return['code'] = 0;
             $return['msg'] = '下架状态修改失败';     
         } else {
-            $return['code'] = 0;
+            $return['code'] = 1;
             $return['msg'] = '下架状态修改成功'; 
         }
         return $return;

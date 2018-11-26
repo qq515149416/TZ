@@ -48,12 +48,12 @@ Route::group([
     Route::group([
         'prefix' => 'ips',
     ], function (Router $router) {
-        $router->get('index', 'Idc\IpsController@index');
-        $router->post('insert', 'Idc\IpsController@insert');
-        $router->get('alert', 'Idc\IpsController@edit');
-        $router->post('alerting', 'Idc\IpsController@doEdit');
-        $router->post('remove', 'Idc\IpsController@deleted');
-        $router->get('machineroom', 'Idc\IpsController@machineroom');
+        $router->get('index', 'Idc\IpsController@index');//查找IP表相关信息
+        $router->post('insert', 'Idc\IpsController@insert');//新增IP资源
+        $router->get('alert', 'Idc\IpsController@edit');//修改
+        $router->post('alerting', 'Idc\IpsController@doEdit');//修改IP地址相关信息
+        $router->post('remove', 'Idc\IpsController@deleted');//删除IP资源
+        $router->get('machineroom', 'Idc\IpsController@machineroom');//查找机房
     });
 
 
@@ -102,39 +102,39 @@ Route::group([
         /**
          * 账户
          */
-        $router->get('show_account', 'Hr\AccountController@showAccount');
-        $router->get('show_self', 'Hr\AccountController@personalAccount');
-        $router->post('edit_self', 'Hr\AccountController@editAccount');
-        $router->post('reset_pass', 'Hr\AccountController@resetAccountPass');
-        $router->post('confirm_pass', 'Hr\AccountController@confirmPass');
-        $router->post('old_pass', 'Hr\AccountController@oldPass');
-        $router->post('edit_pass', 'Hr\AccountController@editPassword');
-        $router->post('insert_account', 'Hr\AccountController@insertAccount');
+        $router->get('show_account', 'Hr\AccountController@showAccount');//人事查看有关的员工账户
+        $router->get('show_self', 'Hr\AccountController@personalAccount');//员工个人账户信息
+        $router->post('edit_self', 'Hr\AccountController@editAccount');//员工修改个人账户信息
+        $router->post('reset_pass', 'Hr\AccountController@resetAccountPass');//重置密码操作(密码为用户名)
+        $router->post('confirm_pass', 'Hr\AccountController@confirmPass');//修改密码时确认两次的密码是否一致
+        $router->post('old_pass', 'Hr\AccountController@oldPass');//验证原密码
+        $router->post('edit_pass', 'Hr\AccountController@editPassword');//修改密码
+        $router->post('insert_account', 'Hr\AccountController@insertAccount');//人事添加账户
         /**
          * 员工信息
          */
-        $router->get('show_employee', 'Hr\EmployeeInformationController@showEmployee');
-        $router->post('insert_employee', 'Hr\EmployeeInformationController@insertEmployee');
-        $router->post('edit_employee', 'Hr\EmployeeInformationController@editEmployee');
-        $router->post('delete_employee', 'Hr\EmployeeInformationController@deleteEmployee');
-        $router->get('employee_personal', 'Hr\EmployeeInformationController@employeePersonal');
-        $router->get('department', 'Hr\EmployeeInformationController@department');
-        $router->post('jobs', 'Hr\EmployeeInformationController@jobs');
+        $router->get('show_employee', 'Hr\EmployeeInformationController@showEmployee');//展示对应账户的个人详细信息
+        $router->post('insert_employee', 'Hr\EmployeeInformationController@insertEmployee');//添加员工个人信息
+        $router->post('edit_employee', 'Hr\EmployeeInformationController@editEmployee');//修改员工个人信息
+        $router->post('delete_employee', 'Hr\EmployeeInformationController@deleteEmployee');//删除个人信息
+        $router->get('employee_personal', 'Hr\EmployeeInformationController@employeePersonal');//获取个人信息
+        $router->get('department', 'Hr\EmployeeInformationController@department');//获取部门数据
+        $router->post('jobs', 'Hr\EmployeeInformationController@jobs');//获取部门对应职位
         /**
          * 部门
          */
-        $router->get('show_depart', 'Hr\DepartmentController@showDepart');
-        $router->post('insert_depart', 'Hr\DepartmentController@insertDepart');
-        $router->post('edit_depart', 'Hr\DepartmentController@editDepart');
-        $router->post('delete_depart', 'Hr\DepartmentController@deleteDepart');
+        $router->get('show_depart', 'Hr\DepartmentController@showDepart');//获取部门数据
+        $router->post('insert_depart', 'Hr\DepartmentController@insertDepart');//进行部门数据的添加
+        $router->post('edit_depart', 'Hr\DepartmentController@editDepart');//修改部门数据
+        $router->post('delete_depart', 'Hr\DepartmentController@deleteDepart');//删除部门数据
         /**
          * 职位
          */
-        $router->get('show_jobs', 'Hr\JobsController@showJobs');
-        $router->post('insert_jobs', 'Hr\JobsController@insertJobs');
-        $router->post('edit_jobs', 'Hr\JobsController@editJobs');
-        $router->post('delete_jobs', 'Hr\JobsController@deleteJobs');
-        $router->get('depart', 'Hr\JobsController@depart');
+        $router->get('show_jobs', 'Hr\JobsController@showJobs');//获取职位数据
+        $router->post('insert_jobs', 'Hr\JobsController@insertJobs');//添加职位
+        $router->post('edit_jobs', 'Hr\JobsController@editJobs');//修改职位
+        $router->post('delete_jobs', 'Hr\JobsController@deleteJobs');//删除职位
+        $router->get('depart', 'Hr\JobsController@depart');//获取部门数据
 
     });
 

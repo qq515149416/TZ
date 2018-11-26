@@ -557,11 +557,13 @@ class BusinessModel extends Model
                 $return['msg'] = '业务相关机器下架状态修改失败'; 
             }
         }
-        $remove = $this->where(['business_number'=>$edit['business_number']])->update($update);
-        if($remove == false){
+        $remove = DB::table('tz_business')->where(['business_number'=>$edit['business_number']])->update($update);
+        if($remove == 0){
+            DB::rollBack();
             $return['code'] = 0;
             $return['msg'] = '业务下架状态修改失败';     
         } else {
+            DB::commit();
             $return['code'] = 1;
             $return['msg'] = '业务下架状态修改成功'; 
         }

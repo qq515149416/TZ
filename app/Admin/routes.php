@@ -92,6 +92,7 @@ Route::group([
     $router->get('/work_order_type', 'Show\WorkOrderTypeController@index');
     $router->get('/defenseip', 'Show\DefenseipController@index');
     $router->get('/defensePackage', 'Show\DefensePackageController@index');
+    $router->get('/defenseBusines', 'Show\DefenseBusinessController@index');
 
     /**
      * HR

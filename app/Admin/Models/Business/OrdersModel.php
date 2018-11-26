@@ -1046,12 +1046,12 @@ class OrdersModel extends Model
             $return['msg'] = '无对应资源信息';
             return $return;
         }
-        if($order->remove_status < 1 || $order->remove_status = 6){
+        if($order->remove_status < 1 || $order->remove_status = 3){
             $return['code'] = 0;
             $return['msg'] = '资源已完成下架/暂未提交下架申请';
             return $return;
         }
-        if($edit['remove_status'] == '-1'){
+        if($edit['remove_status'] == 0){
             $update_status['remove_reason'] = $order->remove_reason.'驳回原因:'.$edit['remove_reason'];
             $update_status['remove_status'] = $edit['remove_status'];
             $update_status['machineroom'] = 0;

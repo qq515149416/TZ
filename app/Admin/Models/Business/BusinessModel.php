@@ -495,12 +495,12 @@ class BusinessModel extends Model
             $return['msg'] = '无对应业务';
             return $return;
         }
-        if($business->remove_status < 1 || $business->remove_status = 6){//当业务未提交申请或已下架，直接返回
+        if($business->remove_status < 1 || $business->remove_status = 4){//当业务未提交申请或已下架，直接返回
             $return['code'] = 0;
             $return['msg'] = '业务已完成下架/暂未提交下架申请';
             return $return;
         }
-        if($edit['remove_status'] == '-1'){
+        if($edit['remove_status'] == 0){
             $update['remove_reason'] = $business->remove_reason.'驳回原因:'.$edit['remove_reason'];
             $update['remove_status'] = $edit['remove_status'];
             $update['machineroom'] = 0;

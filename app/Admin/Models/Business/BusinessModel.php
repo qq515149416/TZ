@@ -523,10 +523,10 @@ class BusinessModel extends Model
         $remove = $this->where(['business_number'=>$edit['business_number']])->update($update);
         if($remove == false){
             $return['code'] = 0;
-            $return['msg'] = '下架状态修改失败';     
+            $return['msg'] = '业务下架状态修改失败';     
         } else {
             $return['code'] = 1;
-            $return['msg'] = '下架状态修改成功'; 
+            $return['msg'] = '业务下架状态修改成功'; 
         }
         return $return;
 

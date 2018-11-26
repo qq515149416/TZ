@@ -12,9 +12,10 @@ Route::group([
     $router->get('/', 'HomeController@index');
 
 
-    //Jun   个人测试用
+    /**
+     * 测试路由
+     */
     $router->get('jun/test', 'Idc\MachineRoomController@test');
-    // 测试使用
     $router->post('rules', 'Others\ContactsController@rulestest');
     $router->get('rules', 'Others\ContactsController@rulestest');
     $router->get('vi', 'Others\ContactsController@vi');
@@ -28,7 +29,9 @@ Route::group([
     // 显示通讯录
     $router->get('staff/staff_list', 'Hr\EmployeeInformationController@showEmployee');
 
-    // 联系人表
+    /**
+     * 联系人
+     */
     Route::group([
         'prefix' => 'contacts',
     ], function (Router $router) {
@@ -39,7 +42,9 @@ Route::group([
         $router->post('remove', 'Others\ContactsController@deleted');
     });
 
-//ip
+    /**
+     * IP
+     */
     Route::group([
         'prefix' => 'ips',
     ], function (Router $router) {
@@ -88,7 +93,9 @@ Route::group([
     $router->get('/defenseip', 'Show\DefenseipController@index');
     $router->get('/defensePackage', 'Show\DefensePackageController@index');
 
-//人事
+    /**
+     * HR
+     */
     Route::group([
         'prefix' => 'hr',
     ], function (Router $router) {
@@ -265,7 +272,9 @@ Route::group([
     });
 
 
-    //工单问答
+    /**
+     * 工单问答
+     */
     Route::group([
         'prefix' => 'work_answer',
     ], function (Router $router) {
@@ -273,7 +282,9 @@ Route::group([
         $router->post('insert', 'Work\WorkAnswerController@insertWorkAnswer');
     });
 
-    //工单接口
+    /**
+     * 工单接口
+     */
     Route::group([
         'prefix' => 'workorder',
     ], function (Router $router) {
@@ -285,7 +296,9 @@ Route::group([
         $router->get('work_types', 'Work\WorkOrderController@workTypes');
     });
 
-    //工单类型接口
+    /**
+     * 工单类型
+     */
     Route::group([
         'prefix' => 'worktype',
     ], function (Router $router) {
@@ -308,7 +321,11 @@ Route::group([
         $router->post('delete', 'Work\WhiteListController@deleteWhiteList');//白名单申请单 删除接口
     });
 
-    // 业务相关接口(业务员下订单/手动生成业务编号及业务数据并且提供财务人员/管理人员/业务员查看数据等)
+
+    /**
+     * 业务模块
+     * 业务相关接口(业务员下订单/手动生成业务编号及业务数据并且提供财务人员/管理人员/业务员查看数据等)
+     */
     Route::group([
         'prefix' => 'business',
     ], function (Router $router) {
@@ -355,12 +372,16 @@ Route::group([
     });
 
 
-    //发送信息
+    /**
+     * 消息系统
+     */
     Route::group([
         'prefix' => 'message',
     ], function (Router $router) {
 
-        //
+        /**
+         * 续费提醒
+         */
         Route::group([
             'prefix' => 'deadline',
         ], function (Router $router) {
@@ -394,8 +415,12 @@ Route::group([
     Route::group([
         'prefix' => 'defenseip',
     ], function (Router $router) {
+
+        /**
+         * 资源
+         */
         Route::group([
-            'prefix' => 'store',                                                                            //资源库
+            'prefix' => 'store',
         ], function (Router $router) {
             $router->post('insert', 'DefenseIp\StoreController@insert');//高防IP添加
             $router->get('del', 'DefenseIp\StoreController@del');//删除
@@ -403,8 +428,11 @@ Route::group([
             $router->get('show', 'DefenseIp\StoreController@show');//获取资源信息
         });
 
+        /**
+         * 套餐
+         */
         Route::group([
-            'prefix' => 'package',                                                                         //套餐
+            'prefix' => 'package',
         ], function (Router $router) {
             $router->post('insert', 'DefenseIp\PackageController@insert');//添加套餐
             $router->get('del', 'DefenseIp\PackageController@del');//删除套餐

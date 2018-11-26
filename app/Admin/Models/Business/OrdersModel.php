@@ -1040,7 +1040,7 @@ class OrdersModel extends Model
             $return['msg'] = '你无法对资源进行下架处理';
             return $return;
         }
-        $order = $this->where(['order_sn'=>$edit['order_sn']])->select('remove_status','remove_reason')->first();
+        $order = $this->where(['order_sn'=>$edit['order_sn']])->select('remove_status','remove_reason','business_sn','resource_type','machine_sn')->first();
         if(empty($order)){
             $return['code'] = 0;
             $return['msg'] = '无对应资源信息';
@@ -1071,11 +1071,51 @@ class OrdersModel extends Model
                     break;
             }
         }
-        $status = $this->where(['order_sn']=>$edit['order_sn'])->update($update_status);
-        if($status == false){
+        DB::beginTransaction();//开启事务处理
+        if($order->remove_status == 5){
+            switch($order->resource_type){
+                case 4://ip
+                    $ip['ip_status'] = 0;
+                    $ip['own_business'] = 0;
+                    $ip['business_end'] = Null;
+                    $row = DB::table('idc_ips')->where(['ip'=>$order->machine_sn,'own_business'=>$order->business_sn])->update($ip);
+                    break;
+                case 5://cpu
+                    $cpu['cpu_used'] = 0;
+                    $cpu['service_num'] = 0;
+                    $cpu['business_end'] = Null;
+                    $row = DB::table('idc_cpu')->where(['cpu_number'=>$order->machine_sn,'service_num'=>$order->business_sn])->update($cpu);
+                    break;
+                case 6://硬盘
+                    $harddisk['harddisk_used'] = 0;
+                    $harddisk['service_num'] = 0;
+                    $harddisk['business_end'] = Null;
+                    $row = DB::table('idc_harddisk')->where(['harddisk_number'=>$order->machine_sn,'service_num'=>$order->business_sn])->update($harddisk);
+                    break;
+                case 7://内存
+                    $memory['memory_used'] = 0;
+                    $memory['service_num'] = 0;
+                    $memory['business_end'] = Null;
+                    $row = DB::table('idc_memory')->where(['memory_number'=>$order->machine_sn,'service_num'=>$order->business_sn])->update($memory);
+                    break;
+                default:
+                    $row = 1;
+                    break;
+            }
+            if($row == 0){
+                DB::rollBack();
+                $return['code'] = 0;
+                $return['msg'] = '资源下架修改失败!';
+                return $return;
+            }
+        }
+        $status = DB::table('tz_orders')->where(['order_sn'=>$edit['order_sn']])->update($update_status);
+        if($status == 0){
+            DB::rollBack();
             $return['code'] = 0;
             $return['msg'] = '资源下架修改失败';
         } else {
+            DB::commit();
             $return['code'] = 1;
             $return['msg'] = '资源下架修改成功';
         }

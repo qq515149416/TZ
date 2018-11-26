@@ -11,6 +11,7 @@ class StatisticalPerformancesStores extends ActionBoundStores {
     @observable statisticalPerformances = [
 
     ];
+    business_type = 1
     @action.bound
     getData(param={}) {
         let url = 'pfmStatistics/pfmBig';
@@ -18,7 +19,9 @@ class StatisticalPerformancesStores extends ActionBoundStores {
             url = 'rechargeStatistics/list';
         }
         this.statisticalPerformances = [];
-        get(url,param).then((res) => {
+        get(url,Object.assign(param,{
+            business_type: this.business_type
+        })).then((res) => {
             if(res.data.code==1) {
                 this.statisticalPerformances = res.data.data.map(item => new StatisticalPerformanceStores(item));
             }

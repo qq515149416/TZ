@@ -29,6 +29,8 @@ import ReviewRechargeList from "../view/reviewRechargeList.jsx";
 import DefenseipList from "../view/defenseipList.jsx";
 import DefensePackageList from "../view/defensePackageList.jsx";
 import DefenseBusinesList from "../view/defenseBusinesList.jsx";
+import DefenseipReviewList from "../view/defenseipReviewList.jsx";
+
 
 
 
@@ -62,4 +64,5 @@ export default () => [
     <Route path="/tz_admin/defenseip" component={DefenseipList} />,
     <Route path="/tz_admin/defensePackage" component={DefensePackageList} />,
     <Route path="/tz_admin/defenseBusines" component={DefenseBusinesList} />,
+    <Route path="/tz_admin/defenseipReview" component={DefenseipReviewList} />,
 ];

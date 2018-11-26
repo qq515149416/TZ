@@ -94,6 +94,7 @@ Route::group([
     $router->get('/defenseip', 'Show\DefenseipController@index');
     $router->get('/defensePackage', 'Show\DefensePackageController@index');
     $router->get('/defenseBusines', 'Show\DefenseBusinessController@index');
+    $router->get('/defenseipReview', 'Show\DefenseipReviewController@index');
 
     /**
      * HR

@@ -379,7 +379,7 @@ class UnderModel extends Model
             $remove_status = [0=>'正常使用',1=>'下架申请中',2=>'机房处理中',3=>'清空下架中',4=>'下架完成'];
             foreach($business as $business_key => $business_value){
                 $business[$business_key]['resource_type'] = $business_type[$business_value['business_type']];
-                $business[$business_key]['remove_status'] = $remove_status[$business_value['remove_status']];
+                $business[$business_key]['removestatus'] = $remove_status[$business_value['remove_status']];
             }           
 		}
 		$orders = DB::table('tz_orders')->where($where)->where('resource_type','>',3)->whereBetween('remove_status',[1,3])->orderBy('updated_at','desc')->select('business_sn','customer_name','resource_type','business_name','machine_sn','resource','remove_status')->get();
@@ -388,7 +388,7 @@ class UnderModel extends Model
             $remove_status = [0=>'正常使用',1=>'下架申请中',2=>'机房处理中',3=>'清空下架中',4=>'下架完成'];
             foreach($orders as $orders_key => $orders_value){
                 $orders[$orders_key]['resourcetype'] = $resource_type[$orders_value['resource_type']];
-                $orders[$orders_key]['remove_status'] = $remove_status[$orders_value['remove_status']];
+                $orders[$orders_key]['removestatus'] = $remove_status[$orders_value['remove_status']];
             }
         }
         $result = ['business'=>$business,'orders'=>$orders];

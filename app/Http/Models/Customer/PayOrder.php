@@ -95,6 +95,7 @@ class PayOrder extends Model
 
 		DB::beginTransaction();//开启事务处理
 
+		
 		for ($i=0; $i < count($unpaidOrder); $i++) { 
 			$checkCoupon = $this->checkCoupon($unpaidOrder[$i]['id'],$coupon_id);
 			if($checkCoupon != true){

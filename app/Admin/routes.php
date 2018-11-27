@@ -340,7 +340,7 @@ Route::group([
         'prefix' => 'business',
     ], function (Router $router) {
         // 业务
-        
+
         $router->get('machineroom','Business\BusinessController@machineroom');//新购业务时获取机房
         $router->get('selectmachine','Business\BusinessController@selectMachine');//新购业务时选择机器
         $router->get('selectcabinet','Business\BusinessController@selectCabinet');//新购业务时选择机柜
@@ -487,11 +487,11 @@ Route::group([
         Route::group([
             'prefix' => 'under',
         ],function(Router $route){
-            $router->post('apply_under','Business\UnderController@applyUnder');//申请下架
-            $router->get('under_history','Business\UnderController@underHistory');//下架历史记录
-            $router->post('do_under','Business\UnderController@doUnder');//操作下架记录
-            $router->get('show_apply_under','Business\UnderController@showApplyUnder');//展示申请记录
-            $router->get('depart','Business\UnderController@department');//转发机房
+            $route->post('apply_under','Business\UnderController@applyUnder');//申请下架
+            $route->get('under_history','Business\UnderController@underHistory');//下架历史记录
+            $route->post('do_under','Business\UnderController@doUnder');//操作下架记录
+            $route->get('show_apply_under','Business\UnderController@showApplyUnder');//展示申请记录
+            $route->get('depart','Business\UnderController@department');//转发机房
         });
 
     });

@@ -13,7 +13,7 @@ use Encore\Admin\Facades\Admin;
  * 下架模型
  */
 class UnderModel extends Model
-{	
+{
 	/**
 	 * 下架申请
 	 * @param  [type] $apply [description]
@@ -49,12 +49,12 @@ class UnderModel extends Model
 		            return $return;
 	        	}
 	        	//查找业务关联的资源
-		        $resources = DB::table('tz_orders')->where(['business_number'=>$apply['business_number']])->where('price','>','0.00')->where('resource_type','>',3)->orderBy('end_time','desc')->get(['order_sn','resource_type','machine_sn','resource','price','end_time'])->groupBy('machine_sn')->toArray();
+		        $resources = DB::table('tz_orders')->where(['business_sn'=>$apply['business_number']])->where('price','>','0.00')->where('resource_type','>',3)->orderBy('end_time','desc')->get(['order_sn','resource_type','machine_sn','resource','price','end_time'])->groupBy('machine_sn')->toArray();
 		        if(!empty($resources)){//存在业务关联的资源，进一步进行查找资源的最新情况
 		            $resource_keys = array_keys($resources);//获取分组后的资源编号
 		            foreach($resource_keys as $key=>$value){//获取业务关联的最新资源
 		                $business['machine_sn'] = $value;
-		                $resource[$key] = DB::table('tz_orders')->where(['business_number'=>$apply['business_number']])->where('remove_status','<',1)->orderBy('end_time','desc')->select('order_sn','resource_type','machine_sn','resource','price','end_time','order_status')->first();
+		                $resource[$key] = DB::table('tz_orders')->where(['business_sn'=>$apply['business_number']])->where('remove_status','<',1)->orderBy('end_time','desc')->select('order_sn','resource_type','machine_sn','resource','price','end_time','order_status')->first();
 		            }
 		            if(!empty($resource)){//存在关联业务则继续对关联的资源进行同步下架
 		                foreach($resource as $resource_key=>$resource_value){
@@ -87,7 +87,7 @@ class UnderModel extends Model
 		            $return['msg'] = '此资源正在下架中,请勿重复提交申请';
 		            return $return;
 		        }
-		        $end_time = DB::table('tz_orders')->(['machine_sn'=>$order_result->machine_sn,'business_sn'=>$order_result->business_sn])->orderBy('end_time','desc')->select('end_time','remove_status')->first();
+		        $end_time = DB::table('tz_orders')->where(['machine_sn'=>$order_result->machine_sn,'business_sn'=>$order_result->business_sn])->orderBy('end_time','desc')->select('end_time','remove_status')->first();
 		        if(!empty($end_time)){
 		            if($end_time->remove_status > 0){
 		                $return['code'] = 0;
@@ -102,11 +102,11 @@ class UnderModel extends Model
 		        }
 		        $remove['remove_status'] = 1;
 		        $remove['remove_reason'] = $apply['remove_reason'];
-		        $update = DB::table('tz_orders')->(['order_sn'=>$apply['order_sn']])->update($remove);
+		        $update = DB::table('tz_orders')->where(['order_sn'=>$apply['order_sn']])->update($remove);
 		        if($update == 0){
 		            $return['code'] = 0;
 		            $return['msg'] = '资源申请下架失败';
-		            
+
 		        } else {
 		            $return['code'] = 1;
 		            $return['msg'] = '资源申请下架成功';
@@ -118,7 +118,7 @@ class UnderModel extends Model
 	            $return['msg'] = '无对应的资源/业务可以下架';
 	            return $return;
    				break;
-   		}//switch结束	
+   		}//switch结束
     }//方法结束
 
     /**
@@ -255,7 +255,7 @@ class UnderModel extends Model
 		            if($row == 0){
 		                DB::rollBack();
 		                $return['code'] = 0;
-		                $return['msg'] = '业务相关机器下架状态修改失败'; 
+		                $return['msg'] = '业务相关机器下架状态修改失败';
 		            }
 		            $update['remove_status'] = 4;
 		        }
@@ -263,11 +263,11 @@ class UnderModel extends Model
 		        if($remove == 0){
 		            DB::rollBack();
 		            $return['code'] = 0;
-		            $return['msg'] = '业务下架状态修改失败';     
+		            $return['msg'] = '业务下架状态修改失败';
 		        } else {
 		            DB::commit();
 		            $return['code'] = 1;
-		            $return['msg'] = '业务下架状态修改成功'; 
+		            $return['msg'] = '业务下架状态修改成功';
 		        }
 		        return $return;
         		break;
@@ -380,7 +380,7 @@ class UnderModel extends Model
             foreach($business as $business_key => $business_value){
                 $business[$business_key]['resource_type'] = $business_type[$business_value['business_type']];
                 $business[$business_key]['remove_status'] = $remove_status[$business_value['remove_status']];
-            }           
+            }
 		}
 		$orders = DB::table('tz_orders')->where($where)->where('resource_type','>',3)->whereBetween('remove_status',[1,3])->orderBy('updated_at','desc')->select('business_sn','customer_name','resource_type','business_name','machine_sn','resource','remove_status')->get();
         if(!empty($orders)){

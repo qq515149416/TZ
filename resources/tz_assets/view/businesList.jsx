@@ -8,6 +8,7 @@ import RenewalFee from "../component/dialog/renewalFee.jsx";
 import WorkOrderPost from "../component/dialog/workOrderPost.jsx";
 import {post} from "../tool/http.js";
 import extendElementsComponent from "../tool/extendElementsComponent";
+import Disposal from "../component/dialog/disposal.jsx";
 import TabComponent from "../component/tabComponent.jsx";
 import { inject,observer } from "mobx-react";
 import { routerConfig } from "../config/common/config.js";
@@ -94,7 +95,8 @@ const columnData = [
       if(data.business_status==2) {
         let Element = extendElementsComponent([
           RenewalFee,
-          WorkOrderPost
+          WorkOrderPost,
+          Disposal
         ]);
         return <Element {...data} postUrl="business/renewresource" nameParam="machine_number" type="业务" />;
       }else {

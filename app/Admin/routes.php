@@ -481,19 +481,21 @@ Route::group([
 
         });
 
-        /**
-         * 申请下架
-         */
-        Route::group([
-            'prefix' => 'under',
-        ],function(Router $route){
-            $route->post('apply_under','Business\UnderController@applyUnder');//申请下架
-            $route->get('under_history','Business\UnderController@underHistory');//下架历史记录
-            $route->post('do_under','Business\UnderController@doUnder');//操作下架记录
-            $route->get('show_apply_under','Business\UnderController@showApplyUnder');//展示申请记录
-            $route->get('depart','Business\UnderController@department');//转发机房
-        });
 
+
+    });
+
+    /**
+     * 申请下架
+     */
+    Route::group([
+        'prefix' => 'under',
+    ],function(Router $route){
+        $route->post('apply_under','Business\UnderController@applyUnder');//申请下架
+        $route->get('under_history','Business\UnderController@underHistory');//下架历史记录
+        $route->post('do_under','Business\UnderController@doUnder');//操作下架记录
+        $route->get('show_apply_under','Business\UnderController@showApplyUnder');//展示申请记录
+        $route->get('depart','Business\UnderController@department');//转发机房
     });
 
 });

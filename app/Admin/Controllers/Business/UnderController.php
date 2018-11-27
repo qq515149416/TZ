@@ -23,7 +23,7 @@ class UnderController extends Controller
     public function applyUnder(Request $request){
         $apply = $request->only(['type','business_number','remove_reason','order_sn']);
         $apply_for = new UnderModel();
-        $apply_result = $apply_for->applyUnder();
+        $apply_result = $apply_for->applyUnder($apply);
         return tz_ajax_echo($apply_result,$apply_result['msg'],$apply_result['code']);
     }
 

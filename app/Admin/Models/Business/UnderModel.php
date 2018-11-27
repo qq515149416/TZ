@@ -60,7 +60,7 @@ class UnderModel extends Model
 		                foreach($resource as $resource_key=>$resource_value){
 		                    $order_remove['remove_reason'] = '关联业务申请下架，关联业务资源同步下架';
 		                    $order_remove['remove_status'] = 1;
-		                    $order_row = DB::table('tz_orders')->where(['order_sn'=>$resource_value->order_sn])->update($order_remove);
+		                    $order_row = DB::table('tz_orders')->where(['order_sn'=>$resource_value['order_sn']])->update($order_remove);
 		                    if($order_row == 0){//关联业务的资源同步下架失败
 		                        DB::rollBack();
 		                        $return['code'] = 0;

@@ -60,41 +60,48 @@ Route::group([
     $router->post('rules', 'Others\ContactsController@rulestest');
     $router->get('rules', 'Others\ContactsController@rulestest');
     $router->get('vi', 'Others\ContactsController@vi');
-    
-    // 前端显示
-    $router->get('/user_list', 'Show\UserController@index');
-    $router->get('/user_link_list', 'Show\LinkUserController@index');
-    $router->get('/machine_room/show', 'Show\TestController@index');
-    $router->get('/machine_room/socket', 'Show\TestController@socket');
-    $router->get('/resource/ip', 'Show\IpController@index');
-    $router->get('/resource/machine_room', 'Show\MachineRoomController@index');
-    $router->get('/resource/cpu', 'Show\CpuController@index');
-    $router->get('/resource/harddisk', 'Show\HarddiskController@index');
-    $router->get('/resource/memory', 'Show\MemoryController@index');
-    $router->get('/resource/cabinet', 'Show\CabinetController@index');
-    $router->get('/article', 'Show\NewController@index');
-    $router->get('/resource/machinelibrary', 'Show\MachineLibraryController@index');
-    $router->get('/hr/employeeManagement', 'Show\EmployeeManagementController@index');
-    $router->get('/crm/clientele', 'Show\ClienteleController@index');
-    $router->get('/business', 'Show\BusinessController@index');
-    $router->get('/checkbusiness', 'Show\CheckBusinessController@index');
-    $router->get('/business/order', 'Show\OrderController@index');
-    $router->get('/finance', 'Show\FinanceController@index');
-    $router->get('/statisticalPerformance', 'Show\StatisticalPerformanceController@index');
-    $router->get('/whitelist', 'Show\WhitelistController@index');
-    $router->get('/work_order', 'Show\WorkOrderTypeController@index');
-    $router->get('/system_info', 'Show\SystemInformationController@index');
-    $router->get('/hr/departmentview', 'Show\DepartmentController@index');
-    $router->get('/hr/position', 'Show\PositionController@index');
-    $router->get('/hr/usermanagement', 'Show\UserManagementController@index');
-    $router->get('/checkrecharge', 'Show\RechargeController@index');
-    $router->get('/reviewRecharge', 'Show\ReviewRechargeController@index');
-    $router->get('/pwdDepartment', 'Show\WorkOrderTypeController@getPwdDepart');
-    $router->get('/work_order_type', 'Show\WorkOrderTypeController@index');
-    $router->get('/defenseip', 'Show\DefenseipController@index');
-    $router->get('/defensePackage', 'Show\DefensePackageController@index');
-    $router->get('/defenseBusines', 'Show\DefenseBusinessController@index');
-    $router->get('/defenseipReview', 'Show\DefenseipReviewController@index');
+
+    /**
+     * 前端
+     */
+    Route::group([
+        'prefix' => 'show',
+    ], function (Router $router) {
+        $router->get('/user_list', 'Show\UserController@index');//用户列表
+        $router->get('/user_link_list', 'Show\LinkUserController@index');
+        $router->get('/machine_room/show', 'Show\TestController@index');
+        $router->get('/machine_room/socket', 'Show\TestController@socket');
+        $router->get('/resource/ip', 'Show\IpController@index');
+        $router->get('/resource/machine_room', 'Show\MachineRoomController@index');
+        $router->get('/resource/cpu', 'Show\CpuController@index');
+        $router->get('/resource/harddisk', 'Show\HarddiskController@index');
+        $router->get('/resource/memory', 'Show\MemoryController@index');
+        $router->get('/resource/cabinet', 'Show\CabinetController@index');
+        $router->get('/article', 'Show\NewController@index');
+        $router->get('/resource/machinelibrary', 'Show\MachineLibraryController@index');
+        $router->get('/hr/employeeManagement', 'Show\EmployeeManagementController@index');
+        $router->get('/crm/clientele', 'Show\ClienteleController@index');
+        $router->get('/business', 'Show\BusinessController@index');
+        $router->get('/checkbusiness', 'Show\CheckBusinessController@index');
+        $router->get('/business/order', 'Show\OrderController@index');
+        $router->get('/finance', 'Show\FinanceController@index');
+        $router->get('/statisticalPerformance', 'Show\StatisticalPerformanceController@index');
+        $router->get('/whitelist', 'Show\WhitelistController@index');
+        $router->get('/work_order', 'Show\WorkOrderTypeController@index');
+        $router->get('/system_info', 'Show\SystemInformationController@index');
+        $router->get('/hr/departmentview', 'Show\DepartmentController@index');
+        $router->get('/hr/position', 'Show\PositionController@index');
+        $router->get('/hr/usermanagement', 'Show\UserManagementController@index');
+        $router->get('/checkrecharge', 'Show\RechargeController@index');
+        $router->get('/reviewRecharge', 'Show\ReviewRechargeController@index');
+        $router->get('/pwdDepartment', 'Show\WorkOrderTypeController@getPwdDepart');
+        $router->get('/work_order_type', 'Show\WorkOrderTypeController@index');
+        $router->get('/defenseip', 'Show\DefenseipController@index');
+        $router->get('/defensePackage', 'Show\DefensePackageController@index');
+        $router->get('/defenseBusines', 'Show\DefenseBusinessController@index');
+        $router->get('/defenseipReview', 'Show\DefenseipReviewController@index');
+        
+    });
 
     /**
      * HR
@@ -334,19 +341,19 @@ Route::group([
     ], function (Router $router) {
         // 业务
 
-        $router->get('machineroom','Business\BusinessController@machineroom');//新购业务时获取机房
-        $router->get('selectmachine','Business\BusinessController@selectMachine');//新购业务时选择机器
-        $router->get('selectcabinet','Business\BusinessController@selectCabinet');//新购业务时选择机柜
-        $router->post('insert','Business\BusinessController@insertBusiness');//产生业务
-        $router->get('security','Business\BusinessController@securityBusiness');//信安查看业务
-        $router->post('check','Business\BusinessController@checkBusiness');//信安审核业务
-        $router->post('enable','Business\BusinessController@enableBusiness');//启用业务（开发预留）
-        $router->get('showbusiness','Business\BusinessController@showBusiness');//展示业务数据
-        $router->post('deletebusiness','Business\BusinessController@deleteBusiness');//删除业务数据（开发预留）
+        $router->get('machineroom', 'Business\BusinessController@machineroom');//新购业务时获取机房
+        $router->get('selectmachine', 'Business\BusinessController@selectMachine');//新购业务时选择机器
+        $router->get('selectcabinet', 'Business\BusinessController@selectCabinet');//新购业务时选择机柜
+        $router->post('insert', 'Business\BusinessController@insertBusiness');//产生业务
+        $router->get('security', 'Business\BusinessController@securityBusiness');//信安查看业务
+        $router->post('check', 'Business\BusinessController@checkBusiness');//信安审核业务
+        $router->post('enable', 'Business\BusinessController@enableBusiness');//启用业务（开发预留）
+        $router->get('showbusiness', 'Business\BusinessController@showBusiness');//展示业务数据
+        $router->post('deletebusiness', 'Business\BusinessController@deleteBusiness');//删除业务数据（开发预留）
 
-        $router->post('apply_remove','Business\BusinessController@applyRemove');//申请业务下架
-        $router->get('remove_history','Business\BusinessController@removeHistory');//业务下架历史记录
-        $router->post('edit_remove_status','Business\BusinessController@editRemoveStatus');//修改业务下架状态
+        $router->post('apply_remove', 'Business\BusinessController@applyRemove');//申请业务下架
+        $router->get('remove_history', 'Business\BusinessController@removeHistory');//业务下架历史记录
+        $router->post('edit_remove_status', 'Business\BusinessController@editRemoveStatus');//修改业务下架状态
 
         // 订单
         $router->post('finance', 'Business\OrdersController@financeOrders');//财务查看订单

@@ -7,6 +7,7 @@ import ResetPassword from "../component/dialog/resetPassword.jsx";
 import ManualRecharge from "../component/dialog/manualRecharge.jsx";
 import RechargeRecord from "../component/icon/rechargeRecord.jsx";
 import PersonnelTransfer from "../component/dialog/personnelTransfer.jsx";
+import { routerConfig } from "../config/common/config.js";
 
 const columnData = [
     // { id: 'name', numeric: true, disablePadding: false, label: '用户名' },
@@ -61,12 +62,12 @@ const columnData = [
     }, extendUrl: [
         {
             title: "添加业务",
-            link: "/tz_admin/business",
+            link: `${routerConfig.baseUrl}/business`,
             param: ["id","email","money","status","clerk_name"]
         },
         {
             title: "充值记录",
-            link: "/tz_admin/checkrecharge",
+            link: `${routerConfig.baseUrl}/checkrecharge`,
             param: ["id"],
             icon: <RechargeRecord />
         }

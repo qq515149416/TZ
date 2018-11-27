@@ -10,6 +10,7 @@ import {post} from "../tool/http.js";
 import extendElementsComponent from "../tool/extendElementsComponent";
 import TabComponent from "../component/tabComponent.jsx";
 import { inject,observer } from "mobx-react";
+import { routerConfig } from "../config/common/config.js";
 import Enable from "../component/icon/enable.jsx";
 const classNames = require('classnames');
 const dateFormat = require('dateformat');
@@ -102,7 +103,7 @@ const columnData = [
   }, extendUrl: [
     {
         title: "全部订单",
-        link: "/tz_admin/business/order",
+        link: routerConfig.baseUrl+"/business/order",
         param: ["business_number","client_id","client_name","machine_number",{
           field: "resource_detail_json",
           value: ["machineroom_id"]

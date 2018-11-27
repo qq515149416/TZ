@@ -44,7 +44,10 @@ class Cabinet extends Model
 		if($data && $data['id']+0) {
 			$id = $data['id'];
 			unset($data['id']);
-			
+			$check = $this->checkDel($id);
+			if($check['code'] != 1){
+				return $check;
+			}
 			$row = self::where('id', $id)->update($data);
 
 			if($row != false){
@@ -61,6 +64,30 @@ class Cabinet extends Model
 			$return['msg'] 	= '请确保信息正确';
 		}
 		return $return;
+	}
+
+	/**
+	* 检查是否可编辑
+	*/
+	protected function checkDel($id){
+
+		$mod = $this->find($id);
+		if($mod == null){
+			return [
+				'code'	=> 0,
+				'msg'	=> '无此id',
+			];
+		}
+		if($mod->use_state != 0){
+			return [
+				'code'	=> 2,
+				'msg'	=> '机柜正在使用,无法删除或编辑',
+			];
+		}else{
+			return [
+				'code'	=>1,
+			];
+		}
 	}
 
 	/**

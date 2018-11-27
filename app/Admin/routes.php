@@ -351,16 +351,6 @@ Route::group([
         $router->get('showbusiness','Business\BusinessController@showBusiness');//展示业务数据
         $router->post('deletebusiness','Business\BusinessController@deleteBusiness');//删除业务数据（开发预留）
 
-        $router->get('machineroom', 'Business\BusinessController@machineroom');//新购业务时获取机房
-        $router->get('selectmachine', 'Business\BusinessController@selectMachine');//新购业务时选择机器
-        $router->get('selectcabinet', 'Business\BusinessController@selectCabinet');//新购业务时选择机柜
-        $router->post('insert', 'Business\BusinessController@insertBusiness');//产生业务
-        $router->get('security', 'Business\BusinessController@securityBusiness');//信安查看业务
-        $router->post('check', 'Business\BusinessController@checkBusiness');//信安审核业务
-        $router->post('enable', 'Business\BusinessController@enableBusiness');//启用业务（开发预留）
-        $router->get('showbusiness', 'Business\BusinessController@showBusiness');//展示业务数据
-        $router->post('deletebusiness', 'Business\BusinessController@deleteBusiness');//删除业务数据（开发预留）
-
         // 订单
         $router->post('finance', 'Business\OrdersController@financeOrders');//财务查看订单
         $router->post('clerk', 'Business\OrdersController@clerkOrders');//业务员查看订单

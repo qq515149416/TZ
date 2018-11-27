@@ -90,7 +90,7 @@ class WorkOrderList extends React.Component {
     }
     componentDidMount() {
         const { socket } = this.context;
-        get("pwdDepartment").then(res => {
+        get("show/pwdDepartment").then(res => {
             if(res.data.code == 1) {
                 if(res.data.data.sign==2) {
 

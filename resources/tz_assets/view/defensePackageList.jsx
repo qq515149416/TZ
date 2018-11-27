@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import ListTableComponent from "../component/listTableComponent.jsx";
 import { inject,observer } from "mobx-react";
-import { routerConfig } from "../config/common/config.js";
 
 const columnData = [
     { id: 'name', numeric: true, disablePadding: false, label: '套餐名字' },
@@ -14,7 +13,7 @@ const columnData = [
     { id: 'operat', numeric: true, disablePadding: false, label: '操作', extend: true, extendUrl: [
         {
             title: "相关业务",
-            link: routerConfig.baseUrl+"/defenseBusines",
+            link: "/tz_admin/defenseBusines",
             param: ["id"]
         }
       ] }

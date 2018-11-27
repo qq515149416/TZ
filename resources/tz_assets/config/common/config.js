@@ -27,10 +27,7 @@ import DefensePackagesStores from "../../stores/defensePackage-stores";
 import DefenseBusinessStores from "../../stores/defenseBusiness-stores";
 import DefenseipReviewsStores from "../../stores/defenseipReview-stores";
 
-//路由配置共用参数
-export const routerConfig = {
-    baseUrl: "/tz_admin/show"
-}
+
 
 // 前端Models操作
 export const stores = {

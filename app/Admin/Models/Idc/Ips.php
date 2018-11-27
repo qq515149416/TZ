@@ -166,10 +166,6 @@ class Ips extends Model
      */
     public function doEdit($data){
     	if($data && $data['id']+0) {
-                        $check = $this->checkDel($id);
-                        if($check['code'] != 1){
-                            return $check;
-                        }
     		$edit = $this->find($data['id']);
     		$edit->vlan = $data['vlan'];
     		// $edit->ip = $data['ip'];
@@ -201,10 +197,6 @@ class Ips extends Model
      */
     public function dele($id) {
     	if($id) {
-                         $check = $this->checkDel($id);
-                        if($check['code'] != 1){
-                            return $check;
-                        }
     		$row = $this->where('id',$id)->delete();
     		if($row != false){
     			$return['code'] = 1;
@@ -221,29 +213,6 @@ class Ips extends Model
     	return $return;
     }
 
-    /**
-    * 检查是否可编辑
-    */
-    protected function checkDel($id){
-
-        $mod = $this->find($id);
-        if($mod == null){
-            return [
-                'code'  => 0,
-                'msg'   => '无此id',
-            ];
-        }
-        if($mod->memory_used != 0){
-            return [
-                'code'  => 2,
-                'msg'   => 'ip正在使用,无法删除或编辑',
-            ];
-        }else{
-            return [
-                'code'  =>1,
-            ];
-        }
-    }
     /**
      * 获取机房的信息
      * @return array 返回相关的信息和数据

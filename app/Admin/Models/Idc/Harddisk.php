@@ -109,10 +109,6 @@ class  Harddisk extends Model
 	 */
 	public function edit($data){
 		if($data && $data['id']+0) {
-			$check = $this->checkDel($data['id']);
-			if($check['code'] != 1 ){
-				return $check;
-			}
 			
 			$row = self::where('id', $data['id'])
 				->update($data);
@@ -136,44 +132,21 @@ class  Harddisk extends Model
 	 * @return [type]     [description]
 	 */
 	public function dele($id) {
-		$check = $this->checkDel($id);
-		if($check['code'] != 1 ){
-			return $check;
-		}
-		$row = $this->where('id',$id)->delete();
-		if($row != false){
-			$return['code'] 	= 1;
-			$return['msg'] 	= '删除harddisk信息成功';
+		if($id) {
+			$row = $this->where('id',$id)->delete();
+			if($row != false){
+				$return['code'] 	= 1;
+				$return['msg'] 	= '删除harddisk信息成功';
+			} else {
+				$return['code'] 	= 0;
+				$return['msg'] 	= '删除harddisk信息失败';
+			}
 		} else {
 			$return['code'] 	= 0;
-			$return['msg'] 	= '删除harddisk信息失败';
+			$return['msg'] 	= '无法删除harddisk信息';
 		}
 
 		return $return;
-	}
-
-	/**
-	* 检查是否可编辑
-	*/
-	protected function checkDel($id){
-
-		$mod = $this->find($id);
-		if($mod == null){
-			return [
-				'code'	=> 0,
-				'msg'	=> '无此id',
-			];
-		}
-		if($mod->harddisk_used != 0){
-			return [
-				'code'	=> 2,
-				'msg'	=> '硬盘正在使用,无法删除或编辑',
-			];
-		}else{
-			return [
-				'code'	=>1,
-			];
-		}
 	}
 
 	/**

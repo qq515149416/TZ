@@ -100,7 +100,7 @@ Route::group([
         $router->get('/defensePackage', 'Show\DefensePackageController@index');
         $router->get('/defenseBusines', 'Show\DefenseBusinessController@index');
         $router->get('/defenseipReview', 'Show\DefenseipReviewController@index');
-        
+
     });
 
     /**

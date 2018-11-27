@@ -136,7 +136,7 @@ class  Overdue extends Model
 			$end_time = date('Y-m-d H:i:s',time());
 		}else{
 			return false;
-		}
+		} 
 		
 		// 查询已到提醒日期的业务
 		if($resource_type == 0){
@@ -182,11 +182,40 @@ class  Overdue extends Model
 			9	=> '防护',
 			10	=> 'cdn',
 		];
-		for ($i = 0; $i < count($list); $i ++) { 
-			$list[$i]['resource_type'] = $type_list[$list[$i]['resource_type']];
-		}
+		$orr = [];
 		
-		$return['data'] 	= $list;
+		for ($i = 0; $i < count($list); $i ++) { 
+			if( !isset( $orr[ $list[$i]['self_number'] ]) ){
+				$orr[ $list[$i]['self_number'] ] = [
+					'business_number'	=>  $list[$i]['business_sn'],
+					'customer_name'	=>  $list[$i]['customer_name'],
+					'cabinet_num'		=>  $list[$i]['cabinet_num'],
+					'machine_num'		=>  $list[$i]['machine_num'],
+					'end_time'		=>  $list[$i]['end_time'],
+					'resource'		=>  $list[$i]['resource'],
+					'resource_type'		=>  $type_list[ $list[$i]['resource_type'] ],
+					'self_number'		=>  $list[$i]['self_number'],
+				];
+			}else{
+				if($list[$i]['end_time'] > $orr[ $list[$i]['self_number'] ]['end_time']){
+					$orr[ $list[$i]['self_number'] ] = [
+						'business_number'	=>  $list[$i]['business_sn'],
+						'customer_name'	=>  $list[$i]['customer_name'],
+						'cabinet_num'		=>  $list[$i]['cabinet_num'],
+						'machine_num'		=>  $list[$i]['machine_num'],
+						'end_time'		=>  $list[$i]['end_time'],
+						'resource'		=>  $list[$i]['resource'],
+						'resource_type'		=>  $type_list[ $list[$i]['resource_type'] ],
+						'self_number'		=>  $list[$i]['self_number'],
+					];
+				}
+			}	
+		}
+		$arr = [];
+		foreach ($orr as $k => $v) {
+			$arr[] = $v;
+		}
+		$return['data'] 	= $arr;
 		$return['msg'] 	= '获取成功';
 		$return['code']	= 1;
 

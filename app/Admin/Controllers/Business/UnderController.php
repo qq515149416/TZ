@@ -61,4 +61,23 @@ class UnderController extends Controller
         return tz_ajax_echo($show_result['data'],$show_result['msg'],$show_result['code']);
     }
 
+    /**
+     * 获取转发部门数据
+     * @return [type] [description]
+     */
+    public function department(){
+        $where['sign'] = 3;
+        $depart = DepartmentModel::where($where)->get(['id','depart_number','depart_name']);
+        if($depart->isEmpty){
+            $return['data'] = [];
+            $return['code'] = 0;
+            $return['msg'] = '暂无部门数据';
+        } else {
+            $return['data'] = $depart;
+            $return['code'] = 1;
+            $return['msg'] = '获取部门数据成功';
+        }
+        return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
+    }
+
 }

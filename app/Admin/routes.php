@@ -344,17 +344,10 @@ Route::group([
         $router->get('showbusiness','Business\BusinessController@showBusiness');//展示业务数据
         $router->post('deletebusiness','Business\BusinessController@deleteBusiness');//删除业务数据（开发预留）
 
-        $router->post('apply_remove','Business\BusinessController@applyRemove');//申请业务下架
-        $router->get('remove_history','Business\BusinessController@removeHistory');//业务下架历史记录
-        $router->post('edit_remove_status','Business\BusinessController@editRemoveStatus');//修改业务下架状态
-
         // 订单
         $router->post('finance', 'Business\OrdersController@financeOrders');//财务查看订单
         $router->post('clerk', 'Business\OrdersController@clerkOrders');//业务员查看订单
         $router->post('resource', 'Business\OrdersController@resource');//获取资源
-        $router->post('apply_remove_resource', 'Business\OrdersController@applyRemoveResource');//申请资源下架
-        $router->get('resource_remove_history', 'Business\OrdersController@resourceRemoveHistory');//获取资源下架历史记录
-        $router->post('edit_remove_resource', 'Business\OrdersController@editRemoveResource');//修改资源下架
 
         $router->post('renewresource', 'Business\OrdersController@renewResource');//续费
         $router->get('all_renew', 'Business\OrdersController@allRenew');//获取业务下续费的资源
@@ -469,6 +462,19 @@ Route::group([
             $router->get('goExamine', 'DefenseIp\RemoveController@goExamine');//进行审核
             $router->get('showExamine', 'DefenseIp\RemoveController@showExamine');//查看正在审核的下架申请
 
+        });
+
+        /**
+         * 申请下架
+         */
+        Route::group([
+            'prefix' => 'under',
+        ],function(Router $route){
+            $router->post('apply_under','Business\UnderController@applyUnder');//申请下架
+            $router->get('under_history','Business\UnderController@underHistory');//下架历史记录
+            $router->post('do_under','Business\UnderController@doUnder');//操作下架记录
+            $router->get('show_apply_under','Business\UnderController@showApplyUnder');//展示申请记录
+            $router->get('depart','Business\UnderController@department');//转发机房
         });
 
     });

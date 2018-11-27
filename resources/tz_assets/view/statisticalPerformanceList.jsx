@@ -56,6 +56,7 @@ class StatisticalPerformanceList extends React.Component {
     }
     handleChange = (value) => {
         this.props.statisticalPerformancesStores.business_type = value;
+        this.props.statisticalPerformancesStores.statisticalPerformances = [];
         switch(value) {
             case 1:
                 columnData = [

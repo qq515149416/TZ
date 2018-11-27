@@ -32,7 +32,7 @@ import DefenseBusinesList from "../view/defenseBusinesList.jsx";
 import DefenseipReviewList from "../view/defenseipReviewList.jsx";
 
 
-
+const baseUrl = "/tz_admin/show";
 
 export default () => [
     <Route path="/tz_admin/user_list" component={UsersList} />,

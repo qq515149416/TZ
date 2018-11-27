@@ -1046,12 +1046,12 @@ class OrdersModel extends Model
             $return['msg'] = '无对应资源信息';
             return $return;
         }
-        if($order->remove_status < 1 || $order->remove_status = 6){
+        if($order->remove_status < 1 || $order->remove_status = 3){
             $return['code'] = 0;
             $return['msg'] = '资源已完成下架/暂未提交下架申请';
             return $return;
         }
-        if($edit['remove_status'] == '-1'){
+        if($edit['remove_status'] == 0){
             $update_status['remove_reason'] = $order->remove_reason.'驳回原因:'.$edit['remove_reason'];
             $update_status['remove_status'] = $edit['remove_status'];
             $update_status['machineroom'] = 0;
@@ -1066,13 +1066,10 @@ class OrdersModel extends Model
                 case 3:
                     $update_status['remove_status'] = 4;
                     break;
-                case 4:
-                    $update_status['remove_status'] = 5;
-                    break;
             }
         }
         DB::beginTransaction();//开启事务处理
-        if($order->remove_status == 5){
+        if($order->remove_status == 3){
             switch($order->resource_type){
                 case 4://ip
                     $ip['ip_status'] = 0;
@@ -1108,7 +1105,7 @@ class OrdersModel extends Model
                 $return['msg'] = '资源下架修改失败!';
                 return $return;
             }
-            $update_status['remove_status'] = 6;
+            $update_status['remove_status'] = 4;
         }
         $status = DB::table('tz_orders')->where(['order_sn'=>$edit['order_sn']])->update($update_status);
         if($status == 0){

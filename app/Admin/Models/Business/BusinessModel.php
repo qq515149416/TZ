@@ -495,12 +495,12 @@ class BusinessModel extends Model
             $return['msg'] = '无对应业务';
             return $return;
         }
-        if($business->remove_status < 1 || $business->remove_status = 6){//当业务未提交申请或已下架，直接返回
+        if($business->remove_status < 1 || $business->remove_status = 4){//当业务未提交申请或已下架，直接返回
             $return['code'] = 0;
             $return['msg'] = '业务已完成下架/暂未提交下架申请';
             return $return;
         }
-        if($edit['remove_status'] == '-1'){
+        if($edit['remove_status'] == 0){
             $update['remove_reason'] = $business->remove_reason.'驳回原因:'.$edit['remove_reason'];
             $update['remove_status'] = $edit['remove_status'];
             $update['machineroom'] = 0;
@@ -515,14 +515,11 @@ class BusinessModel extends Model
                 case 3:
                     $update['remove_status'] = 4;
                     break;
-                case 4:
-                    $update['remove_status'] = 5;
-                    break;
 
             }
         }
         DB::beginTransaction();//开启事务处理
-        if($business->remove_status == 5){
+        if($business->remove_status == 3){
             switch ($business->business_type) {
                 case 1:
                     $rent['used_status'] = 0;
@@ -556,7 +553,7 @@ class BusinessModel extends Model
                 $return['code'] = 0;
                 $return['msg'] = '业务相关机器下架状态修改失败'; 
             }
-            $update['remove_status'] = 6;
+            $update['remove_status'] = 4;
         }
         $remove = DB::table('tz_business')->where(['business_number'=>$edit['business_number']])->update($update);
         if($remove == 0){

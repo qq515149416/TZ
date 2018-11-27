@@ -62,7 +62,7 @@ Route::group([
     $router->get('vi', 'Others\ContactsController@vi');
 
     /**
-     * 前端
+     * 前端显示
      */
     Route::group([
         'prefix' => 'show',
@@ -100,7 +100,7 @@ Route::group([
         $router->get('/defensePackage', 'Show\DefensePackageController@index');
         $router->get('/defenseBusines', 'Show\DefenseBusinessController@index');
         $router->get('/defenseipReview', 'Show\DefenseipReviewController@index');
-        
+
     });
 
     /**

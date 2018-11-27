@@ -109,11 +109,7 @@ class  Memory extends Model
 	 */
 	public function edit($data){
 		if($data && $data['id']+0) {
-			$res = $this->checkDel($id);
-			if($res['code'] != 1){
-				return $res;
-			}
-
+			
 			$row = self::where('id', $data['id'])
 				->update($data);
 
@@ -136,48 +132,22 @@ class  Memory extends Model
 	 * @return [type]     [description]
 	 */
 	public function dele($id) {
-		$res = $this->checkDel($id);
-		if($res['code'] != 1){
-			return $res;
-		}
-
-		$row = $this->where('id',$id)->delete();
-		if($row != false){
-			$return['code'] 	= 1;
-			$return['msg'] 	= '删除memory信息成功';
+		if($id) {
+			$row = $this->where('id',$id)->delete();
+			if($row != false){
+				$return['code'] 	= 1;
+				$return['msg'] 	= '删除memory信息成功';
+			} else {
+				$return['code'] 	= 0;
+				$return['msg'] 	= '删除memory信息失败';
+			}
 		} else {
 			$return['code'] 	= 0;
-			$return['msg'] 	= '删除memory信息失败';
+			$return['msg'] 	= '无法删除memory信息';
 		}
-	
 
 		return $return;
 	}
-
-	/**
-	* 检查是否可编辑
-	*/
-	protected function checkDel($id){
-
-		$mod = $this->find($id);
-		if($mod == null){
-			return [
-				'code'	=> 0,
-				'msg'	=> '无此id',
-			];
-		}
-		if($mod->memory_used != 0){
-			return [
-				'code'	=> 2,
-				'msg'	=> '内存正在使用,无法删除或编辑',
-			];
-		}else{
-			return [
-				'code'	=>1,
-			];
-		}
-	}
-
 
 	/**
 	* 获取机房的信息

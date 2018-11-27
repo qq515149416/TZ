@@ -30,9 +30,9 @@ import DefenseipList from "../view/defenseipList.jsx";
 import DefensePackageList from "../view/defensePackageList.jsx";
 import DefenseBusinesList from "../view/defenseBusinesList.jsx";
 import DefenseipReviewList from "../view/defenseipReviewList.jsx";
+import { routerConfig } from "../config/common/config.js"
 
-
-const baseUrl = "/tz_admin/show";
+const baseUrl = routerConfig.baseUrl;
 
 export default () => [
     <Route path={`${baseUrl}/user_list`} component={UsersList} />,

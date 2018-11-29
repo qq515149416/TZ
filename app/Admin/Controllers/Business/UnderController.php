@@ -35,7 +35,7 @@ class UnderController extends Controller
     public function underHistory(Request $request){
         $history = $request->only(['type']);
         $history_for = new UnderModel();
-        $history_result = $apply_for->underHistory();
+        $history_result = $history_for->underHistory($history);
         return tz_ajax_echo($history_result['data'],$history_result['msg'],$history_result['code']);
     }
 
@@ -47,7 +47,7 @@ class UnderController extends Controller
     public function doUnder(Request $request){
         $do_parm = $request->only(['remove_reason','business_number','remove_status','machineroom','order_sn','type']);
         $do_for = new UnderModel();
-        $do_result = $do_for->doUnder();
+        $do_result = $do_for->doUnder($do_parm);
         return tz_ajax_echo($do_result,$do_result['msg'],$do_result['code']);
     }
 

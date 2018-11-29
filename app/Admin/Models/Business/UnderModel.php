@@ -64,8 +64,7 @@ class UnderModel extends Model
 		                foreach($resource as $resource_key=>$resource_value){
 		                    $order_remove['remove_reason'] = '关联业务申请下架，关联业务资源同步下架';
 		                    $order_remove['remove_status'] = 1;
-		                    dd($resource_value['order_sn']);
-		                    $order_row = DB::table('tz_orders')->where(['order_sn'=>$resource_value['order_sn']])->update($order_remove);
+		                    $order_row = DB::table('tz_orders')->where(['order_sn'=>$resource_value->order_sn])->update($order_remove);
 		                    if($order_row == 0){//关联业务的资源同步下架失败
 		                        DB::rollBack();
 		                        $return['code'] = 0;
@@ -387,7 +386,7 @@ class UnderModel extends Model
                 $business_value->removestatus = $remove_status[$business_value->remove_status];
             }
 		}
-		$orders = DB::table('tz_orders')->where($where)->where('resource_type','>',3)->whereBetween('remove_status',[1,3])->orderBy('updated_at','desc')->select('business_sn','customer_name','resource_type','business_name','machine_sn','resource','remove_status')->get();
+		$orders = DB::table('tz_orders')->where($where)->where('resource_type','>',3)->whereBetween('remove_status',[1,3])->orderBy('updated_at','desc')->select('order_sn','business_sn','customer_name','resource_type','business_name','machine_sn','resource','remove_status')->get();
         if(!empty($orders)){
             $resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn',11=>'高防IP'];
             $remove_status = [0=>'正常使用',1=>'下架申请中',2=>'机房处理中',3=>'清空下架中',4=>'下架完成'];

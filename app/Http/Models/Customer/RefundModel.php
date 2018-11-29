@@ -87,6 +87,7 @@ class RefundModel extends Model
             $return['msg'] = '该订单,无法申请退款,原因:订单未完成支付';
             return $return;
         }
+        //查找相同支付流水的其他订单的状态，方便后面是否是第一个退款的订单
         $order_flow_same = DB::table('tz_orders')->where(['serial_number'=>$order->serial_number])->where('order_sn','<>',$refund_order['refund_order'])->select('order_sn','business_sn','order_status','business_id','business_name','resource_type','end_time','created_at','serial_number')->get();
         if(!empty($order_flow_same)){
             foreach($order_flow_same as $same=>$value){

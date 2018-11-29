@@ -50,16 +50,21 @@ class UnderModel extends Model
 	        	}
 	        	//查找业务关联的资源
 		        $resources = DB::table('tz_orders')->where(['business_sn'=>$apply['business_number']])->where('price','>','0.00')->where('resource_type','>',3)->orderBy('end_time','desc')->get(['order_sn','resource_type','machine_sn','resource','price','end_time'])->groupBy('machine_sn')->toArray();
+		       
 		        if(!empty($resources)){//存在业务关联的资源，进一步进行查找资源的最新情况
 		            $resource_keys = array_keys($resources);//获取分组后的资源编号
 		            foreach($resource_keys as $key=>$value){//获取业务关联的最新资源
 		                $business['machine_sn'] = $value;
-		                $resource[$key] = DB::table('tz_orders')->where(['business_sn'=>$apply['business_number']])->where('remove_status','<',1)->orderBy('end_time','desc')->select('order_sn','resource_type','machine_sn','resource','price','end_time','order_status')->first();
+		                $business['business_sn'] = $apply['business_number'];
+		                $business['remove_status'] = 0;
+		             
+		                $resource[$key] = DB::table('tz_orders')->where($business)->orderBy('end_time','desc')->select('order_sn','resource_type','machine_sn','resource','price','end_time','order_status')->first();
 		            }
 		            if(!empty($resource)){//存在关联业务则继续对关联的资源进行同步下架
 		                foreach($resource as $resource_key=>$resource_value){
 		                    $order_remove['remove_reason'] = '关联业务申请下架，关联业务资源同步下架';
 		                    $order_remove['remove_status'] = 1;
+		                    dd($resource_value['order_sn']);
 		                    $order_row = DB::table('tz_orders')->where(['order_sn'=>$resource_value['order_sn']])->update($order_remove);
 		                    if($order_row == 0){//关联业务的资源同步下架失败
 		                        DB::rollBack();

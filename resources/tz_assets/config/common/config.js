@@ -26,6 +26,8 @@ import DefenseipsStores from "../../stores/defenseip-stores";
 import DefensePackagesStores from "../../stores/defensePackage-stores";
 import DefenseBusinessStores from "../../stores/defenseBusiness-stores";
 import DefenseipReviewsStores from "../../stores/defenseipReview-stores";
+import DismissalReviewsStores from "../../stores/dismissalReview-stores";
+
 
 //路由配置共用参数
 export const routerConfig = {
@@ -62,6 +64,7 @@ export const stores = {
     defensePackagesStores: new DefensePackagesStores(),
     defenseBusinessStores: new DefenseBusinessStores(),
     defenseipReviewsStores: new DefenseipReviewsStores(),
+    dismissalReviewsStores: new DismissalReviewsStores(),
 }
 export const domIds = [
     "user_list",
@@ -94,4 +97,5 @@ export const domIds = [
     "defensePackage",
     "defenseBusiness",
     "defenseipReview",
+    "dismissalReview",
 ];

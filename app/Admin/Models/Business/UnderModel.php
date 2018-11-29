@@ -50,14 +50,14 @@ class UnderModel extends Model
 	        	}
 	        	//查找业务关联的资源
 		        $resources = DB::table('tz_orders')->where(['business_sn'=>$apply['business_number']])->where('price','>','0.00')->where('resource_type','>',3)->orderBy('end_time','desc')->get(['order_sn','resource_type','machine_sn','resource','price','end_time'])->groupBy('machine_sn')->toArray();
-		       
+
 		        if(!empty($resources)){//存在业务关联的资源，进一步进行查找资源的最新情况
 		            $resource_keys = array_keys($resources);//获取分组后的资源编号
 		            foreach($resource_keys as $key=>$value){//获取业务关联的最新资源
 		                $business['machine_sn'] = $value;
 		                $business['business_sn'] = $apply['business_number'];
 		                $business['remove_status'] = 0;
-		             
+
 		                $resource[$key] = DB::table('tz_orders')->where($business)->orderBy('end_time','desc')->select('order_sn','resource_type','machine_sn','resource','price','end_time','order_status')->first();
 		            }
 		            if(!empty($resource)){//存在关联业务则继续对关联的资源进行同步下架
@@ -202,13 +202,14 @@ class UnderModel extends Model
 		            $return['code'] = 0;
 		            $return['msg'] = '无对应业务';
 		            return $return;
-		        }
-		        if($business->remove_status < 1 || $business->remove_status = 4){//当业务未提交申请或已下架，直接返回
+                }
+                // dd($business);
+		        if($business->remove_status < 1 || $business->remove_status == 4){//当业务未提交申请或已下架，直接返回
 		            $return['code'] = 0;
 		            $return['msg'] = '业务已完成下架/暂未提交下架申请';
 		            return $return;
 		        }
-		        if($edit['remove_status'] == 0){
+		        if(isset($edit['remove_status'])){
 		            $update['remove_reason'] = $business->remove_reason.'驳回原因:'.$edit['remove_reason'];
 		            $update['remove_status'] = $edit['remove_status'];
 		            $update['machineroom'] = 0;
@@ -233,14 +234,14 @@ class UnderModel extends Model
 		                    $rent['used_status'] = 0;
 		                    $rent['own_business'] = 0;
 		                    $rent['business_end'] = Null;
-		                    $row = DB::table('idc_machine')->where(['machine_num'=>$business->machine_number,'business_number'=>$edit['business_number'],'business_type'=>1])->update($rent);
+		                    $row = DB::table('idc_machine')->where(['machine_num'=>$business->machine_number,'own_business'=>$edit['business_number'],'business_type'=>1])->update($rent);
 		                    break;
 		                case 2:
 		                    $host['used_status'] = 0;
 		                    $host['own_business'] = 0;
 		                    $host['business_end'] = Null;
 		                    $host['machine_status'] = 1;
-		                    $row = DB::table('idc_machine')->where(['machine_num'=>$business->machine_number,'business_number'=>$edit['business_number'],'business_type'=>2])->update($host);
+		                    $row = DB::table('idc_machine')->where(['machine_num'=>$business->machine_number,'own_business'=>$edit['business_number'],'business_type'=>2])->update($host);
 		                    break;
 		                case 3:
 		                    $cabinet = DB::table('idc_cabinet')->where(['cabinet_id'=>$business->machine_number])->select('own_business')->first();//获取机柜原来的业务号

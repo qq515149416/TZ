@@ -80,6 +80,11 @@ const styles = theme => ({
       };
     }
     componentDidMount() {
+        if(this.props.otherConfig) {
+            this.setState({
+                ...this.props.otherConfig
+            });
+        }
         // this.props.usersLinkInfoStores.getData();
     }
     getData() {

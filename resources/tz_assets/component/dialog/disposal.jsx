@@ -76,7 +76,7 @@ class Disposal extends React.Component {
               取消
             </Button>
             <Button onClick={this.obtained} color="primary">
-              修改
+              下架
             </Button>
           </DialogActions>
         </Dialog>

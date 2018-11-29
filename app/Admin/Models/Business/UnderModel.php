@@ -234,6 +234,8 @@ class UnderModel extends Model
 		                    $rent['used_status'] = 0;
 		                    $rent['own_business'] = 0;
 		                    $rent['business_end'] = Null;
+		                    // $rent['loginname'] = $edit['loginname'];
+		                    // $rent['loginpass'] = $edit['loginpass'];
 		                    $row = DB::table('idc_machine')->where(['machine_num'=>$business->machine_number,'own_business'=>$edit['business_number'],'business_type'=>1])->update($rent);
 		                    break;
 		                case 2:
@@ -288,7 +290,7 @@ class UnderModel extends Model
 		            $return['msg'] = '资源已完成下架/暂未提交下架申请';
 		            return $return;
 		        }
-		        if($edit['remove_status'] == 0){
+		        if(isset($edit['remove_status']){
 		            $update_status['remove_reason'] = $order->remove_reason.'驳回原因:'.$edit['remove_reason'];
 		            $update_status['remove_status'] = $edit['remove_status'];
 		            $update_status['machineroom'] = 0;

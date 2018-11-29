@@ -99,8 +99,8 @@ class RefundModel extends Model
     	$refund['refund_num'] = $refund_num;//退款号
     	$refund['refund_order'] = $order->order_sn;//退款订单
     	$refund['refund_business'] = $order->business_sn;//退款业务号
-    	$refund['refund_customer_id'] = Auth::user()->id;//客户id
-    	$refund['refund_customer_name'] = Auth::user()->name?Auth::user()->name:Auth::user()->email;//客户基本信息
+    	$refund['refund_customer_id'] = $order->customer_id;//客户id
+    	$refund['refund_customer_name'] = $order->customer_name;//客户基本信息
     	$refund['refund_clerk_id'] = $order->business_id;//业务员id
     	$refund['refund_clerk_name']= $order->business_name;//业务员姓名
     	$refund['resource_type'] = $order->resource_type;//资源类型
@@ -110,7 +110,7 @@ class RefundModel extends Model
     	$refund['refund_money'] = $order->refund_money;//可退款金额
     	DB::beginTransaction();//DB::rollBack();DB::commit();
     	$row = DB::table('tz_refund')->insertGetId($refund);
-    	if($row == false){
+    	if($row == 0){
     		DB::rollBack();
     		$return['code'] = 0;
     		$refund['msg'] = '申请退款失败,请确认后重新操作';
@@ -122,7 +122,7 @@ class RefundModel extends Model
     		'order_status' => 'in (1,3)';
     	];
     	$order_row = DB::table('tz_orders')->where($where)->update(['order_status'=>6]);
-    	if($order_row != false){
+    	if($order_row != 0){
     		DB::commit();
     		$return['code'] = 1;
     		$refund['msg'] = '申请退款成功(单号:'.$refund_num.'),将退还到账户余额,请耐心等待工作人员处理!';
@@ -147,7 +147,7 @@ class RefundModel extends Model
     		return $return;
     	}
     	// 查询对应退款单的信息
-    	$where = ['refund_num'=>$cancel_order['cancel_refund'],'refund_status'=>0,'refund_customer_id'=>Auth::user()->id];
+    	$where = ['refund_num'=>$cancel_order['cancel_refund'],'refund_status'=>0];
     	$refund = $this->where($where)->select('id','refund_order','resource_type')->first();
     	if(empty($refund)){//不存在退款单
     		$return['code'] = 0;
@@ -157,16 +157,16 @@ class RefundModel extends Model
     	DB::beginTransaction();
     	// 取消退款
     	$row = DB::table('tz_refund')->where($where)->update(['refund_status'=>3]);
-    	if($row == false){//取消失败
+    	if($row == 0){//取消失败
     		DB::rollBack();
     		$return['code'] = 0;
     		$return['msg'] = '取消退款失败';
     		return $return;
     	}
     	// 更改订单状态
-    	$order_where = ['order_sn'=>$refund->refund_order,'order_status'=>6,'customer_id'=>Auth::user()->id,'resource'=>$refund->resource_type];
+    	$order_where = ['order_sn'=>$refund->refund_order,'order_status'=>6,'resource'=>$refund->resource_type];
     	$oreder_row = DB::table('tz_orders')->where($order_where)->update(['order_status'=>2]);
-    	if($order_row != false){
+    	if($order_row != 0){
     		DB::commit();
     		$return['code'] = 1;
     		$return['msg'] = '取消退款成功';
@@ -186,7 +186,7 @@ class RefundModel extends Model
      * @return [type]              [description]
      */
     public function checkRefund($check_param){
-        'refund_num','refund_status','refund_note'
+        //'refund_num','refund_status','refund_note'
         $refund_order = $this->where(['refund_num'=>$check_param['refund_num']])->select('refund_order','refund_business','refund_customer_id','refund_status','created_at')->first();
         if(empty($refund_order)){//不存在对应的退款记录申请
             $return['code'] = 0;
@@ -252,6 +252,7 @@ class RefundModel extends Model
             $return['msg'] = '退款记录编号:'.$check_param['refund_num'].'修改关联订单状态失败';
             return $return;
         }
+        //未完
         
     
     }
@@ -267,8 +268,8 @@ class RefundModel extends Model
     		$return['msg'] = '无法删除退款记录';
     		return $return;
     	}
-    	// 查询对应退款单的信息
-    	$where = ['refund_num'=>$delete_refund['delete_refund'],'refund_status'=>3,'refund_customer_id'=>Auth::user()->id];
+    	// 查询对应退款单的信息,'refund_customer_id'=>Auth::user()->id
+    	$where = ['refund_num'=>$delete_refund['delete_refund'],'refund_status'=>3];
     	$refund = $this->where($where)->select('id')->first();
     	if(empty($refund)){
     		$return['code'] = 0;
@@ -292,7 +293,7 @@ class RefundModel extends Model
      * @return array/string            返回错误信息/可退金额
      */
     public function countRefund($order_num,$apply_time = 0){
-        $order = DB::table('tz_orders')->where(['order_sn'=>$order_num])->select('order_sn','price','duration','business_sn','order_status','business_id','business_name','resource_type','end_time','created_at')->first();
+        $order = DB::table('tz_orders')->where(['order_sn'=>$order_num])->select('order_sn','price','duration','customer_id','customer_name','business_sn','order_status','business_id','business_name','resource_type','end_time','created_at')->first();
         if(!$order){//不存在此订单
             $return['code'] = 0;
             $return['msg'] = '无对应订单,无法申请退款';

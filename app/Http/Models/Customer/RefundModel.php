@@ -133,7 +133,7 @@ class RefundModel extends Model
     	$refund['refund_money'] = $refund_money;//可退款金额
     	DB::beginTransaction();//DB::rollBack();DB::commit();
     	$row = DB::table('tz_refund')->insertGetId($refund);
-    	if($row == false){
+    	if($row == 0){
     		DB::rollBack();
     		$return['code'] = 0;
     		$refund['msg'] = '申请退款失败,请确认后重新操作';
@@ -145,7 +145,7 @@ class RefundModel extends Model
     		'order_status' => 'in (1,3)';
     	];
     	$order_row = DB::table('tz_orders')->where($where)->update(['order_status'=>6]);
-    	if($order_row != false){
+    	if($order_row != 0){
     		DB::commit();
     		$return['code'] = 1;
     		$refund['msg'] = '申请退款成功,将退还到账户余额,请耐心等待工作人员处理!';
@@ -180,7 +180,7 @@ class RefundModel extends Model
     	DB::beginTransaction();
     	// 取消退款
     	$row = DB::table('tz_refund')->where($where)->update(['refund_status'=>3]);
-    	if($row == false){//取消失败
+    	if($row == 0){//取消失败
     		DB::rollBack();
     		$return['code'] = 0;
     		$return['msg'] = '取消退款失败';
@@ -189,7 +189,7 @@ class RefundModel extends Model
     	// 更改订单状态
     	$order_where = ['order_sn'=>$refund->refund_order,'order_status'=>6,'customer_id'=>Auth::user()->id,'resource'=>$refund->resource_type];
     	$oreder_row = DB::table('tz_orders')->where($order_where)->update(['order_status'=>2]);
-    	if($order_row != false){
+    	if($order_row != 0){
     		DB::commit();
     		$return['code'] = 1;
     		$return['msg'] = '取消退款成功';

@@ -83,7 +83,7 @@ class WorkOrderController extends Controller
     public function department(){
         $where['sign'] = 3;
         $depart = DepartmentModel::where($where)->get(['id','depart_number','depart_name']);
-        if($depart->isEmpty){
+        if($depart->isEmpty()){
             $return['data'] = [];
             $return['code'] = 0;
             $return['msg'] = '暂无部门数据';

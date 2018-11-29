@@ -110,7 +110,7 @@ class RefundModel extends Model
     	$refund['refund_money'] = $order->refund_money;//可退款金额
     	DB::beginTransaction();//DB::rollBack();DB::commit();
     	$row = DB::table('tz_refund')->insertGetId($refund);
-    	if($row == false){
+    	if($row == 0){
     		DB::rollBack();
     		$return['code'] = 0;
     		$refund['msg'] = '申请退款失败,请确认后重新操作';
@@ -122,7 +122,7 @@ class RefundModel extends Model
     		'order_status' => 'in (1,3)';
     	];
     	$order_row = DB::table('tz_orders')->where($where)->update(['order_status'=>6]);
-    	if($order_row != false){
+    	if($order_row != 0){
     		DB::commit();
     		$return['code'] = 1;
     		$refund['msg'] = '申请退款成功(单号:'.$refund_num.'),将退还到账户余额,请耐心等待工作人员处理!';
@@ -157,7 +157,7 @@ class RefundModel extends Model
     	DB::beginTransaction();
     	// 取消退款
     	$row = DB::table('tz_refund')->where($where)->update(['refund_status'=>3]);
-    	if($row == false){//取消失败
+    	if($row == 0){//取消失败
     		DB::rollBack();
     		$return['code'] = 0;
     		$return['msg'] = '取消退款失败';
@@ -166,7 +166,7 @@ class RefundModel extends Model
     	// 更改订单状态
     	$order_where = ['order_sn'=>$refund->refund_order,'order_status'=>6,'customer_id'=>Auth::user()->id,'resource'=>$refund->resource_type];
     	$oreder_row = DB::table('tz_orders')->where($order_where)->update(['order_status'=>2]);
-    	if($order_row != false){
+    	if($order_row != 0){
     		DB::commit();
     		$return['code'] = 1;
     		$return['msg'] = '取消退款成功';
@@ -186,7 +186,7 @@ class RefundModel extends Model
      * @return [type]              [description]
      */
     public function checkRefund($check_param){
-        'refund_num','refund_status','refund_note'
+        //'refund_num','refund_status','refund_note'
         $refund_order = $this->where(['refund_num'=>$check_param['refund_num']])->select('refund_order','refund_business','refund_customer_id','refund_status','created_at')->first();
         if(empty($refund_order)){//不存在对应的退款记录申请
             $return['code'] = 0;
@@ -268,8 +268,8 @@ class RefundModel extends Model
     		$return['msg'] = '无法删除退款记录';
     		return $return;
     	}
-    	// 查询对应退款单的信息
-    	$where = ['refund_num'=>$delete_refund['delete_refund'],'refund_status'=>3,'refund_customer_id'=>Auth::user()->id];
+    	// 查询对应退款单的信息,'refund_customer_id'=>Auth::user()->id
+    	$where = ['refund_num'=>$delete_refund['delete_refund'],'refund_status'=>3];
     	$refund = $this->where($where)->select('id')->first();
     	if(empty($refund)){
     		$return['code'] = 0;

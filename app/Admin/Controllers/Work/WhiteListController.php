@@ -51,14 +51,13 @@ class WhiteListController extends Controller
 
 	/**
 	 * 白名单信息的提交
-	 * @param  Request  	white_ip		-IP地址;domain_name	-域名;record_number	-备案编号;binding_machine	-IP绑定的机器编号
-	 *			customer_id	-客户ID;customer_name	-客户姓名;submit_note	-备注;
+	 * @param  Request  	white_ip		-IP地址;domain_name	-域名;record_number	-备案编号;;submit_note	-备注;
 	 * @return json           返回录入状态
 	 */
 	public function insertWhiteList(WhiteListRequest $request){
 		
-			$insertdata = $request->only(['white_ip','domain_name','record_number','binding_machine','customer_id','customer_name','submit_note']);
-		
+			$insertdata = $request->only(['white_ip','domain_name','record_number','submit_note']);
+			
 			$insert = new WhiteListModel();
 
 			$return = $insert->insertWhiteList($insertdata);

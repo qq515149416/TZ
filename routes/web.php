@@ -92,10 +92,9 @@ Route::group([
     'prefix'     => 'home',
     'middleware' => 'UserOperationLog',
 ], function () {
-//支付接口
 
     Route::group([
-        'prefix' => 'recharge',
+        'prefix' => 'recharge',                        //充值分组
     ], function () {
         Route::group([
             'middleware' => 'CheckLogin',

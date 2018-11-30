@@ -101,14 +101,23 @@ class WhiteListController extends Controller
 
     /**
      * 域名跳转
-     * domain
+     * 接口: /tz_admin/whitelist/skipBeian
+     * 类型:GET
+     *
+     * 参数:
+     *   domain:  相应的域名
+     *
      * http://www.miibeian.gov.cn/icp/publish/query/icpMemoInfo_searchExecute.action?siteDomain=
      */
     public function skipBeian(Request $request)
     {
+//        header("Referer: /");
         $req = $request->all();
         $url = "http://www.miibeian.gov.cn/icp/publish/query/icpMemoInfo_searchExecute.action?siteDomain=" . $req['domain'];
-        return redirect($url);
+//        header('Location: '.$url);
+//        return redirect($url);
+//        return back()->withErrors(['错误一']);
+        dump(123);
     }
 
 }

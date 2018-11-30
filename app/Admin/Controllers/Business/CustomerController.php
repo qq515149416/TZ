@@ -81,7 +81,7 @@ class CustomerController extends Controller
     public function editClerk(Request $request){
         $clerk_id = $request->only(['clerk_id','customer_id']);
         $edit = new CustomerModel();
-        $edit_result = $edit->editClerk();
+        $edit_result = $edit->editClerk($clerk_id);
         return tz_ajax_echo($edit_result,$edit_result['msg'],$edit_result['code']);
     }
 

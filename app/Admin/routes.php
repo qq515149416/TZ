@@ -69,40 +69,48 @@ Route::group([
     ], function (Router $router) {
         $router->get('/user_list', 'Show\UserController@index');//用户列表
         $router->get('/user_link_list', 'Show\LinkUserController@index');
-        $router->get('/machine_room/show', 'Show\TestController@index');
-        $router->get('/machine_room/socket', 'Show\TestController@socket');
-        $router->get('/resource/ip', 'Show\IpController@index');
-        $router->get('/resource/machine_room', 'Show\MachineRoomController@index');
-        $router->get('/resource/cpu', 'Show\CpuController@index');
-        $router->get('/resource/harddisk', 'Show\HarddiskController@index');
-        $router->get('/resource/memory', 'Show\MemoryController@index');
-        $router->get('/resource/cabinet', 'Show\CabinetController@index');
-        $router->get('/article', 'Show\NewController@index');
-        $router->get('/resource/machinelibrary', 'Show\MachineLibraryController@index');
         $router->get('/hr/employeeManagement', 'Show\EmployeeManagementController@index');
-        $router->get('/crm/clientele', 'Show\ClienteleController@index');
-        $router->get('/business', 'Show\BusinessController@index');
-        $router->get('/checkbusiness', 'Show\CheckBusinessController@index');
-        $router->get('/business/order', 'Show\OrderController@index');
-        $router->get('/finance', 'Show\FinanceController@index');
-        $router->get('/statisticalPerformance', 'Show\StatisticalPerformanceController@index');
-        $router->get('/whitelist', 'Show\WhitelistController@index');
-        $router->get('/work_order', 'Show\WorkOrderTypeController@index');
         $router->get('/system_info', 'Show\SystemInformationController@index');
         $router->get('/hr/departmentview', 'Show\DepartmentController@index');
         $router->get('/hr/position', 'Show\PositionController@index');
         $router->get('/hr/usermanagement', 'Show\UserManagementController@index');
-        $router->get('/checkrecharge', 'Show\RechargeController@index');
-        $router->get('/reviewRecharge', 'Show\ReviewRechargeController@index');
-        $router->get('/pwdDepartment', 'Show\WorkOrderTypeController@getPwdDepart');
-        $router->get('/work_order_type', 'Show\WorkOrderTypeController@index');
-        $router->get('/defenseip', 'Show\DefenseipController@index');
-        $router->get('/defensePackage', 'Show\DefensePackageController@index');
-        $router->get('/defenseBusines', 'Show\DefenseBusinessController@index');
-        $router->get('/defenseipReview', 'Show\DefenseipReviewController@index');
-        $router->get('/dismissalReview', 'Show\DismissalReviewController@index');
-        $router->get('/disposal', 'Show\DisposalController@index');
-        $router->get('/disposalHistory', 'Show\DisposalHistoryController@index');
+        Route::group([
+            'middleware' => 'CheckStaff',
+        ],function(Router $router){
+            $router->get('/machine_room/show', 'Show\TestController@index');
+            $router->get('/machine_room/socket', 'Show\TestController@socket');
+            $router->get('/resource/ip', 'Show\IpController@index');
+            $router->get('/resource/machine_room', 'Show\MachineRoomController@index');
+            $router->get('/resource/cpu', 'Show\CpuController@index');
+            $router->get('/resource/harddisk', 'Show\HarddiskController@index');
+            $router->get('/resource/memory', 'Show\MemoryController@index');
+            $router->get('/resource/cabinet', 'Show\CabinetController@index');
+            $router->get('/article', 'Show\NewController@index');
+            $router->get('/resource/machinelibrary', 'Show\MachineLibraryController@index');
+            
+            $router->get('/crm/clientele', 'Show\ClienteleController@index');
+            $router->get('/business', 'Show\BusinessController@index');
+            $router->get('/checkbusiness', 'Show\CheckBusinessController@index');
+            $router->get('/business/order', 'Show\OrderController@index');
+            $router->get('/finance', 'Show\FinanceController@index');
+            $router->get('/statisticalPerformance', 'Show\StatisticalPerformanceController@index');
+            $router->get('/whitelist', 'Show\WhitelistController@index');
+            $router->get('/work_order', 'Show\WorkOrderTypeController@index');
+            
+           
+            $router->get('/checkrecharge', 'Show\RechargeController@index');
+            $router->get('/reviewRecharge', 'Show\ReviewRechargeController@index');
+            $router->get('/pwdDepartment', 'Show\WorkOrderTypeController@getPwdDepart');
+            $router->get('/work_order_type', 'Show\WorkOrderTypeController@index');
+            $router->get('/defenseip', 'Show\DefenseipController@index');
+            $router->get('/defensePackage', 'Show\DefensePackageController@index');
+            $router->get('/defenseBusines', 'Show\DefenseBusinessController@index');
+            $router->get('/defenseipReview', 'Show\DefenseipReviewController@index');
+            $router->get('/dismissalReview', 'Show\DismissalReviewController@index');
+            $router->get('/disposal', 'Show\DisposalController@index');
+            $router->get('/disposalHistory', 'Show\DisposalHistoryController@index');
+        });
+        
     });
 
     /**

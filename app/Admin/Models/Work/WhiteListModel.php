@@ -153,7 +153,6 @@ class WhiteListModel extends Model
 
 		$insertdata['customer_id'] 	= $check['data']['customer_id'];
 		$insertdata['binding_machine']= $check['data']['machine_number'];
-		
 		$admin_id 			= Admin::user()->id;
 		$fullname 			= Admin::user()->name?Admin::user()->name:Admin::user()->username;
 		$insertdata['submit_id'] 	= $admin_id;			
@@ -161,7 +160,7 @@ class WhiteListModel extends Model
 		$insertdata['submit'] 		= 2;			// 提交方
 		$insertdata['white_status'] 	= 0;			//待审核
 		//查找是否存在已提交过的申请单
-		dd($insertdata['domain_name']);
+
 		$check = $this->where('domain_name',$insertdata['domain_name'])->select(['white_status','white_ip'])->get();
 		//根据审核状态返回信息
 		foreach ($check as $k => $v) {

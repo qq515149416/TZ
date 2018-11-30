@@ -382,6 +382,15 @@ const styles = theme => ({
                             //     </TableCell>
                             //   )
                             // } else {
+                            if(item.render) {
+                                return item.render((element) => {
+                                    return (
+                                        <TableCell className={classes.td} numeric>
+                                            {element}
+                                        </TableCell>
+                                    );
+                                },n[item.id]);
+                            }
                               return (
                                 <TableCell className={classes.td} numeric>{item.id.indexOf(".") > -1 ? n[item.id.split(".")[0]][item.id.split(".")[1]] : n[item.id]}</TableCell>
                               )

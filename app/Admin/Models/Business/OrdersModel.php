@@ -203,7 +203,7 @@ class OrdersModel extends Model
         $sales_id = Admin::user()->id;
         $insert_data['business_id'] = $sales_id;
         $insert_data['business_name'] = Admin::user()->name?Admin::user()->name:Admin::user()->username;
-        $insert_data['month'] = (int)date('Ym',time());
+        // $insert_data['month'] = (int)date('Ym',time());
         $insert_data['created_at'] = Carbon::now()->toDateTimeString();
         DB::beginTransaction();//开启事务处理
         $row = DB::table('tz_orders')->insert($insert_data);
@@ -230,7 +230,7 @@ class OrdersModel extends Model
             $money = DB::table('tz_users')->where(['id'=>$insert_data['customer_id']])->value('money');
             $order_flow['before_money'] = $money;
             $order_flow['after_money'] = bcsub($money,$insert_data['price'],2);
-            $order_flow['month'] = (int)date('Ym',time());
+            // $order_flow['month'] = (int)date('Ym',time());
             $order_flow['created_at'] = date('Y-m-d H:i:s',time());
             $flow_row = DB::table('tz_orders_flow')->insert($order_flow);
             if($flow_row == 0){
@@ -414,7 +414,7 @@ class OrdersModel extends Model
             $order['payable_money'] = bcmul($business->money,$renew['length'],2);//订单应付金额
             $order['order_note'] = $renew['order_note'];//订单备注
             $order['order_status'] = 0;//订单状态为未支付
-            $order['month'] = date('Ym',time());//订单创建月份
+            // $order['month'] = date('Ym',time());//订单创建月份
             $order['created_at'] = date('Y-m-d H:i:s',time());//订单创建时间
             $business_order = DB::table('tz_orders')->insertGetId($order);
 
@@ -518,7 +518,7 @@ class OrdersModel extends Model
                 $order['payable_money'] = bcmul($order_result->price,$renew['length'],2);//订单应付金额
                 $order['order_note'] = $renew['order_note'];//订单备注
                 $order['order_status'] = 0;//订单状态为未支付
-                $order['month'] = date('Ym',time());//订单创建月份
+                // $order['month'] = date('Ym',time());//订单创建月份
                 $order['created_at'] = date('Y-m-d H:i:s',time());//订单创建时间
                 $business_order = DB::table('tz_orders')->insertGetId($order);
 
@@ -999,7 +999,7 @@ class OrdersModel extends Model
         if($update == false){
             $return['code'] = 0;
             $return['msg'] = '资源申请下架失败';
-            
+
         } else {
             $return['code'] = 1;
             $return['msg'] = '资源申请下架成功';

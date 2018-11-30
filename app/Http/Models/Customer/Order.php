@@ -71,7 +71,7 @@ class Order extends Model
                     ->orderBy('tz_orders.created_at','desc')
         			->select('tz_orders.id','tz_orders.order_sn','tz_orders.business_sn','tz_orders.business_id','tz_orders.end_time','tz_orders.resource_type','tz_orders.order_type','tz_orders.machine_sn','tz_orders.resource','tz_orders.price','tz_orders.duration','tz_orders.payable_money','tz_orders.end_time','tz_orders.serial_number','tz_orders.pay_time','tz_orders.order_status','tz_orders.order_note','tz_orders.created_at','tz_orders_flow.before_money','tz_orders_flow.after_money')
         			->get();
-        
+
 		if(count($order) == 0){
 			return false;
 		}
@@ -176,7 +176,7 @@ class Order extends Model
 				break;
 			case '10':
 				$list->resource_type = 'cdn';
-				break;	
+				break;
 			case '11':
 				$package = DB::table('tz_defenseip_package')
 						->select(['protection_value','site'])
@@ -195,7 +195,7 @@ class Order extends Model
 				}
 				$list->protection_value = $package->protection_value;
 				$list->resource_type = '高防IP';
-				break;		
+				break;
 			default:
 				$list->resource_type = '无此类型,请核对数据库';
 				break;
@@ -221,7 +221,7 @@ class Order extends Model
 			$return['code']	= 0;
 			return $return;
 		}
-		
+
 		$res = $row->delete();
 
 		if(!$res){
@@ -342,7 +342,7 @@ class Order extends Model
 				$resource[$key]['resourcetype'] = $resource_type[$value['resource_type']];
 			}
 			$orders = ['IP'=>$this->filter($resource,4),'cpu'=>$this->filter($resource,5),'harddisk'=>$this->filter($resource,6),'memory'=>$this->filter($resource,7),'bandwidth'=>$this->filter($resource,8),'protected'=>$this->filter($resource,9),'cdn'=>$this->filter($resource,10)];
-			
+
 			$return['data'] = $orders;
 			$return['code'] = 1;
 			$return['msg']	= '该业务下的其他资源信息获取成功';
@@ -412,7 +412,7 @@ class Order extends Model
 			$order['payable_money'] = bcmul($business->money,$renew['length'],2);//订单应付金额
 			$order['order_note'] = $renew['order_note'];//订单备注
 			$order['order_status'] = 0;//订单状态为未支付
-			$order['month'] = date('Ym',time());//订单创建月份
+			// $order['month'] = date('Ym',time());//订单创建月份
 			$order['created_at'] = date('Y-m-d H:i:s',time());//订单创建时间
 			$business_order = DB::table('tz_orders')->insertGetId($order);
 
@@ -431,7 +431,7 @@ class Order extends Model
 				$return['msg'] = '业务续费失败!';
 				return $return;
 			}
-			
+
 			switch ($order['resource_type']) {
 				case 1:
 					$machine = [];
@@ -519,7 +519,7 @@ class Order extends Model
 				$order['payable_money'] = bcmul($order_result->price,$renew['length'],2);//订单应付金额
 				$order['order_note'] = $renew['order_note'];//订单备注
 				$order['order_status'] = 0;//订单状态为未支付
-				$order['month'] = date('Ym',time());//订单创建月份
+				// $order['month'] = date('Ym',time());//订单创建月份
 				$order['created_at'] = date('Y-m-d H:i:s',time());//订单创建时间
 				$business_order = DB::table('tz_orders')->insertGetId($order);
 
@@ -538,7 +538,7 @@ class Order extends Model
 					$return['msg'] = '业务续费失败!请重新操作';
 					return $return;
 				}
-				
+
 				switch ($order['resource_type']) {
 					case 4:
 						$resource = [];
@@ -641,7 +641,7 @@ class Order extends Model
 	// 	return $return;
 	// }
 	//
-	 
+
 	/**
 	 * 展示刚刚续费的订单
 	 * @param  array $renew_order 刚刚续费的订单id

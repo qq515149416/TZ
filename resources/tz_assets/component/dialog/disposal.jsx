@@ -30,21 +30,42 @@ class Disposal extends React.Component {
         });
     }
     obtained = () => {
-        var confirm_next = confirm("是否要将"+this.props.machine_number+"机器下架");
-        if(confirm_next) {
-            post("under/apply_under",{
-                business_number: this.props.business_number,
-                remove_reason: this.remove_reason.value,
-                type: 1
-            }).then((data)=>{
-                if(data.data.code==1) {
-                    alert(data.data.msg);
-                    this.close();
-                } else {
-                    alert(data.data.msg);
-                }
-            });
+        if(this.props.disposal_type==1) {
+            let confirm_next = confirm("是否要将"+this.props.machine_number+"机器下架");
+            if(confirm_next) {
+                post("under/apply_under",{
+                    business_number: this.props.business_number,
+                    remove_reason: this.remove_reason.value,
+                    type: 1
+                }).then((data)=>{
+                    if(data.data.code==1) {
+                        alert(data.data.msg);
+                        this.close();
+                    } else {
+                        alert(data.data.msg);
+                    }
+                });
+            }
         }
+
+        if(this.props.disposal_type==2) {
+            let confirm_next = confirm("是否要将"+this.props.resource+"资源下架");
+            if(confirm_next) {
+                post("under/apply_under",{
+                    order_sn: this.props.order_sn,
+                    remove_reason: this.remove_reason.value,
+                    type: 2
+                }).then((data)=>{
+                    if(data.data.code==1) {
+                        alert(data.data.msg);
+                        this.close();
+                    } else {
+                        alert(data.data.msg);
+                    }
+                });
+            }
+        }
+
     }
     render() {
         return [
@@ -76,7 +97,7 @@ class Disposal extends React.Component {
               取消
             </Button>
             <Button onClick={this.obtained} color="primary">
-              修改
+              下架
             </Button>
           </DialogActions>
         </Dialog>

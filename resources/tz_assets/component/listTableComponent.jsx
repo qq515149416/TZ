@@ -80,6 +80,11 @@ const styles = theme => ({
       };
     }
     componentDidMount() {
+        if(this.props.otherConfig) {
+            this.setState({
+                ...this.props.otherConfig
+            });
+        }
         // this.props.usersLinkInfoStores.getData();
     }
     getData() {
@@ -377,6 +382,15 @@ const styles = theme => ({
                             //     </TableCell>
                             //   )
                             // } else {
+                            if(item.render) {
+                                return item.render((element) => {
+                                    return (
+                                        <TableCell className={classes.td} numeric>
+                                            {element}
+                                        </TableCell>
+                                    );
+                                },n[item.id]);
+                            }
                               return (
                                 <TableCell className={classes.td} numeric>{item.id.indexOf(".") > -1 ? n[item.id.split(".")[0]][item.id.split(".")[1]] : n[item.id]}</TableCell>
                               )
@@ -408,7 +422,7 @@ const styles = theme => ({
                               }
                               {
                                 (this.props.headTitlesData.find(item => item.id=="operat").extend && this.props.headTitlesData.find(item => item.id=="operat").extendElement ) && (
-                                  this.props.headTitlesData.find(item => item.id=="operat").extendElement(n)
+                                  this.props.headTitlesData.find(item => item.id=="operat").extendElement(n,this.props.updata)
                                 )
                               }
                               {

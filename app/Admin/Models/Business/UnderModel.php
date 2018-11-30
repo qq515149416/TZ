@@ -50,17 +50,21 @@ class UnderModel extends Model
 	        	}
 	        	//查找业务关联的资源
 		        $resources = DB::table('tz_orders')->where(['business_sn'=>$apply['business_number']])->where('price','>','0.00')->where('resource_type','>',3)->orderBy('end_time','desc')->get(['order_sn','resource_type','machine_sn','resource','price','end_time'])->groupBy('machine_sn')->toArray();
+
 		        if(!empty($resources)){//存在业务关联的资源，进一步进行查找资源的最新情况
 		            $resource_keys = array_keys($resources);//获取分组后的资源编号
 		            foreach($resource_keys as $key=>$value){//获取业务关联的最新资源
 		                $business['machine_sn'] = $value;
-		                $resource[$key] = DB::table('tz_orders')->where(['business_sn'=>$apply['business_number']])->where('remove_status','<',1)->orderBy('end_time','desc')->select('order_sn','resource_type','machine_sn','resource','price','end_time','order_status')->first();
+		                $business['business_sn'] = $apply['business_number'];
+		                $business['remove_status'] = 0;
+
+		                $resource[$key] = DB::table('tz_orders')->where($business)->orderBy('end_time','desc')->select('order_sn','resource_type','machine_sn','resource','price','end_time','order_status')->first();
 		            }
 		            if(!empty($resource)){//存在关联业务则继续对关联的资源进行同步下架
 		                foreach($resource as $resource_key=>$resource_value){
 		                    $order_remove['remove_reason'] = '关联业务申请下架，关联业务资源同步下架';
 		                    $order_remove['remove_status'] = 1;
-		                    $order_row = DB::table('tz_orders')->where(['order_sn'=>$resource_value['order_sn']])->update($order_remove);
+		                    $order_row = DB::table('tz_orders')->where(['order_sn'=>$resource_value->order_sn])->update($order_remove);
 		                    if($order_row == 0){//关联业务的资源同步下架失败
 		                        DB::rollBack();
 		                        $return['code'] = 0;
@@ -140,8 +144,8 @@ class UnderModel extends Model
 		            $business_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜'];
 		            $remove_status = [0=>'正常使用',1=>'下架申请中',2=>'机房处理中',3=>'清空下架中',4=>'下架完成'];
 		            foreach($history as $history_key => $history_value){
-		                $history[$history_key]['resource_type'] = $business_type[$history_value['business_type']];
-		                $history[$history_key]['remove_status'] = $remove_status[$history_value['remove_status']];
+		                $history_value->resourcetype = $business_type[$history_value->business_type];
+		                $history_value->remove_status = $remove_status[$history_value->remove_status];
 		            }
 		            $return['data'] = $history;
 		            $return['code'] = 1;
@@ -154,13 +158,13 @@ class UnderModel extends Model
 		        return $return;
     			break;
     		case 2:
-    			$history = DB::table('tz_orders')->where('resource_type','>',3)->where(['remove_status'=>4])->orderBy('updated_at','desc')->select('business_sn','customer_name','resource_type','business_name','machine_sn','resource','remove_status')->get();
-		        if(!$history->isEmpty()){
+    			$history = DB::table('tz_orders')->where('resource_type','>',3)->where(['remove_status'=>4])->orderBy('updated_at','desc')->select('business_sn','order_sn','customer_name','resource_type','business_name','machine_sn','resource','remove_status')->get();
+		        if(!empty($history)){
 		            $resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn',11=>'高防IP'];
 		            $remove_status = [0=>'正常使用',1=>'下架申请中',2=>'机房处理中',3=>'清空下架中',4=>'下架完成'];
 		            foreach($history as $history_key => $history_value){
-		                $history[$history_key]['resourcetype'] = $resource_type[$history_value['resource_type']];
-		                $history[$history_key]['remove_status'] = $remove_status[$history_value['remove_status']];
+		                $history_value->resourcetype = $resource_type[$history_value->resource_type];
+		                $history_value->remove_status = $remove_status[$history_value->remove_status];
 		            }
 		            $return['data'] = $history;
 		            $return['code'] = 1;
@@ -170,6 +174,7 @@ class UnderModel extends Model
 		            $return['code'] = 0;
 		            $return['msg'] = '暂无下架资源数据';
 		        }
+		        return $return;
     			break;
     		default:
     			$return['data'] = [];
@@ -198,13 +203,14 @@ class UnderModel extends Model
 		            $return['code'] = 0;
 		            $return['msg'] = '无对应业务';
 		            return $return;
-		        }
-		        if($business->remove_status < 1 || $business->remove_status = 4){//当业务未提交申请或已下架，直接返回
+                }
+                // dd($business);
+		        if($business->remove_status < 1 || $business->remove_status == 4){//当业务未提交申请或已下架，直接返回
 		            $return['code'] = 0;
 		            $return['msg'] = '业务已完成下架/暂未提交下架申请';
 		            return $return;
 		        }
-		        if($edit['remove_status'] == 0){
+		        if(isset($edit['remove_status'])){
 		            $update['remove_reason'] = $business->remove_reason.'驳回原因:'.$edit['remove_reason'];
 		            $update['remove_status'] = $edit['remove_status'];
 		            $update['machineroom'] = 0;
@@ -229,14 +235,16 @@ class UnderModel extends Model
 		                    $rent['used_status'] = 0;
 		                    $rent['own_business'] = 0;
 		                    $rent['business_end'] = Null;
-		                    $row = DB::table('idc_machine')->where(['machine_num'=>$business->machine_number,'business_number'=>$edit['business_number'],'business_type'=>1])->update($rent);
+		                    // $rent['loginname'] = $edit['loginname'];
+		                    // $rent['loginpass'] = $edit['loginpass'];
+		                    $row = DB::table('idc_machine')->where(['machine_num'=>$business->machine_number,'own_business'=>$edit['business_number'],'business_type'=>1])->update($rent);
 		                    break;
 		                case 2:
 		                    $host['used_status'] = 0;
 		                    $host['own_business'] = 0;
 		                    $host['business_end'] = Null;
 		                    $host['machine_status'] = 1;
-		                    $row = DB::table('idc_machine')->where(['machine_num'=>$business->machine_number,'business_number'=>$edit['business_number'],'business_type'=>2])->update($host);
+		                    $row = DB::table('idc_machine')->where(['machine_num'=>$business->machine_number,'own_business'=>$edit['business_number'],'business_type'=>2])->update($host);
 		                    break;
 		                case 3:
 		                    $cabinet = DB::table('idc_cabinet')->where(['cabinet_id'=>$business->machine_number])->select('own_business')->first();//获取机柜原来的业务号
@@ -246,7 +254,7 @@ class UnderModel extends Model
 		                    $own_business = implode(',',$array);//将数组转换为字符串
 		                    $cabinet_update['own_business'] = $own_business;
 		                    $cabinet_update['business_end'] = Null;
-		                    $row = DB::table('idc_cabinet')->where(['cabinet_id'=>$deltet_data->machine_number])->update($cabinet_update);
+		                    $row = DB::table('idc_cabinet')->where(['cabinet_id'=>$business->machine_number])->update($cabinet_update);
 		                    break;
 		                default:
 		                    $row = 1;
@@ -278,12 +286,12 @@ class UnderModel extends Model
 		            $return['msg'] = '无对应资源信息';
 		            return $return;
 		        }
-		        if($order->remove_status < 1 || $order->remove_status = 4){
+		        if($order->remove_status < 1 || $order->remove_status == 4){
 		            $return['code'] = 0;
 		            $return['msg'] = '资源已完成下架/暂未提交下架申请';
 		            return $return;
 		        }
-		        if($edit['remove_status'] == 0){
+		        if(isset($edit['remove_status'])){
 		            $update_status['remove_reason'] = $order->remove_reason.'驳回原因:'.$edit['remove_reason'];
 		            $update_status['remove_status'] = $edit['remove_status'];
 		            $update_status['machineroom'] = 0;
@@ -367,7 +375,7 @@ class UnderModel extends Model
          * 根据不同角色进行查看不同的内容
          * @var [type]
          */
-        $where = ['remove_status'];
+        $where = [];
         $user_id = Admin::user()->id;
         $staff = $this->staff($user_id);
         if($staff->slug == 4){
@@ -378,17 +386,17 @@ class UnderModel extends Model
             $business_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜'];
             $remove_status = [0=>'正常使用',1=>'下架申请中',2=>'机房处理中',3=>'清空下架中',4=>'下架完成'];
             foreach($business as $business_key => $business_value){
-                $business[$business_key]['resource_type'] = $business_type[$business_value['business_type']];
-                $business[$business_key]['removestatus'] = $remove_status[$business_value['remove_status']];
+                $business_value->resource_type = $business_type[$business_value->business_type];
+                $business_value->removestatus = $remove_status[$business_value->remove_status];
             }
 		}
-		$orders = DB::table('tz_orders')->where($where)->where('resource_type','>',3)->whereBetween('remove_status',[1,3])->orderBy('updated_at','desc')->select('business_sn','customer_name','resource_type','business_name','machine_sn','resource','remove_status')->get();
+		$orders = DB::table('tz_orders')->where($where)->where('resource_type','>',3)->whereBetween('remove_status',[1,3])->orderBy('updated_at','desc')->select('order_sn','business_sn','customer_name','resource_type','business_name','machine_sn','resource','remove_status')->get();
         if(!empty($orders)){
             $resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn',11=>'高防IP'];
             $remove_status = [0=>'正常使用',1=>'下架申请中',2=>'机房处理中',3=>'清空下架中',4=>'下架完成'];
             foreach($orders as $orders_key => $orders_value){
-                $orders[$orders_key]['resourcetype'] = $resource_type[$orders_value['resource_type']];
-                $orders[$orders_key]['removestatus'] = $remove_status[$orders_value['remove_status']];
+                $orders_value->resourcetype = $resource_type[$orders_value->resource_type];
+                $orders_value->removestatus = $remove_status[$orders_value->remove_status];
             }
         }
         $result = ['business'=>$business,'orders'=>$orders];

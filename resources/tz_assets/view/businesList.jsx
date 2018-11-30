@@ -98,7 +98,7 @@ const columnData = [
           WorkOrderPost,
           Disposal
         ]);
-        return <Element {...data} postUrl="business/renewresource" nameParam="machine_number" type="业务" />;
+        return <Element {...data} disposal_type={1} postUrl="business/renewresource" nameParam="machine_number" type="业务" />;
       }else {
         return null;
       }

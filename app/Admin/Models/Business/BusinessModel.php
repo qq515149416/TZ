@@ -60,7 +60,7 @@ class BusinessModel extends Model
             $return['code'] = 0;
             $return['msg']  = '业务创建失败';
         }
-         
+
         return $return;
 
     }
@@ -127,7 +127,7 @@ class BusinessModel extends Model
                 $where['business_status'] = '-2';
                 $where['check_note']      = '不通过原因:该业务对应的机器已经被使用，请重新选择机器!';
             }
-            
+
         }
         // 业务表审核时更新的字段
         $business['business_status'] = $where['business_status'];
@@ -189,7 +189,7 @@ class BusinessModel extends Model
         $order['end_time']      = $end_time;
         $order['payable_money'] = bcmul((string)$order['price'], (string)$order['duration'], 2);//应付金额
         $order['created_at']    = Carbon::now()->toDateTimeString();
-        $order['month']         = (int)date('Ym', time());
+        // $order['month']         = (int)date('Ym', time());
         $order_row              = DB::table('tz_orders')->insert($order);//生成订单
         if ($order_row == 0) {
             // 订单生成失败
@@ -273,7 +273,7 @@ class BusinessModel extends Model
     public function showBusiness($show)
     {
         if ($show) {
-            $result = $this->where($show)->orderBy('created_at','desc')->get(['id', 'client_id', 'client_name', 'sales_id', 'sales_name', 'order_number', 'business_number', 'business_type', 'machine_number', 'resource_detail', 'business_status', 'money', 'length', 'start_time', 'endding_time', 'business_note']);
+            $result = $this->where($show)->where('remove_status','<',4)->orderBy('created_at','desc')->get(['id', 'client_id', 'client_name', 'sales_id', 'sales_name', 'order_number', 'business_number', 'business_type', 'machine_number', 'resource_detail', 'business_status', 'money', 'length', 'start_time', 'endding_time', 'business_note']);
             if (!$result->isEmpty()) {
                 $business_status = [-1 => '取消', -2 => '审核不通过', 0 => '审核中', 1 => '未付款使用', 2 => '付款使用中', 3 => '未付用', 4 => '锁定中', 5 => '到期', 6 => '退款'];
                 $business_type   = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜'];
@@ -339,7 +339,7 @@ class BusinessModel extends Model
                 return $return;
             }
         }
-        
+
         //查找业务关联订单
         $order_data = DB::table('tz_business')
             ->join('tz_orders', 'tz_business.business_number', '=', 'tz_orders.business_sn')
@@ -552,7 +552,7 @@ class BusinessModel extends Model
             if($row == 0){
                 DB::rollBack();
                 $return['code'] = 0;
-                $return['msg'] = '业务相关机器下架状态修改失败'; 
+                $return['msg'] = '业务相关机器下架状态修改失败';
             }
             $update['remove_status'] = 4;
         }
@@ -560,11 +560,11 @@ class BusinessModel extends Model
         if($remove == 0){
             DB::rollBack();
             $return['code'] = 0;
-            $return['msg'] = '业务下架状态修改失败';     
+            $return['msg'] = '业务下架状态修改失败';
         } else {
             DB::commit();
             $return['code'] = 1;
-            $return['msg'] = '业务下架状态修改成功'; 
+            $return['msg'] = '业务下架状态修改成功';
         }
         return $return;
 

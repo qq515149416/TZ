@@ -92,4 +92,18 @@ class WhiteListController extends Controller
 			return tz_ajax_echo('',$result['msg'],$result['code']);
 		
 	}
+
+
+	/**
+	 * 域名跳转
+	 * domain
+	 * http://www.miibeian.gov.cn/icp/publish/query/icpMemoInfo_searchExecute.action?siteDomain=
+	 */
+	public function skipBeian(Request $request)
+	{
+		$req = $request->all();
+		$url = "http://www.miibeian.gov.cn/icp/publish/query/icpMemoInfo_searchExecute.action?siteDomain=" . $req['domain'];
+		return redirect($url);
+	}
+
 }

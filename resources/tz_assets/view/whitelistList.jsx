@@ -20,7 +20,13 @@ const styles = theme => ({
 const columnData = [
     { id: 'binding_machine', numeric: true, disablePadding: false, label: '机器编号' },
     { id: 'customer_name', numeric: true, disablePadding: false, label: '客户名字' },
-    { id: 'domain_name', numeric: true, disablePadding: false, label: '绑定域名' },
+    { id: 'domain_name', numeric: true, disablePadding: false, label: '绑定域名', render: (h,param) => {
+        return h((
+            <a target="_blank" href={`/tz_admin/whitelist/skipBeian?domain=${param}`}>
+                {param}
+            </a>
+        ));
+    } },
     { id: 'record_number', numeric: true, disablePadding: false, label: '备案编号' },
     { id: 'status', numeric: true, disablePadding: false, label: '审核状态' },
     { id: 'submit_name', numeric: true, disablePadding: false, label: '提交人' },

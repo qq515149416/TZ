@@ -22,7 +22,7 @@ const columnData = [
     { id: 'customer_name', numeric: true, disablePadding: false, label: '客户名字' },
     { id: 'domain_name', numeric: true, disablePadding: false, label: '绑定域名', render: (h,param) => {
         return h((
-            <a target="_blank" href={`http://www.miibeian.gov.cn/icp/publish/query/icpMemoInfo_searchExecute.action?siteDomain=${param}`}>
+            <a target="_blank" href={`/tz_admin/whitelist/skipBeian?domain=${param}`}>
                 {param}
             </a>
         ));

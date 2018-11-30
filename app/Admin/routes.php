@@ -339,6 +339,7 @@ Route::group([
         $router->post('insert', 'Work\WhiteListController@insertWhiteList');//生成白名单申请单
         $router->post('check', 'Work\WhiteListController@checkWhiteList');//白名单申请单 审核接口
         $router->post('delete', 'Work\WhiteListController@deleteWhiteList');//白名单申请单 删除接口
+        $router->get('skipBeian','Work\WhiteListController@skipBeian');//跳转到工信部备案
     });
 
 

@@ -101,7 +101,8 @@ Route::group([
         $router->get('/defenseBusines', 'Show\DefenseBusinessController@index');
         $router->get('/defenseipReview', 'Show\DefenseipReviewController@index');
         $router->get('/dismissalReview', 'Show\DismissalReviewController@index');
-
+        $router->get('/disposal', 'Show\DisposalController@index');
+        $router->get('/disposalHistory', 'Show\DisposalHistoryController@index');
     });
 
     /**

@@ -413,7 +413,7 @@ const styles = theme => ({
                               }
                               {
                                 (this.props.headTitlesData.find(item => item.id=="operat").extend && this.props.headTitlesData.find(item => item.id=="operat").extendElement ) && (
-                                  this.props.headTitlesData.find(item => item.id=="operat").extendElement(n)
+                                  this.props.headTitlesData.find(item => item.id=="operat").extendElement(n,this.props.updata)
                                 )
                               }
                               {

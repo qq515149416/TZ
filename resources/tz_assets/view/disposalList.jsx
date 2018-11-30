@@ -1,8 +1,8 @@
 import React from "react";
 import ListTableComponent from "../component/listTableComponent.jsx";
 import { inject,observer } from "mobx-react";
-import UnderOperation from "../component/dialog/underOperation.jsx";
-
+import DealWith from "../component/icon/dealWith.jsx";
+import { post } from "../tool/http.js";
 
 const columnData = [
     { id: 'client_name', numeric: true, disablePadding: false, label: '客户' },
@@ -27,13 +27,26 @@ const columnData = [
             {id: "machine_note", label: "机器备注", type: "text"},
             {id: "cabinet_id", label: "机柜编号", type: "text"}
           ]}
-    ], extendElement: (data,update) => {
-        if(data.remove_status==1) {
-            return <UnderOperation {...data} update={update} obtained_type={1} />;
-        } else {
-            return null;
+    ],extendConfirm: {
+        title: "下架操作",
+        content: "是否要对业务进行下架操作",
+        icon: <DealWith />,
+        ok: (data) => {
+            return new Promise((resolve,reject) => {
+                post("under/do_under",{
+                    business_number: data.business_number,
+                    type: 1
+                }).then((res) => {
+                    if(res.data.code==1) {
+                          alert(res.data.msg);
+                        resolve(res.data);
+                    } else {
+                        alert(res.data.msg);
+                        resolve(res.data);
+                    }
+                }).catch(reject);
+            });
         }
-
     } }
 ];
 
@@ -49,8 +62,26 @@ const columnData2 = [
         {id: "remove_reason", label: "下架原因", type: "text"},
         {id: "machine_sn", label: "资源值", type: "text"},
 
-    ],extendElement: (data,update) => {
-        return <UnderOperation {...data} update={update} obtained_type={2} />;
+    ],extendConfirm: {
+        title: "下架操作",
+        content: "是否要对资源进行下架操作",
+        icon: <DealWith />,
+        ok: (data) => {
+            return new Promise((resolve,reject) => {
+                post("under/do_under",{
+                    order_sn: data.order_sn,
+                    type: 2
+                }).then((res) => {
+                    if(res.data.code==1) {
+                          alert(res.data.msg);
+                        resolve(res.data);
+                    } else {
+                        alert(res.data.msg);
+                        resolve(res.data);
+                    }
+                }).catch(reject);
+            });
+        }
     } }
 ]
 
@@ -59,17 +90,17 @@ const inputType = [
 
 @inject("dismissalReviewsStores")
 @observer
-class DismissalReviewList extends React.Component {
+class DisposalList extends React.Component {
     componentDidMount() {
-        this.props.dismissalReviewsStores.getData();
+        this.props.dismissalReviewsStores.getData("disposal");
     }
     updata() {
-        this.props.dismissalReviewsStores.getData();
+        this.props.dismissalReviewsStores.getData("disposal");
     }
     render() {
         return [
             <ListTableComponent
-                title="业务下架管理"
+                title="业务下架处理"
                 operattext="业务下架"
                 inputType={inputType}
                 headTitlesData={columnData}
@@ -78,7 +109,7 @@ class DismissalReviewList extends React.Component {
                 updata={this.updata.bind(this)}
             />,
             <ListTableComponent
-                title="资源下架管理"
+                title="资源下架处理"
                 operattext="资源下架"
                 inputType={inputType}
                 headTitlesData={columnData2}
@@ -89,4 +120,4 @@ class DismissalReviewList extends React.Component {
         ];
     }
 }
-export default DismissalReviewList;
+export default DisposalList;

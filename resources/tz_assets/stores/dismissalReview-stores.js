@@ -13,7 +13,7 @@ class DismissalReviewsStores extends ActionBoundStores {
         orders: [],
     };
     @action.bound
-    getData() {
+    getData(type = "dismissalReview") {
         this.dismissalReviews = {
             business: [],
             orders: [],

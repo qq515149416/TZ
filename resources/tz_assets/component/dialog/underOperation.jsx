@@ -25,13 +25,15 @@ class UnderOperation extends React.Component {
         }
     }
     open = type => event => {
-        get("under/depart").then(res => {
-            if(res.data.code==1) {
-                this.setState({
-                    departs: res.data.data
-                });
-            }
-        });
+        if(this.props.remove_status==1) {
+            get("under/depart").then(res => {
+                if(res.data.code==1) {
+                    this.setState({
+                        departs: res.data.data
+                    });
+                }
+            });
+        }
         this.setState({
             underOperation: true,
             type
@@ -72,6 +74,7 @@ class UnderOperation extends React.Component {
         post("under/do_under",param).then(res => {
             if(res.data.code == 1) {
                 alert(res.data.msg);
+                this.props.update && this.props.update();
                 this.close();
             } else {
                 alert(res.data.msg);

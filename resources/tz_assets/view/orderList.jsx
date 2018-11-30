@@ -7,6 +7,8 @@ import { inject,observer } from "mobx-react";
 // import Paper from '@material-ui/core/Paper';
 // import Tabs from '@material-ui/core/Tabs';
 // import Tab from '@material-ui/core/Tab';
+import extendElementsComponent from "../tool/extendElementsComponent";
+import Disposal from "../component/dialog/disposal.jsx";
 import RenewalFee from "../component/dialog/renewalFee.jsx";
 import SelectExpansion from "../component/dialog/selectExpansion.jsx";
 import TabComponent from "../component/tabComponent.jsx";
@@ -43,14 +45,22 @@ const columnData = [
         {id: "order_note", label: "订单备注" ,type: "text"},
         {id: "created_at", label: "创建时间" ,type: "text"}
     ],extendElement: (data) => {
+        let Element = extendElementsComponent([
+            RenewalFee,
+            Disposal
+          ]);
         if(data.order_status=="已支付") {
             if(data.type > 3) {
-                return <RenewalFee {...data} postUrl="business/renewresource" nameParam="order_sn" type="订单" />;
+                return <Element {...data} disposal_type={2} postUrl="business/renewresource" nameParam="order_sn" type="订单" />;
             } else {
                 return null;
             }
         }else {
-          return null;
+            if(data.type > 3) {
+                return <Disposal {...data} disposal_type={2} />;
+            } else {
+                return null;
+            }
         }
     }, label: '操作' }
 ];

@@ -30,14 +30,9 @@ class CheckStaff
                     ->select('oa_staff.work_number','oa_staff.department','tz_department.sign','tz_jobs.slug')
                     ->first();
         if(empty($staff)){
-            return redirect('/tz_admin/auth/logout');
-            
-           // $this->error();
+            return  redirect('/tz_admin/auth/logout');
         }
         return $next($request);
     }
 
-    // public function error(){
-    //     return back()->with(compact('error'));
-    // }
 }

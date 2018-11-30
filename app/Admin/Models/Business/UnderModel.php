@@ -145,7 +145,7 @@ class UnderModel extends Model
 		            $remove_status = [0=>'正常使用',1=>'下架申请中',2=>'机房处理中',3=>'清空下架中',4=>'下架完成'];
 		            foreach($history as $history_key => $history_value){
 		                $history_value->resourcetype = $business_type[$history_value->business_type];
-		                $history_value->resourcetype = $remove_status[$history_value->remove_status];
+		                $history_value->remove_status = $remove_status[$history_value->remove_status];
 		            }
 		            $return['data'] = $history;
 		            $return['code'] = 1;
@@ -158,13 +158,13 @@ class UnderModel extends Model
 		        return $return;
     			break;
     		case 2:
-    			$history = DB::table('tz_orders')->where('resource_type','>',3)->where(['remove_status'=>4])->orderBy('updated_at','desc')->select('business_sn','customer_name','resource_type','business_name','machine_sn','resource','remove_status')->get();
+    			$history = DB::table('tz_orders')->where('resource_type','>',3)->where(['remove_status'=>4])->orderBy('updated_at','desc')->select('business_sn','order_sn','customer_name','resource_type','business_name','machine_sn','resource','remove_status')->get();
 		        if(!empty($history)){
 		            $resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn',11=>'高防IP'];
 		            $remove_status = [0=>'正常使用',1=>'下架申请中',2=>'机房处理中',3=>'清空下架中',4=>'下架完成'];
 		            foreach($history as $history_key => $history_value){
-		                $history_value->resourcetype = $business_type[$history_value->business_type];
-		                $history_value->resourcetype = $remove_status[$history_value->remove_status];
+		                $history_value->resourcetype = $resource_type[$history_value->resource_type];
+		                $history_value->remove_status = $remove_status[$history_value->remove_status];
 		            }
 		            $return['data'] = $history;
 		            $return['code'] = 1;
@@ -174,6 +174,7 @@ class UnderModel extends Model
 		            $return['code'] = 0;
 		            $return['msg'] = '暂无下架资源数据';
 		        }
+		        return $return;
     			break;
     		default:
     			$return['data'] = [];
@@ -253,7 +254,7 @@ class UnderModel extends Model
 		                    $own_business = implode(',',$array);//将数组转换为字符串
 		                    $cabinet_update['own_business'] = $own_business;
 		                    $cabinet_update['business_end'] = Null;
-		                    $row = DB::table('idc_cabinet')->where(['cabinet_id'=>$deltet_data->machine_number])->update($cabinet_update);
+		                    $row = DB::table('idc_cabinet')->where(['cabinet_id'=>$business->machine_number])->update($cabinet_update);
 		                    break;
 		                default:
 		                    $row = 1;
@@ -285,7 +286,7 @@ class UnderModel extends Model
 		            $return['msg'] = '无对应资源信息';
 		            return $return;
 		        }
-		        if($order->remove_status < 1 || $order->remove_status = 4){
+		        if($order->remove_status < 1 || $order->remove_status == 4){
 		            $return['code'] = 0;
 		            $return['msg'] = '资源已完成下架/暂未提交下架申请';
 		            return $return;

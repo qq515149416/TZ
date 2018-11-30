@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 use Encore\Admin\Facades\Admin;
+use App\Admin\Controllers\Work\ApiController;
 
 class WhiteListModel extends Model
 {
@@ -40,32 +41,53 @@ class WhiteListModel extends Model
 			$return['msg']	= '该IP尚未启用';		
 			return $return;
 		}
-		//用获取的业务编号,前往业务表查找对应的机器编号及客户ID
-		$business = DB::table('tz_business')->where('business_number',$ip['own_business'])->select('client_id','machine_number','business_status')->first();
-		if($business == NULL){
-			$return['msg']	= '业务编号不存在';		
-			return $return;
-		}
-		$business_status		= $business->business_status;
-		if($business_status != 2 && $business_status != 3 && $business_status != 4){
-			$return['msg']	= '业务尚未启用';		
-			return $return;
-		}
+		if($ip['ip_status'] != 2){
+			//用获取的业务编号,前往业务表查找对应的机器编号及客户ID
+			$business = DB::table('tz_business')->where('business_number',$ip['own_business'])->select('client_id','machine_number','business_status')->first();
+			if($business == NULL){
+				$return['msg']	= '业务编号不存在';		
+				return $return;
+			}
+			$business_status		= $business->business_status;
+			if($business_status != 2 && $business_status != 3 && $business_status != 4){
+				$return['msg']	= '业务尚未启用';		
+				return $return;
+			}
 
-		$info['machine_number']	= $business->machine_number;
-		$info['customer_id']		= $business->client_id;
-		$customer_id 	= $business->client_id;
-		//根据获得的客户ID查找客户可用信息
-		$customer = DB::table('tz_users')->where('id',$customer_id)->select('name','email')->first();
-		if($business == NULL){
-			$return['msg']	= '客户id错误';		
-			return $return;
+			$info['machine_number']	= $business->machine_number;
+			$info['customer_id']		= $business->client_id;
+			$customer_id 	= $business->client_id;
+			//根据获得的客户ID查找客户可用信息
+			$customer = DB::table('tz_users')->where('id',$customer_id)->select('name','email')->first();
+			if($business == NULL){
+				$return['msg']	= '客户id错误';		
+				return $return;
+			}
+			$info['customer_name'] 	= $customer->name;
+			$info['email']		= $customer->email;
+
+			$return['data'] 	= $info;
+			$return['msg']	= '获取成功';
+			$return['code']	= 1;
+		}else{
+			$machine_number = DB::table('idc_machine')->where('ip_id',$ip['id'])->value('machine_num');
+			if($machine_number == null){
+				return [
+					'data'	=> '',
+					'code'	=> 0,
+					'msg'	=> 'ip未绑定机器',
+				];
+			}
+			$return['data'] 	= [
+				'customer_id'		=> 0,
+				'customer_name'	=> '腾正自用',
+				'machine_number'	=> $machine_number,
+			];
+			$return['msg']	= '内部用ip';
+			$return['code']	= 1;
 		}
-		$info['customer_name'] 	= $customer->name;
-		$info['email']		= $customer->email;
-		$return['data'] 	= $info;
-		$return['msg']	= '获取成功';
-		$return['code']	= 1;
+		
+		
 		return $return;
 	}
 	
@@ -107,37 +129,63 @@ class WhiteListModel extends Model
 	 */
 	public function insertWhiteList($insertdata){
 		
+		$check_domain = strstr($insertdata['domain_name'],'/');
+		if($check_domain != false){
+			return [
+				'data'	=> '',
+				'msg'	=> '域名格式错误,勿填 : http:// ; https ; www ; / ;',
+				'code'	=> 0,
+			];
+		}
 		// 创建白名单编号
 		$whitenumber = mt_rand(41,70).date("Ymd",time()).substr(time(),8,2);
-		$insertdata['white_number'] = $whitenumber;
+		$insertdata['white_number'] 	= $whitenumber;
 		// 当前登陆用户的信息，作为提交者信息
+		$check = $this->checkIP($insertdata['white_ip']);
+		if($check['code'] != 1){
+			return $check;
+		}
+		if($check['data']['customer_name'] == null){
+			$insertdata['customer_name']	= $check['data']['email'];
+		}else{
+			$insertdata['customer_name']	= $check['data']['customer_name'];
+		}		
+
+		$insertdata['customer_id'] 	= $check['data']['customer_id'];
+		$insertdata['binding_machine']= $check['data']['machine_number'];
 		$admin_id 			= Admin::user()->id;
 		$fullname 			= Admin::user()->name?Admin::user()->name:Admin::user()->username;
-		$insertdata['submit_id'] 		= $admin_id;			
+		$insertdata['submit_id'] 	= $admin_id;			
 		$insertdata['submit_name'] 	= $fullname;	
 		$insertdata['submit'] 		= 2;			// 提交方
 		$insertdata['white_status'] 	= 0;			//待审核
 		//查找是否存在已提交过的申请单
-		$check = $this->where('domain_name',$insertdata['domain_name'])->select('white_status')->get();
+
+		$check = $this->where('domain_name',$insertdata['domain_name'])->select(['white_status','white_ip'])->get();
 		//根据审核状态返回信息
 		foreach ($check as $k => $v) {
 			$return = [
 				'data'	=> '',
 				'code'	=> 0,
 			];
-			
-			if($v->white_status == 0){
-				$return['msg']	= '该域名审核申请单已提交,请勿重复提交,如需更换绑定IP请删除重新提交';
-				return $return;
-			}
+			//曾经被拉黑过就不能再提交
 			if($v->white_status == 3){
 				$return['msg']	= '该域名已被拉黑';
 				return $return;
 			}
-			if($v->white_status == 1){
-				$return['msg']	= '该域名审核申请已通过,请勿重复提交';
-				return $return;
-			}		
+
+			if($v->white_status == 1 ){
+				if($v->white_ip == $insertdata['white_ip']){
+					$return['msg']	= '该域名审核申请单已通过,请勿重复提交';
+					return $return;	
+				}
+			}
+			if($v->white_status == 0 ){
+				if($v->white_ip == $insertdata['white_ip']){
+					$return['msg']	= '该域名审核申请单正在审核中,请勿重复提交';
+					return $return;	
+				}
+			}			
 		}
 
 		$row = $this->create($insertdata);
@@ -145,11 +193,11 @@ class WhiteListModel extends Model
 		if($row != false){
 			$return['data'] = $row->id;
 			$return['code'] = 1;
-			$return['msg'] = '白名单信息提交成功';
+			$return['msg'] = '白名单审核申请提交成功';
 		} else {
 			$return['data'] = '';
 			$return['code'] = 0;
-			$return['msg'] = '白名单信息提交失败';
+			$return['msg'] = '白名单审核申请提交失败';
 		}
 		
 		return $return;
@@ -161,30 +209,76 @@ class WhiteListModel extends Model
 	 * @return [type]            [description]
 	 */
 	public function checkWhiteList($checkdata){
-		if($checkdata){
-			//获取审核者信息
-			$admin_id = Admin::user()->id;
-			$checkdata['check_id'] = $admin_id;
-			$fullname = (array)$this->staff($admin_id);
-			$checkdata['check_number'] = $fullname['work_number'];
-			$checkdata['check_time'] = date('Y-m-d H:i:s',time());
-			//更新审核结果到申请单上
-			$row = $this->where('id',$checkdata['id'])->update($checkdata);
-			if($row != false) {
-				$return['data'] = '';
-				$return['code'] = 1;
-				$return['msg'] = '白名单审核成功';
-			} else {
-				$return['data'] = '';
-				$return['code'] = 0;
-				$return['msg'] = '白名单审核失败';
-			}
+		$row = $this->find($checkdata['id']);
+		if($row == null){
+			return [
+				'data'	=> '',
+				'msg'	=> '审核单不存在',
+				'code'	=> 0,
+			];
+		}
+		if($row->white_status != 0){
+			return [
+				'data'	=> '',
+				'msg'	=> '该单已审核',
+				'code'	=> 0,
+			];
+		}
+		//获取审核者信息
+		$admin_id = Admin::user()->id;
+		$fullname = (array)$this->staff($admin_id);
+		$row->check_id 	= $admin_id;
+		$row->check_number	= $fullname['work_number'];
+		$row->check_time 	= date('Y-m-d H:i:s',time());
+		$row->white_status 	= $checkdata['white_status'];
+		if(isset($checkdata['check_note'])){
+			$row->check_note 	= $checkdata['check_note'];
+		}
+		//更新审核结果到申请单上
+		DB::beginTransaction();//开启事务处理
 
-		} else {
+		$save_res = $row->save($checkdata);
+		if($save_res == false) {
+			DB::rollBack();
 			$return['data'] = '';
 			$return['code'] = 0;
-			$return['msg'] = '无法对白名单进行审核';
+			$return['msg'] = '白名单审核失败';
+			return $return;	
 		}
+		//判断审核状态,如果不是通过,就直接返回审核结果
+		if($checkdata['white_status'] != 1){
+			DB::commit();
+			return [
+				'data'	=> '',
+				'msg'	=> '审核成功',
+				'code'	=> 1,
+			];		
+		}
+		//如果是通过的话,就开始添加通行证
+		$api_controller = new ApiController();
+		$room_id = DB::table('idc_ips')->where('ip',$row->white_ip)->value('ip_comproom');
+		if($room_id == null){
+			DB::rollBack();
+			return[
+				'data'	=> '',
+				'msg'	=> 'ip无绑定机房',
+				'code'	=> 0,	
+			];
+		}
+
+		//更改状态成功,开始调用API塞到白名单的数据库
+		$domain = $row->domain_name;
+		$insert_res = $api_controller->createWhiteList($domain,$room_id);
+		if($insert_res['code'] != 1){
+			DB::rollBack();
+			return $insert_res;
+		}
+		DB::commit();
+		$return = [
+			'data'	=> '',
+			'msg'	=> '审核成功,已为域名添加通行证',
+			'code'	=> 1,
+		];
 		return $return;
 	}
 

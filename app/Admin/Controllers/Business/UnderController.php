@@ -45,7 +45,7 @@ class UnderController extends Controller
      * @return [type]           [description]
      */
     public function doUnder(Request $request){
-        $do_parm = $request->only(['remove_reason','business_number','remove_status','machineroom','order_sn','type']);
+        $do_parm = $request->only(['remove_reason','business_number','remove_status','machineroom','order_sn','type','loginname','loginpass']);
         $do_for = new UnderModel();
         $do_result = $do_for->doUnder($do_parm);
         return tz_ajax_echo($do_result,$do_result['msg'],$do_result['code']);

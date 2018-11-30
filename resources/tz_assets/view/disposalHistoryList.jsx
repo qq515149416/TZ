@@ -17,7 +17,8 @@ let columnData = [
     { id: 'client_name', numeric: true, disablePadding: false, label: '客户' },
     { id: 'sales_name', numeric: true, disablePadding: false, label: '业务员' },
     { id: 'machine_number', numeric: true, disablePadding: false, label: '机器编号' },
-    { id: 'resourcetype', numeric: true, disablePadding: false, label: '下架状态' },
+    { id: 'resourcetype', numeric: true, disablePadding: false, label: '业务类型' },
+    { id: 'remove_status', numeric: true, disablePadding: false, label: '下架状态' },
     { id: 'operat', numeric: true, disablePadding: false, label: '操作',  extend: true, extendData: [
         {id: "business_number", label: "业务号", type: "text"},
         {id: "business_note", label: "业务备注", type: "text"},
@@ -61,7 +62,8 @@ class DisposalHistoryList extends React.Component {
                 { id: 'client_name', numeric: true, disablePadding: false, label: '客户' },
                 { id: 'sales_name', numeric: true, disablePadding: false, label: '业务员' },
                 { id: 'machine_number', numeric: true, disablePadding: false, label: '机器编号' },
-                { id: 'resourcetype', numeric: true, disablePadding: false, label: '下架状态' },
+                { id: 'resourcetype', numeric: true, disablePadding: false, label: '业务类型' },
+                { id: 'remove_status', numeric: true, disablePadding: false, label: '下架状态' },
                 { id: 'operat', numeric: true, disablePadding: false, label: '操作',  extend: true, extendData: [
                     {id: "business_number", label: "业务号", type: "text"},
                     {id: "business_note", label: "业务备注", type: "text"},
@@ -87,7 +89,8 @@ class DisposalHistoryList extends React.Component {
                 { id: 'customer_name', numeric: true, disablePadding: false, label: '客户' },
                 { id: 'business_name', numeric: true, disablePadding: false, label: '业务员' },
                 { id: 'resource', numeric: true, disablePadding: false, label: '资源' },
-                { id: 'resourcetype', numeric: true, disablePadding: false, label: '下架状态' },
+                { id: 'resourcetype', numeric: true, disablePadding: false, label: '资源类型' },
+                { id: 'remove_status', numeric: true, disablePadding: false, label: '下架状态' },
                 { id: 'operat', numeric: true, disablePadding: false, label: '操作',  extend: true, extendData: [
                     {id: "business_sn", label: "业务号", type: "text"},
                     {id: "order_sn", label: "订单号", type: "text"},

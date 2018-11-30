@@ -290,7 +290,7 @@ class UnderModel extends Model
 		            $return['msg'] = '资源已完成下架/暂未提交下架申请';
 		            return $return;
 		        }
-		        if(isset($edit['remove_status']){
+		        if(isset($edit['remove_status'])){
 		            $update_status['remove_reason'] = $order->remove_reason.'驳回原因:'.$edit['remove_reason'];
 		            $update_status['remove_status'] = $edit['remove_status'];
 		            $update_status['machineroom'] = 0;

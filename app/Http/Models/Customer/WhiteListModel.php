@@ -107,7 +107,7 @@ class WhiteListModel extends Model
     	// 根据IP地址查找IP库中对应IP绑定机器编号，业务编号等信息
     	$where['ip'] = $white_ip['white_ip'];
     	$ip = DB::table('idc_ips')->where($where)->select('ip_status','own_business','mac_num')->first();
-    	if(!$ip->isEmpty()){// 查找到对应的IP相关数据后，根据业务状态和客户id进行查找对应的业务信息
+    	if(!empty($ip)){// 查找到对应的IP相关数据后，根据业务状态和客户id进行查找对应的业务信息
     		$business['business_status'] = ' > 1';
     		$business['business_status'] = ' < 5';
     		$business['client_id'] = Auth::user()->id;

@@ -454,7 +454,7 @@ class MachineModel extends Model
 		$worksheet = $spreadsheet->getActiveSheet();
 		$worksheet->setTitle('机器批量导入表格');
 		$worksheet->setCellValueByColumnAndRow(1, 1, '机器批量导入表格(此为测试功能)');
-		$row_value = ['机器编号(必填)','CPU(必填)','内存(必填)','硬盘(必填)','机房(选填)','登录名(选填)','登录密码(选填)','机器型号(必填)','备注'];//填写的字段
+		$row_value = ['机器编号(必填)','CPU(必填)','内存(必填)','硬盘(必填)','机器型号(必填)','机房(选填)','登录名(选填)','登录密码(选填)','备注'];//填写的字段
 		$row = $worksheet->fromArray($row_value,NULL,'A4');//分配字段从A4开始填写（横向）
 		$highest_row = $worksheet->getHighestRow();//总行数
 		$highest_colum = $worksheet->getHighestColumn();//总列数
@@ -591,6 +591,9 @@ class MachineModel extends Model
 				case '硬盘(必填)':
 					$colum_value[$colum] = 'harddisk';
 					break;
+                case '机器型号(必填)':
+                    $colum_value[$colum] = 'machine_type';
+                    break;
 				case '机房(选填)':
 					$colum_value[$colum] = 'machineroom';
 					break;
@@ -611,9 +614,6 @@ class MachineModel extends Model
 					break;
 				case '登录密码(选填)':
 					$colum_value[$colum] = 'loginpass';
-					break;
-				case '机器型号(必填)':
-					$colum_value[$colum] = 'machine_type';
 					break;
 				// case '使用状态(必填)':
 				//     $colum_value[$colum] = 'used_status';

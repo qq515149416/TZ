@@ -88,7 +88,7 @@ class WhiteListModel extends Model
     public function checkDomainName($domain_name){
     	$domain_name['customer_id'] = Auth::user()->id;
     	$status = $this->where($domain_name)->select('white_status')->first();
-    	if(!$status->isEmpty()){
+    	if(!empty($status)){
 			$return['code'] = 1;
 			$return['msg'] = '该域名您已提交过,请勿重复提交';
     	} else {
@@ -108,8 +108,6 @@ class WhiteListModel extends Model
     	$where['ip'] = $white_ip['white_ip'];
     	$ip = DB::table('idc_ips')->where($where)->select('ip_status','own_business','mac_num')->first();
     	if(!empty($ip)){// 查找到对应的IP相关数据后，根据业务状态和客户id进行查找对应的业务信息
-    		$business['business_status'] = ' > 1';
-    		$business['business_status'] = ' < 5';
     		$business['client_id'] = Auth::user()->id;
     		if($ip->ip_status == 1){//IP使用状态为1即子IP时根据业务编号进行查找
     			$business['business_number'] = $ip->own_business;
@@ -122,7 +120,7 @@ class WhiteListModel extends Model
 	    		return $return;
     		}
     		//根据前面的条件进行查找IP绑定的机器编号
-    		$machine_number = DB::table('tz_business')->where($business)->value('machine_number');
+    		$machine_number = DB::table('tz_business')->where($business)->whereBetween('business_status',[2,4])->value('machine_number');
     		if($machine_number){//存在机器编号返回机器编号
     			$return['data'] = $machine_number;
     			$return['code'] = 1;
@@ -130,7 +128,7 @@ class WhiteListModel extends Model
     		} else {//不存在机器编号时直接返回
     			$return['data'] = '';
 	    		$return['code'] = 0;
-	    		$return['msg'] = '该IP赞未绑定机器无法';
+	    		$return['msg'] = '该IP暂未绑定机器无法';
     		}
     	} else {//IP库中未找到对应数据时直接返回
     		$return['data'] = '';

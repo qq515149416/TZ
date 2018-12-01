@@ -311,7 +311,7 @@ class RechargeController extends Controller
 		$model 	= new AliRecharge();
 
 		$info['trade_no'] 		= $trade_no;	//本地订单
-		$info['voucher']			= $res->trade_no;
+		$info['voucher']		= $res->trade_no;
 		$info['recharge_amount']	= $res->total_amount;
 		$info['timestamp']		= $res->send_pay_date;
 		$info['recharge_way']		= 1;

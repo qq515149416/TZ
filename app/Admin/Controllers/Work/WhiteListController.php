@@ -15,109 +15,95 @@ use Encore\Admin\Facades\Admin;
  */
 class WhiteListController extends Controller
 {
-    use ModelForm;
+	use ModelForm;
 
-    /**
-     * 根据对应的IP使用状态进行信息查询
-     * @param  $ip -需要检测的IP
-     * @return  json            返回
-     */
-    public function checkIP(WhiteListRequest $request)
-    {
-        $info = $request->only(['ip']);
-        $ip   = $info['ip'];
+	/**
+	 * 根据对应的IP使用状态进行信息查询
+	 * @param  $ip 		-需要检测的IP
+	 * @return  json           	返回
+	 */
+	public function checkIP(WhiteListRequest $request)
+	{
+		$info = $request->only(['ip']);	
+		$ip = $info['ip'];
 
-        $model = new WhiteListModel();
-        $res   = $model->checkIP($ip);
-
-        return tz_ajax_echo($res['data'], $res['msg'], $res['code']);
-    }
-
-
-    /**
-     * 根据对应白名单状态进行信息查询
-     * @param    Request $white_status
-     * @return    json             返回相关的数据和状态信息
-     */
-
-    public function showWhiteList(WhiteListRequest $request)
-    {
-
-        $where         = $request->only(['white_status']);
-        $showwhitelist = new WhiteListModel();
-        $return        = $showwhitelist->showWhiteList($where);
-        return tz_ajax_echo($return['data'], $return['msg'], $return['code']);
-
-    }
-
-    /**
-     * 白名单信息的提交
-     * @param  Request    white_ip        -IP地址;domain_name    -域名;record_number    -备案编号;binding_machine    -IP绑定的机器编号
-     *            customer_id    -客户ID;customer_name    -客户姓名;submit_note    -备注;
-     * @return json           返回录入状态
-     */
-    public function insertWhiteList(WhiteListRequest $request)
-    {
-
-        $insertdata = $request->only(['white_ip', 'domain_name', 'record_number', 'binding_machine', 'customer_id', 'customer_name', 'submit_note']);
-
-        $insert = new WhiteListModel();
-
-        $return = $insert->insertWhiteList($insertdata);
-        return tz_ajax_echo($return['data'], $return['msg'], $return['code']);
-
-    }
-
-    /**
-     * 对白名单进行审核
-     * @param  Request    white_status    -审核结果;check_note    -备注;id    -被审核的申请单ID
-     * @return json            返回审核结果录入状态
-     */
-    public function checkWhiteList(WhiteListRequest $request)
-    {
-
-        $checkdata = $request->only(['white_status', 'check_note', 'id']);
-        $check     = new WhiteListModel();
-        $return    = $check->checkWhiteList($checkdata);
-        return tz_ajax_echo($return['data'], $return['msg'], $return['code']);
-
-    }
-
-    /**
-     * 删除对应的白名单信息
-     * @param  Request    delete_id    -需要删除的申请单ID
-     * @return   json            返回删除结果
-     */
-    public function deleteWhiteList(WhiteListRequest $request)
-    {
-
-        $id     = $request->get('delete_id');
-        $delete = new WhiteListModel();
-        $result = $delete->deleteWhiteList($id);
-        return tz_ajax_echo('', $result['msg'], $result['code']);
-
-    }
+		$model = new WhiteListModel();
+		$res = $model->checkIP($ip);
+		
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
 
 
-    /**
-     * 域名跳转
-     * 接口: /tz_admin/whitelist/skipBeian
-     * 类型:GET
-     *
-     * 参数:
-     *   domain:  相应的域名
-     *
-     * http://www.miibeian.gov.cn/icp/publish/query/icpMemoInfo_searchExecute.action?siteDomain=
-     */
-    public function skipBeian(Request $request)
-    {
-//        header("Referer: /");
-        $req = $request->all();
-        $url = "http://www.miibeian.gov.cn/icp/publish/query/icpMemoInfo_searchExecute.action?siteDomain=" . $req['domain'];
-//        header('Location: '.$url);
-//        return redirect($url);
-//        return back()->withErrors(['错误一']);
-        dump(123);
-    }
+	/**
+	 * 根据对应白名单状态进行信息查询
+	 * @param  	Request 	$white_status
+	 * @return  	json          	 返回相关的数据和状态信息
+	 */	
+ 
+	public function showWhiteList(WhiteListRequest $request){
+		
+			$where = $request->only(['white_status']);
+			$showwhitelist = new WhiteListModel();
+			$return = $showwhitelist->showWhiteList($where);
+			return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
+		
+	}
+
+	/**
+	 * 白名单信息的提交
+	 * @param  Request  	white_ip		-IP地址;domain_name	-域名;record_number	-备案编号;;submit_note	-备注;
+	 * @return json           返回录入状态
+	 */
+	public function insertWhiteList(WhiteListRequest $request){
+		
+			$insertdata = $request->only(['white_ip','domain_name','record_number','submit_note']);
+			
+			$insert = new WhiteListModel();
+
+			$return = $insert->insertWhiteList($insertdata);
+			return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
+		
+	}
+
+	/**
+	 * 对白名单进行审核
+	 * @param  Request 	white_status	-审核结果;check_note	-备注;id 	-被审核的申请单ID
+	 * @return json           	返回审核结果录入状态
+	 */
+	public function checkWhiteList(WhiteListRequest $request){
+		
+			$checkdata = $request->only(['white_status','check_note','id']);
+			$check = new WhiteListModel();
+			$return = $check->checkWhiteList($checkdata);
+			return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
+		
+	}
+
+	/**
+	 * 删除对应的白名单信息
+	 * @param  Request 	delete_id	-需要删除的申请单ID
+	 * @return   json           	返回删除结果
+	 */
+	public function deleteWhiteList(WhiteListRequest $request){
+		
+			$id = $request->get('delete_id');
+			$delete = new WhiteListModel();
+			$result = $delete->deleteWhiteList($id);
+			return tz_ajax_echo('',$result['msg'],$result['code']);
+		
+	}
+
+
+	/**
+	 * 域名跳转
+	 * domain
+	 * http://www.miibeian.gov.cn/icp/publish/query/icpMemoInfo_searchExecute.action?siteDomain=
+	 */
+	public function skipBeian(Request $request)
+	{
+		$req = $request->all();
+		$url = "http://www.miibeian.gov.cn/icp/publish/query/icpMemoInfo_searchExecute.action?siteDomain=" . $req['domain'];
+        return redirect($url);
+	}
 
 }

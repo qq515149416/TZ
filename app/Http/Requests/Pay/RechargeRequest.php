@@ -61,10 +61,10 @@ class RechargeRequest extends FormRequest
 					'del_trade_id'		=> 'required',
 				];
 				break;
-			case 'payIndex':
-				$return = [
-					'total_amount'		=> 'required|integer|min:1.00',
-				];
+			// case 'payIndex':
+			// 	$return = [
+			// 		'total_amount'		=> 'required|integer|min:1.00',
+			// 	];
 			default:
 	
 				break;

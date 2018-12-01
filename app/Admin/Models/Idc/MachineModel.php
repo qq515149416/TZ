@@ -292,7 +292,7 @@ class MachineModel extends Model
                         ->select('machine_room_name')//所需获得的字段
                         ->first();
             $related->cabinet_id = '机柜暂未选择';
-            $related->ip = '0.0.0.0';
+            $related->ip = '0.0.0.0代表未选择';
             $related->ip_company = 0;
             return $related;//返回数据
 

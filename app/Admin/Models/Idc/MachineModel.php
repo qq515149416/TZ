@@ -42,8 +42,10 @@ class MachineModel extends Model
                 $result[$key]['cabinet'] = $cabinet;
                 $ip_id = $value['ip_id']?$value['ip_id']:0;
                 $result[$key]['ip_id'] = $ip_id;
+                $machineroom = $value['machineroom']?$value['machineroom']:0;
+                $result[$key]['machineroom'] =  $machineroom;
 				//机柜等的对应查询
-				$machineroom = (array)$this->machineroom($value['machineroom'],$cabinet,$ip_id);//机房信息的查询
+				$machineroom = (array)$this->machineroom($machineroom,$cabinet,$ip_id);//机房信息的查询
 				// 进行对应的机柜等信息的转换或者显示
 				if(!empty($machineroom)){
 					$result[$key]['cabinets'] = $machineroom['cabinet_id'];//机柜信息的返回
@@ -54,7 +56,6 @@ class MachineModel extends Model
 					$result[$key]['machineroom_name'] = $machineroom['machine_room_name'];
 				}
 			}
-            // dd($result);
 			$return['data'] = $result;
 			$return['code'] = 1;
 			$return['msg'] = '获取信息成功！！';
@@ -296,6 +297,12 @@ class MachineModel extends Model
             $related->ip_company = 0;
             return $related;//返回数据
 
+        } elseif($roomid == 0 && $cabinet == 0 && $ip == 0){
+            $related['cabinet_id'] = '机柜暂未选择';
+            $related['ip'] = '0.0.0.0代表未选择';
+            $related['ip_company'] = 0;
+            $related['machine_room_name'] = '机房暂未选择';
+            return $related;
         } else {
 			// 当未传入参数时代表简单的查询机房数据
 			$result = DB::table('idc_machineroom')->whereNull('deleted_at')->select('id as roomid','machine_room_id','machine_room_name')->get();

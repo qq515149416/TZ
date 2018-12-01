@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Schema;
 use Encore\Admin\Facades\Admin;
+use App\Admin\Models\Work\WorkAnswerModel;
+
 
 /**
  * 工单的模型
@@ -112,6 +114,13 @@ class WorkOrderModel extends Model
             $return['msg'] = '工单所属业务不存在或已过期或取消或业务不属于对应客户,请确认后提交';
             return $return;
         }
+        $work_order = $this->where(['business_num'=>$work_data['business_num'],'work_order_status'=>[0,1]])->get(['id','work_order_number']);
+        if(!$work_order->isEmpty()){
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg'] = '该业务有工单正在处理中,无法提交新的工单,如有需要,请在处理中的工单下联系';
+            return $return;
+        }
         // 工单号的生成
         $worknumber = mt_rand(71,99).date("Ymd",time()).substr(time(),8,2);
         $work_data['work_order_number'] = $worknumber;//工单号
@@ -123,6 +132,8 @@ class WorkOrderModel extends Model
         $work_data['work_order_status'] = 0;//工单状态
         $work_data['process_department'] = $this->department()->id;//转发部门
         $row = $this->create($work_data);
+        $answer = new WorkAnswerModel();
+        $answer->insertWorkAnswer(['work_number'=>$row['work_order_number'],'answer_content'=>$row['work_order_content']]);
         if($row != false){
 
             /**

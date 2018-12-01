@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use App\Http\Models\Customer\WorkAnswerModel;
 
 class WorkOrderModel extends Model
 {
@@ -83,6 +84,13 @@ class WorkOrderModel extends Model
     		$return['msg'] = '工单所属业务不存在或者已过期或者已取消,请确认后提交';
     		return $return;
     	}
+        $work_order = $this->where(['business_num'=>$insert_data['business_num'],'work_order_status'=>[0,1]])->get(['id','work_order_number']);
+        if(!$work_order->isEmpty()){
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg'] = '该业务有工单正在处理中,无法提交新的工单,如有需要,请在处理中的工单下联系';
+            return $return;
+        }
 		// 工单号的生成
 		$worknumber = mt_rand(71,99).date("Ymd",time()).substr(time(),8,2);
 		$insert_data['work_order_number'] = $worknumber;//工单号
@@ -94,6 +102,8 @@ class WorkOrderModel extends Model
 		$insert_data['work_order_status'] = 0;//工单状态
 		$insert_data['process_department'] = $this->department()->id;//转发部门
 		$row = $this->create($insert_data);
+        $answer = new WorkAnswerModel();
+        $answer->insertWorkAnswer(['work_number'=>$row['work_order_number'],'answer_content'=>$row['work_order_content']]);
 		if($row != false){
             /**
              * 当提交工单成功的时候使用curl进行模拟传值，发送数据到实时推送接口

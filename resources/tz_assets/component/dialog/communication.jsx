@@ -171,7 +171,7 @@ const styles = {
                 <CloseIcon />
               </IconButton>
               <Typography variant="h6" color="inherit" className={classes.flex}>
-            由{this.props.submitter_name}发起{this.props.machine_number}主机的{this.props.worktype}问题
+            由{this.props.submitter_name}发起{this.props.machine_number}主机的{this.props.worktype}问题,问题详细：{this.props.work_order_content}
               </Typography>
             </Toolbar>
           </AppBar>

@@ -79,7 +79,7 @@ class AllInput extends React.Component {
                             }
                         });
                     }
-                    // console.log(item.radioData.find(e => e.checked));
+                    // console.log(item.radioData.find(e => e.checked),item,currCode);
                     this[item.field] = {
                         value : item.radioData.find(e => e.checked).value
                     };

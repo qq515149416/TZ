@@ -20,8 +20,14 @@ class DismissalReviewsStores extends ActionBoundStores {
         };
         get("under/show_apply_under").then((res) => {
             if(res.data.code==1) {
-                this.dismissalReviews.business = res.data.data.business.map(item => new DismissalReviewStores(item));
-                this.dismissalReviews.orders = res.data.data.orders.map(item => new DismissalReviewStores(item));
+                if(type=="dismissalReview") {
+                    this.dismissalReviews.business = res.data.data.business.map(item => new DismissalReviewStores(item));
+                    this.dismissalReviews.orders = res.data.data.orders.map(item => new DismissalReviewStores(item));
+                } else {
+                    this.dismissalReviews.business = res.data.data.business.filter(item => item.remove_status > 1).map(item => new DismissalReviewStores(item));
+                    this.dismissalReviews.orders = res.data.data.orders.filter(item => item.remove_status > 1).map(item => new DismissalReviewStores(item));
+                }
+
             }
         });
     }

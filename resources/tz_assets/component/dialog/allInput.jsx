@@ -118,7 +118,7 @@ class AllInput extends React.Component {
                     }
                     Object.assign(inputAttr,{
                         [item.field]: {
-                            error: false,
+                            error: item.error,
                             label: item.label,
                             defaultValue: this.props.editData ? this.props.editData[item.field] : "",
                             disabled: disabled,
@@ -129,6 +129,12 @@ class AllInput extends React.Component {
             });
         }
         return inputAttr;
+    }
+    changeInputAttr = (field,value) => {
+        this.setState(state => {
+            state.inputAttr[field.split(".")[0]][field.split(".")[1]] = value;
+            return state;
+        });
     }
     handleChange = name => event => {
         this[name.split(".")[0]] = {
@@ -271,7 +277,7 @@ class AllInput extends React.Component {
                         helperText={inputAttr[inputTypeData.field].helperText ? inputAttr[inputTypeData.field].helperText : null}
                         onBlur={(event) => {
                             if(inputTypeData.model && inputTypeData.model.getSubordinateData) {
-                                inputTypeData.model.getSubordinateData(event.target.value);
+                                inputTypeData.model.getSubordinateData(event.target.value,this.changeInputAttr);
                             }
                         }}
                     />

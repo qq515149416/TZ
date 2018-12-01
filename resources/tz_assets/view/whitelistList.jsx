@@ -94,7 +94,19 @@ const inputType = [
     {
         field: "domain_name",
         label: "域名",
-        type: "text"
+        type: "text",
+        model: {
+            getSubordinateData: (value,callbrak) => {
+                let reg = /^(?=^.{3,255}$)[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+$/;
+                if((!reg.test(value)) || value.indexOf("www") > -1) {
+                    callbrak("domain_name.error",true);
+                    callbrak("domain_name.helperText","域名不能携带http和www");
+                } else {
+                    callbrak("domain_name.error",false);
+                    callbrak("domain_name.helperText","");
+                }
+            }
+        }
     },
     {
         field: "record_number",

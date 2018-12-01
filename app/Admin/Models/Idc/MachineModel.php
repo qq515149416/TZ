@@ -31,7 +31,7 @@ class MachineModel extends Model
 			$used_status = [0=>'未使用',1=>'使用中',2=>'锁定',3=>'迁移'];//使用状态的转换数据
 			$machine_status = [0=>'上架',1=>'下架'];//机器上下架的转换数据
 			$business_type = [1=>'租用',2=>'托管',3=>'备用'];//业务类型的转换数据
-			$ip_company = ['-1'=>'运营商暂未选择',0=>'电信',1=>'移动',2=>'联通'];
+			$ip_company = [3=>'运营商暂未选择',0=>'电信',1=>'移动',2=>'联通'];
 			// 遍历查询到的数据并进行相应的转换
 			foreach($result as $key=>$value){
 				// 状态等的转换
@@ -54,6 +54,7 @@ class MachineModel extends Model
 					$result[$key]['machineroom_name'] = $machineroom['machine_room_name'];
 				}
 			}
+            // dd($result);
 			$return['data'] = $result;
 			$return['code'] = 1;
 			$return['msg'] = '获取信息成功！！';
@@ -292,7 +293,7 @@ class MachineModel extends Model
                         ->first();
             $related->cabinet_id = '机柜暂未选择';
             $related->ip = '0.0.0.0';
-            $related->ip_company = '-1';
+            $related->ip_company = 3;
             return $related;//返回数据
 
         } else {

@@ -1,10 +1,10 @@
-import { observable, action, extendObservable} from "mobx";
-import {get,post} from "../tool/http.js";
+import { observable, action, extendObservable } from "mobx";
+import {get, post } from "../tool/http.js";
 import ActionBoundStores from "./common/action-bound-stores.js";
 const dateFormat = require('dateformat');
 class WhitelistStores {
     constructor(data) {
-        extendObservable(this,data);
+        extendObservable(this, data);
     }
 }
 class WhitelistsStores extends ActionBoundStores {
@@ -16,13 +16,13 @@ class WhitelistsStores extends ActionBoundStores {
     @observable customer_name = "";
     type = 0;
     delData(id) {
-        return new Promise((resolve,reject) => {
-            post("whitelist/delete",{
+        return new Promise((resolve, reject) => {
+            post("whitelist/delete", {
                 delete_id: id,
                 method: "deleteWhiteList"
             }).then((res) => {
-                if(res.data.code==1) {
-                    this.delStoreData("whitelists",id);
+                if (res.data.code == 1) {
+                    this.delStoreData("whitelists", id);
                     resolve(true);
                 } else {
                     resolve(false);
@@ -31,58 +31,58 @@ class WhitelistsStores extends ActionBoundStores {
         });
     }
     addData(data) {
-        return new Promise((resolve,reject) => {
-            post("whitelist/insert",Object.assign(data,{
+        return new Promise((resolve, reject) => {
+            post("whitelist/insert", Object.assign(data, {
                 binding_machine: this.binding_machine,
                 customer_id: this.customer_id,
                 customer_name: this.customer_name,
                 method: "insertWhiteList"
             })).then(res => {
-                if(res.data.code==1) {
+                if (res.data.code == 1) {
                     this.getData({
                         white_status: this.type
                     });
                     resolve(true);
-                }else {
+                } else {
                     alert(res.data.msg);
                     resolve(false);
                 }
             }).catch(reject);
         });
     }
-    @action.bound 
+    @action.bound
     handleChange(param) {
-        if(param.binding_machine) {
+        if (param.binding_machine) {
             this.binding_machine = param.binding_machine;
         }
-        if(param.customer_name) {
+        if (param.customer_name) {
             this.customer_name = param.customer_name;
         }
-        if(param.customer_id) {
+        if (param.customer_id) {
             this.customer_id = param.customer_id;
         }
     }
-    @action.bound 
+    @action.bound
     getIpParam(ip) {
-        get("whitelist/checkIP",{
+        get("whitelist/checkIP", {
             ip,
             method: "checkIP"
         }).then((res) => {
-            if(res.data.code==1) {
+            if (res.data.code == 1) {
                 this.binding_machine = res.data.data.machine_number;
-                this.customer_name = res.data.data.email;
+                this.customer_name = res.data.data.customer_name;
                 this.customer_id = res.data.data.customer_id;
                 // this.handleChange(res.data.data);
             }
         });
     }
-    @action.bound 
-    getData(param={}) {
+    @action.bound
+    getData(param = {}) {
         this.whitelists = [];
-        get("whitelist/show",Object.assign(param,{
+        get("whitelist/show", Object.assign(param, {
             method: "showWhiteList"
         })).then((res) => {
-            if(res.data.code==1) {
+            if (res.data.code == 1) {
                 this.whitelists = res.data.data.map(item => new WhitelistStores(item));
             }
         });

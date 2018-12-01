@@ -1,96 +1,10 @@
-import { observable, action} from "mobx";
+import { observable, action, extendObservable} from "mobx";
 import {get,post} from "../tool/http.js";
 import ActionBoundStores from "./common/action-bound-stores.js";
 const dateFormat = require('dateformat');
 class MachineLibraryStores {
-    @observable id =  1;
-    @observable machine_num =  "";
-    @observable cpu =  "";
-    @observable memory = "";
-    @observable harddisk = "";
-    @observable machineroom = 1;
-    @observable machineroom_name = "";
-    @observable cabinet = 1;
-    @observable cabinets = "";
-    @observable ip_id = 1;
-    @observable ip = "";
-    @observable ip_company = "";
-    @observable bandwidth = "";
-    @observable protect = "";
-    @observable loginname = "";
-    @observable loginpass = "";
-    @observable machine_type = "";
-    @observable used_status = 1;
-    @observable used = "";
-    @observable machine_status = 1;
-    @observable status = "";
-    @observable own_business = "";
-    @observable business_end = "";
-    @observable business_type = 1;
-    @observable business = "";
-    @observable machine_note = "";
-    @observable created_at = "";
-    @observable updated_at = "";
-    constructor({
-        id,
-        machine_num,
-        cpu,
-        memory,
-        harddisk,
-        machineroom,
-        machineroom_name,
-        cabinet,
-        cabinets,
-        ip_id,
-        ip,
-        ip_company,
-        bandwidth,
-        protect,
-        loginname,
-        loginpass,
-        machine_type,
-        used_status,
-        used,
-        machine_status,
-        status,
-        own_business,
-        business_end,
-        business_type,
-        business,
-        machine_note,
-        created_at,
-        updated_at
-    }) {
-        Object.assign(this,{
-            id,
-            machine_num,
-            cpu,
-            memory,
-            harddisk,
-            machineroom,
-            machineroom_name,
-            cabinet,
-            cabinets,
-            ip_id,
-            ip,
-            ip_company,
-            bandwidth,
-            protect,
-            loginname,
-            loginpass,
-            machine_type,
-            used_status,
-            used,
-            machine_status,
-            status,
-            own_business,
-            business_end,
-            business_type,
-            business,
-            machine_note,
-            created_at,
-            updated_at
-        });
+    constructor(data) {
+        extendObservable(this,data);
     }
 }
 class ComproomStores {
@@ -143,7 +57,7 @@ class MachineLibrarysStores extends ActionBoundStores {
         this.filterStoreData("machineLibrarys","select",param);
     }
     changeData(param) {
-        param.business_type = this.type;
+        // param.business_type = this.type;
         return new Promise((resolve,reject) => {
             post("machine/editmachine",param).then((res) => {
                 if(res.data.code==1) {
@@ -157,7 +71,7 @@ class MachineLibrarysStores extends ActionBoundStores {
         });
     }
     addData(data) {
-        data.business_type = this.type;
+        // data.business_type = this.type;
         return new Promise((resolve,reject) => {
             post("machine/insertmachine",data).then((res) => {
                 if(res.data.code==1) {
@@ -184,7 +98,7 @@ class MachineLibrarysStores extends ActionBoundStores {
             }).catch(reject);
         });
     }
-    @action.bound 
+    @action.bound
     getIpsData(param) {
         get("machine/ips",param).then((res) => {
             if(res.data.code==1) {
@@ -192,7 +106,7 @@ class MachineLibrarysStores extends ActionBoundStores {
             }
         });
     }
-    @action.bound 
+    @action.bound
     getCabinetsData(param) {
         param.business_type = this.type;
         get("machine/cabinets",param).then((res) => {
@@ -205,7 +119,7 @@ class MachineLibrarysStores extends ActionBoundStores {
     switchType(type) {
         this.type = type;
     }
-    @action.bound 
+    @action.bound
     getData() {
         this.machineLibrarys = [];
         get("machine/machineroom").then((res) => {

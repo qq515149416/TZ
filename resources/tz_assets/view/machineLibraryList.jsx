@@ -135,6 +135,28 @@ const inputType = [
         type: "text"
     },
     {
+        field: "business_type",
+        label: "业务类型",
+        type: "switch",
+        radioData: [
+            {
+                checked: true,
+                value: "1",
+                label: "租用"
+            },
+            {
+                checked: false,
+                value: "2",
+                label: "托管"
+            },
+            {
+                checked: false,
+                value: "3",
+                label: "备用"
+            }
+        ]
+    },
+    {
         field: "used_status",
         label: "使用状态",
         type: "switch",

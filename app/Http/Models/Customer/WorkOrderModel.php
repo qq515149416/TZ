@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use App\Http\Models\Customer\WorkAnswerModel;
 
 class WorkOrderModel extends Model
 {
@@ -94,6 +95,8 @@ class WorkOrderModel extends Model
 		$insert_data['work_order_status'] = 0;//工单状态
 		$insert_data['process_department'] = $this->department()->id;//转发部门
 		$row = $this->create($insert_data);
+        $answer = new WorkAnswerModel();
+        $answer->insertWorkAnswer(['work_number'=>$row['work_order_number'],'answer_content'=>$row['work_order_content']]);
 		if($row != false){
             /**
              * 当提交工单成功的时候使用curl进行模拟传值，发送数据到实时推送接口

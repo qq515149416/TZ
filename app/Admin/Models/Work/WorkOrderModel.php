@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Schema;
 use Encore\Admin\Facades\Admin;
+use App\Admin\Models\Work\WorkAnswerModel;
+
 
 /**
  * 工单的模型
@@ -123,6 +125,8 @@ class WorkOrderModel extends Model
         $work_data['work_order_status'] = 0;//工单状态
         $work_data['process_department'] = $this->department()->id;//转发部门
         $row = $this->create($work_data);
+        $answer = new WorkAnswerModel();
+        $answer->insertWorkAnswer(['work_number'=>$row['work_order_number'],'answer_content'=>$row['work_order_content']]);
         if($row != false){
 
             /**

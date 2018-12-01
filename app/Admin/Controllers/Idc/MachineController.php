@@ -74,7 +74,7 @@ class MachineController extends Controller
      */
     public function machineroom(){
     	$machineroom = new MachineModel();
-    	$result = $machineroom->machineroom();
+    	$result = $machineroom->rooms();
     	return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
     }
 

@@ -312,13 +312,31 @@ class MachineModel extends Model
 				$return['msg'] = '机房信息获取成功!!';
 			} else {
 				$return['data'] = [];
-				$return['code'] = 1;
+				$return['code'] = 0;
 				$return['msg'] = '机房信息获取失败!!';
 			}
-
 			return $return;
 		}
 	}
+
+    /**
+     * 获取机房数据
+     * @return [type] [description]
+     */
+    public function rooms(){
+        // 当未传入参数时代表简单的查询机房数据
+        $result = DB::table('idc_machineroom')->whereNull('deleted_at')->select('id as roomid','machine_room_id','machine_room_name')->get();
+        if(!$result->isEmpty()) {
+            $return['data'] = $result;
+            $return['code'] = 1;
+            $return['msg'] = '机房信息获取成功!!';
+        } else {
+            $return['data'] = [];
+            $return['code'] = 0;
+            $return['msg'] = '机房信息获取失败!!';
+        }
+        return $return;
+    }
 
 	/**
 	 * 对应机房的机柜信息的获取
@@ -388,7 +406,7 @@ class MachineModel extends Model
 				$return['msg'] = 'IP信息获取成功';
 			} else {
 				$return['data'] = [];
-				$return['code'] = 1;
+				$return['code'] = 0;
 				$return['msg'] = 'IP信息获取失败';
 			}
 		} else {

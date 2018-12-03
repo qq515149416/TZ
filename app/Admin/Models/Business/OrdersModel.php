@@ -298,23 +298,44 @@ class OrdersModel extends Model
         $delete_data = DB::table('tz_orders')
                         ->join('tz_business','tz_orders.business_sn','=','tz_business.business_number')
                         ->where('tz_orders.id',$delete_id['delete_id'])
-                        ->select('tz_business.business_number','tz_orders.order_sn')
+                        ->whereNull('tz_orders.deleted_at')
+                        ->select('tz_business.business_number','tz_business.endding_time','tz_orders.order_sn','tz_orders.order_status','tz_orders.resource_type','tz_orders.duration')
                         ->first();
         // 不存在需要删除的数据，直接返回
         if(!$delete_data){
             $return['code'] = 0;
-            $return['msg'] = '无法删除对应数据!';
+            $return['msg'] = '无对应的订单数据!';
             return $return;
         }
-
+        DB::beginTransaction();//开启事务处理
+        switch ($delete_data->resource_type) {//当资源类型为租用主机/托管主机/租用机柜时，对业务的到期时间进行更改
+            case 1:
+            case 2:
+            case 3: 
+                if($delete_data->order_status == 0){
+                    $end_time = Carbon::parse($delete_data->endding_time)->modify('-'.$delete_data->duration.' months')->toDateTimeString();
+                    $business = DB::table('tz_business')->where(['business_number'=>$delete_data->business_number])->update(['endding_time'=>$end_time]);
+                    if($business == 0){//更新业务到期时间失败
+                        DB::rollBack();
+                        $return['code'] = 0;
+                        $return['msg'] = '删除失败!';
+                        return $return;
+                    }
+                }
+                break;
+            default:
+                break;
+        }
         //删除对应业务数据
-        $result = DB::table('tz_orders')->where('id',$delete_id['delete_id'])->delete();
-        if($result == false){
+        $result = DB::table('tz_orders')->where(['id'=>$delete_id['delete_id']])->update(['order_status'=>5,'deleted_at'=>date('Y-m-d H:i:s',time())]);
+        if($result == 0){
+            DB::rollBack();
             $return['code'] = 0;
             $return['msg'] = '删除失败!';
             return $return;
         }
         // 删除成功返回
+        DB::commit();
         $return['msg'] = '删除数据成功,关联业务号为:'.$delete_data->business_number;
         $return['code'] = 1;
         return $return;

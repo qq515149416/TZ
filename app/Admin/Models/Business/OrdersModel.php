@@ -308,24 +308,74 @@ class OrdersModel extends Model
             return $return;
         }
         DB::beginTransaction();//开启事务处理
-        switch ($delete_data->resource_type) {//当资源类型为租用主机/托管主机/租用机柜时，对业务的到期时间进行更改
+        if($delete_data->order_status == 0){//当订单为未支付的时候删除同时需要对其相关的业务/对应的资源信息进行更新
+            switch ($delete_data->resource_type) {//当资源类型为租用主机/托管主机/租用机柜时，对业务的到期时间进行更改
             case 1:
             case 2:
-            case 3: 
-                if($delete_data->order_status == 0){
-                    $end_time = Carbon::parse($delete_data->endding_time)->modify('-'.$delete_data->duration.' months')->toDateTimeString();
-                    $business = DB::table('tz_business')->where(['business_number'=>$delete_data->business_number])->update(['endding_time'=>$end_time]);
-                    if($business == 0){//更新业务到期时间失败
-                        DB::rollBack();
-                        $return['code'] = 0;
-                        $return['msg'] = '删除失败!';
-                        return $return;
-                    }
+                $end_time = Carbon::parse($delete_data->endding_time)->modify('-'.$delete_data->duration.' months')->toDateTimeString();
+                $business = DB::table('tz_business')->where(['business_number'=>$delete_data->business_number])->update(['endding_time'=>$end_time]);
+                if($business == 0){//更新业务到期时间失败
+                    DB::rollBack();
+                    $return['code'] = 0;
+                    $return['msg'] = '删除失败!';
+                    return $return;
+                }
+                break;
+            case 3:
+                $end_time = Carbon::parse($delete_data->endding_time)->modify('-'.$delete_data->duration.' months')->toDateTimeString();
+                $business = DB::table('tz_business')->where(['business_number'=>$delete_data->business_number])->update(['endding_time'=>$end_time]);
+                if($business == 0){//更新业务到期时间失败
+                    DB::rollBack();
+                    $return['code'] = 0;
+                    $return['msg'] = '删除失败!';
+                    return $return;
+                } 
+                break;
+            case 4:
+                $end_time = Carbon::parse($delete_data->endding_time)->modify('-'.$delete_data->duration.' months')->toDateTimeString();
+                $business = DB::table('tz_business')->where(['business_number'=>$delete_data->business_number])->update(['endding_time'=>$end_time]);
+                if($business == 0){//更新业务到期时间失败
+                    DB::rollBack();
+                    $return['code'] = 0;
+                    $return['msg'] = '删除失败!';
+                    return $return;
+                } 
+                break;
+            case 5:
+                $end_time = Carbon::parse($delete_data->endding_time)->modify('-'.$delete_data->duration.' months')->toDateTimeString();
+                $business = DB::table('tz_business')->where(['business_number'=>$delete_data->business_number])->update(['endding_time'=>$end_time]);
+                if($business == 0){//更新业务到期时间失败
+                    DB::rollBack();
+                    $return['code'] = 0;
+                    $return['msg'] = '删除失败!';
+                    return $return;
+                }
+                break;
+            case 6:
+                $end_time = Carbon::parse($delete_data->endding_time)->modify('-'.$delete_data->duration.' months')->toDateTimeString();
+                $business = DB::table('tz_business')->where(['business_number'=>$delete_data->business_number])->update(['endding_time'=>$end_time]);
+                if($business == 0){//更新业务到期时间失败
+                    DB::rollBack();
+                    $return['code'] = 0;
+                    $return['msg'] = '删除失败!';
+                    return $return;
+                }
+                break;
+            case 7:
+                $end_time = Carbon::parse($delete_data->endding_time)->modify('-'.$delete_data->duration.' months')->toDateTimeString();
+                $business = DB::table('tz_business')->where(['business_number'=>$delete_data->business_number])->update(['endding_time'=>$end_time]);
+                if($business == 0){//更新业务到期时间失败
+                    DB::rollBack();
+                    $return['code'] = 0;
+                    $return['msg'] = '删除失败!';
+                    return $return;
                 }
                 break;
             default:
                 break;
+            }
         }
+        
         //删除对应业务数据
         $result = DB::table('tz_orders')->where(['id'=>$delete_id['delete_id']])->update(['order_status'=>5,'deleted_at'=>date('Y-m-d H:i:s',time())]);
         if($result == 0){

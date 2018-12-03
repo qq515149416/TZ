@@ -330,13 +330,14 @@ class Order extends Model
 			$return['msg']	= '无法获取该业务下的所有资源信息';
 			return $return;
 		}
-		$all = $this->where($business)->where('price','>','0.00')->where('resource_type','>',3)->orderBy('end_time','desc')->get(['order_sn','resource_type','machine_sn','resource','price','end_time'])->groupBy('machine_sn')->toArray();
+		$all = $this->where($business)->where('price','>','0.00')->where('order_status','<',3)->where('resource_type','>',3)->orderBy('end_time','desc')->get(['order_sn','resource_type','machine_sn','resource','price','end_time'])->groupBy('machine_sn')->toArray();
 		$all_keys = array_keys($all);//获取分组后的资源编号
+
 		foreach($all_keys as $key=>$value){
 			$business['machine_sn'] = $value;
 			$resource[$key] = $this->where($business)->where('order_status','<',3)->orderBy('end_time','desc')->select('order_sn','resource_type','machine_sn','resource','price','end_time','order_status')->first();
 		}
-		// dd($resource);
+		
 		if(!empty($resource)){
 			foreach($resource as $key=>$value){
 				$resource_type = [ '1' => '租用主机' , '2' => '托管主机' , '3' => '租用机柜' , '4' => 'IP' , '5' => 'CPU' , '6' => '硬盘' , '7' => '内存' , '8' => '带宽' , '9' => '防护' , '10' => 'cdn',11=>'高防IP'];

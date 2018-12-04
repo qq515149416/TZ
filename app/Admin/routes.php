@@ -372,7 +372,7 @@ Route::group([
         $router->get('show_renew_order', 'Business\OrdersController@showRenewOrder');//展示续费的订单
 
         $router->post('insertresource', 'Business\OrdersController@insertResource');//新购资源
-        $router->get('deleteorders', 'Business\OrdersController@deleteOrders');//删除订单（开发预留）
+        $router->post('deleteorders', 'Business\OrdersController@deleteOrders');//删除订单（开发预留）
         //客户信息
         $router->get('admin_customer', 'Business\CustomerController@adminCustomer');//获取客户信息
         $router->post('pull_black', 'Business\CustomerController@pullBlackCustomer');//修改客户账户状态

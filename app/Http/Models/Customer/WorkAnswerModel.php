@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 /**
  * 工单问答的数据
@@ -82,16 +83,57 @@ class WorkAnswerModel extends Model
     		$insert_data['answer_id'] = $uid;
             $insert_data['answer_name'] = Auth::user()->name?Auth::user()->name:Auth::user()->email;
     		$insert_data['answer_role'] = 1;
-    		$row = $this->create($insert_data);
-    		if($row != false){
-    			$return['data'] = $row;
-    			$return['code'] = 1;
-    			$return['msg'] = '';
-    		} else {
+            DB::beginTransaction();//开启事务处理
+    		$row = DB::table('tz_work_answer')->insertGetId($insert_data);
+    		if($row == 0){
+                DB::rollBack()
     			$return['data'] = '';
     			$return['code'] = 0;
     			$return['msg'] = '';
-    		}
+                return $return;
+            }
+            $insert_data['id'] = $row;
+            Session::put([$insert_data['work_number']=>$insert_data]);
+            Session::save();
+            $work = DB::table('tz_work_order')->where(['work_order_number'=>$insert_data['work_number']])->update(['work_order_status'=>0]);
+            if($work == 0){
+                DB::rollBack();
+                $return['data'] = '';
+                $return['code'] = 0;
+                $return['msg'] = '';
+                return $return;
+            } else {
+                DB::commit();
+                $answer = Session::get($insert_data['work_number']);
+                $work_order_detail = DB::table('tz_work_order')->where(['work_order_number'=>$insert_data['work_number']])->select('id','work_order_number','business_num','customer_id','work_order_type','work_order_content','submitter_name','work_order_status','process_department','complete_time','created_at','updated_at')->first();
+                /**
+                 * 转换工单
+                 * @var [type]
+                 */
+                $submitter = [1=>'客户',2=>'内部人员'];
+                $work_status = [0=>'待处理',1=>'处理中',2=>'完成',3=>'取消'];
+                // 提交方的转换
+                $work_order_detail->submit = $submitter[$work_order_detail->submitter];
+                // 工单状态的转换
+                $work_order_detail->workstatus = $work_status[$work_order_detail->work_order_status];
+                // 工单类型
+                $worktype = $this->workType($work_order_detail->work_order_type);
+                $work_order_detail->worktype = $worktype;
+                // 当前处理部门
+                $work_order_detail->department = $this->department($work_order_detail->process_department)->depart_name;
+                // 对应的业务数据
+                $business = $this->businessDetail($work_order_detail->business_num);
+                $work_order_detail->client_name = $business->client_name;
+                $work_order_detail->business_type = $business->business_type;
+                $work_order_detail->machine_number = $business->machine_number;
+                $work_order_detail->resource_detail = $business->resource_detail;
+                $work_order_detail->sales_name = $business->sales_name;
+                $work_order_detail = $work_order_detail->toArray();
+                curl('http://127.0.0.1:8121',$work_order_detail);
+                $return['data'] = $answer;
+                $return['code'] = 1;
+                $return['msg'] = '';
+            }
     	} else {
     		$return['data'] = '';
     		$return['code'] = 0;
@@ -99,6 +141,7 @@ class WorkAnswerModel extends Model
     	}
     	return $return;
     }
+
 
     /**
      * 工单类型
@@ -114,5 +157,32 @@ class WorkAnswerModel extends Model
             $worktype = '【'.$worktype->type_name.'】';
         }
         return $worktype;
+    }
+
+    /**
+     * 部门转换
+     * @param  [type] $depart_id [description]
+     * @return [type]            [description]
+     */
+    public function department($depart_id = 0){
+        if($depart_id != 0){
+            $where['id'] =  $depart_id;
+        } else {
+            $where['sign'] = 2;
+        }
+        $depart = DB::table('tz_department')->where($where)->select('id','depart_number','depart_name')->first();
+        return $depart;
+    }
+
+    /**
+     * 根据工单绑定的业务编号进行业务数据的查询
+     * @param  string $business_number 业务编号
+     * @return                   对应的业务数据
+     */
+    public function businessDetail($business_number){
+        $business = DB::table('tz_business')->where('business_number',$business_number)->select('client_name','business_type','machine_number','resource_detail','sales_name')->first();
+        $business_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜'];
+        $business->business_type = $business_type[$business->business_type];
+        return $business;
     }
 }

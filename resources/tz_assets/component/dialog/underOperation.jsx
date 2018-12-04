@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -14,6 +15,11 @@ import Enable from "../icon/enable.jsx";
 import ImageFilterBlackWhite from "../icon/ImageFilterBlackWhite.jsx";
 import { get, post } from "../../tool/http";
 
+const styles = theme => ({
+    iconButton: {
+        ...theme.tableIconButton
+    }
+});
 class UnderOperation extends React.Component {
     constructor(props) {
         super(props);
@@ -82,14 +88,15 @@ class UnderOperation extends React.Component {
         })
     }
     render() {
+        const { classes } = this.props;
         return [
             <Tooltip title="业务下架通过">
-                <IconButton onClick={this.open(1)} aria-label="success">
+                <IconButton className={classes.iconButton} onClick={this.open(1)} aria-label="success">
                     <Enable />
                 </IconButton>
             </Tooltip>,
             <Tooltip title="业务下架驳回">
-                <IconButton onClick={this.open(2)} aria-label="fail">
+                <IconButton className={classes.iconButton} onClick={this.open(2)} aria-label="fail">
                     <ImageFilterBlackWhite />
                 </IconButton>
             </Tooltip>,
@@ -150,5 +157,6 @@ class UnderOperation extends React.Component {
 }
 UnderOperation.propTypes = {
     obtained_type: PropTypes.number.isRequired,
+    classes: PropTypes.object.isRequired
 }
-export default UnderOperation;
+export default withStyles(styles)(UnderOperation);

@@ -87,7 +87,7 @@ Route::group([
             $router->get('/resource/cabinet', 'Show\CabinetController@index');
             $router->get('/article', 'Show\NewController@index');
             $router->get('/resource/machinelibrary', 'Show\MachineLibraryController@index');
-            
+
             $router->get('/crm/clientele', 'Show\ClienteleController@index');
             $router->get('/business', 'Show\BusinessController@index');
             $router->get('/checkbusiness', 'Show\CheckBusinessController@index');
@@ -96,8 +96,8 @@ Route::group([
             $router->get('/statisticalPerformance', 'Show\StatisticalPerformanceController@index');
             $router->get('/whitelist', 'Show\WhitelistController@index');
             $router->get('/work_order', 'Show\WorkOrderTypeController@index');
-            
-           
+
+
             $router->get('/checkrecharge', 'Show\RechargeController@index');
             $router->get('/reviewRecharge', 'Show\ReviewRechargeController@index');
             $router->get('/pwdDepartment', 'Show\WorkOrderTypeController@getPwdDepart');
@@ -109,8 +109,9 @@ Route::group([
             $router->get('/dismissalReview', 'Show\DismissalReviewController@index');
             $router->get('/disposal', 'Show\DisposalController@index');
             $router->get('/disposalHistory', 'Show\DisposalHistoryController@index');
+            $router->get('/machineProcessing', 'Show\MachineProcessingController@index');
         });
-        
+
     });
 
     /**
@@ -373,7 +374,7 @@ Route::group([
 
         $router->post('insertresource', 'Business\OrdersController@insertResource');//新购资源
         $router->post('renewresource', 'Business\OrdersController@renewResource');//续费资源
-        $router->get('deleteorders', 'Business\OrdersController@deleteOrders');//删除订单（开发预留）
+        $router->post('deleteorders', 'Business\OrdersController@deleteOrders');//删除订单（开发预留）
         //客户信息
         $router->get('admin_customer', 'Business\CustomerController@adminCustomer');//获取客户信息
         $router->post('pull_black', 'Business\CustomerController@pullBlackCustomer');//修改客户账户状态

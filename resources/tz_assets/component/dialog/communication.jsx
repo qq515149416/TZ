@@ -20,51 +20,54 @@ import TextField from '@material-ui/core/TextField';
 import { get,post } from '../../tool/http';
 const classNames = require('classnames');
 
-const styles = {
+const styles = (theme) => ({
     appBar: {
-      position: 'relative',
-    },
-    flex: {
-      flex: 1,
-    },
-    content_container: {
-        height: window.innerHeight - 64 - 110,
-        overflow: "auto"
-    },
-    textField: {
-        margin: 0,
-        padding: 5,
-        paddingBottom: 0
-    },
-    send: {
-        textAlign: "right"
-    },
-    sendButton: {
-        marginTop: 5
-    },
-    conversation_content_item: {
-        margin: "5px 0"
-    },
-    block: {
-        display: "block"
-    },
-    content: {
-        marginLeft: 20
-    },
-    self: {
-        color: "blue"
-    },
-    allochromatic: {
-        color: "green"
-    },
-    date: {
-        marginLeft: 10
-    },
-    changeStatus: {
-        marginTop: 5,
-        float: "left",
-    }
-  };
+        position: 'relative',
+      },
+      flex: {
+        flex: 1,
+      },
+      content_container: {
+          height: window.innerHeight - 64 - 110,
+          overflow: "auto"
+      },
+      textField: {
+          margin: 0,
+          padding: 5,
+          paddingBottom: 0
+      },
+      send: {
+          textAlign: "right"
+      },
+      sendButton: {
+          marginTop: 5
+      },
+      conversation_content_item: {
+          margin: "5px 0"
+      },
+      block: {
+          display: "block"
+      },
+      content: {
+          marginLeft: 20
+      },
+      self: {
+          color: "blue"
+      },
+      allochromatic: {
+          color: "green"
+      },
+      date: {
+          marginLeft: 10
+      },
+      changeStatus: {
+          marginTop: 5,
+          float: "left",
+      },
+      iconButton: {
+          ...theme.tableIconButton
+      }
+});
 
   function Transition(props) {
     return <Slide direction="up" {...props} />;
@@ -154,7 +157,7 @@ const styles = {
       const { classes } = this.props;
       return [
         <Tooltip title="问题沟通">
-            <IconButton onClick={this.handleClickOpen} aria-label="communication">
+            <IconButton className={classes.iconButton} onClick={this.handleClickOpen} aria-label="communication">
                 <CommunicationIcon />
             </IconButton>
         </Tooltip>,

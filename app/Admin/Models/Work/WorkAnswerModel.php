@@ -102,7 +102,9 @@ class WorkAnswerModel extends Model
     		if($row != 0){
                 DB::commit();
                 $insert_data['id'] = $row;
-                $work_order_detail = DB::table('tz_work_order')->where(['work_order_number'=>$insert_data['work_number']])->select('id','work_order_number','business_num','customer_id','work_order_type','work_order_content','submitter_name','work_order_status','process_department','complete_time','created_at','updated_at')->first();
+                $work_order_detail = DB::table('tz_work_order')->where(['work_order_number'=>$insert_data['work_number']])->select('id','work_order_number','business_num','customer_id','clerk_id','work_order_type',
+                              'work_order_content','submitter_id','submitter_name','submitter','work_order_status',
+                              'process_department','complete_id','complete_number','summary','complete_time','created_at','updated_at')->first();
                 /**
                  * 转换工单
                  * @var [type]

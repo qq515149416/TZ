@@ -51,9 +51,6 @@ const styles = theme => ({
         width: 200,
         fontSize: "16px",
         fontWeight: "bold"
-    },
-    iconButton: {
-        ...theme.tableIconButton
     }
 });
 /**
@@ -179,7 +176,7 @@ class ResumeComponent extends React.Component {
         const {classes} = this.props;
         return [
             <Tooltip title="更改状态">
-                <IconButton className={classes.iconButton} onClick={this.handleOpen} aria-label="resume show">
+                <IconButton onClick={this.handleOpen} aria-label="resume show">
                     {this.props.buttonIcon}
                 </IconButton>
             </Tooltip>,

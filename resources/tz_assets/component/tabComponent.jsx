@@ -7,7 +7,6 @@ import Tab from '@material-ui/core/Tab';
 
 const styles = theme => ({
     root: {
-    marginTop: 10,
       flexGrow: 1,
       width: '100%',
       backgroundColor: "transparent",

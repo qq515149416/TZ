@@ -57,17 +57,13 @@ const styles = theme => ({
       paddingLeft: 0,
       paddingRight: 0,
       textAlign: "center",
-      fontSize: 16
+      fontSize: 16,
     },
     tdLast: {
       textAlign: "center"
     },
     tdFirst: {
       textAlign: "center"
-    },
-    tableComponent: {
-        width: 35,
-        height: 35
     }
   });
   @observer
@@ -82,7 +78,6 @@ const styles = theme => ({
         page: 0,
         rowsPerPage: 10
       };
-
     }
     componentDidMount() {
         if(this.props.otherConfig) {
@@ -147,7 +142,6 @@ const styles = theme => ({
 
     isSelected = id => this.state.selected.indexOf(id) !== -1;
     renderLinkComponent = (data) => {
-        const { classes } = this.props;
       let operat = this.props.headTitlesData.find(item => item.id=="operat");
       return operat.extendUrl.map(extendUrl => {
         if(extendUrl.rule) {
@@ -156,7 +150,6 @@ const styles = theme => ({
                 return (
                   <ExpansionComponent
                       type="link"
-                      className={classes.tableComponent}
                       title={extendUrl.title}
                       icon={extendUrl.icon}
                       link={extendUrl.link+"?"+qs.stringify(Object.keys(data).reduce((result,item) => {
@@ -195,7 +188,6 @@ const styles = theme => ({
                 return (
                   <ExpansionComponent
                       type="link"
-                      className={classes.tableComponent}
                       title={extendUrl.title}
                       icon={extendUrl.icon}
                       link={extendUrl.link+"?"+qs.stringify(Object.keys(data).reduce((result,item) => {
@@ -214,7 +206,6 @@ const styles = theme => ({
                 return (
                   <ExpansionComponent
                       type="link"
-                      className={classes.tableComponent}
                       title={extendUrl.title}
                       icon={extendUrl.icon}
                       link={extendUrl.link+"?"+qs.stringify(Object.keys(data).reduce((result,item) => {
@@ -234,7 +225,6 @@ const styles = theme => ({
           return (
             <ExpansionComponent
                 type="link"
-                className={classes.tableComponent}
                 title={extendUrl.title}
                 icon={extendUrl.icon}
                 link={extendUrl.link+"?"+qs.stringify(Object.keys(data).reduce((result,item) => {
@@ -248,12 +238,10 @@ const styles = theme => ({
       });
     }
     renderExpansionComponent = (data) => {
-        const { classes } = this.props;
       if(!this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.rule) {
         return (
           <ExpansionComponent
             type="confirm"
-            className={classes.tableComponent}
             tip_title={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.title}
             tip_content={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.content}
             ok={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.ok}
@@ -272,7 +260,6 @@ const styles = theme => ({
           return (
             <ExpansionComponent
               type="confirm"
-              className={classes.tableComponent}
               tip_title={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.title}
               tip_content={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.content}
               ok={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.ok}
@@ -292,7 +279,6 @@ const styles = theme => ({
           return (
             <ExpansionComponent
               type="confirm"
-              className={classes.tableComponent}
               tip_title={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.title}
               tip_content={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.content}
               ok={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.ok}
@@ -311,11 +297,7 @@ const styles = theme => ({
     }
     render() {
       const { classes } = this.props;
-      const {  order, orderBy, selected, page } = this.state;
-      let { rowsPerPage } = this.state;
-        if(this.props.prohibitedPage) {
-            rowsPerPage = this.props.data.length;
-        }
+      const {  order, orderBy, selected, rowsPerPage, page } = this.state;
       const emptyRows = rowsPerPage - Math.min(rowsPerPage, this.props.data.length - page * rowsPerPage);
       return [
           <div>
@@ -419,7 +401,7 @@ const styles = theme => ({
                           this.props.headTitlesData.find(item => item.id=="operat") ? (
                             <TableCell className={classes.tdLast} numeric>
                               {this.props.changeData && (
-                                <PostData className={classes.tableComponent} operattext={this.props.operattext || this.props.title} inputType={this.props.inputType} postType="edit" editData={n} changeData={this.props.changeData} />
+                                <PostData operattext={this.props.operattext || this.props.title} inputType={this.props.inputType} postType="edit" editData={n} changeData={this.props.changeData} />
                               )}
                               {
                                 (this.props.headTitlesData.find(item => item.id=="operat").extend && this.props.headTitlesData.find(item => item.id=="operat").extendData ) && (<ExpansionComponent
@@ -467,26 +449,22 @@ const styles = theme => ({
               </TableBody>
             </Table>
           </div>
-          {
-              !this.props.prohibitedPage && (
-                <TablePagination
-                    component="div"
-                    count={this.props.data.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    backIconButtonProps={{
-                    'aria-label': 'Previous Page',
-                    }}
-                    nextIconButtonProps={{
-                    'aria-label': 'Next Page',
-                    }}
-                    onChangePage={this.handleChangePage}
-                    onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                    labelRowsPerPage="每页行数："
-                    labelDisplayedRows={({ from, to, count }) => `${from}到${to}条，一共： ${count}条` }
-                />
-              )
-          }
+          <TablePagination
+            component="div"
+            count={this.props.data.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            backIconButtonProps={{
+              'aria-label': 'Previous Page',
+            }}
+            nextIconButtonProps={{
+              'aria-label': 'Next Page',
+            }}
+            onChangePage={this.handleChangePage}
+            onChangeRowsPerPage={this.handleChangeRowsPerPage}
+            labelRowsPerPage="每页行数："
+            labelDisplayedRows={({ from, to, count }) => `${from}到${to}条，一共： ${count}条` }
+          />
         </Paper>
       ];
     }

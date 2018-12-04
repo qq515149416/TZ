@@ -3,23 +3,23 @@
 
 namespace App\Admin\Controllers\DefenseIp;
 
-use App\Admin\Models\DefenseIp\OrderModel;
-use App\Admin\Requests\DefenseIp\OrderRequest;
+use App\Admin\Models\DefenseIp\BusinessModel;
+use App\Admin\Requests\DefenseIp\BusinessRequest;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 
-class OrderController extends Controller
+class BusinessController extends Controller
 {
 	
 	/**
 	 *  新购 高防IP 接口  /  选取购买信息后,生成订单信息 
 	 */
-	public function buyNowByAdmin(OrderRequest $request){
+	public function buyNowByAdmin(BusinessRequest $request){
 		$par = $request->only(['package_id','buy_time','customer_id']);
 
-		$model = new OrderModel();
+		$model = new BusinessModel();
 
 		$package_id 	= $par['package_id'];
 		$buy_time 	= $par['buy_time'];
@@ -32,9 +32,9 @@ class OrderController extends Controller
 	/**
 	 *  续费 高防IP 接口  /  选取业务后,生成订单信息 
 	 */
-	public function renewByAdmin(OrderRequest $request){
+	public function renewByAdmin(BusinessRequest $request){
 		$par = $request->only(['business_id','buy_time']);
-		$model = new OrderModel();
+		$model = new BusinessModel();
 
 		$business_id = $par['business_id'];
 		$buy_time = $par['buy_time'];

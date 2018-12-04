@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\TzAuth;
 
+use App\Http\Models\TzUser;
 use App\Http\Requests\TzAuth\LoginByEmailRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -26,6 +27,7 @@ class LoginController extends Controller
      *  auth/loginByEmail
      * 类型:GET
      * 参数:
+     *
      *      email: 用户邮箱
      *      password :用户密码
      *      captcha :图形验证码
@@ -48,6 +50,35 @@ class LoginController extends Controller
     }
 
 
+    /**
+     * 登录
+     */
+    public function login()
+    {
+
+        $loginName='Jun';
+
+        $TzUserM = new TzUser();
+
+        //判断是否存在
+        $userExists = $TzUserM->where('name', '=',$loginName )->exists();
+        if ($userExists) {
+            //存在
+
+
+            dump('1');
+
+        } else {
+            //不存在
+
+
+            dump('2');
+
+        }
+
+        dump($userExists);
+
+    }
 
 
 }

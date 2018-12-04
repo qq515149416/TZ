@@ -56,7 +56,6 @@ class ChecksComponent extends React.Component {
                             label="IP"
                             fullWidth
                             value={this.state.ip}
-                            helperText="更改完ip后直接提交即可"
                             onChange={this.handleChange('ip')}
                             margin="normal"
                         />
@@ -65,7 +64,6 @@ class ChecksComponent extends React.Component {
                             id="ip"
                             label="IP"
                             fullWidth
-                            helperText="填写完ip后请按下Enter（回车）键确定"
                             value={this.state.ip}
                             onChange={this.handleChange('ip')}
                             margin="normal"

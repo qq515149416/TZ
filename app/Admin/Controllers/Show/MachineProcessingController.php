@@ -10,6 +10,10 @@ use Encore\Admin\Layout\Content;
 use Encore\Admin\Layout\Row;
 use App\Admin\Controllers\Show\tool\script;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 26d2e3d12349d40a2756d59f04204e9b7b00e150
 class MachineProcessingController extends script
 {
     public function index()

@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+// import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -11,13 +10,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import Order from "../icon/order.jsx";
 import {post} from "../../tool/http";
-
-const styles = theme => ({
-    iconButton: {
-        ...theme.tableIconButton
-    }
-});
-
 class OrderShow extends React.Component {
     constructor(props) {
         super(props);
@@ -45,10 +37,9 @@ class OrderShow extends React.Component {
     }
     render() {
         const {data} = this.state;
-        const { classes } = this.props;
         return [
             <Tooltip title="查看业务订单">
-                    <IconButton className={classes.iconButton} onClick={this.open} aria-label="changePassword">
+                    <IconButton onClick={this.open} aria-label="changePassword">
                         <Order />
                     </IconButton>
                 </Tooltip>,
@@ -128,9 +119,4 @@ class OrderShow extends React.Component {
         ];
     }
 }
-
-OrderShow.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(OrderShow);
+export default OrderShow;

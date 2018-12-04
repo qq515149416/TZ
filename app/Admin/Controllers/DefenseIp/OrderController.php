@@ -8,6 +8,7 @@ use App\Admin\Requests\DefenseIp\OrderRequest;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Encore\Admin\Facades\Admin;
 
 
 class OrderController extends Controller
@@ -18,6 +19,7 @@ class OrderController extends Controller
 	 */
 	public function buyNowByAdmin(OrderRequest $request){
 		$par = $request->only(['package_id','buy_time','customer_id']);
+		$admin_user_id = Admin::user()->id;
 
 		$model = new OrderModel();
 
@@ -33,7 +35,9 @@ class OrderController extends Controller
 	 *  续费 高防IP 接口  /  选取业务后,生成订单信息 
 	 */
 	public function renewByAdmin(OrderRequest $request){
-		$par = $request->only(['business_id','buy_time']);
+		$par = $request->only(['business_id','buy_time','customer_id']);
+		$admin_user_id = Admin::user()->id;
+
 		$model = new OrderModel();
 
 		$business_id = $par['business_id'];

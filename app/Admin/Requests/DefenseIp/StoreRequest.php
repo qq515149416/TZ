@@ -77,7 +77,7 @@ class StoreRequest extends FormRequest
 			'protection_value.required'	=> '请填写ip防护值',
 			'protection_value.integer'	=> '防护值需为整数,单位为G', 
 			'site.required'			=> '请填写所属机房,1为西安',
-			'ip.array'			=> 'ip提交格式错误',
+			'ip.array'			=> 'ip请用数组格式传值',
 			'del_id.required'		=> '请提供需删除的ip的id',
 			'edit_id.required'		=> '请提供需编辑的ip的id',
 			'edit_id.integer'			=> 'id格式错误',

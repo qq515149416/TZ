@@ -23,12 +23,21 @@ $io->on('connection',function($socket)use($io){
     });
 });
 
-$io->on('connect',function($socket){
+$io->on('connect',function($socket){//用于后台
 	$socket->on('login',function($depart_id)use($socket){
 		global $depart_map;
 		$depart_id = (string)$depart_id;
 		$socket->join($depart_id);
 		$socket->depart_id = $depart_id;
+	});
+});
+
+$io->on('connected',function($socket){//用于前台
+	$socket->on('clerk_login',function($clerk_id)use($socket){
+		global $depart_map;
+		$clerk_id = (string)$clerk_id;
+		$socket->join($clerk_id);
+		$socket->clerk_id = $clerk_id;
 	});
 });
 
@@ -43,6 +52,10 @@ $io->on('workerStart', function(){
 		global $io;
 		$to_department = @$_POST['process_department'];
 		$io->to($to_department)->emit('new_work_order',$_POST);
+		if(@$_POST['submitter']==1){
+			$clerk = @$_POST['clerk_id'];
+			$io->to($clerk)->emit('work_order',$_POST);
+		}
 		return $http_connection->send(' ');
 
 	};

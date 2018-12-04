@@ -42,8 +42,10 @@ class MachineModel extends Model
                 $result[$key]['cabinet'] = $cabinet;
                 $ip_id = $value['ip_id']?$value['ip_id']:0;
                 $result[$key]['ip_id'] = $ip_id;
+                $machineroom = $value['machineroom']?$value['machineroom']:0;
+                $result[$key]['machineroom'] =  $machineroom;
 				//机柜等的对应查询
-				$machineroom = (array)$this->machineroom($value['machineroom'],$cabinet,$ip_id);//机房信息的查询
+				$machineroom = (array)$this->machineroom($machineroom,$cabinet,$ip_id);//机房信息的查询
 				// 进行对应的机柜等信息的转换或者显示
 				if(!empty($machineroom)){
 					$result[$key]['cabinets'] = $machineroom['cabinet_id'];//机柜信息的返回
@@ -54,7 +56,6 @@ class MachineModel extends Model
 					$result[$key]['machineroom_name'] = $machineroom['machine_room_name'];
 				}
 			}
-            // dd($result);
 			$return['data'] = $result;
 			$return['code'] = 1;
 			$return['msg'] = '获取信息成功！！';
@@ -186,7 +187,31 @@ class MachineModel extends Model
 	 * @return array           返回提示信息和状态
 	 */
 	public function editMachine($editdata){
-		
+		$machine = $this->where(['id'=>$editdata['id']])->select('used_status','own_business','machine_num')->first();
+        if(empty($machine)){
+            $return['code'] = 0;
+            $return['msg'] = '无法修改机器信息！！';
+            return $return;
+        }
+        if($machine->used_status != 0){
+            switch ($machine->used_status) {
+                case 1:
+                    $return['code'] = 0;
+                    $return['msg'] = '机器'.$machine->machine_num.'已经绑定业务'.$machine->own_business.'，无法进行修改';
+                    return $return;
+                    break;
+                case 2:
+                    $return['code'] = 0;
+                    $return['msg'] = '机器'.$machine->machine_num.'已被锁定，无法进行修改';
+                    return $return;
+                    break;
+                case 3:
+                    $return['code'] = 0;
+                    $return['msg'] = '机器'.$machine->machine_num.'已迁移，无法进行修改';
+                    return $return;
+                    break;
+            }
+        }
 		DB::beginTransaction();//开启事务
 		$editdata['updated_at'] = date('Y-m-d H:i:s',time());
 		$row = DB::table('idc_machine')->where('id',$editdata['id'])->update($editdata);
@@ -219,8 +244,6 @@ class MachineModel extends Model
 			$return['code'] = 0;
 			$return['msg'] = '修改信息失败！！';
 		}
-
-		
 		return $return;
 	}
 
@@ -296,6 +319,12 @@ class MachineModel extends Model
             $related->ip_company = 0;
             return $related;//返回数据
 
+        } elseif($roomid == 0 && $cabinet == 0 && $ip == 0){
+            $related['cabinet_id'] = '机柜暂未选择';
+            $related['ip'] = '0.0.0.0代表未选择';
+            $related['ip_company'] = 0;
+            $related['machine_room_name'] = '机房暂未选择';
+            return $related;
         } else {
 			// 当未传入参数时代表简单的查询机房数据
 			$result = DB::table('idc_machineroom')->whereNull('deleted_at')->select('id as roomid','machine_room_id','machine_room_name')->get();
@@ -305,13 +334,31 @@ class MachineModel extends Model
 				$return['msg'] = '机房信息获取成功!!';
 			} else {
 				$return['data'] = [];
-				$return['code'] = 1;
+				$return['code'] = 0;
 				$return['msg'] = '机房信息获取失败!!';
 			}
-
 			return $return;
 		}
 	}
+
+    /**
+     * 获取机房数据
+     * @return [type] [description]
+     */
+    public function rooms(){
+        // 当未传入参数时代表简单的查询机房数据
+        $result = DB::table('idc_machineroom')->whereNull('deleted_at')->select('id as roomid','machine_room_id','machine_room_name')->get();
+        if(!$result->isEmpty()) {
+            $return['data'] = $result;
+            $return['code'] = 1;
+            $return['msg'] = '机房信息获取成功!!';
+        } else {
+            $return['data'] = [];
+            $return['code'] = 0;
+            $return['msg'] = '机房信息获取失败!!';
+        }
+        return $return;
+    }
 
 	/**
 	 * 对应机房的机柜信息的获取
@@ -381,7 +428,7 @@ class MachineModel extends Model
 				$return['msg'] = 'IP信息获取成功';
 			} else {
 				$return['data'] = [];
-				$return['code'] = 1;
+				$return['code'] = 0;
 				$return['msg'] = 'IP信息获取失败';
 			}
 		} else {
@@ -447,7 +494,7 @@ class MachineModel extends Model
 		$worksheet = $spreadsheet->getActiveSheet();
 		$worksheet->setTitle('机器批量导入表格');
 		$worksheet->setCellValueByColumnAndRow(1, 1, '机器批量导入表格(此为测试功能)');
-		$row_value = ['机器编号(必填)','CPU(必填)','内存(必填)','硬盘(必填)','机房(选填)','登录名(选填)','登录密码(选填)','机器型号(必填)','备注'];//填写的字段
+		$row_value = ['机器编号(必填)','CPU(必填)','内存(必填)','硬盘(必填)','机器型号(必填)','机房(选填)','登录名(选填)','登录密码(选填)','备注'];//填写的字段
 		$row = $worksheet->fromArray($row_value,NULL,'A4');//分配字段从A4开始填写（横向）
 		$highest_row = $worksheet->getHighestRow();//总行数
 		$highest_colum = $worksheet->getHighestColumn();//总列数
@@ -584,6 +631,9 @@ class MachineModel extends Model
 				case '硬盘(必填)':
 					$colum_value[$colum] = 'harddisk';
 					break;
+                case '机器型号(必填)':
+                    $colum_value[$colum] = 'machine_type';
+                    break;
 				case '机房(选填)':
 					$colum_value[$colum] = 'machineroom';
 					break;
@@ -604,9 +654,6 @@ class MachineModel extends Model
 					break;
 				case '登录密码(选填)':
 					$colum_value[$colum] = 'loginpass';
-					break;
-				case '机器型号(必填)':
-					$colum_value[$colum] = 'machine_type';
 					break;
 				// case '使用状态(必填)':
 				//     $colum_value[$colum] = 'used_status';

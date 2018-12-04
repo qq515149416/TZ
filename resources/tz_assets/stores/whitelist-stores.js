@@ -31,7 +31,13 @@ class WhitelistsStores extends ActionBoundStores {
         });
     }
     addData(data) {
+        let reg = /^(?=^.{3,255}$)[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+$/;
         return new Promise((resolve, reject) => {
+            if((!reg.test(data.domain_name)) || data.domain_name.indexOf("www") > -1) {
+                alert("域名不能携带http和www");
+                resolve(false);
+                return ;
+            }
             post("whitelist/insert", Object.assign(data, {
                 binding_machine: this.binding_machine,
                 customer_id: this.customer_id,

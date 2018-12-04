@@ -23,11 +23,8 @@ const styles = theme => ({
       boxShadow: "0px 4px 5px 0px rgba(0, 0, 0, 0.1), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12)"
     },
     table: {
-      minWidth: 700
+      minWidth: 700,
     },
-    fontStyle: {
-        fontSize: "14px"
-    }
 });
 
 const types = {
@@ -236,10 +233,10 @@ class Home extends React.Component {
                 <Table className={classes.table}>
                     <TableHead>
                     <TableRow>
-                        <TableCell className={classes.fontStyle}>ID</TableCell>
+                        <TableCell>ID</TableCell>
                         {
                             types[type].columnData.map(item => (
-                                <TableCell className={classes.fontStyle} numeric>{item.label}</TableCell>
+                                <TableCell numeric>{item.label}</TableCell>
                             ))
                         }
                     </TableRow>
@@ -248,12 +245,12 @@ class Home extends React.Component {
                     {data.map(row => {
                         return (
                         <TableRow key={row.id}>
-                            <TableCell className={classes.fontStyle} component="th" scope="row">
+                            <TableCell component="th" scope="row">
                                 {row.id}
                             </TableCell>
                             {
                                 types[type].columnData.map(item => (
-                                    <TableCell className={classes.fontStyle} numeric>{row[item.id]}</TableCell>
+                                    <TableCell numeric>{row[item.id]}</TableCell>
                                 ))
                             }
                         </TableRow>

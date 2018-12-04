@@ -374,6 +374,7 @@ Route::group([
 
         $router->post('insertresource', 'Business\OrdersController@insertResource');//新购资源
         $router->post('renewresource', 'Business\OrdersController@renewResource');//续费资源
+
         $router->post('deleteorders', 'Business\OrdersController@deleteOrders');//删除订单（开发预留）
         //客户信息
         $router->get('admin_customer', 'Business\CustomerController@adminCustomer');//获取客户信息

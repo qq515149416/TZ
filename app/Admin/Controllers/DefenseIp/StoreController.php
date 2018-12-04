@@ -27,7 +27,7 @@ class StoreController extends Controller
 			}
 			$check = $model->checkExist($ip[$i]);
 			if($check['code'] == 0){
-				return tz_ajax_echo($ip[$i],$ip[$i].'该ip地址已存在',0);
+				return tz_ajax_echo($ip[$i],'该ip地址已存在',0);
 			}
 		}
 

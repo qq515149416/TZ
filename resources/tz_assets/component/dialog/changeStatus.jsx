@@ -1,6 +1,4 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -14,12 +12,6 @@ import ChangeStatusIcon from "../icon/changeStatus.jsx";
 import MenuItem from '@material-ui/core/MenuItem';
 import {post} from "../../tool/http";
 import { inject,observer } from "mobx-react";
-
-const styles = theme => ({
-    iconButton: {
-        ...theme.tableIconButton
-    }
-});
 
 @inject("workOrdersStores")
 @observer
@@ -90,10 +82,9 @@ class ChangeStatus extends React.Component {
         });
     }
     render() {
-        const { classes } = this.props;
         return [
             (this.props.buttonElement ? this.props.buttonElement(this.open) :(<Tooltip title="更改状态">
-            <IconButton className={classes.iconButton} onClick={this.open} aria-label="renewalFee">
+            <IconButton onClick={this.open} aria-label="renewalFee">
                 <ChangeStatusIcon />
             </IconButton>
         </Tooltip>)),
@@ -167,7 +158,4 @@ class ChangeStatus extends React.Component {
         ];
     }
 }
-ChangeStatus.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
-export default withStyles(styles)(ChangeStatus);
+export default ChangeStatus;

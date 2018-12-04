@@ -33,7 +33,6 @@ import DefenseipReviewList from "../view/defenseipReviewList.jsx";
 import DismissalReviewList from "../view/dismissalReviewList.jsx";
 import DisposalList from "../view/disposalList.jsx";
 import DisposalHistoryList from "../view/disposalHistoryList.jsx";
-import MachineProcessing from "../view/machineProcessing.jsx";
 
 
 import { routerConfig } from "../config/common/config.js"
@@ -74,5 +73,4 @@ export default () => [
     <Route path={`${baseUrl}/dismissalReview`} component={DismissalReviewList} />,
     <Route path={`${baseUrl}/disposal`} component={DisposalList} />,
     <Route path={`${baseUrl}/disposalHistory`} component={DisposalHistoryList} />,
-    <Route path={`${baseUrl}/machineProcessing`} component={MachineProcessing} />,
 ];

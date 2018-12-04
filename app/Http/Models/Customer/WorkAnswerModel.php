@@ -98,6 +98,7 @@ class WorkAnswerModel extends Model
     		$insert_data['answer_id'] = $uid;
             $insert_data['answer_name'] = Auth::user()->name?Auth::user()->name:Auth::user()->email;
     		$insert_data['answer_role'] = 1;
+            $insert_data['created_at'] = date('Y-m-d H:i:s',time());
     		$row = DB::table('tz_work_answer')->insertGetId($insert_data);
     		if($row == 0){
                 DB::rollBack();

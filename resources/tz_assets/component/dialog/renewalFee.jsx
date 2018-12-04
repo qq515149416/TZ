@@ -43,6 +43,9 @@ const styles = theme => ({
     paperActive: {
         backgroundColor: theme.palette.secondary[500],
         color: theme.palette.common.white,
+    },
+    iconButton: {
+        ...theme.tableIconButton
     }
 });
 class RenewalFee extends React.Component {
@@ -157,7 +160,7 @@ class RenewalFee extends React.Component {
         };
         return [
             <Tooltip title="续费">
-                    <IconButton onClick={this.open} aria-label="renewalFee">
+                    <IconButton className={classes.iconButton} onClick={this.open} aria-label="renewalFee">
                         <RenewalFeeIcon />
                     </IconButton>
                 </Tooltip>,

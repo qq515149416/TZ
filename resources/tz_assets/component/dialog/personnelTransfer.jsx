@@ -25,6 +25,9 @@ const styles = theme => ({
     nested: {
       paddingLeft: theme.spacing.unit * 4,
     },
+    iconButton: {
+        ...theme.tableIconButton
+    }
   });
 
 class PersonnelTransfer extends React.Component {
@@ -113,7 +116,7 @@ class PersonnelTransfer extends React.Component {
         const { classes } = this.props;
         return [
             <Tooltip title="人员转移">
-                <IconButton onClick={this.open} aria-label="renewalFee">
+                <IconButton className={classes.iconButton} onClick={this.open} aria-label="renewalFee">
                     <Reset />
                 </IconButton>
             </Tooltip>,

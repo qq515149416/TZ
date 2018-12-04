@@ -1,5 +1,6 @@
 import React from "react";
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -14,6 +15,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 import WorkOrderIcon from "../icon/workOrder.jsx";
 import {get,post} from "../../tool/http";
 import { inject,observer } from "mobx-react";
+
+const styles = theme => ({
+    iconButton: {
+        ...theme.tableIconButton
+    }
+});
 
 @inject("workOrderTypesStores")
 class WorkOrderPost extends React.Component {
@@ -97,9 +104,10 @@ class WorkOrderPost extends React.Component {
         });
     }
     render() {
+        const { classes } = this.props;
         return [
             <Tooltip title="工单提交">
-                <IconButton onClick={this.open} aria-label="renewalFee">
+                <IconButton className={classes.iconButton} onClick={this.open} aria-label="renewalFee">
                     <WorkOrderIcon />
                 </IconButton>
             </Tooltip>,
@@ -186,4 +194,7 @@ class WorkOrderPost extends React.Component {
         ];
     }
 }
-export default WorkOrderPost;
+WorkOrderPost.propTypes = {
+    classes: PropTypes.object.isRequired
+}
+export default withStyles(styles)(WorkOrderPost);

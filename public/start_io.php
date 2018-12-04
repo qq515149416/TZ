@@ -53,8 +53,8 @@ $io->on('workerStart', function(){
 		$to_department = @$_POST['process_department'];
 		$io->to($to_department)->emit('new_work_order',$_POST);
 		if(@$_POST['submitter']==1){
-			$clerk = @$_POST['clerk_id'];
-			$io->to($clerk)->emit('work_order',$_POST);
+			$customer = @$_POST['customer_id'];
+			$io->to($customer)->emit('work_order',$_POST);
 		}
 		return $http_connection->send(' ');
 

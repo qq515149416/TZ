@@ -1,5 +1,6 @@
 import React from "react";
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -11,6 +12,13 @@ import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import ChangePassword from "../icon/changePassword.jsx";
 import {post} from "../../tool/http";
+
+const styles = theme => ({
+    iconButton: {
+        ...theme.tableIconButton
+    }
+  });
+
 class ResetPassword extends React.Component {
     constructor(props) {
         super(props);
@@ -45,9 +53,10 @@ class ResetPassword extends React.Component {
         }
     }
     render() {
+        const { classes } = this.props;
         return [
             <Tooltip title="修改密码">
-                    <IconButton onClick={this.open} aria-label="changePassword">
+                    <IconButton className={classes.iconButton} onClick={this.open} aria-label="changePassword">
                         <ChangePassword />
                     </IconButton>
                 </Tooltip>,
@@ -81,4 +90,8 @@ class ResetPassword extends React.Component {
         ];
     }
 }
-export default ResetPassword;
+ResetPassword.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(ResetPassword);

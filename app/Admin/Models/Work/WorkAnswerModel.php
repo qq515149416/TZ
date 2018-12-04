@@ -70,7 +70,7 @@ class WorkAnswerModel extends Model
             DB::beginTransaction();
             switch ($work_order->work_order_status) {
                 case 0:
-                    $row = DB::table('tz_business')->where(['work_order_number'=>$insert_data['work_number']])->update(['work_order_status'=>1]);
+                    $row = DB::table('tz_work_order')->where(['work_order_number'=>$insert_data['work_number']])->update(['work_order_status'=>1]);
                     if($row == 0){
                         DB::rollBack();
                         $return['data'] = '';
@@ -127,7 +127,7 @@ class WorkAnswerModel extends Model
                 $work_order_detail->machine_number = $business->machine_number;
                 $work_order_detail->resource_detail = $business->resource_detail;
                 $work_order_detail->sales_name = $business->sales_name;
-                $work_order_detail = $work_order_detail->toArray();
+                $work_order_detail = (array)$work_order_detail;
                 curl('http://127.0.0.1:8121',$work_order_detail);
     			$return['data'] = $insert_data;
 	    		$return['code'] = 1;

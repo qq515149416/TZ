@@ -67,45 +67,48 @@ class WorkAnswerModel extends Model
     public function insertWorkAnswer($insert_data){
     	if($insert_data){
             $work_order = DB::table('tz_work_order')->where(['work_order_number'=>$insert_data['work_number']])->select('work_order_status')->first();
-    		if($work_order->work_order_status == 2){//工单为完成时无法再进行操作
-                $return['data'] = '';
-                $return['code'] = 0;
-                $return['msg'] = '工单已完成,无法再进行联系';
-                return $return;
-            }
-            if($work_order->work_order_status == 3){//工单为取消时无法再进行操作
-                $return['data'] = '';
-                $return['code'] = 0;
-                $return['msg'] = '工单已取消,无法再进行联系';
-                return $return;
+            DB::beginTransaction();//开启事务处理
+            switch ($work_order->work_order_status) {
+                case 1:
+                    $work = DB::table('tz_work_order')->where(['work_order_number'=>$insert_data['work_number']])->update(['work_order_status'=>0]);
+                    if($work == 0){
+                        DB::rollBack();
+                        $return['data'] = '';
+                        $return['code'] = 0;
+                        $return['msg'] = '2';
+                        return $return;
+                    }
+                    break;
+                case 2:
+                    $return['data'] = '';
+                    $return['code'] = 0;
+                    $return['msg'] = '工单已完成,无法再进行联系';
+                    return $return;
+                    break;
+                case 3:
+                    $return['data'] = '';
+                    $return['code'] = 0;
+                    $return['msg'] = '工单已取消,无法再进行联系';
+                    return $return;
+                    break;
+                default:
+                    break;
             }
             $uid = Auth::user()->id;
     		$insert_data['answer_id'] = $uid;
             $insert_data['answer_name'] = Auth::user()->name?Auth::user()->name:Auth::user()->email;
     		$insert_data['answer_role'] = 1;
-            DB::beginTransaction();//开启事务处理
     		$row = DB::table('tz_work_answer')->insertGetId($insert_data);
     		if($row == 0){
-                DB::rollBack()
+                DB::rollBack();
     			$return['data'] = '';
     			$return['code'] = 0;
-    			$return['msg'] = '';
-                return $return;
-            }
-            $insert_data['id'] = $row;
-            Session::put([$insert_data['work_number']=>$insert_data]);
-            Session::save();
-            $work = DB::table('tz_work_order')->where(['work_order_number'=>$insert_data['work_number']])->update(['work_order_status'=>0]);
-            if($work == 0){
-                DB::rollBack();
-                $return['data'] = '';
-                $return['code'] = 0;
-                $return['msg'] = '';
+    			$return['msg'] = '1';
                 return $return;
             } else {
                 DB::commit();
-                $answer = Session::get($insert_data['work_number']);
-                $work_order_detail = DB::table('tz_work_order')->where(['work_order_number'=>$insert_data['work_number']])->select('id','work_order_number','business_num','customer_id','work_order_type','work_order_content','submitter_name','work_order_status','process_department','complete_time','created_at','updated_at')->first();
+                $insert_data['id'] = $row;
+                $work_order_detail = DB::table('tz_work_order')->where(['work_order_number'=>$insert_data['work_number']])->select('id','work_order_number','submitter','business_num','customer_id','work_order_type','work_order_content','submitter_name','work_order_status','process_department','complete_time','created_at','updated_at')->first();
                 /**
                  * 转换工单
                  * @var [type]
@@ -128,16 +131,16 @@ class WorkAnswerModel extends Model
                 $work_order_detail->machine_number = $business->machine_number;
                 $work_order_detail->resource_detail = $business->resource_detail;
                 $work_order_detail->sales_name = $business->sales_name;
-                $work_order_detail = $work_order_detail->toArray();
+                $work_order_detail = (array)$work_order_detail;
                 curl('http://127.0.0.1:8121',$work_order_detail);
-                $return['data'] = $answer;
+                $return['data'] = $insert_data;
                 $return['code'] = 1;
                 $return['msg'] = '';
             }
     	} else {
     		$return['data'] = '';
     		$return['code'] = 0;
-    		$return['msg'] = '';
+    		$return['msg'] = '3';
     	}
     	return $return;
     }

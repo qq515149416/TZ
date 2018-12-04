@@ -31,14 +31,14 @@ class OrderRequest extends FormRequest
 		$return = [];
 
 		switch ($method) {
-			case 'buyDefenseIpNow':
+			case 'buyNowByAdmin':
 				$return = [
 					'package_id'		=> 'required|exists:tz_defenseip_package,id',
 					'buy_time'		=> 'required|integer|min:1',
 					'customer_id'		=> 'required|exists:tz_users,id'
 				];
 				break;
-			case 'renewDefenseIp':
+			case 'renewByAdmin':
 				$return = [
 					'business_id'		=> 'required|exists:tz_defenseip_business,id',
 					'buy_time'		=> 'required|integer|min:1',

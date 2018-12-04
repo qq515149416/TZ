@@ -103,7 +103,7 @@ class WhiteListController extends Controller
 	{
 		$req = $request->all();
 		$url = "http://www.miibeian.gov.cn/icp/publish/query/icpMemoInfo_searchExecute.action?siteDomain=" . $req['domain'];
-		return redirect($url);
+        return redirect($url);
 	}
 
 }

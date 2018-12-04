@@ -187,7 +187,31 @@ class MachineModel extends Model
 	 * @return array           返回提示信息和状态
 	 */
 	public function editMachine($editdata){
-		
+		$machine = $this->where(['id'=>$editdata['id']])->select('used_status','own_business','machine_num')->first();
+        if(empty($machine)){
+            $return['code'] = 0;
+            $return['msg'] = '无法修改机器信息！！';
+            return $return;
+        }
+        if($machine->used_status != 0){
+            switch ($machine->used_status) {
+                case 1:
+                    $return['code'] = 0;
+                    $return['msg'] = '机器'.$machine->machine_num.'已经绑定业务'.$machine->own_business.'，无法进行修改';
+                    return $return;
+                    break;
+                case 2:
+                    $return['code'] = 0;
+                    $return['msg'] = '机器'.$machine->machine_num.'已被锁定，无法进行修改';
+                    return $return;
+                    break;
+                case 3:
+                    $return['code'] = 0;
+                    $return['msg'] = '机器'.$machine->machine_num.'已迁移，无法进行修改';
+                    return $return;
+                    break;
+            }
+        }
 		DB::beginTransaction();//开启事务
 		$editdata['updated_at'] = date('Y-m-d H:i:s',time());
 		$row = DB::table('idc_machine')->where('id',$editdata['id'])->update($editdata);
@@ -220,8 +244,6 @@ class MachineModel extends Model
 			$return['code'] = 0;
 			$return['msg'] = '修改信息失败！！';
 		}
-
-		
 		return $return;
 	}
 

@@ -8,17 +8,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Encore\Admin\Facades\Admin;
 
-class OrderModel extends Model
+class BusinessModel extends Model
 {
 
 	use SoftDeletes;
 	
 
-	protected $table = 'tz_orders'; //表
+	protected $table = 'tz_defenseip_business'; //表
 	protected $primaryKey = 'id'; //主键
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
-	protected $fillable = ['order_sn', 'business_sn','customer_id','customer_name','business_id','business_name','resource_type','order_type','machine_sn','resource','price','duration','payable_money','achievement','end_time','serial_number','pay_time'];
+	protected $fillable = ['business_number', 'user_id','package_id','ip_id','target_ip','price','status','end_at','created_at'];
+	protected $time_limit = 60;//两次购买的时间限制
 
 	/**
 	 *  新购 高防IP 接口  /  选取购买信息后,生成订单信息 
@@ -35,10 +36,10 @@ class OrderModel extends Model
 			];
 		}
 		//计算二次购买允许时间
-		$second_buy_time = bcsub( time() , 60);		//60秒只允许一次
+		$second_buy_time = bcsub( time() , $this->time_limit);		//60秒只允许一次
 		$second_buy_time = date("Y-m-d H:i:s",$second_buy_time); 
 		//查找试用业务申请
-		$check_time = DB::table('tz_defenseip_business')->where('status',4)->where('user_id',$customer_id)->where('created_at','>',$second_buy_time)->value('id');
+		$check_time = $this->where('status',4)->where('user_id',$customer_id)->where('created_at','>',$second_buy_time)->value('id');
 		if($check_time != null){
 			return[
 				'data'	=> '',
@@ -71,14 +72,27 @@ class OrderModel extends Model
 		$data['created_at']		= date("Y-m-d H:i:s");
 		
 		DB::beginTransaction();	
-		$insert = DB::table('tz_defenseip_business')->insert($data);
-		if($insert != true){
+		//因为可先使用后付款,创建业务
+		$insert = $this->create($data);
+		if($insert == false){
 			return[
 				'data'	=> '',
 				'msg'	=> '业务创建失败',
 				'code'	=> 0,
 			];
 		}
+		//业务更新到tz_business_relevance关联表
+		$relevance = DB::table('tz_business_relevance')->insert(['type' => 2 , 'business_id' => $insert->id , 'created_at' => date("Y-m-d H:i:s")]);
+		if($relevance != true){
+			DB::rollBack();
+			return[
+				'data'	=> '',
+				'msg'	=> '业务关联创建失败',
+				'code'	=> 0,
+			];
+		}
+
+		//更新高防IP使用状态
 		$update_ip = DB::table('tz_defenseip_store')->where('id',$data['ip_id'])->update(['status' => 1]);
 		if($update_ip != 1){
 			DB::rollBack();
@@ -88,6 +102,7 @@ class OrderModel extends Model
 				'code'	=> 0,
 			];
 		}
+
 		DB::commit();
 		return[
 			'data'	=> '',

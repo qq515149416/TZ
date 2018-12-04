@@ -483,6 +483,16 @@ Route::group([
 
         });
 
+        /**
+         *  高防ip后台购买
+         */
+        Route::group([
+            'prefix' => 'order',
+        ], function (Router $router) {
+            $router->get('buyNowByAdmin', 'DefenseIp\BusinessController@buyNowByAdmin');  //后台替客户购买高防ip
+            $router->get('renewByAdmin', 'DefenseIp\BusinessController@renewByAdmin');  //后台替客户续费高防ip
+
+        });
 
 
     });

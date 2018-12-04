@@ -6,6 +6,7 @@ import ChangeStatus from "../component/dialog/changeStatus.jsx";
 import Communication from "../component/dialog/communication.jsx";
 import TabComponent from "../component/tabComponent.jsx";
 import DealWith from "../component/icon/dealWith.jsx";
+import DefenseipReviewList from "./defenseipReviewList.jsx";
 import { inject,observer } from "mobx-react";
 import { get, post } from "../tool/http.js";
 
@@ -303,7 +304,8 @@ class MachineProcessing extends React.Component {
                 title="处理中工单"
                 type={1}
             />,
-            <DisposalListWepper />
+            <DisposalListWepper />,
+            <DefenseipReviewList />,
         ];
     }
 }

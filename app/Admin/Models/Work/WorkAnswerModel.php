@@ -159,4 +159,31 @@ class WorkAnswerModel extends Model
         }
         return $worktype;
     }
+
+    /**
+     * 部门转换
+     * @param  [type] $depart_id [description]
+     * @return [type]            [description]
+     */
+    public function department($depart_id = 0){
+        if($depart_id != 0){
+            $where['id'] =  $depart_id;
+        } else {
+            $where['sign'] = 2;
+        }
+        $depart = DB::table('tz_department')->where($where)->select('id','depart_number','depart_name')->first();
+        return $depart;
+    }
+
+    /**
+     * 根据工单绑定的业务编号进行业务数据的查询
+     * @param  string $business_number 业务编号
+     * @return                   对应的业务数据
+     */
+    public function businessDetail($business_number){
+        $business = DB::table('tz_business')->where('business_number',$business_number)->select('client_name','business_type','machine_number','resource_detail','sales_name')->first();
+        $business_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜'];
+        $business->business_type = $business_type[$business->business_type];
+        return $business;
+    }
 }

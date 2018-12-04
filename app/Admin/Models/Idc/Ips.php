@@ -80,21 +80,21 @@ class Ips extends Model
         $ip_end = $data['ip_end'];
         if(empty($ip_end)){
             // 结束IP的第一组的为空则代表进行一条IP插入
-                $data['ip'] = $ip_start;
-                // unset($ip_start);
-                $row = $this->create($data);
-                if($row != false){
-                    // 插入数据成功
-                    $return['data'] = $row->id;
-                    $return['code'] = 1;
-                    $return['msg'] = '新增IP地址信息成功!!';
+            $data['ip'] = $ip_start;
+            // unset($ip_start);
+            $row = $this->create($data);
+            if($row != false){
+                // 插入数据成功
+                $return['data'] = $row->id;
+                $return['code'] = 1;
+                $return['msg'] = '新增IP地址信息成功!!';
 
-                } else {
-                    // 插入数据失败
-                    $return['data'] = '';
-                    $return['code'] = 0;
-                    $return['msg'] = '新增IP地址信息失败!!';
-                }
+            } else {
+                // 插入数据失败
+                $return['data'] = '';
+                $return['code'] = 0;
+                $return['msg'] = '新增IP地址信息失败!!';
+            }
         } else {
             //截取开始时的IP段(如:192.168.1)
             $startstr = substr($ip_start,0,strrpos($ip_start,'.'));
@@ -166,6 +166,10 @@ class Ips extends Model
      */
     public function doEdit($data){
     	if($data && $data['id']+0) {
+                        $check = $this->checkDel($id);
+                        if($check['code'] != 1){
+                            return $check;
+                        }
     		$edit = $this->find($data['id']);
     		$edit->vlan = $data['vlan'];
     		// $edit->ip = $data['ip'];
@@ -197,6 +201,10 @@ class Ips extends Model
      */
     public function dele($id) {
     	if($id) {
+                         $check = $this->checkDel($id);
+                        if($check['code'] != 1){
+                            return $check;
+                        }
     		$row = $this->where('id',$id)->delete();
     		if($row != false){
     			$return['code'] = 1;
@@ -213,6 +221,29 @@ class Ips extends Model
     	return $return;
     }
 
+    /**
+    * 检查是否可编辑
+    */
+    protected function checkDel($id){
+
+        $mod = $this->find($id);
+        if($mod == null){
+            return [
+                'code'  => 0,
+                'msg'   => '无此id',
+            ];
+        }
+        if($mod->used_status != 0){
+            return [
+                'code'  => 2,
+                'msg'   => 'ip正在使用,无法删除或编辑',
+            ];
+        }else{
+            return [
+                'code'  =>1,
+            ];
+        }
+    }
     /**
      * 获取机房的信息
      * @return array 返回相关的信息和数据

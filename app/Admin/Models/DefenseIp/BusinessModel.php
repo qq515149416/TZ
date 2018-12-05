@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Encore\Admin\Facades\Admin;
+use App\Admin\Models\DefenseIp\OrderModel; //后台高防ip的订单模型
+use App\Admin\Models\Business\OrdersModel; //后台的订单支付模型
+use Carbon\Carbon;
 
 class BusinessModel extends Model
 {
@@ -82,7 +85,7 @@ class BusinessModel extends Model
 			];
 		}
 		//业务更新到tz_business_relevance关联表
-		$relevance = DB::table('tz_business_relevance')->insert(['type' => 2 , 'business_id' => $insert->id , 'created_at' => date("Y-m-d H:i:s")]);
+		$relevance = DB::table('tz_business_relevance')->insert(['type' => 2 , 'business_id' => $insert->business_number , 'created_at' => date("Y-m-d H:i:s")]);
 		if($relevance != true){
 			DB::rollBack();
 			return[
@@ -111,14 +114,24 @@ class BusinessModel extends Model
 		];
 	}
 
+
+
+
 	public function renew($business_id,$buy_time){
 		$user_id = Admin::user()->id;
-		$business = DB::table('tz_defenseip_business')->where("id",$business_id)->first();
-		dd($business);
+		$business = $this->find($business_id);	
 		if($business == null){
 			return [
 				'data'	=> '',
 				'msg'	=> '没找到该业务',
+				'code'	=> 0,
+			];
+		}
+		$business_admin_user = DB::table('tz_users')->where('id',$business->user_id)->select(['salesman_id','email','name'])->first();
+		if($user_id != $business_admin_user->salesman_id){
+			return [
+				'data'	=> '',
+				'msg'	=> '客户不属于您',
 				'code'	=> 0,
 			];
 		}
@@ -129,74 +142,66 @@ class BusinessModel extends Model
 				'code'	=> 0,
 			];
 		}
-		$checkOrder = $this
-				->where('business_sn',$business->business_number)
-				->where('order_type',2)
-				->where('order_status',0)
-				->first();
-				
-		if($checkOrder != null){
-			$checkOrder->duration 	= $buy_time;
-			$checkOrder->payable_money 	= bcmul($checkOrder->price,$checkOrder->duration,2);
-			$res = $checkOrder->save();
-			if($res == true){
+
+		if($business->status == 4){
+			$order_type = 1;
+			$end_time = Carbon::parse($business->created_at)->addMonth($buy_time)->toDateTimeString();
+			$end = strtotime($end_time);
+			if($end < time()){
 				return [
 					'data'	=> '',
-					'msg'	=> '续费订单已存在,更新成功',
-					'code'	=> 1,
-				];
-			}else{
-				return [
-					'data'	=> '',
-					'msg'	=> '续费订单已存在,更新失败',
+					'msg'	=> '续费时长需比试用时间长',
 					'code'	=> 0,
 				];
 			}
-		}	
-		
+		}else{
+			$order_type = 2;
+			$end_time = '';
+		}
+		if($business_admin_user->name == null){
+			$business_admin_user->name = $business_admin_user->email;
+		}
+		$order = [
+			'order_sn'		=> 'GO_'.time().'_admin_'.$user_id,
+			'business_sn'		=> $business->business_number,
+			'customer_id'		=> $business->user_id,
+			'customer_name'	=> $business_admin_user->name,
+			'business_id'		=> $business_admin_user->salesman_id,
+			'business_name'	=> DB::table('admin_users')->where('id',$business_admin_user->salesman_id)->value('name'),
+			'resource_type'		=> 11,
+			'order_type'		=> $order_type,
+			'machine_sn'		=> $business->package_id,
+			'resource'		=> DB::table('tz_defenseip_store')->where('id',$business->ip_id)->value('ip'),
+			'price'			=> $business->price,
+			'duration'		=> $buy_time,
+			'payable_money'	=> bcmul($business->price,$buy_time,2),
+			'end_time'		=> $end_time,
+			'order_status'		=> 0,
+			'order_note'		=> '业务员手动为客户高防ip续费',
+		];	
 
-		$second_buy_time = bcsub( time() , 60);
-		$second_buy_time = date("Y-m-d H:i:s",$second_buy_time); 
-
-		$check_time = $this->where('order_type',2)->where('resource_type',11)->where('customer_id',$user_id)->where('created_at','>',$second_buy_time)->value('id');                     
-
-		if($check_time != null){
-			return[
+		DB::beginTransaction();	
+		$orderModel = new OrderModel();
+		$create_order = $orderModel->renewOrder($order);
+		if($create_order == false){
+			return [
 				'data'	=> '',
-				'msg'	=> '1分钟内只能创建一个订单',
+				'msg'	=> '创建订单失败',
 				'code'	=> 0,
 			];
 		}
-
-		$data['order_sn'] 		= 'GO'.'_'.time().'_'.$user_id;
-		$data['business_sn']		= $business->business_number;
-		$data['customer_id']		= $user_id;
-		$data['customer_name']	= Auth::user()->name;
-		if($data['customer_name'] == null){
-			$data['customer_name']	= Auth::user()->email;
+		$pay_model = new OrdersModel();
+		$pay_res = $pay_model->payOrderByBalance($order['business_sn'],0);
+		
+		if($pay_res['code'] != 1){
+			DB::rollBack();
+			return $pay_res;
 		}
-		$data['business_id']		= Auth::user()->salesman_id;
-		$data['business_name']		= DB::table('admin_users')->where('id',$data['business_id'])->value('name');
-		$data['resource_type']		= 11;
-		$data['resource']		= DB::table('tz_defenseip_store')->where('id',$business->ip_id)->value('ip');
-		$data['order_type']		= 2;
-		$data['price']			= $business->price;
-		$data['machine_sn']		= $business->package_id;
-		$data['duration']		= $buy_time;
-		$data['payable_money']		= bcmul($data['price'],$data['duration'],2);
-		$data['order_status']		= 0; 
-
-		$insert = $this->create($data);
-
-		if($insert != false){
-			$return['data']	= $insert->id;
-			$return['msg']	= '创建订单成功';
-			$return['code']	= 1;
-		}else{
-			$return['data']	= '';
-			$return['msg']	= '创建订单失败';
-			$return['code']	= 0;
-		}
+		DB::commit();
+		$return['data']	= '';
+		$return['msg']	= '续费成功';
+		$return['code']	= 1;
+		
 		return $return;
 	}
 

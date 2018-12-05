@@ -220,77 +220,95 @@ class PayOrder extends Model
 				$checkBusiness = DB::table('tz_defenseip_business')
 					->where('business_number',$row['business_sn'])
 					->first();
+				//如果存在该业务
 				if($checkBusiness != null){
-					$return['msg'] 	= '业务已存在,请勿重复付款!';
-					$return['code']	= 2;
-					return $return;
-				}
+					//如果该业务是试用
+					if ($checkBusiness->status == 4 ) {
+						$business = [
+							'status'            => 1,
+							'end_at'            => $row['end_time'],
+						];
+						$update_business = DB::table('tz_defenseip_business')
+									->where('business_number',$row['business_sn'])
+									->update($business);
 
-				$package = DB::table('tz_defenseip_package')
+						if($update_business == 0){
+							$return['msg']  = '更新业务到期时间失败!';
+							$return['code'] = 3;
+							return $return;
+						}
+					}else{
+						$return['msg']  = '业务已存在,请勿重复付款!';
+						$return['code'] = 2;
+						return $return;
+					}
+				}else{
+					$package = DB::table('tz_defenseip_package')
 					->select(['site','protection_value','price'])
 					->where('id',$row['machine_sn'])
 					->first();
-				if($package == null){
-					$return['msg'] 	= '该套餐已下架!';
-					$return['code']	= 2;
-					return $return;
-				}
-				$sale_ip = DB::table('tz_defenseip_store')
-						->select(['id','ip'])
-						->where('site',$package->site)
-						->where('protection_value',$package->protection_value)
-						->where('status',0)
-						->first();
-				if($sale_ip == null){
-					$return['msg'] 	= '该套餐IP库存不足!';
-					$return['code']	= 2;
-					return $return;
-				}
-				$update_ip =  DB::table('tz_defenseip_store')->where('id',$sale_ip->id)->update(['status' => 1]);
-				if($update_ip == 0){
-					$return['msg'] 	= '更新ip使用状态失败!';
-					$return['code']	= 3;
-					return $return;
-				}
-				$end = Carbon::now()->addMonth($row['duration'])->toDateTimeString();
-		
-				$business = [
-					'business_number'	=> $row['business_sn'],
-					'user_id'		=> $row['customer_id'],
-					'package_id'		=> $row['machine_sn'],
-					'ip_id'			=> $sale_ip->id,
-					'price'			=> $package->price,
-					'status'			=> 1,
-					'end_at'			=> $end,
-					'created_at'		=> date("Y-m-d H:i:s"),
-				];
-				$build_business = DB::table('tz_defenseip_business')->insert($business);
-				if($build_business != true){
-					$return['msg'] 	= '创建高防ip业务失败!';
-					$return['code']	= 3;
-					return $return;
-				}
+					if($package == null){
+						$return['msg']  = '该套餐已下架!';
+						$return['code'] = 2;
+						return $return;
+					}
+					$sale_ip = DB::table('tz_defenseip_store')
+							->select(['id','ip'])
+							->where('site',$package->site)
+							->where('protection_value',$package->protection_value)
+							->where('status',0)
+							->first();
+					if($sale_ip == null){
+						$return['msg']  = '该套餐IP库存不足!';
+						$return['code'] = 2;
+						return $return;
+					}
+					$update_ip =  DB::table('tz_defenseip_store')->where('id',$sale_ip->id)->update(['status' => 1]);
+					if($update_ip == 0){
+						$return['msg']  = '更新ip使用状态失败!';
+						$return['code'] = 3;
+						return $return;
+					}
+					$end = Carbon::now()->addMonth($row['duration'])->toDateTimeString();
 
-				$relevance = [
-					'type'		=> 2,
-					'business_id'	=> $business['business_number'],
-				];
-				$build_relevance = DB::table('tz_business_relevance')->insert($relevance);
-				if($build_relevance != true){
-					$return['msg'] 	= '创建高防ip业务关联失败!';
-					$return['code']	= 3;
-					return $return;
-				}
+					$business = [
+						'business_number'   => $row['business_sn'],
+						'user_id'       => $row['customer_id'],
+						'package_id'        => $row['machine_sn'],
+						'ip_id'         => $sale_ip->id,
+						'price'         => $package->price,
+						'status'            => 1,
+						'end_at'            => $end,
+						'created_at'        => date("Y-m-d H:i:s"),
+					];
+					$build_business = DB::table('tz_defenseip_business')->insert($business);
 
-				$update_order = DB::table('tz_orders')
+					if($build_business != true){
+						$return['msg']  = '创建高防ip业务失败!';
+						$return['code'] = 3;
+						return $return;
+					}
+					$relevance = [
+						'type'		=> 2,
+						'business_id'	=> $business['business_number'],
+					];
+					$build_relevance = DB::table('tz_business_relevance')->insert($relevance);
+					if($build_relevance != true){
+						$return['msg'] 	= '创建高防ip业务关联失败!';
+						$return['code']	= 3;
+						return $return;
+					}
+					$update_order = DB::table('tz_orders')
 						->where('id',$row['id'])
 						->update([
-							'resource'	=> $sale_ip->ip,
+							'resource'  => $sale_ip->ip,
 							]);
-				if($update_order == 0){
-					$return['msg'] 	= '更新订单状态失败!';
-					$return['code']	= 3;
-					return $return;
+					if($update_order == 0){
+						$return['msg']  = '更新订单状态失败!';
+						$return['code'] = 3;
+						return $return;
+					}
+					$return['data'] = ['end' => $end];
 				}
 			}else{
 				$business = DB::table('tz_defenseip_business')
@@ -299,8 +317,8 @@ class PayOrder extends Model
 				//判断业务是否已下架
 				if($business->status == 2||$business->status == 3)
 				{
-					$return['msg'] 	= '业务已下架,无法续费!';
-					$return['code']	= 4;
+					$return['msg']  = '业务已下架,无法续费!';
+					$return['code'] = 4;
 					return $return;
 				}
 
@@ -308,13 +326,14 @@ class PayOrder extends Model
 				$upEnd = DB::table('tz_defenseip_business')
 						->where('business_number',$row['business_sn'])
 						->update(['end_at'=>$end]);
+
 				if($upEnd != 1){
-					$return['msg'] 	= '更新业务结束时间失败!';
-					$return['code']	= 3;
+					$return['msg']  = '更新业务结束时间失败!';
+					$return['code'] = 3;
 					return $return;
 				}
-			}
-			$return['data'] = ['end' => $end];		
+				$return['data'] = ['end' => $end];
+			}		
 		}
 		
 		$return['msg'] = '更新成功!!';

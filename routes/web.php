@@ -39,7 +39,8 @@ Route::group([
     Route::get('userInfo', 'User\InfoController@test');
     Route::get('redis', 'Test\RedisController@test'); //测试Redis
     Route::post('mail', 'Test\MailController@handle'); //测试邮件
-
+    Route::post('loginTest', 'TzAuth\LoginController@login'); //测试新登录
+    Route::get('loginCheck', 'TzAuth\LoginController@loginCheck'); //检测登录状态
     Route::get('time', 'Test\TimeController@time'); //测试时间
 });
 
@@ -78,7 +79,8 @@ Route::group([
     Route::post('sendEmailCode', 'TzAuth\RegisterController@sendCodeToEmail');  //发送邮箱验证码
     Route::post('registerByEmail', 'TzAuth\RegisterController@registerByEmail');  //通过邮箱注册帐号
     Route::get('logout', 'TzAuth\LoginController@logout');  //用户退出登录
-    Route::post('loginByEmail', 'TzAuth\LoginController@loginByEmail');  //通过邮箱登录帐号
+//    Route::post('loginByEmail', 'TzAuth\LoginController@loginByEmail');  //通过邮箱登录帐号
+    Route::post('login', 'TzAuth\LoginController@login');  //通过帐号登录 (用户名或邮箱都可以)
     Route::get('getAllSalesman', 'TzAuth\RegisterController@getAllSalesman');  //获取所有业务员
 
 

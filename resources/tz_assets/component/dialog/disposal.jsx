@@ -1,5 +1,6 @@
 import React from "react";
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -12,6 +13,11 @@ import IconButton from '@material-ui/core/IconButton';
 import Obtained from "../icon/obtained.jsx";
 import {post} from "../../tool/http";
 
+const styles = theme => ({
+    iconButton: {
+        ...theme.tableIconButton
+    }
+});
 class Disposal extends React.Component {
     constructor(props) {
         super(props);
@@ -68,9 +74,10 @@ class Disposal extends React.Component {
 
     }
     render() {
+        const { classes } = this.props;
         return [
             <Tooltip title="下架申请">
-                    <IconButton onClick={this.open} aria-label="changePassword">
+                    <IconButton className={classes.iconButton} onClick={this.open} aria-label="changePassword">
                         <Obtained />
                     </IconButton>
                 </Tooltip>,
@@ -104,4 +111,7 @@ class Disposal extends React.Component {
         ];
     }
 }
-export default Disposal;
+Disposal.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+export default withStyles(styles)(Disposal);

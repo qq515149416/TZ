@@ -58,6 +58,12 @@ class RegisterController extends Controller
         if (($par['token'] == $verificationData['token']) && ($par['email'] == $verificationData['accounts'])) {
             $TzUserModel = new TzUser();//实例化
 
+            //判断帐号是否存在
+            $userExists = $TzUserModel->where('email', '=',$par['email'] )->exists();
+            if ($userExists) {
+                return tz_ajax_echo([],'注册失败,帐号已存在',0);//注册失败,邮箱帐号已存在
+            }
+
             //添加帐号
             $addUserInfo = $TzUserModel->create([
 //                'name'     => $par['name'], //用户名暂时不写入

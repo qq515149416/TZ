@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import DialogComponent from "./dialogComponent.jsx";
 import Button from '@material-ui/core/Button';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -15,6 +16,12 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+
+const styles = theme => ({
+    iconButton: {
+        ...theme.tableIconButton
+    }
+});
 class ExpansionComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -72,11 +79,11 @@ class ExpansionComponent extends React.Component {
         });
       }
     render() {
-        const {type} = this.props;
+        const { type, classes } = this.props;
         if(type=="link") {
             return (
                 <Tooltip title={this.props.title}>
-                    <IconButton onClick={this.toLink(this.props.link)} aria-label="Link">
+                    <IconButton className={classes.iconButton} onClick={this.toLink(this.props.link)} aria-label="Link">
                         {
                             this.props.icon ? this.props.icon : (
                                 <AddIcon />
@@ -89,7 +96,7 @@ class ExpansionComponent extends React.Component {
         if(type=="show") {
             return [
                 <Tooltip title="查看">
-                    <IconButton onClick={() => {this.dialogComponent && this.dialogComponent.handleClickOpen();}} aria-label="Show">
+                    <IconButton className={classes.iconButton} onClick={() => {this.dialogComponent && this.dialogComponent.handleClickOpen();}} aria-label="Show">
                         <MoreHorizIcon />
                     </IconButton>
                 </Tooltip>,
@@ -103,7 +110,7 @@ class ExpansionComponent extends React.Component {
         if(type=="confirm") {
             return [
                 <Tooltip title={this.props.tip_title}>
-                    <IconButton onClick={this.confirm_show} aria-label="startFunction">
+                    <IconButton className={classes.iconButton} onClick={this.confirm_show} aria-label="startFunction">
                        {this.props.icon ? this.props.icon : <ImageFilterBlackWhite />}
                     </IconButton>
                 </Tooltip>,
@@ -167,6 +174,7 @@ class ExpansionComponent extends React.Component {
     }
 }
 ExpansionComponent.propTypes = {
-    type: PropTypes.string.isRequired
+    type: PropTypes.string.isRequired,
+    classes: PropTypes.object.isRequired
 };
-export default ExpansionComponent;
+export default withStyles(styles)(ExpansionComponent);

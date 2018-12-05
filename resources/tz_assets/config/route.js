@@ -1,10 +1,10 @@
 import React from "react";
-import {BrowserRouter} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { Provider, onError } from "mobx-react";
 import blue from '@material-ui/core/colors/blue';
 import deepOrange from '@material-ui/core/colors/deepOrange';
-import {stores} from "./common/config.js";
+import { stores } from "./common/config.js";
 import Socket from "./socket.jsx";
 
 const theme = createMuiTheme({
@@ -12,25 +12,29 @@ const theme = createMuiTheme({
         primary: blue,
         secondary: deepOrange
     },
+    tableIconButton: {
+        width: 35,
+        height: 35
+    },
     typography: {
-    // Use the system font instead of the default Roboto font.
-    fontFamily: [
-        '微软雅黑',
-      '黑体',
-      '宋体',
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(','),
-    htmlFontSize: 14
-  }
+        // Use the system font instead of the default Roboto font.
+        fontFamily: [
+            '微软雅黑',
+            '黑体',
+            '宋体',
+            '-apple-system',
+            'BlinkMacSystemFont',
+            '"Segoe UI"',
+            'Roboto',
+            '"Helvetica Neue"',
+            'Arial',
+            'sans-serif',
+            '"Apple Color Emoji"',
+            '"Segoe UI Emoji"',
+            '"Segoe UI Symbol"',
+        ].join(','),
+        htmlFontSize: 14
+    }
 });
 // mobx错误捕获
 onError(error => {
@@ -42,23 +46,22 @@ onError(error => {
  * @augments id 当前渲染名称
  */
 const Main = (Render) => {
-    return (
-        <BrowserRouter>
-            <Provider {...stores}>
-                <MuiThemeProvider theme={theme}>
-                    <Socket>
+    return ( <BrowserRouter >
+            <Provider {...stores } >
+                <MuiThemeProvider theme = { theme } >
+                    <Socket >
                         <Render />
                     </Socket>
-                </MuiThemeProvider>
+                </MuiThemeProvider >
             </Provider>
         </BrowserRouter>
     );
 };
-export default (ReactDOM,renderComponents,id) => {
+export default (ReactDOM, renderComponents, id) => {
     renderComponents.forEach((item) => {
-        if(item.id == id) {
-            let {itemRoute: ItemRoute} = item;
-            ReactDOM.render(Main(ItemRoute),item.routeDOM);
+        if (item.id == id) {
+            let { itemRoute: ItemRoute } = item;
+            ReactDOM.render(Main(ItemRoute), item.routeDOM);
         }
     });
 }

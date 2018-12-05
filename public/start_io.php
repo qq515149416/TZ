@@ -23,12 +23,18 @@ $io->on('connection',function($socket)use($io){
     });
 });
 
-$io->on('connect',function($socket){
+$io->on('connect',function($socket){//用于后台
 	$socket->on('login',function($depart_id)use($socket){
 		global $depart_map;
 		$depart_id = (string)$depart_id;
 		$socket->join($depart_id);
 		$socket->depart_id = $depart_id;
+    });
+    $socket->on('customer_login',function($customer_id)use($socket){
+		global $depart_map;
+		$customer_id = (string)$customer_id;
+		$socket->join($customer_id);
+		$socket->customer_id = $customer_id;
 	});
 });
 
@@ -43,6 +49,10 @@ $io->on('workerStart', function(){
 		global $io;
 		$to_department = @$_POST['process_department'];
 		$io->to($to_department)->emit('new_work_order',$_POST);
+		if(@$_POST['submitter']==1){
+			$customer = @$_POST['customer_id'];
+			$io->to($customer)->emit('work_order',$_POST);
+		}
 		return $http_connection->send(' ');
 
 	};

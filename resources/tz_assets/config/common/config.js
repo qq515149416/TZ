@@ -38,10 +38,10 @@ export const routerConfig = {
 
 // 前端Models操作
 export const stores = {
-    usersInfoStores: new UsersInfoStores(),//用户通信录
-    usersLinkInfoStores: new UsersLinkInfoStores(),//用户联系人信息
-    ipsStores: new IpsStores(),//ip资源库
-    MachineRoomsStores: new MachineRoomsStores(),//机房管理
+    usersInfoStores: new UsersInfoStores(), //用户通信录
+    usersLinkInfoStores: new UsersLinkInfoStores(), //用户联系人信息
+    ipsStores: new IpsStores(), //ip资源库
+    MachineRoomsStores: new MachineRoomsStores(), //机房管理
     newsStores: new NewsStores(),
     cpusStores: new CpusStores(),
     harddisksStores: new HarddisksStores(),
@@ -103,4 +103,5 @@ export const domIds = [
     "dismissalReview",
     "disposal",
     "disposalHistory",
+    "machineProcessing",
 ];

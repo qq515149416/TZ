@@ -23,7 +23,7 @@ let columnData = [
     { id: 'total_money', numeric: true, disablePadding: false, label: '总消费金额' },
     { id: 'achievement', numeric: true, disablePadding: false, label: '有效业绩' },
     { id: 'operat', numeric: true, disablePadding: false, extend: true, extendData: [
-        {id: "all_arrears", label: "历史订单总额", type: "text"},
+        {id: "all_arrears", label: "历史欠款总额", type: "text"},
         {id: "preferential_amount", label: "优惠券扣除金额", type: "text"},
         {id: "this_arrears", label: "订单总额", type: "text"}
     ], label: '操作'}

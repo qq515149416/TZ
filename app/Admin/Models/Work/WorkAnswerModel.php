@@ -67,28 +67,74 @@ class WorkAnswerModel extends Model
     public function insertWorkAnswer($insert_data){
     	if($insert_data){
             $work_order = DB::table('tz_work_order')->where(['work_order_number'=>$insert_data['work_number']])->select('work_order_status')->first();
-            if($work_order->work_order_status == 2){//工单为完成时，无法再进行操作
-                $return['data'] = '';
-                $return['code'] = 0;
-                $return['msg'] = '工单已完成,无法再进行联系';
-                return $return;
-            }
-            if($work_order->work_order_status == 3){//工单为取消时，无法再进行操作
-                $return['data'] = '';
-                $return['code'] = 0;
-                $return['msg'] = '工单已取消,无法再进行联系';
-                return $return;
+            DB::beginTransaction();
+            switch ($work_order->work_order_status) {
+                case 0:
+                    $row = DB::table('tz_work_order')->where(['work_order_number'=>$insert_data['work_number']])->update(['work_order_status'=>1]);
+                    if($row == 0){
+                        DB::rollBack();
+                        $return['data'] = '';
+                        $return['code'] = 0;
+                        $return['msg'] = '联系失败';
+                        return $return;
+                    }
+                    break;
+                case 2:
+                    $return['data'] = '';
+                    $return['code'] = 0;
+                    $return['msg'] = '工单已完成,无法再进行联系';
+                    return $return;
+                    break;
+                case 3:
+                    $return['data'] = '';
+                    $return['code'] = 0;
+                    $return['msg'] = '工单已取消,无法再进行联系';
+                    return $return;
+                    break;
+                default:
+                    break;
             }
     		$uid = Admin::user()->id;
     		$insert_data['answer_id'] = $uid;
             $insert_data['answer_name'] = Admin::user()->name?Admin::user()->name:Admin::user()->username;
     		$insert_data['answer_role'] = 2;
-    		$row = $this->create($insert_data);
-    		if($row != false){
-    			$return['data'] = $row;
+            $insert_data['created_at'] = date('Y-m-d H:i:s',time());
+    		$row = DB::table('tz_work_answer')->insertGetId($insert_data);
+    		if($row != 0){
+                DB::commit();
+                $insert_data['id'] = $row;
+                $work_order_detail = DB::table('tz_work_order')->where(['work_order_number'=>$insert_data['work_number']])->select('id','work_order_number','business_num','customer_id','clerk_id','work_order_type',
+                              'work_order_content','submitter_id','submitter_name','submitter','work_order_status',
+                              'process_department','complete_id','complete_number','summary','complete_time','created_at','updated_at')->first();
+                /**
+                 * 转换工单
+                 * @var [type]
+                 */
+                $submitter = [1=>'客户',2=>'内部人员'];
+                $work_status = [0=>'待处理',1=>'处理中',2=>'完成',3=>'取消'];
+                // 提交方的转换
+                $work_order_detail->submit = $submitter[$work_order_detail->submitter];
+                // 工单状态的转换
+                $work_order_detail->workstatus = $work_status[$work_order_detail->work_order_status];
+                // 工单类型
+                $worktype = $this->workType($work_order_detail->work_order_type);
+                $work_order_detail->worktype = $worktype;
+                // 当前处理部门
+                $work_order_detail->department = $this->department($work_order_detail->process_department)->depart_name;
+                // 对应的业务数据
+                $business = $this->businessDetail($work_order_detail->business_num);
+                $work_order_detail->client_name = $business->client_name;
+                $work_order_detail->business_type = $business->business_type;
+                $work_order_detail->machine_number = $business->machine_number;
+                $work_order_detail->resource_detail = $business->resource_detail;
+                $work_order_detail->sales_name = $business->sales_name;
+                $work_order_detail = (array)$work_order_detail;
+                curl('http://127.0.0.1:8121',$work_order_detail);
+    			$return['data'] = $insert_data;
 	    		$return['code'] = 1;
 	    		$return['msg'] = '';
     		} else {
+                DB::rollBack();
     			$return['data'] = '';
 	    		$return['code'] = 0;
 	    		$return['msg'] = '';
@@ -115,5 +161,32 @@ class WorkAnswerModel extends Model
             $worktype = '【'.$worktype->type_name.'】';
         }
         return $worktype;
+    }
+
+    /**
+     * 部门转换
+     * @param  [type] $depart_id [description]
+     * @return [type]            [description]
+     */
+    public function department($depart_id = 0){
+        if($depart_id != 0){
+            $where['id'] =  $depart_id;
+        } else {
+            $where['sign'] = 2;
+        }
+        $depart = DB::table('tz_department')->where($where)->select('id','depart_number','depart_name')->first();
+        return $depart;
+    }
+
+    /**
+     * 根据工单绑定的业务编号进行业务数据的查询
+     * @param  string $business_number 业务编号
+     * @return                   对应的业务数据
+     */
+    public function businessDetail($business_number){
+        $business = DB::table('tz_business')->where('business_number',$business_number)->select('client_name','business_type','machine_number','resource_detail','sales_name')->first();
+        $business_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜'];
+        $business->business_type = $business_type[$business->business_type];
+        return $business;
     }
 }

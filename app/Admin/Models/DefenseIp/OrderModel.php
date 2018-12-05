@@ -6,7 +6,7 @@ namespace App\Admin\Models\DefenseIp;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
-use Encore\Admin\Facades\Admin;
+use Illuminate\Support\Facades\Auth;
 
 class OrderModel extends Model
 {
@@ -23,6 +23,7 @@ class OrderModel extends Model
 	 *  新购 高防IP 接口  /  选取购买信息后,生成订单信息 
 	 */
 	public function buyNow($package_id,$buy_time,$customer_id){
+
 		
 	}
 
@@ -32,5 +33,4 @@ class OrderModel extends Model
 	}
 
 	
-
 }

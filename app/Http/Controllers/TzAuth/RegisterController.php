@@ -61,7 +61,7 @@ class RegisterController extends Controller
             //判断帐号是否存在
             $userExists = $TzUserModel->where('email', '=',$par['email'] )->exists();
             if ($userExists) {
-                return tz_ajax_echo([],'注册失败,帐号已存在',0);//注册失败,帐号已存在
+                return tz_ajax_echo([],'注册失败,帐号已存在',0);//注册失败,邮箱帐号已存在
             }
 
             //添加帐号

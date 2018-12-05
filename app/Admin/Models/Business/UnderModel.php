@@ -204,7 +204,6 @@ class UnderModel extends Model
 		            $return['msg'] = '无对应业务';
 		            return $return;
                 }
-                // dd($business);
 		        if($business->remove_status < 1 || $business->remove_status == 4){//当业务未提交申请或已下架，直接返回
 		            $return['code'] = 0;
 		            $return['msg'] = '业务已完成下架/暂未提交下架申请';
@@ -225,7 +224,6 @@ class UnderModel extends Model
 		                case 3:
 		                    $update['remove_status'] = 4;
 		                    break;
-
 		            }
 		        }
 		        DB::beginTransaction();//开启事务处理

@@ -27,8 +27,8 @@ class LoginRequest extends FormRequest
     {
         return [
             //
-            'login_name'    => 'required',  //登录帐号
-            'password' => 'required',  //登录密码
+            'login_name' => 'required',  //登录帐号
+            'password'   => 'required',  //登录密码
 //            'captcha'  => 'required|captcha',  //验证码  TODO  上线前需要关闭 注释
         ];
     }
@@ -41,11 +41,11 @@ class LoginRequest extends FormRequest
     public function messages()
     {
         return [
-            'login_name.required'   => '登录帐号必须填写',
+            'login_name.required' => '登录帐号必须填写',
 //            'email.email'     => '邮箱格式错误',
-            'password'        => '密码不能为空',
-            'captcha.required' => '验证码不能为空',
-            'captcha.captcha' => '验证码错误',
+            'password.required'   => '密码不能为空',
+            'captcha.required'    => '验证码不能为空',
+            'captcha.captcha'     => '验证码错误',
         ];
     }
 

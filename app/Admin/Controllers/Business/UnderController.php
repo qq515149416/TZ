@@ -80,4 +80,33 @@ class UnderController extends Controller
         return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
     }
 
+    /**
+     * 给机器生成随机密码
+     * @return [type] [description]
+     */
+    public function randomCode(){
+        // 密码字符集，可任意添加你需要的字符
+        $code = array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
+        'i', 'j', 'k','m', 'n', 'o', 'p', 'q', 'r', 's', 
+        't', 'u', 'v', 'w', 'x', 'y','z', 'A', 'B', 'C', 'D', 
+        'E', 'F', 'G', 'H', 'J', 'K', 'L','M', 'N', 'O', 
+        'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y','Z', 
+        '0', '2', '3', '4', '5', '6', '7', '8', '9', '!', 
+        '@','#','%', '^', '&', '*', '(', ')', 
+        '<', '>', '+', '=',
+        '.', '|');
+        //在$code中随机取 $length 个数组元素键名
+        $length = mt_rand(4,6);
+        $keys = array_rand($code,$length); 
+        $random_code = '';
+        for($i = 0; $i < $length; $i++)
+        {
+            //将$length个数组元素连接成字符串
+            $password .= $code[$keys[$i]];
+        }
+        $return['data'] = $password.substr(time(), 8, 2);
+        $return['msg'] = '随机密码生成成功';
+        return tz_ajax_echo($return['data'],$return['msg'],1);
+    }
+
 }

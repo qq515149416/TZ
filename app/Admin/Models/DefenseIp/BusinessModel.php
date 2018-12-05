@@ -28,7 +28,7 @@ class BusinessModel extends Model
 	 *  新购 高防IP 接口  /  选取购买信息后,生成订单信息 
 	 */
 
-	public function buyNow($package_id,$buy_time,$customer_id){
+	public function buyNow($package_id,$customer_id){
 		$user_id = Admin::user()->id;
 		$check_customer = DB::table('tz_users')->where('id',$customer_id)->value('salesman_id');
 		if($user_id != $check_customer){

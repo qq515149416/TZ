@@ -33,11 +33,11 @@ $io->on('connect',function($socket){//用于后台
 });
 
 $io->on('connected',function($socket){//用于前台
-	$socket->on('clerk_login',function($clerk_id)use($socket){
+	$socket->on('customer_login',function($customer_id)use($socket){
 		global $depart_map;
-		$clerk_id = (string)$clerk_id;
-		$socket->join($clerk_id);
-		$socket->clerk_id = $clerk_id;
+		$customer_id = (string)$customer_id;
+		$socket->join($customer_id);
+		$socket->customer_id = $customer_id;
 	});
 });
 

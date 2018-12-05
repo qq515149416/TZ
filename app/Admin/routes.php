@@ -509,6 +509,7 @@ Route::group([
         $route->post('do_under','Business\UnderController@doUnder');//操作下架
         $route->get('show_apply_under','Business\UnderController@showApplyUnder');//展示申请记录
         $route->get('depart','Business\UnderController@department');//转发机房
+        $route->get('random_code','Business\UnderController@randomCode');//转发机房
     });
 
 });

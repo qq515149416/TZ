@@ -235,8 +235,8 @@ class UnderModel extends Model
 		                    $rent['used_status'] = 0;
 		                    $rent['own_business'] = 0;
 		                    $rent['business_end'] = Null;
-		                    // $rent['loginname'] = $edit['loginname'];
-		                    // $rent['loginpass'] = $edit['loginpass'];
+		                    $rent['loginname'] = isset($edit['loginname'])?$edit['loginname']:'administrator';
+		                    $rent['loginpass'] = isset($edit['loginpass'])?$edit['loginpass']:'esJ04&79';
 		                    $row = DB::table('idc_machine')->where(['machine_num'=>$business->machine_number,'own_business'=>$edit['business_number'],'business_type'=>1])->update($rent);
 		                    break;
 		                case 2:
@@ -355,6 +355,9 @@ class UnderModel extends Model
 		        } else {
 		            DB::commit();
 		            $return['code'] = 1;
+		            if($business->business_type == 1 && $update_status['remove_status'] == 4){
+		            	$return['msg'] = '主机为'.$business->machine_number.'的资源下架修改成功'.'账户:'.$rent['loginname'].',密码:'.$rent['loginpass'];
+		            }
 		            $return['msg'] = '资源下架修改成功';
 		        }
 		        return $return;

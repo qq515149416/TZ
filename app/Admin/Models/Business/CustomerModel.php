@@ -96,11 +96,11 @@ class CustomerModel extends Model
                 
             } else {
                 $return['code'] = 0;
-                $return['msg'] = '此客户加入黑名单失败';
+                $return['msg'] = '此客户账户状态修改失败';
             }
         } else {
             $return['code'] = 0;
-            $return['msg'] = '无法将此客户加入黑名单';
+            $return['msg'] = '此客户账户状态无法修改';
         }
 
         return $return;

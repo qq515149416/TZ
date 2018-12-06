@@ -22,6 +22,7 @@ class CheckStaff
      */
     public function handle($request, Closure $next)
     {   
+
         $admin_id = Admin::user()->id;
         $staff = DB::table('oa_staff')
                     ->join('tz_department','oa_staff.department','=','tz_department.id')
@@ -32,6 +33,7 @@ class CheckStaff
         // if(empty($staff)){
         //     return  redirect('/tz_admin/auth/logout');
         // }
+
         return $next($request);
     }
 

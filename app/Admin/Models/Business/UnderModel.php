@@ -264,6 +264,7 @@ class UnderModel extends Model
 		                $return['msg'] = '业务相关机器下架状态修改失败';
 		            }
 		            $update['remove_status'] = 4;
+		            
 		        }
 		        $remove = DB::table('tz_business')->where(['business_number'=>$edit['business_number']])->update($update);
 		        if($remove == 0){
@@ -273,10 +274,13 @@ class UnderModel extends Model
 		        } else {
 		            DB::commit();
 		            $return['code'] = 1;
-		            if($business->business_type == 1 && $update_status['remove_status'] == 4){
+		            if($business->business_type == 1 && $update['remove_status'] == 4){
 		            	$return['msg'] = '主机为'.$business->machine_number.'的资源下架修改成功'.'账户:'.$rent['loginname'].',密码:'.$rent['loginpass'];
+		            } else {
+		            	$return['msg'] = '业务下架状态修改成功';
 		            }
-		            $return['msg'] = '业务下架状态修改成功';
+		            // $return['msg'] = isset($return['msg'])?$return['msg']:'业务下架状态修改成功';
+		            
 		        }
 		        return $return;
         		break;

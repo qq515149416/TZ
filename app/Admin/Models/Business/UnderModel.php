@@ -279,7 +279,6 @@ class UnderModel extends Model
 		            } else {
 		            	$return['msg'] = '业务下架状态修改成功';
 		            }
-		            // $return['msg'] = isset($return['msg'])?$return['msg']:'业务下架状态修改成功';
 		            
 		        }
 		        return $return;

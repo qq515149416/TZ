@@ -865,6 +865,7 @@ class OrdersModel extends Model
 			'before_money'      => $before_money,
 			'after_money'       => $after_money,
 			'pay_time'      => $pay_time,
+			'business_number'	=> $business_number,
 		];
 		$creatFlow = DB::table('tz_orders_flow')->insert($flow);
 

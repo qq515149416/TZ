@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class OrderModel extends Model
 {
@@ -100,15 +101,29 @@ class OrderModel extends Model
 				'code'	=> 0,
 			];
 		}
+
+		//查看是否有已存在未付款的订单
 		$checkOrder = $this
 				->where('business_sn',$business->business_number)
-				->where('order_type',2)
 				->where('order_status',0)
 				->first();
+		//如果存在未付款订单,则判断业务状态
+		if($checkOrder != null){ 
+			if($business->status == 4){	//如果是试用状态, 还要更新结束时间
+				$end_time = Carbon::parse($business->created_at)->addMonth($buy_time)->toDateTimeString();
+				$end = strtotime($end_time);
+				if($end < time()){	
+					return [
+						'data'	=> '',
+						'msg'	=> '续费时长需比试用时间长',
+						'code'	=> 0,
+					];
+				}
+				$checkOrder->end_time = $end_time;
+			}
+			$checkOrder->duration 	= $buy_time;					//更新购买时长
+			$checkOrder->payable_money 	= bcmul($checkOrder->price,$buy_time,2);	//更新价格
 
-		if($checkOrder != null){
-			$checkOrder->duration 	= $buy_time;
-			$checkOrder->payable_money 	= bcmul($checkOrder->price,$checkOrder->duration,2);
 			$res = $checkOrder->save();
 			if($res == true){
 				return [
@@ -126,10 +141,12 @@ class OrderModel extends Model
 		}
 
 
+
+		//检测 一分钟内是否生成过订单
 		$second_buy_time = bcsub( time() , 60);
 		$second_buy_time = date("Y-m-d H:i:s",$second_buy_time);
 
-		$check_time = $this->where('order_type',2)->where('resource_type',11)->where('customer_id',$user_id)->where('created_at','>',$second_buy_time)->value('id');
+		$check_time = $this->where('resource_type',11)->where('customer_id',$user_id)->where('created_at','>',$second_buy_time)->value('id');
 
 		if($check_time != null){
 			return[
@@ -139,7 +156,27 @@ class OrderModel extends Model
 			];
 		}
 
-		$data['order_sn'] 		= 'GO'.'_'.time().'_'.$user_id;
+
+		// 根据业务状态生成订单
+		// 如果业务的状态是试用,订单的性质就是新购,结束时间也要填上,从试用开始时算起
+		if($business->status == 4){	//试用续费
+			$order_type = 1;
+			$order_sn = 'GS'.'_'.time().'_'.$user_id;
+			$end_time = Carbon::parse($business->created_at)->addMonth($buy_time)->toDateTimeString();
+			$end = strtotime($end_time);
+			if($end < time()){	
+				return [
+					'data'	=> '',
+					'msg'	=> '续费时长需比试用时间长',
+					'code'	=> 0,
+				];
+			}
+		}else{	//普通续费
+			$order_type = 2;
+			$order_sn = 'GO'.'_'.time().'_'.$user_id;
+			$end_time = '';
+		}
+		$data['order_sn'] 		= $order_sn;
 		$data['business_sn']		= $business->business_number;
 		$data['customer_id']		= $user_id;
 		$data['customer_name']	= Auth::user()->name;
@@ -150,13 +187,14 @@ class OrderModel extends Model
 		$data['business_name']		= DB::table('admin_users')->where('id',$data['business_id'])->value('name');
 		$data['resource_type']		= 11;
 		$data['resource']		= DB::table('tz_defenseip_store')->where('id',$business->ip_id)->value('ip');
-		$data['order_type']		= 2;
+		$data['order_type']		= $order_type;
 		$data['price']			= $business->price;
 		$data['machine_sn']		= $business->package_id;
 		$data['duration']		= $buy_time;
-		$data['payable_money']		= bcmul($data['price'],$data['duration'],2);
+		$data['payable_money']	= bcmul($data['price'],$data['duration'],2);
 		$data['order_status']		= 0;
-
+		$data['end_time']		= $end_time;
+		
 		$insert = $this->create($data);
 
 		if($insert != false){

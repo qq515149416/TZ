@@ -49,7 +49,7 @@ class UnderModel extends Model
 		            return $return;
 	        	}
 	        	//查找业务关联的资源
-		        $resources = DB::table('tz_orders')->where(['business_sn'=>$apply['business_number']])->where('price','>','0.00')->where('resource_type','>',3)->orderBy('end_time','desc')->get(['order_sn','resource_type','machine_sn','resource','price','end_time'])->groupBy('machine_sn')->toArray();
+		        $resources = DB::table('tz_orders')->where(['business_sn'=>$apply['business_number'],'remove_status'=>0])->where('price','>','0.00')->where('resource_type','>',3)->orderBy('end_time','desc')->get(['order_sn','resource_type','machine_sn','resource','price','end_time'])->groupBy('machine_sn')->toArray();
 
 		        if(!empty($resources)){//存在业务关联的资源，进一步进行查找资源的最新情况
 		            $resource_keys = array_keys($resources);//获取分组后的资源编号
@@ -62,7 +62,7 @@ class UnderModel extends Model
 		            }
 		            if(!empty($resource)){//存在关联业务则继续对关联的资源进行同步下架
 		                foreach($resource as $resource_key=>$resource_value){
-		                    $order_remove['remove_reason'] = '关联业务申请下架，关联业务资源同步下架';
+		                    $order_remove['remove_reason'] = '关联业务'.$apply['business_number'].'申请下架，关联业务资源同步下架';
 		                    $order_remove['remove_status'] = 1;
 		                    $order_row = DB::table('tz_orders')->where(['order_sn'=>$resource_value->order_sn])->update($order_remove);
 		                    if($order_row == 0){//关联业务的资源同步下架失败
@@ -158,7 +158,7 @@ class UnderModel extends Model
 		        return $return;
     			break;
     		case 2:
-    			$history = DB::table('tz_orders')->where('resource_type','>',3)->where(['remove_status'=>4])->orderBy('updated_at','desc')->select('business_sn','order_sn','customer_name','resource_type','business_name','machine_sn','resource','remove_status')->get();
+    			$history = DB::table('tz_orders')->where('resource_type','>',3)->where(['remove_status'=>4])->orderBy('updated_at','desc')->select('business_sn','order_sn','customer_name','resource_type','business_name','machine_sn','resource','remove_status','remove_reason')->get();
 		        if(!empty($history)){
 		            $resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn',11=>'高防IP'];
 		            $remove_status = [0=>'正常使用',1=>'下架申请中',2=>'机房处理中',3=>'清空下架中',4=>'下架完成'];
@@ -204,7 +204,6 @@ class UnderModel extends Model
 		            $return['msg'] = '无对应业务';
 		            return $return;
                 }
-                // dd($business);
 		        if($business->remove_status < 1 || $business->remove_status == 4){//当业务未提交申请或已下架，直接返回
 		            $return['code'] = 0;
 		            $return['msg'] = '业务已完成下架/暂未提交下架申请';
@@ -225,7 +224,6 @@ class UnderModel extends Model
 		                case 3:
 		                    $update['remove_status'] = 4;
 		                    break;
-
 		            }
 		        }
 		        DB::beginTransaction();//开启事务处理
@@ -266,6 +264,7 @@ class UnderModel extends Model
 		                $return['msg'] = '业务相关机器下架状态修改失败';
 		            }
 		            $update['remove_status'] = 4;
+		            
 		        }
 		        $remove = DB::table('tz_business')->where(['business_number'=>$edit['business_number']])->update($update);
 		        if($remove == 0){
@@ -275,7 +274,12 @@ class UnderModel extends Model
 		        } else {
 		            DB::commit();
 		            $return['code'] = 1;
-		            $return['msg'] = '业务下架状态修改成功';
+		            if($business->business_type == 1 && $update['remove_status'] == 4){
+		            	$return['msg'] = '主机为'.$business->machine_number.'的资源下架修改成功'.'账户:'.$rent['loginname'].',密码:'.$rent['loginpass'];
+		            } else {
+		            	$return['msg'] = '业务下架状态修改成功';
+		            }
+		            
 		        }
 		        return $return;
         		break;
@@ -355,9 +359,6 @@ class UnderModel extends Model
 		        } else {
 		            DB::commit();
 		            $return['code'] = 1;
-		            if($business->business_type == 1 && $update_status['remove_status'] == 4){
-		            	$return['msg'] = '主机为'.$business->machine_number.'的资源下架修改成功'.'账户:'.$rent['loginname'].',密码:'.$rent['loginpass'];
-		            }
 		            $return['msg'] = '资源下架修改成功';
 		        }
 		        return $return;
@@ -393,7 +394,7 @@ class UnderModel extends Model
                 $business_value->removestatus = $remove_status[$business_value->remove_status];
             }
 		}
-		$orders = DB::table('tz_orders')->where($where)->where('resource_type','>',3)->whereBetween('remove_status',[1,3])->orderBy('updated_at','desc')->select('order_sn','business_sn','customer_name','resource_type','business_name','machine_sn','resource','remove_status')->get();
+		$orders = DB::table('tz_orders')->where($where)->where('resource_type','>',3)->whereBetween('remove_status',[1,3])->orderBy('updated_at','desc')->select('order_sn','business_sn','customer_name','resource_type','business_name','machine_sn','resource','remove_reason','remove_status')->get();
         if(!empty($orders)){
             $resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn',11=>'高防IP'];
             $remove_status = [0=>'正常使用',1=>'下架申请中',2=>'机房处理中',3=>'清空下架中',4=>'下架完成'];

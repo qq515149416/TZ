@@ -96,11 +96,11 @@ class CustomerModel extends Model
                 
             } else {
                 $return['code'] = 0;
-                $return['msg'] = '此客户加入黑名单失败';
+                $return['msg'] = '此客户账户状态修改失败';
             }
         } else {
             $return['code'] = 0;
-            $return['msg'] = '无法将此客户加入黑名单';
+            $return['msg'] = '此客户账户状态无法修改';
         }
 
         return $return;
@@ -331,7 +331,14 @@ class CustomerModel extends Model
             $return['msg'] = '此客户已经被加入黑名单,请与管理员确认';
             return $return;
         }
-        $update = $this->where(['email'=>$email['email']])->update(['salesman_id'=>Admin::user()->id]);
+
+        $userExists = $this->where('name', '=', $email['email'])->exists();//判断是否存在对应的用户名帐号
+        if ($userExists) {//如果存在则根据用户名进行业务员绑定
+            $update = $this->where(['name'=>$email['email']])->update(['salesman_id'=>Admin::user()->id]);
+        } else {//如果不存在则根据输入的邮箱进行绑定
+           $update = $this->where(['email'=>$email['email']])->update(['salesman_id'=>Admin::user()->id]);
+
+        }
         if($update != false){
             $return['code'] = 1;
             $return['msg'] = '客户:'.$customer->name.'(邮箱:'.$customer->email.')'.'已绑定到你名下';

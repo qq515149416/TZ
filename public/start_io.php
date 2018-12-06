@@ -25,13 +25,11 @@ $io->on('connection',function($socket)use($io){
 
 $io->on('connect',function($socket){//用于后台
 	$socket->on('login',function($depart_id)use($socket){
-		global $depart_map;
 		$depart_id = (string)$depart_id;
 		$socket->join($depart_id);
 		$socket->depart_id = $depart_id;
     });
     $socket->on('customer_login',function($customer_id)use($socket){
-		global $depart_map;
 		$customer_id = (string)$customer_id;
 		$socket->join($customer_id);
 		$socket->customer_id = $customer_id;
@@ -44,7 +42,6 @@ $io->on('workerStart', function(){
 	$listen_worker = new Worker('http://0.0.0.0:8121');
 	// 当http客户端发来数据时触发
 	$listen_worker->onMessage = function($http_connection, $data){
-		global $depart_map;
 		$_POST = $_POST ? $_POST : $_GET;
 		global $io;
 		$to_department = @$_POST['process_department'];

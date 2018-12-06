@@ -125,9 +125,8 @@ class PayOrder extends Model
 			//计算支付流水应付金额
 			$payable_money = bcadd($payable_money,$updateInfo['payable_money'],2);
 
-			$customer_id = $unpaidOrder[$i]['customer_id'];
 			$business_id = $unpaidOrder[$i]['business_id'];
-
+			
 			$update = DB::table('tz_orders')->where('id',$unpaidOrder[$i]['id'])->update($updateInfo);
 			if($update == 0){
 				DB::rollBack();
@@ -138,12 +137,32 @@ class PayOrder extends Model
 			$order_id_arr[] = $unpaidOrder[$i]['id'];
 		}
 
+		$type = DB::table('tz_business_relevance')->where('business_id',$business_number)->value('type');
+		switch ($type) {
+			case '1':
+				$customer_id = DB::table('tz_business')->where('business_number',$business_number)->value('client_id'); 
+				break;
+			case '2':
+				$customer_id = DB::table('tz_defenseip_business')->where('business_number',$business_number)->value('user_id'); 
+				break;
+			default:
+				$return['msg']  = '获取业务类型失败';
+				$return['code'] = 0;
+				return $return;
+				break;
+		}
+		if($customer_id == null){
+			$return['msg']  = '客户id获取失败';
+			$return['code'] = 0;
+			return $return;
+		}
+		
 		//计算实际支付金额
 		$actual_payment = $this->countCoupon($payable_money,$coupon_id);
 		//优惠券抵扣了的金额
 		$preferential_amount = bcsub($payable_money,$actual_payment,2);
 		//获取余额
-		$before_money = DB::table('tz_users')->where('id',$user_id)->value('money');
+		$before_money = DB::table('tz_users')->where('id',$customer_id)->value('money');
 		//计算扣除应付金额后余额
 		$after_money = bcsub((string)$before_money,(string)$actual_payment,2);
 
@@ -199,20 +218,20 @@ class PayOrder extends Model
 	protected function paySuccess($order_id,$pay_time){
 		$return['data'] = '';
 		$row = $this->find($order_id)->toArray();
-	
+
 		if($row['resource_type'] < 4) {
-			// 资源类型如果是机柜/主机，查找对应的业务状态	
+			// 资源类型如果是机柜/主机，查找对应的业务状态
 			$business_status = DB::table('tz_business')->where('business_number',$row['business_sn'])->value('business_status');
 			if($business_status > 0 && $business_status < 4 && $business_status != 2){
 				// 业务状态是审核通过且是使用状态将状态修改为付款使用即2
 				$business['business_status'] = 2;
 				$businessUp = DB::table('tz_business')->where('business_number',$row['business_sn'])->update($business);
 				if($businessUp == 0) {
-					$return['msg'] 	= '更改资源使用状态失败,订单可能为正在付款使用中状态,支付失败';
-					$return['code']	= 3;
+					$return['msg']  = '更改资源使用状态失败,订单可能为正在付款使用中状态,支付失败';
+					$return['code'] = 3;
 					return $return;
 				}
-			} 
+			}
 		} elseif($row['resource_type'] == 11){
 			//如果是高防IP
 			if($row['order_type'] == 1){
@@ -333,11 +352,11 @@ class PayOrder extends Model
 					return $return;
 				}
 				$return['data'] = ['end' => $end];
-			}		
+			}	
 		}
-		
+
 		$return['msg'] = '更新成功!!';
-		$return['code'] = 1;			
+		$return['code'] = 1;
 		return $return;
 	}
 

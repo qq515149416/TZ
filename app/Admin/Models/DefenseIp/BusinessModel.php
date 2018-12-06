@@ -73,7 +73,7 @@ class BusinessModel extends Model
 		$data['price']			= $package->price;
 		$data['status']			= 4;
 		$data['created_at']		= date("Y-m-d H:i:s");
-		
+	
 		DB::beginTransaction();	
 		//因为可先使用后付款,创建业务
 		$insert = $this->create($data);
@@ -142,56 +142,92 @@ class BusinessModel extends Model
 				'code'	=> 0,
 			];
 		}
-
-		if($business->status == 4){
-			$order_type = 1;
-			$end_time = Carbon::parse($business->created_at)->addMonth($buy_time)->toDateTimeString();
-			$end = strtotime($end_time);
-			if($end < time()){
+		$orderModel = new OrderModel();
+		DB::beginTransaction();	
+		//查看是否有已存在未付款的订单
+		$checkOrder = $orderModel
+				->where('business_sn',$business->business_number)
+				->where('order_status',0)
+				->first();
+		//如果存在未付款订单,则判断业务状态
+		if($checkOrder != null){ 
+			if($business->status == 4){	//如果是试用状态, 还要更新结束时间
+				$end_time = Carbon::parse($business->created_at)->addMonth($buy_time)->toDateTimeString();
+				$end = strtotime($end_time);
+				if($end < time()){	
+					return [
+						'data'	=> '',
+						'msg'	=> '续费时长需比试用时间长',
+						'code'	=> 0,
+					];
+				}
+				$checkOrder->end_time = $end_time;
+			}
+			$checkOrder->duration 	= $buy_time;					//更新购买时长
+			$checkOrder->payable_money 	= bcmul($checkOrder->price,$buy_time,2);	//更新价格
+	
+			$res = $checkOrder->save();
+			if($res != true){
+				DB::rollBack();
 				return [
-					'data'	=> '',
-					'msg'	=> '续费时长需比试用时间长',
+					'data'	=> $checkOrder->id,
+					'msg'	=> '续费订单已存在,更新失败',
 					'code'	=> 0,
 				];
 			}
 		}else{
-			$order_type = 2;
-			$end_time = '';
-		}
-		if($business_admin_user->name == null){
-			$business_admin_user->name = $business_admin_user->email;
-		}
-		$order = [
-			'order_sn'		=> 'GO_'.time().'_admin_'.$user_id,
-			'business_sn'		=> $business->business_number,
-			'customer_id'		=> $business->user_id,
-			'customer_name'	=> $business_admin_user->name,
-			'business_id'		=> $business_admin_user->salesman_id,
-			'business_name'	=> DB::table('admin_users')->where('id',$business_admin_user->salesman_id)->value('name'),
-			'resource_type'		=> 11,
-			'order_type'		=> $order_type,
-			'machine_sn'		=> $business->package_id,
-			'resource'		=> DB::table('tz_defenseip_store')->where('id',$business->ip_id)->value('ip'),
-			'price'			=> $business->price,
-			'duration'		=> $buy_time,
-			'payable_money'	=> bcmul($business->price,$buy_time,2),
-			'end_time'		=> $end_time,
-			'order_status'		=> 0,
-			'order_note'		=> '业务员手动为客户高防ip续费',
-		];	
+			if($business->status == 4){
+				$order_type = 1;
+				$order_sn = 'GS_'.time().'_admin_'.$user_id;
+				$end_time = Carbon::parse($business->created_at)->addMonth($buy_time)->toDateTimeString();
+				$end = strtotime($end_time);
+				if($end < time()){
+					return [
+						'data'	=> '',
+						'msg'	=> '续费时长需比试用时间长',
+						'code'	=> 0,
+					];
+				}
+			}else{
+				$order_sn = 'GO_'.time().'_admin_'.$user_id;
+				$order_type = 2;
+				$end_time = '';
+			}
+			if($business_admin_user->name == null){
+				$business_admin_user->name = $business_admin_user->email;
+			}
+			$order = [
+				'order_sn'		=> $order_sn,
+				'business_sn'		=> $business->business_number,
+				'customer_id'		=> $business->user_id,
+				'customer_name'	=> $business_admin_user->name,
+				'business_id'		=> $business_admin_user->salesman_id,
+				'business_name'	=> DB::table('admin_users')->where('id',$business_admin_user->salesman_id)->value('name'),
+				'resource_type'		=> 11,
+				'order_type'		=> $order_type,
+				'machine_sn'		=> $business->package_id,
+				'resource'		=> DB::table('tz_defenseip_store')->where('id',$business->ip_id)->value('ip'),
+				'price'			=> $business->price,
+				'duration'		=> $buy_time,
+				'payable_money'	=> bcmul($business->price,$buy_time,2),
+				'end_time'		=> $end_time,
+				'order_status'		=> 0,
+				'order_note'		=> '业务员手动为客户高防ip续费',
+			];	
 
-		DB::beginTransaction();	
-		$orderModel = new OrderModel();
-		$create_order = $orderModel->renewOrder($order);
-		if($create_order == false){
-			return [
-				'data'	=> '',
-				'msg'	=> '创建订单失败',
-				'code'	=> 0,
-			];
+			$create_order = $orderModel->renewOrder($order);
+			if($create_order == false){
+				DB::rollBack();
+				return [
+					'data'	=> '',
+					'msg'	=> '创建订单失败',
+					'code'	=> 0,
+				];
+			}
 		}
+
 		$pay_model = new OrdersModel();
-		$pay_res = $pay_model->payOrderByBalance($order['business_sn'],0);
+		$pay_res = $pay_model->payOrderByBalance($business->business_number,0);
 		
 		if($pay_res['code'] != 1){
 			DB::rollBack();

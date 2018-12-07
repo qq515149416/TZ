@@ -82,7 +82,11 @@ class MachineRoom extends Model
     public function show()
     {
         $res = $this->all();
-
+        if(!$res->isEmpty()){
+            foreach ($res as $key => $value) {
+                $res[$key]['list_order'] = $value['list_order'];
+            }
+        }
         return $res;
     }
 
@@ -110,5 +114,8 @@ class MachineRoom extends Model
 
     }
 
+    // public function machineroom($machineroom_id){
+
+    // }
 
 }

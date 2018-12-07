@@ -212,7 +212,8 @@ class BusinessModel extends Model
                 $return['msg']  = '审核失败!!!!';
                 return $return;
             }
-            $row = DB::table('idc_ips')->where('mac_num', $order['machine_sn'])->update(['own_business' => $order['business_sn']]);
+            $ip_id = json_decode($check->resource_detail)->ip_id;
+            $row = DB::table('idc_ips')->where('id',  $ip_id)->update(['own_business' => $order['business_sn'],'mac_num'=>$order['machine_sn']]);
 
         } else {
             // 如果是租用机柜的，在订单生成成功时，将业务编号和到期时间及资源状态进行更新

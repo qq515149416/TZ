@@ -27,7 +27,7 @@ $io->on('connection',function($socket){
 	$socket->on('login',function($group)use($socket){//进行登录，加入对话分组
 		$group = $group;
 		$socket->join($group);
-		$socket->$group = $group;
+		$socket->group = $group;
     });
     $socket->on('leave',function($leave)use($socket){//进行退出，离开对话组
 		$leave = $leave;

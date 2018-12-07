@@ -22,6 +22,7 @@ class CheckStaff
      */
     public function handle($request, Closure $next)
     {   
+
         $admin_id = Admin::user()->id;
         $staff = DB::table('oa_staff')
                     ->join('tz_department','oa_staff.department','=','tz_department.id')
@@ -29,9 +30,10 @@ class CheckStaff
                     ->where(['admin_users_id'=>$admin_id])
                     ->select('oa_staff.work_number','oa_staff.department','tz_department.sign','tz_jobs.slug')
                     ->first();
-        if(empty($staff)){
-            return  redirect('/tz_admin/auth/logout');
-        }
+        // if(empty($staff)){
+        //     return  redirect('/tz_admin/auth/logout');
+        // }
+
         return $next($request);
     }
 

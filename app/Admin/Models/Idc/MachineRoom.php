@@ -27,7 +27,7 @@ class MachineRoom extends Model
      * @param $roomName
      * @return mixed
      */
-    public function store($roomId, $roomName)
+    public function store($roomId, $roomName,$departId)
     {
         //判断机房编号是否存在
         if ($this->where('machine_room_id', '=', $roomId)->exists()) {
@@ -45,9 +45,17 @@ class MachineRoom extends Model
             return $res;
         }
 
+        //判断管理机房的部门是否已绑定其他机房
+        if ($this->where('list_order', '=', $departId)->exists()) {
+            $res['content'] = '';
+            $res['message'] = '此部门已管理其他机房';
+            $res['state']   = 0;
+            return $res;
+        }
 
         $this->machine_room_id   = $roomId;
         $this->machine_room_name = $roomName;
+        $this->list_order = $departId;
 
         $insertInfo = $this->save();
         //添加机房记录

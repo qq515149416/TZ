@@ -129,7 +129,8 @@ class WorkOrderModel extends Model
             // dd($business);
             $row->sales_name = $business->sales_name;
             $row = $row->toArray();
-            curl('http://127.0.0.1:8121',$row);
+            $array = ['work_order'=>$row];
+            curl('http://127.0.0.1:8121',$array);
 			$return['data'] = $row['id'];
 			$return['code'] = 1;
 			$return['msg'] = '工单提交成功,等待工作人员处理,您的工单号:'.$row['work_order_number'];

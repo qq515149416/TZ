@@ -12,43 +12,51 @@ $https_connection = array(
 );
 // ,$https_connection
 $io = new SocketIO(8120,$https_connection);
-$io->on('connection',function($socket)use($io){
-	// 后台发送到前台
-    $socket->on('admin_to_client',function($message)use($io){
-        $io->emit('to_id:'.$message['to_id'].'work_num:'.$message['work_number'],$message);
-    });
-    //前台发送到后台
-    $socket->on('client_to_admin',function($message)use($io){
-    	$io->emit('work_num:'.$message['work_number'],$message);
-    });
-});
+// $io->on('connection',function($socket)use($io){
+// 	// 后台发送到前台
+//     $socket->on('admin_to_client',function($message)use($io){
+//         $io->emit('to_id:'.$message['to_id'].'work_num:'.$message['work_number'],$message);
+//     });
+//     //前台发送到后台
+//     $socket->on('client_to_admin',function($message)use($io){
+//     	$io->emit('work_num:'.$message['work_number'],$message);
+//     });
+// });
 
-$io->on('connect',function($socket){//用于后台
-	$socket->on('login',function($depart_id)use($socket){
-		$depart_id = (string)$depart_id;
-		$socket->join($depart_id);
-		$socket->depart_id = $depart_id;
+$io->on('connection',function($socket){
+	$socket->on('login',function($group)use($socket){//进行登录，加入对话分组
+		$group = (string)$group;
+		$socket->join($group);
+		$socket->$group = $group;
     });
-    $socket->on('customer_login',function($customer_id)use($socket){
-		$customer_id = (string)$customer_id;
-		$socket->join($customer_id);
-		$socket->customer_id = $customer_id;
+    $socket->on('leave',function($leave)use($socket){//进行退出，离开对话组
+		$leave = (string)$leave;
+		$socket->leave($leave);
 	});
 });
 
 // 启动监听另一个端口，通过这个端口可以给任意相关部门推送信息
 $io->on('workerStart', function(){
-	// 监听一个https端口
+	// 监听一个http端口
 	$listen_worker = new Worker('http://0.0.0.0:8121');
 	// 当http客户端发来数据时触发
 	$listen_worker->onMessage = function($http_connection, $data){
 		$_POST = $_POST ? $_POST : $_GET;
-		global $io;
-		$to_department = @$_POST['process_department'];
-		$io->to($to_department)->emit('new_work_order',$_POST);
-		if(@$_POST['submitter']==1){
-			$customer = @$_POST['customer_id'];
-			$io->to($customer)->emit('work_order',$_POST);
+		if(!empty(@$_POST['work_order'])){//工单的推送
+			global $io;
+			$to_admin = 'depart'.@$_POST['work_order']['process_department'];//后台工单组
+			$io->to($to_admin)->emit('new_work_order',$_POST['work_order']);//根据分组推送到后台
+			if(@$_POST['work_order']['submitter']==1){
+				$customer = 'customer'.@$_POST['work_order']['customer_id'];//前台工单组
+				$io->to($customer)->emit('work_order',$_POST['work_order']);//根据分组推送到对应的客户
+			}
+		}
+		if(!empty(@$_POST['work_chat'])){//工单沟通的推送
+			global $io;
+			$to_admin = 'work'.@$_POST['work_chat']['work_number'];//后台沟通组
+			$io->to($to_admin)->emit('new_work_chat',$_POST['work_chat']);//将消息推送到对应的沟通组
+			$customer = 'w'.@$_POST['work_chat']['work_number'].'c'.@$_POST['work_chat']['customer_id'];//前台沟通组
+			$io->to($customer)->emit('work_chat',$_POST['work_chat']);//将消息推送到对应的沟通组
 		}
 		return $http_connection->send(' ');
 

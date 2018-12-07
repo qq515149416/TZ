@@ -25,9 +25,15 @@ $io = new SocketIO(8120,$https_connection);
 
 $io->on('connection',function($socket){
 	$socket->on('login',function($group)use($socket){//进行登录，加入对话分组
-		$group = $group;
-		$socket->join($group);
-		$socket->group = $group;
+		$room = '';
+		$keys = array_keys($group);
+		$key_count = count($keys);
+		for ($count=0; $count < $key_count; $count++) { 
+			$room = $room.$keys[$count].$group[$keys[$count]];
+		}
+		$room = $room;
+		$socket->join($room);
+		$socket->room = $room;
     });
     $socket->on('leave',function($leave)use($socket){//进行退出，离开对话组
 		$leave = $leave;
@@ -47,7 +53,7 @@ $io->on('workerStart', function(){
 			$to_admin = 'depart'.@$_POST['work_order']['process_department'];//后台工单组
 			$io->to($to_admin)->emit('new_work_order',$_POST['work_order']);//根据分组推送到后台
 			if(@$_POST['work_order']['submitter']==1){
-				$customer = 'customer'.@$_POST['work_order']['customer_id'];//前台工单组
+				$customer = 'customer'.@$_POST['work_order']['customer_id'];//前台工单组	
 				$io->to($customer)->emit('work_order',$_POST['work_order']);//根据分组推送到对应的客户
 			}
 		}

@@ -104,6 +104,22 @@ class PackageModel extends Model
 		return $return;
 	}
 
+	public function showById($id){
+		$package_list = $this->find($id);
+		if($package_list == null){
+			return [
+				'data'	=> $id,
+				'code'	=> 0,
+				'msg'	=> '无此套餐',
+			];
+		}
+		return [
+				'data'	=> $package_list,
+				'code'	=> 1,
+				'msg'	=> '获取成功',
+			];
+	}
+
 	public function checkExist($ip){
 		$id = $this->where('ip',$ip)->value('id');
 		if($id != null){

@@ -147,7 +147,7 @@ class BusinessModel extends Model
             } else {
                 $return['data'] = '审核失败';
                 $return['code'] = 0;
-                $return['msg']  = '审核失败';
+                $return['msg']  = '审核失败!';
             }
             return $return;
         }
@@ -170,7 +170,7 @@ class BusinessModel extends Model
             DB::rollBack();
             $return['data'] = '审核失败';
             $return['code'] = 0;
-            $return['msg']  = '审核失败';
+            $return['msg']  = '审核失败!!';
             return $return;
         }
         // 业务审核成功继续进行订单表的生成
@@ -196,7 +196,7 @@ class BusinessModel extends Model
             DB::rollBack();
             $return['data'] = '审核失败';
             $return['code'] = 0;
-            $return['msg']  = '审核失败';
+            $return['msg']  = '审核失败!!!';
             return $return;
         }
         if ($order['resource_type'] == 1 || $order['resource_type'] == 2) {
@@ -209,7 +209,7 @@ class BusinessModel extends Model
                 DB::rollBack();
                 $return['data'] = '审核失败';
                 $return['code'] = 0;
-                $return['msg']  = '审核失败';
+                $return['msg']  = '审核失败!!!!';
                 return $return;
             }
             $row = DB::table('idc_ips')->where('mac_num', $order['machine_sn'])->update(['own_business' => $order['business_sn']]);
@@ -236,7 +236,7 @@ class BusinessModel extends Model
             DB::rollBack();
             $return['data'] = '审核失败';
             $return['code'] = 0;
-            $return['msg']  = '审核失败';
+            $return['msg']  = '审核失败!!!!!';
         }
         return $return;
     }

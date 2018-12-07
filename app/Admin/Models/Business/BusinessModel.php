@@ -109,7 +109,7 @@ class BusinessModel extends Model
         }
         // 根据业务号查询需要审核的业务数据
         $check_where = ['business_number' => $where['business_number']];
-        $check       = DB::table('tz_business')->where($check_where)->select('client_id', 'business_number', 'client_name', 'sales_id', 'sales_name', 'business_type', 'machine_number', 'money', 'length')->first();
+        $check       = DB::table('tz_business')->where($check_where)->select('client_id', 'business_number', 'client_name', 'sales_id', 'sales_name', 'business_type', 'machine_number', 'money', 'length','resource_detail')->first();
         if (empty($check)) {
             // 不存在对应的业务数据直接返回
             $return['data'] = '该业务不存在,无法进行审核操作';

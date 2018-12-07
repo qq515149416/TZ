@@ -52,7 +52,7 @@ class BusinessModel extends Model
         $row                  = $this->create($insert);
         if ($row != false) {
             $return['data'] = $row->id;
-            DB::table('tz_business_relevance')->insert(['type'=>1,'business_id'=>$row->id,'created_at'=>date('Y-m-d H:i:s',time())]);
+            DB::table('tz_business_relevance')->insert(['type'=>1,'business_id'=>$row->business_number,'created_at'=>date('Y-m-d H:i:s',time())]);
             $return['code'] = 1;
             $return['msg']  = '业务创建成功，待审核';
         } else {

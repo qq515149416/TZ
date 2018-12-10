@@ -235,7 +235,7 @@ class UnderModel extends Model
 		                    $rent['own_business'] = 0;
 		                    $rent['business_end'] = Null;
 		                    $rent['loginname'] = isset($edit['loginname'])?$edit['loginname']:'administrator';
-		                    $rent['loginpass'] = isset($edit['loginpass'])?$edit['loginpass']:'esJ04&79';
+		                    $rent['loginpass'] = isset($edit['loginpass'])?$edit['loginpass']:'esJ04&'.substr(time(),8,2);
 		                    $row = DB::table('idc_machine')->where(['machine_num'=>$business->machine_number,'own_business'=>$edit['business_number'],'business_type'=>1])->update($rent);
 		                    break;
 		                case 2:

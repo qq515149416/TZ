@@ -84,7 +84,7 @@ class MachineRoom extends Model
         $res = $this->all();
         if(!$res->isEmpty()){
             foreach ($res as $key => $value) {
-                $res[$key]['list_order'] = $value['list_order'];
+                $res[$key]['list_order'] = $this->machineroom($value['list_order']);
             }
         }
         return $res;
@@ -114,8 +114,15 @@ class MachineRoom extends Model
 
     }
 
-    // public function machineroom($machineroom_id){
-
-    // }
+    /**
+     * 获取机房管理部门的部门名称
+     * @param  [type] $machineroom_id [description]
+     * @return [type]                 [description]
+     */
+    public function machineroom($machineroom_id){
+        $department = DB::table('tz_department')->where(['id'=>$machineroom_id])->value('depart_name');
+        return $department;
+        
+    }
 
 }

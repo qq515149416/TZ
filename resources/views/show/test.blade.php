@@ -109,7 +109,7 @@
     <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
     <script src="/js/bootstrap.min.js"></script>
     <script type="text/javascript">
-var socket = io('http://127.0.0.1:9120');
+var socket = io('http://sk.jungor.cn:8120');
 socket.on('connection',function(){
                 console.log('连接成功');
 });

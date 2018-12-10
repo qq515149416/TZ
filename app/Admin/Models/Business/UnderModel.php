@@ -198,7 +198,7 @@ class UnderModel extends Model
         }
         switch ($edit['type']) {
         	case 1:
-        		$business = DB::table('tz_business')->where(['business_number'=>$edit['business_number']])->select('remove_status','remove_reason','business_type','machine_number','business_number')->first();
+        		$business = DB::table('tz_business')->where(['business_number'=>$edit['business_number']])->select('remove_status','remove_reason','business_type','machine_number','business_number','resource_detail')->first();
 		        if(empty($business)){//不存在需要下架的业务，直接返回
 		            $return['code'] = 0;
 		            $return['msg'] = '无对应业务';
@@ -217,6 +217,7 @@ class UnderModel extends Model
 		            switch ($business->remove_status) {
 		                case 1:
 		                    $update['remove_status'] = 2;
+		                    $update['machineroom'] = DB::table('idc_machineroom')->where(['id'=>json_decode($business->resource_detail)->machineroom])->value('list_order');
 		                    break;
 		                case 2:
 		                    $update['remove_status'] = 3;
@@ -234,7 +235,7 @@ class UnderModel extends Model
 		                    $rent['own_business'] = 0;
 		                    $rent['business_end'] = Null;
 		                    $rent['loginname'] = isset($edit['loginname'])?$edit['loginname']:'administrator';
-		                    $rent['loginpass'] = isset($edit['loginpass'])?$edit['loginpass']:'esJ04&79';
+		                    $rent['loginpass'] = isset($edit['loginpass'])?$edit['loginpass']:'esJ04&'.substr(time(),8,2);
 		                    $row = DB::table('idc_machine')->where(['machine_num'=>$business->machine_number,'own_business'=>$edit['business_number'],'business_type'=>1])->update($rent);
 		                    break;
 		                case 2:

@@ -31,7 +31,7 @@ class MachineRoom extends Model
     {
         //判断机房编号是否存在
         if ($this->where('machine_room_id', '=', $roomId)->exists()) {
-            $res['content'] = '';
+            $res['content'] = '1';
             $res['message'] = '机房编号已存在';
             $res['state']   = 0;
             return $res;
@@ -39,7 +39,7 @@ class MachineRoom extends Model
 
         //判断机房名称是否存在
         if ($this->where('machine_room_name', '=', $roomName)->exists()) {
-            $res['content'] = '';
+            $res['content'] = '2';
             $res['message'] = '机房名字已存在';
             $res['state']   = 0;
             return $res;
@@ -47,7 +47,7 @@ class MachineRoom extends Model
 
         //判断管理机房的部门是否已绑定其他机房
         if ($this->where('list_order', '=', $departId)->exists()) {
-            $res['content'] = '';
+            $res['content'] = '3';
             $res['message'] = '此部门已管理其他机房';
             $res['state']   = 0;
             return $res;
@@ -58,9 +58,9 @@ class MachineRoom extends Model
         $this->list_order = $departId;
 
         $insertInfo = $this->save();
+        // dd($insertInfo);
         //添加机房记录
         if ($insertInfo) {
-            $insertInfo->list_order = $this->machineroom($departId);
             $res['content'] = $insertInfo;
             $res['message'] = '添加机房成功';
             $res['state']   = 1;
@@ -122,7 +122,7 @@ class MachineRoom extends Model
     public function machineroom($machineroom_id){
         $department = DB::table('tz_department')->where(['id'=>$machineroom_id])->value('depart_name');
         return $department;
-        
+
     }
 
 }

@@ -48,4 +48,13 @@ class PackageController extends Controller
 		return tz_ajax_echo($ip_list['data'],$ip_list['msg'],$ip_list['code']);
 	}
 
+	public function showById(PackageRequest $request){
+		$model = new PackageModel();
+		$par = $request->only(['id']);
+		$id = $par['id'];
+		$ip_list = $model->showById($id);
+
+		return tz_ajax_echo($ip_list['data'],$ip_list['msg'],$ip_list['code']);
+	}
+
 }

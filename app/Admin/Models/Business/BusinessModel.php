@@ -52,7 +52,7 @@ class BusinessModel extends Model
         $row                  = $this->create($insert);
         if ($row != false) {
             $return['data'] = $row->id;
-            DB::table('tz_business_relevance')->insert(['type'=>1,'business_id'=>$row->id,'created_at'=>date('Y-m-d H:i:s',time())]);
+            DB::table('tz_business_relevance')->insert(['type'=>1,'business_id'=>$row->business_number,'created_at'=>date('Y-m-d H:i:s',time())]);
             $return['code'] = 1;
             $return['msg']  = '业务创建成功，待审核';
         } else {
@@ -109,7 +109,7 @@ class BusinessModel extends Model
         }
         // 根据业务号查询需要审核的业务数据
         $check_where = ['business_number' => $where['business_number']];
-        $check       = DB::table('tz_business')->where($check_where)->select('client_id', 'business_number', 'client_name', 'sales_id', 'sales_name', 'business_type', 'machine_number', 'money', 'length')->first();
+        $check       = DB::table('tz_business')->where($check_where)->select('client_id', 'business_number', 'client_name', 'sales_id', 'sales_name', 'business_type', 'machine_number', 'money', 'length','resource_detail')->first();
         if (empty($check)) {
             // 不存在对应的业务数据直接返回
             $return['data'] = '该业务不存在,无法进行审核操作';
@@ -147,7 +147,7 @@ class BusinessModel extends Model
             } else {
                 $return['data'] = '审核失败';
                 $return['code'] = 0;
-                $return['msg']  = '审核失败';
+                $return['msg']  = '审核失败!';
             }
             return $return;
         }
@@ -170,7 +170,7 @@ class BusinessModel extends Model
             DB::rollBack();
             $return['data'] = '审核失败';
             $return['code'] = 0;
-            $return['msg']  = '审核失败';
+            $return['msg']  = '审核失败!!';
             return $return;
         }
         // 业务审核成功继续进行订单表的生成
@@ -196,7 +196,7 @@ class BusinessModel extends Model
             DB::rollBack();
             $return['data'] = '审核失败';
             $return['code'] = 0;
-            $return['msg']  = '审核失败';
+            $return['msg']  = '审核失败!!!';
             return $return;
         }
         if ($order['resource_type'] == 1 || $order['resource_type'] == 2) {
@@ -209,10 +209,11 @@ class BusinessModel extends Model
                 DB::rollBack();
                 $return['data'] = '审核失败';
                 $return['code'] = 0;
-                $return['msg']  = '审核失败';
+                $return['msg']  = '审核失败!!!!';
                 return $return;
             }
-            $row = DB::table('idc_ips')->where('mac_num', $order['machine_sn'])->update(['own_business' => $order['business_sn']]);
+            $ip_id = json_decode($check->resource_detail)->ip_id;
+            $row = DB::table('idc_ips')->where('id',  $ip_id)->update(['own_business' => $order['business_sn'],'mac_num'=>$order['machine_sn']]);
 
         } else {
             // 如果是租用机柜的，在订单生成成功时，将业务编号和到期时间及资源状态进行更新
@@ -236,7 +237,7 @@ class BusinessModel extends Model
             DB::rollBack();
             $return['data'] = '审核失败';
             $return['code'] = 0;
-            $return['msg']  = '审核失败';
+            $return['msg']  = '审核失败!!!!!';
         }
         return $return;
     }

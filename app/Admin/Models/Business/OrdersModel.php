@@ -490,7 +490,7 @@ class OrdersModel extends Model
 			$business_where = [
 				'business_number'=>$renew['business_number'],
 			];
-			$business = DB::table('tz_business')->where($business_where)->select('business_number','business_type','client_id','client_name','business_type','machine_number','endding_time','length','money','business_status')->first();
+			$business = DB::table('tz_business')->where($business_where)->select('business_number','business_type','client_id','client_name','business_type','machine_number','endding_time','length','money','business_status','remove_status')->first();
 			if(!$business){
 				$return['data'] = '';
 				$return['code'] = 0;
@@ -504,6 +504,12 @@ class OrdersModel extends Model
 				$return['msg']  = '该业务'.$business_status[$business->business_status].'无法进行续费';
 				return $return;
 			}
+            if($business->remove_status != 0){
+                $return['data'] = '';
+                $return['code'] = 0;
+                $return['msg']  = '该业务'.$business_status[$business->business_status].'无法进行续费,业务可能已到期未续费下架';
+                return $return;
+            }
 			//续费订单号的生成规则：前两位（4-6的随机数）+ 年月日 + 时间戳的后2位数 + 4-6的随机数
 			$order_sn = mt_rand(4,6).date("Ymd",time()).substr(time(),8,2).mt_rand(4,6);//续费订单号
 			$order['order_sn'] = $order_sn;

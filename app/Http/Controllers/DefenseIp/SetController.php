@@ -47,7 +47,8 @@ class SetController extends Controller
         $targetIp     = trim($request['target_ip']);  //获取参数,去除左右两边空格
 
         $apiModel     = new ApiController();//实例化
-        $businessData = BusinessModel::find($busId); //根据业务ID获取相关业务数据
+//        $businessData = BusinessModel::find($busId); //根据业务ID获取相关业务数据
+        $businessData = BusinessModel::where('business_number','=',$busId)->get(); //根据业务ID获取相关业务数据
 
         //判断有误相关的业务数据
         if (!$businessData) {

@@ -97,7 +97,7 @@ class LoginController extends Controller
      * 密码加密方式 md5()+ '01?!010@$%203**'
      *
      */
-    protected function loginByOldOa()
+    protected function loginByOldOa($password)
     {
 
 
@@ -113,7 +113,7 @@ class LoginController extends Controller
 
 
 
-        dump(md5(123456));
+        dump(md5(123456).'01?!010@$%203**');
         die();
 
 //        //判断有无登录

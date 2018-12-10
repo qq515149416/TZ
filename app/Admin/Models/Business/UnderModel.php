@@ -282,7 +282,7 @@ class UnderModel extends Model
 		            } elseif($update['remove_status'] ==3){
 		            	$return['msg'] = '通知机房成功';
 		            } elseif($update['remove_status'] == 0){
-		            	$return['msg'] = '驳回下架成功原因:'.$edit['remove_reason'];
+		            	$return['msg'] = '驳回下架原因:'.$edit['remove_reason'];
 		            }
 		            
 		        }

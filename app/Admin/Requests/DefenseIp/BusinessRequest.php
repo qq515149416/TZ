@@ -48,6 +48,12 @@ class BusinessRequest extends FormRequest
 					'package_id'		=> 'required',
 				];
 				break;
+			case 'showBusinessByCustomer':
+				$return = [
+					'customer_id'		=> 'required|exists:tz_users,id',
+				];
+				break;
+				
 			default:
 	
 				break;
@@ -64,6 +70,8 @@ class BusinessRequest extends FormRequest
 			'business_id.exists'			=> '不存在此业务id',
 			'status.required'			=> '请选择审核结果',
 			'package_id.required'			=> '请提供套餐id',
+			'customer_id.required'			=> '请提供用户id',
+			'customer_id.exists'			=> '用户id不存在',
 		];
 	}
 

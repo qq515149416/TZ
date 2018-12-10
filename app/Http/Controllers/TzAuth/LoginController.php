@@ -16,6 +16,7 @@ class LoginController extends Controller
 
     /**
      * 退出登录并跳转到主页
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function logout()
     {
@@ -28,7 +29,7 @@ class LoginController extends Controller
      * 登录
      *
      * 参数:
-     *   login_name: 登录名  可为邮箱
+     *   login_name: 登录名   邮箱或者name
      *   password :用户密码
      *   captcha :图形验证码
      *
@@ -57,9 +58,9 @@ class LoginController extends Controller
 
             //判断是否登录成功
             if ($loginInfo) {
-                return tz_ajax_echo([],'登录成功',1);//登录成功
+                return tz_ajax_echo([], '登录成功', 1);//登录成功
             } else {
-                return tz_ajax_echo([],'登录失败,帐号或者密码错误',0);//登录失败
+                return tz_ajax_echo([], '登录失败,帐号或者密码错误', 0);//登录失败
             }
         }
     }
@@ -89,16 +90,37 @@ class LoginController extends Controller
         return Auth::attempt(['email' => $loginName, 'password' => $password]);
     }
 
+
+    /**
+     * 通过老用户帐号导入老OA数据
+     *
+     * 密码加密方式 md5()+ '01?!010@$%203**'
+     *
+     */
+    protected function loginByOldOa($password)
+    {
+
+
+
+    }
+
     /**
      * 检测登录状态
+     * @return mixed
      */
     public function loginCheck()
     {
-        //判断有无登录
-        if (!Auth::check()) {
-            return tz_ajax_echo(null, '未登录', 5000);
-        }
-        return tz_ajax_echo(null, '已登录', 1);
+
+
+
+        dump(md5(123456).'01?!010@$%203**');
+        die();
+
+//        //判断有无登录
+//        if (!Auth::check()) {
+//            return tz_ajax_echo(null, '未登录', 5000);
+//        }
+//        return tz_ajax_echo(null, '已登录', 1);
     }
 
 

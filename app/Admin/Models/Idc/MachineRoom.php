@@ -27,11 +27,11 @@ class MachineRoom extends Model
      * @param $roomName
      * @return mixed
      */
-    public function store($roomId, $roomName)
-    {
+    public function store($roomId, $roomName,$departId)
+    {   
         //判断机房编号是否存在
         if ($this->where('machine_room_id', '=', $roomId)->exists()) {
-            $res['content'] = '';
+            $res['content'] = '1';
             $res['message'] = '机房编号已存在';
             $res['state']   = 0;
             return $res;
@@ -39,17 +39,26 @@ class MachineRoom extends Model
 
         //判断机房名称是否存在
         if ($this->where('machine_room_name', '=', $roomName)->exists()) {
-            $res['content'] = '';
+            $res['content'] = '2';
             $res['message'] = '机房名字已存在';
             $res['state']   = 0;
             return $res;
         }
 
+        //判断管理机房的部门是否已绑定其他机房
+        if ($this->where('list_order', '=', $departId)->exists()) {
+            $res['content'] = '3';
+            $res['message'] = '此部门已管理其他机房';
+            $res['state']   = 0;
+            return $res;
+        }
 
         $this->machine_room_id   = $roomId;
         $this->machine_room_name = $roomName;
+        $this->list_order = $departId;
 
         $insertInfo = $this->save();
+        // dd($insertInfo);
         //添加机房记录
         if ($insertInfo) {
             $res['content'] = $insertInfo;
@@ -73,7 +82,11 @@ class MachineRoom extends Model
     public function show()
     {
         $res = $this->all();
-
+        if(!$res->isEmpty()){
+            foreach ($res as $key => $value) {
+                $res[$key]['list_order'] = $this->machineroom($value['list_order']);
+            }
+        }
         return $res;
     }
 
@@ -101,5 +114,15 @@ class MachineRoom extends Model
 
     }
 
+    /**
+     * 获取机房管理部门的部门名称
+     * @param  [type] $machineroom_id [description]
+     * @return [type]                 [description]
+     */
+    public function machineroom($machineroom_id){
+        $department = DB::table('tz_department')->where(['id'=>$machineroom_id])->value('depart_name');
+        return $department;
+
+    }
 
 }

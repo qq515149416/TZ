@@ -57,13 +57,19 @@ class ContactsController extends Controller
      * 测试
      */
     public function vi(Request $request) {
-       $order = DB::table('tz_orders')->where(['business_sn'=>'320181008169'])->get();
-        // dd($order);
-        $resource = ['IP'=>$this->filter($order->toArray(),4)];
+       // $order = DB::table('tz_orders')->where(['business_sn'=>'320181008169'])->get();
+       //  // dd($order);
+       //  $resource = ['IP'=>$this->filter($order->toArray(),4)];
 
-        dd($resource);
+       //  dd($resource);
+       // $check       = DB::table('tz_business')->where(['business_number'=>'220181130219'])->select('client_id', 'business_number', 'client_name', 'sales_id', 'sales_name', 'business_type', 'machine_number', 'money', 'length','resource_detail')->first();
+       //  // dd(explode(trim($check->resource_detail,'{}'),','));
+      
+    
+       //  $json = json_decode($check->resource_detail);
+       //  dd($json->ip_id);
      //    curl('http://127.0.0.1:8121',$request->only(['process_department']));
-    	// return view('show/test');
+    	return view('show/test');
     }
     public function vtest(Request $request) {
         $session = [];

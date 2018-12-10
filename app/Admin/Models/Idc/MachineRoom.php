@@ -28,7 +28,7 @@ class MachineRoom extends Model
      * @return mixed
      */
     public function store($roomId, $roomName,$departId)
-    {
+    {   
         //判断机房编号是否存在
         if ($this->where('machine_room_id', '=', $roomId)->exists()) {
             $res['content'] = '1';

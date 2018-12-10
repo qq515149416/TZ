@@ -277,8 +277,12 @@ class UnderModel extends Model
 		            $return['code'] = 1;
 		            if($business->business_type == 1 && $update['remove_status'] == 4){
 		            	$return['msg'] = '主机为'.$business->machine_number.'的资源下架修改成功'.'账户:'.$rent['loginname'].',密码:'.$rent['loginpass'];
-		            } else {
-		            	$return['msg'] = '业务下架状态修改成功';
+		            } elseif($update['remove_status'] == 2) {
+		            	$return['msg'] = '通知机房成功';
+		            } elseif($update['remove_status'] ==3){
+		            	$return['msg'] = '通知机房成功';
+		            } elseif($update['remove_status'] == 0){
+		            	$return['msg'] = '驳回下架成功原因:'.$edit['remove_reason'];
 		            }
 		            
 		        }

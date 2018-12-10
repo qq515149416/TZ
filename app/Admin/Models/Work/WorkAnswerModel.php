@@ -129,6 +129,7 @@ class WorkAnswerModel extends Model
                 $work_order_detail->resource_detail = $business->resource_detail;
                 $work_order_detail->sales_name = $business->sales_name;
                 $insert_data['customer_id'] = $work_order_detail->customer_id;
+                $insert_data['role'] = $work_order_detail->submitter;
                 $work_order_detail = (array)$work_order_detail;
                 $array = ['work_order'=>$work_order_detail,'work_chat'=>$insert_data];
                 curl('http://127.0.0.1:8121',$array);

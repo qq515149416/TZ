@@ -48,8 +48,11 @@ $io->on('workerStart', function(){
 			global $io;
 			$to_admin = 'work'.@$_POST['work_chat']['work_number'];//后台沟通组
 			$io->to($to_admin)->emit('new_work_chat',$_POST['work_chat']);//将消息推送到对应的沟通组
-			$customer = 'w'.@$_POST['work_chat']['work_number'].'c'.@$_POST['work_chat']['customer_id'];//前台沟通组
-			$io->to($customer)->emit('work_chat',$_POST['work_chat']);//将消息推送到对应的沟通组
+			if(@$_POST['work_chat']['role'] == 1){
+				$customer = 'w'.@$_POST['work_chat']['work_number'].'c'.@$_POST['work_chat']['customer_id'];//前台沟通组
+				$io->to($customer)->emit('work_chat',$_POST['work_chat']);//将消息推送到对应的沟通组
+			}
+			
 		}
 		return $http_connection->send(' ');
 

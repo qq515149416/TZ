@@ -156,6 +156,9 @@ class BusinessModel extends Model
     			case '3':
     				$list[$i]['status'] = '已下架';
     				break;	
+                                            case '4':
+                                                        $list[$i]['status'] = '试用中';
+                                                        break;  
     			default:
     				# code...
     				break;
@@ -173,9 +176,24 @@ class BusinessModel extends Model
     	];
     }
 
-    public function showBusinessByPackage($package_id)
+    public function showBusiness($id,$way)
     {
-        $list = $this->where('package_id',$package_id)->get()->toArray();
+        switch ($way) {
+            case 'package':
+                $list = $this->where('package_id',$id)->get()->toArray();
+                break;
+            case 'customer':
+                $list = $this->where('user_id',$id)->get()->toArray();
+                break;
+            default:
+                return [
+                    'data'  => '',
+                    'msg'   => '获取失败',
+                    'code'  => 0,
+                ];
+                break;
+        }
+        
         if(count($list) == 0){
             return [
                 'data'  =>  '',
@@ -201,6 +219,9 @@ class BusinessModel extends Model
                     break;
                 case '3':
                     $list[$i]['status'] = '已下架';
+                    break;
+                case '4':
+                    $list[$i]['status'] = '试用中';
                     break;
                 default:
                     $list[$i]['status'] = '无此状态,请核对数据库';

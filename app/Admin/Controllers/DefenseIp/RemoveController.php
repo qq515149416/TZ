@@ -110,7 +110,20 @@ class RemoveController extends Controller
         $package_id = $par['package_id'];
 
         $model = new BusinessModel();
-        $list = $model->showBusinessByPackage($package_id);
+        $list = $model->showBusiness($package_id,'package');
+        return tz_ajax_echo($list['data'],$list['msg'],$list['code']);
+    }
+
+    /**
+     * 通过客户id获取所有该用户所属业务
+     */
+    public function showBusinessByCustomer(BusinessRequest $request)
+    {
+        $par = $request->only(['customer_id']);
+        $customer_id = $par['customer_id'];
+
+        $model = new BusinessModel();
+        $list = $model->showBusiness($customer_id,'customer');
         return tz_ajax_echo($list['data'],$list['msg'],$list['code']);
     }
 }

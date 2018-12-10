@@ -129,7 +129,7 @@ class Account extends Model
            $row = $this->where('id',$reset_pass['id'])->update($reset);
            if($row != false){
               $return['code'] = 1;
-              $return['msg'] = '密码重置成功，密码为登录账号';
+              $return['msg'] = '密码重置成功，密码为账号';
            } else {
               $return['code'] = 0;
               $return['msg'] = '密码重置失败';

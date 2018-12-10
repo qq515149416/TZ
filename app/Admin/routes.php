@@ -478,6 +478,7 @@ Route::group([
         ], function (Router $router) {
             $router->get('selectExpireList', 'DefenseIp\RemoveController@selectExpireList');  //查询过期业务
             $router->get('showBusinessByPackage', 'DefenseIp\RemoveController@showBusinessByPackage');  //查询某套餐所有业务
+            $router->get('showBusinessByCustomer', 'DefenseIp\RemoveController@showBusinessByCustomer');  //查询某用户所有业务
 
             $router->get('subExamine', 'DefenseIp\RemoveController@subExamine');//提交审核
             $router->get('goExamine', 'DefenseIp\RemoveController@goExamine');//进行审核

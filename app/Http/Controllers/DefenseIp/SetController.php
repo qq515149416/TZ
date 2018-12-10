@@ -46,13 +46,13 @@ class SetController extends Controller
         $busId        = $request['business_id'];//获取参数,高防IP业务ID
         $targetIp     = trim($request['target_ip']);  //获取参数,去除左右两边空格
 
-        $apiModel     = new ApiController();//实例化
+        $apiModel = new ApiController();//实例化
 //        $businessData = BusinessModel::find($busId); //根据业务ID获取相关业务数据
-        $businessData = BusinessModel::where('business_number','=',$busId)->get(); //根据业务ID获取相关业务数据
+        $businessData = BusinessModel::where('business_number', '=', $busId)->first(); //根据业务ID获取相关业务数据
 
         //判断有误相关的业务数据
         if (!$businessData) {
-            return tz_ajax_echo([],'没有找到相关的业务',0);
+            return tz_ajax_echo([], '没有找到相关的业务', 0);
         }
         $businessData = $businessData->toArray();  //将业务数据转换成数组
 
@@ -77,5 +77,13 @@ class SetController extends Controller
         }
     }
 
+
+    public function test()
+    {
+//        $businessData = BusinessModel::find(33);
+     $businessData = BusinessModel::where('business_number', '=','G_1542937532')->first(); //根据业务ID获取相关业务数据
+        $businessData= $businessData->toArray();
+        dump($businessData);
+    }
 
 }

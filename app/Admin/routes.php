@@ -466,6 +466,7 @@ Route::group([
             $router->get('del', 'DefenseIp\PackageController@del');//删除套餐
             $router->post('edit', 'DefenseIp\PackageController@edit');//编辑套餐
             $router->get('show', 'DefenseIp\PackageController@show'); //获取套餐信息
+            $router->get('showById', 'DefenseIp\PackageController@showById'); //获取套餐信息
         });
 
 

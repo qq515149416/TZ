@@ -64,7 +64,12 @@ class PackageRequest extends FormRequest
 					'site'			=> 'required',	
 				];
 				break;
-
+			case 'showById':
+				
+				$return = [
+					'id'			=> 'required|exists:tz_defenseip_package,id',	
+				];
+				break;
 			default:
 	
 				break;
@@ -89,6 +94,8 @@ class PackageRequest extends FormRequest
 			'name.unique'			=> '该套餐名已存在',
 			'name.required'		=> '请填写套餐名',
 			'description.required'		=> '请填写套餐描述',
+			'id.required'			=> '请提供套餐的id',
+			'id.exists'			=> '套餐id不存在',
 		];
 	}
 

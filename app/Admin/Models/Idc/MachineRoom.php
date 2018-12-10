@@ -27,7 +27,7 @@ class MachineRoom extends Model
      * @param $roomName
      * @return mixed
      */
-    public function store($roomId, $roomName)
+    public function store($roomId, $roomName,$departId,$departName)
     {
         //判断机房编号是否存在
         if ($this->where('machine_room_id', '=', $roomId)->exists()) {
@@ -45,13 +45,22 @@ class MachineRoom extends Model
             return $res;
         }
 
+        //判断管理机房的部门是否已绑定其他机房
+        if ($this->where('list_order', '=', $departId)->exists()) {
+            $res['content'] = '';
+            $res['message'] = '此部门已管理其他机房';
+            $res['state']   = 0;
+            return $res;
+        }
 
         $this->machine_room_id   = $roomId;
         $this->machine_room_name = $roomName;
+        $this->list_order = $departId;
 
         $insertInfo = $this->save();
         //添加机房记录
         if ($insertInfo) {
+            $insertInfo->list_order = $departName;
             $res['content'] = $insertInfo;
             $res['message'] = '添加机房成功';
             $res['state']   = 1;
@@ -73,7 +82,11 @@ class MachineRoom extends Model
     public function show()
     {
         $res = $this->all();
-
+        if(!$res->isEmpty()){
+            foreach ($res as $key => $value) {
+                $res[$key]['list_order'] = $this->machineroom($value['list_order']);
+            }
+        }
         return $res;
     }
 
@@ -101,5 +114,15 @@ class MachineRoom extends Model
 
     }
 
+    /**
+     * 获取机房管理部门的部门名称
+     * @param  [type] $machineroom_id [description]
+     * @return [type]                 [description]
+     */
+    public function machineroom($machineroom_id){
+        $department = DB::table('tz_department')->where(['id'=>$machineroom_id])->value('depart_name');
+        return $department;
+        
+    }
 
 }

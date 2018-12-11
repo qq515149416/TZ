@@ -279,4 +279,59 @@ class  Overdue extends Model
 
 		return $return;
 	}
+	/**
+	* 查找试用中高防IP业务
+	* @param  
+	* @return  
+	*/
+	public function showTrialDefenseIp(){
+		$list = DB::table('tz_defenseip_business')->where('status',4)->where('deleted_at',null)->get()->toArray();
+		if(count($list) == 0){
+			return [
+				'data'	=> '',
+				'msg'	=> '无试用高防IP业务',
+				'code'	=> 0,
+			];
+		}
+		$status = [ 0 => '预留状态' , 1 => '正在使用' , 2 => '申请下架' , 3 => '已下架' , 4 => '试用'];
+		for ($i=0; $i < count($list); $i++) { 
+			$list[$i]->status =  $status[$list[$i]->status];
+		}
+		return [
+			'data'	=> $list,
+			'msg'	=> '获取成功',
+			'code'	=> 1,
+		];
+	}
+
+	/**
+	* 查找未付款的idc业务订单
+	* @param  
+	* @return  
+	*/
+	public function showUnpaidIdcOrder(){
+		$list = DB::table('tz_orders')
+			->where('order_status',0)
+			->whereIn('resource_type',[1,2,3,4,5,6,7,8,9])
+			->get()
+			->toArray();
+		if(count($list) == 0){
+			return [
+				'data'	=> '',
+				'msg'	=> '无未付款的idc业务订单',
+				'code'	=> 0,
+			];
+		}
+		$resource_type = [ '1' => '租用主机' , '2' => '托管主机' , '3' => '租用机柜' , '4' => 'IP' , '5' => 'CPU' , '6' => '硬盘' , '7' => '内存' , '8' => '带宽' , '9' => '防护' , '10' => 'cdn' , '11' => '高防IP'];
+		$order_status = [ '0' => '待支付' , '1' => '已支付' , '2' => '已支付' , '3' => '订单完成' , '4' => '到期' , '5' => '取消' , '6' => '申请退款', '8' => '退款完成'];
+		for ($i=0; $i < count($list); $i++) { 
+			$list[$i]->order_status =  $order_status[$list[$i]->order_status];
+			$list[$i]->resource_type =  $resource_type[$list[$i]->resource_type];
+		}
+		return [
+			'data'	=> $list,
+			'msg'	=> '获取成功',
+			'code'	=> 1,
+		];
+	}
 }

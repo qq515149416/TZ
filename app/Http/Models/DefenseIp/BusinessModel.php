@@ -15,7 +15,7 @@ class BusinessModel extends Model
     protected $table = 'tz_defenseip_business'; //表
     protected $primaryKey = 'id'; //主键
     protected $dates = ['deleted_at']; //删除时间
-
+    public $timestamps = true;
 //    /**
 //     *
 //     */
@@ -133,7 +133,7 @@ class BusinessModel extends Model
 
     public function showExamine()
     {
-    	$list = $this->where('status',2)->get()->toArray();
+    	$list = $this->where('status',2)->orderBy('updated_at','desc')->get()->toArray();
     	if(count($list) == 0){
     		return [
 	    		'data'	=> '',

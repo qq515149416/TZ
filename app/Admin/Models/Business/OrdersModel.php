@@ -299,7 +299,7 @@ class OrdersModel extends Model
 						->join('tz_business','tz_orders.business_sn','=','tz_business.business_number')
 						->where('tz_orders.id',$delete_id['delete_id'])
 						->whereNull('tz_orders.deleted_at')
-						->select('tz_business.business_number','tz_business.endding_time','tz_orders.order_sn','tz_orders.machine_sn','tz_orders.end_time','tz_orders.order_status','tz_orders.resource_type','tz_orders.duration')
+						->select('tz_business.business_number','tz_business.endding_time','tz_orders.order_sn','tz_orders.machine_sn','tz_orders.order_type','tz_orders.end_time','tz_orders.order_status','tz_orders.resource_type','tz_orders.duration')
 						->first();
 		// 不存在需要删除的数据，直接返回
 		if(!$delete_data){
@@ -307,148 +307,189 @@ class OrdersModel extends Model
 			$return['msg'] = '无对应的订单数据!';
 			return $return;
 		}
-		DB::beginTransaction();//开启事务处理
-		if($delete_data->order_status == 0){//当订单为未支付的时候删除同时需要对其相关的业务/对应的资源信息进行更新
-			switch ($delete_data->resource_type) {//当资源类型为租用主机/托管主机/租用机柜时，对业务的到期时间进行更改
-				case 1://租用机器
-					$end_time = Carbon::parse($delete_data->endding_time)->modify('-'.$delete_data->duration.' months')->toDateTimeString();
-					$business = DB::table('tz_business')->where(['business_number'=>$delete_data->business_number])->update(['endding_time'=>$end_time]);
-					if($business == 0){//更新业务到期时间失败
-						DB::rollBack();
-						$return['code'] = 0;
-						$return['msg'] = '删除失败!';
-						return $return;
-					}
-					$row = DB::table('idc_machine')->where(['machine_num'=>$delete_data->machine_sn,'own_business'=>$delete_data->business_number,'business_type'=>1])->update(['own_business'=>$delete_data->business_number,'business_end'=>$end_time]); 
-					if($row == 0){
-						DB::rollBack();
-						$return['code'] = 0;
-						$return['msg'] = '删除失败!';
-						return $return;
-					}
-					break;
-				case 2://托管机器
-					$end_time = Carbon::parse($delete_data->endding_time)->modify('-'.$delete_data->duration.' months')->toDateTimeString();
-					$business = DB::table('tz_business')->where(['business_number'=>$delete_data->business_number])->update(['endding_time'=>$end_time]);
-					if($business == 0){//更新业务到期时间失败
-						DB::rollBack();
-						$return['code'] = 0;
-						$return['msg'] = '删除失败!';
-						return $return;
-					}
-					$row = DB::table('idc_machine')->where(['machine_num'=>$delete_data->machine_sn,'own_business'=>$delete_data->business_number,'business_type'=>2])->update(['own_business'=>$delete_data->business_number,'business_end'=>$end_time]); 
-					if($row == 0){
-						DB::rollBack();
-						$return['code'] = 0;
-						$return['msg'] = '删除失败!';
-						return $return;
-					}
-					break;
-				case 3://租用机柜
-					$end_time = Carbon::parse($delete_data->endding_time)->modify('-'.$delete_data->duration.' months')->toDateTimeString();
-					$business = DB::table('tz_business')->where(['business_number'=>$delete_data->business_number])->update(['endding_time'=>$end_time]);
-					if($business == 0){//更新业务到期时间失败
-						DB::rollBack();
-						$return['code'] = 0;
-						$return['msg'] = '删除失败!';
-						return $return;
-					}
-					break;
-				case 4://IP
-					$end_time = $this->findResource($delete_data->order_sn,$delete_data->machine_sn,$delete_data->business_number);
-					$ip['own_business'] = $delete_data->business_number;
-					$ip['business_end'] = empty($end_time)?Null:$end_time->end_time;
-					$row = DB::table('idc_ips')->where(['ip'=>$delete_data->machine_sn,'own_business'=>$delete_data->business_number])->update($ip);
-					if($row == 0){//更新业务到期时间失败
-						DB::rollBack();
-						$return['code'] = 0;
-						$return['msg'] = '删除失败!';
-						return $return;
-					}
-                    $order_status = DB::table('tz_orders')->where(['order_sn'=>$end_time->order_sn])->update(['order_status'=>2]);
-                    if($order_status == 0){
-                        DB::rollBack();
-                        $return['code'] = 0;
-                        $return['msg'] = '删除失败!';
-                        return $return;
-                    }
-					break;
-				case 5://CPU
-					$end_time = $this->findResource($delete_data->order_sn,$delete_data->machine_sn,$delete_data->business_number);
-					$cpu['service_num'] = $delete_data->business_number;
-					$cpu['business_end'] = empty($end_time)?Null:$end_time->end_time;
-					$row = DB::table('idc_cpu')->where(['cpu_number'=>$delete_data->machine_sn,'service_num'=>$delete_data->business_number])->update($cpu);
-					if($row == 0){//更新业务到期时间失败
-						DB::rollBack();
-						$return['code'] = 0;
-						$return['msg'] = '删除失败!';
-						return $return;
-					}
-                    $order_status = DB::table('tz_orders')->where(['order_sn'=>$end_time->order_sn])->update(['order_status'=>2]);
-                    if($order_status == 0){
-                        DB::rollBack();
-                        $return['code'] = 0;
-                        $return['msg'] = '删除失败!';
-                        return $return;
-                    }
-					break;
-				case 6://硬盘
-					$end_time = $this->findResource($delete_data->order_sn,$delete_data->machine_sn,$delete_data->business_number);
-					$harddisk['service_num'] = $delete_data->business_number;
-					$harddisk['business_end'] = empty($end_time)?Null:$end_time->end_time;
-					$row = DB::table('idc_harddisk')->where(['harddisk_number'=>$delete_data->machine_sn,'service_num'=>$delete_data->business_number])->update($harddisk);
-					if($row == 0){//更新业务到期时间失败
-						DB::rollBack();
-						$return['code'] = 0;
-						$return['msg'] = '删除失败!';
-						return $return;
-					}
-                    $order_status = DB::table('tz_orders')->where(['order_sn'=>$end_time->order_sn])->update(['order_status'=>2]);
-                    if($order_status == 0){
-                        DB::rollBack();
-                        $return['code'] = 0;
-                        $return['msg'] = '删除失败!';
-                        return $return;
-                    }
-					break;
-				case 7://内存
-					$end_time = $this->findResource($delete_data->order_sn,$delete_data->machine_sn,$delete_data->business_number);
-					$memory['service_num'] = $delete_data->business_number;
-					$memory['business_end'] = empty($end_time)?Null:$end_time->end_time;
-					$row = DB::table('idc_memory')->where(['memory_number'=>$delete_data->machine_sn,'service_num'=>$delete_data->business_number])->update($memory);
-					if($row == 0){//更新业务到期时间失败
-						DB::rollBack();
-						$return['code'] = 0;
-						$return['msg'] = '删除失败!';
-						return $return;
-					}
-                    $order_status = DB::table('tz_orders')->where(['order_sn'=>$end_time->order_sn])->update(['order_status'=>2]);
-                    if($order_status == 0){
-                        DB::rollBack();
-                        $return['code'] = 0;
-                        $return['msg'] = '删除失败!';
-                        return $return;
-                    }
-					break;
-				default:
-					break;
-			}
-		}
-		
-		//删除对应业务数据
-		$result = DB::table('tz_orders')->where(['id'=>$delete_id['delete_id']])->update(['order_status'=>5,'deleted_at'=>date('Y-m-d H:i:s',time())]);
-		if($result == 0){
-			DB::rollBack();
-			$return['code'] = 0;
-			$return['msg'] = '删除失败!';
-			return $return;
-		}
-		// 删除成功返回
-		DB::commit();
-		$return['msg'] = '删除数据成功,关联业务号为:'.$delete_data->business_number;
-		$return['code'] = 1;
-		return $return;
-
+        if($delete_data->order_status == 5){
+            $delete_row = $this->where(['id'=>$delete_id['delete_id']])->delete();
+            if($delete_row != false){
+                $return['code'] = 1;
+                $return['msg'] = '删除订单记录成功!';
+            } else {
+                $return['code'] = 0;
+                $return['msg'] = '删除订单记录失败!';
+            }
+            return $return;
+        } else {
+            DB::beginTransaction();//开启事务处理
+            if($delete_data->order_status == 0){//当订单为未支付的时候删除同时需要对其相关的业务/对应的资源信息进行更新
+                switch ($delete_data->resource_type) {//当资源类型为租用主机/托管主机/租用机柜时，对业务的到期时间进行更改
+                    case 1://租用机器
+                        $end_time = Carbon::parse($delete_data->endding_time)->modify('-'.$delete_data->duration.' months')->toDateTimeString();
+                        $business = DB::table('tz_business')->where(['business_number'=>$delete_data->business_number])->update(['endding_time'=>$end_time]);
+                        if($business == 0){//更新业务到期时间失败
+                            DB::rollBack();
+                            $return['code'] = 0;
+                            $return['msg'] = '删除失败!';
+                            return $return;
+                        }
+                        $row = DB::table('idc_machine')->where(['machine_num'=>$delete_data->machine_sn,'own_business'=>$delete_data->business_number,'business_type'=>1])->update(['own_business'=>$delete_data->business_number,'business_end'=>$end_time]); 
+                        if($row == 0){
+                            DB::rollBack();
+                            $return['code'] = 0;
+                            $return['msg'] = '删除失败!';
+                            return $return;
+                        }
+                        break;
+                    case 2://托管机器
+                        $end_time = Carbon::parse($delete_data->endding_time)->modify('-'.$delete_data->duration.' months')->toDateTimeString();
+                        $business = DB::table('tz_business')->where(['business_number'=>$delete_data->business_number])->update(['endding_time'=>$end_time]);
+                        if($business == 0){//更新业务到期时间失败
+                            DB::rollBack();
+                            $return['code'] = 0;
+                            $return['msg'] = '删除失败!';
+                            return $return;
+                        }
+                        $row = DB::table('idc_machine')->where(['machine_num'=>$delete_data->machine_sn,'own_business'=>$delete_data->business_number,'business_type'=>2])->update(['own_business'=>$delete_data->business_number,'business_end'=>$end_time]); 
+                        if($row == 0){
+                            DB::rollBack();
+                            $return['code'] = 0;
+                            $return['msg'] = '删除失败!';
+                            return $return;
+                        }
+                        break;
+                    case 3://租用机柜
+                        $end_time = Carbon::parse($delete_data->endding_time)->modify('-'.$delete_data->duration.' months')->toDateTimeString();
+                        $business = DB::table('tz_business')->where(['business_number'=>$delete_data->business_number])->update(['endding_time'=>$end_time]);
+                        if($business == 0){//更新业务到期时间失败
+                            DB::rollBack();
+                            $return['code'] = 0;
+                            $return['msg'] = '删除失败!';
+                            return $return;
+                        }
+                        break;
+                    case 4://IP
+                        if($delete_data->order_type == 1){
+                            $ip['own_business'] = Null;
+                            $ip['business_end'] = Null;
+                            $ip['ip_status'] = 0;
+                        } else {
+                            $end_time = $this->findResource($delete_data->order_sn,$delete_data->machine_sn,$delete_data->business_number);
+                            $order_status = DB::table('tz_orders')->where(['order_sn'=>$end_time->order_sn])->update(['order_status'=>2]);
+                            if($order_status == 0){
+                                DB::rollBack();
+                                $return['code'] = 0;
+                                $return['msg'] = '删除失败!';
+                                return $return;
+                            }
+                            $ip['own_business'] = $delete_data->business_number;
+                            $ip['business_end'] = empty($end_time)?Null:$end_time->end_time;
+                        }
+                        
+                        $row = DB::table('idc_ips')->where(['ip'=>$delete_data->machine_sn,'own_business'=>$delete_data->business_number])->update($ip);
+                        if($row == 0){//更新业务到期时间失败
+                            DB::rollBack();
+                            $return['code'] = 0;
+                            $return['msg'] = '删除失败!';
+                            return $return;
+                        }
+                        
+                        break;
+                    case 5://CPU
+                        if($delete_data->order_type == 1){
+                            $cpu['service_num'] = Null;
+                            $cpu['business_end'] = Null;
+                            $cpu['cpu_used'] = 0;
+                        } else {
+                            $end_time = $this->findResource($delete_data->order_sn,$delete_data->machine_sn,$delete_data->business_number);
+                            $order_status = DB::table('tz_orders')->where(['order_sn'=>$end_time->order_sn])->update(['order_status'=>2]);
+                            if($order_status == 0){
+                                DB::rollBack();
+                                $return['code'] = 0;
+                                $return['msg'] = '删除失败!';
+                                return $return;
+                            }
+                            $cpu['service_num'] = $delete_data->business_number;
+                            $cpu['business_end'] = empty($end_time)?Null:$end_time->end_time;
+                        }
+                        
+                        $row = DB::table('idc_cpu')->where(['cpu_number'=>$delete_data->machine_sn,'service_num'=>$delete_data->business_number])->update($cpu);
+                        if($row == 0){//更新业务到期时间失败
+                            DB::rollBack();
+                            $return['code'] = 0;
+                            $return['msg'] = '删除失败!';
+                            return $return;
+                        }
+                        
+                        break;
+                    case 6://硬盘
+                        if($delete_data->order_type == 1){
+                            $harddisk['service_num'] = Null;
+                            $harddisk['business_end'] = Null;
+                            $harddisk['harddisk_used'] = 0;
+                        } else { 
+                            $end_time = $this->findResource($delete_data->order_sn,$delete_data->machine_sn,$delete_data->business_number);
+                            $order_status = DB::table('tz_orders')->where(['order_sn'=>$end_time->order_sn])->update(['order_status'=>2]);
+                            if($order_status == 0){
+                                DB::rollBack();
+                                $return['code'] = 0;
+                                $return['msg'] = '删除失败!';
+                                return $return;
+                            }
+                            $harddisk['service_num'] = $delete_data->business_number;
+                            $harddisk['business_end'] = empty($end_time)?Null:$end_time->end_time;
+                        }
+                        
+                        $row = DB::table('idc_harddisk')->where(['harddisk_number'=>$delete_data->machine_sn,'service_num'=>$delete_data->business_number])->update($harddisk);
+                        if($row == 0){//更新业务到期时间失败
+                            DB::rollBack();
+                            $return['code'] = 0;
+                            $return['msg'] = '删除失败!';
+                            return $return;
+                        }
+                        
+                        break;
+                    case 7://内存
+                        if($delete_data->order_type == 1){
+                            $memory['service_num'] = Null;
+                            $memory['business_end'] = Null;
+                            $memory['memory_used'] = 0;
+                        } else {
+                            $end_time = $this->findResource($delete_data->order_sn,$delete_data->machine_sn,$delete_data->business_number);
+                            $order_status = DB::table('tz_orders')->where(['order_sn'=>$end_time->order_sn])->update(['order_status'=>2]);
+                            if($order_status == 0){
+                                DB::rollBack();
+                                $return['code'] = 0;
+                                $return['msg'] = '删除失败!';
+                                return $return;
+                            }
+                            $memory['service_num'] = $delete_data->business_number;
+                            $memory['business_end'] = empty($end_time)?Null:$end_time->end_time;
+                        }
+                        
+                        $row = DB::table('idc_memory')->where(['memory_number'=>$delete_data->machine_sn,'service_num'=>$delete_data->business_number])->update($memory);
+                        if($row == 0){//更新业务到期时间失败
+                            DB::rollBack();
+                            $return['code'] = 0;
+                            $return['msg'] = '删除失败!';
+                            return $return;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            //删除对应业务数据
+            $result = DB::table('tz_orders')->where(['id'=>$delete_id['delete_id']])->update(['order_status'=>5]);
+            if($result == 0){
+                DB::rollBack();
+                $return['code'] = 0;
+                $return['msg'] = '删除失败!';
+                return $return;
+            }
+            // 删除成功返回
+            DB::commit();
+            $return['msg'] = '删除数据成功,关联业务号为:'.$delete_data->business_number;
+            $return['code'] = 1;
+            return $return;
+        }	
 	}
 
 	/**
@@ -459,7 +500,7 @@ class OrdersModel extends Model
 	 * @return [type]                返回到期时间
 	 */
 	public function findResource($exclude_order,$resource_sn,$business){
-		$end = $this->where(['business_sn'=>$business,'machine_sn'=>$resource_sn,'order_status'=>3])->where('order_sn','<>',$exclude_order)->orderBy('end_time','desc')->select('end_time')->first();
+		$end = $this->where(['business_sn'=>$business,'machine_sn'=>$resource_sn,'order_status'=>3])->where('order_sn','<>',$exclude_order)->orderBy('end_time','desc')->select('end_time','order_sn')->first();
 		return $end;
 	}
 
@@ -605,18 +646,14 @@ class OrdersModel extends Model
 					//如果是租用机柜的，在订单生成成功时，将业务编号和到期时间及资源状态进行更新
 					$cabinet = DB::table('idc_cabinet')->where(['cabinet_id'=>$order['machine_sn']])->value('own_business');
 					$business = strpos($cabinet,$order['business_sn']);
-					if($business){
-						$machine['own_business'] = $business;
-					} else {
+					if(!$business){
 						DB::rollBack();
-						$return['data'] = '';
-						$return['code'] = 0;
-						$return['msg'] = '资源续费失败,请确认您此前购买过该机柜';
-						return $return;
+                        $return['data'] = '';
+                        $return['code'] = 0;
+                        $return['msg'] = '资源续费失败,请确认您此前购买过该机柜';
+                        return $return;
 					}
-					$machine['use_state'] = 1;
-					$where = ['own_business'=>$order['business_sn'],'cabinet_id'=>$order['machine_sn']];
-					$result = DB::table('idc_cabinet')->where($where)->update($machine);
+                    $result = 1;
 					break;
 			}
 			if($result == 0){
@@ -631,118 +668,122 @@ class OrdersModel extends Model
 		}
 		if(isset($renew['orders'])){
 			foreach($renew['orders'] as $key=>$value){
-				$order_where['order_sn'] = $value;
-				$order_result = $this->where($order_where)->select('business_sn','customer_id','customer_name','resource_type','machine_sn','resource','price','end_time','order_status')->first();
-				if($order_result->order_status < 1 || $order_result->order_status > 2){
-					$order_status = [0=>'待支付',1=>'支付',2=>'支付',3=>'续费过',4=>'到期',5=>'取消',6=>'申请退款',8=>'退款完成'];
-					DB::rollBack();
-					$return['data'] = '';
-					$return['code'] = 0;
-					$return['msg'] = '资源编号:'.$order_result->machine_sn.'的资源'.$order_result->resource.','.'无法续费,原因:'.$order_status[$order_result->order_status];
-					return $return;
-				}
-				//续费订单号的生成规则：前两位（4-6的随机数）+ 年月日 + 时间戳的后2位数 + 4-6的随机数
-				$order_sn = mt_rand(4,6).date("Ymd",time()).substr(time(),8,2).mt_rand(4,6);//续费订单号
-				$order['order_sn'] = $order_sn;
-				//到期时间
-				$end_time = Carbon::parse($order_result->end_time)->modify('+'.$renew['length'].' months')->toDateTimeString();
-				$order['end_time'] = $end_time;
-				$order['duration'] = $renew['length'];//订单时长
-				$order['business_sn'] = $order_result->business_sn;//订单关联业务
-				$order['customer_id'] = $order_result->customer_id;//订单关联客户
-				$order['customer_name'] = $order_result->customer_name;
-				$order['business_id'] = Admin::user()->id;//订单绑定业务员
-				$order['business_name'] = Admin::user()->name?Admin::user()->name:Admin::user()->username;
-				$order['resource_type'] = $order_result->resource_type;//资源类型
-				$order['order_type'] = 2;//订单类型为续费
-				$order['machine_sn'] = $order_result->machine_sn;//订单机器编号
-				$order['resource'] = $order_result->resource;//订单机器详情
-				$order['price'] = $order_result->price;//订单单价
-				$order['payable_money'] = bcmul($order_result->price,$renew['length'],2);//订单应付金额
-				$order['order_note'] = $renew['order_note'];//订单备注
-				$order['order_status'] = 0;//订单状态为未支付
-				// $order['month'] = date('Ym',time());//订单创建月份
-				$order['created_at'] = date('Y-m-d H:i:s',time());//订单创建时间
-				$business_order = DB::table('tz_orders')->insertGetId($order);
+                if($value != 0){
+                    $order_where['order_sn'] = $value;
+                    $order_result = $this->where($order_where)->select('business_sn','customer_id','customer_name','resource_type','machine_sn','resource','price','end_time','order_status')->first();
+                    if($order_result->order_status < 1 || $order_result->order_status > 2){
+                        $order_status = [0=>'待支付',1=>'支付',2=>'支付',3=>'续费过',4=>'到期',5=>'取消',6=>'申请退款',8=>'退款完成'];
+                        DB::rollBack();
+                        $return['data'] = '';
+                        $return['code'] = 0;
+                        $return['msg'] = '资源编号:'.$order_result->machine_sn.'的资源'.$order_result->resource.','.'无法续费,原因:'.$order_status[$order_result->order_status];
+                        return $return;
+                    }
+                    //续费订单号的生成规则：前两位（4-6的随机数）+ 年月日 + 时间戳的后2位数 + 4-6的随机数
+                    $order_sn = mt_rand(4,6).date("Ymd",time()).substr(time(),8,2).mt_rand(4,6);//续费订单号
+                    $order['order_sn'] = $order_sn;
+                    //到期时间
+                    $end_time = Carbon::parse($order_result->end_time)->modify('+'.$renew['length'].' months')->toDateTimeString();
+                    $order['end_time'] = $end_time;
+                    $order['duration'] = $renew['length'];//订单时长
+                    $order['business_sn'] = $order_result->business_sn;//订单关联业务
+                    $order['customer_id'] = $order_result->customer_id;//订单关联客户
+                    $order['customer_name'] = $order_result->customer_name;
+                    $order['business_id'] = Admin::user()->id;//订单绑定业务员
+                    $order['business_name'] = Admin::user()->name?Admin::user()->name:Admin::user()->username;
+                    $order['resource_type'] = $order_result->resource_type;//资源类型
+                    $order['order_type'] = 2;//订单类型为续费
+                    $order['machine_sn'] = $order_result->machine_sn;//订单机器编号
+                    $order['resource'] = $order_result->resource;//订单机器详情
+                    $order['price'] = $order_result->price;//订单单价
+                    $order['payable_money'] = bcmul($order_result->price,$renew['length'],2);//订单应付金额
+                    $order['order_note'] = $renew['order_note'];//订单备注
+                    $order['order_status'] = 0;//订单状态为未支付
+                    // $order['month'] = date('Ym',time());//订单创建月份
+                    $order['created_at'] = date('Y-m-d H:i:s',time());//订单创建时间
+                    $business_order = DB::table('tz_orders')->insertGetId($order);
 
-				if($business_order == 0){
-					DB::rollBack();
-					$return['data'] = '';
-					$return['code'] = 0;
-					$return['msg'] = '业务续费失败!';
-					return $return;
-				}
-				$old_order = DB::table('tz_orders')->where($order_where)->update(['order_status'=>3]);
-				if($old_order == 0){
-					DB::rollBack();
-					$return['data'] = '';
-					$return['code'] = 0;
-					$return['msg'] = '业务续费失败!请重新操作';
-					return $return;
-				}
+                    if($business_order == 0){
+                        DB::rollBack();
+                        $return['data'] = '';
+                        $return['code'] = 0;
+                        $return['msg'] = '业务续费失败!';
+                        return $return;
+                    }
+                    $old_order = DB::table('tz_orders')->where($order_where)->update(['order_status'=>3]);
+                    if($old_order == 0){
+                        DB::rollBack();
+                        $return['data'] = '';
+                        $return['code'] = 0;
+                        $return['msg'] = '业务续费失败!请重新操作';
+                        return $return;
+                    }
 
-				switch ($order['resource_type']) {
-					case 4:
-						$resource = [];
-						$resource['business_end'] = $order['end_time'];
-						//更新IP表的所属业务编号，资源状态和到期时间
-						$resource['own_business'] = $order['business_sn'];
-						$resource['ip_status'] = 1;
-						$where = ['own_business'=>$order['business_sn'],'ip'=>$order['machine_sn']];
-						$result = DB::table('idc_ips')->where($where)->update($resource);
-					break;
-					case 5:
-						$resource = [];
-						$resource['business_end'] = $order['end_time'];
-						//更新CPU表的所属业务编号，资源状态和到期时间
-						$resource['service_num'] = $order['business_sn'];
-						$resource['cpu_used'] = 1;
-						$where = ['service_num'=>$order['business_sn'],'cpu_number'=>$order['machine_sn']];
-						$result = DB::table('idc_cpu')->where($where)->update($resource);
-						break;
-					case 6:
-						$resource = [];
-						$resource['business_end'] = $order['end_time'];
-						//更新硬盘表的所属业务编号，资源状态和到期时间
-						$resource['service_num'] = $order['business_sn'];
-						$resource['harddisk_used'] = 1;
-						$where = ['service_num'=>$order['business_sn'],'harddisk_number'=>$order['machine_sn']];
-						$result = DB::table('idc_harddisk')->where($where)->update($resource);
-						break;
-					case 7:
-						$resource = [];
-						$resource['business_end'] = $order['end_time'];
-						//更新内存表的所属业务编号，资源状态和到期时间
-						$resource['service_num'] = $order['business_sn'];
-						$resource['memory_used'] = 1;
-						$where = ['service_num'=>$order['business_sn'],'memory_number'=>$order['machine_sn']];
-						$result = DB::table('idc_memory')->where($where)->update($resource);
-						break;
-					default:
-						$result = 1;
-						break;
-				}
-				if($result == 0){
-					DB::rollBack();
-					$return['data'] = '';
-					$return['code'] = 0;
-					$return['msg'] = '资源续费失败!!';
-					return $return;
-				}
-				$order_str = $order['order_sn'].','.$order_str;
-				array_push($renew_order,$business_order);
-			}
-            $business = DB::table('tz_business')->where(['business_number'=>$order_result->business_sn])->select('business_status')->first();
-            if($business->business_status == 2){//当业务的状态为付款使用时且续费资源成功，将业务状态修改为未付款使用，作为欠费标记，代表业务下有未付款的订单
-                $businessRow = DB::table('tz_business')->where(['business_number'=>$order_result->business_sn])->update(['business_status'=>1]);
-                if($businessRow == 0){
-                    DB::rollBack();
-                    $return['data'] = '';
-                    $return['code'] = 0;
-                    $return['msg'] = '资源续费失败!!';
-                    return $return;
+                    switch ($order['resource_type']) {
+                        case 4:
+                            $resource = [];
+                            $resource['business_end'] = $order['end_time'];
+                            //更新IP表的所属业务编号，资源状态和到期时间
+                            $resource['own_business'] = $order['business_sn'];
+                            $resource['ip_status'] = 1;
+                            $where = ['own_business'=>$order['business_sn'],'ip'=>$order['machine_sn']];
+                            $result = DB::table('idc_ips')->where($where)->update($resource);
+                        break;
+                        case 5:
+                            $resource = [];
+                            $resource['business_end'] = $order['end_time'];
+                            //更新CPU表的所属业务编号，资源状态和到期时间
+                            $resource['service_num'] = $order['business_sn'];
+                            $resource['cpu_used'] = 1;
+                            $where = ['service_num'=>$order['business_sn'],'cpu_number'=>$order['machine_sn']];
+                            $result = DB::table('idc_cpu')->where($where)->update($resource);
+                            break;
+                        case 6:
+                            $resource = [];
+                            $resource['business_end'] = $order['end_time'];
+                            //更新硬盘表的所属业务编号，资源状态和到期时间
+                            $resource['service_num'] = $order['business_sn'];
+                            $resource['harddisk_used'] = 1;
+                            $where = ['service_num'=>$order['business_sn'],'harddisk_number'=>$order['machine_sn']];
+                            $result = DB::table('idc_harddisk')->where($where)->update($resource);
+                            break;
+                        case 7:
+                            $resource = [];
+                            $resource['business_end'] = $order['end_time'];
+                            //更新内存表的所属业务编号，资源状态和到期时间
+                            $resource['service_num'] = $order['business_sn'];
+                            $resource['memory_used'] = 1;
+                            $where = ['service_num'=>$order['business_sn'],'memory_number'=>$order['machine_sn']];
+                            $result = DB::table('idc_memory')->where($where)->update($resource);
+                            break;
+                        default:
+                            $result = 1;
+                            break;
+                    }
+                    if($result == 0){
+                        DB::rollBack();
+                        $return['data'] = '';
+                        $return['code'] = 0;
+                        $return['msg'] = '资源续费失败!!';
+                        return $return;
+                    }
+                    $order_str = $order['order_sn'].','.$order_str;
+                    array_push($renew_order,$business_order);
+                    $business = DB::table('tz_business')->where(['business_number'=>$order_result->business_sn])->select('business_status')->first();
+                    if($business->business_status == 2){//当业务的状态为付款使用时且续费资源成功，将业务状态修改为未付款使用，作为欠费标记，代表业务下有未付款的订单
+                        $businessRow = DB::table('tz_business')->where(['business_number'=>$order_result->business_sn])->update(['business_status'=>1]);
+                        if($businessRow == 0){
+                            DB::rollBack();
+                            $return['data'] = '';
+                            $return['code'] = 0;
+                            $return['msg'] = '资源续费失败!!';
+                            return $return;
+                        }
+                    }
                 }
-            }
+				
+			}
+            
 		}
 		//所对应资源表的业务编号和到期时间，状态修改成功后进行事务提交
 		Session::put([Admin::user()->id=>$renew_order]);

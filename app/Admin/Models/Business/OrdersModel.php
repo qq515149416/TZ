@@ -459,7 +459,7 @@ class OrdersModel extends Model
 	 * @return [type]                返回到期时间
 	 */
 	public function findResource($exclude_order,$resource_sn,$business){
-		$end = $this->where(['business_sn'=>$business,'machine_sn'=>$resource_sn])->where('order_sn','<>',$exclude_order)->orderBy('end_time','desc')->select('end_time')->first();
+		$end = $this->where(['business_sn'=>$business,'machine_sn'=>$resource_sn,'order_status'=>3])->where('order_sn','<>',$exclude_order)->orderBy('end_time','desc')->select('end_time')->first();
 		return $end;
 	}
 
@@ -571,7 +571,7 @@ class OrdersModel extends Model
 				$return['msg'] = '业务续费失败';
 				return $return;
 			}
-			$business_row = DB::table('tz_business')->where($business_where)->update(['endding_time'=>$endding_time,'length'=>$length]);
+			$business_row = DB::table('tz_business')->where($business_where)->update(['endding_time'=>$endding_time,'length'=>$length,'business_status'=>1]);
 			if($business_row == 0){
 				DB::rollBack();
 				$return['data'] = '';
@@ -732,6 +732,17 @@ class OrdersModel extends Model
 				$order_str = $order['order_sn'].','.$order_str;
 				array_push($renew_order,$business_order);
 			}
+            $business = DB::table('tz_business')->where(['business_number'=>$order_result->business_sn])->select('business_status')->first();
+            if($business->business_status == 2){//当业务的状态为付款使用时且续费资源成功，将业务状态修改为未付款使用，作为欠费标记，代表业务下有未付款的订单
+                $businessRow = DB::table('tz_business')->where(['business_number'=>$order_result->business_sn])->update(['business_status'=>1]);
+                if($businessRow == 0){
+                    DB::rollBack();
+                    $return['data'] = '';
+                    $return['code'] = 0;
+                    $return['msg'] = '资源续费失败!!';
+                    return $return;
+                }
+            }
 		}
 		//所对应资源表的业务编号和到期时间，状态修改成功后进行事务提交
 		Session::put([Admin::user()->id=>$renew_order]);
@@ -1115,165 +1126,4 @@ class OrdersModel extends Model
 		return $return;
 	}
 
-	/**
-	 * 对资源进行下架申请
-	 * @param  [type] $order [description]
-	 * @return [type]        [description]
-	 */
-	public function applyRemoveResource($order){
-		if(!$order){
-			$return['code'] = 0;
-			$return['msg'] = '无法下架资源';
-			return $return;
-		}
-		$order_result = $this->where(['order_sn'=>$order['order_sn']])->select('order_sn','remove_status','machine_sn','end_time','business_sn')->first();
-		if(empty($order_result)){
-			$return['code'] = 0;
-			$return['msg'] = '无此资源的信息,无法下架!';
-			return $return;
-		}
-		if($order_result->remove_status > 0){
-			$return['code'] = 0;
-			$return['msg'] = '此资源正在下架中,请勿重复提交申请';
-			return $return;
-		}
-		$end_time = $this->where(['machine_sn'=>$order_result->machine_sn,'business_sn'=>$order_result->business_sn])->orderBy('end_time','desc')->select('end_time','remove_status')->first();
-		if(!empty($end_time)){
-			if($end_time->remove_status > 0){
-				$return['code'] = 0;
-				$return['msg'] = '此资源正在下架中,请勿重复提交申请';
-				return $return;
-			}
-			if($order_result->end_time != $end_time->end_time){
-				$return['code'] = 0;
-				$return['msg'] = '此资源的信息不是最新，请查找最新';
-				return $return;
-			}
-		}
-		$remove['remove_status'] = 1;
-		$remove['remove_reason'] = $order['remove_reason'];
-		$update = $this->where(['order_sn'=>$order['order_sn']])->update($remove);
-		if($update == false){
-			$return['code'] = 0;
-			$return['msg'] = '资源申请下架失败';
-
-		} else {
-			$return['code'] = 1;
-			$return['msg'] = '资源申请下架成功';
-		}
-		return $return;
-
-	}
-
-	/**
-	 * 获取资源下架记录
-	 * @return [type] [description]
-	 */
-	public function resourceRemoveHistory(){
-		$history = $this->where('resource_type','>',3)->where(['remove_status'=>6])->orderBy('updated_at','desc')->get(['business_sn','customer_name','resource_type','business_name','machine_sn','resource']);
-		if(!$history->isEmpty()){
-			$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn',11=>'高防IP'];
-			foreach($history as $history_key => $history_value){
-				$history[$history_key]['resourcetype'] = $resource_type[$history_value['resource_type']];
-			}
-			$return['data'] = $history;
-			$return['code'] = 1;
-			$return['msg'] = '获取资源下架记录数据成功';
-		} else {
-			$return['data'] = [];
-			$return['code'] = 0;
-			$return['msg'] = '暂无下架资源数据';
-		}
-	}
-
-	/**
-	 * 资源下架处理操作
-	 * @param  [type] $edit [description]
-	 * @return [type]       [description]
-	 */
-	public function editRemoveResource($edit){
-		if(!$edit){
-			$return['code'] = 0;
-			$return['msg'] = '你无法对资源进行下架处理';
-			return $return;
-		}
-		$order = $this->where(['order_sn'=>$edit['order_sn']])->select('remove_status','remove_reason','business_sn','resource_type','machine_sn')->first();
-		if(empty($order)){
-			$return['code'] = 0;
-			$return['msg'] = '无对应资源信息';
-			return $return;
-		}
-		if($order->remove_status < 1 || $order->remove_status = 3){
-			$return['code'] = 0;
-			$return['msg'] = '资源已完成下架/暂未提交下架申请';
-			return $return;
-		}
-		if($edit['remove_status'] == 0){
-			$update_status['remove_reason'] = $order->remove_reason.'驳回原因:'.$edit['remove_reason'];
-			$update_status['remove_status'] = $edit['remove_status'];
-			$update_status['machineroom'] = 0;
-		} else {
-			switch($order->remove_status){
-				case 1:
-					$update_status['remove_status'] = 2;
-					break;
-				case 2:
-					$update_status['remove_status'] = 3;
-					break;
-				case 3:
-					$update_status['remove_status'] = 4;
-					break;
-			}
-		}
-		DB::beginTransaction();//开启事务处理
-		if($order->remove_status == 3){
-			switch($order->resource_type){
-				case 4://ip
-					$ip['ip_status'] = 0;
-					$ip['own_business'] = 0;
-					$ip['business_end'] = Null;
-					$row = DB::table('idc_ips')->where(['ip'=>$order->machine_sn,'own_business'=>$order->business_sn])->update($ip);
-					break;
-				case 5://cpu
-					$cpu['cpu_used'] = 0;
-					$cpu['service_num'] = 0;
-					$cpu['business_end'] = Null;
-					$row = DB::table('idc_cpu')->where(['cpu_number'=>$order->machine_sn,'service_num'=>$order->business_sn])->update($cpu);
-					break;
-				case 6://硬盘
-					$harddisk['harddisk_used'] = 0;
-					$harddisk['service_num'] = 0;
-					$harddisk['business_end'] = Null;
-					$row = DB::table('idc_harddisk')->where(['harddisk_number'=>$order->machine_sn,'service_num'=>$order->business_sn])->update($harddisk);
-					break;
-				case 7://内存
-					$memory['memory_used'] = 0;
-					$memory['service_num'] = 0;
-					$memory['business_end'] = Null;
-					$row = DB::table('idc_memory')->where(['memory_number'=>$order->machine_sn,'service_num'=>$order->business_sn])->update($memory);
-					break;
-				default:
-					$row = 1;
-					break;
-			}
-			if($row == 0){
-				DB::rollBack();
-				$return['code'] = 0;
-				$return['msg'] = '资源下架修改失败!';
-				return $return;
-			}
-			$update_status['remove_status'] = 4;
-		}
-		$status = DB::table('tz_orders')->where(['order_sn'=>$edit['order_sn']])->update($update_status);
-		if($status == 0){
-			DB::rollBack();
-			$return['code'] = 0;
-			$return['msg'] = '资源下架修改失败';
-		} else {
-			DB::commit();
-			$return['code'] = 1;
-			$return['msg'] = '资源下架修改成功';
-		}
-		return $return;
-	}
 }

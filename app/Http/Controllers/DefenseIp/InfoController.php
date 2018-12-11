@@ -126,29 +126,6 @@ class InfoController extends Controller
     public function test()
     {
 
-        die();   //关闭测试
-
-        dump(Session::all());
-        die();
-
-        $XADefenseDataModel = new XADefenseDataModel();
-
-        dump($XADefenseDataModel->getByIp());
-
-
-        die();
-//        $busM = new BusinessModel();
-////        $data = $busM->test()->get();
-//        $data = $busM->find(20)->test();
-//        dump($data);
-        $nowTime = Carbon::now();  //获取当前时间
-
-        $endData = BusinessModel::where('end_at', '<', $nowTime)//条件为当前时间大于结束时间时
-        ->join('tz_defenseip_store', 'tz_defenseip_business.ip_id', '=', 'tz_defenseip_store.id')
-            ->get()
-            ->toArray();  //获取数据比并转换成数组形式
-
-        dump($endData);
 
     }
 

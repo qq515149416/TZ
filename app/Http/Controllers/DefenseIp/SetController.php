@@ -67,7 +67,7 @@ class SetController extends Controller
         //判断是否更新成功
         if ($apiData['code'] == 0) {
             //成功
-            $businessData            = BusinessModel::find($busId);
+            $businessData            = BusinessModel::where('business_number', '=', $busId)->first();
             $businessData->target_ip = $targetIp;  //更新高防IP业务目标IP
             $businessData->save();
             return tz_ajax_echo([], '成功', 1);
@@ -81,9 +81,9 @@ class SetController extends Controller
     public function test()
     {
 //        $businessData = BusinessModel::find(33);
-     $businessData = BusinessModel::where('business_number', '=','G_1542937532')->first(); //根据业务ID获取相关业务数据
-        $businessData= $businessData->toArray();
-        dump($businessData);
+//     $businessData = BusinessModel::where('business_number', '=','G_1542937532')->first(); //根据业务ID获取相关业务数据
+//        $businessData= $businessData->toArray();
+//        dump($businessData);
     }
 
 }

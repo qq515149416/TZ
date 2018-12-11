@@ -291,14 +291,14 @@ class Order extends Model
 					if($row == 0){//更新业务到期时间失败
 						DB::rollBack();
 						$return['code'] = 0;
-						$return['msg'] = '取消订单失败!';
+						$return['msg'] = '取消订单失败!!';
 						return $return;
 					}
 					$order_status = DB::table('tz_orders')->where(['order_sn'=>$end_time->order_sn])->update(['order_status'=>2]);
 					if($order_status == 0){
 						DB::rollBack();
 						$return['code'] = 0;
-						$return['msg'] = '取消订单失败!';
+						$return['msg'] = '取消订单失败!!!';
 						return $return;
 					}
 					break;
@@ -386,7 +386,11 @@ class Order extends Model
 	 * @return [type]                返回到期时间
 	 */
 	public function findResource($exclude_order,$resource_sn,$business){
-		$end = $this->where(['business_sn'=>$business,'machine_sn'=>$resource_sn])->where('order_sn','<>',$exclude_order)->orderBy('end_time','desc')->select('end_time','order_sn')->first();
+		$end = $this->where(['business_sn'=>$business,'machine_sn'=>$resource_sn,'order_status'=>3])
+					->where('order_sn','<>',$exclude_order)
+					->orderBy('end_time','desc')
+					->select('end_time','order_sn')
+					->first();
 		return $end;
 	}
 
@@ -745,7 +749,7 @@ class Order extends Model
 				$order_str = $order['order_sn'].','.$order_str;
 				array_push($renew_order,$business_order);
 			}
-			$business = DB::table('tz_business')->where($business_where)->select('business_status')->first();
+			$business = DB::table('tz_business')->where(['business_number'=>$order_result->business_sn])->select('business_status')->first();
 			if($business->business_status == 2){//当业务的状态为付款使用时且续费资源成功，将业务状态修改为未付款使用，作为欠费标记，代表业务下有未付款的订单
 				$businessRow = DB::table('tz_business')->where(['business_number'=>$order_result->business_sn])->update(['business_status'=>1]);
 				if($businessRow == 0){

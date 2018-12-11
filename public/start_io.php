@@ -10,19 +10,7 @@ $https_connection = array(
     //     'verify_peer' => false,
     // )
 );
-// ,$https_connection
 $io = new SocketIO(8120,$https_connection);
-// $io->on('connection',function($socket)use($io){
-// 	// 后台发送到前台
-//     $socket->on('admin_to_client',function($message)use($io){
-//         $io->emit('to_id:'.$message['to_id'].'work_num:'.$message['work_number'],$message);
-//     });
-//     //前台发送到后台
-//     $socket->on('client_to_admin',function($message)use($io){
-//     	$io->emit('work_num:'.$message['work_number'],$message);
-//     });
-// });
-
 $io->on('connection',function($socket){
 	$socket->on('login',function($group)use($socket){//进行登录，加入对话分组
 		$room = '';
@@ -35,9 +23,8 @@ $io->on('connection',function($socket){
 		$socket->join($room);
 		$socket->room = $room;
     });
-    $socket->on('leave',function($leave)use($socket){//进行退出，离开对话组
-		$leave = $leave;
-		$socket->leave($leave);
+    $socket->on('disconnect',function()use($socket){//进行退出，离开对话组
+		$socket->leave($socket->room);
 	});
 });
 
@@ -61,8 +48,11 @@ $io->on('workerStart', function(){
 			global $io;
 			$to_admin = 'work'.@$_POST['work_chat']['work_number'];//后台沟通组
 			$io->to($to_admin)->emit('new_work_chat',$_POST['work_chat']);//将消息推送到对应的沟通组
-			$customer = 'w'.@$_POST['work_chat']['work_number'].'c'.@$_POST['work_chat']['customer_id'];//前台沟通组
-			$io->to($customer)->emit('work_chat',$_POST['work_chat']);//将消息推送到对应的沟通组
+			if(@$_POST['work_chat']['role'] == 1){
+				$customer = 'w'.@$_POST['work_chat']['work_number'].'c'.@$_POST['work_chat']['customer_id'];//前台沟通组
+				$io->to($customer)->emit('work_chat',$_POST['work_chat']);//将消息推送到对应的沟通组
+			}
+			
 		}
 		return $http_connection->send(' ');
 

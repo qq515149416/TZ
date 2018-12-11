@@ -771,7 +771,9 @@ class OrdersModel extends Model
 		$payable_money = '0.00';
 		$pay_time = date("Y-m-d h:i:s");
 		$order_id_arr = [];
-
+		$idc_arr = array(1,2,3,4,5,6,7,8,9);
+		$defenseip_arr = array(11);
+		
 		DB::beginTransaction();//开启事务处理
 
 		for ($i=0; $i < count($unpaidOrder); $i++) {
@@ -821,9 +823,16 @@ class OrdersModel extends Model
 				return $return;
 			}
 			$order_id_arr[] = $unpaidOrder[$i]['id'];
+
+			if(in_array($unpaidOrder[$i]['resource_type'], $idc_arr)){
+				$type = 1;
+			} elseif(in_array($unpaidOrder[$i]['resource_type'], $defenseip_arr)){
+				$type = 2;
+			}else{
+				$type = 3;
+			}
 		}
 
-		$type = DB::table('tz_business_relevance')->where('business_id',$business_number)->value('type');
 		switch ($type) {
 			case '1':
 				$customer_id = DB::table('tz_business')->where('business_number',$business_number)->value('client_id'); 

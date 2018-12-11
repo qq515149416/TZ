@@ -254,7 +254,7 @@ class CustomerModel extends Model
                     ->whereIn('tz_jobs.slug',[2,3])
                     ->select('admin_users.id','admin_users.name')
                     ->get();
-        if(empty($clerk)){
+        if($clerk->isEmpty()){
             $return['data'] = [];
             $return['code'] = 0;
             $return['msg'] = '无法获取业务员相关信息';

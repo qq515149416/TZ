@@ -434,7 +434,9 @@ Route::group([
         $router->get('showUnpaidCabinet', 'Overdue\OverdueController@showUnpaidCabinet');//查找未支付使用中的机柜
         $router->get('showXiaJiaRes', 'Overdue\OverdueController@showXiaJiaRes');//查找下架资源
         $router->get('showOverdueResDet', 'Overdue\OverdueController@showOverdueResDet');//按类型查找接近过期资源
-
+        $router->get('showTrialDefenseIp', 'Overdue\OverdueController@showTrialDefenseIp');//查找试用中高防IP业务
+        $router->get('showUnpaidIdcOrder', 'Overdue\OverdueController@showUnpaidIdcOrder');//查找未付款的idc业务订单
+        
     });
 
     /**

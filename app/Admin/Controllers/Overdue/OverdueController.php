@@ -133,4 +133,31 @@ class OverdueController extends Controller
 	
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
+
+	/**
+	* 查找试用中高防IP业务
+	* @return json 返回相关的信息
+	*/
+	public function showTrialDefenseIp(OverdueRequest $request){
+		//设置时区
+		date_default_timezone_set('PRC');
+		$model = new Overdue();
+		$res = $model->showTrialDefenseIp();
+	
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
+	
+	/**
+	* 查找未付款的idc业务订单
+	* @return json 返回相关的信息
+	*/
+	public function showUnpaidIdcOrder(OverdueRequest $request){
+		//设置时区
+		date_default_timezone_set('PRC');
+		$model = new Overdue();
+		$res = $model->showUnpaidIdcOrder();
+	
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
+
 }

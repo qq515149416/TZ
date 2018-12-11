@@ -39,11 +39,12 @@ class InfoController extends Controller
         //根据用户ID获取本用户所有高防IP业务表
         $listData = $businessM
             ->where([
-                'user_id' => $this->userId    //用户ID
+                'user_id' => $this->userId//用户ID
             ])
+            ->whereIn('status',[1,4])
             ->get()
             ->toArray();   //将对象转为数组
-
+        
         //遍历添加查询IP资源数组
         foreach ($listData as $key => $value) {
             $storeData                          = StoreModel::find($value['ip_id'])->toArray();
@@ -126,29 +127,6 @@ class InfoController extends Controller
     public function test()
     {
 
-        die();   //关闭测试
-
-        dump(Session::all());
-        die();
-
-        $XADefenseDataModel = new XADefenseDataModel();
-
-        dump($XADefenseDataModel->getByIp());
-
-
-        die();
-//        $busM = new BusinessModel();
-////        $data = $busM->test()->get();
-//        $data = $busM->find(20)->test();
-//        dump($data);
-        $nowTime = Carbon::now();  //获取当前时间
-
-        $endData = BusinessModel::where('end_at', '<', $nowTime)//条件为当前时间大于结束时间时
-        ->join('tz_defenseip_store', 'tz_defenseip_business.ip_id', '=', 'tz_defenseip_store.id')
-            ->get()
-            ->toArray();  //获取数据比并转换成数组形式
-
-        dump($endData);
 
     }
 

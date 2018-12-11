@@ -83,7 +83,7 @@ class OrderController extends Controller
 	
 		$return = $orderModel->delOrder($user_id,$order_id);
 
-		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
+		return tz_ajax_echo($return,$return['msg'],$return['code']);
 	}
 
 

@@ -365,6 +365,13 @@ class OrdersModel extends Model
 						$return['msg'] = '删除失败!';
 						return $return;
 					}
+                    $order_status = DB::table('tz_orders')->where(['order_sn'=>$end_time->order_sn])->update(['order_status'=>2]);
+                    if($order_status == 0){
+                        DB::rollBack();
+                        $return['code'] = 0;
+                        $return['msg'] = '删除失败!';
+                        return $return;
+                    }
 					break;
 				case 5://CPU
 					$end_time = $this->findResource($delete_data->order_sn,$delete_data->machine_sn,$delete_data->business_number);
@@ -377,6 +384,13 @@ class OrdersModel extends Model
 						$return['msg'] = '删除失败!';
 						return $return;
 					}
+                    $order_status = DB::table('tz_orders')->where(['order_sn'=>$end_time->order_sn])->update(['order_status'=>2]);
+                    if($order_status == 0){
+                        DB::rollBack();
+                        $return['code'] = 0;
+                        $return['msg'] = '删除失败!';
+                        return $return;
+                    }
 					break;
 				case 6://硬盘
 					$end_time = $this->findResource($delete_data->order_sn,$delete_data->machine_sn,$delete_data->business_number);
@@ -389,6 +403,13 @@ class OrdersModel extends Model
 						$return['msg'] = '删除失败!';
 						return $return;
 					}
+                    $order_status = DB::table('tz_orders')->where(['order_sn'=>$end_time->order_sn])->update(['order_status'=>2]);
+                    if($order_status == 0){
+                        DB::rollBack();
+                        $return['code'] = 0;
+                        $return['msg'] = '删除失败!';
+                        return $return;
+                    }
 					break;
 				case 7://内存
 					$end_time = $this->findResource($delete_data->order_sn,$delete_data->machine_sn,$delete_data->business_number);
@@ -401,6 +422,13 @@ class OrdersModel extends Model
 						$return['msg'] = '删除失败!';
 						return $return;
 					}
+                    $order_status = DB::table('tz_orders')->where(['order_sn'=>$end_time->order_sn])->update(['order_status'=>2]);
+                    if($order_status == 0){
+                        DB::rollBack();
+                        $return['code'] = 0;
+                        $return['msg'] = '删除失败!';
+                        return $return;
+                    }
 					break;
 				default:
 					break;

@@ -49,18 +49,38 @@ class BusinessModel extends Model
         $sales_id             = Admin::user()->id;
         $insert['sales_id']   = $sales_id;
         $insert['sales_name'] = Admin::user()->name?Admin::user()->name:Admin::user()->username;
-        $row                  = $this->create($insert);
-        if ($row != false) {
-            $return['data'] = $row->id;
-            DB::table('tz_business_relevance')->insert(['type'=>1,'business_id'=>$row->business_number,'created_at'=>date('Y-m-d H:i:s',time())]);
-            $return['code'] = 1;
-            $return['msg']  = '业务创建成功，待审核';
-        } else {
+        DB::beginTransaction();//开启事务处理
+        $row                  = DB::table('tz_business')->insertGetId($insert);
+        if ($row == 0) {
+            DB::rollBack();
             $return['data'] = '';
             $return['code'] = 0;
             $return['msg']  = '业务创建失败';
+            return $return;
         }
-
+        if($insert['business_type'] == 1 || $insert['business_type'] == 2){
+            $machine = DB::table('idc_machine')->where(['machine_num'=>$insert['machine_number']])->update(['used_status'=>2]);
+            if($machine == 0){
+                DB::rollBack();
+                $return['data'] = '';
+                $return['code'] = 0;
+                $return['msg']  = '业务创建失败!';
+                return $return;
+            }
+        }
+        $relevance = DB::table('tz_business_relevance')->insert(['type'=>1,'business_id'=>$insert['business_number'],'created_at'=>date('Y-m-d H:i:s',time())]);
+        if($relevance != 0){
+            DB::commit();
+            $return['data'] = $row;
+            $return['code'] = 1;
+            $return['msg']  = '业务创建成功，待审核';
+        }  else {
+            DB::rollBack();
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg']  = '业务创建失败!!';
+        } 
+            
         return $return;
 
     }
@@ -121,7 +141,7 @@ class BusinessModel extends Model
         if($check->business_type != 3 && $where['business_status'] == 1) {
             // 审核通过前验证业务机器是否未使用，如果是使用直接返回提示
             $machine_where['machine_num'] = $check->machine_number;
-            $machine_where['used_status'] = 0;
+            $machine_where['used_status'] = 2;
             $machine_status               = DB::table('idc_machine')->where($machine_where)->select('id', 'machine_num', 'used_status')->first();
             if (empty($machine_status)) {
                 $where['business_status'] = '-2';
@@ -133,21 +153,33 @@ class BusinessModel extends Model
         $business['business_status'] = $where['business_status'];
         $business['check_note']      = $where['check_note'];
         if ($where['business_status'] != 1) {
+            DB::beginTransaction();
             // 审核为不通过时直接进行业务的状态更改
-            $row = $this->where($check_where)->update($business);
-            if ($row != false) {
-                $return['data'] = '';
-                $return['code'] = 1;
-                if (isset($where['check_note'])) {
-                    $return['msg'] = '审核不通过,原因:'.$where['check_note'];
-                } else {
-                    $return['msg'] = '审核不通过';
-                }
-
-            } else {
+            $row = DB::table('tz_business')->where($check_where)->update($business);
+            if($row == 0){
+                DB::rollBack();
                 $return['data'] = '审核失败';
                 $return['code'] = 0;
                 $return['msg']  = '审核失败!';
+                return $return;
+            }
+            if($check->business_type != 3){
+               $machine = DB::table('idc_machine')->where(['machine_num'=>$check->machine_number])->update(['used_status'=>0]);
+               if($machine == 0){
+                     DB::rollBack();
+                    $return['data'] = '审核失败';
+                    $return['code'] = 0;
+                    $return['msg']  = '审核失败!!';
+                    return $return;
+               } 
+            }
+            DB::commit();
+            $return['data'] = '';
+            $return['code'] = 1;
+            if (isset($where['check_note'])) {
+                $return['msg'] = '审核不通过,原因:'.$where['check_note'];
+            } else {
+                $return['msg'] = '审核不通过';
             }
             return $return;
         }

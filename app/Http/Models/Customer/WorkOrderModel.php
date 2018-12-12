@@ -75,9 +75,8 @@ class WorkOrderModel extends Model
     		$return['msg'] = '工单无法提交';
     		return $return;
     	}
-    	$where = ['client_id'=>Auth::user()->id,'business_number'=>$insert_data['business_num'],'business_status'=>[2,3,4]];
-        $business = DB::table('tz_business')->where($where)->select('client_id','business_number','sales_id','sales_name')->first();
-        // dd($business);
+    	$where = ['client_id'=>Auth::user()->id,'business_number'=>$insert_data['business_num']];
+        $business = DB::table('tz_business')->where($where)->whereIn('business_status',[0,1,2,3,4])->select('client_id','business_number','sales_id','sales_name')->first();
     	if(!$business){
     		$return['data'] = '';
     		$return['code'] = 0;

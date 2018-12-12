@@ -106,8 +106,8 @@ class WorkOrderModel extends Model
             return $return;
 
         }
-        $where = ['sales_id'=>Admin::user()->id,'business_number'=>$work_data['business_num'],'business_status'=>[2,3,4]];
-        $business = DB::table('tz_business')->where($where)->select('client_id','business_number','sales_id')->first();
+        $where = ['sales_id'=>Admin::user()->id,'business_number'=>$work_data['business_num']];
+        $business = DB::table('tz_business')->where($where)->whereIn('business_status',[0,1,2,3,4])->select('client_id','business_number','sales_id')->first();
     	if(!$business){
             $return['data'] = '';
             $return['code'] = 0;

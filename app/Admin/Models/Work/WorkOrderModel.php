@@ -45,9 +45,9 @@ class WorkOrderModel extends Model
          */
         $user_id = Admin::user()->id;
         $staff = $this->staff($user_id);
-        if($staff->slug == 3){
+        if($staff->slug == 3){//业务查看
             $where['clerk_id'] = $user_id;
-        } elseif($staff->slug == 4){
+        } elseif($staff->slug == 4){//机房查看
             $where['process_department'] = $staff->department;
         }
         // 进行数据查询

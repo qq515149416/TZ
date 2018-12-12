@@ -166,7 +166,7 @@ class BusinessModel extends Model
             if($check->business_type != 3){
                $machine = DB::table('idc_machine')->where(['machine_num'=>$check->machine_number])->update(['used_status'=>0]);
                if($machine == 0){
-                     DB::rollBack();
+                    DB::rollBack();
                     $return['data'] = '审核失败';
                     $return['code'] = 0;
                     $return['msg']  = '审核失败!!';

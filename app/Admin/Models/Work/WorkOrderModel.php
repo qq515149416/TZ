@@ -160,7 +160,7 @@ class WorkOrderModel extends Model
             $row->sales_name = $business->sales_name;
             $row = $row->toArray();
             $array = ['work_order'=>$row];
-            curl('http://127.0.0.1:8121',$array);
+            curl('http://sk.jungor.cn:8121',$array);
             $return['data'] = $row['id'];
             $return['code'] = 1;
             $return['msg'] = '工单提交成功,工单号:'.$row['work_order_number'];        
@@ -255,7 +255,7 @@ class WorkOrderModel extends Model
                     $edit_after->sales_name = $business->sales_name;
                     $edit_after = $edit_after->toArray();
                     $array = ['work_order'=>$edit_after];
-                    curl('http://127.0.0.1:8121',$array);
+                    curl('http://sk.jungor.cn:8121',$array);
                 }
     			$return['code'] = 1;
     			$return['msg'] = '工单修改成功!!';

@@ -33,9 +33,9 @@ class EmployeeInformationRequest extends FormRequest
 		switch ($method) {
 			case 'insert_employee':
 				$return = [
-					'admin_users_id'   	=> "required|unique:oa_staff",
+					'admin_users_id'   	=> "required",
 					'department'		=> 'required|integer',
-					'work_number'		=> 'required|unique:oa_staff',
+					'work_number'		=> 'required',
 					'job'			=> 'required|integer',
 					'phone'			=> [
 		                'required',
@@ -82,20 +82,18 @@ class EmployeeInformationRequest extends FormRequest
 	{
 		
 		return  [
-					'admin_users_id.required' 	=> '工作人员id必须填写',
-		            'admin_users_id.unique'       	=> '该id相关信息已录入',
-		            'department.required' 		=> '部门必须填写',	
-		            'department.integer' 		=> '部门id必须是有效整数数字',	
-		            'work_number.required' 		=> '工号必须填写',
-		            'work_number.unique' 		=> '工号已存在',	
-		            'job.required' 			=> '岗位必须填写',
-		            'job.integer' 			=> '岗位id必须是有效整数数字',
-		            'phone.required'			=> '手机号码电话必须填写',
-		            'phone.regex'       =>'手机号码必须符合号码相关规则',
-		            'QQ.required'			=> 'QQ必须填写',
-		            'wechat.required'		=> '微信号必须填写',
-		            'email.required'			=> '邮箱号必须填写',
-		            'email.email'			=> '邮箱号格式错误',
+				'admin_users_id.required' 	=> '工作人员id必须填写',
+	            'department.required' 		=> '部门必须选择',	
+	            'department.integer' 		=> '部门id必须是有效整数数字',	
+	            'work_number.required' 		=> '工号必须填写',	
+	            'job.required' 			=> '职位必须选择',
+	            'job.integer' 			=> '职位id必须是有效整数数字',
+	            'phone.required'			=> '手机号码电话必须填写',
+	            'phone.regex'       =>'手机号码必须符合号码相关规则',
+	            'QQ.required'			=> 'QQ必须填写',
+	            'wechat.required'		=> '微信号必须填写',
+	            'email.required'			=> '邮箱号必须填写',
+	            'email.email'			=> '邮箱号格式错误',
 
 		];
 	}

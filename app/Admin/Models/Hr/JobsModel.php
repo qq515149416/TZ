@@ -40,7 +40,7 @@ class JobsModel extends Model
     		$return['msg'] = '获取职位数据成功';
     	} else {
     		$return['data'] = [];
-    		$return['code'] = 0;
+    		$return['code'] = 1;
     		$return['msg'] = '暂无职位数据';
     	}
     	return $return;

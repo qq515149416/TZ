@@ -38,7 +38,7 @@ class DepartmentModel extends Model
     		$return['msg'] = '获取部门数据成功';
     	} else {
     		$return['data'] = [];
-    		$return['code'] = 0;
+    		$return['code'] = 1;
     		$return['msg'] = '暂无部门数据';
     	}
     	return  $return;

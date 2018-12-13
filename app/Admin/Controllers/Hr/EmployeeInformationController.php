@@ -35,7 +35,7 @@ class EmployeeInformationController extends Controller
      * @param  Request $request [description]
      * @return [type]           [description]
      */
-    public function insertEmployee(Request $request){
+    public function insertEmployee(EmployeeInformationRequest $request){
         $insert_data = $request->only(['admin_users_id','sex','age','department','job','entrytime','work_number','phone','QQ','wechat','email','dimission','education','work','skill','detailed','note']);
         $insert = new EmployeeInformation();
         $insert_result = $insert->insertEmployee($insert_data);

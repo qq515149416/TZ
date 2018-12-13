@@ -45,9 +45,9 @@ class WorkOrderModel extends Model
          */
         $user_id = Admin::user()->id;
         $staff = $this->staff($user_id);
-        if($staff->slug == 3){
+        if($staff->slug == 3){//业务查看
             $where['clerk_id'] = $user_id;
-        } elseif($staff->slug == 4){
+        } elseif($staff->slug == 4){//机房查看
             $where['process_department'] = $staff->department;
         }
         // 进行数据查询
@@ -106,8 +106,8 @@ class WorkOrderModel extends Model
             return $return;
 
         }
-        $where = ['sales_id'=>Admin::user()->id,'business_number'=>$work_data['business_num'],'business_status'=>[2,3,4]];
-        $business = DB::table('tz_business')->where($where)->select('client_id','business_number','sales_id')->first();
+        $where = ['sales_id'=>Admin::user()->id,'business_number'=>$work_data['business_num']];
+        $business = DB::table('tz_business')->where($where)->whereIn('business_status',[0,1,2,3,4])->select('client_id','business_number','sales_id')->first();
     	if(!$business){
             $return['data'] = '';
             $return['code'] = 0;
@@ -160,7 +160,7 @@ class WorkOrderModel extends Model
             $row->sales_name = $business->sales_name;
             $row = $row->toArray();
             $array = ['work_order'=>$row];
-            curl('http://127.0.0.1:8121',$array);
+            curl('http://sk.jungor.cn:8121',$array);
             $return['data'] = $row['id'];
             $return['code'] = 1;
             $return['msg'] = '工单提交成功,工单号:'.$row['work_order_number'];        
@@ -255,7 +255,7 @@ class WorkOrderModel extends Model
                     $edit_after->sales_name = $business->sales_name;
                     $edit_after = $edit_after->toArray();
                     $array = ['work_order'=>$edit_after];
-                    curl('http://127.0.0.1:8121',$array);
+                    curl('http://sk.jungor.cn:8121',$array);
                 }
     			$return['code'] = 1;
     			$return['msg'] = '工单修改成功!!';

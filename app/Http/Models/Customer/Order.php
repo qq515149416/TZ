@@ -241,14 +241,24 @@ class Order extends Model
 			switch ($delete_data->resource_type) {//当资源类型为租用主机/托管主机/租用机柜时，对业务的到期时间进行更改
 				case 1://租用机器
 					$end_time = Carbon::parse($delete_data->endding_time)->modify('-'.$delete_data->duration.' months')->toDateTimeString();
-					$business = DB::table('tz_business')->where(['business_number'=>$delete_data->business_number])->update(['endding_time'=>$end_time]);
+					if($delete_data->order_type == 1){//当为新购订单取消时同时对对应的机器状态等修改为未使用
+                        $update['business_status'] = '-1';
+                        $rent['own_business'] = Null;
+                        $rent['business_end'] = Null;
+                        $rent['used_status'] = 0;
+                    } else {
+                    	$rent['own_business'] = $delete_data->business_number;
+                        $rent['business_end'] = $end_time;
+                    }
+					$update['endding_time'] = $end_time;
+					$business = DB::table('tz_business')->where(['business_number'=>$delete_data->business_number])->update($update);
 					if($business == 0){//更新业务到期时间失败
 						DB::rollBack();
 						$return['code'] = 0;
 						$return['msg'] = '取消订单失败!!';
 						return $return;
 					}
-					$row = DB::table('idc_machine')->where(['machine_num'=>$delete_data->machine_sn,'own_business'=>$delete_data->business_number,'business_type'=>1])->update(['own_business'=>$delete_data->business_number,'business_end'=>$end_time]); 
+					$row = DB::table('idc_machine')->where(['machine_num'=>$delete_data->machine_sn,'own_business'=>$delete_data->business_number,'business_type'=>1])->update($rent); 
 					if($row == 0){
 						DB::rollBack();
 						$return['code'] = 0;
@@ -258,14 +268,24 @@ class Order extends Model
 					break;
 				case 2://托管机器
 					$end_time = Carbon::parse($delete_data->endding_time)->modify('-'.$delete_data->duration.' months')->toDateTimeString();
-					$business = DB::table('tz_business')->where(['business_number'=>$delete_data->business_number])->update(['endding_time'=>$end_time]);
+					if($delete_data->order_type == 1){//当为新购订单取消时同时对对应的机器状态等修改为未使用
+                        $update_io['business_status'] = '-1';
+                        $hosting['own_business'] = Null;
+                        $hosting['business_end'] = Null;
+                        $hosting['used_status'] = 0;
+                    } else {
+                    	$hosting['own_business'] = $delete_data->business_number;
+                        $hosting['business_end'] = $end_time;
+                    }
+					$update_io['endding_time'] = $end_time;
+					$business = DB::table('tz_business')->where(['business_number'=>$delete_data->business_number])->update($update_io);
 					if($business == 0){//更新业务到期时间失败
 						DB::rollBack();
 						$return['code'] = 0;
 						$return['msg'] = '取消订单失败!';
 						return $return;
 					}
-					$row = DB::table('idc_machine')->where(['machine_num'=>$delete_data->machine_sn,'own_business'=>$delete_data->business_number,'business_type'=>2])->update(['own_business'=>$delete_data->business_number,'business_end'=>$end_time]); 
+					$row = DB::table('idc_machine')->where(['machine_num'=>$delete_data->machine_sn,'own_business'=>$delete_data->business_number,'business_type'=>2])->update($hosting); 
 					if($row == 0){
 						DB::rollBack();
 						$return['code'] = 0;
@@ -274,15 +294,32 @@ class Order extends Model
 					}
 					break;
 				case 3://租用机柜
-					$end_time = Carbon::parse($delete_data->endding_time)->modify('-'.$delete_data->duration.' months')->toDateTimeString();
-					$business = DB::table('tz_business')->where(['business_number'=>$delete_data->business_number])->update(['endding_time'=>$end_time]);
-					if($business == 0){//更新业务到期时间失败
-						DB::rollBack();
-						$return['code'] = 0;
-						$return['msg'] = '取消订单失败!';
-						return $return;
-					}
-					break;
+                    if($delete_data->order_type == 1){//当为新购订单取消时同时对对应的机器状态等修改为未使用
+                        $cabinet['business_status'] = '-1';
+                        $cabinets = DB::table('idc_cabinet')->where(['cabinet_id'=>$delete_data->machine_sn])->select('own_business')->first();
+                        $array = explode(',',$cabinets->own_business);//先将原本的业务数据转换为数组
+                        $key = array_search($delete_data->business_number,$array);//查找要删除的业务编号在数组的位置的键
+                        array_splice($array,$key,1);//根据查找的对应键进行删除
+                        $own_business = implode(',',$array);//将数组转换为字符串
+                        $row = DB::table('idc_cabinet')->where(['cabinet_id'=>$delete_data->machine_sn])->update(['own_business'=>$own_business]);
+                        if($row == 0){
+                            DB::rollBack();
+                            $return['code'] = 0;
+                            $return['msg'] = '取消订单失败!';
+                            return $return;
+                        }
+
+                    }
+                    $end_time = Carbon::parse($delete_data->endding_time)->modify('-'.$delete_data->duration.' months')->toDateTimeString();
+                    $cabinet['endding_time'] = $end_time;
+                    $business = DB::table('tz_business')->where(['business_number'=>$delete_data->business_number])->update($cabinet);
+                    if($business == 0){//更新业务到期时间失败
+                        DB::rollBack();
+                        $return['code'] = 0;
+                        $return['msg'] = '取消订单失败!';
+                        return $return;
+                    }
+                    break;
 				 case 4://IP
                         if($delete_data->order_type == 1){
                             $ip['own_business'] = Null;
@@ -648,18 +685,14 @@ class Order extends Model
 					//如果是租用机柜的，在订单生成成功时，将业务编号和到期时间及资源状态进行更新
 					$cabinet = DB::table('idc_cabinet')->where(['cabinet_id'=>$order['machine_sn']])->value('own_business');
 					$business = strpos($cabinet,$order['business_sn']);
-					if($business){
-						$machine['own_business'] = $business;
-					} else {
+					if(!$business){
 						DB::rollBack();
 						$return['data'] = '';
 						$return['code'] = 0;
 						$return['msg'] = '资源续费失败,请确认您此前购买过该机柜';
 						return $return;
 					}
-					$machine['use_state'] = 1;
-					$where = ['own_business'=>$order['business_sn'],'cabinet_id'=>$order['machine_sn']];
-					$result = DB::table('idc_cabinet')->where($where)->update($machine);
+					$result = 1;
 					break;
 			}
 			if($result == 0){

@@ -30,6 +30,7 @@ class ApiController extends Controller
 	 */
 	public function createWhiteList($domain,$room_id)
 	{
+
 		switch ($room_id) {
 			//惠州机房
 			case '37':	//数据库里的机房对应id
@@ -38,20 +39,27 @@ class ApiController extends Controller
 				break;
 			//衡阳机房
 			case '38':	//数据库里的机房对应id
-				$url 	= 'http://qy.zeisp.com/domain.php/domain.php?domain='.$domain.'&key='.$this->huizhou_key;
-				$url2 	= 'http://qy.zeisp.com/domain.php/domain.php?domain=.'.$domain.'&key='.$this->huizhou_key;
+				$url 	= 'http://qy.zeisp.com/domain.php/domain.php?domain='.$domain.'&key='.$this->hengyang_key;
+				$url2 	= 'http://qy.zeisp.com/domain.php/domain.php?domain=.'.$domain.'&key='.$this->hengyang_key;
 				break;
 			//西安机房
 			case '39':	//数据库里的机房对应id
-				$url 	= 'http://xa.tzidc.com/domain.php?domain='.$domain.'&key='.$this->huizhou_key;
-				$url2 	= 'http://xa.tzidc.com/domain.php?domain=.'.$domain.'&key='.$this->huizhou_key;
+				$url 	= 'http://xa.tzidc.com/domain.php?domain='.$domain.'&key='.$this->xian_key;
+				$url2 	= 'http://xa.tzidc.com/domain.php?domain=.'.$domain.'&key='.$this->xian_key;
 				break;
 			default:
+				//测试用的返回
 				return [
 					'data'	=> '',
-					'msg'	=> '机房暂无白名单库',
-					'code'	=> 0,
+					'msg'	=> '测试用,白名单通过,记得关掉这个',
+					'code'	=> 1,
 				];
+				//实际环境用下面的这个
+				// return [
+				// 	'data'	=> '',
+				// 	'msg'	=> '机房暂无白名单接口,请设置',
+				// 	'code'	=> 0,
+				// ];
 				break;
 		}
 

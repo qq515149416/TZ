@@ -100,7 +100,7 @@ class WhiteListModel extends Model
 		//获取模型
 		$result = $this->where($where)
 			->orderBy('created_at','desc')
-			->get(['id','white_number','domain_name','record_number','binding_machine','customer_id','customer_name','submit_id','submit_name','submit','submit_note','check_id','check_number','check_time','check_note','white_status','created_at']);
+			->get(['id','white_ip','white_number','domain_name','record_number','binding_machine','customer_id','customer_name','submit_id','submit_name','submit','submit_note','check_id','check_number','check_time','check_note','white_status','created_at']);
 		//返回
 		if(!$result->isEmpty()){
 			//转换信息
@@ -227,8 +227,16 @@ class WhiteListModel extends Model
 		//获取审核者信息
 		$admin_id = Admin::user()->id;
 		$fullname = (array)$this->staff($admin_id);
+		if(count($fullname) == 0){
+			return [
+				'data'	=> '',
+				'msg'	=> '审核人员信息不完整,请填写完整再进行审核',
+				'code'	=> 0,
+			];
+		}
 		$row->check_id 	= $admin_id;
 		$row->check_number	= $fullname['work_number'];
+
 		$row->check_time 	= date('Y-m-d H:i:s',time());
 		$row->white_status 	= $checkdata['white_status'];
 		if(isset($checkdata['check_note'])){

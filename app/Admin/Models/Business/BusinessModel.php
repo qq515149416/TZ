@@ -49,18 +49,38 @@ class BusinessModel extends Model
         $sales_id             = Admin::user()->id;
         $insert['sales_id']   = $sales_id;
         $insert['sales_name'] = Admin::user()->name?Admin::user()->name:Admin::user()->username;
-        $row                  = $this->create($insert);
-        if ($row != false) {
-            $return['data'] = $row->id;
-            DB::table('tz_business_relevance')->insert(['type'=>1,'business_id'=>$row->business_number,'created_at'=>date('Y-m-d H:i:s',time())]);
-            $return['code'] = 1;
-            $return['msg']  = '业务创建成功，待审核';
-        } else {
+        DB::beginTransaction();//开启事务处理
+        $row                  = DB::table('tz_business')->insertGetId($insert);
+        if ($row == 0) {
+            DB::rollBack();
             $return['data'] = '';
             $return['code'] = 0;
             $return['msg']  = '业务创建失败';
+            return $return;
         }
-
+        if($insert['business_type'] == 1 || $insert['business_type'] == 2){
+            $machine = DB::table('idc_machine')->where(['machine_num'=>$insert['machine_number']])->update(['used_status'=>2]);
+            if($machine == 0){
+                DB::rollBack();
+                $return['data'] = '';
+                $return['code'] = 0;
+                $return['msg']  = '业务创建失败!';
+                return $return;
+            }
+        }
+        $relevance = DB::table('tz_business_relevance')->insert(['type'=>1,'business_id'=>$insert['business_number'],'created_at'=>date('Y-m-d H:i:s',time())]);
+        if($relevance != 0){
+            DB::commit();
+            $return['data'] = $row;
+            $return['code'] = 1;
+            $return['msg']  = '业务创建成功，待审核';
+        }  else {
+            DB::rollBack();
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg']  = '业务创建失败!!';
+        } 
+            
         return $return;
 
     }
@@ -121,7 +141,7 @@ class BusinessModel extends Model
         if($check->business_type != 3 && $where['business_status'] == 1) {
             // 审核通过前验证业务机器是否未使用，如果是使用直接返回提示
             $machine_where['machine_num'] = $check->machine_number;
-            $machine_where['used_status'] = 0;
+            $machine_where['used_status'] = 2;
             $machine_status               = DB::table('idc_machine')->where($machine_where)->select('id', 'machine_num', 'used_status')->first();
             if (empty($machine_status)) {
                 $where['business_status'] = '-2';
@@ -133,21 +153,33 @@ class BusinessModel extends Model
         $business['business_status'] = $where['business_status'];
         $business['check_note']      = $where['check_note'];
         if ($where['business_status'] != 1) {
+            DB::beginTransaction();
             // 审核为不通过时直接进行业务的状态更改
-            $row = $this->where($check_where)->update($business);
-            if ($row != false) {
-                $return['data'] = '';
-                $return['code'] = 1;
-                if (isset($where['check_note'])) {
-                    $return['msg'] = '审核不通过,原因:'.$where['check_note'];
-                } else {
-                    $return['msg'] = '审核不通过';
-                }
-
-            } else {
+            $row = DB::table('tz_business')->where($check_where)->update($business);
+            if($row == 0){
+                DB::rollBack();
                 $return['data'] = '审核失败';
                 $return['code'] = 0;
                 $return['msg']  = '审核失败!';
+                return $return;
+            }
+            if($check->business_type != 3){
+               $machine = DB::table('idc_machine')->where(['machine_num'=>$check->machine_number])->update(['used_status'=>0]);
+               if($machine == 0){
+                    DB::rollBack();
+                    $return['data'] = '审核失败';
+                    $return['code'] = 0;
+                    $return['msg']  = '审核失败!!';
+                    return $return;
+               } 
+            }
+            DB::commit();
+            $return['data'] = '';
+            $return['code'] = 1;
+            if (isset($where['check_note'])) {
+                $return['msg'] = '审核不通过,原因:'.$where['check_note'];
+            } else {
+                $return['msg'] = '审核不通过';
             }
             return $return;
         }
@@ -391,183 +423,6 @@ class BusinessModel extends Model
             ->get();
 
         return $data;
-
-    }
-
-    /**
-     * 进行业务的申请下架
-     * @param  [type] $business [description]
-     * @return [type]           [description]
-     */
-    public function applyRemove($business){
-        if(!$business){//没有传递下架所需的任何信息
-            $return['code'] = 0;
-            $return['msg'] = '业务下架无法申请';
-            return $return;
-        }
-
-        $business_result = $this->where(['business_number'=>$business['business_number']])->select('remove_status','business_number','business_type','machine_number')->first();
-        if(empty($business_result)){//不存在业务
-            $return['code'] = 0;
-            $return['msg'] = '无此业务，无法申请下架';
-            return $return;
-        }
-
-        if($business_result->remove_status > 0){//业务已处于下架状态的
-            $return['code'] = 0;
-            $return['msg'] = '此业务正在下架中，请勿重复申请操作!';
-            return $return;
-        }
-
-        $remove['remove_reason'] = $business['remove_reason'];//下架缘由
-        $remove['remove_status'] = 1;//申请下架的状态
-        DB::beginTransaction();//开启事务
-        $business_remove = DB::table('tz_business')->where(['business_number'=>$business['business_number']])->update($remove);//更新业务的下架状态
-        if($business_remove == 0){//更新失败
-            DB::rollBack();
-            $return['code'] = 0;
-            $return['msg'] = '业务申请下架失败';
-            return $return;
-        }
-        //查找业务关联的资源
-        $resources = DB::table('tz_orders')->where(['business_number'=>$business['business_number']])->where('price','>','0.00')->where('resource_type','>',3)->orderBy('end_time','desc')->get(['order_sn','resource_type','machine_sn','resource','price','end_time'])->groupBy('machine_sn')->toArray();
-        if(!empty($resources)){//存在业务关联的资源，进一步进行查找资源的最新情况
-            $resource_keys = array_keys($resources);//获取分组后的资源编号
-            foreach($resource_keys as $key=>$value){//获取业务关联的最新资源
-                $business['machine_sn'] = $value;
-                $resource[$key] = DB::table('tz_orders')->where(['business_number'=>$business['business_number']])->where('remove_status','<',1)->orderBy('end_time','desc')->select('order_sn','resource_type','machine_sn','resource','price','end_time','order_status')->first();
-            }
-            if(!empty($resource)){//存在关联业务则继续对关联的资源进行同步下架
-                foreach($resource as $resource_key=>$resource_value){
-                    $order_remove['remove_reason'] = '关联业务申请下架，关联业务资源同步下架';
-                    $order_remove['remove_status'] = 1;
-                    $order_row = DB::table()->where(['order_sn'=>$resource_value->order_sn])->update($order_remove);
-                    if($order_row == 0){//关联业务的资源同步下架失败
-                        DB::rollBack();
-                        $return['code'] = 0;
-                        $return['msg'] = '业务关联资源申请下架失败';
-                        return $return;
-                    }
-                }
-            }
-        }
-        DB::commit();
-        $return['code'] = 1;
-        $return['msg'] = '业务:'.$business['business_number'].'申请下架成功,等待处理';
-        return $return;
-
-    }
-
-    /**
-     * 机器下架历史记录
-     * @return [type] [description]
-     */
-    public function removeHistory(){
-        $history = $this->where(['remove_status'=>6])->orderBy('updated_at','desc')->get(['client_name','sales_name','business_number','machine_number','business_type','business_note','remove_reason','resource_detail']);
-        if(!$history->isEmpty()){
-            $business_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜'];
-            foreach($history as $history_key => $history_value){
-                $history[$history_key]['resource_type'] = $business_type[$history_value['business_type']];
-            }
-            $return['data'] = $history;
-            $return['code'] = 1;
-            $return['msg'] = '获取机器下架记录数据成功';
-        } else {
-            $return['data'] = [];
-            $return['code'] = 0;
-            $return['msg'] = '暂无机器下架记录数据';
-        }
-        return $return;
-    }
-
-    /**
-     * 处理下架，修改下架的状态
-     * @param  [type] $edit [description]
-     * @return [type]       [description]
-     */
-    public function editRemoveStatus($edit){
-        if(!$edit){//当未传递任何参数，直接返回，直接返回
-            $return['code'] = 0;
-            $return['msg'] = '你无法进行下架处理';
-            return $return;
-        }
-        $business = $this->where(['business_number'=>$edit['business_number']])->select('remove_status','remove_reason','business_type','machine_number','business_number')->first();
-        if(empty($business)){//不存在需要下架的业务，直接返回
-            $return['code'] = 0;
-            $return['msg'] = '无对应业务';
-            return $return;
-        }
-        if($business->remove_status < 1 || $business->remove_status = 4){//当业务未提交申请或已下架，直接返回
-            $return['code'] = 0;
-            $return['msg'] = '业务已完成下架/暂未提交下架申请';
-            return $return;
-        }
-        if($edit['remove_status'] == 0){
-            $update['remove_reason'] = $business->remove_reason.'驳回原因:'.$edit['remove_reason'];
-            $update['remove_status'] = $edit['remove_status'];
-            $update['machineroom'] = 0;
-        } else {
-            switch ($business->remove_status) {
-                case 1:
-                    $update['remove_status'] = 2;
-                    break;
-                case 2:
-                    $update['remove_status'] = 3;
-                    break;
-                case 3:
-                    $update['remove_status'] = 4;
-                    break;
-
-            }
-        }
-        DB::beginTransaction();//开启事务处理
-        if($business->remove_status == 3){
-            switch ($business->business_type) {
-                case 1:
-                    $rent['used_status'] = 0;
-                    $rent['own_business'] = 0;
-                    $rent['business_end'] = Null;
-                    $row = DB::table('idc_machine')->where(['machine_num'=>$business->machine_number,'business_number'=>$edit['business_number'],'business_type'=>1])->update($rent);
-                    break;
-                case 2:
-                    $host['used_status'] = 0;
-                    $host['own_business'] = 0;
-                    $host['business_end'] = Null;
-                    $host['machine_status'] = 1;
-                    $row = DB::table('idc_machine')->where(['machine_num'=>$business->machine_number,'business_number'=>$edit['business_number'],'business_type'=>2])->update($host);
-                    break;
-                case 3:
-                    $cabinet = DB::table('idc_cabinet')->where(['cabinet_id'=>$business->machine_number])->select('own_business')->first();//获取机柜原来的业务号
-                    $array = explode(',',$cabinet->own_business);//先将原本的业务数据转换为数组
-                    $key = array_search($business->business_number,$array);//查找要删除的业务编号在数组的位置的键
-                    array_splice($array,$key,1);//根据查找的对应键进行删除
-                    $own_business = implode(',',$array);//将数组转换为字符串
-                    $cabinet_update['own_business'] = $own_business;
-                    $cabinet_update['business_end'] = Null;
-                    $row = DB::table('idc_cabinet')->where(['cabinet_id'=>$deltet_data->machine_number])->update($cabinet_update);
-                    break;
-                default:
-                    $row = 1;
-                    break;
-            }
-            if($row == 0){
-                DB::rollBack();
-                $return['code'] = 0;
-                $return['msg'] = '业务相关机器下架状态修改失败';
-            }
-            $update['remove_status'] = 4;
-        }
-        $remove = DB::table('tz_business')->where(['business_number'=>$edit['business_number']])->update($update);
-        if($remove == 0){
-            DB::rollBack();
-            $return['code'] = 0;
-            $return['msg'] = '业务下架状态修改失败';
-        } else {
-            DB::commit();
-            $return['code'] = 1;
-            $return['msg'] = '业务下架状态修改成功';
-        }
-        return $return;
 
     }
 

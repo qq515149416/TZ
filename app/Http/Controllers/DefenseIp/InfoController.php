@@ -44,7 +44,7 @@ class InfoController extends Controller
             ->whereIn('status',[1,4])
             ->get()
             ->toArray();   //将对象转为数组
-        
+
         //遍历添加查询IP资源数组
         foreach ($listData as $key => $value) {
             $storeData                          = StoreModel::find($value['ip_id'])->toArray();

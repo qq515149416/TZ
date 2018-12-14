@@ -78,7 +78,7 @@ class  Overdue extends Model
 		->leftjoin('idc_machineroom as c','b.machineroom_id','=','c.id')	
 		->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name,tz_business.start_time'))
 		->where('tz_business.business_type',3)
-		->where('tz_business.business_status',3)
+		->where('tz_business.business_status',1)
 		->orderBy('tz_business.endding_time','asc')
 		->get();		
 		if($list->isEmpty()){

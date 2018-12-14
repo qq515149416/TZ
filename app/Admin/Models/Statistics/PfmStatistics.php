@@ -41,6 +41,7 @@ class  PfmStatistics extends Model
 			->whereIn('resource_type',[1,2,3,4,5,6,7,8,9])
 			->where('pay_time','>',$begin)
 			->where('pay_time','<',$end)
+			->whereNull('deleted_at')
 			->groupBy('business_id','order_type')
 			->get()
 			->toArray();	
@@ -50,6 +51,7 @@ class  PfmStatistics extends Model
 			->select(DB::raw('payable_money as arrears, business_id as user_id , created_at ,order_type'))
 			->where('order_status',0)
 			->whereIn('resource_type',[1,2,3,4,5,6,7,8,9])
+			->whereNull('deleted_at')
 			->get()
 			->toArray();	
 		// dd($unpaid);
@@ -169,6 +171,7 @@ class  PfmStatistics extends Model
 			->where('pay_time','>',$begin)
 			->where('pay_time','<',$end)
 			->where('business_id',$user_id)
+			->whereNull('deleted_at')
 			->groupBy('order_type')
 			->get()
 			->toArray();
@@ -179,6 +182,7 @@ class  PfmStatistics extends Model
 			->where('order_status',0)
 			->whereIn('resource_type',[1,2,3,4,5,6,7,8,9])
 			->where('business_id',$user_id)
+			->whereNull('deleted_at')
 			->get()
 			->toArray();	
 	
@@ -233,105 +237,5 @@ class  PfmStatistics extends Model
 	}
 	
 
-	public function getDefenseipStatisticsBig($begin,$end)
-	{
-		$begin = date("Y-m-d H:i:s",$begin);
-		$end = date("Y-m-d H:i:s",$end);
-
-		//获取查询时间段内的已付费idc订单
-		$already = DB::table('tz_orders')
-			->select(DB::raw('sum(payable_money) as payable_money, business_id as user_id,order_type'))
-			->whereIn('order_status',[1,2,3,4])
-			->where('resource_type','11')
-			->where('pay_time','>',$begin)
-			->where('pay_time','<',$end)
-			->groupBy('business_id','order_type')
-			->get()
-			->toArray();	
-
-		$order_arr = [];
-		$order_arr['总计'] = [
-			'user_id'		=> '总计',
-			'user_name'		=> '总计',
-			'total_money'		=> 0,
-			'new_achievement'	=> 0,
-			'old_achievement'	=> 0,
-			'preferential_amount'	=> 0,
-		];
-		//开始统计
-		for ($i=0; $i < count($already); $i++) { 
-			if(!isset( $order_arr[ $already[$i]->user_id ] )){
-				$order_arr[ $already[$i]->user_id ] = [
-					'user_id'		=> $already[$i]->user_id,
-					'user_name'		=> DB::table('admin_users')->where('id',$already[$i]->user_id)->value('name'),
-					'total_money'		=> 0,
-					'new_achievement'	=> 0,
-					'old_achievement'	=> 0,
-					'preferential_amount'	=> 0,	
-				];
-			}
-
-			if($already[$i]->order_type == 1){
-				$order_arr[ $already[$i]->user_id ] ['new_achievement'] = $already[$i]->payable_money;	
-				$order_arr['总计']['new_achievement'] = bcadd($order_arr['总计']['new_achievement'],$already[$i]->payable_money,2);
-			}else{
-				$order_arr[ $already[$i]->user_id ] ['old_achievement'] = $already[$i]->payable_money;
-				$order_arr['总计']['old_achievement'] = bcadd($order_arr['总计']['old_achievement'],$already[$i]->payable_money,2);
-			}
-			$order_arr[ $already[$i]->user_id ]['total_money'] = bcadd($order_arr[ $already[$i]->user_id ]['total_money'],$already[$i]->payable_money,2);
-			$order_arr['总计']['total_money'] = bcadd($order_arr['总计']['total_money'],$already[$i]->payable_money,2);
-		}
-
-		$orr = [];
-		foreach ($order_arr as $k => $v) {
-			$orr[] = $v;
-		}
-
-		$return['data'] 	= $orr;
-		$return['msg'] 	= '统计成功';
-		$return['code']	= 1;
-		return $return;
-	}
-
-	public function getDefenseipStatisticsSmall($begin,$end,$user_id)
-	{
-		$begin = date("Y-m-d H:i:s",$begin);
-		$end = date("Y-m-d H:i:s",$end);
-
-		//获取查询时间段内的已付费idc订单
-		$already = DB::table('tz_orders')
-			->select(DB::raw('sum(payable_money) as payable_money,order_type'))
-			->whereIn('order_status',[1,2,3,4])
-			->where('resource_type','11')
-			->where('pay_time','>',$begin)
-			->where('pay_time','<',$end)
-			->where('business_id',$user_id)
-			->groupBy('order_type')
-			->get()
-			->toArray();	
-
-		$orr = [
-			'user_id'		=> $user_id,
-			'user_name'		=> DB::table('admin_users')->where('id',$user_id)->value('name'),
-			'total_money'		=> 0,
-			'new_achievement'	=> 0,
-			'old_achievement'	=> 0,
-			'preferential_amount'	=> 0,
-		];
 	
-		//开始统计
- 		for ($i=0; $i < count($already); $i++) { 
- 			if($already[$i]->order_type == 1){
-				$orr['new_achievement'] = $already[$i]->payable_money;	
-			}else{
-				$orr['old_achievement'] = $already[$i]->payable_money;	
-			}
-			$orr['total_money'] = bcadd($orr['total_money'],$already[$i]->payable_money,2);
- 		}
-
-		$return['data'] 	= $orr;
-		$return['msg'] 	= '统计成功';
-		$return['code']	= 1;
-		return $return;
-	}
 }

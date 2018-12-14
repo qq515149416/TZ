@@ -315,7 +315,7 @@ class CustomerModel extends Model
             $return['msg'] = '无法绑定客户';
             return $return;
         }
-        $customer = $this->where(['email'=>$email['email']])->select('id','name','salesman_id','email','status')->first();
+        $customer = $this->where(['email'=>$email['email']])->orWhere(['name'=>$email['email']])->orWhere(['nickname'=>$email['email']])->select('id','name','salesman_id','email','status')->first();
         if(empty($customer)){//客户不存在
             $return['code'] = 0;
             $return['msg'] = '此客户不存在,请确认客户注册邮箱正确,或与客户联系核实!';
@@ -332,12 +332,13 @@ class CustomerModel extends Model
             return $return;
         }
 
-        $userExists = $this->where('name', '=', $email['email'])->exists();//判断是否存在对应的用户名帐号
-        if ($userExists) {//如果存在则根据用户名进行业务员绑定
+        // $userExists = $this->where('name', '=', $email['email'])->exists();//判断是否存在对应的用户名帐号
+        if ($this->where('name', '=', $email['email'])->exists()) {//如果存在则根据用户名进行业务员绑定
             $update = $this->where(['name'=>$email['email']])->update(['salesman_id'=>Admin::user()->id]);
-        } else {//如果不存在则根据输入的邮箱进行绑定
-           $update = $this->where(['email'=>$email['email']])->update(['salesman_id'=>Admin::user()->id]);
-
+        } elseif($this->where('nickname', '=', $email['email'])->exists()) {//如果不存在则根据输入的邮箱进行绑定
+           $update = $this->where(['nickname'=>$email['email']])->update(['salesman_id'=>Admin::user()->id]);
+        } else {
+            $update = $this->where(['email'=>$email['email']])->update(['salesman_id'=>Admin::user()->id]);
         }
         if($update != false){
             $return['code'] = 1;

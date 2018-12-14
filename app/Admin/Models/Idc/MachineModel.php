@@ -222,27 +222,31 @@ class MachineModel extends Model
 			$return['msg'] = '修改信息失败！！';
 			return $return;
 		}
+		$or_ip = DB::table('idc_ips')->where('mac_num',$editdata['machine_num'])->first();
+		if(!empty($or_ip)){
 		//先将原来所属IP的机器编号字段清除，状态修改
-		$original = DB::table('idc_ips')->where('mac_num',$editdata['machine_num'])->update(['mac_num'=>'','ip_status'=>0]);
-		if($original == 0){
-			//原来的IP所属机器编号字段更新失败，事务回滚
-			DB::rollBack();
-			$return['code'] = 0;
-			$return['msg'] = '修改信息失败！！';
-			return $return;
+				$original = DB::table('idc_ips')->where('mac_num',$editdata['machine_num'])->update(['mac_num'=>'','ip_status'=>0]);
+				if($original == 0){
+					//原来的IP所属机器编号字段更新失败，事务回滚
+					DB::rollBack();
+					$return['code'] = 0;
+					$return['msg'] = '修改信息失败！！!';
+					return $return;
+				}
 		}
+		
 		//原来的修改成功，将新的IP更新机器编号字段
 		$ip = DB::table('idc_ips')->where('id',$editdata['ip_id'])->update(['mac_num'=>$editdata['machine_num'],'ip_status'=>2]);
 		if($ip != 0){
 			// 都更新成功，进行事务提交
 			DB::commit();
 			$return['code'] = 1;
-			$return['msg'] = '修改信息成功！！';
+			$return['msg'] = '修改信息成功！！!';
 		} else {
 			//新的IP所属机器编号更新失败，事务回滚
 			DB::rollBack();
 			$return['code'] = 0;
-			$return['msg'] = '修改信息失败！！';
+			$return['msg'] = '修改信息失败！！!!';
 		}
 		return $return;
 	}

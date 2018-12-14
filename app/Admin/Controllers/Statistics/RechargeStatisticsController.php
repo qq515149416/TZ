@@ -33,45 +33,19 @@ class RechargeStatisticsController extends Controller
 	* @return 	json 返回相关的信息
 	*/
 	public function index( RechargeStatisticsRequest $request){
-		//获取查询月份
-		$par = $request->only('month');
-		//如无传值,则查当月
-		if(isset($par['month'])){
-			$month = $par['month'];
-		}else{
-			$month = date("Ym");
-		}
-
-		//更新统计数据
-		$res = $this->rechargeStatistics($month);
-		if($res['code'] == 1){
-			$msg = '数据更新成功 , ';
-		}else{
-			$msg = '数据更新失败 , ';
-		}
-		
-		//获取统计数据
+		//获取查询时间
+		$par = $request->only(['begin' , 'end']);
+		$begin = date("Y-m-d H:i:s",$par['begin']);
+		$end = date("Y-m-d H:i:s",$par['end']);
+		// dd($begin.'-------'.$end);
 		$rechargeModel = new RechargeStatistics();
-		$info = $rechargeModel->getStatistics($month);	
 
-		return tz_ajax_echo($info['data'],$msg.$info['msg'],$info['code']);
+		$return = $rechargeModel->statistics($begin,$end);
+
+		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
 
 	}
 
 
-	/**
-	 * 按月份统计充值情况
-	 * @param 	$month
-	 * @return 	code,1为更新成功,0为失败
-	 */
-
-	public function rechargeStatistics($month)
-	{
-
-		$RechargeModel = new RechargeStatistics();
-		$result = $RechargeModel->statistics($month);
-
-		return $result;                                                                                                                                                                                                                                                      
-	}
 
 }

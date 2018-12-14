@@ -19,137 +19,84 @@ class  RechargeStatistics extends Model
 {
    use SoftDeletes;
    
-	protected $table = 'admin_recharge_statistics';
+	protected $table = 'tz_recharge_flow';
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
 	
-	protected $fillable = ['customer_id', 'recharge_amount','month','updated_at','artificial_amount','self_amount'];
+	protected $fillable = [];
 
 	/**
 	* 统计业绩的方法
 	* @return 将数据及相关的信息返回到控制器
 	*/
 
-	public function statistics($month)
+	public function statistics($begin,$end)
 	{	
 		//获取查询月份订单
-		$order = DB::table('tz_recharge_flow')->select('user_id','recharge_way','recharge_amount as money')->where('month',$month)->where('trade_status',1)->get();
-
-		if($order->isEmpty()){
-			$return['msg'] 	= '无数据';		
-			return $return;
+		$flow = DB::table('tz_recharge_flow')
+				->select(
+					'recharge_way',
+					'user_id',
+					DB::raw('
+						SUM(recharge_amount) AS money
+						')
+					)
+				->groupBy('recharge_way','user_id')
+				->whereNull('deleted_at')
+				->get();
+		if($flow->isEmpty()){
+			return [
+				'data'	=> '',
+				'code'	=> 0,
+				'msg'	=> '无数据',
+			];
 		}
-
-		$order = json_decode(json_encode($order),true);
-
-		$return['data'] = [];
-		$return['code'] 	= 0;
+		
+		$flow = json_decode(json_encode($flow),true);
+	
 		//生成每个有充值的用户的空数组
 		$order_arr = [];
 		//总计
-		$order_arr['0'] = [
+		$order_arr['总计'] = [
 			'customer_id'		=> 0,
+			'customer_name'	=> '总计',
 			'recharge_amount'	=> 0,
 			'artificial_amount'	=> 0,
 			'self_amount'		=> 0,
-			'month'			=> $month,
 		];
-		foreach ($order as $k => $v) {
+		foreach ($flow as $k => $v) {
 			if(!isset($order_arr[$v['user_id']])){
 				$order_arr[$v['user_id']]['customer_id']		= $v['user_id'];
+				$order_arr[$v['user_id']]['customer_name']	= DB::table('tz_users')->where('id', $v['user_id'])->value('name');
+				if($order_arr[$v['user_id']]['customer_name'] == null){
+					$order_arr[$v['user_id']]['customer_name']	= DB::table('tz_users')->where('id', $v['user_id'])->value('email');
+				}
 				$order_arr[$v['user_id']]['recharge_amount']	= 0;
 				$order_arr[$v['user_id']]['artificial_amount']	= 0;
 				$order_arr[$v['user_id']]['self_amount']		= 0;
-				$order_arr[$v['user_id']]['month']		= $month;
 			}
-			if($v['recharge_way'] == 3){
-				$order_arr[$v['user_id']]['artificial_amount']	= bcadd($order_arr[$v['user_id']]['artificial_amount'],$v['money'],2);
-				$order_arr[0]['artificial_amount']	= bcadd($order_arr[0]['artificial_amount'],$v['money'],2);
-			}else{
-				$order_arr[$v['user_id']]['self_amount']	= bcadd($order_arr[$v['user_id']]['self_amount'],$v['money'],2);
-				$order_arr[0]['self_amount']		= bcadd($order_arr[0]['self_amount'],$v['money'],2);
+
+			if($v['recharge_way'] == 3){	//如果是手动充值
+				$order_arr[$v['user_id']]['artificial_amount']	= $v['money'];
+				$order_arr['总计']['artificial_amount']		= bcadd( $order_arr['总计']['artificial_amount'] , $v['money'],2);
+			}else{				//其余的是自助充
+				$order_arr[$v['user_id']]['self_amount']		= $v['money'];
+				$order_arr['总计']['self_amount']		= bcadd( $order_arr['总计']['self_amount'] , $v['money'],2);
 			}
-			$order_arr['0']['recharge_amount']		= bcadd($order_arr['0']['recharge_amount'],$v['money'],2);
-			$order_arr[$v['user_id']]['recharge_amount'] 	= bcadd($order_arr[$v['user_id']]['recharge_amount'],$v['money'],2);		
+			$order_arr[$v['user_id']]['recharge_amount']	= bcadd($order_arr[$v['user_id']]['recharge_amount'], $v['money'],2);
+			$order_arr['总计']['recharge_amount']		= bcadd( $order_arr['总计']['recharge_amount'] , $v['money'],2);
 		}
-		//入库统计表
-	
-		$res = $this->insert($order_arr);
-		if($res){
-			$return['msg'] 	= '统计成功';
-			$return['code'] 	= 1;
-		}else{
-			$return['msg'] 	= '统计失败';
-			$return['code'] 	= 0;
+		$arr = [];
+		foreach($order_arr as $k => $v){
+			$arr[] = $v;
 		}
-		return $return;
+		return [
+				'data'	=> $arr,
+				'code'	=> 1,
+				'msg'	=> '统计成功',
+			];
 	}
 
 
-	//插入统计数据的方法
-	//	$data[
-	//		'key' => ['room_id' => ?? , 'rent_inuse' => ?? , .....]
-	//	]
-	public function insert($data)
-	{
-
-		foreach($data as $key => $value){
-
-			$res = $this->updateOrCreate(
-				[
-					'customer_id' 	=> $value['customer_id'],
-					'month'		=> $value['month'],
-				],
-
-				[
-					'customer_id' 		=> $value['customer_id'] , 
-					'recharge_amount' 	=> $value['recharge_amount'] , 
-					'artificial_amount' 	=> $value['artificial_amount'] , 
-					'self_amount' 		=> $value['self_amount'] , 
-					'month'			=> $value['month'],
-				]);
-			if($res == false){			
-				return false;
-			}		
-		}
-		return true;
-	}
-
-
-	/**
-	* 查询统计表的数据
-	* @param  $month : 需要查询的月份
-	* @return 将该月数据及相关的信息返回到控制器
-	*/
-	public function getStatistics($month){
-		// 用模型进行数据查询
-		$index = $this->where("month",$month)->get($this->fillable);
-
-		if(!$index->isEmpty()){
-		// 判断存在数据就对部分需要转换的数据进行数据转换的操作
-			$index = json_decode(json_encode($index),true);
-			foreach($index as $key=>$value) {
-			// 对应的字段的数据转换
-				if($value['customer_id'] == 0){
-					$index[$key]['customer'] = '本月总计';	
-				}else{
-					$index[$key]['customer'] = DB::table('tz_users')->where('id',$value['customer_id'])->value('name');
-					if($index[$key]['customer'] == null){
-						$index[$key]['customer'] = DB::table('tz_users')->where('id',$value['customer_id'])->value('email');
-					}
-				}
-			}
-			
-			$return['data'] = $index;
-			$return['code'] = 1;
-			$return['msg'] = '获取信息成功！！';
-		} else {
-			$return['data'] = $index;
-			$return['code'] = 0;
-			$return['msg'] = '暂无数据';
-		}
-		// 返回
-		return $return;
-	}
 	
 }

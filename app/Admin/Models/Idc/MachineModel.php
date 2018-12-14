@@ -228,7 +228,7 @@ class MachineModel extends Model
 			//原来的IP所属机器编号字段更新失败，事务回滚
 			DB::rollBack();
 			$return['code'] = 0;
-			$return['msg'] = '修改信息失败！！';
+			$return['msg'] = '修改信息失败！！!';
 			return $return;
 		}
 		//原来的修改成功，将新的IP更新机器编号字段
@@ -237,12 +237,12 @@ class MachineModel extends Model
 			// 都更新成功，进行事务提交
 			DB::commit();
 			$return['code'] = 1;
-			$return['msg'] = '修改信息成功！！';
+			$return['msg'] = '修改信息成功！！!';
 		} else {
 			//新的IP所属机器编号更新失败，事务回滚
 			DB::rollBack();
 			$return['code'] = 0;
-			$return['msg'] = '修改信息失败！！';
+			$return['msg'] = '修改信息失败！！!!';
 		}
 		return $return;
 	}

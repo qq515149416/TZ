@@ -981,7 +981,7 @@ class OrdersModel extends Model
 		$after_money = bcsub((string)$before_money,(string)$actual_payment,2);
 		
 		if( $after_money < 0 ){
-			$return['msg']  = '余额不足,请充值';
+			$return['msg']  = '用户的余额为 ￥'.$before_money.',订单尚需支付 ￥'.$actual_payment.',余额不足,请充值';
 			$return['code'] = 0;
 			return $return;
 		}

@@ -223,7 +223,7 @@ class MachineModel extends Model
 			return $return;
 		}
 		$or_ip = DB::table('idc_ips')->where('mac_num',$editdata['machine_num'])->first();
-		if($or_ip->isEmpty()){
+		if(!empty($or_ip)){
 		//先将原来所属IP的机器编号字段清除，状态修改
 				$original = DB::table('idc_ips')->where('mac_num',$editdata['machine_num'])->update(['mac_num'=>'','ip_status'=>0]);
 				if($original == 0){

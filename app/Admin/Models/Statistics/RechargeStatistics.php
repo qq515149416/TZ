@@ -43,6 +43,7 @@ class  RechargeStatistics extends Model
 					)
 				->groupBy('recharge_way','user_id')
 				->whereNull('deleted_at')
+				->where('trade_status',1)
 				->get();
 		if($flow->isEmpty()){
 			return [

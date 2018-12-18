@@ -19,7 +19,6 @@ Route::get('/gaofangip', function () {
     return view()->file(dirname(public_path()).'/resources/index/highDefense.html');
 });
 Route::get('/verification_code', function () {
-    captcha_src();
     return tz_ajax_echo(["src" => captcha_src()], "获取成功", 1);  //获取图形验证码链接
 });
 

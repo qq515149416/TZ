@@ -1,0 +1,17 @@
+.tz-search-btn button {
+    background-color: #2196f3;
+    color: #fff;
+    border-color: #2196f3;
+    border-radius: 0;
+}
+.tz-search-btn button:hover,
+.tz-search-btn button:active,
+.tz-search-btn button:focus,
+.tz-search-btn button:focus:active {
+    background-color: #2196f3;
+    color: #fff;
+    border-color: #2196f3;
+}
+input.tz-search-input {
+    border-color: #2196f3;
+}

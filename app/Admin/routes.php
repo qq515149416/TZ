@@ -67,6 +67,7 @@ Route::group([
     Route::group([
         'prefix' => 'show',
     ], function (Router $router) {
+        $router->get('/search','Show\GlobalSearchController@index');
         $router->get('/user_list', 'Show\UserController@index');//用户列表
         $router->get('/user_link_list', 'Show\LinkUserController@index');
         $router->get('/hr/employeeManagement', 'Show\EmployeeManagementController@index');
@@ -436,7 +437,7 @@ Route::group([
         $router->get('showOverdueResDet', 'Overdue\OverdueController@showOverdueResDet');//按类型查找接近过期资源
         $router->get('showTrialDefenseIp', 'Overdue\OverdueController@showTrialDefenseIp');//查找试用中高防IP业务
         $router->get('showUnpaidIdcOrder', 'Overdue\OverdueController@showUnpaidIdcOrder');//查找未付款的idc业务订单
-        
+
     });
 
     /**

@@ -26,6 +26,8 @@
         "file-loader": "^2.0.0",
         "jquery": "^3.3.1",
         "laravel-mix": "^2.0",
+        "less": "^3.9.0",
+        "less-loader": "^4.1.0",
         "lodash": "^4.17.4",
         "popper.js": "^1.12",
         "url-loader": "^1.1.1",

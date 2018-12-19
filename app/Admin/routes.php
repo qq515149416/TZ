@@ -111,6 +111,8 @@ Route::group([
             $router->get('/disposal', 'Show\DisposalController@index');
             $router->get('/disposalHistory', 'Show\DisposalHistoryController@index');
             $router->get('/machineProcessing', 'Show\MachineProcessingController@index');
+            $router->get('/newTypeManagement', 'Show\NewTypeManagementController@index');
+
         });
 
     });

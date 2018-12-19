@@ -20,6 +20,14 @@
 
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu">
+            <form class="navbar-form navbar-left">
+                <div class="input-group">
+                    <input type="text" class="form-control tz-search-input" placeholder="资产编号,IP,客户名称..">
+                    <span class="input-group-btn tz-search-btn">
+                        <button class="btn btn-default" type="button">搜索</button>
+                    </span>
+                </div><!-- /input-group -->
+            </form>
             <ul class="nav navbar-nav">
 
                 {!! Admin::getNavbar()->render() !!}

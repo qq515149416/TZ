@@ -11,15 +11,19 @@
 |
 */
 
-Route::get('/', function () {
-    return redirect('http://www.tzidc.com/');
-});
-Route::get('/gaofangip', function () {
-    \View::addExtension('html','php');
-    return view()->file(dirname(public_path()).'/resources/index/highDefense.html');
-});
+
+// Route::get('/gaofangip', function () {
+//     \View::addExtension('html','php');
+//     return view()->file(dirname(public_path()).'/resources/index/highDefense.html');
+// });
 Route::get('/verification_code', function () {
     return tz_ajax_echo(["src" => captcha_src()], "获取成功", 1);  //获取图形验证码链接
+});
+
+Route::group([
+    'middleware' => 'UserOperationLog'
+], function () {
+    Route::get('/', 'show\IndexController@index');
 });
 
 /**

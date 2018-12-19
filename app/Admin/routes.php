@@ -263,7 +263,7 @@ Route::group([
         $router->get('machineroom', 'Idc\MachineController@machineroom');//获取机房数据
         $router->get('cabinets', 'Idc\MachineController@cabinets');//获取机柜数据
         $router->get('ips', 'Idc\MachineController@ips');//获取IP数据
-        $router->get('excel_template', 'Idc\MachineController@excelTemplate');//下架机器的批量模板
+        $router->get('excel_template', 'Idc\MachineController@excelTemplate');//下载机器的批量模板
         $router->post('handle_excel', 'Idc\MachineController@handleExcel');//上传机器的批量添加数据
     });
 

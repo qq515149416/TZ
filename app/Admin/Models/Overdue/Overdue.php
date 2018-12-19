@@ -44,8 +44,11 @@ class  Overdue extends Model
 		->orderBy('tz_business.endding_time','asc')
 		->get();		
 		if($list->isEmpty()){
-			$return['msg']	= '暂无过期机柜';
-			return $return;
+			return [
+				'data'	=> [], 
+				'msg'	=> '暂无过期机柜',
+				'code'	=> 1,
+			];
 		}
 		
 		$return['data'] 	= $list;
@@ -82,8 +85,11 @@ class  Overdue extends Model
 		->orderBy('tz_business.endding_time','asc')
 		->get();		
 		if($list->isEmpty()){
-			$return['msg']	= '暂无过期机柜';
-			return $return;
+			return [
+				'data'	=> [], 
+				'msg'	=> '暂无未付款机柜',
+				'code'	=> 1,
+			];
 		}
 		
 		$return['data'] 	= $list;
@@ -114,8 +120,11 @@ class  Overdue extends Model
 		->orderBy('tz_business.endding_time','asc')
 		->get();	
 		if($list->isEmpty()){
-			$return['msg']	= '暂无过期机器';
-			return $return;
+			return [
+				'data'	=> [], 
+				'msg'	=> '暂无过期机器',
+				'code'	=> 1,
+			];
 		}
 
 		$return['data'] 	= $list;
@@ -164,12 +173,24 @@ class  Overdue extends Model
 		if($list->isEmpty()){
 			if($way == 'overdue'){
 				if($resource_type == 0){
-					$return['msg']	= '暂无接近过期资源';
+					return [
+						'data'	=> [], 
+						'msg'	=> '暂无接近过期资源',
+						'code'	=> 1,
+					];
 				}else{
-					$return['msg']	= '暂无此类型接近过期资源';
+					return [
+						'data'	=> [], 
+						'msg'	=> '暂无此类型接近过期资源',
+						'code'	=> 1,
+					];
 				}	
 			}elseif($way == 'xiajia'){
-				$return['msg']	= '暂无下架资源';
+				return [
+					'data'	=> [], 
+					'msg'	=> '暂无下架资源',
+					'code'	=> 1,
+				];
 			}
 			return $return;
 		}
@@ -241,8 +262,11 @@ class  Overdue extends Model
 		->orderBy('tz_business.start_time','desc')
 		->get();	
 		if($list->isEmpty()){
-			$return['msg']	= '暂无未付款使用中机器';
-			return $return;
+			return [
+				'data'	=> [], 
+				'msg'	=> '暂无未付款使用中机器',
+				'code'	=> 1,
+			];
 		}
 		$return['data'] 	= $list;
 		$return['msg'] 	= '获取成功';
@@ -270,8 +294,11 @@ class  Overdue extends Model
 		->orderBy('tz_business.start_time','desc')
 		->get();	
 		if($list->isEmpty()){
-			$return['msg']	= '暂无最近下架机器';
-			return $return;
+			return [
+				'data'	=> [], 
+				'msg'	=> '暂无最近下架机器',
+				'code'	=> 1,
+			];
 		}
 		$return['data'] 	= $list;
 		$return['msg'] 	= '获取成功';
@@ -290,7 +317,7 @@ class  Overdue extends Model
 			return [
 				'data'	=> '',
 				'msg'	=> '无试用高防IP业务',
-				'code'	=> 0,
+				'code'	=> 1,
 			];
 		}
 		$status = [ 0 => '预留状态' , 1 => '正在使用' , 2 => '申请下架' , 3 => '已下架' , 4 => '试用'];
@@ -320,7 +347,7 @@ class  Overdue extends Model
 			return [
 				'data'	=> '',
 				'msg'	=> '无未付款的idc业务订单',
-				'code'	=> 0,
+				'code'	=> 1,
 			];
 		}
 		$resource_type = [ '1' => '租用主机' , '2' => '托管主机' , '3' => '租用机柜' , '4' => 'IP' , '5' => 'CPU' , '6' => '硬盘' , '7' => '内存' , '8' => '带宽' , '9' => '防护' , '10' => 'cdn' , '11' => '高防IP'];

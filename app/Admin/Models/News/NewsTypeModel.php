@@ -23,7 +23,7 @@ class NewsTypeModel extends Model
      * @return [type] [description]
      */
     public function showNewsType(){
-    	$result = $this->all(['id','name','note','created_at','updated_at']);
+    	$result = $this->get(['id','name','note','created_at','updated_at']);
     	if(!$result->isEmpty()){
     		$return['data'] = $result;
     		$return['code'] = 1;
@@ -31,7 +31,7 @@ class NewsTypeModel extends Model
     	} else {
     		$return['data'] = $result;
     		$return['code'] = 0;
-    		$return['msg'] = '获取新闻类型信息失败';
+    		$return['msg'] = '暂无相关信息';
     	}
         return $return;
     }

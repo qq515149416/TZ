@@ -117,7 +117,7 @@ class StoreModel extends Model
 		$return['data'] = '';
 		if(count($ip_list) == 0){
 			$return['msg'] 	= '无此状态ip';
-			$return['code']	= 0;
+			$return['code']	= 1;
 			return $return;
 		}
 		$site_list = [1 => '西安'];

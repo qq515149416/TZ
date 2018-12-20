@@ -13,6 +13,8 @@ use App\Admin\Models\Idc\Memory;
 use Illuminate\Support\Carbon;//使用该包做到期时间的计算
 use Encore\Admin\Facades\Admin;
 use Illuminate\Support\Facades\Session;
+use XS;
+use XSDocument;
 /**
  * 后台订单模型
  */
@@ -208,7 +210,7 @@ class OrdersModel extends Model
 		// $insert_data['month'] = (int)date('Ym',time());
 		$insert_data['created_at'] = Carbon::now()->toDateTimeString();
 		DB::beginTransaction();//开启事务处理
-		$row = DB::table('tz_orders')->insert($insert_data);
+		$row = DB::table('tz_orders')->insertGetId($insert_data);
 		if($row == false){
 			// 资源订单生成失败
 			DB::rollBack();
@@ -234,7 +236,7 @@ class OrdersModel extends Model
 			$order_flow['after_money'] = bcsub($money,$insert_data['price'],2);
 			// $order_flow['month'] = (int)date('Ym',time());
 			$order_flow['created_at'] = date('Y-m-d H:i:s',time());
-			$flow_row = DB::table('tz_orders_flow')->insert($order_flow);
+			$flow_row = DB::table('tz_orders_flow')->insertGetId($order_flow);
 			if($flow_row == 0){
 				DB::rollBack();
 				$return['data'] = '';
@@ -275,6 +277,15 @@ class OrdersModel extends Model
 		}
 		if($result != 0){
 			//所对应资源表的业务编号和到期时间，状态修改成功后进行事务提交
+			$xunsearch = new XS('orders');
+		    $index = $xunsearch->index;
+            $doc['id'] = strtolower($row);
+			$doc['machine_sn'] = strtolower($insert_data['machine_sn']);
+			$doc['business_sn'] = strtolower($insert_data['business_sn']);
+			$doc['order_sn'] = strtolower($order_sn);
+    		$document = new \XSDocument($doc);
+    		$index->update($document);
+    		$index->flushIndex();
 			DB::commit();
 			$return['data'] = $order_sn;
 			$return['code'] = 1;

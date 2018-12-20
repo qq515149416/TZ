@@ -91,7 +91,7 @@ class PackageModel extends Model
 		$return['data'] = '';
 		if(count($package_list) == 0){
 			$return['msg'] 	= '无此地区套餐';
-			$return['code']	= 0;
+			$return['code']	= 1;
 			return $return;
 		}
 		$site_list = [1 => '西安' , 2 => '测试'];

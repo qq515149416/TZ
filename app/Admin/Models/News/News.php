@@ -58,8 +58,8 @@ class  News extends Model
 			$return['code'] = 1;
 			$return['msg'] = '获取信息成功！！';
 		} else {
-			$return['data'] = $index;
-			$return['code'] = 0;
+			$return['data'] = [];
+			$return['code'] = 1;
 			$return['msg'] = '暂无数据';
 		}
 		// 返回

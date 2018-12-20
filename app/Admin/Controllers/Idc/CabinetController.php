@@ -54,7 +54,10 @@ class CabinetController extends Controller
 			0 => '内部机柜',
 			1 => '客户机柜',
 		];
-
+		//判断是否为空
+		if($cabinetData->isEmpty()){
+			return tz_ajax_echo([], '暂无数据', 1);
+		}
 		//根据机房ID查询机房名称
 		foreach ($cabinetData as $key => $value) {
 			$machineRoomData                        = $machineRoomModel->queryMachineRoomName($value['machineroom_id']);
@@ -62,13 +65,9 @@ class CabinetController extends Controller
 			$cabinetData[$key]['use_state_cn']      = $stateCN[$value['use_state']];
 			$cabinetData[$key]['use_type_cn']       = $typeCN[$value['use_type']];
 		}
-
-		//判断是否获取成功
-		if ($cabinetData) {
-			return tz_ajax_echo($cabinetData, '获取成功', 1);
-		} else {
-			return tz_ajax_echo([], '获取失败', 0);
-		}
+		
+		return tz_ajax_echo($cabinetData, '获取成功', 1);
+		
 	}
 
 

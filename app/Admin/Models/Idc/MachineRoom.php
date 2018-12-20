@@ -86,6 +86,8 @@ class MachineRoom extends Model
             foreach ($res as $key => $value) {
                 $res[$key]['list_order'] = $this->machineroom($value['list_order']);
             }
+        }else{
+            $res = false;
         }
         return $res;
     }

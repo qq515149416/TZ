@@ -136,9 +136,9 @@ class BusinessModel extends Model
     	$list = $this->where('status',2)->orderBy('updated_at','desc')->get()->toArray();
     	if(count($list) == 0){
     		return [
-	    		'data'	=> '',
+	    		'data'	=> [],
 			'msg'	=> '无下架申请',
-			'code'	=> 0,
+			'code'	=> 1,
 	    	];
     	}
    
@@ -196,9 +196,9 @@ class BusinessModel extends Model
         
         if(count($list) == 0){
             return [
-                'data'  =>  '',
-                'msg'   => '获取失败或无数据',
-                'code'  => 0,
+                'data'  =>  [],
+                'msg'   => '暂无数据',
+                'code'  => 1,
             ];
         }
         for ($i=0; $i < count($list); $i++) { 

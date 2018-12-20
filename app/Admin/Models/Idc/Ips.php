@@ -166,7 +166,7 @@ class Ips extends Model
      */
     public function doEdit($data){
     	if($data && $data['id']+0) {
-                        $check = $this->checkDel($id);
+                        $check = $this->checkDel($data['id']);
                         if($check['code'] != 1){
                             return $check;
                         }

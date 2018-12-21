@@ -422,7 +422,7 @@ class OrdersModel extends Model
                             $ip['ip_status'] = 0;
                         } else {
                             $end_time = $this->findResource($delete_data->order_sn,$delete_data->machine_sn,$delete_data->business_number);
-                            $order_status = DB::table('tz_orders')->where(['order_sn'=>$end_time->order_sn])->update(['order_status'=>2]);
+                            $order_status = DB::table('tz_orders')->where(['order_sn'=>$end_time->order_sn])->update(['order_status'=>1]);
                             if($order_status == 0){
                                 DB::rollBack();
                                 $return['code'] = 0;
@@ -449,7 +449,7 @@ class OrdersModel extends Model
                             $cpu['cpu_used'] = 0;
                         } else {
                             $end_time = $this->findResource($delete_data->order_sn,$delete_data->machine_sn,$delete_data->business_number);
-                            $order_status = DB::table('tz_orders')->where(['order_sn'=>$end_time->order_sn])->update(['order_status'=>2]);
+                            $order_status = DB::table('tz_orders')->where(['order_sn'=>$end_time->order_sn])->update(['order_status'=>1]);
                             if($order_status == 0){
                                 DB::rollBack();
                                 $return['code'] = 0;
@@ -476,7 +476,7 @@ class OrdersModel extends Model
                             $harddisk['harddisk_used'] = 0;
                         } else { 
                             $end_time = $this->findResource($delete_data->order_sn,$delete_data->machine_sn,$delete_data->business_number);
-                            $order_status = DB::table('tz_orders')->where(['order_sn'=>$end_time->order_sn])->update(['order_status'=>2]);
+                            $order_status = DB::table('tz_orders')->where(['order_sn'=>$end_time->order_sn])->update(['order_status'=>1]);
                             if($order_status == 0){
                                 DB::rollBack();
                                 $return['code'] = 0;
@@ -503,7 +503,7 @@ class OrdersModel extends Model
                             $memory['memory_used'] = 0;
                         } else {
                             $end_time = $this->findResource($delete_data->order_sn,$delete_data->machine_sn,$delete_data->business_number);
-                            $order_status = DB::table('tz_orders')->where(['order_sn'=>$end_time->order_sn])->update(['order_status'=>2]);
+                            $order_status = DB::table('tz_orders')->where(['order_sn'=>$end_time->order_sn])->update(['order_status'=>1]);
                             if($order_status == 0){
                                 DB::rollBack();
                                 $return['code'] = 0;

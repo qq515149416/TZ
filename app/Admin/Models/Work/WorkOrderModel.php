@@ -109,12 +109,21 @@ class WorkOrderModel extends Model
         $where = ['sales_id'=>Admin::user()->id,'business_number'=>$work_data['business_num']];
         $business = DB::table('tz_business')->where($where)->whereIn('business_status',[0,1,2,3,4])->select('client_id','business_number','sales_id')->first();
     	if(!$business){
-            $return['data'] = '';
-            $return['code'] = 0;
-            $return['msg'] = '工单所属业务不存在或已过期或取消或业务不属于对应客户,请确认后提交';
-            return $return;
+            $business = DB::table('tz_defenseip_business')
+                            ->join('tz_users','tz_defenseip_business.user_id','=','tz_users.id')
+                            ->join('admin_users','tz_users.salesman_id','=','admin_users.id')
+                            ->where(['tz_defenseip_business.business_number'=>$work_data['business_num'],'tz_defenseip_business.status'=>1])
+                            ->select('tz_defenseip_business.id','admin_users.id as sales_id','admin_users.name as sales_name','tz_defenseip_business.user_id as client_id')
+                            ->first();
+            if(!$business){
+                $return['data'] = '';
+                $return['code'] = 0;
+                $return['msg'] = '工单所属业务不存在或者已过期或者已取消,请确认后提交';
+                return $return;
+            }
+            
         }
-        $work_order = $this->where(['business_num'=>$work_data['business_num'],'work_order_status'=>[0,1]])->get(['id','work_order_number']);
+        $work_order = $this->where(['business_num'=>$work_data['business_num']])->whereBetween('work_order_status',array(0,1))->get(['id','work_order_number']);
         if(!$work_order->isEmpty()){
             $return['data'] = '';
             $return['code'] = 0;
@@ -133,7 +142,7 @@ class WorkOrderModel extends Model
         $work_data['process_department'] = $this->department()->id;//转发部门
         $row = $this->create($work_data);
         $answer = new WorkAnswerModel();
-        $answer->insertWorkAnswer(['work_number'=>$row['work_order_number'],'answer_content'=>$row['work_order_content']]);
+        $answer->insertWorkAnswer(['work_number'=>$row['work_order_number'],'answer_content'=>$row['work_order_content'],'work_order_status'=>0]);
         if($row != false){
 
             /**
@@ -346,7 +355,20 @@ class WorkOrderModel extends Model
      */
     public function businessDetail($business_number){
         $business = DB::table('tz_business')->where('business_number',$business_number)->select('client_name','business_type','machine_number','resource_detail','sales_name')->first();
-        $business_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜'];
+        if(!$business){
+            $business = DB::table('tz_defenseip_business')
+                            ->join('tz_defenseip_store','tz_defenseip_business.ip_id','=','tz_defenseip_store.id')
+                            ->join('tz_users','tz_defenseip_business.user_id','=','tz_users.id')
+                            ->join('admin_users','tz_users.salesman_id','=','admin_users.id')
+                            ->where('tz_defenseip_business.business_number',$business_number)
+                            ->select('tz_defenseip_business.target_ip','tz_defenseip_store.ip','tz_defenseip_store.protection_value','tz_users.name','tz_users.email','admin_users.name as sales_name')
+                            ->first();
+            $business->business_type = 4;
+            $business->client_name = $business->name?$business->name:$business->email;
+            $business->machine_number = $business->ip;
+            $business->resource_detail = json_encode((array)$business);
+        }
+        $business_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'高防IP'];
         $business->business_type = $business_type[$business->business_type];
         return $business;
     }

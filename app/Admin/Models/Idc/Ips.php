@@ -34,7 +34,7 @@ class Ips extends Model
     	if(!$index->isEmpty()){
     		// 判断存在数据就对部分需要转换的数据进行数据转换的操作
     		$ip_company = [0=>'电信公司',1=>'移动公司',2=>'联通公司'];
-    		$ip_status = [0=>'未使用',1=>'使用(子IP)',2=>'使用(内部机器主IP)',3=>'使用(托管主机的主IP)'];
+    		$ip_status = [0=>'未使用',1=>'使用中',2=>'使用(内部机器主IP)',3=>'使用(托管主机的主IP)'];
     		$ip_lock = [0=>'未锁定',1=>'锁定'];
 
     		foreach($index as $ipkey=>$ipvalue) {

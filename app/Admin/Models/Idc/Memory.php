@@ -58,8 +58,8 @@ class  Memory extends Model
 			$return['code'] = 1;
 			$return['msg'] = '获取信息成功！！';
 		} else {
-			$return['data'] = $index;
-			$return['code'] = 0;
+			$return['data'] = [];
+			$return['code'] = 1;
 			$return['msg'] = '暂无数据';
 		}
 		// 返回
@@ -77,7 +77,7 @@ class  Memory extends Model
 		if($data){
 			// 存在数据就用model进行数据写入操作
 			// $fill = $this->fill($data);
-			$data['memory_number'] = 'RAM'.$data['memory_number'];
+			$data['memory_number'] = 'RAM-'.$data['memory_number'];
 			$row = $this->create($data);
 
 			if($row != false){

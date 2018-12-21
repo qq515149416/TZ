@@ -29,8 +29,8 @@ class NewsTypeModel extends Model
     		$return['code'] = 1;
     		$return['msg'] = '获取新闻类型信息成功';
     	} else {
-    		$return['data'] = $result;
-    		$return['code'] = 0;
+    		$return['data'] = [];
+    		$return['code'] = 1;
     		$return['msg'] = '暂无相关信息';
     	}
         return $return;

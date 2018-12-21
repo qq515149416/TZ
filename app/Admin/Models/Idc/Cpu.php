@@ -59,8 +59,8 @@ class  Cpu extends Model
 			$return['code'] = 1;
 			$return['msg'] = '获取信息成功！！';
 		} else {
-			$return['data'] = $index;
-			$return['code'] = 0;
+			$return['data'] = [];
+			$return['code'] = 1;
 			$return['msg'] = '暂无数据';
 		}
 		// 返回
@@ -78,7 +78,7 @@ class  Cpu extends Model
 		if($data){
 			// 存在数据就用model进行数据写入操作
 			// $fill = $this->fill($data);
-			$data['cpu_number'] = 'CPU'.$data['cpu_number'];
+			$data['cpu_number'] = 'CPU-'.$data['cpu_number'];
 			$row = $this->create($data);
 
 			if($row != false){

@@ -53,8 +53,8 @@ class Ips extends Model
     		$return['code'] = 1;
     		$return['msg'] = '获取信息成功！！';
     	} else {
-    		$return['data'] = $index;
-    		$return['code'] = 0;
+    		$return['data'] = [];
+    		$return['code'] = 1;
     		$return['msg'] = '暂无数据';
     	}
     	// 返回
@@ -166,7 +166,7 @@ class Ips extends Model
      */
     public function doEdit($data){
     	if($data && $data['id']+0) {
-                        $check = $this->checkDel($id);
+                        $check = $this->checkDel($data['id']);
                         if($check['code'] != 1){
                             return $check;
                         }

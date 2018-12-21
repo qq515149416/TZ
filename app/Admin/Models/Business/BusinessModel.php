@@ -71,9 +71,8 @@ class BusinessModel extends Model
         }
         $relevance = DB::table('tz_business_relevance')->insert(['type'=>1,'business_id'=>$insert['business_number'],'created_at'=>date('Y-m-d H:i:s',time())]);
         if($relevance != 0){
-	    $xunsearch = new XS('business');
-	    $index = $xunsearch->index;
-		//$insex->clean();
+    	    $xunsearch = new XS('business');
+    	    $index = $xunsearch->index;
             $resource = json_decode($insert['resource_detail']);
             $doc['ip'] = strtolower($resource->ip);
             $doc['cpu'] = strtolower($resource->cpu);

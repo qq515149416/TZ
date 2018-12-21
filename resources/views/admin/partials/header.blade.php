@@ -20,11 +20,12 @@
 
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu">
-            <form class="navbar-form navbar-left">
+            <form class="navbar-form navbar-left" action="/tz_admin/show/search" method="get">
                 <div class="input-group">
-                    <input type="text" class="form-control tz-search-input" placeholder="资产编号,IP,客户名称..">
+                    <input type="text" class="form-control tz-search-input" name="search" placeholder="资产编号,IP,客户名称..">
                     <span class="input-group-btn tz-search-btn">
-                        <button class="btn btn-default" type="button">搜索</button>
+                        <input class="btn btn-default submit-btn" type="submit" value="搜索" />
+                        <!-- <button class="btn btn-default" type="button">搜索</button> -->
                     </span>
                 </div><!-- /input-group -->
             </form>

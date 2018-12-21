@@ -161,7 +161,7 @@ class MachineRoomController extends Controller
             return tz_ajax_echo($listData, '机房列表获取成功', 1);
         } else {
             //失败
-            return tz_ajax_echo($listData, '暂无数据', 1;
+            return tz_ajax_echo($listData, '暂无数据', 1);
         }
 
     }

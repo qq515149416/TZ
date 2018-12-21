@@ -498,7 +498,7 @@ class MachineModel extends Model
 		$worksheet = $spreadsheet->getActiveSheet();
 		$worksheet->setTitle('机器批量导入表格');
 		$worksheet->setCellValueByColumnAndRow(1, 1, '机器批量导入表格(此为测试功能)');
-		$row_value = ['机器编号(必填)','CPU(必填)','内存(必填)','硬盘(必填)','机器型号(必填)','机房(选填)','登录名(选填)','登录密码(选填)','备注'];//填写的字段
+		$row_value = ['机器编号(必填)','CPU(必填)','内存(必填)','硬盘(必填)','机器型号(必填)','业务类型(必填)','机房(选填)','登录名(选填)','登录密码(选填)','备注'];//填写的字段
 		$row = $worksheet->fromArray($row_value,NULL,'A4');//分配字段从A4开始填写（横向）
 		$highest_row = $worksheet->getHighestRow();//总行数
 		$highest_colum = $worksheet->getHighestColumn();//总列数
@@ -514,9 +514,9 @@ class MachineModel extends Model
 		];
 		$worksheet->mergeCells('A1:'.$highest_colum.'1')->getStyle('A1:'.$highest_colum.'1')->applyFromArray($title_font);//设置标题样式
 		//说明内容
-		$worksheet->getCell('A2')->setValue("填写说明:填写机房时请参照右边的机房信息,填写对应id(例如A机房的id为1,此时填1);以上字段请参照右边的对照表");
+		$worksheet->getCell('A2')->setValue("填写说明:填写机房时请参照右边的机房信息,填写对应id(例如A机房的id为1,此时填1);填写业务类型时请填写对应的代号即可(主要用于预备库的添加),以上字段请参照右边的对照表");
 		$worksheet->getStyle('A2')->getFont()->applyFromArray(['bold'=>TRUE,'size'=>'12px']);//说明内容样式
-		$worksheet->getRowDimension('2')->setRowHeight(12);//说明内容行高
+		$worksheet->getRowDimension('2')->setRowHeight(16);//说明内容行高
 		$worksheet->mergeCells('A2:'.$highest_colum.'3')->getStyle('A2:'.$highest_colum.'3')->getAlignment()->setWrapText(true);//说明内容自动换行
 		//设置字段宽度
 		for($i='A';$i<=$highest_colum;$i++){
@@ -533,7 +533,7 @@ class MachineModel extends Model
 			],
 		];
 		$colum = ++$highest_colum;//说明字段的开始列数
-		$note_value = ['机房(id-名称)'];//说明字段
+		$note_value = ['机房(id-名称)','业务类型(代号-名称)'];//说明字段
 		$row_note = $worksheet->fromArray($note_value,NULL,$colum.'4');//分配说明字段（横向）
 		$highest_colum = $worksheet->getHighestColumn();//总的列数
 		$row->getStyle('A4:'.$highest_colum.'4')->applyFromArray($row_font);//设置字段样式
@@ -573,13 +573,13 @@ class MachineModel extends Model
 		// $use = ['0--未使用','1--使用中','2--锁定'];
 		// $use = array_chunk($use,1);
 		// $worksheet->fromArray($use,NULL,++$colum.'5');
-		// /**
-		//  * 业务类型
-		//  * @var [type]
-		//  */
-		// $business = ['1--租用','2--托管','3--备用'];
-		// $business = array_chunk($business,1);
-		// $worksheet->fromArray($business,NULL,++$colum.'5');
+		/**
+		 * 业务类型
+		 * @var [type]
+		 */
+		$business = ['3--预备机器','4--托管预备机器'];
+		$business = array_chunk($business,1);
+		$worksheet->fromArray($business,NULL,++$colum.'5');
 		// /**
 		//  * 上下架
 		//  * @var [type]
@@ -619,7 +619,7 @@ class MachineModel extends Model
 		$spreadsheet = $reader->load($file->getRealPath());//加载文件
 		$worksheet = $spreadsheet->getActiveSheet();//获取表格的活动区域
 		$highest_colum = $worksheet->getHighestColumn();//获取总的列数
-		$highest_colum_num = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($highest_colum)-2;//将总列数转换为数字
+		$highest_colum_num = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($highest_colum)-3;//将总列数转换为数字
 		$highest_colum = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($highest_colum_num);//数字转换为列
 		for($colum = 'A';$colum <= $highest_colum;$colum++){//转换列名
 			switch($worksheet->getCell($colum.'4')->getValue()){
@@ -662,9 +662,9 @@ class MachineModel extends Model
 				// case '使用状态(必填)':
 				//     $colum_value[$colum] = 'used_status';
 				//     break;
-				// case '业务类型(必填)':
-				//     $colum_value[$colum] = 'business_type';
-				//     break;
+				case '业务类型(必填)':
+				    $colum_value[$colum] = 'business_type';
+				    break;
 				// case '上下架(必填)':
 				//     $colum_value[$colum] = 'machine_status';
 				//     break;
@@ -674,7 +674,7 @@ class MachineModel extends Model
 			}
 		}
 		$mysql = Schema::getColumnListing($this->table);//获取数据库中的字段
-		if(empty($colum_value) && count(array_intersect($colum_value,$mysql) != 9)){//判断列名是否与数据库一致
+		if(empty($colum_value) && count(array_intersect($colum_value,$mysql) != 10)){//判断列名是否与数据库一致
 			$return['data'] = '';
 			$return['code'] = 0;
 			$return['msg'] = '请从网站下载正确的模板填写!!';

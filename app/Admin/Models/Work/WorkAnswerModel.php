@@ -27,17 +27,29 @@ class WorkAnswerModel extends Model
     	if($where){
             $business = DB::table('tz_work_order')
                             ->join('tz_business', 'tz_work_order.business_num', '=', 'tz_business.business_number')
-                            ->where(['tz_work_order.work_order_number'=>$where['work_number']])
+                            ->where(['work_order_number'=>$where['work_number']])
                             ->select('tz_business.business_type','tz_business.business_number','tz_business.machine_number','tz_work_order.work_order_type','tz_work_order.customer_id','tz_work_order.work_order_number','tz_work_order.work_order_content')
+                           ->first();
+            if(empty($business)){
+                $business = DB::table('tz_work_order')
+                            ->join('tz_defenseip_business', 'tz_work_order.business_num', '=', 'tz_defenseip_business.business_number')
+                            ->join('tz_defenseip_store','tz_defenseip_business.ip_id','=','tz_defenseip_store.id')
+                            ->join('tz_users','tz_defenseip_business.user_id','=','tz_users.id')
+                            ->where(['tz_work_order.work_order_number'=>$where['work_number']])
+                            ->select('tz_defenseip_business.target_ip','tz_defenseip_store.ip','tz_defenseip_store.protection_value','tz_users.name','tz_users.email','tz_work_order.work_order_type','tz_work_order.customer_id','tz_work_order.work_order_number','tz_work_order.work_order_content')
                             ->first();
-
+                $business->business_type = 4;
+                $business->client_name = $business->name?$business->name:$business->email;
+                $business->machine_number = $business->ip;
+                $business->resource_detail = json_decode(json_encode($business));
+            }
             if(empty($business)){
                 $return['data'] = [];
                 $return['msg'] = '工单不存在';
                 $return['code'] = 0;
                 return $return;
             }
-            $business_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜'];
+            $business_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'高防IP'];
             $business->business_type = $business_type[$business->business_type];
             $business->work_order_type = $this->workType($business->work_order_type);
     		$answer = $this->where($where)->get(['work_number','answer_content','answer_id','answer_name','answer_role','created_at']);

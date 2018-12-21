@@ -35,7 +35,11 @@ class GlobalSearchController extends Controller
         $rows = [
         ];
         foreach($result as $k=>$v) {
-            array_push($rows,$v);
+            array_push($rows,[
+                $v["business_number"],
+                $v["client_name"],
+                $v["sales_name"]
+            ]);
         }
 
         $table = new Table($headers, $rows);

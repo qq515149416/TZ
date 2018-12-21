@@ -1,13 +1,13 @@
-.tz-search-btn button {
+.tz-search-btn .submit-btn {
     background-color: #2196f3;
     color: #fff;
     border-color: #2196f3;
     border-radius: 0;
 }
-.tz-search-btn button:hover,
-.tz-search-btn button:active,
-.tz-search-btn button:focus,
-.tz-search-btn button:focus:active {
+.tz-search-btn .submit-btn:hover,
+.tz-search-btn .submit-btn:active,
+.tz-search-btn .submit-btn:focus,
+.tz-search-btn .submit-btn:focus:active {
     background-color: #2196f3;
     color: #fff;
     border-color: #2196f3;

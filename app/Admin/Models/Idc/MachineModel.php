@@ -154,10 +154,10 @@ class MachineModel extends Model
 			}
 			if($data['business_type'] == 1 || $data['business_type'] == 3){
 				//如果新增机器成功则将机器编号更新到对应的IP库中
-				$ip_row = DB::table('idc_ips')->where(['id'=>$data['ip_id']])->update(['mac_num'=>$data['machine_num'],'ip_status'=>2]);
+				$ip_row = DB::table('idc_ips')->where(['id'=>$data['ip_id']])->update(['mac_num'=>$data['machine_num'],'ip_status'=>1]);
 			} elseif($data['business_type'] == 2) {
 				//如果新增机器成功则将机器编号更新到对应的IP库中
-				$ip_row = DB::table('idc_ips')->where(['id'=>$data['ip_id']])->update(['mac_num'=>$data['machine_num'],'ip_status'=>3]);
+				$ip_row = DB::table('idc_ips')->where(['id'=>$data['ip_id']])->update(['mac_num'=>$data['machine_num'],'ip_status'=>1]);
 			}
 
 			if($ip_row != 0){
@@ -241,7 +241,7 @@ class MachineModel extends Model
 			return $return;
 		}
 		//原来的修改成功，将新的IP更新机器编号字段
-		$ip = DB::table('idc_ips')->where('id',$editdata['ip_id'])->update(['mac_num'=>$editdata['machine_num'],'ip_status'=>2]);
+		$ip = DB::table('idc_ips')->where('id',$editdata['ip_id'])->update(['mac_num'=>$editdata['machine_num'],'ip_status'=>1]);
 		if($ip != 0){
 			// 都更新成功，进行事务提交
 			DB::commit();

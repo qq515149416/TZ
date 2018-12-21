@@ -47,7 +47,9 @@ class OrderModel extends Model
 				->where('protection_value',$package->protection_value)
 				->where('status',0)
 				->first();
+		
 		if($check_ip == null){
+			$return['data'] 	= [];
 			$return['msg'] 	= '该套餐IP库存不足!';
 			$return['code']	= 0;
 			return $return;

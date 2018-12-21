@@ -38,7 +38,14 @@ class GlobalSearchController extends Controller
             array_push($rows,[
                 $v["business_number"],
                 $v["client_name"],
-                $v["sales_name"]
+                $v["sales_name"],
+                $v["machine_number"],
+                $v["money"],
+                $v["length"],
+                $v["start_time"],
+                $v["endding_time"],
+                $v["type"],
+                $v["status"]
             ]);
         }
 

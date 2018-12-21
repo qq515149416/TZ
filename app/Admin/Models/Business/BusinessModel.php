@@ -50,6 +50,7 @@ class BusinessModel extends Model
         $sales_id             = Admin::user()->id;
         $insert['sales_id']   = $sales_id;
         $insert['sales_name'] = Admin::user()->name?Admin::user()->name:Admin::user()->username;
+        $insert['created_at'] = date('Y-m-d H:i:s',time());
         DB::beginTransaction();//开启事务处理
         $row                  = DB::table('tz_business')->insertGetId($insert);
         if ($row == 0) {

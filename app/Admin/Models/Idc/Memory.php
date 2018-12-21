@@ -77,7 +77,7 @@ class  Memory extends Model
 		if($data){
 			// 存在数据就用model进行数据写入操作
 			// $fill = $this->fill($data);
-			$data['memory_number'] = 'RAM'.$data['memory_number'];
+			$data['memory_number'] = 'RAM-'.$data['memory_number'];
 			$row = $this->create($data);
 
 			if($row != false){

@@ -29,12 +29,13 @@ class GlobalSearchController extends Controller
             '时长',
             '开始时间',
             '到期时间',
-            '业务类型'
+            '业务类型',
+            '业务状态'
         ];
         $rows = [
         ];
         foreach($result as $k=>$v) {
-
+            array_push($rows,$v);
         }
 
         $table = new Table($headers, $rows);

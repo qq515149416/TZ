@@ -22,7 +22,7 @@ class SearchController extends Controller
      * @param  string $search 搜索条件
      * @return array         搜索结果
      */
-    public function doSearch(Request $request){
+    public function doSearch($search){
         if(!$search){
             return $search_result = [];
         }

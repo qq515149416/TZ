@@ -78,7 +78,7 @@ class  Cpu extends Model
 		if($data){
 			// 存在数据就用model进行数据写入操作
 			// $fill = $this->fill($data);
-			$data['cpu_number'] = 'CPU'.$data['cpu_number'];
+			$data['cpu_number'] = 'CPU-'.$data['cpu_number'];
 			$row = $this->create($data);
 
 			if($row != false){

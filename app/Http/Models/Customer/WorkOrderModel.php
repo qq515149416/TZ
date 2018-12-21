@@ -92,7 +92,7 @@ class WorkOrderModel extends Model
             }
     		
     	}
-        $work_order = $this->where(['business_num'=>$insert_data['business_num'],'work_order_status'=>[0,1]])->get(['id','work_order_number']);
+        $work_order = $this->where(['business_num'=>$insert_data['business_num']])->whereBetween('work_order_status',array(0,1))->get(['id','work_order_number']);
         if(!$work_order->isEmpty()){
             $return['data'] = '';
             $return['code'] = 0;
@@ -202,7 +202,7 @@ class WorkOrderModel extends Model
             $business->business_type = 4;
             $business->client_name = $business->name?$business->name:$business->email;
             $business->machine_number = $business->ip;
-            $business->resource_detail = json_decode(json_encode($business));
+            $business->resource_detail = json_encode((array)$business);
         }
         $business_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'高防IP'];
     	$business->business_type = $business_type[$business->business_type];

@@ -70,7 +70,7 @@ class WorkAnswerModel extends Model
             DB::beginTransaction();
             switch ($work_order->work_order_status) {
                 case 0:
-                    $row = DB::table('tz_work_order')->where(['work_order_number'=>$insert_data['work_number']])->update(['work_order_status'=>1]);
+                    $row = DB::table('tz_work_order')->where(['work_order_number'=>$insert_data['work_number']])->update(['work_order_status'=>isset($insert_data['work_order_status'])?$insert_data['work_order_status']:1]);
                     if($row == 0){
                         DB::rollBack();
                         $return['data'] = '';
@@ -188,7 +188,20 @@ class WorkAnswerModel extends Model
      */
     public function businessDetail($business_number){
         $business = DB::table('tz_business')->where('business_number',$business_number)->select('client_name','business_type','machine_number','resource_detail','sales_name')->first();
-        $business_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜'];
+        if(!$business){
+            $business = DB::table('tz_defenseip_business')
+                            ->join('tz_defenseip_store','tz_defenseip_business.ip_id','=','tz_defenseip_store.id')
+                            ->join('tz_users','tz_defenseip_business.user_id','=','tz_users.id')
+                            ->join('admin_users','tz_users.salesman_id','=','admin_users.id')
+                            ->where('tz_defenseip_business.business_number',$business_number)
+                            ->select('tz_defenseip_business.target_ip','tz_defenseip_store.ip','tz_defenseip_store.protection_value','tz_users.name','tz_users.email','admin_users.name as sales_name')
+                            ->first();
+            $business->business_type = 4;
+            $business->client_name = $business->name?$business->name:$business->email;
+            $business->machine_number = $business->ip;
+            $business->resource_detail = json_decode(json_encode($business));
+        }
+        $business_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'高防IP'];
         $business->business_type = $business_type[$business->business_type];
         return $business;
     }

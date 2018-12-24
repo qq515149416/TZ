@@ -84,6 +84,9 @@ class SearchModel extends Model
             }
             $search_result[$xs_key] = $business;
         }
+        if(empty($search_result[0])){
+            $search_result = [];
+        }
         return $search_result;
     }
 

@@ -40,7 +40,7 @@ class SearchModel extends Model
             return $search_result = [];
         }
         $search_result = [];
-        $result_key  = 0;
+        //$result_key  = 0;
         foreach($xs_result as $xs_key => $xs_value){
             $business = $this->where(['business_number'=>$xs_value['business_sn']])->whereBetween('remove_status',[0,1])->select('id','client_name','sales_name','business_number','business_type','machine_number','resource_detail','money','client_id','length','start_time','endding_time','business_status')->first();
             if(!empty($business)){
@@ -71,10 +71,11 @@ class SearchModel extends Model
                 $resource_detail = json_decode($business['resource_detail']);
                 if($business['business_type'] != 3 ){
                     array_push($ip,$resource_detail->ip_detail);//IP
-                    bcadd($total_bandwidth,$resource_detail->bandwidth);//带宽
-                    bcadd($total_protected,$resource_detail->protect);//防护
+                    $total_bandwidth = bcadd($total_bandwidth,$resource_detail->bandwidth);//带宽
+                    $total_protected = bcadd($total_protected,$resource_detail->protect);//防护
                     $business['cabinet'] = $resource_detail->cabinets;
                     $business['machineroom_name'] = $resource_detail->machineroom_name;
+                    $business['machineroom_id'] = $resource_detail->machineroom_id;
                 } else {
                     $business['cabinet'] = $resource_detail->cabinet_id;
                     $business['machineroom_name'] = $resource_detail->machineroom_name;
@@ -84,10 +85,14 @@ class SearchModel extends Model
                 $business['protect'] = $total_protected;
                 $business['bandwidth'] = $total_bandwidth;
             }
-            if(!empty($business)){
-                $search_result[$result_key] = $business;
-                $result_key++;
-            }    
+            // if(!empty($business)){
+            //     $search_result[$result_key] = $business;
+            //     $result_key++;
+            // } 
+            if(!empty($business)){//当查询到对应的业务时将业务编号作为下标生成新的数组，防止同个业务数据出现多次
+                $search_result['S'.$business['business_number']] = $business;
+            }
+   
         }
         return $search_result;
     }

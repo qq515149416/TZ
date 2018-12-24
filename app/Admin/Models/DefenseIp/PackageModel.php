@@ -58,11 +58,14 @@ class PackageModel extends Model
 			$return['code']	= 0;
 			return $return;
 		}
+
 		$package_model->name 		= $par['name'];
 		$package_model->description 		= $par['description'];
-		$package_model->site 			= $par['site'];
-		$package_model->protection_value 	= $par['protection_value'];
+		//这俩不能改
+		// $package_model->site 			= $par['site'];
+		// $package_model->protection_value 	= $par['protection_value'];
 		$package_model->price 		= $par['price'];
+		$package_model->sell_status 		= $par['sell_status'];
 		$res = $package_model->save();
 	
 		if($res != true){
@@ -94,9 +97,23 @@ class PackageModel extends Model
 			$return['code']	= 1;
 			return $return;
 		}
-		$site_list = [1 => '西安' , 2 => '测试'];
+		
 		for ($i=0; $i < count($package_list); $i++) { 
-			$package_list[$i]['site'] = $site_list[$package_list[$i]['site']];
+			$package_list[$i]['site'] = DB::table('idc_machineroom')->where('id',$package_list[$i]['site'])->value('machine_room_name');
+			if($package_list[$i]['site'] == null){
+				$package_list[$i]['site'] = '机房id有误,请核对数据库';
+			}
+			switch ($package_list[$i]['sell_status']) {
+				case '0':
+					$package_list[$i]['sell_status'] = '下架中';
+					break;
+				case '1':
+					$package_list[$i]['sell_status'] = '上架中';
+					break;
+				default:
+					$package_list[$i]['sell_status'] = '无此状态';
+					break;
+			}
 		}
 		$return['data'] = $package_list;
 		$return['msg'] = '获取成功';
@@ -106,6 +123,7 @@ class PackageModel extends Model
 
 	public function showById($id){
 		$package_list = $this->find($id);
+
 		if($package_list == null){
 			return [
 				'data'	=> $id,
@@ -113,6 +131,22 @@ class PackageModel extends Model
 				'msg'	=> '无此套餐',
 			];
 		}
+		$package_list->site = DB::table('idc_machineroom')->where('id',$package_list->site)->value('machine_room_name');
+		if($package_list->site == null){
+			$package_list[$i]['site'] = '机房id有误,请核对数据库';
+		}
+		switch ($package_list->sell_status) {
+				case '0':
+					$package_list->sell_status = '下架中';
+					break;
+				case '1':
+					$package_list->sell_status = '上架中';
+					break;
+				default:
+					$package_list->sell_status = '无此状态';
+					break;
+			}
+
 		return [
 				'data'	=> $package_list,
 				'code'	=> 1,

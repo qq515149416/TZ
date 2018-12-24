@@ -71,10 +71,11 @@ class SearchModel extends Model
                 $resource_detail = json_decode($business['resource_detail']);
                 if($business['business_type'] != 3 ){
                     array_push($ip,$resource_detail->ip_detail);//IP
-                    bcadd($total_bandwidth,$resource_detail->bandwidth);//带宽
-                    bcadd($total_protected,$resource_detail->protect);//防护
+                    $total_bandwidth = bcadd($total_bandwidth,$resource_detail->bandwidth);//带宽
+                    $total_protected = bcadd($total_protected,$resource_detail->protect);//防护
                     $business['cabinet'] = $resource_detail->cabinets;
                     $business['machineroom_name'] = $resource_detail->machineroom_name;
+                    $business['machineroom_id'] = $resource_detail->machineroom_id;
                 } else {
                     $business['cabinet'] = $resource_detail->cabinet_id;
                     $business['machineroom_name'] = $resource_detail->machineroom_name;

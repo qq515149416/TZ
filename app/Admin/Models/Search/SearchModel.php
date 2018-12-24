@@ -34,7 +34,7 @@ class SearchModel extends Model
      * 进行对应业务的搜索
      * @param  array $xs_result 搜索所需的条件
      * @return array           返回搜索的结果
-     */
+     *///->whereBetween('business_status',[0,4])
     public function doSearch($xs_result){
         if(!$xs_result){
             return $search_result = [];
@@ -42,7 +42,7 @@ class SearchModel extends Model
         $search_result = [];
         $result_key  = 0;
         foreach($xs_result as $xs_key => $xs_value){
-            $business = $this->where(['business_number'=>$xs_value['business_sn']])->whereBetween('business_status',[0,4])->whereBetween('remove_status',[0,1])->select('id','client_name','sales_name','business_number','business_type','machine_number','resource_detail','money','client_id','length','start_time','endding_time','business_status')->first();
+            $business = $this->where(['business_number'=>$xs_value['business_sn']])->whereBetween('remove_status',[0,1])->select('id','client_name','sales_name','business_number','business_type','machine_number','resource_detail','money','client_id','length','start_time','endding_time','business_status')->first();
             if(!empty($business)){
                 $business = $business->toArray();
                 $business_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜'];

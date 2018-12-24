@@ -40,6 +40,7 @@ class SearchModel extends Model
             return $search_result = [];
         }
         $search_result = [];
+        $result_key  = 0;
         foreach($xs_result as $xs_key => $xs_value){
             $business = $this->where(['business_number'=>$xs_value['business_sn']])->whereBetween('business_status',[0,4])->whereBetween('remove_status',[0,1])->select('id','client_name','sales_name','business_number','business_type','machine_number','resource_detail','money','client_id','length','start_time','endding_time','business_status')->first();
             if(!empty($business)){
@@ -83,7 +84,10 @@ class SearchModel extends Model
                 $business['protect'] = $total_protected;
                 $business['bandwidth'] = $total_bandwidth;
             }
-            $search_result[$xs_key] = $business;
+            if(!empty($business)){
+                $search_result[$result_key] = $business;
+                $result_key++;
+            }    
         }
         return $search_result;
     }

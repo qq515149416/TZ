@@ -236,6 +236,129 @@ class  PfmStatistics extends Model
 		return $return;
 	}
 	
+	/**
+	* 统计高防IP业绩数据,财务用
+	* @param  $begin -开始时间 / $end -结束时间
+	* @return 
+	*/
+	public function getDefenseipStatisticsBig($begin,$end){
+		$begin = date("Y-m-d H:i:s",$begin);
+		$end = date("Y-m-d H:i:s",$end);
+		
+		//获取查询时间段内的已付费高防IP订单
+		$already = DB::table('tz_orders')
+			->select(DB::raw('sum(payable_money) as payable_money, business_id as user_id,order_type'))
+			->whereIn('order_status',[1,2,3,4])
+			->where('resource_type',11)
+			->where('pay_time','>',$begin)
+			->where('pay_time','<',$end)
+			->whereNull('deleted_at')
+			->groupBy('business_id','order_type')
+			->get()
+			->toArray();	
+	
+		if(count($already) == 0){
+			return [
+				'data'	=> [],
+				'msg'	=> '获取数据失败',
+				'code'	=> 1,
+			];
+		}
+	
+		$order_arr = [];
+		$order_arr['总计'] = [
+			'user_id'			=> '总计',		
+			'user_name'			=> '总计',
+			'new_achievement'		=> 0,	
+			'old_achievement'		=> 0,
+			'preferential_amount'		=> 0,
+			'total_money'			=> 0,
+		];
+		//开始统计
+		for ($i=0; $i < count($already); $i++) { 
+			if(!isset( $order_arr[ $already[$i]->user_id ] )){
+				$order_arr[ $already[$i]->user_id ] = [
+					'user_id'		=> $already[$i]->user_id,
+					'user_name'		=> DB::table('admin_users')->where('id',$already[$i]->user_id)->value('name'),
+					'new_achievement'		=> 0,	
+					'old_achievement'		=> 0,
+					'preferential_amount'		=> 0,
+					'total_money'			=> 0,
+				];
+			}
 
+			if($already[$i]->order_type == 1){
+				$order_arr[ $already[$i]->user_id ] ['new_achievement'] = $already[$i]->payable_money;	
+				$order_arr['总计']['new_achievement'] = bcadd($order_arr['总计']['new_achievement'],$already[$i]->payable_money,2);
+			}else{
+				$order_arr[ $already[$i]->user_id ] ['old_achievement'] = $already[$i]->payable_money;
+				$order_arr['总计']['old_achievement'] = bcadd($order_arr['总计']['old_achievement'],$already[$i]->payable_money,2);
+			}
+			$order_arr[ $already[$i]->user_id ]['total_money'] = bcadd($order_arr[ $already[$i]->user_id ]['total_money'],$already[$i]->payable_money,2);
+			$order_arr['总计']['total_money'] = bcadd($order_arr['总计']['total_money'],$already[$i]->payable_money,2);
+		}
+		$orr = [];
+		foreach ($order_arr as $k => $v) {
+			$orr[] = $v;
+		}
+
+		$return['data'] 	= $orr;
+		$return['msg'] 	= '统计成功';
+		$return['code']	= 1;
+		return $return;
+	}
+	
+	/**
+	* 统计高防IP业绩数据,财务用
+	* @param  $begin -开始时间 / $end -结束时间
+	* @return 
+	*/
+	public function getDefenseipStatisticsSmall($begin,$end,$user_id){
+		$begin = date("Y-m-d H:i:s",$begin);
+		$end = date("Y-m-d H:i:s",$end);
+		
+		//获取查询时间段内的已付费高防IP订单
+		$already = DB::table('tz_orders')
+			->select(DB::raw('payable_money,order_type'))
+			->whereIn('order_status',[1,2,3,4])
+			->where('resource_type',11)
+			->where('business_id',$user_id)
+			->where('pay_time','>',$begin)
+			->where('pay_time','<',$end)
+			->whereNull('deleted_at')
+			->get()
+			->toArray();	
+	
+		if(count($already) == 0){
+			return [
+				'data'	=> [],
+				'msg'	=> '无已支付订单',
+				'code'	=> 1,
+			];
+		}
+
+		$order_arr = [
+			'new_achievement'		=> 0,	
+			'old_achievement'		=> 0,
+			'preferential_amount'		=> 0,
+			'total_money'			=> 0,
+		];
+		//开始统计
+		for ($i=0; $i < count($already); $i++) { 
+			
+			if($already[$i]->order_type == 1){
+				$order_arr['new_achievement'] = bcadd($order_arr['new_achievement'],$already[$i]->payable_money,2);	
+			}else{
+				$order_arr['old_achievement'] = bcadd($order_arr['old_achievement'],$already[$i]->payable_money,2);
+			}
+			$order_arr['total_money'] = bcadd($order_arr['total_money'],$already[$i]->payable_money,2);
+		}
+		
+
+		$return['data'] 	= $order_arr;
+		$return['msg'] 	= '统计成功';
+		$return['code']	= 1;
+		return $return;
+	}
 	
 }

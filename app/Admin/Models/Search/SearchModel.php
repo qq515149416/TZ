@@ -34,15 +34,17 @@ class SearchModel extends Model
      * 进行对应业务的搜索
      * @param  array $xs_result 搜索所需的条件
      * @return array           返回搜索的结果
-     */
+     *///->whereBetween('business_status',[0,4])
     public function doSearch($xs_result){
         if(!$xs_result){
             return $search_result = [];
         }
         $search_result = [];
+        $result_key  = 0;
         foreach($xs_result as $xs_key => $xs_value){
-            $business = $this->where(['business_number'=>$xs_value['business_sn']])->select('id','client_name','sales_name','business_number','business_type','machine_number','resource_detail','money','client_id','length','start_time','endding_time','business_status')->first()->toArray();
+            $business = $this->where(['business_number'=>$xs_value['business_sn']])->whereBetween('remove_status',[0,1])->select('id','client_name','sales_name','business_number','business_type','machine_number','resource_detail','money','client_id','length','start_time','endding_time','business_status')->first();
             if(!empty($business)){
+                $business = $business->toArray();
                 $business_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜'];
                 $business_status = ['-1'=>'取消','-2'=>'审核不通过',0=>'审核中',1=>'未付款使用',2=>'付款使用中',3=>'到期未付款',4=>'锁定中',5=>'到期',6=>'退款'];
                 $business['type'] = $business_type[$business['business_type']];//业务类型
@@ -76,12 +78,16 @@ class SearchModel extends Model
                 } else {
                     $business['cabinet'] = $resource_detail->cabinet_id;
                     $business['machineroom_name'] = $resource_detail->machineroom_name;
+                    $business['machineroom_id'] = $resource_detail->machineroom_id;
                 }
                 $business['ip'] = $ip;
                 $business['protect'] = $total_protected;
                 $business['bandwidth'] = $total_bandwidth;
             }
-            $search_result[$xs_key] = $business;
+            if(!empty($business)){
+                $search_result[$result_key] = $business;
+                $result_key++;
+            }    
         }
         return $search_result;
     }

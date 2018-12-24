@@ -26,23 +26,26 @@ class SearchController extends Controller
         if(!$search){
             return $search_result = [];
         }
-        $xs_result = $this->xsdocuemnt('business',$search);
+        $business = $this->xsdocuemnt('business',$search);//直接查询业务
+        $orders  = $this->xsdocuemnt('orders',$search);//查询订单资源
+        if(!empty($business) && !empty($orders)){//当业务和资源的搜索索引存在时进行同时查询
+            $xs_result = array_merge($business,$orders);
+        } elseif(!empty($business) && empty($orders)){//当只存在业务时，查询业务
+            $xs_result = $business;
+        } elseif(empty($business) && !empty($orders)){//当只存在资源时，搜索资源
+            $xs_result = $orders;
+        } 
         if(empty($xs_result)){
-            $xs_result = $this->xsdocuemnt('orders',$search);
-            if(empty($xs_result)){
-                $xs_result = $this->xsdocuemnt('customer',$search);
-                if(!empty($xs_result)){
-                    $xs_result = $this->xsdocuemnt('business',$xs_result[0]['id']);
-                    if(empty($xs_result)){
-                        return $search_result = [];
-                    }
-                } else {
+            $customer = $this->xsdocuemnt('customer',$search);
+            if(!empty($customer)){
+                $xs_result = $this->xsdocuemnt('business',$customer[0]['id']);
+                if(empty($xs_result)){
                     return $search_result = [];
                 }
+            } else {
+                return $search_result = [];
             }
-        }
-        if(empty($xs_result)){
-            return $search_result = [];
+           
         }
         $model = new SearchModel();
         $search_result = $model->doSearch($xs_result);

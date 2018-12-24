@@ -18,7 +18,7 @@ class GlobalSearchController extends Controller
     public function result($search='')
     {
         $searchController = new SearchController();
-        $searchController->doSearch($search);
+        $result = $searchController->doSearch($search);
         // client_id=29&client_name=cai&business_number=120181220579&machine_number=JG_0002&machineroom_id=37
         // client_id=29&client_name=cai&business_number=320181221478&machine_number=JG_0002&machineroom_id=37
         // $result = [

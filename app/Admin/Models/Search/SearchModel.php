@@ -41,8 +41,9 @@ class SearchModel extends Model
         }
         $search_result = [];
         foreach($xs_result as $xs_key => $xs_value){
-            $business = $this->where(['business_number'=>$xs_value['business_sn']])->select('id','client_name','sales_name','business_number','business_type','machine_number','resource_detail','money','client_id','length','start_time','endding_time','business_status')->first()->toArray();
+            $business = $this->where(['business_number'=>$xs_value['business_sn']])->whereBetween('business_status',[0,4])->whereBetween('remove_status',[0,1])->select('id','client_name','sales_name','business_number','business_type','machine_number','resource_detail','money','client_id','length','start_time','endding_time','business_status')->first();
             if(!empty($business)){
+                $business = $business->toArray();
                 $business_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜'];
                 $business_status = ['-1'=>'取消','-2'=>'审核不通过',0=>'审核中',1=>'未付款使用',2=>'付款使用中',3=>'到期未付款',4=>'锁定中',5=>'到期',6=>'退款'];
                 $business['type'] = $business_type[$business['business_type']];//业务类型
@@ -82,6 +83,9 @@ class SearchModel extends Model
                 $business['bandwidth'] = $total_bandwidth;
             }
             $search_result[$xs_key] = $business;
+        }
+        if(empty($search_result[0])){
+            $search_result = [];
         }
         return $search_result;
     }

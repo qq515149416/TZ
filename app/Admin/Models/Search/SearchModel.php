@@ -77,15 +77,13 @@ class SearchModel extends Model
                 } else {
                     $business['cabinet'] = $resource_detail->cabinet_id;
                     $business['machineroom_name'] = $resource_detail->machineroom_name;
+                    $business['machineroom_id'] = $resource_detail->machineroom_id;
                 }
                 $business['ip'] = $ip;
                 $business['protect'] = $total_protected;
                 $business['bandwidth'] = $total_bandwidth;
             }
             $search_result[$xs_key] = $business;
-        }
-        if(empty($search_result[0])){
-            $search_result = [];
         }
         return $search_result;
     }

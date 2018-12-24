@@ -18,7 +18,35 @@ class GlobalSearchController extends Controller
     public function result($search='')
     {
         $searchController = new SearchController();
-        $result = $searchController->doSearch($search);
+        //$searchController->doSearch($search)
+        $result = [
+            [
+                'id'=>1,
+                'business_number'=>'00011',
+                'client_name'=>'dsseed',
+                'sales_name'=>'bbbb',
+                'machine_number'=>'TZ-dev',
+                'money'=>100,
+                'length'=>'6个月',
+                'start_time'=>'2018-12-21',
+                'endding_time'=>'2019-01-21',
+                'type'=>'租用',
+                'status'=>'未付款'
+            ],
+            [
+                'id'=>2,
+                'business_number'=>'00022',
+                'client_name'=>'dssddeed',
+                'sales_name'=>'bbbbbb',
+                'machine_number'=>'TZ-dev1',
+                'money'=>100,
+                'length'=>'6个月',
+                'start_time'=>'2018-12-21',
+                'endding_time'=>'2019-01-21',
+                'type'=>'租用',
+                'status'=>'已付款'
+            ]
+        ];
         $headers = [
             'id',
             '业务号',
@@ -36,6 +64,7 @@ class GlobalSearchController extends Controller
         ];
         foreach($result as $k=>$v) {
             array_push($rows,[
+                $v["id"],
                 $v["business_number"],
                 $v["client_name"],
                 $v["sales_name"],

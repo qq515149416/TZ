@@ -19,7 +19,7 @@ class MailController extends Controller
      */
     public function handle()
     {
-            dump(md5(123456));
+//            dump(md5(123456));
 //        $testM= new OverdueAlterStatus();
 //        dump($testM->selectOverdue());
 

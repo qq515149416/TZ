@@ -186,13 +186,13 @@ class OrdersModel extends Model
 		}
 		//业务到期时间和资源到期时间比较
 		$end_time = Carbon::parse('+'.$insert_data['duration'].' months')->toDateTimeString();
-		$endding_time = DB::table('tz_business')->where('business_number',$insert_data['business_sn'])->value('endding_time');
-		if($end_time > $endding_time){
-			$return['data'] = '';
-			$return['code'] = 0;
-			$return['msg'] = '资源到期时间超业务到期时间，无法添加资源!';
-			return $return;
-		}
+		// $endding_time = DB::table('tz_business')->where('business_number',$insert_data['business_sn'])->value('endding_time');
+		// if($end_time > $endding_time){
+		// 	$return['data'] = '';
+		// 	$return['code'] = 0;
+		// 	$return['msg'] = '资源到期时间超业务到期时间，无法添加资源!';
+		// 	return $return;
+		// }
 		$insert_data['end_time'] = $end_time;
 		// 订单号的生成规则：前两位（4-6的随机数）+ 年月日（如:20180830） + 时间戳的后2位数 + 1-3随机数
 		$order_sn = mt_rand(4,6).date("Ymd",time()).substr(time(),8,2).mt_rand(1,3);

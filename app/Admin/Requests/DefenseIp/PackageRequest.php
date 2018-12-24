@@ -34,9 +34,10 @@ class PackageRequest extends FormRequest
 			case 'insert':
 				$return = [
 					'name'			=> 'unique:tz_defenseip_package',
-					'site'			=> 'required|integer',
+					'site'			=> 'required|integer|exists:idc_machineroom,id',
 					'protection_value'	=> 'required|integer',
 					'price'			=> 'required|numeric',
+					'sell_status'		=> 'required|integer|min:0|max:1',
 				];
 				break;
 			case 'del':
@@ -52,10 +53,9 @@ class PackageRequest extends FormRequest
 				$return = [
 					'edit_id'			=> 'required|exists:tz_defenseip_package,id',
 					'name'			=> 'required|unique:tz_defenseip_package,name,'.$par['edit_id'],
-					'site'			=> 'required|integer',
-					'protection_value'	=> 'required|integer',
 					'price'			=> 'required|numeric',
 					'description'		=> 'required',
+					'sell_status'		=> 'required|integer|min:0|max:1',
 				];
 				break;
 			case 'show':
@@ -84,6 +84,7 @@ class PackageRequest extends FormRequest
 		return  [
 			'site.required'			=> '请选择地区',
 			'site.integer'			=> '地区格式错误',
+			'site.exists'			=> '无此机房',
 			'protection_value.required'	=> '请填写防护值',
 			'price.required'			=> '请填写价格',
 			'price.numeric'			=> '价格格式错误',
@@ -96,6 +97,10 @@ class PackageRequest extends FormRequest
 			'description.required'		=> '请填写套餐描述',
 			'id.required'			=> '请提供套餐的id',
 			'id.exists'			=> '套餐id不存在',
+			'sell_status.required'		=> '请选择是否上架',
+			'sell_status.integer'		=> '0-下架;1-上架',
+			'sell_status.min'			=> '0-下架;1-上架',
+			'sell_status.max'		=> '0-下架;1-上架',
 		];
 	}
 

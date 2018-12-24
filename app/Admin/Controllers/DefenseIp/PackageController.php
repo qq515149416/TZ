@@ -15,7 +15,7 @@ class PackageController extends Controller
 	public function insert(PackageRequest $request){
 
 		$model = new PackageModel();
-		$par = $request->only(['name','description','site','protection_value','price']);
+		$par = $request->only(['name','description','site','protection_value','price','sell_status']);
 		$insert = $model->insert($par);
 		
 		return tz_ajax_echo($insert['data'],$insert['msg'],$insert['code']);
@@ -33,7 +33,7 @@ class PackageController extends Controller
 
 	public function edit(PackageRequest $request){
 		$model = new PackageModel();
-		$par = $request->only(['edit_id','name','description','site','protection_value','price']);
+		$par = $request->only(['edit_id','name','description','site','protection_value','price','sell_status']);
 		$edit_res = $model->edit($par);
 
 		return tz_ajax_echo($edit_res['data'],$edit_res['msg'],$edit_res['code']);

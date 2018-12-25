@@ -243,6 +243,7 @@ class RechargeModel extends Model
 			'money_before'		=> $money_before,
 			'money_after'		=> $money_after,
 			'month'			=> date("Ym"),
+			'created_at'		=> date("Y-m-d H:i:s"),
 		];
 		
 

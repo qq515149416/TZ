@@ -14,6 +14,7 @@ namespace App\Admin\Models\Statistics;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
+use Encore\Admin\Facades\Admin;
 
 class  RechargeStatistics extends Model
 {
@@ -32,7 +33,7 @@ class  RechargeStatistics extends Model
 
 	public function statistics($begin,$end)
 	{	
-		//获取查询月份订单
+		//获取查询时间内的订单
 		$flow = DB::table('tz_recharge_flow')
 				->select(
 					'recharge_way',
@@ -43,6 +44,8 @@ class  RechargeStatistics extends Model
 					)
 				->groupBy('recharge_way','user_id')
 				->whereNull('deleted_at')
+				->where('timestamp','<',$end)
+				->where('timestamp','>',$begin)
 				->where('trade_status',1)
 				->get();
 		if($flow->isEmpty()){
@@ -98,6 +101,6 @@ class  RechargeStatistics extends Model
 			];
 	}
 
-
+ 	
 	
 }

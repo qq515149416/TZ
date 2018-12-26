@@ -51,6 +51,12 @@ class BusinessModel extends Model
         $insert['sales_id']   = $sales_id;
         $insert['sales_name'] = Admin::user()->name?Admin::user()->name:Admin::user()->username;
         $insert['created_at'] = date('Y-m-d H:i:s',time());
+        //业务开始时间
+        $start_time = Carbon::now()->toDateTimeString();
+        //到期时间的计算
+        $end_time = Carbon::parse('+' . $insert['length'] . ' months')->toDateTimeString();
+        $insert['start_time']   = $start_time;
+        $insert['endding_time'] = $end_time;
         DB::beginTransaction();//开启事务处理
         $row                  = DB::table('tz_business')->insertGetId($insert);
         if ($row == 0) {
@@ -145,7 +151,7 @@ class BusinessModel extends Model
         }
         // 根据业务号查询需要审核的业务数据
         $check_where = ['business_number' => $where['business_number']];
-        $check       = DB::table('tz_business')->where($check_where)->select('client_id', 'business_number', 'client_name', 'sales_id', 'sales_name', 'business_type', 'machine_number', 'money', 'length','resource_detail')->first();
+        $check       = DB::table('tz_business')->where($check_where)->select('client_id', 'business_number', 'client_name', 'sales_id', 'sales_name', 'business_type', 'machine_number', 'money', 'length','resource_detail','endding_time')->first();
         if (empty($check)) {
             // 不存在对应的业务数据直接返回
             $return['data'] = '该业务不存在,无法进行审核操作';
@@ -202,15 +208,10 @@ class BusinessModel extends Model
 
         // 如果审核为通过则继续进行订单表的生成
         DB::beginTransaction();//开启事务处理
-        //业务开始时间
-        $start_time = Carbon::now()->toDateTimeString();
-        //到期时间的计算
-        $end_time = Carbon::parse('+' . $check->length . ' months')->toDateTimeString();
+        
         // 订单号的生成规则：前两位（4-6的随机数）+ 年月日（如:20180830） + 时间戳的后2位数 + 1-3随机数
         $order_sn                 = mt_rand(4, 6) . date("Ymd", time()) . substr(time(), 8, 2) . mt_rand(1, 3);
         $business['order_number'] = $order_sn;
-        $business['start_time']   = $start_time;
-        $business['endding_time'] = $end_time;
         $business['updated_at']   = Carbon::now()->toDateTimeString();
         $business_row             = DB::table('tz_business')->where($check_where)->update($business);
         if ($business_row == 0) {
@@ -234,7 +235,7 @@ class BusinessModel extends Model
         $order['price']         = $check->money;//单价
         $order['duration']      = $check->length;//时长
         $order['resource']      = $check->machine_number;//机器的话为IP/机柜则为机柜编号
-        $order['end_time']      = $end_time;
+        $order['end_time']      = $check->endding_time;
         $order['payable_money'] = bcmul((string)$order['price'], (string)$order['duration'], 2);//应付金额
         $order['created_at']    = Carbon::now()->toDateTimeString();
         // $order['month']         = (int)date('Ym', time());

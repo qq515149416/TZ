@@ -2,24 +2,31 @@
 
 namespace App\Admin\Controllers\Excel;
 
-use App\Http\Controllers\BaseController;
-use App\Model\Member\MemberFollow;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use Excel;
 
-class ExcelController extends BaseController
+class ExcelController extends Controller
 {
 	/**
-	 *
+	 *这个是excel需要的数组的格式
+	*	$cellData = [
+	*		0 => ['昵称','性别','头像'],
+	*		1 => ['AAA','男','aaa'],
+	*		2 => ['BBB','女','bbb'],
+	*		3 => ['CCC','女','ccc'],
+	*		4 => ['=DDD','男','ddd'],
+	*	];
 	 * Excel导出
 	 */
-	public function export()
+
+	public function export($cellData)
 	{
 		ini_set('memory_limit','500M');
 		set_time_limit(0);//设置超时限制为0分钟
-		$cellData = MemberFollow::select('xt_name','sex','face')->limit(5)->get()->toArray();
-		$cellData[0] = array('昵称','性别','头像');
+		
+
 		for($i=0;$i<count($cellData);$i++){
 			$cellData[$i] = array_values($cellData[$i]);
 			$cellData[$i][0] = str_replace('=',' '.'=',$cellData[$i][0]);

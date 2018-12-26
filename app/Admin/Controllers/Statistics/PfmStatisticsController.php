@@ -39,22 +39,24 @@ class PfmStatisticsController extends Controller
 		switch ($par['business_type']) {
 			//区分查询的业务类型,1-idc;2-高防ip
 			case '1':
-				$return = $pfmModel->getIdcStatisticsBig($par['begin'],$par['end']);
+				if (isset($par['customer_id'])) {
+					$return = $pfmModel->getIdcStatisticsBigByUser($par['begin'],$par['end'],$par['customer_id']);
+				}else{
+					$return = $pfmModel->getIdcStatisticsBig($par['begin'],$par['end']);
+				}	
 				break;
 			case '2':
-				$return = $pfmModel->getDefenseipStatisticsBig($par['begin'],$par['end']);
-				break;
-			case '3':
-				if (!isset($par['customer_id'])) {
-					return tz_ajax_echo('','请选择需查找客户',0);
+				if (isset($par['customer_id'])) {
+					$return = $pfmModel->getDefenseipStatisticsBigByUser($par['begin'],$par['end'],$par['customer_id']);
+				}else{
+					$return = $pfmModel->getDefenseipStatisticsBig($par['begin'],$par['end']);
 				}
-				$return = $pfmModel->getIdcStatisticsBigByUser($par['begin'],$par['end'],$par['customer_id']);
 				break;
 			default:
 				return tz_ajax_echo('','请选择正确业务类型',0);
 				break;
 		}
-		
+	
 		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
 	}
 

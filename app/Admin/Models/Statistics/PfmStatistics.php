@@ -184,13 +184,15 @@ class  PfmStatistics extends Model
 			->toArray();	
 		
 		if(count($already) == 0 && count($unpaid) == 0 ){
-			$return['msg'] 	= '无数据';
-			$return['code'] 	= 1;
-			return $return;
+			return [
+				'data'	=> [],
+				'msg'	=> '无数据',
+				'code'	=> 1,
+			];
 		}
 
 		$order_arr = [
-			'user_name'		=> $already[0]->customer_name,
+			'user_name'		=> '',
 			'total_money'		=> 0,
 			'achievement'		=> 0,
 			'new_achievement'	=> 0,
@@ -201,6 +203,11 @@ class  PfmStatistics extends Model
 			'all_arrears'		=> 0,
 			'preferential_amount'	=> 0,
 		];
+		if(!count($already) == 0){
+			$order_arr['user_name'] = $already[0]->customer_name;
+		}else{
+			$order_arr['user_name'] = $unpaid[0]->customer_name;
+		}
 		if($order_arr['user_name'] == null){
 			$order_arr['user_name'] = DB::table('tz_users')->where('id',$customer_id)->value('email');
 		}
@@ -210,8 +217,7 @@ class  PfmStatistics extends Model
 				$order_arr['new_achievement'] = bcadd($order_arr['new_achievement'],$already[$i]->payable_money,2);	
 			}else{
 				$order_arr['old_achievement'] = bcadd($order_arr['old_achievement'],$already[$i]->payable_money,2);
-			}
-
+			}		
 		}
 	
 		for ($j=0; $j < count($unpaid); $j++) { 
@@ -235,11 +241,15 @@ class  PfmStatistics extends Model
 		foreach ($unpaid as $k => $v) {
 			$orr[] = $v;
 		}
-		$orr[] = $order_arr;
-	
-		$return['data'] 	= $orr;
+
+		for ($i=0; $i < count($orr); $i++) { 
+			$orr[$i] = $this->trans($orr[$i]);
+		}
+
+		$return['data'] 	= $order_arr;
 		$return['msg'] 	= '统计成功';
 		$return['code']	= 1;
+
 		return $return;
 	}
 
@@ -331,6 +341,64 @@ class  PfmStatistics extends Model
 	* @param  $begin -开始时间 / $end -结束时间
 	* @return 
 	*/
+	public function getDefenseipStatisticsBigByUser($begin,$end,$customer_id){
+		$begin = date("Y-m-d H:i:s",$begin);
+		$end = date("Y-m-d H:i:s",$end);
+		
+		//获取查询时间段内的已付费高防IP订单
+		$already = DB::table('tz_orders')
+			->select(['id','order_sn','serial_number','business_sn','customer_name','business_name','resource_type','order_type','machine_sn','resource','price','duration','payable_money','end_time','pay_time','order_status','order_note','remove_status','created_at'])
+			->whereIn('order_status',[1,2,3,4])
+			->where('resource_type',11)
+			->where('pay_time','>',$begin)
+			->where('pay_time','<',$end)
+			->where('customer_id',$customer_id)
+			->whereNull('deleted_at')
+			->groupBy('business_id','order_type')
+			->get()
+			->toArray();	
+
+		if(count($already) == 0){
+			return [
+				'data'	=> [],
+				'msg'	=> '无高防IP订单',
+				'code'	=> 1,
+			];
+		}
+
+		$order_arr= [	
+			'user_name'			=> $already[0]->customer_name,
+			'new_achievement'		=> 0,	
+			'old_achievement'		=> 0,
+			'preferential_amount'		=> 0,
+			'total_money'			=> 0,
+		];
+		//开始统计
+		for ($i=0; $i < count($already); $i++) { 
+			if($already[$i]->order_type == 1){
+				$order_arr['new_achievement'] = bcadd($order_arr['new_achievement'],$already[$i]->payable_money,2);	
+			}else{
+				$order_arr['old_achievement'] = bcadd($order_arr['old_achievement'],$already[$i]->payable_money,2);
+			}
+			$order_arr['total_money'] = bcadd($order_arr['total_money'],$already[$i]->payable_money,2);
+		}
+		for ($i=0; $i < count($already); $i++) { 
+			$already[$i] = $this->trans($already[$i]);
+		}
+		
+		$return['data'] 	= $order_arr;
+		$return['msg'] 	= '统计成功';
+		$return['code']	= 1;
+		return $return;
+	}
+	
+
+
+	/**
+	* 统计指定客户高防IP消费情况,财务用
+	* @param  $begin -开始时间 / $end -结束时间
+	* @return 
+	*/
 	public function getDefenseipStatisticsBig($begin,$end){
 		$begin = date("Y-m-d H:i:s",$begin);
 		$end = date("Y-m-d H:i:s",$end);
@@ -397,7 +465,6 @@ class  PfmStatistics extends Model
 		$return['code']	= 1;
 		return $return;
 	}
-	
 	/**
 	* 统计高防IP业绩数据,财务用
 	* @param  $begin -开始时间 / $end -结束时间
@@ -451,4 +518,111 @@ class  PfmStatistics extends Model
 		return $return;
 	}
 	
+	/*
+	*转换状态方法,适用订单
+	*/
+	protected function trans($arr){
+		switch ($arr->order_type) {
+			case '1':
+				$arr->order_type = '新购';
+				break;
+			case '2':
+				$arr->order_type = '续费';
+				break;	
+			default:
+				$arr->order_type = '无此类型';
+				break;
+		}
+		switch ($arr->order_status) {
+			case '0':
+				$arr->order_status = '待支付';
+				break;
+			case '1':
+				$arr->order_status = '已支付';
+				break;
+			case '2':
+				$arr->order_status = '财务确认';
+				break;
+			case '3':
+				$arr->order_status = '订单完成';
+				break;
+			case '4':
+				$arr->order_status = '到期';
+				break;
+			case '5':
+				$arr->order_status = '取消';
+				break;
+			case '6':
+				$arr->order_status = '待支付';
+				break;
+			case '8':
+				$arr->order_status = '退款完成';
+				break;
+			case '9':
+				$arr->order_status = '需支付尚未支付';
+				break;
+			default:
+				$arr->order_status = '无此支付状态';
+				break;
+		}
+		switch ($arr->remove_status) {
+			case '0':
+				$arr->remove_status = '正常';
+				break;
+			case '1':
+				$arr->remove_status = '下架申请中';
+				break;
+			case '2':
+				$arr->remove_status = '等待机房处理';
+				break;
+			case '3':
+				$arr->remove_status = '清空下架中';
+				break;
+			case '4':
+				$arr->remove_status = '下架完成';
+				break;
+			default:
+				$arr->remove_status = '无此状态';
+				break;
+		}
+		switch ($arr->resource_type) {
+			case '1':
+				$arr->resource_type = '租用主机';
+				break;
+			case '2':
+				$arr->resource_type = '托管主机';
+				break;
+			case '3':
+				$arr->resource_type = '租用机柜';
+				break;
+			case '4':
+				$arr->resource_type = 'IP';
+				break;
+			case '5':
+				$arr->resource_type = 'CPU';
+				break;
+			case '6':
+				$arr->resource_type = '硬盘';
+				break;
+			case '7':
+				$arr->resource_type = '内存';
+				break;
+			case '8':
+				$arr->resource_type = '带宽';
+				break;
+			case '9':
+				$arr->resource_type = '防护';
+				break;
+			case '10':
+				$arr->resource_type = 'cdn';
+				break;
+			case '11':
+				$arr->resource_type = '高防IP';
+				break;
+			default:
+				$arr->resource_type = '无此类型';
+				break;
+		}
+		return $arr;
+	}
 }

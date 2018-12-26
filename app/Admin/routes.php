@@ -519,5 +519,17 @@ Route::group([
         $route->get('random_code','Business\UnderController@randomCode');//转发机房
     });
 
+    /**
+     * 申请下架
+     */
+    Route::group([
+        'prefix' => 'excel',
+    ],function(Router $route){
+        Route::get('export','Excel\ExcelController@export');    //Excel导出  
+        Route::get('import','Excel\ExcelController@import');    //Excel导入
+    });
+
+
 });
+
 

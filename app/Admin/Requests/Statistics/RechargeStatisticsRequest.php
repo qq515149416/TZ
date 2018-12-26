@@ -42,11 +42,11 @@ class RechargeStatisticsRequest extends FormRequest
 		switch ($method) {
 			case 'list':
 				$return = [
-					'begin'         => 'required|integer',
-					'end'           => 'required|integer',
+					'begin'=> 'required|integer',
+					'end'		=> 'required|integer',
 				];
 				break;
-		
+			
 			default:
 				
 				break;
@@ -62,6 +62,7 @@ class RechargeStatisticsRequest extends FormRequest
 			'begin.integer'				=> '请传时间戳',
 			'end.required'				=> '请选择结束时间',
 			'end.integer'				=> '请传时间戳',
+		
 		];
 	}
 

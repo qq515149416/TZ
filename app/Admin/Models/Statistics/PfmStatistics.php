@@ -152,6 +152,96 @@ class  PfmStatistics extends Model
 		$return['code']	= 1;
 		return $return;
 	}
+	/**
+	* 统计业绩数据,财务用
+	* @param  $begin -开始时间 / $end -结束时间
+	* @return 
+	*/
+	public function getIdcStatisticsBigByUser($begin,$end,$customer_id){
+		$begin = date("Y-m-d H:i:s",$begin);
+		$end = date("Y-m-d H:i:s",$end);
+
+		//获取查询时间段内的已付费idc订单
+		$already = DB::table('tz_orders')
+			->select(['id','order_sn','serial_number','business_sn','customer_name','business_name','resource_type','order_type','machine_sn','resource','price','duration','payable_money','end_time','pay_time','order_status','order_note','remove_status','created_at'])
+			->whereIn('order_status',[1,2,3,4])
+			->whereIn('resource_type',[1,2,3,4,5,6,7,8,9])
+			->where('pay_time','>',$begin)
+			->where('pay_time','<',$end)
+			->whereNull('deleted_at')
+			->where('customer_id',$customer_id)
+			->get()
+			->toArray();	
+
+		//获取所有idc业务欠费订单
+		$unpaid = DB::table('tz_orders')
+			->select(['id','order_sn','serial_number','business_sn','customer_name','business_name','resource_type','order_type','machine_sn','resource','price','duration','payable_money','end_time','pay_time','order_status','order_note','remove_status','created_at'])
+			->where('order_status',0)
+			->whereIn('resource_type',[1,2,3,4,5,6,7,8,9])
+			->whereNull('deleted_at')
+			->where('customer_id',$customer_id)
+			->get()
+			->toArray();	
+		
+		if(count($already) == 0 && count($unpaid) == 0 ){
+			$return['msg'] 	= '无数据';
+			$return['code'] 	= 1;
+			return $return;
+		}
+
+		$order_arr = [
+			'user_name'		=> $already[0]->customer_name,
+			'total_money'		=> 0,
+			'achievement'		=> 0,
+			'new_achievement'	=> 0,
+			'old_achievement'	=> 0,
+			'this_arrears'		=> 0,
+			'new_arrears'		=> 0,
+			'old_arrears'		=> 0,
+			'all_arrears'		=> 0,
+			'preferential_amount'	=> 0,
+		];
+		if($order_arr['user_name'] == null){
+			$order_arr['user_name'] = DB::table('tz_users')->where('id',$customer_id)->value('email');
+		}
+		//开始统计
+		for ($i=0; $i < count($already); $i++) { 
+			if($already[$i]->order_type == 1){
+				$order_arr['new_achievement'] = bcadd($order_arr['new_achievement'],$already[$i]->payable_money,2);	
+			}else{
+				$order_arr['old_achievement'] = bcadd($order_arr['old_achievement'],$already[$i]->payable_money,2);
+			}
+
+		}
+	
+		for ($j=0; $j < count($unpaid); $j++) { 
+			if($unpaid[$j]->created_at > $begin && $unpaid[$j]->created_at < $end){				
+				if($unpaid[$j]->order_type == 1){
+					$order_arr ['new_arrears'] = bcadd($order_arr['new_arrears'],$unpaid[$j]->payable_money,2);
+				}else{
+					$order_arr['old_arrears'] = bcadd($order_arr['old_arrears'],$unpaid[$j]->payable_money,2);
+				}
+			}
+			$order_arr['all_arrears'] = bcadd($order_arr['all_arrears'],$unpaid[$j]->payable_money,2);		
+		}
+		$order_arr['achievement'] = bcsub(bcadd($order_arr['new_achievement'],$order_arr['old_achievement'],2),$order_arr['preferential_amount'],2);
+		$order_arr['this_arrears'] = bcadd($order_arr['new_arrears'],$order_arr['old_arrears'],2);
+		$order_arr['total_money'] = bcadd($order_arr['achievement'],$order_arr['this_arrears'],2);
+		
+		$orr = [];
+		foreach ($already as $k => $v) {
+			$orr[] = $v;
+		}
+		foreach ($unpaid as $k => $v) {
+			$orr[] = $v;
+		}
+		$orr[] = $order_arr;
+	
+		$return['data'] 	= $orr;
+		$return['msg'] 	= '统计成功';
+		$return['code']	= 1;
+		return $return;
+	}
 
 	/**
 	* 

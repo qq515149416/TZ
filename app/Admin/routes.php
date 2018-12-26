@@ -293,8 +293,6 @@ Route::group([
         'prefix' => 'rechargeStatistics',
     ], function (Router $router) {
         $router->get('list', 'Statistics\RechargeStatisticsController@index');//充值统计
-        $router->get('listByUser', 'Statistics\RechargeStatisticsController@listByUser');//获取指定用户的充值记录
-        
     });
 
 

@@ -26,24 +26,32 @@ class SearchController extends Controller
         if(!$search){
             return $search_result = [];
         }
-        $xs_result = $this->xsdocuemnt('business',$search);
-        if(empty($xs_result)){
-            $xs_result = $this->xsdocuemnt('orders',$search);
-            if(empty($xs_result)){
-                $xs_result = $this->xsdocuemnt('customer',$search);
-                if(!empty($xs_result)){
-                    $xs_result = $this->xsdocuemnt('business',$xs_result[0]['id']);
-                    if(empty($xs_result)){
-                        return $search_result = [];
-                    }
-                } else {
-                    return $search_result = [];
+
+        $business = $this->xsdocuemnt('business',$search);//直接查询业务
+        $orders = $this->xsdocuemnt('orders',$search);//直接查找资源
+        if(!empty($business) && !empty($orders)){//当业务和资源的索引存在时进行同时查询
+            $xs_result = array_merge($business,$orders);
+        } elseif(!empty($business) && empty($orders)){//当只存在业务，查询业务
+            $xs_result = $business;
+        } elseif(empty($business) && !empty($orders)){//当只存在资源时，搜索资源
+            $xs_result = $orders;
+        }
+        if(empty($xs_result)){//当业务和资源未找到时，找客户id
+            $customer = $this->xsdocuemnt('customer',$search);
+            if(!empty($customer)){
+                $xs_result = [];
+                for ($key=0; $key < count($customer); $key++) {
+                    $business = $this->xsdocuemnt('business',$customer[$key]['id']);
+                    if(!empty($business)){
+                        foreach ($business as $b_key => $b_value) {
+                            array_push($xs_result,$b_value);
+                        }
+                    } 
                 }
+            } else {
+                return $search_result = [];
             }
-        }
-        if(empty($xs_result)){
-            return $search_result = [];
-        }
+        }   
         $model = new SearchModel();
         $search_result = $model->doSearch($xs_result);
         return $search_result;

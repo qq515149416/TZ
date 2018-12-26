@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
-
+use XS;
+use XSDocument;
 
 class RegisterController extends Controller
 {
@@ -73,6 +74,17 @@ class RegisterController extends Controller
             ]);
             $this->bindSalesman($addUserInfo['id'], $par['salesman']); //绑定业务员
             Auth::loginUsingId($addUserInfo['id']);  //注册后自动登录
+            /**
+             * 将先注册的账户相关信息放入索引文件
+             * @var XS
+             */
+            $xunsearch = new XS('customer');
+            $index = $xunsearch->index;
+            $doc['id'] = strtolower($addUserInfo['id']);
+            $doc['email'] = strtolower($par['email']);
+            $document = new \XSDocument($doc);
+            $index->update($document);
+            $index->flushIndex();
             return tz_ajax_echo([], '注册成功', 1);   //注册成功
         } else {
             return tz_ajax_echo([], '注册失败,验证码失败', 0);   //注册失败

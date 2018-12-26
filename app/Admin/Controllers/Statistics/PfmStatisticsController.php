@@ -34,7 +34,7 @@ class PfmStatisticsController extends Controller
 	*/
 	public function index( PfmStatisticsRequest $request){
 		
-		$par = $request->only(['begin','end','business_type']);
+		$par = $request->only(['begin','end','business_type','customer_id']);
 		$pfmModel = new PfmStatistics();
 		switch ($par['business_type']) {
 			//区分查询的业务类型,1-idc;2-高防ip
@@ -43,6 +43,12 @@ class PfmStatisticsController extends Controller
 				break;
 			case '2':
 				$return = $pfmModel->getDefenseipStatisticsBig($par['begin'],$par['end']);
+				break;
+			case '3':
+				if (!isset($par['customer_id'])) {
+					return tz_ajax_echo('','请选择需查找客户',0);
+				}
+				$return = $pfmModel->getIdcStatisticsBigByUser($par['begin'],$par['end'],$par['customer_id']);
 				break;
 			default:
 				return tz_ajax_echo('','请选择正确业务类型',0);

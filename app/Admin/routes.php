@@ -367,7 +367,7 @@ Route::group([
         $router->post('deletebusiness','Business\BusinessController@deleteBusiness');//删除业务数据（开发预留）
 
         // 订单
-        $router->post('finance', 'Business\OrdersController@financeOrders');//财务查看订单
+        $router->get('finance', 'Business\OrdersController@financeOrders');//财务查看订单
         $router->post('clerk', 'Business\OrdersController@clerkOrders');//业务员查看订单
         $router->post('resource', 'Business\OrdersController@resource');//获取资源
 
@@ -519,5 +519,17 @@ Route::group([
         $route->get('random_code','Business\UnderController@randomCode');//转发机房
     });
 
+    /**
+     * 申请下架
+     */
+    Route::group([
+        'prefix' => 'excel',
+    ],function(Router $route){
+        Route::get('export','Member\MemberController@export')->name('/excel/export');    //Excel导出  
+        Route::get('import','Member\MemberController@import')->name('/excel/import');    //Excel导入
+    });
+
+
 });
+
 

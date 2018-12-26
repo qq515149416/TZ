@@ -192,7 +192,7 @@ class  PfmStatistics extends Model
 		}
 
 		$order_arr = [
-			'user_name'		=> $already[0]->customer_name,
+			'user_name'		=> '',
 			'total_money'		=> 0,
 			'achievement'		=> 0,
 			'new_achievement'	=> 0,
@@ -203,6 +203,11 @@ class  PfmStatistics extends Model
 			'all_arrears'		=> 0,
 			'preferential_amount'	=> 0,
 		];
+		if(!count($already) == 0){
+			$order_arr['user_name'] = $already[0]->customer_name;
+		}else{
+			$order_arr['user_name'] = $unpaid[0]->customer_name;
+		}
 		if($order_arr['user_name'] == null){
 			$order_arr['user_name'] = DB::table('tz_users')->where('id',$customer_id)->value('email');
 		}

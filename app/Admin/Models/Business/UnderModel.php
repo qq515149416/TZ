@@ -217,7 +217,7 @@ class UnderModel extends Model
 		            switch ($business->remove_status) {
 		                case 1:
 		                    $update['remove_status'] = 2;
-		                    $update['machineroom'] = DB::table('idc_machineroom')->where(['id'=>json_decode($business->resource_detail)->machineroom])->value('list_order');
+		                    $update['machineroom'] = DB::table('idc_machineroom')->where(['id'=>json_decode($business->resource_detail)->machineroom_id])->value('list_order');
 		                    break;
 		                case 2:
 		                    $update['remove_status'] = 3;
@@ -275,12 +275,13 @@ class UnderModel extends Model
 		        } else {
 		            DB::commit();
 		            $return['code'] = 1;
+		            $return['msg'] = '下架完成';
 		            if($business->business_type == 1 && $update['remove_status'] == 4){
 		            	$return['msg'] = '主机为'.$business->machine_number.'的资源下架修改成功'.'账户:'.$rent['loginname'].',密码:'.$rent['loginpass'];
 		            } elseif($update['remove_status'] == 2) {
 		            	$return['msg'] = '通知机房成功';
 		            } elseif($update['remove_status'] ==3){
-		            	$return['msg'] = '通知机房成功';
+		            	$return['msg'] = '机房清空下架中';
 		            } elseif($update['remove_status'] == 0){
 		            	$return['msg'] = '驳回下架原因:'.$edit['remove_reason'];
 		            }

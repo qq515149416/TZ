@@ -1,0 +1,714 @@
+body {
+	background: #FFF;
+}
+
+.looktxt {
+	display: block;
+	width: 120px;
+	padding: 8 0 8 0;
+	text-align: center;
+	border: 1px solid #FF5D15;
+	margin-top: 20px;
+	font-size: 16px;
+	font-family: Microsoft YaHei;
+	color: #FF5D15
+}
+
+.looktxt:hover {
+	color: #FF5D15
+}
+
+/* @media ( min-width :600px) {
+	
+	.advantages{
+		margin-top: 20px;
+	}
+}
+
+@media ( min-width :768px) {
+	.cpuone{
+		margin-left: 10px;
+	}
+	.cputwo{
+		margin-left: 10px;
+	}
+	
+	.cputhree{
+		margin-left: 10px;
+	}
+	
+	.onetext{
+		font-size: 15px;
+	}
+	.twotext{
+		font-size: 15px;
+	}
+	.threetext{
+		font-size: 15px;
+	}
+	#mon1{
+		font-size: 13px;
+	}
+	#mon2{
+		font-size: 15px;
+	}
+	#mon3{
+		font-size: 15px;
+	}
+	.propng{
+		width: 100%;
+	}
+	.protext{
+		width: 100%;
+	}
+	
+	.advantages{
+		margin-top: 20px;
+	}
+	
+	.hyshuju{
+		margin-left: 28px;
+	}
+}
+
+@media ( min-width :992px) {
+	.cpuone{
+		margin-left: 20px;
+	}
+	.cputwo{
+		margin-left: 40px;
+	}
+	
+	.cputhree{
+		margin-left: 30px;
+	}
+	
+	.onetext{
+		font-size: 16px;
+	}
+	.twotext{
+		font-size: 16px;
+	}
+	.threetext{
+		font-size: 16px;
+	}
+	#mon1{
+		font-size: 15px;
+	}
+	#mon2{
+		font-size: 15px;
+	}
+	#mon3{
+		font-size: 15px;
+	}
+	
+	.propng{
+		width: 100%;
+	}
+	.protext{
+		width: 100%;
+	}
+	.advantage{
+		width: 35%;
+		margin-left: 50px;
+	}
+	
+	.advantageimg{
+		width: 20%;
+	}
+	
+	.advantages{
+		width: 35%;
+		margin-left: 120px;
+		margin-top: 0px;
+	}
+	.one{
+		width: 55%; 
+	}
+	
+	.oner{
+		width: 55%; 
+		margin-top:15px;
+	}
+	
+	.ones{
+		width:35%;
+		margin-left: 30px;
+	}
+	
+	.two{
+		width: 35%;
+	}
+	
+	.twos{
+		width: 55%;
+		margin-left: 30px; 
+		margin-top: 80px;
+	}
+	
+	.hyshuju{
+		margin-left: 30px;
+	}
+}
+
+@media ( min-width :1100px) {
+	.cpuone{
+		margin-left: 30px;
+	}
+	
+	.cputwo{
+		margin-left: 40px;
+	}
+	
+	.cputhree{
+		margin-left: 30px;
+	}
+	
+	.onetext{
+		font-size: 18px;
+	}
+	.twotext{
+		font-size: 18px;
+	}
+	.threetext{
+		font-size: 18px;
+	}
+	
+	#mon1{
+		font-size: 17px;
+	}
+	#mon2{
+		font-size: 17px;
+	}
+	#mon3{
+		font-size: 17px;
+	}
+	
+	.propng{
+		width: 100%;
+	}
+	.protext{
+		width: 100%;
+	}
+	.advantage{
+		width: 35%;
+		margin-left: 50px;
+	}
+	
+	.advantageimg{
+		width: 20%;
+	}
+	
+	.advantages{
+		width: 35%;
+		margin-left: 150px;
+		margin-top: 0px;
+	}
+	.one{
+		width: 40%;
+		margin-left: 80px;
+	}
+	
+	.oner{
+		width: 40%;
+		margin-left: 80px;
+		margin-top: 35px;
+	}
+	
+	.ones{
+		width:35%;
+		margin-left: 80px;
+	}
+	
+	.two{
+		width: 35%;
+		margin-left: 50px;
+	}
+	
+	.twos{
+		width: 45%;
+		margin-left: 80px;
+		margin-top: 80px;
+	}
+	
+	.hyshuju{
+		margin-left: 35px;
+	}
+}
+
+@media ( min-width :1200px) {
+	.onetext{
+		font-size: 20px;
+	}
+	.twotext{
+		font-size: 20px;
+	}
+	.threetext{
+		font-size: 20px;
+	}
+	
+	#mon1{
+		font-size: 17px;
+	}
+	#mon2{
+		font-size: 17px;
+	}
+	#mon3{
+		font-size: 17px;
+	}
+	
+	.propng{
+		width: 100%;
+	}
+	.protext{
+		width: 100%;
+	}
+	.advantage{
+		width: 35%;
+		margin-left: 80px;
+	}
+	
+	.advantageimg{
+		width: 20%;
+	}
+	
+	.advantages{
+		width: 35%;
+		margin-left: 150px;
+		margin-top: 0px;
+	}
+	.one{
+		width: 45%;
+		margin-left: 50px;
+	}
+	
+	.oner{
+		width: 45%;
+		margin-left: 50px;
+	}
+	
+	.ones{
+		width:35%;
+		margin-left: 80px;
+	}
+	
+	.two{
+		width: 35%;
+		margin-left: 50px;
+	}
+	
+	.twos{
+		width: 45%;
+		margin-left: 80px;
+		margin-top: 80px;
+	}
+	
+	.hyshuju{
+		margin-left: 40px;
+	}
+}
+
+@media ( min-width :1400px) {
+	.cpuone{
+		margin-left: 30px;
+	}
+	
+	.cputwo{
+		margin-left: 40px;
+	}
+	
+	.cputhree{
+		margin-left: 30px;
+	}
+	.onetext{
+		font-size: 23px;
+	}
+	.twotext{
+		font-size: 23px;
+	}
+	.threetext{
+		font-size: 23px;
+	}
+	
+	#mon1{
+		font-size: 17px;
+	}
+	#mon2{
+		font-size: 17px;
+	}
+	#mon3{
+		font-size: 17px;
+	}
+	
+	.propng{
+		width: 100%;
+	}
+	.protext{
+		width: 100%;
+	}
+	.advantage{
+		width: 35%;
+		margin-left: 80px;
+	}
+	
+	.advantageimg{
+		width: 20%;
+	}
+	
+	.advantages{
+		width: 35%;
+		margin-left: 150px;
+		margin-top: 0px;
+	}
+	.one{
+		width: 35%;
+		margin-left: 80px;
+	}
+	
+	.oner{
+		width: 35%;
+		margin-left: 120px;
+	}
+	
+	.ones{
+		width:35%;
+		margin-left: 80px;
+	}
+	
+	.two{
+		width: 35%;
+		margin-top: 25px;
+		margin-left: 80px;
+	}
+	
+	.twos{
+		width: 40%;
+		margin-left: 130px;
+		margin-top: 80px;
+	}
+	.hyshuju{
+		margin-left: 43px;
+	}
+}
+
+@media ( min-width :1600px) {
+	.cpuone{
+		margin-left: 70px;
+	}
+	
+	.cputwo{
+		margin-left: 80px;
+	}
+	
+	.cputhree{
+		margin-left: 70px;
+	}
+	.onetext{
+		font-size: 23px;
+	}
+	.twotext{
+		font-size: 23px;
+	}
+	.threetext{
+		font-size: 23px;
+	}
+	#mon1{
+		font-size: 17px;
+	}
+	#mon2{
+		font-size: 17px;
+	}
+	#mon3{
+		font-size: 17px;
+	}
+	.propng{
+		width: 50%;
+	}
+	.protext{
+		width: 50%;
+	}
+	
+	.advantage{
+		width: 35%;
+		margin-left: 80px;
+	}
+	
+	.advantageimg{
+		width: 20%;
+	}
+	
+	.advantages{
+		width: 35%;
+		margin-left: 150px;
+		margin-top: 0px;
+	}
+	
+	.one{
+		width: 35%;
+		margin-left: 120px;
+	}
+	
+	.oner{
+		width: 35%;
+		margin-left: 120px;
+	}
+	
+	.ones{
+		width:35%;
+		margin-left: 150px;
+		margin-top: 45px;
+	}
+	
+	.two{
+		width: 35%;
+		margin-top: 30px;
+		margin-left: 120px;
+	}
+	
+	.twos{
+		width: 35%;
+		margin-left: 150px;
+	}
+	.hyshuju{
+		margin-left: 55px;
+	}
+} */
+.cpuone {
+	margin-left: 70px;
+}
+
+.cputwo {
+	margin-left: 80px;
+}
+
+.cputhree {
+	margin-left: 70px;
+}
+
+.onetext {
+	font-size: 23px;
+}
+
+.twotext {
+	font-size: 23px;
+}
+
+.threetext {
+	font-size: 23px;
+}
+
+#mon1 {
+	font-size: 17px;
+}
+
+#mon2 {
+	font-size: 17px;
+}
+
+#mon3 {
+	font-size: 17px;
+}
+
+.propng {
+	width: 50%;
+}
+
+.protext {
+	width: 50%;
+}
+
+.advantage {
+	width: 35%;
+	margin-left: 80px;
+}
+
+.advantageimg {
+	width: 20%;
+}
+
+.advantages {
+	width: 35%;
+	margin-left: 150px;
+	margin-top: 0px;
+}
+
+.one {
+	width: 35%;
+	margin-left: 120px;
+}
+
+.oner {
+	width: 35%;
+	margin-left: 120px;
+}
+
+.ones {
+	width: 35%;
+	margin-left: 150px;
+	margin-top: 45px;
+}
+
+.two {
+	width: 35%;
+	margin-top: 30px;
+	margin-left: 120px;
+}
+
+.twos {
+	width: 35%;
+	margin-left: 150px;
+}
+
+.hyshuju {
+	margin-left: 55px;
+}
+
+.float-left {
+	float: left;
+}
+
+.sale-info-card {
+	color: #F9C500;
+	width: 300px;
+	height: 378px;
+	padding: 0;
+	background-color: #595758;
+	margin: 10px;
+}
+
+.sale-info-card a {
+	text-decoration: none;
+}
+
+.sale-info-card a:link {
+	color: black;
+}
+
+.sale-info-card a:hover {
+	color: black;
+}
+
+.sale-info-card a:visited {
+	color: black;
+}
+
+.sale-info-card .sale-info-title {
+	width: 100%;
+	font-size: 26px;
+	font-weight: 500;
+	padding-top: 30px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 10px;
+	text-align: center;
+}
+
+.sale-info-card .sale-info-content {
+	padding: 4px;
+	border-top: 1px solid #F9C500;
+	border-bottom: 1px solid #F9C500;
+	width: 248px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 4px;
+	margin-bottom: 4px;
+	font-size: 15px;
+}
+
+.sale-info-card .sale-info-content ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	line-height: 32px;
+}
+
+.sale-info-card .sale-info-content ul li {
+	padding: 0;
+}
+
+.sale-info-card .sale-info-price {
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+
+.sale-info-card .sale-info-price .sale-info-price-normol {
+	width: 100%;
+	font-size: 26px;
+	font-weight: 400;
+	margin-top: 40px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	display: block;
+}
+
+.sale-info-card .sale-info-price .sale-info-price-discount {
+	text-align: center;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.sale-info-card .sale-info-price .sale-info-price-discount .sale-info-price-original
+	{
+	width: 100%;
+	font-size: 18px;
+	font-weight: 400;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	text-decoration: line-through;
+	color: red;
+}
+
+.sale-info-card .sale-info-price .sale-info-price-discount .sale-info-price-now
+	{
+	width: 100%;
+	font-size: 23px;
+	font-weight: 400;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+.sale-info-card .sale-info-btn {
+	margin-left: auto;
+	margin-right: auto;
+	background: #F9C500;
+	color: #595758;
+	font-size: 21px;
+	width: 150px;
+	height: 40px;
+	text-align: center;
+	padding-top: 5px;
+}
+
+.sale-info-card .sale-info-btn a {
+	color: #595758;
+}
+
+.servTable {
+	border-collapse: collapse;
+	text-align: center;
+	font-size: 18px;
+	width: 1141px;
+	margin-top: 30px;
+}
+
+.servTable th {
+	border: 1px solid grey;
+	padding: 10px;
+}
+
+.servTable td {
+	border: 1px solid grey;
+	padding: 10px;
+}
+
+.servTable table tr .tz-service-td {
+	font-size: 26px;
+}
+
+.servTable table tr .tz-service-content {
+	text-align: left;
+}

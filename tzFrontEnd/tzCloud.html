@@ -1,0 +1,996 @@
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="http://127.0.0.1:80/">
+
+    <title>腾正云</title>
+
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+
+	<link rel="stylesheet" type="text/css" href="tz/css/tzCloud.css">
+
+	<style>
+	body {
+		background: #FFF;
+		min-width: 1320px;
+	}
+</style>
+  </head>
+
+  <body>
+
+
+<link rel="stylesheet" href="tz/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="tz/css/hear.css">
+<link rel="stylesheet" type="text/css" href="/tz/css/zynavigation.css">
+<script type="text/javascript" src="tz/js/top.js"></script>
+<script type="text/javascript" src="tz/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="tz/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="tz/js/bgjs/fdnews.js"></script> <!-- 新闻 -->
+<script type="text/javascript" src="tz/js/bgjs/zynavigation.js"></script>
+<script type="text/javascript" src="tz/js/bgjs/login.js"></script>
+<script type="text/javascript" src="myjs/front/index.js?version=0402"></script><!-- 登录 -->
+<script type="text/javascript" src="myjs/myrule.js"></script>
+<script type="text/javascript" src="myjs/commonFunction.js"></script>
+
+<style>
+
+<!--
+.container {
+}
+
+.navbar-collapse.collapse {
+	display: block !important;
+	height: auto !important;
+	overflow: visible !important;
+	padding-bottom: 0;
+	visibility: visible !important;
+}
+
+.li_page {
+	float: left;
+	height: 65px;
+}
+.navbar-brand{
+	float: left;
+	height: 76px;
+}
+-->
+</style>
+<div style="background: #595758;height: 45px;color:#FFF;line-height: 45px;font-family: Microsoft YaHei;position: fixed;z-index: 99999;width: 100%">
+	<div style="position: fixed;z-index: 999999;height: 45px;width: 1300px;margin:auto;left:0; right:0;padding-left:47px ">
+		<div style="float:left">
+		<!--<a href="http://www.tengzheng.net/" target="_blank" style="color: #fff;text-decoration: none;">
+					<img src="tz/images/tengzhengLOGO.png"  alt="腾正集团" title="腾正集团" style="margin-top: -7px"/>
+					腾正集团
+			</a>-->
+		</div>
+		<div style="float:left;margin-left: 20px;">
+			<a href="http://yun.zeisp.com/" target="_blank" style="color: #fff;text-decoration: none;">
+					<img src="tz/images/tzCloudLOGO.png"  alt="腾正云" title="腾正云" style="margin-top: -7px"/>
+					腾正云
+			</a>
+		</div>
+		<!-- <div style="float:left;margin-left: 20px;">
+			<a href="http://www.15cdn.com/" target="_blank" style="color: #fff;text-decoration: none;" >
+				<img src="tz/images/15CDNlogo.png"  alt="15CDN" title="15CDN" style="margin-top: -7px"/>
+				15CDN
+			</a>
+		</div> -->
+		<div style="float:left;margin-left: 20px;">
+			<a href="http://www.15cdn.com" target="_blank" style="color: #fff;text-decoration: none;" >
+				<img src="tz/images/fcdunlogo.png"  alt="安全加速" title="安全加速" style="margin-top: -7px;width: 76px;"/>&nbsp;
+			</a>
+		</div>
+		<!-- <div style="float:left;margin-left: 50px;">
+			分支机构：
+		</div>
+
+		<div style="float:left;margin-left: 10px;">
+			 东莞
+		</div>
+
+		<div style="float:left;margin-left: 20px;">
+			 惠州
+		</div>
+
+		<div style="float:left;margin-left: 20px;">
+			衡阳
+		</div> -->
+		<div  style="float:right;">
+
+		<span style="float: left;">账号<input type="text" size="10" id="cusnameid" style="color: black;line-height:normal;"><span id="nameImgId"></span></span>
+		<span style="float: left;">密码 <input type="password" size="10" id="cuspasswordid" style="color: black;line-height:normal;"><span id="passImgId"></span></span>
+		<span style="float: left;"><a style="color: #fff;" href="javascript:getLoginCode()">获取验证码</a><input type="text" size="5" id="loginCode" style="color: black;line-height:normal;"><span id="codeImgId"></span></span>
+		<div style="width: 300px;height: 100px;position: absolute;margin-left: 183px;margin-top: 45px;display: none;" id="codeImgBg"></div>
+		<a class="login" href="javascript:cusLogin()">登录<!-- <img src="/images/denglu1.png" /> --></a>
+
+			<!-- <a class="login">
+				登录
+			</a> -->
+			<a class="login">
+				注册
+			</a>
+		</div>
+	</div>
+</div>
+
+<div class="navbar navbar-default navbar-fixed-top u-navbar">
+	<div class="container" style="width: 1300px;max-width: none !important;margin: 0 auto;min-width: 1300px;padding-left: 40px;height: 76px;">
+		<div class="navbar-header" style="height: 76px;float: left;">
+			<!-- <button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target=".navbar-collapse">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button> -->
+			<a class="navbar-brand" href="http://www.tzidc.com/"> <img alt="" src="tz/images/index/logo.png"></a>
+
+		</div>
+		<div class="navbar-collapse collapse" style="height: 76px;float: left;margin: 0 auto;border: 0;">
+			<ul class="nav navbar-nav" style="height: 76px;margin: 0 auto;padding-left: 0px;padding-top: 11px;float: left;">
+				<li class="li_page"><a href="/" class="hears">首页</a>
+				</li>
+				<li class="li_page"><a href="tz/proser.html" class="hear">服务器租用与托管</a>
+					<div id="menuone" class="navi_children" style="">
+						<div style="padding-top: 45px;">
+							<div class="menu" style="float:left">
+								<img alt="" src="tz/images/index/boro.png" width="100%">
+							</div>
+
+							<div style="float:left;margin-left: 40px;">
+								<img alt="" src="tz/images/index/xian2.png">
+							</div>
+
+							<div style="float:left;margin-left: 30px;">
+								<ul style="list-style-type: none;padding: 0;">
+									<li>
+										<div
+											style="border-bottom: 2px solid #595758;width: 110px;height: 30px;">
+											<div style="float:left;margin-top: 2px;">
+												<img alt="" src="tz/images/index/product.png">
+											</div>
+											<div style="float:left;font-size: 18px;font-family: Microsoft YaHei;margin-left:10px; ">
+												<a href="tz/proser.html" style="color:#000;text-decoration:none;">产品中心</a>
+											</div>
+										</div></li>
+									<li
+										style="font-size: 15px;font-family: Microsoft YaHei;margin-left:15px;margin-top: 10px;">
+										<a href="tz/zygfzy.html" style="color:#000;text-decoration:none;">服务器租用</a>
+									</li>
+									<li
+										style="font-size: 15px;font-family: Microsoft YaHei;margin-left:15px;margin-top: 5px;">
+										<a href="tz/zytg.html" style="color:#000;text-decoration:none;">服务器托管</a>
+									</li>
+									<li
+										style="font-size: 15px;font-family: Microsoft YaHei;margin-left:15px;margin-top: 5px; ">
+										<a href="tz/zyddk.html" style="color:#000;text-decoration:none;">机柜大宽带</a>
+									</li>
+									<li
+										style="font-size: 15px;font-family: Microsoft YaHei;margin-left:15px;margin-top: 5px; ">
+										<a href="tz/solutions.html" style="color:#000;text-decoration:none;">解决方案</a>
+									</li>
+									<li
+										style="font-size: 15px;font-family: Microsoft YaHei;margin-left:15px;margin-top: 5px; ">
+										<a href="tz/easy.html" style="color:#000;text-decoration:none;">无忧盾</a>
+									</li>
+								</ul>
+							</div>
+
+							<div style="float:left;margin-left: 40px;">
+								<ul style="list-style-type: none;padding: 0;">
+									<li>
+										<div
+											style="border-bottom: 2px solid #595758;width: 110px;height: 30px;">
+											<div style="float:left;margin-top: 2px;">
+												<img alt="" src="tz/images/index/data.png">
+											</div>
+											<div style="float:left;font-size: 18px;font-family: Microsoft YaHei;margin-left:10px; ">
+												<a href="tz/dcenter.html" style="color:#000;text-decoration:none;">数据中心</a>
+											</div>
+										</div>
+										</li>
+									<li
+										style="font-size: 15px;font-family: Microsoft YaHei;margin-left:10px;margin-top: 10px;">
+										<a href="tz/dcenter.html" style="color:#000;text-decoration:none;">惠州数据中心</a>
+									</li>
+									<li
+										style="font-size: 15px;font-family: Microsoft YaHei;margin-left:10px;margin-top: 5px;">
+										<a href="tz/dcenter.html?dc=hy" style="color:#000;text-decoration:none;">衡阳数据中心</a></li>
+										<li
+										style="font-size: 15px;font-family: Microsoft YaHei;margin-left:10px;margin-top: 5px;">
+										<a href="tz/dcenter.html?dc=xian" style="color:#000;text-decoration:none;">西安数据中心</a></li>
+								</ul>
+							</div>
+
+							<div style="float:left;margin-left: 40px;">
+								<ul style="list-style-type: none;padding: 0;">
+									<li>
+										<div
+											style="border-bottom: 2px solid #595758;width: 70px;height: 30px;">
+											<div style="float:left;margin-top: 2px;">
+												<img alt="" src="tz/images/index/data.png">
+											</div>
+											<div
+												style="float:left;font-size: 18px;font-family: Microsoft YaHei;margin-left:10px; ">服务</div>
+										</div></li>
+									<li
+										style="font-size: 15px;font-family: Microsoft YaHei;margin-left:15px;margin-top: 10px;">
+										<a href="tz/record.html" style="color:#000;text-decoration:none;">备案</a>
+									</li>
+									<li
+										style="font-size: 15px;font-family: Microsoft YaHei;margin-left:15px;margin-top: 5px;">
+										<a href="tz/whitelist.html" style="color:#000;text-decoration:none;">白名单</a>
+									</li>
+								</ul>
+							</div>
+
+						</div>
+					</div>
+				</li>
+				<!-- <li class="li_page"><a href="tz/anti.html" class="hear">超高防系列</a>
+				</li> -->
+				<li class="li_page"><a href="tz/preferential.html" class="hear">优惠促销</a>
+				</li>
+				<li class="li_page"><a href="tz/tzCloud.html" class="hear">腾正云</a>
+				</li>
+				<li class="li_page"><a href="tz/15cdn.html" class="hear">安全加速</a>
+				</li>
+				<!-- <li class="li_page"><a href="tz/fcdun.html" class="hear">防C盾</a>
+				</li> -->
+				<li class="li_page"><a href="tz/introduction.html" class="hear">关于我们</a>
+					<div id="menutwo" class="navi_children" style="">
+						<div style="width:100%;margin-top: 45px;">
+							<div class="menu" style="float:left">
+								<img alt="" src="tz/images/index/about.jpg" width="100%">
+							</div>
+
+							<div style="float:left;margin-left: 40px;">
+								<img alt="" src="tz/images/index/xian2.png">
+							</div>
+
+							<div style="float:left;margin-left: 30px;">
+								<ul style="list-style-type: none;padding: 0;">
+									<li>
+										<div
+											style="border-bottom: 2px solid #595758;width: 110px;height: 30px;">
+											<div style="float:left;margin-top: 2px;">
+												<img alt="" src="tz/images/index/tu_01.png">
+											</div>
+											<div style="float:left;font-size: 18px;font-family: Microsoft YaHei;margin-left:10px; ">
+												<a href="tz/introduction.html" style="color:#000;text-decoration:none;">公司简介</a>
+											</div>
+										</div>
+									</li>
+									<li style="font-size: 15px;font-family: Microsoft YaHei;margin-left:25px;margin-top: 10px;">
+										<a href="tz/about.html" style="color:#000;text-decoration:none;">公司介绍</a>
+									</li>
+									<li
+										style="font-size: 15px;font-family: Microsoft YaHei;margin-left:25px;margin-top: 5px;">
+										<a href="tz/contact.html" style="color:#000;text-decoration:none;">联系我们</a>
+									</li>
+								</ul>
+							</div>
+
+							<div style="float:left;margin-left: 40px;">
+								<ul style="list-style-type: none;padding: 0;">
+									<li>
+										<div
+											style="border-bottom: 2px solid #595758;width: 110px;height: 30px;">
+											<div style="float:left;margin-top: 2px;">
+												<img alt="" src="tz/images/index/tu_02.png">
+											</div>
+											<div
+												style="float:left;font-size: 18px;font-family: Microsoft YaHei;margin-left:10px; ">新闻中心</div>
+										</div></li>
+									<li
+										style="font-size: 15px;font-family: Microsoft YaHei;margin-left:25px;margin-top: 10px;">
+										<a href="javascript:void(0)" onClick="findsid(2)" style="color:#000;text-decoration:none;">公司新闻</a>
+									</li>
+									<li
+										style="font-size: 15px;font-family: Microsoft YaHei;margin-left:25px;margin-top: 5px;">
+										<a href="javascript:void(0)"  onClick="findsid(1)" style="color:#000;text-decoration:none;">公司公告</a></li>
+<!-- 										<a href="javascript:void(0)"  onClick="findsid(4)" style="color:#000;text-decoration:none;">媒体报道</a></li> -->
+									<li
+										style="font-size: 15px;font-family: Microsoft YaHei;margin-left:25px;margin-top: 5px;">
+										<a href="javascript:void(0)"  onClick="findsid(3)" style="color:#000;text-decoration:none;">行业新闻</a></li>
+								</ul>
+							</div>
+
+						</div>
+					</div>
+				</li>
+				<li class="li_page"><a href="tz/paycenter.html" class="hear">支付中心</a>
+				</li>
+				<!-- <li class="li_page"><a target="_blank" href="http://yun.zeisp.com/" class="hear">腾正云</a>
+				</li>
+				<li class="li_page"><a target="_blank" href="http://www.15cdn.com/" class="hear">15CDN</a>
+				</li> -->
+					<li style="width: 400px;margin-left:  810px;position: absolute;">
+							<div style="margin-top: 5px;">
+									<div  class="on" style="float: left;">
+										<a style="float: left;">
+											<img alt="" src="tz/images/index/phone.png">
+										</a>
+										<div class="phone" style="display:none;font-size: 18px;color: #f9c500;float: left;padding-top: 7px;">0769-22226555<!-- <img alt="" src="tz/images/index/dianhua.png"> --></div>
+									</div>
+									<div class="ons" style="float: left;margin-left: 10px">
+										<a style="float: left;">
+											<img alt="" src="tz/images/index/map.png">
+										</a>
+										<div class="dizhi" style="display:none;font-size: 18px;color: #f9c500;float: left;padding-top: 7px;">广东省东莞松山湖科技十路2栋B座</div>
+									</div>
+									<div style="float: left;margin-left: 5px">
+										<a href="tz/contact.html"><img alt="" src="tz/images/index/help.png"></a>
+									</div>
+							</div>
+					</li>
+			</ul>
+
+
+		</div>
+
+
+	</div>
+	<span class="spinner sk-rotating-plane u-loading"></span>
+</div>
+
+	<div class="floating_ck">
+	<dl>
+        <dd class="consult chi-parent ic1"  id="hideid">
+        	<span>在线咨询</span>
+				<!-- <i class="ar1"></i> <span class="icons"></span> -->
+				<div class="kf-chi">
+					<ul>
+						<li class='curs'>
+							<div class="fir">
+								<span class="icon"></span> <span class="txt">售前QQ</span>
+							</div>
+							<div class="chiqq oneq" id="contactsqqid">
+							</div>
+						</li>
+						<li>
+							<div class="shzx-fir">
+								<span class="icon"></span> <span class="txt" style="font-size: 18px;color: #fff;padding-top:0px; ">7*24小时技术支持</span>
+							</div>
+							<div class="shzx oneq" id="contactsqqid">
+								<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=800093515&site=qq&menu=yes" id="gfqq_1">
+										<img border="0" alt="给我发消息" src="http://wpa.qq.com/pa?p=1:800093515:4">
+										800093515
+								</a>
+								<br />
+								<a href="javascript:void(0)" id="gfqq_1">
+										<img border="0" alt="Call me" src="tz/images/index/shzx-p.png" style="padding-right: 5px;">
+										0769-22385558
+								</a>
+								<br />
+								<a href="javascript:void(0)" id="gfqq_1">
+											<img border="0" alt="call me" src="tz/images/index/shzx-m.png" style="padding-right: 5px;padding-left: 6px">
+										15399941777
+								</a>
+							 <br />
+							</div>
+						</li>
+						<li>
+							<div class="bmd">
+								<span style="padding-top:5px;color: #fff;font-size: 23px;">投诉方式</span>
+							</div>
+							<div class="shzx oneq" id="contactsqqid">
+								<a href="javascript:void(0)" id="gfqq_1">
+									<img border="0" alt="Call me" width="24px" height="18px" src="tz/images/index/email_gaitubao_com_136x130.png" style="padding-right: 5px;">
+									ts@tzidc.com
+								</a>
+								<br />
+								<a href="javascript:void(0)" id="gfqq_1">
+									<img border="0" alt="call me" src="tz/images/index/shzx-m.png" style="padding-right: 5px;padding-left: 6px">
+									18038235325
+								</a>
+							</div>
+						</li>
+					</ul>
+									<!-- <div class="nullclss">
+									</div> -->
+				</div>
+        </dd>
+	        <dd class="jssh">
+		        	<span>微信公众号</span>
+		        	<div  class="jssh-m ">
+							<ul style="width: 233px;overflow: hidden;padding-left: 0px">
+								<li>
+									<div class="">
+										<img alt="weixin" src="/tz/images/index/ss_03.jpg" width="233px;">
+									</div>
+								</li>
+							</ul>
+		        	</div>
+		</dd>
+	        <dd class="words">
+	        		<a href="tz/record.html" style="text-decoration: none;font-size: 14px;">
+		        			<span>备案中心</span>
+			        </a>
+	        </dd>
+        <dd class="return">
+        	<span onClick="gotoTop();">到顶部</span>
+        </dd>
+    </dl>
+</div>
+
+
+
+<script>
+	$(".on").hover(function(){
+			$(".phone").stop(false,true).show(500);
+	    },function(){
+			$(".phone").stop(false,true).hide(100);
+		});
+
+    $(".ons").hover(function(){
+   			 $(".dizhi").stop(false,true).show(500);
+	    },function(){
+			$(".dizhi").stop(false,true).hide(100);
+	});
+
+	/* $(".li_page1").mousedown(function() {
+		$("#menuone").slideToggle();
+	});
+
+	$(".about").mousedown(function() {
+		$("#menutwo").slideToggle();
+	}); */
+
+
+	$(".li_page").hover(
+		function(){
+			$(this).children("a").css("color","#000");
+			$(this).children("a").css("background-color","#f5c200");
+			$(".navi_children",this).stop(false,true).fadeIn();
+		},
+		function(){
+			$(".navi_children",this).stop(false,true).fadeOut();
+			$(this).children("a").css("color","#fff");
+			$(this).children("a").css("background","none");
+		}
+	);
+
+</script>
+
+
+
+	<!-- banner -->
+	<div class="bannertwo" style="padding-top: 125px;width: 100%;">
+		<!-- images/TZpromotionsBanner.png -->
+		<a href="http://yun.zeisp.com/cloud.html">
+			<img alt="" src="images/TZpromotionsBanner.jpg"width="100%">
+		</a>
+	</div>
+
+
+	<!-- <div style="width: 100%;height: 140px" >
+		<div style="padding-top: 45px;">
+			<div style="text-align: center;font-size: 30px;font-family: Microsoft YaHei;color: #000;">腾正云服务器热销产品</div>
+			<div style="text-align: center;font-size: 18px;font-family: Microsoft YaHei;margin-top: 10px;color: #000;">存储、计算、监控、安全...你所需要的一切云产品，腾正云均能以业界领先的水平为你提供</div>
+		</div>
+	</div>
+
+	<div style="margin-top: 40px;width: 1144px;margin: 0 auto;">
+		<div
+			style="background: #ECECEC;margin:0 auto;height: 90px;">
+
+			<div style="font-family: Microsoft YaHei;padding-top: 30px;margin-left: 30px;float:left;font-size: 25px;">节点</div>
+
+			<div style="float:left;padding-top: 30px;">
+				<a id="site-1" class="human colort" sitediv="#tzCloudSite-1" href="javascript:void(0)">节点一</a>
+			</div>
+
+			<div style="float:left;padding-top: 30px;">
+				<a id="site-2" class="human" sitediv="#tzCloudSite-2" href="javascript:void(0)">节点二</a>
+			</div>
+
+			<div style="float:right;padding-top: 30px;margin-right:30px;font-weight:700;">
+				<a id="" class="humans colort"  href="http://yun.zeisp.com/">快速购买</a>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	$(".human").click(function(){
+		$(".human").removeClass("colort");
+		$(this).addClass("colort");
+
+		$(".tzCloudSite").css("display","none");
+		$($(this).attr("sitediv")).css("display","block");
+	});
+	</script>
+
+	<div id="tzCloudSite-1" class="tzCloudSite" style="display: block;">
+		<div class="tzCloud-bg" style="margin-left: 0px;">
+			<div class="tzCloud-pro">
+			 	<div class="tzCloud-pro-verso">
+					<div class="tzCloud-pro-verso-package-name">特惠　套餐一</div>
+					<div class="tzCloud-pro-verso-package-detail">
+						<ul>
+							<li>1核 1GB</li>
+							<li>系统盘（普通存储）20GB</li>
+							<li>数据盘（普通存储）20GB</li>
+							<li>公网IP 1个</li>
+							<li>不限网络模式</li>
+							<li>电信 10M 带宽</li>
+						</ul>
+					</div>
+					<div class="tzCloud-pro-verso-package-price">
+						<span class="tzCloud-pro-verso-package-price-p">特惠价：99元/月</span>
+						<span class="tzCloud-pro-verso-package-price-btn">立即咨询</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="tzCloud-bg">
+			<div class="tzCloud-pro">
+			 	<div class="tzCloud-pro-verso">
+					<div class="tzCloud-pro-verso-package-name">套餐四</div>
+					<div class="tzCloud-pro-verso-package-detail">
+						<ul>
+							<li>4核 4GB</li>
+							<li>系统盘（普通存储）20GB</li>
+							<li>数据盘（普通存储）40GB</li>
+							<li>公网IP 1个</li>
+							<li>不限网络模式</li>
+							<li>电信 10M 带宽</li>
+						</ul>
+					</div>
+					<div class="tzCloud-pro-verso-package-price">
+						<span class="tzCloud-pro-verso-package-price-p">特惠价：199元/月</span>
+						<span class="tzCloud-pro-verso-package-price-btn">立即咨询</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="tzCloud-bg">
+			<div class="tzCloud-pro">
+			 	<div class="tzCloud-pro-verso">
+					<div class="tzCloud-pro-verso-package-name">特惠　商企云</div>
+					<div class="tzCloud-pro-verso-package-detail">
+						<ul>
+							<li>8核 8GB</li>
+							<li>系统盘（普通存储）30GB</li>
+							<li>数据盘（普通存储）200GB</li>
+							<li>公网IP 1个</li>
+							<li>不限网络模式</li>
+							<li>电信 50M 带宽</li>
+						</ul>
+					</div>
+					<div class="tzCloud-pro-verso-package-price">
+						<span class="tzCloud-pro-verso-package-price-p">特惠价：699元/月</span>
+						<span class="tzCloud-pro-verso-package-price-btn">立即咨询</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="tzCloud-bg tzC-secline"  style="margin-left: 0px;">
+			<div class="tzCloud-pro">
+			 	<div class="tzCloud-pro-verso">
+					<div class="tzCloud-pro-verso-package-name">特惠　媒体云</div>
+					<div class="tzCloud-pro-verso-package-detail">
+						<ul>
+							<li>8核 8GB</li>
+							<li>系统盘（普通存储）40GB</li>
+							<li>数据盘（不限存储类型）500GB</li>
+							<li>公网IP 1个</li>
+							<li>不限网络模式</li>
+							<li>电信 100M 带宽</li>
+						</ul>
+					</div>
+					<div class="tzCloud-pro-verso-package-price">
+						<span class="tzCloud-pro-verso-package-price-p">特惠价：899元/月</span>
+						<span class="tzCloud-pro-verso-package-price-btn">立即咨询</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="tzCloudSite-2" class="tzCloudSite" style="display: none;">
+		<div class="tzCloud-bg" style="margin-left: 0px;">
+			<div class="tzCloud-pro">
+			 	<div class="tzCloud-pro-verso">
+					<div class="tzCloud-pro-verso-package-name">特惠　套餐二</div>
+					<div class="tzCloud-pro-verso-package-detail">
+						<ul>
+							<li>2核 2GB</li>
+							<li>系统盘（普通存储）20GB</li>
+							<li>数据盘（普通存储）20GB</li>
+							<li>公网IP 1个</li>
+							<li>不限网络模式</li>
+							<li>电信 10M 带宽</li>
+						</ul>
+					</div>
+					<div class="tzCloud-pro-verso-package-price">
+						<span class="tzCloud-pro-verso-package-price-p">特惠价：119元/月</span>
+						<span class="tzCloud-pro-verso-package-price-btn">立即咨询</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="tzCloud-bg">
+			<div class="tzCloud-pro">
+			 	<div class="tzCloud-pro-verso">
+					<div class="tzCloud-pro-verso-package-name">套餐三</div>
+					<div class="tzCloud-pro-verso-package-detail">
+						<ul>
+							<li>2核 4GB</li>
+							<li>系统盘（普通存储）20GB</li>
+							<li>数据盘（普通存储）20GB</li>
+							<li>公网IP 1个</li>
+							<li>不限网络模式</li>
+							<li>电信10M 带宽</li>
+						</ul>
+					</div>
+					<div class="tzCloud-pro-verso-package-price">
+						<span class="tzCloud-pro-verso-package-price-p">特惠价：139元/月</span>
+						<span class="tzCloud-pro-verso-package-price-btn">立即咨询</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="tzCloud-bg">
+			<div class="tzCloud-pro">
+			 	<div class="tzCloud-pro-verso">
+					<div class="tzCloud-pro-verso-package-name">套餐四</div>
+					<div class="tzCloud-pro-verso-package-detail">
+						<ul>
+							<li>4核 4GB</li>
+							<li>系统盘（普通存储）20GB</li>
+							<li>数据盘（普通存储）40GB</li>
+							<li>公网IP 1个</li>
+							<li>不限网络模式</li>
+							<li>电信 10M 带宽</li>
+						</ul>
+					</div>
+					<div class="tzCloud-pro-verso-package-price">
+						<span class="tzCloud-pro-verso-package-price-p">特惠价：199元/月</span>
+						<span class="tzCloud-pro-verso-package-price-btn">立即咨询</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="tzCloud-bg tzC-secline" style="margin-left: 0px;">
+			<div class="tzCloud-pro">
+			 	<div class="tzCloud-pro-verso">
+					<div class="tzCloud-pro-verso-package-name">特惠　商企云</div>
+					<div class="tzCloud-pro-verso-package-detail">
+						<ul>
+							<li>8核 8GB</li>
+							<li>系统盘（普通存储）30GB</li>
+							<li>数据盘（普通存储）200GB</li>
+							<li>公网IP 1个</li>
+							<li>不限网络模式</li>
+							<li>电信 50M 带宽</li>
+						</ul>
+					</div>
+					<div class="tzCloud-pro-verso-package-price">
+						<span class="tzCloud-pro-verso-package-price-p">特惠价：699元/月</span>
+						<span class="tzCloud-pro-verso-package-price-btn">立即咨询</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="tzCloud-bg tzC-secline">
+			<div class="tzCloud-pro">
+			 	<div class="tzCloud-pro-verso">
+					<div class="tzCloud-pro-verso-package-name">特惠　媒体云</div>
+					<div class="tzCloud-pro-verso-package-detail">
+						<ul>
+							<li>8核 8GB</li>
+							<li>系统盘（普通存储）40GB</li>
+							<li>数据盘（不限存储类型）500GB</li>
+							<li>公网IP 1个</li>
+							<li>不限网络模式</li>
+							<li>电信 100M 带宽</li>
+						</ul>
+					</div>
+					<div class="tzCloud-pro-verso-package-price">
+						<span class="tzCloud-pro-verso-package-price-p">特惠价：899元/月</span>
+						<span class="tzCloud-pro-verso-package-price-btn">立即咨询</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> -->
+
+	<div style="width: 100%;height: 140px" >
+		<div style="padding-top: 45px;">
+			<div style="text-align: center;font-size: 30px;font-family: Microsoft YaHei;color: #000;">腾正云优势</div>
+			<div style="text-align: center;font-size: 18px;font-family: Microsoft YaHei;margin-top: 10px;color: #000;">采用先进技术，提供个性化行业解决方案，只为您提供周全服务</div>
+			<div style="text-align: center; width: 9%;height: 80px;margin:  0 auto;margin-top: 15px;"> <a id="" class="humans colort"  href="http://yun.zeisp.com/">快速购买</a></div>
+		</div>
+	</div>
+
+	<div class="def-type">
+	 		<div class="types">
+	 			<div class="types-img">
+	 				<img alt="ack" src="/tz/images/tzCloud/tzCloud_01.png">
+	 			</div>
+	 			<div class="types-text">
+	 				<ul>
+	 					<li><span>带宽共享</span>用户只需开通一个账号，购买一个带宽即可实现多公网ip共用带宽，节省带宽费用，解决带宽冗余使用情况，达到资源利用最大化。（注意：经典网络的带宽不支持共享使用）</li>
+	 					<li><span>专有网络</span>使用NAT映射技术，用户只需购买一个NAT网关绑定带宽资源，即可映射到多台无公网IP云主机使用，不但节省IP资源投资费用，同时保证了用户网络和数据安全</li>
+	 				</ul>
+	 			</div>
+	 		</div>
+
+	 		<div class="types">
+	 			<div class="types-text">
+	 				<ul>
+	 					<li><span>网络安全</span>高达40G的防护，有效防御DDOS，CC，SYN等多种类型攻击，并及时修复漏洞，确保云主机用户使用稳定安心和网络安全。</li>
+	 					<li><span>数据安全</span>部署完善，高效灵活的云灾备服务，保证了数据和数据的完整性，数据传输的一致性，快速实现用户的灾备目标，降低用户运维成本和工作强度，降低灾备系统的总体拥有成本。分布式的数据储存服务，可靠性高达99.99%。</li>
+	 				</ul>
+	 			</div>
+	 			<div class="types-img">
+	 				<img alt="ack" src="/tz/images/tzCloud/tzCloud_02.png">
+	 			</div>
+	 		</div>
+
+	 		<div class="types">
+	 			<div class="types-img">
+	 				<img alt="ack" src="/tz/images/tzCloud/tzCloud_03.png">
+	 			</div>
+	 			<div class="types-text">
+	 				<ul>
+	 					<li><span>安心保障</span>采用G-Cloud底层，不但是通过了信息安全评测中心认证（EAL3+）的云操作系统，而且同时也是工信部认证的基于安全可控优秀云计算解决方案。7*24小时专业技术售后在线支持，完善快捷的工单响应体系，云服务器删除后数据保密彻底处理，平台数据免费迁移。</li>
+	 				</ul>
+	 			</div>
+	 		</div>
+	 	</div>
+
+
+	<!-- 底部 -->
+
+<link rel="stylesheet" type="text/css" href="tz/css/bottom.css">
+
+
+<div style="background: #373D41;width: 100%;padding-bottom: 30px;">
+
+	<div class="bottomone">
+		<div style="float:left">
+			<div>
+				<div style="float:left">
+					<img alt="" src="tz/images/index/address.png">
+				</div>
+				<div
+					style="font-size: 20px;color:#F9C500;font-family: Microsoft YaHei;float:left;margin-left: 10px;">
+					总部：广东腾正计算机科技有限公司
+				</div>
+			</div>
+			<div style="clear:both"></div>
+			<div style="color:#FFF;margin-left: 25px;font-family: Microsoft YaHei;font-size: 15px;margin-top: 10px;">
+				广东省东莞市松山湖科技十路国际金融IT研发中心2栋B座</div>
+		</div>
+
+		<div class="bottomtwo" style="float:left;">
+			<div>
+				<div style="float:left">
+					<img alt="" src="tz/images/index/address.png">
+				</div>
+				<div style="font-size: 20px;color:#F9C500;font-family: Microsoft YaHei;float:left;margin-left: 10px;">
+					分部：广东腾川计算机系统有限公司
+				</div>
+			</div>
+			<div style="clear:both"></div>
+			<div
+				style="color:#FFF;margin-left: 25px;font-family: Microsoft YaHei;font-size: 15px;margin-top: 10px;">
+				广东省惠州市东平南路21号2栋第二层</div>
+		</div>
+
+		<div class="bottomtwo" style="float:left;">
+			<div>
+				<div style="float:left">
+					<img alt="" src="tz/images/index/address.png">
+				</div>
+				<div style="font-size: 20px;color:#F9C500;font-family: Microsoft YaHei;float:left;margin-left: 10px;">
+					子公司：长沙正易网络科技有限公司
+				</div>
+			</div>
+			<div style="clear:both"></div>
+			<div
+				style="color:#FFF;margin-left: 25px;font-family: Microsoft YaHei;font-size: 15px;margin-top: 10px;">
+				湖南省长沙市高新开发区麓龙路209号单元402</div>
+		</div>
+
+	</div>
+	<div style="clear:both"></div>
+
+	<!-- <div class="temp" style="margin-top: 30px;">
+		<img alt="" src="tz/images/index/base.png">
+	</div> -->
+
+	<div style="clear:both"></div>
+
+	<div class="base">
+		<div style="float:left;">
+			<dl>
+				<dd>
+					<a href="tz/proser.html">产品中心</a>
+				</dd>
+				<dt>
+					<a href="tz/zygfzy.html">服务器租用</a>
+				</dt>
+				<dt>
+					<a href="tz/zytg.html">服务器托管</a>
+				</dt>
+				<dt>
+					<a href="tz/zyddk.html">机柜大带宽</a>
+				</dt>
+				<dt>
+					<a href="tz/solutions.html">解决方案</a>
+				</dt>
+				<dt>
+					<a href="tz/easy.html">无忧盾</a>
+				</dt>
+			</dl>
+		</div>
+
+		<div style="float:left;margin-left: 70px;">
+			<dl>
+				<dd>
+					<a style="text-decoration: none">数据中心</a>
+				</dd>
+				<dt>
+					<a href="tz/dcenter.html">惠州数据中心</a>
+				</dt>
+				<dt>
+					<a href="tz/dcenter.html?dc=hy">衡阳数据中心</a>
+				</dt>
+				<dt>
+					<a href="tz/dcenter.html?dc=xian">西安数据中心</a>
+				</dt>
+			</dl>
+		</div>
+
+		<div style="float:left;margin-left: 70px;">
+			<dl>
+				<dd>
+					<a style="text-decoration: none">增值业务</a>
+				</dd>
+				<dt>
+					<a href="http://yun.tzidc.com/">腾正云</a>
+				</dt>
+				<dt>
+					<a href="http://www.15cdn.com/">15CDN</a>
+				</dt>
+			</dl>
+		</div>
+
+		<div style="float:left;margin-left: 70px;">
+			<dl>
+				<dd>
+					<a style="text-decoration: none">服务</a>
+				</dd>
+				<dt>
+					<a href="tz/record.html">备案</a>
+				</dt>
+				<dt>
+					<a href="tz/whitelist.html">白名单</a>
+				</dt>
+				<dt>
+					<a href="http://www.downun.com/special/arc-4769.html" target="_blank">站长工具</a>
+				</dt>
+			</dl>
+		</div>
+
+		<div style="float:left;margin-left: 70px;">
+			<dl>
+				<dd>
+					<a href="tz/introduction.html">公司简介</a>
+				</dd>
+				<dt>
+					<a href="tz/about.html">公司介绍</a>
+				</dt>
+				<dt>
+					<a href="tz/contact.html">联系我们</a>
+				</dt>
+			</dl>
+		</div>
+
+		<div style="float:left;margin-left: 70px;">
+			<dl>
+				<dd>
+					<a href="javascript:void(0)">新闻中心</a>
+				</dd>
+				<dt>
+					<a href="javascript:void(0)" onClick="findsid(2)">公司动态</a>
+				</dt>
+				<dt>
+					<a href="javascript:void(0)" onClick="findsid(1)">公司公告</a>
+					<!-- <a href="javascript:void(0)" onClick="findsid(4)">媒体报道</a> -->
+				</dt>
+				<dt>
+					<a href="javascript:void(0)" onClick="findsid(3)">行业动态</a>
+				</dt>
+			</dl>
+		</div>
+		<div class="tz">
+			<img alt="" src="tz/images/index/tz.png">
+		</div>
+	</div>
+
+	<div style="clear:both"></div>
+</div>
+
+
+<div
+	style="background: #202020;width: 100%;position: relative;padding-bottom: 84px;padding-top: 30px;">
+	<div style="text-align: center;color:#FFF;font-size: 13px;">
+		Copyright© 2014.Company name All rights reserved.广东腾正计算机科技有限公司</div>
+
+	<div class="tu1"
+		style="text-align: center;color:#FFF;font-size: 13px;margin: auto;margin-top: 10px;">
+		<div style="float:left">IDC/ISP证：湘B1-20130093 粤B2-20051052 </div>
+		<div style="float:left;margin-left: 5px;">
+			<img alt="" src="tz/images/index/img1.png">
+		</div>
+		<div style="float:left;margin-left: 5px;">粤网文〔2016〕1106-216号</div>
+	</div>
+
+	<div style="clear:both"></div>
+
+	<div class="tu2"
+		style="text-align: center;color:#FFF;font-size: 13px;margin: auto;margin-top: 10px;">
+		<div style="float:left;margin-left: 5px;">
+			<img alt="" src="tz/images/index/img2.png">
+		</div>
+		<div style="float:left;margin-left: 5px;margin-top: 2px;">
+			粤公网安备44190002000106号 <a href="http://www.miitbeian.gov.cn" style="color: #fff">粤ICP备15081286号-2</a>  全国IDC证：B1.B2-20150233</div>
+<div style="float:left;margin-left: 190px;margin-top: 10px;">
+<iframe style="height: 40px; width: 117px;" src="http://wljg.gdgs.gov.cn/lz.ashx?vie=41BEF320E537FBF5FB05128371785C72E68E27A4AF820A5D7DDC2E150B907189EF905A25C90D5E0E0799C10B9F2E8A59" scrolling="no" style="overflow:hidden;" frameborder="0" allowtransparency="true"></iframe>
+</div>
+
+	</div>
+
+</div>
+<script>
+	// setTimeout(function() {
+	// 	console.log($("#newBridge .nb-icon-inner-wrap"));
+	// 	$("#newBridge .nb-icon-inner-wrap").css({
+	// 		"background-image": "url(/tz/promotion/20180105/images/120X170.gif)"
+	// 	});
+	// 	$("#newBridge .nb-invite-body").css({
+	// 		"background-image": "url(/tz/promotion/20180105/images/422X173.png)"
+	// 	});
+	// },2000);
+	// var key = ["领先","中国","完美","星级","国际"];
+	// key.forEach(function(item) {
+	// 	$("body").html($("body").html().replace(item,"**"));
+	// });
+
+</script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?168311ab5cf4653f3b9dec7c0f46eda6";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253197097'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "w.cnzz.com/c.php%3Fid%3D1253197097' type='text/javascript'%3E%3C/script%3E"));</script>
+<script src="http://s95.cnzz.com/z_stat.php?id=1257184467&web_id=1257184467 " language="JavaScript"></script>
+<script type="text/javascript">
+$("a[title=站长统计]").hide();
+</script>
+	<!-- 底部 -->
+  </body>
+</html>

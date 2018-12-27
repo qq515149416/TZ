@@ -1,0 +1,197 @@
+body {
+	background: #FFF;
+}
+
+.human {
+	width: 130px;
+	height: 40px;
+	display: block;
+	text-align: center;
+	padding-top: 10px;
+	background: #FFF;
+	font-family: Microsoft YaHei;
+	font-size: 15px;
+	color: #000;
+	margin-left: 20px;
+}
+
+.human:hover {
+	text-decoration: none;
+	color: #FFF;
+	background-color: #FB645D;
+}
+
+.colort{
+	text-decoration: none;
+	color: #FFF;
+	background-color: #FB645D;
+}
+
+/* @media ( min-width :600px) {
+}
+
+@media ( min-width :768px) {
+	.himages {
+		width: 100%
+	}
+	.himages2 {
+		width: 50%;
+		margin-left: 10px;
+	}
+	.yidian {
+		height: 00px;
+	}
+}
+
+@media ( min-width :980px) {
+	.yidian {
+		height: 80px;
+	}
+}
+
+@media ( min-width :992px) {
+	.yidian {
+		height: 80px;
+	}
+	.himages2 {
+		width: 50%;
+		margin-left: 30px;
+	}
+}
+
+@media ( min-width :1100px) {
+	.gaosu {
+		margin-left: 10px;
+	}
+	.gaosus {
+		margin-left: 10px;
+	}
+	.too {
+		padding-top: 30px;
+	}
+	.toos {
+		padding-top: 15px;
+	}
+	.himages {
+		width: 45%
+	}
+	.himages2 {
+		width: 50%;
+		margin-left: 30px;
+	}
+	.yidian {
+		height: 80px;
+	}
+	.gugan {
+		margin-left: 10px;
+	}
+}
+
+@media ( min-width :1200px) {
+	.gaosu {
+		margin-left: 10px;
+	}
+	.gaosus {
+		margin-left: 10px;
+	}
+	.too {
+		padding-top: 30px;
+	}
+	.toos {
+		padding-top: 15px;
+	}
+	.himages {
+		width: 45%
+	}
+	.himages2 {
+		width: 40%;
+		margin-left: 60px;
+	}
+	.yidian {
+		height: 80px;
+	}
+	.gugan {
+		margin-left: 10px;
+	}
+}
+
+@media ( min-width :1400px) {
+	.gaosu {
+		margin-left: 20px;
+	}
+	.gaosus {
+		margin-left: 20px;
+	}
+	.too {
+		padding-top: 50px;
+	}
+	.toos {
+		padding-top: 15px;
+	}
+	.himages {
+		width: 45%
+	}
+	.himages2 {
+		width: 40%
+	}
+	.yidian {
+		height: 80px;
+	}
+	.gugan {
+		margin-left: 20px;
+	}
+}
+
+@media ( min-width :1600px) {
+	.gaosu {
+		margin-left: 30px;
+	}
+	.gaosus {
+		margin-left: 30px;
+	}
+	.too {
+		padding-top: 80px;
+	}
+	.toos {
+		padding-top: 15px;
+	}
+	.himages {
+		width: 40%
+	}
+	.himages2 {
+		width: 40%
+	}
+	.yidian {
+		height: 80px;
+	}
+	.gugan {
+		margin-left: 20px;
+	}
+} */
+
+
+
+.gaosu {
+		margin-left: 30px;
+	}
+	.gaosus {
+		margin-left: 30px;
+	}
+	.too {
+		padding-top: 80px;
+	}
+	.toos {
+		padding-top: 15px;
+	}
+	.himages {
+		width: 40%
+	}
+	.himages2 {
+		width: 40%
+	}
+	.yidian {
+		height: 80px;
+	}
+	.gugan {
+		margin-left: 20px;
+	}

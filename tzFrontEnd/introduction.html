@@ -1,0 +1,984 @@
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<base href="http://127.0.0.1/">
+<title>腾正科技-服务器租用，服务器托管，专业IDC服务商</title>
+<link rel="stylesheet" href="tz/css/bootstrap.min.css">
+
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="This is my page">
+
+	<link rel="stylesheet" type="text/css" href="tz/css/introduction.css">
+
+</head>
+
+<body style="min-width: 1320px;">
+	<div>
+
+
+<link rel="stylesheet" href="tz/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="tz/css/hear.css">
+<link rel="stylesheet" type="text/css" href="/tz/css/zynavigation.css">
+<script type="text/javascript" src="tz/js/top.js"></script>
+<script type="text/javascript" src="tz/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="tz/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="tz/js/bgjs/fdnews.js"></script> <!-- 新闻 -->
+<script type="text/javascript" src="tz/js/bgjs/zynavigation.js"></script>
+<script type="text/javascript" src="tz/js/bgjs/login.js"></script>
+<script type="text/javascript" src="myjs/front/index.js?version=0402"></script><!-- 登录 -->
+<script type="text/javascript" src="myjs/myrule.js"></script>
+<script type="text/javascript" src="myjs/commonFunction.js"></script>
+
+<style>
+
+<!--
+.container {
+}
+
+.navbar-collapse.collapse {
+	display: block !important;
+	height: auto !important;
+	overflow: visible !important;
+	padding-bottom: 0;
+	visibility: visible !important;
+}
+
+.li_page {
+	float: left;
+	height: 65px;
+}
+.navbar-brand{
+	float: left;
+	height: 76px;
+}
+-->
+</style>
+<div style="background: #595758;height: 45px;color:#FFF;line-height: 45px;font-family: Microsoft YaHei;position: fixed;z-index: 99999;width: 100%">
+	<div style="position: fixed;z-index: 999999;height: 45px;width: 1300px;margin:auto;left:0; right:0;padding-left:47px ">
+		<div style="float:left">
+		<!--<a href="http://www.tengzheng.net/" target="_blank" style="color: #fff;text-decoration: none;">
+					<img src="tz/images/tengzhengLOGO.png"  alt="腾正集团" title="腾正集团" style="margin-top: -7px"/>
+					腾正集团
+			</a>-->
+		</div>
+		<div style="float:left;margin-left: 20px;">
+			<a href="http://yun.zeisp.com/" target="_blank" style="color: #fff;text-decoration: none;">
+					<img src="tz/images/tzCloudLOGO.png"  alt="腾正云" title="腾正云" style="margin-top: -7px"/>
+					腾正云
+			</a>
+		</div>
+		<!-- <div style="float:left;margin-left: 20px;">
+			<a href="http://www.15cdn.com/" target="_blank" style="color: #fff;text-decoration: none;" >
+				<img src="tz/images/15CDNlogo.png"  alt="15CDN" title="15CDN" style="margin-top: -7px"/>
+				15CDN
+			</a>
+		</div> -->
+		<div style="float:left;margin-left: 20px;">
+			<a href="http://www.15cdn.com" target="_blank" style="color: #fff;text-decoration: none;" >
+				<img src="tz/images/fcdunlogo.png"  alt="安全加速" title="安全加速" style="margin-top: -7px;width: 76px;"/>&nbsp;
+			</a>
+		</div>
+		<!-- <div style="float:left;margin-left: 50px;">
+			分支机构：
+		</div>
+
+		<div style="float:left;margin-left: 10px;">
+			 东莞
+		</div>
+
+		<div style="float:left;margin-left: 20px;">
+			 惠州
+		</div>
+
+		<div style="float:left;margin-left: 20px;">
+			衡阳
+		</div> -->
+		<div  style="float:right;">
+
+		<span style="float: left;">账号<input type="text" size="10" id="cusnameid" style="color: black;line-height:normal;"><span id="nameImgId"></span></span>
+		<span style="float: left;">密码 <input type="password" size="10" id="cuspasswordid" style="color: black;line-height:normal;"><span id="passImgId"></span></span>
+		<span style="float: left;"><a style="color: #fff;" href="javascript:getLoginCode()">获取验证码</a><input type="text" size="5" id="loginCode" style="color: black;line-height:normal;"><span id="codeImgId"></span></span>
+		<div style="width: 300px;height: 100px;position: absolute;margin-left: 183px;margin-top: 45px;display: none;" id="codeImgBg"></div>
+		<a class="login" href="javascript:cusLogin()">登录<!-- <img src="/images/denglu1.png" /> --></a>
+
+			<!-- <a class="login">
+				登录
+			</a> -->
+			<a class="login">
+				注册
+			</a>
+		</div>
+	</div>
+</div>
+
+<div class="navbar navbar-default navbar-fixed-top u-navbar">
+	<div class="container" style="width: 1300px;max-width: none !important;margin: 0 auto;min-width: 1300px;padding-left: 40px;height: 76px;">
+		<div class="navbar-header" style="height: 76px;float: left;">
+			<!-- <button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target=".navbar-collapse">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button> -->
+			<a class="navbar-brand" href="http://www.tzidc.com/"> <img alt="" src="tz/images/index/logo.png"></a>
+
+		</div>
+		<div class="navbar-collapse collapse" style="height: 76px;float: left;margin: 0 auto;border: 0;">
+			<ul class="nav navbar-nav" style="height: 76px;margin: 0 auto;padding-left: 0px;padding-top: 11px;float: left;">
+				<li class="li_page"><a href="/" class="hears">首页</a>
+				</li>
+				<li class="li_page"><a href="tz/proser.html" class="hear">服务器租用与托管</a>
+					<div id="menuone" class="navi_children" style="">
+						<div style="padding-top: 45px;">
+							<div class="menu" style="float:left">
+								<img alt="" src="tz/images/index/boro.png" width="100%">
+							</div>
+
+							<div style="float:left;margin-left: 40px;">
+								<img alt="" src="tz/images/index/xian2.png">
+							</div>
+
+							<div style="float:left;margin-left: 30px;">
+								<ul style="list-style-type: none;padding: 0;">
+									<li>
+										<div
+											style="border-bottom: 2px solid #595758;width: 110px;height: 30px;">
+											<div style="float:left;margin-top: 2px;">
+												<img alt="" src="tz/images/index/product.png">
+											</div>
+											<div style="float:left;font-size: 18px;font-family: Microsoft YaHei;margin-left:10px; ">
+												<a href="tz/proser.html" style="color:#000;text-decoration:none;">产品中心</a>
+											</div>
+										</div></li>
+									<li
+										style="font-size: 15px;font-family: Microsoft YaHei;margin-left:15px;margin-top: 10px;">
+										<a href="tz/zygfzy.html" style="color:#000;text-decoration:none;">服务器租用</a>
+									</li>
+									<li
+										style="font-size: 15px;font-family: Microsoft YaHei;margin-left:15px;margin-top: 5px;">
+										<a href="tz/zytg.html" style="color:#000;text-decoration:none;">服务器托管</a>
+									</li>
+									<li
+										style="font-size: 15px;font-family: Microsoft YaHei;margin-left:15px;margin-top: 5px; ">
+										<a href="tz/zyddk.html" style="color:#000;text-decoration:none;">机柜大宽带</a>
+									</li>
+									<li
+										style="font-size: 15px;font-family: Microsoft YaHei;margin-left:15px;margin-top: 5px; ">
+										<a href="tz/solutions.html" style="color:#000;text-decoration:none;">解决方案</a>
+									</li>
+									<li
+										style="font-size: 15px;font-family: Microsoft YaHei;margin-left:15px;margin-top: 5px; ">
+										<a href="tz/easy.html" style="color:#000;text-decoration:none;">无忧盾</a>
+									</li>
+								</ul>
+							</div>
+
+							<div style="float:left;margin-left: 40px;">
+								<ul style="list-style-type: none;padding: 0;">
+									<li>
+										<div
+											style="border-bottom: 2px solid #595758;width: 110px;height: 30px;">
+											<div style="float:left;margin-top: 2px;">
+												<img alt="" src="tz/images/index/data.png">
+											</div>
+											<div style="float:left;font-size: 18px;font-family: Microsoft YaHei;margin-left:10px; ">
+												<a href="tz/dcenter.html" style="color:#000;text-decoration:none;">数据中心</a>
+											</div>
+										</div>
+										</li>
+									<li
+										style="font-size: 15px;font-family: Microsoft YaHei;margin-left:10px;margin-top: 10px;">
+										<a href="tz/dcenter.html" style="color:#000;text-decoration:none;">惠州数据中心</a>
+									</li>
+									<li
+										style="font-size: 15px;font-family: Microsoft YaHei;margin-left:10px;margin-top: 5px;">
+										<a href="tz/dcenter.html?dc=hy" style="color:#000;text-decoration:none;">衡阳数据中心</a></li>
+										<li
+										style="font-size: 15px;font-family: Microsoft YaHei;margin-left:10px;margin-top: 5px;">
+										<a href="tz/dcenter.html?dc=xian" style="color:#000;text-decoration:none;">西安数据中心</a></li>
+								</ul>
+							</div>
+
+							<div style="float:left;margin-left: 40px;">
+								<ul style="list-style-type: none;padding: 0;">
+									<li>
+										<div
+											style="border-bottom: 2px solid #595758;width: 70px;height: 30px;">
+											<div style="float:left;margin-top: 2px;">
+												<img alt="" src="tz/images/index/data.png">
+											</div>
+											<div
+												style="float:left;font-size: 18px;font-family: Microsoft YaHei;margin-left:10px; ">服务</div>
+										</div></li>
+									<li
+										style="font-size: 15px;font-family: Microsoft YaHei;margin-left:15px;margin-top: 10px;">
+										<a href="tz/record.html" style="color:#000;text-decoration:none;">备案</a>
+									</li>
+									<li
+										style="font-size: 15px;font-family: Microsoft YaHei;margin-left:15px;margin-top: 5px;">
+										<a href="tz/whitelist.html" style="color:#000;text-decoration:none;">白名单</a>
+									</li>
+								</ul>
+							</div>
+
+						</div>
+					</div>
+				</li>
+				<!-- <li class="li_page"><a href="tz/anti.html" class="hear">超高防系列</a>
+				</li> -->
+				<li class="li_page"><a href="tz/preferential.html" class="hear">优惠促销</a>
+				</li>
+				<li class="li_page"><a href="tz/tzCloud.html" class="hear">腾正云</a>
+				</li>
+				<li class="li_page"><a href="tz/15cdn.html" class="hear">安全加速</a>
+				</li>
+				<!-- <li class="li_page"><a href="tz/fcdun.html" class="hear">防C盾</a>
+				</li> -->
+				<li class="li_page"><a href="tz/introduction.html" class="hear">关于我们</a>
+					<div id="menutwo" class="navi_children" style="">
+						<div style="width:100%;margin-top: 45px;">
+							<div class="menu" style="float:left">
+								<img alt="" src="tz/images/index/about.jpg" width="100%">
+							</div>
+
+							<div style="float:left;margin-left: 40px;">
+								<img alt="" src="tz/images/index/xian2.png">
+							</div>
+
+							<div style="float:left;margin-left: 30px;">
+								<ul style="list-style-type: none;padding: 0;">
+									<li>
+										<div
+											style="border-bottom: 2px solid #595758;width: 110px;height: 30px;">
+											<div style="float:left;margin-top: 2px;">
+												<img alt="" src="tz/images/index/tu_01.png">
+											</div>
+											<div style="float:left;font-size: 18px;font-family: Microsoft YaHei;margin-left:10px; ">
+												<a href="tz/introduction.html" style="color:#000;text-decoration:none;">公司简介</a>
+											</div>
+										</div>
+									</li>
+									<li style="font-size: 15px;font-family: Microsoft YaHei;margin-left:25px;margin-top: 10px;">
+										<a href="tz/about.html" style="color:#000;text-decoration:none;">公司介绍</a>
+									</li>
+									<li
+										style="font-size: 15px;font-family: Microsoft YaHei;margin-left:25px;margin-top: 5px;">
+										<a href="tz/contact.html" style="color:#000;text-decoration:none;">联系我们</a>
+									</li>
+								</ul>
+							</div>
+
+							<div style="float:left;margin-left: 40px;">
+								<ul style="list-style-type: none;padding: 0;">
+									<li>
+										<div
+											style="border-bottom: 2px solid #595758;width: 110px;height: 30px;">
+											<div style="float:left;margin-top: 2px;">
+												<img alt="" src="tz/images/index/tu_02.png">
+											</div>
+											<div
+												style="float:left;font-size: 18px;font-family: Microsoft YaHei;margin-left:10px; ">新闻中心</div>
+										</div></li>
+									<li
+										style="font-size: 15px;font-family: Microsoft YaHei;margin-left:25px;margin-top: 10px;">
+										<a href="javascript:void(0)" onClick="findsid(2)" style="color:#000;text-decoration:none;">公司新闻</a>
+									</li>
+									<li
+										style="font-size: 15px;font-family: Microsoft YaHei;margin-left:25px;margin-top: 5px;">
+										<a href="javascript:void(0)"  onClick="findsid(1)" style="color:#000;text-decoration:none;">公司公告</a></li>
+<!-- 										<a href="javascript:void(0)"  onClick="findsid(4)" style="color:#000;text-decoration:none;">媒体报道</a></li> -->
+									<li
+										style="font-size: 15px;font-family: Microsoft YaHei;margin-left:25px;margin-top: 5px;">
+										<a href="javascript:void(0)"  onClick="findsid(3)" style="color:#000;text-decoration:none;">行业新闻</a></li>
+								</ul>
+							</div>
+
+						</div>
+					</div>
+				</li>
+				<li class="li_page"><a href="tz/paycenter.html" class="hear">支付中心</a>
+				</li>
+				<!-- <li class="li_page"><a target="_blank" href="http://yun.zeisp.com/" class="hear">腾正云</a>
+				</li>
+				<li class="li_page"><a target="_blank" href="http://www.15cdn.com/" class="hear">15CDN</a>
+				</li> -->
+					<li style="width: 400px;margin-left:  810px;position: absolute;">
+							<div style="margin-top: 5px;">
+									<div  class="on" style="float: left;">
+										<a style="float: left;">
+											<img alt="" src="tz/images/index/phone.png">
+										</a>
+										<div class="phone" style="display:none;font-size: 18px;color: #f9c500;float: left;padding-top: 7px;">0769-22226555<!-- <img alt="" src="tz/images/index/dianhua.png"> --></div>
+									</div>
+									<div class="ons" style="float: left;margin-left: 10px">
+										<a style="float: left;">
+											<img alt="" src="tz/images/index/map.png">
+										</a>
+										<div class="dizhi" style="display:none;font-size: 18px;color: #f9c500;float: left;padding-top: 7px;">广东省东莞松山湖科技十路2栋B座</div>
+									</div>
+									<div style="float: left;margin-left: 5px">
+										<a href="tz/contact.html"><img alt="" src="tz/images/index/help.png"></a>
+									</div>
+							</div>
+					</li>
+			</ul>
+
+
+		</div>
+
+
+	</div>
+	<span class="spinner sk-rotating-plane u-loading"></span>
+</div>
+
+	<div class="floating_ck">
+	<dl>
+        <dd class="consult chi-parent ic1"  id="hideid">
+        	<span>在线咨询</span>
+				<!-- <i class="ar1"></i> <span class="icons"></span> -->
+				<div class="kf-chi">
+					<ul>
+						<li class='curs'>
+							<div class="fir">
+								<span class="icon"></span> <span class="txt">售前QQ</span>
+							</div>
+							<div class="chiqq oneq" id="contactsqqid">
+							</div>
+						</li>
+						<li>
+							<div class="shzx-fir">
+								<span class="icon"></span> <span class="txt" style="font-size: 18px;color: #fff;padding-top:0px; ">7*24小时技术支持</span>
+							</div>
+							<div class="shzx oneq" id="contactsqqid">
+								<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=800093515&site=qq&menu=yes" id="gfqq_1">
+										<img border="0" alt="给我发消息" src="http://wpa.qq.com/pa?p=1:800093515:4">
+										800093515
+								</a>
+								<br />
+								<a href="javascript:void(0)" id="gfqq_1">
+										<img border="0" alt="Call me" src="tz/images/index/shzx-p.png" style="padding-right: 5px;">
+										0769-22385558
+								</a>
+								<br />
+								<a href="javascript:void(0)" id="gfqq_1">
+											<img border="0" alt="call me" src="tz/images/index/shzx-m.png" style="padding-right: 5px;padding-left: 6px">
+										15399941777
+								</a>
+							 <br />
+							</div>
+						</li>
+						<li>
+							<div class="bmd">
+								<span style="padding-top:5px;color: #fff;font-size: 23px;">投诉方式</span>
+							</div>
+							<div class="shzx oneq" id="contactsqqid">
+								<a href="javascript:void(0)" id="gfqq_1">
+									<img border="0" alt="Call me" width="24px" height="18px" src="tz/images/index/email_gaitubao_com_136x130.png" style="padding-right: 5px;">
+									ts@tzidc.com
+								</a>
+								<br />
+								<a href="javascript:void(0)" id="gfqq_1">
+									<img border="0" alt="call me" src="tz/images/index/shzx-m.png" style="padding-right: 5px;padding-left: 6px">
+									18038235325
+								</a>
+							</div>
+						</li>
+					</ul>
+									<!-- <div class="nullclss">
+									</div> -->
+				</div>
+        </dd>
+	        <dd class="jssh">
+		        	<span>微信公众号</span>
+		        	<div  class="jssh-m ">
+							<ul style="width: 233px;overflow: hidden;padding-left: 0px">
+								<li>
+									<div class="">
+										<img alt="weixin" src="/tz/images/index/ss_03.jpg" width="233px;">
+									</div>
+								</li>
+							</ul>
+		        	</div>
+		</dd>
+	        <dd class="words">
+	        		<a href="tz/record.html" style="text-decoration: none;font-size: 14px;">
+		        			<span>备案中心</span>
+			        </a>
+	        </dd>
+        <dd class="return">
+        	<span onClick="gotoTop();">到顶部</span>
+        </dd>
+    </dl>
+</div>
+
+
+
+<script>
+	$(".on").hover(function(){
+			$(".phone").stop(false,true).show(500);
+	    },function(){
+			$(".phone").stop(false,true).hide(100);
+		});
+
+    $(".ons").hover(function(){
+   			 $(".dizhi").stop(false,true).show(500);
+	    },function(){
+			$(".dizhi").stop(false,true).hide(100);
+	});
+
+	/* $(".li_page1").mousedown(function() {
+		$("#menuone").slideToggle();
+	});
+
+	$(".about").mousedown(function() {
+		$("#menutwo").slideToggle();
+	}); */
+
+
+	$(".li_page").hover(
+		function(){
+			$(this).children("a").css("color","#000");
+			$(this).children("a").css("background-color","#f5c200");
+			$(".navi_children",this).stop(false,true).fadeIn();
+		},
+		function(){
+			$(".navi_children",this).stop(false,true).fadeOut();
+			$(this).children("a").css("color","#fff");
+			$(this).children("a").css("background","none");
+		}
+	);
+
+</script>
+
+
+
+
+		<div style="padding-top: 125px;width: 100%;margin-bottom: 30px;">
+			<img alt="" src="tz/images/introduction/banner.jpg"width="100%">
+		</div>
+
+		<div style="width: 1144px;margin: 0 auto;color:#000;margin-top: 50px">
+
+			<div style="border-left: 4px solid #146EC9;">
+				<div style="font-size: 30px;font-family: Microsoft YaHei;margin-left: 10px;">
+					公司简介
+				</div>
+			</div>
+
+			<div style="margin-top: 20px;">
+				<div style="line-height: 40px;text-indent:2em;font-family: Microsoft YaHei;font-size: 15px;width: 98%;margin: 0 auto">
+					作为一家专注于互联网安全技术研究的现代网络综合服务性的高科技公司，腾正科技一直致力于为企业提供安全，高效，全面的互联网运营服务。自成立起，依托自身雄厚的技术力量团队及丰富的互联网技术经验，腾正科技迅速建立了完善的服务体系，不仅在网络运营领域取得了骄人的成绩，还获得多个自有的软件著作权及专利。在强大的研发人员队伍及庞大的信息资源支持下，腾正科技已成长为互联网基础网络服务领域具有较强影响力的公司。
+				</div>
+
+				<div style="line-height: 40px;text-indent:2em;font-family: Microsoft YaHei;font-size: 15px;width: 98%;margin: 0 auto">
+					腾正科技位于东莞松山湖国际金融IT研发创新园，旗下全资拥有两家子公司，长沙正易网络科技有限公司和广东腾川网络科技有限公司及多家分子公司。作为多点覆盖面的IDC运营商，腾正科技的产品线涵盖了IDC数据中心，数据安全，云计算，DNS&CDN，系统研发，电商平台基础支撑等领域。服务的企业遍布各个行业。其中，腾正科技与中科院联合打造的TzCloud公有云-云计算操作系统，不仅与中科院达成战略性合作，并且获得了信息安全评测中心等级安全认证，给予”安全可控优秀云计算解决方案”的评价。腾正云投入使用后，已经与曙光等知名公司建立了深度合作，并服务了南方报业集团等上百家企事业单位。
+				</div>
+
+				<div style="line-height: 40px;text-indent:2em;font-family: Microsoft YaHei;font-size: 15px;width: 98%;margin: 0 auto">
+					面对互联网产业蓬勃发展的全球化格局，为了更好的迎接互联网时代的浪潮，腾正科技以提供安全的互联网解决方案为目标，以市场的需求和业务的发展为先导，以互联网安全技术为核心，以专业，快速的售后服务为支撑，本着坚定的信念，开拓创新，为广大的互联网同行与合作伙伴提供优质的产品和完善的服务。
+				</div>
+			</div>
+
+		</div>
+
+		<div style="width: 1144px;margin: 0 auto;color:#000;margin-top: 50px">
+
+			<div style="border-left: 4px solid #146EC9;">
+				<div style="font-size: 30px;font-family: Microsoft YaHei;margin-left: 10px;">
+					数据中心分布
+				</div>
+			</div>
+
+			<div class="introimg" style="margin-top: 20px;float:left;">
+				<div style="width: 100%">
+					<img alt="" src="tz/images/introduction/address.png" width="100%">
+				</div>
+			</div>
+
+			<div id="gddg" class="introtxt" style="border:1px solid #CCCCCC;float:right;padding:10 0 10 0;">
+				<div>
+					<div id="dgleft" style="float:left;margin-left: 10px;">
+						<img alt="" src="tz/images/introduction/tu_05.png">
+					</div>
+
+					<div class="intxt" style="float:left;font-size: 17px;font-family: Microsoft YaHei;">
+						广东东莞总部
+					</div>
+
+					<div id="dgright" style="float:right;margin-right: 10px;">
+						<img alt="" src="tz/images/introduction/tu_06.png">
+					</div>
+					<div style="clear:both"></div>
+				</div>
+
+				<div style="padding-top: 10px;">
+					<div style="width: 90%;margin: 0 auto">
+						<img alt="" src="tz/images/introduction/tu_01.jpg" width="100%">
+					</div>
+
+					<div style="font-size: 13px;text-align: center;font-family: Microsoft YaHei;line-height: 30px;">
+						地址：广东省东莞市松山湖科技十路栋B座
+					</div>
+
+					<div style="font-size: 13px;font-family: Microsoft YaHei;margin-left: 10px;">
+						邮政编码：523000
+					</div>
+
+				</div>
+
+			</div>
+
+			<div id="hnhy" class="introtxt" style="border:1px solid #CCCCCC;float:right;padding:10 0 10 0;">
+				<div>
+					<div id="hnleft" style="float:left;margin-left: 10px;">
+						<img alt="" src="tz/images/introduction/tu_05.png">
+					</div>
+
+					<div class="" style="float:left;font-size: 17px;font-family: Microsoft YaHei;margin-left: 60px;">
+						湖南分公司
+					</div>
+
+					<div id="hnright" style="float:right;margin-right: 10px;">
+						<img alt="" src="tz/images/introduction/tu_06.png">
+					</div>
+					<div style="clear:both"></div>
+				</div>
+
+				<div style="padding-top: 10px;">
+					<div style="width: 90%;margin: 0 auto">
+						<img alt="" src="tz/images/introduction/hy.jpg" width="100%">
+					</div>
+
+					<div style="font-size: 13px;text-align: center;font-family: Microsoft YaHei;line-height: 25px;">
+						地址：湖南省长沙市高新开发区麓龙路209号单元402
+					</div>
+
+					<div style="font-size: 13px;font-family: Microsoft YaHei;margin-left: 10px;">
+						邮政编码：410000
+					</div>
+
+				</div>
+
+			</div>
+
+			<div id="gdhz" class="introtxt" style="border:1px solid #CCCCCC;float:right;padding:10 0 10 0;">
+				<div>
+					<div id="hzleft" style="float:left;margin-left: 10px;">
+						<img alt="" src="tz/images/introduction/tu_05.png">
+					</div>
+
+					<div class="" style="float:left;font-size: 17px;font-family: Microsoft YaHei;margin-left: 60px;">
+						惠州分公司
+					</div>
+
+					<div id="hzright" style="float:right;margin-right: 10px;">
+						<img alt="" src="tz/images/introduction/tu_06.png">
+					</div>
+					<div style="clear:both"></div>
+				</div>
+
+				<div style="padding-top: 10px;">
+					<div style="width: 90%;margin: 0 auto">
+						<img alt="" src="tz/images/introduction/hy.jpg" width="100%">
+					</div>
+
+					<div style="font-size: 12px;text-align: center;font-family: Microsoft YaHei;line-height: 30px;">
+						地址：广东省惠州市东平南路21号2栋第二层
+					</div>
+
+					<div style="font-size: 13px;font-family: Microsoft YaHei;margin-left: 10px;">
+						邮政编码：516000
+					</div>
+
+				</div>
+
+			</div>
+			<div style="clear:both"></div>
+		</div>
+
+		<div style="width: 1144px;margin: 0 auto;color:#000;margin-top: 50px">
+
+			<div style="border-left: 4px solid #146EC9;">
+				<div style="font-size: 30px;font-family: Microsoft YaHei;margin-left: 10px;">
+					资质荣誉
+				</div>
+			</div>
+
+			<div style="width: 45%;margin-top: 50px;float:left;">
+				<div style="width: 100%">
+					<img alt="" src="tz/images/introduction/tu_11.png" width="100%">
+				</div>
+
+				<div style="margin-left: 80px;margin-top: 80px;">
+					<div>
+						<div style="float:left;margin-top: 10px;">
+							<img alt="" src="tz/images/introduction/tu_07.png">
+						</div>
+						<div class="one" style="float:left;font-family: Microsoft YaHei;margin-left: 10px;">
+							腾正科技版权
+						</div>
+						<div style="clear:both"></div>
+					</div>
+
+					<div style="font-size: 17px;font-family: Microsoft YaHei;line-height: 30px;margin-left: 20px;">
+						腾正互联网数据中心技术交流平台<br/>
+						腾正下载站平台<br/>
+						腾正内容分发网络管理平台<br/>
+						腾正防火墙系统<br/>
+						腾正域名备案查询软件<br/>
+						腾正防火墙牵引系统<br/>
+						腾正自动化办公系统
+					</div>
+
+				</div>
+
+				<div style="width: 100%;margin-top: 80px;margin-left: 26px;">
+					<img alt="" src="tz/images/introduction/tu_18.png" width="100%">
+				</div>
+
+				<div style="clear:both"></div>
+			</div>
+
+			<div class="sequence" style="float:left;width: 5%;">
+				<img alt="" src="tz/images/introduction/tu_04.png">
+			</div>
+
+			<div class="txtright" style="width: 45%;float:left;">
+				<div style="margin-left: 80px;">
+					<div>
+						<div style="float:left;margin-top: 10px;">
+							<img alt="" src="tz/images/introduction/tu_07.png">
+						</div>
+						<div class="one" style="float:left;font-family: Microsoft YaHei;margin-left: 10px;">
+							腾正科技荣誉
+						</div>
+						<div style="clear:both"></div>
+					</div>
+
+					<div class="two" style="font-family: Microsoft YaHei;line-height: 30px;">
+						2015智慧城市十大IDC服务商<br/>
+						2015年度东莞十大成长性企业<br/>
+						广东省互联网协会常务理事单位<br/>
+						东莞市电子商务联合会会员单位<br/>
+						东莞市网络文化协会会员单位<br/>
+						东莞市现代信息协会会员单位<br/>
+						东莞市寮步电子商务协会常务理事单位<br/>
+						松山湖电商协会副会长单位
+					</div>
+
+				</div>
+
+				<div style="width: 80%;padding-top: 50px;margin: 0 auto">
+					<img alt="" src="tz/images/introduction/tu_15.png" width="100%">
+				</div>
+
+				<div style="margin-left: 80px;margin-top: 80px;">
+					<div>
+						<div style="float:left;margin-top: 10px;">
+							<img alt="" src="tz/images/introduction/tu_07.png">
+						</div>
+						<div class="one" style="float:left;font-family: Microsoft YaHei;margin-left: 10px;">
+							腾正科技资质
+						</div>
+						<div style="clear:both"></div>
+					</div>
+
+					<div style="font-size: 17px;font-family: Microsoft YaHei;line-height: 30px;margin-left: 20px;">
+						腾正科技营业执照<br/>
+						腾正科技增值电信业务经营许可证<br/>
+						腾正科技质量管理体系认证<br/>
+						腾正科技文化经营许可证
+					</div>
+
+				</div>
+
+				<div style="clear:both"></div>
+			</div>
+		</div>
+
+		<div style="clear:both"></div>
+		<div style="height: 50px;"></div>
+
+
+		<!-- 底部 -->
+
+<link rel="stylesheet" type="text/css" href="tz/css/bottom.css">
+
+
+<div style="background: #373D41;width: 100%;padding-bottom: 30px;">
+
+	<div class="bottomone">
+		<div style="float:left">
+			<div>
+				<div style="float:left">
+					<img alt="" src="tz/images/index/address.png">
+				</div>
+				<div
+					style="font-size: 20px;color:#F9C500;font-family: Microsoft YaHei;float:left;margin-left: 10px;">
+					总部：广东腾正计算机科技有限公司
+				</div>
+			</div>
+			<div style="clear:both"></div>
+			<div style="color:#FFF;margin-left: 25px;font-family: Microsoft YaHei;font-size: 15px;margin-top: 10px;">
+				广东省东莞市松山湖科技十路国际金融IT研发中心2栋B座</div>
+		</div>
+
+		<div class="bottomtwo" style="float:left;">
+			<div>
+				<div style="float:left">
+					<img alt="" src="tz/images/index/address.png">
+				</div>
+				<div style="font-size: 20px;color:#F9C500;font-family: Microsoft YaHei;float:left;margin-left: 10px;">
+					分部：广东腾川计算机系统有限公司
+				</div>
+			</div>
+			<div style="clear:both"></div>
+			<div
+				style="color:#FFF;margin-left: 25px;font-family: Microsoft YaHei;font-size: 15px;margin-top: 10px;">
+				广东省惠州市东平南路21号2栋第二层</div>
+		</div>
+
+		<div class="bottomtwo" style="float:left;">
+			<div>
+				<div style="float:left">
+					<img alt="" src="tz/images/index/address.png">
+				</div>
+				<div style="font-size: 20px;color:#F9C500;font-family: Microsoft YaHei;float:left;margin-left: 10px;">
+					子公司：长沙正易网络科技有限公司
+				</div>
+			</div>
+			<div style="clear:both"></div>
+			<div
+				style="color:#FFF;margin-left: 25px;font-family: Microsoft YaHei;font-size: 15px;margin-top: 10px;">
+				湖南省长沙市高新开发区麓龙路209号单元402</div>
+		</div>
+
+	</div>
+	<div style="clear:both"></div>
+
+	<!-- <div class="temp" style="margin-top: 30px;">
+		<img alt="" src="tz/images/index/base.png">
+	</div> -->
+
+	<div style="clear:both"></div>
+
+	<div class="base">
+		<div style="float:left;">
+			<dl>
+				<dd>
+					<a href="tz/proser.html">产品中心</a>
+				</dd>
+				<dt>
+					<a href="tz/zygfzy.html">服务器租用</a>
+				</dt>
+				<dt>
+					<a href="tz/zytg.html">服务器托管</a>
+				</dt>
+				<dt>
+					<a href="tz/zyddk.html">机柜大带宽</a>
+				</dt>
+				<dt>
+					<a href="tz/solutions.html">解决方案</a>
+				</dt>
+				<dt>
+					<a href="tz/easy.html">无忧盾</a>
+				</dt>
+			</dl>
+		</div>
+
+		<div style="float:left;margin-left: 70px;">
+			<dl>
+				<dd>
+					<a style="text-decoration: none">数据中心</a>
+				</dd>
+				<dt>
+					<a href="tz/dcenter.html">惠州数据中心</a>
+				</dt>
+				<dt>
+					<a href="tz/dcenter.html?dc=hy">衡阳数据中心</a>
+				</dt>
+				<dt>
+					<a href="tz/dcenter.html?dc=xian">西安数据中心</a>
+				</dt>
+			</dl>
+		</div>
+
+		<div style="float:left;margin-left: 70px;">
+			<dl>
+				<dd>
+					<a style="text-decoration: none">增值业务</a>
+				</dd>
+				<dt>
+					<a href="http://yun.tzidc.com/">腾正云</a>
+				</dt>
+				<dt>
+					<a href="http://www.15cdn.com/">15CDN</a>
+				</dt>
+			</dl>
+		</div>
+
+		<div style="float:left;margin-left: 70px;">
+			<dl>
+				<dd>
+					<a style="text-decoration: none">服务</a>
+				</dd>
+				<dt>
+					<a href="tz/record.html">备案</a>
+				</dt>
+				<dt>
+					<a href="tz/whitelist.html">白名单</a>
+				</dt>
+				<dt>
+					<a href="http://www.downun.com/special/arc-4769.html" target="_blank">站长工具</a>
+				</dt>
+			</dl>
+		</div>
+
+		<div style="float:left;margin-left: 70px;">
+			<dl>
+				<dd>
+					<a href="tz/introduction.html">公司简介</a>
+				</dd>
+				<dt>
+					<a href="tz/about.html">公司介绍</a>
+				</dt>
+				<dt>
+					<a href="tz/contact.html">联系我们</a>
+				</dt>
+			</dl>
+		</div>
+
+		<div style="float:left;margin-left: 70px;">
+			<dl>
+				<dd>
+					<a href="javascript:void(0)">新闻中心</a>
+				</dd>
+				<dt>
+					<a href="javascript:void(0)" onClick="findsid(2)">公司动态</a>
+				</dt>
+				<dt>
+					<a href="javascript:void(0)" onClick="findsid(1)">公司公告</a>
+					<!-- <a href="javascript:void(0)" onClick="findsid(4)">媒体报道</a> -->
+				</dt>
+				<dt>
+					<a href="javascript:void(0)" onClick="findsid(3)">行业动态</a>
+				</dt>
+			</dl>
+		</div>
+		<div class="tz">
+			<img alt="" src="tz/images/index/tz.png">
+		</div>
+	</div>
+
+	<div style="clear:both"></div>
+</div>
+
+
+<div
+	style="background: #202020;width: 100%;position: relative;padding-bottom: 84px;padding-top: 30px;">
+	<div style="text-align: center;color:#FFF;font-size: 13px;">
+		Copyright© 2014.Company name All rights reserved.广东腾正计算机科技有限公司</div>
+
+	<div class="tu1"
+		style="text-align: center;color:#FFF;font-size: 13px;margin: auto;margin-top: 10px;">
+		<div style="float:left">IDC/ISP证：湘B1-20130093 粤B2-20051052 </div>
+		<div style="float:left;margin-left: 5px;">
+			<img alt="" src="tz/images/index/img1.png">
+		</div>
+		<div style="float:left;margin-left: 5px;">粤网文〔2016〕1106-216号</div>
+	</div>
+
+	<div style="clear:both"></div>
+
+	<div class="tu2"
+		style="text-align: center;color:#FFF;font-size: 13px;margin: auto;margin-top: 10px;">
+		<div style="float:left;margin-left: 5px;">
+			<img alt="" src="tz/images/index/img2.png">
+		</div>
+		<div style="float:left;margin-left: 5px;margin-top: 2px;">
+			粤公网安备44190002000106号 <a href="http://www.miitbeian.gov.cn" style="color: #fff">粤ICP备15081286号-2</a>  全国IDC证：B1.B2-20150233</div>
+<div style="float:left;margin-left: 190px;margin-top: 10px;">
+<iframe style="height: 40px; width: 117px;" src="http://wljg.gdgs.gov.cn/lz.ashx?vie=41BEF320E537FBF5FB05128371785C72E68E27A4AF820A5D7DDC2E150B907189EF905A25C90D5E0E0799C10B9F2E8A59" scrolling="no" style="overflow:hidden;" frameborder="0" allowtransparency="true"></iframe>
+</div>
+
+	</div>
+
+</div>
+<script>
+	// setTimeout(function() {
+	// 	console.log($("#newBridge .nb-icon-inner-wrap"));
+	// 	$("#newBridge .nb-icon-inner-wrap").css({
+	// 		"background-image": "url(/tz/promotion/20180105/images/120X170.gif)"
+	// 	});
+	// 	$("#newBridge .nb-invite-body").css({
+	// 		"background-image": "url(/tz/promotion/20180105/images/422X173.png)"
+	// 	});
+	// },2000);
+	// var key = ["领先","中国","完美","星级","国际"];
+	// key.forEach(function(item) {
+	// 	$("body").html($("body").html().replace(item,"**"));
+	// });
+
+</script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?168311ab5cf4653f3b9dec7c0f46eda6";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253197097'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "w.cnzz.com/c.php%3Fid%3D1253197097' type='text/javascript'%3E%3C/script%3E"));</script>
+<script src="http://s95.cnzz.com/z_stat.php?id=1257184467&web_id=1257184467 " language="JavaScript"></script>
+<script type="text/javascript">
+$("a[title=站长统计]").hide();
+</script>
+		<!-- 底部 -->
+
+
+	</div>
+</body>
+ <script>
+ 	$("#hnhy").hide();
+ 	$("#gdhz").hide();
+
+ 	$("#dgright").click(function(){
+ 		$("#gddg").hide();
+ 		$("#hnhy").show();
+ 	});
+
+ 	$("#hnright").click(function(){
+ 		$("#hnhy").hide();
+ 		$("#gdhz").show();
+ 	});
+
+ 	$("#hzright").click(function(){
+ 		$("#gdhz").hide();
+ 		$("#gddg").show();
+ 	});
+
+ 	$("#dgleft").click(function(){
+ 		$("#gddg").hide();
+ 		$("#gdhz").show();
+ 	});
+
+ 	$("#hnleft").click(function(){
+ 		$("#hnhy").hide();
+ 		$("#gddg").show();
+ 	});
+
+ 	$("#hzleft").click(function(){
+ 		$("#gdhz").hide();
+ 		$("#hnhy").show();
+ 	});
+
+ </script>
+</html>

@@ -1,0 +1,28 @@
+body {
+	background: #FFF;
+}
+
+	.introimg{
+		width: 55%;
+	}
+	
+	.introtxt{
+		width: 25%;
+		margin-top: 80px;
+	}
+	
+	.intxt{
+		margin-left:48px;
+	}
+	.sequence{
+		margin-left: 23px;
+	}
+	.txtright{
+		margin-left: 23px
+	}
+	.one{
+		font-size: 35px;
+	}
+	.two{
+		font-size: 17px;
+	}

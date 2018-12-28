@@ -1,0 +1,46 @@
+body {
+	background: #FFF;
+}
+
+.as{
+	text-decoration: none;
+	display:block;
+	font-family: Microsoft YaHei;
+	color:#000;
+	font-size: 17px;
+}
+
+.as:hover{
+	text-decoration: none;
+	color:#FFF;
+	background-color: #FFAE00;
+
+}
+	.abmune{
+		width: 247px;
+		margin-top:-40px;
+	}
+	.newtxt{
+		margin-left: 30px;
+	}
+	.newtxts{
+		font-size: 21px;
+		margin-top: 10px;
+	}
+	.newstxts{
+		font-size: 17px;
+		line-height: 35px;
+		margin-top: 10px;
+	}
+	.newdata{
+		font-size: 17px;
+		margin-top: 15px;
+	}
+	.atxt{
+		font-size: 17px;
+		margin-top: -29px;
+	}
+	.twotxt{
+		width: 80%;
+		margin-left: 30px;
+	}

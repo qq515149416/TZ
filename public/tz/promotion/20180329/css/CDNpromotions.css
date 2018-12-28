@@ -1,0 +1,101 @@
+body,html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+.CDNpromotions-root {
+    padding-top: 125px !important;
+}
+.CDNpromotions-head {
+    cursor: pointer;
+}
+.CDNpromotions-to-cdn {
+    width: 134px;
+    height: 110px;
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 5px;
+}
+.CDNpromotions-body {
+    height: 580px;
+    background: url(../images1/bg_.png) no-repeat;
+    background-size: cover;
+    border-top: 1px solid transparent;
+    margin-top: -1px; 
+}
+.CDNpromotions-container {
+    margin-top: 40px;
+}
+.CDNpromotions-container .arial {
+    font-family: "Arial";
+}
+.CDNpromotions-product {
+    margin: 0 auto;
+    width: 619px;
+    height: 474px;
+    background: url(../images1/cp.png) no-repeat;
+    box-shadow: 1px 2px 2px rgba(0, 0, 0, .5);
+    text-align: center;
+    position: relative;
+}
+.CDNpromotions-product h3 {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 78px;
+    line-height: 78px;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+    letter-spacing: 3px;
+    font-size: 30px;
+}
+
+.CDNpromotions-container-infos {
+    margin-top: 45px;
+    margin-bottom: 22px; 
+}
+.CDNpromotions-container-infos.special {
+    margin-top: 20px;
+    margin-bottom: 30px; 
+}
+.CDNpromotions-container-infos p {
+    color: #fff;
+    font-size: 26px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.CDNpromotions-container-infos p.emphasize-info {
+    margin-bottom: 10px;
+}
+.CDNpromotions-to {
+    width: 185px;
+    height: 49px;
+    display: inline-block;
+    background: url(../images1/goumai.png) no-repeat;
+    text-indent: -999999em;
+}
+.CDNpromotions-tip {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 10px;
+    font-size: 18px;
+    width: 100%;
+    color: #cccdcd;
+    text-align: center;
+    padding: 0 10px;
+}
+.note {
+    color: #a6a6a6;
+    margin-top: 8px;
+}
+.emphasize {
+    font-size: 36px;
+    color: #b64535;
+}
+.CDNpromotions-headtip {
+    width: 100%;
+    height: 76px;
+}

@@ -1,0 +1,44 @@
+/*
+* @Author: Marte
+* @Date:   2017-11-07 16:04:28
+* @Last Modified by:   Marte
+* @Last Modified time: 2017-11-07 17:29:03
+*/
+body,html {
+    margin: 0;
+    padding: 0;
+}
+body > img {
+    display: block;
+    width: 100%;
+}
+.main > img {
+    width: 100%;
+}
+.main img {
+    display: block;
+}
+.main {
+    background: url(../images/promotions/cronter-nr.png) no-repeat;
+    background-size: 100% 100%;
+    height: 747px;
+    border-top: 1px solid transparent;
+    margin-top: -1px;
+}
+.main .product {
+    margin-top: 200px;
+    width: 100%;
+    text-align: center;
+}
+.main .product img {
+    display: inline-block;
+    margin: 0 20px;
+    cursor: pointer;
+}
+.main p {
+    color: #fff;
+    text-align: center;
+    font-size: 20px;
+    font-family: "微软雅黑";
+    margin-top: 90px;
+}

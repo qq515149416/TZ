@@ -136,7 +136,7 @@ class CabinetController extends Controller
 
 	}
 
-	public function updateByAjax(CabinetVerify $request)
+	public function updateByAjax(Request $request)
 	{
 		//获取参数
 		$par = $request->post();

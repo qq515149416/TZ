@@ -77,7 +77,7 @@ class  Harddisk extends Model
 		if($data){
 			// 存在数据就用model进行数据写入操作
 			// $fill = $this->fill($data);
-			$data['harddisk_number'] = 'HDD-'.$data['harddisk_number'];
+			$data['harddisk_number'] = $data['harddisk_number'];
 			$row = $this->create($data);
 
 			if($row != false){

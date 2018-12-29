@@ -118,7 +118,7 @@ class  News extends Model
 			$edit->seoTitle 		= $data['seoTitle'];
 			$edit->seoDescription 	= $data['seoDescription'];
 			$edit->digest 		= $data['digest'];
-			$edit->list_order  	= $data['list_order'];
+			// $edit->list_order  	= $data['list_order'];
 			$row = $edit->save();
 			if($row != false){
 				$return['code'] 	= 1;

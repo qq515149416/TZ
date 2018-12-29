@@ -32,14 +32,14 @@ class WorkAnswerModel extends Model
                            ->first();
             if(!empty($idc_business)){
                 $resource_detail = json_decode($idc_business->resource_detail);
-                $idc_business->cpu = $resource_detail->cpu;
-                $idc_business->memory = $resource_detail->memory;
-                $idc_business->harddisk = $resource_detail->harddisk;
-                $idc_business->bandwidth = $resource_detail->bandwidth;
-                $idc_business->protect = $resource_detail->protect;
-                $idc_business->machine_type = $resource_detail->machine_type;
-                $idc_business->cabinets = $resource_detail->cabinets;
-                $idc_business->ip = $resource_detail->ip_detail;
+                $idc_business->cpu = isset($resource_detail->cpu)?$resource_detail->cpu:'';
+                $idc_business->memory = isset($resource_detail->memory)?$resource_detail->memory:'';
+                $idc_business->harddisk = isset($resource_detail->harddisk)?$resource_detail->harddisk:'';
+                $idc_business->bandwidth = isset($resource_detail->bandwidth)?$resource_detail->bandwidth:'';
+                $idc_business->protect = isset($resource_detail->protect)?$resource_detail->protect:'';
+                $idc_business->machine_type = isset($resource_detail->machine_type)?$resource_detail->machine_type:'';
+                $idc_business->cabinets = isset($resource_detail->cabinets)?$resource_detail->cabinets:isset($resource_detail->cabinet_id)?$resource_detail->cabinet_id:'';
+                $idc_business->ip = isset($resource_detail->ip_detail)?$resource_detail->ip_detail:'';
                 $idc_business->machineroom_name = $resource_detail->machineroom_name;
                 unset($idc_business->resource_detail);
                 $business = $idc_business;

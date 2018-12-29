@@ -25,23 +25,39 @@ class WorkAnswerModel extends Model
     public function showWorkAnswer($where){
 
     	if($where){
-            $business = DB::table('tz_work_order')
+            $idc_business = DB::table('tz_work_order')
                             ->join('tz_business', 'tz_work_order.business_num', '=', 'tz_business.business_number')
                             ->where(['work_order_number'=>$where['work_number']])
                             ->select('tz_business.business_type','tz_business.resource_detail','tz_business.business_number','tz_business.machine_number','tz_work_order.work_order_type','tz_work_order.customer_id','tz_work_order.work_order_number','tz_work_order.work_order_content')
                            ->first();
-            if(empty($business)){
-                $business = DB::table('tz_work_order')
+            if(!empty($idc_business)){
+                $resource_detail = json_decode($idc_business->resource_detail);
+                $idc_business->cpu = $resource_detail->cpu;
+                $idc_business->memory = $resource_detail->memory;
+                $idc_business->harddisk = $resource_detail->harddisk;
+                $idc_business->bandwidth = $resource_detail->bandwidth;
+                $idc_business->protect = $resource_detail->protect;
+                $idc_business->machine_type = $resource_detail->machine_type;
+                $idc_business->cabinets = $resource_detail->cabinets;
+                $idc_business->ip = $resource_detail->ip_detail;
+                $idc_business->machineroom_name = $resource_detail->machineroom_name;
+                unset($idc_business->resource_detail);
+                $business = $idc_business;
+            } else {
+                $define_business = DB::table('tz_work_order')
                             ->join('tz_defenseip_business', 'tz_work_order.business_num', '=', 'tz_defenseip_business.business_number')
                             ->join('tz_defenseip_store','tz_defenseip_business.ip_id','=','tz_defenseip_store.id')
                             ->join('tz_users','tz_defenseip_business.user_id','=','tz_users.id')
                             ->where(['tz_work_order.work_order_number'=>$where['work_number']])
                             ->select('tz_defenseip_business.target_ip','tz_defenseip_store.ip','tz_defenseip_store.protection_value','tz_users.name','tz_users.email','tz_work_order.work_order_type','tz_work_order.customer_id','tz_work_order.work_order_number','tz_work_order.work_order_content')
                             ->first();
-                $business->business_type = 4;
-                $business->client_name = $business->name?$business->name:$business->email;
-                $business->machine_number = $business->ip;
-                $business->resource_detail = json_decode(json_encode($business));
+                if(!empty($define_business)){
+                    $define_business->business_type = 4;
+                    $define_business->client_name = $define_business->name?$define_business->name:$define_business->email;
+                    $define_business->machine_number = $define_business->ip;
+                    $define_business->protect = $define_business->protection_value;
+                    $business = $define_business;
+                }
             }
             if(empty($business)){
                 $return['data'] = [];

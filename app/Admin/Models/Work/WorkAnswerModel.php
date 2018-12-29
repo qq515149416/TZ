@@ -38,7 +38,11 @@ class WorkAnswerModel extends Model
                 $idc_business->bandwidth = isset($resource_detail->bandwidth)?$resource_detail->bandwidth:'';
                 $idc_business->protect = isset($resource_detail->protect)?$resource_detail->protect:'';
                 $idc_business->machine_type = isset($resource_detail->machine_type)?$resource_detail->machine_type:'';
-                $idc_business->cabinets = isset($resource_detail->cabinets)?$resource_detail->cabinets:isset($resource_detail->cabinet_id)?$resource_detail->cabinet_id:'';
+                if($idc_business->business_type==1 || $idc_business->business_type==2){
+                    $idc_business->cabinets = isset($resource_detail->cabinets)?$resource_detail->cabinets:'';
+                } else {
+                    $idc_business->cabinets = isset($resource_detail->cabinet_id)?$resource_detail->cabinet_id:'';
+                }
                 $idc_business->ip = isset($resource_detail->ip_detail)?$resource_detail->ip_detail:'';
                 $idc_business->machineroom_name = $resource_detail->machineroom_name;
                 unset($idc_business->resource_detail);

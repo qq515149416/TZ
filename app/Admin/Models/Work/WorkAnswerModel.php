@@ -28,7 +28,7 @@ class WorkAnswerModel extends Model
             $business = DB::table('tz_work_order')
                             ->join('tz_business', 'tz_work_order.business_num', '=', 'tz_business.business_number')
                             ->where(['work_order_number'=>$where['work_number']])
-                            ->select('tz_business.business_type','tz_business.business_number','tz_business.machine_number','tz_work_order.work_order_type','tz_work_order.customer_id','tz_work_order.work_order_number','tz_work_order.work_order_content')
+                            ->select('tz_business.business_type','tz_business.resource_detail','tz_business.business_number','tz_business.machine_number','tz_work_order.work_order_type','tz_work_order.customer_id','tz_work_order.work_order_number','tz_work_order.work_order_content')
                            ->first();
             if(empty($business)){
                 $business = DB::table('tz_work_order')

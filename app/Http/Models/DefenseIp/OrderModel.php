@@ -56,7 +56,7 @@ class OrderModel extends Model
 		}
 		$time = time();
 		$data['order_sn'] 		= 'GN_'.$time.'_'.$user_id;
-		$data['business_sn']		= 'G_'.$time.'_'.$user_id;
+		$data['business_sn']		= 'G_admin_'.$time.'_'.$user_id;
 		$data['customer_id']		= $user_id;
 		$data['customer_name']	= Auth::user()->name;
 		if($data['customer_name'] == null){

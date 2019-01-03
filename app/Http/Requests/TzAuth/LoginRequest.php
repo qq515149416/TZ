@@ -29,7 +29,7 @@ class LoginRequest extends FormRequest
             //
             'login_name' => 'required',  //登录帐号
             'password'   => 'required',  //登录密码
-            //'captcha'  => 'required|captcha',  //验证码  TODO  上线前需要关闭 注释
+            'captcha'  => 'required|captcha',  //验证码  TODO  上线前需要关闭 注释
         ];
     }
 

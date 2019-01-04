@@ -104,7 +104,7 @@ class RegisterController extends Controller
     {
 
         $par   = $request->all();                  //获取参数
-        $token = mt_rand(10000, 99999);         //生成随机验证码
+        $token = mt_rand(1000, 9999);         //生成随机验证码
         $mail  = $par['email'];                  //测试接受代码的邮箱
 
         //发送邮件

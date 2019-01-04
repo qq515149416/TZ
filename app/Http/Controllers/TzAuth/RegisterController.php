@@ -71,6 +71,7 @@ class RegisterController extends Controller
                 'email'    => $par['email'],  //邮箱
                 'password' => Hash::make($par['password']),  //密码
                 'status'   => 2,  //状态为已验证
+                'pwd_ver'   => 1,
             ]);
             $this->bindSalesman($addUserInfo['id'], $par['salesman']); //绑定业务员
             Auth::loginUsingId($addUserInfo['id']);  //注册后自动登录

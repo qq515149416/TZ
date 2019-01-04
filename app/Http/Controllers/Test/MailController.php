@@ -40,6 +40,7 @@ class MailController extends Controller
 //        });
 
         $token = 123122;
+        $mail  = '15812816866@163.com';                  //测试接受代码的邮箱
 
         Mail::send('emails.code', ['token' => $token], function ($message) use ($mail) {
             $to = $mail;

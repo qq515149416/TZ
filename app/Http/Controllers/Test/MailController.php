@@ -36,7 +36,7 @@ class MailController extends Controller
 //            'exampleId'   => $data['exampleId'],    //实例ID
 //            'deadLine'    => $data['deadLine '],    //到期时间
         ], function ($message) {
-            $message->to('15812816866@163.com')->subject('测试');
+            $message->to('15812816866@qq.com')->subject('测试');
         });
 
 //        Demo::dispatch('123');

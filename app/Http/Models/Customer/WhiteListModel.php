@@ -109,10 +109,21 @@ class WhiteListModel extends Model
     	$ip = DB::table('idc_ips')->where($where)->select('ip_status','own_business','mac_num')->first();
     	if(!empty($ip)){// 查找到对应的IP相关数据后，根据业务状态和客户id进行查找对应的业务信息
     		$business['client_id'] = Auth::user()->id;
-    		if($ip->ip_status == 1){//IP使用状态为1即子IP时根据业务编号进行查找
-    			$business['business_number'] = $ip->own_business;
-    		} elseif($ip->ip_status == 2 || $ip->ip_status == 3) {//IP使用状态为主IP时即2或者3时，根据机器编号进行查找
-    			$business['machine_number'] = $ip->mac_num;
+    		if($ip->ip_status != 0){//IP使用状态为1即子IP时根据业务编号进行查找
+                if(isset($ip->own_business) && isset($ip->mac_num)){
+                    $business['business_number'] = $ip->own_business;
+                    $business['machine_number'] = $ip->mac_num;
+                } elseif(isset($ip->own_business) && !isset($ip->mac_num)){
+                    $business['business_number'] = $ip->own_business;
+                } elseif(!isset($ip->own_business) && isset($ip->mac_num)){
+                    $business['machine_number'] = $ip->mac_num;
+                } else {
+                    $return['data'] = '';
+                    $return['code'] = 0;
+                    $return['msg'] = '您暂未购买此IP使用';
+                    return $return;
+                }
+    			    
     		} else {//IP使用状态为未使用即0时直接返回
     			$return['data'] = '';
 	    		$return['code'] = 0;
@@ -120,7 +131,7 @@ class WhiteListModel extends Model
 	    		return $return;
     		}
     		//根据前面的条件进行查找IP绑定的机器编号
-    		$machine_number = DB::table('tz_business')->where($business)->whereBetween('business_status',[2,4])->value('machine_number');
+    		$machine_number = DB::table('tz_business')->where($business)->whereIn('business_status',[0,1,2,3,4])->value('machine_number');
     		if($machine_number){//存在机器编号返回机器编号
     			$return['data'] = $machine_number;
     			$return['code'] = 1;

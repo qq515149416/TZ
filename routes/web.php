@@ -42,7 +42,7 @@ Route::group([
     Route::get('login', 'TzAuth\TestController@login');//TODO 上线前要删除   用户登录模拟登录
     Route::get('userInfo', 'User\InfoController@test');
     Route::get('redis', 'Test\RedisController@test'); //测试Redis
-    Route::post('mail', 'Test\MailController@handle'); //测试邮件
+    Route::get('mail', 'Test\MailController@handle'); //测试邮件
     Route::post('loginTest', 'TzAuth\LoginController@login'); //测试新登录
     Route::get('loginCheck', 'TzAuth\LoginController@loginCheck'); //检测登录状态
     Route::get('time', 'Test\TimeController@time'); //测试时间

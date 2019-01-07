@@ -344,7 +344,7 @@ class DataTransfer extends Model
 	public function transMachine(){
 		
 		$old_machine = DB::table('machinelibrary')->where('is_trans',0)->get()->toArray();
-		
+	
 		if(count($old_machine) == 0){
 			return [
 				'data'	=> DB::table('idc_machine')->where('machine_status',0)->whereNull('cabinet')->get(['id']),
@@ -392,45 +392,54 @@ class DataTransfer extends Model
 					$data['cabinet'] = $info->id;
 					$data['machineroom'] = $info->machineroom_id;
 				}
+				if(filter_var(trim($old_machine[$i]->dxip), FILTER_VALIDATE_IP)) {
+					$data['ip_id'] = DB::table('idc_ips')->where('ip',$old_machine[$i]->dxip)->value('id');
+				}else{
+					if(filter_var(trim($old_machine[$i]->unicomip), FILTER_VALIDATE_IP)) {
+						$data['ip_id'] = DB::table('idc_ips')->where('ip',$old_machine[$i]->unicomip)->value('id');
+					}	
+				}
 			}
 			
 			//查找新表是否存在
 			$check = DB::table('idc_machine')->where('machine_num',$old_machine[$i]->macnum)->first();
 
 			if($check != null){
-				dd($check);
-				return [
-					'data'	=> '',
-					'msg'	=> 'id : '.$old_machine[$i]->machid.' , 该机器已存在',
-					'code'	=> 0,
-				];
-			}
-			//开启事务
-			DB::beginTransaction();
-			//在新表创建数据
-			$res = DB::table('idc_machine')->insert($data);
-			if($res != false){
-				//如果成功创建,就将旧表的is_trans改为1
-				$up = DB::table('machinelibrary')->where('machid',$old_machine[$i]->machid)->update(['is_trans' => 1]);
-				if($up != true){
+				
+				// return [
+				// 	'data'	=> '',
+				// 	'msg'	=> 'id : '.$old_machine[$i]->machid.' , 该机器已存在',
+				// 	'code'	=> 0,
+				// ];
+			}else{
+				//开启事务
+				DB::beginTransaction();
+				//在新表创建数据
+				$res = DB::table('idc_machine')->insert($data);
+				if($res != false){
+					//如果成功创建,就将旧表的is_trans改为1
+					$up = DB::table('machinelibrary')->where('machid',$old_machine[$i]->machid)->update(['is_trans' => 1]);
+					if($up != true){
+						DB::rollBack();
+						return [
+							'data'	=> '',
+							'msg'	=> 'id : '.$old_machine[$i]->machid.' , 更新转移状态,转移失败',
+							'code'	=> 0,
+						];
+						break;
+					}
+				}else{
 					DB::rollBack();
 					return [
 						'data'	=> '',
-						'msg'	=> 'id : '.$old_machine[$i]->machid.' , 更新转移状态,转移失败',
+						'msg'	=> 'id : '.$old_machine[$i]->machid.' , 转移失败',
 						'code'	=> 0,
-					];
+					];			
 					break;
 				}
-			}else{
-				DB::rollBack();
-				return [
-					'data'	=> '',
-					'msg'	=> 'id : '.$old_machine[$i]->machid.' , 转移失败',
-					'code'	=> 0,
-				];			
-				break;
+				DB::commit();
 			}
-			DB::commit();
+			
 		}
 		return [
 				'data'	=> DB::table('idc_machine')->where('machine_status',0)->whereNull('cabinet')->get(['id']),

@@ -4,6 +4,7 @@ namespace App\Admin\Controllers\Work;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Admin\Models\Idc\MachineRoom;
 
 class ApiController extends Controller
 {
@@ -30,41 +31,34 @@ class ApiController extends Controller
 	 */
 	public function createWhiteList($domain,$room_id)
 	{
-
-		switch ($room_id) {
-			//惠州机房
-			case '37':	//数据库里的机房对应id
-				$url 	= 'http://qy.tzidc.com/domain.php?domain='.$domain.'&key='.$this->huizhou_key;	//一次正常域名
-				$url2 	= 'http://qy.tzidc.com/domain.php?domain=.'.$domain.'&key='.$this->huizhou_key;	//一次域名前加个 ' . ' 
-				break;
-			//衡阳机房
-			case '38':	//数据库里的机房对应id
-				$url 	= 'http://qy.zeisp.com/domain.php/domain.php?domain='.$domain.'&key='.$this->hengyang_key;
-				$url2 	= 'http://qy.zeisp.com/domain.php/domain.php?domain=.'.$domain.'&key='.$this->hengyang_key;
-				break;
-			//西安机房
-			case '39':	//数据库里的机房对应id
-				$url 	= 'http://xa.tzidc.com/domain.php?domain='.$domain.'&key='.$this->xian_key;
-				$url2 	= 'http://xa.tzidc.com/domain.php?domain=.'.$domain.'&key='.$this->xian_key;
-				break;
-			default:
-				//测试用的返回
-				return [
-					'data'	=> '',
-					'msg'	=> '测试用,白名单通过,记得关掉这个',
-					'code'	=> 1,
-				];
-				//实际环境用下面的这个
-				// return [
-				// 	'data'	=> '',
-				// 	'msg'	=> '机房暂无白名单接口,请设置',
-				// 	'code'	=> 0,
-				// ];
-				break;
+		
+		$roomModel = new MachineRoom();
+		$info = $roomModel->find($room_id);
+		if($info == null){
+			return [
+				'data'	=> '',
+				'msg'	=> '机房不存在',
+				'code'	=> 0,
+			];
 		}
+		if(trim($info->white_list_add) == '' || trim($info->white_list_key) == ''){
+			return [
+				'data'	=> '',
+				'msg'	=> '机房暂无白名单接口,请设置',
+				'code'	=> 0,
+			];
+		}
+		$key 	= $info->white_list_key;
+		$url 	= $info->white_list_add.'?domain='.$domain.'&key='.$this->$key;
+		$url2 	= $info->white_list_add.'?domain=.'.$domain.'&key='.$this->$key;
+		//真实环境用这个过白
+		// $res = $this->executeCurl($url);
+		// $res2 = $this->executeCurl($url2);
 
-		$res = $this->executeCurl($url);
-		$res2 = $this->executeCurl($url2);
+		//测试的用这一个
+		$res = true;
+		$res2 = true;
+
 		if($res&&$res2){
 			$return = [
 				'data'	=> '',

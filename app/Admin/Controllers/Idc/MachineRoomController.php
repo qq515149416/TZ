@@ -9,7 +9,7 @@ use Encore\Admin\Facades\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
-use App\Admin\Requests\MachineRoom as MachineRoomValidate;
+use App\Admin\Requests\Idc\MachineRoom as MachineRoomValidate;
 use Psy\Util\Json;
 
 class MachineRoomController extends Controller
@@ -85,8 +85,8 @@ class MachineRoomController extends Controller
 		$machineRoomModel = new MachineRoom();
 
 		//模型添加机房数据
-		$res = $machineRoomModel->store($par['room_id'], $par['room_name'],$par['depart_id']);
-//        dump($res);
+		$res = $machineRoomModel->store($par['room_id'], $par['room_name'],$par['depart_id'],$par['white_list_add'],$par['white_list_key']);
+		//dump($res);
 		return tz_ajax_echo([], '新增机房成功', 1);
 
 	}

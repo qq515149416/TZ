@@ -106,8 +106,8 @@ class RegisterController extends Controller
         $par   = $request->all();                  //获取参数
         $token = mt_rand(1000, 9999);         //生成随机验证码
         $mail  = $par['email'];                  //测试接受代码的邮箱
-
         //发送邮件
+
         Mail::send('emails.code', ['token' => $token], function ($message) use ($mail) {
             $to = $mail;
             $message->to($to)->subject('邮箱验证');

@@ -82,7 +82,9 @@ class RechargeController extends Controller
 		$res 		= $model->makePay($trade_id,$user_id);
 
 		if($res['code'] != 1){
-			return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+			return redirect('/tz/?uphash=0#/rechargeRecord')
+    				->withErrors([$res['msg']]);
+			// return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 		}
 		
 		$info = json_decode(json_encode($res['data']),true);

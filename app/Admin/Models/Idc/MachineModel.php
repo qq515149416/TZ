@@ -38,12 +38,12 @@ class MachineModel extends Model
 				$result[$key]['used'] = $used_status[$value['used_status']];//使用状态的转换
 				$result[$key]['status'] = $machine_status[$value['machine_status']];//机器上下架的转换
 				$result[$key]['business'] = $business_type[$value['business_type']];//业务类型的转换
-                $cabinet = $value['cabinet']?$value['cabinet']:0;
-                $result[$key]['cabinet'] = $cabinet;
-                $ip_id = $value['ip_id']?$value['ip_id']:0;
-                $result[$key]['ip_id'] = $ip_id;
-                $machineroom = $value['machineroom']?$value['machineroom']:0;
-                $result[$key]['machineroom'] =  $machineroom;
+				$cabinet = $value['cabinet']?$value['cabinet']:0;
+				$result[$key]['cabinet'] = $cabinet;
+				$ip_id = $value['ip_id']?$value['ip_id']:0;
+				$result[$key]['ip_id'] = $ip_id;
+				$machineroom = $value['machineroom']?$value['machineroom']:0;
+				$result[$key]['machineroom'] =  $machineroom;
 				//机柜等的对应查询
 				$machineroom = (array)$this->machineroom($machineroom,$cabinet,$ip_id);//机房信息的查询
 				// 进行对应的机柜等信息的转换或者显示
@@ -79,6 +79,7 @@ class MachineModel extends Model
 		$where['machine_status'] = 0;
 		// 进行条件查询业务类型为1的即租用的所有机器信息
 		$result = $this->where($where)->get(['id','machine_num','cpu','memory','harddisk','cabinet','ip_id','machineroom','bandwidth','protect','loginname','loginpass','machine_type','used_status','machine_status','business_type','machine_note','created_at','updated_at']);
+		//dd($result);
 		// 判断是否查询到数据
 		if(!$result->isEmpty()){
 			// 查询到数据进行某些字段的数据转换
@@ -94,10 +95,11 @@ class MachineModel extends Model
 				$result[$key]['business'] = $business_type[$value['business_type']];//业务类型的转换
 				$result[$key]['machineroom_id'] = $value['machineroom'];
 				unset($value['business_type']);
-                // $cabinet = $value['cabinet']?$value['cabinet']:0;
-                // $ip_id = $value['ip_id']?$value['ip_id']:0;
+				// $cabinet = $value['cabinet']?$value['cabinet']:0;
+				// $ip_id = $value['ip_id']?$value['ip_id']:0;
 				$machineroom = (array)$this->machineroom($value['machineroom'],$value['cabinet'],$value['ip_id']);//机房信息的查询
 				// 进行对应的机柜等信息的转换或者显示
+				
 				if(!empty($machineroom)){
 					$result[$key]['cabinets'] = $machineroom['cabinet_id'];//机柜信息的返回
 					//IP信息的返回
@@ -188,30 +190,30 @@ class MachineModel extends Model
 	 */
 	public function editMachine($editdata){
 		$machine = $this->where(['id'=>$editdata['id']])->select('used_status','own_business','machine_num')->first();
-        if(empty($machine)){
-            $return['code'] = 0;
-            $return['msg'] = '无法修改机器信息！！';
-            return $return;
-        }
-        if($machine->used_status != 0){
-            switch ($machine->used_status) {
-                case 1:
-                    $return['code'] = 0;
-                    $return['msg'] = '机器'.$machine->machine_num.'已经绑定业务'.$machine->own_business.'，无法进行修改';
-                    return $return;
-                    break;
-                case 2:
-                    $return['code'] = 0;
-                    $return['msg'] = '机器'.$machine->machine_num.'已被锁定，无法进行修改';
-                    return $return;
-                    break;
-                case 3:
-                    $return['code'] = 0;
-                    $return['msg'] = '机器'.$machine->machine_num.'已迁移，无法进行修改';
-                    return $return;
-                    break;
-            }
-        }
+		if(empty($machine)){
+			$return['code'] = 0;
+			$return['msg'] = '无法修改机器信息！！';
+			return $return;
+		}
+		if($machine->used_status != 0){
+			switch ($machine->used_status) {
+				case 1:
+					$return['code'] = 0;
+					$return['msg'] = '机器'.$machine->machine_num.'已经绑定业务'.$machine->own_business.'，无法进行修改';
+					return $return;
+					break;
+				case 2:
+					$return['code'] = 0;
+					$return['msg'] = '机器'.$machine->machine_num.'已被锁定，无法进行修改';
+					return $return;
+					break;
+				case 3:
+					$return['code'] = 0;
+					$return['msg'] = '机器'.$machine->machine_num.'已迁移，无法进行修改';
+					return $return;
+					break;
+			}
+		}
 		DB::beginTransaction();//开启事务
 		$editdata['updated_at'] = date('Y-m-d H:i:s',time());
 		$row = DB::table('idc_machine')->where('id',$editdata['id'])->update($editdata);
@@ -306,7 +308,9 @@ class MachineModel extends Model
 	 * @return [type]           [description]
 	 */
 	public function machineroom($roomid = 0,$cabinet = 0,$ip = 0){
+		
 		if($roomid != 0 && $cabinet != 0 && $ip != 0){
+			
 			// 当是IP，机柜，机房等信息转换时对应参数都传入
 			$related = DB::table('idc_machineroom')//机房表
 						->join('idc_cabinet','idc_machineroom.id','=','idc_cabinet.machineroom_id')//关联查询机柜表
@@ -318,36 +322,39 @@ class MachineModel extends Model
 						->first();
 			return $related;//返回数据
 		} elseif($roomid != 0 && $cabinet == 0 && $ip == 0){
-            //当只传入机房，未传入机柜和IP
-            $related = DB::table('idc_machineroom')//机房表
-                        ->where('idc_machineroom.id',$roomid)//机房表的条件
-                        ->select('machine_room_name')//所需获得的字段
-                        ->first();
-            $related->cabinet_id = '机柜暂未选择';
-            $related->ip = '0.0.0.0代表未选择';
-            $related->ip_company = 0;
-            return $related;//返回数据
 
-        } elseif($roomid == 0 && $cabinet == 0 && $ip == 0){
-        	//当是IP，机柜，机房等信息都未传入
-            $related['cabinet_id'] = '机柜暂未选择';
-            $related['ip'] = '0.0.0.0代表未选择';
-            $related['ip_company'] = 0;
-            $related['machine_room_name'] = '机房暂未选择';
-            return $related;
-        } elseif($roomid != 0 && $cabinet == 0 && $ip != 0){
-        	//当IP，机房等信息转换时对应参数都传入，机柜信息未传入
-        	$related = DB::table('idc_machineroom')//机房表
+			//当只传入机房，未传入机柜和IP
+			$related = DB::table('idc_machineroom')//机房表
+						->where('idc_machineroom.id',$roomid)//机房表的条件
+						->select('machine_room_name')//所需获得的字段
+						->first();
+			$related->cabinet_id = '机柜暂未选择';
+			$related->ip = '0.0.0.0代表未选择';
+			$related->ip_company = 0;
+			return $related;//返回数据
+
+		} elseif($roomid == 0 && $cabinet == 0 && $ip == 0){
+			//当是IP，机柜，机房等信息都未传入
+			$related['cabinet_id'] = '机柜暂未选择';
+			$related['ip'] = '0.0.0.0代表未选择';
+			$related['ip_company'] = 0;
+			$related['machine_room_name'] = '机房暂未选择';
+			return $related;
+		} elseif($roomid != 0 && $cabinet == 0 && $ip != 0){
+			//当IP，机房等信息转换时对应参数都传入，机柜信息未传入
+			$related = DB::table('idc_machineroom')//机房表
 						->join('idc_ips','idc_machineroom.id','=','idc_ips.ip_comproom')//关联查询IP表
 						->where('idc_machineroom.id',$roomid)//机房表的条件
 						->where('idc_ips.id',$ip)//IP的条件
 						->select('idc_machineroom.machine_room_name','idc_ips.ip','idc_ips.ip_company')//所需获得的字段
 						->first();
 			$related->cabinet_id = '机柜暂未选择';
+
 			return $related;//返回数据
-        } elseif($roomid != 0 && $cabinet != 0 && $ip == 0){
-        	//机柜，机房等信息转换时对应参数都传入，IP信息未传入，
-        	$related = DB::table('idc_machineroom')//机房表
+		} elseif($roomid != 0 && $cabinet != 0 && $ip == 0){
+		
+			//机柜，机房等信息转换时对应参数都传入，IP信息未传入，
+			$related = DB::table('idc_machineroom')//机房表
 						->join('idc_cabinet','idc_machineroom.id','=','idc_cabinet.machineroom_id')//关联查询机柜表
 						->where('idc_machineroom.id',$roomid)//机房表的条件
 						->where('idc_cabinet.id',$cabinet)//机柜表的条件
@@ -356,7 +363,8 @@ class MachineModel extends Model
 			$related->ip = '0.0.0.0代表未选择';
 			$related->ip_company = 0;
 			return $related;//返回数据
-        } else {
+		} else {
+
 			// 当未传入参数时代表简单的查询机房数据
 			$result = DB::table('idc_machineroom')->whereNull('deleted_at')->select('id as roomid','machine_room_id','machine_room_name')->get();
 			if(!$result->isEmpty()) {
@@ -372,24 +380,24 @@ class MachineModel extends Model
 		}
 	}
 
-    /**
-     * 获取机房数据
-     * @return [type] [description]
-     */
-    public function rooms(){
-        // 当未传入参数时代表简单的查询机房数据
-        $result = DB::table('idc_machineroom')->whereNull('deleted_at')->select('id as roomid','machine_room_id','machine_room_name')->get();
-        if(!$result->isEmpty()) {
-            $return['data'] = $result;
-            $return['code'] = 1;
-            $return['msg'] = '机房信息获取成功!!';
-        } else {
-            $return['data'] = [];
-            $return['code'] = 0;
-            $return['msg'] = '机房信息获取失败!!';
-        }
-        return $return;
-    }
+	/**
+	 * 获取机房数据
+	 * @return [type] [description]
+	 */
+	public function rooms(){
+		// 当未传入参数时代表简单的查询机房数据
+		$result = DB::table('idc_machineroom')->whereNull('deleted_at')->select('id as roomid','machine_room_id','machine_room_name')->get();
+		if(!$result->isEmpty()) {
+			$return['data'] = $result;
+			$return['code'] = 1;
+			$return['msg'] = '机房信息获取成功!!';
+		} else {
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '机房信息获取失败!!';
+		}
+		return $return;
+	}
 
 	/**
 	 * 对应机房的机柜信息的获取
@@ -662,9 +670,9 @@ class MachineModel extends Model
 				case '硬盘(必填)':
 					$colum_value[$colum] = 'harddisk';
 					break;
-                case '机器型号(必填)':
-                    $colum_value[$colum] = 'machine_type';
-                    break;
+				case '机器型号(必填)':
+					$colum_value[$colum] = 'machine_type';
+					break;
 				case '机房(选填)':
 					$colum_value[$colum] = 'machineroom';
 					break;
@@ -690,8 +698,8 @@ class MachineModel extends Model
 				//     $colum_value[$colum] = 'used_status';
 				//     break;
 				case '业务类型(必填)':
-				    $colum_value[$colum] = 'business_type';
-				    break;
+					$colum_value[$colum] = 'business_type';
+					break;
 				// case '上下架(必填)':
 				//     $colum_value[$colum] = 'machine_status';
 				//     break;
@@ -731,11 +739,11 @@ class MachineModel extends Model
 				$return['msg'] = '批量添加机器失败,失败原因为:编号'.$insert_data[$i]['machine_num'].'的机器信息有误,从此机器开始修改并重新提交信息,此机器前的所有信息已提交成功无须重新提交';
 				return $return;
 			}  else {
-                DB::commit();
-                $return['data'] = rtrim($row.','.$return['data'],',');
-                $return['code'] = 1;
-                $return['msg'] = '批量添加机器成功';
-            }
+				DB::commit();
+				$return['data'] = rtrim($row.','.$return['data'],',');
+				$return['code'] = 1;
+				$return['msg'] = '批量添加机器成功';
+			}
 			// $ip = DB::table('idc_ips')->where(['id'=>$insert_data[$i]['ip_id']])->select('ip_status')->first();
 			// if(!$ip){//不存在此IP
 			// 	DB::rollBack();

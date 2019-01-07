@@ -354,6 +354,7 @@ class MachineModel extends Model
 						->select('idc_machineroom.machine_room_name','idc_cabinet.cabinet_id')//所需获得的字段
 						->first();
 			$related->ip = '0.0.0.0代表未选择';
+			$related->ip_company = 0;
 			return $related;//返回数据
         } else {
 			// 当未传入参数时代表简单的查询机房数据

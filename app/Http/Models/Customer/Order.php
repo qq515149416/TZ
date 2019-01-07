@@ -619,7 +619,7 @@ class Order extends Model
                 return $return;
             }
 			//续费订单号的生成规则：前两位（4-6的随机数）+ 年月日 + 时间戳的后2位数 + 4-6的随机数
-			$order_sn = mt_rand(4,6).date("Ymd",time()).substr(time(),8,2).mt_rand(4,6);//续费订单号
+			$order_sn = mt_rand(4,6).date("Ymd",time()).substr(time(),8,2).mt_rand(4,6).'2';//续费订单号
 			$order['order_sn'] = $order_sn;
 			//对业务进行到期时间的更新
 			$endding_time = Carbon::parse($business->endding_time)->modify('+'.$renew['length'].' months')->toDateTimeString();

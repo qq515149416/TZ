@@ -71,6 +71,7 @@ class RegisterController extends Controller
                 'email'    => $par['email'],  //邮箱
                 'password' => Hash::make($par['password']),  //密码
                 'status'   => 2,  //状态为已验证
+                'pwd_ver'   => 1,
             ]);
             $this->bindSalesman($addUserInfo['id'], $par['salesman']); //绑定业务员
             Auth::loginUsingId($addUserInfo['id']);  //注册后自动登录
@@ -103,7 +104,7 @@ class RegisterController extends Controller
     {
 
         $par   = $request->all();                  //获取参数
-        $token = mt_rand(10000, 99999);         //生成随机验证码
+        $token = mt_rand(1000, 9999);         //生成随机验证码
         $mail  = $par['email'];                  //测试接受代码的邮箱
 
         //发送邮件

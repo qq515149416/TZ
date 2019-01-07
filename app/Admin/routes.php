@@ -529,6 +529,22 @@ Route::group([
         Route::get('import','Excel\ExcelController@import');    //Excel导入
     });
 
+    /**
+     * 数据转移
+     *因关联问题,注意顺序
+     */
+    Route::group([
+        'prefix' => 'dataTransfer',
+    ], function (Router $router) {
+        $router->get('transMachineroom', 'DataTransfer\DataTransferController@transMachineroom');//转移机房数据
+       $router->get('transAdminUser', 'DataTransfer\DataTransferController@transAdminUser');//转移后台人员数据
+       $router->get('transIp', 'DataTransfer\DataTransferController@transIp');//转移IP资源数据
+       $router->get('transCabinet', 'DataTransfer\DataTransferController@transCabinet');//转移IP资源数据
+       $router->get('transMachine', 'DataTransfer\DataTransferController@transMachine');//转移IP资源数据
+       $router->get('transCustomer', 'DataTransfer\DataTransferController@transCustomer');//转移IP资源数据
+       
+    });
+
 
 });
 

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Admin\Requests\Idc\CabinetVerify;
 use Stevenyangecho\UEditor\UEditorServiceProvider;
+use Illuminate\Support\Facades\DB;
 
 class CabinetController extends Controller
 {
@@ -123,7 +124,14 @@ class CabinetController extends Controller
 		$par = $request->post();
 		//实例化
 		$cabineModel = new Cabinet();
-
+		$cabinet = $cabineModel->find($par['id']);
+		if(empty($cabinet)){
+			return tz_ajax_echo([], '此机柜信息不存在', 0);
+		}
+		$bindCabinet = DB::table('idc_machine')->where(['cabinet'=>$par['id']])->whereNull('deleted_at')->get();
+		if(!$bindCabinet->isEmpty()){
+			return tz_ajax_echo([], '请将编号为:'.$cabinet->cabinet_id.'的机柜上的机器转移后再删除', 0);
+		};
 		//判断是否删除成功
 		if ($cabineModel->destroy($par['id'])) {
 			//软删除成功

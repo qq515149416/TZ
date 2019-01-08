@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
+use XS;
+use XSDocument;
 
 
 class ContactsController extends Controller
@@ -57,45 +59,29 @@ class ContactsController extends Controller
      * 测试
      */
     public function vi(Request $request) {
-       // $order = DB::table('tz_orders')->where(['business_sn'=>'320181008169'])->get();
-       //  // dd($order);
-       //  $resource = ['IP'=>$this->filter($order->toArray(),4)];
-
-       //  dd($resource);
-       // $check       = DB::table('tz_business')->where(['business_number'=>'220181130219'])->select('client_id', 'business_number', 'client_name', 'sales_id', 'sales_name', 'business_type', 'machine_number', 'money', 'length','resource_detail')->first();
-       //  // dd(explode(trim($check->resource_detail,'{}'),','));
-      
-    
-       //  $json = json_decode($check->resource_detail);
-       //  dd($json->ip_id);
-     //    curl('http://127.0.0.1:8121',$request->only(['process_department']));
-    	return view('show/test');
+        $index = new Contacts();
+        $index->test();
+     //    // dd(json_encode(DB::table('tz_orders')->first()));
+     //    DB::table('test')->insert(['test'=>json_encode(DB::table('tz_orders')->first())]);
+     //    // dd(json_encode(DB::table('test')->first()));
+     //    $a = [1,2,3,4,5,6];
+     //    dump((object)$a);
+     //    dd(json_encode((object)$a));
+     //    dd(DB::table('test')->first());
+     //    dd(json_decode(DB::table('test')->first()->test));
+    	// return view('show/test');
     }
     public function vtest(Request $request) {
-        $session = [];
-        array_push($session,1);
-        array_push($session,2);
-        array_push($session,3);
-        dd($session);
-      // $request->only(['process_department'];
-        // echo 'http://'.$_SERVER['SERVER_ADDR'].':8121';
-      curl('http://127.0.0.1:8121',$request->only(['process_department']));
-      // dd(1);
-    //    // dd(simulation_request('http://www.cmd96.cn:8121/tz_admin/vi',['process_department'=>40],'post'));
-    // echo "<form action='http://127.0.0.1:8121/index.html' method='post' enctype='multipart/form-data'>
-    //     <!-- {{ csrf_field() }} -->
-    //     <input type='hidden' name='to' value='8'>
-    //     <input type='text' name='process_department'>
-    //     <input type='submit' value='上传'>
-    // </form>";
-    // echo "<form action='http://www.baidu.com' method='post' enctype='multipart/form-data'>
-    //     <!-- {{ csrf_field() }} -->
-    //     <input type='hidden' name='to' value='8'>
-    //     <input type='text' name='process_department'>
-    //     <input type='submit' value='上传'>
-    // </form>";
-        // phpinfo();
-        return view('show/test');
+        $search = $request->only('search');
+        $xs = new XS('ip');
+        $index = $xs->index;
+        $doc = DB::table('idc_ips')->select('id','ip')->get();
+        $document = new \XSDocument($doc);
+        //修改成功时更新文档主键值一样时会替换数据
+        $index->update($document);
+        $index->flushIndex();
+        dd($xs);
+        dd($search);
     }
 
     /**

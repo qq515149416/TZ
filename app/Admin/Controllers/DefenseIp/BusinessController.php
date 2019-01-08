@@ -43,6 +43,18 @@ class BusinessController extends Controller
 	}
 
 	/**
+	 *  获取待审核 高防IP 接口 
+	 */
+	public function showUpExamineDefenseIp(BusinessRequest $request){
+
+		$model = new BusinessModel();
+
+		$makeOrder = $model->showUpExamineDefenseIp();
+		
+		return tz_ajax_echo($makeOrder['data'],$makeOrder['msg'],$makeOrder['code']);
+	}
+
+	/**
 	 *  续费 高防IP 接口  /  选取业务后,生成订单信息 
 	 */
 	public function renewByAdmin(BusinessRequest $request){

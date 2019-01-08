@@ -64,7 +64,7 @@ class BusinessModel extends Model
 		$data['user_id']			= $customer_id;
 		$data['package_id']		= $package_id;
 		// $data['ip_id']			= $check_ip->id;
-		$data['price']			= $package->price;
+		$data['price']			= $check_ip->price;
 		$data['status']			= 5;
 		$data['created_at']		= date("Y-m-d H:i:s");
 	
@@ -186,10 +186,42 @@ class BusinessModel extends Model
 		if($check_ip == NULL){
 			return false;
 		}else{
+			$check_ip->price = $package->price;
 			return $check_ip;
 		}
 	}
 
+	public function showUpExamineDefenseIp(){
+		$res = $this->where('status',5)->get();
+		if($res->isEmpty()){
+			return [
+				'data'	=> '',
+				'msg'	=> '无数据',
+				'code'	=> 1,
+			];		
+		}
+		for ($i=0; $i < count($res); $i++) { 
+			$res[$i] = $this->trans($res[$i]);
+		}
+		
+		return [
+				'data'	=> $res,
+				'msg'	=> '获取成功',
+				'code'	=> 1,
+			];
+	}
+
+	private function trans($business){
+		switch ($business->status) {
+			case '5':
+				$business->status = '待审核';
+				break;	
+			default:
+				$business->status = '无需审核';
+				break;
+		}
+		return $business;
+	}
 
 	public function renew($business_id,$buy_time){
 		$user_id = Admin::user()->id;

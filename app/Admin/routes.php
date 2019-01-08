@@ -112,6 +112,7 @@ Route::group([
             $router->get('/disposalHistory', 'Show\DisposalHistoryController@index');
             $router->get('/machineProcessing', 'Show\MachineProcessingController@index');
             $router->get('/newTypeManagement', 'Show\NewTypeManagementController@index');
+            $router->get('/defenseBusinesReview', 'Show\DefenseBusinessReviewController@index');
 
         });
 
@@ -501,7 +502,7 @@ Route::group([
             $router->get('renewByAdmin', 'DefenseIp\BusinessController@renewByAdmin');  //后台替客户续费高防ip
             $router->get('upExamineDefenseIp', 'DefenseIp\BusinessController@upExamineDefenseIp');  //审核后台的高防试用申请
             $router->get('showUpExamineDefenseIp', 'DefenseIp\BusinessController@showUpExamineDefenseIp');  //获取待审核的高防试用申请
-            
+
         });
 
 
@@ -527,7 +528,7 @@ Route::group([
     Route::group([
         'prefix' => 'excel',
     ],function(Router $route){
-        Route::get('export','Excel\ExcelController@export');    //Excel导出  
+        Route::get('export','Excel\ExcelController@export');    //Excel导出
         Route::get('import','Excel\ExcelController@import');    //Excel导入
     });
 
@@ -544,7 +545,7 @@ Route::group([
        $router->get('transCabinet', 'DataTransfer\DataTransferController@transCabinet');//转移IP资源数据
        $router->get('transMachine', 'DataTransfer\DataTransferController@transMachine');//转移IP资源数据
        $router->get('transCustomer', 'DataTransfer\DataTransferController@transCustomer');//转移IP资源数据
-       
+
     });
 
 

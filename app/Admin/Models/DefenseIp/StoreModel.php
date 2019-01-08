@@ -103,7 +103,7 @@ class StoreModel extends Model
 		}else{
 			if($site == '*'){
 				$ip_list = $this
-					->where('status',$status)
+					->where('status',0)
 					->get()
 					->toArray();
 			}else{

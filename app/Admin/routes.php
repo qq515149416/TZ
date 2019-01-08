@@ -497,9 +497,9 @@ Route::group([
         Route::group([
             'prefix' => 'order',
         ], function (Router $router) {
-            $router->get('buyNowByAdmin', 'DefenseIp\BusinessController@buyNowByAdmin');  //后台替客户购买高防ip
+            $router->get('buyNowByAdmin', 'DefenseIp\BusinessController@buyNowByAdmin');  //后台替客户购买高防ip,提交试用申请
             $router->get('renewByAdmin', 'DefenseIp\BusinessController@renewByAdmin');  //后台替客户续费高防ip
-
+            $router->get('upExamineDefenseIp', 'DefenseIp\BusinessController@upExamineDefenseIp');  //审核后台的高防试用申请
         });
 
 

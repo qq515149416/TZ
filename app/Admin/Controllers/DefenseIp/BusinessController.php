@@ -14,7 +14,7 @@ class BusinessController extends Controller
 {
 	
 	/**
-	 *  新购 高防IP 接口  /  选取购买信息后,生成订单信息 
+	 *  新购 高防IP 接口  /  选取购买信息后,生成审核中业务信息
 	 */
 	public function buyNowByAdmin(BusinessRequest $request){
 		$par = $request->only(['package_id','customer_id']);
@@ -29,6 +29,20 @@ class BusinessController extends Controller
 	}
 	
 	/**
+	 *  审核 高防IP 接口  /  选取审核中业务后,转为试用业务
+	 */
+	public function upExamineDefenseIp(BusinessRequest $request){
+		$par = $request->only(['business_id','res']);
+		$model = new BusinessModel();
+
+		$business_id = $par['business_id'];
+		$res = $par['res'];
+		$makeOrder = $model->upExamineDefenseIp($business_id,$res);
+		
+		return tz_ajax_echo($makeOrder['data'],$makeOrder['msg'],$makeOrder['code']);
+	}
+
+	/**
 	 *  续费 高防IP 接口  /  选取业务后,生成订单信息 
 	 */
 	public function renewByAdmin(BusinessRequest $request){
@@ -41,4 +55,7 @@ class BusinessController extends Controller
 		
 		return tz_ajax_echo($makeOrder['data'],$makeOrder['msg'],$makeOrder['code']);
 	}
+
+	
+
 }

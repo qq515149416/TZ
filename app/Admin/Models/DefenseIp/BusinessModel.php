@@ -42,7 +42,7 @@ class BusinessModel extends Model
 		$second_buy_time = bcsub( time() , $this->time_limit);		//60秒只允许一次
 		$second_buy_time = date("Y-m-d H:i:s",$second_buy_time); 
 		//查找试用业务申请
-		$check_time = $this->where('status',4)->where('user_id',$customer_id)->where('created_at','>',$second_buy_time)->value('id');
+		$check_time = $this->where('status',5)->where('user_id',$customer_id)->where('created_at','>',$second_buy_time)->value('id');
 		if($check_time != null){
 			return[
 				'data'	=> '',
@@ -51,6 +51,130 @@ class BusinessModel extends Model
 			];
 		}
 
+		$check_ip = $this->checkStock($package_id);
+		if($check_ip == false){
+			return[
+				'data'	=> '',
+				'msg'	=> '该套餐IP库存不足',
+				'code'	=> 0,
+			];
+		}
+
+		$data['business_number']	= 'G_'.time().'_admin_'.$user_id;
+		$data['user_id']			= $customer_id;
+		$data['package_id']		= $package_id;
+		// $data['ip_id']			= $check_ip->id;
+		$data['price']			= $package->price;
+		$data['status']			= 5;
+		$data['created_at']		= date("Y-m-d H:i:s");
+	
+		
+		//因为可先使用后付款,创建待审核状态业务
+		$insert = $this->create($data);
+		if($insert == false){
+			return[
+				'data'	=> '',
+				'msg'	=> '高防IP业务审核提交失败',
+				'code'	=> 0,
+			];
+		}
+		
+		return[
+			'data'	=> '',
+			'msg'	=> '高防IP业务审核提交成功',
+			'code'	=> 1,
+		];
+	}
+
+	public function upExamineDefenseIp($business_id,$res){
+		//建立业务模型
+		$business = $this->find($business_id);
+		if($business == null){
+			return [
+				'data'	=> '',
+				'msg'	=> '没找到该业务',
+				'code'	=> 0,
+			];
+		}
+		if($business->status != 5){
+			return [
+				'data'	=> '',
+				'msg'	=> '该业务无需上架审核',
+				'code'	=> 0,
+			];
+		}
+		if($res == 0){
+			$business->status = 3;
+			$res = $business->save();
+			if($res != true){
+				return [
+					'data'	=> '',
+					'msg'	=> '审核失败',
+					'code'	=> 0,
+				];
+			}else{
+				return [
+					'data'	=> '',
+					'msg'	=> '审核成功',
+					'code'	=> 1,
+				];
+			}
+		}elseif($res == 1){
+			$business->status = 4;
+			$check_ip = $this->checkStock($business->package_id);
+			if($check_ip == false){
+				return [
+					'data'	=> '',
+					'msg'	=> '该套餐IP库存不足',
+					'code'	=> 0,
+				];
+			}
+			$business->ip_id = $check_ip->id;
+
+			DB::beginTransaction();
+			$save_business = $business->save();
+			if($save_business!=true){
+				return [
+					'data'	=> '',
+					'msg'	=> '业务审核失败',
+					'code'	=> 0,
+				];
+			}
+			//业务更新到tz_business_relevance关联表
+			$relevance = DB::table('tz_business_relevance')->insert(['type' => 2 , 'business_id' => $business->business_number , 'created_at' => date("Y-m-d H:i:s")]);
+			if($relevance != true){
+				DB::rollBack();
+				return [
+					'data'	=> '',
+					'msg'	=> '业务关联创建失败',
+					'code'	=> 0,
+				];
+			}
+
+			//更新高防IP使用状态
+			$update_ip = DB::table('tz_defenseip_store')->where('id',$business->ip_id)->update(['status' => 1]);
+			if($update_ip != 1){
+				DB::rollBack();
+				return[
+					'data'	=> '',
+					'msg'	=> 'IP更新使用状态失败',
+					'code'	=> 0,
+				];
+			}
+
+			DB::commit();
+			return [
+				'data'	=> '',
+				'msg'	=> '审核成功',
+				'code'	=> 1,
+			];
+		}
+	}
+
+	/**
+	*查询库存
+	*/
+	public function checkStock($package_id){
 		$package = DB::table('tz_defenseip_package')->select(['site','protection_value','price'])->where('id',$package_id)->first();
 
 		$check_ip = DB::table('tz_defenseip_store')
@@ -60,61 +184,11 @@ class BusinessModel extends Model
 				->where('status',0)
 				->first();	
 		if($check_ip == NULL){
-			return[
-				'data'	=> '',
-				'msg'	=> '该套餐IP库存不足',
-				'code'	=> 0,
-			];
+			return false;
+		}else{
+			return $check_ip;
 		}
-		$data['business_number']	= 'G_'.time().'_admin_'.$user_id;
-		$data['user_id']			= $customer_id;
-		$data['package_id']		= $package_id;
-		$data['ip_id']			= $check_ip->id;
-		$data['price']			= $package->price;
-		$data['status']			= 4;
-		$data['created_at']		= date("Y-m-d H:i:s");
-	
-		DB::beginTransaction();	
-		//因为可先使用后付款,创建业务
-		$insert = $this->create($data);
-		if($insert == false){
-			return[
-				'data'	=> '',
-				'msg'	=> '业务创建失败',
-				'code'	=> 0,
-			];
-		}
-		//业务更新到tz_business_relevance关联表
-		$relevance = DB::table('tz_business_relevance')->insert(['type' => 2 , 'business_id' => $insert->business_number , 'created_at' => date("Y-m-d H:i:s")]);
-		if($relevance != true){
-			DB::rollBack();
-			return[
-				'data'	=> '',
-				'msg'	=> '业务关联创建失败',
-				'code'	=> 0,
-			];
-		}
-
-		//更新高防IP使用状态
-		$update_ip = DB::table('tz_defenseip_store')->where('id',$data['ip_id'])->update(['status' => 1]);
-		if($update_ip != 1){
-			DB::rollBack();
-			return[
-				'data'	=> '',
-				'msg'	=> 'IP更新使用状态失败',
-				'code'	=> 0,
-			];
-		}
-
-		DB::commit();
-		return[
-			'data'	=> '',
-			'msg'	=> '创建高防IP业务成功',
-			'code'	=> 1,
-		];
 	}
-
-
 
 
 	public function renew($business_id,$buy_time){

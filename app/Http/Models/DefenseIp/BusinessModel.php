@@ -223,6 +223,9 @@ class BusinessModel extends Model
                 case '4':
                     $list[$i]['status'] = '试用中';
                     break;
+                case '5':
+                    $list[$i]['status'] = '审核中';
+                    break;
                 default:
                     $list[$i]['status'] = '无此状态,请核对数据库';
                     break;

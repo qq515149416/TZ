@@ -53,6 +53,12 @@ class BusinessRequest extends FormRequest
 					'customer_id'		=> 'required|exists:tz_users,id',
 				];
 				break;
+			case 'upExamineDefenseIp':
+				$return = [
+					'business_id'		=> 'required|exists:tz_defenseip_business,id',	
+					'res'			=> 'required|integer|min:0|max:1',
+				];
+				break;
 				
 			default:
 	
@@ -66,12 +72,16 @@ class BusinessRequest extends FormRequest
 	{
 		
 		return  [
-			'business_id.required'			=> '请选择申请下架的业务id',
+			'business_id.required'			=> '请选择业务id',
 			'business_id.exists'			=> '不存在此业务id',
 			'status.required'			=> '请选择审核结果',
 			'package_id.required'			=> '请提供套餐id',
 			'customer_id.required'			=> '请提供用户id',
 			'customer_id.exists'			=> '用户id不存在',
+			'res.required'				=> '请提供审核结果',
+			'res.integer'				=> '审核结果只能为:0-不通过;1-通过',
+			'res.min'				=> '审核结果只能为:0-不通过;1-通过',
+			'res.max'				=> '审核结果只能为:0-不通过;1-通过',
 		];
 	}
 

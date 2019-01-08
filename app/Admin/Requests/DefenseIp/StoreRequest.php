@@ -35,7 +35,7 @@ class StoreRequest extends FormRequest
 				$return = [
 					'ip'			=> 'required|array',
 					'protection_value'	=> 'required|integer',
-					'site'			=> 'required',		
+					'site'			=> 'required|integer|exists:idc_machineroom,id',		
 				];
 				break;
 			case 'del':
@@ -77,6 +77,8 @@ class StoreRequest extends FormRequest
 			'protection_value.required'	=> '请填写ip防护值',
 			'protection_value.integer'	=> '防护值需为整数,单位为G', 
 			'site.required'			=> '请填写所属机房,1为西安',
+			'site.integer'			=> '地区格式错误',
+			'site.exists'			=> '无此机房',
 			'ip.array'			=> 'ip请用数组格式传值',
 			'del_id.required'		=> '请提供需删除的ip的id',
 			'edit_id.required'		=> '请提供需编辑的ip的id',

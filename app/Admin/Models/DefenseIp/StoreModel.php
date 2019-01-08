@@ -53,16 +53,31 @@ class StoreModel extends Model
 	}
 
 	public function del($del_id){
-		$del = $this->where('id',$del_id)->delete($del_id);
-		$return['data'] = '';
-		if($del == 1){
-			$return['msg']	= '删除成功';
-			$return['code']	= 1;
-		}else{
-			$return['msg']	= '删除失败';
-			$return['code']	= 0;
+		$ip = $this->find($del_id);
+	
+		if($ip->status != 0){
+			return [
+				'data'	=> '',
+				'msg'	=> '该ip正在使用',
+				'code'	=> 0,
+			];
 		}
-		return $return;
+		
+		$del = $ip->delete();
+	
+		if($del == true){
+			return [
+				'data'	=> '',
+				'msg'	=> '删除成功',
+				'code'	=> 1,
+			];
+		}else{
+			return [
+				'data'	=> '',
+				'msg'	=> '删除失败',
+				'code'	=> 0,
+			];
+		}
 	}
 
 	public function edit($par){
@@ -73,6 +88,12 @@ class StoreModel extends Model
 			$return['code']	= 0;
 			return $return;
 		}
+		if($ip_model->status != 0){
+			$return['msg']	= '该ip正在使用';
+			$return['code']	= 0;
+			return $return;
+		}
+
 		$ip_model->ip 		= $par['ip'];
 		$ip_model->site 	= $par['site'];
 		$ip_model->protection_value 		= $par['protection_value'];
@@ -120,16 +141,34 @@ class StoreModel extends Model
 			$return['code']	= 1;
 			return $return;
 		}
-		$site_list = [1 => '西安'];
-		$status_list = [0 => '未使用' , 1 => '已使用'];
+
 		for ($i=0; $i < count($ip_list); $i++) { 
-			$ip_list[$i]['status'] = $status_list[$ip_list[$i]['status']];
-			$ip_list[$i]['site'] = $site_list[$ip_list[$i]['site']];
+			$ip_list[$i] = $this->trans($ip_list[$i]);
 		}
+
 		$return['data'] = $ip_list;
 		$return['msg'] = '获取成功';
 		$return['code']	=1;
 		return $return;
+	}
+
+	private function trans($ip){
+		switch ($ip['status']) {
+			case '0':
+				$ip['status'] = '未使用';
+				break;
+			case '1':
+				$ip['status'] = '已使用';
+				break;
+			default:
+				$ip['status'] = '未知状态';
+				break;
+		}
+		$ip['site'] = DB::table('idc_machineroom')->where('id',$ip['site'])->value('machine_room_name');
+		if($ip['site'] == null){
+			$ip['site'] = '无此机房';
+		}
+		return $ip;
 	}
 
 	public function checkExist($ip){

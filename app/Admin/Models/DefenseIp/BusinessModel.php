@@ -120,7 +120,6 @@ class BusinessModel extends Model
 				];
 			}
 		}elseif($res == 1){
-			$business->status = 4;
 			$check_ip = $this->checkStock($business->package_id);
 			if($check_ip == false){
 				return [
@@ -130,6 +129,8 @@ class BusinessModel extends Model
 				];
 			}
 			$business->ip_id = $check_ip->id;
+			$business->status = 4;
+			$business->examine_time = date("Y-m-d H:i:s");
 
 			DB::beginTransaction();
 			$save_business = $business->save();
@@ -258,7 +259,7 @@ class BusinessModel extends Model
 		//如果存在未付款订单,则判断业务状态
 		if($checkOrder != null){ 
 			if($business->status == 4){	//如果是试用状态, 还要更新结束时间
-				$end_time = Carbon::parse($business->created_at)->addMonth($buy_time)->toDateTimeString();
+				$end_time = Carbon::parse($business->examine_time)->addMonth($buy_time)->toDateTimeString();
 				$end = strtotime($end_time);
 				if($end < time()){	
 					return [
@@ -285,7 +286,7 @@ class BusinessModel extends Model
 			if($business->status == 4){
 				$order_type = 1;
 				$order_sn = 'GS_'.time().'_admin_'.$user_id;
-				$end_time = Carbon::parse($business->created_at)->addMonth($buy_time)->toDateTimeString();
+				$end_time = Carbon::parse($business->examine_time)->addMonth($buy_time)->toDateTimeString();
 				$end = strtotime($end_time);
 				if($end < time()){
 					return [

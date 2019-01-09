@@ -392,13 +392,13 @@ class DataTransfer extends Model
 					$data['cabinet'] = $info->id;
 					$data['machineroom'] = $info->machineroom_id;
 				}
-				if(filter_var(trim($old_machine[$i]->dxip), FILTER_VALIDATE_IP)) {
-					$data['ip_id'] = DB::table('idc_ips')->where('ip',$old_machine[$i]->dxip)->value('id');
-				}else{
-					if(filter_var(trim($old_machine[$i]->unicomip), FILTER_VALIDATE_IP)) {
-						$data['ip_id'] = DB::table('idc_ips')->where('ip',$old_machine[$i]->unicomip)->value('id');
-					}	
-				}
+				// if(filter_var(trim($old_machine[$i]->dxip), FILTER_VALIDATE_IP)) {
+				// 	$data['ip_id'] = DB::table('idc_ips')->where('ip',$old_machine[$i]->dxip)->value('id');
+				// }else{
+				// 	if(filter_var(trim($old_machine[$i]->unicomip), FILTER_VALIDATE_IP)) {
+				// 		$data['ip_id'] = DB::table('idc_ips')->where('ip',$old_machine[$i]->unicomip)->value('id');
+				// 	}	
+				// }
 			}
 			
 			//查找新表是否存在

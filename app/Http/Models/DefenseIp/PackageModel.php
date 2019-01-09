@@ -23,13 +23,16 @@ class PackageModel extends Model
 		if(count($list) == 0){
 			return [
 				'data'	=> '',
-				'msg'	=> '获取失败',
+				'msg'	=> '无数据',
 				'code'	=> 1,
 			]; 
 		}
 
 		for ($i=0; $i < count($list); $i++) { 
 			$list[$i]['site'] = DB::table('idc_machineroom')->where('id',$list[$i]['site'])->value('machine_room_name');
+			if($list[$i]['site'] == null){
+				$list[$i]['site'] = '无此机房';
+			}
 		}
 		return [
 			'data'	=> $list,

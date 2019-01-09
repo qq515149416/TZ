@@ -165,7 +165,9 @@ class DataTransfer extends Model
 					'ip_company'		=> 0,
 					'ip_status'		=> 0,
 				];
-
+				if($old_dxips[$i]->ipstatus == 4){
+					$data['ip_lock'] = 1;
+				}
 				//找机房关联
 				$old_room = DB::table('comproom')->where('comproomid',$old_dxips[$i]->comproom)->value('comproomname');
 				$data['ip_comproom'] = DB::table('idc_machineroom')->where('machine_room_name',$old_room)->value('id');
@@ -223,6 +225,9 @@ class DataTransfer extends Model
 					'ip_company'		=> 2,
 					'ip_status'		=> 0,
 				];
+				if($old_unicomips[$j]->ipstatus == 4){
+					$data['ip_lock'] = 1;
+				}
 				//找机房关联
 				$old_room = DB::table('comproom')->where('comproomid',$old_unicomips[$j]->comproom)->value('comproomname');
 				$data['ip_comproom'] = DB::table('idc_machineroom')->where('machine_room_name',$old_room)->value('id');

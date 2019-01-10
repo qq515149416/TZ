@@ -188,7 +188,7 @@ class MachineRoomController extends Controller
 		$machineRoomModel = new MachineRoom();
 
 		//模型添加机房数据
-		$res = $machineRoomModel->store($par['room_id'], $par['room_name'],$par['depart_id'],$par['white_list_add'],$par['white_list_key']);
+		$res = $machineRoomModel->store($par['room_id'], $par['room_name'],$par['depart_id'],isset($par['white_list_add'])?$par['white_list_add']:'',isset($par['white_list_key'])?$par['white_list_key']:'');
 //        dump($res);
 		return tz_ajax_echo($res['content'], $res['message'], $res['state']);
 
@@ -240,7 +240,7 @@ class MachineRoomController extends Controller
 		$par = $request->post();
         
         $update = new MachineRoom();
-        $result = $update->updateStore($par['id'],$par['room_id'], $par['room_name'],$par['depart_id'],$par['white_list_add'],$par['white_list_key']);
+        $result = $update->updateStore($par['id'],$par['room_id'], $par['room_name'],$par['depart_id'],isset($par['white_list_add'])?$par['white_list_add']:'',isset($par['white_list_key'])?$par['white_list_key']:'');
 
 		//返回正确信息
         return tz_ajax_echo($result['content'], $result['message'], $result['state']);

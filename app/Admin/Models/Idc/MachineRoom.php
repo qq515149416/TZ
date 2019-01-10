@@ -18,7 +18,7 @@ class MachineRoom extends Model
 	public $timestamps = true;
 	//定义软删除 字段
 	protected $dates = ['delete_at'];
-	protected $fillable = ['machine_room_id', 'machine_room_name','list_order'];
+	protected $fillable = ['machine_room_id', 'machine_room_name','list_order','white_list_add','white_list_key'];
 
 	/**
 	 * 根据机房编号,机房名称生成机房 记录
@@ -73,6 +73,51 @@ class MachineRoom extends Model
 			return $res;
 		}
 
+	}
+
+	/**
+	 * 修改机房信息
+	 * @param  int $id             机房id
+	 * @param  string $roomId         机房编号
+	 * @param  string $roomName       机房名称
+	 * @param  int $departId      机房所对应的管理部门
+	 * @param  string $white_list_add 白名单的api接口
+	 * @param  string $white_list_key 白名单的api接口的密钥
+	 * @return array                 修改后的返回信息及提示
+	 */
+	public function updateStore($id,$roomId, $roomName,$departId,$white_list_add,$white_list_key){
+		if(!isset($id)){
+			$res['content'] = '';
+			$res['message'] = '(#101)修改机房失败';
+			$res['state']   = 0;
+			return $res;
+		}
+		$machineroom = $this->where(['id'=>$id])->first();
+		if(empty($machineroom)){
+			$res['content'] = '';
+			$res['message'] = '(#102)机房不存在';
+			$res['state']   = 0;
+			return $res;
+		}
+		$machineroom = [];
+		$machineroom['machine_room_id']   = $roomId;
+		$machineroom['machine_room_name'] = $roomName;
+		$machineroom['list_order'] = $departId;
+		$machineroom['white_list_add'] = $white_list_add;
+		$machineroom['white_list_key'] = $white_list_key;
+		$machineroom['id'] = $id;
+		$row = $this->where(['id'=>$id])->update($machineroom);
+		if($row != 0){
+			$res['content'] = '';
+			$res['message'] = '机房信息修改成功';
+			$res['state']   = 1;
+			
+		} else {
+			$res['content'] = '';
+			$res['message'] = '(#103)机房信息修改失败';
+			$res['state']   = 0;
+		}
+		return $res;
 	}
 
 	/**

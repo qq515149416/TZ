@@ -460,6 +460,7 @@ Route::group([
             $router->get('del', 'DefenseIp\StoreController@del');//删除
             $router->post('edit', 'DefenseIp\StoreController@edit'); //编辑
             $router->get('show', 'DefenseIp\StoreController@show');//获取资源信息
+            $router->get('form', 'DefenseIp\StoreController@form');//获取资源信息
         });
 
         /**

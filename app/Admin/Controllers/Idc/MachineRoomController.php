@@ -2,7 +2,7 @@
 
 namespace App\Admin\Controllers\Idc;
 
-use App\Admin\Models\Idc\MachineRoom;
+use App\Admin\Models\Idc\MachineRoomModel;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use Encore\Admin\Facades\Admin;
@@ -82,7 +82,7 @@ class MachineRoomController extends Controller
 		$par = $request->post();
 
 		//实例化
-		$machineRoomModel = new MachineRoom();
+		$machineRoomModel = new MachineRoomModel();
 
 		//模型添加机房数据
 		$res = $machineRoomModel->store($par['room_id'], $par['room_name'],$par['depart_id'],$par['white_list_add'],$par['white_list_key']);
@@ -149,7 +149,7 @@ class MachineRoomController extends Controller
 	public function showByAjax()
 	{
 		//实例化
-		$machineRoomModel = new MachineRoom();
+		$machineRoomModel = new MachineRoomModel();
 
 		//使用模型方法获取列表数据
 		$listData = $machineRoomModel->show();
@@ -185,12 +185,12 @@ class MachineRoomController extends Controller
 		$par = $request->post();
 
 		//实例化
-		$machineRoomModel = new MachineRoom();
+		$machineRoomModel = new MachineRoomModel();
 
 		//模型添加机房数据
-		$res = $machineRoomModel->store($par['room_id'], $par['room_name'],$par['depart_id']);
+		$res = $machineRoomModel->store($par['room_id'], $par['room_name'],$par['depart_id'],$par['white_list_add'],$par['white_list_key']);
 //        dump($res);
-		return tz_ajax_echo([], '新增机房成功', 1);
+		return tz_ajax_echo($res['content'], $res['message'], $res['state']);
 
 	}
 
@@ -208,7 +208,7 @@ class MachineRoomController extends Controller
 		//软删除
 		$par = $request->post();
 		//实例化
-		$machineRoomModel = new MachineRoom();
+		$machineRoomModel = new MachineRoomModel();
 
 		//判断是否删除成功
 		if ($machineRoomModel->destroy($par['id'])) {
@@ -238,17 +238,12 @@ class MachineRoomController extends Controller
 	{
 		//获取参数
 		$par = $request->post();
-
-//        dump($par);
-
-		//判断是否获取到参数
-//        if (1) {
-//            dump('su');
-//        }
-
+        
+        $update = new MachineRoomModel();
+        $result = $update->updateStore($par['id'],$par['room_id'], $par['room_name'],$par['depart_id'],$par['white_list_add'],$par['white_list_key']);
 
 		//返回正确信息
-//        return tz_ajax_echo([], '修改成功', 0);
+        return tz_ajax_echo($result['content'], $result['message'], $result['state']);
 
 
 	}
@@ -267,7 +262,7 @@ class MachineRoomController extends Controller
 	public function showSelectListByAjax()
 	{
 		//实例化
-		$machineRoomModel = new MachineRoom();
+		$machineRoomModel = new MachineRoomModel();
 
 		//获取选择列表信息
 		$listData = $machineRoomModel->showSelectList();

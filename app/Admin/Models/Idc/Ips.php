@@ -30,7 +30,7 @@ class Ips extends Model
 	 */
 	public function index(){
 		// 用模型进行数据查询
-	
+
 		$index = $this->paginate(15);
 		if(!$index->isEmpty()){
 			// 判断存在数据就对部分需要转换的数据进行数据转换的操作
@@ -48,13 +48,13 @@ class Ips extends Model
 					$index[$ipkey]['ip_comproomname'] = $room['machine_room_name'];
 					$index[$ipkey]['ip_roomno'] = $room['machine_room_id'];
 				}
-				
-			}
+
+            }
 			$return['data'] = $index;
 			$return['code'] = 1;
 			$return['msg'] = '获取信息成功！！';
 		} else {
-			$return['data'] = [];
+			$return['data'] = $index;
 			$return['code'] = 1;
 			$return['msg'] = '暂无数据';
 		}
@@ -129,11 +129,11 @@ class Ips extends Model
 					$return['msg'] = '新增IP地址信息失败!!';
 				}
 			}
-			
+
 		}
 		return $return;
 	}
-	
+
 	/**
 	 * 查找对应的IP数据
 	 * @param  int $id 查找IP的id条件
@@ -270,7 +270,7 @@ class Ips extends Model
 
 			return $return;
 		}
-		
+
 	}
 
 	/**
@@ -291,15 +291,15 @@ class Ips extends Model
 				$ips[$key]['value'] = $value['ip'].$ip_company[$value['ip_company']];
 				$ips[$key]['room_id'] = $value['ip_comproom'];
 				$ips[$key]['machineroom'] = $this->machineroom($value['ip_comproom'])->machine_room_name;
-				unset($ips[$key]['ip']); 
-				unset($ips[$key]['ip_comproom']); 
+				unset($ips[$key]['ip']);
+				unset($ips[$key]['ip_comproom']);
 			}
 			return $ips;
 		} else {
 			return [];
 		}
-		
+
 	}
 
-	
+
 }

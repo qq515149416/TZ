@@ -234,7 +234,7 @@ class Ips extends Model
 				'msg'   => '无此id',
 			];
 		}
-		if($mod->used_status != 0){
+		if($mod->ip_status != 0){
 			return [
 				'code'  => 2,
 				'msg'   => 'ip正在使用,无法删除或编辑',

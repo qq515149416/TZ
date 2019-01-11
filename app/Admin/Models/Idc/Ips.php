@@ -167,11 +167,12 @@ class Ips extends Model
 	 */
 	public function doEdit($data){
 		if($data && $data['id']+0) {
-						$check = $this->checkDel($data['id']);
-						if($check['code'] != 1){
-							return $check;
-						}
 			$edit = $this->find($data['id']);
+            if(empty($edit)){
+                $return['code'] = 0;
+                $return['msg'] = '无此IP';
+                return $return;
+            }
 			$edit->vlan = $data['vlan'];
 			// $edit->ip = $data['ip'];
 			$edit->ip_company = $data['ip_company'];

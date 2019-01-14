@@ -240,7 +240,7 @@ class MachineRoomController extends Controller
 		$par = $request->post();
         
         $update = new MachineRoom();
-        $result = $update->updateStore($par['id'],$par['room_id'], $par['room_name'],$par['depart_id'],isset($par['white_list_add'])?$par['white_list_add']:'',isset($par['white_list_key'])?$par['white_list_key']:'');
+        $result = $update->updateStore($par['id'],$par['machine_room_id'], $par['machine_room_name'],$par['depart_id'],isset($par['white_list_add'])?$par['white_list_add']:'',isset($par['white_list_key'])?$par['white_list_key']:'');
 
 		//返回正确信息
         return tz_ajax_echo($result['content'], $result['message'], $result['state']);

@@ -130,6 +130,7 @@ class MachineRoom extends Model
 		$res = $this->all();
 		if(!$res->isEmpty()){
 			foreach ($res as $key => $value) {
+				$res[$key]['depart_id'] = $value['list_order'];
 				$res[$key]['list_order'] = $this->machineroom($value['list_order']);
 			}
 		}else{

@@ -45,6 +45,10 @@ class CabinetController extends Controller
 
 		//获取机柜列表数据
 		$cabinetData = $cabinetModel->all();
+
+		//分页的获取方法
+		// $cabinetData = $cabinetModel->paginate(15);
+		
 		//dump($cabinetData);
 		$stateCN = [
 			0 => '未使用',

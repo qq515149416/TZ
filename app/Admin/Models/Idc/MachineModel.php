@@ -25,7 +25,10 @@ class MachineModel extends Model
 	public function showMachine($where){
 		// 进行条件查询业务类型为1的即租用的所有机器信息
 		$result = $this->where($where)->get(['id','machine_num','cpu','memory','harddisk','cabinet','ip_id','machineroom','bandwidth','protect','loginname','loginpass','machine_type','used_status','machine_status','own_business','business_end','business_type','machine_note','created_at','updated_at']);
+
+		//分页取数据
 		// $result  = $this->paginate(15);
+
 		// 判断是否查询到数据
 		if(!$result->isEmpty()){
 			// 查询到数据进行某些字段的数据转换

@@ -40,7 +40,7 @@ class CustomerModel extends Model
         } else {
             $where = [];
         }
-    	$admin_customer = $this->orderBy('created_at','desc')->where($where)->get(['id','status','name','email','money','salesman_id','created_at','updated_at']);
+    	$admin_customer = $this->orderBy('created_at','desc')->where($where)->get(['id','status','name','email','money','salesman_id','created_at','updated_at','nickname']);
     	if(!$admin_customer->isEmpty()){
     		$status = [0=>'拉黑',1=>'未验证',2=>'正常'];
     		foreach($admin_customer as $key=>$value){

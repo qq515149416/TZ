@@ -383,6 +383,9 @@ class DataTransfer extends Model
 					
 					break;
 			}
+			// $old_machine_room = DB::table('comproom')->where('comproomid',$old_machine[$i]->comproom)->value('comproomname');
+			// $data['machineroom'] = DB::table('idc_machineroom')->where('machine_room_name',$old_machine_room)->value('id');
+
 			if($old_machine[$i]->status == 0){
 				$info = DB::table('idc_cabinet')->where('cabinet_id',$old_machine[$i]->cabinet)->select(['id', 'machineroom_id'])->first();
 				if($info == null){
@@ -395,7 +398,7 @@ class DataTransfer extends Model
 					// ];
 				}else{
 					$data['cabinet'] = $info->id;
-					$data['machineroom'] = $info->machineroom_id;
+					$data['machineroom']	= $info->machineroom_id;
 				}
 				// if(filter_var(trim($old_machine[$i]->dxip), FILTER_VALIDATE_IP)) {
 				// 	$data['ip_id'] = DB::table('idc_ips')->where('ip',$old_machine[$i]->dxip)->value('id');

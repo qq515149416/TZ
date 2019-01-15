@@ -25,6 +25,7 @@ class MachineModel extends Model
 	public function showMachine($where){
 		// 进行条件查询业务类型为1的即租用的所有机器信息
 		$result = $this->where($where)->get(['id','machine_num','cpu','memory','harddisk','cabinet','ip_id','machineroom','bandwidth','protect','loginname','loginpass','machine_type','used_status','machine_status','own_business','business_end','business_type','machine_note','created_at','updated_at']);
+		// $result  = $this->paginate(15);
 		// 判断是否查询到数据
 		if(!$result->isEmpty()){
 			// 查询到数据进行某些字段的数据转换
@@ -47,6 +48,7 @@ class MachineModel extends Model
 				//机柜等的对应查询
 				$machineroom = (array)$this->machineroom($machineroom,$cabinet,$ip_id);//机房信息的查询
 				// 进行对应的机柜等信息的转换或者显示
+				
 				if(!empty($machineroom)){
 					$result[$key]['cabinets'] = $machineroom['cabinet_id'];//机柜信息的返回
 					//IP信息的返回
@@ -315,6 +317,7 @@ class MachineModel extends Model
 						->where('idc_ips.id',$ip)//IP的条件
 						->select('idc_machineroom.machine_room_name','idc_cabinet.cabinet_id','idc_ips.ip','idc_ips.ip_company')//所需获得的字段
 						->first();
+
 			return $related;//返回数据
 		} elseif($roomid != 0 && $cabinet == 0 && $ip == 0){
 
@@ -326,6 +329,7 @@ class MachineModel extends Model
 			$related->cabinet_id = '机柜暂未选择';
 			$related->ip = '0.0.0.0代表未选择';
 			$related->ip_company = 0;
+
 			return $related;//返回数据
 
 		} elseif($roomid == 0 && $cabinet == 0 && $ip == 0){
@@ -334,6 +338,7 @@ class MachineModel extends Model
 			$related['ip'] = '0.0.0.0代表未选择';
 			$related['ip_company'] = 0;
 			$related['machine_room_name'] = '机房暂未选择';
+
 			return $related;
 		} elseif($roomid != 0 && $cabinet == 0 && $ip != 0){
 			//当IP，机房等信息转换时对应参数都传入，机柜信息未传入
@@ -357,6 +362,7 @@ class MachineModel extends Model
 						->first();
 			$related->ip = '0.0.0.0代表未选择';
 			$related->ip_company = 0;
+
 			return $related;//返回数据
 		} else {
 

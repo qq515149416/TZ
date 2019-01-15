@@ -20,11 +20,11 @@ Route::get('/verification_code', function () {
     return tz_ajax_echo(["src" => captcha_src()], "获取成功", 1);  //获取图形验证码链接
 });
 
-// Route::group([
-//     'middleware' => 'UserOperationLog'
-// ], function () {
-//     Route::get('/', 'show\IndexController@index');
-// });
+Route::group([
+    'middleware' => 'UserOperationLog'
+], function () {
+    Route::get('/', 'show\IndexController@index');
+});
 
 /**
  * 测试组

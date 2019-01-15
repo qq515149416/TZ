@@ -35,6 +35,9 @@ class  Cpu extends Model
 		// 用模型进行数据查询
 		$index = $this->all(['id','cpu_number','cpu_param','cpu_used','created_at','updated_at','service_num','room_id']);
 
+		//分页获取方法
+		// $index = $this->paginate(15);
+
 		$status = [
 			0 => '未使用',
 			1 => '已使用',

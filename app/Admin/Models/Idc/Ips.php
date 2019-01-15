@@ -30,8 +30,8 @@ class Ips extends Model
 	 */
 	public function index(){
 		// 用模型进行数据查询
-
-		$index = $this->paginate(15);
+		$index = $this->all();
+		// $index = $this->paginate(15);
 		if(!$index->isEmpty()){
 			// 判断存在数据就对部分需要转换的数据进行数据转换的操作
 			$ip_company = [0=>'电信公司',1=>'移动公司',2=>'联通公司'];

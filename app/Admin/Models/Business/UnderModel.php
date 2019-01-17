@@ -247,7 +247,11 @@ class UnderModel extends Model
 		                    break;
 		                case 3:
 		                    $cabinet = DB::table('idc_cabinet')->where(['cabinet_id'=>$business->machine_number])->select('own_business')->first();//获取机柜原来的业务号
-		                    $array = explode(',',$cabinet->own_business);//先将原本的业务数据转换为数组
+		                    if(!empty($cabinet)){
+		                    	$array = explode(',',$cabinet->own_business);//先将原本的业务数据转换为数组
+		                    } else {
+		                    	$array = [];
+		                    }
 		                    $key = array_search($business->business_number,$array);//查找要删除的业务编号在数组的位置的键
 		                    array_splice($array,$key,1);//根据查找的对应键进行删除
 		                    $own_business = implode(',',$array);//将数组转换为字符串

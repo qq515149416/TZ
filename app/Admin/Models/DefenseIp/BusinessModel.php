@@ -249,6 +249,13 @@ class BusinessModel extends Model
 				'code'	=> 0,
 			];
 		}
+		if($business->status == 5){
+			return [
+				'data'	=> '',
+				'msg'	=> '业务审核中,无法续费',
+				'code'	=> 0,
+			];
+		}
 		$orderModel = new OrderModel();
 		DB::beginTransaction();	
 		//查看是否有已存在未付款的订单

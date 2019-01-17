@@ -41,7 +41,7 @@ class RechargeModel extends Model
 	 */
 	public function rechargeByAdmin($data){
 		$return = [
-			'data'  => '',
+			'data'  => [],
 			'msg'   => '',
 			'code'  => 0,
 		];
@@ -104,9 +104,9 @@ class RechargeModel extends Model
 		
 		if($list->isEmpty()){
 			$return = [
-				'data'	=> '',
+				'data'	=> [],
 				'msg'	=> '无该状态审核订单或获取失败',
-				'code'	=> 0,
+				'code'	=> 1,
 			];
 		}else{
 			$list = json_decode($list,true);
@@ -157,9 +157,9 @@ class RechargeModel extends Model
 		
 		if($list->isEmpty()){
 			$return = [
-				'data'	=> '',
+				'data'	=> [],
 				'msg'	=> '无该状态审核订单或获取失败',
-				'code'	=> 0,
+				'code'	=> 1,
 			];
 		}else{
 			$list = json_decode($list,true);
@@ -182,13 +182,15 @@ class RechargeModel extends Model
 	 * @return 
 	 */
 	public function auditRecharge($audit_status,$trade_id){
-		$return['data'] 	= '';
+		$return['data'] 	= [];
 		$return['code']	= 0;
 		$auditor_id = Admin::user()->id;
 		
 		$trade = $this->find($trade_id);
 
 		if($trade == null){
+			$return['data'] 	= [];
+			$return['code']	= 1;
 			$return['msg'] = '无此充值审核单';
 			return $return;
 		}
@@ -315,9 +317,9 @@ class RechargeModel extends Model
 		 } 
 	   
 		if($flow->isEmpty()){
-			$return['data'] = '';
+			$return['data'] = [];
 			$return['msg'] = '无数据';
-			$return['code'] = 0;
+			$return['code'] = 1;
 			return $return;
 		}
 		$flow = json_decode($flow,true);   

@@ -200,14 +200,14 @@ class MachineModel extends Model
 					$return['msg'] = '机器'.$machine->machine_num.'(#101)已经绑定业务'.$machine->own_business.'，无法进行修改';
 					return $return;
 					break;
-				case 2:
-					$return['code'] = 0;
-					$return['msg'] = '机器'.$machine->machine_num.'(#102)已被锁定，无法进行修改';
-					return $return;
-					break;
+				// case 2:
+				// 	$return['code'] = 0;
+				// 	$return['msg'] = '机器'.$machine->machine_num.'(#102)已被锁定，无法进行修改';
+				// 	return $return;
+				// 	break;
 				case 3:
 					$return['code'] = 0;
-					$return['msg'] = '机器'.$machine->machine_num.'(#103)已迁移，无法进行修改';
+					$return['msg'] = '机器'.$machine->machine_num.'(#102)已迁移，无法进行修改';
 					return $return;
 					break;
 			}

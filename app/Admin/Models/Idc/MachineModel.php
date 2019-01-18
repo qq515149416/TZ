@@ -471,7 +471,7 @@ class MachineModel extends Model
 				$return['msg'] = 'IP信息获取成功';
 			} else {
 				$return['data'] = [];
-				$return['code'] = 0;
+				$return['code'] = 1;
 				$return['msg'] = 'IP信息获取失败';
 			}
 		} else {

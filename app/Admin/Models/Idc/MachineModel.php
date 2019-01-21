@@ -133,6 +133,26 @@ class MachineModel extends Model
 	 */
 	public function insertMachine($data){
 		if($data){
+			if(isset($data['business_type'])&&$data['business_type']==1||$data['business_type']==2){//当机器是租用/托管时，机柜/IP/机房必须选择
+				if(isset($data['cabinet']) && empty($data['cabinet'])){
+					$return['data'] = '';
+					$return['code'] = 0;
+					$return['msg'] = '(#001)租用/托管的机器必须放在机柜上';
+					return $return;
+				}
+				if(isset($data['ip_id']) && empty($data['ip_id'])){
+					$return['data'] = '';
+					$return['code'] = 0;
+					$return['msg'] = '(#002)租用/托管的机器必须配置IP';
+					return $return;
+				}
+				if(isset($data['machineroom']) && empty($data['machineroom'])){
+					$return['data'] = '';
+					$return['code'] = 0;
+					$return['msg'] = '(#003)租用/托管的机器必须选择存放机房';
+					return $return;
+				}
+			}
 			DB::beginTransaction();//开启事务
 			if(isset($data['ip_id']) && $data['ip_id'] != 0){
 				$ip = DB::table('idc_ips')->where(['id'=>$data['ip_id']])->select('ip_status')->first();
@@ -193,6 +213,26 @@ class MachineModel extends Model
 			$return['msg'] = '无法修改机器信息！！';
 			return $return;
 		}
+		if(isset($editdata['business_type'])&&$editdata['business_type']==1||$editdata['business_type']==2){//当机器是租用/托管时，机柜/IP/机房必须选择
+				if(isset($editdata['cabinet']) && empty($editdata['cabinet'])){
+					$return['data'] = '';
+					$return['code'] = 0;
+					$return['msg'] = '(#001)租用/托管的机器必须放在机柜上';
+					return $return;
+				}
+				if(isset($editdata['ip_id']) && empty($editdata['ip_id'])){
+					$return['data'] = '';
+					$return['code'] = 0;
+					$return['msg'] = '(#002)租用/托管的机器必须配置IP';
+					return $return;
+				}
+				if(isset($editdata['machineroom']) && empty($editdata['machineroom'])){
+					$return['data'] = '';
+					$return['code'] = 0;
+					$return['msg'] = '(#003)租用/托管的机器必须选择存放机房';
+					return $return;
+				}
+			}
 		if($machine->used_status != 0){
 			switch ($machine->used_status) {
 				case 1:
@@ -471,7 +511,7 @@ class MachineModel extends Model
 				$return['msg'] = 'IP信息获取成功';
 			} else {
 				$return['data'] = [];
-				$return['code'] = 0;
+				$return['code'] = 1;
 				$return['msg'] = 'IP信息获取失败';
 			}
 		} else {

@@ -49,7 +49,7 @@ class MachineModel extends Model
 				$machineroom = $value['machineroom']?$value['machineroom']:0;
 				$result[$key]['machineroom'] =  $machineroom;
 				//机柜等的对应查询
-				$machineroom = $this->machineroom($machineroom);//机房信息的查询
+				$machinerooms = $this->machineroom($machineroom);//机房信息的查询
 				$cabinet = $this->showCabinets($machineroom,$cabinet);
 				$ip = $this->showIps($machineroom,$ip_id);
 				// 进行对应的机柜等信息的转换或者显
@@ -59,7 +59,7 @@ class MachineModel extends Model
 				$result[$key]['ip'] = $ip->ip.'('.$ip_company[$ip->ip_company].')';
 				$result[$key]['ip_company'] = $ip->ip_company;
 				//机房的信息返回
-				$result[$key]['machineroom_name'] = $machineroom;
+				$result[$key]['machineroom_name'] = $machinerooms;
 				
 			}
 			$return['data'] = $result;
@@ -103,7 +103,7 @@ class MachineModel extends Model
 				unset($value['business_type']);
 				// $cabinet = $value['cabinet']?$value['cabinet']:0;
 				// $ip_id = $value['ip_id']?$value['ip_id']:0;
-				$machineroom = $this->machineroom($value['machineroom']);//机房信息的查询
+				$machinerooms = $this->machineroom($value['machineroom']);//机房信息的查询
 				// 进行对应的机柜等信息的转换或者显示
 				$machineroom = $this->machineroom($value['machineroom']);//机房信息的查询
 				$cabinet = $this->showCabinets($value['machineroom'],$value['cabinet']);
@@ -115,7 +115,7 @@ class MachineModel extends Model
 				$result[$key]['ip'] = $ip->ip;
 				$result[$key]['ip_detail'] = $ip->ip.'('.$ip_company[$ip->ip_company].')';;
 				//机房的信息返回
-				$result[$key]['machineroom_name'] = $machineroom;
+				$result[$key]['machineroom_name'] = $machinerooms;
 				
 			}
 			$return['data'] = $result;
@@ -383,7 +383,7 @@ class MachineModel extends Model
 				$cabinets->cabinet_id = '机柜暂未选择';
 			} else {
 				if($roomid != 0 && $cabinets->machineroom_id != $roomid){
-					$cabinets->cabinet_id = $cabinets->cabinet_id.'机柜所在机房与机器所在机房不一致';
+					$cabinets->cabinet_id = $cabinets->cabinet_id.':机柜所在机房与机器所在机房不一致';
 			    }
 			}
 			
@@ -407,7 +407,7 @@ class MachineModel extends Model
 				$ip->ip_company = 0;
 			} else {
 				if($roomid !=0 && $ip->ip_comproom != $roomid){
-					$ip->ip = $ip->ip.'IP所在机房与机器所在机房不一致';
+					$ip->ip = $ip->ip.':IP所在机房与机器所在机房不一致';
 				}
 			}
 			

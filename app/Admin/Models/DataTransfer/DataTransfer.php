@@ -5,6 +5,7 @@ namespace App\Admin\Models\DataTransfer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
+use App\Admin\Models\Idc\Ips;
 
 class DataTransfer extends Model
 {
@@ -140,144 +141,173 @@ class DataTransfer extends Model
 	}
 
 	/**
-	 * 旧数据库    IP资源 转移方法
+	 * 旧数据库    IP资源 转移方法(v2.0)
 	 */
 	public function transIp(){
-		// $test = DB::table('idc_ips')->where('ip','183.2.243.0')->first();
-		// dd($test);
-		$old_dxips = DB::table('dxips')->where('is_trans',0)->get()->toArray();
-		$old_unicomips = DB::table('unicomips')->where('is_trans',0)->get()->toArray();
-		if(count($old_dxips) == 0 && count($old_unicomips) == 0 ){
-			return [
-				'data'	=> '',
-				'msg'	=> '无未转移ip',
-				'code'	=> 1,
-			];
-		}
-		$sameIp = '';
-		if(count($old_dxips) != 0){
-			for ($i=0; $i < count($old_dxips); $i++) { 
-				$data = [
-					'vlan'			=> $old_dxips[$i]->vlan,
-					'ip'			=> $old_dxips[$i]->dxip,
-					'ip_note'		=> $old_dxips[$i]->note,
-					'created_at'		=> date('Y-m-d H:i:s'),
-					'ip_company'		=> 0,
-					'ip_status'		=> 0,
-				];
-				if($old_dxips[$i]->ipstatus == 4){
-					$data['ip_lock'] = 1;
-				}
-				//找机房关联
-				$old_room = DB::table('comproom')->where('comproomid',$old_dxips[$i]->comproom)->value('comproomname');
-				$data['ip_comproom'] = DB::table('idc_machineroom')->where('machine_room_name',$old_room)->value('id');
+		$model = new Ips();
 
-				//查找新表是否存在
-				$check = DB::table('idc_ips')->where('ip',$old_dxips[$i]->dxip)->first();
-				
-				if($check != null){
-					// return [
-					// 	'data'	=> '',
-					// 	'msg'	=> 'id : '.$old_dxips[$i]->id.' , 该电信ip已存在',
-					// 	'code'	=> 0,
-					// ];
-					$up = DB::table('idc_ips')->where('id',$check->id)->update(['ip' => $check->ip.'(new)']);
-					$sameIp.= $check->id. ' 、 ';
-				}
-				//开启事务
-				DB::beginTransaction();
-				//在新表创建数据
-				$res = DB::table('idc_ips')->insert($data);
-				if($res != false){
-					//如果成功创建,就将旧表的is_trans改为1
-					$up = DB::table('dxips')->where('id',$old_dxips[$i]->id)->update(['is_trans' => 1]);
-					if($up != true){
-						DB::rollBack();
-						return [
-							'data'	=> '',
-							'msg'	=> 'id : '.$old_dxips[$i]->id.' , 此电信IP  更新转移状态失败',
-							'code'	=> 0,
-						];
-						break;
-					}
-				}else{
-					DB::rollBack();
-					return [
-						'data'	=> '',
-						'msg'	=> 'id : '.$old_dxips[$i]->id.' ,此电信IP 转移失败',
-						'code'	=> 0,
-					];			
-					break;
-				}
-				DB::commit();
-			}
-		}
-		//循环转到新表
-		$sameIp.= ' 这些id的电信ip重名,新库的后面加了 (new);';
+		$ips = $model->all();
 		
-		if(count($old_unicomips) != 0){
-			for ($j=0; $j < count($old_unicomips); $j++) { 
-				$data = [
-					'vlan'			=> $old_unicomips[$j]->vlan,
-					'ip'			=> $old_unicomips[$j]->unip,
-					'ip_note'		=> $old_unicomips[$j]->note,
-					'created_at'		=> date('Y-m-d H:i:s'),
-					'ip_company'		=> 2,
-					'ip_status'		=> 0,
-				];
-				if($old_unicomips[$j]->ipstatus == 4){
-					$data['ip_lock'] = 1;
-				}
-				//找机房关联
-				$old_room = DB::table('comproom')->where('comproomid',$old_unicomips[$j]->comproom)->value('comproomname');
-				$data['ip_comproom'] = DB::table('idc_machineroom')->where('machine_room_name',$old_room)->value('id');
+		for ($i=0; $i < count($ips); $i++) { 
 
-				//查找新表是否存在
-				$check = DB::table('idc_ips')->where('ip',$old_unicomips[$j]->unip)->first();
-				if($check != null){
-					// return [
-					// 	'data'	=> '',
-					// 	'msg'	=> 'id : '.$old_unicomips[$j]->id.' , 该联通ip已存在',
-					// 	'code'	=> 0,
-					// ];
-					$up = DB::table('idc_ips')->where('id',$check->id)->update(['ip' => $check->ip.'(new)']);
-					$sameIp.= $check->id. ' 、 ';
-				}
-				//开启事务
-				DB::beginTransaction();
-				//在新表创建数据
-				$res = DB::table('idc_ips')->insert($data);
-				if($res != false){
-					//如果成功创建,就将旧表的is_trans改为1
-					$up = DB::table('unicomips')->where('id',$old_unicomips[$j]->id)->update(['is_trans' => 1]);
-					if($up != true){
-						DB::rollBack();
-						return [
-							'data'	=> '',
-							'msg'	=> 'id : '.$old_unicomips[$j]->id.' ,该联通ip 更新转移状态失败',
-							'code'	=> 0,
-						];
-						break;
-					}
+			if($ips[$i]['ip_company'] == 0){
+				$ip_note = DB::table('dxips')->where('dxip',$ips[$i]['ip'])->value('note');
+			}else{
+				if($ips[$i]['ip_company'] == 2){
+					$ip_note = DB::table('unicomips')->where('unip',$ips[$i]['ip'])->value('note');
 				}else{
-					DB::rollBack();
-					return [
-						'data'	=> '',
-						'msg'	=> 'id : '.$old_unicomips[$j]->id.' ,该联通ip 转移失败',
-						'code'	=> 0,
-					];			
-					break;
+					$ip_note = null;
 				}
-				DB::commit();
 			}
+			$ips[$i]['ip_note'] = $ip_note;
+			$res = $ips[$i]->save();	
 		}
-		$sameIp.= ' 这些id的联通ip重名,新库的后面加了 (new);';
 		return [
-				'data'	=> '',
-				'msg'	=> '转移成功,'.$sameIp,
-				'code'	=> 1,
-			];
+			'data'	=> '',
+			'msg'	=> '备注添加成功',
+			'code'	=> 1,
+		];
 	}
+
+	// /**
+	//  * 旧数据库    IP资源 转移方法
+	//  */
+	// public function transIp(){
+	// 	// $test = DB::table('idc_ips')->where('ip','183.2.243.0')->first();
+	// 	// dd($test);
+	// 	$old_dxips = DB::table('dxips')->where('is_trans',0)->get()->toArray();
+	// 	$old_unicomips = DB::table('unicomips')->where('is_trans',0)->get()->toArray();
+	// 	if(count($old_dxips) == 0 && count($old_unicomips) == 0 ){
+	// 		return [
+	// 			'data'	=> '',
+	// 			'msg'	=> '无未转移ip',
+	// 			'code'	=> 1,
+	// 		];
+	// 	}
+	// 	$sameIp = '';
+	// 	if(count($old_dxips) != 0){
+	// 		for ($i=0; $i < count($old_dxips); $i++) { 
+	// 			$data = [
+	// 				'vlan'			=> $old_dxips[$i]->vlan,
+	// 				'ip'			=> $old_dxips[$i]->dxip,
+	// 				'ip_note'		=> $old_dxips[$i]->note,
+	// 				'created_at'		=> date('Y-m-d H:i:s'),
+	// 				'ip_company'		=> 0,
+	// 				'ip_status'		=> 0,
+	// 			];
+	// 			if($old_dxips[$i]->ipstatus == 4){
+	// 				$data['ip_lock'] = 1;
+	// 			}
+	// 			//找机房关联
+	// 			$old_room = DB::table('comproom')->where('comproomid',$old_dxips[$i]->comproom)->value('comproomname');
+	// 			$data['ip_comproom'] = DB::table('idc_machineroom')->where('machine_room_name',$old_room)->value('id');
+
+	// 			//查找新表是否存在
+	// 			$check = DB::table('idc_ips')->where('ip',$old_dxips[$i]->dxip)->first();
+				
+	// 			if($check != null){
+	// 				// return [
+	// 				// 	'data'	=> '',
+	// 				// 	'msg'	=> 'id : '.$old_dxips[$i]->id.' , 该电信ip已存在',
+	// 				// 	'code'	=> 0,
+	// 				// ];
+	// 				$up = DB::table('idc_ips')->where('id',$check->id)->update(['ip' => $check->ip.'(new)']);
+	// 				$sameIp.= $check->id. ' 、 ';
+	// 			}
+	// 			//开启事务
+	// 			DB::beginTransaction();
+	// 			//在新表创建数据
+	// 			$res = DB::table('idc_ips')->insert($data);
+	// 			if($res != false){
+	// 				//如果成功创建,就将旧表的is_trans改为1
+	// 				$up = DB::table('dxips')->where('id',$old_dxips[$i]->id)->update(['is_trans' => 1]);
+	// 				if($up != true){
+	// 					DB::rollBack();
+	// 					return [
+	// 						'data'	=> '',
+	// 						'msg'	=> 'id : '.$old_dxips[$i]->id.' , 此电信IP  更新转移状态失败',
+	// 						'code'	=> 0,
+	// 					];
+	// 					break;
+	// 				}
+	// 			}else{
+	// 				DB::rollBack();
+	// 				return [
+	// 					'data'	=> '',
+	// 					'msg'	=> 'id : '.$old_dxips[$i]->id.' ,此电信IP 转移失败',
+	// 					'code'	=> 0,
+	// 				];			
+	// 				break;
+	// 			}
+	// 			DB::commit();
+	// 		}
+	// 	}
+	// 	//循环转到新表
+	// 	$sameIp.= ' 这些id的电信ip重名,新库的后面加了 (new);';
+		
+	// 	if(count($old_unicomips) != 0){
+	// 		for ($j=0; $j < count($old_unicomips); $j++) { 
+	// 			$data = [
+	// 				'vlan'			=> $old_unicomips[$j]->vlan,
+	// 				'ip'			=> $old_unicomips[$j]->unip,
+	// 				'ip_note'		=> $old_unicomips[$j]->note,
+	// 				'created_at'		=> date('Y-m-d H:i:s'),
+	// 				'ip_company'		=> 2,
+	// 				'ip_status'		=> 0,
+	// 			];
+	// 			if($old_unicomips[$j]->ipstatus == 4){
+	// 				$data['ip_lock'] = 1;
+	// 			}
+	// 			//找机房关联
+	// 			$old_room = DB::table('comproom')->where('comproomid',$old_unicomips[$j]->comproom)->value('comproomname');
+	// 			$data['ip_comproom'] = DB::table('idc_machineroom')->where('machine_room_name',$old_room)->value('id');
+
+	// 			//查找新表是否存在
+	// 			$check = DB::table('idc_ips')->where('ip',$old_unicomips[$j]->unip)->first();
+	// 			if($check != null){
+	// 				// return [
+	// 				// 	'data'	=> '',
+	// 				// 	'msg'	=> 'id : '.$old_unicomips[$j]->id.' , 该联通ip已存在',
+	// 				// 	'code'	=> 0,
+	// 				// ];
+	// 				$up = DB::table('idc_ips')->where('id',$check->id)->update(['ip' => $check->ip.'(new)']);
+	// 				$sameIp.= $check->id. ' 、 ';
+	// 			}
+	// 			//开启事务
+	// 			DB::beginTransaction();
+	// 			//在新表创建数据
+	// 			$res = DB::table('idc_ips')->insert($data);
+	// 			if($res != false){
+	// 				//如果成功创建,就将旧表的is_trans改为1
+	// 				$up = DB::table('unicomips')->where('id',$old_unicomips[$j]->id)->update(['is_trans' => 1]);
+	// 				if($up != true){
+	// 					DB::rollBack();
+	// 					return [
+	// 						'data'	=> '',
+	// 						'msg'	=> 'id : '.$old_unicomips[$j]->id.' ,该联通ip 更新转移状态失败',
+	// 						'code'	=> 0,
+	// 					];
+	// 					break;
+	// 				}
+	// 			}else{
+	// 				DB::rollBack();
+	// 				return [
+	// 					'data'	=> '',
+	// 					'msg'	=> 'id : '.$old_unicomips[$j]->id.' ,该联通ip 转移失败',
+	// 					'code'	=> 0,
+	// 				];			
+	// 				break;
+	// 			}
+	// 			DB::commit();
+	// 		}
+	// 	}
+	// 	$sameIp.= ' 这些id的联通ip重名,新库的后面加了 (new);';
+	// 	return [
+	// 			'data'	=> '',
+	// 			'msg'	=> '转移成功,'.$sameIp,
+	// 			'code'	=> 1,
+	// 		];
+	// }
 
 
 	public function transCabinet(){

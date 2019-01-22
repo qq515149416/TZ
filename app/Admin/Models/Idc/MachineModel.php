@@ -453,16 +453,16 @@ class MachineModel extends Model
 		if($roomid){
 
 			$where = ['machineroom_id'=>$roomid['roomid']];
-			switch($roomid['business_type']) {
-				case 1:
-					$where['use_type'] = 0;
-					break;
-				case 2:
-					$where['use_type'] = 1;
-					break;
-				default:
-					break;
-			}
+			// switch($roomid['business_type']) {
+			// 	case 1:
+			// 		$where['use_type'] = 0;
+			// 		break;
+			// 	case 2:
+			// 		$where['use_type'] = 1;
+			// 		break;
+			// 	default:
+			// 		break;
+			// }
 			$cabinets = DB::table('idc_cabinet')
 							->where($where)
 							->whereNull('deleted_at')

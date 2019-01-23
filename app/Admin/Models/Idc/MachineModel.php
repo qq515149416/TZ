@@ -49,17 +49,18 @@ class MachineModel extends Model
 				$machineroom = $value['machineroom']?$value['machineroom']:0;
 				$result[$key]['machineroom'] =  $machineroom;
 				//机柜等的对应查询
-				$machineroom = (array)$this->machineroom($machineroom,$cabinet,$ip_id);//机房信息的查询
-				// 进行对应的机柜等信息的转换或者显示
+				$machinerooms = $this->machineroom($machineroom);//机房信息的查询
+				$cabinet = $this->showCabinets($machineroom,$cabinet);
+				$ip = $this->showIps($machineroom,$ip_id);
+				// 进行对应的机柜等信息的转换或者显
 				
-				if(!empty($machineroom)){
-					$result[$key]['cabinets'] = $machineroom['cabinet_id'];//机柜信息的返回
-					//IP信息的返回
-					$result[$key]['ip'] = $machineroom['ip'].'('.$ip_company[$machineroom['ip_company']].')';
-					$result[$key]['ip_company'] = $machineroom['ip_company'];
-					//机房的信息返回
-					$result[$key]['machineroom_name'] = $machineroom['machine_room_name'];
-				}
+				$result[$key]['cabinets'] = $cabinet->cabinet_id;//机柜信息的返回
+				//IP信息的返回
+				$result[$key]['ip'] = $ip->ip.'('.$ip_company[$ip->ip_company].')';
+				$result[$key]['ip_company'] = $ip->ip_company;
+				//机房的信息返回
+				$result[$key]['machineroom_name'] = $machinerooms;
+				
 			}
 			$return['data'] = $result;
 			$return['code'] = 1;
@@ -102,17 +103,20 @@ class MachineModel extends Model
 				unset($value['business_type']);
 				// $cabinet = $value['cabinet']?$value['cabinet']:0;
 				// $ip_id = $value['ip_id']?$value['ip_id']:0;
-				$machineroom = (array)$this->machineroom($value['machineroom'],$value['cabinet'],$value['ip_id']);//机房信息的查询
+				$machinerooms = $this->machineroom($value['machineroom']);//机房信息的查询
 				// 进行对应的机柜等信息的转换或者显示
+				$machineroom = $this->machineroom($value['machineroom']);//机房信息的查询
+				$cabinet = $this->showCabinets($value['machineroom'],$value['cabinet']);
+				$ip = $this->showIps($value['machineroom'],$value['ip_id']);
+				// 进行对应的机柜等信息的转换或者显
 				
-				if(!empty($machineroom)){
-					$result[$key]['cabinets'] = $machineroom['cabinet_id'];//机柜信息的返回
-					//IP信息的返回
-					$result[$key]['ip'] = $machineroom['ip'];
-					$result[$key]['ip_detail'] = $machineroom['ip'].'('.$ip_company[$machineroom['ip_company']].')';
-					//机房的信息返回
-					$result[$key]['machineroom_name'] = $machineroom['machine_room_name'];
-				}
+				$result[$key]['cabinets'] = $cabinet->cabinet_id;//机柜信息的返回
+				//IP信息的返回
+				$result[$key]['ip'] = $ip->ip;
+				$result[$key]['ip_detail'] = $ip->ip.'('.$ip_company[$ip->ip_company].')';;
+				//机房的信息返回
+				$result[$key]['machineroom_name'] = $machinerooms;
+				
 			}
 			$return['data'] = $result;
 			$return['code'] = 1;
@@ -339,89 +343,78 @@ class MachineModel extends Model
 			];
 		}
 	}
-
+// ->join('idc_cabinet','idc_machineroom.id','=','idc_cabinet.machineroom_id')//关联查询机柜表
+// 						->join('idc_ips','idc_machineroom.id','=','idc_ips.ip_comproom')//关联查询IP表
+// 						->where('idc_machineroom.id',$roomid)//机房表的条件
+// 						->where('idc_cabinet.id',$cabinet)//机柜表的条件
+// 						->where('idc_ips.id',$ip)//IP的条件
+// 						->select('idc_machineroom.machine_room_name','idc_cabinet.cabinet_id','idc_ips.ip','idc_ips.ip_company')//所需获得的字段
+// 						->first();
 	/**
-	 * 机房信息的获取，当是展示机器的时候IP，机柜，机房等信息转换的时候需要传入对应的参数进行查询，如果只是简单获取机房数据（添加，修改时）无须传参，
+	 * 机房信息的获取，当是展示机器的时候机房信息转换的时候需要传入对应的参数进行查询
 	 * @param  integer $roomid  机房的id
-	 * @param  integer $cabinet 机柜的id
-	 * @param  integer $ip      IP表的id
 	 * @return [type]           [description]
 	 */
-	public function machineroom($roomid = 0,$cabinet = 0,$ip = 0){
+	public function machineroom($roomid = 0){
 		
-		if($roomid != 0 && $cabinet != 0 && $ip != 0){
-			
+		if($roomid != 0){
 			// 当是IP，机柜，机房等信息转换时对应参数都传入
-			$related = DB::table('idc_machineroom')//机房表
-						->join('idc_cabinet','idc_machineroom.id','=','idc_cabinet.machineroom_id')//关联查询机柜表
-						->join('idc_ips','idc_machineroom.id','=','idc_ips.ip_comproom')//关联查询IP表
-						->where('idc_machineroom.id',$roomid)//机房表的条件
-						->where('idc_cabinet.id',$cabinet)//机柜表的条件
-						->where('idc_ips.id',$ip)//IP的条件
-						->select('idc_machineroom.machine_room_name','idc_cabinet.cabinet_id','idc_ips.ip','idc_ips.ip_company')//所需获得的字段
-						->first();
-
-			return $related;//返回数据
-		} elseif($roomid != 0 && $cabinet == 0 && $ip == 0){
-
-			//当只传入机房，未传入机柜和IP
-			$related = DB::table('idc_machineroom')//机房表
-						->where('idc_machineroom.id',$roomid)//机房表的条件
-						->select('machine_room_name')//所需获得的字段
-						->first();
-			$related->cabinet_id = '机柜暂未选择';
-			$related->ip = '0.0.0.0代表未选择';
-			$related->ip_company = 0;
-
-			return $related;//返回数据
-
-		} elseif($roomid == 0 && $cabinet == 0 && $ip == 0){
-			//当是IP，机柜，机房等信息都未传入
-			$related['cabinet_id'] = '机柜暂未选择';
-			$related['ip'] = '0.0.0.0代表未选择';
-			$related['ip_company'] = 0;
-			$related['machine_room_name'] = '机房暂未选择';
-
-			return $related;
-		} elseif($roomid != 0 && $cabinet == 0 && $ip != 0){
-			//当IP，机房等信息转换时对应参数都传入，机柜信息未传入
-			$related = DB::table('idc_machineroom')//机房表
-						->join('idc_ips','idc_machineroom.id','=','idc_ips.ip_comproom')//关联查询IP表
-						->where('idc_machineroom.id',$roomid)//机房表的条件
-						->where('idc_ips.id',$ip)//IP的条件
-						->select('idc_machineroom.machine_room_name','idc_ips.ip','idc_ips.ip_company')//所需获得的字段
-						->first();
-			$related->cabinet_id = '机柜暂未选择';
-
-			return $related;//返回数据
-		} elseif($roomid != 0 && $cabinet != 0 && $ip == 0){
-		
-			//机柜，机房等信息转换时对应参数都传入，IP信息未传入，
-			$related = DB::table('idc_machineroom')//机房表
-						->join('idc_cabinet','idc_machineroom.id','=','idc_cabinet.machineroom_id')//关联查询机柜表
-						->where('idc_machineroom.id',$roomid)//机房表的条件
-						->where('idc_cabinet.id',$cabinet)//机柜表的条件
-						->select('idc_machineroom.machine_room_name','idc_cabinet.cabinet_id')//所需获得的字段
-						->first();
-			$related->ip = '0.0.0.0代表未选择';
-			$related->ip_company = 0;
-
-			return $related;//返回数据
-		} else {
-
-			// 当未传入参数时代表简单的查询机房数据
-			$result = DB::table('idc_machineroom')->whereNull('deleted_at')->select('id as roomid','machine_room_id','machine_room_name')->get();
-			if(!$result->isEmpty()) {
-				$return['data'] = $result;
-				$return['code'] = 1;
-				$return['msg'] = '机房信息获取成功!!';
-			} else {
-				$return['data'] = [];
-				$return['code'] = 0;
-				$return['msg'] = '机房信息获取失败!!';
+			$machineroom = DB::table('idc_machineroom')->where('id',$roomid)->value('machine_room_name');//机房表
+			if(empty($machineroom)){
+				$machineroom = '机房暂未选择';
 			}
-			return $return;
+			
+		} else {
+			$machineroom = '机房暂未选择';
 		}
+		return $machineroom;//返回数据
+	}
+
+	/**
+	 * 机柜信息
+	 * @param  integer $roomid  机房id
+	 * @param  integer $cabinet 机柜id
+	 * @return [type]           [description]
+	 */
+	public function showCabinets($roomid=0,$cabinet=0){
+		if($cabinet != 0){
+			$cabinets = DB::table('idc_cabinet')->where('id',$cabinet)->select('cabinet_id','machineroom_id')->first();
+			if(empty($cabinets)){
+				$cabinets->cabinet_id = '机柜暂未选择';
+			} else {
+				if($roomid != 0 && $cabinets->machineroom_id != $roomid){
+					$cabinets->cabinet_id = $cabinets->cabinet_id.':机柜所在机房与机器所在机房不一致';
+			    }
+			}
+			
+		} else {
+			$cabinets = json_decode('{"cabinet_id":"机柜暂未选择"}');
+		}
+		return $cabinets;
+	}
+
+	/**
+	 * IP
+	 * @param  integer $roomid 机房id
+	 * @param  integer $ip_id  IP的id
+	 * @return [type]          [description]
+	 */
+	public function showIps($roomid=0,$ip_id=0){
+		if($ip_id != 0){
+			$ip = DB::table('idc_ips')->where('id',$ip_id)->select('ip','ip_company','ip_comproom')->first();
+			if(empty($ip)){
+				$ip->ip = '0.0.0.0 IP暂未选择';
+				$ip->ip_company = 0;
+			} else {
+				if($roomid !=0 && $ip->ip_comproom != $roomid){
+					$ip->ip = $ip->ip.':IP所在机房与机器所在机房不一致';
+				}
+			}
+			
+		} else {
+			$ip = json_decode('{"ip":"0.0.0.0 IP暂未选择","ip_company":0}');
+		}
+		return $ip;
 	}
 
 	/**

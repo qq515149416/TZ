@@ -27,7 +27,8 @@ class CabinetVerify extends FormRequest
 	{
 		$return = [
 			'machineroom_id'    	=> 'required',
-			'cabinet_id'        		=> 'required|unique:idc_cabinet,cabinet_id',
+//			'cabinet_id'        		=> 'required|unique:idc_cabinet,cabinet_id',
+			'cabinet_id'        		=> 'required',
 		];
 		$info = $this->all();
 

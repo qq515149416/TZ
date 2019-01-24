@@ -231,7 +231,7 @@ class OrdersModel extends Model
 		if($insert_data['price'] == '0.00'){
 			$order_flow['serial_number'] = 'tz_'.time().'_'.$insert_data['customer_id'];
 			$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn'];
-			$order_flow['subject'] = '赠送'.$resource_type[$insert_data['resource_type']];
+			// $order_flow['subject'] = '赠送'.$resource_type[$insert_data['resource_type']];
 			$order_flow['customer_id'] = $insert_data['customer_id'];
 			$order_flow['business_id'] = Admin::user()->id;
 			$order_flow['payable_money'] = $insert_data['price'];

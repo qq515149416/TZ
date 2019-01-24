@@ -45,6 +45,7 @@ class CustomerModel extends Model
     		$status = [0=>'拉黑',1=>'未验证',2=>'正常'];
     		foreach($admin_customer as $key=>$value){
     			$admin_customer[$key]['status'] = $status[$value['status']];
+                $admin_customer[$key]['email'] = $value['email']?$value['email']:$value['name'];
     			$admin_customer[$key]['clerk_name'] = $this->clerk($value['salesman_id']);
     		}
     		$return['data'] = $admin_customer;

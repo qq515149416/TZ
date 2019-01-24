@@ -237,7 +237,7 @@ class OrdersModel extends Model
 			$order_flow['payable_money'] = $insert_data['price'];
 			$order_flow['actual_payment'] = $insert_data['price'];
 			$order_flow['preferential_amount'] = '0.00';
-			$order_flow['pay_status'] = 1;
+			// $order_flow['pay_status'] = 1;
 			$order_flow['pay_time'] = date('Y-m-d H:i:s',time());
 			$money = DB::table('tz_users')->where(['id'=>$insert_data['customer_id']])->value('money');
 			$order_flow['before_money'] = $money;

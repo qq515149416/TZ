@@ -203,7 +203,7 @@ class OrdersModel extends Model
 		}
 		$insert_data['end_time'] = $end_time;
 		// 订单号的生成规则：前两位（4-6的随机数）+ 年月日（如:20180830） + 时间戳的后2位数 + 1-3随机数
-		$order_sn = mt_rand(4,6).date("Ymd",time()).substr(time(),8,2).mt_rand(1,3).'1';
+		$order_sn = mt_rand(4,6).date("Ymd",time()).substr(time(),6,4).mt_rand(1,3).'1';
 		$insert_data['order_sn'] = $order_sn;
 		if($insert_data['resource_type'] == 8){//带宽的时候生成专属的带宽序号
 			$insert_data['machine_sn'] = 'BW'.date("Ymd",time()).substr(time(),8,2);
@@ -231,13 +231,13 @@ class OrdersModel extends Model
 		if($insert_data['price'] == '0.00'){
 			$order_flow['serial_number'] = 'tz_'.time().'_'.$insert_data['customer_id'];
 			$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn'];
-			$order_flow['subject'] = '赠送'.$resource_type[$insert_data['resource_type']];
+			// $order_flow['subject'] = '赠送'.$resource_type[$insert_data['resource_type']];
 			$order_flow['customer_id'] = $insert_data['customer_id'];
 			$order_flow['business_id'] = Admin::user()->id;
 			$order_flow['payable_money'] = $insert_data['price'];
 			$order_flow['actual_payment'] = $insert_data['price'];
 			$order_flow['preferential_amount'] = '0.00';
-			$order_flow['pay_status'] = 1;
+			// $order_flow['pay_status'] = 1;
 			$order_flow['pay_time'] = date('Y-m-d H:i:s',time());
 			$money = DB::table('tz_users')->where(['id'=>$insert_data['customer_id']])->value('money');
 			$order_flow['before_money'] = $money;
@@ -738,7 +738,7 @@ class OrdersModel extends Model
                         return $return;
                     }
                     //续费订单号的生成规则：前两位（4-6的随机数）+ 年月日 + 时间戳的后2位数 + 4-6的随机数
-                    $order_sn = mt_rand(4,6).date("Ymd",time()).substr(time(),8,2).mt_rand(4,6).'1';//续费订单号
+                    $order_sn = mt_rand(4,6).date("Ymd",time()).substr(time(),6,4).mt_rand(4,6).'1';//续费订单号
                     $order['order_sn'] = $order_sn;
                     //到期时间
                     $end_time = Carbon::parse($order_result->end_time)->modify('+'.$renew['length'].' months')->toDateTimeString();

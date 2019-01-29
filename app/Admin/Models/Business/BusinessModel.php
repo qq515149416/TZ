@@ -35,7 +35,7 @@ class BusinessModel extends Model
             return $return;
         }
         //业务编号的生成规则：前两位（1-3的随机数）+ 年月日（如:20180830） + 时间戳的后5位数 + 7-9随机数（业务编号产生）
-        $business_sn               = mt_rand(1, 3) . date("Ymd", time()) . substr(time(), 8, 2) . mt_rand(7, 9).'1';
+        $business_sn               = $this->businesssn();
         $insert['business_number'] = $business_sn;
         $insert['business_status'] = 0;
         $client = DB::table('tz_users')->where(['id'=>$insert['client_id'],'status'=>2])->select('id','name','email')->first();
@@ -210,7 +210,7 @@ class BusinessModel extends Model
         DB::beginTransaction();//开启事务处理
         
         // 订单号的生成规则：前两位（4-6的随机数）+ 年月日（如:20180830） + 时间戳的后2位数 + 1-3随机数
-        $order_sn                 = mt_rand(4, 6) . date("Ymd", time()) . substr(time(), 8, 2) . mt_rand(1, 3).'1';
+        $order_sn                 = mt_rand(4, 6) . date("Ymd", time()) . substr(time(), 6, 4) . mt_rand(1, 3).'1';
         $business['order_number'] = $order_sn;
         $business['updated_at']   = Carbon::now()->toDateTimeString();
         $business_row             = DB::table('tz_business')->where($check_where)->update($business);
@@ -219,7 +219,7 @@ class BusinessModel extends Model
             DB::rollBack();
             $return['data'] = '审核失败';
             $return['code'] = 0;
-            $return['msg']  = '审核失败!!';
+            $return['msg']  = '(#101)审核失败!!';
             return $return;
         }
         // 业务审核成功继续进行订单表的生成
@@ -341,6 +341,21 @@ class BusinessModel extends Model
             }
 
             return $return;
+        }
+    }
+
+    /**
+     * 创建业务号
+     * @return [type] [description]
+     */
+    public function businesssn(){
+        //业务编号的生成规则：前两位（1-3的随机数）+ 年月日（如:20180830） + 时间戳的后5位数 + 7-9随机数（业务编号产生）
+        $business_sn = mt_rand(1, 3) . date("Ymd", time()) . substr(time(), 6, 4) . mt_rand(7, 9).'1';
+        $business = $this->where('business_number',$business_sn)->select('business_number','machine_number')->first();
+        if(!empty($business)){
+            $this->businesssn();
+        } else {
+            return $business_sn;
         }
     }
 

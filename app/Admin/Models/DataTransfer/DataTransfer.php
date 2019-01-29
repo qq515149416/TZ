@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use App\Admin\Models\Idc\Ips;
+use App\Admin\Models\Customer\Customer;
 
 class DataTransfer extends Model
 {
@@ -529,17 +530,19 @@ class DataTransfer extends Model
 			//查找新表是否存在
 			$check = DB::table('tz_users')->where('name',$old_customer[$i]->cusname)->first();
 			if($check != null){
-				// return [
-				// 	'data'	=> '',
-				// 	'msg'	=> 'id : '.$old_customer[$i]->cusid.' , 该用户已存在',
-				// 	'code'	=> 0,
-				// ];
+				return [
+					'data'	=> '',
+					'msg'	=> 'id : '.$old_customer[$i]->cusid.' , 该用户已存在',
+					'code'	=> 0,
+				];
 			}else{
 				//开启事务
 				DB::beginTransaction();
 				//在新表创建数据
-				$res = DB::table('tz_users')->insert($data);
-				if($res != false){
+				$model = new Customer();
+				// $res = DB::table('tz_users')->insert($data);
+				$res = $model->create($data);
+				if(!$res){
 					//如果成功创建,就将旧表的is_trans改为1
 					$up = DB::table('customer')->where('cusid',$old_customer[$i]->cusid)->update(['is_trans' => 1]);
 					if($up != true){

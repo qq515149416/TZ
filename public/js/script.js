@@ -60,20 +60,20 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 45);
+/******/ 	return __webpack_require__(__webpack_require__.s = 46);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 45:
+/***/ 46:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(46);
+module.exports = __webpack_require__(47);
 
 
 /***/ }),
 
-/***/ 46:
+/***/ 47:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -100,6 +100,15 @@ $(function () {
     } else {
         $(".tz-main-head").css({
             "background-color": " rgba(16, 21, 44, 0)"
+        });
+        $(".tz-main-head").hover(function () {
+            $(".tz-main-head").css({
+                "background-color": " rgba(16, 21, 44, .5)"
+            });
+        }, function () {
+            $(".tz-main-head").css({
+                "background-color": " rgba(16, 21, 44, 0)"
+            });
         });
     }
     $(".service-item").each(function (i) {

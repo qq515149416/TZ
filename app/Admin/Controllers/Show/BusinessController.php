@@ -17,6 +17,10 @@ class BusinessController extends script
         return Admin::content(function (Content $content) {
             $content->header('业务管理');
             $content->description('业务操作');
+            // $content->breadcrumb(
+            //     ['text' => '客户管理', 'url' => '/show/crm/clientele'],
+            //     ['text' => '业务管理']
+            // );
             $content->body(view('show/business'));
             Admin::script($this->script());
         });

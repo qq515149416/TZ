@@ -23,7 +23,8 @@ Route::get('/verification_code', function () {
 Route::group([
     'middleware' => 'UserOperationLog'
 ], function () {
-    Route::get('/', 'show\IndexController@index');
+    Route::get('/', 'Show\IndexController@index');
+    Route::get('/page/tz/{p}', 'Show\PageController@index');
 });
 
 /**

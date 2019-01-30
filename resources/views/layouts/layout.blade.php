@@ -35,7 +35,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/tz/login.html" class="login">登陆</a></li>
-                <li class="register"><a href="http://127.0.0.1/tz/registered.html" class="registered">注册</a></li>
+                <li class="register"><a href="/tz/registered.html" class="registered">注册</a></li>
             </ul>
             <ul class="nav navbar-nav">
                 <li class="active"><a href="/">首页 <span class="sr-only">(current)</span></a></li>

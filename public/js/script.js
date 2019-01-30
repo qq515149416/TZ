@@ -81,7 +81,7 @@ module.exports = __webpack_require__(47);
 
 window.onscroll = function () {
     if ($(document).scrollTop() > 82) {
-        console.log($(document).scrollTop());
+        // console.log($(document).scrollTop());
         $(".tz-main-head").css({
             "background-color": " rgba(16, 21, 44, 1)"
         });
@@ -101,16 +101,22 @@ $(function () {
         $(".tz-main-head").css({
             "background-color": " rgba(16, 21, 44, 0)"
         });
-        $(".tz-main-head").hover(function () {
-            $(".tz-main-head").css({
-                "background-color": " rgba(16, 21, 44, .5)"
-            });
-        }, function () {
-            $(".tz-main-head").css({
-                "background-color": " rgba(16, 21, 44, 0)"
-            });
-        });
     }
+    $(".tz-main-head").hover(function () {
+        if ($(document).scrollTop() > 82) {
+            return;
+        }
+        $(".tz-main-head").css({
+            "background-color": " rgba(16, 21, 44, .5)"
+        });
+    }, function () {
+        if ($(document).scrollTop() > 82) {
+            return;
+        }
+        $(".tz-main-head").css({
+            "background-color": " rgba(16, 21, 44, 0)"
+        });
+    });
     $(".service-item").each(function (i) {
         if (i != 0) {
             var item = $(this);

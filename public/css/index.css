@@ -883,8 +883,11 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 .service .service-body .service-list .service-item .body .product-item .product-item-option span.option-btn:hover {
   border: 1px solid #043fc4;
-  -webkit-box-shadow: 0 0 8px rgba(4, 63, 196, 0.4);
-          box-shadow: 0 0 8px rgba(4, 63, 196, 0.4);
+  -webkit-box-shadow: 0.5px 0.5px 12px rgba(4, 63, 196, 0.4);
+          box-shadow: 0.5px 0.5px 12px rgba(4, 63, 196, 0.4);
+}
+.service .service-body .service-list .service-item .body .product-item .product-item-option span.option-btn:hover:hover {
+  color: #043fc4;
 }
 .advantage {
   height: 715px;

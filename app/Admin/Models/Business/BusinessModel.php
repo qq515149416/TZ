@@ -210,7 +210,7 @@ class BusinessModel extends Model
         DB::beginTransaction();//开启事务处理
         
         // 订单号的生成规则：前两位（4-6的随机数）+ 年月日（如:20180830） + 时间戳的后2位数 + 1-3随机数
-        $order_sn                 = mt_rand(4, 6) . date("Ymd", time()) . substr(time(), 6, 4) . mt_rand(1, 3).'1';
+        $order_sn                 = $this->ordersn();
         $business['order_number'] = $order_sn;
         $business['updated_at']   = Carbon::now()->toDateTimeString();
         $business_row             = DB::table('tz_business')->where($check_where)->update($business);
@@ -356,6 +356,20 @@ class BusinessModel extends Model
             $this->businesssn();
         } else {
             return $business_sn;
+        }
+    }
+
+    /**
+     * 创建订单号
+     * @return [type] [description]
+     */
+    public function ordersn(){
+        $order_sn = mt_rand(4, 6) . date("Ymd", time()) . substr(time(), 6, 4) . mt_rand(1, 3).'1';
+        $order = DB::table('tz_orders')->where('order_sn',$order_sn)->select('order_sn','machine_sn')->first();
+        if(!empty($order)){
+            $this->ordersn();
+        } else {
+            return $order_sn;
         }
     }
 

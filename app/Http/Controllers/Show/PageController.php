@@ -6,9 +6,8 @@ use App\Http\Controllers\Controller;
 
 class PageController extends Controller
 {
-    public function index($p)
+    public function index($directory,$p)
     {
-        // dump($p);
-        return view("http/page",["p"=>$p]);
+        return view("http/page",["directory" => $directory,"p"=>$p]);
     }
 }

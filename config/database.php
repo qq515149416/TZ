@@ -97,6 +97,24 @@ return [
             'engine' => null,
         ],
 
+        /**
+         *  旧OA数据库
+         * */
+        "mysql_oldoa" => [
+            'driver' => 'mysql',
+            'host' => '175.6.244.210',
+            'port' => '3306',
+            'database' => 'zeidc',
+            'username' => 'root',
+            'password' => '15099971895',
+            'unix_socket' => '',
+            'charset' => 'utf8',
+            'collation' => 'utf8_general_ci',
+            'prefix' => '',
+            'strict' => false,
+            'engine' => null,
+        ]
+
     ],
 
     /*

@@ -24,7 +24,7 @@ Route::group([
     'middleware' => 'UserOperationLog'
 ], function () {
     Route::get('/', 'Show\IndexController@index');
-    Route::get('/page/tz/{p}', 'Show\PageController@index');
+    Route::get('/page/{directory}/{p}', 'Show\PageController@index');
 });
 
 /**

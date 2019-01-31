@@ -6,7 +6,11 @@
 
     <div class="row">
         <div class="iframe">
-            <iframe width="100%" scrolling="no" seamless frameborder="0" src="http://175.6.248.62:8080/tz/{{ $p }}.jsp" height="3065px"></iframe>
+            @if (strpos($p,".html"))
+            <iframe width="100%" scrolling="no" seamless frameborder="0" src="http://175.6.248.62:8080/{{ $directory }}/{{ $p }}" height="3065px"></iframe>
+            @else
+            <iframe width="100%" scrolling="no" seamless frameborder="0" src="http://175.6.248.62:8080/{{ $directory }}/{{ $p }}.jsp" height="3065px"></iframe>
+            @endif
         </div>
     </div>
 

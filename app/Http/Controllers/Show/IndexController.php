@@ -17,8 +17,8 @@ class IndexController extends Controller
     public function index()
     {
         return view("http/index",[
-            "company_news" => $this->new_list(1),
-            "company_announcement" => $this->new_list(2),
+            "company_news" => $this->new_list(2),
+            "company_announcement" => $this->new_list(1),
             "industry_news" => $this->new_list(3)
         ]);
     }

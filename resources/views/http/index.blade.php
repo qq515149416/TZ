@@ -24,19 +24,25 @@
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox">
             <div class="item active">
-                <img src="{{ asset("/images/banner/cdnNewYear.jpg") }}" alt="...">
-                <div class="carousel-caption">
-                </div>
+                <a href="http://www.15cdn.com/" target="_blank">
+                    <img src="{{ asset("/images/banner/cdnNewYear.jpg") }}" alt="...">
+                    <div class="carousel-caption">
+                    </div>
+                </a>
             </div>
             <div class="item">
-                <img src="{{ asset("/images/banner/newYear.png") }}" alt="...">
-                <div class="carousel-caption">
-                </div>
+                <a href="/page/tz/preferential" target="_blank">
+                    <img src="{{ asset("/images/banner/newYear.png") }}" alt="...">
+                    <div class="carousel-caption">
+                    </div>
+                </a>
             </div>
             <div class="item">
-                <img src="{{ asset("/images/banner/yunNewYear.png") }}" alt="...">
-                <div class="carousel-caption">
-                </div>
+                <a href="http://yun.zeisp.com/" target="_blank">
+                    <img src="{{ asset("/images/banner/yunNewYear.png") }}" alt="...">
+                    <div class="carousel-caption">
+                    </div>
+                </a>
             </div>
         </div>
 

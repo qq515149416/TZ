@@ -221,19 +221,19 @@ class Order extends Model
 		// 不存在需要删除的数据，直接返回
 		if(!$delete_data){
 			$return['code'] = 0;
-			$return['msg'] = '无对应的订单数据/已删除!';
+			$return['msg'] = '(#101)无对应的订单数据/已删除!';
 			return $return;
 		}
 		if($delete_data->order_status == 5){//当订单为取消时，无须再次操作
 			$return['code'] = 0;
-			$return['msg'] = '订单已取消，无须再次操作!';
+			$return['msg'] = '(#102)订单已取消，无须再次操作!';
 			return $return;
 		}
 		$created_at = Carbon::parse($delete_data->created_at)->addDays(7)->toDateTimeString();//获取订单创建7天后的时间
 		$now = Carbon::now()->toDateTimeString();//获取当前时间
 		if($now > $created_at){//当前时间如果大于订单创建后的七天时间，代表订单已超过7天，无法再进行取消
 			$return['code'] = 0;
-			$return['msg'] = '该订单已超过七天无法取消';
+			$return['msg'] = '(#103)该订单已超过七天无法取消';
 			return $return;
 		}
 		DB::beginTransaction();//开启事务处理
@@ -255,14 +255,14 @@ class Order extends Model
 					if($business == 0){//更新业务到期时间失败
 						DB::rollBack();
 						$return['code'] = 0;
-						$return['msg'] = '取消订单失败!!';
+						$return['msg'] = '(#104)取消订单失败!!';
 						return $return;
 					}
 					$row = DB::table('idc_machine')->where(['machine_num'=>$delete_data->machine_sn,'own_business'=>$delete_data->business_number,'business_type'=>1])->update($rent); 
 					if($row == 0){
 						DB::rollBack();
 						$return['code'] = 0;
-						$return['msg'] = '取消订单失败!';
+						$return['msg'] = '(#105)取消订单失败!';
 						return $return;
 					}
 					break;
@@ -282,14 +282,14 @@ class Order extends Model
 					if($business == 0){//更新业务到期时间失败
 						DB::rollBack();
 						$return['code'] = 0;
-						$return['msg'] = '取消订单失败!';
+						$return['msg'] = '(#106)取消订单失败!';
 						return $return;
 					}
 					$row = DB::table('idc_machine')->where(['machine_num'=>$delete_data->machine_sn,'own_business'=>$delete_data->business_number,'business_type'=>2])->update($hosting); 
 					if($row == 0){
 						DB::rollBack();
 						$return['code'] = 0;
-						$return['msg'] = '取消订单失败!';
+						$return['msg'] = '(#107)取消订单失败!';
 						return $return;
 					}
 					break;
@@ -305,7 +305,7 @@ class Order extends Model
                         if($row == 0){
                             DB::rollBack();
                             $return['code'] = 0;
-                            $return['msg'] = '取消订单失败!';
+                            $return['msg'] = '(#108)取消订单失败!';
                             return $return;
                         }
 
@@ -316,7 +316,7 @@ class Order extends Model
                     if($business == 0){//更新业务到期时间失败
                         DB::rollBack();
                         $return['code'] = 0;
-                        $return['msg'] = '取消订单失败!';
+                        $return['msg'] = '(#109)取消订单失败!';
                         return $return;
                     }
                     break;
@@ -331,7 +331,7 @@ class Order extends Model
                             if($order_status == 0){
                                 DB::rollBack();
                                 $return['code'] = 0;
-                                $return['msg'] = '删除失败!';
+                                $return['msg'] = '(#110)删除失败!';
                                 return $return;
                             }
                             $ip['own_business'] = $delete_data->business_number;
@@ -342,7 +342,7 @@ class Order extends Model
                         if($row == 0){//更新业务到期时间失败
                             DB::rollBack();
                             $return['code'] = 0;
-                            $return['msg'] = '删除失败!';
+                            $return['msg'] = '(#111)删除失败!';
                             return $return;
                         }
                         
@@ -358,7 +358,7 @@ class Order extends Model
                         if($order_status == 0){
                             DB::rollBack();
                             $return['code'] = 0;
-                            $return['msg'] = '删除失败!';
+                            $return['msg'] = '(#112)删除失败!';
                             return $return;
                         }
                         $cpu['service_num'] = $delete_data->business_number;
@@ -369,7 +369,7 @@ class Order extends Model
                     if($row == 0){//更新业务到期时间失败
                         DB::rollBack();
                         $return['code'] = 0;
-                        $return['msg'] = '删除失败!';
+                        $return['msg'] = '(#113)删除失败!';
                         return $return;
                     }
                     
@@ -385,7 +385,7 @@ class Order extends Model
                         if($order_status == 0){
                             DB::rollBack();
                             $return['code'] = 0;
-                            $return['msg'] = '删除失败!';
+                            $return['msg'] = '(#114)删除失败!';
                             return $return;
                         }
                         $harddisk['service_num'] = $delete_data->business_number;
@@ -396,7 +396,7 @@ class Order extends Model
                     if($row == 0){//更新业务到期时间失败
                         DB::rollBack();
                         $return['code'] = 0;
-                        $return['msg'] = '删除失败!';
+                        $return['msg'] = '(#115)删除失败!';
                         return $return;
                     }
                     
@@ -412,7 +412,7 @@ class Order extends Model
                         if($order_status == 0){
                             DB::rollBack();
                             $return['code'] = 0;
-                            $return['msg'] = '删除失败!';
+                            $return['msg'] = '(#116)删除失败!';
                             return $return;
                         }
                         $memory['service_num'] = $delete_data->business_number;
@@ -423,7 +423,7 @@ class Order extends Model
                     if($row == 0){//更新业务到期时间失败
                         DB::rollBack();
                         $return['code'] = 0;
-                        $return['msg'] = '删除失败!';
+                        $return['msg'] = '(#117)删除失败!';
                         return $return;
                     }
                     break;
@@ -437,7 +437,7 @@ class Order extends Model
 		if($result == 0){
 			DB::rollBack();
 			$return['code'] = 0;
-			$return['msg'] = '取消订单失败!';
+			$return['msg'] = '(#118)取消订单失败!';
 			return $return;
 		}
 		// 取消成功返回
@@ -587,7 +587,7 @@ class Order extends Model
 		if(!$renew){//未传递任何参数，无法进行续费
 			$return['data'] = '';
 			$return['code'] = 0;
-			$return['msg']	= '无法进行续费,请确认后重新操作';
+			$return['msg']	= '(#101)无法进行续费,请确认后重新操作';
 			return $return;
 		}
 		$order_str = '';//用于记录创建的续费订单的订单号
@@ -602,24 +602,24 @@ class Order extends Model
 			if(!$business){
 				$return['data'] = '';
 				$return['code'] = 0;
-				$return['msg']	= '无查找到对应的业务,无法续费';
+				$return['msg']	= '(#102)无查找到对应的业务,无法续费';
 				return $return;
 			}
 			if($business->business_status < 1 || $business->business_status > 3){
 				$business_status = ['-1'=>'取消','-2'=>'审核不通过',0=>'审核中',1=>'审核通过',2=>'付款使用中',3=>'未付款使用',4=>'锁定中',5=>'到期',6=>'退款'];
 				$return['data'] = '';
 				$return['code'] = 0;
-				$return['msg']	= '该业务'.$business_status[$business->business_status].'无法进行续费';
+				$return['msg']	= '(#103)该业务'.$business_status[$business->business_status].'无法进行续费';
 				return $return;
 			}
 			if($business->remove_status != 0){
                 $return['data'] = '';
                 $return['code'] = 0;
-                $return['msg']  = '该业务'.$business_status[$business->business_status].'无法进行续费,业务可能已到期未续费下架';
+                $return['msg']  = '(#104)该业务'.$business_status[$business->business_status].'无法进行续费,业务可能已到期未续费下架';
                 return $return;
             }
 			//续费订单号的生成规则：前两位（4-6的随机数）+ 年月日 + 时间戳的后2位数 + 4-6的随机数
-			$order_sn = mt_rand(4,6).date("Ymd",time()).substr(time(),8,2).mt_rand(4,6).'2';//续费订单号
+			$order_sn = $this->ordersn();
 			$order['order_sn'] = $order_sn;
 			//对业务进行到期时间的更新
 			$endding_time = Carbon::parse($business->endding_time)->modify('+'.$renew['length'].' months')->toDateTimeString();
@@ -656,7 +656,7 @@ class Order extends Model
 				DB::rollBack();
 				$return['data'] = '';
 				$return['code'] = 0;
-				$return['msg'] = '业务续费失败!';
+				$return['msg'] = '(#105)业务续费失败!';
 				return $return;
 			}
 
@@ -689,7 +689,7 @@ class Order extends Model
 						DB::rollBack();
 						$return['data'] = '';
 						$return['code'] = 0;
-						$return['msg'] = '资源续费失败,请确认您此前购买过该机柜';
+						$return['msg'] = '(#106)资源续费失败,请确认您此前购买过该机柜';
 						return $return;
 					}
 					$result = 1;
@@ -699,7 +699,7 @@ class Order extends Model
 				DB::rollBack();
 				$return['data'] = '';
 				$return['code'] = 0;
-				$return['msg'] = '资源续费失败!!';
+				$return['msg'] = '(#107)资源续费失败!!';
 				return $return;
 			}
 			$order_str = $order['order_sn'].','.$order_str;
@@ -717,11 +717,11 @@ class Order extends Model
 					DB::rollBack();
 					$return['data'] = '';
 					$return['code'] = 0;
-					$return['msg'] = '资源编号:'.$order_result->machine_sn.'的资源'.$order_result->resource.','.'无法续费,原因:'.$order_status[$order_result->order_status];
+					$return['msg'] = '(#108)资源编号:'.$order_result->machine_sn.'的资源'.$order_result->resource.','.'无法续费,原因:'.$order_status[$order_result->order_status];
 					return $return;
 				}
 				//续费订单号的生成规则：前两位（4-6的随机数）+ 年月日 + 时间戳的后2位数 + 4-6的随机数
-				$order_sn = mt_rand(4,6).date("Ymd",time()).substr(time(),8,2).mt_rand(4,6);//续费订单号
+				$order_sn = $this->ordersn();
 				$order['order_sn'] = $order_sn;
 				//到期时间
 				$end_time = Carbon::parse($order_result->end_time)->modify('+'.$renew['length'].' months')->toDateTimeString();
@@ -751,7 +751,7 @@ class Order extends Model
 					DB::rollBack();
 					$return['data'] = '';
 					$return['code'] = 0;
-					$return['msg'] = '业务续费失败!';
+					$return['msg'] = '(#109)业务续费失败!';
 					return $return;
 				}
 				$old_order = DB::table('tz_orders')->where($order_where)->update(['order_status'=>3]);
@@ -759,7 +759,7 @@ class Order extends Model
 					DB::rollBack();
 					$return['data'] = '';
 					$return['code'] = 0;
-					$return['msg'] = '业务续费失败!请重新操作';
+					$return['msg'] = '(#110)业务续费失败!请重新操作';
 					return $return;
 				}
 
@@ -808,7 +808,7 @@ class Order extends Model
 					DB::rollBack();
 					$return['data'] = '';
 					$return['code'] = 0;
-					$return['msg'] = '资源续费失败!!';
+					$return['msg'] = '(#111)资源续费失败!!';
 					return $return;
 				}
 				$business = DB::table('tz_business')->where(['business_number'=>$order_result->business_sn])->select('business_status')->first();
@@ -873,4 +873,18 @@ class Order extends Model
 		$return['msg'] = '资源续费订单获取成功';
 		return $return;
 	}
+
+	 /**
+     * 创建订单号
+     * @return [type] [description]
+     */
+    public function ordersn(){
+        $order_sn = mt_rand(4, 6) . date("Ymd", time()) . substr(time(), 6, 4) . mt_rand(1, 3).'2';
+        $order = DB::table('tz_orders')->where('order_sn',$order_sn)->select('order_sn','machine_sn')->first();
+        if(!empty($order)){
+            $this->ordersn();
+        } else {
+            return $order_sn;
+        }
+    }
 }

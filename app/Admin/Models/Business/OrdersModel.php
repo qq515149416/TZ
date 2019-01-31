@@ -203,7 +203,7 @@ class OrdersModel extends Model
 		}
 		$insert_data['end_time'] = $end_time;
 		// 订单号的生成规则：前两位（4-6的随机数）+ 年月日（如:20180830） + 时间戳的后2位数 + 1-3随机数
-		$order_sn = mt_rand(4,6).date("Ymd",time()).substr(time(),6,4).mt_rand(1,3).'1';
+		$order_sn =$this->ordersn();
 		$insert_data['order_sn'] = $order_sn;
 		if($insert_data['resource_type'] == 8){//带宽的时候生成专属的带宽序号
 			$insert_data['machine_sn'] = 'BW'.date("Ymd",time()).substr(time(),8,2);
@@ -638,7 +638,7 @@ class OrdersModel extends Model
                 return $return;
             }
 			//续费订单号的生成规则：前两位（4-6的随机数）+ 年月日 + 时间戳的后2位数 + 4-6的随机数
-			$order_sn = mt_rand(4,6).date("Ymd",time()).substr(time(),8,2).mt_rand(4,6).'1';//续费订单号
+			$order_sn = $this->ordersn();
 			$order['order_sn'] = $order_sn;
 			//对业务进行到期时间的更新
 			$endding_time = Carbon::parse($business->endding_time)->modify('+'.$renew['length'].' months')->toDateTimeString();
@@ -889,7 +889,20 @@ class OrdersModel extends Model
 		return $return;
 	}
 
-
+	/**
+     * 创建订单号
+     * @return [type] [description]
+     */
+    public function ordersn(){
+        $order_sn = mt_rand(4, 6) . date("Ymd", time()) . substr(time(), 6, 4) . mt_rand(1, 3).'1';
+        $order = DB::table('tz_orders')->where('order_sn',$order_sn)->select('order_sn','machine_sn')->first();
+        if(!empty($order)){
+            $this->ordersn();
+        } else {
+            return $order_sn;
+        }
+    }
+    
 	public function payOrderByBalance($business_number,$coupon_id){
 		$return['data'] = '';
 		$admin_user_id = Admin::user()->id;

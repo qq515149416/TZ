@@ -103,7 +103,7 @@ class SearchModel extends Model
      * @return array              返回业务绑定的所有资源
      */
     public function searchResources($business_sn){
-        $all_resource = DB::table('tz_orders')->where(['business_sn'=>$business_sn])->where('resource_type','>','3')->orderBy('end_time','desc')->select('machine_sn','resource')->get()->groupBy('machine_sn')->toArray();
+        $all_resource = DB::table('tz_orders')->where(['business_sn'=>$business_sn,'remove_status'=>0])->where('resource_type','>','3')->orderBy('end_time','desc')->select('machine_sn','resource')->get()->groupBy('machine_sn')->toArray();
         $resource_keys = array_keys($all_resource);//获取分组后的资源编号
         foreach($resource_keys as $key=>$value){
             $order['machine_sn'] = $value;

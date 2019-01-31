@@ -60,9 +60,9 @@ class RegisterController extends Controller
             $TzUserModel = new TzUser();//实例化
 
             //判断帐号是否存在
-            $userExists = $TzUserModel->where('email', '=',$par['email'] )->exists();
+            $userExists = $TzUserModel->where('email', '=', $par['email'])->exists();
             if ($userExists) {
-                return tz_ajax_echo([],'注册失败,帐号已存在',0);//注册失败,邮箱帐号已存在
+                return tz_ajax_echo([], '注册失败,帐号已存在', 0);//注册失败,邮箱帐号已存在
             }
 
             //添加帐号
@@ -71,7 +71,7 @@ class RegisterController extends Controller
                 'email'    => $par['email'],  //邮箱
                 'password' => Hash::make($par['password']),  //密码
                 'status'   => 2,  //状态为已验证
-                'pwd_ver'   => 1,
+                'pwd_ver'  => 1,
             ]);
             $this->bindSalesman($addUserInfo['id'], $par['salesman']); //绑定业务员
             Auth::loginUsingId($addUserInfo['id']);  //注册后自动登录
@@ -79,11 +79,11 @@ class RegisterController extends Controller
              * 将先注册的账户相关信息放入索引文件
              * @var XS
              */
-            $xunsearch = new XS('customer');
-            $index = $xunsearch->index;
-            $doc['id'] = strtolower($addUserInfo['id']);
+            $xunsearch    = new XS('customer');
+            $index        = $xunsearch->index;
+            $doc['id']    = strtolower($addUserInfo['id']);
             $doc['email'] = strtolower($par['email']);
-            $document = new \XSDocument($doc);
+            $document     = new \XSDocument($doc);
             $index->update($document);
             $index->flushIndex();
             return tz_ajax_echo([], '注册成功', 1);   //注册成功
@@ -148,6 +148,22 @@ class RegisterController extends Controller
         $salemanJobId = $tzJobsModel->getAllSalesmanJobId();  //获取所有销售员职位ID
         $adminUserId  = $oaStaffModel->getAdminUserIdByJob($salemanJobId); //根据职位ID获取后台账户ID
         $salemanData  = $adminUsersModel->getAdminUserName($adminUserId);  //获取业务员数据
+
+        /**
+         * 去除重复
+         */
+        $salemanId = [];//去除用
+        foreach ($salemanData as $v => $k) {
+
+            //判断数组中是否已经存在
+            if (in_array($k['id'], $salemanId)) {
+
+                unset($salemanData[$v]);
+
+            }
+            $salemanId[] = $k['id'];
+        }
+        
         return tz_ajax_echo($salemanData, '业务员列表获取成功', 1);
 
     }

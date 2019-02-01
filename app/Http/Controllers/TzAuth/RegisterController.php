@@ -163,7 +163,7 @@ class RegisterController extends Controller
             }
             $salemanId[] = $k['id'];
         }
-        
+
         return tz_ajax_echo($salemanData, '业务员列表获取成功', 1);
 
     }

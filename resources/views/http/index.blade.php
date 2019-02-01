@@ -24,19 +24,25 @@
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox">
             <div class="item active">
-                <img src="{{ asset("/images/banner/cdnNewYear.jpg") }}" alt="...">
-                <div class="carousel-caption">
-                </div>
+                <a href="http://www.15cdn.com/" target="_blank">
+                    <img src="{{ asset("/images/banner/cdnNewYear.jpg") }}" alt="...">
+                    <div class="carousel-caption">
+                    </div>
+                </a>
             </div>
             <div class="item">
-                <img src="{{ asset("/images/banner/newYear.png") }}" alt="...">
-                <div class="carousel-caption">
-                </div>
+                <a href="/page/tz/preferential" target="_blank">
+                    <img src="{{ asset("/images/banner/newYear.png") }}" alt="...">
+                    <div class="carousel-caption">
+                    </div>
+                </a>
             </div>
             <div class="item">
-                <img src="{{ asset("/images/banner/yunNewYear.png") }}" alt="...">
-                <div class="carousel-caption">
-                </div>
+                <a href="http://yun.zeisp.com/" target="_blank">
+                    <img src="{{ asset("/images/banner/yunNewYear.png") }}" alt="...">
+                    <div class="carousel-caption">
+                    </div>
+                </a>
             </div>
         </div>
 
@@ -476,7 +482,7 @@
                                 成熟技术团队
                             </div>
                             <div class="dec">
-                                拥有多年互联网安全技术研究经验的高级 网络工程师和高级研发工程师团队
+                                拥有多年互联网安全技术研究经验的高级网络工程师和高级研发工程师团队
                             </div>
                         </a>
                     </div>
@@ -489,7 +495,7 @@
                                 立体安全防护
                             </div>
                             <div class="dec">
-                                全线防护均采用金盾防护产品配合腾正科技自主研发的立体式安全防护技术，有效防止各种攻击
+                            全线防护采用金盾防护产品配合腾正自主研发的立体式安全防护技术，有效防止各种攻击
                             </div>
                         </a>
                     </div>
@@ -502,7 +508,7 @@
                                 储备电力系统
                             </div>
                             <div class="dec">
-                                双路供电，10kv高压柴油发电机组，24h燃油储备2n后备高频UPS供电系统，电池备用时间＞2h
+                            双路供电，10kv高压柴油发电机组24h燃油储备，2n后备高频UPS供电系统电池备用＞2h
                             </div>
                         </a>
                     </div>

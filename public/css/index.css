@@ -222,8 +222,8 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   position: absolute;
   top: 82px;
   left: 50%;
-  -webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
+  -webkit-transform: translateX(-50%) translateY(1px);
+          transform: translateX(-50%) translateY(1px);
   width: 513px;
   background-color: #fff;
   border-radius: 4px;

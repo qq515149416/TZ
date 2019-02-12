@@ -536,13 +536,13 @@
                     <div class="content">
                         <div class="contact-item">
                             <a href="#">
-                                <img alt="给我发消息" src="{{ asset("/images/info.png") }}">
+                                <img alt="给我发消息" src="{{ asset("/images/iphone.png") }}">
                                 0769-22385558
                             </a>
                         </div>
                         <div class="contact-item">
                             <a href="#">
-                                <img alt="给我发消息" src="{{ asset("/images/iphone.png") }}">
+                                <img alt="给我发消息" src="{{ asset("/images/mobile.png") }}">
                                 15399941777
                             </a>
                         </div>
@@ -575,7 +575,7 @@
                     <div class="content">
                         <div class="contact-item">
                             <a href="#">
-                                <img alt="给我发消息" src="{{ asset("/images/info.png") }}">
+                                <img alt="给我发消息" src="{{ asset("/images/iphone.png") }}">
                                 0769-22385558
                             </a>
                         </div>

@@ -19,11 +19,21 @@
             <li data-target="#carousel-example-generic" data-slide-to="2">
                 <span class="progress"></span>
             </li>
+            <li data-target="#carousel-example-generic" data-slide-to="3">
+                <span class="progress"></span>
+            </li>
         </ol>
 
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox">
             <div class="item active">
+                <a href="http://www.15cdn.com/" target="_blank">
+                    <img src="{{ asset("/images/banner/kai.png") }}" alt="...">
+                    <div class="carousel-caption">
+                    </div>
+                </a>
+            </div>
+            <div class="item">
                 <a href="http://www.15cdn.com/" target="_blank">
                     <img src="{{ asset("/images/banner/cdnNewYear.jpg") }}" alt="...">
                     <div class="carousel-caption">

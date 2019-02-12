@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Hash;
 use Encore\Admin\Facades\Admin;
+use App\Admin\Models\Business\BusinessModel;
 
 /**
  * 所有客户信息
@@ -40,7 +41,15 @@ class CustomerModel extends Model
         } else {
             $where = [];
         }
-    	$admin_customer = $this->orderBy('created_at','desc')->where($where)->get(['id','status','name','email','money','salesman_id','created_at','updated_at','nickname']);
+    	$admin_customer = $this
+                ->orderBy('created_at','desc')
+                ->where($where)
+                ->get(['id','status','name','email','money','salesman_id','created_at','updated_at','nickname']);
+
+                for ($i=0; $i < count($admin_customer); $i++) { 
+                    $admin_customer[$i] = $this->checkBusiness($admin_customer[$i]);
+                }
+
     	if(!$admin_customer->isEmpty()){
     		$status = [0=>'拉黑',1=>'未验证',2=>'正常'];
     		foreach($admin_customer as $key=>$value){
@@ -60,6 +69,16 @@ class CustomerModel extends Model
     	return $return;
     }
 
+    public function checkBusiness($customer){
+        $b_model = new BusinessModel();
+        $count_b = $b_model
+            ->where('client_id',$customer->id)
+            ->whereIn('business_status',[1,2])
+            ->count('id');
+
+        $customer->haveBusiness = $count_b;
+        return $customer;
+    }
     /**
      * 查找业务员姓名
      * @param  int $id oa_staff表的admin_users_id字段的值

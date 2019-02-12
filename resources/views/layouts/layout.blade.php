@@ -202,7 +202,23 @@
                     </div>
                 </li>
                 <li><a href="/page/tz/preferential">最新活动</a></li>
-                <li><a href="/page/tz/zynews">新闻中心</a></li>
+                <li>
+                    <a href="/page/tz/zynews">新闻中心</a>
+                    <div class="dropdown-mark" style="width: auto; height: auto; padding-bottom: 20px; padding-right: 20px; padding-left: 20px; text-align: center;">
+                        <span class="dropdown-icon"></span>
+                        <ul>
+                            <li>
+                                <a href="/page/tz/zynews">公司新闻</a>
+                            </li>
+                            <li>
+                                <a href="/page/tz/zynews">公司公告</a>
+                            </li>
+                            <li>
+                                <a href="/page/tz/zynews">行业动态</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
                 <li>
                     <a href="javascript:;">关于我们</a>
                     <div class="dropdown-mark" style="width: auto; height: auto; padding-bottom: 20px; padding-right: 20px; padding-left: 20px; text-align: center;">

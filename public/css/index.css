@@ -1551,9 +1551,11 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .news .news-body .new-list .new-item .preview a .type-info {
   width: 100%;
   padding: 24px 16px 32px 24px;
-  background-color: #2d313f;
+  background-color: rgba(45, 49, 63, 0.7);
   border-radius: 0 0 4px 4px;
   position: relative;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
 }
 .news .news-body .new-list .new-item .preview a .type-info h4 {
   font-size: 16px;
@@ -1575,6 +1577,9 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   width: 41px;
   height: 41px;
   background: url(/images/newMore.png?346acaebd851aa798658c2a8e2fc13dc) no-repeat;
+}
+.news .news-body .new-list .new-item .preview a .type-info:hover {
+  background-color: #2d313f;
 }
 .news .news-body .new-list .new-item .preview a .type-info:hover .more-icon {
   background: url(/images/newMoreT.png?254ea8b1154e480b8658eda892af287b) no-repeat;

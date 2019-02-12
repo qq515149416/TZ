@@ -1190,9 +1190,10 @@
                         .type-info {
                             width: 100%;
                             padding: 24px 16px 32px 24px;
-                            background-color: #2d313f;
+                            background-color: rgba(45, 49, 63, .7);
                             border-radius: 0 0 4px 4px;
                             position: relative;
+                            transition: all .5s;
                             h4 {
                                 font-size: 16px;
                                 color: #fff;
@@ -1214,6 +1215,7 @@
                                 background: url(../images/new/newMore.png) no-repeat;
                             }
                             &:hover {
+                                background-color: rgba(45, 49, 63, 1);
                                 .more-icon {
                                     background: url(../images/new/newMoreT.png) no-repeat;
                                 }

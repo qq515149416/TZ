@@ -14,7 +14,7 @@ class TzUser extends Authenticatable
 
 	protected $primaryKey = 'id'; //主键
 
-	public $timestamps = false;    //关闭自动写入时间戳
+	public $timestamps = true;    //关闭自动写入时间戳
 
 	/**
 	 * The attributes that are mass assignable.

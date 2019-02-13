@@ -22,7 +22,7 @@ class PackageModel extends Model
 
 		if(count($list) == 0){
 			return [
-				'data'	=> '',
+				'data'	=> [],
 				'msg'	=> '无数据',
 				'code'	=> 1,
 			]; 

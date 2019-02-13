@@ -325,7 +325,7 @@
                 </dl>
                 <dl class="attention wx">
                     <dt>关注我们</dt>
-                    <dd>腾正官网微信二维码</dd>
+                    <dd>腾正官网二维码</dd>
                     <dd>
                         <img src="{{ asset("/images/logo_erweima.png") }}" alt="" />
                     </dd>
@@ -334,7 +334,7 @@
                     <dt class="text-right">
                         <a href="javascript:;">加入我们</a>
                     </dt>
-                    <dd>腾正官网微博二维码</dd>
+                    <dd>腾正官网微信二维码</dd>
                     <dd>
                         <img src="{{ asset("/images/wx_erweima.png") }}" alt="" />
                     </dd>

@@ -592,7 +592,7 @@
                         <div class="contact-item">
                             <a href="#">
                                 <img alt="给我发消息" src="{{ asset("/images/iphone.png") }}">
-                                0769-22385558
+                                0769-22226555
                             </a>
                         </div>
                         <div class="contact-item">

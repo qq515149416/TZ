@@ -54,7 +54,7 @@ class PackageRequest extends FormRequest
 					'edit_id'			=> 'required|exists:tz_defenseip_package,id',
 					'name'			=> 'required|unique:tz_defenseip_package,name,'.$par['edit_id'],
 					'price'			=> 'required|numeric',
-					'description'		=> 'required',
+					// 'description'		=> 'required',
 					'sell_status'		=> 'required|integer|min:0|max:1',
 				];
 				break;

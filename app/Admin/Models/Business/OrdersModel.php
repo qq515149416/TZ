@@ -703,7 +703,7 @@ class OrdersModel extends Model
 					$machine['business_end'] = $order['end_time'];
 					//如果是租用机柜的，在订单生成成功时，将业务编号和到期时间及资源状态进行更新
 					$cabinet = DB::table('idc_cabinet')->where(['cabinet_id'=>$order['machine_sn']])->value('own_business');
-					$business = strpos($cabinet,$order['business_sn']);
+					$business = strpos($cabinet,$order['business_sn'])+1;
 					if(!$business){
 						DB::rollBack();
                         $return['data'] = '';

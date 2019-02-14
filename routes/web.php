@@ -47,6 +47,8 @@ Route::group([
     Route::post('loginTest', 'TzAuth\LoginController@login'); //测试新登录
     Route::get('loginCheck', 'TzAuth\LoginController@loginCheck'); //检测登录状态
     Route::get('time', 'Test\TimeController@time'); //测试时间
+    Route::get('user', 'Test\TimeController@time'); //测试时间
+
 });
 
 //news接口路径

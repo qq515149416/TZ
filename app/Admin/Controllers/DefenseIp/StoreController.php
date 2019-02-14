@@ -16,7 +16,7 @@ class StoreController extends Controller
 	public function insert(StoreRequest $request){
 		$model = new StoreModel();
 
-		$par = $request->only(['ip','site','protection_value','status']);
+		$par = $request->only(['ip','site','protection_value']);
 		$ip = $par['ip'];
 
 		//0.0.0.0--- 255.255.255.255
@@ -33,7 +33,7 @@ class StoreController extends Controller
 
 		$protection_value = $par['protection_value'];
 		$site = $par['site'];
-		$insert = $model->insert($ip,$protection_value,$site,$par['status']);
+		$insert = $model->insert($ip,$protection_value,$site);
 		return tz_ajax_echo($insert['data'],$insert['msg'],$insert['code']);
 	}
 

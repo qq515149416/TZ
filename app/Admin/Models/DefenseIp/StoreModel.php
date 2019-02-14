@@ -20,7 +20,7 @@ class StoreModel extends Model
 	protected $dates = ['deleted_at'];
 	protected $fillable = ['ip', 'status','site','protection_value'];
 
-	public function insert($ip,$protection_value,$site,$status){
+	public function insert($ip,$protection_value,$site){
 		//DB::beginTransaction();
 		$fail_arr = [];
 		for ($i=0; $i < count($ip); $i++) { 
@@ -30,7 +30,6 @@ class StoreModel extends Model
 				'status'			=> 0,
 				'protection_value'	=> $protection_value,
 				'site'			=> $site,
-				'status'			=> $status,
 			];
 			$res = $this->create($ip_arr);
 			if($res == false){

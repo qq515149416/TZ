@@ -105,10 +105,10 @@ class PackageModel extends Model
 			}
 			switch ($package_list[$i]['sell_status']) {
 				case '0':
-					$package_list[$i]['sell_status'] = '下架中';
+					$package_list[$i]['sell_status'] = '下架';
 					break;
 				case '1':
-					$package_list[$i]['sell_status'] = '上架中';
+					$package_list[$i]['sell_status'] = '上架';
 					break;
 				default:
 					$package_list[$i]['sell_status'] = '无此状态';

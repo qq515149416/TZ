@@ -432,7 +432,7 @@
                 <span>
                     <a href="http://www.miitbeian.gov.cn">粤ICP备15081286号-2</a>
                 </span>
-                <span>全国IDC证：B1.B2-20150233</span>
+                <span>全国IDC证：A2.B1.B2-20150233</span>
             </p>
         </div>
     </div>

@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{ admin_asset("/vendor/laravel-admin/font-awesome/css/font-awesome.min.css") }}">
     <link rel="stylesheet" href="{{ asset("/css/swiper.min.css") }}" />
     <link rel="stylesheet" href="{{ asset("/css/animate.min.css") }}" />
-    <link rel="stylesheet" href="{{ asset("/css/index.css") }}" />
+    <link rel="stylesheet" href="{{ asset("/css/index.css") }}?random_num={{ time() + random_int(100,1000) }}" />
 </head>
 <body>
     <div class="container-fluid main">

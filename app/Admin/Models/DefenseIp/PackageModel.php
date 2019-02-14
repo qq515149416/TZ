@@ -17,7 +17,7 @@ class PackageModel extends Model
 	protected $primaryKey = 'id';
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
-	protected $fillable = ['name','description','site','protection_value','price'];
+	protected $fillable = ['name','description','site','protection_value','price','sell_status'];
 
 	public function insert($par){
 		// DB::beginTransaction();

@@ -316,16 +316,15 @@
                 </dl>
                 <dl class="contact-us">
                     <dt>联系我们</dt>
-                    <dd>总部：广东腾正计算机科技有限公司</dd>
-                    <dd>地址：广东省东莞市松山湖科技十路研发中心2栋B座</dd>
-                    <dd>分公司：广东腾正计算机科技有限公司西安分公司</dd>
-                    <dd>地址：陕西省西安市高新区瑞吉大厦7层10701-7634</dd>
-                    <dd>子公司：长沙正易网络科技有限公司</dd>
-                    <dd>地址：湖南省长沙市高新开发区麓龙路209号单元402</dd>
+                    <dd>东莞总公司：广东省东莞市松山湖科技十路研发中心2栋B座</dd>
+                    <dd>惠州分公司：广东省惠州市东平南路21号2栋第二层</dd>
+                    <dd>陕西分公司：陕西省西安市高新区瑞吉大厦7层10701-7634</dd>
+                    <dd>湖南分公司：湖南省长沙市高新开发区麓龙路209号单元402</dd>
+                    <dd>上海分公司：上海市金山工业区夏宁路666弄58_59号2064室</dd>
                 </dl>
                 <dl class="attention wx">
                     <dt>关注我们</dt>
-                    <dd>腾正官网微信二维码</dd>
+                    <dd>腾正官网二维码</dd>
                     <dd>
                         <img src="{{ asset("/images/logo_erweima.png") }}" alt="" />
                     </dd>
@@ -334,7 +333,7 @@
                     <dt class="text-right">
                         <a href="javascript:;">加入我们</a>
                     </dt>
-                    <dd>腾正官网微博二维码</dd>
+                    <dd>腾正官网微信二维码</dd>
                     <dd>
                         <img src="{{ asset("/images/wx_erweima.png") }}" alt="" />
                     </dd>
@@ -432,7 +431,7 @@
                 <span>
                     <a href="http://www.miitbeian.gov.cn">粤ICP备15081286号-2</a>
                 </span>
-                <span>全国IDC证：B1.B2-20150233</span>
+                <span>全国IDC证：A2.B1.B2-20150233</span>
             </p>
         </div>
     </div>
@@ -592,7 +591,7 @@
                         <div class="contact-item">
                             <a href="#">
                                 <img alt="给我发消息" src="{{ asset("/images/iphone.png") }}">
-                                0769-22385558
+                                0769-22226555
                             </a>
                         </div>
                         <div class="contact-item">

@@ -103,6 +103,16 @@ Route::group([
 ], function () {
 
     Route::group([
+        'prefix' => 'userCenter',                           //用户中心
+    ], function () {
+       
+        Route::get('resetNickName', 'Customer\UserCentorController@resetNickName');     //用户更改昵称
+        Route::get('resetAcc', 'Customer\UserCentorController@resetAcc');                               //用户更改登录名
+
+    });
+
+
+    Route::group([
         'prefix' => 'recharge',                        //充值分组
     ], function () {
         Route::group([

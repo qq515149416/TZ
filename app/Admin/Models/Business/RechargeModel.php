@@ -110,9 +110,40 @@ class RechargeModel extends Model
 			];
 		}else{
 			$list = json_decode($list,true);
-			$recharge_way = [ '1' => '银行' , '2' => '第三方平台' ];
 			for ($i=0; $i < count($list); $i++) { 
-				$list[$i]['recharge_way'] = $recharge_way[$list[$i]['recharge_way']];
+				switch ($list[$i]['recharge_way']) {
+					case '1':
+						$list[$i]['recharge_way'] = '腾正公帐(建设银行)';
+						break;
+					case '2':
+						$list[$i]['recharge_way'] = '腾正公帐(工商银行)';
+						break;
+					case '3':
+						$list[$i]['recharge_way'] = '腾正公帐(招商银行)';
+						break;
+					case '4':
+						$list[$i]['recharge_way'] = '腾正公帐(农业银行)';
+						break;
+					case '5':
+						$list[$i]['recharge_way'] = '正易公帐(中国银行)';
+						break;
+					case '6':
+						$list[$i]['recharge_way'] = '支付宝';
+						break;
+					case '7':
+						$list[$i]['recharge_way'] = '公帐支付宝';
+						break;
+					case '8':
+						$list[$i]['recharge_way'] = '财付通';
+						break;
+					case '9':
+						$list[$i]['recharge_way'] = '微信支付';
+						break;
+					
+					default:
+						$list[$i]['recharge_way'] = '无此状态';
+						break;
+				}
 			}
 			$return = [
 				'data'	=> $list,
@@ -163,9 +194,41 @@ class RechargeModel extends Model
 			];
 		}else{
 			$list = json_decode($list,true);
-			$recharge_way = [ '1' => '银行' , '2' => '第三方平台' ];
+
 			for ($i=0; $i < count($list); $i++) { 
-				$list[$i]['recharge_way'] = $recharge_way[$list[$i]['recharge_way']];
+				switch ($list[$i]['recharge_way']) {
+					case '1':
+						$list[$i]['recharge_way'] = '腾正公帐(建设银行)';
+						break;
+					case '2':
+						$list[$i]['recharge_way'] = '腾正公帐(工商银行)';
+						break;
+					case '3':
+						$list[$i]['recharge_way'] = '腾正公帐(招商银行)';
+						break;
+					case '4':
+						$list[$i]['recharge_way'] = '腾正公帐(农业银行)';
+						break;
+					case '5':
+						$list[$i]['recharge_way'] = '正易公帐(中国银行)';
+						break;
+					case '6':
+						$list[$i]['recharge_way'] = '支付宝';
+						break;
+					case '7':
+						$list[$i]['recharge_way'] = '公帐支付宝';
+						break;
+					case '8':
+						$list[$i]['recharge_way'] = '财付通';
+						break;
+					case '9':
+						$list[$i]['recharge_way'] = '微信支付';
+						break;
+					
+					default:
+						$list[$i]['recharge_way'] = '无此状态';
+						break;
+				}
 			}
 			$return = [
 				'data'	=> $list,
@@ -233,13 +296,46 @@ class RechargeModel extends Model
 			return $return;
 		}
 		$money_after = bcadd($money_before,$trade->recharge_amount,2);
-		$voucher = [ '1' => '银行' , '2' => '第三方平台' ];
+
+		switch ($trade->recharge_way) {
+			case '1':
+				$voucher = '腾正公帐(建设银行)';
+				break;
+			case '2':
+				$voucher = '腾正公帐(工商银行)';
+				break;
+			case '3':
+				$voucher = '腾正公帐(招商银行)';
+				break;
+			case '4':
+				$voucher = '腾正公帐(农业银行)';
+				break;
+			case '5':
+				$voucher = '正易公帐(中国银行)';
+				break;
+			case '6':
+				$voucher = '支付宝';
+				break;
+			case '7':
+				$voucher = '公帐支付宝';
+				break;
+			case '8':
+				$voucher = '财付通';
+				break;
+			case '9':
+				$voucher = '微信支付';
+				break;
+			
+			default:
+				$voucher = '无此状态';
+				break;
+		}
 		$data = [
 			'user_id'		=> $trade->user_id,
 			'recharge_amount'	=> $trade->recharge_amount,
 			'recharge_way'		=> 3,
 			'trade_no'		=> $trade->trade_no,
-			'voucher'		=> $voucher[$trade->recharge_way],
+			'voucher'		=> $voucher,
 			'timestamp'		=> $trade->audit_time,
 			'trade_status'		=> 1,
 			'money_before'		=> $money_before,

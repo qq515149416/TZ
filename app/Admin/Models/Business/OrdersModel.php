@@ -584,7 +584,7 @@ class OrdersModel extends Model
 		if(!empty($resource)){
 			foreach($resource as $key=>$value){
 				$resource_type = [ '1' => '租用主机' , '2' => '托管主机' , '3' => '租用机柜' , '4' => 'IP' , '5' => 'CPU' , '6' => '硬盘' , '7' => '内存' , '8' => '带宽' , '9' => '防护' , '10' => 'cdn','11'=>'高防IP'];
-				$resource[$key]['resourcetype'] = $resource_type[$value['resource_type']];
+				// $resource[$key]['resourcetype'] = $resource_type[$value['resource_type']];
 			}
 			$orders = ['IP'=>$this->filter($resource,4),'cpu'=>$this->filter($resource,5),'harddisk'=>$this->filter($resource,6),'memory'=>$this->filter($resource,7),'bandwidth'=>$this->filter($resource,8),'protected'=>$this->filter($resource,9),'cdn'=>$this->filter($resource,10)];
 			$return['data'] = $orders;

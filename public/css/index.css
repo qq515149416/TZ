@@ -388,11 +388,14 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   color: #bbbbbb;
   font-size: 14px;
   display: inline-block;
-  padding-right: 46px;
+  padding-right: 50px;
 }
 .footer .footer-popular-searches span a {
   text-decoration: none;
   color: #bbbbbb;
+}
+.footer .footer-popular-searches span:last-of-type {
+  padding-right: 0;
 }
 .footer .footer-hot-products {
   padding-bottom: 0;
@@ -407,7 +410,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   color: #bbbbbb;
   font-size: 14px;
   display: inline-block;
-  padding-right: 46px;
+  padding-right: 50px;
 }
 .footer .footer-hot-products span a,
 .footer .footer-links span a {

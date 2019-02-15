@@ -165,6 +165,7 @@ class  Overdue extends Model
 			->where('a.business_id',$sales_id)
 			->where('a.resource_type','>',3)
 			->where('a.resource_type','<=',9)
+			->where('a.order_status',0)
 			->orderBy('a.end_time','asc')
 			->get();	
 		}else{
@@ -175,6 +176,7 @@ class  Overdue extends Model
 			->where('a.end_time','<',$end_time)
 			->where('a.business_id',$sales_id)
 			->where('a.resource_type','=',$resource_type)
+			->where('a.order_status',0)
 			->orderBy('a.end_time','asc')
 			->get();	
 		}

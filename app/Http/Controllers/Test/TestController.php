@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Test;
 
 use App\Http\Models\TzUser;
+use Carbon\Carbon;
+use Faker\Provider\zh_CN\DateTime;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -15,9 +17,14 @@ class TestController extends Controller
     public function test()
     {
         //测试专用测试
-        dump('测试模块测试');
 
-        dump('ZhangJun');
+        $dataM = new DateTime();
+        echo Carbon::now();
+        $timeM = Carbon::now();
+        dump($dataM);
+        dump($timeM);
+
+
     }
 
     /*

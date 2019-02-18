@@ -549,7 +549,16 @@ Route::group([
 
     });
 
+     /**
+         *  测试
+         */
+        Route::group([
+            'prefix' => 'test',
+        ], function (Router $router) {
+            $router->get('test', 'DefenseIp\BusinessController@test');  //查询过期业务
+           
 
+        });
 });
 
 

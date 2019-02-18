@@ -1044,7 +1044,7 @@ class OrdersModel extends Model
 
 		// 订单支付成功后对客户的余额进行修改
 		$payMoney = DB::table('tz_users')->where('id',$customer_id)->update(['money' => $after_money ]);
-		if($payMoney == false){
+		if($payMoney == false && $before_money != $after_money){
 			// 修改客户余额失败，进行事务回滚
 			DB::rollBack();
 			$return['msg']  = '扣除余额失败,支付失败';

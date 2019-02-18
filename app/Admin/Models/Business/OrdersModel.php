@@ -574,7 +574,8 @@ class OrdersModel extends Model
 			$return['msg']  = '无法获取该业务下的所有资源信息';
 			return $return;
 		}
-		$all = $this->where($business)->where('price','>','0.00')->where('resource_type','>',3)->orderBy('end_time','desc')->get(['order_sn','resource_type','machine_sn','resource','price','end_time'])->groupBy('machine_sn')->toArray();
+		$all = $this->where($business)->where('resource_type','>',3)->orderBy('end_time','desc')->get(['order_sn','resource_type','machine_sn','resource','price','end_time'])->groupBy('machine_sn')->toArray();
+		// ->where('price','>','0.00')
 		$all_keys = array_keys($all);//获取分组后的资源编号
 		foreach($all_keys as $key=>$value){
 			$business['machine_sn'] = $value;

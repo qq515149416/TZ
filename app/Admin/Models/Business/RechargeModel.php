@@ -436,4 +436,24 @@ class RechargeModel extends Model
 		return $return;
 	}
 
+	public function editAuditRecharge($recharge_amount,$recharge_way,$trade_id){
+		$trade = $this->find($trade_id);
+		$trade->recharge_way = $recharge_way;
+		$trade->recharge_amount = $recharge_amount;
+
+		$res = $trade->save();
+		if($res != true){
+			return [
+				'data'	=> '',
+				'msg'	=> '更改审核单失败',
+				'code'	=> 0,
+			];
+		}else{
+			return [
+				'data'	=> '',
+				'msg'	=> '更改审核单成功',
+				'code'	=> 1,
+			];
+		}
+	}
 }

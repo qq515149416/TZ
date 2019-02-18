@@ -29,14 +29,14 @@ class  Overdue extends Model
 	* @param  
 	* @return  
 	*/
-	public function showOverdueCabinet($lev){
+	public function showOverdueCabinet(){
 		$sales_id	= Admin::user()->id;
 		$return['data'] 	= '';
 		$return['code']	= 0;
 		//获取查询提醒过期天数时间
 		$end_time = date('Y-m-d H:i:s',$this->overtime*24*60*60+time());
 		// 查询已到提醒日期的业务
-		if($lev == 'self'){
+		if(Admin::user()->isAdministrator() != 1){
 			$list = $this
 			->select('business_number','client_name','endding_time','machine_number')		
 			->leftjoin('idc_cabinet as b','tz_business.machine_number','=','b.cabinet_id')
@@ -87,12 +87,12 @@ class  Overdue extends Model
 	* @param  
 	* @return  
 	*/
-	public function showUnpaidCabinet($lev){
+	public function showUnpaidCabinet(){
 		$sales_id	= Admin::user()->id;
 		$return['data'] 	= '';
 		$return['code']	= 0;
 		// 查询已到提醒日期的业务
-		if($lev == 'self'){
+		if(Admin::user()->isAdministrator() != 1){
 			$list = $this
 			->select('business_number','client_name','endding_time','machine_number')		
 			->leftjoin('idc_cabinet as b','tz_business.machine_number','=','b.cabinet_id')
@@ -135,7 +135,7 @@ class  Overdue extends Model
 	* @param  
 	* @return  
 	*/
-	public function showOverdueMachine($lev){
+	public function showOverdueMachine(){
 		$sales_id	= Admin::user()->id;
 
 		$return['data'] 	= '';
@@ -143,7 +143,7 @@ class  Overdue extends Model
 		//获取查询提醒过期天数时间
 		$end_time = date('Y-m-d H:i:s',$this->overtime*24*60*60+time());
 		// 查询已到提醒日期的业务
-		if($lev == 'self'){
+		if(Admin::user()->isAdministrator() != 1){
 			$list = $this		
 			->leftjoin('idc_machine as b','tz_business.machine_number','=','b.machine_num')
 			->leftjoin('idc_ips as c','b.ip_id','=','c.id')
@@ -180,7 +180,7 @@ class  Overdue extends Model
 	}
 
 
-	public function showOverdueRes($way,$resource_type=0,$lev){
+	public function showOverdueRes($way,$resource_type=0){
 		$sales_id	= Admin::user()->id;
 		$return['data'] 	= '';
 		$return['code']	= 0;
@@ -194,7 +194,7 @@ class  Overdue extends Model
 		} 
 		
 		// 查询已到提醒日期的业务
-		if($lev == 'self'){
+		if(Admin::user()->isAdministrator() != 1){
 			if($resource_type == 0){
 				$list = DB::table('tz_orders as a')	
 				->leftjoin('idc_machine as b','a.business_sn','=','b.own_business')		
@@ -325,12 +325,12 @@ class  Overdue extends Model
 	* @param  
 	* @return  
 	*/
-	public function showUnpaidMachine($lev){
+	public function showUnpaidMachine(){
 		$sales_id	= Admin::user()->id;
 		$return['data'] 	= '';
 		$return['code']	= 0;
 		// 查询已到提醒日期的业务
-		if($lev == 'self'){
+		if(Admin::user()->isAdministrator() != 1){
 			$list = $this		
 			->leftjoin('idc_machine as b','tz_business.machine_number','=','b.machine_num')
 			->leftjoin('idc_ips as c','b.ip_id','=','c.id')
@@ -371,12 +371,12 @@ class  Overdue extends Model
 	* @param  
 	* @return  
 	*/
-	public function showXiaJiaMachine($lev){
+	public function showXiaJiaMachine(){
 		$sales_id	= Admin::user()->id;
 		$return['data'] 	= '';
 		$return['code']	= 0;
 		// 查询已到提醒日期的业务
-		if($lev == 'self'){
+		if(Admin::user()->isAdministrator() != 1){
 			$list = $this		
 			->leftjoin('idc_machine as b','tz_business.machine_number','=','b.machine_num')
 			->leftjoin('idc_ips as c','b.ip_id','=','c.id')
@@ -415,9 +415,9 @@ class  Overdue extends Model
 	* @param  
 	* @return  
 	*/
-	public function showTrialDefenseIp($lev){
+	public function showTrialDefenseIp(){
 
-		if($lev == 'self'){
+		if(Admin::user()->isAdministrator() != 1){
 			$list = DB::table('tz_defenseip_business')->where('status',4)->whereNull('deleted_at')->get()->toArray();
 		}else{
 			$list = DB::table('tz_defenseip_business')->where('status',4)->whereNull('deleted_at')->get()->toArray();
@@ -446,9 +446,9 @@ class  Overdue extends Model
 	* @param  
 	* @return  
 	*/
-	public function showUnpaidIdcOrder($lev){
+	public function showUnpaidIdcOrder(){
 		$sales_id	= Admin::user()->id;
-		if($lev == 'self'){
+		if(Admin::user()->isAdministrator() != 1){
 			$list = DB::table('tz_orders')
 				->where('business_id',$sales_id)
 				->where('order_status',0)

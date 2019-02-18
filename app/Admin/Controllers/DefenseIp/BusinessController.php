@@ -70,16 +70,6 @@ class BusinessController extends Controller
 
 	
 	public function test(){
-		 //得到系统的年月  
-	    $tmp_date=date("Ym");  
-	    //切割出年份  
-	    $tmp_year=substr($tmp_date,0,4);  
-	    //切割出月份  
-	    $tmp_mon =substr($tmp_date,4,2);  
-	    $tmp_nextmonth=mktime(0,0,0,$tmp_mon+1,1,$tmp_year);  
-	    $tmp_forwardmonth=mktime(0,0,0,$tmp_mon-1,1,$tmp_year);  
-	    
-        //得到当前月的下一个月   
-        echo $fm_next_month=date("Ym",$tmp_nextmonth);         
+		
 	}
 }

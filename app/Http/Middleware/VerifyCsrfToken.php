@@ -29,5 +29,6 @@ class VerifyCsrfToken extends Middleware
 
         'tz_admin/message/*',   //TODO  记得删除
         'home/defenseIp/*',     //TODO   记得删除
+        'tz_admin/users/*',    //后台用户管理   //TODO   记得删除
     ];
 }

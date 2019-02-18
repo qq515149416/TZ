@@ -392,6 +392,7 @@ Route::group([
         $router->post('auditRecharge', 'Business\RechargeController@auditRecharge');//财务用审核手动充值
         $router->get('showRecharge', 'Business\RechargeController@getRecharge');//查看自己用户的充值流水信息
         $router->get('showAllRecharge', 'Business\RechargeController@getAllRecharge');//财务用查看所有客户充值流水信息接口
+        $router->get('editAuditRecharge', 'Business\RechargeController@editAuditRecharge');//财务用更改充值审核单接口
 
         /**
          * 转移业务员相关

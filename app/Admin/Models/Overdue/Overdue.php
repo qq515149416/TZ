@@ -29,23 +29,36 @@ class  Overdue extends Model
 	* @param  
 	* @return  
 	*/
-	public function showOverdueCabinet(){
+	public function showOverdueCabinet($lev){
 		$sales_id	= Admin::user()->id;
 		$return['data'] 	= '';
 		$return['code']	= 0;
 		//获取查询提醒过期天数时间
 		$end_time = date('Y-m-d H:i:s',$this->overtime*24*60*60+time());
 		// 查询已到提醒日期的业务
-		$list = $this
-		->select('business_number','client_name','endding_time','machine_number')		
-		->leftjoin('idc_cabinet as b','tz_business.machine_number','=','b.cabinet_id')
-		->leftjoin('idc_machineroom as c','b.machineroom_id','=','c.id')
-		->where('tz_business.business_type',3)
-		// ->where('tz_business.sales_id',$sales_id)
-		->where('tz_business.endding_time','<',$end_time)
-		->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name'))
-		->orderBy('tz_business.endding_time','asc')
-		->get();		
+		if($lev == 'self'){
+			$list = $this
+			->select('business_number','client_name','endding_time','machine_number')		
+			->leftjoin('idc_cabinet as b','tz_business.machine_number','=','b.cabinet_id')
+			->leftjoin('idc_machineroom as c','b.machineroom_id','=','c.id')
+			->where('tz_business.business_type',3)
+			->where('tz_business.sales_id',$sales_id)
+			->where('tz_business.endding_time','<',$end_time)
+			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name'))
+			->orderBy('tz_business.endding_time','asc')
+			->get();	
+		}else{
+			$list = $this
+			->select('business_number','client_name','endding_time','machine_number')		
+			->leftjoin('idc_cabinet as b','tz_business.machine_number','=','b.cabinet_id')
+			->leftjoin('idc_machineroom as c','b.machineroom_id','=','c.id')
+			->where('tz_business.business_type',3)
+			->where('tz_business.endding_time','<',$end_time)
+			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name'))
+			->orderBy('tz_business.endding_time','asc')
+			->get();
+		}
+				
 		if($list->isEmpty()){
 			return [
 				'data'	=> [], 
@@ -74,21 +87,34 @@ class  Overdue extends Model
 	* @param  
 	* @return  
 	*/
-	public function showUnpaidCabinet(){
+	public function showUnpaidCabinet($lev){
 		$sales_id	= Admin::user()->id;
 		$return['data'] 	= '';
 		$return['code']	= 0;
 		// 查询已到提醒日期的业务
-		$list = $this
-		->select('business_number','client_name','endding_time','machine_number')		
-		->leftjoin('idc_cabinet as b','tz_business.machine_number','=','b.cabinet_id')
-		->leftjoin('idc_machineroom as c','b.machineroom_id','=','c.id')	
-		->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name,tz_business.start_time'))
-		->where('tz_business.business_type',3)
-		->where('tz_business.business_status',1)
-		// ->where('tz_business.sales_id',$sales_id)
-		->orderBy('tz_business.endding_time','asc')
-		->get();		
+		if($lev == 'self'){
+			$list = $this
+			->select('business_number','client_name','endding_time','machine_number')		
+			->leftjoin('idc_cabinet as b','tz_business.machine_number','=','b.cabinet_id')
+			->leftjoin('idc_machineroom as c','b.machineroom_id','=','c.id')	
+			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name,tz_business.start_time'))
+			->where('tz_business.business_type',3)
+			->where('tz_business.business_status',1)
+			->where('tz_business.sales_id',$sales_id)
+			->orderBy('tz_business.endding_time','asc')
+			->get();	
+		}else{
+			$list = $this
+			->select('business_number','client_name','endding_time','machine_number')		
+			->leftjoin('idc_cabinet as b','tz_business.machine_number','=','b.cabinet_id')
+			->leftjoin('idc_machineroom as c','b.machineroom_id','=','c.id')	
+			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name,tz_business.start_time'))
+			->where('tz_business.business_type',3)
+			->where('tz_business.business_status',1)
+			->orderBy('tz_business.endding_time','asc')
+			->get();	
+		}
+			
 		if($list->isEmpty()){
 			return [
 				'data'	=> [], 
@@ -122,7 +148,7 @@ class  Overdue extends Model
 		->leftjoin('idc_ips as c','b.ip_id','=','c.id')
 		->select(DB::raw('c.ip,tz_business.id,tz_business.sales_id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number'))
 		->whereIn('tz_business.business_type',['1','2'])
-		// ->where('tz_business.sales_id',$sales_id)
+		->where('tz_business.sales_id',$sales_id)
 		->where('tz_business.endding_time','<',$end_time)
 		->orderBy('tz_business.endding_time','asc')
 		->get();	
@@ -270,7 +296,7 @@ class  Overdue extends Model
 		->leftjoin('idc_machine as b','tz_business.machine_number','=','b.machine_num')
 		->leftjoin('idc_ips as c','b.ip_id','=','c.id')
 		->select(DB::raw('c.ip,tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,tz_business.business_type,tz_business.start_time'))
-		// ->where('tz_business.sales_id',$sales_id)
+		->where('tz_business.sales_id',$sales_id)
 		->where('tz_business.business_status',1)
 		->where('tz_business.business_type','!=',3)
 		->orderBy('tz_business.start_time','desc')
@@ -304,7 +330,7 @@ class  Overdue extends Model
 		->leftjoin('idc_machine as b','tz_business.machine_number','=','b.machine_num')
 		->leftjoin('idc_ips as c','b.ip_id','=','c.id')
 		->select(DB::raw('c.ip,tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,tz_business.business_type,tz_business.start_time'))
-		// ->where('tz_business.sales_id',$sales_id)
+		->where('tz_business.sales_id',$sales_id)
 		->where('tz_business.business_type','!=',3)
 		->where('tz_business.remove_status','!=',0)
 		->orderBy('tz_business.start_time','desc')

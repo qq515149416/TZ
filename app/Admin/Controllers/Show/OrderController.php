@@ -13,6 +13,10 @@ use Illuminate\Http\Request;
 
 class OrderController extends script
 {
+    public function clienteleInfo()
+    {
+        return tz_ajax_echo(session("url_param_json"),"获取成功",1);
+    }
     public function index(Request $request)
     {
         return Admin::content(function (Content $content) {

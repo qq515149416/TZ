@@ -17,15 +17,15 @@ class TzUsers extends Model
      *
      * @return mixed
      */
-    public function getUser()
+    public function getUserInfo($uId)
     {
 
 
-        $userId = 2203; //测试用户的ID
+//        $userId = 2203; //测试用户的ID
 
         //根据用户ID获取相关信息
         $userInfo = $this
-            ->where('id', $userId)
+            ->where('id', $uId)
             ->select('id', 'msg_phone', 'msg_qq', 'remarks', 'email', 'name', 'money')
             ->get();
 
@@ -40,10 +40,19 @@ class TzUsers extends Model
      * 需要先判断用户是否存在
      *
      */
-    public function updateUserInfo()
+    public function updateUserInfo($updateData)
     {
         $userId = 2203;//用于测试的用户ID
 
+        $res = $this
+            ->where('id', $updateData['uid'])
+            ->update([
+                'msg_phone' => $updateData['msg_phone'],
+                'msg_qq'=>$updateData['msg_qq'],
+                'remarks'=>$updateData['remarks'],
+            ]);
+
+        return $res;
 
     }
 

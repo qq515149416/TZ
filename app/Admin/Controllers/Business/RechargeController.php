@@ -120,5 +120,16 @@ class RechargeController extends Controller
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
 
-
+	/**
+	 * 后台手动替客户充值余额---修改充值申请的金额与时间/财务用接口
+	 * @param  Request $request [description]
+	 * @return 
+	 */
+	public function editAuditRecharge(RechargeRequest $request){
+		$info = $request->only(['recharge_amount','recharge_way','trade_id']);
+	
+		$model = new RechargeModel();
+		$res = $model->editAuditRecharge($info['recharge_amount'],$info['recharge_way'],$info['trade_id']);
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
 }

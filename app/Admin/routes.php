@@ -93,6 +93,7 @@ Route::group([
             $router->get('/business', 'Show\BusinessController@index');
             $router->get('/checkbusiness', 'Show\CheckBusinessController@index');
             $router->get('/business/order', 'Show\OrderController@index');
+            $router->get('/business/clienteleInfo', 'Show\OrderController@clienteleInfo');
             $router->get('/finance', 'Show\FinanceController@index');
             $router->get('/statisticalPerformance', 'Show\StatisticalPerformanceController@index');
             $router->get('/whitelist', 'Show\WhitelistController@index');
@@ -391,6 +392,7 @@ Route::group([
         $router->post('auditRecharge', 'Business\RechargeController@auditRecharge');//财务用审核手动充值
         $router->get('showRecharge', 'Business\RechargeController@getRecharge');//查看自己用户的充值流水信息
         $router->get('showAllRecharge', 'Business\RechargeController@getAllRecharge');//财务用查看所有客户充值流水信息接口
+        $router->get('editAuditRecharge', 'Business\RechargeController@editAuditRecharge');//财务用更改充值审核单接口
 
         /**
          * 转移业务员相关
@@ -549,20 +551,16 @@ Route::group([
 
     });
 
+     /**
+         *  测试
+         */
+        Route::group([
+            'prefix' => 'test',
+        ], function (Router $router) {
+            $router->get('test', 'DefenseIp\BusinessController@test');  //查询过期业务
+           
 
-
-    /**
-     * 客户用户管理
-     */
-    Route::group([
-        'prefix' => 'users',
-    ], function (Router $router) {
-
-        $router->get('getUserInfo','TzUsers\InfoController@getUserInfo');//修改用户QQ、手机、备注等信息
-        $router->post('updateUserInfo','TzUsers\InfoController@updateUserInfo');//更新客户信息
-
-    });
-
+        });
 });
 
 

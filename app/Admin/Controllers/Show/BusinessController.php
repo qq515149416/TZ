@@ -32,7 +32,9 @@ class BusinessController extends script
                 ['text' => '业务管理']
             );
             // $request->session()->flash("url_param",$this->queryUrlParam($request->all()));
-            // session("url_param",$this->queryUrlParam($request->all()));
+            session(["url_param"=>$this->queryUrlParam($request->all())]);
+            session(["url_param_json"=>$request->all()]);
+            // dump(session("url_param"));
             $content->body(view('show/business'));
             Admin::script($this->script());
         });

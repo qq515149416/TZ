@@ -574,7 +574,8 @@ class OrdersModel extends Model
 			$return['msg']  = '无法获取该业务下的所有资源信息';
 			return $return;
 		}
-		$all = $this->where($business)->where('price','>','0.00')->where('resource_type','>',3)->orderBy('end_time','desc')->get(['order_sn','resource_type','machine_sn','resource','price','end_time'])->groupBy('machine_sn')->toArray();
+		$all = $this->where($business)->where('resource_type','>',3)->orderBy('end_time','desc')->get(['order_sn','resource_type','machine_sn','resource','price','end_time'])->groupBy('machine_sn')->toArray();
+		// ->where('price','>','0.00')
 		$all_keys = array_keys($all);//获取分组后的资源编号
 		foreach($all_keys as $key=>$value){
 			$business['machine_sn'] = $value;
@@ -1044,7 +1045,7 @@ class OrdersModel extends Model
 
 		// 订单支付成功后对客户的余额进行修改
 		$payMoney = DB::table('tz_users')->where('id',$customer_id)->update(['money' => $after_money ]);
-		if($payMoney == false){
+		if($payMoney == false && $before_money != $after_money){
 			// 修改客户余额失败，进行事务回滚
 			DB::rollBack();
 			$return['msg']  = '扣除余额失败,支付失败';

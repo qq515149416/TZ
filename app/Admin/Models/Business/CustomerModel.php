@@ -56,6 +56,7 @@ class CustomerModel extends Model
     			$admin_customer[$key]['status'] = $status[$value['status']];
                 $admin_customer[$key]['email'] = $value['email']?$value['email']:$value['name'];
     			$admin_customer[$key]['clerk_name'] = $this->clerk($value['salesman_id']);
+                // $admin_customer[$key]['money'] = (float)$value['money'];
     		}
     		$return['data'] = $admin_customer;
     		$return['code'] = 1;

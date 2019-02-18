@@ -17,6 +17,9 @@ class ClienteleController extends script
         return Admin::content(function (Content $content) {
             $content->header('客户管理');
             $content->description('客户信息管理');
+            $content->breadcrumb(
+                ['text' => '客户管理', 'url' => '/crm/clientele']
+            );
             $content->body(view('show/clientele'));
             Admin::script($this->script());
         });

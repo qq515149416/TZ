@@ -550,6 +550,19 @@ Route::group([
     });
 
 
+
+    /**
+     * 客户用户管理
+     */
+    Route::group([
+        'prefix' => 'users',
+    ], function (Router $router) {
+
+        $router->get('getUserInfo','TzUsers\InfoController@getUserInfo');//修改用户QQ、手机、备注等信息
+        $router->post('updateUserInfo','TzUsers\InfoController@updateUserInfo');//更新客户信息
+
+    });
+
 });
 
 

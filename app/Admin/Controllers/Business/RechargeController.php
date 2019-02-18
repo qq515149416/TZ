@@ -22,7 +22,7 @@ class RechargeController extends Controller
 	 * @return 
 	 */
 	public function rechargeByAdmin(RechargeRequest $request){
-		$data = $request->only(['user_id','recharge_amount','recharge_way','remarks']);
+		$data = $request->only(['user_id','recharge_amount','recharge_way','remarks','time']);
 		$model = new RechargeModel();
 		$res = $model->rechargeByAdmin($data);
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
@@ -126,10 +126,10 @@ class RechargeController extends Controller
 	 * @return 
 	 */
 	public function editAuditRecharge(RechargeRequest $request){
-		$info = $request->only(['recharge_amount','recharge_way','trade_id']);
+		$info = $request->only(['recharge_amount','recharge_way','trade_id','time']);
 	
 		$model = new RechargeModel();
-		$res = $model->editAuditRecharge($info['recharge_amount'],$info['recharge_way'],$info['trade_id']);
+		$res = $model->editAuditRecharge($info['recharge_amount'],$info['recharge_way'],$info['trade_id'],$info['time']);
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
 }

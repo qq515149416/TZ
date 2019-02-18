@@ -18,7 +18,7 @@ class RechargeModel extends Model
 	protected $primaryKey = 'id';
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
-	protected $fillable = ['user_id', 'recharge_amount','recharge_way','trade_no','recharge_uid','audit_status','auditor_id','audit_time','remarks','created_at','updated_at','deleted_at'];
+	protected $fillable = ['user_id', 'recharge_amount','recharge_way','trade_no','recharge_uid','audit_status','auditor_id','audit_time','remarks','created_at','updated_at','deleted_at','pay_at'];
 
 	/**
 	 * 查找业务员姓名
@@ -61,6 +61,9 @@ class RechargeModel extends Model
 		$data['trade_no']	= 'tz_'.time().'_'.$data['user_id'];
 		$data['audit_status']	= 0;
 		$data['recharge_uid']	= $clerk_id;
+		if(isset($data['time'])){
+			$data['pay_at'] = $data['time'];
+		}
 	
 		$res = $this->create($data);
 		if($res == false){  	
@@ -436,11 +439,11 @@ class RechargeModel extends Model
 		return $return;
 	}
 
-	public function editAuditRecharge($recharge_amount,$recharge_way,$trade_id){
+	public function editAuditRecharge($recharge_amount,$recharge_way,$trade_id,$pay_at){
 		$trade = $this->find($trade_id);
 		$trade->recharge_way = $recharge_way;
 		$trade->recharge_amount = $recharge_amount;
-
+		$trade->pay_at = $pay_at;
 		$res = $trade->save();
 		if($res != true){
 			return [

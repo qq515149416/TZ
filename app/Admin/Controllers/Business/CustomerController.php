@@ -96,4 +96,7 @@ class CustomerController extends Controller
         $insert_result = $insert->insertClerk($customer);
         return tz_ajax_echo($insert_result,$insert_result['msg'],$insert_result['code']); 
     }
+
+
+
 }

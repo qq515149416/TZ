@@ -44,7 +44,7 @@ class CustomerModel extends Model
     	$admin_customer = $this
                 ->orderBy('created_at','desc')
                 ->where($where)
-                ->get(['id','status','name','email','money','salesman_id','created_at','updated_at','nickname']);
+                ->get(['id','status','name','email','money','salesman_id','created_at','updated_at','nickname','msg_qq','msg_phone','remarks']);
 
                 for ($i=0; $i < count($admin_customer); $i++) { 
                     $admin_customer[$i] = $this->checkBusiness($admin_customer[$i]);

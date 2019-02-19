@@ -68,7 +68,7 @@ class InfoController extends Controller
         $TzUsersM->updateUserInfo($updateData);
 
         return tz_ajax_echo(null, '修改成功', 1);
-        
+
 
     }
 

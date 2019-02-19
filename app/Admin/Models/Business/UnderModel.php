@@ -411,11 +411,11 @@ class UnderModel extends Model
         $orders = DB::table('tz_orders')->where($where)->where('resource_type', '>', 3)->whereBetween('remove_status', [1, 3])->orderBy('updated_at', 'desc')->select('order_sn', 'business_sn', 'customer_name', 'resource_type', 'business_name', 'machine_sn', 'resource', 'remove_reason', 'remove_status')->get();
 
         //遍历查询  资源所属业务的机器所在的机柜  和 IP
-        foreach ($orders as $key =>$value) {
-            $rData= $this->getResourceData($value->business_sn); //根据业务号获取机柜和IP信息
-            $orders[$key]->ip =  $rData->ip;    //ip放入到订单数据中
-            $orders[$key]->cabinet_id= $rData->cabinet_id;  //机柜编号放入到订单订单数据中
-        }
+//        foreach ($orders as $key =>$value) {
+//            $rData= $this->getResourceData($value->business_sn); //根据业务号获取机柜和IP信息
+//            $orders[$key]->ip =  $rData->ip;    //ip放入到订单数据中
+//            $orders[$key]->cabinet_id= $rData->cabinet_id;  //机柜编号放入到订单订单数据中
+//        }
 //        dump($orders);
 
         if (!empty($orders)) {

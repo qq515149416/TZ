@@ -69,7 +69,7 @@ class RechargeRequest extends FormRequest
 					'recharge_amount'	=> 'required|integer|min:1.00',
 					'recharge_way'		=> 'required',		
 					'trade_id'		=> 'required|integer|exists:tz_recharge_admin,id',
-					'time'			=> 'required',	
+	
 				];
 				break;
 			default:

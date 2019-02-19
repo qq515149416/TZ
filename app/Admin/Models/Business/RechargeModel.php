@@ -87,7 +87,7 @@ class RechargeModel extends Model
 				$list = $this
 				->leftjoin('admin_users as b','tz_recharge_admin.recharge_uid','=','b.id')
 				->leftjoin('tz_users as c','tz_recharge_admin.user_id','=','c.id')
-				->select(DB::raw('tz_recharge_admin.id,tz_recharge_admin.user_id,tz_recharge_admin.recharge_amount,tz_recharge_admin.recharge_way,tz_recharge_admin.trade_no,tz_recharge_admin.recharge_uid,tz_recharge_admin.created_at,tz_recharge_admin.audit_status,tz_recharge_admin.remarks,b.name as recharger,c.name as customer_name,c.email as customer_email'))
+				->select(DB::raw('tz_recharge_admin.id,tz_recharge_admin.pay_at,tz_recharge_admin.user_id,tz_recharge_admin.recharge_amount,tz_recharge_admin.recharge_way,tz_recharge_admin.trade_no,tz_recharge_admin.recharge_uid,tz_recharge_admin.created_at,tz_recharge_admin.audit_status,tz_recharge_admin.remarks,b.name as recharger,c.name as customer_name,c.email as customer_email'))
 				->orderBy('tz_recharge_admin.created_at','desc')
 				->get();
 
@@ -97,7 +97,7 @@ class RechargeModel extends Model
 				$list = $this
 				->leftjoin('admin_users as b','tz_recharge_admin.recharge_uid','=','b.id')
 				->leftjoin('tz_users as c','tz_recharge_admin.user_id','=','c.id')
-				->select(DB::raw('tz_recharge_admin.id,tz_recharge_admin.user_id,tz_recharge_admin.recharge_amount,tz_recharge_admin.recharge_way,tz_recharge_admin.trade_no,tz_recharge_admin.recharge_uid,tz_recharge_admin.created_at,tz_recharge_admin.audit_status,tz_recharge_admin.remarks,b.name as recharger,c.name as customer_name,c.email as customer_email'))
+				->select(DB::raw('tz_recharge_admin.id,tz_recharge_admin.pay_at,tz_recharge_admin.user_id,tz_recharge_admin.recharge_amount,tz_recharge_admin.recharge_way,tz_recharge_admin.trade_no,tz_recharge_admin.recharge_uid,tz_recharge_admin.created_at,tz_recharge_admin.audit_status,tz_recharge_admin.remarks,b.name as recharger,c.name as customer_name,c.email as customer_email'))
 				->where('tz_recharge_admin.audit_status',$need)
 				->orderBy('tz_recharge_admin.created_at','desc')
 				->get();
@@ -169,7 +169,7 @@ class RechargeModel extends Model
 				$list = $this
 				->leftjoin('admin_users as b','tz_recharge_admin.recharge_uid','=','b.id')
 				->leftjoin('tz_users as c','tz_recharge_admin.user_id','=','c.id')
-				->select(DB::raw('tz_recharge_admin.id,tz_recharge_admin.user_id,tz_recharge_admin.recharge_amount,tz_recharge_admin.recharge_way,tz_recharge_admin.trade_no,tz_recharge_admin.recharge_uid,tz_recharge_admin.created_at,tz_recharge_admin.audit_status,tz_recharge_admin.remarks,b.name as recharger,c.name as customer_name,c.email as customer_email'))
+				->select(DB::raw('tz_recharge_admin.id,tz_recharge_admin.pay_at,tz_recharge_admin.user_id,tz_recharge_admin.recharge_amount,tz_recharge_admin.recharge_way,tz_recharge_admin.trade_no,tz_recharge_admin.recharge_uid,tz_recharge_admin.created_at,tz_recharge_admin.audit_status,tz_recharge_admin.remarks,b.name as recharger,c.name as customer_name,c.email as customer_email'))
 				->where('tz_recharge_admin.recharge_uid',$user_id)
 				->orderBy('tz_recharge_admin.created_at','desc')
 				->get();
@@ -180,7 +180,7 @@ class RechargeModel extends Model
 				$list = $this
 				->leftjoin('admin_users as b','tz_recharge_admin.recharge_uid','=','b.id')
 				->leftjoin('tz_users as c','tz_recharge_admin.user_id','=','c.id')
-				->select(DB::raw('tz_recharge_admin.id,tz_recharge_admin.user_id,tz_recharge_admin.recharge_amount,tz_recharge_admin.recharge_way,tz_recharge_admin.trade_no,tz_recharge_admin.recharge_uid,tz_recharge_admin.created_at,tz_recharge_admin.audit_status,tz_recharge_admin.remarks,b.name as recharger,c.name as customer_name,c.email as customer_email'))
+				->select(DB::raw('tz_recharge_admin.id,tz_recharge_admin.pay_at,tz_recharge_admin.user_id,tz_recharge_admin.recharge_amount,tz_recharge_admin.recharge_way,tz_recharge_admin.trade_no,tz_recharge_admin.recharge_uid,tz_recharge_admin.created_at,tz_recharge_admin.audit_status,tz_recharge_admin.remarks,b.name as recharger,c.name as customer_name,c.email as customer_email'))
 				->where('tz_recharge_admin.audit_status',$need)
 				->where('tz_recharge_admin.recharge_uid',$user_id)
 				->orderBy('tz_recharge_admin.created_at','desc')

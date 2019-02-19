@@ -268,6 +268,11 @@ class RechargeModel extends Model
 			$return['msg'] = '该审核单已审核完毕';
 			return $return;
 		}
+		if($trade->pay_at == null){
+			$return['msg'] = '请填写到账时间';
+			return $return;
+		}
+		
 		$test = DB::table('tz_recharge_flow')->where('trade_no',$trade->trade_no)->value('id');
 		if($test != null){
 			DB::rollBack();

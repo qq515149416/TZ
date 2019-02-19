@@ -410,13 +410,14 @@ class UnderModel extends Model
         }
         $orders = DB::table('tz_orders')->where($where)->where('resource_type', '>', 3)->whereBetween('remove_status', [1, 3])->orderBy('updated_at', 'desc')->select('order_sn', 'business_sn', 'customer_name', 'resource_type', 'business_name', 'machine_sn', 'resource', 'remove_reason', 'remove_status')->get();
 
+
         //遍历查询  资源所属业务的机器所在的机柜  和 IP
-//        foreach ($orders as $key =>$value) {
-//            $rData= $this->getResourceData($value->business_sn); //根据业务号获取机柜和IP信息
-//            $orders[$key]->ip =  $rData->ip;    //ip放入到订单数据中
-//            $orders[$key]->cabinet_id= $rData->cabinet_id;  //机柜编号放入到订单订单数据中
-//        }
-//        dump($orders);
+        foreach ($orders as $key => $value) {
+            $rData = $this->getResourceData($value->business_sn); //根据业务号获取机柜和IP信息
+            $orders[$key]->ip =  $rData['ip'];    //ip放入到订单数据中
+            $orders[$key]->cabinet_id= $rData['cabinet_id'];  //机柜编号放入到订单订单数据中
+        }
+
 
         if (!empty($orders)) {
             $resource_type = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜', 4 => 'IP', 5 => 'CPU', 6 => '硬盘', 7 => '内存', 8 => '带宽', 9 => '防护', 10 => 'cdn', 11 => '高防IP'];
@@ -462,16 +463,44 @@ class UnderModel extends Model
             ->where('business_number', $businessSn)
             ->first();
 
-        //$testData->machine_number   机器编号
-        //TODO 若IPID 或机柜ID  为0不知是否会产生错误
         $machineData = DB::table('idc_machine')
-            ->join('idc_ips', 'idc_machine.ip_id', '=', 'idc_ips.id')
-            ->join('idc_cabinet', 'idc_machine.cabinet', '=', 'idc_cabinet.id')
             ->where('machine_num', $businessData->machine_number)
-            ->select('idc_cabinet.cabinet_id', 'idc_ips.ip')
             ->first();
 
-        return $machineData;
+        //判断ip是否为空
+        if ($machineData->ip_id == 0) {
+            $resData['ip'] = '未配置IP';
+        } else {
+            $ipData        = DB::table('idc_ips')
+                ->where('id', $machineData->ip_id)
+                ->first();
+            $resData['ip'] = $ipData->ip;
+        }
+
+
+        //判断是否配置了机柜
+        if ($machineData->cabinet == 0) {
+            $resData['cabinet'] = '未配置机柜';
+        } else {
+            $cabinetData        = DB::table('idc_cabinet')
+                ->where('id', $machineData->cabinet)
+                ->first();
+            $resData['cabinet_id'] = $cabinetData->cabinet_id;
+        }
+
+
+        return $resData;
+
+        //多表联查-------------------------------------
+        //$testData->machine_number   机器编号
+        //TODO 若IPID 或机柜ID  为0不知是否会产生错误
+//        $machineData = DB::table('idc_machine')
+//            ->join('idc_ips', 'idc_machine.ip_id', '=', 'idc_ips.id')
+//            ->join('idc_cabinet', 'idc_machine.cabinet', '=', 'idc_cabinet.id')
+//            ->where('machine_num', $businessData->machine_number)
+//            ->select('idc_cabinet.cabinet_id', 'idc_ips.ip')
+//            ->first();
+
 
     }
 }

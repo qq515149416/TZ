@@ -345,7 +345,7 @@ class RechargeModel extends Model
 			'recharge_way'		=> 3,
 			'trade_no'		=> $trade->trade_no,
 			'voucher'		=> $voucher,
-			'timestamp'		=> $trade->audit_time,
+			'timestamp'		=> $trade->pay_at,
 			'trade_status'		=> 1,
 			'money_before'		=> $money_before,
 			'money_after'		=> $money_after,

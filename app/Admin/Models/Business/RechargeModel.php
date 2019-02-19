@@ -142,7 +142,9 @@ class RechargeModel extends Model
 					case '9':
 						$list[$i]['recharge_way'] = '微信支付';
 						break;
-					
+					case '10':
+						$list[$i]['recharge_way'] = '新支付宝';
+						break;
 					default:
 						$list[$i]['recharge_way'] = '无此状态';
 						break;
@@ -227,7 +229,9 @@ class RechargeModel extends Model
 					case '9':
 						$list[$i]['recharge_way'] = '微信支付';
 						break;
-					
+					case '10':
+						$list[$i]['recharge_way'] = '新支付宝';
+						break;
 					default:
 						$list[$i]['recharge_way'] = '无此状态';
 						break;
@@ -328,7 +332,9 @@ class RechargeModel extends Model
 			case '9':
 				$voucher = '微信支付';
 				break;
-			
+			case '10':
+				$voucher = '新支付宝';
+				break;
 			default:
 				$voucher = '无此状态';
 				break;

@@ -87,7 +87,7 @@ class RechargeModel extends Model
 				$list = $this
 				->leftjoin('admin_users as b','tz_recharge_admin.recharge_uid','=','b.id')
 				->leftjoin('tz_users as c','tz_recharge_admin.user_id','=','c.id')
-				->select(DB::raw('tz_recharge_admin.id,tz_recharge_admin.user_id,tz_recharge_admin.recharge_amount,tz_recharge_admin.recharge_way,tz_recharge_admin.trade_no,tz_recharge_admin.recharge_uid,tz_recharge_admin.created_at,tz_recharge_admin.audit_status,tz_recharge_admin.remarks,b.name as recharger,c.name as customer_name,c.email as customer_email'))
+				->select(DB::raw('tz_recharge_admin.id,tz_recharge_admin.pay_at,tz_recharge_admin.user_id,tz_recharge_admin.recharge_amount,tz_recharge_admin.recharge_way,tz_recharge_admin.trade_no,tz_recharge_admin.recharge_uid,tz_recharge_admin.created_at,tz_recharge_admin.audit_status,tz_recharge_admin.remarks,b.name as recharger,c.name as customer_name,c.email as customer_email'))
 				->orderBy('tz_recharge_admin.created_at','desc')
 				->get();
 
@@ -97,7 +97,7 @@ class RechargeModel extends Model
 				$list = $this
 				->leftjoin('admin_users as b','tz_recharge_admin.recharge_uid','=','b.id')
 				->leftjoin('tz_users as c','tz_recharge_admin.user_id','=','c.id')
-				->select(DB::raw('tz_recharge_admin.id,tz_recharge_admin.user_id,tz_recharge_admin.recharge_amount,tz_recharge_admin.recharge_way,tz_recharge_admin.trade_no,tz_recharge_admin.recharge_uid,tz_recharge_admin.created_at,tz_recharge_admin.audit_status,tz_recharge_admin.remarks,b.name as recharger,c.name as customer_name,c.email as customer_email'))
+				->select(DB::raw('tz_recharge_admin.id,tz_recharge_admin.pay_at,tz_recharge_admin.user_id,tz_recharge_admin.recharge_amount,tz_recharge_admin.recharge_way,tz_recharge_admin.trade_no,tz_recharge_admin.recharge_uid,tz_recharge_admin.created_at,tz_recharge_admin.audit_status,tz_recharge_admin.remarks,b.name as recharger,c.name as customer_name,c.email as customer_email'))
 				->where('tz_recharge_admin.audit_status',$need)
 				->orderBy('tz_recharge_admin.created_at','desc')
 				->get();
@@ -142,7 +142,9 @@ class RechargeModel extends Model
 					case '9':
 						$list[$i]['recharge_way'] = '微信支付';
 						break;
-					
+					case '10':
+						$list[$i]['recharge_way'] = '新支付宝';
+						break;
 					default:
 						$list[$i]['recharge_way'] = '无此状态';
 						break;
@@ -169,7 +171,7 @@ class RechargeModel extends Model
 				$list = $this
 				->leftjoin('admin_users as b','tz_recharge_admin.recharge_uid','=','b.id')
 				->leftjoin('tz_users as c','tz_recharge_admin.user_id','=','c.id')
-				->select(DB::raw('tz_recharge_admin.id,tz_recharge_admin.user_id,tz_recharge_admin.recharge_amount,tz_recharge_admin.recharge_way,tz_recharge_admin.trade_no,tz_recharge_admin.recharge_uid,tz_recharge_admin.created_at,tz_recharge_admin.audit_status,tz_recharge_admin.remarks,b.name as recharger,c.name as customer_name,c.email as customer_email'))
+				->select(DB::raw('tz_recharge_admin.id,tz_recharge_admin.pay_at,tz_recharge_admin.user_id,tz_recharge_admin.recharge_amount,tz_recharge_admin.recharge_way,tz_recharge_admin.trade_no,tz_recharge_admin.recharge_uid,tz_recharge_admin.created_at,tz_recharge_admin.audit_status,tz_recharge_admin.remarks,b.name as recharger,c.name as customer_name,c.email as customer_email'))
 				->where('tz_recharge_admin.recharge_uid',$user_id)
 				->orderBy('tz_recharge_admin.created_at','desc')
 				->get();
@@ -180,7 +182,7 @@ class RechargeModel extends Model
 				$list = $this
 				->leftjoin('admin_users as b','tz_recharge_admin.recharge_uid','=','b.id')
 				->leftjoin('tz_users as c','tz_recharge_admin.user_id','=','c.id')
-				->select(DB::raw('tz_recharge_admin.id,tz_recharge_admin.user_id,tz_recharge_admin.recharge_amount,tz_recharge_admin.recharge_way,tz_recharge_admin.trade_no,tz_recharge_admin.recharge_uid,tz_recharge_admin.created_at,tz_recharge_admin.audit_status,tz_recharge_admin.remarks,b.name as recharger,c.name as customer_name,c.email as customer_email'))
+				->select(DB::raw('tz_recharge_admin.id,tz_recharge_admin.pay_at,tz_recharge_admin.user_id,tz_recharge_admin.recharge_amount,tz_recharge_admin.recharge_way,tz_recharge_admin.trade_no,tz_recharge_admin.recharge_uid,tz_recharge_admin.created_at,tz_recharge_admin.audit_status,tz_recharge_admin.remarks,b.name as recharger,c.name as customer_name,c.email as customer_email'))
 				->where('tz_recharge_admin.audit_status',$need)
 				->where('tz_recharge_admin.recharge_uid',$user_id)
 				->orderBy('tz_recharge_admin.created_at','desc')
@@ -227,7 +229,9 @@ class RechargeModel extends Model
 					case '9':
 						$list[$i]['recharge_way'] = '微信支付';
 						break;
-					
+					case '10':
+						$list[$i]['recharge_way'] = '新支付宝';
+						break;
 					default:
 						$list[$i]['recharge_way'] = '无此状态';
 						break;
@@ -264,6 +268,11 @@ class RechargeModel extends Model
 			$return['msg'] = '该审核单已审核完毕';
 			return $return;
 		}
+		if($trade->pay_at == null){
+			$return['msg'] = '请填写到账时间';
+			return $return;
+		}
+		
 		$test = DB::table('tz_recharge_flow')->where('trade_no',$trade->trade_no)->value('id');
 		if($test != null){
 			DB::rollBack();
@@ -328,7 +337,9 @@ class RechargeModel extends Model
 			case '9':
 				$voucher = '微信支付';
 				break;
-			
+			case '10':
+				$voucher = '新支付宝';
+				break;
 			default:
 				$voucher = '无此状态';
 				break;
@@ -339,7 +350,7 @@ class RechargeModel extends Model
 			'recharge_way'		=> 3,
 			'trade_no'		=> $trade->trade_no,
 			'voucher'		=> $voucher,
-			'timestamp'		=> $trade->audit_time,
+			'timestamp'		=> $trade->pay_at,
 			'trade_status'		=> 1,
 			'money_before'		=> $money_before,
 			'money_after'		=> $money_after,

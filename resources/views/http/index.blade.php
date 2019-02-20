@@ -22,6 +22,9 @@
             <li data-target="#carousel-example-generic" data-slide-to="3">
                 <span class="progress"></span>
             </li>
+            <li data-target="#carousel-example-generic" data-slide-to="4">
+                <span class="progress"></span>
+            </li>
         </ol>
 
         <!-- Wrapper for slides -->

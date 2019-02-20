@@ -22,11 +22,21 @@
             <li data-target="#carousel-example-generic" data-slide-to="3">
                 <span class="progress"></span>
             </li>
+            <li data-target="#carousel-example-generic" data-slide-to="4">
+                <span class="progress"></span>
+            </li>
         </ol>
 
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox">
             <div class="item active">
+                <a href="javascript:;" target="_blank">
+                    <img src="{{ asset("/images/banner/ddk.jpg") }}" alt="...">
+                    <div class="carousel-caption">
+                    </div>
+                </a>
+            </div>
+            <div class="item">
                 <a href="http://www.15cdn.com/" target="_blank">
                     <img src="{{ asset("/images/banner/kai.png") }}" alt="...">
                     <div class="carousel-caption">
@@ -502,10 +512,10 @@
                                 <span class="icon fanghu"></span>
                             </div>
                             <div class="title">
-                                立体安全防护
+                                安全防护体系
                             </div>
                             <div class="dec">
-                            全线防护采用金盾防护产品配合腾正自主研发的立体式安全防护技术，有效防止各种攻击
+                                全线采用自主研发安全牵引系统和数据安全防护体系，有效保护客户业务数据信息安全
                             </div>
                         </a>
                     </div>

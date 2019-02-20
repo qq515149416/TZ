@@ -51,7 +51,7 @@
                                 <a href="/page/tz/easy">高防CDN</a>
                             </dd>
                             <dd>
-                                <a href="/page/tz/easy">DDOS高防IP</a>
+                                <a href="/dist/highDefense.html">DDOS高防IP</a>
                             </dd>
                             <dd>
                                 <a href="/page/tz/easy">防C盾</a>

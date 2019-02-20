@@ -48,7 +48,7 @@ Route::group([
     Route::get('loginCheck', 'TzAuth\LoginController@loginCheck'); //检测登录状态
     Route::get('time', 'Test\TimeController@time'); //测试时间
     Route::get('user', 'Test\TimeController@time'); //测试时间
-    Route::git ('xun','Test\XunsearchController@test');//测试迅搜
+    Route::get ('xun','Test\XunsearchController@test');//测试迅搜索
 });
 
 //news接口路径
@@ -235,7 +235,6 @@ Route::group([
         });
 
     });
-//    Route::get('defenseIp/showPackage', 'DefenseIp\OrderController@showPackage'); //前台显示套餐
 
 
 

@@ -453,54 +453,58 @@ class UnderModel extends Model
     }
 
     /**
-     * 根据业务号 获取机器机柜  和IP
+     * 根据业务号 获取机器机柜 和IP
+     *  TODO 未加机房
      *
-     * @param $rId
+     * @param $businessSn
+     * @return mixed
      */
     public function getResourceData($businessSn)
     {
+        //查询业务数据
         $businessData = DB::table('tz_business')
             ->where('business_number', $businessSn)
             ->first();
 
+        //查询机器数据
         $machineData = DB::table('idc_machine')
             ->where('machine_num', $businessData->machine_number)
             ->first();
 
         //判断ip是否为空
         if ($machineData->ip_id == 0) {
+            //当ipID 为0时
             $resData['ip'] = '未配置IP';
         } else {
+            //不为0时
             $ipData        = DB::table('idc_ips')
                 ->where('id', $machineData->ip_id)
                 ->first();
             $resData['ip'] = $ipData->ip;
         }
 
-
         //判断是否配置了机柜
         if ($machineData->cabinet == 0) {
+            //当未配置机柜时
             $resData['cabinet'] = '未配置机柜';
         } else {
+            //配置机柜时
             $cabinetData        = DB::table('idc_cabinet')
                 ->where('id', $machineData->cabinet)
                 ->first();
             $resData['cabinet_id'] = $cabinetData->cabinet_id;
         }
 
-
         return $resData;
 
-        //多表联查-------------------------------------
+        //----多表联查（为启用）-------------------------------------
         //$testData->machine_number   机器编号
-        //TODO 若IPID 或机柜ID  为0不知是否会产生错误
+        //
 //        $machineData = DB::table('idc_machine')
 //            ->join('idc_ips', 'idc_machine.ip_id', '=', 'idc_ips.id')
 //            ->join('idc_cabinet', 'idc_machine.cabinet', '=', 'idc_cabinet.id')
 //            ->where('machine_num', $businessData->machine_number)
 //            ->select('idc_cabinet.cabinet_id', 'idc_ips.ip')
 //            ->first();
-
-
     }
 }

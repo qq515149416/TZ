@@ -48,7 +48,7 @@ Route::group([
     Route::get('loginCheck', 'TzAuth\LoginController@loginCheck'); //检测登录状态
     Route::get('time', 'Test\TimeController@time'); //测试时间
     Route::get('user', 'Test\TimeController@time'); //测试时间
-
+    Route::git ('xun','Test\XunsearchController@test');//测试迅搜
 });
 
 //news接口路径
@@ -229,12 +229,13 @@ Route::group([
             Route::post('getStatistics', 'DefenseIp\InfoController@getStatistics');  //获取流量数据
             Route::post('setTarget', 'DefenseIp\SetController@setTarget');  //配置目标IP
 
-            Route::get('showPackage', 'DefenseIp\OrderController@showPackage'); //前台显示套餐
+//            Route::get('showPackage', 'DefenseIp\OrderController@showPackage'); //前台显示套餐
             Route::get('buyDefenseIpNow', 'DefenseIp\OrderController@buyNow'); //购买套餐
             Route::get('renewDefenseIp', 'DefenseIp\OrderController@renew'); //续费套餐
         });
 
     });
+    Route::get('defenseIp/showPackage', 'DefenseIp\OrderController@showPackage'); //前台显示套餐
 
 
 

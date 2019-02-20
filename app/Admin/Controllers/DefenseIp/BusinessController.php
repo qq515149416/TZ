@@ -68,8 +68,16 @@ class BusinessController extends Controller
 		return tz_ajax_echo($makeOrder['data'],$makeOrder['msg'],$makeOrder['code']);
 	}
 
-	
-	public function test(){
+	/**
+	*        	$need_month	-续费时长 ; $today	-今天几日  ; $this_month	-今天几月;
+	*/
+	public function test($need_month = 12,$today = 30,$this_month = 1){
 		
+		$this_month = date("Y-{$this_month}");
+		$next_next_month = $need_month+1;
+		$last_day = date("d",strtotime("{$this_month}+{$next_next_month} month -1 day"));
+		$next_month = date("Y-m",strtotime("{$this_month}+{$need_month} month"));
+		$next_day=$today<$last_day ? $today:$last_day;
+		echo '续费日期是'.$this_month.'-'.$today.', 续费 '.$need_month.'个月后是'.$next_month.'-'.$next_day;
 	}
 }

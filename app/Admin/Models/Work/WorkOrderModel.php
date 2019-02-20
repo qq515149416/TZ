@@ -55,6 +55,7 @@ class WorkOrderModel extends Model
                         ->get(['id','work_order_number','business_num','customer_id','clerk_id','work_order_type',
                               'work_order_content','submitter_id','submitter_name','submitter','work_order_status',
                               'process_department','complete_id','complete_number','summary','complete_time','created_at','updated_at']);
+
         if(!$result->isEmpty()){
             // 查询到数据进行转换
             $submitter = [1=>'客户',2=>'内部人员'];
@@ -80,8 +81,10 @@ class WorkOrderModel extends Model
                 $result[$showkey]['resource_detail'] = $business->resource_detail;
                 $result[$showkey]['sales_name'] = $business->sales_name;
                 // dump($result);
+                $result[$showkey] = $this->getInfo($result[$showkey]);
             }
-
+          
+        
             $return['data'] = $result;
             $return['code'] = 1;
             $return['msg'] = '工单信息获取成功！！';
@@ -91,6 +94,33 @@ class WorkOrderModel extends Model
             $return['msg'] = '暂无对应工单数据';
         }
         return $return;
+    }
+
+    /**
+     * 提供工单资料,获取详细信息,资产编号,机房机柜等.
+     * @param  array $order 工单
+     * 
+     */
+    public function getInfo($order){
+        $machine = DB::table('idc_machine')->get(['cabinet','ip_id','machineroom'])->toArray();
+
+        if($order['cabinet'] != null){
+             $order['cabinet'] = DB::table('idc_cabinet')->where('id',$machine[0]['cabinet'])->value('cabinet_id');
+         }else{
+            $order['cabinet'] = '无机柜信息';
+         }
+        if($order['ip'] != null){
+             $order['ip'] = DB::table('idc_ips')->where('id',$machine[0]['ip_id'])->value('ip');
+         }else{
+            $order['ip'] = '无ip信息';
+         }
+         if($order['machineroom'] != null){
+             $order['machineroom'] = DB::table('idc_machineroom')->where('id',$machine[0]['machineroom'])->value('machine_room_name');
+         }else{
+            $order['machineroom'] = '无机房信息';
+         }
+        
+        return $order;
     }
 
     /**

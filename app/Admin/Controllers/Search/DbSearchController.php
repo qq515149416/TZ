@@ -74,6 +74,7 @@ class DbSearchController extends Controller
         //机器编号作为条件查询
         $resData['data'] = DB::table('tz_business')
             ->where('machine_number', $machineNum)
+            ->where('remove_status', '!=', 4)
             ->first();
 
         $resData['msg']  = '获取成功';
@@ -100,6 +101,32 @@ class DbSearchController extends Controller
 
         return $resData;
 
+    }
+
+
+    /**
+     * 查询机柜编号
+     * 根据机柜ID获取机柜编号
+     */
+    private function getBusinessId()
+    {
+
+
+    }
+
+
+    /**
+     * 根据用户ID 获取用户数据
+     */
+    private function getUserInfo($userId)
+    {
+
+        $userData = DB::table('tz_users')
+            ->where('id', $userId)
+            ->first()
+            ->toArray();
+
+        return $userData;
     }
 
 

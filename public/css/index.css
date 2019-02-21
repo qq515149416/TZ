@@ -1630,3 +1630,32 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   border: 1px solid #3251ed;
   color: #fff;
 }
+#ddk_promotion .body {
+  border-top: 1px solid #21252e;
+  background: url(/images/promotion_ddk_BG_.jpg?43f348f8a972b03b34d0a3a4cd9152f6) no-repeat;
+  background-size: 100% 100%;
+}
+#ddk_promotion .body .title {
+  width: 454px;
+  margin: 0 auto;
+  margin-top: 45px;
+}
+#ddk_promotion .body .title span {
+  width: 35px;
+  height: 48px;
+  background: url(/images/promotion_ddk_BT_dianzhui.png?709840addcaca9ea8b4c0862580433f0) no-repeat;
+  background-size: 100% 100%;
+}
+#ddk_promotion .body .title span:first-of-type {
+  margin-right: 20px;
+}
+#ddk_promotion .body .title span:last-of-type {
+  margin-left: 20px;
+}
+#ddk_promotion .body .title h3 {
+  margin: 0;
+  color: #fff;
+  font-size: 24px;
+  font-weight: normal;
+  line-height: 48px;
+}

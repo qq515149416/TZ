@@ -102,7 +102,7 @@ class WorkOrderModel extends Model
      * 
      */
     public function getInfo($order){
-        $machine = DB::table('idc_machine')->where('own_business',$order['business_num'])->get(['cabinet','ip_id','machineroom'])->toArray();
+        $machine = DB::table('idc_machine')->where('own_business',$order['business_num'])->get(['cabinet','ip_id','machineroom']);
        
         if(!$machine->isEmpty() && $machine[0]->cabinet != null){
              $order['cabinet'] = DB::table('idc_cabinet')->where('id',$machine[0]->cabinet)->value('cabinet_id');

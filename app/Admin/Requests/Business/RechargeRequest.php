@@ -61,7 +61,10 @@ class RechargeRequest extends FormRequest
 			case 'auditRecharge':
 				$return = [
 					'audit_status'		=> 'required|between:-1,1|integer',	
-					'trade_id'		=> 'required|integer|exists:tz_recharge_admin,id',		
+					'recharge_amount'	=> 'required|integer|min:1.00',
+					'recharge_way'		=> 'required',	
+					'trade_id'		=> 'required|integer|exists:tz_recharge_admin,id',	
+					'time'			=> 'date',	
 				];
 				break;
 			case 'editAuditRecharge':
@@ -69,7 +72,7 @@ class RechargeRequest extends FormRequest
 					'recharge_amount'	=> 'required|integer|min:1.00',
 					'recharge_way'		=> 'required',		
 					'trade_id'		=> 'required|integer|exists:tz_recharge_admin,id',
-	
+					
 				];
 				break;
 			default:
@@ -97,7 +100,7 @@ class RechargeRequest extends FormRequest
 			'trade_id.integer'		=> 'id为整数',
 			'trade_id.exists'			=> '充值审核单不存在',
 			'time.required'			=> '请填写到账时间',
-
+			'time.date'			=> '到账日期格式错误',
 		];
 	}
 

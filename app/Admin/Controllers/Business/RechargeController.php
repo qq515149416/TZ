@@ -63,14 +63,19 @@ class RechargeController extends Controller
 	 * @return 
 	 */
 	public function auditRecharge(RechargeRequest $request){
-		$info = $request->only(['audit_status','trade_id']);
+		$info = $request->only(['audit_status','trade_id','recharge_amount','recharge_way','time']);
 		$audit_status = $info['audit_status'];
 		$trade_id = $info['trade_id'];
 		if($audit_status == 0){
 			return tz_ajax_echo('','审核结果不能为0',0);
 		}
 		$model = new RechargeModel();
-		$res = $model->auditRecharge($audit_status,$trade_id);
+		if(isset($info['time'])){
+			$time = $info['time'];
+		}else{
+			$time = '';
+		}
+		$res = $model->auditRecharge($audit_status,$trade_id,$info['recharge_amount'],$info['recharge_way'],$time);
 
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}

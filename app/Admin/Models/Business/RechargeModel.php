@@ -251,24 +251,25 @@ class RechargeModel extends Model
 	 * @param  Request $request [description]
 	 * @return 
 	 */
-	public function auditRecharge($audit_status,$trade_id){
+	public function auditRecharge($audit_status,$trade_id,$recharge_amount,$recharge_way,$time){
 		$return['data'] 	= [];
 		$return['code']	= 0;
 		$auditor_id = Admin::user()->id;
 		
 		$trade = $this->find($trade_id);
-
 		if($trade == null){
 			$return['data'] 	= [];
 			$return['code']	= 1;
 			$return['msg'] = '无此充值审核单';
 			return $return;
 		}
+
 		if($trade->audit_status != 0){
 			$return['msg'] = '该审核单已审核完毕';
 			return $return;
 		}
-		if($trade->pay_at == null){
+
+		if($audit_status == 1 && $trade->pay_at == null && $time == ''){
 			$return['msg'] = '请填写到账时间';
 			return $return;
 		}
@@ -279,13 +280,18 @@ class RechargeModel extends Model
 			$return['msg'] = '该审核单的充值流水已存在,请确认审核单';
 			return $return;
 		}
-
 		DB::beginTransaction();
+		$trade->recharge_way = $recharge_way;
+		$trade->recharge_amount = $recharge_amount;
+		if($time != ''){
+			$trade->pay_at = $time;	
+		}
 		$trade->auditor_id	= $auditor_id;
 		$trade->audit_status	= $audit_status;
 		$trade->audit_time	= date("Y-m-d H:i:s",time());
-
+		
 		$audit_res = $trade->save();
+
 
 		if($audit_res != true){
 			DB::rollBack();

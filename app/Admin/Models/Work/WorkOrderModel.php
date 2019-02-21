@@ -102,20 +102,20 @@ class WorkOrderModel extends Model
      * 
      */
     public function getInfo($order){
-        $machine = DB::table('idc_machine')->get(['cabinet','ip_id','machineroom'])->toArray();
-        dd($machine);
-        if($order['cabinet'] != null){
-             $order['cabinet'] = DB::table('idc_cabinet')->where('id',$machine[0]['cabinet'])->value('cabinet_id');
+        $machine = DB::table('idc_machine')->where('own_business',$order['business_num'])->get(['cabinet','ip_id','machineroom']);
+       
+        if(!$machine->isEmpty() && $machine[0]->cabinet != null){
+             $order['cabinet'] = DB::table('idc_cabinet')->where('id',$machine[0]->cabinet)->value('cabinet_id');
          }else{
             $order['cabinet'] = '无机柜信息';
          }
-        if($order['ip'] != null){
-             $order['ip'] = DB::table('idc_ips')->where('id',$machine[0]['ip_id'])->value('ip');
+        if(!$machine->isEmpty() && $machine[0]->ip_id != null){
+             $order['ip'] = DB::table('idc_ips')->where('id',$machine[0]->ip_id)->value('ip');
          }else{
             $order['ip'] = '无ip信息';
          }
-         if($order['machineroom'] != null){
-             $order['machineroom'] = DB::table('idc_machineroom')->where('id',$machine[0]['machineroom'])->value('machine_room_name');
+         if(!$machine->isEmpty() && $machine[0]->machineroom != null){
+             $order['machineroom'] = DB::table('idc_machineroom')->where('id',$machine[0]->machineroom)->value('machine_room_name');
          }else{
             $order['machineroom'] = '无机房信息';
          }

@@ -124,7 +124,7 @@ class StoreModel extends Model
 		}else{
 			if($site == '*'){
 				$ip_list = $this
-					->where('status',0)
+					->where('status',$status)
 					->get()
 					->toArray();
 			}else{

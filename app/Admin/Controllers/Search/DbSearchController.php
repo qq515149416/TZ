@@ -52,8 +52,8 @@ class DbSearchController extends Controller
                 break;
 
             case 2://通过资源编号搜索
-
-
+                $resData = $this->searchMachineNum($keyword);
+                dump($resData);
                 break;
 
             default://默认搜索类型
@@ -71,8 +71,15 @@ class DbSearchController extends Controller
      */
     private function searchMachineNum($machineNum)
     {
+        //机器编号作为条件查询
+        $resData['data'] = DB::table('tz_business')
+            ->where('machine_number', $machineNum)
+            ->first();
 
+        $resData['msg']  = '获取成功';
+        $resData['code'] = 1;
 
+        return $resData;
 
     }
 

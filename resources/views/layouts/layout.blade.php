@@ -51,7 +51,7 @@
                                 <a href="/page/tz/easy">高防CDN</a>
                             </dd>
                             <dd>
-                                <a href="/page/tz/easy">DDOS高防IP</a>
+                                <a href="/dist/highDefense.html">DDOS高防IP</a>
                             </dd>
                             <dd>
                                 <a href="/page/tz/easy">防C盾</a>
@@ -614,5 +614,13 @@
     <script src="{{ asset("/js/swiper.min.js") }}"></script>
     <script src="{{ asset("/js/swiper.animate1.0.3.min.js") }}"></script>
     <script src="{{ asset("/js/script.js") }}"></script>
+    <script>
+        var rs = [{"site":3,"rank":1,"email":"2885655958@qq.com","contactname":"成龙","contactid":35,"qq":"2885655958","mobile":"13790423606"},{"site":3,"rank":1,"email":"2853978330@qq.com","contactname":"禹豪","contactid":36,"qq":"2853978330","mobile":"15622908447"},{"site":3,"rank":1,"email":"2885650826@qq.com","contactname":"唐康","contactid":38,"qq":"2885650826","mobile":"13712756033"},{"site":3,"rank":1,"email":"2851506995@qq.com","contactname":"彭秋霞","contactid":41,"qq":"2851506995","mobile":"18218649432"},{"site":3,"rank":1,"email":"2851506994@qq.com","contactname":"王思恩","contactid":42,"qq":"2851506994","mobile":"17820147491"},{"site":3,"rank":3,"email":"wgd@tzidc.com","contactname":"国东","contactid":5,"qq":"2851506993","mobile":"18566500885"},{"site":3,"rank":5,"email":"2853978331@qq.com","contactname":"帅东","contactid":33,"qq":"2853978331","mobile":"13922933992"},{"site":3,"rank":6,"email":"yjh@tzidc.com","contactname":"嘉辉","contactid":8,"qq":"2853978334","mobile":"18566153210"},{"site":3,"rank":7,"email":"ye@tzidc.com","contactname":"小叶","contactid":6,"qq":"2851506997","mobile":"18566509950"},{"site":3,"rank":9,"email":"2851506992qq.com","contactname":"镜雄","contactid":10,"qq":"2851506992","mobile":"13592703394"},{"site":1,"rank":22,"email":"2851506990@qq.com","contactname":"小庞","contactid":22,"qq":"2851506990","mobile":"123"}];
+        function randomqq(){
+            var num = Math.random();
+            num = Math.ceil(num *rs.length)-1;
+            window.location.href="http://wpa.qq.com/msgrd?v=3&uin="+rs[num].qq+"&site=qq&menu=yes";
+        }
+    </script>
 </body>
 </html>

@@ -105,7 +105,7 @@ Route::group([
     Route::group([
         'prefix' => 'userCenter',                           //用户中心
     ], function () {
-       
+
         Route::get('resetNickName', 'Customer\UserCentorController@resetNickName');     //用户更改昵称
         Route::get('resetAcc', 'Customer\UserCentorController@resetAcc');                               //用户更改登录名
 
@@ -161,6 +161,7 @@ Route::group([
             Route::post('renewresource', 'Customer\OrderController@renewResource');//续费
             Route::get('all_renew','Customer\OrderController@allRenew');//获取业务下续费的资源
             Route::get('show_renew_order','Customer\OrderController@showRenewOrder');//展示续费的订单
+            Route::get('renew_pay','Customer\OrderController@payRenew');//续费订单支付
 
             Route::get('show_white_list', 'Customer\WhiteListController@showWhiteList');
             Route::post('insert_white_list', 'Customer\WhiteListController@insertWhiteList');

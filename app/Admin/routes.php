@@ -25,6 +25,7 @@ Route::group([
     $router->get('contacts/maillist', 'Others\ContactsController@test');
     $router->get('ip/test', 'Idc\IpsController@test');
     $router->get('account/test', 'Hr\AccountController@test');
+    $router->post('test/search', 'Search\DbSearchController@doSearch');//测试数据库搜索路由
 
     // 显示通讯录
     $router->get('staff/staff_list', 'Hr\EmployeeInformationController@showEmployee');//内部员工通讯录
@@ -67,7 +68,7 @@ Route::group([
     Route::group([
         'prefix' => 'show',
     ], function (Router $router) {
-        $router->get('/search','Show\GlobalSearchController@index');
+        $router->get('/search', 'Show\GlobalSearchController@index');
         $router->get('/user_list', 'Show\UserController@index');//用户列表
         $router->get('/user_link_list', 'Show\LinkUserController@index');
         $router->get('/hr/employeeManagement', 'Show\EmployeeManagementController@index');
@@ -77,7 +78,7 @@ Route::group([
         $router->get('/hr/usermanagement', 'Show\UserManagementController@index');
         Route::group([
             'middleware' => 'CheckStaff',
-        ],function(Router $router){
+        ], function (Router $router) {
             $router->get('/machine_room/show', 'Show\TestController@index');
             $router->get('/machine_room/socket', 'Show\TestController@socket');
             $router->get('/resource/ip', 'Show\IpController@index');
@@ -345,7 +346,7 @@ Route::group([
         $router->post('insert', 'Work\WhiteListController@insertWhiteList');//生成白名单申请单
         $router->post('check', 'Work\WhiteListController@checkWhiteList');//白名单申请单 审核接口
         $router->post('delete', 'Work\WhiteListController@deleteWhiteList');//白名单申请单 删除接口
-        $router->get('skipBeian','Work\WhiteListController@skipBeian');//跳转到工信部备案
+        $router->get('skipBeian', 'Work\WhiteListController@skipBeian');//跳转到工信部备案
     });
 
 
@@ -358,15 +359,15 @@ Route::group([
     ], function (Router $router) {
         // 业务
 
-        $router->get('machineroom','Business\BusinessController@machineroom');//新购业务时获取机房
-        $router->get('selectmachine','Business\BusinessController@selectMachine');//新购业务时选择机器
-        $router->get('selectcabinet','Business\BusinessController@selectCabinet');//新购业务时选择机柜
-        $router->post('insert','Business\BusinessController@insertBusiness');//产生业务
-        $router->get('security','Business\BusinessController@securityBusiness');//信安查看业务
-        $router->post('check','Business\BusinessController@checkBusiness');//信安审核业务
-        $router->post('enable','Business\BusinessController@enableBusiness');//启用业务（开发预留）
-        $router->get('showbusiness','Business\BusinessController@showBusiness');//展示业务数据
-        $router->post('deletebusiness','Business\BusinessController@deleteBusiness');//删除业务数据（开发预留）
+        $router->get('machineroom', 'Business\BusinessController@machineroom');//新购业务时获取机房
+        $router->get('selectmachine', 'Business\BusinessController@selectMachine');//新购业务时选择机器
+        $router->get('selectcabinet', 'Business\BusinessController@selectCabinet');//新购业务时选择机柜
+        $router->post('insert', 'Business\BusinessController@insertBusiness');//产生业务
+        $router->get('security', 'Business\BusinessController@securityBusiness');//信安查看业务
+        $router->post('check', 'Business\BusinessController@checkBusiness');//信安审核业务
+        $router->post('enable', 'Business\BusinessController@enableBusiness');//启用业务（开发预留）
+        $router->get('showbusiness', 'Business\BusinessController@showBusiness');//展示业务数据
+        $router->post('deletebusiness', 'Business\BusinessController@deleteBusiness');//删除业务数据（开发预留）
 
         // 订单
         $router->post('finance', 'Business\OrdersController@financeOrders');//财务查看订单
@@ -516,13 +517,13 @@ Route::group([
      */
     Route::group([
         'prefix' => 'under',
-    ],function(Router $route){
-        $route->post('apply_under','Business\UnderController@applyUnder');//申请下架
-        $route->get('under_history','Business\UnderController@underHistory');//下架历史记录
-        $route->post('do_under','Business\UnderController@doUnder');//操作下架
-        $route->get('show_apply_under','Business\UnderController@showApplyUnder');//展示申请记录
-        $route->get('depart','Business\UnderController@department');//转发机房
-        $route->get('random_code','Business\UnderController@randomCode');//转发机房
+    ], function (Router $route) {
+        $route->post('apply_under', 'Business\UnderController@applyUnder');//申请下架
+        $route->get('under_history', 'Business\UnderController@underHistory');//下架历史记录
+        $route->post('do_under', 'Business\UnderController@doUnder');//操作下架
+        $route->get('show_apply_under', 'Business\UnderController@showApplyUnder');//展示申请记录
+        $route->get('depart', 'Business\UnderController@department');//转发机房
+        $route->get('random_code', 'Business\UnderController@randomCode');//转发机房
     });
 
     /**
@@ -530,9 +531,9 @@ Route::group([
      */
     Route::group([
         'prefix' => 'excel',
-    ],function(Router $route){
-        Route::get('export','Excel\ExcelController@export');    //Excel导出
-        Route::get('import','Excel\ExcelController@import');    //Excel导入
+    ], function (Router $route) {
+        Route::get('export', 'Excel\ExcelController@export');    //Excel导出
+        Route::get('import', 'Excel\ExcelController@import');    //Excel导入
     });
 
     /**
@@ -543,24 +544,24 @@ Route::group([
         'prefix' => 'dataTransfer',
     ], function (Router $router) {
         $router->get('transMachineroom', 'DataTransfer\DataTransferController@transMachineroom');//转移机房数据
-       $router->get('transAdminUser', 'DataTransfer\DataTransferController@transAdminUser');//转移后台人员数据
-       $router->get('transIp', 'DataTransfer\DataTransferController@transIp');//转移IP资源数据
-       $router->get('transCabinet', 'DataTransfer\DataTransferController@transCabinet');//转移IP资源数据
-       $router->get('transMachine', 'DataTransfer\DataTransferController@transMachine');//转移IP资源数据
-       $router->get('transCustomer', 'DataTransfer\DataTransferController@transCustomer');//转移IP资源数据
+        $router->get('transAdminUser', 'DataTransfer\DataTransferController@transAdminUser');//转移后台人员数据
+        $router->get('transIp', 'DataTransfer\DataTransferController@transIp');//转移IP资源数据
+        $router->get('transCabinet', 'DataTransfer\DataTransferController@transCabinet');//转移IP资源数据
+        $router->get('transMachine', 'DataTransfer\DataTransferController@transMachine');//转移IP资源数据
+        $router->get('transCustomer', 'DataTransfer\DataTransferController@transCustomer');//转移IP资源数据
 
     });
 
-     /**
-         *  测试
-         */
-        Route::group([
-            'prefix' => 'test',
-        ], function (Router $router) {
-            $router->get('test', 'DefenseIp\BusinessController@test');  //查询过期业务
+    /**
+     *  测试
+     */
+    Route::group([
+        'prefix' => 'test',
+    ], function (Router $router) {
+        $router->get('test', 'DefenseIp\BusinessController@test');  //查询过期业务
 
 
-        });
+    });
 
     /**
      * 客户用户管理
@@ -569,8 +570,8 @@ Route::group([
         'prefix' => 'users',
     ], function (Router $router) {
 
-        $router->post('getUserInfo','TzUsers\InfoController@getUserInfo');//修改用户QQ、手机、备注等信息
-        $router->post('updateUserInfo','TzUsers\InfoController@updateUserInfo');//更新客户信息
+        $router->post('getUserInfo', 'TzUsers\InfoController@getUserInfo');//修改用户QQ、手机、备注等信息
+        $router->post('updateUserInfo', 'TzUsers\InfoController@updateUserInfo');//更新客户信息
 
     });
 

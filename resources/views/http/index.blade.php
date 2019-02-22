@@ -30,7 +30,7 @@
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox">
             <div class="item active">
-                <a href="javascript: randomqq();" target="_blank">
+                <a href="/promotion/ddk" target="_blank">
                     <img src="{{ asset("/images/banner/ddk.jpg") }}" alt="...">
                     <div class="carousel-caption">
                     </div>

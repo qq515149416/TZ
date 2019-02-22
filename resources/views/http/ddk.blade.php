@@ -18,7 +18,7 @@
             <p class="dec">CDN服务，视频流媒体，下载站等高带宽需求客户。</p>
             <div class="config">
                 <h5>产品配置</h5>
-                <ul>
+                <ul class="clearfix">
                     <li>
                         <span class="attr">CPU</span>
                         <span class="value">8核</span>
@@ -61,7 +61,7 @@
             </div>
 
             <a href="javascript:;" class="buy">购买咨询</a>
-            <p class="activity-tip">活动时间：<span class="date">2019年2月19日——3月31日</span></p>
+            <p class="activity-tip">活动时间：<span class="date">2019年2月19日 — 3月31日</span></p>
         </div>
     </div>
 </div>

@@ -35,9 +35,6 @@ class BusinessModel extends Model
             return $return;
         }
         //业务编号的生成规则：前两位（1-3的随机数）+ 年月日（如:20180830） + 时间戳的后5位数 + 7-9随机数（业务编号产生）
-        $business_sn               = $this->businesssn();
-        $insert['business_number'] = $business_sn;
-        $insert['business_status'] = 0;
         $client = DB::table('tz_users')->where(['id'=>$insert['client_id'],'status'=>2])->select('id','name','email')->first();
         if(!$client){
             $return['data'] = '';
@@ -45,6 +42,10 @@ class BusinessModel extends Model
             $return['msg']  = '客户不存在或账号未验证/异常,请确认后再创建业务!';
             return $return;
         }
+        DB::beginTransaction();//开启事务处理
+        $business_sn               = $this->businesssn();
+        $insert['business_number'] = $business_sn;
+        $insert['business_status'] = 0;
         $insert['client_name'] = $client->name?$client->name:$client->email;
         // 对应业务员的信息
         $sales_id             = Admin::user()->id;
@@ -57,7 +58,6 @@ class BusinessModel extends Model
         $end_time = Carbon::parse('+' . $insert['length'] . ' months')->toDateTimeString();
         $insert['start_time']   = $start_time;
         $insert['endding_time'] = $end_time;
-        DB::beginTransaction();//开启事务处理
         $row                  = DB::table('tz_business')->insertGetId($insert);
         if ($row == 0) {
             DB::rollBack();
@@ -77,14 +77,14 @@ class BusinessModel extends Model
             }
         }
         $relevance = DB::table('tz_business_relevance')->insert(['type'=>1,'business_id'=>$insert['business_number'],'created_at'=>date('Y-m-d H:i:s',time())]);
-        if($relevance != 0){
-    	    $xunsearch = new XS('business');
-    	    $index = $xunsearch->index;
+        if($relevance == true){
+            $xunsearch = new XS('business');
+            $index = $xunsearch->index;
             $resource = json_decode($insert['resource_detail']);
-            $doc['ip'] = strtolower($resource->ip);
-            $doc['cpu'] = strtolower($resource->cpu);
-            $doc['memory'] = strtolower($resource->memory);
-            $doc['harddisk'] = strtolower($resource->harddisk);
+            $doc['ip'] = isset($resource->ip)?strtolower($resource->ip):'';
+            $doc['cpu'] = isset($resource->cpu)?strtolower($resource->cpu):'';
+            $doc['memory'] = isset($resource->memory)?strtolower($resource->memory):'';
+            $doc['harddisk'] = isset($resource->harddisk)?strtolower($resource->harddisk):'';
             $doc['id'] = strtolower($row);
             $doc['business_sn'] = strtolower($business_sn);
             $doc['machine_number'] = strtolower($insert['machine_number']);
@@ -186,14 +186,17 @@ class BusinessModel extends Model
                 return $return;
             }
             if($check->business_type != 3){
-               $machine = DB::table('idc_machine')->where(['machine_num'=>$check->machine_number])->update(['used_status'=>0]);
-               if($machine == 0){
-                    DB::rollBack();
-                    $return['data'] = '审核失败';
-                    $return['code'] = 0;
-                    $return['msg']  = '审核失败!!';
-                    return $return;
-               } 
+                $omachine = DB::table('idc_machine')->where(['machine_num'=>$check->machine_number,'used_status'=>0])->first();//先检查是否该机器状态为未使用
+                if(empty($omachine)){//不是未使用，更新成为使用状态，是的话就不更新
+                    $machine = DB::table('idc_machine')->where(['machine_num'=>$check->machine_number])->update(['used_status'=>0]);
+                    if($machine == 0){
+                        DB::rollBack();
+                        $return['data'] = '审核失败';
+                        $return['code'] = 0;
+                        $return['msg']  = '审核失败!!';
+                        return $return;
+                    }
+                }     
             }
             DB::commit();
             $return['data'] = '';
@@ -240,7 +243,7 @@ class BusinessModel extends Model
         $order['created_at']    = Carbon::now()->toDateTimeString();
         // $order['month']         = (int)date('Ym', time());
         $order_row              = DB::table('tz_orders')->insert($order);//生成订单
-        if ($order_row == 0) {
+        if ($order_row != true) {
             // 订单生成失败
             DB::rollBack();
             $return['data'] = '审核失败';
@@ -254,7 +257,7 @@ class BusinessModel extends Model
             $machine['business_end'] = $order['end_time'];
             $machine['used_status']  = 1;
             $row                     = DB::table('idc_machine')->where('machine_num', $order['machine_sn'])->update($machine);
-            if (!$row) {
+            if ($row == 0) {
                 DB::rollBack();
                 $return['data'] = '审核失败';
                 $return['code'] = 0;

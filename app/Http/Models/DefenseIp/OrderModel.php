@@ -46,6 +46,7 @@ class OrderModel extends Model
 				->where('site',$package->site)
 				->where('protection_value',$package->protection_value)
 				->where('status',0)
+				->where('deleted_at',null)
 				->first();
 		
 		if($check_ip == null){

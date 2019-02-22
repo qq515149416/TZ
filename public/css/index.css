@@ -1659,3 +1659,32 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   font-weight: normal;
   line-height: 48px;
 }
+#ddk_promotion .body .product {
+  width: 1034px;
+  height: 599px;
+  background: url(/images/promotion_ddk_CP_BG.png?2e46cc1a235b9ea3a393fcd051269867) no-repeat;
+  background-size: 100% 100%;
+  margin: 0 auto;
+  margin-top: 46px;
+  padding: 26px 60px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+#ddk_promotion .body .product h4 {
+  margin: 20px 0;
+  border-bottom: 3px solid #0284ed;
+  font-size: 18px;
+  color: #28140c;
+  font-weight: normal;
+  display: inline-block;
+  line-height: 30px;
+}
+#ddk_promotion .body .product p.dec {
+  color: #4f4f4f;
+  font-size: 14px;
+  margin-bottom: 56px;
+}
+#ddk_promotion .body .product .config h5 {
+  color: #28140c;
+  font-size: 18px;
+}

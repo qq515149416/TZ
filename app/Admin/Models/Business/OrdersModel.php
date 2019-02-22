@@ -865,14 +865,17 @@ class OrdersModel extends Model
 				$return['msg']  = '余额不足，无法进行支付，续费失败，请充值后再续费';
 				return $return;
 			}
-			$over_money = bcsub($money,$total,2);//进行余额扣除
-			$users = DB::table('tz_users')->where(['id'=>$client_id])->update(['money'=>$over_money]);//更新余额到对应的客户
-			if($users == 0){//更新客户余额失败
-				$return['data'] = $pay_key['session_key'];
-				$return['code'] = 0;
-				$return['msg']  = '支付失败，续费失败';
-				return $return;
+			if($total != 0.00){
+				$over_money = bcsub($money,$total,2);//进行余额扣除
+				$users = DB::table('tz_users')->where(['id'=>$client_id])->update(['money'=>$over_money]);//更新余额到对应的客户
+				if($users == 0){//更新客户余额失败
+					$return['data'] = $pay_key['session_key'];
+					$return['code'] = 0;
+					$return['msg']  = '支付失败，续费失败';
+					return $return;
+				}
 			}
+			
 			$pay_info = [
 				'serial_number'=>$this->serialNumber(),
 				'order_id'=>$order->id,

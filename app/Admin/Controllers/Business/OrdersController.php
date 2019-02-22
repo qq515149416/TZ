@@ -120,11 +120,31 @@ class OrdersController extends Controller
 	 * @return [type]           [description]
 	 */
 	public function showRenewOrder(Request $request){
-		$renew_order = $request->only(['business_sn']);//获取续费的订单id
-		$show_renew = new OrdersModel();
-		//$renew = isset($renew_order['renew_order'])?$renew_order['renew_order']:$renew_order;
-		$show_renew_result = $show_renew->showRenewOrder($renew_order);
-		return tz_ajax_echo($show_renew_result['data'],$show_renew_result['msg'],$show_renew_result['code']);
+		$renew_order = $request->only(['session_key']);
+		$session = session($renew_order['session_key']);
+		if(!empty($session)){
+			unset($session['client_id']);
+			$return['data'] = $session;
+			$return['code'] = 1;
+			$return['msg']  = '获取续费信息成功';
+		} else {
+			$return['data'] = $session;
+			$return['code'] = 0;
+			$return['msg']  = '无此续费信息,请确认无误';
+		}
+		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
+	}
+
+	/**
+	 * 支付续费的订单
+	 * @param  Request $request [description]
+	 * @return [type]           [description]
+	 */
+	public function renewPay(Request $request){
+		$pay = $request->only(['session_key']);
+		$renew_pay = new OrdersModel();
+		$pay_result = $renew_pay->renewPay($pay);
+		return tz_ajax_echo($pay_result['data'],$pay_result['msg'],$pay_result['code']);
 	}
 
 
@@ -175,6 +195,17 @@ class OrdersController extends Controller
 		$do_edit = new OrdersModel();
 		$edit_result = $do_edit->editRemoveResource($edit);
 		return tz_ajax_echo($edit_result,$edit_result['msg'],$edit_result['code']);
+	}
+
+	/**
+	 * 旧数据的转换
+	 * @param  Request $request [description]
+	 * @return [type]           [description]
+	 */
+	public function tranOrders(Request $request){
+		$tran = $request->only(['business_sn']);
+		$do_tran = new OrdersModel();
+		$do_result = $do_tran->tranOrders($tran);
 	}
 
 }

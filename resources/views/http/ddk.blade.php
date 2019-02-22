@@ -61,7 +61,7 @@
             </div>
 
             <a href="javascript:;" class="buy">购买咨询</a>
-            <p class="activity-tip">活动时间：<span class="date">2019年2月19日——3月31日</span></p>
+            <p class="activity-tip">活动时间：<span class="date">2019年2月19日 — 3月31日</span></p>
         </div>
     </div>
 </div>

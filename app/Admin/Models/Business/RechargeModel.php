@@ -252,7 +252,7 @@ class RechargeModel extends Model
 	 * @param  Request $request [description]
 	 * @return 
 	 */
-	public function auditRecharge($audit_status,$trade_id,$recharge_amount,$recharge_way,$time){
+	public function auditRecharge($audit_status,$trade_id,$recharge_amount,$recharge_way,$time,$remarks){
 		$return['data'] 	= [];
 		$return['code']	= 0;
 		$auditor_id = Admin::user()->id;
@@ -290,6 +290,7 @@ class RechargeModel extends Model
 		$trade->auditor_id	= $auditor_id;
 		$trade->audit_status	= $audit_status;
 		$trade->audit_time	= date("Y-m-d H:i:s",time());
+		$trade->audit_remarks	= $remarks;
 		
 		$audit_res = $trade->save();
 

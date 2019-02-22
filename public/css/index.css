@@ -1638,6 +1638,10 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background: url(/images/promotion_ddk_BG_.jpg?43f348f8a972b03b34d0a3a4cd9152f6) no-repeat;
   background-size: 100% 100%;
 }
+#ddk_promotion .body .title.adv {
+  width: 226px;
+  margin-top: 114px;
+}
 #ddk_promotion .body .title {
   width: 454px;
   margin: 0 auto;
@@ -1764,4 +1768,48 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #ddk_promotion .body .product .config ul li span.value {
   margin-top: 10px;
   color: #0284ed;
+}
+#ddk_promotion .body .product-advantage {
+  width: 1150px;
+  height: 406px;
+  margin: 0 auto;
+  background: url(/images/promotion_ddk_fuwuqi.png?750a64ffb2b3e3594f3dc9ca8d8e9d76) no-repeat;
+  background-size: 100% 100%;
+  margin-top: 50px;
+  position: relative;
+}
+#ddk_promotion .body .product-advantage div {
+  position: absolute;
+}
+#ddk_promotion .body .product-advantage div:nth-of-type(1) {
+  left: 30px;
+  top: 25px;
+}
+#ddk_promotion .body .product-advantage div:nth-of-type(2) {
+  left: 827px;
+  top: 25px;
+}
+#ddk_promotion .body .product-advantage div:nth-of-type(3) {
+  left: 34px;
+  top: 236px;
+}
+#ddk_promotion .body .product-advantage div:nth-of-type(4) {
+  left: 838px;
+  top: 156px;
+}
+#ddk_promotion .body .product-advantage div:nth-of-type(5) {
+  left: 812px;
+  top: 314px;
+}
+#ddk_promotion .body .product-advantage h6 {
+  font-size: 18px;
+  color: #fff;
+  margin: 0;
+}
+#ddk_promotion .body .product-advantage p {
+  font-size: 14px;
+  color: #fff;
+  margin: 0;
+  margin-top: 16px;
+  width: 288px;
 }

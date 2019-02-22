@@ -231,6 +231,9 @@
                                 <a href="/page/tz/about">资质荣誉</a>
                             </li>
                             <li>
+                                <a href="/page/tz/paycenter">支付中心</a>
+                            </li>
+                            <li>
                                 <a href="/page/tz/about">企业文化</a>
                             </li>
                             <li>

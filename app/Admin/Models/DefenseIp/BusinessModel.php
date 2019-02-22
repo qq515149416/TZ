@@ -180,6 +180,7 @@ class BusinessModel extends Model
 
 		$check_ip = DB::table('tz_defenseip_store')
 				->select(['id','ip'])
+				->where('deleted_at',null)
 				->where('site',$package->site)
 				->where('protection_value',$package->protection_value)
 				->where('status',0)

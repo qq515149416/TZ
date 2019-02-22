@@ -114,6 +114,7 @@ class RechargeModel extends Model
 		}else{
 			$list = json_decode($list,true);
 			for ($i=0; $i < count($list); $i++) { 
+				$list[$i]['recharge_num'] = $list[$i]['recharge_way'];
 				switch ($list[$i]['recharge_way']) {
 					case '1':
 						$list[$i]['recharge_way'] = '腾正公帐(建设银行)';

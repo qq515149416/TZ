@@ -47,10 +47,18 @@ class InfoController extends Controller
 
         //遍历添加查询IP资源数组
         foreach ($listData as $key => $value) {
-            $storeData                          = StoreModel::find($value['ip_id'])->toArray();
-            $listData[$key]['defense_ip']       = $storeData['ip']; //列表数组中添加高防IP
-            $listData[$key]['status_cn']        = $this->checkStatus($value['end_at']);  //追加业务状态
-            $listData[$key]['protection_value'] = $storeData['protection_value'];  //防御值
+            $storeData                          = StoreModel::find($value['ip_id']);
+            if($storeData != null){
+                $storeData = $storeData->toArray();
+                $listData[$key]['defense_ip']       = $storeData['ip']; //列表数组中添加高防IP
+                $listData[$key]['status_cn']        = $this->checkStatus($value['end_at']);  //追加业务状态
+                $listData[$key]['protection_value'] = $storeData['protection_value'];  //防御值
+            }else{
+                $listData[$key]['defense_ip']       = 'ip不存在,请联系客服'; //列表数组中添加高防IP
+                $listData[$key]['status_cn']        = 'ip不存在,请联系客服';  //追加业务状态
+                $listData[$key]['protection_value'] = 'ip不存在,请联系客服';  //防御值
+            }
+            
         }
         return tz_ajax_echo($listData, '获取高防IP列表成功', 1);
     }

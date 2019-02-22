@@ -317,6 +317,7 @@ class PayOrder extends Model
 					$relevance = [
 						'type'		=> 2,
 						'business_id'	=> $business['business_number'],
+						'created_at'	=> $business['created_at'],
 					];
 					$build_relevance = DB::table('tz_business_relevance')->insert($relevance);
 					if($build_relevance != true){

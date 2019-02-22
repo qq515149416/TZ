@@ -443,11 +443,11 @@ class RechargeModel extends Model
 		for ($i=0; $i < count($flow); $i++) { 
 			if($flow[$i]['recharge_way'] != 3){
 				$salesman_id = DB::table('tz_users')->where('id',$flow[$i]['customer_id'])->value('salesman_id');
-				$flow[$i]['recharge_way'] = $recharge_way[$flow[$i]['recharge_way']];
+				$flow[$i]['recharge_way'] = $recharge_way[$flow[$i]['recharge_way']].' / 自助充值';
 			}else{
 				$salesman_id = DB::table('tz_recharge_admin')->where('trade_no',$flow[$i]['trade_no'])->value('recharge_uid');	
 				$auditor_id = DB::table('tz_recharge_admin')->where('trade_no',$flow[$i]['trade_no'])->value('auditor_id');	
-				$flow[$i]['recharge_way'] = DB::table('admin_users')->where('id',$auditor_id)->value('name');
+				$flow[$i]['recharge_way'] = DB::table('admin_users')->where('id',$auditor_id)->value('name').' / 审核';
 			}
 			$flow[$i]['salesman_name'] = DB::table('admin_users')->where('id',$salesman_id)->value('name');	
 			$flow[$i]['customer_name'] = $flow[$i]['customer_name'] ? $flow[$i]['customer_name'] : $flow[$i]['email'];

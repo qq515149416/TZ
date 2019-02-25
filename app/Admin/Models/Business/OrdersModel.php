@@ -942,7 +942,7 @@ class OrdersModel extends Model
 	 * @return [type] [description]
 	 */
 	public function serialNumber(){
-		sleep(1);
+		sleep(0.2);
 		$business_id = Admin::user()->id;
    		$serial_number = 'tz_'.time().mt_rand(21,30).'_admin_'.$business_id;
    		if(empty($serial_number)){

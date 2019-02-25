@@ -56,7 +56,7 @@ class UpdateXunsearch extends Command
         //业务
         $business = new BusinessModel();
         $business_result = $business->where('business_status','>','-1')->where('business_status','<',5)->where('remove_status','<',4)->select('resource_detail','id','client_id','machine_number','business_number')->get();
-        if(!$business->isEmpty()){
+        if(!$business_result->isEmpty()){
             $xunsearch = new XS('business');
             $index = $xunsearch->index;
             $index->beginRebuild();

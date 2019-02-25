@@ -875,12 +875,8 @@ class OrdersModel extends Model
 					return $return;
 				}
 			}
-			$serial_number = $this->serialNumber();
-			if(empty($serial_number)){
-				$serial_number = $this->serialNumber();
-			}
 			$pay_info = [
-				'serial_number'=>$serial_number,
+				'serial_number'=>$this->serialNumber(),
 				'order_id'=>$order->id,
 				'business_id'=>Admin::user()->id,
 				'customer_id'=>$client_id,
@@ -946,8 +942,12 @@ class OrdersModel extends Model
 	 * @return [type] [description]
 	 */
 	public function serialNumber(){
+		sleep(1);
 		$business_id = Admin::user()->id;
    		$serial_number = 'tz_'.time().mt_rand(21,30).'_admin_'.$business_id;
+   		if(empty($serial_number)){
+   			$this->serialNumber();
+   		}
 		$serial = DB::table('tz_orders_flow')->where(['serial_number'=>$serial_number])->select('id','business_number')->first();
 		if(!empty($serial)){
 			$this->serialNumber();

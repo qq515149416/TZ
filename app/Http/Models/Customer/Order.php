@@ -948,7 +948,10 @@ class Order extends Model
 					return $return;
 				}
 			}
-			
+			$serial_number = $this->serialNumber();
+			if(empty($serial_number)){
+				$serial_number = $this->serialNumber();
+			}
 			$pay_info = [
 				'serial_number'=>$this->serialNumber(),
 				'order_id'=>$order->id,

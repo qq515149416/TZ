@@ -45,7 +45,7 @@ class RechargeRequest extends FormRequest
 					'user_id'		=> 'required|exists:tz_users,id',
 					'recharge_amount'	=> 'required|integer|min:1.00',
 					'recharge_way'		=> 'required',	
-					'tax'			=> 'required',
+					// 'tax'			=> 'required',
 					// 'time'			=> 'required',	
 				];
 				break;

@@ -290,7 +290,10 @@ class RechargeModel extends Model
 		$trade->auditor_id	= $auditor_id;
 		$trade->audit_status	= $audit_status;
 		$trade->audit_time	= date("Y-m-d H:i:s",time());
-		$trade->audit_remarks	= $remarks;
+		if($remarks != ''){
+			$trade->remarks	= $remarks;	
+		}
+		
 		
 		$audit_res = $trade->save();
 

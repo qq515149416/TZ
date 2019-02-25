@@ -3,9 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Mail;
 use App\Admin\Models\Business\BusinessModel;
 use App\Admin\Models\Business\OrdersModel;
+use App\Admin\Models\Business\CustomerModel;
 use XS;
 use XSDocument;
 
@@ -92,7 +92,25 @@ class UpdateXunsearch extends Command
             }
             $index->endRebuild();
         }
-        
+        //客户信息
+        $customer = new CustomerModel();
+        $customer_result = $customer->select('name','email','nickname','msg_qq','msg_phone','id')->get();
+        if(!$customer_result->isEmpty()){
+            $xunsearch = new XS('customer');
+            $index = $xunsearch->index;
+            $index->beginRebuild();
+            foreach ($customer_result as $customer_key => $customer_value) {
+                $doc['id'] = strtolower($customer_value->id);
+                $doc['name'] = strtolower($customer_value->name);
+                $doc['email'] = strtolower($customer_value->email);
+                $doc['nickname'] = strtolower($customer_value->email);
+                $doc['msg_qq'] = strtolower($customer_value->msg_qq);
+                $doc['msg_phone'] = strtolower($customer_value->msg_phone);
+                $document = new \XSDocument($doc);
+                $index->add($document);
+            }
+            $index->endRebuild();
+        }
     }
 
 }

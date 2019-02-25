@@ -77,7 +77,7 @@ class UpdateXunsearch extends Command
         }
         //相关资源
         $order = new OrdersModel();
-        $order_result = $order->where('order_status','<',3)->where('remove_status','<',4)->select('id','machine_sn','business_sn','order_sn')->get();
+        $order_result = $order->where('order_status','<',3)->where('remove_status','<',4)->where('resource_type','>',3)->select('id','machine_sn','business_sn','order_sn')->get();
         if(!$order_result->isEmpty()){
             $xunsearch = new XS('orders');
             $index = $xunsearch->index;

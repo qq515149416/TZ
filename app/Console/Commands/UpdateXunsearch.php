@@ -70,7 +70,8 @@ class UpdateXunsearch extends Command
                 $doc['business_sn'] = strtolower($business_value->business_number);
                 $doc['machine_number'] = strtolower($business_value->machine_number);
                 $doc['client'] = strtolower($business_value->client_id);
-                $index->add($doc);
+                $document = new \XSDocument($doc);
+                $index->add($document);
             }
             $index->endRebuild();
         }
@@ -86,7 +87,8 @@ class UpdateXunsearch extends Command
                 $doc['machine_sn'] = strtolower($order_value->machine_sn);
                 $doc['business_sn'] = strtolower($order_value->business_sn);
                 $doc['order_sn'] = strtolower($order_value->order_sn);
-                $index->add($doc);
+                $document = new \XSDocument($doc);
+                $index->add($document);
             }
             $index->endRebuild();
         }

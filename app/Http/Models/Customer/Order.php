@@ -721,7 +721,9 @@ class Order extends Model
 			
 		}
 		//自动生成一串编码，作为session的键，防止前面覆盖后面的
-		$order_sn = 'TRZ'.$this->ordersn();
+		$id = mt_rand(10000,20000);
+		$type = mt_rand(11,20);
+		$order_sn = 'TRZ'.$this->ordersn($id,$type);
 		session([$order_sn=>$renew_order]);
 		$return['data'] = $order_sn;
 		$return['code'] = 1;
@@ -771,14 +773,21 @@ class Order extends Model
      * 创建订单号
      * @return [type] [description]
      */
-    public function ordersn(){
-        $order_sn = mt_rand(4, 6) . date("Ymd", time()) . substr(time(), 6, 4) . mt_rand(1, 3).'2';
+    public function ordersn($resource_id=100,$resource_type=1){
+        // $order_sn = mt_rand(4, 6) . date("Ymd", time()) . substr(time(), 6, 4) . mt_rand(1, 3).'1';
+        // $time = bcadd(time(),$resource_id,0);
+        // $order_sn = mt_rand(4,6).date('YmdHis').$time.mt_rand(10,99).'2'.$resource_type;
+        $time = bcadd(time(),$resource_id,0);
+        $order_sn = mt_rand(4, 6) . date("Ymd", time()) . substr($time, 6, 4) . $resource_id .mt_rand(1, 3).'2';
         $order = DB::table('tz_orders')->where('order_sn',$order_sn)->select('order_sn','machine_sn')->first();
+        $session = session()->has('TRZ'.$order_sn);
         if(!empty($order)){
             $this->ordersn();
-        } else {
-            return $order_sn;
         }
+        if($session == true){
+        	$this->ordersn();
+        }
+        return $order_sn;
     }
 
 

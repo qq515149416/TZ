@@ -184,7 +184,7 @@ class  Cpu extends Model
 	public function selectCpu($machineroom){
 		$where['cpu_used'] = 0;
 		$where['room_id'] = $machineroom;
-		$cpu = $this->where($where)->get(['cpu_number','cpu_param','room_id']);
+		$cpu = $this->where($where)->get(['cpu_number','cpu_param','room_id','id']);
 		foreach($cpu as $key => $value){
 			$cpu[$key]['machineroom'] = $this->machineroom($value['room_id']);
 			$cpu[$key]['label'] = $value['cpu_number'];

@@ -683,7 +683,7 @@ class Order extends Model
 					$order['payable_money'] = bcmul($order_result->price,$renew['length'],2);//订单应付金额
 					$order['order_status'] = 0;//订单状态为未支付
 					$order['created_at'] = date('Y-m-d H:i:s',time());//订单创建时间
-					$order['id'] = $order_result->id
+					$order['id'] = $order_result->id;
 					if(isset($renew_order['client_id']) && $order_result->customer_id != $renew_order['client_id']){
 	                	$return['data'] = '';
 	                    $return['code'] = 0;

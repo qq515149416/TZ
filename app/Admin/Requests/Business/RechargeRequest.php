@@ -45,8 +45,8 @@ class RechargeRequest extends FormRequest
 					'user_id'		=> 'required|exists:tz_users,id',
 					'recharge_amount'	=> 'required|integer|min:1.00',
 					'recharge_way'		=> 'required',	
-					// 'tax'			=> 'required',
-					// 'time'			=> 'required',	
+					'tax'			=> 'required',
+					'time'			=> 'date',	
 				];
 				break;
 			case 'showAuditRechargeBig':
@@ -103,6 +103,7 @@ class RechargeRequest extends FormRequest
 			'time.required'			=> '请填写到账时间',
 			'time.date'			=> '到账日期格式错误',
 			'tax.required'			=> '请填写税额',
+
 		];
 	}
 

@@ -284,7 +284,7 @@ class Ips extends Model
 		$where['ip_company'] = $company;
 		$where['ip_status'] = 0;
 		$where['ip_lock'] = 0;
-		$ips = $this->where($where)->get(['ip','ip_company','ip_comproom']);
+		$ips = $this->where($where)->get(['ip','id','ip_company','ip_comproom']);
 		if(!$ips->isEmpty()){
 			$ip_company = [0=>'电信公司',1=>'移动公司',2=>'联通公司'];
 			foreach($ips as $key=>$value){

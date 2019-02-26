@@ -22,7 +22,7 @@ class RechargeController extends Controller
 	 * @return 
 	 */
 	public function rechargeByAdmin(RechargeRequest $request){
-		$data = $request->only(['user_id','recharge_amount','recharge_way','remarks','time']);
+		$data = $request->only(['user_id','recharge_amount','recharge_way','remarks','time','tax']);
 		$model = new RechargeModel();
 		$res = $model->rechargeByAdmin($data);
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
@@ -63,7 +63,7 @@ class RechargeController extends Controller
 	 * @return 
 	 */
 	public function auditRecharge(RechargeRequest $request){
-		$info = $request->only(['audit_status','trade_id','recharge_amount','recharge_way','time','remarks']);
+		$info = $request->only(['audit_status','trade_id','recharge_amount','recharge_way','time','remarks','tax']);
 		$audit_status = $info['audit_status'];
 		$trade_id = $info['trade_id'];
 		if($audit_status == 0){
@@ -75,12 +75,17 @@ class RechargeController extends Controller
 		}else{
 			$time = '';
 		}
+		if(isset($info['tax'])){
+			$tax = $info['tax'];
+		}else{
+			$tax = '';
+		}
 		if(isset($info['remarks'])){
 			$remarks = $info['remarks'];
 		}else{
 			$remarks = '';
 		}
-		$res = $model->auditRecharge($audit_status,$trade_id,$info['recharge_amount'],$info['recharge_way'],$time,$remarks);
+		$res = $model->auditRecharge($audit_status,$trade_id,$info['recharge_amount'],$info['recharge_way'],$time,$remarks,$tax);
 
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}

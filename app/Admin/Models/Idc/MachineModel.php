@@ -211,51 +211,33 @@ class MachineModel extends Model
 	 * @return array           返回提示信息和状态
 	 */
 	public function editMachine($editdata){
-		$machine = $this->where(['id'=>$editdata['id']])->select('used_status','own_business','machine_num','ip_id')->first();
+		$machine = $this->where(['id'=>$editdata['id']])->select('used_status','own_business','machine_num','ip_id','machineroom','cabinet','machine_status','business_type')->first();
 		if(empty($machine)){
 			$return['code'] = 0;
 			$return['msg'] = '无法修改机器信息！！';
 			return $return;
 		}
 		if(isset($editdata['business_type'])&&$editdata['business_type']==1||$editdata['business_type']==2){//当机器是租用/托管时，机柜/IP/机房必须选择
-				if(isset($editdata['cabinet']) && empty($editdata['cabinet'])){
-					$return['data'] = '';
-					$return['code'] = 0;
-					$return['msg'] = '(#001)租用/托管的机器必须放在机柜上';
-					return $return;
-				}
-				if(isset($editdata['ip_id']) && empty($editdata['ip_id'])){
-					$return['data'] = '';
-					$return['code'] = 0;
-					$return['msg'] = '(#002)租用/托管的机器必须配置IP';
-					return $return;
-				}
-				if(isset($editdata['machineroom']) && empty($editdata['machineroom'])){
-					$return['data'] = '';
-					$return['code'] = 0;
-					$return['msg'] = '(#003)租用/托管的机器必须选择存放机房';
-					return $return;
-				}
+			if(isset($editdata['cabinet']) && empty($editdata['cabinet'])){
+				$return['data'] = '';
+				$return['code'] = 0;
+				$return['msg'] = '(#001)租用/托管的机器必须放在机柜上';
+				return $return;
 			}
-		if($machine->used_status != 0){
-			switch ($machine->used_status) {
-				case 1:
-					$return['code'] = 0;
-					$return['msg'] = '机器'.$machine->machine_num.'(#101)已经绑定业务'.$machine->own_business.'，无法进行修改';
-					return $return;
-					break;
-				// case 2:
-				// 	$return['code'] = 0;
-				// 	$return['msg'] = '机器'.$machine->machine_num.'(#102)已被锁定，无法进行修改';
-				// 	return $return;
-				// 	break;
-				case 3:
-					$return['code'] = 0;
-					$return['msg'] = '机器'.$machine->machine_num.'(#102)已迁移，无法进行修改';
-					return $return;
-					break;
+			if(isset($editdata['ip_id']) && empty($editdata['ip_id'])){
+				$return['data'] = '';
+				$return['code'] = 0;
+				$return['msg'] = '(#002)租用/托管的机器必须配置IP';
+				return $return;
+			}
+			if(isset($editdata['machineroom']) && empty($editdata['machineroom'])){
+				$return['data'] = '';
+				$return['code'] = 0;
+				$return['msg'] = '(#003)租用/托管的机器必须选择存放机房';
+				return $return;
 			}
 		}
+
 		DB::beginTransaction();//开启事务
 		if(isset($editdata['ip_id']) &&  $editdata['ip_id'] != $machine->ip_id){//当机器库的IP字段存在，且传递的新的IP字段，不等同于数据库的IP
 			if($machine->ip_id != 0){//原IP字段不等于0
@@ -265,6 +247,7 @@ class MachineModel extends Model
 					if($original == 0){
 						//原来的IP所属机器编号字段更新失败，事务回滚
 						DB::rollBack();
+						$return['data'] = '';
 						$return['code'] = 0;
 						$return['msg'] = '(#104)修改失败！！!';
 						return $return;
@@ -277,14 +260,46 @@ class MachineModel extends Model
 					$new_update =  DB::table('idc_ips')->where('id',$editdata['ip_id'])->update(['mac_num'=>$editdata['machine_num'],'ip_status'=>1]);
 					if($new_update == 0){
 						DB::rollBack();
+						$return['data'] = '';
 						$return['code'] = 0;
 						$return['msg'] = '(#105)修改失败！！!';
 						return $return;
 					}
 				}
-			}
-			
+			}	
 		}
+
+		if($machine->used_status != 0){
+			// echo $machine->machineroom.'<br>'.$machine->cabinet.'<br>'.$machine->used_status.'<br>'.$machine->machine_status.'<br>'.$machine->business_type.'<br>';
+			// dd($editdata);
+			if(intval($editdata['machineroom']) != $machine->machineroom || intval($editdata['cabinet']) != $machine->cabinet || intval($editdata['used_status']) != $machine->used_status || intval($editdata['machine_status']) != $machine->machine_status|| intval($editdata['business_type']) != $machine->business_type ){
+				
+				return [
+					'data'	=> [],
+					'msg'	=> '机器正在使用,部分资料无法更改,请下架后更改',
+					'code'	=> 0,
+				];
+			}
+			// switch ($machine->used_status) {
+			// 	case 1:
+					
+			// 		$return['code'] = 0;
+			// 		$return['msg'] = '机器'.$machine->machine_num.'(#101)已经绑定业务'.$machine->own_business.'，无法进行修改';
+			// 		return $return;
+			// 		break;
+			// 	// case 2:
+			// 	// 	$return['code'] = 0;
+			// 	// 	$return['msg'] = '机器'.$machine->machine_num.'(#102)已被锁定，无法进行修改';
+			// 	// 	return $return;
+			// 	// 	break;
+			// 	case 3:
+			// 		$return['code'] = 0;
+			// 		$return['msg'] = '机器'.$machine->machine_num.'(#102)已迁移，无法进行修改';
+			// 		return $return;
+			// 		break;
+			// }
+		}
+		
 		$editdata['updated_at'] = date('Y-m-d H:i:s',time());
 		$row = DB::table('idc_machine')->where('id',$editdata['id'])->update($editdata);
 		if($row == 0){

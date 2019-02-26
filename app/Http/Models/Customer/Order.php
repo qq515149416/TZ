@@ -985,8 +985,7 @@ class Order extends Model
 	 * @return [type] [description]
 	 */
 	public function serialNumber(){
-		sleep(1);
-		$serial_number = 'tz_'.time().mt_rand(10,20).'_'.Auth::user()->id;
+		$serial_number = 'tz_'.chr(mt_rand(97,122)).time().mt_rand(51,99).'_'.Auth::user()->id;
 		if(empty($serial_number)){
    			$this->serialNumber();
    		}

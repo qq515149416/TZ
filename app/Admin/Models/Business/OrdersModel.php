@@ -286,15 +286,15 @@ class OrdersModel extends Model
 		}
 		if($result != 0){
 			//所对应资源表的业务编号和到期时间，状态修改成功后进行事务提交
-			$xunsearch = new XS('orders');
-		    $index = $xunsearch->index;
-            $doc['id'] = strtolower($row);
-			$doc['machine_sn'] = strtolower($insert_data['machine_sn']);
-			$doc['business_sn'] = strtolower($insert_data['business_sn']);
-			$doc['order_sn'] = strtolower($order_sn);
-    		$document = new \XSDocument($doc);
-    		$index->update($document);
-    		$index->flushIndex();
+			// $xunsearch = new XS('orders');
+		 //    $index = $xunsearch->index;
+   //          $doc['id'] = strtolower($row);
+			// $doc['machine_sn'] = strtolower($insert_data['machine_sn']);
+			// $doc['business_sn'] = strtolower($insert_data['business_sn']);
+			// $doc['order_sn'] = strtolower($order_sn);
+   //  		$document = new \XSDocument($doc);
+   //  		$index->update($document);
+   //  		$index->flushIndex();
 			DB::commit();
 			$return['data'] = $order_sn;
 			$return['code'] = 1;
@@ -737,7 +737,10 @@ class OrdersModel extends Model
 		$client_id = $renew['client_id'];
 		$serial_number = '';
 		unset($renew['client_id']);
-		foreach($renew as $renew_key => $renew_value){
+		$array_count = count($renew);
+		$while = 1;
+		while($while<=$array_count){
+			$renew_value = array_shift($renew);
 			$order = DB::table('tz_orders')->where(['order_sn'=>$renew_value['order_number']])->select('id','order_sn','business_sn','machine_sn','duration')->first();//查找对应的订单数据
 			if(empty($order)){//当无法找到对应的订单数据
 				DB::rollBack();
@@ -899,7 +902,7 @@ class OrdersModel extends Model
                 $return['msg'] = '资源续费扣除失败!!!';
                 return $return;
 			}
-   			
+   		$while++;	
 		}//foreach
 		DB::commit();
 		session()->forget($pay_key['session_key']);
@@ -942,18 +945,19 @@ class OrdersModel extends Model
 	 * @return [type] [description]
 	 */
 	public function serialNumber(){
-		sleep(1);
+		// sleep(1);
 		$business_id = Admin::user()->id;
-   		$serial_number = 'tz_'.time().mt_rand(21,30).'_admin_'.$business_id;
+   		$serial_number = 'tz_'.chr(mt_rand(97,122)).time().mt_rand(10,50).'_admin_'.$business_id;
+   		// dump($serial_number);
    		if(empty($serial_number)){
    			$this->serialNumber();
    		}
 		$serial = DB::table('tz_orders_flow')->where(['serial_number'=>$serial_number])->select('id','business_number')->first();
 		if(!empty($serial)){
 			$this->serialNumber();
-		} else {
-			return $serial_number;
-		}
+		} 
+		return $serial_number;
+		
 	}
     
 	public function payOrderByBalance($business_number,$coupon_id){

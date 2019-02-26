@@ -620,7 +620,7 @@ class OrdersModel extends Model
 			$business_where = [
 				'business_number'=>$renew['business_number'],
 			];
-			$business = DB::table('tz_business')->where($business_where)->select('business_number','business_type','client_id','client_name','business_type','machine_number','endding_time','length','money','business_status','remove_status','order_number','resource_detail')->first();
+			$business = DB::table('tz_business')->where($business_where)->select('id','business_number','business_type','client_id','client_name','business_type','machine_number','endding_time','length','money','business_status','remove_status','order_number','resource_detail')->first();
 			if(!$business){
 				$return['data'] = '';
 				$return['code'] = 0;
@@ -655,6 +655,7 @@ class OrdersModel extends Model
 			$order['resourcetype'] = $resource_type[$order['resource_type']];
 			$order['machine_sn'] = $business->machine_number;//订单机器编号
 			$resource_detail = json_decode($business->resource_detail);
+			$order['id']=$business->id;
 			$order['resource'] = isset($resource_detail->ip)?$resource_detail->ip:$business->machine_number;//订单机器详情
 			$order['price'] = $business->money;//订单单价
 			$order['payable_money'] = bcmul($business->money,$renew['length'],2);//订单应付金额
@@ -667,7 +668,7 @@ class OrdersModel extends Model
 			foreach($renew['orders'] as $key=>$value){
                 if($value != 0){
                     $order_where['order_sn'] = $value;
-                    $order_result = $this->where($order_where)->select('business_sn','customer_id','customer_name','resource_type','machine_sn','resource','price','end_time','order_status')->first();
+                    $order_result = $this->where($order_where)->select('id','business_sn','customer_id','customer_name','resource_type','machine_sn','resource','price','end_time','order_status')->first();
                     if($order_result->order_status < 1 || $order_result->order_status > 2){
                         $order_status = [0=>'待支付',1=>'支付',2=>'支付',3=>'续费过',4=>'到期',5=>'取消',6=>'申请退款',8=>'退款完成'];
                         $return['data'] = '';
@@ -691,6 +692,7 @@ class OrdersModel extends Model
                     $order['payable_money'] = bcmul($order_result->price,$renew['length'],2);//订单应付金额
                     $order['order_status'] = 0;//订单状态为未支付
                     $order['created_at'] = date('Y-m-d H:i:s',time());//订单创建时间
+                    $order['id']=$order_result->id;
                     if(isset($renew_order['client_id']) && $order_result->customer_id != $renew_order['client_id']){
                     	$return['data'] = '';
                         $return['code'] = 0;
@@ -879,7 +881,7 @@ class OrdersModel extends Model
 				}
 			}
 			$pay_info = [
-				'serial_number'=>$this->serialNumber(),
+				'serial_number'=>$this->serialNumber($renew_value['id']),
 				'order_id'=>$order->id,
 				'business_id'=>Admin::user()->id,
 				'customer_id'=>$client_id,
@@ -944,10 +946,11 @@ class OrdersModel extends Model
 	 * 生成支付流水号
 	 * @return [type] [description]
 	 */
-	public function serialNumber(){
+	public function serialNumber($id){
 		// sleep(1);
 		$business_id = Admin::user()->id;
-   		$serial_number = 'tz_'.chr(mt_rand(97,122)).time().mt_rand(10,50).'_admin_'.$business_id;
+		$time = bcadd(time(),$id,0);
+   		$serial_number = 'tz_'.chr(mt_rand(97,122)).$time.mt_rand(10,50).'_admin_'.$business_id;
    		// dump($serial_number);
    		if(empty($serial_number)){
    			$this->serialNumber();

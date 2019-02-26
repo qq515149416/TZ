@@ -46,7 +46,7 @@ class RechargeRequest extends FormRequest
 					'recharge_amount'	=> 'required|integer|min:1.00',
 					'recharge_way'		=> 'required',	
 					'tax'			=> 'required',
-					'time'			=> 'date',	
+					'time'			=> 'required|date',	
 				];
 				break;
 			case 'showAuditRechargeBig':

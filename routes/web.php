@@ -90,7 +90,7 @@ Route::group([
 //    Route::post('loginByEmail', 'TzAuth\LoginController@loginByEmail');  //通过邮箱登录帐号
     Route::post('login', 'TzAuth\LoginController@login');  //通过帐号登录 (用户名或邮箱都可以)
     Route::get('getAllSalesman', 'TzAuth\RegisterController@getAllSalesman');  //获取所有业务员
-
+    Route::get('loginCheck', 'TzAuth\LoginController@loginCheck');//判断用户是否登陆
 
 });
 

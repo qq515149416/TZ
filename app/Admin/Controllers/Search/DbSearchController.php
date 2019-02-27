@@ -30,7 +30,11 @@ class DbSearchController extends Controller
      */
     public function doSearch(Request $request)
     {
-        dump($request->all());//打印测试
+//        dump(session_-id());
+//        dump(uniqid('aa'));
+//        dump($osn = uniqid('4-11-' . str_pad(mt_rand(1, 9999), 4, '0', STR_PAD_LEFT)));
+
+//        dump($request->all());//打印测试.
 
         $keyword = $request->all()['keyword'];
 
@@ -53,7 +57,10 @@ class DbSearchController extends Controller
 
             case 2://通过资源编号搜索
                 $resData = $this->searchMachineNum($keyword);
+
                 dump($resData);
+
+                dump($resData->order_number);
                 break;
 
             default://默认搜索类型
@@ -76,6 +83,10 @@ class DbSearchController extends Controller
             ->where('machine_number', $machineNum)
             ->where('remove_status', '!=', 4)
             ->first();
+
+        dump($resData);
+        dump($this->getUserInfo(2090));
+//        dump($this->getUserInfo($resData['data']->client_id));
 
         $resData['msg']  = '获取成功';
         $resData['code'] = 1;
@@ -121,10 +132,13 @@ class DbSearchController extends Controller
     private function getUserInfo($userId)
     {
 
-        $userData = DB::table('tz_users')
-            ->where('id', $userId)
-            ->first()
-            ->toArray();
+//        $userData = DB::table('tz_users')
+//            ->where('id', $userId)
+//            ->first();
+//            ->toArray();
+
+        $userData = DB::table('tz_users')->find($userId);
+
 
         return $userData;
     }

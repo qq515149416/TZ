@@ -400,7 +400,7 @@ class RechargeModel extends Model
 				  $clerk_id = Admin::user()->id;
 				  $flow = DB::table('tz_users')
 						->leftjoin('tz_recharge_flow as b','tz_users.id','=','b.user_id')
-						->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.id,b.tax'))
+						->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.nickname,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.id,b.tax'))
 						->where('b.trade_status',1)
 						->where('tz_users.salesman_id',$clerk_id)
 						->orderBy('b.timestamp','desc')
@@ -410,7 +410,7 @@ class RechargeModel extends Model
 			 case 'customer_id':
 				  $flow = DB::table('tz_users')
 						->leftjoin('tz_recharge_flow as b','tz_users.id','=','b.user_id')
-						->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.id,b.tax'))
+						->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.nickname,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.id,b.tax'))
 						->where('b.trade_status',1)
 						->where('tz_users.id',$key)
 						->orderBy('b.timestamp','desc')
@@ -420,7 +420,7 @@ class RechargeModel extends Model
 			case '*':
 				  $flow = DB::table('tz_users')
 						->leftjoin('tz_recharge_flow as b','tz_users.id','=','b.user_id')
-						->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.id,b.tax'))
+						->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.nickname,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.id,b.tax'))
 						->where('b.trade_status',1)
 						->orderBy('b.timestamp','desc')
 						->get();    
@@ -429,7 +429,7 @@ class RechargeModel extends Model
 			case 'byMonth':
 				  $flow = DB::table('tz_users')
 						->leftjoin('tz_recharge_flow as b','tz_users.id','=','b.user_id')
-						->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.id,b.tax'))
+						->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.nickname,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.id,b.tax'))
 						->where('b.trade_status',1)
 						->where('b.month',$key)
 						->orderBy('b.timestamp','desc')
@@ -452,6 +452,7 @@ class RechargeModel extends Model
 		for ($i=0; $i < count($flow); $i++) { 
 			if($flow[$i]['recharge_way'] != 3){
 				$salesman_id = DB::table('tz_users')->where('id',$flow[$i]['customer_id'])->value('salesman_id');
+				$flow[$i]['bank'] = $recharge_way[$flow[$i]['recharge_way']];
 				$flow[$i]['recharge_way'] = $recharge_way[$flow[$i]['recharge_way']].' / 自助充值';
 			}else{
 				$salesman_id = DB::table('tz_recharge_admin')->where('trade_no',$flow[$i]['trade_no'])->value('recharge_uid');	
@@ -492,7 +493,8 @@ class RechargeModel extends Model
 						$bank = '无此支付模式';
 						break;
 				}
-				$flow[$i]['recharge_way'] = DB::table('admin_users')->where('id',$auditor_id)->value('name').' 审核 / '.$bank;
+				$flow[$i]['recharge_way'] = DB::table('admin_users')->where('id',$auditor_id)->value('name').' / 审核';
+				$flow[$i]['bank'] = $bank;
 			}
 			$flow[$i]['salesman_name'] = DB::table('admin_users')->where('id',$salesman_id)->value('name');	
 			$flow[$i]['customer_name'] = $flow[$i]['customer_name'] ? $flow[$i]['customer_name'] : $flow[$i]['email'];

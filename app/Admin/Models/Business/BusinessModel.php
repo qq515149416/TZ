@@ -43,7 +43,8 @@ class BusinessModel extends Model
             return $return;
         }
         DB::beginTransaction();//开启事务处理
-        $business_sn               = $this->businesssn();
+        $business_id = mt_rand(10000,20000);
+        $business_sn               = $this->businesssn($business_id,$insert['business_type']);
         $insert['business_number'] = $business_sn;
         $insert['business_status'] = 0;
         $insert['client_name'] = $client->name?$client->name:$client->email;
@@ -151,7 +152,7 @@ class BusinessModel extends Model
         }
         // 根据业务号查询需要审核的业务数据
         $check_where = ['business_number' => $where['business_number']];
-        $check       = DB::table('tz_business')->where($check_where)->select('client_id', 'business_number', 'client_name', 'sales_id', 'sales_name', 'business_type', 'machine_number', 'money', 'length','resource_detail','endding_time')->first();
+        $check       = DB::table('tz_business')->where($check_where)->select('client_id','id','business_number', 'client_name', 'sales_id', 'sales_name', 'business_type', 'machine_number', 'money', 'length','resource_detail','endding_time')->first();
         if (empty($check)) {
             // 不存在对应的业务数据直接返回
             $return['data'] = '该业务不存在,无法进行审核操作';
@@ -213,7 +214,7 @@ class BusinessModel extends Model
         DB::beginTransaction();//开启事务处理
         
         // 订单号的生成规则：前两位（4-6的随机数）+ 年月日（如:20180830） + 时间戳的后2位数 + 1-3随机数
-        $order_sn                 = $this->ordersn();
+        $order_sn                 = $this->ordersn($check->id,$check->business_type);
         $business['order_number'] = $order_sn;
         $business['updated_at']   = Carbon::now()->toDateTimeString();
         $business_row             = DB::table('tz_business')->where($check_where)->update($business);
@@ -351,9 +352,11 @@ class BusinessModel extends Model
      * 创建业务号
      * @return [type] [description]
      */
-    public function businesssn(){
+    public function businesssn($business_id=100,$business_type=1){
+        $time= bcadd(time(),$business_id);
+        $business_sn = mt_rand(1, 3) . date("Ymd", time()) . substr($time, 6, 4) . $business_id .mt_rand(7, 9);
         //业务编号的生成规则：前两位（1-3的随机数）+ 年月日（如:20180830） + 时间戳的后5位数 + 7-9随机数（业务编号产生）
-        $business_sn = mt_rand(1, 3) . date("Ymd", time()) . substr(time(), 6, 4) . mt_rand(7, 9).'1';
+        // $business_sn = mt_rand(1,3).date('YmdHis').$time.mt_rand(20,99).'1'.$business_type;
         $business = $this->where('business_number',$business_sn)->select('business_number','machine_number')->first();
         if(!empty($business)){
             $this->businesssn();
@@ -366,14 +369,25 @@ class BusinessModel extends Model
      * 创建订单号
      * @return [type] [description]
      */
-    public function ordersn(){
-        $order_sn = mt_rand(4, 6) . date("Ymd", time()) . substr(time(), 6, 4) . mt_rand(1, 3).'1';
+    /**
+     * 创建订单号
+     * @return [type] [description]
+     */
+    public function ordersn($resource_id=100,$resource_type=1){
+        // $order_sn = mt_rand(4, 6) . date("Ymd", time()) . substr(time(), 6, 4) . mt_rand(1, 3).'1';
+        // $time = bcadd(time(),$resource_id,0);
+        // $order_sn = mt_rand(4,6).date('YmdHis').$time.mt_rand(10,99).'1'.$resource_type;
+        $time = bcadd(time(),$resource_id,0);
+        $order_sn = mt_rand(4, 6) . date("Ymd", time()) . substr($time, 6, 4) . $resource_id .mt_rand(1, 3).'1';
         $order = DB::table('tz_orders')->where('order_sn',$order_sn)->select('order_sn','machine_sn')->first();
+        $session = session()->has('O'.$order_sn);
         if(!empty($order)){
             $this->ordersn();
-        } else {
-            return $order_sn;
         }
+        if($session == true){
+            $this->ordersn();
+        }
+        return $order_sn;
     }
 
     /**

@@ -341,6 +341,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 .tz-navbar-style ul.navbar-right li a.member-centre .user-icon {
   color: #ffd543;
+  margin-right: 5px;
   letter-spacing: normal;
 }
 .tz-navbar-style ul.navbar-right li.register {

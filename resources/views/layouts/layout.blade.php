@@ -35,14 +35,14 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 @if (!Auth::check())
+                    <li><a href="/tz/login.html" class="login">登陆</a></li>
+                    <li class="register"><a href="/tz/registered.html" class="registered">注册</a></li>
+                @else
                     <li>
                         <a href="/tz/member92019.html" class="member-centre">
                            <span class="glyphicon glyphicon-user user-icon"></span> 个人中心
                         </a>
                     </li>
-                @else
-                    <li><a href="/tz/login.html" class="login">登陆</a></li>
-                    <li class="register"><a href="/tz/registered.html" class="registered">注册</a></li>
                 @endif
             </ul>
             <ul class="nav navbar-nav">

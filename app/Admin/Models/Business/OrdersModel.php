@@ -1033,7 +1033,7 @@ class OrdersModel extends Model
 			$payable_money = bcadd($payable_money,$updateInfo['payable_money'],2);
 			$business_id = $unpaidOrder[$i]['business_id'];
 
-			$update = DB::table('tz_orders')->where('id',$unpaidOrder[$i]['id'])->update($updateInfo);
+			$update = DB::table('tz_orders')->where('id',$unpaidOrder[$i]['id'])->where('remove_status',0)->update($updateInfo);
 			if($update == 0){
 				DB::rollBack();
 				$return['msg'] = '更新支付状态失败';
@@ -1317,27 +1317,35 @@ class OrdersModel extends Model
 			$return['msg']  = '无法获取该业务下的所有资源信息';
 			return $return;
 		}
-		$all = $this->where($tran)->where('resource_type','>',3)->orderBy('end_time','desc')->get(['order_sn','duration','order_status','resource_type','machine_sn','resource','price','end_time','remove_status'])->groupBy('machine_sn','remove_status')->toArray();
+		// $all = $this->where($tran)->where('resource_type','>',3)->orderBy('end_time','desc')->get(['order_sn','duration','order_status','resource_type','machine_sn','resource','price','end_time','remove_status'])->groupBy('machine_sn')->toArray();
+		$tran['order_type'] = 1;
+		$all = $this->where($tran)->whereBetween('order_status',[1,3])->whereBetween('remove_status',[0,3])->get(['id','order_sn','duration','order_type','order_status','resource_type','machine_sn','resource','price','end_time','remove_status']);
 		dump($all);
-		// ->where('price','>','0.00')
-		$all_keys = array_keys($all);//获取分组后的资源编号
-		foreach($all_keys as $key=>$value){
-			$tran['machine_sn'] = $value;
-			$resource[$value] = $this->where($tran)->where('order_status','<',5)->sum('duration');
-			// $all[$value][0]['duration'] = $this->where($tran)->where('order_status','<',5)->sum('duration');
-			$aa = array_shift($all[$value]);
-			// dd($aa);
-			$aa['duration'] =  $this->where($tran)->where('order_status','<',5)->sum('duration');
-			// dd($aa);
-			// array_unshift($all[$value],$aa);
-			array_push($all[$value],$aa);
-			// reset($all[$value]);
+		$duration = [];
+		foreach($all as $key=>$value){
+			$length = $this->where(['business_sn'=>$tran['business_sn'],'machine_sn'=>$value['machine_sn']])->whereBetween('order_status',[1,3])->whereBetween('remove_status',[0,3])->sum('duration');
+			$duration[$value['machine_sn']] = $this->where(['business_sn'=>$tran['business_sn'],'machine_sn'=>$value['machine_sn']])->whereBetween('order_status',[1,3])->whereBetween('remove_status',[0,3])->get(['id'])->values()->toArray();
 		}
-		dump($resource);
-		dd($all);
-		foreach ($all as $key => $value) {
-			# code...
-		}
+		dump($duration);
+		// // ->where('price','>','0.00')
+		// $all_keys = array_keys($all);//获取分组后的资源编号
+		// foreach($all_keys as $key=>$value){
+		// 	$tran['machine_sn'] = $value;
+		// 	$resource[$value] = $this->where($tran)->where('order_status','<',5)->sum('duration');
+		// 	// $all[$value][0]['duration'] = $this->where($tran)->where('order_status','<',5)->sum('duration');
+		// 	$aa = array_shift($all[$value]);
+		// 	// dd($aa);
+		// 	$aa['duration'] =  $this->where($tran)->where('order_status','<',5)->sum('duration');
+		// 	// dd($aa);
+		// 	// array_unshift($all[$value],$aa);
+		// 	array_unshift($all[$value],$aa);
+		// 	// reset($all[$value]);
+		// }
+		// dump($resource);
+		// dd($all);
+		// foreach ($all as $key => $value) {
+		// 	# code...
+		// }
 		if(!empty($resource)){
 			foreach($resource as $key=>$value){
 				$resource_type = [ '1' => '租用主机' , '2' => '托管主机' , '3' => '租用机柜' , '4' => 'IP' , '5' => 'CPU' , '6' => '硬盘' , '7' => '内存' , '8' => '带宽' , '9' => '防护' , '10' => 'cdn','11'=>'高防IP'];

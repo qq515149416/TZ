@@ -69,6 +69,7 @@ class CabinetController extends Controller
 			$cabinetData[$key]['machine_room_name'] = $machineRoomData['machine_room_name'];
 			$cabinetData[$key]['use_state_cn']      = $stateCN[$value['use_state']];
 			$cabinetData[$key]['use_type_cn']       = $typeCN[$value['use_type']];
+			$cabinetData[$key]['ziyuan'] = 3;
 		}
 		
 		return tz_ajax_echo($cabinetData, '获取成功', 1);

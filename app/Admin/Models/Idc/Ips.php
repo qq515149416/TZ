@@ -44,6 +44,7 @@ class Ips extends Model
 				$index[$ipkey]['ip_company'] = $ip_company[$ipvalue['ip_company']];
 				$index[$ipkey]['ip_status'] = $ip_status[$ipvalue['ip_status']];
 				$index[$ipkey]['ip_lock'] = $ip_lock[$ipvalue['ip_lock']];
+				$index[$ipkey]['ziyuan'] = 4;
 				if(!empty($room)){
 					$index[$ipkey]['ip_comproomname'] = $room['machine_room_name'];
 					$index[$ipkey]['ip_roomno'] = $room['machine_room_id'];

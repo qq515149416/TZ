@@ -451,9 +451,9 @@ class RechargeModel extends Model
 		$recharge_way = [ 1 => '支付宝' , 2 => '微信' , 3 => '工作人员手动充值' ];
 		for ($i=0; $i < count($flow); $i++) { 
 			if($flow[$i]['recharge_way'] != 3){
-				$salesman_id = DB::table('tz_users')->where('id',$flow[$i]['customer_id'])->value('salesman_id');
-				$flow[$i]['bank'] = $recharge_way[$flow[$i]['recharge_way']];
+				$salesman_id = DB::table('tz_users')->where('id',$flow[$i]['customer_id'])->value('salesman_id');		
 				$flow[$i]['recharge_way'] = $recharge_way[$flow[$i]['recharge_way']].' / 自助充值';
+				$flow[$i]['bank'] = $flow[$i]['recharge_way'];
 			}else{
 				$salesman_id = DB::table('tz_recharge_admin')->where('trade_no',$flow[$i]['trade_no'])->value('recharge_uid');	
 				$auditor_id = DB::table('tz_recharge_admin')->where('trade_no',$flow[$i]['trade_no'])->value('auditor_id');

@@ -55,6 +55,7 @@ class  Cpu extends Model
 		foreach ($index as $k => $v) {
 			$index[$k]['cpu_used'] = $status[$index[$k]['cpu_used']];
 			$index[$k]['room'] = $room_arr[$index[$k]['room_id']];
+			$index[$k]['ziyuan'] = 5;
 		}
 		
 		if(!$index->isEmpty()){	

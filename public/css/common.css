@@ -333,6 +333,17 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin: 0 10px;
   line-height: 82px;
 }
+.tz-navbar-style ul.navbar-right li a.member-centre {
+  margin: 0;
+  width: 160px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  letter-spacing: 2px;
+}
+.tz-navbar-style ul.navbar-right li a.member-centre .user-icon {
+  color: #ffd543;
+  margin-right: 8px;
+  letter-spacing: normal;
+}
 .tz-navbar-style ul.navbar-right li.register {
   margin-right: 0;
 }

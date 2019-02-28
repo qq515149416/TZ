@@ -54,6 +54,7 @@ class  Memory extends Model
 		foreach ($index as $k => $v) {
 			$index[$k]['memory_used'] = $status[$index[$k]['memory_used']];
 			$index[$k]['room'] = $room_arr[$index[$k]['room_id']];
+			$index[$k]['ziyua'] = 7;
 		}
 		
 		if(!$index->isEmpty()){	

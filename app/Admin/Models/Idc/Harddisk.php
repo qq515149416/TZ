@@ -54,6 +54,7 @@ class  Harddisk extends Model
 		foreach ($index as $k => $v) {
 			$index[$k]['harddisk_used'] = $status[$index[$k]['harddisk_used']];
 			$index[$k]['room'] = $room_arr[$index[$k]['room_id']];
+			$index[$k]['ziyuan'] = 6;
 		}
 		
 		if(!$index->isEmpty()){	

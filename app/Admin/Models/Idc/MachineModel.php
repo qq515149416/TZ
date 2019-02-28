@@ -42,6 +42,7 @@ class MachineModel extends Model
 				$result[$key]['used'] = $used_status[$value['used_status']];//使用状态的转换
 				$result[$key]['status'] = $machine_status[$value['machine_status']];//机器上下架的转换
 				$result[$key]['business'] = $business_type[$value['business_type']];//业务类型的转换
+				$result[$key]['ziyuan'] = $value['business_type'];
 				$cabinet = $value['cabinet']?$value['cabinet']:0;
 				$result[$key]['cabinet'] = $cabinet;
 				$ip_id = $value['ip_id']?$value['ip_id']:0;

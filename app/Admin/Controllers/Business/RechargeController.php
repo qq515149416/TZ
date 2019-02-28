@@ -23,6 +23,15 @@ class RechargeController extends Controller
 	 */
 	public function rechargeByAdmin(RechargeRequest $request){
 		$data = $request->only(['user_id','recharge_amount','recharge_way','remarks','time','tax']);
+
+		if (!preg_match('/^[0-9]+(.[0-9]{1,2})?$/', $data['recharge_amount'])) {
+			return [
+				'data'	=> [],
+				'msg'	=> '充值金额只能保留两位小数',
+				'code'	=> 0,
+			];	
+		}
+		
 		$model = new RechargeModel();
 		$res = $model->rechargeByAdmin($data);
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);

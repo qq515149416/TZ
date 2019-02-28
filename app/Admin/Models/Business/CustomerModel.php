@@ -36,6 +36,8 @@ class CustomerModel extends Model
             $return['msg'] = '请先完善您的个人信息';
             return $return;
         }
+
+        // dd($slug);
         if($slug->slug == 3){
             $where['salesman_id'] = $clerk_id;
         } else {

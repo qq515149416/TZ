@@ -977,6 +977,7 @@ class OrdersModel extends Model
 		$unpaidOrder = $this
 				->where('order_status',0)
 				->where('business_sn',$business_number)
+				->where('remove_status',0)
 				->get()
 				->toArray();
 		if(count($unpaidOrder) == 0){
@@ -1033,7 +1034,7 @@ class OrdersModel extends Model
 			$payable_money = bcadd($payable_money,$updateInfo['payable_money'],2);
 			$business_id = $unpaidOrder[$i]['business_id'];
 
-			$update = DB::table('tz_orders')->where('id',$unpaidOrder[$i]['id'])->where('remove_status',0)->update($updateInfo);
+			$update = DB::table('tz_orders')->where('id',$unpaidOrder[$i]['id'])->update($updateInfo);
 			if($update == 0){
 				DB::rollBack();
 				$return['msg'] = '更新支付状态失败';

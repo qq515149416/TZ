@@ -406,6 +406,12 @@ Route::group([
         $router->post('insert_clerk', 'Business\CustomerController@insertClerk');//绑定业务员
 
         $router->post('payOrderByAdmin', 'Business\OrdersController@payOrderByAdmin');//业务员替客户支付
+
+        /**
+         * 信安录入业务时进行相关信息的获取
+         */
+        $router->get('select_sales','Business\BusinessController@selectSalesman');
+        $router->post('select_users','Business\BusinessController@selectUsers');
     });
 
 

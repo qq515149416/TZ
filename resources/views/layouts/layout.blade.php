@@ -427,6 +427,9 @@
                 <span>
                     <a href="#">15CDN</a>
                 </span>
+                <span>
+                    <a href="http://www.ip138.com/idc/">IDC公司</a>
+                </span>
             </div>
         </div>
     </div>

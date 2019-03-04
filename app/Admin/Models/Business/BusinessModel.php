@@ -489,4 +489,185 @@ class BusinessModel extends Model
 
     }
 
+    /**
+     * 信安录入业务数据
+     * @param  [type] $insert_data [description]
+     * @return [type]              [description]
+     */
+    public function securityInsertBusiness($insert_data){
+        if (!$insert_data) {
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg']  = '(#101)业务无法创建！！';
+            return $return;
+        }
+        $sales = DB::table('admin_users')->where(['id'=>$insert_data['sales_id']])->select('id','name','username')->first();//查找业务信息
+        if(!$sales){//业务员信息不存在
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg']  = '(#102)该业务员不存在,请确认后再创建业务!';
+            return $return;
+        }
+        $client = DB::table('tz_users')->where(['id'=>$insert_data['client_id'],'status'=>2,'salesman_id'=>$insert_data['sales_id']])->select('id','name','email')->first();//查找对应的客户信息
+        if(!$client){//客户信息不存在/拉黑
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg']  = '(#103)客户不存在/客户不属于业务员:'.$sales->name?$sales->name:$sales->username.'/账号未验证/异常,请确认后再创建业务!';
+            return $return;
+        }
+        DB::beginTransaction();//开启事务处理
+        if($insert_data['business_type'] == 1 || $insert_data['business_type'] == 2){
+            $machine = DB::table('idc_machine')->where(['id'=>$insert_data['resource_id'],'business_type'=>$insert_data['business_type'],'used_status'=>0,'machine_status'=>0])->select('id','machine_num','cpu','memory','harddisk','cabinet','ip_id','machineroom','bandwidth','protect','loginname','loginpass','machine_type','used_status','machine_status','business_type','machine_note','created_at','updated_at')->first();
+            if(empty($machine)){
+                $return['data'] = '';
+                $return['code'] = 0;
+                $return['msg']  = '(#104)该机器资源不存在/已被使用/已下架,请确认后再创建业务!';
+                return $return;
+            }
+            // dd($machine);
+            $ip = $this->tranIp($machine->ip_id);
+            $machine->ip = $ip['ip'];
+            $machine->ip_detail = $ip['ip_detail'];
+            $machine->machineroom_name = $this->machineroom($machine->machineroom);
+            $machine->cabinets = $this->cabinets($machine->cabinet);
+            $machine_status = [0=>'上架',1=>'下架'];
+            $used_status = [0=>'未使用',1=>'使用中',2=>'锁定',3=>'迁移'];
+            $business_type = [1=>'租用',2=>'托管',3=>'预备',4=>'托管预备'];
+            $machine->used = $used_status[$machine->used_status];
+            $machine->status = $machine_status[$machine->machine_status];
+            $machine->business = $business_type[$machine->business_type];
+            $machine->id = $machine->machine_num;
+            $machine->machineroom_id = $machine->machineroom;
+            $machine_update = DB::table('idc_machine')->where(['id'=>$insert_data['resource_id']])->update(['used_status'=>2]);
+            if($machine_update == 0){
+                DB::rollBack();
+                $return['data'] = '';
+                $return['code'] = 0;
+                $return['msg']  = '(#105)业务创建失败!';
+                return $return;
+            }
+        } elseif($insert_data['business_type'] == 3){
+            $machine = DB::table('idc_cabinet')->where(['id'=>$insert_data['resource_id']])->select('id','cabinet_id','machineroom_id')->first();
+            if(empty($machine)){
+                DB::rollBack();
+                $return['data'] = '';
+                $return['code'] = 0;
+                $return['msg']  = '(#106)该机柜资源不存在,请确认后再创建业务!';
+                return $return;
+            }
+            $machine->machineroom_name = $this->machineroom($machine->machineroom_id);
+            $machine->cabinetid = $machine->id;
+            $machine->id = $machine->cabinet_id;
+        }
+        $business_id = mt_rand(10000,20000);
+        $business_sn               = $this->businesssn($business_id,$insert_data['business_type']);
+        $insert['business_number'] = $business_sn;
+        $insert['business_status'] = 0;
+        $insert['client_id'] = $insert_data['client_id']; 
+        $insert['client_name'] = $client->name?$client->name:$client->email;
+        // 对应业务员的信息
+        $insert['sales_id']   = $insert_data['sales_id'];
+        $insert['sales_name'] = $sales->name?$sales->name:$sales->username;
+        $insert['business_type'] = $insert_data['business_type'];
+        $insert['money'] = $insert_data['money'];
+        $insert['length'] = $insert_data['length'];
+        $insert['business_note'] = $insert_data['business_note'];
+        $insert['machine_number'] = isset($machine->machine_num)?$machine->machine_num:$machine->cabinet_id;
+        $insert['resource_detail'] = json_encode($machine);
+        $insert['created_at'] = date('Y-m-d H:i:s',time());
+        //业务开始时间
+        $start_time = Carbon::now()->toDateTimeString();
+        //到期时间的计算
+        $end_time = Carbon::parse('+' . $insert_data['length'] . ' months')->toDateTimeString();
+        $insert['start_time']   = $start_time;
+        $insert['endding_time'] = $end_time;
+        $row                  = DB::table('tz_business')->insertGetId($insert);
+        if ($row == 0) {
+            DB::rollBack();
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg']  = '(#107)业务创建失败!';
+            return $return;
+        }
+        $relevance = DB::table('tz_business_relevance')->insert(['type'=>1,'business_id'=>$insert['business_number'],'created_at'=>date('Y-m-d H:i:s',time())]);
+        if($relevance == true){
+            $xunsearch = new XS('business');
+            $index = $xunsearch->index;
+            $resource = json_decode($insert['resource_detail']);
+            $doc['ip'] = isset($resource->ip)?strtolower($resource->ip):'';
+            $doc['cpu'] = isset($resource->cpu)?strtolower($resource->cpu):'';
+            $doc['memory'] = isset($resource->memory)?strtolower($resource->memory):'';
+            $doc['harddisk'] = isset($resource->harddisk)?strtolower($resource->harddisk):'';
+            $doc['id'] = strtolower($row);
+            $doc['business_sn'] = strtolower($business_sn);
+            $doc['machine_number'] = strtolower($insert['machine_number']);
+            $doc['client'] = strtolower($insert['client_id']);
+            $document = new \XSDocument($doc);
+            $index->update($document);
+            $index->flushIndex();
+            DB::commit();
+            $return['data'] = $row;
+            $return['code'] = 1;
+            $return['msg']  = '业务创建成功,业务号:'.$business_sn.',待审核!';
+        }  else {
+            DB::rollBack();
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg']  = '(#108)业务创建失败!!';
+        } 
+            
+        return $return;
+    }
+
+    /**
+     * 转化IP
+     * @param  [type] $ip_id [description]
+     * @return [type]        [description]
+     */
+    public function tranIp($ip_id){
+        if(!$ip_id){
+            $ip['ip'] = '0.0.0.0';
+            $ip['ip_detail'] = '0.0.0.0(未选)';
+            return $ip;
+        }
+        $ips = DB::table('idc_ips')->where(['id'=>$ip_id])->select('ip','ip_company')->first();
+        if(empty($ip)){
+            $ip['ip'] = '0.0.0.0';
+            $ip['ip_detail'] = '0.0.0.0(未找到)';
+            return $ip;
+        }
+        $ip_company = [0=>'电信',1=>'移动',2=>'联通'];
+        $ip['ip'] = $ips->ip;
+        $ip['ip_detail'] = $ips->ip.'('.$ip_company[$ips->ip_company].')';
+        return $ip;
+    }
+
+    /**
+     * 转换机房名
+     * @param  [type] $machineroom [description]
+     * @return [type]              [description]
+     */
+    public function machineroom($machineroom){
+        if(!$machineroom){
+            $machineroom_name = '未选择';
+            return $machineroom_name;
+        }
+        $machineroom_name = DB::table('idc_machineroom')->where(['id'=>$machineroom])->value('machine_room_name');
+        return $machineroom_name;
+    }
+
+    /**
+     * 转换机柜
+     * @param  [type] $cabinet [description]
+     * @return [type]          [description]
+     */
+    public function cabinets($cabinet){
+        if(!$cabinet){
+            $cabinets = '未选择';
+            return $cabinets;
+        }
+        $cabinets = DB::table('idc_cabinet')->where(['id'=>$cabinet])->value('cabinet_id');
+        return $cabinets;
+    }
+
 }

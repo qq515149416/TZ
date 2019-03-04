@@ -9,6 +9,7 @@ use App\Admin\Models\Business\BusinessModel;
 use App\Admin\Models\Idc\MachineModel;
 use App\Admin\Models\Idc\Cabinet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 /**
  * 后台业务控制器
@@ -120,4 +121,47 @@ class BusinessController extends Controller
         return tz_ajax_echo($return,$return['msg'],$return['code']);
     }
 
+    /**
+     * 信安添加业务获取业务员信息
+     * @return json [description]
+     */
+    public function selectSalesman(){
+        $salesman = DB::table('admin_users')
+                        ->join('oa_staff','admin_users.id','=','oa_staff.admin_users_id')
+                        ->join('tz_department','oa_staff.department','=','tz_department.id')
+                        ->where('tz_department.sign',4)
+                        ->select('admin_users.id','admin_users.name')
+                        ->distinct()
+                        ->get();
+        if(empty($salesman)){
+            return tz_ajax_echo([],'无业务员信息',0);
+        }
+        return tz_ajax_echo($salesman,'业务员信息获取成功',1);
+    }
+
+    /**
+     * 获取业务员名下的所有客户
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function selectUsers(Request $request){
+        $salesman_id = $request->only(['salesman_id']);
+        $client = DB::table('tz_users')->where($salesman_id)->select('id','name','email')->get();
+        if(empty($client)){
+            return tz_ajax_echo([],'该业务员名下暂无客户',0);
+        }
+        return tz_ajax_echo($client,'业务员名下客户信息获取成功',1);
+    }
+    
+    /**
+     * 信安录入业务数据
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function securityInsertBusiness(Request $request){
+        $insert = $request->only(['client_id','sales_id','resource_id','money','length','business_note','business_type']);
+        $business = new BusinessModel();
+        $result = $business->securityInsertBusiness($insert);
+        return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
+    }
 }

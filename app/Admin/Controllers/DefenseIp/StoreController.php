@@ -61,7 +61,12 @@ class StoreController extends Controller
 		$status = $par['status'];
 		$site = $par['site'];
 		
-		$ip_list = $model->show($status,$site);
+		if($status == '1'){
+			$ip_list = $model->showUse();
+		}else{
+			$ip_list = $model->show($status,$site);
+		}
+		
 
 		return tz_ajax_echo($ip_list['data'],$ip_list['msg'],$ip_list['code']);
 	}

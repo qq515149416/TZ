@@ -43,7 +43,7 @@ class RechargeRequest extends FormRequest
 			case 'recharge':
 				$return = [
 					'user_id'		=> 'required|exists:tz_users,id',
-					'recharge_amount'	=> 'required|integer|min:1.00',
+					'recharge_amount'	=> 'required|numeric|min:1.00',
 					'recharge_way'		=> 'required',	
 					'tax'			=> 'required',
 					'time'			=> 'required|date',	
@@ -93,6 +93,7 @@ class RechargeRequest extends FormRequest
 			'recharge_amount.required'	=> '请填写充值金额',
 			'recharge_amount.integer'	=> '充值金额必须为整数',
 			'recharge_amount.min'		=> '充值金额最少为1元',
+			'recharge_amount.numeric'	=> '充值金额格式错误',
 			'recharge_way.required'	=> '请选择付款方式',
 			'audit_status.required'		=> '请选择充值审核单状态',
 			'audit_status.between'		=> '审核单状态请在-1、0 、1之间选择',

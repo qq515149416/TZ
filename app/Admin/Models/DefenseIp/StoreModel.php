@@ -152,6 +152,55 @@ class StoreModel extends Model
 		return $return;
 	}
 
+	public function showUse(){
+		$ip_list = $this
+		->where('status',1)
+		->get()
+		->toArray();
+		if(count($ip_list) == 0){
+			return [
+				'data'	=> [],
+				'msg'	=> '无此状态ip',
+				'code'	=> 1,
+			];
+		}
+		for ($i=0; $i < count($ip_list); $i++) { 
+			$ip_list[$i] = $this->getUseInfo($ip_list[$i]);
+			$ip_list[$i] = $this->trans($ip_list[$i]);
+		}
+
+		return [
+			'data' => $ip_list;
+			'msg' => '获取成功';
+			'code' => 1;
+		];
+	}
+	private function getUseInfo($ip){
+		$business = DB::table('tz_defenseip_business')->where('ip_id',$ip['id'])->first();
+		if($business == null){
+			$ip['target_ip'] = '无业务信息';
+			$ip['end_time'] = '无业务信息';	
+			$ip['user'] = '无业务信息';
+			$ip['nickname']	= '无业务信息';
+		}else{
+			if($business->target_ip == null){
+				$ip['target_ip'] = '未绑定目标ip';
+			}else{
+				$ip['target_ip'] = $business->target_ip;
+			}
+			$ip['end_time'] = $business->end_at;
+			if($business->user_id == null){
+				$ip['user'] = '客户信息错误';
+			}else{
+				$user = DB::table('tz_users')->select(['name','nickname'])->where('id',$business->user_id)->first();
+				$ip['user'] = $user->name;
+				$ip['nickname']	= $user->nickname;
+			}
+			
+		}
+		return $ip;
+	}
+
 	private function trans($ip){
 		switch ($ip['status']) {
 			case '0':

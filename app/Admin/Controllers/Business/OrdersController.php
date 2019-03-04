@@ -208,4 +208,16 @@ class OrdersController extends Controller
 		$do_result = $do_tran->tranOrders($tran);
 	}
 
+	/**
+	 * 信安代为录入相关的资源
+	 * @param  Request $request [description]
+	 * @return [type]           [description]
+	 */
+	public function securityInsertOrders(Request $request){
+		$insert = $request->only(['customer_id','sales_id','business_id','resource_id','resource_type','price','duration','order_note']);
+		$security_insert = new OrdersModel();
+		$insert_result = $security_insert->securityInsertOrders($insert);
+		return tz_ajax_echo($insert_result['data'],$insert_result['msg'],$insert_result['code']);
+	}
+
 }

@@ -16,15 +16,6 @@
             <li data-target="#carousel-example-generic" data-slide-to="1">
                 <span class="progress"></span>
             </li>
-            <li data-target="#carousel-example-generic" data-slide-to="2">
-                <span class="progress"></span>
-            </li>
-            <li data-target="#carousel-example-generic" data-slide-to="3">
-                <span class="progress"></span>
-            </li>
-            <li data-target="#carousel-example-generic" data-slide-to="4">
-                <span class="progress"></span>
-            </li>
         </ol>
 
         <!-- Wrapper for slides -->
@@ -39,27 +30,6 @@
             <div class="item">
                 <a href="http://www.15cdn.com/" target="_blank">
                     <img src="{{ asset("/images/banner/kai.png") }}" alt="...">
-                    <div class="carousel-caption">
-                    </div>
-                </a>
-            </div>
-            <div class="item">
-                <a href="http://www.15cdn.com/" target="_blank">
-                    <img src="{{ asset("/images/banner/cdnNewYear.jpg") }}" alt="...">
-                    <div class="carousel-caption">
-                    </div>
-                </a>
-            </div>
-            <div class="item">
-                <a href="/page/tz/preferential" target="_blank">
-                    <img src="{{ asset("/images/banner/newYear.png") }}" alt="...">
-                    <div class="carousel-caption">
-                    </div>
-                </a>
-            </div>
-            <div class="item">
-                <a href="http://yun.zeisp.com/" target="_blank">
-                    <img src="{{ asset("/images/banner/yunNewYear.png") }}" alt="...">
                     <div class="carousel-caption">
                     </div>
                 </a>

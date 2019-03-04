@@ -502,14 +502,14 @@ class BusinessModel extends Model
             return $return;
         }
         $sales = DB::table('admin_users')->where(['id'=>$insert_data['sales_id']])->select('id','name','username')->first();//查找业务信息
-        if(!$sales){//业务员信息不存在
+        if(empty($sales)){//业务员信息不存在
             $return['data'] = '';
             $return['code'] = 0;
             $return['msg']  = '(#102)该业务员不存在,请确认后再创建业务!';
             return $return;
         }
         $client = DB::table('tz_users')->where(['id'=>$insert_data['client_id'],'status'=>2,'salesman_id'=>$insert_data['sales_id']])->select('id','name','email')->first();//查找对应的客户信息
-        if(!$client){//客户信息不存在/拉黑
+        if(empty($client)){//客户信息不存在/拉黑
             $return['data'] = '';
             $return['code'] = 0;
             $return['msg']  = '(#103)客户不存在/客户不属于业务员:'.$sales->name?$sales->name:$sales->username.'/账号未验证/异常,请确认后再创建业务!';

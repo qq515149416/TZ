@@ -152,5 +152,16 @@ class BusinessController extends Controller
         }
         return tz_ajax_echo($client,'业务员名下客户信息获取成功',1);
     }
-
+    
+    /**
+     * 信安录入业务数据
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function securityInsertBusiness(Request $request){
+        $insert = $request->only(['client_id','sales_id','resource_id','money','length','business_note','business_type']);
+        $business = new BusinessModel();
+        $result = $business->securityInsertBusiness($insert);
+        return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
+    }
 }

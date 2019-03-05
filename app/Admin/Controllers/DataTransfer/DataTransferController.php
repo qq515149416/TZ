@@ -52,4 +52,11 @@ class DataTransferController extends Controller
 		$res = $model->transCustomer();
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
+
+	public function transNews(){
+		$model = new DataTransfer();
+
+		$res = $model->transNews();
+		return  tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
 }

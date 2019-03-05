@@ -487,6 +487,90 @@ class DataTransfer extends Model
 			];
 	}
 
+	public function transNews(){
+		$old_news = DB::table('news')->where('is_trans',1)->get()->toArray();
+		$old_news2 = DB::table('news-1')->where('is_trans',1)->get()->toArray();
+		$old_news = array_merge($old_news,$old_news2);
+		if(count($old_news) == 0){
+			return [
+				'data'	=> '',
+				'msg'	=> '无未转移文章',
+				'code'	=> 0,
+			];
+		}
+		//循环转到新表
+
+		for ($i=0; $i < count($old_news); $i++) { 
+			$data = [
+				'tid'			=> $old_news[$i]->sid,
+				'title'			=> $old_news[$i]->titles,
+				'content'		=> $old_news[$i]->content,
+				'seoKeywords'		=> $old_news[$i]->seoKeywords,
+				'seoTitle'		=> $old_news[$i]->seoTitle,
+				'seoDescription'	=> $old_news[$i]->seoDescription,
+				'digest'			=> $old_news[$i]->digest,
+				'created_at'		=> $old_news[$i]->createdate,
+			];
+
+			$old_sale = DB::table('masters')->where('maid',$old_customer[$i]->masterid)->value('name');
+			if($old_sale == null){
+				$data['salesman_id'] = null;
+			}else{
+				$data['salesman_id'] = DB::table('admin_users')->where('username',$old_sale)->value('id');
+			}
+
+			switch ($old_customer[$i]->status) {
+				case '0':
+					$data['status'] = 2;
+					break;
+				case '1':
+					$data['status'] = 0;
+					break;
+				default:
+					break;
+			}
+			//查找新表是否存在
+			$check = DB::table('tz_users')->where('name',$old_customer[$i]->cusname)->first();
+			if($check != null){
+				return [
+					'data'	=> '',
+					'msg'	=> 'id : '.$old_customer[$i]->cusid.' , 该用户已存在',
+					'code'	=> 0,
+				];
+			}else{
+				//开启事务
+				DB::beginTransaction();
+				//在新表创建数据
+				$model = new Customer();
+				// $res = DB::table('tz_users')->insert($data);
+				$res = $model->create($data);
+				if(!$res){
+					//如果成功创建,就将旧表的is_trans改为1
+					$up = DB::table('customer')->where('cusid',$old_customer[$i]->cusid)->update(['is_trans' => 1]);
+					if($up != true){
+						DB::rollBack();
+						return [
+							'data'	=> '',
+							'msg'	=> 'id : '.$old_customer[$i]->cusid.' , 更新转移状态,转移失败',
+							'code'	=> 0,
+						];
+						break;
+					}
+				}else{
+					DB::rollBack();
+					return [
+						'data'	=> '',
+						'msg'	=> 'id : '.$old_customer[$i]->cusid.' , 转移失败',
+						'code'	=> 0,
+					];			
+					break;
+				}
+				DB::commit();
+			}
+		}
+
+	}
+
 	public function transCustomer(){
 
 		// $test = DB::table('customer')->where('cusname','xiaowu')->get()->toArray();

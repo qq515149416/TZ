@@ -206,9 +206,10 @@ class  Overdue extends Model
 				->where('a.business_id',$sales_id)
 				->where('a.resource_type','>',3)
 				->where('a.resource_type','<=',9)
-				// ->where('a.order_status',0)
+				->whereIn('a.order_status',[0,1,2])
 				->orderBy('a.end_time','asc')
 				->get();	
+				
 			}else{
 				$list = DB::table('tz_orders as a')	
 				->leftjoin('idc_machine as b','a.business_sn','=','b.own_business')		
@@ -217,9 +218,10 @@ class  Overdue extends Model
 				->where('a.end_time','<',$end_time)
 				->where('a.business_id',$sales_id)
 				->where('a.resource_type','=',$resource_type)
-				// ->where('a.order_status',0)
+				->whereIn('a.order_status',[0,1,2])
 				->orderBy('a.end_time','asc')
 				->get();	
+
 			}
 		}else{
 			if($resource_type == 0){
@@ -230,9 +232,10 @@ class  Overdue extends Model
 				->where('a.end_time','<',$end_time)
 				->where('a.resource_type','>',3)
 				->where('a.resource_type','<=',9)
-				// ->where('a.order_status',0)
+				->whereIn('a.order_status',[0,1,2])
 				->orderBy('a.end_time','asc')
 				->get();	
+				dd($list);
 			}else{
 				$list = DB::table('tz_orders as a')	
 				->leftjoin('idc_machine as b','a.business_sn','=','b.own_business')		
@@ -240,13 +243,12 @@ class  Overdue extends Model
 				->select(DB::raw('a.id,a.business_sn,a.resource_type,a.customer_name,a.machine_sn as self_number,a.resource,a.end_time,b.machine_num,c.cabinet_id as cabinet_num'))		
 				->where('a.end_time','<',$end_time)
 				->where('a.resource_type','=',$resource_type)
-				// ->where('a.order_status',0)
+				->whereIn('a.order_status',[0,1,2])
 				->orderBy('a.end_time','asc')
 				->get();	
 			}
 		}
-		
-		
+	
 		
 		if($list->isEmpty()){
 			if($way == 'overdue'){

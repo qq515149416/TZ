@@ -1855,3 +1855,9 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.5);
 }
+#aboutus .content-list .nav-tabs li a {
+  border: none;
+  width: 196px;
+  height: 64px;
+  background-color: #d9dde7;
+}

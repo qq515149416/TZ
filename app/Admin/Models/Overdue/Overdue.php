@@ -189,8 +189,10 @@ class  Overdue extends Model
 		//获取查询提醒过期天数时间
 		if($way == 'overdue'){
 			$end_time = date('Y-m-d H:i:s',$this->overtime*24*60*60+time());
+			$remove_status = [0,1];
 		}elseif($way == 'xiajia'){
 			$end_time = date('Y-m-d H:i:s',time());
+			$remove_status = [2,3,4];
 		}else{
 			return false;
 		} 
@@ -207,7 +209,7 @@ class  Overdue extends Model
 				->where('a.resource_type','>',3)
 				->where('a.resource_type','<=',9)
 				->whereIn('a.order_status',[0,1,2])		//订单完成之前,意思为正在生效
-				->whereIn('a.remove_status',[0,1])		//还没下架的
+				->whereIn('a.remove_status',$remove_status)		//还没下架的
 				->orderBy('a.end_time','asc')
 				->get();	
 				
@@ -220,7 +222,7 @@ class  Overdue extends Model
 				->where('a.business_id',$sales_id)
 				->where('a.resource_type','=',$resource_type)
 				->whereIn('a.order_status',[0,1,2])
-				->whereIn('a.remove_status',[0,1])		//还没下架的
+				->whereIn('a.remove_status',$remove_status)		//还没下架的
 				->orderBy('a.end_time','asc')
 				->get();	
 
@@ -235,7 +237,7 @@ class  Overdue extends Model
 				->where('a.resource_type','>',3)
 				->where('a.resource_type','<=',9)
 				->whereIn('a.order_status',[0,1,2])
-				->whereIn('a.remove_status',[0,1])		//还没下架的
+				->whereIn('a.remove_status',$remove_status)		//还没下架的
 				->orderBy('a.end_time','asc')
 				->get();	
 		
@@ -247,7 +249,7 @@ class  Overdue extends Model
 				->where('a.end_time','<',$end_time)
 				->where('a.resource_type','=',$resource_type)
 				->whereIn('a.order_status',[0,1,2])
-				->whereIn('a.remove_status',[0,1])		//还没下架的
+				->whereIn('a.remove_status',$remove_status)		//还没下架的
 				->orderBy('a.end_time','asc')
 				->get();	
 			}

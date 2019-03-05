@@ -177,5 +177,15 @@ class OrderController extends Controller
 		return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
 	}
 
+	/**
+	 * 客户端查看支付流水
+	 * @return [type] [description]
+	 */
+	public function flows(){
+		$flow = new Order();
+		$result = $flow->flows();
+		return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
+	}
+
 
 }

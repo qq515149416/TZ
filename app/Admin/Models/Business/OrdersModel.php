@@ -81,6 +81,35 @@ class OrdersModel extends Model
 
 		return $return;
 	}
+	// 
+	// /**
+	//  * 财务人员和管理人员查看支付流水
+	//  * @param  array $where 订单的状态
+	//  * @return array        返回相关的数据信息和提示状态及信息
+	//  */
+	// public function financeOrders(){
+	// 	$result = DB::table('tz_orders_flow as flow')
+	// 				->join('tz_users as users','flow.customer_id','=','users.id')
+	// 				->join('admin_users as admin','flow.business_id','=','admin.id')
+	// 				->select('flow.id as flow_id','flow.business_number','flow.serial_number','flow.payable_money','flow.actual_payment','flow.preferential_amount','flow.pay_time','flow.before_money','flow.after_money','flow.created_at','flow.flow_type','users.name as customer_name','users.email as customer_email','users.nickname as customer_nick_name','admin.name as business_name')
+	// 				->get();
+	// 	if(!empty($result)){
+	// 		foreach($result as $key=>$value){
+	// 			$flow_type = [1=>'新购',2=>'续费'];
+	// 			$value->type = $flow_type[$value->flow_type];
+	// 			$value->customer_email = $value->customer_email?$value->customer_email:$value->customer_name;
+	// 			$value->customer_email = $value->customer_email?$value->customer_email:$value->customer_nick_name;
+	// 		}
+	// 		$return['data'] = $result;
+	// 		$return['code'] = 1;
+	// 		$return['msg'] = '客户流水获取成功！';
+	// 	} else {
+	// 		$return['data'] = $result;
+	// 		$return['code'] = 0;
+	// 		$return['msg'] = '客户流水获取失败！';
+	// 	}
+	// 	return $return;	
+	// }
 
 	/**
 	 * 业务员和管理人员通过业务查看订单
@@ -1360,6 +1389,155 @@ class OrdersModel extends Model
 			$return['code'] = 0;
 			$return['msg']  = '该业务下暂无其他资源信息';
 		}
+		return $return;
+	}
+
+	/**
+	 * 信安代为录入相关的资源数据
+	 * @param  [type] $insert_data [description]
+	 * @return [type]              [description]
+	 */
+	public function securityInsertOrders($insert_data){
+		if(!$insert_data){
+			$return['data'] = '';
+			$return['code'] = 0;
+			$return['msg'] = '(#101)资源无法代为录入增加！！';
+			return $return;
+		}
+		$sales = DB::table('admin_users')->where(['id'=>$insert_data['sales_id']])->select('id','name','username')->first();//查找业务信息
+        if(empty($sales)){//业务员信息不存在
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg']  = '(#102)该业务员不存在,请确认后再创建业务!';
+            return $return;
+        }
+        $client = DB::table('tz_users')->where(['id'=>$insert_data['customer_id'],'status'=>2,'salesman_id'=>$insert_data['sales_id']])->select('id','name','email')->first();//查找对应的客户信息
+        if(empty($client)){//客户信息不存在/拉黑
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg']  = '(#103)客户不存在/客户不属于业务员:'.$sales->name?$sales->name:$sales->username.'/账号未验证/异常,请确认后再创建业务!';
+            return $return;
+        }
+        $business = DB::table('tz_business')->where(['id'=>$insert_data['business_id'],'client_id'=>$insert_data['customer_id'],'sales_id'=>$insert_data['sales_id'],'remove_status'=>0])->whereBetween('business_status',[0,3])->select('business_number','id','resource_detail')->first();
+        if(empty($business)){
+        	$return['data'] = '';
+        	$return['code'] = 0;
+        	$return['msg'] = '(#104)所选择的业务不存在/客户(业务员)不对应/业务已(正在)下架';
+        	return $return;
+        }
+        $resource_detail = json_decode($business->resource_detail);
+        DB::beginTransaction();
+        switch ($insert_data['resource_type']) {
+			case 4:
+				$resource = DB::table('idc_ips')->where(['id'=>$insert_data['resource_id'],'ip_status'=>0,'ip_comproom'=>$resource_detail->machineroom_id,'ip_lock'=>0])->select('id','ip','ip_company')->first();
+				if(empty($resource)){
+					DB::rollBack();
+					$return['data'] = $resource;
+					$return['code'] = 0;
+					$return['msg'] = '(#105)所选择的IP资源不存在/已被使用';
+					return $return;
+				}
+				$ip_company = [0=>'电信',1=>'移动',2=>'联通'];
+				$insert['machine_sn'] = $resource->ip;
+				$insert['resource'] = $resource->ip.$ip_company[$resource->ip_company];
+				//更新IP表的所属业务编号，资源状态和到期时间
+				$machine['own_business'] = $business->business_number;
+				$machine['ip_status'] = 1;
+				$result = DB::table('idc_ips')->where(['id'=>$insert_data['resource_id']])->update($machine);
+				break;
+			case 5:
+				$resource = DB::table('idc_cpu')->where(['id'=>$insert_data['resource_id'],'cpu_used'=>0])->select('id','cpu_number','cpu_param')->first();
+				if(empty($resource)){
+					DB::rollBack();
+					$return['data'] = $resource;
+					$return['code'] = 0;
+					$return['msg'] = '(#106)所选择的CPU资源不存在/已被使用';
+					return $return;
+				}
+				$insert['machine_sn'] = $resource->cpu_number;
+				$insert['resource'] = $resource->cpu_param;
+				//更新CPU表的所属业务编号，资源状态和到期时间
+				$machine['service_num'] = $business->business_number;
+				$machine['cpu_used'] = 1;
+				$result = DB::table('idc_cpu')->where(['id'=>$insert_data['resource_id']])->update($machine);
+				break;
+			case 6:
+				$resource = DB::table('idc_harddisk')->where(['id'=>$insert_data['resource_id'],'harddisk_used'=>0])->select('id','harddisk_number','harddisk_param')->first();
+			   	if(empty($resource)){
+			   		DB::rollBack();
+			   		$return['data'] = $resource;
+					$return['code'] = 0;
+					$return['msg'] = '(#107)所选择的硬盘资源不存在/已被使用';
+					return $return;
+			   	}
+			   	$insert['machine_sn'] = $resource->harddisk_number;
+			   	$insert['resource'] = $resource->harddisk_param;
+			   //更新硬盘表的所属业务编号，资源状态和到期时间
+				$machine['service_num'] = $business->business_number;
+				$machine['harddisk_used'] = 1;
+				$result = DB::table('idc_harddisk')->where(['id'=>$insert_data['resource_id']])->update($machine);
+				break;
+			case 7:
+				$resource = DB::table('idc_memory')->where(['id'=>$insert_data['resource_id'],'memory_used'=>0])->select('id','memory_number','memory_param')->first();
+				if(empty($resource)){
+					DB::rollBack();
+					$return['data'] = $resource;
+					$return['code'] = 0;
+					$return['msg'] = '(#108)所选择的内存资源不存在/已被使用';
+					return $return;
+				}
+				$insert['machine_sn'] = $resource->memory_number;
+				$insert['resource'] = $resource->harddisk_param;
+				//更新内存表的所属业务编号，资源状态和到期时间
+				$machine['service_num'] = $business->business_number;
+				$machine['memory_used'] = 1;
+				$result = DB::table('idc_memory')->where(['id'=>$insert_data['resource_id']])->update($machine);
+				break;
+		}
+		if($result == 0){
+			DB::rollBack();
+			$return['data'] = '';
+        	$return['code'] = 0;
+        	$return['msg'] = '(#109)资源添加失败';
+        	return $return;
+		}
+		$insert['business_sn'] = $business->business_number;
+		$resource_id = isset($insert_data['resource_id'])?$insert_data['resource_id']:mt_rand(1000,9999);
+		$order_sn =$this->ordersn($resource_id,$insert_data['resource_type']);
+		$insert['order_sn'] = $order_sn;
+		$insert['customer_id'] = $insert_data['customer_id'];
+		$insert['customer_name'] =  $client->name?$client->name:$client->email;  
+		$insert['business_id'] = $insert_data['sales_id'];
+		$insert['business_name'] = $sales->name?$sales->name:$sales->username;   
+		$insert['resource_type'] = $insert_data['resource_type'];
+		$insert['price'] = $insert_data['price'];
+		$insert['duration'] = $insert_data['duration'];
+		$insert['payable_money'] = bcmul((string)$insert_data['price'],(string)$insert_data['duration'],2);//计算价格
+		$insert['end_time'] = Carbon::parse('+' . $insert_data['duration'] . ' months')->toDateTimeString();
+		$insert['order_note'] = $insert_data['order_note'];
+		$insert['created_at'] = Carbon::now()->toDateTimeString();
+		$row = DB::table('tz_orders')->insertGetId($insert);
+		if($row == false){
+			// 资源订单生成失败
+			DB::rollBack();
+			$return['data'] = '';
+			$return['code'] = 0;
+			$return['msg'] = '(#110)资源增加失败';
+			return $return;
+		}
+		$xunsearch = new XS('orders');
+	    $index = $xunsearch->index;
+        $doc['id'] = strtolower($row);
+		$doc['machine_sn'] = strtolower($insert['machine_sn']);
+		$doc['business_sn'] = strtolower($insert['business_sn']);
+		$doc['order_sn'] = strtolower($order_sn);
+		$document = new \XSDocument($doc);
+		$index->update($document);
+		$index->flushIndex();
+		DB::commit();
+		$return['data'] = $order_sn;
+		$return['code'] = 1;
+		$return['msg'] = '资源增加成功，请提醒客户及时支付，订单号:'.$order_sn;
 		return $return;
 	}
 

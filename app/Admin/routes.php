@@ -413,6 +413,7 @@ Route::group([
         $router->get('select_sales','Business\BusinessController@selectSalesman');
         $router->post('select_users','Business\BusinessController@selectUsers');
         $router->post('security_insert','Business\BusinessController@securityInsertBusiness');
+        $router->post('security_order','Business\OrdersController@securityInsertOrders');
     });
 
 

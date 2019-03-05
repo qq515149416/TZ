@@ -1009,4 +1009,30 @@ class Order extends Model
 		}
 	}
 
+	/**
+	 * 客户查看支付流水
+	 * @param  
+	 * @return array        返回相关的数据信息和提示状态及信息
+	 */
+	public function flows(){
+		$result = DB::table('tz_orders_flow as flow')
+					->where(['flow.customer_id'=>Auth::user()->id])
+					->select('flow.id as flow_id','flow.business_number','flow.serial_number','flow.payable_money','flow.actual_payment','flow.preferential_amount','flow.pay_time','flow.before_money','flow.after_money','flow.created_at','flow.flow_type')
+					->get();
+		if(!empty($result)){
+			foreach($result as $key=>$value){
+				$flow_type = [1=>'新购',2=>'续费'];
+				$value->type = $flow_type[$value->flow_type];
+			}
+			$return['data'] = $result;
+			$return['code'] = 1;
+			$return['msg'] = '账单流水获取成功！';
+		} else {
+			$return['data'] = $result;
+			$return['code'] = 0;
+			$return['msg'] = '账单流水获取失败！';
+		}
+		return $return;	
+	}
+
 }

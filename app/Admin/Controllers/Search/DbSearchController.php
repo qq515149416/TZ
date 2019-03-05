@@ -122,6 +122,8 @@ class DbSearchController extends Controller
     private function getBusinessId()
     {
 
+        //
+
 
     }
 

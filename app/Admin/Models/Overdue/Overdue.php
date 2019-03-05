@@ -206,7 +206,8 @@ class  Overdue extends Model
 				->where('a.business_id',$sales_id)
 				->where('a.resource_type','>',3)
 				->where('a.resource_type','<=',9)
-				->whereIn('a.order_status',[0,1,2])
+				->whereIn('a.order_status',[0,1,2])		//订单完成之前,意思为正在生效
+				->whereIn('a.remove_status',[0,1])		//还没下架的
 				->orderBy('a.end_time','asc')
 				->get();	
 				
@@ -219,6 +220,7 @@ class  Overdue extends Model
 				->where('a.business_id',$sales_id)
 				->where('a.resource_type','=',$resource_type)
 				->whereIn('a.order_status',[0,1,2])
+				->whereIn('a.remove_status',[0,1])		//还没下架的
 				->orderBy('a.end_time','asc')
 				->get();	
 
@@ -233,9 +235,10 @@ class  Overdue extends Model
 				->where('a.resource_type','>',3)
 				->where('a.resource_type','<=',9)
 				->whereIn('a.order_status',[0,1,2])
+				->whereIn('a.remove_status',[0,1])		//还没下架的
 				->orderBy('a.end_time','asc')
 				->get();	
-				dd($list);
+		
 			}else{
 				$list = DB::table('tz_orders as a')	
 				->leftjoin('idc_machine as b','a.business_sn','=','b.own_business')		
@@ -244,6 +247,7 @@ class  Overdue extends Model
 				->where('a.end_time','<',$end_time)
 				->where('a.resource_type','=',$resource_type)
 				->whereIn('a.order_status',[0,1,2])
+				->whereIn('a.remove_status',[0,1])		//还没下架的
 				->orderBy('a.end_time','asc')
 				->get();	
 			}

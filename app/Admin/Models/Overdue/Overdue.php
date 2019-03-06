@@ -347,6 +347,7 @@ class  Overdue extends Model
 			->select(DB::raw('c.ip,tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,tz_business.business_type,tz_business.start_time'))
 			->where('tz_business.sales_id',$sales_id)
 			->where('tz_business.business_status',1)
+			->whereIn('tz_business.remove_status',[0,1])
 			->where('tz_business.business_type','!=',3)
 			->orderBy('tz_business.start_time','desc')
 			->get();	
@@ -356,6 +357,7 @@ class  Overdue extends Model
 			->leftjoin('idc_ips as c','b.ip_id','=','c.id')
 			->select(DB::raw('c.ip,tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,tz_business.business_type,tz_business.start_time'))
 			->where('tz_business.business_status',1)
+			->whereIn('tz_business.remove_status',[0,1])
 			->where('tz_business.business_type','!=',3)
 			->orderBy('tz_business.start_time','desc')
 			->get();	

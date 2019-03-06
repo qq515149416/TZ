@@ -488,9 +488,10 @@ class DataTransfer extends Model
 	}
 
 	public function transNews(){
-		$old_news = DB::table('news')->where('is_trans',1)->get()->toArray();
-		$old_news2 = DB::table('news-1')->where('is_trans',1)->get()->toArray();
+		$old_news = DB::table('news')->where('is_trans',0)->get()->toArray();
+		$old_news2 = DB::table('news-1')->where('is_trans',0)->get()->toArray();
 		$old_news = array_merge($old_news,$old_news2);
+	
 		if(count($old_news) == 0){
 			return [
 				'data'	=> '',
@@ -512,23 +513,6 @@ class DataTransfer extends Model
 				'created_at'		=> $old_news[$i]->createdate,
 			];
 
-			$old_sale = DB::table('masters')->where('maid',$old_customer[$i]->masterid)->value('name');
-			if($old_sale == null){
-				$data['salesman_id'] = null;
-			}else{
-				$data['salesman_id'] = DB::table('admin_users')->where('username',$old_sale)->value('id');
-			}
-
-			switch ($old_customer[$i]->status) {
-				case '0':
-					$data['status'] = 2;
-					break;
-				case '1':
-					$data['status'] = 0;
-					break;
-				default:
-					break;
-			}
 			//查找新表是否存在
 			$check = DB::table('tz_users')->where('name',$old_customer[$i]->cusname)->first();
 			if($check != null){

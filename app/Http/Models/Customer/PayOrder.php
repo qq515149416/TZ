@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
+use App\Http\Models\Customer\UserCenter;
+
 class PayOrder extends Model
 {
 
@@ -203,8 +205,9 @@ class PayOrder extends Model
 		}
 
 		// 订单支付成功后对客户的余额进行修改
-		$payMoney = DB::table('tz_users')->where('id',$user_id)->update(['money' => $after_money ]);
-		if($payMoney == false){
+		$user_model = new UserCenter();
+		$payMoney = $user_model->where('id',$user_id)->save(['money' => $after_money ]);
+		if(!$payMoney){
 			// 修改客户余额失败，进行事务回滚
 			DB::rollBack();
 			$return['msg'] 	= '扣除余额失败,支付失败';

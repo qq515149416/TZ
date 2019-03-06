@@ -1409,7 +1409,7 @@ class OrdersModel extends Model
 			$return['code'] = 0;
 			$return['msg']  = $tran['business_sn'].'下的支付流水不存在,请进一步确认';
 			return $return;
-		}	
+		}
 		//进行支付流失的order_id字段的更新
 		foreach($data as $key=>$value){
 			foreach($id as $ky=>$val){

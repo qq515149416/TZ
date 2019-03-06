@@ -206,7 +206,10 @@ class PayOrder extends Model
 
 		// 订单支付成功后对客户的余额进行修改
 		$user_model = new UserCenter();
-		$payMoney = $user_model->where('id',$user_id)->save(['money' => $after_money ]);
+		$usera = $user_model->find($user_id);
+		$usera->money = $after_money;
+		$payMoney = $usera->save();
+		//$payMoney = DB::table('tz_users')->where('id',$user_id)->save(['money' => $after_money ]);
 		if(!$payMoney){
 			// 修改客户余额失败，进行事务回滚
 			DB::rollBack();

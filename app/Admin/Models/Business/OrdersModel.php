@@ -1362,7 +1362,7 @@ class OrdersModel extends Model
 			//统计所有有效订单的总时长
 			$length = $this->where(['business_sn'=>$tran['business_sn'],'machine_sn'=>$value['machine_sn']])->whereBetween('order_status',[1,3])->whereBetween('remove_status',[0,3])->sum('duration');
 			//获取对应业务下的所有对应资源的订单id(要保留的订单id作为订单集合数组的键) 
-			$ids = $this->where(['business_sn'=>$tran['business_sn'],'machine_sn'=>$value['machine_sn']])->whereBetween('order_status',[1,3])->whereBetween('remove_status',[0,3])->get(['id'])->toArray();
+			$ids = $this->where(['business_sn'=>$tran['business_sn'],'machine_sn'=>$value['machine_sn']])->whereBetween('order_status',[1,3])->whereBetween('remove_status',[0,3])->whereNotIn('id',[$value['id']])->get(['id'])->toArray();
 			if(!empty($ids)){
 				$duration[$value['id']] = $ids;
 			}

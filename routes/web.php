@@ -16,6 +16,11 @@
 //     \View::addExtension('html','php');
 //     return view()->file(dirname(public_path()).'/resources/index/highDefense.html');
 // });
+
+Route::get('/socketurl',function() {
+    return tz_ajax_echo(env("SOCKET_URL","http://localhost:8120"), "获取成功", 1);
+});
+
 Route::get('/verification_code', function () {
     return tz_ajax_echo(["src" => captcha_src()], "获取成功", 1);  //获取图形验证码链接
 });

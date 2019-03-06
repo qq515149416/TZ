@@ -1855,9 +1855,31 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.5);
 }
+#aboutus .content-list .nav-tabs {
+  background-color: #d9dde7;
+  border-radius: 5px 5px 0 0;
+  display: inline-block;
+  overflow: hidden;
+}
 #aboutus .content-list .nav-tabs li a {
+  border-radius: 5px 5px 0 0;
   border: none;
   width: 196px;
   height: 64px;
+  line-height: 64px;
+  padding: 0;
   background-color: #d9dde7;
+  font-size: 18px;
+  text-align: center;
+  color: #6b6d75;
+  margin: 0;
+}
+#aboutus .content-list .nav-tabs li.active {
+  z-index: 99;
+}
+#aboutus .content-list .nav-tabs li.active a {
+  background-color: #fff;
+  color: #162fac;
+  -webkit-box-shadow: 0 0 30px rgba(2, 17, 91, 0.16);
+          box-shadow: 0 0 30px rgba(2, 17, 91, 0.16);
 }

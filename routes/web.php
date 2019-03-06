@@ -187,6 +187,8 @@ Route::group([
             //以下订单
             Route::post('payOrderByBalance', 'Customer\OrderController@payOrderByBalance');
 
+            Route::get('flows','Customer\OrderController@flows');
+
         });
     });
 

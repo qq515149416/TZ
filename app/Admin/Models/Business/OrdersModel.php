@@ -81,6 +81,35 @@ class OrdersModel extends Model
 
 		return $return;
 	}
+	// 
+	// /**
+	//  * 财务人员和管理人员查看支付流水
+	//  * @param  array $where 订单的状态
+	//  * @return array        返回相关的数据信息和提示状态及信息
+	//  */
+	// public function financeOrders(){
+	// 	$result = DB::table('tz_orders_flow as flow')
+	// 				->join('tz_users as users','flow.customer_id','=','users.id')
+	// 				->join('admin_users as admin','flow.business_id','=','admin.id')
+	// 				->select('flow.id as flow_id','flow.business_number','flow.serial_number','flow.payable_money','flow.actual_payment','flow.preferential_amount','flow.pay_time','flow.before_money','flow.after_money','flow.created_at','flow.flow_type','users.name as customer_name','users.email as customer_email','users.nickname as customer_nick_name','admin.name as business_name')
+	// 				->get();
+	// 	if(!empty($result)){
+	// 		foreach($result as $key=>$value){
+	// 			$flow_type = [1=>'新购',2=>'续费'];
+	// 			$value->type = $flow_type[$value->flow_type];
+	// 			$value->customer_email = $value->customer_email?$value->customer_email:$value->customer_name;
+	// 			$value->customer_email = $value->customer_email?$value->customer_email:$value->customer_nick_name;
+	// 		}
+	// 		$return['data'] = $result;
+	// 		$return['code'] = 1;
+	// 		$return['msg'] = '客户流水获取成功！';
+	// 	} else {
+	// 		$return['data'] = $result;
+	// 		$return['code'] = 0;
+	// 		$return['msg'] = '客户流水获取失败！';
+	// 	}
+	// 	return $return;	
+	// }
 
 	/**
 	 * 业务员和管理人员通过业务查看订单

@@ -559,7 +559,7 @@ Route::group([
         $router->get('transCabinet', 'DataTransfer\DataTransferController@transCabinet');//转移IP资源数据
         $router->get('transMachine', 'DataTransfer\DataTransferController@transMachine');//转移IP资源数据
         $router->get('transCustomer', 'DataTransfer\DataTransferController@transCustomer');//转移IP资源数据
-
+        $router->get('transNews', 'DataTransfer\DataTransferController@transNews');//转移文章
     });
 
     /**

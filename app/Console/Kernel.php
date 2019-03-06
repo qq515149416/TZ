@@ -35,8 +35,10 @@ class Kernel extends ConsoleKernel
 //        $schedule->command('demo:demo')->everyMinute();  //Demo
 
         $schedule->command('business:send-email-notice')->dailyAt('13:00');   //每天 13:00 定时向所有用户发送准备到期续费提醒邮件
+        $schedule->command('business:update-xunsearch')->hourly();   ////每隔1小时  自动平滑自动更新迅搜索引
+
 //        $schedule->command('business:check-business-status')->hourly();            //每隔8小时 自动对过期业务修改状态为到期
-        $schedule->command('recharge:check-trade-status')->dailyAt('23:59');    //每天23:59 定时清理掉未付款的过期充值订单
+//        $schedule->command('recharge:check-trade-status')->dailyAt('23:59');    //每天23:59 定时清理掉未付款的过期充值订单
         
     }
 

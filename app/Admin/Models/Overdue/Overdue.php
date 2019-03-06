@@ -189,8 +189,10 @@ class  Overdue extends Model
 		//获取查询提醒过期天数时间
 		if($way == 'overdue'){
 			$end_time = date('Y-m-d H:i:s',$this->overtime*24*60*60+time());
+			$remove_status = [0,1];
 		}elseif($way == 'xiajia'){
 			$end_time = date('Y-m-d H:i:s',time());
+			$remove_status = [2,3,4];
 		}else{
 			return false;
 		} 
@@ -206,9 +208,11 @@ class  Overdue extends Model
 				->where('a.business_id',$sales_id)
 				->where('a.resource_type','>',3)
 				->where('a.resource_type','<=',9)
-				// ->where('a.order_status',0)
+				->whereIn('a.order_status',[0,1,2])		//订单完成之前,意思为正在生效
+				->whereIn('a.remove_status',$remove_status)		//还没下架的
 				->orderBy('a.end_time','asc')
 				->get();	
+				
 			}else{
 				$list = DB::table('tz_orders as a')	
 				->leftjoin('idc_machine as b','a.business_sn','=','b.own_business')		
@@ -217,9 +221,11 @@ class  Overdue extends Model
 				->where('a.end_time','<',$end_time)
 				->where('a.business_id',$sales_id)
 				->where('a.resource_type','=',$resource_type)
-				// ->where('a.order_status',0)
+				->whereIn('a.order_status',[0,1,2])
+				->whereIn('a.remove_status',$remove_status)		//还没下架的
 				->orderBy('a.end_time','asc')
 				->get();	
+
 			}
 		}else{
 			if($resource_type == 0){
@@ -230,9 +236,11 @@ class  Overdue extends Model
 				->where('a.end_time','<',$end_time)
 				->where('a.resource_type','>',3)
 				->where('a.resource_type','<=',9)
-				// ->where('a.order_status',0)
+				->whereIn('a.order_status',[0,1,2])
+				->whereIn('a.remove_status',$remove_status)		//还没下架的
 				->orderBy('a.end_time','asc')
 				->get();	
+		
 			}else{
 				$list = DB::table('tz_orders as a')	
 				->leftjoin('idc_machine as b','a.business_sn','=','b.own_business')		
@@ -240,13 +248,13 @@ class  Overdue extends Model
 				->select(DB::raw('a.id,a.business_sn,a.resource_type,a.customer_name,a.machine_sn as self_number,a.resource,a.end_time,b.machine_num,c.cabinet_id as cabinet_num'))		
 				->where('a.end_time','<',$end_time)
 				->where('a.resource_type','=',$resource_type)
-				// ->where('a.order_status',0)
+				->whereIn('a.order_status',[0,1,2])
+				->whereIn('a.remove_status',$remove_status)		//还没下架的
 				->orderBy('a.end_time','asc')
 				->get();	
 			}
 		}
-		
-		
+	
 		
 		if($list->isEmpty()){
 			if($way == 'overdue'){
@@ -339,6 +347,7 @@ class  Overdue extends Model
 			->select(DB::raw('c.ip,tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,tz_business.business_type,tz_business.start_time'))
 			->where('tz_business.sales_id',$sales_id)
 			->where('tz_business.business_status',1)
+			->whereIn('tz_business.remove_status',[0,1])
 			->where('tz_business.business_type','!=',3)
 			->orderBy('tz_business.start_time','desc')
 			->get();	
@@ -348,6 +357,7 @@ class  Overdue extends Model
 			->leftjoin('idc_ips as c','b.ip_id','=','c.id')
 			->select(DB::raw('c.ip,tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,tz_business.business_type,tz_business.start_time'))
 			->where('tz_business.business_status',1)
+			->whereIn('tz_business.remove_status',[0,1])
 			->where('tz_business.business_type','!=',3)
 			->orderBy('tz_business.start_time','desc')
 			->get();	

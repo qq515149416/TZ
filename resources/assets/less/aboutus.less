@@ -32,12 +32,31 @@
     }
     .content-list {
         .nav-tabs {
+            background-color: #d9dde7;
+            border-radius: 5px 5px 0 0;
+            display: inline-block;
+            overflow: hidden;
             li {
                 a {
+                    border-radius: 5px 5px 0 0;
                     border: none;
                     width: 196px;
                     height: 64px;
+                    line-height: 64px;
+                    padding: 0;
                     background-color: #d9dde7;
+                    font-size: 18px;
+                    text-align: center;
+                    color: #6b6d75;
+                    margin: 0;
+                }
+                &.active {
+                    z-index: 99;
+                    a {
+                        background-color: #fff;
+                        color: #162fac;
+                        box-shadow: 0 0 30px rgba(2, 17, 91, .16);
+                    }
                 }
             }
         }

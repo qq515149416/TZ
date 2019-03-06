@@ -206,6 +206,7 @@ class OrdersController extends Controller
 		$tran = $request->only(['business_sn']);
 		$do_tran = new OrdersModel();
 		$do_result = $do_tran->tranOrders($tran);
+		return tz_ajax_echo($do_result['data'],$do_result['msg'],$do_result['code']);
 	}
 
 	/**

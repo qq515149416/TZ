@@ -1361,8 +1361,11 @@ class OrdersModel extends Model
 		foreach($all as $key=>$value){
 			//统计所有有效订单的总时长
 			$length = $this->where(['business_sn'=>$tran['business_sn'],'machine_sn'=>$value['machine_sn']])->whereBetween('order_status',[1,3])->whereBetween('remove_status',[0,3])->sum('duration');
-			//获取对应业务下的所有对应资源的订单id(要保留的订单id作为订单集合数组的键)
-			$duration[$value['id']] = $this->where(['business_sn'=>$tran['business_sn'],'machine_sn'=>$value['machine_sn']])->whereBetween('order_status',[1,3])->whereBetween('remove_status',[0,3])->get(['id'])->toArray();
+			//获取对应业务下的所有对应资源的订单id(要保留的订单id作为订单集合数组的键) 
+			$ids = $this->where(['business_sn'=>$tran['business_sn'],'machine_sn'=>$value['machine_sn']])->whereBetween('order_status',[1,3])->whereBetween('remove_status',[0,3])->get(['id'])->toArray();
+			if(!empty($ids)){
+				$duration[$value['id']] = $ids;
+			}
 			//获取最近的到期时间
 			$end_time = $this->where(['business_sn'=>$tran['business_sn'],'machine_sn'=>$value['machine_sn']])->whereBetween('order_status',[1,3])->whereBetween('remove_status',[0,3])->orderBy('end_time','desc')->value('end_time');
 			if($length != $value['duration'] || $end_time != $value['end_time'] ){//当到期时间/时长跟所查找的订单中的任一不一致时进行更新操作

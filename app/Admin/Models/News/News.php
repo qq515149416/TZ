@@ -44,11 +44,19 @@ class  News extends Model
 			foreach ($type as $k=> $v) {
 				$type_arr[$v['tid']] = $v['type_name'];
 			}
-		
+			
 			foreach($index as $key=>$value) {
 			// 对应的字段的数据转换
 			// return 123;
-				$index[$key]['type_name'] 	= $type_arr[$value['tid']];
+				switch ($value['tid']) {
+					case '0':
+						$index[$key]['type_name'] 	= '无此种类';
+						break;
+					default:
+						$index[$key]['type_name'] 	= $type_arr[$value['tid']];
+						break;
+				}
+				
 				$index[$key]['top_status'] 	= $status[$value['top_status']];
 				$index[$key]['home_status'] 	= $status[$value['home_status']];
 				

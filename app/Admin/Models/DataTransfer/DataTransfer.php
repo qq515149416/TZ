@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use App\Admin\Models\Idc\Ips;
 use App\Admin\Models\Customer\Customer;
+use App\Admin\Models\News\News;
 
 class DataTransfer extends Model
 {
@@ -489,15 +490,20 @@ class DataTransfer extends Model
 
 	public function transNews(){
 		$old_news = DB::table('news')->where('is_trans',0)->get()->toArray();
-		$old_news2 = DB::table('news-1')->where('is_trans',0)->get()->toArray();
-		$old_news = array_merge($old_news,$old_news2);
+		$table = 0;
+		// $old_news2 = DB::table('news-1')->where('is_trans',0)->get()->toArray();
+		// $old_news = array_merge($old_news,$old_news2);
 	
 		if(count($old_news) == 0){
-			return [
-				'data'	=> '',
-				'msg'	=> '无未转移文章',
-				'code'	=> 0,
-			];
+			$old_news = DB::table('news-1')->where('is_trans',0)->get()->toArray();
+			$table = 1;
+			if(count($old_news) == 0){
+				return [
+					'data'	=> '',
+					'msg'	=> '无未转移文章',
+					'code'	=> 0,
+				];
+			}
 		}
 		//循环转到新表
 
@@ -513,46 +519,48 @@ class DataTransfer extends Model
 				'created_at'		=> $old_news[$i]->createdate,
 			];
 
-			//查找新表是否存在
-			$check = DB::table('tz_users')->where('name',$old_customer[$i]->cusname)->first();
-			if($check != null){
-				return [
-					'data'	=> '',
-					'msg'	=> 'id : '.$old_customer[$i]->cusid.' , 该用户已存在',
-					'code'	=> 0,
-				];
-			}else{
-				//开启事务
-				DB::beginTransaction();
-				//在新表创建数据
-				$model = new Customer();
-				// $res = DB::table('tz_users')->insert($data);
-				$res = $model->create($data);
-				if(!$res){
-					//如果成功创建,就将旧表的is_trans改为1
-					$up = DB::table('customer')->where('cusid',$old_customer[$i]->cusid)->update(['is_trans' => 1]);
-					if($up != true){
-						DB::rollBack();
-						return [
-							'data'	=> '',
-							'msg'	=> 'id : '.$old_customer[$i]->cusid.' , 更新转移状态,转移失败',
-							'code'	=> 0,
-						];
-						break;
-					}
+			
+			//开启事务
+			DB::beginTransaction();
+			//在新表创建数据
+			$model = new News();
+			// $res = DB::table('tz_users')->insert($data);
+			$res = $model->create($data);
+	
+			if($res){
+				if($table == 0){
+					$up = DB::table('news')->where('newsid',$old_news[$i]->newsid)->update(['is_trans' => 1]);
 				}else{
+					$up = DB::table('news-1')->where('newsid',$old_news[$i]->newsid)->update(['is_trans' => 1]);
+				}
+				//如果成功创建,就将旧表的is_trans改为1
+				
+				if($up != true){
 					DB::rollBack();
 					return [
 						'data'	=> '',
-						'msg'	=> 'id : '.$old_customer[$i]->cusid.' , 转移失败',
+						'msg'	=> 'id : '.$old_news[$i]->newsid.' , 更新转移状态,转移失败',
 						'code'	=> 0,
-					];			
+					];
 					break;
 				}
-				DB::commit();
+			}else{
+				DB::rollBack();
+				return [
+					'data'	=> '',
+					'msg'	=> 'id : '.$old_news[$i]->newsid.' , 转移失败',
+					'code'	=> 0,
+				];			
+				break;
 			}
+			DB::commit();
+			
 		}
-
+		return [
+			'data'	=> [],
+			'msg'	=> '转移成功',
+			'code'	=> 1,
+		];
 	}
 
 	public function transCustomer(){

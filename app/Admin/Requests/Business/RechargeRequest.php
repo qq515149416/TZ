@@ -62,7 +62,7 @@ class RechargeRequest extends FormRequest
 			case 'auditRecharge':
 				$return = [
 					'audit_status'		=> 'required|between:-1,1|integer',	
-					'recharge_amount'	=> 'required|integer|min:1.00',
+					'recharge_amount'	=> 'required|min:1.00',
 					'recharge_way'		=> 'required',	
 					'trade_id'		=> 'required|integer|exists:tz_recharge_admin,id',	
 					'time'			=> 'date',	
@@ -70,7 +70,7 @@ class RechargeRequest extends FormRequest
 				break;
 			case 'editAuditRecharge':
 				$return = [
-					'recharge_amount'	=> 'required|integer|min:1.00',
+					'recharge_amount'	=> 'required|min:1.00',
 					'recharge_way'		=> 'required',		
 					'trade_id'		=> 'required|integer|exists:tz_recharge_admin,id',
 					

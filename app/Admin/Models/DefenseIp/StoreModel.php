@@ -170,9 +170,9 @@ class StoreModel extends Model
 		}
 
 		return [
-			'data' => $ip_list;
-			'msg' => '获取成功';
-			'code' => 1;
+			'data' => $ip_list,
+			'msg' => '获取成功',
+			'code' => 1,
 		];
 	}
 	private function getUseInfo($ip){

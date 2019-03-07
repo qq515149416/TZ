@@ -510,6 +510,10 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   vertical-align: bottom;
   margin-right: 4px;
 }
+.copyright-information .red-shield {
+  text-align: center;
+  margin-top: 14px;
+}
 .hot-products {
   height: 160px;
   background-color: #112698;

@@ -447,7 +447,11 @@
                 </span>
                 <span>全国IDC证：A2.B1.B2-20150233</span>
             </p>
-            <iframe src="http://wljg.gdgs.gov.cn/lz.ashx?vie=41BEF320E537FBF5FB05128371785C72E68E27A4AF820A5D7DDC2E150B907189EF905A25C90D5E0E0799C10B9F2E8A59" allowtransparency="true" scrolling="no" style="overflow:hidden;" frameborder="0"></iframe>
+            <div class="red-shield">
+                <a title="企业名称：广东腾正计算机科技有限公司&#10;法定代表人：黄志昌&#10;标识状态：已激活 粤工商备P191809001261" href="http://wljg.gdgs.gov.cn/lz.ashx?vie=41BEF320E537FBF5FB05128371785C72E68E27A4AF820A5D7DDC2E150B907189EF905A25C90D5E0E0799C10B9F2E8A59" target="_blank">
+                    <img style="border: 0px currentColor; border-image: none;" alt="" src="http://wljg.gdgs.gov.cn/images/logo.jpg" />
+                </a>
+            </div>
         </div>
     </div>
 

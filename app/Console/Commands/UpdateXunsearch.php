@@ -55,7 +55,7 @@ class UpdateXunsearch extends Command
     public function updateXunsearch(){
         //业务
         $business = new BusinessModel();
-        $business_result = $business->where('business_status','>','-1')->where('business_status','<',5)->where('remove_status','<',4)->select('resource_detail','id','client_id','machine_number','business_number')->get();
+        $business_result = $business->where('business_status','>','-1')->where('business_status','<',5)->where('remove_status','<',4)->select('resource_detail','id','client_id','machine_number','business_number')->whereNotNull('deleted_at')->get();
         if(!$business_result->isEmpty()){
             $xunsearch = new XS('business');
             $index = $xunsearch->index;
@@ -77,7 +77,7 @@ class UpdateXunsearch extends Command
         }
         //相关资源
         $order = new OrdersModel();
-        $order_result = $order->where('order_status','<',3)->where('remove_status','<',4)->where('resource_type','>',3)->select('id','machine_sn','business_sn','order_sn')->get();
+        $order_result = $order->where('order_status','<',3)->where('remove_status','<',4)->where('resource_type','>',3)->whereNotNull('deleted_at')->select('id','machine_sn','business_sn','order_sn')->get();
         if(!$order_result->isEmpty()){
             $xunsearch = new XS('orders');
             $index = $xunsearch->index;
@@ -94,7 +94,7 @@ class UpdateXunsearch extends Command
         }
         //客户信息
         $customer = new CustomerModel();
-        $customer_result = $customer->select('name','email','nickname','msg_qq','msg_phone','id')->get();
+        $customer_result = $customer->select('name','email','nickname','msg_qq','msg_phone','id')->whereNotNull('deleted_at')->get();
         if(!$customer_result->isEmpty()){
             $xunsearch = new XS('customer');
             $index = $xunsearch->index;

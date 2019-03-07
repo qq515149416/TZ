@@ -52,12 +52,12 @@ class ApiController extends Controller
 		$url 	= $info->white_list_add.'?domain='.$domain.'&key='.$this->$key;
 		$url2 	= $info->white_list_add.'?domain=.'.$domain.'&key='.$this->$key;
 		//真实环境用这个过白
-		// $res = $this->executeCurl($url);
-		// $res2 = $this->executeCurl($url2);
-
+		$res = $this->executeCurl($url);
+		$res2 = $this->executeCurl($url2);
+		// dd($url.'<br>'.$url2);
 		//测试的用这一个
-		$res = true;
-		$res2 = true;
+		// $res = true;
+		// $res2 = true;
 
 		if($res&&$res2){
 			$return = [

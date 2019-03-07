@@ -152,7 +152,7 @@ class WhiteListModel extends Model
 		}		
 
 		$insertdata['customer_id'] 	= $check['data']['customer_id'];
-		$insertdata['binding_machine']= $check['data']['machine_number'];
+		$insertdata['binding_machine']	= $check['data']['machine_number'];
 		$admin_id 			= Admin::user()->id;
 		$fullname 			= Admin::user()->name?Admin::user()->name:Admin::user()->username;
 		$insertdata['submit_id'] 	= $admin_id;			
@@ -265,6 +265,7 @@ class WhiteListModel extends Model
 		//如果是通过的话,就开始添加通行证
 		$api_controller = new ApiController();
 		$room_id = DB::table('idc_ips')->where('ip',$row->white_ip)->value('ip_comproom');
+		//$room_id = 78;
 		if($room_id == null){
 			DB::rollBack();
 			return[

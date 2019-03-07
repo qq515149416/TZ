@@ -45,21 +45,21 @@ class UpdateXunsearch extends Command
      */
     public function handle()
     {
-        // $this->updateXunsearch();
-        $this->clea();
+        $this->updateXunsearch();
+        // $this->clea();
     }
 
-    public function clea(){
-         $xunsearch = new XS('business');
-        $index = $xunsearch->index;
-        $index->clean();
-        $xunsearch = new XS('orders');
-            $index = $xunsearch->index;
-        $index->clean();
-         $xunsearch = new XS('customer');
-            $index = $xunsearch->index;
-        $index->clean();
-    }
+    // public function clea(){
+    //      $xunsearch = new XS('business');
+    //     $index = $xunsearch->index;
+    //     $index->clean();
+    //     $xunsearch = new XS('orders');
+    //         $index = $xunsearch->index;
+    //     $index->clean();
+    //      $xunsearch = new XS('customer');
+    //         $index = $xunsearch->index;
+    //     $index->clean();
+    // }
 
     /**
      * 进行索引的更新

@@ -56,6 +56,7 @@ Route::group([
     Route::get('time', 'Test\TimeController@time'); //测试时间
     Route::get('user', 'Test\TimeController@time'); //测试时间
     Route::get ('xun','Test\XunsearchController@test');//测试迅搜索
+
 });
 
 //news接口路径

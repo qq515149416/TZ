@@ -48,7 +48,6 @@ class OrdersModel extends Model
 	 * @param  array $where 订单的状态
 	 * @return array        返回相关的数据信息和提示状态及信息
 	 */
-	//['id','order_sn','customer_name','business_sn','business_name','before_money','after_money','resource_type','order_type','resource','price','duration','payable_money','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at']
 	public function financeOrders($where){
 		$result = DB::table('tz_orders')
 					->leftJoin('tz_orders_flow','tz_orders.serial_number','=','tz_orders_flow.serial_number')
@@ -57,9 +56,6 @@ class OrdersModel extends Model
 					->orderBy('tz_orders.created_at','desc')
 					->select('tz_orders.id','tz_orders.order_sn','tz_orders.customer_name','tz_orders.business_sn','tz_orders.business_name','tz_orders.resource_type','tz_orders.order_type','tz_orders.resource','tz_orders.price','tz_orders.duration','tz_orders.payable_money','tz_orders.end_time','tz_orders.serial_number','tz_orders.pay_time','tz_orders.order_status','tz_orders.order_note','tz_orders.created_at','tz_orders_flow.before_money','tz_orders_flow.after_money')
 					->get();
-		//$this->where($where)
-					//->get(['id','order_sn','customer_name','business_sn','business_name','resource_type','order_type','resource','price','duration','payable_money','end_time','serial_number','pay_time','order_status','order_note','created_at']);
-		// 'before_money','after_money','pay_type','pay_price',
 		if(!empty($result)){
 			$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn',11=>'高防IP'];
 			$order_type = [1=>'新购',2=>'续费'];
@@ -118,7 +114,6 @@ class OrdersModel extends Model
 	 */
 	public function clerkOrders($where){
 		$where['remove_status'] = 0;
-		// ['tz_orders.business_sn'=>$where['business_sn'],'tz_orders.resource_type'=>$where['resource_type']]
 		$result = DB::table('tz_orders')
 					->leftJoin('tz_orders_flow','tz_orders.serial_number','=','tz_orders_flow.serial_number')
 					->where($where)
@@ -257,32 +252,6 @@ class OrdersModel extends Model
 			$return['code'] = 0;
 			$return['msg'] = '资源增加失败';
 			return $return;
-		}
-		// 'business_sn','customer_id','customer_name','resource_type','machine_sn','resource','price','duration'
-		if($insert_data['price'] == '0.00'){
-			$order_flow['serial_number'] = 'tz_'.time().'_'.$insert_data['customer_id'];
-			$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn'];
-			// $order_flow['subject'] = '赠送'.$resource_type[$insert_data['resource_type']];
-			$order_flow['customer_id'] = $insert_data['customer_id'];
-			$order_flow['business_id'] = Admin::user()->id;
-			$order_flow['payable_money'] = $insert_data['price'];
-			$order_flow['actual_payment'] = $insert_data['price'];
-			$order_flow['preferential_amount'] = '0.00';
-			// $order_flow['pay_status'] = 1;
-			$order_flow['pay_time'] = date('Y-m-d H:i:s',time());
-			$money = DB::table('tz_users')->where(['id'=>$insert_data['customer_id']])->value('money');
-			$order_flow['before_money'] = $money;
-			$order_flow['after_money'] = bcsub($money,$insert_data['price'],2);
-			// $order_flow['month'] = (int)date('Ym',time());
-			$order_flow['created_at'] = date('Y-m-d H:i:s',time());
-			$flow_row = DB::table('tz_orders_flow')->insertGetId($order_flow);
-			if($flow_row == 0){
-				DB::rollBack();
-				$return['data'] = '';
-				$return['code'] = 0;
-				$return['msg'] = '资源增加失败';
-			}
-
 		}
 		$machine['business_end'] = $insert_data['end_time'];
 		switch ($insert_data['resource_type']) {

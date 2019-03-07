@@ -24,7 +24,12 @@
 
             <!-- Tab panes -->
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="descripts">...</div>
+                <div role="tabpanel" class="tab-pane active" id="descripts">
+                    <h2>公司简介</h2>
+                    <p>
+                    广东腾正计算机科技有限公司（以下简称腾正科技）一家专注于互联网安全技术研究的现代网络综合服务性的高科技公司，为企业提供领先、安全、高效、全面的互联网运营服务。总部位于东莞松山湖国际金融IT研发创新园，旗下全资拥有两家子公司，长沙正易网络科技有限公司和广东腾川网络科技有限公司及多家分子公司，建立了以华南的广东、华中的湖南、西部的西安、北部的吉林、东北的浙江五大核心数据中心及多个IDC节点，服务的企业遍布各个行业。
+                    </p>
+                </div>
                 <div role="tabpanel" class="tab-pane" id="rongyu">...</div>
                 <div role="tabpanel" class="tab-pane" id="wenhua">...</div>
                 <div role="tabpanel" class="tab-pane" id="fazhang">...</div>

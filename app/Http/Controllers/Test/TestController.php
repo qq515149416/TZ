@@ -95,7 +95,7 @@ class TestController extends Controller
     public function hd()
     {
 
-        return view('hd');
+//        return view('hd');
 
     }
 }

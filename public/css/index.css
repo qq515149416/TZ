@@ -1855,11 +1855,20 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.5);
 }
+#aboutus .content-list {
+  width: 1176px;
+  margin: 0 auto;
+  margin-top: -63px;
+}
+#aboutus .content-list .tab-content {
+  -webkit-box-shadow: 0 -1px 54px 12px rgba(2, 17, 91, 0.16);
+          box-shadow: 0 -1px 54px 12px rgba(2, 17, 91, 0.16);
+}
 #aboutus .content-list .nav-tabs {
   background-color: #d9dde7;
   border-radius: 5px 5px 0 0;
-  display: inline-block;
   overflow: hidden;
+  border-bottom: none;
 }
 #aboutus .content-list .nav-tabs li a {
   border-radius: 5px 5px 0 0;

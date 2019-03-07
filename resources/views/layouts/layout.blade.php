@@ -447,6 +447,7 @@
                 </span>
                 <span>全国IDC证：A2.B1.B2-20150233</span>
             </p>
+            <iframe src="http://wljg.gdgs.gov.cn/lz.ashx?vie=41BEF320E537FBF5FB05128371785C72E68E27A4AF820A5D7DDC2E150B907189EF905A25C90D5E0E0799C10B9F2E8A59" allowtransparency="true" scrolling="no" style="overflow:hidden;" frameborder="0"></iframe>
         </div>
     </div>
 

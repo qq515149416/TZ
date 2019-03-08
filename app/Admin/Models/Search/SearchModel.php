@@ -91,10 +91,6 @@ class SearchModel extends Model
                 $business['protect'] = $total_protected;
                 $business['bandwidth'] = $total_bandwidth;
             }
-            // if(!empty($business)){
-            //     $search_result[$result_key] = $business;
-            //     $result_key++;
-            // } 
             if(!empty($business)){//当查询到对应的业务时将业务编号作为下标生成新的数组，防止同个业务数据出现多次
                 $search_result['S'.$business['business_number']] = $business;
             }
@@ -109,11 +105,11 @@ class SearchModel extends Model
      * @return array              返回业务绑定的所有资源
      */
     public function searchResources($business_sn){
-        $all_resource = DB::table('tz_orders')->where(['business_sn'=>$business_sn,'remove_status'=>0])->where('resource_type','>','3')->orderBy('end_time','desc')->select('machine_sn','resource')->get()->groupBy('machine_sn')->toArray();
+        $all_resource = DB::table('tz_orders')->where(['business_sn'=>$business_sn,'remove_status'=>0])->where('resource_type','>','3')->whereNull('deleted_at')->orderBy('end_time','desc')->select('machine_sn','resource')->get()->groupBy('machine_sn')->toArray();
         $resource_keys = array_keys($all_resource);//获取分组后的资源编号
         foreach($resource_keys as $key=>$value){
             $order['machine_sn'] = $value;
-            $resource[$key] = DB::table('tz_orders')->where($order)->where('order_status','<',4)->orderBy('end_time','desc')->select('resource_type','machine_sn','resource')->first();
+            $resource[$key] = DB::table('tz_orders')->where($order)->where('order_status','<',4)->whereNull('deleted_at')->orderBy('end_time','desc')->select('resource_type','machine_sn','resource')->first();
         }
         $orders = ['IP'=>$this->filter($resource,4),'cpu'=>$this->filter($resource,5),'harddisk'=>$this->filter($resource,6),'memory'=>$this->filter($resource,7),'bandwidth'=>$this->filter($resource,8),'protected'=>$this->filter($resource,9),'cdn'=>$this->filter($resource,10)];
         return $orders;

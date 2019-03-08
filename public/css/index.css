@@ -510,6 +510,10 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   vertical-align: bottom;
   margin-right: 4px;
 }
+.copyright-information .red-shield {
+  text-align: center;
+  margin-top: 14px;
+}
 .hot-products {
   height: 160px;
   background-color: #112698;
@@ -1864,11 +1868,16 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   -webkit-box-shadow: 0 -1px 54px 12px rgba(2, 17, 91, 0.16);
           box-shadow: 0 -1px 54px 12px rgba(2, 17, 91, 0.16);
 }
+#aboutus .content-list .tab-content h2 {
+  margin: 0;
+}
 #aboutus .content-list .nav-tabs {
   background-color: #d9dde7;
   border-radius: 5px 5px 0 0;
   overflow: hidden;
   border-bottom: none;
+  -webkit-box-shadow: 0 -1px 24px 10px rgba(2, 17, 91, 0.1) inset;
+          box-shadow: 0 -1px 24px 10px rgba(2, 17, 91, 0.1) inset;
 }
 #aboutus .content-list .nav-tabs li a {
   border-radius: 5px 5px 0 0;

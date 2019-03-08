@@ -8,6 +8,7 @@ use App\Admin\Models\Business\OrdersModel;
 use App\Admin\Models\Business\CustomerModel;
 use XS;
 use XSDocument;
+use Illuminate\Support\Facades\DB;
 
 /**
  * 用于平滑更新xunsearch的索引，解决某些数据因修改而搜索不到的问题
@@ -46,7 +47,20 @@ class UpdateXunsearch extends Command
     public function handle()
     {
         $this->updateXunsearch();
+        // $this->clea();
     }
+
+    // public function clea(){
+    //      $xunsearch = new XS('business');
+    //     $index = $xunsearch->index;
+    //     $index->clean();
+    //     $xunsearch = new XS('orders');
+    //         $index = $xunsearch->index;
+    //     $index->clean();
+    //      $xunsearch = new XS('customer');
+    //         $index = $xunsearch->index;
+    //     $index->clean();
+    // }
 
     /**
      * 进行索引的更新
@@ -77,7 +91,7 @@ class UpdateXunsearch extends Command
         }
         //相关资源
         $order = new OrdersModel();
-        $order_result = $order->where('order_status','<',3)->where('remove_status','<',4)->where('resource_type','>',3)->select('id','machine_sn','business_sn','order_sn')->get();
+        $order_result = $order->where('order_status','<',3)->where('remove_status','<',4)->where('resource_type','>',3)->whereNull('deleted_at')->select('id','machine_sn','business_sn','order_sn')->get();
         if(!$order_result->isEmpty()){
             $xunsearch = new XS('orders');
             $index = $xunsearch->index;

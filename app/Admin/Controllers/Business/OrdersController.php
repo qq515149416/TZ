@@ -159,6 +159,9 @@ class OrdersController extends Controller
 		$order_id = $par['order_id'];
 		// $coupon_id = $par['coupon_id'];
 		// dd($order_id);
+		if(!is_array($order_id)){
+			return tz_ajax_echo([],'订单id格式错误',0);
+		}
 		$model = new OrdersModel();
 		$pay = $model->payOrderByBalance($order_id,0);
 		return tz_ajax_echo($pay['data'],$pay['msg'],$pay['code']);

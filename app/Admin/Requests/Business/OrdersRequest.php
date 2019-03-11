@@ -33,8 +33,8 @@ class OrdersRequest extends FormRequest
 		switch ($method) {
 			case 'payOrderByAdmin':
 				$return = [
-					'order_id'		=> 'required',
-					// 'coupon_id'		=> 'required',
+					'business_number'	=> 'required',
+					'coupon_id'		=> 'required',
 				];
 				break;
 			
@@ -52,7 +52,7 @@ class OrdersRequest extends FormRequest
 		return  [
 			'business_number.required'	=> '请选择业务',
 			'coupon_id.required'		=> '请选择优惠券',
-			'order_id.required'		=> '请选择需支付的订单',	
+		
 		];
 	}
 

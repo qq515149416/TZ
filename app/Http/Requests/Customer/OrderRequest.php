@@ -31,13 +31,22 @@ class OrderRequest extends FormRequest
 		$return = [];
 
 		switch ($method) {
+
+			//以下这个是新版的方法,子梁测试请打开注释,注释掉下面同名那小段代码
+			// case 'payOrderByBalance':
+			// 	$return = [
+			// 		'order_id'		=> 'required',
+			// 		// 'coupon_id'		=> 'required',
+			// 	];
+			// 	break;
+
 			case 'payOrderByBalance':
 				$return = [
-					'order_id'		=> 'required',
-					// 'coupon_id'		=> 'required',
+					'business_sn'		=> 'required',
+					'coupon_id'		=> 'required',
 				];
 				break;
-			
+
 			case 'getOrderById':
 				$return = [
 					'order_id'		=> 'required|exists:tz_orders,id',

@@ -60,7 +60,7 @@ class OrdersController extends Controller
 	 * @return [type]           [description]
 	 */
 	public function insertResource(Request $request){
-		$insert_data = $request->only(['business_sn','customer_id','customer_name','resource_type','machine_sn','resource','price','duration','resource_id']);
+		$insert_data = $request->only(['business_sn','customer_id','customer_name','resource_type','machine_sn','resource','price','duration']);
 		$insert = new OrdersModel();
 		$return = $insert->insertResource($insert_data);
 		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
@@ -120,31 +120,11 @@ class OrdersController extends Controller
 	 * @return [type]           [description]
 	 */
 	public function showRenewOrder(Request $request){
-		$renew_order = $request->only(['session_key']);
-		$session = session($renew_order['session_key']);
-		if(!empty($session)){
-			unset($session['client_id']);
-			$return['data'] = $session;
-			$return['code'] = 1;
-			$return['msg']  = '获取续费信息成功';
-		} else {
-			$return['data'] = $session;
-			$return['code'] = 0;
-			$return['msg']  = '无此续费信息,请确认无误';
-		}
-		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
-	}
-
-	/**
-	 * 支付续费的订单
-	 * @param  Request $request [description]
-	 * @return [type]           [description]
-	 */
-	public function renewPay(Request $request){
-		$pay = $request->only(['session_key']);
-		$renew_pay = new OrdersModel();
-		$pay_result = $renew_pay->renewPay($pay);
-		return tz_ajax_echo($pay_result['data'],$pay_result['msg'],$pay_result['code']);
+		$renew_order = $request->only(['business_sn']);//获取续费的订单id
+		$show_renew = new OrdersModel();
+		//$renew = isset($renew_order['renew_order'])?$renew_order['renew_order']:$renew_order;
+		$show_renew_result = $show_renew->showRenewOrder($renew_order);
+		return tz_ajax_echo($show_renew_result['data'],$show_renew_result['msg'],$show_renew_result['code']);
 	}
 
 
@@ -154,16 +134,12 @@ class OrdersController extends Controller
 	*/
 
 	public function payOrderByAdmin(OrdersRequest $request){
+		$par = $request->only(['business_number','coupon_id']);
+		$business_number = $par['business_number'];
+		$coupon_id = $par['coupon_id'];
 
-		$par = $request->only(['order_id','coupon_id']);
-		$order_id = $par['order_id'];
-		// $coupon_id = $par['coupon_id'];
-		// dd($order_id);
-		if(!is_array($order_id)){
-			return tz_ajax_echo([],'订单id格式错误',0);
-		}
 		$model = new OrdersModel();
-		$pay = $model->payOrderByBalance($order_id,0);
+		$pay = $model->payOrderByBalance($business_number,$coupon_id);
 		return tz_ajax_echo($pay['data'],$pay['msg'],$pay['code']);
 	}
 
@@ -199,30 +175,6 @@ class OrdersController extends Controller
 		$do_edit = new OrdersModel();
 		$edit_result = $do_edit->editRemoveResource($edit);
 		return tz_ajax_echo($edit_result,$edit_result['msg'],$edit_result['code']);
-	}
-
-	/**
-	 * 旧数据的转换
-	 * @param  Request $request [description]
-	 * @return [type]           [description]
-	 */
-	public function tranOrders(Request $request){
-		$tran = $request->only(['business_sn']);
-		$do_tran = new OrdersModel();
-		$do_result = $do_tran->tranOrders($tran);
-		return tz_ajax_echo($do_result['data'],$do_result['msg'],$do_result['code']);
-	}
-
-	/**
-	 * 信安代为录入相关的资源
-	 * @param  Request $request [description]
-	 * @return [type]           [description]
-	 */
-	public function securityInsertOrders(Request $request){
-		$insert = $request->only(['customer_id','sales_id','business_id','resource_id','resource_type','price','duration','order_note']);
-		$security_insert = new OrdersModel();
-		$insert_result = $security_insert->securityInsertOrders($insert);
-		return tz_ajax_echo($insert_result['data'],$insert_result['msg'],$insert_result['code']);
 	}
 
 }

@@ -719,10 +719,6 @@ class OrdersModel extends Model
 	}
 
 
-
-	}
-
-
 	/**
 	 * 续费订单的支付
 	 * @param  array $pay_key 续费订单的session键

@@ -629,22 +629,62 @@ class  PfmStatistics extends Model
 	}
 
 	public function test($begin,$end){
-		$already = $this
-			->where('pay_time','>',$begin)
-			->where('pay_time','<',$end)
-			->sum('actual_payment');
+		
+		$already = DB::table('tz_orders_flow as a')
+			->leftJoin('tz_users as b','a.customer_id','=','b.id')
+			->select('a.customer_id','b.name as customer_name','b.nickname as customer_nickname',DB::raw('SUM(actual_payment) as money'))
+			->where('a.pay_time','>',$begin)
+			->where('a.pay_time','<',$end)
+			->groupBy('a.customer_id')
+			->get();
 
 		$order_model = new OrdersModel();
-		$not = $order_model
-			->where('created_at','>',$begin)
-			->where('created_at','<',$end)
-			->where('order_status',0)
-			->where('remove_status',0)
-			->sum('payable_money');
-		$arr = [
-			'already' 	=> $already,
-			'not'		=> $not,
-			];
-		return $arr;
+		
+		$not = DB::table('tz_orders as a')
+			->leftJoin('tz_users as b','a.customer_id','=','b.id')
+			->select('a.customer_id','b.name as customer_name','b.nickname as customer_nickname',DB::raw('SUM(payable_money) as money'))
+			->where('a.created_at','>',$begin)
+			->where('a.created_at','<',$end)
+			->groupBy('a.customer_id')
+			->get();
+		$arr['heji'] = [
+			'already' 		=> 0,
+			'not'			=> 0,
+			'customer_id'		=> 0,
+			'customer_name'	=> '合计',
+			'customer_nickname'	=> '合计',
+		];
+		foreach ($already as $k => $v) {
+			if(!isset($arr[$v->customer_id])){
+				$arr[$v->customer_id] = [
+					'already' 		=> $v->money,
+					'not'			=> 0,
+					'customer_id'		=> $v->customer_id,
+					'customer_name'	=> $v->customer_name,
+					'customer_nickname'	=> $v->customer_nickname,
+				];
+			}
+			$arr['heji']['already'] = bcadd($arr['heji']['already'], $v->money,2);
+		}
+		foreach ($not as $k => $v) {
+			if(!isset($arr[$v->customer_id])){
+				$arr[$v->customer_id] = [
+					'already' 		=> 0,
+					'not'			=> $v->money,
+					'customer_id'		=> $v->customer_id,
+					'customer_name'	=> $v->customer_name,
+					'customer_nickname'	=> $v->customer_nickname,
+				];
+			}else{
+				$arr[$v->customer_id]['not'] = bcadd($arr[$v->customer_id]['not'], $v->money,2);
+			}
+			$arr['heji']['not'] = bcadd($arr['heji']['not'], $v->money,2);
+		}
+		$brr = [];
+		foreach ($arr as $k => $v) {
+			$brr[] = $v;
+		}
+		
+		return $brr;
 	}
 }

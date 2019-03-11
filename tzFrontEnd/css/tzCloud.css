@@ -1,0 +1,156 @@
+@CHARSET "UTF-8";@CHARSET "UTF-8";
+.human {
+	width: 130px;
+	height: 40px;
+	display: block;
+	text-align: center;
+	padding-top: 10px;
+	background: #FFF;
+	font-family: Microsoft YaHei;
+	font-size: 15px;
+	color: #000;
+	margin-left: 20px;
+}
+
+.human:hover {
+	text-decoration: none;
+	color: #FFF;
+	background-color: #FB645D;
+}
+
+.colort{
+	text-decoration: none;
+	color: #FFF;
+	background-color: #FB645D;
+}
+
+.tzCloudSite{
+	width: 1144px;
+	height: 930px;
+	margin: 50px auto 0;
+	display: none;
+}
+.tzCloud-bg{
+	float: left;
+	width: 330px;
+	height: 430px;
+	margin-left:70px;
+}
+.tzC-secline{
+	margin-top: 50px;
+}
+.tzCloud-pro{
+	width: 330px;
+	height: 430px;
+	position: relative;
+}
+.tzCloud-pro-verso{
+	width: 330px;
+	height: 430px;
+	padding: 20px;
+	background-color: #595758;
+}
+.tzCloud-pro-verso-package-name{
+	width: 100%;
+	height:50px;
+	text-align: center;
+	font-size: 25px;
+	font-weight: 700;
+	color: #F9C500;
+}
+.tzCloud-pro-verso-package-detail{
+	border-top: 1px #F9C500 solid;
+	border-bottom: 1px #F9C500 solid;
+	padding: 10px 5px 5px 8px;
+	color: #F9C500;
+	font-size: 19px;
+}
+.tzCloud-pro-verso-package-detail ul{
+	list-style: none;
+	line-height: 37px;
+	padding-left:0px;
+}
+.tzCloud-pro-verso-package-price{
+	margin-top:5px;
+	width: 100%;
+	height: 70px;
+	text-align: center;
+}
+.tzCloud-pro-verso-package-price-p{
+	display: block;
+	font-size: 24px;
+	color: #F9C500;
+}
+.tzCloud-pro-verso-package-price-btn{
+	display: block;
+	border: 1px #F9C500 solid;
+	background-color: #F9C500;
+	color: #000;
+	font-size: 18px;
+	width: 160px;
+	height: 35px;
+	margin: 0 auto;
+	padding-top:3px;
+	cursor: pointer;
+	margin-top: 5px;
+}
+
+
+.def-type {
+	width: 1150px;
+	height: auto;
+	min-width: 1150px;
+	margin: 0 auto;
+	margin-top: 60px;
+}
+
+.def-type .types {
+	padding: 0 50px 50px 50px;
+	width: 1152px;
+	height: 423px;
+}
+
+.types-text {
+	float: left;
+	width: 569px;
+	height: auto;
+}
+.types-text ul{
+	list-style: url("/tz/images/fcdun/dot.png");
+}
+.types-text ul li{
+	font-size: 18px;
+	margin-top: 40px;
+}
+.types-text ul li span {
+	font-size: 33px;
+	font-weight: 700;
+	color: #146ec9;
+	padding-right: 20px;
+}
+
+.types-img {
+	width: 477px;
+	height: auto;
+	float: left;
+}
+
+.humans {
+	width: 130px;
+	height: 40px;
+	display: block;
+	text-align: center;
+	padding-top: 10px;
+	background: #FFF;
+	font-family: Microsoft YaHei;
+	font-size: 15px;
+	color: #000;
+	margin-left: 20px;
+	color: #FFF;
+	background-color: #FB645D;
+}
+.humans:hover {
+	text-decoration: none;
+	color: #FFF;
+	background-color: #FB645D;
+}

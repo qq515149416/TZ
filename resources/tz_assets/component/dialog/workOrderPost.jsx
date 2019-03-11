@@ -1,5 +1,6 @@
 import React from "react";
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -14,6 +15,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 import WorkOrderIcon from "../icon/workOrder.jsx";
 import {get,post} from "../../tool/http";
 import { inject,observer } from "mobx-react";
+
+const styles = theme => ({
+    iconButton: {
+        ...theme.tableIconButton
+    }
+});
 
 @inject("workOrderTypesStores")
 class WorkOrderPost extends React.Component {
@@ -42,7 +49,11 @@ class WorkOrderPost extends React.Component {
             work_order_type: this.selectTypeId
         }).then(res => {
             if(res.data.code==1) {
-                alert("工单提交成功");
+                alert(res.data.msg);
+                this.setState({
+                    currency: 0,
+                    currency2: 0
+                });
                 this.close();
             } else {
                 alert(res.data.msg);
@@ -74,7 +85,7 @@ class WorkOrderPost extends React.Component {
             //         });
             //     }
             // });
-            if(this.props.workOrderTypesStores.workOrderTypes.filter(item => {
+            if(!this.props.workOrderTypesStores.workOrderTypes.filter(item => {
                 return item.parent_id == event.target.value;
             }).length) {
                 this.selectTypeId = event.target.value;
@@ -93,9 +104,10 @@ class WorkOrderPost extends React.Component {
         });
     }
     render() {
+        const { classes } = this.props;
         return [
             <Tooltip title="工单提交">
-                <IconButton onClick={this.open} aria-label="renewalFee">
+                <IconButton className={classes.iconButton} onClick={this.open} aria-label="renewalFee">
                     <WorkOrderIcon />
                 </IconButton>
             </Tooltip>,
@@ -129,7 +141,7 @@ class WorkOrderPost extends React.Component {
                                     </MenuItem>
                                 ))
                             }
-                            
+
                         </TextField>
                     </Grid>
                     <Grid item xs={6}>
@@ -182,4 +194,7 @@ class WorkOrderPost extends React.Component {
         ];
     }
 }
-export default WorkOrderPost;
+WorkOrderPost.propTypes = {
+    classes: PropTypes.object.isRequired
+}
+export default withStyles(styles)(WorkOrderPost);

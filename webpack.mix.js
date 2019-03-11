@@ -13,3 +13,6 @@ let mix = require('laravel-mix');
 
 mix.js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css');
+mix.less('resources/assets/less/index.less', 'public/css')
+   .js('resources/assets/js/script.js', 'public/js')
+   .less('resources/assets/less/common.less', 'public/css');

@@ -61,6 +61,10 @@ class RechargeRequest extends FormRequest
 					'del_trade_id'		=> 'required',
 				];
 				break;
+			// case 'payIndex':
+			// 	$return = [
+			// 		'total_amount'		=> 'required|integer|min:1.00',
+			// 	];
 			default:
 	
 				break;
@@ -77,6 +81,9 @@ class RechargeRequest extends FormRequest
 			'way.required'		=> '请选择支付途径',
 			'trade_no.required'	=> '请提供所需查询充值单号',
 			'del_trade_id.required'	=> '请提供所需删除充值单号',
+			'total_amount.required'=> '请填写充值金额',
+			'total_amount.integer'	=> '充值金额必须为整数',
+			'total_amount.min'	=> '充值金额最少为1元',
 		];
 	}
 

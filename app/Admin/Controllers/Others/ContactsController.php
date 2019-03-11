@@ -11,10 +11,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
+use XS;
+use XSDocument;
+
 
 class ContactsController extends Controller
 {
     use ModelForm;
+    private function filter($arr,$state){
+        $this->state = $state;
+        return array_filter($arr,function($var) {
+            return $var->resource_type == $this->state;
+        });
+    }
     /**
      * 测试
      */
@@ -49,8 +58,30 @@ class ContactsController extends Controller
     /**
      * 测试
      */
-    public function vi() {
-    	return view('show/test');
+    public function vi(Request $request) {
+        $index = new Contacts();
+        $index->test();
+     //    // dd(json_encode(DB::table('tz_orders')->first()));
+     //    DB::table('test')->insert(['test'=>json_encode(DB::table('tz_orders')->first())]);
+     //    // dd(json_encode(DB::table('test')->first()));
+     //    $a = [1,2,3,4,5,6];
+     //    dump((object)$a);
+     //    dd(json_encode((object)$a));
+     //    dd(DB::table('test')->first());
+     //    dd(json_decode(DB::table('test')->first()->test));
+    	// return view('show/test');
+    }
+    public function vtest(Request $request) {
+        $search = $request->only('search');
+        $xs = new XS('ip');
+        $index = $xs->index;
+        $doc = DB::table('idc_ips')->select('id','ip')->get();
+        $document = new \XSDocument($doc);
+        //修改成功时更新文档主键值一样时会替换数据
+        $index->update($document);
+        $index->flushIndex();
+        dd($xs);
+        dd($search);
     }
 
     /**

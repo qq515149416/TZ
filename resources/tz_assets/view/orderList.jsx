@@ -4,11 +4,14 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import ListTableComponent from "../component/listTableComponent.jsx";
 import { inject,observer } from "mobx-react";
-import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+// import Paper from '@material-ui/core/Paper';
+// import Tabs from '@material-ui/core/Tabs';
+// import Tab from '@material-ui/core/Tab';
+import extendElementsComponent from "../tool/extendElementsComponent";
+import Disposal from "../component/dialog/disposal.jsx";
 import RenewalFee from "../component/dialog/renewalFee.jsx";
 import SelectExpansion from "../component/dialog/selectExpansion.jsx";
+import TabComponent from "../component/tabComponent.jsx";
 const qs = require('qs');
 const styles = theme => ({
     listTableComponent: {
@@ -31,8 +34,6 @@ const columnData = [
     { id: 'duration', numeric: true, disablePadding: true, label: '时长' },
     { id: 'payable_money', numeric: true, disablePadding: true, label: '应付金额' },
     { id: 'end_time', numeric: true, disablePadding: true, label: '到期时间' },
-    { id: 'pay_type', numeric: true, disablePadding: true, label: '支付方式' },
-    { id: 'pay_price', numeric: true, disablePadding: true, label: '实付金额' },
     { id: 'operat', numeric: true, disablePadding: false, extend: true, extendData: [
         {id: "business_sn", label: "业务号", type: "text"},
         {id: "before_money", label: "支付前余额", type: "text"},
@@ -44,10 +45,22 @@ const columnData = [
         {id: "order_note", label: "订单备注" ,type: "text"},
         {id: "created_at", label: "创建时间" ,type: "text"}
     ],extendElement: (data) => {
+        let Element = extendElementsComponent([
+            RenewalFee,
+            Disposal
+          ]);
         if(data.order_status=="已支付") {
-          return <RenewalFee {...data} postUrl="business/renewresource" nameParam="order_sn" type="订单" />;
+            if(data.type > 3) {
+                return <Element {...data} disposal_type={2} postUrl="business/renewresource" nameParam="order_sn" type="订单" />;
+            } else {
+                return null;
+            }
         }else {
-          return null;
+            if(data.type > 3) {
+                return <Disposal {...data} disposal_type={2} />;
+            } else {
+                return null;
+            }
         }
     }, label: '操作' }
 ];
@@ -156,7 +169,7 @@ const inputType = [
     }
 ];
 @inject("ordersStores")
-@observer 
+@observer
 class OrderList extends React.Component {
     constructor(props) {
         super(props);
@@ -195,8 +208,8 @@ class OrderList extends React.Component {
         } else {
             param.machine_sn = param.resource.label;
             param.resource = param.resource.value;
-        }   
-        
+        }
+
         this.props.ordersStores.addData(param).then((state) => {
             callbrak(state);
         });
@@ -217,7 +230,7 @@ class OrderList extends React.Component {
             console.error("参数：",param,"有问题");
         }
     }
-    handleChange = (event, value) => {
+    handleChange = (value) => {
         if(value=="all") {
             this.props.ordersStores.getData({
                 business_sn: qs.parse(location.search.substr(1)).business_number
@@ -239,8 +252,9 @@ class OrderList extends React.Component {
               text: item.label
             }
         });
-        return [
-            <Paper square>
+        //TabComponent
+        /*
+        <Paper square>
                 <AppBar className={classes.tabAppBar} position="static" color="default">
                     <Tabs
                     value={this.state.value}
@@ -262,18 +276,64 @@ class OrderList extends React.Component {
                     <Tab label="防护" value={9} />
                     </Tabs>
                 </AppBar>
-            </Paper>,
-            <ListTableComponent 
-            className={classes.listTableComponent}
-            title="业务订单管理"
-            operattext="业务订单操作"
-            inputType={inputType} 
-            headTitlesData={columnData} 
-            data={this.props.ordersStores.orders}
-            addData={this.addData.bind(this)} 
-            delData={this.delData.bind(this)} 
-          />
-        ];
+            </Paper>
+
+        */
+        return (
+            <TabComponent onChange={this.handleChange} type={this.state.value} types={[
+                {
+                    label: "全部",
+                    value: "all"
+                },
+                {
+                    label: "租用主机",
+                    value: 1
+                },
+                {
+                    label: "托管主机",
+                    value: 2
+                },
+                {
+                    label: "租用机柜",
+                    value: 3
+                },
+                {
+                    label: "IP",
+                    value: 4
+                },
+                {
+                    label: "CPU",
+                    value: 5
+                },
+                {
+                    label: "硬盘",
+                    value: 6
+                },
+                {
+                    label: "内存",
+                    value: 7
+                },
+                {
+                    label: "带宽",
+                    value: 8
+                },
+                {
+                    label: "防护",
+                    value: 9
+                }
+            ]}>
+                <ListTableComponent
+                    className={classes.listTableComponent}
+                    title="业务订单管理"
+                    operattext="业务订单操作"
+                    inputType={inputType}
+                    headTitlesData={columnData}
+                    data={this.props.ordersStores.orders}
+                    addData={this.addData.bind(this)}
+                    delData={this.delData.bind(this)}
+                />
+            </TabComponent>
+        );
       }
 }
 OrderList.propTypes = {

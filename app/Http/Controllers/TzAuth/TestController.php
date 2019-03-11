@@ -16,7 +16,7 @@ class TestController extends Controller
      */
     public function login()
     {
-        Auth::loginUsingId(2);
+        Auth::loginUsingId(2203);
         return tz_ajax_echo([],'登录成功',1);
     }
 

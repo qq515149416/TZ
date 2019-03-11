@@ -35,7 +35,7 @@ const styles = theme => ({
 });
 
 @inject("MachineRoomsStores")
-@observer 
+@observer
 class LinkageOption extends React.Component {
     constructor(props) {
         super(props);
@@ -73,7 +73,7 @@ class LinkageOption extends React.Component {
                 }
             });
         }
-        
+
     }
     handleOpen = (type) => {
         this.type = type;
@@ -164,8 +164,8 @@ class LinkageOption extends React.Component {
                             <TableCell numeric>机房名</TableCell> */}
                             <TableCell numeric>带宽</TableCell>
                             <TableCell numeric>防护</TableCell>
-                            <TableCell numeric>登录名</TableCell>
-                            <TableCell numeric>登录密码</TableCell>
+                            {/* <TableCell numeric>登录名</TableCell> */}
+                            {/* <TableCell numeric>登录密码</TableCell> */}
                             {/* <TableCell numeric>机器型号</TableCell>
                             <TableCell numeric>使用状态</TableCell>
                             <TableCell numeric>机器状态</TableCell>
@@ -196,8 +196,8 @@ class LinkageOption extends React.Component {
                                 <TableCell numeric>{row.machineroom_name}</TableCell> */}
                                 <TableCell numeric>{row.bandwidth}</TableCell>
                                 <TableCell numeric>{row.protect}</TableCell>
-                                <TableCell numeric>{row.loginname}</TableCell>
-                                <TableCell numeric>{row.loginpass}</TableCell>
+                                {/* <TableCell numeric>{row.loginname}</TableCell> */}
+                                {/* <TableCell numeric>{row.loginpass}</TableCell> */}
                                 {/* <TableCell numeric>{row.machine_type}</TableCell>
                                 <TableCell numeric>{row.used}</TableCell>
                                 <TableCell numeric>{row.status}</TableCell>
@@ -229,11 +229,11 @@ class LinkageOption extends React.Component {
                                         </ListItem>
                                     ))
                                 }
-                                
+
                             </List>
                         ]
                     }
-                    
+
                     <div className={classes.bottom}>
                         <Button variant="contained" onClick={this.selectedValue} color="primary">
                             确定

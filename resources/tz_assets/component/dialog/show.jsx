@@ -15,10 +15,12 @@ const ShowStyle = theme => ({
     },
     title_type: {
         fontWeight: "bold",
-        float: "left"
+        float: "left",
+        fontSize: "16px",
     },
     title_content: {
-        float: "left"
+        float: "left",
+        fontSize: "16px",
     },
     dialog: {
         minWidth: theme.breakpoints.values.md

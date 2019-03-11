@@ -129,7 +129,7 @@ class Account extends Model
            $row = $this->where('id',$reset_pass['id'])->update($reset);
            if($row != false){
               $return['code'] = 1;
-              $return['msg'] = '密码重置成功，密码为登录账号';
+              $return['msg'] = '密码重置成功，密码为账号';
            } else {
               $return['code'] = 0;
               $return['msg'] = '密码重置失败';
@@ -138,6 +138,7 @@ class Account extends Model
             $return['code'] = 0;
             $return['msg'] = '密码无法重置';
         }
+        return $return;
     }
 
       /**
@@ -161,7 +162,7 @@ class Account extends Model
             $return['msg'] = '密码无法修改';
         }
         return $return;
-    } 
+    }
 
     /**
      * 人事添加账户
@@ -175,6 +176,7 @@ class Account extends Model
             $return['msg'] = '无法添加账户信息';
             return $return;
         }
+        // dd($insert_data);
         $insert_data['password'] = Hash::make($insert_data['username']);
         $row = $this->create($insert_data);
         if($row != false){

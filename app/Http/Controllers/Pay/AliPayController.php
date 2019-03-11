@@ -41,7 +41,7 @@ class AliPayController extends Controller
 			// 'type' => 'single', // optional, 可选 daily.
    //          			'max_file' => 30, // optional, 当 type 为 daily 时有效，默认 30 天
 		],
-		'mode' => 'dev', // optional,设置此参数，将进入沙箱模式
+		//'mode' => 'dev', // optional,设置此参数，将进入沙箱模式
 
 	];
 
@@ -51,12 +51,12 @@ class AliPayController extends Controller
  	**/
  	
  	public function __construct()
- 	{
- 		$this->seller_id			= env('SELLER_ID');
-		$this->domain_name		= env('APP_URL');
- 		$this->config['private_key'] 	= env('ALI_PRIVATE_KEY');
- 		$this->config['ali_public_key'] 	= env('ALI_PUBLIC_KEY');
- 		$this->config['app_id'] 		= env('ALI_APP_ID');
+ 	{					
+ 		$this->seller_id			= config('ali_pay.seller_id');
+		$this->domain_name		= config('ali_pay.domain_name');
+ 		$this->config['private_key'] 	= config('ali_pay.private_key');
+ 		$this->config['ali_public_key'] 	= config('ali_pay.ali_public_key');
+ 		$this->config['app_id'] 		= config('ali_pay.app_id');
  	}
 
 	/**
@@ -66,8 +66,10 @@ class AliPayController extends Controller
 	*/
 	public function goToPay($order,$way,$returnUrl,$notifyUrl)
 	{
+
 		$this->config['return_url'] 	= $returnUrl;
  		$this->config['notify_url'] 	= $notifyUrl;
+
 		//生成支付宝链接
 		switch ($way) {
 			case 'web':
@@ -155,7 +157,6 @@ class AliPayController extends Controller
 		//获取配置信息
 		$alipay = Pay::alipay($this->config);
 		
-
 		try{
 			$data = $alipay->verify(); // 是的，验签就这么简单！
 
@@ -207,7 +208,7 @@ class AliPayController extends Controller
 	
 
 	/**
-	*关闭订单接口
+	*取消订单接口(会退款)
 	*@param 	$trade_no 	订单号,就是属于支付宝的out_trade_no
 	*/
 
@@ -217,6 +218,19 @@ class AliPayController extends Controller
 
 		return $cancel;
 	}
+
+	/**
+	*关闭订单接口
+	*@param 	$trade_no 	订单号,就是属于支付宝的out_trade_no
+	*/
+
+	public function close($trade_no){
+		
+		$close =  Pay::alipay($this->config)->close($trade_no);
+
+		return $close;
+	}
+
 
 	/**
 	*查询订单接口

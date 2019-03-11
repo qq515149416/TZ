@@ -11,10 +11,17 @@ class StatisticalPerformancesStores extends ActionBoundStores {
     @observable statisticalPerformances = [
 
     ];
-    @action.bound 
+    business_type = 1
+    @action.bound
     getData(param={}) {
+        let url = 'pfmStatistics/pfmBig';
+        if(location.search.indexOf("?type=recharge") > -1) {
+            url = 'rechargeStatistics/list';
+        }
         this.statisticalPerformances = [];
-        get("pfmStatistics/pfmStatisticsList",param).then((res) => {
+        get(url,Object.assign(param,{
+            business_type: this.business_type
+        })).then((res) => {
             if(res.data.code==1) {
                 this.statisticalPerformances = res.data.data.map(item => new StatisticalPerformanceStores(item));
             }

@@ -55,18 +55,15 @@ class WhiteListRequest extends FormRequest
 					'white_ip' => 'required|ip',
 					'domain_name' => [
 						'required',
-						// 'regex:',
+						'regex:#^(?!www|http)\w+(.\w+)+\w*$#',
 					],
 					'record_number' => 'required',
-					'binding_machine' => 'required',
-					'customer_id' => 'required|integer',
-					'customer_name' => 'required',
 					];
 				break;
 			case 'check':
 				$return = [
-					'white_status' => 'required|integer|min:0|max:4',
-					'id' => 'required|integer',
+					'white_status' => 'required|integer|min:1|max:3',
+					'id' => 'required|exists:tz_white_list,id',
 				];
 				break;
 			default:
@@ -84,19 +81,21 @@ class WhiteListRequest extends FormRequest
 			'ip.required' 			=> 'IP地址必须填写',
 			'ip.ip' 				=> 'IP地址必须符合IP规范(如:192.168.1.1)',
 			'white_status.required' 		=> '白名单状态必须选择',
-			'white_status.integer' 		=> '白名单状态必须为0~4的正整数',
-			'white_status.min' 		=> '白名单状态必须为0~4的正整数',
-			'white_status.max' 		=> '白名单状态必须为0~4的正整数',
+			'white_status.integer' 		=> '白名单状态 : 1-通过,2-不通过,3-拉黑',
+			'white_status.min' 		=> '白名单状态 : 1-通过,2-不通过,3-拉黑',
+			'white_status.max' 		=> '白名单状态 : 1-通过,2-不通过,3-拉黑',
 			'white_ip.required'		=> 'IP地址必须填写',
 			'white_ip.ip'			=> 'IP地址必须符合IP规范(如:192.168.1.1)',
 			'domain_name.required'	=> '域名必须填写',
+			'domain_name.regex'		=> '域名格式错误,勿填 : http:// ; https ; www ; / ;',
 			'record_number.required'	=> '备案编号必须填写',
 			'binding_machine.required'	=> '机器编号必须填写',
-			'customer_id.required'		=> '客户编号必须填写',
-			'customer_id.integer' 		=> '客户编号必须为正整数',
+			'customer_id.required'		=> '客户id必须填写',
+			'customer_id.integer' 		=> '客户id必须为正整数',
+			'customer_id.exists' 		=> '客户id不存在',
 			'customer_name.required'	=> '客户姓名必须填写',
 			'id.required'			=> '请提供所需审核的编号',
-			'id.integer' 			=> '审核所需的编号必须为正整数',
+			'id.exists' 			=> '审核单id不存在',
 		];
 	}
 

@@ -5,6 +5,9 @@ import {post} from "../tool/http.js";
 import extendElementsComponent from "../tool/extendElementsComponent";
 import ResetPassword from "../component/dialog/resetPassword.jsx";
 import ManualRecharge from "../component/dialog/manualRecharge.jsx";
+import RechargeRecord from "../component/icon/rechargeRecord.jsx";
+import PersonnelTransfer from "../component/dialog/personnelTransfer.jsx";
+import { routerConfig } from "../config/common/config.js";
 
 const columnData = [
     // { id: 'name', numeric: true, disablePadding: false, label: '用户名' },
@@ -13,8 +16,8 @@ const columnData = [
     { id: 'clerk_name', numeric: true, disablePadding: false, label: '业务员' },
     { id: 'status', numeric: true, disablePadding: false, label: '状态' },
     { id: 'created_at', numeric: true, disablePadding: false, label: '创建时间' },
-    { id: 'updated_at', numeric: true, disablePadding: false, label: '更新时间' },
     { id: 'operat', numeric: true, disablePadding: false, extend: true,  extendConfirm: {
+        last: true,
         title: "更改状态操作",
         content: "是否要更改此用户状态",
         select: true,
@@ -52,17 +55,33 @@ const columnData = [
       } ,extendElement: (data) => {
         let Element = extendElementsComponent([
             ResetPassword,
-            ManualRecharge
+            ManualRecharge,
+            PersonnelTransfer
           ]);
         return <Element postUrl="business/recharge" nameParam="email" {...data} />;
-    }, extendUrl: {
-        title: "添加业务",
-        link: "/tz_admin/business",
-        param: ["id","email","money","status"]
-    }, label: '操作' }
+    }, extendUrl: [
+        {
+            title: "添加业务",
+            link: `${routerConfig.baseUrl}/business`,
+            param: ["id","email","money","status","clerk_name"]
+        },
+        {
+            title: "充值记录",
+            link: `${routerConfig.baseUrl}/checkrecharge`,
+            param: ["id"],
+            icon: <RechargeRecord />
+        }
+    ], label: '操作' }
+];
+const inputType = [
+    {
+        field: "email",
+        label: "用户邮箱",
+        type: "text"
+      }
 ];
 @inject("clientelesStores")
-@observer 
+@observer
 class ClienteleList extends React.Component {
     componentDidMount() {
         this.props.clientelesStores.getData();
@@ -70,13 +89,20 @@ class ClienteleList extends React.Component {
     updata() {
         this.props.clientelesStores.getData();
     }
+    addData = (param,callbrak) => {
+        this.props.clientelesStores.bingSalesman(param).then((state) => {
+          callbrak(state);
+        });
+    }
     render() {
         return (
-          <ListTableComponent 
+          <ListTableComponent
             title="CRM管理"
             operattext="客户"
-            headTitlesData={columnData} 
-            data={this.props.clientelesStores.clienteles}  
+            headTitlesData={columnData}
+            inputType={inputType}
+            data={this.props.clientelesStores.clienteles}
+            addData={this.addData.bind(this)}
             updata={this.updata.bind(this)}
           />
         );

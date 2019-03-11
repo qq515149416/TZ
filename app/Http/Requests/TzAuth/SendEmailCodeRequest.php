@@ -45,7 +45,7 @@ class SendEmailCodeRequest extends FormRequest
         return [
             'email.required'   => '邮箱帐号必须填写',
             'email.email'      => '邮箱格式错误',
-//            'email.unique'     => '邮箱已被注册过',
+            'email.unique'     => '邮箱已被注册过',
             'captcha.required' => '验证码不能为空',
             'captcha.captcha'  => '验证码错误',
 

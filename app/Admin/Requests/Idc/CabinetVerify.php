@@ -27,7 +27,8 @@ class CabinetVerify extends FormRequest
 	{
 		$return = [
 			'machineroom_id'    	=> 'required',
-			'cabinet_id'        		=> 'required|unique:idc_cabinet,cabinet_id',
+//			'cabinet_id'        		=> 'required|unique:idc_cabinet,cabinet_id',
+			'cabinet_id'        		=> 'required',
 		];
 		$info = $this->all();
 
@@ -53,7 +54,9 @@ class CabinetVerify extends FormRequest
 	 */
 	public function failedValidation(Validator $validator)
 	{
-		exit(tz_ajax_echo([], $validator->errors()->first(), 0));
+		$msg = $validator->errors()->first();
+        header('Content-type:application/json');
+        exit('{"code": 0,"data":[],"msg":"'.$msg.'"}'); 
 	}
 
 }

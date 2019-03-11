@@ -9,6 +9,8 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
+import ExpansionComponent from "../expansionComponent.jsx";
+import Approval from "../icon/approval.jsx";
 import PostData from "./postData.jsx";
 const toolbarStyles = theme => ({
     root: {
@@ -36,7 +38,7 @@ const toolbarStyles = theme => ({
       flex: '0 0 auto',
     },
   });
-  
+
   let EnhancedTableToolbar = props => {
     const { numSelected, classes, selectedData, getParentData } = props;
     let data = selectedData.map(item => getParentData().find((e) => e.id == item));
@@ -53,8 +55,31 @@ const toolbarStyles = theme => ({
                         console.warn("ID:"+item+"，删除失败");
                       }
                     });
-                  });
+                });
             });
+        }
+    }
+    const checkAllData = (result,param) => {
+        let isCheck = confirm(`是否要对选中的${numSelected}个数据进行审批？`);
+        const postAllData = selectedData.filter(id => data.find(item => item.id == id).business_status == 0).map(id => Object.assign({},{
+            id,
+            business_number: data.find(item => item.id == id).business_number,
+            business_status: param,
+            check_note: result.note
+        }));
+        if(isCheck) {
+            props.handleSelectAllEmptyClick();
+            props.checkAll(postAllData,(checkAllIng) => {
+                Promise.all(checkAllIng).then((ret) => {
+                    selectedData.forEach((item,index) => {
+                      if(ret[index]) {
+                        console.log("ID:"+item+"，删除成功");
+                      } else {
+                        console.warn("ID:"+item+"，删除失败");
+                      }
+                    });
+                });
+            })
         }
     }
     return (
@@ -84,6 +109,31 @@ const toolbarStyles = theme => ({
                   </IconButton>
                 </Tooltip>)
               }
+              {
+                  props.checkAll && (
+                    <ExpansionComponent
+                    type="confirm"
+                    tip_title="批量审批操作"
+                    tip_content="此操作将会应用在选中的业务上请谨慎操作"
+                    ok={checkAllData.bind(this)}
+                    select={true}
+                    input={true}
+                    data={{}}
+                    icon={<Approval />}
+                    selectOptions={[
+                        {
+                            text: "审核通过",
+                            value: 1
+                        },
+                        {
+                            text: "审核不通过",
+                            value: -2,
+                            default: true
+                        }
+                    ]}
+                    />
+                  )
+              }
             </div>
           ]: (
             <span>
@@ -98,10 +148,10 @@ const toolbarStyles = theme => ({
       </Toolbar>
     );
   };
-  
+
   EnhancedTableToolbar.propTypes = {
     classes: PropTypes.object.isRequired,
     numSelected: PropTypes.number.isRequired,
   };
-  
+
  export default withStyles(toolbarStyles)(EnhancedTableToolbar);

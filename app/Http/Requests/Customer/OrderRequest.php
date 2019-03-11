@@ -1,14 +1,5 @@
 <?php
 
-// +----------------------------------------------------------------------
-// | Author: kiri <420541662@qq.com>
-// +----------------------------------------------------------------------
-// | Copyright (c) 2016-2018 by cmd
-// +----------------------------------------------------------------------
-// | Description: 用户订单表验证规则
-// +----------------------------------------------------------------------
-// | @DateTime: 2018-08-27 10:19:24
-// +----------------------------------------------------------------------
 
 namespace App\Http\Requests\Customer;
 
@@ -40,18 +31,28 @@ class OrderRequest extends FormRequest
 		$return = [];
 
 		switch ($method) {
+
+			//以下这个是新版的方法,子梁测试请打开注释,注释掉下面同名那小段代码
+			// case 'payOrderByBalance':
+			// 	$return = [
+			// 		'order_id'		=> 'required',
+			// 		// 'coupon_id'		=> 'required',
+			// 	];
+			// 	break;
+
 			case 'payOrderByBalance':
 				$return = [
-					'serial_number'		=> 'required',
-				];
-				break;
-			case 'makeTrade':
-				$return = [
-					'order_id'		=> 'required|array',
+					'business_sn'		=> 'required',
 					'coupon_id'		=> 'required',
 				];
 				break;
- 			
+
+			case 'getOrderById':
+				$return = [
+					'order_id'		=> 'required|exists:tz_orders,id',
+				];
+				break;
+			
 			default:
 	
 				break;
@@ -64,10 +65,10 @@ class OrderRequest extends FormRequest
 	{
 		
 		return  [
-			'serial_number.required'	=> '请提供所需支付的支付流水号',
-			'order_id.required'		=> '请提供所需支付订单id',
-			'order_id.array'			=> '订单id必须为数组格式',
+			'business_sn.required'		=> '请提供所需支付的业务编号',
 			'coupon_id.required'		=> '请提供优惠券id,0为不使用',
+			'order_id.required'		=> '请提供订单id',
+			'order_id.exists'			=> '无此订单id',
 		];
 	}
 

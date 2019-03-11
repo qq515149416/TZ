@@ -35,6 +35,9 @@ class  Cpu extends Model
 		// 用模型进行数据查询
 		$index = $this->all(['id','cpu_number','cpu_param','cpu_used','created_at','updated_at','service_num','room_id']);
 
+		//分页获取方法
+		// $index = $this->paginate(15);
+
 		$status = [
 			0 => '未使用',
 			1 => '已使用',
@@ -52,6 +55,7 @@ class  Cpu extends Model
 		foreach ($index as $k => $v) {
 			$index[$k]['cpu_used'] = $status[$index[$k]['cpu_used']];
 			$index[$k]['room'] = $room_arr[$index[$k]['room_id']];
+			$index[$k]['ziyuan'] = 5;
 		}
 		
 		if(!$index->isEmpty()){	
@@ -59,8 +63,8 @@ class  Cpu extends Model
 			$return['code'] = 1;
 			$return['msg'] = '获取信息成功！！';
 		} else {
-			$return['data'] = $index;
-			$return['code'] = 0;
+			$return['data'] = [];
+			$return['code'] = 1;
 			$return['msg'] = '暂无数据';
 		}
 		// 返回
@@ -78,7 +82,7 @@ class  Cpu extends Model
 		if($data){
 			// 存在数据就用model进行数据写入操作
 			// $fill = $this->fill($data);
-		
+			$data['cpu_number'] = $data['cpu_number'];
 			$row = $this->create($data);
 
 			if($row != false){
@@ -181,7 +185,7 @@ class  Cpu extends Model
 	public function selectCpu($machineroom){
 		$where['cpu_used'] = 0;
 		$where['room_id'] = $machineroom;
-		$cpu = $this->where($where)->get(['cpu_number','cpu_param','room_id']);
+		$cpu = $this->where($where)->get(['cpu_number','cpu_param','room_id','id']);
 		foreach($cpu as $key => $value){
 			$cpu[$key]['machineroom'] = $this->machineroom($value['room_id']);
 			$cpu[$key]['label'] = $value['cpu_number'];

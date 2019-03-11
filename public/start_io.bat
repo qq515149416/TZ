@@ -1,2 +1,2 @@
-php  start_io.php
+php start_io.php
 pause

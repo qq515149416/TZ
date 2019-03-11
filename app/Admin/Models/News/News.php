@@ -44,11 +44,19 @@ class  News extends Model
 			foreach ($type as $k=> $v) {
 				$type_arr[$v['tid']] = $v['type_name'];
 			}
-		
+			
 			foreach($index as $key=>$value) {
 			// 对应的字段的数据转换
 			// return 123;
-				$index[$key]['type_name'] 	= $type_arr[$value['tid']];
+				switch ($value['tid']) {
+					case '0':
+						$index[$key]['type_name'] 	= '无此种类';
+						break;
+					default:
+						$index[$key]['type_name'] 	= $type_arr[$value['tid']];
+						break;
+				}
+				
 				$index[$key]['top_status'] 	= $status[$value['top_status']];
 				$index[$key]['home_status'] 	= $status[$value['home_status']];
 				
@@ -58,8 +66,8 @@ class  News extends Model
 			$return['code'] = 1;
 			$return['msg'] = '获取信息成功！！';
 		} else {
-			$return['data'] = $index;
-			$return['code'] = 0;
+			$return['data'] = [];
+			$return['code'] = 1;
 			$return['msg'] = '暂无数据';
 		}
 		// 返回
@@ -118,7 +126,7 @@ class  News extends Model
 			$edit->seoTitle 		= $data['seoTitle'];
 			$edit->seoDescription 	= $data['seoDescription'];
 			$edit->digest 		= $data['digest'];
-			$edit->list_order  	= $data['list_order'];
+			// $edit->list_order  	= $data['list_order'];
 			$row = $edit->save();
 			if($row != false){
 				$return['code'] 	= 1;

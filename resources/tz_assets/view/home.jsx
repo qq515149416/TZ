@@ -23,8 +23,11 @@ const styles = theme => ({
       boxShadow: "0px 4px 5px 0px rgba(0, 0, 0, 0.1), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12)"
     },
     table: {
-      minWidth: 700,
+      minWidth: 700
     },
+    fontStyle: {
+        fontSize: "14px"
+    }
 });
 
 const types = {
@@ -51,7 +54,7 @@ const types = {
     overdueRes: {
          url: "overdue/showOverdueRes",
          columnData: [
-            { id: 'business_number', label: '业务编号' },
+            { id: 'business_sn', label: '业务编号' },
             { id: 'cabinet_num', label: '机柜编号' },
             { id: 'machine_num', label: '机器编号' },
             { id: 'customer_name', label: '客户名称' },
@@ -193,7 +196,7 @@ class Home extends React.Component {
                 alert(res.data.msg);
             }
         });
-        
+
     };
     render() {
         const { classes } = this.props;
@@ -228,15 +231,15 @@ class Home extends React.Component {
                                 ))
                             }
                         </FormGroup>
-                    ) 
+                    )
                 }
                 <Table className={classes.table}>
                     <TableHead>
                     <TableRow>
-                        <TableCell>ID</TableCell>
+                        <TableCell className={classes.fontStyle}>ID</TableCell>
                         {
                             types[type].columnData.map(item => (
-                                <TableCell numeric>{item.label}</TableCell>
+                                <TableCell className={classes.fontStyle} numeric>{item.label}</TableCell>
                             ))
                         }
                     </TableRow>
@@ -245,12 +248,12 @@ class Home extends React.Component {
                     {data.map(row => {
                         return (
                         <TableRow key={row.id}>
-                            <TableCell component="th" scope="row">
+                            <TableCell className={classes.fontStyle} component="th" scope="row">
                                 {row.id}
                             </TableCell>
                             {
                                 types[type].columnData.map(item => (
-                                    <TableCell numeric>{row[item.id]}</TableCell>
+                                    <TableCell className={classes.fontStyle} numeric>{row[item.id]}</TableCell>
                                 ))
                             }
                         </TableRow>

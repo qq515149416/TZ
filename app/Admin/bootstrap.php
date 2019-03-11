@@ -21,4 +21,5 @@
 Encore\Admin\Form::forget(['map', 'editor']);
 
 app('view')->prependNamespace('admin', resource_path('views/admin'));
+Admin::css('/css/header.css');
 Admin::js('/tz_assets/bundle.js');

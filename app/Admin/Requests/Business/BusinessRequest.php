@@ -39,19 +39,19 @@ class BusinessRequest extends FormRequest
 		$method = $arr[count($arr)-1];
 		$return = [];
 
-		switch ($method) {
-			case 'recharge':
-				$return = [
-					'user_id'		=> 'required',
-					'recharge_amount'	=> 'required',
-					'voucher'		=> 'required',		
-				];
-				break;
- 			
-			default:
+		// switch ($method) {
+		// 	case 'recharge':
+		// 		$return = [
+		// 			'user_id'		=> 'required',
+		// 			'recharge_amount'	=> 'required|integer|min:1.00',
+		// 			'recharge_way'		=> 'required',		
+		// 		];
+		// 		break;
+			
+		// 	default:
 	
-				break;
-		}
+		// 		break;
+		// }
 
 		return $return;
 	}
@@ -62,8 +62,9 @@ class BusinessRequest extends FormRequest
 		return  [
 			'user_id.required'		=> '请提供所需充值客户id',
 			'recharge_amount.required'	=> '请填写充值金额',
-			'voucher.required'		=> '请选择付款方式',
-			
+			'recharge_amount.integer'	=> '充值金额必须为整数',
+			'recharge_amount.min'		=> '充值金额最少为1元',
+			'recharge_way.required'	=> '请选择付款方式',
 		];
 	}
 

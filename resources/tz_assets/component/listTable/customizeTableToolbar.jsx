@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+const dateFormat = require('dateformat');
 
 const styles = theme => ({
     button: {
@@ -11,11 +12,14 @@ const styles = theme => ({
   });
 
 class CustomizeTableToolbar extends React.Component {
-    search = date => event => {
+    search = (start,end) => {
+        const startTime = Math.round(new Date(start.value).getTime()/1000);
+        const endTime = Math.round(new Date(end.value).getTime()/1000);
         this.props.getData({
-            month: date.value.split("-")[0]+date.value.split("-")[1]
+            begin: startTime,
+            end: endTime,
         });
-    } 
+    }
     reset = event => {
         this.props.getData();
     }
@@ -24,15 +28,28 @@ class CustomizeTableToolbar extends React.Component {
         return [
             <TextField
                 id="date"
-                label="时间"
+                label="开始时间"
                 type="date"
-                defaultValue="2018-10-10"
+                defaultValue={dateFormat(new Date(),"yyyy-mm-dd")}
                 InputLabelProps={{
                     shrink: true,
                 }}
-                inputRef={ref => this.dateTime = ref}
+                inputRef={ref => this.dateTimeStart = ref}
             />,
-            <Button className={classes.button} variant="contained" onClick={this.search(this.dateTime)} color="primary">
+            <span style={{margin: "0 10px"}}>
+                —
+            </span>,
+            <TextField
+                id="date"
+                label="结束时间"
+                type="date"
+                defaultValue={dateFormat(new Date(),"yyyy-mm-dd")}
+                InputLabelProps={{
+                    shrink: true,
+                }}
+                inputRef={ref => this.dateTimeEnd = ref}
+            />,
+            <Button className={classes.button} variant="contained" onClick={() => this.search(this.dateTimeStart,this.dateTimeEnd)} color="primary">
                 搜索
             </Button>,
             <Button className={classes.button} variant="contained" onClick={this.reset} color="primary">

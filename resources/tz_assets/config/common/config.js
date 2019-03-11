@@ -19,14 +19,29 @@ import WorkOrderTypesStores from "../../stores/workOrderType-stores";
 import WorkOrdersStores from "../../stores/workOrder-stores";
 import DepartmentsStores from "../../stores/department-stores";
 import PositionsStores from "../../stores/position-stores";
+import UsersStores from "../../stores/user-stores";
+import RechargesStores from "../../stores/recharge-stores";
+import ReviewRechargesStores from "../../stores/reviewRecharge-stores";
+import DefenseipsStores from "../../stores/defenseip-stores";
+import DefensePackagesStores from "../../stores/defensePackage-stores";
+import DefenseBusinessStores from "../../stores/defenseBusiness-stores";
+import DefenseipReviewsStores from "../../stores/defenseipReview-stores";
+import DismissalReviewsStores from "../../stores/dismissalReview-stores";
+import DisposalHistorysStores from "../../stores/disposalHistory-stores";
 
+
+
+//路由配置共用参数
+export const routerConfig = {
+    baseUrl: "/tz_admin/show"
+}
 
 // 前端Models操作
 export const stores = {
-    usersInfoStores: new UsersInfoStores(),//用户通信录
-    usersLinkInfoStores: new UsersLinkInfoStores(),//用户联系人信息
-    ipsStores: new IpsStores(),//ip资源库
-    MachineRoomsStores: new MachineRoomsStores(),//机房管理
+    usersInfoStores: new UsersInfoStores(), //用户通信录
+    usersLinkInfoStores: new UsersLinkInfoStores(), //用户联系人信息
+    ipsStores: new IpsStores(), //ip资源库
+    MachineRoomsStores: new MachineRoomsStores(), //机房管理
     newsStores: new NewsStores(),
     cpusStores: new CpusStores(),
     harddisksStores: new HarddisksStores(),
@@ -43,7 +58,16 @@ export const stores = {
     workOrderTypesStores: new WorkOrderTypesStores(),
     workOrdersStores: new WorkOrdersStores(),
     departmentsStores: new DepartmentsStores(),
-    positionsStores: new PositionsStores()
+    positionsStores: new PositionsStores(),
+    usersStores: new UsersStores(),
+    rechargesStores: new RechargesStores(),
+    reviewRechargesStores: new ReviewRechargesStores(),
+    defenseipsStores: new DefenseipsStores(),
+    defensePackagesStores: new DefensePackagesStores(),
+    defenseBusinessStores: new DefenseBusinessStores(),
+    defenseipReviewsStores: new DefenseipReviewsStores(),
+    dismissalReviewsStores: new DismissalReviewsStores(),
+    disposalHistorysStores: new DisposalHistorysStores(),
 }
 export const domIds = [
     "user_list",
@@ -68,5 +92,16 @@ export const domIds = [
     "workOrder",
     "home",
     "department",
-    "position"
+    "position",
+    "user",
+    "recharge",
+    "reviewRecharge",
+    "defenseip",
+    "defensePackage",
+    "defenseBusiness",
+    "defenseipReview",
+    "dismissalReview",
+    "disposal",
+    "disposalHistory",
+    "machineProcessing",
 ];

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Test;
 
 use App\Http\Models\TzUser;
+use Carbon\Carbon;
+use Faker\Provider\zh_CN\DateTime;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -15,9 +17,14 @@ class TestController extends Controller
     public function test()
     {
         //测试专用测试
-        dump('测试模块测试');
 
-        dump('ZhangJun');
+        $dataM = new DateTime();
+        echo Carbon::now();
+        $timeM = Carbon::now();
+        dump($dataM);
+        dump($timeM);
+
+
     }
 
     /*
@@ -53,14 +60,14 @@ class TestController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
@@ -68,15 +75,27 @@ class TestController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \App\User
      */
     protected function create(array $data)
     {
         return TzUser::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
+            'name'     => $data['name'],
+            'email'    => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+
+    /**
+     *
+     *
+     */
+    public function hd()
+    {
+
+//        return view('hd');
+
     }
 }

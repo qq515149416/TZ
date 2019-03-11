@@ -15,8 +15,8 @@ class StatisticalPerformanceController extends script
     public function index()
     {
         return Admin::content(function (Content $content) {
-            $content->header('业绩统计');
-            $content->description('业绩操作');
+            $content->header('金额统计');
+            // $content->description('业绩操作');
             $content->body(view('show/statisticalPerformance'));
             Admin::script($this->script());
         });

@@ -23,13 +23,15 @@ use Encore\Admin\Facades\Admin;
 
 class OverdueController extends Controller
 {
+	public function __construct(){
+		date_default_timezone_set('PRC');
+	}
 	/**
 	* 查找5天内到期或过期未续费的机柜,提醒时间可在模型类里$overtime设置
 	* @return json 返回相关的信息
 	*/
 	public function showOverdueCabinet(){
-		//设置时区
-		date_default_timezone_set('PRC');
+		
 		$customerModel = new Overdue();
 		$res = $customerModel->showOverdueCabinet();
 		
@@ -41,8 +43,7 @@ class OverdueController extends Controller
 	* @return json 返回相关的信息
 	*/
 	public function showOverdueMachine(){
-		//设置时区
-		date_default_timezone_set('PRC');
+
 		$customerModel = new Overdue();
 		$res = $customerModel->showOverdueMachine();
 		
@@ -58,8 +59,7 @@ class OverdueController extends Controller
 	* @return json 返回相关的信息
 	*/
 	public function showUnpaidMachine(){
-		//设置时区
-		date_default_timezone_set('PRC');
+
 		$customerModel = new Overdue();
 		$res = $customerModel->showUnpaidMachine();
 	
@@ -71,8 +71,7 @@ class OverdueController extends Controller
 	* @return json 返回相关的信息
 	*/
 	public function showXiaJiaMachine(){
-		//设置时区
-		date_default_timezone_set('PRC');
+
 		$customerModel = new Overdue();
 		$res = $customerModel->showXiaJiaMachine();
 		
@@ -84,8 +83,7 @@ class OverdueController extends Controller
 	* @return json 返回相关的信息
 	*/
 	public function showUnpaidCabinet(){
-		//设置时区
-		date_default_timezone_set('PRC');
+
 		$customerModel = new Overdue();
 		$res = $customerModel->showUnpaidCabinet();
 		
@@ -98,8 +96,7 @@ class OverdueController extends Controller
 	* @return json 返回相关的信息
 	*/
 	public function showOverdueRes(){
-		//设置时区
-		date_default_timezone_set('PRC');
+	
 		$customerModel = new Overdue();
 		$res = $customerModel->showOverdueRes('overdue');
 		
@@ -111,8 +108,7 @@ class OverdueController extends Controller
 	* @return json 返回相关的信息
 	*/
 	public function showXiaJiaRes(){
-		//设置时区
-		date_default_timezone_set('PRC');
+	
 		$customerModel = new Overdue();
 		$res = $customerModel->showOverdueRes('xiajia');
 		
@@ -124,8 +120,7 @@ class OverdueController extends Controller
 	* @return json 返回相关的信息
 	*/
 	public function showOverdueResDet(OverdueRequest $request){
-		//设置时区
-		date_default_timezone_set('PRC');
+
 		$customerModel = new Overdue();
 		$info = $request->only(['resource_type']);
 		$resource_type = $info['resource_type'];
@@ -133,4 +128,29 @@ class OverdueController extends Controller
 	
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
+
+	/**
+	* 查找试用中高防IP业务
+	* @return json 返回相关的信息
+	*/
+	public function showTrialDefenseIp(OverdueRequest $request){
+
+		$model = new Overdue();
+		$res = $model->showTrialDefenseIp();
+	
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
+	
+	/**
+	* 查找未付款的idc业务订单
+	* @return json 返回相关的信息
+	*/
+	public function showUnpaidIdcOrder(OverdueRequest $request){
+	
+		$model = new Overdue();
+		$res = $model->showUnpaidIdcOrder();
+	
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
+
 }

@@ -35,12 +35,13 @@ class Business extends Model
 	public function getList($user_id)
 	{	
 		$where['client_id'] = $user_id;
-		$where['business_status'] = ' < 3';
+		
 		$business = $this->where('client_id',$user_id)
-						->where('business_status','>',1)
+						->where('business_status','>','-1')
 						->where('business_status','<',5)
-						->get(['id','business_number','business_type','machine_number','resource_detail','business_status','money','length','business_note']);
-		$business_status = [2=>'付款使用中',3=>'未付款使用',4=>'锁定中'];
+						->where('remove_status','<',2)
+						->get(['id','business_number','business_type','machine_number','resource_detail','business_status','money','length','business_note','endding_time']);
+		$business_status = [0=>'审核中',1=>'未付款使用',2=>'正常',3=>'正常',4=>'锁定中'];
 		$business_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜'];
 		if(!$business->isEmpty()){
 			foreach ($business as $key => $value) {

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Admin\Requests\Idc\CabinetVerify;
 use Stevenyangecho\UEditor\UEditorServiceProvider;
+use Illuminate\Support\Facades\DB;
 
 class CabinetController extends Controller
 {
@@ -44,6 +45,10 @@ class CabinetController extends Controller
 
 		//获取机柜列表数据
 		$cabinetData = $cabinetModel->all();
+
+		//分页的获取方法
+		// $cabinetData = $cabinetModel->paginate(15);
+		
 		//dump($cabinetData);
 		$stateCN = [
 			0 => '未使用',
@@ -54,21 +59,21 @@ class CabinetController extends Controller
 			0 => '内部机柜',
 			1 => '客户机柜',
 		];
-
+		//判断是否为空
+		if($cabinetData->isEmpty()){
+			return tz_ajax_echo([], '暂无数据', 1);
+		}
 		//根据机房ID查询机房名称
 		foreach ($cabinetData as $key => $value) {
 			$machineRoomData                        = $machineRoomModel->queryMachineRoomName($value['machineroom_id']);
 			$cabinetData[$key]['machine_room_name'] = $machineRoomData['machine_room_name'];
 			$cabinetData[$key]['use_state_cn']      = $stateCN[$value['use_state']];
 			$cabinetData[$key]['use_type_cn']       = $typeCN[$value['use_type']];
+			$cabinetData[$key]['ziyuan'] = 3;
 		}
-
-		//判断是否获取成功
-		if ($cabinetData) {
-			return tz_ajax_echo($cabinetData, '获取成功', 1);
-		} else {
-			return tz_ajax_echo([], '获取失败', 0);
-		}
+		
+		return tz_ajax_echo($cabinetData, '获取成功', 1);
+		
 	}
 
 
@@ -124,7 +129,14 @@ class CabinetController extends Controller
 		$par = $request->post();
 		//实例化
 		$cabineModel = new Cabinet();
-
+		$cabinet = $cabineModel->find($par['id']);
+		if(empty($cabinet)){
+			return tz_ajax_echo([], '此机柜信息不存在', 0);
+		}
+		$bindCabinet = DB::table('idc_machine')->where(['cabinet'=>$par['id']])->whereNull('deleted_at')->get();
+		if(!$bindCabinet->isEmpty()){
+			return tz_ajax_echo([], '请将编号为:'.$cabinet->cabinet_id.'的机柜上的机器转移后再删除', 0);
+		};
 		//判断是否删除成功
 		if ($cabineModel->destroy($par['id'])) {
 			//软删除成功
@@ -137,7 +149,7 @@ class CabinetController extends Controller
 
 	}
 
-	public function updateByAjax(CabinetVerify $request)
+	public function updateByAjax(Request $request)
 	{
 		//获取参数
 		$par = $request->post();

@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Schema;
 use Encore\Admin\Facades\Admin;
+use App\Admin\Models\Work\WorkAnswerModel;
+
 
 /**
  * 工单的模型
@@ -37,13 +39,21 @@ class WorkOrderModel extends Model
      * @return array        返回相关的数据信息和状态
      */
     public function showWorkOrder($where){
-        // $user_id = Admin::user()->id;
-        // $staff = $this->staff($user_id);
-        // if($staff->slug == 3){
-        //     $where['clerk_id'] = $user_id;
-        // } elseif($staff->slug == 4){
-        //     $where['process_department'] = $staff->department;
-        // }
+        /**
+         * 根据不同角色进行查看不同的内容
+         * @var [type]
+         */
+        $user_id = Admin::user()->id;
+        $staff = $this->staff($user_id);
+
+        if( !Admin::user()->inRoles(['administrator','network_dimension'])   ){
+            if($staff->slug == 3){//业务查看
+                $where['clerk_id'] = $user_id;
+            } elseif($staff->slug == 4){//机房查看
+                $where['process_department'] = $staff->department;
+            }
+        }
+ 
         // 进行数据查询
         $result = $this->where($where)
                         ->get(['id','work_order_number','business_num','customer_id','clerk_id','work_order_type',
@@ -60,17 +70,22 @@ class WorkOrderModel extends Model
                 $result[$showkey]['workstatus'] = $work_status[$showvalue['work_order_status']];
                 // 工单类型
                 $worktype = $this->workType($showvalue['work_order_type']);
+
+
                 $result[$showkey]['worktype'] = $worktype->parenttype?'【'.$worktype->parenttype.'】 -- 【'.$worktype->type_name.'】':'【'.$worktype->type_name.'】';
                 // 当前处理部门
                 $result[$showkey]['department'] = $this->department($showvalue['process_department'])->depart_name;
                 // 对应的业务数据
                 $business = $this->businessDetail($showvalue['business_num']);
+
                 $result[$showkey]['client_name'] = $business->client_name;
-                $result[$showkey]['business_type'] = $business->business_type;    
+                $result[$showkey]['business_type'] = $business->business_type;
                 $result[$showkey]['machine_number'] = $business->machine_number;
                 $result[$showkey]['resource_detail'] = $business->resource_detail;
-                $result[$showkey]['sales_name'] = $business->sales_name;  
+                $result[$showkey]['sales_name'] = $business->sales_name;
+                // dump($result);
             }
+
             $return['data'] = $result;
             $return['code'] = 1;
             $return['msg'] = '工单信息获取成功！！';
@@ -95,13 +110,34 @@ class WorkOrderModel extends Model
             return $return;
 
         }
-        $where = ['sales_id'=>Admin::user()->id,'business_number'=>$work_data['business_num'],'business_status'=>[2,3,4]];
-        $business = DB::table('tz_business')->where($where)->select('client_id','business_number','sales_id')->first();
+        if( !Admin::user()->inRoles(['network_dimension'])   ){
+           $where = ['sales_id'=>Admin::user()->id,'business_number'=>$work_data['business_num']];
+        }else{
+            $where = ['business_number'=>$work_data['business_num']];
+        }
+        
+        $business = DB::table('tz_business')->where($where)->whereIn('business_status',[0,1,2,3,4])->select('client_id','business_number','sales_id')->first();
     	if(!$business){
+            $business = DB::table('tz_defenseip_business')
+                            ->join('tz_users','tz_defenseip_business.user_id','=','tz_users.id')
+                            ->join('admin_users','tz_users.salesman_id','=','admin_users.id')
+                            ->where(['tz_defenseip_business.business_number'=>$work_data['business_num'],'tz_defenseip_business.status'=>1])
+                            ->select('tz_defenseip_business.id','admin_users.id as sales_id','admin_users.name as sales_name','tz_defenseip_business.user_id as client_id')
+                            ->first();
+            if(!$business){
+                $return['data'] = '';
+                $return['code'] = 0;
+                $return['msg'] = '工单所属业务不存在或者已过期或者已取消,请确认后提交';
+                return $return;
+            }
+            
+        }
+        $work_order = $this->where(['business_num'=>$work_data['business_num']])->whereBetween('work_order_status',array(0,1))->get(['id','work_order_number']);
+        if(!$work_order->isEmpty()){
             $return['data'] = '';
             $return['code'] = 0;
-            $return['msg'] = '工单所属业务不存在或已过期或取消或业务不属于对应客户,请确认后提交';
-            return $return; 
+            $return['msg'] = '该业务有工单正在处理中,无法提交新的工单,如有需要,请在处理中的工单下联系';
+            return $return;
         }
         // 工单号的生成
         $worknumber = mt_rand(71,99).date("Ymd",time()).substr(time(),8,2);
@@ -112,12 +148,41 @@ class WorkOrderModel extends Model
         $work_data['submitter_name'] = Admin::user()->name?Admin::user()->name:Admin::user()->username;//提交者姓名
         $work_data['submitter'] = 2;//提交方客户
         $work_data['work_order_status'] = 0;//工单状态
-        //$work_data['process_department'] = $this->department()->id;//转发部门
+        $work_data['process_department'] = $this->department()->id;//转发部门
         $row = $this->create($work_data);
+        $answer = new WorkAnswerModel();
+        $answer->insertWorkAnswer(['work_number'=>$row['work_order_number'],'answer_content'=>$row['work_order_content'],'work_order_status'=>0]);
         if($row != false){
-            $return['data'] = $row->id;
+
+            /**
+             * 当提交工单成功的时候使用curl进行模拟传值，发送数据到实时推送接口
+             * @var [type]
+             */
+            $submitter = [1=>'客户',2=>'内部人员'];
+            $work_status = [0=>'待处理',1=>'处理中',2=>'完成',3=>'取消'];
+            // 提交方的转换
+            $row->submit = $submitter[$row->submitter];
+            // 工单状态的转换
+            $row->workstatus = $work_status[$row->work_order_status];
+            // 工单类型
+            $worktype = $this->workType($row->work_order_type);
+            $row->worktype = $worktype->parenttype?'【'.$worktype->parenttype.'】 -- 【'.$worktype->type_name.'】':'【'.$worktype->type_name.'】';
+            // 当前处理部门
+            $row->department = $this->department($row->process_department)->depart_name;
+            // 对应的业务数据
+            $business = $this->businessDetail($row->business_num);
+            $row->client_name = $business->client_name;
+            $row->business_type = $business->business_type;
+            $row->machine_number = $business->machine_number;
+            $row->resource_detail = $business->resource_detail;
+            $row->sales_name = $business->sales_name;
+            $row = $row->toArray();
+            $array = ['work_order'=>$row];
+            curl('http://sk.jungor.cn:8121',$array);
+            $return['data'] = $row['id'];
             $return['code'] = 1;
-            $return['msg'] = '工单提交成功,工单号:'.$row->work_order_number;
+            $return['msg'] = '工单提交成功,工单号:'.$row['work_order_number'];        
+            
         } else {
             $return['data'] = '';
             $return['code'] = 0;
@@ -134,6 +199,30 @@ class WorkOrderModel extends Model
     public function editWorkOrder($editdata){
     	if($editdata){
     		$edit = $this->find($editdata['id']);
+            $user_id = Admin::user()->id;
+            $staff = $this->staff($user_id);
+            if($staff->slug != 2){
+                if($edit->work_order_status == 2){
+                    $return['code'] = 0;
+                    $return['msg'] = '工单是已完成的,您无权对其进行再次操作!!';
+                    return $return;
+                }
+                if($edit->work_order_status == 3){
+                    $return['code'] = 0;
+                    $return['msg'] = '工单是已取消的,您无权对其进行再次操作!!';
+                    return $return;
+                }
+                if($edit->work_order_status == 1 && $editdata['work_order_status']==0){
+                    $return['code'] = 0;
+                    $return['msg'] = '您无权对处理中的工单的状态修改为待处理!!';
+                    return $return;
+                }
+                if($edit->work_order_status == 1 && $editdata['work_order_status']==3){
+                    $return['code'] = 0;
+                    $return['msg'] = '您无权对处理中的工单的状态修改为取消!!';
+                    return $return;
+                }
+            }
     		// 当工单处理状态修改为2完成时
     		if($editdata['work_order_status'] == 2){
     			// 存入完成时间
@@ -148,7 +237,7 @@ class WorkOrderModel extends Model
     			if(!empty($editdata['summary'])){
     				$edit->summary = $editdata['summary'];
     			}
-    			
+
     		}
     		// 修改状态
     		$edit->work_order_status = $editdata['work_order_status'];
@@ -156,8 +245,36 @@ class WorkOrderModel extends Model
     		if(isset($editdata['process_department'])){
     			$edit->process_department = $editdata['process_department'];
     		}
-    		$row = $edit->save();
+    		$row = $edit->save();//true
     		if($row != false){
+                if($editdata['work_order_status'] == 1){
+                    /**
+                     * 当工单状态修改为处理中时将值传递到实时推送接口
+                     * @var [type]
+                     */
+                    $edit_after = $this->find($editdata['id']);
+                    $submitter = [1=>'客户',2=>'内部人员'];
+                    $work_status = [0=>'待处理',1=>'处理中',2=>'完成',3=>'取消'];
+                    // 提交方的转换
+                    $edit_after->submit = $submitter[$edit_after->submitter];
+                    // 工单状态的转换
+                    $edit_after->workstatus = $work_status[$edit_after->work_order_status];
+                    // 工单类型
+                    $worktype = $this->workType($edit_after->work_order_type);
+                    $edit_after->worktype = $worktype->parenttype?'【'.$worktype->parenttype.'】 -- 【'.$worktype->type_name.'】':'【'.$worktype->type_name.'】';
+                    // 当前处理部门
+                   $edit_after->department = $this->department($edit_after->process_department)->depart_name;
+                    // 对应的业务数据
+                    $business = $this->businessDetail($edit_after->business_num);
+                    $edit_after->client_name = $business->client_name;
+                    $edit_after->business_type = $business->business_type;
+                    $edit_after->machine_number = $business->machine_number;
+                    $edit_after->resource_detail = $business->resource_detail;
+                    $edit_after->sales_name = $business->sales_name;
+                    $edit_after = $edit_after->toArray();
+                    $array = ['work_order'=>$edit_after];
+                    curl('http://sk.jungor.cn:8121',$array);
+                }
     			$return['code'] = 1;
     			$return['msg'] = '工单修改成功!!';
     		} else {
@@ -247,7 +364,20 @@ class WorkOrderModel extends Model
      */
     public function businessDetail($business_number){
         $business = DB::table('tz_business')->where('business_number',$business_number)->select('client_name','business_type','machine_number','resource_detail','sales_name')->first();
-        $business_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜'];
+        if(!$business){
+            $business = DB::table('tz_defenseip_business')
+                            ->join('tz_defenseip_store','tz_defenseip_business.ip_id','=','tz_defenseip_store.id')
+                            ->join('tz_users','tz_defenseip_business.user_id','=','tz_users.id')
+                            ->join('admin_users','tz_users.salesman_id','=','admin_users.id')
+                            ->where('tz_defenseip_business.business_number',$business_number)
+                            ->select('tz_defenseip_business.target_ip','tz_defenseip_store.ip','tz_defenseip_store.protection_value','tz_users.name','tz_users.email','admin_users.name as sales_name')
+                            ->first();
+            $business->business_type = 4;
+            $business->client_name = $business->name?$business->name:$business->email;
+            $business->machine_number = $business->ip;
+            $business->resource_detail = json_encode((array)$business);
+        }
+        $business_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'高防IP'];
         $business->business_type = $business_type[$business->business_type];
         return $business;
     }
@@ -259,7 +389,7 @@ class WorkOrderModel extends Model
      */
     public function workTypes($parent_id){
         if(!$parent_id){
-            $parent_id['parent_id'] = 0; 
+            $parent_id['parent_id'] = 0;
         }
         $work_type = DB::table('tz_work_type')->where($parent_id)->whereNull('deleted_at')->select('id','type_name')->get();
         $return['data'] = $work_type;

@@ -23,30 +23,56 @@ import WorkOrderList from "../view/workOrderList.jsx";
 import Home from "../view/home.jsx";
 import DepartmentList from "../view/departmentList.jsx";
 import PositionList from "../view/positionList.jsx";
+import UserList from "../view/userList.jsx";
+import RechargeList from "../view/rechargeList.jsx";
+import ReviewRechargeList from "../view/reviewRechargeList.jsx";
+import DefenseipList from "../view/defenseipList.jsx";
+import DefensePackageList from "../view/defensePackageList.jsx";
+import DefenseBusinesList from "../view/defenseBusinesList.jsx";
+import DefenseipReviewList from "../view/defenseipReviewList.jsx";
+import DismissalReviewList from "../view/dismissalReviewList.jsx";
+import DisposalList from "../view/disposalList.jsx";
+import DisposalHistoryList from "../view/disposalHistoryList.jsx";
+import MachineProcessing from "../view/machineProcessing.jsx";
 
+
+import { routerConfig } from "../config/common/config.js"
+
+const baseUrl = routerConfig.baseUrl;
 
 export default () => [
-    <Route path="/tz_admin/user_list" component={UsersList} />,
-    <Route path="/tz_admin/user_link_list" component={UsersLinkList} />,
-    <Route path="/tz_admin/resource/ip" component={IpList} />,
-    <Route path="/tz_admin/resource/machine_room" component={MachineRoomList} />,
-    <Route path="/tz_admin/article" component={NewList} />,
-    <Route path="/tz_admin/resource/cpu" component={CpuList} />,
-    <Route path="/tz_admin/resource/harddisk" component={HarddiskList} />,
-    <Route path="/tz_admin/resource/memory" component={MemoryList} />,
-    <Route path="/tz_admin/resource/cabinet" component={CabinetList} />,
-    <Route path="/tz_admin/resource/machinelibrary" component={MachineLibraryList} />,
-    <Route path="/tz_admin/hr/employeeManagement" component={EmployeeManagementList} />,
-    <Route path="/tz_admin/crm/clientele" component={ClienteleList} />,
-    <Route path="/tz_admin/business" exact component={BusinesList} />,
-    <Route path="/tz_admin/checkbusiness" component={CheckBusinessList} />,
-    <Route path="/tz_admin/business/order" component={OrderList} />,
-    <Route path="/tz_admin/finance" component={FinanceList} />,
-    <Route path="/tz_admin/statisticalPerformance" component={StatisticalPerformanceList} />,
-    <Route path="/tz_admin/whitelist" component={WhitelistList} />,
-    <Route path="/tz_admin/work_order_type" component={WorkOrderTypeList} />,
-    <Route path="/tz_admin/work_order" component={WorkOrderList} />,
+    <Route path={`${baseUrl}/user_list`} component={UsersList} />,
+    <Route path={`${baseUrl}/user_link_list`} component={UsersLinkList} />,
+    <Route path={`${baseUrl}/resource/ip`} component={IpList} />,
+    <Route path={`${baseUrl}/resource/machine_room`} component={MachineRoomList} />,
+    <Route path={`${baseUrl}/article`} component={NewList} />,
+    <Route path={`${baseUrl}/resource/cpu`} component={CpuList} />,
+    <Route path={`${baseUrl}/resource/harddisk`} component={HarddiskList} />,
+    <Route path={`${baseUrl}/resource/memory`} component={MemoryList} />,
+    <Route path={`${baseUrl}/resource/cabinet`} component={CabinetList} />,
+    <Route path={`${baseUrl}/resource/machinelibrary`} component={MachineLibraryList} />,
+    <Route path={`${baseUrl}/hr/employeeManagement`} component={EmployeeManagementList} />,
+    <Route path={`${baseUrl}/crm/clientele`} component={ClienteleList} />,
+    <Route path={`${baseUrl}/business`} exact component={BusinesList} />,
+    <Route path={`${baseUrl}/checkbusiness`} component={CheckBusinessList} />,
+    <Route path={`${baseUrl}/business/order`} component={OrderList} />,
+    <Route path={`${baseUrl}/finance`} component={FinanceList} />,
+    <Route path={`${baseUrl}/statisticalPerformance`} component={StatisticalPerformanceList} />,
+    <Route path={`${baseUrl}/whitelist`} component={WhitelistList} />,
+    <Route path={`${baseUrl}/work_order_type`} component={WorkOrderTypeList} />,
+    <Route path={`${baseUrl}/work_order`} component={WorkOrderList} />,
     <Route path="/tz_admin" component={Home} exact />,
-    <Route path="/tz_admin/hr/departmentview" component={DepartmentList} />,
-    <Route path="/tz_admin/hr/position" component={PositionList} />
+    <Route path={`${baseUrl}/hr/departmentview`} component={DepartmentList} />,
+    <Route path={`${baseUrl}/hr/position`} component={PositionList} />,
+    <Route path={`${baseUrl}/hr/usermanagement`} component={UserList} />,
+    <Route path={`${baseUrl}/checkrecharge`} component={RechargeList} />,
+    <Route path={`${baseUrl}/reviewRecharge`} component={ReviewRechargeList} />,
+    <Route path={`${baseUrl}/defenseip`} component={DefenseipList} />,
+    <Route path={`${baseUrl}/defensePackage`} component={DefensePackageList} />,
+    <Route path={`${baseUrl}/defenseBusines`} component={DefenseBusinesList} />,
+    <Route path={`${baseUrl}/defenseipReview`} component={DefenseipReviewList} />,
+    <Route path={`${baseUrl}/dismissalReview`} component={DismissalReviewList} />,
+    <Route path={`${baseUrl}/disposal`} component={DisposalList} />,
+    <Route path={`${baseUrl}/disposalHistory`} component={DisposalHistoryList} />,
+    <Route path={`${baseUrl}/machineProcessing`} component={MachineProcessing} />,
 ];

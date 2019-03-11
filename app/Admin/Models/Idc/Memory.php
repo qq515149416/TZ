@@ -34,6 +34,9 @@ class  Memory extends Model
 	public function index(){
 		// 用模型进行数据查询
 		$index = $this->all(['id','memory_number','memory_param','memory_used','created_at','updated_at','service_num','room_id']);
+
+		// 分页获取方法
+		//$index = $this->paginate(15);
 		$status = [
 			0 => '未使用',
 			1 => '已使用',
@@ -51,6 +54,7 @@ class  Memory extends Model
 		foreach ($index as $k => $v) {
 			$index[$k]['memory_used'] = $status[$index[$k]['memory_used']];
 			$index[$k]['room'] = $room_arr[$index[$k]['room_id']];
+			$index[$k]['ziyua'] = 7;
 		}
 		
 		if(!$index->isEmpty()){	
@@ -58,8 +62,8 @@ class  Memory extends Model
 			$return['code'] = 1;
 			$return['msg'] = '获取信息成功！！';
 		} else {
-			$return['data'] = $index;
-			$return['code'] = 0;
+			$return['data'] = [];
+			$return['code'] = 1;
 			$return['msg'] = '暂无数据';
 		}
 		// 返回
@@ -77,7 +81,7 @@ class  Memory extends Model
 		if($data){
 			// 存在数据就用model进行数据写入操作
 			// $fill = $this->fill($data);
-		
+			$data['memory_number'] = $data['memory_number'];
 			$row = $this->create($data);
 
 			if($row != false){

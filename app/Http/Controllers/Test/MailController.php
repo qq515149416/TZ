@@ -19,16 +19,35 @@ class MailController extends Controller
      */
     public function handle()
     {
-            dump(md5('5b8060d7c7b37364732bfd91d688afba'));
+//            dump(md5(123456));
 //        $testM= new OverdueAlterStatus();
 //        dump($testM->selectOverdue());
 
 //        dump($testM->alterStatus());
 
 
-//        $sendData['test'] = 'susu';
-//        Mail::to('568171152@qq.com')
-//            ->queue(new Deadline($sendData));
+        $sendData['test'] = 'susu';
+
+//        Mail::send('emails.' . 'test', [
+//            //发送内容
+////            'token' => $token,
+////            'userName'    => $data['userName'],     //用户名
+////            'exampleType' => $data['exampleType'],  //实例类型
+////            'exampleId'   => $data['exampleId'],    //实例ID
+////            'deadLine'    => $data['deadLine '],    //到期时间
+//        ], function ($message) {
+//            $message->to('15812816866@163.com')->subject('测试');
+//        });
+
+        $token = 123122;
+        $mail  = '15812816866@163.com';                  //测试接受代码的邮箱
+
+        Mail::send('emails.code', ['token' => $token], function ($message) use ($mail) {
+            $to = $mail;
+            $message->to($to)->subject('邮箱验证');
+        });
+
+
 //        Demo::dispatch('123');
 //        die();
 //         return '123';

@@ -1,13 +1,15 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+// import Paper from '@material-ui/core/Paper';
+// import Tabs from '@material-ui/core/Tabs';
+// import Tab from '@material-ui/core/Tab';
 import ListTableComponent from "../component/listTableComponent.jsx";
 import ChangeStatus from "../component/dialog/changeStatus.jsx";
 import Communication from "../component/dialog/communication.jsx";
+import TabComponent from "../component/tabComponent.jsx";
 import { inject,observer } from "mobx-react";
+import { get } from "../tool/http.js";
 const qs = require('qs');
 
 const styles = theme => ({
@@ -48,26 +50,66 @@ const columnData = [
             {id: "cabinet_id", label: "机柜编号", type: "text"}
           ]}
     ],extendElement: (data) => {
-        if(data.work_order_status==1) {
-            return <Communication {...data} />;
-        } else {
-            return <ChangeStatus {...data} postUrl="workorder/edit" nameParam="work_order_number" />;
-        }
+
+        return <Communication {...data} />;
+        // if(data.work_order_status < 2) {
+
+        // } else {
+        //     return <ChangeStatus {...data} postUrl="workorder/edit" nameParam="work_order_number" />;
+        // }
     }, label: '操作' }
 ];
 const inputType = [
 
 ];
 @inject("workOrdersStores")
-@observer 
+@observer
 class WorkOrderList extends React.Component {
+    static contextTypes = {
+        socket: PropTypes.object
+    }
     constructor(props) {
         super(props);
         this.state = {
-            value: 0
+            value: 1,
+            types: [
+                {
+                    label: "处理中",
+                    value: 1
+                },
+                {
+                    label: "完成",
+                    value: 2
+                },
+                {
+                    label: "取消",
+                    value: 3
+                }
+            ]
         };
     }
     componentDidMount() {
+        const { socket } = this.context;
+        get("show/pwdDepartment").then(res => {
+            if(res.data.code == 1) {
+                if(res.data.data.sign==2) {
+
+                    this.setState(state => {
+                        state["types"].unshift({
+                            label: "待处理",
+                            value: 0
+                        });
+                        state["value"] = 0;
+                        return state;
+                    });
+                }
+                socket.emit("connect","start");
+                socket.emit("login",res.data.data.id);
+                socket.on("new_work_order",content=>{
+                    this.props.workOrdersStores.addData(content);
+                });
+            }
+        })
         this.props.workOrdersStores.getData();
     }
     delData = (selectedData,callbrak) => {
@@ -75,14 +117,14 @@ class WorkOrderList extends React.Component {
         let delIng = selectedData.map(item => workOrdersStores.delData(item));
         callbrak(delIng);
     }
-    handleChange = (event, value) => {
+    handleChange = (value) => {
         this.props.workOrdersStores.type = value;
         this.setState({ value });
         this.props.workOrdersStores.getData();
     }
     render() {
         const {classes} = this.props;
-        return [
+        /*
             <Paper square>
                 <Tabs
                 value={this.state.value}
@@ -95,17 +137,22 @@ class WorkOrderList extends React.Component {
                 <Tab label="完成" value={2} />
                 <Tab label="取消" value={3} />
                 </Tabs>
-                </Paper>,
-          <ListTableComponent 
-            className={classes.listTableComponent}
-            title="工单列表"
-            operattext="工单信息"
-            inputType={inputType} 
-            headTitlesData={columnData} 
-            data={this.props.workOrdersStores.workOrders} 
-            delData={this.delData.bind(this)}
-          />
-        ];
+                </Paper>
+
+        */
+        return (
+            <TabComponent onChange={this.handleChange} type={this.state.value} types={this.state.types}>
+                <ListTableComponent
+                    className={classes.listTableComponent}
+                    title="工单列表"
+                    operattext="工单信息"
+                    inputType={inputType}
+                    headTitlesData={columnData}
+                    data={this.props.workOrdersStores.workOrders}
+                    delData={this.delData.bind(this)}
+                />
+            </TabComponent>
+        );
       }
 }
 WorkOrderList.propTypes = {

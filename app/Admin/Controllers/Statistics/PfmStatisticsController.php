@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Admin\Requests\Statistics\PfmStatisticsRequest;
 use Encore\Admin\Facades\Admin;
-
+use App\Admin\Controllers\Excel;
 
 
 
@@ -33,52 +33,51 @@ class PfmStatisticsController extends Controller
 	* @return 	json 返回相关的信息
 	*/
 	public function index( PfmStatisticsRequest $request){
-		//获取查询月份
-		$par = $request->only('month');
-		//如无传值,则查当月
-		if(isset($par['month'])){
-			$month = $par['month'];
-		}else{
-			$month = date("Ym");
-		}
-
-		//更新统计数据
-		$res = $this->pfmStatistics($month);
-		if($res['code'] == 1){
-			$msg = '数据更新成功 , ';
-		}else{
-			$msg = '数据更新失败 , ';
-		}
 		
-		//获取统计数据
+		$par = $request->only(['begin','end','business_type','customer_id']);
 		$pfmModel = new PfmStatistics();
-		$info = $pfmModel->getStatistics($month);	
-
-		return tz_ajax_echo($info['data'],$msg.$info['msg'],$info['code']);
+		switch ($par['business_type']) {
+			//区分查询的业务类型,1-idc;2-高防ip
+			case '1':
+				if (isset($par['customer_id'])) {
+					$return = $pfmModel->getIdcStatisticsBigByUser($par['begin'],$par['end'],$par['customer_id']);
+				}else{
+					$return = $pfmModel->getIdcStatisticsBig($par['begin'],$par['end']);
+				}	
+				break;
+			case '2':
+				if (isset($par['customer_id'])) {
+					$return = $pfmModel->getDefenseipStatisticsBigByUser($par['begin'],$par['end'],$par['customer_id']);
+				}else{
+					$return = $pfmModel->getDefenseipStatisticsBig($par['begin'],$par['end']);
+				}
+				break;
+			default:
+				return tz_ajax_echo('','请选择正确业务类型',0);
+				break;
+		}
+	
+		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
 	}
 
-
-	/**
-	 * 按月份统计业务员业绩
-	 * @param 	$month
-	 * @return code,1为更新成功,0为失败
-	 */
-
-	public function pfmStatistics($month)
-	{
-		//如需单独调用此接口,放出下面的,再改下参数
-		// $par = $request->only('month');
-		// if(isset($par['month'])){
-		// 	$month = $par['month'];
-		// }else{
-		// 	return tz_ajax_echo([],'参数错误!!',0);
-		// }
+	public function pfmSmall(PfmStatisticsRequest $request){
+		$par = $request->only(['begin','end','business_type']);
+		$user_id = Admin::user()->id;
 
 		$pfmModel = new PfmStatistics();
-		$result = $pfmModel->statistics($month);
 
-		return $result;
-
+		switch ($par['business_type']) {
+			//区分查询的业务类型,1-idc;2-高防ip
+			case '1':
+				$return = $pfmModel->getIdcStatisticsSmall($par['begin'],$par['end'],$user_id);
+				break;
+			case '2':
+				$return = $pfmModel->getDefenseipStatisticsSmall($par['begin'],$par['end'],$user_id);
+				break;
+			default:
+				return tz_ajax_echo('','请选择正确业务类型',0);
+				break;
+		}
+		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
 	}
-
 }

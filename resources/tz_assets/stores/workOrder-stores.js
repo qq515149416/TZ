@@ -1,20 +1,23 @@
-import { observable, action, extendObservable} from "mobx";
-import {get,post} from "../tool/http.js";
+import { observable, action, extendObservable } from "mobx";
+import {get, post } from "../tool/http.js";
 import ActionBoundStores from "./common/action-bound-stores.js";
 const dateFormat = require('dateformat');
 
 class WorkOrderStores {
     constructor(data) {
-        extendObservable(this,data);
+        extendObservable(this, data);
     }
 }
 class DepartmentStores {
     constructor(data) {
-        extendObservable(this,data);
+        extendObservable(this, data);
     }
 }
 
 class WorkOrdersStores extends ActionBoundStores {
+    @observable workOrderObj = {
+
+    };
     @observable workOrders = [
 
     ];
@@ -23,12 +26,12 @@ class WorkOrdersStores extends ActionBoundStores {
     ];
     type = 0;
     delData(id) {
-        return new Promise((resolve,reject) => {
-            post("workorder/delete",{
+        return new Promise((resolve, reject) => {
+            post("workorder/delete", {
                 delete_id: id
             }).then((res) => {
-                if(res.data.code==1) {
-                    this.delStoreData("workOrders",id);
+                if (res.data.code == 1) {
+                    this.delStoreData("workOrders", id);
                     resolve(true);
                 } else {
                     resolve(false);
@@ -38,23 +41,33 @@ class WorkOrdersStores extends ActionBoundStores {
     }
     @action.bound
     getDepartments() {
-        if(!this.department.length) {
+        if (!this.department.length) {
             get("hr/show_depart").then(res => {
-                if(res.data.code==1) {
+                if (res.data.code == 1) {
                     this.department = res.data.data.map(item => new DepartmentStores(item));
                 }
             })
         }
     }
     @action.bound
-    getData(param={}) {
+    addData(data) {
+        this.workOrders.unshift(new WorkOrderStores(Object.assign(data, {
+            resource_detail_json: JSON.parse(data.resource_detail)
+        })));
+    }
+    @action.bound
+    getData(param = {}) {
         this.workOrders = [];
-        get("workorder/show",Object.assign(param,{
-            work_order_status: this.type
-        })).then((res) => {
-            if(res.data.code==1) {
+        if (!param.work_order_status) {
+            param.work_order_status = this.type;
+        }
+        get("workorder/show", param).then((res) => {
+            if (res.data.code == 1) {
                 this.getDepartments();
-                this.workOrders = res.data.data.map(item => new WorkOrderStores(Object.assign(item,{
+                this.workOrders = res.data.data.map(item => new WorkOrderStores(Object.assign(item, {
+                    resource_detail_json: JSON.parse(item.resource_detail)
+                })));
+                this.workOrderObj[param.work_order_status] = res.data.data.map(item => new WorkOrderStores(Object.assign(item, {
                     resource_detail_json: JSON.parse(item.resource_detail)
                 })));
             }

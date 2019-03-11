@@ -56,13 +56,18 @@ const styles = theme => ({
     td: {
       paddingLeft: 0,
       paddingRight: 0,
-      textAlign: "center"
+      textAlign: "center",
+      fontSize: 16
     },
     tdLast: {
       textAlign: "center"
     },
     tdFirst: {
       textAlign: "center"
+    },
+    tableComponent: {
+        width: 35,
+        height: 35
     }
   });
   @observer
@@ -77,8 +82,14 @@ const styles = theme => ({
         page: 0,
         rowsPerPage: 10
       };
+
     }
     componentDidMount() {
+        if(this.props.otherConfig) {
+            this.setState({
+                ...this.props.otherConfig
+            });
+        }
         // this.props.usersLinkInfoStores.getData();
     }
     getData() {
@@ -136,100 +147,113 @@ const styles = theme => ({
 
     isSelected = id => this.state.selected.indexOf(id) !== -1;
     renderLinkComponent = (data) => {
+        const { classes } = this.props;
       let operat = this.props.headTitlesData.find(item => item.id=="operat");
-      if(operat.extendUrl.rule) {
-        if(operat.extendUrl.rule.type=="equal") {
-          if(data[operat.extendUrl.rule.term]==operat.extendUrl.rule.execute) {
-            return (
-              <ExpansionComponent
-                  type="link"
-                  title={operat.extendUrl.title}
-                  link={operat.extendUrl.link+"?"+qs.stringify(Object.keys(data).reduce((result,item) => {
-                    if(operat.extendUrl.param && operat.extendUrl.param.find(e => {
-                      if(Object.prototype.toString.call(e)!="[object Object]") {
-                        return item==e;
-                      } else {
+      return operat.extendUrl.map(extendUrl => {
+        if(extendUrl.rule) {
+            if(extendUrl.rule.type=="equal") {
+              if(data[extendUrl.rule.term]==extendUrl.rule.execute) {
+                return (
+                  <ExpansionComponent
+                      type="link"
+                      className={classes.tableComponent}
+                      title={extendUrl.title}
+                      icon={extendUrl.icon}
+                      link={extendUrl.link+"?"+qs.stringify(Object.keys(data).reduce((result,item) => {
+                        if(extendUrl.param && extendUrl.param.find(e => {
+                          if(Object.prototype.toString.call(e)!="[object Object]") {
+                            return item==e;
+                          } else {
 
-                        return e.field==item;
-                      }
-                    })) {
+                            return e.field==item;
+                          }
+                        })) {
 
-                      if(Object.prototype.toString.call(data[item])!="[object Object]") {
-                        result[item] = data[item];
-                      } else {
-                        Object.assign(result,{
-                          ...Object.keys(data[item]).reduce((result,attr) => {
-                            if(operat.extendUrl.param.find(e => e.value==attr)) {
-                              result[attr] = data[item][attr];
-                            }
-                            return result;
-                          },{})
-                        });
+                          if(Object.prototype.toString.call(data[item])!="[object Object]") {
+                            result[item] = data[item];
+                          } else {
+                            Object.assign(result,{
+                              ...Object.keys(data[item]).reduce((result,attr) => {
+                                if(extendUrl.param.find(e => e.value==attr)) {
+                                  result[attr] = data[item][attr];
+                                }
+                                return result;
+                              },{})
+                            });
 
-                      }
-                    }
-                    return result;
-                  },{}))}
-                />
-            )
-          } else {
-            return null;
-          }
-        } else if(operat.extendUrl.rule.type=="more") {
-          if(data[operat.extendUrl.rule.term] > this.props.headTitlesData.find(item => item.id=="operat").extendUrl.rule.execute) {
-            return (
-              <ExpansionComponent
-                  type="link"
-                  title={operat.extendUrl.title}
-                  link={operat.extendUrl.link+"?"+qs.stringify(Object.keys(data).reduce((result,item) => {
-                    if(operat.extendUrl.param && operat.extendUrl.param.find(e => item==e)) {
-                      result[item] = data[item];
-                    }
-                    return result;
-                  },{}))}
-                />
-            )
-          } else {
-            return null;
-          }
-        } else {
-          if(data[operat.extendUrl.rule.term]!=operat.extendUrl.rule.execute) {
-            return (
-              <ExpansionComponent
-                  type="link"
-                  title={operat.extendUrl.title}
-                  link={operat.extendUrl.link+"?"+qs.stringify(Object.keys(data).reduce((result,item) => {
-                    if(operat.extendUrl.param && operat.extendUrl.param.find(e => item==e)) {
-                      result[item] = data[item];
-                    }
-                    return result;
-                  },{}))}
-                />
-            )
-          } else {
-            return null;
-          }
-        }
-
-      }
-      return (
-        <ExpansionComponent
-            type="link"
-            title={operat.extendUrl.title}
-            link={operat.extendUrl.link+"?"+qs.stringify(Object.keys(data).reduce((result,item) => {
-              if(operat.extendUrl.param && operat.extendUrl.param.find(e => item==e)) {
-                result[item] = data[item];
+                          }
+                        }
+                        return result;
+                      },{}))}
+                    />
+                )
+              } else {
+                return null;
               }
-              return result;
-            },{}))}
-          />
-      )
+            } else if(extendUrl.rule.type=="more") {
+              if(data[extendUrl.rule.term] > extendUrl.rule.execute) {
+                return (
+                  <ExpansionComponent
+                      type="link"
+                      className={classes.tableComponent}
+                      title={extendUrl.title}
+                      icon={extendUrl.icon}
+                      link={extendUrl.link+"?"+qs.stringify(Object.keys(data).reduce((result,item) => {
+                        if(extendUrl.param && extendUrl.param.find(e => item==e)) {
+                          result[item] = data[item];
+                        }
+                        return result;
+                      },{}))}
+                    />
+                )
+              } else {
+                return null;
+              }
+            } else {
+              if(data[extendUrl.rule.term]!=extendUrl.rule.execute) {
+                return (
+                  <ExpansionComponent
+                      type="link"
+                      className={classes.tableComponent}
+                      title={extendUrl.title}
+                      icon={extendUrl.icon}
+                      link={extendUrl.link+"?"+qs.stringify(Object.keys(data).reduce((result,item) => {
+                        if(extendUrl.param && extendUrl.param.find(e => item==e)) {
+                          result[item] = data[item];
+                        }
+                        return result;
+                      },{}))}
+                    />
+                )
+              } else {
+                return null;
+              }
+            }
+
+          }
+          return (
+            <ExpansionComponent
+                type="link"
+                className={classes.tableComponent}
+                title={extendUrl.title}
+                icon={extendUrl.icon}
+                link={extendUrl.link+"?"+qs.stringify(Object.keys(data).reduce((result,item) => {
+                  if(extendUrl.param && extendUrl.param.find(e => item==e)) {
+                    result[item] = data[item];
+                  }
+                  return result;
+                },{}))}
+              />
+          )
+      });
     }
     renderExpansionComponent = (data) => {
+        const { classes } = this.props;
       if(!this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.rule) {
         return (
           <ExpansionComponent
             type="confirm"
+            className={classes.tableComponent}
             tip_title={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.title}
             tip_content={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.content}
             ok={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.ok}
@@ -239,6 +263,7 @@ const styles = theme => ({
             updata = {this.props.updata}
             select={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.select}
             selectOptions={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.selectOptions}
+            icon={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.icon}
           />
         );
       }
@@ -247,6 +272,7 @@ const styles = theme => ({
           return (
             <ExpansionComponent
               type="confirm"
+              className={classes.tableComponent}
               tip_title={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.title}
               tip_content={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.content}
               ok={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.ok}
@@ -256,6 +282,7 @@ const styles = theme => ({
               updata = {this.props.updata}
               select={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.select}
               selectOptions={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.selectOptions}
+              icon={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.icon}
             />
           );
         }
@@ -265,6 +292,7 @@ const styles = theme => ({
           return (
             <ExpansionComponent
               type="confirm"
+              className={classes.tableComponent}
               tip_title={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.title}
               tip_content={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.content}
               ok={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.ok}
@@ -274,6 +302,7 @@ const styles = theme => ({
               updata = {this.props.updata}
               select={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.select}
               selectOptions={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.selectOptions}
+              icon={this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.icon}
             />
           );
         }
@@ -282,21 +311,18 @@ const styles = theme => ({
     }
     render() {
       const { classes } = this.props;
-      const {  order, orderBy, selected, rowsPerPage, page } = this.state;
+      const {  order, orderBy, selected, page } = this.state;
+      let { rowsPerPage } = this.state;
+        if(this.props.prohibitedPage) {
+            rowsPerPage = this.props.data.length;
+        }
       const emptyRows = rowsPerPage - Math.min(rowsPerPage, this.props.data.length - page * rowsPerPage);
       return [
           <div>
              {
               this.props.filterType && (
-                <Paper className={classes.paper} elevation={1}>
+                <Paper className={`${classes.paper} ${this.props.listFilterComponentClassName}`} elevation={1}>
                       <FilterTableToolbar filterData={this.props.filterData} types={this.props.headTitlesData} filterType={this.props.filterType} />
-                </Paper>
-              )
-            }
-            {
-              this.props.customizeToolbar && (
-                <Paper className={classes.paper} elevation={1}>
-                      {this.props.customizeToolbar}
                 </Paper>
               )
             }
@@ -311,8 +337,20 @@ const styles = theme => ({
             getParentData={this.getData.bind(this)}
             handleSelectAllEmptyClick={this.handleSelectAllEmptyClick}
             delData={this.props.delData}
+            checkAll={this.props.checkAll}
             selectedData={selected}
           />
+          {
+              this.props.customizeToolbar && (
+                <Paper className={classes.paper} style={{
+                    boxShadow: "none",
+                    paddingTop: 0,
+                    paddingBottom: 0
+                }} elevation={1}>
+                      {this.props.customizeToolbar}
+                </Paper>
+              )
+            }
           <div className={classes.tableWrapper}>
             <Table className={classes.table} aria-labelledby="tableTitle">
               <EnhancedTableHead
@@ -327,6 +365,9 @@ const styles = theme => ({
               <TableBody>
                 {this.props.data
                   .sort(getSorting(order, orderBy))
+                  .sort((a,b) => {
+                        return b.id - a.id
+                    })
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((n,i,arr) => {
                     const isSelected = this.isSelected(n.id);
@@ -359,6 +400,15 @@ const styles = theme => ({
                             //     </TableCell>
                             //   )
                             // } else {
+                            if(item.render) {
+                                return item.render((element) => {
+                                    return (
+                                        <TableCell className={classes.td} numeric>
+                                            {element}
+                                        </TableCell>
+                                    );
+                                },n[item.id]);
+                            }
                               return (
                                 <TableCell className={classes.td} numeric>{item.id.indexOf(".") > -1 ? n[item.id.split(".")[0]][item.id.split(".")[1]] : n[item.id]}</TableCell>
                               )
@@ -369,7 +419,7 @@ const styles = theme => ({
                           this.props.headTitlesData.find(item => item.id=="operat") ? (
                             <TableCell className={classes.tdLast} numeric>
                               {this.props.changeData && (
-                                <PostData operattext={this.props.operattext || this.props.title} inputType={this.props.inputType} postType="edit" editData={n} changeData={this.props.changeData} />
+                                <PostData className={classes.tableComponent} operattext={this.props.operattext || this.props.title} inputType={this.props.inputType} postType="edit" editData={n} changeData={this.props.changeData} />
                               )}
                               {
                                 (this.props.headTitlesData.find(item => item.id=="operat").extend && this.props.headTitlesData.find(item => item.id=="operat").extendData ) && (<ExpansionComponent
@@ -384,16 +434,23 @@ const styles = theme => ({
                                 />)
                               }
                               {
-                                (this.props.headTitlesData.find(item => item.id=="operat").extend && this.props.headTitlesData.find(item => item.id=="operat").extendConfirm ) && this.renderExpansionComponent(n)
+                                (this.props.headTitlesData.find(item => item.id=="operat").extend && this.props.headTitlesData.find(item => item.id=="operat").extendConfirm && !this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.last ) && (
+                                    this.renderExpansionComponent(n)
+                                )
                               }
                               {
                                 (this.props.headTitlesData.find(item => item.id=="operat").extend && this.props.headTitlesData.find(item => item.id=="operat").extendElement ) && (
-                                  this.props.headTitlesData.find(item => item.id=="operat").extendElement(n)
+                                  this.props.headTitlesData.find(item => item.id=="operat").extendElement(n,this.props.updata)
                                 )
                               }
                               {
                                 (this.props.headTitlesData.find(item => item.id=="operat").extend && this.props.headTitlesData.find(item => item.id=="operat").extendUrl ) && (
                                   this.renderLinkComponent(n)
+                                )
+                              }
+                              {
+                                (this.props.headTitlesData.find(item => item.id=="operat").extend && this.props.headTitlesData.find(item => item.id=="operat").extendConfirm && this.props.headTitlesData.find(item => item.id=="operat").extendConfirm.last ) && (
+                                    this.renderExpansionComponent(n)
                                 )
                               }
                             </TableCell>
@@ -410,22 +467,26 @@ const styles = theme => ({
               </TableBody>
             </Table>
           </div>
-          <TablePagination
-            component="div"
-            count={this.props.data.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            backIconButtonProps={{
-              'aria-label': 'Previous Page',
-            }}
-            nextIconButtonProps={{
-              'aria-label': 'Next Page',
-            }}
-            onChangePage={this.handleChangePage}
-            onChangeRowsPerPage={this.handleChangeRowsPerPage}
-            labelRowsPerPage="每页行数："
-            labelDisplayedRows={({ from, to, count }) => `${from}到${to}条，一共： ${count}条` }
-          />
+          {
+              !this.props.prohibitedPage && (
+                <TablePagination
+                    component="div"
+                    count={this.props.data.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    backIconButtonProps={{
+                    'aria-label': 'Previous Page',
+                    }}
+                    nextIconButtonProps={{
+                    'aria-label': 'Next Page',
+                    }}
+                    onChangePage={this.handleChangePage}
+                    onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                    labelRowsPerPage="每页行数："
+                    labelDisplayedRows={({ from, to, count }) => `${from}到${to}条，一共： ${count}条` }
+                />
+              )
+          }
         </Paper>
       ];
     }

@@ -38,7 +38,7 @@ class WhiteListRequest extends FormRequest
                 'white_ip' => 'required|ip',
                 'domain_name' => [
                     'required',
-                    'regex:',
+                    // 'regex:',
                 ],
                 'record_number' => 'required',
                 'binding_machine' => 'required',
@@ -62,7 +62,7 @@ class WhiteListRequest extends FormRequest
                 'white_ip.required' => 'IP地址必须填写',
                 'white_ip.ip' => 'IP地址的填写必须符合IP规范(例如:192.168.1.1)',
                 'domain_name.required' => '需要绑定的域名必须填写',
-                'domain_name.regex' => '所填写的域名必须符合域名规范(如:baidu.com)',
+                // 'domain_name.regex' => '所填写的域名必须符合域名规范(如:baidu.com)',
                 'record_number' => '域名的备案编号必须填写',
                 'binding_machine' => 'IP所属机器编号必须存在',
             ];

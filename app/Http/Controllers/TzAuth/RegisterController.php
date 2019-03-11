@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\TzAuth;
 
 use App\Http\Models\TzUser;
+use App\Http\Models\User\AdminUsers;
+use App\Http\Models\User\OaStaff;
+use App\Http\Models\User\TzJobs;
 use App\Http\Models\User\TzUsersVerification;
 use App\Http\Requests\TzAuth\RegisterByEmailRequest;
 use App\Http\Requests\TzAuth\SendEmailCodeRequest;
@@ -12,7 +15,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
-use Mews\Captcha\Captcha;
+use XS;
+use XSDocument;
 
 class RegisterController extends Controller
 {
@@ -22,20 +26,6 @@ class RegisterController extends Controller
     public function test(Request $request)
     {
 
-//        dump(captcha_src('tz'));
-        dump(Session::all());
-//        Auth::logout();
-        dump(Auth::check());
-        dump(Auth::user());
-
-//        return response()->view()
-//        return
-
-    }
-
-    public function test2()
-    {
-        dump(Auth::check());
 
     }
 
@@ -69,14 +59,33 @@ class RegisterController extends Controller
         if (($par['token'] == $verificationData['token']) && ($par['email'] == $verificationData['accounts'])) {
             $TzUserModel = new TzUser();//实例化
 
+            //判断帐号是否存在
+            $userExists = $TzUserModel->where('email', '=', $par['email'])->exists();
+            if ($userExists) {
+                return tz_ajax_echo([], '注册失败,帐号已存在', 0);//注册失败,邮箱帐号已存在
+            }
+
             //添加帐号
             $addUserInfo = $TzUserModel->create([
 //                'name'     => $par['name'], //用户名暂时不写入
-                'email'    => $par['email'],
-                'password' => Hash::make($par['password']),
+                'email'    => $par['email'],  //邮箱
+                'password' => Hash::make($par['password']),  //密码
                 'status'   => 2,  //状态为已验证
+                'pwd_ver'  => 1,
             ]);
+            $this->bindSalesman($addUserInfo['id'], $par['salesman']); //绑定业务员
             Auth::loginUsingId($addUserInfo['id']);  //注册后自动登录
+            /**
+             * 将先注册的账户相关信息放入索引文件
+             * @var XS
+             */
+            $xunsearch    = new XS('customer');
+            $index        = $xunsearch->index;
+            $doc['id']    = strtolower($addUserInfo['id']);
+            $doc['email'] = strtolower($par['email']);
+            $document     = new \XSDocument($doc);
+            $index->update($document);
+            $index->flushIndex();
             return tz_ajax_echo([], '注册成功', 1);   //注册成功
         } else {
             return tz_ajax_echo([], '注册失败,验证码失败', 0);   //注册失败
@@ -95,10 +104,10 @@ class RegisterController extends Controller
     {
 
         $par   = $request->all();                  //获取参数
-        $token = mt_rand(10000, 99999);         //生成随机验证码
+        $token = mt_rand(1000, 9999);         //生成随机验证码
         $mail  = $par['email'];                  //测试接受代码的邮箱
-
         //发送邮件
+
         Mail::send('emails.code', ['token' => $token], function ($message) use ($mail) {
             $to = $mail;
             $message->to($to)->subject('邮箱验证');
@@ -118,8 +127,62 @@ class RegisterController extends Controller
     }
 
 
+    /**
+     * 查询所有业务员
+     *
+     *[
+     *  {
+     *      "id": 业务员ID
+     *      "username": 登录名
+     *      "name": 显示名
+     *  },
+     * ]
+     *
+     */
+    public function getAllSalesman()
+    {
+        $tzJobsModel     = new TzJobs();  //实例化  职位表
+        $oaStaffModel    = new OaStaff(); // 实例化 员工表
+        $adminUsersModel = new AdminUsers(); // 实例化 后台用户表
+
+        $salemanJobId = $tzJobsModel->getAllSalesmanJobId();  //获取所有销售员职位ID
+        $adminUserId  = $oaStaffModel->getAdminUserIdByJob($salemanJobId); //根据职位ID获取后台账户ID
+        $salemanData  = $adminUsersModel->getAdminUserName($adminUserId);  //获取业务员数据
+
+        /**
+         * 去除重复
+         */
+        $salemanId = [];//去除用
+        foreach ($salemanData as $v => $k) {
+
+            //判断数组中是否已经存在
+            if (in_array($k['id'], $salemanId)) {
+
+                unset($salemanData[$v]);
+
+            }
+            $salemanId[] = $k['id'];
+        }
+
+        return tz_ajax_echo($salemanData, '业务员列表获取成功', 1);
+
+    }
 
 
-
+    /**
+     * 注册中绑定业务员
+     *
+     * @param int $userId 用户ID
+     * @param int $salesmanUserId 业务员后台用户ID
+     * @return mixed   true:成功   false:失败
+     */
+    private function bindSalesman($userId, $salesmanUserId)
+    {
+        $TzUserModel       = new TzUser(); //实例化腾正用户模型
+        $user              = $TzUserModel->find($userId);  //根据用户ID 获取用户数据
+        $user->salesman_id = $salesmanUserId;    //修改用数据中的业务员ID
+        $bool              = $user->save();           //保存
+        return $bool;
+    }
 
 }

@@ -115,20 +115,30 @@ class OrderController extends Controller
 	 * @param  Request $request [description]
 	 * @return json           续费的反馈信息和提示
 	 */
-	public function payOrderByBalance(OrderRequest $request){
+	//以下这个是新版的方法,子梁测试请打开注释,注释掉下面同名那个
+	// public function payOrderByBalance(OrderRequest $request){
 		
-		$par = $request->only(['order_id','coupon_id']);
-		$order_id = $par['order_id'];
-		//$coupon_id = $par['coupon_id'];
-		if(!is_array($order_id)){
-			return tz_ajax_echo([],'订单id格式错误',0);
-		}
+	// 	$par = $request->only(['order_id','coupon_id']);
+	// 	$order_id = $par['order_id'];
+	// 	//$coupon_id = $par['coupon_id'];
+	// 	if(!is_array($order_id)){
+	// 		return tz_ajax_echo([],'订单id格式错误',0);
+	// 	}
+
+	// 	$model = new PayOrder();
+	// 	$pay = $model->payOrderByBalance($order_id,0);
+	// 	return tz_ajax_echo($pay['data'],$pay['msg'],$pay['code']);
+	// }
+
+	public function payOrderByBalance(OrderRequest $request){
+		$par = $request->only(['business_sn','coupon_id']);
+		$business_sn = $par['business_sn'];
+		$coupon_id = $par['coupon_id'];
 
 		$model = new PayOrder();
-		$pay = $model->payOrderByBalance($order_id,0);
+		$pay = $model->payOrderByBalance($business_sn,$coupon_id);
 		return tz_ajax_echo($pay['data'],$pay['msg'],$pay['code']);
 	}
-
 	/**
 	 * 获取该业务下的其他资源订单数据
 	 * @param  Request $request [description]

@@ -83,11 +83,14 @@ class PfmStatisticsController extends Controller
 
 	public function test(PfmStatisticsRequest $request){
 		$par = $request->only(['begin','end']);
-		$begin = strtotime('2019-03-01 00:00:00') ;
-		$end = strtotime('2019-03-31 23:59:59') ;
-		
+		// $begin = strtotime('2019-03-01 00:00:00') ;
+		// $end = strtotime('2019-03-31 23:59:59') ;
+		$begin = '2019-03-01 00:00:00';
+		$end = '2019-03-31 23:59:59';
+
 		$pfmModel = new PfmStatistics();
 		$res = $pfmModel->test($begin,$end);
-		dd($res);
+		return tz_ajax_echo($res,'统计完成',1);
 	}
+
 }

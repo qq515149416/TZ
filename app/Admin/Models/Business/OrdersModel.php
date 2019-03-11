@@ -715,7 +715,9 @@ class OrdersModel extends Model
 		$return['msg'] = '续费已经创建,支付后即代表续费成功!';
 		return $return;
 
+
 	}
+
 
 	/**
 	 * 续费订单的支付
@@ -913,6 +915,7 @@ class OrdersModel extends Model
 		return ['data'=>'','code'=>1,'msg'=>'资源续费成功,请及时确认信息'];
 	}
 
+
 	/**
 	 * 计算续费订单需要支付的金额
 	 * @param  array $pay 需要支付的续费订单的数据
@@ -959,11 +962,13 @@ class OrdersModel extends Model
    		$serial_number = 'tz_'.chr(mt_rand(97,122)).$time.mt_rand(10,50).'_admin_'.$business_id;
    		// dump($serial_number);
    		if(empty($serial_number)){
-   			$this->serialNumber();
+
+   			$this->serialNumber($id);
    		}
 		$serial = DB::table('tz_orders_flow')->where(['serial_number'=>$serial_number])->select('id','business_number')->first();
 		if(!empty($serial)){
-			$this->serialNumber();
+			$this->serialNumber($id);
+
 		}
 		return $serial_number;
 

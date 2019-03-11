@@ -100,8 +100,8 @@ class OrdersController extends Controller
 		$renew = new OrdersModel();
 		$renew_resource = $renew->renewResource($renew_data);
 		return tz_ajax_echo($renew_resource['data'],$renew_resource['msg'],$renew_resource['code']);
-	}
-
+	}       
+                                                                                     
 	// /**
 	//  * 展示之前续费新生成的订单
 	//  * @param  Request $request renew_order -- 续费产生的订单id组合

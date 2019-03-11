@@ -968,18 +968,71 @@ class OrdersModel extends Model
 		
 	}
     
-	public function payOrderByBalance($business_number,$coupon_id){
+	public function payOrderByBalance($order_id,$coupon_id){
 		$return['data'] = '';
 		$admin_user_id = Admin::user()->id;
 
+		//查看有没有这些订单
+		$biaoshi = 0;
+		foreach ($order_id as $k => $v) {
+			$c_order = $this->find($v);
+
+			if($c_order == null){		//如果没有
+				return [
+					'data'	=> [],
+					'msg'	=> '订单不存在',
+					'code'	=> 0,
+				];
+			}
+			if($biaoshi == 0){
+				$customer_id = $c_order->customer_id;
+				$biaoshi = 1;
+			}
+
+			if($customer_id == null){
+				return [
+					'data'	=> [],
+					'msg'	=> '客户id获取失败',
+					'code'	=> 0, 
+				];
+			}
+
+			if ($c_order->customer_id != $customer_id) {
+	
+				return [
+					'data'	=> [],
+					'msg'	=> '订单不属于同一客户,请分开支付',
+					'code'	=> 0, 
+				];
+			}
+			if ($c_order->order_status != 0) {
+	
+				return [
+					'data'	=> [],
+					'msg'	=> '订单已支付',
+					'code'	=> 0, 
+				];
+			}
+			if ($c_order->remove_status != 0) {
+	
+				return [
+					'data'	=> [],
+					'msg'	=> '资源已下架,无法支付',
+					'code'	=> 0, 
+				];
+			}	
+		}
+
 		$unpaidOrder = $this
 				->where('order_status',0)
-				->where('business_sn',$business_number)
+				// ->where('business_sn',$business_number)
 				->where('remove_status',0)
+				->whereIN('id',$order_id)
 				->get()
 				->toArray();
+			
 		if(count($unpaidOrder) == 0){
-			$return['msg']  = '无此业务未付款订单';
+			$return['msg']  = '订单不存在';
 			$return['code'] = 0;
 			return $return;
 		}
@@ -994,20 +1047,21 @@ class OrdersModel extends Model
 		DB::beginTransaction();//开启事务处理
 
 		for ($i=0; $i < count($unpaidOrder); $i++) {
+
 			$business_id = DB::table('tz_users')->where('id',$unpaidOrder[$i]['customer_id'])->value('salesman_id');
+			$business_number = $unpaidOrder[$i]['business_sn'];
 			if($business_id != $admin_user_id){
 				$return['msg']  = '该业务所属客户不属于您';
 				$return['code'] = 0;
 				return $return;
 			}
 
-
-			$checkCoupon = $this->checkCoupon($unpaidOrder[$i]['id'],$coupon_id);
-			if($checkCoupon != true){
-				$return['msg']  = '该优惠券不可用';
-				$return['code'] = 0;
-				return $return;
-			}
+			// $checkCoupon = $this->checkCoupon($unpaidOrder[$i]['id'],$coupon_id);
+			// if($checkCoupon != true){
+			// 	$return['msg']  = '该优惠券不可用';
+			// 	$return['code'] = 0;
+			// 	return $return;
+			// }
 
 			$processing = $this->paySuccess($unpaidOrder[$i]['id'],$pay_time);
 			if($processing['code'] != 1){
@@ -1040,35 +1094,9 @@ class OrdersModel extends Model
 				return $return;
 			}
 			$order_id_arr[] = $unpaidOrder[$i]['id'];
-
-			if(in_array($unpaidOrder[$i]['resource_type'], $idc_arr)){
-				$type = 1;
-			} elseif(in_array($unpaidOrder[$i]['resource_type'], $defenseip_arr)){
-				$type = 2;
-			}else{
-				$type = 3;
-			}
-		}
-
-		switch ($type) {
-			case '1':
-				$customer_id = DB::table('tz_business')->where('business_number',$business_number)->value('client_id'); 
-				break;
-			case '2':
-				$customer_id = DB::table('tz_defenseip_business')->where('business_number',$business_number)->value('user_id'); 
-				break;
-			default:
-				$return['msg']  = '获取业务类型失败';
-				$return['code'] = 0;
-				return $return;
-				break;
 		}
 		
-		if($customer_id == null){
-			$return['msg']  = '客户id获取失败';
-			$return['code'] = 0;
-			return $return;
-		}
+
 		//计算实际支付金额
 		$actual_payment = $this->countCoupon($payable_money,$coupon_id);
 		//优惠券抵扣了的金额

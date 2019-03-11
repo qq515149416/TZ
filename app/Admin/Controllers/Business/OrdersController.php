@@ -154,12 +154,16 @@ class OrdersController extends Controller
 	*/
 
 	public function payOrderByAdmin(OrdersRequest $request){
-		$par = $request->only(['business_number','coupon_id']);
-		$business_number = $par['business_number'];
-		$coupon_id = $par['coupon_id'];
 
+		$par = $request->only(['order_id','coupon_id']);
+		$order_id = $par['order_id'];
+		// $coupon_id = $par['coupon_id'];
+		// dd($order_id);
+		if(!is_array($order_id)){
+			return tz_ajax_echo([],'订单id格式错误',0);
+		}
 		$model = new OrdersModel();
-		$pay = $model->payOrderByBalance($business_number,$coupon_id);
+		$pay = $model->payOrderByBalance($order_id,0);
 		return tz_ajax_echo($pay['data'],$pay['msg'],$pay['code']);
 	}
 

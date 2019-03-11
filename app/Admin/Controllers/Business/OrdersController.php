@@ -60,7 +60,7 @@ class OrdersController extends Controller
 	 * @return [type]           [description]
 	 */
 	public function insertResource(Request $request){
-		$insert_data = $request->only(['business_sn','customer_id','customer_name','resource_type','machine_sn','resource','price','duration']);
+		$insert_data = $request->only(['business_sn','customer_id','customer_name','resource_type','machine_sn','resource','price','duration','resource_id']);
 		$insert = new OrdersModel();
 		$return = $insert->insertResource($insert_data);
 		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
@@ -154,12 +154,16 @@ class OrdersController extends Controller
 	*/
 
 	public function payOrderByAdmin(OrdersRequest $request){
-		$par = $request->only(['business_number','coupon_id']);
-		$business_number = $par['business_number'];
-		$coupon_id = $par['coupon_id'];
 
+		$par = $request->only(['order_id','coupon_id']);
+		$order_id = $par['order_id'];
+		// $coupon_id = $par['coupon_id'];
+		// dd($order_id);
+		if(!is_array($order_id)){
+			return tz_ajax_echo([],'订单id格式错误',0);
+		}
 		$model = new OrdersModel();
-		$pay = $model->payOrderByBalance($business_number,$coupon_id);
+		$pay = $model->payOrderByBalance($order_id,0);
 		return tz_ajax_echo($pay['data'],$pay['msg'],$pay['code']);
 	}
 
@@ -220,6 +224,5 @@ class OrdersController extends Controller
 		$insert_result = $security_insert->securityInsertOrders($insert);
 		return tz_ajax_echo($insert_result['data'],$insert_result['msg'],$insert_result['code']);
 	}
-
 
 }

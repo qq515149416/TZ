@@ -48,7 +48,6 @@ class OrdersModel extends Model
 	 * @param  array $where 订单的状态
 	 * @return array        返回相关的数据信息和提示状态及信息
 	 */
-	//['id','order_sn','customer_name','business_sn','business_name','before_money','after_money','resource_type','order_type','resource','price','duration','payable_money','end_time','pay_type','pay_price','serial_number','pay_time','order_status','order_note','created_at']
 	public function financeOrders($where){
 		$result = DB::table('tz_orders')
 					->leftJoin('tz_orders_flow','tz_orders.serial_number','=','tz_orders_flow.serial_number')
@@ -57,9 +56,6 @@ class OrdersModel extends Model
 					->orderBy('tz_orders.created_at','desc')
 					->select('tz_orders.id','tz_orders.order_sn','tz_orders.customer_name','tz_orders.business_sn','tz_orders.business_name','tz_orders.resource_type','tz_orders.order_type','tz_orders.resource','tz_orders.price','tz_orders.duration','tz_orders.payable_money','tz_orders.end_time','tz_orders.serial_number','tz_orders.pay_time','tz_orders.order_status','tz_orders.order_note','tz_orders.created_at','tz_orders_flow.before_money','tz_orders_flow.after_money')
 					->get();
-		//$this->where($where)
-					//->get(['id','order_sn','customer_name','business_sn','business_name','resource_type','order_type','resource','price','duration','payable_money','end_time','serial_number','pay_time','order_status','order_note','created_at']);
-		// 'before_money','after_money','pay_type','pay_price',
 		if(!empty($result)){
 			$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn',11=>'高防IP'];
 			$order_type = [1=>'新购',2=>'续费'];
@@ -81,6 +77,35 @@ class OrdersModel extends Model
 
 		return $return;
 	}
+	// 
+	// /**
+	//  * 财务人员和管理人员查看支付流水
+	//  * @param  array $where 订单的状态
+	//  * @return array        返回相关的数据信息和提示状态及信息
+	//  */
+	// public function financeOrders(){
+	// 	$result = DB::table('tz_orders_flow as flow')
+	// 				->join('tz_users as users','flow.customer_id','=','users.id')
+	// 				->join('admin_users as admin','flow.business_id','=','admin.id')
+	// 				->select('flow.id as flow_id','flow.business_number','flow.serial_number','flow.payable_money','flow.actual_payment','flow.preferential_amount','flow.pay_time','flow.before_money','flow.after_money','flow.created_at','flow.flow_type','users.name as customer_name','users.email as customer_email','users.nickname as customer_nick_name','admin.name as business_name')
+	// 				->get();
+	// 	if(!empty($result)){
+	// 		foreach($result as $key=>$value){
+	// 			$flow_type = [1=>'新购',2=>'续费'];
+	// 			$value->type = $flow_type[$value->flow_type];
+	// 			$value->customer_email = $value->customer_email?$value->customer_email:$value->customer_name;
+	// 			$value->customer_email = $value->customer_email?$value->customer_email:$value->customer_nick_name;
+	// 		}
+	// 		$return['data'] = $result;
+	// 		$return['code'] = 1;
+	// 		$return['msg'] = '客户流水获取成功！';
+	// 	} else {
+	// 		$return['data'] = $result;
+	// 		$return['code'] = 0;
+	// 		$return['msg'] = '客户流水获取失败！';
+	// 	}
+	// 	return $return;	
+	// }
 
 	/**
 	 * 业务员和管理人员通过业务查看订单
@@ -88,7 +113,7 @@ class OrdersModel extends Model
 	 * @return array        返回相关的数据信息和提示状态及信息
 	 */
 	public function clerkOrders($where){
-		// ['tz_orders.business_sn'=>$where['business_sn'],'tz_orders.resource_type'=>$where['resource_type']]
+		$where['remove_status'] = 0;
 		$result = DB::table('tz_orders')
 					->leftJoin('tz_orders_flow','tz_orders.serial_number','=','tz_orders_flow.serial_number')
 					->where($where)
@@ -203,13 +228,14 @@ class OrdersModel extends Model
 			return $return;
 		}
 		$insert_data['end_time'] = $end_time;
-		// 订单号的生成规则：前两位（4-6的随机数）+ 年月日（如:20180830） + 时间戳的后2位数 + 1-3随机数
-		$order_sn =$this->ordersn();
+		$resource_id = isset($insert_data['resource_id'])?$insert_data['resource_id']:mt_rand(1000,9999);
+		unset($insert_data['resource_id']);
+		$order_sn =$this->ordersn($resource_id,$insert_data['resource_type']);
 		$insert_data['order_sn'] = $order_sn;
 		if($insert_data['resource_type'] == 8){//带宽的时候生成专属的带宽序号
-			$insert_data['machine_sn'] = 'BW'.date("Ymd",time()).substr(time(),8,2);
+			$insert_data['machine_sn'] = 'BW'.date("Ymd",time()).substr(time(),8,2).chr(mt_rand(65,90));
 		} elseif($insert_data['resource_type'] == 9){//防护的时候生成专属的防护序号
-			$insert_data['machine_sn'] = 'DEF'.date("Ymd",time()).substr(time(),8,2);
+			$insert_data['machine_sn'] = 'DEF'.date("Ymd",time()).substr(time(),8,2).chr(mt_rand(65,90));
 		}
 		$insert_data['order_type'] = 1;
 		$insert_data['payable_money'] = bcmul((string)$insert_data['price'],(string)$insert_data['duration'],2);//计算价格
@@ -227,32 +253,6 @@ class OrdersModel extends Model
 			$return['code'] = 0;
 			$return['msg'] = '资源增加失败';
 			return $return;
-		}
-		// 'business_sn','customer_id','customer_name','resource_type','machine_sn','resource','price','duration'
-		if($insert_data['price'] == '0.00'){
-			$order_flow['serial_number'] = 'tz_'.time().'_'.$insert_data['customer_id'];
-			$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn'];
-			// $order_flow['subject'] = '赠送'.$resource_type[$insert_data['resource_type']];
-			$order_flow['customer_id'] = $insert_data['customer_id'];
-			$order_flow['business_id'] = Admin::user()->id;
-			$order_flow['payable_money'] = $insert_data['price'];
-			$order_flow['actual_payment'] = $insert_data['price'];
-			$order_flow['preferential_amount'] = '0.00';
-			// $order_flow['pay_status'] = 1;
-			$order_flow['pay_time'] = date('Y-m-d H:i:s',time());
-			$money = DB::table('tz_users')->where(['id'=>$insert_data['customer_id']])->value('money');
-			$order_flow['before_money'] = $money;
-			$order_flow['after_money'] = bcsub($money,$insert_data['price'],2);
-			// $order_flow['month'] = (int)date('Ym',time());
-			$order_flow['created_at'] = date('Y-m-d H:i:s',time());
-			$flow_row = DB::table('tz_orders_flow')->insertGetId($order_flow);
-			if($flow_row == 0){
-				DB::rollBack();
-				$return['data'] = '';
-				$return['code'] = 0;
-				$return['msg'] = '资源增加失败';
-			}
-
 		}
 		$machine['business_end'] = $insert_data['end_time'];
 		switch ($insert_data['resource_type']) {
@@ -285,7 +285,7 @@ class OrdersModel extends Model
 				break;
 		}
 		if($result != 0){
-			//所对应资源表的业务编号和到期时间，状态修改成功后进行事务提交
+			// 所对应资源表的业务编号和到期时间，状态修改成功后进行事务提交
 			$xunsearch = new XS('orders');
 		    $index = $xunsearch->index;
             $doc['id'] = strtolower($row);
@@ -715,7 +715,13 @@ class OrdersModel extends Model
 		$return['msg'] = '续费已经创建,支付后即代表续费成功!';
 		return $return;
 
+
 	}
+
+
+
+	}
+
 
 	/**
 	 * 续费订单的支付
@@ -960,27 +966,83 @@ class OrdersModel extends Model
    		$serial_number = 'tz_'.chr(mt_rand(97,122)).$time.mt_rand(10,50).'_admin_'.$business_id;
    		// dump($serial_number);
    		if(empty($serial_number)){
-   			$this->serialNumber(($id);
+
+   			$this->serialNumber($id);
    		}
 		$serial = DB::table('tz_orders_flow')->where(['serial_number'=>$serial_number])->select('id','business_number')->first();
 		if(!empty($serial)){
-			$this->serialNumber(($id);
+			$this->serialNumber($id);
+
 		} 
 		return $serial_number;
 		
 	}
     
-	public function payOrderByBalance($business_number,$coupon_id){
+	public function payOrderByBalance($order_id,$coupon_id){
 		$return['data'] = '';
 		$admin_user_id = Admin::user()->id;
 
+		//查看有没有这些订单
+		$biaoshi = 0;
+		foreach ($order_id as $k => $v) {
+			$c_order = $this->find($v);
+
+			if($c_order == null){		//如果没有
+				return [
+					'data'	=> [],
+					'msg'	=> '订单不存在',
+					'code'	=> 0,
+				];
+			}
+			if($biaoshi == 0){
+				$customer_id = $c_order->customer_id;
+				$biaoshi = 1;
+			}
+
+			if($customer_id == null){
+				return [
+					'data'	=> [],
+					'msg'	=> '客户id获取失败',
+					'code'	=> 0, 
+				];
+			}
+
+			if ($c_order->customer_id != $customer_id) {
+	
+				return [
+					'data'	=> [],
+					'msg'	=> '订单不属于同一客户,请分开支付',
+					'code'	=> 0, 
+				];
+			}
+			if ($c_order->order_status != 0) {
+	
+				return [
+					'data'	=> [],
+					'msg'	=> '订单已支付',
+					'code'	=> 0, 
+				];
+			}
+			if ($c_order->remove_status != 0) {
+	
+				return [
+					'data'	=> [],
+					'msg'	=> '资源已下架,无法支付',
+					'code'	=> 0, 
+				];
+			}	
+		}
+
 		$unpaidOrder = $this
 				->where('order_status',0)
-				->where('business_sn',$business_number)
+				// ->where('business_sn',$business_number)
+				->where('remove_status',0)
+				->whereIN('id',$order_id)
 				->get()
 				->toArray();
+			
 		if(count($unpaidOrder) == 0){
-			$return['msg']  = '无此业务未付款订单';
+			$return['msg']  = '订单不存在';
 			$return['code'] = 0;
 			return $return;
 		}
@@ -995,20 +1057,21 @@ class OrdersModel extends Model
 		DB::beginTransaction();//开启事务处理
 
 		for ($i=0; $i < count($unpaidOrder); $i++) {
+
 			$business_id = DB::table('tz_users')->where('id',$unpaidOrder[$i]['customer_id'])->value('salesman_id');
+			$business_number = $unpaidOrder[$i]['business_sn'];
 			if($business_id != $admin_user_id){
 				$return['msg']  = '该业务所属客户不属于您';
 				$return['code'] = 0;
 				return $return;
 			}
 
-
-			$checkCoupon = $this->checkCoupon($unpaidOrder[$i]['id'],$coupon_id);
-			if($checkCoupon != true){
-				$return['msg']  = '该优惠券不可用';
-				$return['code'] = 0;
-				return $return;
-			}
+			// $checkCoupon = $this->checkCoupon($unpaidOrder[$i]['id'],$coupon_id);
+			// if($checkCoupon != true){
+			// 	$return['msg']  = '该优惠券不可用';
+			// 	$return['code'] = 0;
+			// 	return $return;
+			// }
 
 			$processing = $this->paySuccess($unpaidOrder[$i]['id'],$pay_time);
 			if($processing['code'] != 1){
@@ -1041,35 +1104,9 @@ class OrdersModel extends Model
 				return $return;
 			}
 			$order_id_arr[] = $unpaidOrder[$i]['id'];
-
-			if(in_array($unpaidOrder[$i]['resource_type'], $idc_arr)){
-				$type = 1;
-			} elseif(in_array($unpaidOrder[$i]['resource_type'], $defenseip_arr)){
-				$type = 2;
-			}else{
-				$type = 3;
-			}
-		}
-
-		switch ($type) {
-			case '1':
-				$customer_id = DB::table('tz_business')->where('business_number',$business_number)->value('client_id'); 
-				break;
-			case '2':
-				$customer_id = DB::table('tz_defenseip_business')->where('business_number',$business_number)->value('user_id'); 
-				break;
-			default:
-				$return['msg']  = '获取业务类型失败';
-				$return['code'] = 0;
-				return $return;
-				break;
 		}
 		
-		if($customer_id == null){
-			$return['msg']  = '客户id获取失败';
-			$return['code'] = 0;
-			return $return;
-		}
+
 		//计算实际支付金额
 		$actual_payment = $this->countCoupon($payable_money,$coupon_id);
 		//优惠券抵扣了的金额

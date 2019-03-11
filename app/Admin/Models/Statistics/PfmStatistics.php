@@ -14,6 +14,7 @@ namespace App\Admin\Models\Statistics;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
+use App\Admin\Models\Business\OrdersModel;
 
 class  PfmStatistics extends Model
 {
@@ -628,6 +629,22 @@ class  PfmStatistics extends Model
 	}
 
 	public function test($begin,$end){
+		$already = $this
+			->where('pay_time','>',$begin)
+			->where('pay_time','<',$end)
+			->sum('actual_payment');
 
+		$order_model = new OrdersModel();
+		$not = $order_model
+			->where('created_at','>',$begin)
+			->where('created_at','<',$end)
+			->where('order_status',0)
+			->where('remove_status',0)
+			->sum('payable_money');
+		$arr = [
+			'already' 	=> $already,
+			'not'		=> $not,
+			];
+		return $arr;
 	}
 }

@@ -287,6 +287,7 @@ Route::group([
     ], function (Router $router) {
         $router->get('pfmBig', 'Statistics\PfmStatisticsController@index');//财务用业绩统计
         $router->get('pfmSmall', 'Statistics\PfmStatisticsController@pfmSmall');//业务员用业绩统计
+        $router->get('test', 'Statistics\PfmStatisticsController@test');//计算时间区间内消费额度
     });
 
     /**

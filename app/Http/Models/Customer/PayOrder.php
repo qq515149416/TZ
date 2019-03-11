@@ -77,186 +77,63 @@ class PayOrder extends Model
 	 */
 	
 	//以下这个是新版的方法,子梁测试请打开注释,注释掉下面同名那个
-	// public function payOrderByBalance($order_id,$coupon_id){
-	// 	$return['data'] = '';
-	// 	$user_id = Auth::id();
-
-	// 	//查看有没有这些订单
-	
-	// 	foreach ($order_id as $k => $v) {
-	// 		$c_order = $this->find($v);
-
-	// 		if($c_order == null){		//如果没有
-	// 			return [
-	// 				'data'	=> [],
-	// 				'msg'	=> '订单不存在',
-	// 				'code'	=> 0,
-	// 			];
-	// 		}
-
-	// 		if ($c_order->customer_id != $user_id) {
-	
-	// 			return [
-	// 				'data'	=> [],
-	// 				'msg'	=> '订单不属于您',
-	// 				'code'	=> 0, 
-	// 			];
-	// 		}
-	// 		if ($c_order->order_status != 0) {
-	
-	// 			return [
-	// 				'data'	=> [],
-	// 				'msg'	=> '订单已支付',
-	// 				'code'	=> 0, 
-	// 			];
-	// 		}
-	// 		if ($c_order->remove_status != 0) {
-	
-	// 			return [
-	// 				'data'	=> [],
-	// 				'msg'	=> '资源已下架,无法支付',
-	// 				'code'	=> 0, 
-	// 			];
-	// 		}	
-	// 	}
-
-	// 	$unpaidOrder = $this
-	// 			->where('order_status',0)
-	// 			// ->where('business_sn',$business_sn)
-	// 			->where('customer_id',$user_id)
-	// 			->where('remove_status',0) 
-	// 			->whereIn('id',$order_id)
-	// 			->get()
-	// 			->toArray();
-	// 	if(count($unpaidOrder) == 0){
-	// 		$return['msg'] 	= '订单不存在';
-	// 		$return['code']	= 0;
-	// 		return $return;
-	// 	}
-
-	// 	$serial_number = 'tz_'.time().'_'.$user_id;
-	// 	$payable_money = '0.00';
-	// 	$pay_time = date("Y-m-d h:i:s");
-	// 	$order_id_arr = [];
-	// 	$idc_arr = array(1,2,3,4,5,6,7,8,9);
-	// 	$defenseip_arr = array(11);
-		
-	// 	DB::beginTransaction();//开启事务处理
-
-	// 	for ($i=0; $i < count($unpaidOrder); $i++) { 
-	// 		// $checkCoupon = $this->checkCoupon($unpaidOrder[$i]['id'],$coupon_id);
-	// 		// if($checkCoupon != true){
-	// 		// 	$return['msg'] 	= '该优惠券不可用';
-	// 		// 	$return['code']	= 0;
-	// 		// 	return $return;
-	// 		// }
-					
-	// 		$processing = $this->paySuccess($unpaidOrder[$i]['id'],$pay_time);
-	// 		if($processing['code'] != 1){
-	// 			DB::rollBack();
-	// 			return $processing;
-	// 		} 
-		
-	// 		//更新订单内信息
-	// 		$updateInfo['serial_number'] = $serial_number;
-	// 		$updateInfo['order_status'] = 1;
-	// 		$updateInfo['pay_time'] = $pay_time;
-	// 		if(isset($processing['data']['end'])){
-	// 			$updateInfo['end_time'] = $processing['data']['end'];
-	// 		}
-	// 		//重新计算单一订单应付金额
-	// 		/*
-	// 		*如需添加单一商品优惠券,在此添加计算
-	// 		*/
-	// 		$updateInfo['payable_money'] = bcmul($unpaidOrder[$i]['price'],$unpaidOrder[$i]['duration'],2);
-			
-	// 		//计算支付流水应付金额
-	// 		$payable_money = bcadd($payable_money,$updateInfo['payable_money'],2);
-
-	// 		$business_id = $unpaidOrder[$i]['business_id'];
-	// 		$update = DB::table('tz_orders')->where('id',$unpaidOrder[$i]['id'])->update($updateInfo);
-	// 		if($update == 0){
-	// 			DB::rollBack();
-	// 			$return['msg'] = '更新支付状态失败';
-	// 			$return['code']	= 0;
-	// 			return $return;
-	// 		}
-	// 		$order_id_arr[] = $unpaidOrder[$i]['id'];
-	// 		$business_sn = $unpaidOrder[$i]['business_sn'];
-	// 	}
-		
-	// 	//计算实际支付金额
-	// 	$actual_payment = $this->countCoupon($payable_money,$coupon_id);
-	// 	//优惠券抵扣了的金额
-	// 	$preferential_amount = bcsub($payable_money,$actual_payment,2);
-	// 	//获取余额
-	// 	$before_money = DB::table('tz_users')->where('id',$user_id)->value('money');
-	// 	//计算扣除应付金额后余额
-	// 	$after_money = bcsub((string)$before_money,(string)$actual_payment,2);
-
-	// 	if( $after_money < 0 ){
-	// 		$return['msg'] 	= '您的余额为 ￥'.$before_money.',订单尚需支付 ￥'.$actual_payment.',余额不足,请充值';
-	// 		$return['code']	= 0;
-	// 		return $return;
-	// 	}
-		
-	// 	$flow = [
-	// 		'serial_number'		=> $serial_number,
-	// 		'order_id'		=> json_encode($order_id_arr),
-	// 		'customer_id'		=> $user_id,
-	// 		'payable_money'	=> $payable_money,
-	// 		'actual_payment'	=> $actual_payment,
-	// 		'preferential_amount'	=> $preferential_amount,
-	// 		'coupon_id'		=> $coupon_id,
-	// 		'created_at'		=> date('Y-m-d H:i:s',time()),
-	// 		'business_id'		=> $business_id,
-	// 		'before_money'		=> $before_money,
-	// 		'after_money'		=> $after_money,
-	// 		'pay_time'		=> $pay_time,
-	// 		'business_number'	=> $business_sn,
-	// 	];
-	// 	$creatFlow = DB::table('tz_orders_flow')->insert($flow);
-	// 	if($creatFlow == false){
-	// 		DB::rollBack();
-	// 		$return['msg'] = '创建支付流水失败';
-	// 		$return['code']	= 0;
-	// 		return $return;
-	// 	}
-
-	// 	// 订单支付成功后对客户的余额进行修改
-	// 	$user_model = new UserCenter();
-	// 	$usera = $user_model->find($user_id);
-	// 	$usera->money = $after_money;
-	// 	$payMoney = $usera->save();
-	// 	//$payMoney = DB::table('tz_users')->where('id',$user_id)->save(['money' => $after_money ]);
-	// 	if(!$payMoney){
-	// 		// 修改客户余额失败，进行事务回滚
-	// 		DB::rollBack();
-	// 		$return['msg'] 	= '扣除余额失败,支付失败';
-	// 		$return['code']	= 0;
-	// 		return $return;	
-	// 	}
-	// 	DB::commit();
-	// 	$return['msg'] 	= '余额支付成功';
-	// 	$return['code']	= 1;
-	 		
-	// 	return $return;
-	// }
-
-	public function payOrderByBalance($business_sn,$coupon_id){
+	public function payOrderByBalance($order_id,$coupon_id){
 		$return['data'] = '';
 		$user_id = Auth::id();
+
+		//查看有没有这些订单
+	
+		foreach ($order_id as $k => $v) {
+			$c_order = $this->find($v);
+
+			if($c_order == null){		//如果没有
+				return [
+					'data'	=> [],
+					'msg'	=> '订单不存在',
+					'code'	=> 0,
+				];
+			}
+
+			if ($c_order->customer_id != $user_id) {
+	
+				return [
+					'data'	=> [],
+					'msg'	=> '订单不属于您',
+					'code'	=> 0, 
+				];
+			}
+			if ($c_order->order_status != 0) {
+	
+				return [
+					'data'	=> [],
+					'msg'	=> '订单已支付',
+					'code'	=> 0, 
+				];
+			}
+			if ($c_order->remove_status != 0) {
+	
+				return [
+					'data'	=> [],
+					'msg'	=> '资源已下架,无法支付',
+					'code'	=> 0, 
+				];
+			}	
+		}
+
 		$unpaidOrder = $this
 				->where('order_status',0)
-				->where('business_sn',$business_sn)
+				// ->where('business_sn',$business_sn)
 				->where('customer_id',$user_id)
+				->where('remove_status',0) 
+				->whereIn('id',$order_id)
 				->get()
 				->toArray();
 		if(count($unpaidOrder) == 0){
-			$return['msg'] 	= '无此业务未付款订单';
+			$return['msg'] 	= '订单不存在';
 			$return['code']	= 0;
 			return $return;
 		}
+
 		$serial_number = 'tz_'.time().'_'.$user_id;
 		$payable_money = '0.00';
 		$pay_time = date("Y-m-d h:i:s");
@@ -267,19 +144,19 @@ class PayOrder extends Model
 		DB::beginTransaction();//开启事务处理
 
 		for ($i=0; $i < count($unpaidOrder); $i++) { 
-			$checkCoupon = $this->checkCoupon($unpaidOrder[$i]['id'],$coupon_id);
-			if($checkCoupon != true){
-				$return['msg'] 	= '该优惠券不可用';
-				$return['code']	= 0;
-				return $return;
-			}
+			// $checkCoupon = $this->checkCoupon($unpaidOrder[$i]['id'],$coupon_id);
+			// if($checkCoupon != true){
+			// 	$return['msg'] 	= '该优惠券不可用';
+			// 	$return['code']	= 0;
+			// 	return $return;
+			// }
 					
 			$processing = $this->paySuccess($unpaidOrder[$i]['id'],$pay_time);
 			if($processing['code'] != 1){
 				DB::rollBack();
 				return $processing;
 			} 
-			
+		
 			//更新订单内信息
 			$updateInfo['serial_number'] = $serial_number;
 			$updateInfo['order_status'] = 1;
@@ -305,32 +182,7 @@ class PayOrder extends Model
 				return $return;
 			}
 			$order_id_arr[] = $unpaidOrder[$i]['id'];
-
-			if(in_array($unpaidOrder[$i]['resource_type'], $idc_arr)){
-				$type = 1;
-			} elseif(in_array($unpaidOrder[$i]['resource_type'], $defenseip_arr)){
-				$type = 2;
-			}else{
-				$type = 3;
-			}
-		}
-		switch ($type) {
-			case '1':
-				$customer_id = DB::table('tz_business')->where('business_number',$business_sn)->value('client_id'); 
-				break;
-			case '2':
-				$customer_id = DB::table('tz_defenseip_business')->where('business_number',$business_sn)->value('user_id'); 
-				break;
-			default:
-				$return['msg']  = '获取业务类型失败';
-				$return['code'] = 0;
-				return $return;
-				break;
-		}
-		if($customer_id == null){
-			$return['msg']  = '客户id获取失败';
-			$return['code'] = 0;
-			return $return;
+			$business_sn = $unpaidOrder[$i]['business_sn'];
 		}
 		
 		//计算实际支付金额
@@ -338,7 +190,7 @@ class PayOrder extends Model
 		//优惠券抵扣了的金额
 		$preferential_amount = bcsub($payable_money,$actual_payment,2);
 		//获取余额
-		$before_money = DB::table('tz_users')->where('id',$customer_id)->value('money');
+		$before_money = DB::table('tz_users')->where('id',$user_id)->value('money');
 		//计算扣除应付金额后余额
 		$after_money = bcsub((string)$before_money,(string)$actual_payment,2);
 
@@ -351,7 +203,7 @@ class PayOrder extends Model
 		$flow = [
 			'serial_number'		=> $serial_number,
 			'order_id'		=> json_encode($order_id_arr),
-			'customer_id'		=> $customer_id,
+			'customer_id'		=> $user_id,
 			'payable_money'	=> $payable_money,
 			'actual_payment'	=> $actual_payment,
 			'preferential_amount'	=> $preferential_amount,
@@ -372,8 +224,12 @@ class PayOrder extends Model
 		}
 
 		// 订单支付成功后对客户的余额进行修改
-		$payMoney = DB::table('tz_users')->where('id',$user_id)->update(['money' => $after_money ]);
-		if($payMoney == false && $before_money != $after_money){
+		$user_model = new UserCenter();
+		$usera = $user_model->find($user_id);
+		$usera->money = $after_money;
+		$payMoney = $usera->save();
+		//$payMoney = DB::table('tz_users')->where('id',$user_id)->save(['money' => $after_money ]);
+		if(!$payMoney){
 			// 修改客户余额失败，进行事务回滚
 			DB::rollBack();
 			$return['msg'] 	= '扣除余额失败,支付失败';
@@ -386,6 +242,150 @@ class PayOrder extends Model
 	 		
 		return $return;
 	}
+
+	// public function payOrderByBalance($business_sn,$coupon_id){
+	// 	$return['data'] = '';
+	// 	$user_id = Auth::id();
+	// 	$unpaidOrder = $this
+	// 			->where('order_status',0)
+	// 			->where('business_sn',$business_sn)
+	// 			->where('customer_id',$user_id)
+	// 			->get()
+	// 			->toArray();
+	// 	if(count($unpaidOrder) == 0){
+	// 		$return['msg'] 	= '无此业务未付款订单';
+	// 		$return['code']	= 0;
+	// 		return $return;
+	// 	}
+	// 	$serial_number = 'tz_'.time().'_'.$user_id;
+	// 	$payable_money = '0.00';
+	// 	$pay_time = date("Y-m-d h:i:s");
+	// 	$order_id_arr = [];
+	// 	$idc_arr = array(1,2,3,4,5,6,7,8,9);
+	// 	$defenseip_arr = array(11);
+		
+	// 	DB::beginTransaction();//开启事务处理
+
+	// 	for ($i=0; $i < count($unpaidOrder); $i++) { 
+	// 		$checkCoupon = $this->checkCoupon($unpaidOrder[$i]['id'],$coupon_id);
+	// 		if($checkCoupon != true){
+	// 			$return['msg'] 	= '该优惠券不可用';
+	// 			$return['code']	= 0;
+	// 			return $return;
+	// 		}
+					
+	// 		$processing = $this->paySuccess($unpaidOrder[$i]['id'],$pay_time);
+	// 		if($processing['code'] != 1){
+	// 			DB::rollBack();
+	// 			return $processing;
+	// 		} 
+			
+	// 		//更新订单内信息
+	// 		$updateInfo['serial_number'] = $serial_number;
+	// 		$updateInfo['order_status'] = 1;
+	// 		$updateInfo['pay_time'] = $pay_time;
+	// 		if(isset($processing['data']['end'])){
+	// 			$updateInfo['end_time'] = $processing['data']['end'];
+	// 		}
+	// 		//重新计算单一订单应付金额
+	// 		/*
+	// 		*如需添加单一商品优惠券,在此添加计算
+	// 		*/
+	// 		$updateInfo['payable_money'] = bcmul($unpaidOrder[$i]['price'],$unpaidOrder[$i]['duration'],2);
+			
+	// 		//计算支付流水应付金额
+	// 		$payable_money = bcadd($payable_money,$updateInfo['payable_money'],2);
+
+	// 		$business_id = $unpaidOrder[$i]['business_id'];
+	// 		$update = DB::table('tz_orders')->where('id',$unpaidOrder[$i]['id'])->update($updateInfo);
+	// 		if($update == 0){
+	// 			DB::rollBack();
+	// 			$return['msg'] = '更新支付状态失败';
+	// 			$return['code']	= 0;
+	// 			return $return;
+	// 		}
+	// 		$order_id_arr[] = $unpaidOrder[$i]['id'];
+
+	// 		if(in_array($unpaidOrder[$i]['resource_type'], $idc_arr)){
+	// 			$type = 1;
+	// 		} elseif(in_array($unpaidOrder[$i]['resource_type'], $defenseip_arr)){
+	// 			$type = 2;
+	// 		}else{
+	// 			$type = 3;
+	// 		}
+	// 	}
+	// 	switch ($type) {
+	// 		case '1':
+	// 			$customer_id = DB::table('tz_business')->where('business_number',$business_sn)->value('client_id'); 
+	// 			break;
+	// 		case '2':
+	// 			$customer_id = DB::table('tz_defenseip_business')->where('business_number',$business_sn)->value('user_id'); 
+	// 			break;
+	// 		default:
+	// 			$return['msg']  = '获取业务类型失败';
+	// 			$return['code'] = 0;
+	// 			return $return;
+	// 			break;
+	// 	}
+	// 	if($customer_id == null){
+	// 		$return['msg']  = '客户id获取失败';
+	// 		$return['code'] = 0;
+	// 		return $return;
+	// 	}
+		
+	// 	//计算实际支付金额
+	// 	$actual_payment = $this->countCoupon($payable_money,$coupon_id);
+	// 	//优惠券抵扣了的金额
+	// 	$preferential_amount = bcsub($payable_money,$actual_payment,2);
+	// 	//获取余额
+	// 	$before_money = DB::table('tz_users')->where('id',$customer_id)->value('money');
+	// 	//计算扣除应付金额后余额
+	// 	$after_money = bcsub((string)$before_money,(string)$actual_payment,2);
+
+	// 	if( $after_money < 0 ){
+	// 		$return['msg'] 	= '您的余额为 ￥'.$before_money.',订单尚需支付 ￥'.$actual_payment.',余额不足,请充值';
+	// 		$return['code']	= 0;
+	// 		return $return;
+	// 	}
+		
+	// 	$flow = [
+	// 		'serial_number'		=> $serial_number,
+	// 		'order_id'		=> json_encode($order_id_arr),
+	// 		'customer_id'		=> $customer_id,
+	// 		'payable_money'	=> $payable_money,
+	// 		'actual_payment'	=> $actual_payment,
+	// 		'preferential_amount'	=> $preferential_amount,
+	// 		'coupon_id'		=> $coupon_id,
+	// 		'created_at'		=> date('Y-m-d H:i:s',time()),
+	// 		'business_id'		=> $business_id,
+	// 		'before_money'		=> $before_money,
+	// 		'after_money'		=> $after_money,
+	// 		'pay_time'		=> $pay_time,
+	// 		'business_number'	=> $business_sn,
+	// 	];
+	// 	$creatFlow = DB::table('tz_orders_flow')->insert($flow);
+	// 	if($creatFlow == false){
+	// 		DB::rollBack();
+	// 		$return['msg'] = '创建支付流水失败';
+	// 		$return['code']	= 0;
+	// 		return $return;
+	// 	}
+
+	// 	// 订单支付成功后对客户的余额进行修改
+	// 	$payMoney = DB::table('tz_users')->where('id',$user_id)->update(['money' => $after_money ]);
+	// 	if($payMoney == false && $before_money != $after_money){
+	// 		// 修改客户余额失败，进行事务回滚
+	// 		DB::rollBack();
+	// 		$return['msg'] 	= '扣除余额失败,支付失败';
+	// 		$return['code']	= 0;
+	// 		return $return;	
+	// 	}
+	// 	DB::commit();
+	// 	$return['msg'] 	= '余额支付成功';
+	// 	$return['code']	= 1;
+	 		
+	// 	return $return;
+	// }
 
 	/**
 	*支付订单改状态方法

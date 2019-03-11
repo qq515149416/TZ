@@ -632,7 +632,7 @@ class  PfmStatistics extends Model
 		
 		$already = DB::table('tz_orders_flow as a')
 			->leftJoin('tz_users as b','a.customer_id','=','b.id')
-			->select('a.customer_id','b.name as customer_name','b.nickname as customer_nickname',DB::raw('SUM(actual_payment) as money'))
+			->select('a.customer_id','b.name as customer_name','b.nickname as customer_nickname','b.email as customer_email',DB::raw('SUM(actual_payment) as money'))
 			->where('a.pay_time','>',$begin)
 			->where('a.pay_time','<',$end)
 			->groupBy('a.customer_id')
@@ -642,7 +642,7 @@ class  PfmStatistics extends Model
 		
 		$not = DB::table('tz_orders as a')
 			->leftJoin('tz_users as b','a.customer_id','=','b.id')
-			->select('a.customer_id','b.name as customer_name','b.nickname as customer_nickname',DB::raw('SUM(payable_money) as money'))
+			->select('a.customer_id','b.name as customer_name','b.nickname as customer_nickname','b.email as customer_email',DB::raw('SUM(payable_money) as money'))
 			->where('a.created_at','>',$begin)
 			->where('a.created_at','<',$end)
 			->groupBy('a.customer_id')
@@ -651,6 +651,7 @@ class  PfmStatistics extends Model
 			'already' 		=> 0,
 			'not'			=> 0,
 			'customer_id'		=> 0,
+			'customer_email'	=> '合计',
 			'customer_name'	=> '合计',
 			'customer_nickname'	=> '合计',
 		];
@@ -661,6 +662,7 @@ class  PfmStatistics extends Model
 					'not'			=> 0,
 					'customer_id'		=> $v->customer_id,
 					'customer_name'	=> $v->customer_name,
+					'customer_email'	=> $v->customer_email,
 					'customer_nickname'	=> $v->customer_nickname,
 				];
 			}
@@ -673,6 +675,7 @@ class  PfmStatistics extends Model
 					'not'			=> $v->money,
 					'customer_id'		=> $v->customer_id,
 					'customer_name'	=> $v->customer_name,
+					'customer_email'	=> $v->customer_email,
 					'customer_nickname'	=> $v->customer_nickname,
 				];
 			}else{

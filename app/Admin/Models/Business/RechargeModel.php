@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Hash;
 use Encore\Admin\Facades\Admin;
+use App\Admin\Models\Statistics\RechargeStatistics;
 
 
 class RechargeModel extends Model
@@ -265,41 +266,116 @@ class RechargeModel extends Model
 			return $return;
 		}
 
-		if($trade->audit_status != 0){
-			$return['msg'] = '该审核单已审核完毕';
-			return $return;
-		}
-
+		
 		if($audit_status == 1 && $trade->pay_at == null && $time == ''){
 			$return['msg'] = '请填写到账时间';
 			return $return;
 		}
 		
+		
+		DB::beginTransaction();
+
+		if($trade->audit_status != 0){		//如果是已经审核的状态
+			if($trade->audit_status != 1){
+				$return['msg'] = '驳回的审核单无法修改';
+				return $return;
+			}
+			$trade->recharge_way = $recharge_way;
+			if($time != ''){
+				$trade->pay_at = $time;	
+			}
+			$p = 'a';				//'a'标记代表已经审核,需要修改到账信息
+		}else{
+			$trade->recharge_way = $recharge_way;
+			$trade->recharge_amount = $recharge_amount;
+			if($time != ''){
+				$trade->pay_at = $time;	
+			}
+			if($tax != ''){
+				$trade->tax = $tax;	
+			}
+			$trade->auditor_id	= $auditor_id;
+			$trade->audit_status	= $audit_status;
+			$trade->audit_time	= date("Y-m-d H:i:s",time());
+			if($remarks != ''){
+				$trade->remarks	= $remarks;	
+			}
+			$p = 'b';				//'b'标记代表未经审核,需要进行审核
+		}
+
+		$audit_res = $trade->save();
+
+		if($p == 'a'){
+			if($audit_res != true){
+				DB::rollBack();
+				$return['msg'] = '编辑失败';
+				return $return;
+			}else{
+				$flow_model = new RechargeStatistics();
+				$flow = $flow_model->where('trade_no',$trade->trade_no)->first();
+				switch ($recharge_way) {
+					case '1':
+						$voucher = '腾正公帐(建设银行)';
+						break;
+					case '2':
+						$voucher = '腾正公帐(工商银行)';
+						break;
+					case '3':
+						$voucher = '腾正公帐(招商银行)';
+						break;
+					case '4':
+						$voucher = '腾正公帐(农业银行)';
+						break;
+					case '5':
+						$voucher = '正易公帐(中国银行)';
+						break;
+					case '6':
+						$voucher = '支付宝';
+						break;
+					case '7':
+						$voucher = '公帐支付宝';
+						break;
+					case '8':
+						$voucher = '财付通';
+						break;
+					case '9':
+						$voucher = '微信支付';
+						break;
+					case '10':
+						$voucher = '新支付宝';
+						break;
+					default:
+						$voucher = '无此状态';
+						break;
+				}
+				$flow->timestamp = $time;
+				$flow->voucher = $voucher;
+				$up_flow = $flow->save();
+				if($up_flow){
+					DB::commit();
+					return [
+						'data'	=> [],
+						'msg'	=> '编辑成功',
+						'code'	=> 1,
+					];
+				}else{
+					DB::rollBack();
+					return [
+						'data'	=> [],
+						'msg'	=> '编辑失败',
+						'code'	=> 0,
+					];
+				}
+				
+			}
+		}
+
 		$test = DB::table('tz_recharge_flow')->where('trade_no',$trade->trade_no)->value('id');
 		if($test != null){
 			DB::rollBack();
 			$return['msg'] = '该审核单的充值流水已存在,请确认审核单';
 			return $return;
 		}
-		DB::beginTransaction();
-		$trade->recharge_way = $recharge_way;
-		$trade->recharge_amount = $recharge_amount;
-		if($time != ''){
-			$trade->pay_at = $time;	
-		}
-		if($tax != ''){
-			$trade->tax = $tax;	
-		}
-		$trade->auditor_id	= $auditor_id;
-		$trade->audit_status	= $audit_status;
-		$trade->audit_time	= date("Y-m-d H:i:s",time());
-		if($remarks != ''){
-			$trade->remarks	= $remarks;	
-		}
-		
-		
-		$audit_res = $trade->save();
-
 
 		if($audit_res != true){
 			DB::rollBack();

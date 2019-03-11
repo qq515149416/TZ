@@ -80,4 +80,14 @@ class PfmStatisticsController extends Controller
 		}
 		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
 	}
+
+	public function test(PfmStatisticsRequest $request){
+		$par = $request->only(['begin','end']);
+		$begin = strtotime('2019-03-01 00:00:00') ;
+		$end = strtotime('2019-03-31 23:59:59') ;
+		
+		$pfmModel = new PfmStatistics();
+		$res = $pfmModel->test($begin,$end);
+		dd($res);
+	}
 }

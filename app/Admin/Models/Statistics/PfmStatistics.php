@@ -19,11 +19,11 @@ class  PfmStatistics extends Model
 {
    use SoftDeletes;
    
-	protected $table = 'admin_pfm_statistics';
+	protected $table = 'tz_orders_flow';
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
 	
-	protected $fillable = ['user_id', 'achievement','total_money','this_arrears','all_arrears','month','updated_at'];
+	// protected $fillable = ['user_id', 'achievement','total_money','this_arrears','all_arrears','month','updated_at'];
 
 	/**
 	* 统计idc业绩数据,财务用
@@ -625,5 +625,9 @@ class  PfmStatistics extends Model
 				break;
 		}
 		return $arr;
+	}
+
+	public function test($begin,$end){
+
 	}
 }

@@ -76,20 +76,63 @@ class PayOrder extends Model
 	 * @return array          返回相关的状态提示及信息
 	 */
 
-	public function payOrderByBalance($business_sn,$coupon_id){
+	public function payOrderByBalance($order_id,$coupon_id){
 		$return['data'] = '';
 		$user_id = Auth::id();
+
+		//查看有没有这些订单
+	
+		foreach ($order_id as $k => $v) {
+			$c_order = $this->find($v);
+
+			if($c_order == null){		//如果没有
+				return [
+					'data'	=> [],
+					'msg'	=> '订单不存在',
+					'code'	=> 0,
+				];
+			}
+
+			if ($c_order->customer_id != $user_id) {
+	
+				return [
+					'data'	=> [],
+					'msg'	=> '订单不属于您',
+					'code'	=> 0, 
+				];
+			}
+			if ($c_order->order_status != 0) {
+	
+				return [
+					'data'	=> [],
+					'msg'	=> '订单已支付',
+					'code'	=> 0, 
+				];
+			}
+			if ($c_order->remove_status != 0) {
+	
+				return [
+					'data'	=> [],
+					'msg'	=> '资源已下架,无法支付',
+					'code'	=> 0, 
+				];
+			}	
+		}
+
 		$unpaidOrder = $this
 				->where('order_status',0)
-				->where('business_sn',$business_sn)
+				// ->where('business_sn',$business_sn)
 				->where('customer_id',$user_id)
+				->where('remove_status',0) 
+				->whereIn('id',$order_id)
 				->get()
 				->toArray();
 		if(count($unpaidOrder) == 0){
-			$return['msg'] 	= '无此业务未付款订单';
+			$return['msg'] 	= '订单不存在';
 			$return['code']	= 0;
 			return $return;
 		}
+
 		$serial_number = 'tz_'.time().'_'.$user_id;
 		$payable_money = '0.00';
 		$pay_time = date("Y-m-d h:i:s");
@@ -100,19 +143,19 @@ class PayOrder extends Model
 		DB::beginTransaction();//开启事务处理
 
 		for ($i=0; $i < count($unpaidOrder); $i++) { 
-			$checkCoupon = $this->checkCoupon($unpaidOrder[$i]['id'],$coupon_id);
-			if($checkCoupon != true){
-				$return['msg'] 	= '该优惠券不可用';
-				$return['code']	= 0;
-				return $return;
-			}
+			// $checkCoupon = $this->checkCoupon($unpaidOrder[$i]['id'],$coupon_id);
+			// if($checkCoupon != true){
+			// 	$return['msg'] 	= '该优惠券不可用';
+			// 	$return['code']	= 0;
+			// 	return $return;
+			// }
 					
 			$processing = $this->paySuccess($unpaidOrder[$i]['id'],$pay_time);
 			if($processing['code'] != 1){
 				DB::rollBack();
 				return $processing;
 			} 
-			
+		
 			//更新订单内信息
 			$updateInfo['serial_number'] = $serial_number;
 			$updateInfo['order_status'] = 1;
@@ -138,32 +181,7 @@ class PayOrder extends Model
 				return $return;
 			}
 			$order_id_arr[] = $unpaidOrder[$i]['id'];
-
-			if(in_array($unpaidOrder[$i]['resource_type'], $idc_arr)){
-				$type = 1;
-			} elseif(in_array($unpaidOrder[$i]['resource_type'], $defenseip_arr)){
-				$type = 2;
-			}else{
-				$type = 3;
-			}
-		}
-		switch ($type) {
-			case '1':
-				$customer_id = DB::table('tz_business')->where('business_number',$business_sn)->value('client_id'); 
-				break;
-			case '2':
-				$customer_id = DB::table('tz_defenseip_business')->where('business_number',$business_sn)->value('user_id'); 
-				break;
-			default:
-				$return['msg']  = '获取业务类型失败';
-				$return['code'] = 0;
-				return $return;
-				break;
-		}
-		if($customer_id == null){
-			$return['msg']  = '客户id获取失败';
-			$return['code'] = 0;
-			return $return;
+			$business_sn = $unpaidOrder[$i]['business_sn'];
 		}
 		
 		//计算实际支付金额
@@ -171,7 +189,7 @@ class PayOrder extends Model
 		//优惠券抵扣了的金额
 		$preferential_amount = bcsub($payable_money,$actual_payment,2);
 		//获取余额
-		$before_money = DB::table('tz_users')->where('id',$customer_id)->value('money');
+		$before_money = DB::table('tz_users')->where('id',$user_id)->value('money');
 		//计算扣除应付金额后余额
 		$after_money = bcsub((string)$before_money,(string)$actual_payment,2);
 
@@ -184,7 +202,7 @@ class PayOrder extends Model
 		$flow = [
 			'serial_number'		=> $serial_number,
 			'order_id'		=> json_encode($order_id_arr),
-			'customer_id'		=> $customer_id,
+			'customer_id'		=> $user_id,
 			'payable_money'	=> $payable_money,
 			'actual_payment'	=> $actual_payment,
 			'preferential_amount'	=> $preferential_amount,

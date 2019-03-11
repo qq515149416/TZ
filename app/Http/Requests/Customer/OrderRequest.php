@@ -33,8 +33,8 @@ class OrderRequest extends FormRequest
 		switch ($method) {
 			case 'payOrderByBalance':
 				$return = [
-					'business_sn'		=> 'required',
-					'coupon_id'		=> 'required',
+					'order_id'		=> 'required',
+					// 'coupon_id'		=> 'required',
 				];
 				break;
 			
@@ -58,8 +58,8 @@ class OrderRequest extends FormRequest
 		return  [
 			'business_sn.required'		=> '请提供所需支付的业务编号',
 			'coupon_id.required'		=> '请提供优惠券id,0为不使用',
-			'order_id.required'		=> '请提供所需查询的订单id',
-			'order_id.exists'		=> '无此订单id',
+			'order_id.required'		=> '请提供订单id',
+			'order_id.exists'			=> '无此订单id',
 		];
 	}
 

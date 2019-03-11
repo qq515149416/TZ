@@ -139,6 +139,7 @@ class OrderController extends Controller
 	// 	$pay = $model->payOrderByBalance($business_sn,$coupon_id);
 	// 	return tz_ajax_echo($pay['data'],$pay['msg'],$pay['code']);
 	// }
+	
 	/**
 	 * 获取该业务下的其他资源订单数据
 	 * @param  Request $request [description]

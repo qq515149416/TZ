@@ -92,4 +92,5 @@ class PfmStatisticsController extends Controller
 		$res = $pfmModel->test($begin,$end);
 		return tz_ajax_echo($res,'统计完成',1);
 	}
+
 }

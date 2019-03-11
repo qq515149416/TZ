@@ -91,10 +91,10 @@ class Order extends Model
 
 		foreach ($order as $key => $value) {
 
-			$value->type = $value->resource_type;
-			$value->resource_type = $resource_type[$value->resource_type];
-			$value->order_type = $order_type[$value->order_type];
-			$value->order_status = $order_status[$value->order_status];
+			$value->type 			= $value->resource_type;
+			$value->resource_type 		= $resource_type[$value->resource_type];
+			$value->order_type 		= $order_type[$value->order_type];
+			$value->order_status_trans 	= $order_status[$value->order_status];
 			$value->business_name	= $admin_name[$value->business_id];
 		}
 

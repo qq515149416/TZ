@@ -486,7 +486,7 @@ class UnderModel extends Model
         //判断是否配置了机柜
         if ($machineData->cabinet == 0) {
             //当未配置机柜时
-            $resData['cabinet'] = '未配置机柜';
+            $resData['cabinet_id'] = '未配置机柜';
         } else {
             //配置机柜时
             $cabinetData        = DB::table('idc_cabinet')

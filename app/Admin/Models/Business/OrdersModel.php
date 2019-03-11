@@ -129,7 +129,8 @@ class OrdersModel extends Model
 			foreach($result as $okey=>$ovalue){
 				$ovalue->type = $ovalue->resource_type;
 				$ovalue->resourcetype = $resource_type[$ovalue->resource_type];
-				$ovalue->order_type = $order_type[$ovalue->order_type];
+                $ovalue->order_type = $order_type[$ovalue->order_type];
+                $ovalue->status = $ovalue->order_status;
 				$ovalue->order_status = $order_status[$ovalue->order_status];
 			}
 			$return['data'] = $result;

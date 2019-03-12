@@ -64,7 +64,10 @@ class Order extends Model
 			$where['tz_orders.customer_id'] = $user_id;
 			$where['tz_orders.business_sn'] = $type['business_sn'];
 			$where['tz_orders.resource_type'] = $type['resource_type'];
-		}
+        }
+        if(isset($type['status'])) {
+            $where['tz_orders.order_status'] = $type['status'];
+        }
 		$order = DB::table('tz_orders')
                     ->leftJoin('tz_orders_flow','tz_orders.serial_number','=','tz_orders_flow.serial_number')
                     ->where($where)

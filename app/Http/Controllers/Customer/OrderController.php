@@ -36,7 +36,7 @@ class OrderController extends Controller
 		if(!Auth::check()){
 			return tz_ajax_echo('','请先登录',0);
 		}
-		$type = $request->only(['resource_type','business_sn']);
+		$type = $request->only(['resource_type','business_sn','status']);
 		$orderModel = new Order();
 		//根据id获取所属订单
 		$list = $orderModel->getList($type);
@@ -78,7 +78,7 @@ class OrderController extends Controller
 		$info = $request->only('order_id');
 		// dump($info);
 		$order_id = $info['order_id'];
-	
+
 		$return = $orderModel->delOrder($user_id,$order_id);
 
 		return tz_ajax_echo($return,$return['msg'],$return['code']);
@@ -90,12 +90,12 @@ class OrderController extends Controller
 	 * @return json           返回对应的信息和状态提示及信息
 	 */
 	public function resourceOrders(Request $request){
-		
+
 			$data = $request->only(['business_sn','resource_type']);
 			$resource = new Order();
 			$resource_orders = $resource->resourceOrders($data);
 			return tz_ajax_echo($resource_orders['data'],$resource_orders['msg'],$resource_orders['code']);
-		
+
 	}
 
 	/**
@@ -117,7 +117,7 @@ class OrderController extends Controller
 	 */
 	//以下这个是新版的方法,子梁测试请打开注释,注释掉下面同名那个
 	public function payOrderByBalance(OrderRequest $request){
-		
+
 		$par = $request->only(['order_id','coupon_id']);
 		$order_id = $par['order_id'];
 		//$coupon_id = $par['coupon_id'];
@@ -139,7 +139,7 @@ class OrderController extends Controller
 	// 	$pay = $model->payOrderByBalance($business_sn,$coupon_id);
 	// 	return tz_ajax_echo($pay['data'],$pay['msg'],$pay['code']);
 	// }
-	
+
 	/**
 	 * 获取该业务下的其他资源订单数据
 	 * @param  Request $request [description]
@@ -176,7 +176,7 @@ class OrderController extends Controller
 			$show_renew = new Order();
 			$return = $show_renew->showRenewOrder($renew_order);
 		}
-		
+
 		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
 	}
 

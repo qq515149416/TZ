@@ -60,5 +60,41 @@ class Business extends Model
 		return $return;
 	}
 
+	/**
+	 * 客户端获取绑定业务员信息
+	 * @param  [type] $sales_id [description]
+	 * @return [type]           [description]
+	 */
+	public function getSales($sales_id){
+		if(!$sales_id){
+			return [
+	            'data'=>'',
+				'code'=>0,
+				'msg'=>'无法获取业务员的信息'
+			];
+		}
+		if($sales_id != 0){
+			$sales = DB::table('admin_users as admin')
+					->join('oa_staff as staff','admin.id','=','staff.admin_users_id')
+					->where(['admin.id'=>$sales_id])
+					->select('admin.id','admin.name as sale_name','staff.phone','staff.QQ','staff.wechat','staff.email')
+					->first();
+			
+		} else {
+			return [
+				'data'=>'',
+				'code'=>0,
+				'msg'=>'您暂未绑定业务员'
+			];
+		}
+		return [
+			'data'=>$sales,
+			'code'=>1,
+			'msg'=>'业务员信息获取成功'
+		];
+
+
+	}
+
 
 }

@@ -38,6 +38,16 @@ class BusinessController extends Controller
 		return tz_ajax_echo($list['data'],$list['msg'],$list['code']);
 
 	}
+
+	/**
+	 * 客户端获取业务员的相关信息 --蔡明东
+	 * @return [type] [description]
+	 */
+	public function getSales(){
+		$get = new Business();
+		$return = $get->getSales(Auth::user()->salesman_id);
+		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
+	}
 	
 
 }

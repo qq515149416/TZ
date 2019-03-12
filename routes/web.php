@@ -195,6 +195,8 @@ Route::group([
 
             Route::get('flows','Customer\OrderController@flows');
 
+            Route::get('get_sales','Customer\BusinessController@getSales');
+
         });
     });
 

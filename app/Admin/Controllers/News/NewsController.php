@@ -120,4 +120,8 @@ class NewsController extends Controller
 		print_r($_COOKIE);
 		return view('form');
 	}
+
+	public function putImages(NewsRequest $request){
+		dd('666666');
+	}
 }

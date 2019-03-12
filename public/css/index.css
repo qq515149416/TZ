@@ -1879,9 +1879,14 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #aboutus .content-list .tab-content h2 span {
   font-size: 14px;
   color: #999999;
+  margin-top: 20px;
 }
 #aboutus .content-list .tab-content h2 span a {
   color: #999999;
+  text-decoration: none;
+}
+#aboutus .content-list .tab-content h2 span a.active {
+  color: #333333;
 }
 #aboutus .content-list .nav-tabs {
   background-color: #d9dde7;

@@ -30,7 +30,7 @@
                         <span class="pull-right">
                             <a href="#">首页</a> >
                             <a href="#">关于我们</a> >
-                            <a href="#">公司介绍</a>
+                            <a href="#" class="active">公司介绍</a>
                         </span>
                     </h2>
                     <p>

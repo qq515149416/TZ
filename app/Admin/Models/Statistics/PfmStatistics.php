@@ -652,7 +652,7 @@ class  PfmStatistics extends Model
 
 		$maybe = DB::table('tz_business as a')
 			->leftJoin('tz_users as b','a.client_id','=','b.id')
-			->select('a.client_id','b.name as customer_name','b.nickname as customer_nickname','b.email as customer_email',DB::raw('SUM(a.money) as money'))
+			->select('a.client_id as customer_id','b.name as customer_name','b.nickname as customer_nickname','b.email as customer_email',DB::raw('SUM(a.money) as money'))
 			->where('a.endding_time','>',$begin)
 			->where('a.endding_time','<',$end)
 			->groupBy('a.client_id')
@@ -677,6 +677,7 @@ class  PfmStatistics extends Model
 			'customer_name'	=> '合计',
 			'customer_nickname'	=> '合计',
 		];
+
 		foreach ($already as $k => $v) {
 			if(!isset($arr[$v->customer_id])){
 				$arr[$v->customer_id] = [

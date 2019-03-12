@@ -86,8 +86,7 @@ class PfmStatisticsController extends Controller
     public function test(PfmStatisticsRequest $request)
     {
         $par = $request->only(['begin', 'end']);
-        // $begin = strtotime('2019-03-01 00:00:00') ;
-        // $end = strtotime('2019-03-31 23:59:59') ;
+        
         $begin = '2019-03-01 00:00:00';
         $end   = '2019-03-31 23:59:59';
 

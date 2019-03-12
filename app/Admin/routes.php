@@ -203,6 +203,7 @@ Route::group([
         $router->post('edit', 'News\NewsController@edit');//编辑消息
         $router->post('deleted', 'News\NewsController@deleted'); //删除消息
         $router->get('get_news_type', 'News\NewsController@get_news_type');//获取消息类型列表
+        $router->post('putImages', 'News\NewsController@putImages');//上传图片接口
     });
 
     /**

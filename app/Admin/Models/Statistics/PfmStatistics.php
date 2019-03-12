@@ -632,7 +632,7 @@ class  PfmStatistics extends Model
 		
 		$already = DB::table('tz_orders_flow as a')
 			->leftJoin('tz_users as b','a.customer_id','=','b.id')
-			->select('a.customer_id','b.name as customer_name','b.nickname as customer_nickname','b.email as customer_email',DB::raw('SUM(actual_payment) as money'))
+			->select('a.customer_id','b.name as customer_name','b.nickname as customer_nickname','b.email as customer_email',DB::raw('SUM(a.actual_payment) as money'))
 			->where('a.pay_time','>',$begin)
 			->where('a.pay_time','<',$end)
 			->groupBy('a.customer_id')
@@ -642,14 +642,36 @@ class  PfmStatistics extends Model
 		
 		$not = DB::table('tz_orders as a')
 			->leftJoin('tz_users as b','a.customer_id','=','b.id')
-			->select('a.customer_id','b.name as customer_name','b.nickname as customer_nickname','b.email as customer_email',DB::raw('SUM(payable_money) as money'))
+			->select('a.customer_id','b.name as customer_name','b.nickname as customer_nickname','b.email as customer_email',DB::raw('SUM(a.payable_money) as money'))
 			->where('a.created_at','>',$begin)
 			->where('a.created_at','<',$end)
+			->where('a.order_status',0)
+			->where('a.remove_status',0)
 			->groupBy('a.customer_id')
 			->get();
+
+		$maybe = DB::table('tz_business as a')
+			->leftJoin('tz_users as b','a.client_id','=','b.id')
+			->select('a.client_id','b.name as customer_name','b.nickname as customer_nickname','b.email as customer_email',DB::raw('SUM(a.money) as money'))
+			->where('a.endding_time','>',$begin)
+			->where('a.endding_time','<',$end)
+			->groupBy('a.client_id')
+			->get();
+
+		$maybe_res = DB::table('tz_orders as a')
+			->leftJoin('tz_users as b','a.customer_id','=','b.id')
+			->select('a.customer_id','b.name as customer_name','b.nickname as customer_nickname','b.email as customer_email',DB::raw('SUM(a.price) as money'))
+			->where('a.end_time','>',$begin)
+			->where('a.end_time','<',$end)
+			->whereIn('a.order_status',[0,1])
+			->where('a.remove_status',0)
+			->groupBy('a.customer_id')
+			->get();
+		
 		$arr['heji'] = [
 			'already' 		=> 0,
 			'not'			=> 0,
+			'maybe'		=> 0,
 			'customer_id'		=> 0,
 			'customer_email'	=> '合计',
 			'customer_name'	=> '合计',
@@ -660,6 +682,7 @@ class  PfmStatistics extends Model
 				$arr[$v->customer_id] = [
 					'already' 		=> $v->money,
 					'not'			=> 0,
+					'maybe'		=> 0,
 					'customer_id'		=> $v->customer_id,
 					'customer_name'	=> $v->customer_name,
 					'customer_email'	=> $v->customer_email,
@@ -673,6 +696,7 @@ class  PfmStatistics extends Model
 				$arr[$v->customer_id] = [
 					'already' 		=> 0,
 					'not'			=> $v->money,
+					'maybe'		=> 0,
 					'customer_id'		=> $v->customer_id,
 					'customer_name'	=> $v->customer_name,
 					'customer_email'	=> $v->customer_email,
@@ -683,6 +707,41 @@ class  PfmStatistics extends Model
 			}
 			$arr['heji']['not'] = bcadd($arr['heji']['not'], $v->money,2);
 		}
+
+		foreach ($maybe as $k => $v) {
+			if(!isset($arr[$v->customer_id])){
+				$arr[$v->customer_id] = [
+					'already' 		=> 0,
+					'not'			=> 0,
+					'maybe'		=> $v->money,
+					'customer_id'		=> $v->customer_id,
+					'customer_name'	=> $v->customer_name,
+					'customer_email'	=> $v->customer_email,
+					'customer_nickname'	=> $v->customer_nickname,
+				];
+			}else{
+				$arr[$v->customer_id]['maybe'] = bcadd($arr[$v->customer_id]['maybe'], $v->money,2);
+			}
+			$arr['heji']['maybe'] = bcadd($arr['heji']['maybe'], $v->money,2);
+		}
+
+		foreach ($maybe_res as $k => $v) {
+			if(!isset($arr[$v->customer_id])){
+				$arr[$v->customer_id] = [
+					'already' 		=> 0,
+					'not'			=> 0,
+					'maybe'		=> $v->money,
+					'customer_id'		=> $v->customer_id,
+					'customer_name'	=> $v->customer_name,
+					'customer_email'	=> $v->customer_email,
+					'customer_nickname'	=> $v->customer_nickname,
+				];
+			}else{
+				$arr[$v->customer_id]['maybe'] = bcadd($arr[$v->customer_id]['maybe'], $v->money,2);
+			}
+			$arr['heji']['maybe'] = bcadd($arr['heji']['maybe'], $v->money,2);
+		}
+	
 		$brr = [];
 		foreach ($arr as $k => $v) {
 			$brr[] = $v;

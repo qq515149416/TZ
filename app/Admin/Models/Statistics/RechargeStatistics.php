@@ -107,8 +107,8 @@ class  RechargeStatistics extends Model
 		->leftjoin('tz_users as b','a.user_id','=','b.id')
 		->select(DB::raw('b.id as customer_id,b.name as customer_name,b.nickname,b.email,a.id as flow_id,a.recharge_amount,a.recharge_way,a.trade_no,a.voucher,a.timestamp,a.money_before,a.money_after,a.tax'))
 		->where('a.trade_status',1)
-		// ->where('a.timestamp','>',$begin)
-		// ->where('a.timestamp','<',$end)
+		->where('a.timestamp','>',$begin)
+		->where('a.timestamp','<',$end)
 		->orderBy('a.timestamp','desc')
 		->get();
 

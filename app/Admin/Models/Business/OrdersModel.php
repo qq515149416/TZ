@@ -43,69 +43,69 @@ class OrdersModel extends Model
 		return $result;
 	}
 
-	/**
-	 * 财务人员和管理人员查看订单
-	 * @param  array $where 订单的状态
-	 * @return array        返回相关的数据信息和提示状态及信息
-	 */
-	public function financeOrders($where){
-		$result = DB::table('tz_orders')
-					->leftJoin('tz_orders_flow','tz_orders.serial_number','=','tz_orders_flow.serial_number')
-					->where($where)
-                    ->whereNull('tz_orders.deleted_at')
-					->orderBy('tz_orders.created_at','desc')
-					->select('tz_orders.id','tz_orders.order_sn','tz_orders.customer_name','tz_orders.business_sn','tz_orders.business_name','tz_orders.resource_type','tz_orders.order_type','tz_orders.resource','tz_orders.price','tz_orders.duration','tz_orders.payable_money','tz_orders.end_time','tz_orders.serial_number','tz_orders.pay_time','tz_orders.order_status','tz_orders.order_note','tz_orders.created_at','tz_orders_flow.before_money','tz_orders_flow.after_money')
-					->get();
-		if(!empty($result)){
-			$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn',11=>'高防IP'];
-			$order_type = [1=>'新购',2=>'续费'];
-			$order_status = [0=>'待支付',1=>'已支付',2=>'财务确认',3=>'订单完成',4=>'到期',5=>'取消',6=>'申请退款',7=>'正在支付',8=>'退款完成'];
-			foreach($result as $okey=>$ovalue){
-				$ovalue->type = $ovalue->resource_type;
-				$ovalue->resource_type = $resource_type[$ovalue->resource_type];
-				$ovalue->order_type = $order_type[$ovalue->order_type];
-				$ovalue->order_status = $order_status[$ovalue->order_status];
-			}
-			$return['data'] = $result;
-			$return['code'] = 1;
-			$return['msg'] = '订单获取成功';
-		} else {
-			$return['data'] = '暂无订单';
-			$return['code'] = 0;
-			$return['msg'] = '暂无对应订单';
-		}
-
-		return $return;
-	}
-	//
 	// /**
-	//  * 财务人员和管理人员查看支付流水
+	//  * 财务人员和管理人员查看订单
 	//  * @param  array $where 订单的状态
 	//  * @return array        返回相关的数据信息和提示状态及信息
 	//  */
-	// public function financeOrders(){
-	// 	$result = DB::table('tz_orders_flow as flow')
-	// 				->join('tz_users as users','flow.customer_id','=','users.id')
-	// 				->join('admin_users as admin','flow.business_id','=','admin.id')
-	// 				->select('flow.id as flow_id','flow.business_number','flow.serial_number','flow.payable_money','flow.actual_payment','flow.preferential_amount','flow.pay_time','flow.before_money','flow.after_money','flow.created_at','flow.flow_type','users.name as customer_name','users.email as customer_email','users.nickname as customer_nick_name','admin.name as business_name')
+	// public function financeOrders($where){
+	// 	$result = DB::table('tz_orders')
+	// 				->leftJoin('tz_orders_flow','tz_orders.serial_number','=','tz_orders_flow.serial_number')
+	// 				->where($where)
+    //                 ->whereNull('tz_orders.deleted_at')
+	// 				->orderBy('tz_orders.created_at','desc')
+	// 				->select('tz_orders.id','tz_orders.order_sn','tz_orders.customer_name','tz_orders.business_sn','tz_orders.business_name','tz_orders.resource_type','tz_orders.order_type','tz_orders.resource','tz_orders.price','tz_orders.duration','tz_orders.payable_money','tz_orders.end_time','tz_orders.serial_number','tz_orders.pay_time','tz_orders.order_status','tz_orders.order_note','tz_orders.created_at','tz_orders_flow.before_money','tz_orders_flow.after_money')
 	// 				->get();
 	// 	if(!empty($result)){
-	// 		foreach($result as $key=>$value){
-	// 			$flow_type = [1=>'新购',2=>'续费'];
-	// 			$value->type = $flow_type[$value->flow_type];
-	// 			$value->customer_email = $value->customer_email?$value->customer_email:$value->customer_name;
-	// 			$value->customer_email = $value->customer_email?$value->customer_email:$value->customer_nick_name;
+	// 		$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn',11=>'高防IP'];
+	// 		$order_type = [1=>'新购',2=>'续费'];
+	// 		$order_status = [0=>'待支付',1=>'已支付',2=>'财务确认',3=>'订单完成',4=>'到期',5=>'取消',6=>'申请退款',7=>'正在支付',8=>'退款完成'];
+	// 		foreach($result as $okey=>$ovalue){
+	// 			$ovalue->type = $ovalue->resource_type;
+	// 			$ovalue->resource_type = $resource_type[$ovalue->resource_type];
+	// 			$ovalue->order_type = $order_type[$ovalue->order_type];
+	// 			$ovalue->order_status = $order_status[$ovalue->order_status];
 	// 		}
 	// 		$return['data'] = $result;
 	// 		$return['code'] = 1;
-	// 		$return['msg'] = '客户流水获取成功！';
+	// 		$return['msg'] = '订单获取成功';
 	// 	} else {
-	// 		$return['data'] = $result;
+	// 		$return['data'] = '暂无订单';
 	// 		$return['code'] = 0;
-	// 		$return['msg'] = '客户流水获取失败！';
+	// 		$return['msg'] = '暂无对应订单';
 	// 	}
+
 	// 	return $return;
 	// }
+
+	/**
+	 * 财务人员和管理人员查看支付流水
+	 * @param  array $where 订单的状态
+	 * @return array        返回相关的数据信息和提示状态及信息
+	 */
+	public function financeOrders(){
+		$result = DB::table('tz_orders_flow as flow')
+					->join('tz_users as users','flow.customer_id','=','users.id')
+					->join('admin_users as admin','flow.business_id','=','admin.id')
+					->select('flow.id as flow_id','flow.business_number','flow.serial_number','flow.payable_money','flow.actual_payment','flow.preferential_amount','flow.pay_time','flow.before_money','flow.after_money','flow.created_at','flow.flow_type','users.name as customer_name','users.email as customer_email','users.nickname as customer_nick_name','admin.name as business_name')
+					->get();
+		if(!empty($result)){
+			foreach($result as $key=>$value){
+				$flow_type = [1=>'新购',2=>'续费'];
+				$value->type = $flow_type[$value->flow_type];
+				$value->customer_email = $value->customer_email?$value->customer_email:$value->customer_name;
+				$value->customer_email = $value->customer_email?$value->customer_email:$value->customer_nick_name;
+			}
+			$return['data'] = $result;
+			$return['code'] = 1;
+			$return['msg'] = '客户流水获取成功！';
+		} else {
+			$return['data'] = $result;
+			$return['code'] = 0;
+			$return['msg'] = '客户流水获取失败！';
+		}
+		return $return;
+	}
 
 	/**
 	 * 业务员和管理人员通过业务查看订单

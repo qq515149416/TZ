@@ -48,8 +48,8 @@ class RechargeStatisticsRequest extends FormRequest
 				break;
 			case 'getFlow':
 				$return = [
-					'begin'		=> 'required',
-					'end'		=> 'required',
+					'begin'		=> 'required|date',
+					'end'		=> 'required|date',
 				];
 				break;
 
@@ -68,6 +68,8 @@ class RechargeStatisticsRequest extends FormRequest
 			'begin.integer'				=> '请传时间戳',
 			'end.required'				=> '请选择结束时间',
 			'end.integer'				=> '请传时间戳',
+			'begin.date'				=> '开始时间格式错误',
+			'end.date'				=> '结束时间格式错误',
 		
 		];
 	}

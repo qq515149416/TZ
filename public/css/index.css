@@ -1864,10 +1864,10 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #consumer_promotion {
   background: url(/images/consumer_banner_BG.png?05bd52cf327dc2b8c3ed3a4988dc1f5f) no-repeat;
-  background-size: 100% 100%;
+  background-size: 100%;
 }
 #consumer_promotion .head {
-  height: 616px;
+  height: 513px;
 }
 #consumer_promotion .body {
   background: transparent;

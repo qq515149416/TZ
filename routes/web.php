@@ -32,6 +32,7 @@ Route::group([
     Route::get('/page/{directory}/{p}', 'Show\PageController@index');
     Route::get('/promotion/ddk', 'Show\DdkPromotionController@index');
     Route::get('/aboutus', 'Show\AboutUsController@index');
+    Route::get('/promotion/consumer', 'Show\ConsumerPromotionController@index');
 });
 
 /**
@@ -194,6 +195,8 @@ Route::group([
             Route::post('payOrderByBalance', 'Customer\OrderController@payOrderByBalance');
 
             Route::get('flows','Customer\OrderController@flows');
+
+            Route::get('get_sales','Customer\BusinessController@getSales');
 
         });
     });

@@ -1645,43 +1645,52 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   border: 1px solid #3251ed;
   color: #fff;
 }
-#ddk_promotion {
+#ddk_promotion,
+#consumer_promotion {
   font-family: "\5FAE\8F6F\96C5\9ED1";
 }
-#ddk_promotion .body {
+#ddk_promotion .body,
+#consumer_promotion .body {
   border-top: 1px solid #21252e;
   background: url(/images/promotion_ddk_BG_.jpg?43f348f8a972b03b34d0a3a4cd9152f6) no-repeat;
   background-size: 100% 100%;
 }
-#ddk_promotion .body .title.adv {
+#ddk_promotion .body .title.adv,
+#consumer_promotion .body .title.adv {
   width: 226px;
   margin-top: 114px;
 }
-#ddk_promotion .body .title {
+#ddk_promotion .body .title,
+#consumer_promotion .body .title {
   width: 454px;
   margin: 0 auto;
   margin-top: 45px;
 }
-#ddk_promotion .body .title span {
+#ddk_promotion .body .title span,
+#consumer_promotion .body .title span {
   width: 35px;
   height: 48px;
   background: url(/images/promotion_ddk_BT_dianzhui.png?709840addcaca9ea8b4c0862580433f0) no-repeat;
   background-size: 100% 100%;
 }
-#ddk_promotion .body .title span:first-of-type {
+#ddk_promotion .body .title span:first-of-type,
+#consumer_promotion .body .title span:first-of-type {
   margin-right: 20px;
 }
-#ddk_promotion .body .title span:last-of-type {
+#ddk_promotion .body .title span:last-of-type,
+#consumer_promotion .body .title span:last-of-type {
   margin-left: 20px;
 }
-#ddk_promotion .body .title h3 {
+#ddk_promotion .body .title h3,
+#consumer_promotion .body .title h3 {
   margin: 0;
   color: #fff;
   font-size: 24px;
   font-weight: normal;
   line-height: 48px;
 }
-#ddk_promotion .body .product {
+#ddk_promotion .body .product,
+#consumer_promotion .body .product {
   width: 1034px;
   height: 599px;
   background: url(/images/promotion_ddk_CP_BG.png?2e46cc1a235b9ea3a393fcd051269867) no-repeat;
@@ -1693,7 +1702,8 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
           box-sizing: border-box;
   position: relative;
 }
-#ddk_promotion .body .product::after {
+#ddk_promotion .body .product::after,
+#consumer_promotion .body .product::after {
   content: "";
   position: absolute;
   width: 114px;
@@ -1703,7 +1713,8 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background: url(/images/promotion_ddk_HOT_biaoqian.png?e831c4f60f334594611a29a0f6c9bba8) no-repeat;
   background-size: 100% 100%;
 }
-#ddk_promotion .body .product h4 {
+#ddk_promotion .body .product h4,
+#consumer_promotion .body .product h4 {
   margin: 20px 0;
   border-bottom: 3px solid #0284ed;
   font-size: 18px;
@@ -1712,35 +1723,43 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   display: inline-block;
   line-height: 30px;
 }
-#ddk_promotion .body .product p.dec {
+#ddk_promotion .body .product p.dec,
+#consumer_promotion .body .product p.dec {
   color: #4f4f4f;
   font-size: 14px;
   margin-bottom: 56px;
 }
-#ddk_promotion .body .product .price-information {
+#ddk_promotion .body .product .price-information,
+#consumer_promotion .body .product .price-information {
   padding-top: 8px;
   color: #ea2d2e;
 }
-#ddk_promotion .body .product .price-information .price {
+#ddk_promotion .body .product .price-information .price,
+#consumer_promotion .body .product .price-information .price {
   font-size: 34px;
 }
-#ddk_promotion .body .product .price-information .unit {
+#ddk_promotion .body .product .price-information .unit,
+#consumer_promotion .body .product .price-information .unit {
   font-size: 24px;
 }
-#ddk_promotion .body .product .price-information .tip {
+#ddk_promotion .body .product .price-information .tip,
+#consumer_promotion .body .product .price-information .tip {
   font-size: 16px;
   margin-left: 14px;
 }
-#ddk_promotion .body .product .activity-tip {
+#ddk_promotion .body .product .activity-tip,
+#consumer_promotion .body .product .activity-tip {
   margin: 0;
   text-align: center;
   font-size: 16px;
   color: #28140c;
 }
-#ddk_promotion .body .product .activity-tip .date {
+#ddk_promotion .body .product .activity-tip .date,
+#consumer_promotion .body .product .activity-tip .date {
   color: #ea2d2e;
 }
-#ddk_promotion .body .product .buy {
+#ddk_promotion .body .product .buy,
+#consumer_promotion .body .product .buy {
   display: block;
   width: 100%;
   height: 50px;
@@ -1752,39 +1771,46 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background-color: #146ef5;
   margin: 25px 0;
 }
-#ddk_promotion .body .product .config h5 {
+#ddk_promotion .body .product .config h5,
+#consumer_promotion .body .product .config h5 {
   color: #28140c;
   font-size: 18px;
 }
-#ddk_promotion .body .product .config ul {
+#ddk_promotion .body .product .config ul,
+#consumer_promotion .body .product .config ul {
   list-style: none;
   margin: 0;
   padding: 0;
   width: 884px;
   margin-top: 26px;
 }
-#ddk_promotion .body .product .config ul li {
+#ddk_promotion .body .product .config ul li,
+#consumer_promotion .body .product .config ul li {
   float: left;
   height: 50px;
   margin-bottom: 40px;
   border-right: 1px solid #e7e6e6;
   padding: 0 50px;
 }
-#ddk_promotion .body .product .config ul li:nth-of-type(4n) {
+#ddk_promotion .body .product .config ul li:nth-of-type(4n),
+#consumer_promotion .body .product .config ul li:nth-of-type(4n) {
   border-right: none;
 }
-#ddk_promotion .body .product .config ul li span {
+#ddk_promotion .body .product .config ul li span,
+#consumer_promotion .body .product .config ul li span {
   display: block;
   min-width: 80px;
   text-align: center;
   font-size: 16px;
   color: #4f4f4f;
 }
-#ddk_promotion .body .product .config ul li span.value {
+#ddk_promotion .body .product .config ul li span.value,
+#consumer_promotion .body .product .config ul li span.value {
   margin-top: 10px;
   color: #0284ed;
 }
-#ddk_promotion .body .product-advantage {
+#ddk_promotion .body .product-advantage,
+#consumer_promotion .body .product-advantage {
   width: 1150px;
   height: 406px;
   margin: 0 auto;
@@ -1793,40 +1819,98 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin-top: 50px;
   position: relative;
 }
-#ddk_promotion .body .product-advantage div {
+#ddk_promotion .body .product-advantage div,
+#consumer_promotion .body .product-advantage div {
   position: absolute;
 }
-#ddk_promotion .body .product-advantage div:nth-of-type(1) {
+#ddk_promotion .body .product-advantage div:nth-of-type(1),
+#consumer_promotion .body .product-advantage div:nth-of-type(1) {
   left: 30px;
   top: 25px;
 }
-#ddk_promotion .body .product-advantage div:nth-of-type(2) {
+#ddk_promotion .body .product-advantage div:nth-of-type(2),
+#consumer_promotion .body .product-advantage div:nth-of-type(2) {
   left: 827px;
   top: 25px;
 }
-#ddk_promotion .body .product-advantage div:nth-of-type(3) {
+#ddk_promotion .body .product-advantage div:nth-of-type(3),
+#consumer_promotion .body .product-advantage div:nth-of-type(3) {
   left: 34px;
   top: 236px;
 }
-#ddk_promotion .body .product-advantage div:nth-of-type(4) {
+#ddk_promotion .body .product-advantage div:nth-of-type(4),
+#consumer_promotion .body .product-advantage div:nth-of-type(4) {
   left: 838px;
   top: 156px;
 }
-#ddk_promotion .body .product-advantage div:nth-of-type(5) {
+#ddk_promotion .body .product-advantage div:nth-of-type(5),
+#consumer_promotion .body .product-advantage div:nth-of-type(5) {
   left: 812px;
   top: 314px;
 }
-#ddk_promotion .body .product-advantage h6 {
+#ddk_promotion .body .product-advantage h6,
+#consumer_promotion .body .product-advantage h6 {
   font-size: 18px;
   color: #fff;
   margin: 0;
 }
-#ddk_promotion .body .product-advantage p {
+#ddk_promotion .body .product-advantage p,
+#consumer_promotion .body .product-advantage p {
   font-size: 14px;
   color: #fff;
   margin: 0;
   margin-top: 16px;
   width: 288px;
+}
+#consumer_promotion {
+  background: url(/images/consumer_banner_BG.png?05bd52cf327dc2b8c3ed3a4988dc1f5f) no-repeat;
+  background-size: 100%;
+}
+#consumer_promotion .head {
+  height: 513px;
+}
+#consumer_promotion .body {
+  background: transparent;
+  border-top: 1px solid transparent;
+}
+#consumer_promotion .body .title {
+  width: 298px;
+}
+#consumer_promotion .body .title span {
+  width: 60px;
+  height: 21px;
+  margin-top: 14px;
+}
+#consumer_promotion .body .title span:first-of-type {
+  margin-right: 5px;
+}
+#consumer_promotion .body .title span:last-of-type {
+  margin-left: 5px;
+}
+#consumer_promotion .body .title span.left {
+  background: url(/images/consumer_biaotizhuangshi_zuo.png?6e4eb57a61a13e1bea10c3a388f595d6) no-repeat;
+}
+#consumer_promotion .body .title span.right {
+  background: url(/images/consumer_biantizhuangshi_you.png?b5841db26e3d6c71011be2ad47dcdb40) no-repeat;
+}
+#consumer_promotion .body .title.adv {
+  width: 328px;
+}
+#consumer_promotion .body .product-advantage {
+  width: 100%;
+  height: 824px;
+  background: url(/images/consumer_cp_.png?e23289302e2cff9b67f1124bf5dc19bc) no-repeat;
+  background-size: 100% 100%;
+}
+#consumer_promotion .body .product .buy {
+  background-color: #05cd80;
+}
+#consumer_promotion .body .product .config h5 {
+  color: #28140c;
+  font-size: 18px;
+}
+#consumer_promotion .body .product .config ul li span.value {
+  color: #2ad08a;
 }
 #aboutus .banner {
   height: 562px;

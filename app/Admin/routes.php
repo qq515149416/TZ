@@ -298,6 +298,7 @@ Route::group([
         'prefix' => 'rechargeStatistics',
     ], function (Router $router) {
         $router->get('list', 'Statistics\RechargeStatisticsController@index');//充值统计
+        $router->get('getFlow', 'Statistics\RechargeStatisticsController@getFlow');//充值统计
     });
 
 
@@ -399,6 +400,7 @@ Route::group([
         $router->get('showAllRecharge', 'Business\RechargeController@getAllRecharge');//财务用查看所有客户充值流水信息接口
         $router->get('editAuditRecharge', 'Business\RechargeController@editAuditRecharge');//财务用更改充值审核单接口
 
+        
         /**
          * 转移业务员相关
          */

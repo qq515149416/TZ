@@ -46,6 +46,13 @@ class RechargeStatisticsController extends Controller
 
 	}
 
-	
+	public function getFlow(RechargeStatisticsRequest $request){
+		$par = $request->only(['begin','end']);
+		$rechargeModel = new RechargeStatistics();
+
+		$res = $rechargeModel->getFLow($par['begin'],$par['end']);
+
+		return tz_ajax_echo($res,'获取成功',1);
+	}
 
 }

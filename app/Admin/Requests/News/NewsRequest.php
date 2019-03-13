@@ -33,6 +33,29 @@ class NewsRequest extends FormRequest
 	 */
 	public function rules()
 	{
+		$path_info = Request()->getPathInfo();
+		$arr = explode('/',$path_info);
+		$method = $arr[count($arr)-1];
+		$return = [];
+
+		switch ($method) {
+			case 'putImages':
+				$return = [
+					
+				];
+				break;
+			
+			default:
+				$return = [
+					'title'		=> 'required|max:50',
+					'content'	=> 'required|min:30',
+					'digest'		=> 'required',
+					'list_order'	=> 'numeric',
+				];
+				break;
+		}
+
+		return $return;
 		return [
 
 			'title'		=> 'required|max:50',

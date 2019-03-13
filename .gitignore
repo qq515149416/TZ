@@ -25,3 +25,4 @@ public/ErrorFiles/503.html
 public/ErrorFiles/403.html
 public/ErrorFiles/500.html
 public/upload/*
+public/.well-known/

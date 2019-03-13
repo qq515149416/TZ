@@ -42,11 +42,17 @@ class RechargeStatisticsRequest extends FormRequest
 		switch ($method) {
 			case 'list':
 				$return = [
-					'begin'=> 'required|integer',
+					'begin'		=> 'required|integer',
 					'end'		=> 'required|integer',
 				];
 				break;
-			
+			case 'getFlow':
+				$return = [
+					'begin'		=> 'required',
+					'end'		=> 'required',
+				];
+				break;
+
 			default:
 				
 				break;

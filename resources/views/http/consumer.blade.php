@@ -48,7 +48,7 @@
                     </li>
                     <li>
                         <span class="attr">类型</span>
-                        <span class="value">高配物理服务器</span>
+                        <span class="value">高防物理服务器</span>
                     </li>
                 </ul>
             </div>

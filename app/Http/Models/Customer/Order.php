@@ -1022,6 +1022,7 @@ class Order extends Model
 		$result = DB::table('tz_orders_flow as flow')
 					->where(['flow.customer_id'=>Auth::user()->id])
 					->select('flow.id as flow_id','flow.business_number','flow.serial_number','flow.payable_money','flow.actual_payment','flow.preferential_amount','flow.pay_time','flow.before_money','flow.after_money','flow.created_at','flow.flow_type')
+					->orderBy('flow.pay_time','desc')
 					->get();
 		if(!empty($result)){
 			foreach($result as $key=>$value){

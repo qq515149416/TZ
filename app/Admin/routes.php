@@ -204,6 +204,7 @@ Route::group([
         $router->post('deleted', 'News\NewsController@deleted'); //删除消息
         $router->get('get_news_type', 'News\NewsController@get_news_type');//获取消息类型列表
         $router->post('putImages', 'News\NewsController@putImages');//上传图片接口
+        $router->get('test', 'News\NewsController@form');//上传图片接口
     });
 
     /**

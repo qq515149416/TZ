@@ -210,6 +210,7 @@ class  Overdue extends Model
 				->where('a.resource_type','<=',9)
 				->whereIn('a.order_status',[0,1,2])		//订单完成之前,意思为正在生效
 				->whereIn('a.remove_status',$remove_status)		//还没下架的
+				->whereNull('deleted_at')
 				->orderBy('a.end_time','asc')
 				->get();	
 				
@@ -223,6 +224,7 @@ class  Overdue extends Model
 				->where('a.resource_type','=',$resource_type)
 				->whereIn('a.order_status',[0,1,2])
 				->whereIn('a.remove_status',$remove_status)		//还没下架的
+				->whereNull('deleted_at')
 				->orderBy('a.end_time','asc')
 				->get();	
 
@@ -238,6 +240,7 @@ class  Overdue extends Model
 				->where('a.resource_type','<=',9)
 				->whereIn('a.order_status',[0,1,2])
 				->whereIn('a.remove_status',$remove_status)		//还没下架的
+				->whereNull('deleted_at')
 				->orderBy('a.end_time','asc')
 				->get();	
 		
@@ -250,6 +253,7 @@ class  Overdue extends Model
 				->where('a.resource_type','=',$resource_type)
 				->whereIn('a.order_status',[0,1,2])
 				->whereIn('a.remove_status',$remove_status)		//还没下架的
+				->whereNull('deleted_at')
 				->orderBy('a.end_time','asc')
 				->get();	
 			}

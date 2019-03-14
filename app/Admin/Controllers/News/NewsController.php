@@ -116,12 +116,16 @@ class NewsController extends Controller
 
 	public function form()
 	{
-		echo "<pre>";
-		print_r($_COOKIE);
-		return view('form');
+		
+		return view('form2');
 	}
 
 	public function putImages(NewsRequest $request){
-		dd('666666');
+		$par = $request->only(['images']);
+
+		$model = new News();
+		$res = $model->putImages($par['images']);
+	
+		
 	}
 }

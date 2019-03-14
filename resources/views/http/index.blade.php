@@ -67,28 +67,28 @@
     <div class="hot-products row">
         <div class="container clearfix">
             <div class="hot-products-item">
-                <a href="javascript:;">
+                <a href="/promotion/consumer">
                     <h3>安全防护</h3>
                     <p>抵御SYN、CC、DNS等 多种攻击，实现有效防护</p>
                     <span class="more"></span>
                 </a>
             </div>
             <div class="hot-products-item">
-                <a href="javascript:;">
+                <a href="/page/tz/zytg">
                     <h3>服务器托管</h3>
                     <p>多线路组合，多城布点， 7×24的专人维护以及监控服务</p>
                     <span class="more"></span>
                 </a>
             </div>
             <div class="hot-products-item">
-                <a href="javascript:;">
+                <a href="/page/tz/zygfzy">
                     <h3>服务器租用</h3>
                     <p>品牌服务器，根据行业特点、 客户规模量身打造租用方案</p>
                     <span class="more"></span>
                 </a>
             </div>
             <div class="hot-products-item">
-                <a href="javascript:;">
+                <a href="/dist/highDefense.html">
                     <h3>智能高防IP</h3>
                     <p>隐藏真实源服务器IP，安全 稳定全程保驾护航源服务器</p>
                     <span class="more"></span>

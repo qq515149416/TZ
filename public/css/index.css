@@ -1864,7 +1864,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #consumer_promotion {
   background: url(/images/consumer_banner_BG.png?05bd52cf327dc2b8c3ed3a4988dc1f5f) no-repeat;
-  background-size: 100%;
+  background-size: 100% 100%;
 }
 #consumer_promotion .head {
   height: 513px;
@@ -1897,9 +1897,10 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   width: 328px;
 }
 #consumer_promotion .body .product-advantage {
+  margin-top: 0;
   width: 100%;
   height: 824px;
-  background: url(/images/consumer_cp_.png?e23289302e2cff9b67f1124bf5dc19bc) no-repeat;
+  background: url(/images/consumer_cp_.png?e23289302e2cff9b67f1124bf5dc19bc) no-repeat 0 -10px;
   background-size: 100% 100%;
 }
 #consumer_promotion .body .product .buy {

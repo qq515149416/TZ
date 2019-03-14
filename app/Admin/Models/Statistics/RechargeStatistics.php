@@ -135,7 +135,11 @@ class  RechargeStatistics extends Model
 					$mr[ $flow[$i]['customer_id'] ]['machineroom'] = '暂无业务';
 				}	
 			} 
-			$flow[$i]['machineroom'] = $mr[ $flow[$i]['customer_id'] ]['machineroom'];
+			if(is_array($mr[ $flow[$i]['customer_id'] ]['machineroom'])){
+				$flow[$i]['machineroom'] = implode(',',$mr[ $flow[$i]['customer_id'] ]['machineroom']);
+			}else{
+				$flow[$i]['machineroom'] = $mr[ $flow[$i]['customer_id'] ]['machineroom'];
+			}
 		}
 		return $flow;
  	}

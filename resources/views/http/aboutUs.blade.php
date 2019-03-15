@@ -54,6 +54,46 @@
                             <a href="#" class="active">荣誉资质</a>
                         </span>
                     </h2>
+                    <div class="certificate square clearfix">
+                        <ul>
+                            <li>
+                                <a href="javascript:;" class="thumbnail">
+                                    <img src="{{ asset("/images/cert/01.png") }}" alt="" />
+                                </a>
+                                <span>东莞市电子商务联合会</span>
+                            </li>
+                            <li>
+                                <a href="javascript:;" class="thumbnail">
+                                    <img src="{{ asset("/images/cert/01.png") }}" alt="" />
+                                </a>
+                                <span>东莞市电子商务联合会</span>
+                            </li>
+                            <li>
+                                <a href="javascript:;" class="thumbnail">
+                                    <img src="{{ asset("/images/cert/01.png") }}" alt="" />
+                                </a>
+                                <span>东莞市电子商务联合会</span>
+                            </li>
+                            <li>
+                                <a href="javascript:;" class="thumbnail">
+                                    <img src="{{ asset("/images/cert/01.png") }}" alt="" />
+                                </a>
+                                <span>东莞市电子商务联合会</span>
+                            </li>
+                            <li>
+                                <a href="javascript:;" class="thumbnail">
+                                    <img src="{{ asset("/images/cert/01.png") }}" alt="" />
+                                </a>
+                                <span>东莞市电子商务联合会</span>
+                            </li>
+                            <li>
+                                <a href="javascript:;" class="thumbnail">
+                                    <img src="{{ asset("/images/cert/01.png") }}" alt="" />
+                                </a>
+                                <span>东莞市电子商务联合会</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="wenhua">...</div>
                 <div role="tabpanel" class="tab-pane" id="fazhang">...</div>

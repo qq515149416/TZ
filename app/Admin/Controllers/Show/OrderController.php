@@ -10,11 +10,16 @@ use Encore\Admin\Layout\Content;
 use Encore\Admin\Layout\Row;
 use App\Admin\Controllers\Show\tool\script;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends script
 {
-    public function clienteleInfo()
+    public function clienteleInfo(Request $request)
     {
+        // if($request->has('id')) {
+        //     $param = $request->all();
+        //     return tz_ajax_echo(DB::table('tz_users')->where(['id'=>$param["id"]])->first(),"获取成功",1);
+        // }
         return tz_ajax_echo(session("url_param_json"),"获取成功",1);
     }
     public function index(Request $request)

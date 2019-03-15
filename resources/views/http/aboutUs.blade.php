@@ -45,7 +45,16 @@
                     </p>
                     <img class="slogan clearfix" src="{{ asset("/images/boiling.png") }}" alt="" />
                 </div>
-                <div role="tabpanel" class="tab-pane" id="rongyu">...</div>
+                <div role="tabpanel" class="tab-pane" id="rongyu">
+                    <h2>
+                        荣誉资质
+                        <span class="pull-right">
+                            <a href="#">首页</a> >
+                            <a href="#">关于我们</a> >
+                            <a href="#" class="active">荣誉资质</a>
+                        </span>
+                    </h2>
+                </div>
                 <div role="tabpanel" class="tab-pane" id="wenhua">...</div>
                 <div role="tabpanel" class="tab-pane" id="fazhang">...</div>
                 <div role="tabpanel" class="tab-pane" id="lianxi">...</div>

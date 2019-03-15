@@ -24,7 +24,7 @@ class CustomerModel extends Model
 	 * 管理人员查看客户信息
 	 * @return array 返回客户信息和状态提示及信息
 	 */
-    public function adminCustomer(){
+    public function adminCustomer($id){
         $clerk_id = Admin::user()->id;
         $slug = DB::table('oa_staff')->join('tz_jobs','oa_staff.job','=','tz_jobs.id')
                 ->where(['oa_staff.admin_users_id'=> $clerk_id])
@@ -42,6 +42,9 @@ class CustomerModel extends Model
             $where['salesman_id'] = $clerk_id;
         } else {
             $where = [];
+        }
+        if(!empty($id)){
+            $where['id'] = $id;
         }
     	$admin_customer = $this
                 ->orderBy('created_at','desc')

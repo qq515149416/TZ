@@ -121,16 +121,17 @@ class OrdersController extends Controller
 	 */
 	public function showRenewOrder(Request $request){
 		$renew_order = $request->only(['session_key']);
-		$session = session($renew_order['session_key']);
-		if(!empty($session)){
-			unset($session['client_id']);
-			$return['data'] = $session;
+		// $session = session($renew_order['session_key']);
+		$redis = get_redis($renew_order['session_key']);
+		// dd($redis);
+		if(!empty($redis)){
+			$return['data'] = $redis;
 			$return['code'] = 1;
 			$return['msg']  = '获取续费信息成功';
 		} else {
-			$return['data'] = $session;
+			$return['data'] = $redis;
 			$return['code'] = 0;
-			$return['msg']  = '无此续费信息,请确认无误';
+			$return['msg']  = '无此续费信息,请确认无误!';
 		}
 		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
 	}

@@ -152,12 +152,13 @@ class InfoController extends Controller
 
         $res      = $request->all();  //获取所有传参
         $apiData  = $this->test($res['ip'], $res['date']);
+
         $flowData = $apiData['data'];
 
         foreach ($flowData as $key => $value) {
 //
-            $flowData[$key]['bandwidth_down']        = number_format($value['in_byte'] /= pow(1024, 2), 3);
-            $flowData[$key]['upstream_bandwidth_up'] = number_format($value['out_byte'] /= pow(1024, 2), 3);
+            $flowData[$key]['bandwidth_down']        = number_format($value['in_byte'] /= pow(1024, 1), 3);
+            $flowData[$key]['upstream_bandwidth_up'] = number_format($value['out_byte'] /= pow(1024, 1), 3);
         }
 
 //        dump($flowData);

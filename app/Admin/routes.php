@@ -203,7 +203,6 @@ Route::group([
         $router->post('edit', 'News\NewsController@edit');//编辑消息
         $router->post('deleted', 'News\NewsController@deleted'); //删除消息
         $router->get('get_news_type', 'News\NewsController@get_news_type');//获取消息类型列表
-        $router->post('putImages', 'News\NewsController@putImages');//上传图片接口
         $router->get('test', 'News\NewsController@form');//上传图片接口
     });
 
@@ -576,6 +575,17 @@ Route::group([
         $router->get('test', 'DefenseIp\BusinessController@test');  //查询过期业务
 
 
+    });
+
+    /**
+     * 上传文件管理
+     */
+    Route::group([
+        'prefix' => 'upload',
+    ], function (Router $router) {
+        $router->post('putImages', 'News\UploadController@putImages');//上传图片接口
+        $router->get('showImages', 'News\UploadController@showImages');//展示上传图片接口
+        $router->get('del', 'News\UploadController@del');//展示上传图片接口
     });
 
     /**

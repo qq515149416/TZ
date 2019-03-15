@@ -151,7 +151,6 @@ class InfoController extends Controller
     {
 
         $res      = $request->all();  //获取所有传参
-        dump($res);
         $apiData  = $this->test($res['ip'], $res['date']);
 
         $flowData = $apiData['data'];

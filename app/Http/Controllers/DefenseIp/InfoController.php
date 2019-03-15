@@ -152,7 +152,7 @@ class InfoController extends Controller
 
         $res      = $request->all();  //获取所有传参
         $apiData  = $this->test($res['ip'], $res['date']);
-        dd($apiData);
+        die();
         $flowData = $apiData['data'];
 
         foreach ($flowData as $key => $value) {

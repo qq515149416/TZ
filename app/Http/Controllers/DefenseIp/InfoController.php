@@ -41,24 +41,24 @@ class InfoController extends Controller
             ->where([
                 'user_id' => $this->userId//用户ID
             ])
-            ->whereIn('status',[1,4])
+            ->whereIn('status', [1, 4])
             ->get()
             ->toArray();   //将对象转为数组
 
         //遍历添加查询IP资源数组
         foreach ($listData as $key => $value) {
-            $storeData                          = StoreModel::find($value['ip_id']);
-            if($storeData != null){
-                $storeData = $storeData->toArray();
+            $storeData = StoreModel::find($value['ip_id']);
+            if ($storeData != null) {
+                $storeData                          = $storeData->toArray();
                 $listData[$key]['defense_ip']       = $storeData['ip']; //列表数组中添加高防IP
                 $listData[$key]['status_cn']        = $this->checkStatus($value['end_at']);  //追加业务状态
                 $listData[$key]['protection_value'] = $storeData['protection_value'];  //防御值
-            }else{
+            } else {
                 $listData[$key]['defense_ip']       = 'ip不存在,请联系客服'; //列表数组中添加高防IP
                 $listData[$key]['status_cn']        = 'ip不存在,请联系客服';  //追加业务状态
                 $listData[$key]['protection_value'] = 'ip不存在,请联系客服';  //防御值
             }
-            
+
         }
         return tz_ajax_echo($listData, '获取高防IP列表成功', 1);
     }
@@ -90,6 +90,44 @@ class InfoController extends Controller
         }
     }
 
+//
+//    /**
+//     * 统计高防IP数据流量
+//     * 用于绘制流量图表
+//     *
+//     * 接口:/home/defenseIp/getStatistics
+//     *
+//     * 参数:
+//     *    business_id:业务ID
+//     *    date:数据日期  例如:2018-11-19
+//     *    ip   :需要查询的ip地址
+//     *
+//     * 返回:
+//     *    time:时间戳
+//     *    bandwidth_down:入流量  单位:(M)
+//     *    upstream_bandwidth_up:出流量  单位:(M)
+//     */
+//    public function getStatistics(Request $request)
+//    {
+//
+//        $res       = $request->all();  //获取所有传参
+//
+//        $startDate = Carbon::parse($res['date'])->timestamp;  //开始时间戳
+//        $endDate   = Carbon::parse($res['date'])->addDay(1)->timestamp; //结束时间戳
+//
+//
+//        $XADefenseDataModel = new XADefenseDataModel(); //实例化流量数据模型
+//
+//        $data = $XADefenseDataModel->getByIp($res['ip'], $startDate, $endDate); //获取数据
+//
+//
+////        判断有无获取到数据
+//        if (!$data) {
+//            return tz_ajax_echo([], '无流量数据', 0);
+//        }
+//        return tz_ajax_echo($data, '获取流量数据成功', 1);
+//    }
+
 
     /**
      * 统计高防IP数据流量
@@ -103,40 +141,114 @@ class InfoController extends Controller
      *    ip   :需要查询的ip地址
      *
      * 返回:
-     *    time:时间戳
+     *    ctime:时间戳
+     *    in_byte: 入流量  单位:(byte)
+     *    out_byte:出流量  单位:(byte)
      *    bandwidth_down:入流量  单位:(M)
      *    upstream_bandwidth_up:出流量  单位:(M)
      */
     public function getStatistics(Request $request)
     {
 
-        $res       = $request->all();  //获取所有传参
-        $startDate = Carbon::parse($res['date'])->timestamp;  //开始时间戳
-        $endDate   = Carbon::parse($res['date'])->addDay(1)->timestamp; //结束时间戳
+        $res      = $request->all();  //获取所有传参
+        $apiData  = $this->test($res['ip'], $res['date']);
 
+        $flowData = $apiData['data'];
 
-        $XADefenseDataModel = new XADefenseDataModel(); //实例化流量数据模型
+        foreach ($flowData as $key => $value) {
+//
+            $flowData[$key]['bandwidth_down']        = number_format($value['in_byte'] /= pow(128, 1), 3);
+            $flowData[$key]['upstream_bandwidth_up'] = number_format($value['out_byte'] /= pow(128, 1), 3);
+        }
 
-        $data = $XADefenseDataModel->getByIp($res['ip'], $startDate, $endDate); //获取数据
+//        dump($flowData);
+//        dd(1);
 
-        //判断有无获取到数据
-        if (!$data) {
+//        判断有无获取到数据
+        if (!$flowData) {
             return tz_ajax_echo([], '无流量数据', 0);
         }
-        return tz_ajax_echo($data, '获取流量数据成功', 1);
+        return tz_ajax_echo($flowData, '获取流量数据成功', 1);
     }
-
 
     /**
      * 测试模型关联
      *
      *
      */
-    public function test()
+    public function test($ip, $date)
     {
 
+        $gfApi = new ApiController();
+        $test  = $gfApi->getState($ip, $date);
+        $test  = json_decode($test, true);
 
+        return $test;
+//        dump($test['data']);
     }
+
+
+    /**
+     * @param $num
+     */
+    public function getFilesize($num)
+    {
+
+        $p      = 0;
+        $format = 'bytes';
+        if ($num > 0 && $num < 1024) {
+            $p = 0;
+            return number_format($num) . ' ' . $format;
+        }
+        if ($num >= 1024 && $num < pow(1024, 2)) {
+            $p      = 1;
+            $format = 'KB';
+        }
+        if ($num >= pow(1024, 2) && $num < pow(1024, 3)) {
+            $p      = 2;
+            $format = 'MB';
+        }
+        if ($num >= pow(1024, 3) && $num < pow(1024, 4)) {
+            $p      = 3;
+            $format = 'GB';
+        }
+        if ($num >= pow(1024, 4) && $num < pow(1024, 5)) {
+            $p      = 3;
+            $format = 'TB';
+        }
+        $num /= pow(1024, $p);
+        return number_format($num, 3) . ' ' . $format;
+    }
+
+//
+//    public function getFilesize($num)
+//    {
+//
+//        $p      = 0;
+//        $format = 'bytes';
+//        if ($num > 0 && $num < 1024) {
+//            $p = 0;
+//            return number_format($num) . ' ' . $format;
+//        }
+//        if ($num >= 1024 && $num < pow(1024, 2)) {
+//            $p      = 1;
+//            $format = 'KB';
+//        }
+//        if ($num >= pow(1024, 2) && $num < pow(1024, 3)) {
+//            $p      = 2;
+//            $format = 'MB';
+//        }
+//        if ($num >= pow(1024, 3) && $num < pow(1024, 4)) {
+//            $p      = 3;
+//            $format = 'GB';
+//        }
+//        if ($num >= pow(1024, 4) && $num < pow(1024, 5)) {
+//            $p      = 3;
+//            $format = 'TB';
+//        }
+//        $num /= pow(1024, $p);
+//        return number_format($num, 3) . ' ' . $format;
+//    }
 
 }
 

@@ -1913,6 +1913,9 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #consumer_promotion .body .product .config ul li span.value {
   color: #2ad08a;
 }
+#aboutus {
+  font-family: "Microsoft Yahei";
+}
 #aboutus .banner {
   height: 562px;
   background: url(/images/aboutusBanner.png?79ce94258ea929f993eba7ed9daa34f5) no-repeat;
@@ -1972,6 +1975,53 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #aboutus .content-list .tab-content h2 span a.active {
   color: #333333;
+}
+#aboutus .content-list .tab-content #descripts img {
+  margin-right: 20px;
+}
+#aboutus .content-list .tab-content #descripts p.topline {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+#aboutus .content-list .tab-content #descripts p {
+  font-size: 14px;
+  color: #666666;
+  margin: 0;
+  text-indent: 2em;
+  line-height: 30px;
+}
+#aboutus .content-list .tab-content #descripts .slogan {
+  margin-top: 74px;
+}
+#aboutus .content-list .tab-content #rongyu ul {
+  list-style: none;
+  margin: 40px 0;
+  padding: 0;
+}
+#aboutus .content-list .tab-content #rongyu ul li {
+  float: left;
+  color: #666666;
+  font-size: 14px;
+  margin-right: 12px;
+  margin-bottom: 38px;
+}
+#aboutus .content-list .tab-content #rongyu ul li:nth-of-type(3n) {
+  margin-right: 0;
+}
+#aboutus .content-list .tab-content #rongyu ul li span {
+  display: block;
+  text-align: center;
+}
+#aboutus .content-list .tab-content #rongyu ul li .thumbnail {
+  padding: 10px;
+  border: 1px solid #999999;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+#aboutus .content-list .tab-content #rongyu ul li .thumbnail:hover {
+  border: 1px solid #5d78fd;
+  -webkit-box-shadow: 0 0 16px rgba(4, 63, 196, 0.4);
+          box-shadow: 0 0 16px rgba(4, 63, 196, 0.4);
 }
 #aboutus .content-list .nav-tabs {
   background-color: #d9dde7;

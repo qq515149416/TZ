@@ -1980,19 +1980,15 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin-right: 20px;
 }
 #aboutus .content-list .tab-content #descripts p.topline {
-  margin-top: 20px;
+  margin-top: 30px;
   margin-bottom: 20px;
 }
 #aboutus .content-list .tab-content #descripts p {
   font-size: 14px;
   color: #666666;
-  padding: 10px 0;
-  margin: 10px 0;
+  margin: 0;
   text-indent: 2em;
-}
-#aboutus .content-list .tab-content #descripts img + p {
-  padding-bottom: 0;
-  margin-bottom: 0;
+  line-height: 30px;
 }
 #aboutus .content-list .tab-content #descripts .slogan {
   margin-top: 74px;

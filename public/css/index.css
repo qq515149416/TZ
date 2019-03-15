@@ -1913,6 +1913,9 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #consumer_promotion .body .product .config ul li span.value {
   color: #2ad08a;
 }
+#aboutus {
+  font-family: "Microsoft Yahei";
+}
 #aboutus .banner {
   height: 562px;
   background: url(/images/aboutusBanner.png?79ce94258ea929f993eba7ed9daa34f5) no-repeat;
@@ -1972,6 +1975,27 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #aboutus .content-list .tab-content h2 span a.active {
   color: #333333;
+}
+#aboutus .content-list .tab-content #descripts img {
+  margin-right: 20px;
+}
+#aboutus .content-list .tab-content #descripts p.topline {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+#aboutus .content-list .tab-content #descripts p {
+  font-size: 14px;
+  color: #666666;
+  padding: 10px 0;
+  margin: 10px 0;
+  text-indent: 2em;
+}
+#aboutus .content-list .tab-content #descripts img + p {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+#aboutus .content-list .tab-content #descripts .slogan {
+  margin-top: 74px;
 }
 #aboutus .content-list .nav-tabs {
   background-color: #d9dde7;

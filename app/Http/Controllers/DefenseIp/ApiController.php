@@ -76,8 +76,6 @@ class ApiController extends Controller
     {
         $url = $this->host . '/openapi/giphoststate?host=' . $host . '&user=' . $this->username . '&password=' . $this->password . '&date=' . $date;
         $res = $this->executeCurl($url);
-        dump($url);
-        dump($res);
         return $res;
     }
 

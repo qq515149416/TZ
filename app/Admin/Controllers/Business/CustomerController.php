@@ -20,9 +20,10 @@ class CustomerController extends Controller
      * 管理员查看客户信息接口
      * @return json 返回相关的数据信息及状态提示及信息
      */
-    public function adminCustomer() {
+    public function adminCustomer(Request $request) {
+        $id = $request->only('id'); 
         $admin = new CustomerModel();
-        $admin_customer = $admin->adminCustomer();
+        $admin_customer = $admin->adminCustomer($id);
         return tz_ajax_echo($admin_customer['data'],$admin_customer['msg'],$admin_customer['code']);
     }
 

@@ -31,7 +31,7 @@ return [
 
     'lifetime' => env('SESSION_LIFETIME', 2880),
 
-    'expire_on_close' => true,  // 改为true 就是浏览器关闭的时候就失效
+    'expire_on_close' => false,  // 改为true 就是浏览器关闭的时候就失效
 
     /*
     |--------------------------------------------------------------------------

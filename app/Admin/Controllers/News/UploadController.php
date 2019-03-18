@@ -45,9 +45,12 @@ class UploadController extends Controller
 	}
 
 	public function del(UploadRequest $request){
+
+		
 		$par = $request->only(['file_id']);
 		$model = new Upload();
 		$res = $model->del($par['file_id']);
-		dd($res);
+		
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
 }

@@ -109,17 +109,45 @@ class  Upload extends Model
 				'code'	=> 0,
 			];
 		}
+
 		switch ($file->type) {
 			case '1':			//如果是图片
-				$path = str_replace($file->name, '', $file->path);
+				// $path = str_replace($file->name, '', $file->path);
+				$disk = Storage::disk('upload');
 
-				$disk = Storage::disk('public');
-				
-		        		// 取出文件
-		        		$file = $disk->get('/upload/images/'.$file->name);
-		        		dd($file);
-				break;
-			
+        				$exists = $disk->exists('/images/'.$file->name);
+
+		        		if($exists == false){
+		        			return [
+						'data'	=> [],
+						'msg'	=> '无此文件',
+						'code'	=> 0,
+					];
+		        		}
+		        		$del_res = $disk->delete('/images/'.$file->name);
+		        		if($del_res == false){
+		        			return [
+						'data'	=> [],
+						'msg'	=> '删除失败',
+						'code'	=> 0,
+					];
+		        		}
+
+		        		$del_db_res = $file->delete();
+		        		if($del_db_res != true){
+		        			return [
+						'data'	=> [],
+						'msg'	=> '文件已删除,数据库删除失败',
+						'code'	=> 1,
+					];
+		        		}else{
+		        			return [
+						'data'	=> [],
+						'msg'	=> '文件删除成功',
+						'code'	=> 1,
+					];
+		        		}
+				break;	
 			default:
 				return [
 					'data'	=> [],

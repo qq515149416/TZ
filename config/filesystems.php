@@ -59,7 +59,7 @@ return [
             'driver' => 'local',
             'root' => base_path('public/upload'),
             'url' => env('APP_URL').'/upload',
-            'visibility' => 'upload',
+            'visibility' => 'public',
         ],
 
         's3' => [

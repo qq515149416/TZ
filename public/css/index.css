@@ -2302,10 +2302,12 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   top: 320px;
   left: 0;
   right: 0;
+  text-align: center;
 }
 #tz-main-content .common-question .content .list-group {
-  margin: 0 auto;
   text-align: center;
+  width: 1240px;
+  margin: 0 auto !important;
 }
 #tz-main-content .common-question .content .list-group .list-group-item {
   width: 350px;

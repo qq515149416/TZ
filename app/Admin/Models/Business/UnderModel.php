@@ -406,6 +406,15 @@ class UnderModel extends Model
             foreach ($business as $business_key => $business_value) {
                 $business_value->resource_type = $business_type[$business_value->business_type];
                 $business_value->removestatus  = $remove_status[$business_value->remove_status];
+                $resource_detail = json_decode($business_value->resource_detail);
+                $business_value->machineroom_name = $resource_detail->machineroom_name;
+                if($business_value->business_type != 3){
+                    $business_value->cabinets = $resource_detail->cabinets;
+                    $business_value->ip = $resource_detail->ip;
+                } else {
+                    $business_value->cabinets = $resource_detail->cabinet_id;
+                    $business_value->ip = '';
+                }
             }
         }
         $orders = DB::table('tz_orders')->where($where)->where('resource_type', '>', 3)->whereBetween('remove_status', [1, 3])->orderBy('updated_at', 'desc')->select('order_sn', 'business_sn', 'customer_name', 'resource_type', 'business_name', 'machine_sn', 'resource', 'remove_reason', 'remove_status')->get();

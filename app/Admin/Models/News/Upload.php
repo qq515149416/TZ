@@ -72,7 +72,7 @@ class  Upload extends Model
 				$path = base_path().'/public/upload/'.$new_path;
 	
 				$data = [
-					'name'		=> $newName,
+					'name'		=> '/'.$new_path,
 					'path'		=> $path,
 					'type'		=> 1,
 					'describe'	=> '文章上传图片',
@@ -121,7 +121,18 @@ class  Upload extends Model
 				'code'	=> 1,
 			];
 		}
-		
+		for ($i=0; $i < count($images); $i++) { 
+			switch ($images[$i]->type) {
+				case '1':
+					$images[$i]->type = '图片';
+					break;
+				
+				default:
+					$images[$i]->type = '未知类型';
+					break;
+			}
+		}
+
 		return [
 			'data'	=> $images,
 			'msg'	=> '获取成功',
@@ -144,7 +155,7 @@ class  Upload extends Model
 				// $path = str_replace($file->name, '', $file->path);
 				$disk = Storage::disk('upload');
 
-        				$exists = $disk->exists('/images/'.$file->name);
+        				$exists = $disk->exists($file->name);
 
 		        		if($exists == false){
 		        			return [
@@ -153,7 +164,7 @@ class  Upload extends Model
 						'code'	=> 0,
 					];
 		        		}
-		        		$del_res = $disk->delete('/images/'.$file->name);
+		        		$del_res = $disk->delete('/'.$file->name);
 		        		if($del_res == false){
 		        			return [
 						'data'	=> [],

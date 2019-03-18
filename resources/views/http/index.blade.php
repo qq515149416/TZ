@@ -553,7 +553,7 @@
                 <div class="solution-next solution-page">
 
                 </div>
-                <div class="swiper-container">
+                <div class="swiper-container solution-swiper">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide swiper-no-swiping">
                             <div class="row">

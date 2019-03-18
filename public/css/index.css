@@ -1993,16 +1993,40 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #aboutus .content-list .tab-content #descripts .slogan {
   margin-top: 74px;
 }
+#aboutus .content-list .tab-content #rongyu .certificate {
+  position: relative;
+}
+#aboutus .content-list .tab-content #rongyu .swiper-certificate-page span {
+  margin: 0 10px;
+  cursor: pointer;
+  color: #c1c0c0;
+}
+#aboutus .content-list .tab-content #rongyu .swiper-certificate-page span:hover {
+  color: #3b5af0;
+}
+#aboutus .content-list .tab-content #rongyu ul.long li {
+  margin-right: 35px;
+}
+#aboutus .content-list .tab-content #rongyu ul.long li:nth-of-type(3n) {
+  margin-right: 35px;
+}
+#aboutus .content-list .tab-content #rongyu ul.long li:nth-of-type(4n) {
+  margin-right: 0;
+}
+#aboutus .content-list .tab-content #rongyu ul.long li .thumbnail img {
+  width: 205px;
+}
 #aboutus .content-list .tab-content #rongyu ul {
   list-style: none;
   margin: 40px 0;
+  margin-bottom: 0;
   padding: 0;
 }
 #aboutus .content-list .tab-content #rongyu ul li {
   float: left;
   color: #666666;
   font-size: 14px;
-  margin-right: 12px;
+  margin-right: 25px;
   margin-bottom: 38px;
 }
 #aboutus .content-list .tab-content #rongyu ul li:nth-of-type(3n) {
@@ -2017,6 +2041,11 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   border: 1px solid #999999;
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+}
+#aboutus .content-list .tab-content #rongyu ul li .thumbnail img {
+  width: 300px;
 }
 #aboutus .content-list .tab-content #rongyu ul li .thumbnail:hover {
   border: 1px solid #5d78fd;

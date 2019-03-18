@@ -54,45 +54,203 @@
                             <a href="#" class="active">荣誉资质</a>
                         </span>
                     </h2>
-                    <div class="certificate square clearfix">
-                        <ul>
-                            <li>
-                                <a href="javascript:;" class="thumbnail">
-                                    <img src="{{ asset("/images/cert/01.png") }}" alt="" />
-                                </a>
-                                <span>东莞市电子商务联合会</span>
-                            </li>
-                            <li>
-                                <a href="javascript:;" class="thumbnail">
-                                    <img src="{{ asset("/images/cert/01.png") }}" alt="" />
-                                </a>
-                                <span>东莞市电子商务联合会</span>
-                            </li>
-                            <li>
-                                <a href="javascript:;" class="thumbnail">
-                                    <img src="{{ asset("/images/cert/01.png") }}" alt="" />
-                                </a>
-                                <span>东莞市电子商务联合会</span>
-                            </li>
-                            <li>
-                                <a href="javascript:;" class="thumbnail">
-                                    <img src="{{ asset("/images/cert/01.png") }}" alt="" />
-                                </a>
-                                <span>东莞市电子商务联合会</span>
-                            </li>
-                            <li>
-                                <a href="javascript:;" class="thumbnail">
-                                    <img src="{{ asset("/images/cert/01.png") }}" alt="" />
-                                </a>
-                                <span>东莞市电子商务联合会</span>
-                            </li>
-                            <li>
-                                <a href="javascript:;" class="thumbnail">
-                                    <img src="{{ asset("/images/cert/01.png") }}" alt="" />
-                                </a>
-                                <span>东莞市电子商务联合会</span>
-                            </li>
-                        </ul>
+                    <div class="certificate square">
+                        <div class="swiper-container certificate-swiper">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide swiper-no-swiping">
+                                    <ul class="clearfix">
+                                        <li>
+                                            <a href="javascript:;" class="thumbnail">
+                                                <img src="{{ asset("/images/cert/01.png") }}" alt="" />
+                                            </a>
+                                            <span>东莞市电子商务联合会</span>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;" class="thumbnail">
+                                                <img src="{{ asset("/images/cert/01.png") }}" alt="" />
+                                            </a>
+                                            <span>东莞市电子商务联合会</span>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;" class="thumbnail">
+                                                <img src="{{ asset("/images/cert/01.png") }}" alt="" />
+                                            </a>
+                                            <span>东莞市电子商务联合会</span>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;" class="thumbnail">
+                                                <img src="{{ asset("/images/cert/01.png") }}" alt="" />
+                                            </a>
+                                            <span>东莞市电子商务联合会</span>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;" class="thumbnail">
+                                                <img src="{{ asset("/images/cert/01.png") }}" alt="" />
+                                            </a>
+                                            <span>东莞市电子商务联合会</span>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;" class="thumbnail">
+                                                <img src="{{ asset("/images/cert/01.png") }}" alt="" />
+                                            </a>
+                                            <span>东莞市电子商务联合会</span>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;" class="thumbnail">
+                                                <img src="{{ asset("/images/cert/01.png") }}" alt="" />
+                                            </a>
+                                            <span>东莞市电子商务联合会</span>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;" class="thumbnail">
+                                                <img src="{{ asset("/images/cert/01.png") }}" alt="" />
+                                            </a>
+                                            <span>东莞市电子商务联合会</span>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;" class="thumbnail">
+                                                <img src="{{ asset("/images/cert/01.png") }}" alt="" />
+                                            </a>
+                                            <span>东莞市电子商务联合会</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="swiper-slide swiper-no-swiping">
+                                    <ul class="clearfix">
+                                        <li>
+                                            <a href="javascript:;" class="thumbnail">
+                                                <img src="{{ asset("/images/cert/01.png") }}" alt="" />
+                                            </a>
+                                            <span>东莞市电子商务联合会123</span>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;" class="thumbnail">
+                                                <img src="{{ asset("/images/cert/01.png") }}" alt="" />
+                                            </a>
+                                            <span>东莞市电子商务联合会</span>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;" class="thumbnail">
+                                                <img src="{{ asset("/images/cert/01.png") }}" alt="" />
+                                            </a>
+                                            <span>东莞市电子商务联合会</span>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;" class="thumbnail">
+                                                <img src="{{ asset("/images/cert/01.png") }}" alt="" />
+                                            </a>
+                                            <span>东莞市电子商务联合会</span>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;" class="thumbnail">
+                                                <img src="{{ asset("/images/cert/01.png") }}" alt="" />
+                                            </a>
+                                            <span>东莞市电子商务联合会</span>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;" class="thumbnail">
+                                                <img src="{{ asset("/images/cert/01.png") }}" alt="" />
+                                            </a>
+                                            <span>东莞市电子商务联合会</span>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;" class="thumbnail">
+                                                <img src="{{ asset("/images/cert/01.png") }}" alt="" />
+                                            </a>
+                                            <span>东莞市电子商务联合会</span>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;" class="thumbnail">
+                                                <img src="{{ asset("/images/cert/01.png") }}" alt="" />
+                                            </a>
+                                            <span>东莞市电子商务联合会</span>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;" class="thumbnail">
+                                                <img src="{{ asset("/images/cert/01.png") }}" alt="" />
+                                            </a>
+                                            <span>东莞市电子商务联合会</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="normal swiper-certificate-page text-center">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                        </div>
+
+                        <div class="swiper-container long-certificate-swiper">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide swiper-no-swiping">
+                                    <ul class="clearfix long">
+                                        <li>
+                                            <a href="javascript:;" class="thumbnail">
+                                                <img class="long" src="{{ asset("/images/cert/long/01.jpg") }}" alt="" />
+                                            </a>
+                                            <span>腾正防火墙牵引系统版权</span>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;" class="thumbnail">
+                                                <img class="long" src="{{ asset("/images/cert/long/01.jpg") }}" alt="" />
+                                            </a>
+                                            <span>腾正防火墙牵引系统版权</span>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;" class="thumbnail">
+                                                <img class="long" src="{{ asset("/images/cert/long/01.jpg") }}" alt="" />
+                                            </a>
+                                            <span>腾正防火墙牵引系统版权</span>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;" class="thumbnail">
+                                                <img src="{{ asset("/images/cert/long/01.jpg") }}" alt="" />
+                                            </a>
+                                            <span>腾正防火墙牵引系统版权</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="swiper-slide swiper-no-swiping">
+                                    <ul class="clearfix long">
+                                        <li>
+                                            <a href="javascript:;" class="thumbnail">
+                                                <img class="long" src="{{ asset("/images/cert/long/01.jpg") }}" alt="" />
+                                            </a>
+                                            <span>腾正防火墙牵引系统版权</span>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;" class="thumbnail">
+                                                <img class="long" src="{{ asset("/images/cert/long/01.jpg") }}" alt="" />
+                                            </a>
+                                            <span>腾正防火墙牵引系统版权</span>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;" class="thumbnail">
+                                                <img class="long" src="{{ asset("/images/cert/long/01.jpg") }}" alt="" />
+                                            </a>
+                                            <span>腾正防火墙牵引系统版权</span>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;" class="thumbnail">
+                                                <img src="{{ asset("/images/cert/long/01.jpg") }}" alt="" />
+                                            </a>
+                                            <span>腾正防火墙牵引系统版权</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="long swiper-certificate-page text-center">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                        </div>
+
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="wenhua">...</div>

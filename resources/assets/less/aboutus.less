@@ -80,15 +80,45 @@
                 }
             }
             #rongyu {
+                .certificate {
+                    position: relative;
+                }
+                .swiper-certificate-page {
+                    span {
+                        margin: 0 10px;
+                        cursor: pointer;
+                        color: #c1c0c0;
+                        &:hover {
+                            color: #3b5af0;
+                        }
+                    }
+                }
+                ul.long {
+                    li {
+                        margin-right: 35px;
+                        &:nth-of-type(3n) {
+                            margin-right: 35px;
+                        }
+                        &:nth-of-type(4n) {
+                            margin-right: 0;
+                        }
+                        .thumbnail {
+                            img {
+                                width: 205px;
+                            }
+                        }
+                    }
+                }
                 ul {
                     list-style: none;
                     margin: 40px 0;
+                    margin-bottom: 0;
                     padding: 0;
                     li {
                         float: left;
                         color: #666666;
                         font-size: 14px;
-                        margin-right: 12px;
+                        margin-right: 25px;
                         margin-bottom: 38px;
                         &:nth-of-type(3n) {
                             margin-right: 0;
@@ -101,6 +131,10 @@
                             padding: 10px;
                             border: 1px solid #999999;
                             transition: all .5s;
+                            box-sizing: content-box;
+                            img {
+                                width: 300px;
+                            }
                             &:hover {
                                 border: 1px solid #5d78fd;
                                 box-shadow: 0 0 16px rgba(4, 63, 196, .4);

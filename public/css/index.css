@@ -2345,6 +2345,8 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background-color: transparent;
   border: 1px solid #fff;
   border-radius: 17px;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
 }
 #tz-main-content .consult .consult-btn:hover {
   background-color: #fff;

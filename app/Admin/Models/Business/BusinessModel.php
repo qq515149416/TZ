@@ -121,6 +121,15 @@ class BusinessModel extends Model
             foreach ($result as $check => $check_value) {
                 $result[$check]['status'] = $business_status[$check_value['business_status']];
                 $result[$check]['type']   = $business_type[$check_value['business_type']];
+                $resource_detail = json_decode($check_value['resource_detail']);
+                $result[$check]['machineroom_name'] = $resource_detail->machineroom_name;
+                if($check_value['business_type'] != 3){
+                    $result[$check]['cabinets'] = $resource_detail->cabinets;
+                    $result[$check]['ip'] = $resource_detail->ip;
+                } else {    
+                    $result[$check]['cabinets'] = $resource_detail->cabinet_id;
+                    $result[$check]['ip'] = '';
+                }
             }
             $return['data'] = $result;
             $return['code'] = 1;

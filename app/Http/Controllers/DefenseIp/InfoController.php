@@ -157,8 +157,8 @@ class InfoController extends Controller
 
         foreach ($flowData as $key => $value) {
 //
-            $flowData[$key]['bandwidth_down']        = number_format($value['in_byte'] /= pow(1024, 1), 3);
-            $flowData[$key]['upstream_bandwidth_up'] = number_format($value['out_byte'] /= pow(1024, 1), 3);
+            $flowData[$key]['bandwidth_down']        = number_format(($value['in_byte'] /= pow(128, 1))*100, 3);
+            $flowData[$key]['upstream_bandwidth_up'] = number_format(($value['out_byte'] /= pow(128, 1))*100, 3);
         }
 
 //        dump($flowData);

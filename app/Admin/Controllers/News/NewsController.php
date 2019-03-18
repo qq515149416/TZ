@@ -123,9 +123,13 @@ class NewsController extends Controller
 	public function putImages(NewsRequest $request){
 		$par = $request->only(['images']);
 
+		if( !is_array($par['images']) ){
+			return json_encode(['errno' => 1]);
+		}
+
 		$model = new News();
 		$res = $model->putImages($par['images']);
 	
-		
+		return json_encode(['errno' => 0 , 'data' => $res['data']]);
 	}
 }

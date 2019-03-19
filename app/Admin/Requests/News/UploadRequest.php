@@ -44,6 +44,12 @@ class UploadRequest extends FormRequest
 					
 				];
 				break;
+
+			case 'del':
+				$return = [
+					'file_id'	=> 'required',
+				];
+				break;
 			
 			default:
 				
@@ -51,25 +57,15 @@ class UploadRequest extends FormRequest
 		}
 
 		return $return;
-		return [
-
-			'title'		=> 'required|max:50',
-			'content'	=> 'required|min:30',
-			'digest'		=> 'required',
-			'list_order'	=> 'numeric',
-		];
+		
 	}
 
 	public function messages()
 	{
 		
 		return  [
-			'title.required' 		=> '标题必须填写',
-			'title.max' 		=> '标题长度不得超过50字符',
-			'content.required' 	=> '内容必须填写',
-			'content.min' 		=> '内容长度必须大于30字符',
-			'digest.required' 	=> '摘要必须填写',
-			'list_order.numeric'	=> '排序必须为数字',
+			'file_id.required' 	=> '文件id必须填写',
+			
 		];
 	}
 

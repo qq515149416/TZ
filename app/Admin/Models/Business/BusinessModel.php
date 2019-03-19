@@ -336,13 +336,20 @@ class BusinessModel extends Model
     public function showBusiness($show)
     {
         if ($show) {
-            $result = $this->where($show)->where('remove_status','<',4)->orderBy('created_at','desc')->get(['id', 'client_id', 'client_name', 'sales_id', 'sales_name', 'order_number', 'business_number', 'business_type', 'machine_number', 'resource_detail', 'business_status', 'money', 'length', 'start_time', 'endding_time', 'business_note']);
+            $result = $this->where($show)->whereBetween('business_status',[0,5])->where('remove_status','<',4)->orderBy('created_at','desc')->get(['id', 'client_id', 'client_name', 'sales_id', 'sales_name', 'order_number', 'business_number', 'business_type', 'machine_number', 'resource_detail', 'business_status', 'money', 'length', 'start_time', 'endding_time', 'business_note']);
             if (!$result->isEmpty()) {
                 $business_status = [-1 => '取消', -2 => '审核不通过', 0 => '审核中', 1 => '未付款使用', 2 => '付款使用中', 3 => '未付用', 4 => '锁定中', 5 => '到期', 6 => '退款'];
                 $business_type   = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜'];
                 foreach ($result as $check => $check_value) {
                     $result[$check]['status'] = $business_status[$check_value['business_status']];
                     $result[$check]['type']   = $business_type[$check_value['business_type']];
+                    $resource_detail = json_decode($check_value['resource_detail']);
+                    // $result[$check]['machineroom_name'] = $resource_detail->machineroom_name;
+                    if($check_value['business_type'] != 3){
+                        $result[$check]['cabinets'] = $resource_detail->cabinets;
+                    } else {    
+                        $result[$check]['cabinets'] = $resource_detail->cabinet_id;
+                    }
                 }
                 $return['data'] = $result;
                 $return['code'] = 1;

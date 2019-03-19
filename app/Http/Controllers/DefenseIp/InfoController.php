@@ -113,12 +113,12 @@ class InfoController extends Controller
         $res       = $request->all();  //获取所有传参
 
         $endDate = Carbon::parse($res['date'])->timestamp;  //结束时间戳
-        $startDate = Carbon::parse($res['date'])->addDay(1)->timestamp; //开始时间戳
+        $startDate = Carbon::parse($res['date'])->subDay(1)->timestamp; //开始时间戳
 
 
         $XADefenseDataModel = new XADefenseDataModel(); //实例化流量数据模型
 
-        $data = $XADefenseDataModel->getByIp($res['ip'], $endDate, $startDate); //获取数据
+        $data = $XADefenseDataModel->getByIp($res['ip'], $startDate, $endDate); //获取数据
 
 
 //        判断有无获取到数据

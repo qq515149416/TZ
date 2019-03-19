@@ -253,7 +253,49 @@
 
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="wenhua">...</div>
+                <div role="tabpanel" class="tab-pane" id="wenhua">
+                    <h2>
+                        企业文化
+                        <span class="pull-right">
+                            <a href="#">首页</a> >
+                            <a href="#">关于我们</a> >
+                            <a href="#" class="active">企业文化</a>
+                        </span>
+                    </h2>
+                    <div class="culture-list">
+                        <div class="culture-item">
+                            <div class="title">
+                                <h4>服务宗旨</h4>
+                                <span>SERVICE TENET</span>
+                            </div>
+                            <div class="body">
+                                <p>客户至上，务实创新</p>
+                            </div>
+                        </div>
+                        <div class="culture-item">
+                            <div class="title">
+                                <h4>核心价值观</h4>
+                                <span>CORE VALUES</span>
+                            </div>
+                            <div class="body">
+                                <ul>
+                                    <li>
+                                        <span>分享：以开放的态度，分享资源，分享技术</span>
+                                    </li>
+                                    <li>
+                                        <span>共赢：在成功的道路上为客户护航，提供支撑，实现双赢目标</span>
+                                    </li>
+                                    <li>
+                                        <span>创新：以创新为发展动力，从技术创新和服务创新为导向，为客户提供更安全的保护</span>
+                                    </li>
+                                    <li>
+                                        <span>诚信：始终坚持用诚信赢得客户</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div role="tabpanel" class="tab-pane" id="fazhang">...</div>
                 <div role="tabpanel" class="tab-pane" id="lianxi">...</div>
                 <div role="tabpanel" class="tab-pane" id="pay">...</div>

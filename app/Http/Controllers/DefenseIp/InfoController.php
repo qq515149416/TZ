@@ -90,7 +90,45 @@ class InfoController extends Controller
         }
     }
 
-//
+
+    /**
+     * 统计高防IP数据流量
+     * 用于绘制流量图表
+     *
+     * 接口:/home/defenseIp/getStatistics
+     *
+     * 参数:
+     *    business_id:业务ID
+     *    date:数据日期  例如:2018-11-19 12:00:00
+     *    ip   :需要查询的ip地址
+     *
+     * 返回:
+     *    time:时间戳
+     *    bandwidth_down:入流量  单位:(M)
+     *    upstream_bandwidth_up:出流量  单位:(M)
+     */
+    public function getStatistics(Request $request)
+    {
+
+        $res       = $request->all();  //获取所有传参
+
+        $endDate = Carbon::parse($res['date'])->timestamp;  //结束时间戳
+        $startDate = Carbon::parse($res['date'])->addDay(1)->timestamp; //开始时间戳
+
+
+        $XADefenseDataModel = new XADefenseDataModel(); //实例化流量数据模型
+
+        $data = $XADefenseDataModel->getByIp($res['ip'], $endDate, $startDate); //获取数据
+
+
+//        判断有无获取到数据
+        if (!$data) {
+            return tz_ajax_echo([], '无流量数据', 0);
+        }
+        return tz_ajax_echo($data, '获取流量数据成功', 1);
+    }
+
+
 //    /**
 //     * 统计高防IP数据流量
 //     * 用于绘制流量图表
@@ -103,73 +141,35 @@ class InfoController extends Controller
 //     *    ip   :需要查询的ip地址
 //     *
 //     * 返回:
-//     *    time:时间戳
+//     *    ctime:时间戳
+//     *    in_byte: 入流量  单位:(byte)
+//     *    out_byte:出流量  单位:(byte)
 //     *    bandwidth_down:入流量  单位:(M)
 //     *    upstream_bandwidth_up:出流量  单位:(M)
 //     */
 //    public function getStatistics(Request $request)
 //    {
 //
-//        $res       = $request->all();  //获取所有传参
+//        $res      = $request->all();  //获取所有传参
+//        $apiData  = $this->test($res['ip'], $res['date']);
 //
-//        $startDate = Carbon::parse($res['date'])->timestamp;  //开始时间戳
-//        $endDate   = Carbon::parse($res['date'])->addDay(1)->timestamp; //结束时间戳
+//        $flowData = $apiData['data'];
 //
+//        foreach ($flowData as $key => $value) {
+////
+//            $flowData[$key]['bandwidth_down']        = number_format(($value['in_byte'] /= pow(128, 1)), 3);
+//            $flowData[$key]['upstream_bandwidth_up'] = number_format(($value['out_byte'] /= pow(128, 1)), 3);
+//        }
 //
-//        $XADefenseDataModel = new XADefenseDataModel(); //实例化流量数据模型
-//
-//        $data = $XADefenseDataModel->getByIp($res['ip'], $startDate, $endDate); //获取数据
-//
+////        dump($flowData);
+////        dd(1);
 //
 ////        判断有无获取到数据
-//        if (!$data) {
+//        if (!$flowData) {
 //            return tz_ajax_echo([], '无流量数据', 0);
 //        }
-//        return tz_ajax_echo($data, '获取流量数据成功', 1);
+//        return tz_ajax_echo($flowData, '获取流量数据成功', 1);
 //    }
-
-
-    /**
-     * 统计高防IP数据流量
-     * 用于绘制流量图表
-     *
-     * 接口:/home/defenseIp/getStatistics
-     *
-     * 参数:
-     *    business_id:业务ID
-     *    date:数据日期  例如:2018-11-19
-     *    ip   :需要查询的ip地址
-     *
-     * 返回:
-     *    ctime:时间戳
-     *    in_byte: 入流量  单位:(byte)
-     *    out_byte:出流量  单位:(byte)
-     *    bandwidth_down:入流量  单位:(M)
-     *    upstream_bandwidth_up:出流量  单位:(M)
-     */
-    public function getStatistics(Request $request)
-    {
-
-        $res      = $request->all();  //获取所有传参
-        $apiData  = $this->test($res['ip'], $res['date']);
-
-        $flowData = $apiData['data'];
-
-        foreach ($flowData as $key => $value) {
-//
-            $flowData[$key]['bandwidth_down']        = number_format(($value['in_byte'] /= pow(128, 1))*100, 3);
-            $flowData[$key]['upstream_bandwidth_up'] = number_format(($value['out_byte'] /= pow(128, 1))*100, 3);
-        }
-
-//        dump($flowData);
-//        dd(1);
-
-//        判断有无获取到数据
-        if (!$flowData) {
-            return tz_ajax_echo([], '无流量数据', 0);
-        }
-        return tz_ajax_echo($flowData, '获取流量数据成功', 1);
-    }
 
     /**
      * 测试模型关联

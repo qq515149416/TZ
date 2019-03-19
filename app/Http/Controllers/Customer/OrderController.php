@@ -200,8 +200,9 @@ class OrderController extends Controller
 	public function showRenewOrder(Request $request){
 		$renew_order = $request->only(['business_sn']);
 		$biao = mb_substr($renew_order['business_sn'],0,3);
+		$get_redis = new Order();
 		if($biao == 'TRZ'){
-			$redis = get_redis($renew_order['business_sn']);
+			$redis = $get_redis->getRenewRedis($renew_order['business_sn']);
 			if(!empty($redis)){
 				$return['data'] = $redis;
 				$return['code'] = 1;

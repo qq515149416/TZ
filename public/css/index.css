@@ -1994,7 +1994,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin-top: 74px;
 }
 #aboutus .content-list .tab-content #lianxi .culture-list .culture-item .title {
-  margin-top: 40px;
+  margin-top: 30px;
 }
 #aboutus .content-list .tab-content #lianxi .culture-list .culture-item .title h4 {
   display: inline-block;
@@ -2021,6 +2021,40 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #aboutus .content-list .tab-content #lianxi .culture-list .culture-item .body {
   margin-top: 40px;
+}
+#aboutus .content-list .tab-content #lianxi .culture-list .culture-item .body .table tr {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+#aboutus .content-list .tab-content #lianxi .culture-list .culture-item .body .table tr td {
+  border: none;
+  border-bottom: 1px solid #dcdcdc;
+  padding-left: 0;
+  padding-right: 0;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+#aboutus .content-list .tab-content #lianxi .culture-list .culture-item .body ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+#aboutus .content-list .tab-content #lianxi .culture-list .culture-item .body ul li {
+  width: 254px;
+  padding-bottom: 10px;
+}
+#aboutus .content-list .tab-content #lianxi .culture-list .culture-item .body ul li span {
+  display: block;
+}
+#aboutus .content-list .tab-content #lianxi .culture-list .culture-item .body ul li span:last-of-type {
+  text-indent: 3em;
 }
 #aboutus .content-list .tab-content #fazhang img {
   margin-top: 60px;

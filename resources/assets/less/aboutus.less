@@ -83,7 +83,7 @@
                 .culture-list {
                     .culture-item {
                         .title {
-                            margin-top: 40px;
+                            margin-top: 40px - 10px;
                             h4 {
                                 display: inline-block;
                                 font-size: 20px;
@@ -111,7 +111,35 @@
                             // margin: 40px 0;
                             margin-top: 40px;
                             // margin-bottom: 40px;
-
+                            .table {
+                                tr {
+                                    display: flex;
+                                    td {
+                                        border: none;
+                                        border-bottom: 1px solid #dcdcdc;
+                                        padding-left: 0;
+                                        padding-right: 0;
+                                        flex: 1;
+                                    }
+                                }
+                            }
+                            ul {
+                                list-style: none;
+                                padding: 0;
+                                margin: 0;
+                                display: flex;
+                                flex-wrap: wrap;
+                                li {
+                                    width: 1016px / 4px;
+                                    padding-bottom: 10px;
+                                    span {
+                                        display: block;
+                                        &:last-of-type {
+                                            text-indent: 3em;
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }

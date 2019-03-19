@@ -207,6 +207,7 @@ class CustomerModel extends Model
                         ->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.salesman_id'))
                         ->where('b.trade_status',1)
                         ->where('tz_users.salesman_id',$clerk_id)
+                        ->whereNull('deleted_at')
                         ->orderBy('b.timestamp','desc')
                         ->get();    
                  break;
@@ -217,6 +218,7 @@ class CustomerModel extends Model
                         ->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.salesman_id'))
                         ->where('b.trade_status',1)
                         ->where('tz_users.id',$key)
+                        ->whereNull('deleted_at')
                         ->orderBy('b.timestamp','desc')
                         ->get();    
                  break;
@@ -226,6 +228,7 @@ class CustomerModel extends Model
                         ->leftjoin('tz_recharge_flow as b','tz_users.id','=','b.user_id')
                         ->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.salesman_id'))
                         ->where('b.trade_status',1)
+                        ->whereNull('deleted_at')
                         ->orderBy('b.timestamp','desc')
                         ->get();    
                  break;
@@ -236,6 +239,7 @@ class CustomerModel extends Model
                         ->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.salesman_id'))
                         ->where('b.trade_status',1)
                         ->where('b.month',$key)
+                        ->whereNull('deleted_at')
                         ->orderBy('b.timestamp','desc')
                         ->get();    
                  break;
@@ -277,7 +281,7 @@ class CustomerModel extends Model
                     ->join('admin_users','oa_staff.admin_users_id','=','admin_users.id')
                     ->join('tz_jobs','oa_staff.job','=','tz_jobs.id')
                     ->where(['oa_staff.department'=>$depart['depart_id']])
-                    ->whereIn('tz_jobs.slug',[2,3])
+                    // ->whereIn('tz_jobs.slug',[2,3])
                     ->select('admin_users.id','admin_users.name')
                     ->get();
         if($clerk->isEmpty()){

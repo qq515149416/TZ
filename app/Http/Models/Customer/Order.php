@@ -19,6 +19,7 @@ use App\Http\Models\Customer\Business;
 use Illuminate\Support\Carbon;//使用该包做到期时间的计算
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redis;
 
 class Order extends Model
 {
@@ -802,7 +803,7 @@ class Order extends Model
 			if(empty($primary_key)){
 				$primary_key = $this->redisPrimaryKey($business->id,$business->business_type);
 			}
-			set_redis($primary_key,$renew_order);
+			$this->setRenewRedis($primary_key,$renew_order);
 		}
 		if(isset($renew['orders'])){
 			foreach($renew['orders'] as $key=>$value){
@@ -839,7 +840,7 @@ class Order extends Model
                     if(empty($primary_key)){
 						$primary_key = $this->redisPrimaryKey($order_result->id,$order_result->resource_type);
 					}
-					set_redis($primary_key,$renew_order);   
+					$this->setRenewRedis($primary_key,$renew_order);   
                 }	
 			}    
 		}
@@ -918,7 +919,7 @@ class Order extends Model
         $order_sn = mt_rand(4, 6) . date("Ymd", time()) . substr($time, 6, 4) . $resource_id .mt_rand(1, 3).'1';
         // $order_sn = mt_rand(4,6).date('YmdHis').$time.mt_rand(10,99).'1'.$resource_type;
         $order = DB::table('tz_orders')->where('order_sn',$order_sn)->select('order_sn','machine_sn')->first();
-        $redis = app('redis.connection');
+        $redis = Redis::connection('orders');
         if(!empty($order)){
             $this->ordersn($resource_id,$resource_type);
         }
@@ -963,7 +964,7 @@ class Order extends Model
 			$type = mt_rand(11,20);
 		}
 		$order_sn = 'TRZ'.$this->ordersn($id,$type);
-		$redis = app('redis.connection');
+		$redis = Redis::connection('orders');
 		if($redis->exists($order_sn) != 0  || $redis->exists('M'.$order_sn) != 0 || $redis->exists('C'.$order_sn) != 0){
 			$this->redisPrimaryKey($id,$type);
 		}
@@ -1183,14 +1184,14 @@ class Order extends Model
 			$return['msg']  = '(#101)无法获取需要支付的续费信息';
 			return $return;
 		}
-		$redis_length = redis_length('P'.$pay_key['pay_key']);
+		$redis_length = $this->renewRedisLength('P'.$pay_key['pay_key']);
 		if(!$redis_length > 0){
 			$return['data'] = $redis_length;
 			$return['code'] = 0;
 			$return['msg']  = '(#102)无对应续费信息，请确认无误后操作';
 			return $return;
 		}
-		$redis = app('redis.connection');
+		$redis = Redis::connection('orders');
 		$total_money = $redis->get('M'.$pay_key['pay_key']);
 		// $client = $redis->get('C'.$pay_key['pay_key']);
 		$client_money = DB::table('tz_users')->where(['id'=>Auth::user()->id])->value('money');//获取客户的余额
@@ -1204,7 +1205,7 @@ class Order extends Model
 		$serial_number = '';
 		$client_id = '';
 		for($get_pay = 0;$get_pay < $redis_length;$get_pay++){
-			$renew_value = get_redis('P'.$pay_key['pay_key'],'pay');
+			$renew_value = $this->getRenewRedis('P'.$pay_key['pay_key'],'pay');
 			if(empty($renew_value)){
 				DB::rollBack();
 				$return['data'] = '';
@@ -1427,6 +1428,93 @@ class Order extends Model
 			$return['msg'] = '账单流水获取失败！';
 		}
 		return $return;
+	}
+
+	/**
+	 * 续费时调用redis存储
+	 * @param string  $primary_key push的键
+	 * @param array  $param       需要存储的数据的数组，
+	 * @param integer $expire_time        过期时间默认2小时,以秒为计算单位
+	 */
+	public function setRenewRedis($primary_key,$param,$expire_time=7200){
+		$redis = Redis::connection('orders');
+		$has_key = array_keys($param);
+		$key_count = count($has_key);
+		for($time = 0;$time < $key_count; $time++){
+			$key = $has_key[$time];
+			$redis->set($key,$param[$key]);
+			$redis->expire($key,$expire_time);
+			$redis->lpush($primary_key,$key);
+			$redis->expire($primary_key,$expire_time);
+		}
+	}
+
+	/**
+	 *续费时取出redis存储的续费订单
+	 * @param  string  $primary_key push的键
+	 * @return [type]               [description]
+	 */
+	public function getRenewRedis($parimary_key,$type = 'order'){
+		$redis = Redis::connection('orders');
+		if($type == 'order'){
+			$orders = [];
+			$length = $redis->llen($parimary_key);
+		    if(!$length > 0){
+		    	return $orders;
+		    }
+		    $key = 0;
+		    $total = 0;
+		    $client_id = '';
+		    while($key<$length){
+		        $primar_value = $redis -> lindex ($parimary_key ,$key);
+		        $order = $redis->get($primar_value);
+		        if(!empty($order)){
+		        	$order_array = json_decode($order);
+		        	array_push($orders,$order_array);
+			        $pay_key = 'P'.$parimary_key;
+			        $pay_value = 'P'.$primar_value;
+			        $redis->lpush($pay_key,$pay_value);
+			        $redis->del($primar_value);
+			        $pay['order_number'] = $order_array->order_number;
+			        $pay['resource_type'] = $order_array->resource_type;
+			        $pay['duration'] = $order_array->duration;
+			        $pay['end_time'] = $order_array->end_time;
+			        $pay['client_id'] = $order_array->client_id;
+			        $pay['price'] = $order_array->price;
+			        $pay['id'] = $order_array->id;
+			        $pay_data = json_encode($pay);
+			        $redis->set($pay_value,$pay_data);
+			        $total = bcadd($total,bcmul($pay['price'],$pay['duration'],2),2);
+			        if(isset($client_id) && empty($client_id)){
+		            	$client_id = $pay['client_id'];
+		            }
+		   			if($client_id != $pay['client_id']){
+						$orders = [];
+		   			}
+		        } 
+		        $key++;       
+		    }
+		    $redis->set('M'.$parimary_key,$total);
+		    $redis->set('C'.$parimary_key,$client_id);
+		} elseif($type == 'pay'){
+			$primar_value = $redis->rpop($parimary_key);
+		    $order = $redis->get($primar_value);
+		    $orders = (array)json_decode($order);
+		    $redis->del($primar_value);
+		}
+		
+	    return $orders;
+	}
+
+	/**
+	 * 续费时获取队列的长度
+	 * @param  [type] $parimary_key [description]
+	 * @return [type]               [description]
+	 */
+	public function renewRedisLength($parimary_key){
+		$redis = Redis::connection('orders');
+		$length = $redis->llen($parimary_key);
+		return $length;
 	}
 
 }

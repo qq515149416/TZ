@@ -34,6 +34,7 @@ Route::group([
     Route::get('/aboutus', 'Show\AboutUsController@index');
     Route::get('/promotion/consumer', 'Show\ConsumerPromotionController@index');
     Route::get('/zuyong', 'Show\ServerRentController@index');
+    Route::get('/fangan', 'Show\ProgramController@index');
 });
 
 /**

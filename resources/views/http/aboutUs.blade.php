@@ -253,9 +253,155 @@
 
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="wenhua">...</div>
-                <div role="tabpanel" class="tab-pane" id="fazhang">...</div>
-                <div role="tabpanel" class="tab-pane" id="lianxi">...</div>
+                <div role="tabpanel" class="tab-pane" id="wenhua">
+                    <h2>
+                        企业文化
+                        <span class="pull-right">
+                            <a href="#">首页</a> >
+                            <a href="#">关于我们</a> >
+                            <a href="#" class="active">企业文化</a>
+                        </span>
+                    </h2>
+                    <div class="culture-list">
+                        <div class="culture-item">
+                            <div class="title">
+                                <h4>服务宗旨</h4>
+                                <span>SERVICE TENET</span>
+                            </div>
+                            <div class="body">
+                                <p>客户至上，务实创新</p>
+                            </div>
+                        </div>
+                        <div class="culture-item">
+                            <div class="title">
+                                <h4>核心价值观</h4>
+                                <span>CORE VALUES</span>
+                            </div>
+                            <div class="body">
+                                <ul>
+                                    <li>
+                                        <span>分享：以开放的态度，分享资源，分享技术</span>
+                                    </li>
+                                    <li>
+                                        <span>共赢：在成功的道路上为客户护航，提供支撑，实现双赢目标</span>
+                                    </li>
+                                    <li>
+                                        <span>创新：以创新为发展动力，从技术创新和服务创新为导向，为客户提供更安全的保护</span>
+                                    </li>
+                                    <li>
+                                        <span>诚信：始终坚持用诚信赢得客户</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="fazhang">
+                    <h2>
+                        发展历程
+                        <span class="pull-right">
+                            <a href="#">首页</a> >
+                            <a href="#">关于我们</a> >
+                            <a href="#" class="active">发展历程</a>
+                        </span>
+                    </h2>
+                    <img src="{{ asset("/images/history.png") }}" alt="" />
+                </div>
+                <div role="tabpanel" class="tab-pane" id="lianxi">
+                    <h2>
+                        联系我们
+                        <span class="pull-right">
+                            <a href="#">首页</a> >
+                            <a href="#">关于我们</a> >
+                            <a href="#" class="active">联系我们</a>
+                        </span>
+                    </h2>
+                    <div class="culture-list">
+                        <div class="culture-item">
+                            <div class="title">
+                                <h4>联系方式</h4>
+                                <span>CONTACT INFORMATION</span>
+                            </div>
+                            <div class="body">
+                                <ul>
+                                    <li>销售一部直线：0769-22895563</li>
+                                    <li>销售二部直线：0769-22895561</li>
+                                    <li>销售三部直线：0769-22895564</li>
+                                    <li>传真：0769-22385552</li>
+                                    <li>邮编：523000</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="culture-item">
+                            <div class="title">
+                                <h4>投诉建议</h4>
+                                <span>CONPLAINT SUGGESTION</span>
+                            </div>
+                            <div class="body">
+                                <ul>
+                                    <li>电话：18922986777</li>
+                                    <li>QQ：2851506990</li>
+                                    <li>邮箱：pzw@tzidc.com</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="culture-item">
+                            <div class="title">
+                                <h4>售后服务</h4>
+                                <span>AFTER-SALE SERVICE</span>
+                            </div>
+                            <div class="body">
+                                <ul>
+                                    <li>
+                                        <span>电话：15399941777</span>
+                                        <span>0769-22385558</span>
+                                    </li>
+                                    <li>QQ：800093515</li>
+                                    <li>邮箱：crc@tzidc.com</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="culture-item">
+                            <div class="title">
+                                <h4>备案专员</h4>
+                                <span>FILING SPECIALIST</span>
+                            </div>
+                            <div class="body">
+                                <ul>
+                                    <li>
+                                        电话：15387558899
+                                    </li>
+                                    <li>QQ：3134597671</li>
+                                    <li>邮箱：crc@tzidc.com</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="culture-item">
+                            <div class="title">
+                                <h4>售前人员</h4>
+                                <span>PRE SALES PERSONNEL</span>
+                            </div>
+                            <div class="body">
+                                <table class="table">
+                                    <tr>
+                                        <td>
+                                            姓名：尹嘉辉
+                                        </td>
+                                        <td>
+                                            电话：18028237786
+                                        </td>
+                                        <td>
+                                            QQ：2853978334
+                                        </td>
+                                        <td>
+                                            邮箱：2853978334@qq.com
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div role="tabpanel" class="tab-pane" id="pay">...</div>
             </div>
         </article>

@@ -121,9 +121,8 @@ class OrdersController extends Controller
 	 */
 	public function showRenewOrder(Request $request){
 		$renew_order = $request->only(['session_key']);
-		// $session = session($renew_order['session_key']);
-		$redis = get_redis($renew_order['session_key']);
-		// dd($redis);
+		$get_redis = new OrdersModel(); 
+		$redis = $get_redis->getRenewRedis($renew_order['session_key']);
 		if(!empty($redis)){
 			$return['data'] = $redis;
 			$return['code'] = 1;

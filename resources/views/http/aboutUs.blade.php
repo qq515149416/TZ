@@ -296,8 +296,42 @@
                         </div>
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="fazhang">...</div>
-                <div role="tabpanel" class="tab-pane" id="lianxi">...</div>
+                <div role="tabpanel" class="tab-pane" id="fazhang">
+                    <h2>
+                        发展历程
+                        <span class="pull-right">
+                            <a href="#">首页</a> >
+                            <a href="#">关于我们</a> >
+                            <a href="#" class="active">发展历程</a>
+                        </span>
+                    </h2>
+                    <img src="{{ asset("/images/history.png") }}" alt="" />
+                </div>
+                <div role="tabpanel" class="tab-pane" id="lianxi">
+                    <h2>
+                        联系我们
+                        <span class="pull-right">
+                            <a href="#">首页</a> >
+                            <a href="#">关于我们</a> >
+                            <a href="#" class="active">联系我们</a>
+                        </span>
+                    </h2>
+                    <div class="culture-list">
+                        <div class="culture-item">
+                            <div class="title">
+                                <h4>联系方式</h4>
+                                <span>CONTACT INFORMATION</span>
+                            </div>
+                            <div class="body">
+                                <ul>
+                                    <li>销售一部直线：0769-22895563</li>
+                                    <li>销售二部直线：0769-22895561</li>
+                                    <li>销售二部直线：0769-22895561</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div role="tabpanel" class="tab-pane" id="pay">...</div>
             </div>
         </article>

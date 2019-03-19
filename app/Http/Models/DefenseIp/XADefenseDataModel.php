@@ -25,7 +25,7 @@ class XADefenseDataModel extends Model
      * 根据IP查询相关数据
      *
      */
-    public function getByIp($ip,$startDate,$endDate)
+    public function getByIp($ip,$endDate,$startDate)
     {
         //============测试数据=================
 //        $ip = '113.141.160.136';
@@ -33,7 +33,7 @@ class XADefenseDataModel extends Model
         //==============END===============
         $data=$this
             ->where('ipaddress','=',$ip)
-            ->whereBetween('time',[$startDate,$endDate ])
+            ->whereBetween('time',[$endDate,$startDate ])
             ->orderBy('time','desc')
             ->get(['time','bandwidth_down','upstream_bandwidth_up'])
             ->toArray();

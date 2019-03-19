@@ -277,7 +277,7 @@ class CustomerModel extends Model
                     ->join('admin_users','oa_staff.admin_users_id','=','admin_users.id')
                     ->join('tz_jobs','oa_staff.job','=','tz_jobs.id')
                     ->where(['oa_staff.department'=>$depart['depart_id']])
-                    ->whereIn('tz_jobs.slug',[2,3])
+                    // ->whereIn('tz_jobs.slug',[2,3])
                     ->select('admin_users.id','admin_users.name')
                     ->get();
         if($clerk->isEmpty()){

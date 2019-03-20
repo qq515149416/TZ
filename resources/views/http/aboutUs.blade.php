@@ -397,12 +397,224 @@
                                             邮箱：2853978334@qq.com
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td>
+                                            姓名：郭镜雄
+                                        </td>
+                                        <td>
+                                            电话：13592703394
+                                        </td>
+                                        <td>
+                                            QQ：2851506992
+                                        </td>
+                                        <td>
+                                            邮箱：2851506992@qq.com
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            姓名：吴国东
+                                        </td>
+                                        <td>
+                                            电话：16620655846
+                                        </td>
+                                        <td>
+                                            QQ：2851506993
+                                        </td>
+                                        <td>
+                                            邮箱：2851506993@qq.com
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            姓名：叶伟斌
+                                        </td>
+                                        <td>
+                                            电话：15920220772
+                                        </td>
+                                        <td>
+                                            QQ：2851506997
+                                        </td>
+                                        <td>
+                                            邮箱：2851506997@qq.com
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            姓名：黄育东
+                                        </td>
+                                        <td>
+                                            电话：13922933992
+                                        </td>
+                                        <td>
+                                            QQ：2853978331
+                                        </td>
+                                        <td>
+                                            邮箱：2853978331@qq.com
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            姓名：成灶龙
+                                        </td>
+                                        <td>
+                                            电话：13790423606
+                                        </td>
+                                        <td>
+                                            QQ：2885655958
+                                        </td>
+                                        <td>
+                                            邮箱：2885655958@qq.com
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            姓名：禹豪
+                                        </td>
+                                        <td>
+                                            电话：15622908447
+                                        </td>
+                                        <td>
+                                            QQ：2853978330
+                                        </td>
+                                        <td>
+                                            邮箱：2853978330@qq.com
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            姓名：王思恩
+                                        </td>
+                                        <td>
+                                            电话：17820147491
+                                        </td>
+                                        <td>
+                                            QQ：2851506994
+                                        </td>
+                                        <td>
+                                            邮箱：2851506994@qq.com
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            姓名：彭秋霞
+                                        </td>
+                                        <td>
+                                            电话：18218649432
+                                        </td>
+                                        <td>
+                                            QQ：2851506995
+                                        </td>
+                                        <td>
+                                            邮箱：2851506995@qq.com
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            姓名：邓家健
+                                        </td>
+                                        <td>
+                                            电话：13172704478
+                                        </td>
+                                        <td>
+                                            QQ：2853978335
+                                        </td>
+                                        <td>
+                                            邮箱：2853978335@qq.com
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="culture-item">
+                            <div class="title">
+                                <h4>公司地址</h4>
+                                <span>COMPANY ADDRESS</span>
+                            </div>
+                            <div class="body">
+                                <table class="table">
+                                    <tr>
+                                        <td>
+                                            东莞总公司：广东省东莞市松山湖科技十路国际金融IT研发中心2栋B座
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            惠州分公司：广东省惠州市东平南路21号2栋第二层
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            陕西分公司：陕西省西安市高新区瑞吉大厦7层10701-7634
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            湖南分公司：湖南省长沙市高新开发区麓龙路209号单元402
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            上海分公司：上海市金山工业区夏宁路666弄58_59号2064室
+                                        </td>
+                                    </tr>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="pay">...</div>
+                <div role="tabpanel" class="tab-pane" id="pay">
+                    <h2>
+                        支付中心
+                        <span class="pull-right">
+                            <a href="#">首页</a> >
+                            <a href="#">关于我们</a> >
+                            <a href="#" class="active">支付中心</a>
+                        </span>
+                    </h2>
+                    <div class="culture-list">
+                        <div class="culture-item">
+                            <div class="title">
+                                <h4>公司对公帐户</h4>
+                                <span>COMPANY'S PUBLIC ACCOUNT</span>
+                            </div>
+                            <div class="body">
+                                <ul class="clearfix">
+                                    <li>
+                                        <div class="thumb">
+                                            <img src="{{ asset("/images/pay/01.png") }}" alt="" />
+                                        </div>
+                                        <div class="dec">
+                                            <p>开户名称：广东腾正计算机科技有限公司</p>
+                                            <p>银行账号：7699 0507 2010 999</p>
+                                            <p>开户支行：招商银行东莞松山湖支行</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="thumb">
+                                            <img src="{{ asset("/images/pay/01.png") }}" alt="" />
+                                        </div>
+                                        <div class="dec">
+                                            <p>开户名称：广东腾正计算机科技有限公司</p>
+                                            <p>银行账号：7699 0507 2010 999</p>
+                                            <p>开户支行：招商银行东莞松山湖支行</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="thumb">
+                                            <img src="{{ asset("/images/pay/01.png") }}" alt="" />
+                                        </div>
+                                        <div class="dec">
+                                            <p>开户名称：广东腾正计算机科技有限公司</p>
+                                            <p>银行账号：7699 0507 2010 999</p>
+                                            <p>开户支行：招商银行东莞松山湖支行</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </article>
     </div>

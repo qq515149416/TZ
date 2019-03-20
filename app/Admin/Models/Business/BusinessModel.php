@@ -68,7 +68,7 @@ class BusinessModel extends Model
             return $return;
         }
         if($insert['business_type'] == 1 || $insert['business_type'] == 2){
-            $machine = DB::table('idc_machine')->where(['machine_num'=>$insert['machine_number']])->update(['used_status'=>2]);
+            $machine = DB::table('idc_machine')->where(['machine_num'=>$insert['machine_number']])->update(['used_status'=>1]);
             if($machine == 0){
                 DB::rollBack();
                 $return['data'] = '';
@@ -175,7 +175,7 @@ class BusinessModel extends Model
         if($check->business_type != 3 && $where['business_status'] == 1) {
             // 审核通过前验证业务机器是否未使用，如果是使用直接返回提示
             $machine_where['machine_num'] = $check->machine_number;
-            $machine_where['used_status'] = 2;
+            $machine_where['used_status'] = 1;//业务锁定
             $machine_status               = DB::table('idc_machine')->where($machine_where)->select('id', 'machine_num', 'used_status')->first();
             if (empty($machine_status)) {
                 $where['business_status'] = '-2';
@@ -253,7 +253,6 @@ class BusinessModel extends Model
         $order['end_time']      = $check->endding_time;
         $order['payable_money'] = bcmul((string)$order['price'], (string)$order['duration'], 2);//应付金额
         $order['created_at']    = Carbon::now()->toDateTimeString();
-        // $order['month']         = (int)date('Ym', time());
         $order_row              = DB::table('tz_orders')->insert($order);//生成订单
         if ($order_row != true) {
             // 订单生成失败
@@ -267,7 +266,7 @@ class BusinessModel extends Model
             // 如果是租用/托管机器的，在订单生成成功时，将业务编号和到期时间及资源状态进行更新
             $machine['own_business'] = $order['business_sn'];
             $machine['business_end'] = $order['end_time'];
-            $machine['used_status']  = 1;
+            $machine['used_status']  = 2;
             $row                     = DB::table('idc_machine')->where('machine_num', $order['machine_sn'])->update($machine);
             if ($row == 0) {
                 DB::rollBack();
@@ -348,7 +347,6 @@ class BusinessModel extends Model
                     $result[$check]['type']   = $business_type[$check_value['business_type']];
                     $result[$check]['remove'] = $remove_status[$check_value['remove_status']];
                     $resource_detail = json_decode($check_value['resource_detail']);
-                    // $result[$check]['machineroom_name'] = $resource_detail->machineroom_name;
                     if($check_value['business_type'] != 3){
                         $result[$check]['cabinets'] = $resource_detail->cabinets;
                     } else {    
@@ -394,9 +392,6 @@ class BusinessModel extends Model
      * @return [type] [description]
      */
     public function ordersn($resource_id=100,$resource_type=1){
-        // $order_sn = mt_rand(4, 6) . date("Ymd", time()) . substr(time(), 6, 4) . mt_rand(1, 3).'1';
-        // $time = bcadd(time(),$resource_id,0);
-        // $order_sn = mt_rand(4,6).date('YmdHis').$time.mt_rand(10,99).'1'.$resource_type;
         $time = bcadd(time(),$resource_id,0);
         $order_sn = mt_rand(4, 6) . date("Ymd", time()) . substr($time, 6, 4) . $resource_id .mt_rand(1, 3).'1';
         $order = DB::table('tz_orders')->where('order_sn',$order_sn)->select('order_sn','machine_sn')->first();
@@ -551,14 +546,14 @@ class BusinessModel extends Model
             $machine->machineroom_name = $this->machineroom($machine->machineroom);
             $machine->cabinets = $this->cabinets($machine->cabinet);
             $machine_status = [0=>'上架',1=>'下架'];
-            $used_status = [0=>'未使用',1=>'使用中',2=>'锁定',3=>'迁移'];
+            $used_status = [0=>'未使用',1=>'业务锁定',2=>'使用中',3=>'锁定使用',4=>'迁移'];
             $business_type = [1=>'租用',2=>'托管',3=>'预备',4=>'托管预备'];
             $machine->used = $used_status[$machine->used_status];
             $machine->status = $machine_status[$machine->machine_status];
             $machine->business = $business_type[$machine->business_type];
             $machine->id = $machine->machine_num;
             $machine->machineroom_id = $machine->machineroom;
-            $machine_update = DB::table('idc_machine')->where(['id'=>$insert_data['resource_id']])->update(['used_status'=>2]);
+            $machine_update = DB::table('idc_machine')->where(['id'=>$insert_data['resource_id']])->update(['used_status'=>1]);
             if($machine_update == 0){
                 DB::rollBack();
                 $return['data'] = '';

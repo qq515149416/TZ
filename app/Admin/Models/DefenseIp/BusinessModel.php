@@ -203,7 +203,7 @@ class BusinessModel extends Model
 			];		
 		}
 		for ($i=0; $i < count($res); $i++) { 
-			$res[$i] = $this->trans($res[$i]);
+			$res[$i] = $this->transUp($res[$i]);
 		}
 		
 		return [
@@ -213,7 +213,7 @@ class BusinessModel extends Model
 			];
 	}
 
-	private function trans($business){
+	private function transUp($business){
 		switch ($business->status) {
 			case '5':
 				$business->status = '待审核';
@@ -222,6 +222,23 @@ class BusinessModel extends Model
 				$business->status = '无需审核';
 				break;
 		}
+		$user_info = DB::table('tz_users')->where('id',$business->user_id)->first();
+
+		if($user_info == null){
+			$business->user = '客户信息查找失败';
+			$business->nick_name = '客户信息查找失败';
+		}else{
+			if($user_info->name != null){
+				$business->user = $user_info->name;
+			}else{
+				$business->user = $user_info->email;
+			}
+			$business->nickname = $user_info->nickname;
+
+			$admin_id = $user_info->salesman_id;
+			$business->admin_user = DB::table('admin_users')->where('id',$admin_id)->value('name');
+		}	
+
 		return $business;
 	}
 

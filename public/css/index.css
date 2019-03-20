@@ -1993,6 +1993,73 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #aboutus .content-list .tab-content #descripts .slogan {
   margin-top: 74px;
 }
+#aboutus .content-list .tab-content #pay .culture-list .culture-item .title {
+  margin-top: 30px;
+}
+#aboutus .content-list .tab-content #pay .culture-list .culture-item .title h4 {
+  display: inline-block;
+  font-size: 20px;
+  color: #043fc4;
+  margin: 0;
+  position: relative;
+}
+#aboutus .content-list .tab-content #pay .culture-list .culture-item .title h4::after {
+  content: "";
+  position: absolute;
+  width: 2em;
+  height: 3px;
+  background-image: -webkit-gradient(linear, left top, right top, from(#3251ed), to(#6d8fff));
+  background-image: linear-gradient(to right, #3251ed, #6d8fff);
+  top: 38px;
+  left: 0;
+}
+#aboutus .content-list .tab-content #pay .culture-list .culture-item .title span {
+  font-size: 12px;
+  color: #6b6d75;
+  vertical-align: bottom;
+  margin-left: 2px;
+}
+#aboutus .content-list .tab-content #pay .culture-list .culture-item .body {
+  margin-top: 40px;
+}
+#aboutus .content-list .tab-content #pay .culture-list .culture-item .body ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#aboutus .content-list .tab-content #pay .culture-list .culture-item .body ul li {
+  float: left;
+  width: 308px;
+  margin-right: 49px;
+}
+#aboutus .content-list .tab-content #pay .culture-list .culture-item .body ul li:nth-of-type(3n) {
+  margin-right: 0;
+}
+#aboutus .content-list .tab-content #pay .culture-list .culture-item .body ul li .thumb {
+  height: 108px;
+  border-radius: 10px;
+  border: 1px solid #bec3d2;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+#aboutus .content-list .tab-content #pay .culture-list .culture-item .body ul li .thumb img {
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+}
+#aboutus .content-list .tab-content #pay .culture-list .culture-item .body ul li .thumb:hover {
+  border: 1px solid #043fc4;
+  -webkit-box-shadow: 0 0 15px rgba(4, 63, 196, 0.4);
+          box-shadow: 0 0 15px rgba(4, 63, 196, 0.4);
+}
+#aboutus .content-list .tab-content #pay .culture-list .culture-item .body ul li .dec {
+  font-size: 14px;
+  color: #666666;
+  margin-top: 14px;
+}
+#aboutus .content-list .tab-content #pay .culture-list .culture-item .body ul li .dec p {
+  text-indent: 10px;
+}
 #aboutus .content-list .tab-content #lianxi .culture-list .culture-item .title {
   margin-top: 30px;
 }
@@ -2026,6 +2093,9 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+}
+#aboutus .content-list .tab-content #lianxi .culture-list .culture-item .body .table tr:last-of-type td {
+  border-bottom: none;
 }
 #aboutus .content-list .tab-content #lianxi .culture-list .culture-item .body .table tr td {
   border: none;

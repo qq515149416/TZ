@@ -237,7 +237,6 @@ class MachineModel extends Model
 				if($original == 0){
 					//原来的IP所属机器编号字段更新失败，事务回滚
 					DB::rollBack();
-					$return['data'] = '';
 					$return['code'] = 0;
 					$return['msg'] = '(#103)机器信息修改失败！！!';
 					return $return;
@@ -251,16 +250,18 @@ class MachineModel extends Model
 				$new_update =  DB::table('idc_ips')->where('id',$editdata['ip_id'])->update(['mac_num'=>$editdata['machine_num'],'ip_status'=>1]);
 				if($new_update == 0){
 					DB::rollBack();
-					$return['data'] = '';
 					$return['code'] = 0;
 					$return['msg'] = '(#104)机器信息修改失败！！!';
 					return $return;
 				}
 			}
-			$ip = $this->ip($editdata['ip_id']);
-			$detail['ip'] = $ip->ip;
-			$detail['ip_detail'] = $ip->ip_detail;
-			$detail['ip_id'] = 	$editdata['ip_id'];	
+			if($editdata['ip_id'] != 0){
+				$ip = $this->ip($editdata['ip_id']);
+				$detail['ip'] = $ip->ip;
+				$detail['ip_detail'] = $ip->ip_detail;
+				$detail['ip_id'] = 	$editdata['ip_id'];	
+			}
+			
 		} elseif(isset($editdata['ip_id']) &&  $editdata['ip_id'] == $machine->ip_id){
 			$ip = $this->ip($editdata['ip_id']);
 			$detail['ip'] = $ip->ip;
@@ -269,9 +270,20 @@ class MachineModel extends Model
 		}
 		if($machine->used_status == 2 && $machine->used_status != $editdata['used_status']){
 			DB::rollBack();
-			$return['data'] = '';
 			$return['code'] = 0;
 			$return['msg'] = '(#105)机器有业务在使用,无法进行修改';
+			return $return;
+		}
+		if($machine->used_status != 1 && $editdata['used_status'] == 1){
+			DB::rollBack();
+			$return['code'] = 0;
+			$return['msg'] = '(#106)业务锁定状态只能添加业务时锁定,无法手动修改为此状态';
+			return $return;
+		}
+		if($machine->used_status != 2 && $editdata['used_status'] == 2){
+			DB::rollBack();
+			$return['code'] = 0;
+			$return['msg'] = '(#107)使用中状态只能业务审核通过后自动修改为此状态,无法手动修改为此状态';
 			return $return;
 		}
 		if($machine->used_status == 2){//当机器的状态为使用中时，更改业务里面的resource_detail字段
@@ -299,7 +311,6 @@ class MachineModel extends Model
 				$result = DB::table('tz_business')->where(['business_number'=>$machine->own_business])->update(['machine_number'=>$editdata['machine_num'],'resource_detail'=>$resource_detail]);
 				if($result == 0){
 					DB::rollBack();
-					$return['data'] = '';
 					$return['code'] = 0;
 					$return['msg'] = '(#106)机器信息修改失败！！!';
 					return $return;

@@ -137,4 +137,10 @@ class MachineController extends Controller
         return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
     }
 
+    public function tranStatus(){
+        $tran = new MachineModel();
+        $result = $tran->tranStatus();
+        return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
+    }
+
 }

@@ -651,7 +651,7 @@ class BusinessModel extends Model
             return $ip;
         }
         $ips = DB::table('idc_ips')->where(['id'=>$ip_id])->select('ip','ip_company')->first();
-        if(empty($ip)){
+        if(empty($ips)){
             $ip['ip'] = '0.0.0.0';
             $ip['ip_detail'] = '0.0.0.0(未找到)';
             return $ip;

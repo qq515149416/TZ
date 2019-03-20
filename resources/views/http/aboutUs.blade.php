@@ -592,22 +592,22 @@
                                     </li>
                                     <li>
                                         <div class="thumb">
-                                            <img src="{{ asset("/images/pay/01.png") }}" alt="" />
+                                            <img src="{{ asset("/images/pay/02.png") }}" alt="" />
                                         </div>
                                         <div class="dec">
                                             <p>开户名称：广东腾正计算机科技有限公司</p>
-                                            <p>银行账号：7699 0507 2010 999</p>
-                                            <p>开户支行：招商银行东莞松山湖支行</p>
+                                            <p>银行账号：4430 8001 0400 08440</p>
+                                            <p>开户支行：农业银行东莞市松山湖支行</p>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="thumb">
-                                            <img src="{{ asset("/images/pay/01.png") }}" alt="" />
+                                            <img src="{{ asset("/images/pay/03.png") }}" alt="" />
                                         </div>
                                         <div class="dec">
                                             <p>开户名称：广东腾正计算机科技有限公司</p>
-                                            <p>银行账号：7699 0507 2010 999</p>
-                                            <p>开户支行：招商银行东莞松山湖支行</p>
+                                            <p>银行账号：4405 0177 0053 0000 0295</p>
+                                            <p>开户支行：建设银行东莞市松山湖支行</p>
                                         </div>
                                     </li>
                                 </ul>

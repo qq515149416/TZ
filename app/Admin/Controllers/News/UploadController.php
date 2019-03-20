@@ -33,8 +33,12 @@ class UploadController extends Controller
 
 		$model = new Upload();
 		$res = $model->putImages($par['images']);
-	
-		return json_encode(['errno' => 0 , 'data' => $res['data']]);
+		if($res['code'] != 1){
+			return json_encode(['errno' => 1 , 'data' => $res['data'], 'msg' => $res['msg'] ]);
+		}else{
+			return json_encode(['errno' => 0 , 'data' => $res['data'] ]);
+		}
+		
 	}
 
 	public function showImages(){

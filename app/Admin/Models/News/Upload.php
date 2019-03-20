@@ -12,19 +12,20 @@
 namespace App\Admin\Models\News;
 
 use Illuminate\Database\Eloquent\Model;
-// use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Encore\Admin\Facades\Admin;
 use Illuminate\Support\Facades\Storage;
 
+
 class  Upload extends Model
 {
-   // use SoftDeletes;
+   use SoftDeletes;
    
-	protected $table = 'tz_upload';
-
-	
-	protected $fillable = ['name', 'path','type','describe'];
+	protected $table = 'tz_files';
+	public $timestamps = true;
+	protected $dates = ['deleted_at'];
+	protected $fillable = ['name', 'path','type','describe','user_id'];
 	// 测试
 
 	public function putImages($images){
@@ -32,9 +33,10 @@ class  Upload extends Model
 		DB::beginTransaction();
 
 		$path_arr = [];
-		$dir = 'images/'.date("Ymd").'/';
+		$dir = '/images/'.date("Ymd").'/';
 		$disk = Storage::disk('upload');
 		$check_dir = $disk->exists($dir);
+		
 		if($check_dir == false){
 			$res = $disk->makeDirectory($dir);
 			if($res == false){
@@ -55,6 +57,15 @@ class  Upload extends Model
 				$realPath = $v -> getRealPath(); 
 				// 上传文件的后缀.
 				$entension = $v -> getClientOriginalExtension(); 
+				$img_arr = ['jpg','jpeg','png','bmp','gif','svg'];
+				if( !in_array($entension,$img_arr)){
+					return [
+						'data'	=> [],
+						'msg'	=> '文件格式不正确',
+						'code'	=> 0,
+					];
+				}
+
 				// 大家对mimeType应该不陌生了. 我得到的结果是 image/jpeg.(这里要注意一点,以前我们使用 mime_content_type() ,在php5.3 之后,开始使用 fileinfo 来获取文件的mime类型.所以要加入 php_fileinfo的php拓展.windows下是 php_fileinfo.dll,在php.ini文件中将 extension=php_fileinfo.dll前面的分号去掉即可.当然要重启服务器. )
 				$mimeTye = $v -> getMimeType();
 				// (第一种)最后我们使用
@@ -69,16 +80,17 @@ class  Upload extends Model
 				// $path = $images[$i] -> move(app_path().'/../public/upload/images',$newName);
 
 				
-				$path = base_path().'/public/upload/'.$new_path;
-	
+				$path = base_path().'/public/upload'.$new_path;
+
 				$data = [
-					'name'		=> '/'.$new_path,
+					'name'		=> $new_path,
 					'path'		=> $path,
 					'type'		=> 1,
 					'describe'	=> '文章上传图片',
+					'user_id'	=> Admin::user()->id,
 				];
 
-				if(!Db::table('tz_upload')->insert($data)){
+				if(!$this->create($data)){
 					DB::rollBack();
 					return [
 						'data'	=> [],
@@ -122,6 +134,7 @@ class  Upload extends Model
 			];
 		}
 		for ($i=0; $i < count($images); $i++) { 
+			$images[$i]->user_name = DB::table('admin_users')->where('id',$images[$i]->user_id)->value('username');
 			switch ($images[$i]->type) {
 				case '1':
 					$images[$i]->type = '图片';
@@ -164,7 +177,8 @@ class  Upload extends Model
 						'code'	=> 0,
 					];
 		        		}
-		        		$del_res = $disk->delete('/'.$file->name);
+		        		//$del_res = $disk->delete($file->name);
+		        		$del_res = true;
 		        		if($del_res == false){
 		        			return [
 						'data'	=> [],
@@ -174,6 +188,7 @@ class  Upload extends Model
 		        		}
 
 		        		$del_db_res = $file->delete();
+
 		        		if($del_db_res != true){
 		        			return [
 						'data'	=> [],

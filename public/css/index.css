@@ -2030,7 +2030,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #aboutus .content-list .tab-content #pay .culture-list .culture-item .body ul li {
   float: left;
   width: 308px;
-  margin-right: 49px;
+  margin-right: 46px;
 }
 #aboutus .content-list .tab-content #pay .culture-list .culture-item .body ul li:nth-of-type(3n) {
   margin-right: 0;
@@ -2045,7 +2045,6 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #aboutus .content-list .tab-content #pay .culture-list .culture-item .body ul li .thumb img {
   border-radius: 10px;
   width: 100%;
-  height: 100%;
 }
 #aboutus .content-list .tab-content #pay .culture-list .culture-item .body ul li .thumb:hover {
   border: 1px solid #043fc4;

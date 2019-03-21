@@ -127,8 +127,7 @@ class  RechargeStatistics extends Model
 				if(!$business->isEmpty()){
 					for ($j=0; $j < count($business); $j++) { 
 						$room = json_decode($business[$j]->resource_detail);
-						$room_name = DB::table('idc_machineroom')->where('id',$room->machineroom)->value('machine_room_name');
-						$mr[ $flow[$i]['customer_id'] ]['machineroom'][] = $room_name;
+						$mr[ $flow[$i]['customer_id'] ]['machineroom'][] = $room->machineroom_name;
 					}
 					$mr[ $flow[$i]['customer_id'] ]['machineroom'] = array_unique($mr[ $flow[$i]['customer_id'] ]['machineroom']);
 				}else{

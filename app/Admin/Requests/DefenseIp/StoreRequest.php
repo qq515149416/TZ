@@ -49,7 +49,7 @@ class StoreRequest extends FormRequest
 				}
 				$return = [
 					'edit_id'			=> 'required|integer|exists:tz_defenseip_store,id',
-					'ip'			=> 'required|ip|unique:tz_defenseip_store,ip,'.$par['edit_id'],
+					// 'ip'			=> 'required|ip|unique:tz_defenseip_store,ip,'.$par['edit_id'],
 					'site'			=> 'required|integer',
 					'protection_value'	=> 'required|integer',
 				];

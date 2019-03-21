@@ -114,7 +114,7 @@ class BusinessModel extends Model
      */
     public function securityBusiness()
     {
-        $result = $this->orderBy('created_at','desc')->get(['id', 'client_id', 'client_name', 'sales_id', 'sales_name', 'order_number', 'business_number', 'business_type', 'machine_number', 'resource_detail', 'business_status', 'money', 'length', 'business_note','created_at','start_time','endding_time','remove_status']);
+        $result = $this->whereBetween('business_status',[0,5])->where('remove_status','<',4)->orderBy('created_at','desc')->get(['id', 'client_id', 'client_name', 'sales_id', 'sales_name', 'order_number', 'business_number', 'business_type', 'machine_number', 'resource_detail', 'business_status', 'money', 'length', 'business_note','created_at','start_time','endding_time','remove_status']);
         if (!$result->isEmpty()) {
             $business_status = [-1 => '取消', -2 => '审核不通过', 0 => '审核中', 1 => '未付款使用', 2 => '付款使用中', 3 => '未付用', 4 => '锁定中', 5 => '到期', 6 => '退款'];
             $business_type   = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜'];
@@ -189,6 +189,7 @@ class BusinessModel extends Model
         if ($where['business_status'] != 1) {
             DB::beginTransaction();
             // 审核为不通过时直接进行业务的状态更改
+            $business['remove_status'] = 4;
             $row = DB::table('tz_business')->where($check_where)->update($business);
             if($row == 0){
                 DB::rollBack();

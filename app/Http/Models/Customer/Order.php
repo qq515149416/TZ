@@ -72,9 +72,10 @@ class Order extends Model
 		$order = DB::table('tz_orders')
                     ->leftJoin('tz_orders_flow','tz_orders.serial_number','=','tz_orders_flow.serial_number')
                     ->where($where)
+                    ->whereBetween('tz_orders.remove_status',[0,3])
                     ->whereNull('tz_orders.deleted_at')
                     ->orderBy('tz_orders.created_at','desc')
-        			->select('tz_orders.id','tz_orders.order_sn','tz_orders.business_sn','tz_orders.business_id','tz_orders.end_time','tz_orders.resource_type','tz_orders.order_type','tz_orders.machine_sn','tz_orders.resource','tz_orders.price','tz_orders.duration','tz_orders.payable_money','tz_orders.end_time','tz_orders.serial_number','tz_orders.pay_time','tz_orders.order_status','tz_orders.order_note','tz_orders.created_at','tz_orders_flow.before_money','tz_orders_flow.after_money')
+        			->select('tz_orders.id','tz_orders.order_sn','tz_orders.business_sn','tz_orders.business_id','tz_orders.end_time','tz_orders.resource_type','tz_orders.order_type','tz_orders.machine_sn','tz_orders.resource','tz_orders.price','tz_orders.duration','tz_orders.payable_money','tz_orders.end_time','tz_orders.serial_number','tz_orders.pay_time','tz_orders.order_status','tz_orders.order_note','tz_orders.created_at','tz_orders_flow.before_money','tz_orders_flow.after_money','tz_orders.remove_status')
         			->get();
 
 		if(count($order) == 0){
@@ -86,7 +87,7 @@ class Order extends Model
 		$order_type = [ '1' => '新购' , '2' => '续费' ];
 
 		$order_status = [ '0' => '待支付' , '1' => '已支付' , '2' => '已支付' , '3' => '订单完成' , '4' => '到期' , '5' => '取消' , '6' => '申请退款', '8' => '退款完成'];
-
+		$remove_status = [0 => '正常使用', 1 => '下架申请中', 2 => '机房处理中', 3 => '清空下架中', 4 => '下架完成'];
 		$info = $this->getName('*');
 		$admin_name = [];
 		foreach ($info as $k => $v) {
@@ -94,7 +95,7 @@ class Order extends Model
 		}
 
 		foreach ($order as $key => $value) {
-
+			$value->remove_status = $remove_status[$value->remove_status];
 			$value->type 			= $value->resource_type;
 			$value->resource_type 		= $resource_type[$value->resource_type];
             $value->order_type 		= $order_type[$value->order_type];

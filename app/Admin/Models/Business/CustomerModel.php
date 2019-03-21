@@ -81,7 +81,12 @@ class CustomerModel extends Model
             ->where('client_id',$customer->id)
             ->whereIn('business_status',[1,2])
             ->count('id');
-
+        if($count_b == 0){
+            $count_b = DB::table('tz_defenseip_business')
+                                ->where('user_id',$customer->id)
+                                ->whereIn('status',[1,2,4])
+                                ->count('id');
+        }
         $customer->haveBusiness = $count_b;
         return $customer;
     }

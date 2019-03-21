@@ -1,4 +1,4 @@
-#tz-program-content {
+#tz-program {
   margin-left: -15px;
   margin-right: -15px;
 
@@ -43,11 +43,11 @@
       background: -ms-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
       background: -moz-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
       background: -webkit-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
-      -webkit-transition: all .4s ease-in-out;
-      -moz-transition: all .4s ease-in-out;
-      -ms-transition: all .4s ease-in-out;
-      -o-transition: all .4s ease-in-out;
-      transition: all .4s ease-in-out;
+      -webkit-transition: background .4s ease-in-out;
+      -moz-transition: background .4s ease-in-out;
+      -ms-transition: background .4s ease-in-out;
+      -o-transition: background .4s ease-in-out;
+      transition: background .4s ease-in-out;
 
       &:hover {
         color: #043fc4;
@@ -55,14 +55,14 @@
       }
     }
 
-    .bottom {
+    .btn-link {
       position: absolute;
       left: 0;
       right: 0;
       bottom: 0;
       text-align: center;
 
-      .btn-link {
+      &-item {
         display: inline-block;
         width: 130px;
         height: 63px;
@@ -75,11 +75,11 @@
         font-size: 18px;
         letter-spacing: 3.6px;
         text-decoration: none;
-        -webkit-transition: all .4s ease-in-out;
-        -moz-transition: all .4s ease-in-out;
-        -ms-transition: all .4s ease-in-out;
-        -o-transition: all .4s ease-in-out;
-        transition: all .4s ease-in-out;
+        -webkit-transition: background .4s ease-in-out;
+        -moz-transition: background .4s ease-in-out;
+        -ms-transition: background .4s ease-in-out;
+        -o-transition: background .4s ease-in-out;
+        transition: background .4s ease-in-out;
         background: linear-gradient(to right, #b9ccfc 0%, #6d8fff 50%);
         background: -o-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
         background: -ms-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
@@ -89,6 +89,69 @@
         &:hover {
           background: #fff;
           color: #043fc4;
+        }
+      }
+    }
+  }
+
+  .content {
+    text-align: center;
+
+    .problem {
+      height: 682px;
+      padding-top: 80px;
+      background-color: #fff;
+
+      .title {
+        color: #333;
+        font-size: 26px;
+        font-weight: 600;
+        letter-spacing: 1.3px;
+        text-align: center;
+      }
+
+      .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 1240px;
+        flex-direction: row;
+        justify-content: center;
+        margin: 30px auto 0;
+
+        .card {
+          width: 380px;
+          height: 206px;
+          border: 1px solid #dcdcdc;
+          border-radius: 6px;
+          padding: 35px 50px;
+          margin: 10px;
+          text-align: center;
+
+          &-title {
+            text-align: left;
+            margin-bottom: 12px;
+            .icon {
+              display: inline-block;
+              margin-top: -5px;
+            }
+            .text {
+              color: #333;
+              font-size: 16px;
+              font-weight: 600;
+              letter-spacing: 0.8px;
+              margin-left: 18px;
+            }
+          }
+          &-body {
+            ul {
+              padding-left: 48px;
+              li {
+                text-align: left;
+                padding-left: 5px;
+                margin-bottom: 8px;
+              }
+            }
+          }
         }
       }
     }

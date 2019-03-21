@@ -2601,11 +2601,11 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background-color: #fff;
   color: #043fc4;
 }
-#tz-program-content {
+#tz-program {
   margin-left: -15px;
   margin-right: -15px;
 }
-#tz-program-content .banner {
+#tz-program .banner {
   position: relative;
   height: 563px;
   padding-top: 83px;
@@ -2614,20 +2614,20 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background-image: url(/images/program-banner-bg.png?70f07cea6da876f74947ecc8224d8659);
   background-size: cover;
 }
-#tz-program-content .banner .title {
+#tz-program .banner .title {
   margin-top: 80px;
 }
-#tz-program-content .banner .title .text {
+#tz-program .banner .title .text {
   font-size: 50px;
   line-height: 72px;
   margin-bottom: 25px;
   letter-spacing: 3.75px;
 }
-#tz-program-content .banner .title .sub-text {
+#tz-program .banner .title .sub-text {
   font-size: 16px;
   letter-spacing: 0.8px;
 }
-#tz-program-content .banner .apply-btn {
+#tz-program .banner .apply-btn {
   display: block;
   width: 180px;
   height: 40px;
@@ -2641,21 +2641,21 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background: -webkit-gradient(linear, left top, right top, from(#b9ccfc), color-stop(50%, #6d8fff));
   background: linear-gradient(to right, #b9ccfc 0%, #6d8fff 50%);
   background: -webkit-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
-  -webkit-transition: all 0.4s ease-in-out;
-  transition: all 0.4s ease-in-out;
+  -webkit-transition: background 0.4s ease-in-out;
+  transition: background 0.4s ease-in-out;
 }
-#tz-program-content .banner .apply-btn:hover {
+#tz-program .banner .apply-btn:hover {
   color: #043fc4;
   background: #fff;
 }
-#tz-program-content .banner .bottom {
+#tz-program .banner .btn-link {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
   text-align: center;
 }
-#tz-program-content .banner .bottom .btn-link {
+#tz-program .banner .btn-link-item {
   display: inline-block;
   width: 130px;
   height: 63px;
@@ -2668,13 +2668,76 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   font-size: 18px;
   letter-spacing: 3.6px;
   text-decoration: none;
-  -webkit-transition: all 0.4s ease-in-out;
-  transition: all 0.4s ease-in-out;
+  -webkit-transition: background 0.4s ease-in-out;
+  transition: background 0.4s ease-in-out;
   background: -webkit-gradient(linear, left top, right top, from(#b9ccfc), color-stop(50%, #6d8fff));
   background: linear-gradient(to right, #b9ccfc 0%, #6d8fff 50%);
   background: -webkit-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
 }
-#tz-program-content .banner .bottom .btn-link:hover {
+#tz-program .banner .btn-link-item:hover {
   background: #fff;
   color: #043fc4;
+}
+#tz-program .content {
+  text-align: center;
+}
+#tz-program .content .problem {
+  height: 682px;
+  padding-top: 80px;
+  background-color: #fff;
+}
+#tz-program .content .problem .title {
+  color: #333;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: 1.3px;
+  text-align: center;
+}
+#tz-program .content .problem .card-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  max-width: 1240px;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin: 30px auto 0;
+}
+#tz-program .content .problem .card-container .card {
+  width: 380px;
+  height: 206px;
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  padding: 35px 50px;
+  margin: 10px;
+  text-align: center;
+}
+#tz-program .content .problem .card-container .card-title {
+  text-align: left;
+  margin-bottom: 12px;
+}
+#tz-program .content .problem .card-container .card-title .icon {
+  display: inline-block;
+  margin-top: -5px;
+}
+#tz-program .content .problem .card-container .card-title .text {
+  color: #333;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  margin-left: 18px;
+}
+#tz-program .content .problem .card-container .card-body ul {
+  padding-left: 48px;
+}
+#tz-program .content .problem .card-container .card-body ul li {
+  text-align: left;
+  padding-left: 5px;
+  margin-bottom: 8px;
 }

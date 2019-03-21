@@ -263,10 +263,12 @@ class MachineModel extends Model
 			}
 			
 		} elseif(isset($editdata['ip_id']) &&  $editdata['ip_id'] == $machine->ip_id){
-			$ip = $this->ip($editdata['ip_id']);
-			$detail['ip'] = $ip->ip;
-			$detail['ip_detail'] = $ip->ip_detail;
-			$detail['ip_id'] = 	$editdata['ip_id'];
+			if($editdata['ip_id'] != 0){
+				$ip = $this->ip($editdata['ip_id']);
+				$detail['ip'] = $ip->ip;
+				$detail['ip_detail'] = $ip->ip_detail;
+				$detail['ip_id'] = 	$editdata['ip_id'];	
+			}
 		}
 		if($machine->used_status == 2 && $machine->used_status != $editdata['used_status']){
 			DB::rollBack();

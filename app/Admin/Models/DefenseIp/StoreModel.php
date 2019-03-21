@@ -94,7 +94,7 @@ class StoreModel extends Model
 			return $return;
 		}
 
-		$ip_model->ip 		= $par['ip'];
+		// $ip_model->ip 		= $par['ip'];
 		$ip_model->site 	= $par['site'];
 		$ip_model->protection_value 		= $par['protection_value'];
 		$res = $ip_model->save();

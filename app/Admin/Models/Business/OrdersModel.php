@@ -45,41 +45,6 @@ class OrdersModel extends Model
 		return $result;
 	}
 
-	// /**
-	//  * 财务人员和管理人员查看订单
-	//  * @param  array $where 订单的状态
-	//  * @return array        返回相关的数据信息和提示状态及信息
-	//  */
-	// public function financeOrders($where){
-	// 	$result = DB::table('tz_orders')
-	// 				->leftJoin('tz_orders_flow','tz_orders.serial_number','=','tz_orders_flow.serial_number')
-	// 				->where($where)
-    //                 ->whereNull('tz_orders.deleted_at')
-	// 				->orderBy('tz_orders.created_at','desc')
-	// 				->select('tz_orders.id','tz_orders.order_sn','tz_orders.customer_name','tz_orders.business_sn','tz_orders.business_name','tz_orders.resource_type','tz_orders.order_type','tz_orders.resource','tz_orders.price','tz_orders.duration','tz_orders.payable_money','tz_orders.end_time','tz_orders.serial_number','tz_orders.pay_time','tz_orders.order_status','tz_orders.order_note','tz_orders.created_at','tz_orders_flow.before_money','tz_orders_flow.after_money')
-	// 				->get();
-	// 	if(!empty($result)){
-	// 		$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn',11=>'高防IP'];
-	// 		$order_type = [1=>'新购',2=>'续费'];
-	// 		$order_status = [0=>'待支付',1=>'已支付',2=>'财务确认',3=>'订单完成',4=>'到期',5=>'取消',6=>'申请退款',7=>'正在支付',8=>'退款完成'];
-	// 		foreach($result as $okey=>$ovalue){
-	// 			$ovalue->type = $ovalue->resource_type;
-	// 			$ovalue->resource_type = $resource_type[$ovalue->resource_type];
-	// 			$ovalue->order_type = $order_type[$ovalue->order_type];
-	// 			$ovalue->order_status = $order_status[$ovalue->order_status];
-	// 		}
-	// 		$return['data'] = $result;
-	// 		$return['code'] = 1;
-	// 		$return['msg'] = '订单获取成功';
-	// 	} else {
-	// 		$return['data'] = '暂无订单';
-	// 		$return['code'] = 0;
-	// 		$return['msg'] = '暂无对应订单';
-	// 	}
-
-	// 	return $return;
-	// }
-
 	/**
 	 * 财务人员和管理人员查看支付流水
 	 * @param  array $where 订单的状态
@@ -117,25 +82,28 @@ class OrdersModel extends Model
 	 * @return array        返回相关的数据信息和提示状态及信息
 	 */
 	public function clerkOrders($where){
-		$where['remove_status'] = 0;
+		// $where['remove_status'] = 0;
 		$result = DB::table('tz_orders')
 					->leftJoin('tz_orders_flow','tz_orders.serial_number','=','tz_orders_flow.serial_number')
 					->where($where)
+					->whereBetween('tz_orders.remove_status',[0,3])
                     ->whereNull('tz_orders.deleted_at')
 					->orderBy('tz_orders.created_at','desc')
-					->select('tz_orders.id','tz_orders.order_sn','tz_orders.customer_name','tz_orders.business_sn','tz_orders.business_name','tz_orders.resource_type','tz_orders.order_type','tz_orders.resource','tz_orders.price','tz_orders.duration','tz_orders.payable_money','tz_orders.end_time','tz_orders.serial_number','tz_orders.pay_time','tz_orders.order_status','tz_orders.order_note','tz_orders.created_at','tz_orders_flow.before_money','tz_orders_flow.after_money')
+					->select('tz_orders.id','tz_orders.order_sn','tz_orders.customer_name','tz_orders.business_sn','tz_orders.business_name','tz_orders.resource_type','tz_orders.order_type','tz_orders.resource','tz_orders.price','tz_orders.duration','tz_orders.payable_money','tz_orders.end_time','tz_orders.serial_number','tz_orders.pay_time','tz_orders.order_status','tz_orders.order_note','tz_orders.created_at','tz_orders_flow.before_money','tz_orders_flow.after_money','tz_orders.remove_status')
 					->get();
 
 		if(!$result->isEmpty()){
 			$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn'];
 			$order_type = [1=>'新购',2=>'续费'];
 			$order_status = [0=>'待支付',1=>'已支付',2=>'财务确认',3=>'订单完成',4=>'到期',5=>'取消',6=>'申请退款',7=>'正在支付',8=>'退款完成'];
+			$remove_status = [0 => '正常使用', 1 => '下架申请中', 2 => '机房处理中', 3 => '清空下架中', 4 => '下架完成'];
 			foreach($result as $okey=>$ovalue){
 				$ovalue->type = $ovalue->resource_type;
 				$ovalue->resourcetype = $resource_type[$ovalue->resource_type];
                 $ovalue->order_type = $order_type[$ovalue->order_type];
                 $ovalue->status = $ovalue->order_status;
 				$ovalue->order_status = $order_status[$ovalue->order_status];
+				$ovalue->remove_status = $remove_status[$ovalue->remove_status];
 			}
 			$return['data'] = $result;
 			$return['code'] = 1;

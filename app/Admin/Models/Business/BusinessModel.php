@@ -79,20 +79,20 @@ class BusinessModel extends Model
         }
         $relevance = DB::table('tz_business_relevance')->insert(['type'=>1,'business_id'=>$insert['business_number'],'created_at'=>date('Y-m-d H:i:s',time())]);
         if($relevance == true){
-            // $xunsearch = new XS('business');
-            // $index = $xunsearch->index;
-            // $resource = json_decode($insert['resource_detail']);
-            // $doc['ip'] = isset($resource->ip)?strtolower($resource->ip):'';
-            // $doc['cpu'] = isset($resource->cpu)?strtolower($resource->cpu):'';
-            // $doc['memory'] = isset($resource->memory)?strtolower($resource->memory):'';
-            // $doc['harddisk'] = isset($resource->harddisk)?strtolower($resource->harddisk):'';
-            // $doc['id'] = strtolower($row);
-            // $doc['business_sn'] = strtolower($business_sn);
-            // $doc['machine_number'] = strtolower($insert['machine_number']);
-            // $doc['client'] = strtolower($insert['client_id']);
-            // $document = new \XSDocument($doc);
-            // $index->update($document);
-            // $index->flushIndex();
+            $xunsearch = new XS('business');
+            $index = $xunsearch->index;
+            $resource = json_decode($insert['resource_detail']);
+            $doc['ip'] = isset($resource->ip)?strtolower($resource->ip):'';
+            $doc['cpu'] = isset($resource->cpu)?strtolower($resource->cpu):'';
+            $doc['memory'] = isset($resource->memory)?strtolower($resource->memory):'';
+            $doc['harddisk'] = isset($resource->harddisk)?strtolower($resource->harddisk):'';
+            $doc['id'] = strtolower($row);
+            $doc['business_sn'] = strtolower($business_sn);
+            $doc['machine_number'] = strtolower($insert['machine_number']);
+            $doc['client'] = strtolower($insert['client_id']);
+            $document = new \XSDocument($doc);
+            $index->update($document);
+            $index->flushIndex();
             DB::commit();
             $return['data'] = $row;
             $return['code'] = 1;

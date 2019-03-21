@@ -40,14 +40,16 @@ class Business extends Model
 						->where('business_status','>','-1')
 						->where('business_status','<',5)
 						->where('remove_status','<',2)
-						->get(['id','business_number','business_type','machine_number','resource_detail','business_status','money','length','business_note','endding_time']);
+						->get(['id','business_number','business_type','machine_number','resource_detail','business_status','money','length','business_note','endding_time','remove_status']);
 		$business_status = [0=>'审核中',1=>'未付款使用',2=>'正常',3=>'正常',4=>'锁定中'];
 		$business_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜'];
+		$remove_status = [0 => '正常使用', 1 => '下架申请中', 2 => '机房处理中', 3 => '清空下架中', 4 => '下架完成'];
 		if(!$business->isEmpty()){
 			foreach ($business as $key => $value) {
 				$business[$key]['business_status'] = $business_status[$value['business_status']];
 				$business[$key]['type'] = $value['business_type'];
 				$business[$key]['business_type'] = $business_type[$value['business_type']];	
+				$business[$key]['remove_status'] = $remove_status[$value['remove_status']];	
 			}
 			$return['data'] = $business;
 			$return['code'] = 1;

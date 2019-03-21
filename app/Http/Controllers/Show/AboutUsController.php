@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 
 class AboutUsController extends Controller
 {
-    public function index()
+    public function index($page)
     {
-        return view("http/aboutUs");
+        return view("http/aboutUs",[
+            "page" => $page
+        ]);
     }
 }

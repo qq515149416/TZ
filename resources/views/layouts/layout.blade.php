@@ -233,22 +233,22 @@
                         <span class="dropdown-icon"></span>
                         <ul>
                             <li>
-                                <a href="/page/tz/about">公司介绍</a>
+                                <a href="/aboutus/index">公司介绍</a>
                             </li>
                             <li>
-                                <a href="/page/tz/about">资质荣誉</a>
+                                <a href="/aboutus/rongyu">资质荣誉</a>
                             </li>
                             <li>
-                                <a href="/page/tz/paycenter">支付中心</a>
+                                <a href="/aboutus/wenhua">企业文化</a>
                             </li>
                             <li>
-                                <a href="/page/tz/about">企业文化</a>
+                                <a href="/aboutus/fazhang">发展历程</a>
                             </li>
                             <li>
-                                <a href="/page/tz/about">发展历程</a>
+                                <a href="/aboutus/lianxi">联系我们</a>
                             </li>
                             <li>
-                                <a href="/page/tz/about">联系我们</a>
+                                <a href="/aboutus/pay">支付中心</a>
                             </li>
                         </ul>
                     </div>

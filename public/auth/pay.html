@@ -10,7 +10,7 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
     <script type="text/javascript">
         if(location.search.indexOf("?order")!=-1) {
-            $.get("http://"+location.hostname+"/home/recharge/getOrder",{
+            $.get("https://"+location.hostname+"/home/recharge/getOrder",{
                 trade_no: location.search.substr(1).split("=")[1]
             },function(data) {
                 if(data.code==1) {
@@ -18,11 +18,11 @@
                 } else {
                     alert("支付失败，请重新充值");
                 }
-                location.href = "http://"+location.hostname+"/tz/member92019.html";
+                location.href = "https://"+location.hostname+"/tz/member92019.html";
             });
         }
         if(location.search.indexOf("?serial_number")!=-1) {
-            $.get("http://"+location.hostname+"/home/customer/checkTrade",{
+            $.get("https://"+location.hostname+"/home/customer/checkTrade",{
                 serial_number: location.search.substr(1).split("=")[1]
             },function(data) {
                 if(data.code==1) {
@@ -30,7 +30,7 @@
                 } else {
                     alert("支付失败，请重新充值");
                 }
-                location.href = "http://"+location.hostname+"/tz/member92019.html";
+                location.href = "https://"+location.hostname+"/tz/member92019.html";
             });
         }
     </script>

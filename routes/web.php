@@ -31,7 +31,7 @@ Route::group([
     Route::get('/', 'Show\IndexController@index');
     Route::get('/page/{directory}/{p}', 'Show\PageController@index');
     Route::get('/promotion/ddk', 'Show\DdkPromotionController@index');
-    Route::get('/aboutus', 'Show\AboutUsController@index');
+    Route::get('/aboutus/{page}', 'Show\AboutUsController@index');
     Route::get('/promotion/consumer', 'Show\ConsumerPromotionController@index');
     Route::get('/zuyong', 'Show\ServerRentController@index');
     Route::get('/fangan', 'Show\ProgramController@index');

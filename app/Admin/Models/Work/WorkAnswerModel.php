@@ -164,7 +164,7 @@ class WorkAnswerModel extends Model
                 $insert_data['role'] = $work_order_detail->submitter;
                 $work_order_detail = (array)$work_order_detail;
                 $array = ['work_order'=>$work_order_detail,'work_chat'=>$insert_data];
-                curl('http://sk.jungor.cn:8121',$array);
+                curl('http://sk.tzidc.com:8121',$array);
     			$return['data'] = $insert_data;
 	    		$return['code'] = 1;
 	    		$return['msg'] = '';

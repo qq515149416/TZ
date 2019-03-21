@@ -89,7 +89,7 @@ class OrdersModel extends Model
 		$result = DB::table('tz_orders_flow as flow')
 					->join('tz_users as users','flow.customer_id','=','users.id')
 					->join('admin_users as admin','flow.business_id','=','admin.id')
-					->whereNull('flow.deleted_at');
+					->whereNull('flow.deleted_at')
 					->select('flow.id as flow_id','flow.business_number','flow.serial_number','flow.payable_money','flow.actual_payment','flow.preferential_amount','flow.pay_time','flow.before_money','flow.after_money','flow.created_at','flow.flow_type','users.name as customer_name','users.email as customer_email','users.nickname as customer_nick_name','admin.name as business_name')
 					->orderBy('flow.pay_time','desc')
 					->get();

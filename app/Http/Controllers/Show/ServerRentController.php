@@ -6,8 +6,14 @@ use App\Http\Controllers\Controller;
 
 class ServerRentController extends Controller
 {
-    public function index()
+    public function index($page)
     {
-        return view("http/serverRent");
+        if($page=="index") {
+            return view("http/serverRent");
+        } else {
+            return view("http/product",[
+                "page" => $page
+            ]);
+        }
     }
 }

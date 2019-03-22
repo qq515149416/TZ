@@ -33,7 +33,7 @@ Route::group([
     Route::get('/promotion/ddk', 'Show\DdkPromotionController@index');
     Route::get('/aboutus/{page}', 'Show\AboutUsController@index');
     Route::get('/promotion/consumer', 'Show\ConsumerPromotionController@index');
-    Route::get('/zuyong', 'Show\ServerRentController@index');
+    Route::get('/zuyong/{page}', 'Show\ServerRentController@index');
     Route::get('/fangan', 'Show\ProgramController@index');
 });
 

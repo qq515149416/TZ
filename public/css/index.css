@@ -1261,15 +1261,15 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background: url(/images/solutionItemIcon04.png?66e31c3579dd1b95af27ad5fad0adbec) no-repeat center top;
 }
 .solution .solution-list .swiper-index-2.col-md-3:nth-of-type(4) .solution-item {
-  background: url(/images/solutionItem06.png?aa1c7c07439df4c3cfe0908aed4204ab) no-repeat;
+  background: url(/images/solutionItem09.png?f7ff81230532c8f7a6cbb0d16032ce7c) no-repeat;
   background-size: 100% 100%;
 }
 .solution .solution-list .swiper-index-2.col-md-3:nth-of-type(4) .solution-item:hover {
-  background: url(/images/solutionItem66.png?2c0b34c790fbea96482d6279e724b12b) no-repeat;
+  background: url(/images/solutionItem99.png?1ea6e19c3cfd893ae69ec4f179d07064) no-repeat;
   background-size: 100% 100%;
 }
 .solution .solution-list .swiper-index-2.col-md-3:nth-of-type(4) .solution-item .solution-item-dec .icon {
-  background: url(/images/solutionItemIcon06.png?1f6b757d63551d387b9c890f246dc53c) no-repeat center top;
+  background: url(/images/solutionItemIcon09.png?68f62c98a7b076542e71d586e0e87277) no-repeat center top;
 }
 .case {
   height: 807px;
@@ -2601,11 +2601,68 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background-color: #fff;
   color: #043fc4;
 }
-#tz-program {
+#server_product .banner {
+  position: relative;
+  height: 563px;
+  padding-top: 83px;
+  color: #fff;
+  text-align: center;
+  background-image: url(/images/server-rent-banner-bg.png?fbb67add78596bef8b8434641a45220b);
+  background-size: cover;
+}
+#server_product .banner .title {
+  margin-top: 140px;
+}
+#server_product .banner .title .text {
+  font-size: 60px;
+  line-height: 72px;
+  margin-bottom: 16px;
+  letter-spacing: 4.5px;
+}
+#server_product .banner .title .sub-text {
+  font-size: 24px;
+  padding-left: 18px;
+  letter-spacing: 8.2px;
+}
+#server_product .banner .bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+}
+#server_product .banner .bottom .btn-link {
+  display: inline-block;
+  width: 220px;
+  height: 63px;
+  line-height: 63px;
+  border-radius: 8px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 18px;
+  color: #fff;
+  font-size: 18px;
+  letter-spacing: 3.2px;
+  text-decoration: none;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+  background: -webkit-gradient(linear, left top, right top, from(#b9ccfc), color-stop(50%, #6d8fff));
+  background: linear-gradient(to right, #b9ccfc 0%, #6d8fff 50%);
+  background: -webkit-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
+}
+#server_product .banner .bottom .btn-link:hover {
+  background: #fff;
+  color: #043fc4;
+}
+#server_product .banner .bottom .btn-link.active {
+  background: #fff;
+  color: #043fc4;
+}
+#tz-program-content {
   margin-left: -15px;
   margin-right: -15px;
 }
-#tz-program .banner {
+#tz-program-content .banner {
   position: relative;
   height: 563px;
   padding-top: 83px;
@@ -2614,20 +2671,20 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background-image: url(/images/program-banner-bg.png?70f07cea6da876f74947ecc8224d8659);
   background-size: cover;
 }
-#tz-program .banner .title {
+#tz-program-content .banner .title {
   margin-top: 80px;
 }
-#tz-program .banner .title .text {
+#tz-program-content .banner .title .text {
   font-size: 50px;
   line-height: 72px;
   margin-bottom: 25px;
   letter-spacing: 3.75px;
 }
-#tz-program .banner .title .sub-text {
+#tz-program-content .banner .title .sub-text {
   font-size: 16px;
   letter-spacing: 0.8px;
 }
-#tz-program .banner .apply-btn {
+#tz-program-content .banner .apply-btn {
   display: block;
   width: 180px;
   height: 40px;
@@ -2641,21 +2698,21 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background: -webkit-gradient(linear, left top, right top, from(#b9ccfc), color-stop(50%, #6d8fff));
   background: linear-gradient(to right, #b9ccfc 0%, #6d8fff 50%);
   background: -webkit-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
-  -webkit-transition: background 0.4s ease-in-out;
-  transition: background 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
 }
-#tz-program .banner .apply-btn:hover {
+#tz-program-content .banner .apply-btn:hover {
   color: #043fc4;
   background: #fff;
 }
-#tz-program .banner .btn-link {
+#tz-program-content .banner .bottom {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
   text-align: center;
 }
-#tz-program .banner .btn-link-item {
+#tz-program-content .banner .bottom .btn-link {
   display: inline-block;
   width: 130px;
   height: 63px;
@@ -2668,76 +2725,13 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   font-size: 18px;
   letter-spacing: 3.6px;
   text-decoration: none;
-  -webkit-transition: background 0.4s ease-in-out;
-  transition: background 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
   background: -webkit-gradient(linear, left top, right top, from(#b9ccfc), color-stop(50%, #6d8fff));
   background: linear-gradient(to right, #b9ccfc 0%, #6d8fff 50%);
   background: -webkit-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
 }
-#tz-program .banner .btn-link-item:hover {
+#tz-program-content .banner .bottom .btn-link:hover {
   background: #fff;
   color: #043fc4;
-}
-#tz-program .content {
-  text-align: center;
-}
-#tz-program .content .problem {
-  height: 682px;
-  padding-top: 80px;
-  background-color: #fff;
-}
-#tz-program .content .problem .title {
-  color: #333;
-  font-size: 26px;
-  font-weight: 600;
-  letter-spacing: 1.3px;
-  text-align: center;
-}
-#tz-program .content .problem .card-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  max-width: 1240px;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  margin: 30px auto 0;
-}
-#tz-program .content .problem .card-container .card {
-  width: 380px;
-  height: 206px;
-  border: 1px solid #dcdcdc;
-  border-radius: 6px;
-  padding: 35px 50px;
-  margin: 10px;
-  text-align: center;
-}
-#tz-program .content .problem .card-container .card-title {
-  text-align: left;
-  margin-bottom: 12px;
-}
-#tz-program .content .problem .card-container .card-title .icon {
-  display: inline-block;
-  margin-top: -5px;
-}
-#tz-program .content .problem .card-container .card-title .text {
-  color: #333;
-  font-size: 16px;
-  font-weight: 600;
-  letter-spacing: 0.8px;
-  margin-left: 18px;
-}
-#tz-program .content .problem .card-container .card-body ul {
-  padding-left: 48px;
-}
-#tz-program .content .problem .card-container .card-body ul li {
-  text-align: left;
-  padding-left: 5px;
-  margin-bottom: 8px;
 }

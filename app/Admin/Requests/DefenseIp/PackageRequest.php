@@ -33,7 +33,8 @@ class PackageRequest extends FormRequest
 		switch ($method) {
 			case 'insert':
 				$return = [
-					'name'			=> 'unique:tz_defenseip_package',
+					// 'name'			=> 'unique:tz_defenseip_package',
+					'name'			=> 'required',
 					'site'			=> 'required|integer|exists:idc_machineroom,id',
 					'protection_value'	=> 'required|integer',
 					'price'			=> 'required|numeric',
@@ -52,7 +53,7 @@ class PackageRequest extends FormRequest
 				}
 				$return = [
 					'edit_id'			=> 'required|exists:tz_defenseip_package,id',
-					'name'			=> 'required|unique:tz_defenseip_package,name,'.$par['edit_id'],
+					'name'			=> 'required',
 					'price'			=> 'required|numeric',
 					// 'description'		=> 'required',
 					'sell_status'		=> 'required|integer|min:0|max:1',

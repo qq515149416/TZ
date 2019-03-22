@@ -712,11 +712,11 @@
                                         </div>
                                         <div class="dec clearfix">
                                             <div class="pull-left">
-                                                <p>开户名称：庞志伟</p>
-                                                <p>支付宝账号：pay@zeisp.com</p>
+                                                <p>开户名称：广东腾正</p>
+                                                <p>支付宝账号：pay@tzidc.com</p>
                                             </div>
                                             <div class="pull-right">
-                                                <img class="pay" src="{{ asset("/images/pay/payerweima.png") }}" alt="" />
+                                                <img class="pay" src="{{ asset("/images/pay/payerweima.jpg") }}" alt="" />
                                             </div>
                                         </div>
                                     </li>

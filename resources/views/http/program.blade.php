@@ -111,6 +111,18 @@
         </div>
       </div>
     </div>
+    <div class="arch">
+      <p class="title">解决方案构架部署</p>
+      <img class="d-block" src="{{ asset("/images/program/rectangle.png") }}">
+      <div class="cont">
+        <img class="arch-img" src="{{ asset("/images/program/program-game-arch.png") }}" alt="游戏云解决方案构架部署图">
+        <div>
+          <p class="desc">腾正科技游戏云服务，从构建基础设施到游戏上线到后期精细化运营，腾正科技服务涵盖项目整个发展周期。在IT架构层面将不同功能模块，比如登录，逻辑，商城，图片服务等业务分离，业<br/>务水平扩展，利用云服务器弹性扩展和负载均衡功能，随时增减云服务器。同时增加缓存服务器、数据库读写分离、轻松应对海量玩家同时在线。在资源上，腾正科技应用业内领先的双线高防<br/>节点以及国内优质的BGP多线网络资源，隐藏源站真实IP，解决跨地域跨线路问题，为用户全面打造稳如磐石的游戏解决方案。
+          </p>
+        </div>
+        <a class="consult-btn" href="javascript: void(0);">立即咨询</a>
+      </div>
+    </div>
   </div>
 </div>
 </div>

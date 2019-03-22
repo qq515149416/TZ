@@ -21,6 +21,16 @@ class PackageModel extends Model
 
 	public function insert($par){
 		// DB::beginTransaction();
+	
+		$check = $this->where('name',$par['name'])->whereNull('deleted_at')->exists();
+		if($check == true){
+			return [
+				'data' 	=> '',
+				'msg'	=> '套餐存在同名',
+				'code'	=> 0,
+			];
+		}
+		
 		$insert = $this->create($par);
 		if($insert == false){
 			return [
@@ -51,6 +61,7 @@ class PackageModel extends Model
 	}
 
 	public function edit($par){
+		
 		$return['data'] = '';
 		$package_model = $this->find($par['edit_id']);
 		if($package_model == null){
@@ -59,8 +70,19 @@ class PackageModel extends Model
 			return $return;
 		}
 
+		$check = $this->where('name',$par['name'])->whereNull('deleted_at')->where('id','!=',$par['edit_id'])->exists();
+		if($check == true){
+			return [
+				'data' 	=> '',
+				'msg'	=> '套餐存在同名',
+				'code'	=> 0,
+			];
+		}
+
 		$package_model->name 		= $par['name'];
-		$package_model->description 		= $par['description'];
+		if(isset($par['description'])){
+			$package_model->description 		= $par['description'];
+		}
 		//这俩不能改
 		// $package_model->site 			= $par['site'];
 		// $package_model->protection_value 	= $par['protection_value'];
@@ -154,18 +176,5 @@ class PackageModel extends Model
 			];
 	}
 
-	public function checkExist($ip){
-		$id = $this->where('ip',$ip)->value('id');
-		if($id != null){
-			return [
-				'data'	=> $id,
-				'code'	=> 0,
-			];
-		}else{
-			return [
-				'data'	=> '',
-				'code'	=> 1,
-			];
-		}
-	}
+	
 }

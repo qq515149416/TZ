@@ -712,7 +712,7 @@
                                         </div>
                                         <div class="dec clearfix">
                                             <div class="pull-left">
-                                                <p>开户名称：广东腾正计算机科技有限公司</p>
+                                                <p>开户名称：广东腾正</p>
                                                 <p>支付宝账号：pay@tzidc.com</p>
                                             </div>
                                             <div class="pull-right">

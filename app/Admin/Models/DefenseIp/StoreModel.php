@@ -221,7 +221,7 @@ class StoreModel extends Model
 	}
 
 	public function checkExist($ip){
-		$id = $this->where('ip',$ip)->value('id');
+		$id = $this->where('ip',$ip)->whereNull('deleted_at')->value('id');
 		if($id != null){
 			return [
 				'data'	=> $id,

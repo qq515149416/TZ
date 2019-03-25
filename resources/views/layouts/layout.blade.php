@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title')-腾正科技有限公司</title>
+    <title>腾正科技-@yield('title')</title>
     <link rel="stylesheet" href="{{ admin_asset("/vendor/laravel-admin/AdminLTE/bootstrap/css/bootstrap.min.css") }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ admin_asset("/vendor/laravel-admin/font-awesome/css/font-awesome.min.css") }}">
     <link rel="stylesheet" href="{{ asset("/css/swiper.min.css") }}" />
     <link rel="stylesheet" href="{{ asset("/css/animate.min.css") }}" />
     <link rel="stylesheet" href="{{ asset("/css/index.css") }}?random_num={{ time() + random_int(100,1000) }}" />
+    <meta name="keywords" content="@yield('keywords')"/>
+    <meta name="description" content="@yield('description')">
 </head>
 <body>
     <div class="container-fluid main">

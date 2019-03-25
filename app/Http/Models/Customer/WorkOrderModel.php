@@ -138,7 +138,11 @@ class WorkOrderModel extends Model
             $row->sales_name = $business->sales_name;
             $row = $row->toArray();
             $array = ['work_order'=>$row];
-            curl('http://sk.tzidc.com:8121',$array);
+            $socket_url = env('SOCKET_URL');//获取.env里面的有关socket_url的地址
+            $end = strrpos($str,':');//端口号前的:位置
+            $start = strpos($str,'/')+2;//‘/’第一次出现的第一次位置加2就是url地址的开始部分
+            $url = substr($socket_url,$start,$end - $start);//截取url地址
+            curl('http://'.$url.':8121',$array);
 			$return['data'] = $row['id'];
 			$return['code'] = 1;
 			$return['msg'] = '工单提交成功,等待工作人员处理,您的工单号:'.$row['work_order_number'];

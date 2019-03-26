@@ -470,6 +470,7 @@ class  Overdue extends Model
 				->where('order_status',0)
 				->whereIn('resource_type',[1,2,3,4,5,6,7,8,9])
 				->whereNull('deleted_at')
+				->whereIn('remove_status',[0,1])
 				->get()
 				->toArray();
 		}else{
@@ -477,6 +478,7 @@ class  Overdue extends Model
 				->where('order_status',0)
 				->whereIn('resource_type',[1,2,3,4,5,6,7,8,9])
 				->whereNull('deleted_at')
+				->whereIn('remove_status',[0,1])
 				->get()
 				->toArray();
 		}

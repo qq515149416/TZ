@@ -2721,15 +2721,32 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   width: 100%;
   display: table;
   border: 1px solid #d6d7e1;
-  border-radius: 5px;
+  border-radius: 4px;
 }
 #server_product .jumbotron.data-center .main-content .tab-content .tab-pane .data-table .data-table-row {
   display: table-row;
 }
+#server_product .jumbotron.data-center .main-content .tab-content .tab-pane .data-table .data-table-row:last-of-type .data-table-col {
+  border-bottom: none;
+}
 #server_product .jumbotron.data-center .main-content .tab-content .tab-pane .data-table .data-table-row .data-table-col {
-  border: 1px solid #d6d7e1;
+  border-right: 1px solid #d6d7e1;
+  border-bottom: 1px solid #d6d7e1;
   text-align: center;
   display: table-cell;
+  height: 49px;
+  line-height: 49px;
+  font-size: 14px;
+  color: #666666;
+}
+#server_product .jumbotron.data-center .main-content .tab-content .tab-pane .data-table .data-table-row .data-table-col.thead {
+  background-color: #eeeff3;
+  font-size: 14px;
+  color: #333333;
+  font-weight: bold;
+}
+#server_product .jumbotron.data-center .main-content .tab-content .tab-pane .data-table .data-table-row .data-table-col:last-of-type {
+  border-right: none;
 }
 #server_product .jumbotron.data-center .main-content .nav-tabs {
   border: none;

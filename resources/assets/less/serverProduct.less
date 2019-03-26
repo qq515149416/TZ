@@ -128,13 +128,32 @@
                         width: 100%;
                         display: table;
                         border: 1px solid #d6d7e1;
-                        border-radius: 5px;
+                        border-radius: 4px;
                         .data-table-row {
                             display: table-row;
+                            &:last-of-type {
+                                .data-table-col {
+                                    border-bottom: none;
+                                }
+                            }
                             .data-table-col {
-                                border: 1px solid #d6d7e1;
+                                border-right: 1px solid #d6d7e1;
+                                border-bottom: 1px solid #d6d7e1;
                                 text-align: center;
                                 display: table-cell;
+                                height: 49px;
+                                line-height: 49px;
+                                font-size: 14px;
+                                color: #666666;
+                                &.thead {
+                                    background-color: #eeeff3;
+                                    font-size: 14px;
+                                    color: #333333;
+                                    font-weight: bold;
+                                }
+                                &:last-of-type {
+                                    border-right: none;
+                                }
                             }
                         }
 

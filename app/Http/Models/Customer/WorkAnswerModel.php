@@ -150,8 +150,8 @@ class WorkAnswerModel extends Model
                 $work_order_detail = (array)$work_order_detail;
                 $array = ['work_order'=>$work_order_detail,'work_chat'=>$insert_data];
                 $socket_url = env('SOCKET_URL');//获取.env里面的有关socket_url的地址
-                $end = strrpos($str,':');//端口号前的:位置
-                $start = strpos($str,'/')+2;//‘/’第一次出现的第一次位置加2就是url地址的开始部分
+                $end = strrpos($socket_url,':');//端口号前的:位置
+                $start = strpos($socket_url,'/')+2;//‘/’第一次出现的第一次位置加2就是url地址的开始部分
                 $url = substr($socket_url,$start,$end - $start);//截取url地址
                 curl('http://'.$url.':8121',$array);
                 $return['data'] = $insert_data;

@@ -2785,6 +2785,12 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background-color: transparent;
   font-size: 18px;
 }
+#server_product .jumbotron.introduction {
+  padding: 38px 0 52px 0;
+  margin: 0;
+  background: url(/images/productBg.png?8e787a79814dde5601c807ef0a253556) no-repeat;
+  background-size: 100% 100%;
+}
 #server_product .versionHeart {
   width: 1181px;
   margin: 0 auto;

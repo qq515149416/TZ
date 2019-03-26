@@ -35,6 +35,7 @@ Route::group([
     Route::get('/promotion/consumer', 'Show\ConsumerPromotionController@index');
     Route::get('/zuyong/{page}', 'Show\ServerRentController@index');
     Route::get('/fangan', 'Show\ProgramController@index');
+    Route::get('/tuoguan', 'Show\HostingController@index');
 });
 
 /**

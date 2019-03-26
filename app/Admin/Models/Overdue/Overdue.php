@@ -490,6 +490,8 @@ class  Overdue extends Model
 				'code'	=> 1,
 			];
 		}
+
+
 		$resource_type = [ '1' => '租用主机' , '2' => '托管主机' , '3' => '租用机柜' , '4' => 'IP' , '5' => 'CPU' , '6' => '硬盘' , '7' => '内存' , '8' => '带宽' , '9' => '防护' , '10' => 'cdn' , '11' => '高防IP'];
 		$order_status = [ '0' => '待支付' , '1' => '已支付' , '2' => '已支付' , '3' => '订单完成' , '4' => '到期' , '5' => '取消' , '6' => '申请退款', '8' => '退款完成'];
 		$order_type = [ '1' => '新购' , '2' => '续费'];
@@ -497,10 +499,24 @@ class  Overdue extends Model
 			$list[$i]->order_status =  $order_status[$list[$i]->order_status];
 			$list[$i]->resource_type =  $resource_type[$list[$i]->resource_type];
 		}
+
+		$list = $this->removeXiaJia($list);
+
 		return [
 			'data'	=> $list,
 			'msg'	=> '获取成功',
 			'code'	=> 1,
 		];
+	}
+
+	public function removeXiaJia($list){
+		$arr = [];
+		for ($i=0; $i < count($list); $i++) { 
+			$check_remove = DB::table('tz_business')->where('business_number',$list[$i]->business_sn)->value('remove_status');
+			if($check_remove == 0 || $check_remove == 1){
+				$arr[] = $list[$i];
+			}
+		}
+		return $arr;
 	}
 }

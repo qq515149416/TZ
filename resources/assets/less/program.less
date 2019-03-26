@@ -12,7 +12,7 @@
     background-size: cover;
 
     .title {
-      margin-top: 80px;
+      margin-top: 60px;
 
       .text {
         font-size: 50px;
@@ -55,7 +55,7 @@
       }
     }
 
-    .btn-link {
+    .tab {
       position: absolute;
       left: 0;
       right: 0;
@@ -86,7 +86,7 @@
         background: -moz-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
         background: -webkit-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
 
-        &:hover {
+        &.active, &:hover {
           background: #fff;
           color: #043fc4;
         }
@@ -99,7 +99,7 @@
 
     .problem {
       height: 682px;
-      padding-top: 80px;
+      padding-top: 60px;
       background-color: #fff;
 
       .title {
@@ -161,7 +161,7 @@
       height: 1000px;
       background-image: url("../images/program/program-arch-bg.png");
       background-size: cover;
-      padding-top: 60px;
+      padding-top: 50px;
       .title {
         color: #121931;
         font-size: 26px;
@@ -180,10 +180,11 @@
           margin: 50px auto 40px;
         }
         .consult-btn {
-          padding: 8px 60px;
+          width: 180px;
+          height: 40px;
           display: inline-block;
           font-size: 14px;
-          line-height: 41px;
+          line-height: 36px;
           color: #fff;
           letter-spacing: 2.8px;
           text-decoration: none;
@@ -199,6 +200,91 @@
             background-color: #fff;
             color: #043fc4;
           }
+        }
+      }
+    }
+
+    .adv {
+      height: 686px;
+      padding-top: 45px;
+      background: url("../images/program/game-cloud-adv.png") no-repeat center 70%;
+      .title {
+        color: #121931;
+        font-size: 26px;
+        font-weight: 600;
+        letter-spacing: 1.3px;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .cont {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        max-width: 1180px;
+        margin: 30px auto 0;
+        .column {
+          display: flex;
+          flex-direction: column;
+        }
+        .item {
+          width: 340px;
+          height: 120px;
+          text-align: left;
+          margin-bottom: 50px;
+          &-title {
+            color: #2b3555;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 41px;
+            .order {
+              display: inline-block;
+              vertical-align: super;
+              margin-right: -5px;
+            }
+          }
+          &-body {
+            color: #33394e;
+            font-size: 14px;
+            line-height: 22px;
+            padding-left: 20px;
+          }
+        }
+      }
+    }
+
+    .consult {
+      height: 192px;
+      background: url("../images/program/bottom-bg.png") no-repeat center center;
+      background-size: cover;
+      text-align: center;
+      padding-top: 30px;
+
+      .title {
+        color: #fff;
+        font-size: 26px;
+        line-height: 41px;
+        margin-bottom: 20px;
+      }
+
+      .consult-btn {
+        padding: 8px 40px;
+        font-size: 14px;
+        line-height: 41px;
+        color: #fff;
+        letter-spacing: 2.8px;
+        text-decoration: none;
+        background-color: transparent;
+        border: 1px solid #fff;
+        border-radius: 17px;
+        -webkit-transition: all .4s ease-in-out;
+        -moz-transition: all .4s ease-in-out;
+        -ms-transition: all .4s ease-in-out;
+        -o-transition: all .4s ease-in-out;
+        transition: all .4s ease-in-out;
+        &:hover {
+          background-color: #fff;
+          color: #043fc4;
         }
       }
     }

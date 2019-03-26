@@ -2803,7 +2803,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background-size: cover;
 }
 #tz-program .banner .title {
-  margin-top: 80px;
+  margin-top: 60px;
 }
 #tz-program .banner .title .text {
   font-size: 50px;
@@ -2836,14 +2836,14 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   color: #043fc4;
   background: #fff;
 }
-#tz-program .banner .btn-link {
+#tz-program .banner .tab {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
   text-align: center;
 }
-#tz-program .banner .btn-link-item {
+#tz-program .banner .tab-item {
   display: inline-block;
   width: 130px;
   height: 63px;
@@ -2862,7 +2862,8 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background: linear-gradient(to right, #b9ccfc 0%, #6d8fff 50%);
   background: -webkit-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
 }
-#tz-program .banner .btn-link-item:hover {
+#tz-program .banner .tab-item.active,
+#tz-program .banner .tab-item:hover {
   background: #fff;
   color: #043fc4;
 }
@@ -2871,7 +2872,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz-program .content .problem {
   height: 682px;
-  padding-top: 80px;
+  padding-top: 60px;
   background-color: #fff;
 }
 #tz-program .content .problem .title {
@@ -2934,7 +2935,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   height: 1000px;
   background-image: url(/images/program-arch-bg.png?aeb381af904a4d8292c7f5c71f1fb1f2);
   background-size: cover;
-  padding-top: 60px;
+  padding-top: 50px;
 }
 #tz-program .content .arch .title {
   color: #121931;
@@ -2955,10 +2956,11 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin: 50px auto 40px;
 }
 #tz-program .content .arch .cont .consult-btn {
-  padding: 8px 60px;
+  width: 180px;
+  height: 40px;
   display: inline-block;
   font-size: 14px;
-  line-height: 41px;
+  line-height: 36px;
   color: #fff;
   letter-spacing: 2.8px;
   text-decoration: none;
@@ -2969,6 +2971,97 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   transition: all 0.4s ease-in-out;
 }
 #tz-program .content .arch .cont .consult-btn:hover {
+  background-color: #fff;
+  color: #043fc4;
+}
+#tz-program .content .adv {
+  height: 686px;
+  padding-top: 45px;
+  background: url(/images/game-cloud-adv.png?de6c44551eb078692cc6598120b898dc) no-repeat center 70%;
+}
+#tz-program .content .adv .title {
+  color: #121931;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: 1.3px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+#tz-program .content .adv .cont {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  max-width: 1180px;
+  margin: 30px auto 0;
+}
+#tz-program .content .adv .cont .column {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+#tz-program .content .adv .cont .item {
+  width: 340px;
+  height: 120px;
+  text-align: left;
+  margin-bottom: 50px;
+}
+#tz-program .content .adv .cont .item-title {
+  color: #2b3555;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 41px;
+}
+#tz-program .content .adv .cont .item-title .order {
+  display: inline-block;
+  vertical-align: super;
+  margin-right: -5px;
+}
+#tz-program .content .adv .cont .item-body {
+  color: #33394e;
+  font-size: 14px;
+  line-height: 22px;
+  padding-left: 20px;
+}
+#tz-program .content .consult {
+  height: 192px;
+  background: url(/images/bottom-bg.png?ea1b0ccf74fe5f03daa52d067e80b31c) no-repeat center center;
+  background-size: cover;
+  text-align: center;
+  padding-top: 30px;
+}
+#tz-program .content .consult .title {
+  color: #fff;
+  font-size: 26px;
+  line-height: 41px;
+  margin-bottom: 20px;
+}
+#tz-program .content .consult .consult-btn {
+  padding: 8px 40px;
+  font-size: 14px;
+  line-height: 41px;
+  color: #fff;
+  letter-spacing: 2.8px;
+  text-decoration: none;
+  background-color: transparent;
+  border: 1px solid #fff;
+  border-radius: 17px;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+#tz-program .content .consult .consult-btn:hover {
   background-color: #fff;
   color: #043fc4;
 }

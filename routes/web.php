@@ -52,13 +52,14 @@ Route::group([
     Route::get('ipTest2', 'DefenseIp\SetController@test');    //高防IP测试
     Route::get('login', 'TzAuth\TestController@login');//TODO 上线前要删除   用户登录模拟登录
     Route::get('userInfo', 'User\InfoController@test');
-    Route::get('redis', 'Test\RedisController@test'); //测试Redis
+    Route::get('redis', 'Test\RedisController@test2'); //测试Redis
     Route::get('mail', 'Test\MailController@handle'); //测试邮件
     Route::post('loginTest', 'TzAuth\LoginController@login'); //测试新登录
     Route::get('loginCheck', 'TzAuth\LoginController@loginCheck'); //检测登录状态
     Route::get('time', 'Test\TimeController@time'); //测试时间
     Route::get('user', 'Test\TimeController@time'); //测试时间
     Route::get ('xun','Test\XunsearchController@test');//测试迅搜索
+    Route::get('gf', 'DefenseIp\ApiController@addTest');    //检查状态
 
 });
 

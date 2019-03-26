@@ -110,7 +110,7 @@ class WorkOrderModel extends Model
             return $return;
 
         }
-        if( !Admin::user()->inRoles(['network_dimension'])   ){
+        if( !Admin::user()->inRoles(['network_dimension'])  && !Admin::user()->inRoles(['TZ_admin']) ){
            $where = ['sales_id'=>Admin::user()->id,'business_number'=>$work_data['business_num']];
         }else{
             $where = ['business_number'=>$work_data['business_num']];

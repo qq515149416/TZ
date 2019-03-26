@@ -66,4 +66,122 @@
           }
         }
       }
+      .jumbotron.data-center {
+          padding: 80px 0 37px 0;
+          margin: 0;
+          background-color: #ffffff;
+          h2 {
+              font-size: 26px;
+              color: #333333;
+              text-align: center;
+              margin: 0;
+              font-family: "微软雅黑";
+              padding-bottom: 32px;
+              position: relative;
+              &::after {
+                content: "";
+                position: absolute;
+                width: 50px;
+                height: 6px;
+                background-color: #2139b7;
+                border-radius: 6px;
+                left: 50%;
+                transform: translateX(-50%);
+                bottom: 0;
+              }
+          }
+          .main-content {
+              margin-top: 30px;
+              .tab-content {
+                  .tab-pane {
+                    h3 {
+                        margin: 0;
+                        padding: 0;
+                        padding-bottom: 19px;
+                        border-bottom: 1px solid #333333;
+                        font-size: 32px;
+                        color: #333333;
+                    }
+                    p {
+                        font-size: 14px;
+                        color: #666666;
+                        line-height: 24px;
+                        margin: 18px 0;
+                        .focus {
+                            color: #ea0000;
+                        }
+                        a {
+                            display: block;
+                            background-color: #ea0000;
+                            width: 115px;
+                            height: 20px;
+                            line-height: 20px;
+                            text-align: center;
+                            border-radius: 5px;
+                            color: #fff;
+                            text-decoration: none;
+                            margin-left: 72px;
+                            margin-top: 7px;
+                        }
+                    }
+                    .data-table {
+                        width: 100%;
+                        display: table;
+                        border: 1px solid #d6d7e1;
+                        border-radius: 5px;
+                        .data-table-row {
+                            display: table-row;
+                            .data-table-col {
+                                border: 1px solid #d6d7e1;
+                                text-align: center;
+                                display: table-cell;
+                            }
+                        }
+
+                    }
+
+                  }
+              }
+            .nav-tabs {
+                border: none;
+                margin-bottom: 60px;
+                li {
+                    width: 378px;
+                    border: 1px solid #2343c0;
+                    margin-right: 20px;
+                    border-radius: 10px;
+                    &:last-of-type {
+                        margin: 0;
+                    }
+                    &.active {
+                        border: 1px solid transparent;
+                        background: linear-gradient(to right,#1730ad,#4274f4);
+                        box-shadow: 0 0 29px 11px rgba(6, 43, 205, .25);
+                        a {
+                            color: #fff;
+                        }
+                    }
+                    a {
+                        padding: 0;
+                        margin: 0;
+                        display: block;
+                        width: 100%;
+                        height: 100%;
+                        text-align: center;
+                        color: #043fc4;
+                        line-height: 60px;
+                        height: 60px;
+                        border: none;
+                        // border-radius: 10px;
+                        background-color: transparent;
+                        font-size: 18px;
+                    }
+                }
+            }
+          }
+      }
+      .versionHeart {
+        width: 1181px;
+        margin: 0 auto;
+      }
 }

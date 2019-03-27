@@ -45,7 +45,41 @@ class RedisController extends Controller
 
         Email::dispatch($podcast);
 
-        
+
     }
+
+
+    /**
+     * 测试Redis
+     */
+    public function test2()
+    {
+
+        $redis = Redis::connection('host_flow');
+//        dump($redis->info());
+
+
+
+//        $redis->hset('hash1:001', 'key1', 'v1');  //将key为'key1' value为'v1'的元素存入hash1表
+
+
+        die();
+
+        $mkv = array(
+            'a:0001' => 'First user',
+            'a:0002' => 'Second user',
+            'a:0003' => 'Third user'
+        );
+        $redis->mset($mkv);  // 存储多个 key 对应的 value
+        $retval = $redis -> mget (array_keys( $mkv));  //获取多个key对应的value
+
+        dump($retval);
+
+//        $redis->set('name', 'guwenjie');
+//        $values = $redis->get('name');
+//        dd($values);
+
+    }
+
 
 }

@@ -45,36 +45,36 @@
                             </p>
                             <div class="data-table">
                                 <div class="data-table-row">
-                                    <div class="data-table-col">
+                                    <div class="data-table-col thead">
                                         线路
                                     </div>
-                                    <div class="data-table-col">
+                                    <div class="data-table-col thead">
                                         规格
                                     </div>
-                                    <div class="data-table-col">
+                                    <div class="data-table-col thead">
                                         内存
                                     </div>
-                                    <div class="data-table-col">
+                                    <div class="data-table-col thead">
                                         硬盘
                                     </div>
-                                    <div class="data-table-col">
+                                    <div class="data-table-col thead">
                                         带宽
                                     </div>
-                                    <div class="data-table-col">
+                                    <div class="data-table-col thead">
                                         IP数
                                     </div>
-                                    <div class="data-table-col">
+                                    <div class="data-table-col thead">
                                         单机防御
                                     </div>
-                                    <div class="data-table-col">
+                                    <div class="data-table-col thead">
                                         月付
                                     </div>
-                                    <div class="data-table-col">
+                                    <div class="data-table-col thead">
                                         年付
                                     </div>
                                 </div>
                                 <div class="data-table-row">
-                                    <div class="data-table-col">
+                                    <div class="data-table-col thead">
                                         衡阳电信
                                     </div>
                                     <div class="data-table-col">
@@ -102,6 +102,64 @@
                                         7700
                                     </div>
                                 </div>
+                                <div class="data-table-row">
+                                    <div class="data-table-col thead">
+                                        衡阳电信
+                                    </div>
+                                    <div class="data-table-col">
+                                        八核16线程Xeon E5530*2/L5630*2
+                                    </div>
+                                    <div class="data-table-col">
+                                        8G
+                                    </div>
+                                    <div class="data-table-col">
+                                        1T SATA
+                                    </div>
+                                    <div class="data-table-col">
+                                        G口20M独享
+                                    </div>
+                                    <div class="data-table-col">
+                                        1个
+                                    </div>
+                                    <div class="data-table-col">
+                                        80G
+                                    </div>
+                                    <div class="data-table-col">
+                                        1200
+                                    </div>
+                                    <div class="data-table-col">
+                                        13200
+                                    </div>
+                                </div>
+                                <div class="data-table-row">
+                                    <div class="data-table-col thead">
+                                        衡阳电信
+                                    </div>
+                                    <div class="data-table-col">
+                                        八核16线程Xeon E5530*2/L5630*2
+                                    </div>
+                                    <div class="data-table-col">
+                                        8G
+                                    </div>
+                                    <div class="data-table-col">
+                                        1T SATA
+                                    </div>
+                                    <div class="data-table-col">
+                                        G口50M独享
+                                    </div>
+                                    <div class="data-table-col">
+                                        1个
+                                    </div>
+                                    <div class="data-table-col">
+                                        120G
+                                    </div>
+                                    <div class="data-table-col">
+                                        1800
+                                    </div>
+                                    <div class="data-table-col">
+                                        19800
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div role="tabpanel" class="tab-pane" id="huizhou">
@@ -113,6 +171,11 @@
                     </div>
 
                 </div>
+            </div>
+        </section>
+        <section class="jumbotron introduction">
+            <div class="versionHeart">
+
             </div>
         </section>
     </div>

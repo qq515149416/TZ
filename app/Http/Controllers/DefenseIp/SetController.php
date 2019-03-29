@@ -62,15 +62,16 @@ class SetController extends Controller
         }
 
         $businessData['defense_ip'] = StoreModel::find($businessData['ip_id'])->toArray()['ip']; //根根据高防ID资源获取IP
-        $apiData                    = json_decode($apiModel->updateTarget($businessData['defense_ip'], $targetIp), true); //使用api接口更新目标IP地址
+        $apiData                    = json_decode($apiModel->createTarget($businessData['defense_ip'], $targetIp), true); //使用api接口更新目标IP地址
+        $apiData2                   = json_decode($apiModel->updateTarget($businessData['defense_ip'], $targetIp), true); //使用api接口更新目标IP地址
 
         //判断是否更新成功
-        if ($apiData['code'] == 0) {
+        if (($apiData['code'] == 0) || ($apiData2['code'] == 0)) {
             //成功
             $businessData            = BusinessModel::where('business_number', '=', $busId)->first();
             $businessData->target_ip = $targetIp;  //更新高防IP业务目标IP
             $businessData->save();
-            return tz_ajax_echo([], '成功', 1);
+            return tz_ajax_echo($apiData, '成功', 1);
         } else {
             //失败
             return tz_ajax_echo([], '失败', 0);

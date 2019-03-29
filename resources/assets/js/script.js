@@ -156,7 +156,7 @@ $(function () {
     }
   });
   // 解决方案页面tab切换
-  $('#tz-program .tab').find('a.tab-item[href="' + window.location.hash +'"]').addClass('active').tab('show').siblings().removeClass('active');
+  $('#tz-program .tab').find('a.tab-item[href="' + window.location.hash + '"]').addClass('active').tab('show').siblings().removeClass('active');
   $('#tz-program a.tab-item').on('click', function (e) {
     // e.preventDefault();
     if ($(this).hasClass('active')) {
@@ -164,5 +164,11 @@ $(function () {
     } else {
       $(this).addClass('active').tab('show').siblings().removeClass('active');
     }
+  });
+  // 服务器托管页面collapse切换
+  $('#tz-server-hosting a.collapse-tab-item').on('click', function (e) {
+    // e.preventDefault();
+    $(this).toggleClass('active').siblings().removeClass('active');
+    $('#tz-server-hosting .expand-item.collapse.in').collapse('toggle').siblings().collapse('hide');
   });
 });

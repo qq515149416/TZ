@@ -29,28 +29,24 @@ class WechatController extends Controller
 			if(isset($access_token['errcode'])){
 				return $access_token['errmsg'];
 			}
-			Cache::put('access_token', $access_token['access_token'], $access_token['expires_in']);
+			//过期时间还没弄
+			Cache::put('access_token', $access_token['access_token'], 1);
 		}
-		
+		$check = Cache::get('access_token');
 
 		dd($check);
-		if ($request->session()->has('access_token')) {
-			return true;
-		}else{
-			return false;
-		}
+		
 		dd($res);
 	}
 
 	public function test(Request $request){
 		// $res = $request->session()->get('access_token');
-
-		dd($res);
+		Cache::put('test','666', 1);
+		
 	}
 
 	public function test2(Request $request){
-		$res = $request->session()->get('access_token');
-
+		$res = Cache::get('test');
 		dd($res);
 	}
 

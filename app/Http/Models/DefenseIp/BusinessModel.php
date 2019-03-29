@@ -180,10 +180,10 @@ class BusinessModel extends Model
     {
         switch ($way) {
             case 'package':
-                $list = $this->where('package_id',$id)->get()->toArray();
+                $list = $this->where('package_id',$id)->where('status','!=',3)->get()->toArray();
                 break;
             case 'customer':
-                $list = $this->where('user_id',$id)->get()->toArray();
+                $list = $this->where('user_id',$id)->where('status','!=',3)->get()->toArray();
                 break;
             default:
                 return [

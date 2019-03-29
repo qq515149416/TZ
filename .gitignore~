@@ -1,7 +1,7 @@
 /node_modules
 /public/hot
 /public/storage
-/public/logs
+/public/logs/*
 /storage/*.key
 /vendor
 /.idea
@@ -14,3 +14,16 @@ yarn-error.log
 .env
 .phpunit.result.cache
 .temporary_file.code-workspace
+public/ErrorFiles/504.html
+public/ErrorFiles/404.html
+public/ErrorFiles/400.html
+public/u.php
+public/ErrorFiles/510.html
+public/ErrorFiles/502.html
+public/ErrorFiles/401.html
+public/ErrorFiles/503.html
+public/ErrorFiles/403.html
+public/ErrorFiles/500.html
+public/upload/*
+public/.well-known/
+/config/admin.php

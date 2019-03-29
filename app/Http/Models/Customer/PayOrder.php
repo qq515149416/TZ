@@ -190,7 +190,7 @@ class PayOrder extends Model
 		//优惠券抵扣了的金额
 		$preferential_amount = bcsub($payable_money,$actual_payment,2);
 		//获取余额
-		$before_money = DB::table('tz_users')->where('id',$user_id)->whereNull('deleted_at')->value('money');
+		$before_money = DB::table('tz_users')->where('id',$user_id)->value('money');
 		//计算扣除应付金额后余额
 		$after_money = bcsub((string)$before_money,(string)$actual_payment,2);
 

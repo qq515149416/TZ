@@ -15,11 +15,11 @@
       <p class="sub-text">您的托付，我们全力以赴！</p>
     </div>
     <div class="bottom">
-      <a class="btn-link" href="javascript: void(0);">电信服务器租用</a>
-      <a class="btn-link" href="javascript: void(0);">联通服务器租用</a>
-      <a class="btn-link" href="javascript: void(0);">双线服务器租用</a>
-      <a class="btn-link" href="javascript: void(0);">三线服务器租用</a>
-      <a class="btn-link" href="javascript: void(0);">BGP服务器租用</a>
+        <a class="btn-link {{ $page == 'dianxin' ? 'active' : '' }}" href="/zuyong/dianxin">电信服务器租用</a>
+        <a class="btn-link {{ $page == 'liantong' ? 'active' : '' }}" href="/zuyong/liantong">联通服务器租用</a>
+        <a class="btn-link {{ $page == 'shuangxian' ? 'active' : '' }}" href="/zuyong/shuangxian">双线服务器租用</a>
+        <a class="btn-link {{ $page == 'sanxian' ? 'active' : '' }}" href="/zuyong/sanxian">三线服务器租用</a>
+        <a class="btn-link {{ $page == 'bgp' ? 'active' : '' }}" href="/zuyong/bgp">BGP服务器租用</a>
     </div>
   </div>
   <!-- 热销产品 -->

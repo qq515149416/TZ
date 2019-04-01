@@ -36,138 +36,11 @@
 
                     <!-- Tab panes -->
                     <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane active" id="hengyang">
-                            <h3>湖南衡阳机房</h3>
-                            <p>机房概况：腾正科技湖南衡阳机房出口总带宽860G，直连中国电信骨干网；采用200G集群防火墙，有效防止网络攻击；机房面积达3000平方米，可容纳1288个42U国际标准机柜；电力设备方面，机房两路市电，排除电力故障带来的影响；UPS 艾默生力博特 Hipluse 系统，保证网络的持续稳定；美国卡特 2000KVA 柴油发电机组，为机房稳定运行提供强大保障。</p>
-                            <p>
-                                机房等级：国家 <span class="focus">AAAA</span> 级机房
-                                <a href="#">查看机房实景</a>
-                            </p>
-                            <div class="data-table">
-                                <div class="data-table-row">
-                                    <div class="data-table-col thead">
-                                        线路
-                                    </div>
-                                    <div class="data-table-col thead">
-                                        规格
-                                    </div>
-                                    <div class="data-table-col thead">
-                                        内存
-                                    </div>
-                                    <div class="data-table-col thead">
-                                        硬盘
-                                    </div>
-                                    <div class="data-table-col thead">
-                                        带宽
-                                    </div>
-                                    <div class="data-table-col thead">
-                                        IP数
-                                    </div>
-                                    <div class="data-table-col thead">
-                                        单机防御
-                                    </div>
-                                    <div class="data-table-col thead">
-                                        月付
-                                    </div>
-                                    <div class="data-table-col thead">
-                                        年付
-                                    </div>
-                                </div>
-                                <div class="data-table-row">
-                                    <div class="data-table-col thead">
-                                        衡阳电信
-                                    </div>
-                                    <div class="data-table-col">
-                                        八核16线程Xeon E5530*2/L5630*2
-                                    </div>
-                                    <div class="data-table-col">
-                                        8G
-                                    </div>
-                                    <div class="data-table-col">
-                                        1T SATA
-                                    </div>
-                                    <div class="data-table-col">
-                                        G口20M独享
-                                    </div>
-                                    <div class="data-table-col">
-                                        1个
-                                    </div>
-                                    <div class="data-table-col">
-                                        40G
-                                    </div>
-                                    <div class="data-table-col">
-                                        700
-                                    </div>
-                                    <div class="data-table-col">
-                                        7700
-                                    </div>
-                                </div>
-                                <div class="data-table-row">
-                                    <div class="data-table-col thead">
-                                        衡阳电信
-                                    </div>
-                                    <div class="data-table-col">
-                                        八核16线程Xeon E5530*2/L5630*2
-                                    </div>
-                                    <div class="data-table-col">
-                                        8G
-                                    </div>
-                                    <div class="data-table-col">
-                                        1T SATA
-                                    </div>
-                                    <div class="data-table-col">
-                                        G口20M独享
-                                    </div>
-                                    <div class="data-table-col">
-                                        1个
-                                    </div>
-                                    <div class="data-table-col">
-                                        80G
-                                    </div>
-                                    <div class="data-table-col">
-                                        1200
-                                    </div>
-                                    <div class="data-table-col">
-                                        13200
-                                    </div>
-                                </div>
-                                <div class="data-table-row">
-                                    <div class="data-table-col thead">
-                                        衡阳电信
-                                    </div>
-                                    <div class="data-table-col">
-                                        八核16线程Xeon E5530*2/L5630*2
-                                    </div>
-                                    <div class="data-table-col">
-                                        8G
-                                    </div>
-                                    <div class="data-table-col">
-                                        1T SATA
-                                    </div>
-                                    <div class="data-table-col">
-                                        G口50M独享
-                                    </div>
-                                    <div class="data-table-col">
-                                        1个
-                                    </div>
-                                    <div class="data-table-col">
-                                        120G
-                                    </div>
-                                    <div class="data-table-col">
-                                        1800
-                                    </div>
-                                    <div class="data-table-col">
-                                        19800
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div role="tabpanel" class="tab-pane" id="huizhou">
-                            惠州机房
-                        </div>
-                        <div role="tabpanel" class="tab-pane" id="xian">
-                            西安机房
-                        </div>
+                        @if(count($data))
+                            @tabpanel(['status' => 'active', 'id' => 'hengyang', 'index' => 'hunan'])
+                            @tabpanel(['status' => '', 'id' => 'huizhou', 'index' => 'huizhou'])
+                            @tabpanel(['status' => '', 'id' => 'xian', 'index' => 'xian'])
+                        @endif
                     </div>
 
                 </div>
@@ -272,6 +145,10 @@
                     </div>
                 </div>
             </div>
+        </section>
+        <section class="jumbotron footer">
+            <h4>独立自主IDC机房，专业服务、品质保障！</h4>
+            <a href="javascript:;">立即咨询</a>
         </section>
     </div>
 @endsection

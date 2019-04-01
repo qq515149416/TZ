@@ -174,7 +174,7 @@ class PayOrder extends Model
 			$payable_money = bcadd($payable_money,$updateInfo['payable_money'],2);
 
 			$business_id = $unpaidOrder[$i]['business_id'];
-			$update = DB::table('tz_orders')->where('id',$unpaidOrder[$i]['id'])->update($updateInfo);
+			$update = DB::table('tz_orders')->where('id',$unpaidOrder[$i]['id'])->whereNull('deleted_at')->update($updateInfo);
 			if($update == 0){
 				DB::rollBack();
 				$return['msg'] = '更新支付状态失败';
@@ -413,6 +413,7 @@ class PayOrder extends Model
 				//如果是新购的高防IP
 				$checkBusiness = DB::table('tz_defenseip_business')
 					->where('business_number',$row['business_sn'])
+					->whereNull('deleted_at')
 					->first();
 				//如果存在该业务
 				if($checkBusiness != null){
@@ -424,6 +425,7 @@ class PayOrder extends Model
 						];
 						$update_business = DB::table('tz_defenseip_business')
 									->where('business_number',$row['business_sn'])
+									->whereNull('deleted_at')
 									->update($business);
 
 						if($update_business == 0){
@@ -440,6 +442,7 @@ class PayOrder extends Model
 					$package = DB::table('tz_defenseip_package')
 					->select(['site','protection_value','price'])
 					->where('id',$row['machine_sn'])
+					->whereNull('deleted_at')
 					->first();
 					if($package == null){
 						$return['msg']  = '该套餐已下架!';
@@ -451,13 +454,14 @@ class PayOrder extends Model
 							->where('site',$package->site)
 							->where('protection_value',$package->protection_value)
 							->where('status',0)
+							->whereNull('deleted_at')
 							->first();
 					if($sale_ip == null){
 						$return['msg']  = '该套餐IP库存不足!';
 						$return['code'] = 2;
 						return $return;
 					}
-					$update_ip =  DB::table('tz_defenseip_store')->where('id',$sale_ip->id)->update(['status' => 1]);
+					$update_ip =  DB::table('tz_defenseip_store')->where('id',$sale_ip->id)->whereNull('deleted_at')->update(['status' => 1]);
 					if($update_ip == 0){
 						$return['msg']  = '更新ip使用状态失败!';
 						$return['code'] = 3;
@@ -495,6 +499,7 @@ class PayOrder extends Model
 					}
 					$update_order = DB::table('tz_orders')
 						->where('id',$row['id'])
+						->whereNull('deleted_at')
 						->update([
 							'resource'  => $sale_ip->ip,
 							]);
@@ -508,6 +513,7 @@ class PayOrder extends Model
 			}else{
 				$business = DB::table('tz_defenseip_business')
 						->where('business_number',$row['business_sn'])
+						->whereNull('deleted_at')
 						->first();
 				//判断业务是否已下架
 				if($business->status == 2||$business->status == 3)
@@ -520,6 +526,7 @@ class PayOrder extends Model
 				$end = Carbon::parse($business->end_at)->addMonth($row['duration'])->toDateTimeString();
 				$upEnd = DB::table('tz_defenseip_business')
 						->where('business_number',$row['business_sn'])
+						->whereNull('deleted_at')
 						->update(['end_at'=>$end]);
 
 				if($upEnd != 1){

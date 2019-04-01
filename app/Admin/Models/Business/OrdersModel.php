@@ -1203,11 +1203,11 @@ class OrdersModel extends Model
 
 		if($row['resource_type'] < 4) {
 			// 资源类型如果是机柜/主机，查找对应的业务状态
-			$business_status = DB::table('tz_business')->where('business_number',$row['business_sn'])->value('business_status');
+			$business_status = DB::table('tz_business')->where('business_number',$row['business_sn'])->whereNull('deleted_at')->value('business_status');
 			if($business_status > 0 && $business_status < 4 && $business_status != 2){
 				// 业务状态是审核通过且是使用状态将状态修改为付款使用即2
 				$business['business_status'] = 2;
-				$businessUp = DB::table('tz_business')->where('business_number',$row['business_sn'])->update($business);
+				$businessUp = DB::table('tz_business')->where('business_number',$row['business_sn'])->whereNull('deleted_at')->update($business);
 				if($businessUp == 0) {
 					$return['msg']  = '更改资源使用状态失败,订单可能为正在付款使用中状态,支付失败';
 					$return['code'] = 3;
@@ -1220,6 +1220,7 @@ class OrdersModel extends Model
 				//如果是新购的高防IP
 				$checkBusiness = DB::table('tz_defenseip_business')
 					->where('business_number',$row['business_sn'])
+					->whereNull('deleted_at')
 					->first();
 				//如果存在该业务
 				if($checkBusiness != null){
@@ -1231,6 +1232,7 @@ class OrdersModel extends Model
 						];
 						$update_business = DB::table('tz_defenseip_business')
 									->where('business_number',$row['business_sn'])
+									->whereNull('deleted_at')
 									->update($business);
 
 						if($update_business == 0){
@@ -1247,6 +1249,7 @@ class OrdersModel extends Model
 					$package = DB::table('tz_defenseip_package')
 					->select(['site','protection_value','price'])
 					->where('id',$row['machine_sn'])
+					->whereNull('deleted_at')
 					->first();
 					if($package == null){
 						$return['msg']  = '该套餐已下架!';
@@ -1258,13 +1261,14 @@ class OrdersModel extends Model
 							->where('site',$package->site)
 							->where('protection_value',$package->protection_value)
 							->where('status',0)
+							->whereNull('deleted_at')
 							->first();
 					if($sale_ip == null){
 						$return['msg']  = '该套餐IP库存不足!';
 						$return['code'] = 2;
 						return $return;
 					}
-					$update_ip =  DB::table('tz_defenseip_store')->where('id',$sale_ip->id)->update(['status' => 1]);
+					$update_ip =  DB::table('tz_defenseip_store')->where('id',$sale_ip->id)->whereNull('deleted_at')->update(['status' => 1]);
 					if($update_ip == 0){
 						$return['msg']  = '更新ip使用状态失败!';
 						$return['code'] = 3;
@@ -1301,6 +1305,7 @@ class OrdersModel extends Model
 					}
 					$update_order = DB::table('tz_orders')
 						->where('id',$row['id'])
+						->whereNull('deleted_at')
 						->update([
 							'resource'  => $sale_ip->ip,
 							]);
@@ -1314,6 +1319,7 @@ class OrdersModel extends Model
 			}else{
 				$business = DB::table('tz_defenseip_business')
 						->where('business_number',$row['business_sn'])
+						->whereNull('deleted_at')
 						->first();
 				//判断业务是否已下架
 				if($business->status == 2||$business->status == 3)
@@ -1326,6 +1332,7 @@ class OrdersModel extends Model
 				$end = Carbon::parse($business->end_at)->addMonth($row['duration'])->toDateTimeString();
 				$upEnd = DB::table('tz_defenseip_business')
 						->where('business_number',$row['business_sn'])
+						->whereNull('deleted_at')
 						->update(['end_at'=>$end]);
 
 				if($upEnd != 1){

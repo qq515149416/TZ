@@ -46,7 +46,7 @@ class OrderModel extends Model
 				->where('site',$package->site)
 				->where('protection_value',$package->protection_value)
 				->where('status',0)
-				->where('deleted_at',null)
+				->whereNull('deleted_at')
 				->first();
 		
 		if($check_ip == null){
@@ -70,7 +70,7 @@ class OrderModel extends Model
 		$data['price']			= DB::table('tz_defenseip_package')->where('id',$package_id)->value('price');
 		$data['machine_sn']		= $package_id;
 		$data['duration']		= $buy_time;
-		$data['payable_money']		= bcmul($data['price'],$data['duration'],2);
+		$data['payable_money']	= bcmul($data['price'],$data['duration'],2);
 		$data['order_status']		= 0;
 		$insert = $this->create($data);
 

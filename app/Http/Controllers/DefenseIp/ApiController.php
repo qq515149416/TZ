@@ -166,10 +166,11 @@ class ApiController extends Controller
 //    }
 
 
-//    public function addTest()
-//    {
+    public function addTest()
+    {
 //        $this->deleteTarget('1.2.3.4');
-//    }
+        dump($_SERVER);
+    }
 
 
 }

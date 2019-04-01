@@ -578,6 +578,20 @@ Route::group([
 
     });
 
+
+    /**
+     *微信端
+     */
+    Route::group([
+        'prefix' => 'wechat',
+        'middleware' => 'web',
+    ], function (Router $router) {
+        $router->get('test', 'Wechat\WechatController@test');  //微信端测试接口
+        $router->get('test2', 'Wechat\WechatController@test2');  //微信端测试接口
+
+    });
+
+
     /**
      * 上传文件管理
      */

@@ -36,21 +36,23 @@ class  PfmStatistics extends Model
 		$end = date("Y-m-d H:i:s",$end);
 		
 		//获取查询时间段内的已付费idc订单
-		$already = DB::table('tz_orders')
-			->select(DB::raw('sum(payable_money) as payable_money, business_id as user_id,order_type'))
-			->whereIn('order_status',[1,2,3,4])
-			->whereIn('resource_type',[1,2,3,4,5,6,7,8,9])
-			->where('pay_time','>',$begin)
-			->where('pay_time','<',$end)
-			->whereNull('deleted_at')
-			->groupBy('business_id','order_type')
+			
+		$already = DB::table('tz_orders_flow as a')
+			->select(DB::raw('sum(a.actual_payment) as payable_money, a.business_id as user_id,a.flow_type as order_type'))
+			->leftjoin('tz_business_relevance as b','a.business_number','=','b.business_id')			
+			->where('a.pay_time','>',$begin)
+			->where('a.pay_time','<',$end)
+			->where('b.type',1)
+			->whereNull('a.deleted_at')
+			->groupBy('a.business_id','order_type')
 			->get()
 			->toArray();	
-
+		// dd($already);
 		//获取所有idc业务欠费订单
 		$unpaid = DB::table('tz_orders')
 			->select(DB::raw('payable_money as arrears, business_id as user_id , created_at ,order_type'))
 			->where('order_status',0)
+			->whereIn('remove_status',[0,1])
 			->whereIn('resource_type',[1,2,3,4,5,6,7,8,9])
 			->whereNull('deleted_at')
 			->get()
@@ -162,22 +164,28 @@ class  PfmStatistics extends Model
 		$begin = date("Y-m-d H:i:s",$begin);
 		$end = date("Y-m-d H:i:s",$end);
 
-		//获取查询时间段内的已付费idc订单
-		$already = DB::table('tz_orders')
-			->select(['id','order_sn','serial_number','business_sn','customer_name','business_name','resource_type','order_type','machine_sn','resource','price','duration','payable_money','end_time','pay_time','order_status','order_note','remove_status','created_at'])
-			->whereIn('order_status',[1,2,3,4])
-			->whereIn('resource_type',[1,2,3,4,5,6,7,8,9])
-			->where('pay_time','>',$begin)
-			->where('pay_time','<',$end)
-			->whereNull('deleted_at')
-			->where('customer_id',$customer_id)
-			->get()
-			->toArray();	
+		$user_info = DB::table('tz_users')->where('id',$customer_id)->first();
+		$user_nickname = $user_info->nickname;
+		$user_name = $user_info->name;
+		$user_email = $user_info->email;
 
+
+		$already = DB::table('tz_orders_flow as a')
+			->select(DB::raw('sum(a.actual_payment) as payable_money,a.flow_type as order_type'))
+			->leftjoin('tz_business_relevance as b','a.business_number','=','b.business_id')			
+			->where('a.pay_time','>',$begin)
+			->where('a.pay_time','<',$end)
+			->where('a.customer_id',$customer_id)
+			->where('b.type',1)
+			->whereNull('a.deleted_at')
+			->get()
+			->toArray();
+			
 		//获取所有idc业务欠费订单
 		$unpaid = DB::table('tz_orders')
 			->select(['id','order_sn','serial_number','business_sn','customer_name','business_name','resource_type','order_type','machine_sn','resource','price','duration','payable_money','end_time','pay_time','order_status','order_note','remove_status','created_at'])
 			->where('order_status',0)
+			->whereIn('remove_status',[0,1])
 			->whereIn('resource_type',[1,2,3,4,5,6,7,8,9])
 			->whereNull('deleted_at')
 			->where('customer_id',$customer_id)
@@ -193,7 +201,7 @@ class  PfmStatistics extends Model
 		}
 
 		$order_arr = [
-			'user_name'		=> '',
+			'user_name'		=> $user_nickname,
 			'total_money'		=> 0,
 			'achievement'		=> 0,
 			'new_achievement'	=> 0,
@@ -204,14 +212,7 @@ class  PfmStatistics extends Model
 			'all_arrears'		=> 0,
 			'preferential_amount'	=> 0,
 		];
-		if(!count($already) == 0){
-			$order_arr['user_name'] = $already[0]->customer_name;
-		}else{
-			$order_arr['user_name'] = $unpaid[0]->customer_name;
-		}
-		if($order_arr['user_name'] == null){
-			$order_arr['user_name'] = DB::table('tz_users')->where('id',$customer_id)->value('email');
-		}
+		
 		//开始统计
 		for ($i=0; $i < count($already); $i++) { 
 			if($already[$i]->order_type == 1){
@@ -220,7 +221,7 @@ class  PfmStatistics extends Model
 				$order_arr['old_achievement'] = bcadd($order_arr['old_achievement'],$already[$i]->payable_money,2);
 			}		
 		}
-	
+		
 		for ($j=0; $j < count($unpaid); $j++) { 
 			if($unpaid[$j]->created_at > $begin && $unpaid[$j]->created_at < $end){				
 				if($unpaid[$j]->order_type == 1){
@@ -235,17 +236,7 @@ class  PfmStatistics extends Model
 		$order_arr['this_arrears'] = bcadd($order_arr['new_arrears'],$order_arr['old_arrears'],2);
 		$order_arr['total_money'] = bcadd($order_arr['achievement'],$order_arr['this_arrears'],2);
 		
-		$orr = [];
-		foreach ($already as $k => $v) {
-			$orr[] = $v;
-		}
-		foreach ($unpaid as $k => $v) {
-			$orr[] = $v;
-		}
-
-		for ($i=0; $i < count($orr); $i++) { 
-			$orr[$i] = $this->trans($orr[$i]);
-		}
+	
 
 		$return['data'] 	= [$order_arr];
 		$return['msg'] 	= '统计成功';
@@ -265,18 +256,19 @@ class  PfmStatistics extends Model
 		
 		$orr = [];
 
-		$already = DB::table('tz_orders')
-			->select(DB::raw('sum(payable_money) as payable_money,order_type'))
-			->whereIn('order_status',[1,2,3,4])
-			->whereIn('resource_type',[1,2,3,4,5,6,7,8,9])
-			->where('pay_time','>',$begin)
-			->where('pay_time','<',$end)
-			->where('business_id',$user_id)
-			->whereNull('deleted_at')
-			->groupBy('order_type')
+		$already = DB::table('tz_orders_flow as a')
+			->select(DB::raw('sum(a.actual_payment) as payable_money,a.flow_type as order_type'))
+			->leftjoin('tz_business_relevance as b','a.business_number','=','b.business_id')			
+			->where('a.pay_time','>',$begin)
+			->where('a.pay_time','<',$end)
+			->where('a.business_id',$user_id)
+			->where('b.type',1)
+			->whereNull('a.deleted_at')
+			->groupBy('flow_type')
 			->get()
 			->toArray();
-		
+
+
 		//获取未付款订单
 		$unpaid = DB::table('tz_orders')
 			->select(DB::raw('payable_money as arrears, created_at ,order_type'))

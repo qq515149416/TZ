@@ -80,6 +80,7 @@ class CustomerModel extends Model
         $count_b = $b_model
             ->where('client_id',$customer->id)
             ->whereIn('business_status',[1,2])
+            ->whereBetween('remove_status',[0,3])
             ->count('id');
         if($count_b == 0){
             $count_b = DB::table('tz_defenseip_business')

@@ -169,7 +169,23 @@ class ApiController extends Controller
     public function addTest()
     {
 //        $this->deleteTarget('1.2.3.4');
-        dump($_SERVER);
+//        dump($_SERVER);
+        print "您的IP地址是：";
+
+
+        if(!empty($_SERVER["HTTP_CLIENT_IP"])){
+             $cip = $_SERVER["HTTP_CLIENT_IP"];
+}
+        elseif(!empty($_SERVER["HTTP_X_FORWARDED_FOR"])){
+            $cip = $_SERVER["HTTP_X_FORWARDED_FOR"];
+}
+        elseif(!empty($_SERVER["REMOTE_ADDR"])){
+            $cip = $_SERVER["REMOTE_ADDR"];
+}
+        else{
+            $cip = "无法获取！";
+}
+        print $cip;
     }
 
 

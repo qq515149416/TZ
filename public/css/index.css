@@ -2791,6 +2791,66 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background: url(/images/productBg.png?8e787a79814dde5601c807ef0a253556) no-repeat;
   background-size: 100% 100%;
 }
+#server_product .jumbotron.introduction .icon {
+  margin-top: 3px;
+}
+#server_product .jumbotron.introduction article {
+  margin-bottom: 24px;
+}
+#server_product .jumbotron.introduction article:last-of-type {
+  margin-bottom: 0;
+}
+#server_product .jumbotron.introduction article h4 {
+  font-size: 18px;
+  font-weight: normal;
+  color: #2139b7;
+  margin: 0;
+}
+#server_product .jumbotron.introduction article p {
+  line-height: 22px;
+  max-width: 679px;
+  margin: 0;
+  margin-top: 10px;
+  color: #666666;
+  font-size: 14px;
+}
+#server_product .jumbotron.reason {
+  height: 628px;
+  padding: 0;
+  padding-top: 80px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0;
+  background: url(/images/productBg2.png?6a68fb8dad3b3de8bda783174a92fa8e) no-repeat;
+  background-size: 100% 100%;
+}
+#server_product .jumbotron.reason h4 {
+  font-size: 26px;
+  color: #ffffff;
+  margin: 0;
+  text-align: center;
+}
+#server_product .jumbotron.reason .reason-content .row {
+  margin: 56px 0;
+}
+#server_product .jumbotron.reason .reason-content .row:last-of-type {
+  margin: 0;
+}
+#server_product .jumbotron.reason .reason-content div[class*="col-md"] {
+  padding: 0 30px;
+  text-align: center;
+}
+#server_product .jumbotron.reason .reason-content div[class*="col-md"] h5 {
+  margin: 10px 0;
+  font-size: 16px;
+  color: #ffffff;
+}
+#server_product .jumbotron.reason .reason-content div[class*="col-md"] p {
+  margin: 0;
+  line-height: 22px;
+  font-size: 14px;
+  color: #c2c1c1;
+}
 #server_product .versionHeart {
   width: 1181px;
   margin: 0 auto;

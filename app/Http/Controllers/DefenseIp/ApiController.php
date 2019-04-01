@@ -169,7 +169,7 @@ class ApiController extends Controller
     public function addTest()
     {
 //        $this->deleteTarget('1.2.3.4');
-        dump($_SERVER);
+//        dump($_SERVER);
 //        print "您的IP地址是：";
 //
 //

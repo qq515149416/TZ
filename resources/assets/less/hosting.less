@@ -28,16 +28,16 @@
       }
     }
 
-    .bottom {
+    .collapse-tab {
       position: absolute;
       left: 0;
       right: 0;
       bottom: 0;
       text-align: center;
 
-      .btn-link {
+      &-item {
         display: inline-block;
-        width: 220px;
+        width: 280px;
         height: 63px;
         line-height: 63px;
         border-radius: 8px;
@@ -59,7 +59,7 @@
         background: -moz-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
         background: -webkit-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
 
-        &:hover {
+        &.active, &:hover {
           background: #fff;
           color: #043fc4;
         }
@@ -81,6 +81,85 @@
       line-height: 40px;
       margin-top: -10px;
       margin-bottom: -2px;
+    }
+  }
+
+
+  .expand-item {
+    height: 620px;
+    margin: 0 auto;
+    width: 1180px;
+    text-align: left;
+    color: #666;
+
+    &-title {
+      padding-top: 40px;
+      font-size: 32px;
+      color: #333;
+    }
+
+    .scene-btn {
+      display: inline-block;
+      padding: 4px 18px;
+      margin-top: 6px;
+      margin-left: 6.8rem;
+      font-size: 12px;
+      color: #fff;
+      letter-spacing: 2.4px;
+      background-color: #ea0000;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+
+    .table-container {
+      margin-top: 40px;
+      text-align: center;
+
+      .table-bordered {
+        thead {
+          th {
+            border-bottom-width: 0 !important;
+          }
+        }
+      }
+
+      th {
+        text-align: center;
+        vertical-align: middle;
+        background: #eeeff3;
+        color: #333;
+        letter-spacing: 2.8px;
+        border: 1px solid #d6d7e1;
+      }
+
+      tr {
+        height: 50px;
+
+        td {
+          line-height: 39px;
+          border: 1px solid #d6d7e1;
+        }
+      }
+
+      .purchase-btn {
+        padding: 6px 22px;
+        color: #666;
+        font-size: 12px;
+        letter-spacing: 1.2px;
+        background-color: #dcdcdc;
+        text-decoration: none;
+        border-radius: 4px;
+        -webkit-transition: all .4s ease-in-out;
+        -moz-transition: all .4s ease-in-out;
+        -ms-transition: all .4s ease-in-out;
+        -o-transition: all .4s ease-in-out;
+        transition: all .4s ease-in-out;
+
+        &:hover {
+          background-color: #ea0000;
+          color: #fffefe
+        }
+      }
     }
   }
 
@@ -274,7 +353,6 @@
       .text {
         margin-top: 0;
       }
-
     }
 
     .consult-btn {

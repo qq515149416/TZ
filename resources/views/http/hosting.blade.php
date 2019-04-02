@@ -14,11 +14,115 @@
             <h2 class="text">服务器托管</h2>
             <h4 class="sub-text">您的托付，我们全力以赴！</h4>
         </div>
-        <div class="bottom">
-            <a class="btn-link" href="javascript: void(0);">衡阳服务器托管</a>
-            <a class="btn-link" href="javascript: void(0);">惠州服务器托管</a>
-            <a class="btn-link" href="javascript: void(0);">西安服务器托管</a>
-            <a class="btn-link" href="javascript: void(0);">杭州服务器托管</a>
+        <div class="collapse-tab">
+            <a class="collapse-tab-item active" href="#hengyang" data-toggle="collapse"
+               data-target="#heng-yang"
+               aria-expanded="true" aria-controls="heng-yang">衡阳服务器托管</a>
+            <a class="collapse-tab-item" href="#huizhou" data-toggle="collapse"
+               data-target="#hui-zhou"
+               aria-expanded="false" aria-controls="hui-zhou">惠州服务器托管</a>
+            <a class="collapse-tab-item" href="#xian" data-toggle="collapse"
+               data-target="#xi-an"
+               aria-expanded="false" aria-controls="xi-an">西安服务器托管</a>
+            <a class="collapse-tab-item" href="#hangzhou" data-toggle="collapse"
+               data-target="#hang-zhou"
+               aria-expanded="false" aria-controls="hang-zhou">杭州服务器托管</a>
+        </div>
+    </div>
+    <!-- 展开部分 -->
+    <div class="expand-area">
+        <div class="expand-item collapse in" id="heng-yang">
+            <h1 class="expand-item-title">湖南衡阳机房</h1>
+            <hr style="height: 1px; background-color: #333; margin-bottom: 10px;"/>
+            <p class="expand-item-desc">
+                机房概况：腾正科技湖南衡阳机房总建筑面积约3000㎡，采用T3+标准机房，BGP三线（电信、联通、移动），1300余个机柜42U国际标准机柜，860G直连中国电信骨干网。</p>
+            <p class="expand-item-desc">
+                机房等级：国家 <span style="color: #ea0000; font-weight: 600;">AAAA</span> 级机房
+                <br/>
+                <a href="javascript: void(0);" class="scene-btn">查看机房实景</a>
+            </p>
+            <p class="expand-item-desc">典型客户：</p>
+            <div class="table-container">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th scope="col" style="width: calc(100% / 9);">线路</th>
+                        <th scope="col" style="width: calc(100% / 9);">规格</th>
+                        <th scope="col" style="width: calc(100% / 9);">电流</th>
+                        <th scope="col" style="width: calc(100% / 9);">带宽</th>
+                        <th scope="col" style="width: calc(100% / 9);">IP数</th>
+                        <th scope="col" style="width: calc(100% / 9);">防御</th>
+                        <th scope="col" style="width: calc(100% / 9);">月付</th>
+                        <th scope="col" style="width: calc(100% / 9);">年付</th>
+                        <th scope="col" style="width: calc(100% / 9);">购买</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!--******-->
+                    <tr>
+                        <th>衡阳电信</th>
+                        <td>1U</td>
+                        <td><0.7A</td>
+                        <td>G口20M独享</td>
+                        <td>1个</td>
+                        <td>40G</td>
+                        <td>650</td>
+                        <td>7100</td>
+                        <td>
+                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
+                        </td>
+                    </tr>
+                    <!--******-->
+                    <tr>
+                        <th>衡阳电信</th>
+                        <td>2U</td>
+                        <td><0.7A</td>
+                        <td>G口20M独享</td>
+                        <td>1个</td>
+                        <td>40G</td>
+                        <td>750</td>
+                        <td>8250</td>
+                        <td>
+                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
+                        </td>
+                    </tr>
+                    <!--******-->
+                    <tr>
+                        <th>衡阳双线</th>
+                        <td>1U</td>
+                        <td><0.7A</td>
+                        <td>G口20M独享</td>
+                        <td>1个</td>
+                        <td>40G</td>
+                        <td>750</td>
+                        <td>8250</td>
+                        <td>
+                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
+                        </td>
+                    </tr>
+                    <!--******-->
+                    <tr>
+                        <th>衡阳双线</th>
+                        <td>2U</td>
+                        <td><0.7A</td>
+                        <td>G口20M独享</td>
+                        <td>1个</td>
+                        <td>40G</td>
+                        <td>950</td>
+                        <td>9900</td>
+                        <td>
+                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="expand-item collapse" id="hui-zhou">
+        </div>
+        <div class="expand-item collapse" id="xi-an">
+        </div>
+        <div class="expand-item collapse" id="hang-zhou">
         </div>
     </div>
     <!-- 性能pk -->

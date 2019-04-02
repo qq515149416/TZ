@@ -244,6 +244,12 @@ $(function () {
       $(this).addClass('active').tab('show').siblings().removeClass('active');
     }
   });
+  // 服务器托管页面collapse切换
+  $('#tz-server-hosting a.collapse-tab-item').on('click', function (e) {
+    // e.preventDefault();
+    $(this).toggleClass('active').siblings().removeClass('active');
+    $('#tz-server-hosting .expand-item.collapse.in').collapse('toggle').siblings().collapse('hide');
+  });
 });
 
 /***/ })

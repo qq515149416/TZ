@@ -18,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('join', function ($expression) {
             return "<?php echo implode('<br />',$expression); ?>";
         });
+        Blade::include('http.productTemplate.tabpanel', 'tabpanel');
     }
 
     /**

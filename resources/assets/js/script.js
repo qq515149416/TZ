@@ -166,6 +166,9 @@ $(function () {
     }
   });
   // 服务器托管页面collapse切换
+  let $target = $('#tz-server-hosting .collapse-tab').find('a.collapse-tab-item[href="' + window.location.hash + '"]');
+  $target.addClass('active').siblings().removeClass('active');
+  $('#tz-server-hosting' + ' #' + $target.attr('aria-controls')).collapse('show').siblings().collapse('hide');
   $('#tz-server-hosting a.collapse-tab-item').on('click', function (e) {
     // e.preventDefault();
     $(this).toggleClass('active').siblings().removeClass('active');

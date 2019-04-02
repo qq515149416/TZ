@@ -2,94 +2,41 @@
   margin-left: -15px;
   margin-right: -15px;
 
-  .banner {
-    position: relative;
-    height: 563px;
-    padding-top: 83px;
-    color: #fff;
+  .tab {
+    position: absolute;
+    top: 480px;
+    left: 0;
+    right: 0;
+    z-index: 2;
     text-align: center;
-    background-image: url("../images/program/program-banner-bg.png");
-    background-size: cover;
 
-    .title {
-      margin-top: 60px;
-
-      .text {
-        font-size: 50px;
-        line-height: 72px;
-        margin-bottom: 25px;
-        letter-spacing: 3.75px;
-      }
-
-      .sub-text {
-        font-size: 16px;
-        letter-spacing: 0.8px;
-      }
-    }
-
-    .apply-btn {
-      display: block;
-      width: 180px;
-      height: 40px;
-      margin: 60px auto 0;
-      border-radius: 20px;
-      font-size: 14px;
-      line-height: 40px;
-      letter-spacing: 2.8px;
+    &-item {
+      display: inline-block;
+      width: 130px;
+      height: 63px;
+      line-height: 63px;
+      border-radius: 8px;
+      margin-left: 10px;
+      margin-right: 10px;
+      margin-bottom: 18px;
       color: #fff;
+      font-size: 18px;
+      letter-spacing: 3.6px;
       text-decoration: none;
-      background: linear-gradient(to right, #b9ccfc 0%, #6d8fff 50%);
-      background: -o-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
-      background: -ms-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
-      background: -moz-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
-      background: -webkit-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
       -webkit-transition: background .4s ease-in-out;
       -moz-transition: background .4s ease-in-out;
       -ms-transition: background .4s ease-in-out;
       -o-transition: background .4s ease-in-out;
       transition: background .4s ease-in-out;
+      background: linear-gradient(to right, #b9ccfc 0%, #6d8fff 50%);
+      background: -o-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
+      background: -ms-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
+      background: -moz-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
+      background: -webkit-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
 
-      &:hover {
-        color: #043fc4;
+      &.active, &:hover {
         background: #fff;
-      }
-    }
-
-    .tab {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      text-align: center;
-
-      &-item {
-        display: inline-block;
-        width: 130px;
-        height: 63px;
-        line-height: 63px;
-        border-radius: 8px;
-        margin-left: 10px;
-        margin-right: 10px;
-        margin-bottom: 18px;
-        color: #fff;
-        font-size: 18px;
-        letter-spacing: 3.6px;
-        text-decoration: none;
-        -webkit-transition: background .4s ease-in-out;
-        -moz-transition: background .4s ease-in-out;
-        -ms-transition: background .4s ease-in-out;
-        -o-transition: background .4s ease-in-out;
-        transition: background .4s ease-in-out;
-        background: linear-gradient(to right, #b9ccfc 0%, #6d8fff 50%);
-        background: -o-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
-        background: -ms-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
-        background: -moz-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
-        background: -webkit-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
-
-        &.active, &:hover {
-          background: #fff;
-          color: #043fc4;
-        }
+        color: #043fc4;
       }
     }
   }
@@ -97,8 +44,63 @@
   .content {
     text-align: center;
 
+    .banner {
+      position: relative;
+      height: 563px;
+      padding-top: 83px;
+      color: #fff;
+      text-align: center;
+      background-size: cover;
+
+      .title {
+        margin-top: 60px;
+        color: #fff;
+
+        .text {
+          font-size: 50px;
+          line-height: 72px;
+          margin-bottom: 25px;
+          letter-spacing: 3.75px;
+        }
+
+        .sub-text {
+          font-size: 16px;
+          letter-spacing: 0.8px;
+          line-height: 30px;
+        }
+      }
+
+      .apply-btn {
+        display: block;
+        width: 180px;
+        height: 40px;
+        margin: 60px auto 0;
+        border-radius: 20px;
+        font-size: 14px;
+        line-height: 40px;
+        letter-spacing: 2.8px;
+        color: #fff;
+        text-decoration: none;
+        background: linear-gradient(to right, #b9ccfc 0%, #6d8fff 50%);
+        background: -o-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
+        background: -ms-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
+        background: -moz-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
+        background: -webkit-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
+        -webkit-transition: background .4s ease-in-out;
+        -moz-transition: background .4s ease-in-out;
+        -ms-transition: background .4s ease-in-out;
+        -o-transition: background .4s ease-in-out;
+        transition: background .4s ease-in-out;
+
+        &:hover {
+          color: #043fc4;
+          background: #fff;
+        }
+      }
+    }
+
     .problem {
-      height: 682px;
+      height: 700px;
       padding-top: 60px;
       background-color: #fff;
 
@@ -131,10 +133,12 @@
           &-title {
             text-align: left;
             margin-bottom: 12px;
+
             .icon {
               display: inline-block;
               margin-top: -5px;
             }
+
             .text {
               color: #333;
               font-size: 16px;
@@ -143,9 +147,11 @@
               margin-left: 18px;
             }
           }
+
           &-body {
             ul {
               padding-left: 48px;
+
               li {
                 text-align: left;
                 padding-left: 5px;
@@ -159,9 +165,9 @@
 
     .arch {
       height: 1000px;
-      background-image: url("../images/program/program-arch-bg.png");
-      background-size: cover;
+      background-size: 100% 100%;
       padding-top: 50px;
+
       .title {
         color: #121931;
         font-size: 26px;
@@ -170,15 +176,19 @@
         text-align: center;
         margin-bottom: 20px;
       }
+
       .cont {
         margin-top: 40px;
+
         .desc {
           color: #363f5b;
           font-size: 14px;
+          line-height: 25px;
           text-align: left;
           display: inline-block;
           margin: 50px auto 40px;
         }
+
         .consult-btn {
           width: 180px;
           height: 40px;
@@ -196,6 +206,7 @@
           -ms-transition: all .4s ease-in-out;
           -o-transition: all .4s ease-in-out;
           transition: all .4s ease-in-out;
+
           &:hover {
             background-color: #fff;
             color: #043fc4;
@@ -207,7 +218,7 @@
     .adv {
       height: 686px;
       padding-top: 45px;
-      background: url("../images/program/game-cloud-adv.png") no-repeat center 70%;
+
       .title {
         color: #121931;
         font-size: 26px;
@@ -216,6 +227,7 @@
         text-align: center;
         margin-bottom: 20px;
       }
+
       .cont {
         display: flex;
         flex-direction: row;
@@ -223,26 +235,31 @@
         justify-content: space-between;
         max-width: 1180px;
         margin: 30px auto 0;
+
         .column {
           display: flex;
           flex-direction: column;
         }
+
         .item {
           width: 340px;
           height: 120px;
           text-align: left;
           margin-bottom: 50px;
+
           &-title {
             color: #2b3555;
             font-size: 16px;
             font-weight: 600;
             line-height: 41px;
+
             .order {
               display: inline-block;
               vertical-align: super;
               margin-right: -5px;
             }
           }
+
           &-body {
             color: #33394e;
             font-size: 14px;
@@ -255,7 +272,7 @@
 
     .consult {
       height: 192px;
-      background: url("../images/program/bottom-bg.png") no-repeat center center;
+      background: url("../images/program/consult-bg.png") no-repeat center center;
       background-size: cover;
       text-align: center;
       padding-top: 30px;
@@ -282,10 +299,267 @@
         -ms-transition: all .4s ease-in-out;
         -o-transition: all .4s ease-in-out;
         transition: all .4s ease-in-out;
+
         &:hover {
           background-color: #fff;
           color: #043fc4;
         }
+      }
+    }
+
+    /* 游戏 */
+
+    #game {
+      .banner {
+        background-image: url("../images/program/game/game-banner-bg.png");
+      }
+
+      .arch {
+        background-image: url("../images/program/game/game-arch-bg.png");
+      }
+
+      .adv {
+        background: url("../images/program/game/game-adv.png") no-repeat center 70%;
+      }
+    }
+
+    /* 棋牌 */
+
+    #chess {
+      .banner {
+        background-image: url("../images/program/chess/chess-banner-bg.png");
+      }
+
+      .problem {
+        height: 530px;
+
+        .card {
+          position: relative;
+          height: 290px;
+          padding-left: 35px;
+          padding-right: 35px;
+          -webkit-transition: all .4s;
+          -moz-transition: all .4s;
+          -ms-transition: all .4s;
+          -o-transition: all .4s;
+          transition: all .4s;
+
+          &-title {
+            position: relative;
+            top: 50%;
+            -webkit-transform: translateY(-50%);
+            -moz-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+            -o-transform: translateY(-50%);
+            transform: translateY(-50%);
+            -webkit-transition: all .4s;
+            -moz-transition: all .4s;
+            -ms-transition: all .4s;
+            -o-transition: all .4s;
+            transition: all .4s;
+            text-align: center;
+
+            .text {
+              margin-top: 20px;
+              margin-left: 0;
+            }
+
+            .hover-icon {
+              display: none;
+            }
+
+            .divider {
+              width: 20px;
+              height: 1px;
+              background-color: #4d4d4d;
+              border-top: unset;
+              -webkit-transition: all .4s;
+              -moz-transition: all .4s;
+              -ms-transition: all .4s;
+              -o-transition: all .4s;
+              transition: all .4s;
+            }
+          }
+
+          &-body {
+            position: relative;
+            top: 15%;
+            color: #fff;
+            opacity: 0;
+            -webkit-transition: all .4s;
+            -moz-transition: all .4s;
+            -ms-transition: all .4s;
+            -o-transition: all .4s;
+            transition: all .4s;
+          }
+
+          &:hover {
+            background: linear-gradient(to right, #284af3 0%, #6d8fff 60%);
+            background: -o-linear-gradient(left, #284af3 0%, #6d8fff 60%);
+            background: -ms-linear-gradient(left, #284af3 0%, #6d8fff 60%);
+            background: -moz-linear-gradient(left, #284af3 0%, #6d8fff 60%);
+            background: -webkit-linear-gradient(left, #284af3 0%, #6d8fff 60%);
+
+            .card-title {
+              text-align: center;
+              top: 25%;
+
+              .icon {
+                display: none;
+              }
+
+              .hover-icon {
+                display: inline-block;
+              }
+
+              .text {
+                color: #fff;
+              }
+
+              .divider {
+                width: 34px;
+                height: 1px;
+                background-color: #fff;
+                border-top: unset;
+              }
+            }
+
+            .card-body {
+              top: 0;
+              opacity: 1;
+            }
+          }
+        }
+      }
+
+      .arch {
+        max-width: 100%;
+        height: 660px;
+        background: url("../images/program/chess/chess-arch-bg.png") no-repeat;
+        background-size: 100% 100%;
+
+        .title {
+          color: #fff;
+        }
+
+        .cont {
+          position: relative;
+          height: 400px;
+          max-width: 1240px;
+          margin-left: auto;
+          margin-right: auto;
+          text-align: center;
+
+          .arch-text {
+            position: absolute;
+            top: 10px;
+            left: 30px;
+            width: 370px;
+            height: 300px;
+            text-align: left;
+            color: #fff;
+
+            .desc {
+              margin-top: 0;
+              margin-bottom: 60px;
+              color: #fff;
+            }
+          }
+
+          .arch-img {
+            position: absolute;
+            top: -20px;
+            right: 20px;
+            -webkit-transform: scale(0.9);
+            -moz-transform: scale(0.9);
+            -ms-transform: scale(0.9);
+            -o-transform: scale(0.9);
+            transform: scale(0.9);
+          }
+        }
+      }
+
+      .adv {
+        height: 546px;
+        background: url("../images/program/chess/chess-adv.png") no-repeat center 70%;
+
+        .item {
+          height: 140px;
+        }
+      }
+    }
+
+    /* 金融 */
+
+    #finance {
+      .banner {
+        background-image: url("../images/program/finance/finance-banner-bg.png");
+      }
+
+      .problem {
+        height: 620px;
+
+        .card {
+          width: 570px;
+          height: 176px;
+
+          &-body {
+            p {
+              text-align: left;
+              padding-left: 50px;
+            }
+          }
+        }
+      }
+
+      .arch {
+        height: 1100px;
+        background-image: url("../images/program/finance/finance-arch-bg.png");
+      }
+
+      .adv {
+        height: 710px;
+        background: url("../images/program/finance/finance-adv.png") no-repeat 48.5% 58%;
+
+        .cont {
+          .item {
+            width: 320px;
+          }
+        }
+      }
+    }
+
+    /* 流媒体 */
+
+    #streaming_media {
+      .banner {
+        background-image: url("../images/program/streaming-media/streaming-media-banner-bg.png");
+      }
+
+      .problem {
+        height: 620px;
+
+        .card {
+          width: 570px;
+          height: 176px;
+
+          &-body {
+            p {
+              text-align: left;
+              padding-left: 50px;
+            }
+          }
+        }
+      }
+
+      .arch {
+        height: 1220px;
+        background-image: url("../images/program/streaming-media/streaming-media-arch-bg.png");
+      }
+
+      .adv {
+        height: 710px;
+        background: url("../images/program/streaming-media/streaming-media-adv.png") no-repeat 48.5% 70%;
       }
     }
   }

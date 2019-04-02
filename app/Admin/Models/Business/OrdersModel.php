@@ -182,8 +182,8 @@ class OrdersModel extends Model
 			$return['msg'] = '资源无法增加！！';
 			return $return;
 		}
-		//业务到期时间和资源到期时间比较
-		$end_time = Carbon::parse('+'.$insert_data['duration'].' months')->toDateTimeString();
+		//业务到期时间
+		$end_time = time_calculation(date('Y-m-d H:i:s',time()),$insert_data['duration'],'month');
 		$business = DB::table('tz_business')->where('business_number',$insert_data['business_sn'])->value('business_status');
 		if(empty($business)){
 			$return['data'] = '';
@@ -214,8 +214,7 @@ class OrdersModel extends Model
 		$sales_id = Admin::user()->id;
 		$insert_data['business_id'] = $sales_id;
 		$insert_data['business_name'] = Admin::user()->name?Admin::user()->name:Admin::user()->username;
-		// $insert_data['month'] = (int)date('Ym',time());
-		$insert_data['created_at'] = Carbon::now()->toDateTimeString();
+		$insert_data['created_at'] = date('Y-m-d H:i:s',time());
 		DB::beginTransaction();//开启事务处理
 		$row = DB::table('tz_orders')->insertGetId($insert_data);
 		if($row == false){
@@ -257,7 +256,7 @@ class OrdersModel extends Model
 				break;
 		}
 		if($result != 0){
-			// 所对应资源表的业务编号和到期时间，状态修改成功后进行事务提交
+			//所对应资源表的业务编号和到期时间，状态修改成功后进行事务提交
 			$xunsearch = new XS('orders');
 		    $index = $xunsearch->index;
             $doc['id'] = strtolower($row);
@@ -615,7 +614,7 @@ class OrdersModel extends Model
                 return $return;
             }
 			//对业务进行到期时间的更新
-			$endding_time = Carbon::parse($business->endding_time)->modify('+'.$renew['length'].' months')->toDateTimeString();
+			$endding_time = time_calculation($business->endding_time,$renew['length'],'month');
 			// 对业务的累计时长进行更新
 			$length = bcadd($business->length,$renew['length'],0);
 			$order['end_time'] = $endding_time;//订单到期时间
@@ -655,7 +654,7 @@ class OrdersModel extends Model
                         return $return;
                     }
                     //到期时间
-                    $end_time = Carbon::parse($order_result->end_time)->modify('+'.$renew['length'].' months')->toDateTimeString();
+                    $end_time = time_calculation($order_result->end_time,$renew['length'],'month');
                     $order['end_time'] = $end_time;
                     $order['duration'] = $renew['length'];//订单时长
                     $order['order_sn'] = $this->orderSn($order_result->id,$order_result->resource_type);//订单关联业务
@@ -1274,7 +1273,8 @@ class OrdersModel extends Model
 						$return['code'] = 3;
 						return $return;
 					}
-					$end = Carbon::now()->addMonth($row['duration'])->toDateTimeString();
+					$end = time_calculation(date('Y-m-d H:i:s',time()),$row['duration'],'month');
+					// Carbon::now()->addMonth($row['duration'])->toDateTimeString();
 
 					$business = [
 						'business_number'   => $row['business_sn'],
@@ -1329,7 +1329,8 @@ class OrdersModel extends Model
 					return $return;
 				}
 
-				$end = Carbon::parse($business->end_at)->addMonth($row['duration'])->toDateTimeString();
+				$end = time_calculation($business->end_at,$row['duration'],'month');
+				// Carbon::parse($business->end_at)->addMonth($row['duration'])->toDateTimeString();
 				$upEnd = DB::table('tz_defenseip_business')
 						->where('business_number',$row['business_sn'])
 						->whereNull('deleted_at')
@@ -1586,9 +1587,9 @@ class OrdersModel extends Model
 		$insert['price'] = $insert_data['price'];
 		$insert['duration'] = $insert_data['duration'];
 		$insert['payable_money'] = bcmul((string)$insert_data['price'],(string)$insert_data['duration'],2);//计算价格
-		$insert['end_time'] = Carbon::parse('+' . $insert_data['duration'] . ' months')->toDateTimeString();
+		$insert['end_time'] = time_calculation(date('Y-m-d H:i:s',time()),$insert_data['duration'],'month');
 		$insert['order_note'] = $insert_data['order_note'];
-		$insert['created_at'] = Carbon::now()->toDateTimeString();
+		$insert['created_at'] = date('Y-m-d H:i:s',time());
 		$row = DB::table('tz_orders')->insertGetId($insert);
 		if($row == false){
 			// 资源订单生成失败

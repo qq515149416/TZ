@@ -7,7 +7,7 @@ use Encore\Admin\Controllers\ModelForm;
 use App\Admin\Models\Business\CustomerModel;
 use App\Admin\Models\Hr\DepartmentModel;
 use Illuminate\Http\Request;
-use App\Admin\Requests\Business\BusinessRequest;
+use App\Admin\Requests\Business\CustomerRequest;
 
 /**
  * 客户信息
@@ -91,7 +91,7 @@ class CustomerController extends Controller
      * @param  Request $request [description]
      * @return [type]           [description]
      */
-    public function insertClerk(Request $request){
+    public function insertClerk(CustomerRequest $request){
         $customer = $request->only(['email']);
         $insert = new CustomerModel();
         $insert_result = $insert->insertClerk($customer);

@@ -780,7 +780,7 @@ class Order extends Model
                 return $return;
             }
 			//对业务进行到期时间的更新
-			$endding_time = time($business->endding_time,$renew['length'],'month');
+			$endding_time = time_calculation($business->endding_time,$renew['length'],'month');
 			// 对业务的累计时长进行更新
 			$length = bcadd($business->length,$renew['length'],0);
 			$order['end_time'] = $endding_time;//订单到期时间

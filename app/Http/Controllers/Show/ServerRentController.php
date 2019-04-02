@@ -8,6 +8,16 @@ class ServerRentController extends Controller
 {
     public function index($page)
     {
+        // $leng = 4;
+        // $currteme = strtotime("2019-01-20 17:28:00");
+        // $now = date("Y-m",$currteme);
+        // // $now = date("Y-m",strtotime("2019-01"));
+        // $date = date("t",strtotime("$now +1 month"));
+        // $xfts = 0;
+        // for($i = 0;$i<$leng;$i++) {
+
+        // }
+        // dump($date);
         $template = "http/serverRent";
         $data = [
             "dianxin" => [

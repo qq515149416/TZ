@@ -496,7 +496,7 @@ Route::group([
 
 
         /**
-         *  高防IP下架处理
+         *  高防IP业务管理
          */
         Route::group([
             'prefix' => 'remove',
@@ -509,6 +509,7 @@ Route::group([
             $router->get('goExamine', 'DefenseIp\RemoveController@goExamine');//进行审核
             $router->get('showExamine', 'DefenseIp\RemoveController@showExamine');//查看正在审核的下架申请
 
+            $router->post('setTarget', 'DefenseIp\SetController@setTarget');//配置目标IP
         });
 
         /**
@@ -542,7 +543,7 @@ Route::group([
     });
 
     /**
-     * 申请下架
+     * excel
      */
     Route::group([
         'prefix' => 'excel',

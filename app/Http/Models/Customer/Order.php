@@ -780,7 +780,7 @@ class Order extends Model
                 return $return;
             }
 			//对业务进行到期时间的更新
-			$endding_time = Carbon::parse($business->endding_time)->modify('+'.$renew['length'].' months')->toDateTimeString();
+			$endding_time = time($business->endding_time,$renew['length'],'month');
 			// 对业务的累计时长进行更新
 			$length = bcadd($business->length,$renew['length'],0);
 			$order['end_time'] = $endding_time;//订单到期时间
@@ -820,7 +820,7 @@ class Order extends Model
                         return $return;
                     }
                     //到期时间
-                    $end_time = Carbon::parse($order_result->end_time)->modify('+'.$renew['length'].' months')->toDateTimeString();
+                    $end_time = time_calculation($order_result->end_time,$renew['length'],'month');
                     $order['end_time'] = $end_time;
                     $order['duration'] = $renew['length'];//订单时长
                     $order['order_sn'] = $this->orderSn($order_result->id,$order_result->resource_type);//订单关联业务

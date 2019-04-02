@@ -284,7 +284,8 @@ class BusinessModel extends Model
 		//如果存在未付款订单,则判断业务状态
 		if($checkOrder != null){ 
 			if($business->status == 4){	//如果是试用状态, 还要更新结束时间
-				$end_time = Carbon::parse($business->examine_time)->addMonth($buy_time)->toDateTimeString();
+				$end_time = time_calculation($business->examine_time,$buy_time,'month');
+				// Carbon::parse($business->examine_time)->addMonth($buy_time)->toDateTimeString();
 				$end = strtotime($end_time);
 				if($end < time()){	
 					return [
@@ -311,7 +312,8 @@ class BusinessModel extends Model
 			if($business->status == 4){
 				$order_type = 1;
 				$order_sn = 'GS_'.time().'_admin_'.$user_id;
-				$end_time = Carbon::parse($business->examine_time)->addMonth($buy_time)->toDateTimeString();
+				$end_time = time_calculation($business->examine_time,$buy_time,'month');
+				// Carbon::parse($business->examine_time)->addMonth($buy_time)->toDateTimeString();
 				$end = strtotime($end_time);
 				if($end < time()){
 					return [

@@ -346,7 +346,7 @@ class CustomerModel extends Model
      * @return [type]        [description]
      */
     public function insertClerk($email){
-        if(!$email){
+        if(!isset($email['email'])){
             $return['code'] = 0;
             $return['msg'] = '无法绑定客户';
             return $return;

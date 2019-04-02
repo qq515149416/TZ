@@ -20,9 +20,9 @@
             <li data-target="#carousel-example-generic" data-slide-to="1">
                 <span class="progress"></span>
             </li>
-            <li data-target="#carousel-example-generic" data-slide-to="2">
+            <!-- <li data-target="#carousel-example-generic" data-slide-to="2">
                 <span class="progress"></span>
-            </li>
+            </li> -->
         </ol>
 
         <!-- Wrapper for slides -->
@@ -34,13 +34,13 @@
                     </div>
                 </a>
             </div>
-            <div class="item">
+            <!-- <div class="item">
                 <a href="/promotion/ddk" target="_blank">
                     <img src="{{ asset("/images/banner/ddk.jpg") }}" alt="...">
                     <div class="carousel-caption">
                     </div>
                 </a>
-            </div>
+            </div> -->
             <div class="item">
                 <a href="http://yun.zeisp.com/cloudbuy.html" target="_blank">
                     <img src="{{ asset("/images/banner/xianyun.png") }}" alt="...">

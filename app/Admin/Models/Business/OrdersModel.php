@@ -982,11 +982,12 @@ class OrdersModel extends Model
 		$return['data'] = '';
 		$admin_user_id = Admin::user()->id;
 
-		//查看有没有这些订单
 		$biaoshi = 0;
 		foreach ($order_id as $k => $v) {
+			//获取订单信息
 			$c_order = $this->find($v);
 
+			//判断订单是否存在
 			if($c_order == null){		//如果没有
 				return [
 					'data'	=> [],
@@ -1035,7 +1036,6 @@ class OrdersModel extends Model
 
 		$unpaidOrder = $this
 				->where('order_status',0)
-				// ->where('business_sn',$business_number)
 				->where('remove_status',0)
 				->whereIN('id',$order_id)
 				->get()

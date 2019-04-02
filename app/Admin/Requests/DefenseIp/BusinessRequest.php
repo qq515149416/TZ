@@ -59,7 +59,14 @@ class BusinessRequest extends FormRequest
 					'res'			=> 'required|integer|min:0|max:1',
 				];
 				break;
-				
+			case 'renewByAdmin':
+				$return = [
+					'business_id'		=> 'required|exists:tz_defenseip_business,id',	
+					'buy_time'		=> 'required|integer',
+					'start_time'		=> 'date'
+				];
+				break;
+			
 			default:
 	
 				break;
@@ -72,6 +79,10 @@ class BusinessRequest extends FormRequest
 	{
 		
 		return  [
+			'start_time.required'			=> '请填写业务计费开始时间',
+			'start_time.date'			=> '业务计费开始时间格式错误',
+			'buy_time.required'			=> '请填写购买时长',
+			'buy_time.integer'			=> '购买时长需为整数',
 			'business_id.required'			=> '请选择业务id',
 			'business_id.exists'			=> '不存在此业务id',
 			'status.required'			=> '请选择审核结果',

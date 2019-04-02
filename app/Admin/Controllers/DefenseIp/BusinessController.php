@@ -54,16 +54,24 @@ class BusinessController extends Controller
 		return tz_ajax_echo($makeOrder['data'],$makeOrder['msg'],$makeOrder['code']);
 	}
 
+	
 	/**
 	 *  续费 高防IP 接口  /  选取业务后,生成订单信息 
 	 */
 	public function renewByAdmin(BusinessRequest $request){
-		$par = $request->only(['business_id','buy_time']);
+		$par = $request->only(['business_id','buy_time','start_time']);
 		$model = new BusinessModel();
 
 		$business_id = $par['business_id'];
 		$buy_time = $par['buy_time'];
-		$makeOrder = $model->renew($business_id,$buy_time);
+
+		if(isset($par['start_time'])){
+			$start_time = $par['start_time'];
+		}else{
+			$start_time = 0;
+		}
+	
+		$makeOrder = $model->renew($business_id,$buy_time,$start_time);
 		
 		return tz_ajax_echo($makeOrder['data'],$makeOrder['msg'],$makeOrder['code']);
 	}

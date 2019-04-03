@@ -156,6 +156,7 @@ $(function () {
     }
   });
   // 解决方案页面tab切换
+  $('#tz-program .tab').find('a.tab-item[href="' + window.location.hash + '"]').addClass('active').tab('show').siblings().removeClass('active');
   $(window).bind('hashchange', function () {
     $('#tz-program .tab').find('a.tab-item[href="' + window.location.hash + '"]').addClass('active').tab('show').siblings().removeClass('active');
   });
@@ -168,6 +169,9 @@ $(function () {
     }
   });
   // 服务器托管页面collapse切换
+  let $target = $('#tz-server-hosting .collapse-tab').find('a.collapse-tab-item[href="' + window.location.hash + '"]');
+  $target.addClass('active').siblings().removeClass('active');
+  $('#tz-server-hosting' + ' #' + $target.attr('aria-controls')).collapse('show').siblings().collapse('hide');
   $(window).bind('hashchange', function () {
     let $target = $('#tz-server-hosting .collapse-tab').find('a.collapse-tab-item[href="' + window.location.hash + '"]');
     $target.addClass('active').siblings().removeClass('active');

@@ -34,28 +34,28 @@
            aria-controls="streaming_media"
            aria-selected="false">流媒体</a>
         <a class="tab-item"
-           id="mobile-app"
+           id="mobile-app-tab"
            href="#mobile_app"
            role="tab"
            aria-controls="mobile_app"
            aria-selected="false">移动APP</a>
         <a class="tab-item"
-           id="education-cloud"
+           id="education-cloud-tab"
            href="#education_cloud"
            role="tab"
            aria-controls="education_cloud"
            aria-selected="false">教育云</a>
         <a class="tab-item"
-           id="government-cloud"
+           id="government-cloud-tab"
            href="#government_cloud"
            role="tab"
            aria-controls="government_cloud"
            aria-selected="false">政务云</a>
         <a class="tab-item"
-           id="smart-city"
-           href="#smart_city"
+           id="website-deployment-tab"
+           href="#website_deployment"
            role="tab"
-           aria-controls="smart_city"
+           aria-controls="website_deployment"
            aria-selected="false">网站部署</a>
     </div>
     <!--主体内容-->
@@ -263,7 +263,7 @@
             </div>
         </div>
         <!-- 棋牌云 -->
-        <div class="tab-pane" id="chess" role="tabpanel" aria-labelledby="chess-tab">
+        <div class="tab-pane active" id="chess" role="tabpanel" aria-labelledby="chess-tab">
             <!-- banner -->
             <div class="banner">
                 <div class="title">
@@ -393,7 +393,7 @@
             </div>
         </div>
         <!-- 金融云 -->
-        <div class="tab-pane" id="finance" role="tabpanel" aria-labelledby="finance-tab">
+        <div class="tab-pane active" id="finance" role="tabpanel" aria-labelledby="finance-tab">
             <!-- banner -->
             <div class="banner">
                 <div class="title" style="color: #fff;">
@@ -561,7 +561,7 @@
             </div>
         </div>
         <!-- 流媒体 -->
-        <div class="tab-pane" id="streaming_media" role="tabpanel" aria-labelledby="streaming-media-tab">
+        <div class="tab-pane active" id="streaming_media" role="tabpanel" aria-labelledby="streaming-media-tab">
             <!-- banner -->
             <div class="banner">
                 <div class="title" style="color: #fff;">
@@ -718,6 +718,323 @@
                                     提供高防DDos服务，Web应用防护、入侵检测、<br/>
                                     Web漏洞扫描服务，支持服务器、数据库自动<br/>
                                     备份及秒级回档功能，降低企业运营风险。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 移动APP -->
+        <div class="tab-pane active" id="mobile_app" role="tabpanel" aria-labelledby="mobile-app-tab">
+            <!-- banner -->
+            <div class="banner">
+                <div class="title" style="color: #fff;">
+                    <h2 class="text">移动APP云化解决方案</h2>
+                    <h5 class="sub-text">
+                        高效开发快速上云，助力业务快速发展！腾正科技旨在为开发者提供模块功能化的通用移动应用基础服务，<br/>
+                        解决移动APP客户营销困难、高并发、数据安全调度不精准等难题
+                    </h5>
+                </div>
+                <a class="apply-btn" href="javascript: void(0);">立即申请</a>
+            </div>
+            <!--面临问题-->
+            <div class="problem">
+                <h2 class="title">移动APP面临的问题</h2>
+                <img class="d-block" src="{{ asset("/images/program/rectangle.png") }}" />
+                <div class="card-container">
+                    <div class="card">
+                        <div class="card-title">
+                            <img class="icon" src="{{ asset("/images/program/icon13.png") }}" />
+                            <h5 class="text">营销推广困难</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>移动APP推广难，用户下载量少，留存率低；如何提高下载量及留存率成为每个移动应用开发企业关注的核心问题</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">
+                            <img class="icon" src="{{ asset("/images/program/icon14.png") }}" />
+                            <h5 class="text">投入大迭代快</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>开发一款APP，团队需统筹处理各个环节，资源投入要求高，开发效率难保障，企业需保障产品质量的同时，缩短上线及迭代周期</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">
+                            <img class="icon" src="{{ asset("/images/program/icon15.png") }}" />
+                            <h5 class="text">运营分析能力</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>终端种类多，适配量大；数据呈现分散；综合性能、用户体验等问题是移动APP产品从开发到上线需要一直关注并迭代改进
+                            <p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">
+                            <img class="icon" src="{{ asset("/images/program/icon16.png") }}" />
+                            <h5 class="text">峰值访问量大</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>业务受影响因素较多，访问量存在极大不确定性，既要保证业务可用性，应对业务高峰做到及时扩展，又要避免资源浪费</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">
+                            <img class="icon" src="{{ asset("/images/program/icon17.png") }}" />
+                            <h5 class="text">体验难以保障</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>用户地域分布范围不确定，业务迅猛发展使流量分发存在瓶颈，需要覆盖全国的优质网络，来支撑良好的接入体验</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">
+                            <img class="icon" src="{{ asset("/images/program/icon18.png") }}" />
+                            <h5 class="text">数据安全风险</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>APP的运营过程会受到来自各方面的安全挑战，如DDoS攻击、病毒、木马等，严重威胁业务运营和数据信息安全</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--架构部署-->
+            <div class="arch">
+                <h2 class="title">解决方案构架部署</h2>
+                <img class="d-block" src="{{ asset("/images/program/rectangle.png") }}">
+                <div class="cont">
+                    <img class="arch-img" src="{{ asset("/images/program/mobile-app-arch.png") }}"
+                    alt="移动APP解决方案构架部署图" />
+                    <div style="position: absolute; bottom: -30px; right: 40px;">
+                        <p class="desc">
+                            APP业务上线初期，时刻会面临用户爆炸式增长情况，访问量存在极大不确定性，使用腾正云服务，可根据业务需求和策略，自动计算资源<br/>
+                            弹性调整应对流量波峰，为用户提供流畅的网络体验。在防御策略上采用三重防护设计，有效黑客入侵、预防恶意注册、流量作弊、撞库盗号、<br/>
+                            暴力破解、DDOS攻击、CC攻击、SYN攻击等，保障平台数据信息及支付服务安全。
+                        </p>
+                        <br/>
+                        <a class="consult-btn" style="float: right;" href="javascript: void(0);">立即咨询</a>
+                    </div>
+                </div>
+            </div>
+            <!--优势-->
+            <div class="adv">
+                <h2 class="title">移动APP服务优势</h2>
+                <img class="d-block" src="{{ asset("/images/program/rectangle.png") }}" />
+                <div class="cont">
+                    <div class="column">
+                        <div class="item">
+                            <div class="item-title">
+                                <img class="order" src="{{ asset("/images/program/adv1.png") }}" alt="adv1" />
+                                <span>集群管理系统</span>
+                            </div>
+                            <div class="item-body">
+                                <p>
+                                    防入侵监测系统，硬件监控系统，网络故障分析平台，数据灾备系统，保障服务器在安全的环境下运行。
+                                </p>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title">
+                                <img class="order" src="{{ asset("/images/program/adv2.png") }}" alt="adv2" />
+                                <span>万兆带宽接入</span>
+                            </div>
+                            <div class="item-body">
+                                <p>
+                                    采用万兆网络接入，多个CC防护集群组合，建立高效的CC攻击防护基础，满足各种类型的移动APP用户运营需求。
+                                </p>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title">
+                                <img class="order" src="{{ asset("/images/program/adv3.png") }}" alt="adv3" />
+                                <span>总出口达10T</span>
+                            </div>
+                            <div class="item-body">
+                                <p>
+                                    海量机柜，数据中心覆盖全国，总出口规模达到10T，带宽资源充足，随时升级G口带宽，轻松满足顾客的扩展需求。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="item">
+                            <div class="item-title">
+                                <img class="order" src="{{ asset("/images/program/adv4.png") }}" alt="adv4" />
+                                <span>CDN智能加速</span>
+                            </div>
+                            <div class="item-body">
+                                <p>
+                                    自主CDN加速1000+节点网络分发服务，应对APP大量内容分发，随需使用，经济高效，解决因地域、带宽和服务器性能造成的访问瓶颈。
+                                </p>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title">
+                                <img class="order" src="{{ asset("/images/program/adv5.png") }}" alt="adv5" />
+                                <span>冗余机制完善</span>
+                            </div>
+                            <div class="item-body">
+                                <p>
+                                    在设备、节点和网络三个层面上实现了完善的冗余，保证在设备或节点出现故障时，不会影响用户的正常访问。
+                                </p>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title">
+                                <img class="order" src="{{ asset("/images/program/adv6.png") }}" alt="adv6" />
+                                <span>弹性增值服务</span>
+                            </div>
+                            <div class="item-body">
+                                <p>
+                                    简单易用弹性云主机，海量存储，灵活部署，一对一专属客服售前咨询服务和售后跟踪服务，全面解决疑问。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 教育云 -->
+        <div class="tab-pane active" id="education_cloud" role="tabpanel" aria-labelledby="education-cloud-tab">
+            <!-- banner -->
+            <div class="banner">
+                <div class="title" style="color: #fff;">
+                    <h2 class="text">教育云解决方案</h2>
+                    <h5 class="sub-text">
+                        结合教育地域特性，为各种教育场景快速搭建智能化信息平台，将教育管理、教务、教学应用等系统集成化，<br/>
+                        推进教育行业的数字化和智能化，促进行业的转型升级
+                    </h5>
+                </div>
+                <a class="apply-btn" href="javascript: void(0);">立即申请</a>
+            </div>
+            <!--面临问题-->
+            <div class="problem">
+                <h2 class="title">教育云面临的问题</h2>
+                <img class="d-block" src="{{ asset("/images/program/rectangle.png") }}" />
+                <div class="card-container">
+                    <div class="card">
+                        <div class="card-title">
+                            <img class="icon" src="{{ asset("/images/program/icon19.png") }}" />
+                            <span class="text">教育局</span>
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                教育信息化产品品类庞杂，不能将数据统一、规整，不能实时掌握所辖地区的教育数据，如全部学生、教师人数男女生比例，班额情况等，而传统纸质的通知、审批工作，周期长、效率低，不能高效落实和收集反馈。</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">
+                            <img class="icon" src="{{ asset("/images/program/icon20.png") }}" />
+                            <span class="text">高校</span>
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                应用系统较多，缺少统一认证机制，学生、教师身份信息管理复杂；网络、存储等设施设备落后于需求与技术的发展，缺乏统一管理和调度；安全、容灾、备份系统不够完善，稳定性与可靠性不够，整体效率偏低。</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">
+                            <img class="icon" src="{{ asset("/images/program/icon21.png") }}" />
+                            <span class="text">中小学</span>
+                        </div>
+                        <div class="card-body">
+                            <p>学校管理工作仍偏传统未实现智慧化，整体效率偏低；家校沟通较不畅，家长不能及时了解学生在校学习及生活情况；教师日常事务性工作繁琐，不能全身心投入教学。</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">
+                            <img class="icon" src="{{ asset("/images/program/icon22.png") }}" />
+                            <span class="text">幼儿园</span>
+                        </div>
+                        <div class="card-body">
+                            <p>家长不能及时掌握幼儿进园、出园动态；家长较难了解孩子在幼儿园时的表现和动态；幼儿园信息化建设较薄弱，数字化教学资源较短缺。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--架构部署-->
+            <div class="arch">
+                <h2 class="title">解决方案构架部署</h2>
+                <img class="d-block" src="{{ asset("/images/program/rectangle.png") }}">
+                <div class="cont">
+                    <img class="arch-img" src="{{ asset("/images/program/education-cloud-arch.png") }}"
+                    alt="教育云解决方案构架部署图" />
+                    <div style="max-width: 1180px; margin: 0 auto;padding-left: 10px;padding-right: 10px;">
+                        <div class="desc">
+                            <h5 style="text-align: left; color: #1e2251; font-weight: 600;">
+                                将教育管理、教务、教学应用等系统集成化，实现统一数据中心、统一身份认证、统一用户平台，创造“云端”服务：
+                            </h5>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <span>基础设施虚拟化（大集中）——集中管理、按需分配、并行计算、海量存储；</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <span>应用软件集成化（大集成）-----统一部署、综合服务、数据共享、便于应用；</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <span>将服务器与存储进行虚拟化管理，实现一机变多机或多机变一机的动态管理，多任务同步处理；</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <span>教育资源价值化（大数据）——资源共建、数据一致、全面统览、个性应用。</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <br/>
+                        <a class="consult-btn" href="javascript: void(0);">立即咨询</a>
+                    </div>
+                </div>
+            </div>
+            <!--优势-->
+            <div class="adv">
+                <h2 class="title">教育云服务优势</h2>
+                <img class="d-block" src="{{ asset("/images/program/rectangle.png") }}" />
+                <div class="cont">
+                    <div class="column">
+                        <div class="item">
+                            <div class="item-title">
+                                <img class="order" src="{{ asset("/images/program/adv1.png") }}" alt="adv1" />
+                                <span>面向教育管理者</span>
+                            </div>
+                            <div class="item-body">
+                                <p>
+                                    利用云端办公环境，快速便捷地处理学籍、人事、资产及办公信息，提高工作效率和管理水平，减轻工作强度。
+                                </p>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title">
+                                <img class="order" src="{{ asset("/images/program/adv3.png") }}" alt="adv3" />
+                                <span>面向家长</span>
+                            </div>
+                            <div class="item-body">
+                                <p>
+                                    架设学校和家庭之间的沟通桥梁，加强老师、家长、学生之间的联系，通过网络促进学校教育和家庭教育的结合。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="item">
+                            <div class="item-title">
+                                <img class="order" src="{{ asset("/images/program/adv2.png") }}" alt="adv2" />
+                                <span>面向教师</span>
+                            </div>
+                            <div class="item-body">
+                                <p>
+                                    提供云端网络备课授课、课件制作、网上阅卷的平台，在更大范围内共享思想与资源，提高教学质量与教学水平。
+                                </p>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title">
+                                <img class="order" src="{{ asset("/images/program/adv4.png") }}" alt="adv4" />
+                                <span>面向学生</span>
+                            </div>
+                            <div class="item-body">
+                                <p>
+                                    以学生成长档案为核心，通过全新的智能式、协作式、探索式手段开展学习与评价，全面提高学生的综合素质与能力。
                                 </p>
                             </div>
                         </div>

@@ -15,7 +15,7 @@
             <h4 class="sub-text">您的托付，我们全力以赴！</h4>
         </div>
         <div class="collapse-tab">
-            <a class="collapse-tab-item active" href="#hengyang" data-toggle="collapse"
+            <a class="collapse-tab-item" href="#hengyang" data-toggle="collapse"
                data-target="#heng-yang"
                aria-expanded="true" aria-controls="heng-yang">衡阳服务器托管</a>
             <a class="collapse-tab-item" href="#huizhou" data-toggle="collapse"
@@ -24,14 +24,14 @@
             <a class="collapse-tab-item" href="#xian" data-toggle="collapse"
                data-target="#xi-an"
                aria-expanded="false" aria-controls="xi-an">西安服务器托管</a>
-            <a class="collapse-tab-item" href="#hangzhou" data-toggle="collapse"
+            <!-- <a class="collapse-tab-item" href="#hangzhou" data-toggle="collapse"
                data-target="#hang-zhou"
-               aria-expanded="false" aria-controls="hang-zhou">杭州服务器托管</a>
+               aria-expanded="false" aria-controls="hang-zhou">杭州服务器托管</a> -->
         </div>
     </div>
     <!-- 展开部分 -->
     <div class="expand-area">
-        <div class="expand-item collapse in" id="heng-yang">
+        <div class="expand-item collapse" id="heng-yang">
             <h1 class="expand-item-title">湖南衡阳机房</h1>
             <hr style="height: 1px; background-color: #333; margin-bottom: 10px;"/>
             <p class="expand-item-desc">
@@ -119,6 +119,91 @@
             </div>
         </div>
         <div class="expand-item collapse" id="hui-zhou">
+            <h1 class="expand-item-title">广东惠州机房</h1>
+            <hr style="height: 1px; background-color: #333; margin-bottom: 10px;"/>
+            <p class="expand-item-desc">
+                机房概况：腾正科技广东惠州机房总建筑面积约8000㎡，采用T3+标准机房，BGP三线（电信、联通、移动），2800余个机柜42U国际标准机柜，1600G直连中国华南地区国际出口电信骨干网，300G+集群防火墙，毫秒级的网络连接实时数据备份管理。</p>
+            <p class="expand-item-desc">
+                机房等级：国家 <span style="color: #ea0000; font-weight: 600;">AAAA</span> 级机房
+                <br/>
+                <a href="javascript: void(0);" class="scene-btn">查看机房实景</a>
+            </p>
+            <p class="expand-item-desc">典型客户：</p>
+            <div class="table-container">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th scope="col" style="width: calc(100% / 9);">线路</th>
+                        <th scope="col" style="width: calc(100% / 9);">规格</th>
+                        <th scope="col" style="width: calc(100% / 9);">电流</th>
+                        <th scope="col" style="width: calc(100% / 9);">带宽</th>
+                        <th scope="col" style="width: calc(100% / 9);">IP数</th>
+                        <th scope="col" style="width: calc(100% / 9);">防御</th>
+                        <th scope="col" style="width: calc(100% / 9);">月付</th>
+                        <th scope="col" style="width: calc(100% / 9);">年付</th>
+                        <th scope="col" style="width: calc(100% / 9);">购买</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!--******-->
+                    <tr>
+                        <th>惠州电信</th>
+                        <td>1U</td>
+                        <td><0.7A</td>
+                        <td>G口20M独享</td>
+                        <td>1个</td>
+                        <td>50G</td>
+                        <td>700</td>
+                        <td>7700</td>
+                        <td>
+                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
+                        </td>
+                    </tr>
+                    <!--******-->
+                    <tr>
+                        <th>惠州电信</th>
+                        <td>2U</td>
+                        <td><0.7A</td>
+                        <td>G口20M独享</td>
+                        <td>1个</td>
+                        <td>50G</td>
+                        <td>900</td>
+                        <td>9900</td>
+                        <td>
+                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
+                        </td>
+                    </tr>
+                    <!--******-->
+                    <tr>
+                        <th>惠州双线</th>
+                        <td>1U</td>
+                        <td><0.7A</td>
+                        <td>G口20M独享</td>
+                        <td>1对</td>
+                        <td>50G</td>
+                        <td>800</td>
+                        <td>8800</td>
+                        <td>
+                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
+                        </td>
+                    </tr>
+                    <!--******-->
+                    <tr>
+                        <th>惠州双线</th>
+                        <td>2U</td>
+                        <td><0.7A</td>
+                        <td>G口20M独享</td>
+                        <td>1对</td>
+                        <td>50G</td>
+                        <td>1100</td>
+                        <td>12100</td>
+                        <td>
+                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="expand-item collapse" id="xi-an">
         </div>
@@ -260,6 +345,18 @@
                     <td>专业、高效量身定制托管服务方案</td>
                     <td>非一手品质运营资源，沟通易脱节，无法保障方案可行性</td>
                 </tr>
+                <!--******-->
+                <tr>
+                    <th>付款方式</th>
+                    <td>服务器上架成功后再付款</td>
+                    <td>先付款，后上架</td>
+                </tr>
+                <!--******-->
+                <tr>
+                    <th>核心优势</th>
+                    <td>精选高品质机房，连通率99.99%，60秒人工服务响应</td>
+                    <td>价格</td>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -287,60 +384,60 @@
                     <span class="date">2019.01.21</span>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>什么是服务器托管？</span></a>
+                    <a class="text" href="javascript: void(0);"><span>服务器托管有哪些好处？</span></a>
                     <span class="date">2019.01.21</span>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>什么是服务器托管？</span></a>
-                    <span class="date">2019.01.21</span>
+                    <a class="text" href="javascript: void(0);"><span>服务器托管的U是什么意思？</span></a>
+                    <span class="date">2019.01.19</span>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>什么是服务器托管？</span></a>
-                    <span class="date">2019.01.21</span>
+                    <a class="text" href="javascript: void(0);"><span>服务器托管BGP机房是什么意思？</span></a>
+                    <span class="date">2019.01.18</span>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>什么是服务器托管？</span></a>
-                    <span class="date">2019.01.21</span>
+                    <a class="text" href="javascript: void(0);"><span>腾正科技的服务器托管怎么样？</span></a>
+                    <span class="date">2019.01.17</span>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>什么是服务器托管？</span></a>
-                    <span class="date">2019.01.21</span>
+                    <a class="text" href="javascript: void(0);"><span>托管一台服务器多少钱？</span></a>
+                    <span class="date">2019.01.14</span>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>什么是服务器托管？</span></a>
-                    <span class="date">2019.01.21</span>
+                    <a class="text" href="javascript: void(0);"><span>托管一台服务器多少钱？</span></a>
+                    <span class="date">2019.01.14</span>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>什么是服务器托管？</span></a>
-                    <span class="date">2019.01.21</span>
+                    <a class="text" href="javascript: void(0);"><span>托管一台服务器多少钱？</span></a>
+                    <span class="date">2019.01.14</span>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>什么是服务器托管？</span></a>
-                    <span class="date">2019.01.21</span>
+                    <a class="text" href="javascript: void(0);"><span>托管一台服务器多少钱？</span></a>
+                    <span class="date">2019.01.14</span>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>什么是服务器托管？</span></a>
-                    <span class="date">2019.01.21</span>
+                    <a class="text" href="javascript: void(0);"><span>托管一台服务器多少钱？</span></a>
+                    <span class="date">2019.01.14</span>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>什么是服务器托管？</span></a>
-                    <span class="date">2019.01.21</span>
+                    <a class="text" href="javascript: void(0);"><span>托管一台服务器多少钱？</span></a>
+                    <span class="date">2019.01.14</span>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>什么是服务器托管？</span></a>
-                    <span class="date">2019.01.21</span>
+                    <a class="text" href="javascript: void(0);"><span>托管一台服务器多少钱？</span></a>
+                    <span class="date">2019.01.14</span>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>什么是服务器托管？</span></a>
-                    <span class="date">2019.01.21</span>
+                    <a class="text" href="javascript: void(0);"><span>托管一台服务器多少钱？</span></a>
+                    <span class="date">2019.01.14</span>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>什么是服务器托管？</span></a>
-                    <span class="date">2019.01.21</span>
+                    <a class="text" href="javascript: void(0);"><span>托管一台服务器多少钱？</span></a>
+                    <span class="date">2019.01.14</span>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>什么是服务器托管？</span></a>
-                    <span class="date">2019.01.21</span>
+                    <a class="text" href="javascript: void(0);"><span>托管一台服务器多少钱？</span></a>
+                    <span class="date">2019.01.14</span>
                 </li>
             </ul>
         </div>

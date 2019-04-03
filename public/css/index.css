@@ -2894,57 +2894,15 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin-left: -15px;
   margin-right: -15px;
 }
-#tz-program .banner {
-  position: relative;
-  height: 563px;
-  padding-top: 83px;
-  color: #fff;
-  text-align: center;
-  background-image: url(/images/program-banner-bg.png?70f07cea6da876f74947ecc8224d8659);
-  background-size: cover;
-}
-#tz-program .banner .title {
-  margin-top: 60px;
-}
-#tz-program .banner .title .text {
-  font-size: 50px;
-  line-height: 72px;
-  margin-bottom: 25px;
-  letter-spacing: 3.75px;
-}
-#tz-program .banner .title .sub-text {
-  font-size: 16px;
-  letter-spacing: 0.8px;
-}
-#tz-program .banner .apply-btn {
-  display: block;
-  width: 180px;
-  height: 40px;
-  margin: 60px auto 0;
-  border-radius: 20px;
-  font-size: 14px;
-  line-height: 40px;
-  letter-spacing: 2.8px;
-  color: #fff;
-  text-decoration: none;
-  background: -webkit-gradient(linear, left top, right top, from(#b9ccfc), color-stop(50%, #6d8fff));
-  background: linear-gradient(to right, #b9ccfc 0%, #6d8fff 50%);
-  background: -webkit-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
-  -webkit-transition: background 0.4s ease-in-out;
-  transition: background 0.4s ease-in-out;
-}
-#tz-program .banner .apply-btn:hover {
-  color: #043fc4;
-  background: #fff;
-}
-#tz-program .banner .tab {
+#tz-program .tab {
   position: absolute;
+  top: 480px;
   left: 0;
   right: 0;
-  bottom: 0;
+  z-index: 2;
   text-align: center;
 }
-#tz-program .banner .tab-item {
+#tz-program .tab-item {
   display: inline-block;
   width: 130px;
   height: 63px;
@@ -2963,16 +2921,64 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background: linear-gradient(to right, #b9ccfc 0%, #6d8fff 50%);
   background: -webkit-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
 }
-#tz-program .banner .tab-item.active,
-#tz-program .banner .tab-item:hover {
+#tz-program .tab-item.active,
+#tz-program .tab-item:hover {
   background: #fff;
   color: #043fc4;
 }
 #tz-program .content {
   text-align: center;
+  /* 游戏 */
+  /* 棋牌 */
+  /* 金融 */
+  /* 流媒体 */
+}
+#tz-program .content .banner {
+  position: relative;
+  height: 563px;
+  padding-top: 83px;
+  color: #fff;
+  text-align: center;
+  background-size: cover;
+}
+#tz-program .content .banner .title {
+  margin-top: 60px;
+  color: #fff;
+}
+#tz-program .content .banner .title .text {
+  font-size: 50px;
+  line-height: 72px;
+  margin-bottom: 25px;
+  letter-spacing: 3.75px;
+}
+#tz-program .content .banner .title .sub-text {
+  font-size: 16px;
+  letter-spacing: 0.8px;
+  line-height: 30px;
+}
+#tz-program .content .banner .apply-btn {
+  display: block;
+  width: 180px;
+  height: 40px;
+  margin: 60px auto 0;
+  border-radius: 20px;
+  font-size: 14px;
+  line-height: 40px;
+  letter-spacing: 2.8px;
+  color: #fff;
+  text-decoration: none;
+  background: -webkit-gradient(linear, left top, right top, from(#b9ccfc), color-stop(50%, #6d8fff));
+  background: linear-gradient(to right, #b9ccfc 0%, #6d8fff 50%);
+  background: -webkit-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
+  -webkit-transition: background 0.4s ease-in-out;
+  transition: background 0.4s ease-in-out;
+}
+#tz-program .content .banner .apply-btn:hover {
+  color: #043fc4;
+  background: #fff;
 }
 #tz-program .content .problem {
-  height: 682px;
+  height: 700px;
   padding-top: 60px;
   background-color: #fff;
 }
@@ -3034,8 +3040,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz-program .content .arch {
   height: 1000px;
-  background-image: url(/images/program-arch-bg.png?aeb381af904a4d8292c7f5c71f1fb1f2);
-  background-size: cover;
+  background-size: 100% 100%;
   padding-top: 50px;
 }
 #tz-program .content .arch .title {
@@ -3052,6 +3057,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #tz-program .content .arch .cont .desc {
   color: #363f5b;
   font-size: 14px;
+  line-height: 25px;
   text-align: left;
   display: inline-block;
   margin: 50px auto 40px;
@@ -3078,7 +3084,6 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #tz-program .content .adv {
   height: 686px;
   padding-top: 45px;
-  background: url(/images/game-cloud-adv.png?de6c44551eb078692cc6598120b898dc) no-repeat center 70%;
 }
 #tz-program .content .adv .title {
   color: #121931;
@@ -3138,7 +3143,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz-program .content .consult {
   height: 192px;
-  background: url(/images/bottom-bg.png?ea1b0ccf74fe5f03daa52d067e80b31c) no-repeat center center;
+  background: url(/images/consult-bg.png?ea1b0ccf74fe5f03daa52d067e80b31c) no-repeat center center;
   background-size: cover;
   text-align: center;
   padding-top: 30px;
@@ -3165,6 +3170,181 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #tz-program .content .consult .consult-btn:hover {
   background-color: #fff;
   color: #043fc4;
+}
+#tz-program .content #game .banner {
+  background-image: url(/images/game-banner-bg.png?70f07cea6da876f74947ecc8224d8659);
+}
+#tz-program .content #game .arch {
+  background-image: url(/images/game-arch-bg.png?aeb381af904a4d8292c7f5c71f1fb1f2);
+}
+#tz-program .content #game .adv {
+  background: url(/images/game-adv.png?de6c44551eb078692cc6598120b898dc) no-repeat center 70%;
+}
+#tz-program .content #chess .banner {
+  background-image: url(/images/chess-banner-bg.png?a81b0245d73a9f2b88501846afd7735b);
+}
+#tz-program .content #chess .problem {
+  height: 530px;
+}
+#tz-program .content #chess .problem .card {
+  position: relative;
+  height: 290px;
+  padding-left: 35px;
+  padding-right: 35px;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+}
+#tz-program .content #chess .problem .card-title {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+  text-align: center;
+}
+#tz-program .content #chess .problem .card-title .text {
+  margin-top: 20px;
+  margin-left: 0;
+}
+#tz-program .content #chess .problem .card-title .hover-icon {
+  display: none;
+}
+#tz-program .content #chess .problem .card-title .divider {
+  width: 20px;
+  height: 1px;
+  background-color: #4d4d4d;
+  border-top: unset;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+}
+#tz-program .content #chess .problem .card-body {
+  position: relative;
+  top: 15%;
+  color: #fff;
+  opacity: 0;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+}
+#tz-program .content #chess .problem .card:hover {
+  background: -webkit-gradient(linear, left top, right top, from(#284af3), color-stop(60%, #6d8fff));
+  background: linear-gradient(to right, #284af3 0%, #6d8fff 60%);
+  background: -webkit-linear-gradient(left, #284af3 0%, #6d8fff 60%);
+}
+#tz-program .content #chess .problem .card:hover .card-title {
+  text-align: center;
+  top: 25%;
+}
+#tz-program .content #chess .problem .card:hover .card-title .icon {
+  display: none;
+}
+#tz-program .content #chess .problem .card:hover .card-title .hover-icon {
+  display: inline-block;
+}
+#tz-program .content #chess .problem .card:hover .card-title .text {
+  color: #fff;
+}
+#tz-program .content #chess .problem .card:hover .card-title .divider {
+  width: 34px;
+  height: 1px;
+  background-color: #fff;
+  border-top: unset;
+}
+#tz-program .content #chess .problem .card:hover .card-body {
+  top: 0;
+  opacity: 1;
+}
+#tz-program .content #chess .arch {
+  max-width: 100%;
+  height: 660px;
+  background: url(/images/chess-arch-bg.png?8aae1b6552c2838d8a0dc0e726d4ff18) no-repeat;
+  background-size: 100% 100%;
+}
+#tz-program .content #chess .arch .title {
+  color: #fff;
+}
+#tz-program .content #chess .arch .cont {
+  position: relative;
+  height: 400px;
+  max-width: 1240px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+#tz-program .content #chess .arch .cont .arch-text {
+  position: absolute;
+  top: 10px;
+  left: 30px;
+  width: 370px;
+  height: 300px;
+  text-align: left;
+  color: #fff;
+}
+#tz-program .content #chess .arch .cont .arch-text .desc {
+  margin-top: 0;
+  margin-bottom: 60px;
+  color: #fff;
+}
+#tz-program .content #chess .arch .cont .arch-img {
+  position: absolute;
+  top: -20px;
+  right: 20px;
+  -webkit-transform: scale(0.9);
+  transform: scale(0.9);
+}
+#tz-program .content #chess .adv {
+  height: 546px;
+  background: url(/images/chess-adv.png?38ab74a7678e2f35e10a1b4cd54385e3) no-repeat center 70%;
+}
+#tz-program .content #chess .adv .item {
+  height: 140px;
+}
+#tz-program .content #finance .banner {
+  background-image: url(/images/finance-banner-bg.png?cb640bcc47513f23060eb6143e330009);
+}
+#tz-program .content #finance .problem {
+  height: 620px;
+}
+#tz-program .content #finance .problem .card {
+  width: 570px;
+  height: 176px;
+}
+#tz-program .content #finance .problem .card-body p {
+  text-align: left;
+  padding-left: 50px;
+}
+#tz-program .content #finance .arch {
+  height: 1100px;
+  background-image: url(/images/finance-arch-bg.png?e329461e923c3a58f116cb444e5e5a02);
+}
+#tz-program .content #finance .adv {
+  height: 710px;
+  background: url(/images/finance-adv.png?6dd2d0583e3f5fe90f32e4e2b551f77b) no-repeat 48.5% 58%;
+}
+#tz-program .content #finance .adv .cont .item {
+  width: 320px;
+}
+#tz-program .content #streaming_media .banner {
+  background-image: url(/images/streaming-media-banner-bg.png?28ffacd1c8c6956941b2336ebb182582);
+}
+#tz-program .content #streaming_media .problem {
+  height: 620px;
+}
+#tz-program .content #streaming_media .problem .card {
+  width: 570px;
+  height: 176px;
+}
+#tz-program .content #streaming_media .problem .card-body p {
+  text-align: left;
+  padding-left: 50px;
+}
+#tz-program .content #streaming_media .arch {
+  height: 1220px;
+  background-image: url(/images/streaming-media-arch-bg.png?93fbe0bd35321d798720b629287506bb);
+}
+#tz-program .content #streaming_media .adv {
+  height: 710px;
+  background: url(/images/streaming-media-adv.png?6f7fc5e2b991b9f6cc80ab5fd13e93d3) no-repeat 48.5% 70%;
 }
 #tz-server-hosting {
   margin-left: -15px;
@@ -3343,7 +3523,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   border-right: none;
 }
 #tz-server-hosting .service-pk {
-  height: 896px;
+  height: 1000px;
   padding-top: 50px;
   text-align: center;
   background: url(/images/service-pk-bg.png?0a89882368098b645500114ccca48e57) no-repeat center center;

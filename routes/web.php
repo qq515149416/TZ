@@ -36,6 +36,7 @@ Route::group([
     Route::get('/zuyong/{page}', 'Show\ServerRentController@index');
     Route::get('/fangan', 'Show\ProgramController@index');
     Route::get('/tuoguan', 'Show\HostingController@index');
+    Route::get('/article/{type}', 'Show\ArticleController@index');
 });
 
 /**

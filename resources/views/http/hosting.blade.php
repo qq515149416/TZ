@@ -24,9 +24,9 @@
             <a class="collapse-tab-item" href="#xian" data-toggle="collapse"
                data-target="#xi-an"
                aria-expanded="false" aria-controls="xi-an">西安服务器托管</a>
-            <a class="collapse-tab-item" href="#hangzhou" data-toggle="collapse"
+            <!-- <a class="collapse-tab-item" href="#hangzhou" data-toggle="collapse"
                data-target="#hang-zhou"
-               aria-expanded="false" aria-controls="hang-zhou">杭州服务器托管</a>
+               aria-expanded="false" aria-controls="hang-zhou">杭州服务器托管</a> -->
         </div>
     </div>
     <!-- 展开部分 -->

@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ asset("/css/swiper.min.css") }}" />
     <link rel="stylesheet" href="{{ asset("/css/animate.min.css") }}" />
     <link rel="stylesheet" href="{{ asset("/css/index.css") }}?random_num={{ time() + random_int(100,1000) }}" />
+    <link rel="stylesheet" href="{{ asset("/css/layout/index.css") }}?random_num={{ time() + random_int(100,1000) }}" />
     <meta name="keywords" content="@yield('keywords')"/>
     <meta name="description" content="@yield('description')">
 </head>
@@ -69,36 +70,36 @@
                         </dl>
                         <dl>
                             <dt>
-                                <a href="/page/tz/proser">服务器租用</a>
+                                <a href="/zuyong/index">服务器租用</a>
                             </dt>
                             <dd>
-                                <a href="/page/tz/zygfzy">电信服务器租用</a>
+                                <a href="/zuyong/dianxin">电信服务器租用</a>
                             </dd>
                             <dd>
-                                <a href="/page/tz/zygfzy">联通服务器租用</a>
+                                <a href="/zuyong/liantong">联通服务器租用</a>
                             </dd>
                             <dd>
-                                <a href="/page/tz/zygfzy">双线服务器租用</a>
+                                <a href="/zuyong/shuangxian">双线服务器租用</a>
                             </dd>
                             <dd>
-                                <a href="/page/tz/zygfzy">三线服务器租用</a>
+                                <a href="/zuyong/sanxian">三线服务器租用</a>
                             </dd>
                             <dd>
-                                <a href="/page/tz/zygfzy">BGP服务器租用</a>
+                                <a href="/zuyong/bgp">BGP服务器租用</a>
                             </dd>
                         </dl>
                         <dl style="text-align: center;">
                             <dt>
-                                <a href="/page/tz/zytg">服务器托管</a>
+                                <a href="/tuoguan">服务器托管</a>
                             </dt>
                             <dd>
-                                <a href="/page/tz/zytg" style="margin-right: -10px;">衡阳服务器托管</a>
+                                <a href="/tuoguan#hengyang" style="margin-right: -10px;">衡阳服务器托管</a>
                             </dd>
                             <dd>
-                                <a href="/page/tz/zytg" style="margin-right: -10px;">惠州服务器托管</a>
+                                <a href="/tuoguan#huizhou" style="margin-right: -10px;">惠州服务器托管</a>
                             </dd>
                             <dd>
-                                <a href="/page/tz/zytg" style="margin-right: -10px;">西安服务器托管</a>
+                                <a href="/tuoguan#xian" style="margin-right: -10px;">西安服务器托管</a>
                             </dd>
                         </dl>
                         <dl style="text-align: right;">

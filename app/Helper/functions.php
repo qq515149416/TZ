@@ -124,3 +124,72 @@ function curl($url, $params ='', $return = 1, $header = array(), $cookie = array
 	curl_close($ch); // 关闭curl链接
 	return $response;
 }
+
+/**
+ * 计算时间（计算到期时间）
+ * @param  string  $date      起始时间(2019-04-02 13:16:30)
+ * @param  integer $duration  时长
+ * @param  string  $time_unit 计算的时间单位(按月计算-'month',按天计算-'day',按年计算-'year')
+ * @return string             返回计算好的结束时间
+ * @note   当起始时间的天数为自然月的最后一天时，到期时间的天数会是到期当月的最后一天
+ * (如:起始时间为02-28,一个月后就是03-31;起始时间为03-31,一个月后就是04-30,诸如此)
+ */
+function time_calculation($date,$duration = 1,$time_unit = 'month'){
+	if($time_unit == 'month'){//按自然月计算
+		//起始时间所属的自然月
+	 	$current_month = date('m',strtotime($date));
+
+	    //到期时间所属的自然月
+	    $next_month = date('m',strtotime($date.'+'.$duration.' '.$time_unit));
+
+	    //起始时间的天（号数）
+	    $current_days = date('d',strtotime($date));
+
+	    //起始时间所属自然月的总天数
+	    $current_month_days = date('t',strtotime(date('Y-m',strtotime($date))));
+
+	    //到期时间所属自然月的总天数
+	    $next_month_days = date('t',strtotime(date('Y-m',strtotime($date)).'+'.$duration.' '.$time_unit));
+
+	    //起始时间所属自然月的总天数与到期时间所属自然月的总天数的差值
+	    $days = $current_month_days - $next_month_days;
+
+		if($current_month == '02' && $current_days == $current_month_days){
+			//当起始时间所属的自然月是02月时且起始时间的天（号数）与起始时间所属自然月的总天数相等时
+			
+			//正常计算后需减去起始时间所属自然月的总天数与到期时间所属自然月的总天数的差值,最后得到正确的时间
+	        $end_date = date('Y-m-d H:i:s',strtotime(date('Y-m-d H:i:s',strtotime(date($date).'+'.$duration.' '.$time_unit)).'-'.$days.' day'));
+
+	    } elseif($days < 0 && $current_days == $current_month_days){
+	        //当起始时间所属自然月的总天数与到期时间所属自然月的总天数的差值为负数时（即起始时间所属自然月的总天数小于到期时间所属自然月的总天数）
+	        //且起始时间的天（号数）与起始时间所属自然月的总天数相等时
+	       	
+	       	//正常计算后需减去起始时间所属自然月的总天数与到期时间所属自然月的总天数的差值,最后得到正确的时间
+	        $end_date = date('Y-m-d H:i:s',strtotime(date('Y-m-d H:i:s',strtotime(date($date).'+'.$duration.' '.$time_unit)).'-'.$days.' day'));
+
+	    } elseif($days > 0 && $next_month == '02' && $current_days > $next_month_days){
+	    	//当起始时间所属自然月的总天数与到期时间所属自然月的总天数的差值为正数时（即起始时间所属自然月的总天数大于到期时间所属自然月的总天数）
+	    	//且当到期时间所属的自然月是02月时，且起始时间的天（号数）大于到期时间所属自然月的总天数时
+	    	
+	        $difference_days =  $current_days - $next_month_days;//起始时间的天（号数）与到期时间所属自然月的总天数的差值
+	        //正常计算后需减去起始时间的天（号数）与到期时间所属自然月的总天数的差值,最后得到正确的时间
+	        $end_date = date('Y-m-d H:i:s',strtotime(date('Y-m-d H:i:s',strtotime(date($date).'+'.$duration.' '.$time_unit)).'-'.$difference_days.' day'));
+
+	    } elseif($days > 0 && $current_days > $next_month_days){
+	    	//当起始时间所属自然月的总天数与到期时间所属自然月的总天数的差值为正数时（即起始时间所属自然月的总天数大于到期时间所属自然月的总天数）
+	    	//且起始时间的天（号数）大于到期时间所属自然月的总天数时
+	    	
+	    	//正常计算后需减去起始时间所属自然月的总天数与到期时间所属自然月的总天数的差值,最后得到正确的时间
+	        $end_date = date('Y-m-d H:i:s',strtotime(date('Y-m-d H:i:s',strtotime(date($date).'+'.$duration.' '.$time_unit)).'-'.$days.' day'));
+
+	    } else {
+	    	//其他情况
+	        $end_date = date('Y-m-d H:i:s',strtotime(date('Y-m-d H:i:s',strtotime(date($date).'+'.$duration.' '.$time_unit))));
+
+	    }
+	} elseif($time_unit == 'day' || $time_unit == 'year'){//按天/年计算
+		$end_date = date('Y-m-d H:i:s',strtotime(date('Y-m-d H:i:s',strtotime(date($date).'+'.$duration.' '.$time_unit))));
+	}
+ 	
+    return $end_date;
+}

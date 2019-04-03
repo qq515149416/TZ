@@ -54,9 +54,9 @@ class BusinessModel extends Model
         $insert['sales_name'] = Admin::user()->name?Admin::user()->name:Admin::user()->username;
         $insert['created_at'] = date('Y-m-d H:i:s',time());
         //业务开始时间
-        $start_time = Carbon::now()->toDateTimeString();
+        $start_time = date('Y-m-d H:i:s',time());
         //到期时间的计算
-        $end_time = Carbon::parse('+' . $insert['length'] . ' months')->toDateTimeString();
+        $end_time = time_calculation($start_time,$insert['length'],'month');
         $insert['start_time']   = $start_time;
         $insert['endding_time'] = $end_time;
         $row                  = DB::table('tz_business')->insertGetId($insert);
@@ -228,7 +228,7 @@ class BusinessModel extends Model
         // 订单号的生成规则：前两位（4-6的随机数）+ 年月日（如:20180830） + 时间戳的后2位数 + 1-3随机数
         $order_sn                 = $this->ordersn($check->id,$check->business_type);
         $business['order_number'] = $order_sn;
-        $business['updated_at']   = Carbon::now()->toDateTimeString();
+        $business['updated_at']   = date('Y-m-d H:i:s',time());
         $business_row             = DB::table('tz_business')->where($check_where)->update($business);
         if ($business_row == 0) {
             // 业务审核失败
@@ -253,7 +253,7 @@ class BusinessModel extends Model
         $order['resource']      = $check->machine_number;//机器的话为IP/机柜则为机柜编号
         $order['end_time']      = $check->endding_time;
         $order['payable_money'] = bcmul((string)$order['price'], (string)$order['duration'], 2);//应付金额
-        $order['created_at']    = Carbon::now()->toDateTimeString();
+        $order['created_at']    = date('Y-m-d H:i:s',time());
         $order_row              = DB::table('tz_orders')->insert($order);//生成订单
         if ($order_row != true) {
             // 订单生成失败
@@ -592,9 +592,9 @@ class BusinessModel extends Model
         $insert['resource_detail'] = json_encode($machine);
         $insert['created_at'] = date('Y-m-d H:i:s',time());
         //业务开始时间
-        $start_time = Carbon::now()->toDateTimeString();
+        $start_time = date('Y-m-d H:i:s',time());
         //到期时间的计算
-        $end_time = Carbon::parse('+' . $insert_data['length'] . ' months')->toDateTimeString();
+        $end_time = time_calculation($start_time,$insert_data['length'],'month');
         $insert['start_time']   = $start_time;
         $insert['endding_time'] = $end_time;
         $row                  = DB::table('tz_business')->insertGetId($insert);

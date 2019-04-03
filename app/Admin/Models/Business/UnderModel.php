@@ -284,6 +284,7 @@ class UnderModel extends Model
                     $update['remove_status'] = 4;
 
                 }
+                $update['updated_at'] = date('Y-m-d H:i:s',time());
                 $remove = DB::table('tz_business')->where(['business_number' => $edit['business_number']])->update($update);
                 if ($remove == 0) {
                     DB::rollBack();
@@ -374,6 +375,7 @@ class UnderModel extends Model
                     }
                     $update_status['remove_status'] = 4;
                 }
+                $update_status['updated_at'] = date('Y-m-d H:i:s',time());
                 $status = DB::table('tz_orders')->where(['order_sn' => $edit['order_sn']])->update($update_status);
                 if ($status == 0) {
                     DB::rollBack();

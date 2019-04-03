@@ -241,9 +241,15 @@ class BusinessModel extends Model
 
 		return $business;
 	}
-
-	public function renew($business_id,$buy_time){
+	/**
+	*续费
+	* @param  $business_id  -业务id ; $buy_time  -购买时长 ;$start_time -试用业务转正需要用到,开始计费时间
+	* @return 
+	*/
+	public function renew($business_id,$buy_time,$start_time=0){
+		//获取后台登录人员id
 		$user_id = Admin::user()->id;
+		//获取业务信息
 		$business = $this->find($business_id);	
 		if($business == null){
 			return [
@@ -252,14 +258,17 @@ class BusinessModel extends Model
 				'code'	=> 0,
 			];
 		}
+		//获取业务所属业务员
 		$business_admin_user = DB::table('tz_users')->where('id',$business->user_id)->select(['salesman_id','email','name'])->first();
-		if($user_id != $business_admin_user->salesman_id){
+		//判断登录人员是否该业务所属业务员,或者是超级管理员
+		if($user_id != $business_admin_user->salesman_id  && !Admin::user()->isAdministrator()){
 			return [
 				'data'	=> '',
 				'msg'	=> '客户不属于您',
 				'code'	=> 0,
 			];
 		}
+		//判断业务使用状态
 		if($business->status == 2|| $business->status == 3){
 			return [
 				'data'	=> '',
@@ -274,6 +283,28 @@ class BusinessModel extends Model
 				'code'	=> 0,
 			];
 		}
+
+		//判断计费开始时间是否符合区间
+
+		if($start_time != 0){
+			if($start_time < $business->examine_time || $start_time > date("Y-m-d H:i:s",time()) ){
+				return [
+					'data'	=> '',
+					'msg'	=> '业务计费开始时间只能从 审核时间 到 当前时间内选择',
+					'code'	=> 0,
+				]; 
+			}
+		}
+
+		//判断如果是试用业务的话,是否有传开始计费时间
+		if($business->status == 4 && $start_time == 0){
+			return [
+					'data'	=> '',
+					'msg'	=> '业务为试用,请选择开始计费时间',
+					'code'	=> 0,
+				]; 
+		}
+		//获取订单模型
 		$orderModel = new OrderModel();
 		DB::beginTransaction();	
 		//查看是否有已存在未付款的订单
@@ -284,7 +315,9 @@ class BusinessModel extends Model
 		//如果存在未付款订单,则判断业务状态
 		if($checkOrder != null){ 
 			if($business->status == 4){	//如果是试用状态, 还要更新结束时间
-				$end_time = Carbon::parse($business->examine_time)->addMonth($buy_time)->toDateTimeString();
+
+				$end_time = time_calculation($start_time,$buy_time,'month');
+				
 				$end = strtotime($end_time);
 				if($end < time()){	
 					return [
@@ -311,7 +344,9 @@ class BusinessModel extends Model
 			if($business->status == 4){
 				$order_type = 1;
 				$order_sn = 'GS_'.time().'_admin_'.$user_id;
-				$end_time = Carbon::parse($business->examine_time)->addMonth($buy_time)->toDateTimeString();
+
+				$end_time = time_calculation($start_time,$buy_time,'month');
+
 				$end = strtotime($end_time);
 				if($end < time()){
 					return [
@@ -328,6 +363,7 @@ class BusinessModel extends Model
 			if($business_admin_user->name == null){
 				$business_admin_user->name = $business_admin_user->email;
 			}
+			
 			$order = [
 				'order_sn'		=> $order_sn,
 				'business_sn'		=> $business->business_number,
@@ -357,9 +393,9 @@ class BusinessModel extends Model
 				];
 			}
 		}
-
+		
 		$pay_model = new OrdersModel();
-		$pay_res = $pay_model->payOrderByBalance($business->business_number,0);
+		$pay_res = $pay_model->payOrderByBalance([ $create_order->id ],0);
 		
 		if($pay_res['code'] != 1){
 			DB::rollBack();

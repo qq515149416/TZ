@@ -75,22 +75,23 @@ class SetController extends Controller
 			DB::rollBack();
 			return tz_ajax_echo([], '高防ip获取失败,请查看数据库', 0); 
 		}
-
-		$businessData['defense_ip'] = $defense_ip->ip; 
 		
-		//调用api接口,正式的请打开
-		//$apiData                    = json_decode($apiModel->createTarget($businessData['defense_ip'], $targetIp), true); //使用api接口更新目标IP地址
+		//调用api接口,先是尝试插入
+		$apiData                    = json_decode($apiModel->createTarget($defense_ip->ip, $targetIp), true); //使用api接口更新目标IP地址
 
-		$apiData = [
-			'code'	=> 0,
-			] ;//调试模式,正式服记得关闭!!!!
-
-		//判断是否更新成功
-		if ( $apiData['code'] != 0 ) {
-			//成功
-			DB::rollBack();
-			return tz_ajax_echo([], '失败', 0);
+		//$apiData = json_decode('{"code":0,"msg":"ok","data":{"id":18,"type":0,"state":0,"node_id":1,"ip":"1.1.1.1","vip":"2.2.2.2","utime":1554257150}}',true);
+		//判断是否插入成功
+		if ( $apiData['code'] != 0 ) {	
+			//插入失败的话,尝试更新
+			$apiData2                   = json_decode($apiModel->updateTarget($defense_ip->ip, $targetIp), true); //使用api接口更新目标IP地址
+			//判断是否成功更新
+			if($apiData2['code'] != 0){
+			//如果还是失败,回退,返回失败
+				DB::rollBack();
+				return tz_ajax_echo([], '失败', 0);
+			}	
 		}
+		//没有失败就是成功了
 		DB::commit();
 		return tz_ajax_echo($apiData, '成功', 1);
 	}

@@ -1,0 +1,95 @@
+.tabpanel(@filepath) {
+    .banner {
+        height: 562px;
+        background: url(../../images/banner/aboutusBanner.png) no-repeat;
+        background-size: 100% 100%;
+        border-top: 1px solid transparent;
+        margin-top: -1px;
+        text-align: center;
+        h2 {
+            margin-top: 190px;
+            text-align: center;
+            font-size: 60px;
+            color: #fff;
+            margin-bottom: 0;
+        }
+        h3 {
+            font-size: 24px;
+            text-align: center;
+            color: #fff;
+        }
+        p {
+            margin: 0;
+            margin-top: 34px;
+            padding: 10px 20px;
+            display: inline-block;
+            font-size: 14px;
+            color: #fff;
+            background-color: rgba(255, 255, 255, .1);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, .5);
+        }
+    }
+    .content-list {
+        width: 196px * 6px;
+        margin: 0 auto;
+        margin-top: -63px;
+        .tab-content {
+            box-shadow: 0 -1px 54px 12px rgba(2, 17, 91, .16);
+            padding: 56px 80px;
+            h2 {
+                margin: 0;
+                padding-bottom: 20px;
+                border-bottom: 1px solid #333333;
+                font-size: 32px;
+                font-weight: normal;
+                span {
+                    font-size: 14px;
+                    color: #999999;
+                    a {
+                        color: #999999;
+                        text-decoration: none;
+                        &.active {
+                            color: #333333;
+                        }
+                    }
+                    margin-top: 35px - 15px;
+                }
+            }
+            @import "@{filepath}";
+        }
+        .nav-tabs {
+            background-color: #d9dde7;
+            border-radius: 5px 5px 0 0;
+            // display: inline-block;
+            overflow: hidden;
+            border-bottom: none;
+            box-shadow: 0 -1px 24px 10px rgba(2, 17, 91, .1) inset;
+            li {
+                a {
+                    border-radius: 5px 5px 0 0;
+
+                    border: none;
+                    width: 196px;
+                    height: 64px;
+                    line-height: 64px;
+                    padding: 0;
+                    background-color: #d9dde7;
+                    font-size: 18px;
+                    text-align: center;
+                    color: #6b6d75;
+                    margin: 0;
+                }
+                &.active {
+                    z-index: 99;
+                    a {
+                        background-color: #fff;
+                        color: #162fac;
+                        box-shadow: 0 0 30px rgba(2, 17, 91, .16);
+                    }
+                }
+            }
+        }
+
+    }
+}

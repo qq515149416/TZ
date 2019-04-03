@@ -90,7 +90,7 @@
                         </dl>
                         <dl style="text-align: center;">
                             <dt>
-                                <a href="/tuoguan">服务器托管</a>
+                                <a href="javascript:;">服务器托管</a>
                             </dt>
                             <dd>
                                 <a href="/tuoguan#hengyang" style="margin-right: -10px;">衡阳服务器托管</a>
@@ -184,30 +184,33 @@
                     </div>
                 </li>
                 <li>
-                    <a href="#">解决方案</a>
+                    <a href="javascript:;">解决方案</a>
                     <div class="dropdown-mark" style="width: auto; height: auto; padding-bottom: 20px; padding-right: 20px; padding-left: 20px; text-align: center;">
                         <span class="dropdown-icon"></span>
                         <ul>
                             <li>
-                                <a href="/page/tz/solutions">游戏</a>
+                                <a href="/fangan#game">游戏</a>
                             </li>
                             <li>
-                                <a href="/page/tz/solutions">金融</a>
+                                <a href="/fangan#chess">棋牌</a>
                             </li>
                             <li>
-                                <a href="/page/tz/solutions">流媒体</a>
+                                <a href="/fangan#finance">金融</a>
                             </li>
                             <li>
-                                <a href="/page/tz/solutions">移动APP</a>
+                                <a href="/fangan#streaming_media">流媒体</a>
                             </li>
                             <li>
-                                <a href="/page/tz/solutions">智慧城市</a>
+                                <a href="/fangan#mobile_app">移动APP</a>
                             </li>
                             <li>
-                                <a href="/page/tz/solutions">教育云</a>
+                                <a href="/fangan#education_cloud">教育云</a>
                             </li>
                             <li>
-                                <a href="/page/tz/solutions">网站部署</a>
+                                <a href="/fangan#government_cloud">政务云</a>
+                            </li>
+                            <li>
+                                <a href="/fangan#smart_city">网站部署</a>
                             </li>
                         </ul>
                     </div>

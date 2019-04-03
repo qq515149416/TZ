@@ -61,7 +61,7 @@
     <!--主体内容-->
     <div class="content tab-content">
         <!-- 游戏云 -->
-        <div class="tab-pane fade in active" id="game" role="tabpanel" aria-labelledby="game-tab">
+        <div class="tab-pane in active" id="game" role="tabpanel" aria-labelledby="game-tab">
             <!-- banner -->
             <div class="banner">
                 <div class="title" style="color: #fff;">
@@ -263,7 +263,7 @@
             </div>
         </div>
         <!-- 棋牌云 -->
-        <div class="tab-pane fade" id="chess" role="tabpanel" aria-labelledby="chess-tab">
+        <div class="tab-pane" id="chess" role="tabpanel" aria-labelledby="chess-tab">
             <!-- banner -->
             <div class="banner">
                 <div class="title">
@@ -393,7 +393,7 @@
             </div>
         </div>
         <!-- 金融云 -->
-        <div class="tab-pane fade" id="finance" role="tabpanel" aria-labelledby="finance-tab">
+        <div class="tab-pane" id="finance" role="tabpanel" aria-labelledby="finance-tab">
             <!-- banner -->
             <div class="banner">
                 <div class="title" style="color: #fff;">
@@ -561,7 +561,7 @@
             </div>
         </div>
         <!-- 流媒体 -->
-        <div class="tab-pane fade" id="streaming_media" role="tabpanel" aria-labelledby="streaming-media-tab">
+        <div class="tab-pane" id="streaming_media" role="tabpanel" aria-labelledby="streaming-media-tab">
             <!-- banner -->
             <div class="banner">
                 <div class="title" style="color: #fff;">

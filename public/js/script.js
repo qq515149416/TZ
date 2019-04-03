@@ -60,20 +60,20 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 47);
+/******/ 	return __webpack_require__(__webpack_require__.s = 46);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 47:
+/***/ 46:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(48);
+module.exports = __webpack_require__(47);
 
 
 /***/ }),
 
-/***/ 48:
+/***/ 47:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -235,7 +235,9 @@ $(function () {
     }
   });
   // 解决方案页面tab切换
-  $('#tz-program .tab').find('a.tab-item[href="' + window.location.hash + '"]').addClass('active').tab('show').siblings().removeClass('active');
+  $(window).bind('hashchange', function () {
+    $('#tz-program .tab').find('a.tab-item[href="' + window.location.hash + '"]').addClass('active').tab('show').siblings().removeClass('active');
+  });
   $('#tz-program a.tab-item').on('click', function (e) {
     // e.preventDefault();
     if ($(this).hasClass('active')) {
@@ -245,9 +247,11 @@ $(function () {
     }
   });
   // 服务器托管页面collapse切换
-  var $target = $('#tz-server-hosting .collapse-tab').find('a.collapse-tab-item[href="' + window.location.hash + '"]');
-  $target.addClass('active').siblings().removeClass('active');
-  $('#tz-server-hosting' + ' #' + $target.attr('aria-controls')).collapse('show').siblings().collapse('hide');
+  $(window).bind('hashchange', function () {
+    var $target = $('#tz-server-hosting .collapse-tab').find('a.collapse-tab-item[href="' + window.location.hash + '"]');
+    $target.addClass('active').siblings().removeClass('active');
+    $('#tz-server-hosting' + ' #' + $target.attr('aria-controls')).collapse('show').siblings().collapse('hide');
+  });
   $('#tz-server-hosting a.collapse-tab-item').on('click', function (e) {
     // e.preventDefault();
     $(this).toggleClass('active').siblings().removeClass('active');

@@ -63,7 +63,14 @@ class BusinessRequest extends FormRequest
 				$return = [
 					'business_id'		=> 'required|exists:tz_defenseip_business,id',	
 					'buy_time'		=> 'required|integer',
-					'start_time'		=> 'date'
+					'start_time'		=> 'date',
+				];
+				break;
+			case 'getStatistics':
+				$return = [
+					'timestamp'		=> 'required',	
+					'ip'			=> 'required|ip',
+			
 				];
 				break;
 			
@@ -93,6 +100,9 @@ class BusinessRequest extends FormRequest
 			'res.integer'				=> '审核结果只能为:0-不通过;1-通过',
 			'res.min'				=> '审核结果只能为:0-不通过;1-通过',
 			'res.max'				=> '审核结果只能为:0-不通过;1-通过',
+			'timestamp.required'			=> '请填写查询时间',
+			'ip.required'				=> '请填写需查询ip',
+			'ip.ip'					=> 'ip格式错误',
 		];
 	}
 

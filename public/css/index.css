@@ -2929,6 +2929,8 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   /* 棋牌 */
   /* 金融 */
   /* 流媒体 */
+  /* 移动APP */
+  /* 教育云 */
 }
 #tz-program .content .banner {
   position: relative;
@@ -3034,6 +3036,9 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   text-align: left;
   padding-left: 5px;
   margin-bottom: 8px;
+}
+#tz-program .content .problem .card-container .card-body p {
+  line-height: 26px;
 }
 #tz-program .content .arch {
   height: 1000px;
@@ -3300,11 +3305,11 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background-image: url(/images/finance-banner-bg.png?cb640bcc47513f23060eb6143e330009);
 }
 #tz-program .content #finance .problem {
-  height: 620px;
+  height: 650px;
 }
 #tz-program .content #finance .problem .card {
   width: 570px;
-  height: 176px;
+  height: 190px;
 }
 #tz-program .content #finance .problem .card-body p {
   text-align: left;
@@ -3325,23 +3330,189 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background-image: url(/images/streaming-media-banner-bg.png?28ffacd1c8c6956941b2336ebb182582);
 }
 #tz-program .content #streaming_media .problem {
-  height: 620px;
+  height: 650px;
 }
 #tz-program .content #streaming_media .problem .card {
   width: 570px;
-  height: 176px;
+  height: 190px;
 }
 #tz-program .content #streaming_media .problem .card-body p {
   text-align: left;
   padding-left: 50px;
 }
 #tz-program .content #streaming_media .arch {
-  height: 1220px;
+  height: 1210px;
   background-image: url(/images/streaming-media-arch-bg.png?93fbe0bd35321d798720b629287506bb);
 }
 #tz-program .content #streaming_media .adv {
   height: 710px;
   background: url(/images/streaming-media-adv.png?6f7fc5e2b991b9f6cc80ab5fd13e93d3) no-repeat 48.5% 70%;
+}
+#tz-program .content #mobile_app .banner {
+  background-image: url(/images/mobile-app-banner-bg.png?35a34261413158a4f4f85ce149b7d567);
+}
+#tz-program .content #mobile_app .problem {
+  height: 620px;
+}
+#tz-program .content #mobile_app .problem .card {
+  position: relative;
+  height: 176px;
+}
+#tz-program .content #mobile_app .problem .card-title {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  -webkit-transition: opacity 0.4s;
+  transition: opacity 0.4s;
+  text-align: center;
+  opacity: 1;
+  z-index: 2;
+}
+#tz-program .content #mobile_app .problem .card-title .text {
+  margin-top: 20px;
+  margin-left: 0;
+}
+#tz-program .content #mobile_app .problem .card-body {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: table;
+  width: 100%;
+  height: 100%;
+  padding: 35px 50px;
+  color: #fff;
+  -webkit-transition: opacity 0.6s;
+  transition: opacity 0.6s;
+  opacity: 0;
+  z-index: 3;
+}
+#tz-program .content #mobile_app .problem .card-body:nth-child(0) {
+  background: url(/images/problem-bg-1.png?7e0c6a90b614ee1dad1afe48f55d9f85) no-repeat 100% 100%;
+}
+#tz-program .content #mobile_app .problem .card-body:nth-child(1) {
+  background: url(/images/problem-bg-2.png?7792a860ce4c6c5c5bad25542805e293) no-repeat 100% 100%;
+}
+#tz-program .content #mobile_app .problem .card-body:nth-child(2) {
+  background: url(/images/problem-bg-3.png?d6766121bb56f0e4a9b2381ad1c228e2) no-repeat 100% 100%;
+}
+#tz-program .content #mobile_app .problem .card-body:nth-child(3) {
+  background: url(/images/problem-bg-4.png?a9889e258ba777a7283584def6c2c2e2) no-repeat 100% 100%;
+}
+#tz-program .content #mobile_app .problem .card-body:nth-child(4) {
+  background: url(/images/problem-bg-5.png?6affcacc32a52ca794d21d692d555c41) no-repeat 100% 100%;
+}
+#tz-program .content #mobile_app .problem .card-body:nth-child(5) {
+  background: url(/images/problem-bg-6.png?4d513718eb2486400b32c6252aaa5d93) no-repeat 100% 100%;
+}
+#tz-program .content #mobile_app .problem .card-body p {
+  margin-bottom: 0;
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 26px;
+}
+#tz-program .content #mobile_app .problem .card:hover .card-title {
+  opacity: 0;
+}
+#tz-program .content #mobile_app .problem .card:hover .card-body {
+  opacity: 1;
+}
+#tz-program .content #mobile_app .arch {
+  height: 1320px;
+  background-image: url(/images/mobile-app-arch-bg.png?67334bf1ec360a5f0df602882a452608);
+}
+#tz-program .content #mobile_app .arch .cont {
+  position: relative;
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
+}
+#tz-program .content #mobile_app .arch .cont .desc {
+  margin-top: 0;
+  margin-bottom: 15px;
+  text-indent: 2em;
+}
+#tz-program .content #mobile_app .arch .cont .consult-btn {
+  border-color: #2139b7;
+  background-color: #2139b7;
+}
+#tz-program .content #mobile_app .arch .cont .consult-btn:hover {
+  color: #2139b7;
+  border-color: #fff;
+  background-color: #fff;
+}
+#tz-program .content #mobile_app .adv {
+  height: 710px;
+  background: url(/images/mobile-app-adv.png?538960dd8f47b0ef46cbb5c6ca41f3cf) no-repeat 48.5% 70%;
+}
+#tz-program .content #mobile_app .adv .item {
+  width: 320px;
+}
+#tz-program .content #education_cloud .banner {
+  background-image: url(/images/education-cloud-banner-bg.png?2010c80cc8fb90a26b23ccbfc242d666);
+}
+#tz-program .content #education_cloud .problem {
+  height: 700px;
+}
+#tz-program .content #education_cloud .problem .card {
+  width: 570px;
+  height: 215px;
+  padding-left: 60px;
+  padding-right: 60px;
+}
+#tz-program .content #education_cloud .problem .card-body p {
+  text-align: left;
+  padding-left: 50px;
+}
+#tz-program .content #education_cloud .arch {
+  height: 1210px;
+  background-image: url(/images/education-cloud-arch-bg.png?14f83e4808959ead541b7e1d7522394e);
+}
+#tz-program .content #education_cloud .arch .consult-btn {
+  border-color: #1e2251;
+  color: #1e2251;
+}
+#tz-program .content #education_cloud .arch .consult-btn:hover {
+  background-color: #fff;
+  border-color: #fff;
+}
+#tz-program .content #education_cloud .arch .desc {
+  margin-top: 40px;
+  margin-bottom: 30px;
+}
+#tz-program .content #education_cloud .arch .desc .list-group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  text-align: left;
+}
+#tz-program .content #education_cloud .arch .desc .list-group .list-group-item {
+  display: inline-block;
+  padding-top: 0;
+  padding-bottom: 0;
+  background: url(/images/dot.png?ab0a9459dce95c398c2a6fdc1eed29e8) no-repeat left center;
+  color: #1e2251;
+  border: none;
+  border-radius: unset;
+}
+#tz-program .content #education_cloud .adv {
+  height: 600px;
+  background: url(/images/education-cloud-adv.png?555ba2b76e0025fd65bd9ee6dd41188a) no-repeat center 70%;
+}
+#tz-program .content #education_cloud .adv .cont {
+  margin-top: 65px;
 }
 #tz-server-hosting {
   margin-left: -15px;

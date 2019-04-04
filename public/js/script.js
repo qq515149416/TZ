@@ -65,6 +65,20 @@
 /************************************************************************/
 /******/ ({
 
+/***/ 202:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+$(function () {
+   $("#article .content-list .nav-tabs li a").click(function (e) {
+      location.href = $(this).attr("href");
+   });
+});
+
+/***/ }),
+
 /***/ 47:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -78,6 +92,8 @@ module.exports = __webpack_require__(48);
 
 "use strict";
 
+
+__webpack_require__(202);
 
 window.onscroll = function () {
   if ($(document).scrollTop() > 82) {

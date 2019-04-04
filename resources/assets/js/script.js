@@ -1,3 +1,4 @@
+import "./article";
 window.onscroll = function () {
   if ($(document).scrollTop() > 82) {
     // console.log($(document).scrollTop());

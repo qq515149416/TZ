@@ -15,16 +15,16 @@
             <h4 class="sub-text">您的托付，我们全力以赴！</h4>
         </div>
         <div class="collapse-tab">
-            <a class="collapse-tab-item" href="#hengyang" data-toggle="collapse"
+            <a class="collapse-tab-item heng-yang" href="#hengyang" data-toggle="collapse"
                data-target="#heng-yang"
-               aria-expanded="true" aria-controls="heng-yang">衡阳服务器托管</a>
-            <a class="collapse-tab-item" href="#huizhou" data-toggle="collapse"
+               aria-expanded="false" aria-controls="heng-yang">衡阳服务器托管</a>
+            <a class="collapse-tab-item hui-zhou" href="#huizhou" data-toggle="collapse"
                data-target="#hui-zhou"
                aria-expanded="false" aria-controls="hui-zhou">惠州服务器托管</a>
-            <a class="collapse-tab-item" href="#xian" data-toggle="collapse"
+            <a class="collapse-tab-item xi-an" href="#xian" data-toggle="collapse"
                data-target="#xi-an"
                aria-expanded="false" aria-controls="xi-an">西安服务器托管</a>
-            <!-- <a class="collapse-tab-item" href="#hangzhou" data-toggle="collapse"
+            <!-- <a class="collapse-tab-item hang-zhou" href="#hangzhou" data-toggle="collapse"
                data-target="#hang-zhou"
                aria-expanded="false" aria-controls="hang-zhou">杭州服务器托管</a> -->
         </div>

@@ -2931,6 +2931,8 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   /* 流媒体 */
   /* 移动APP */
   /* 教育云 */
+  /* 政务云 */
+  /* 网站部署 */
 }
 #tz-program .content .banner {
   position: relative;
@@ -2964,17 +2966,11 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   font-size: 14px;
   line-height: 40px;
   letter-spacing: 2.8px;
-  color: #fff;
   text-decoration: none;
-  background: -webkit-gradient(linear, left top, right top, from(#b9ccfc), color-stop(50%, #6d8fff));
-  background: linear-gradient(to right, #b9ccfc 0%, #6d8fff 50%);
-  background: -webkit-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
-  -webkit-transition: background 0.4s ease-in-out;
-  transition: background 0.4s ease-in-out;
-}
-#tz-program .content .banner .apply-btn:hover {
   color: #043fc4;
   background: #fff;
+  -webkit-transition: background 0.4s ease-in-out;
+  transition: background 0.4s ease-in-out;
 }
 #tz-program .content .problem {
   height: 700px;
@@ -3180,7 +3176,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background-image: url(/images/game-arch-bg.png?aeb381af904a4d8292c7f5c71f1fb1f2);
 }
 #tz-program .content #game .adv {
-  background: url(/images/game-adv.png?de6c44551eb078692cc6598120b898dc) no-repeat center 70%;
+  background: url(/images/game-adv-bg.png?de6c44551eb078692cc6598120b898dc) no-repeat center 70%;
 }
 #tz-program .content #chess .banner {
   background-image: url(/images/chess-banner-bg.png?a81b0245d73a9f2b88501846afd7735b);
@@ -3296,7 +3292,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz-program .content #chess .adv {
   height: 546px;
-  background: url(/images/chess-adv.png?38ab74a7678e2f35e10a1b4cd54385e3) no-repeat center 70%;
+  background: url(/images/chess-adv-bg.png?38ab74a7678e2f35e10a1b4cd54385e3) no-repeat center 70%;
 }
 #tz-program .content #chess .adv .item {
   height: 140px;
@@ -3321,7 +3317,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz-program .content #finance .adv {
   height: 710px;
-  background: url(/images/finance-adv.png?6dd2d0583e3f5fe90f32e4e2b551f77b) no-repeat 48.5% 58%;
+  background: url(/images/finance-adv-bg.png?6dd2d0583e3f5fe90f32e4e2b551f77b) no-repeat 48.5% 58%;
 }
 #tz-program .content #finance .adv .cont .item {
   width: 320px;
@@ -3346,7 +3342,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz-program .content #streaming_media .adv {
   height: 710px;
-  background: url(/images/streaming-media-adv.png?6f7fc5e2b991b9f6cc80ab5fd13e93d3) no-repeat 48.5% 70%;
+  background: url(/images/streaming-media-adv-bg.png?6f7fc5e2b991b9f6cc80ab5fd13e93d3) no-repeat 48.5% 70%;
 }
 #tz-program .content #mobile_app .banner {
   background-image: url(/images/mobile-app-banner-bg.png?35a34261413158a4f4f85ce149b7d567);
@@ -3446,7 +3442,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz-program .content #mobile_app .adv {
   height: 710px;
-  background: url(/images/mobile-app-adv.png?538960dd8f47b0ef46cbb5c6ca41f3cf) no-repeat 48.5% 70%;
+  background: url(/images/mobile-app-adv-bg.png?538960dd8f47b0ef46cbb5c6ca41f3cf) no-repeat 48.5% 70%;
 }
 #tz-program .content #mobile_app .adv .item {
   width: 320px;
@@ -3473,11 +3469,12 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz-program .content #education_cloud .arch .consult-btn {
   border-color: #1e2251;
-  color: #1e2251;
+  background-color: #1e2251;
 }
 #tz-program .content #education_cloud .arch .consult-btn:hover {
-  background-color: #fff;
+  color: #1e2251;
   border-color: #fff;
+  background-color: #fff;
 }
 #tz-program .content #education_cloud .arch .desc {
   margin-top: 40px;
@@ -3509,10 +3506,84 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz-program .content #education_cloud .adv {
   height: 600px;
-  background: url(/images/education-cloud-adv.png?555ba2b76e0025fd65bd9ee6dd41188a) no-repeat center 70%;
+  background: url(/images/education-cloud-adv-bg.png?555ba2b76e0025fd65bd9ee6dd41188a) no-repeat center 70%;
 }
 #tz-program .content #education_cloud .adv .cont {
   margin-top: 65px;
+}
+#tz-program .content #government_cloud .banner {
+  background-image: url(/images/government-cloud-banner-bg.png?c03da09f2045264f0fe9000040bdc3a1);
+}
+#tz-program .content #government_cloud .problem {
+  height: 620px;
+}
+#tz-program .content #government_cloud .problem .card {
+  width: 570px;
+  height: 176px;
+  padding-left: 60px;
+  padding-right: 60px;
+}
+#tz-program .content #government_cloud .problem .card-body p {
+  text-align: left;
+  padding-left: 50px;
+}
+#tz-program .content #government_cloud .arch {
+  height: 1200px;
+  background-image: url(/images/government-cloud-arch-bg.png?cbd1a530b38258c4a0c6ef066d599287);
+}
+#tz-program .content #government_cloud .arch .consult-btn {
+  color: #091233;
+  background: #fff;
+}
+#tz-program .content #government_cloud .arch .desc {
+  color: #fff;
+}
+#tz-program .content #government_cloud .adv {
+  height: 660px;
+  background: url(/images/government-cloud-adv-bg.png?6b97d8d988ae0176a9c157bd8dc99125) no-repeat center 60%;
+}
+#tz-program .content #government_cloud .adv .cont {
+  margin-top: 60px;
+}
+#tz-program .content #government_cloud .adv .cont .item {
+  width: 290px;
+  height: 180px;
+}
+#tz-program .content #website_deployment .banner {
+  background-image: url(/images/website-deployment-banner-bg.png?3d16521dcd386174e55f1d3d59a3154a);
+}
+#tz-program .content #website_deployment .problem {
+  height: 700px;
+}
+#tz-program .content #website_deployment .problem .card {
+  width: 570px;
+  height: 215px;
+}
+#tz-program .content #website_deployment .problem .card-body p {
+  text-align: left;
+  padding-left: 50px;
+}
+#tz-program .content #website_deployment .arch {
+  height: 990px;
+  background-image: url(/images/website-deployment-arch-bg.png?36c4d6730e65d3780a9ae1cd528a20a6);
+}
+#tz-program .content #website_deployment .arch .consult-btn {
+  color: #091233;
+  background: #fff;
+}
+#tz-program .content #website_deployment .arch .desc {
+  color: #fff;
+}
+#tz-program .content #website_deployment .adv {
+  height: 640px;
+  background: url(/images/website-deployment-adv-bg.png?ee885b796221336228ed7200aa28af3c) no-repeat center 70%;
+}
+#tz-program .content #website_deployment .adv .cont {
+  margin-top: 60px;
+}
+#tz-program .content #website_deployment .adv .cont .item {
+  width: 350px;
+  height: 160px;
 }
 #tz-server-hosting {
   margin-left: -15px;

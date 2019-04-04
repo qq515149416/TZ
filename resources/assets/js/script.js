@@ -156,7 +156,9 @@ $(function () {
       });
     }
   });
-  // 解决方案页面tab切换
+  /**
+   * 解决方案页tab切换
+   */
   $('#tz-program .tab').find('a.tab-item[href="' + window.location.hash + '"]').addClass('active').tab('show').siblings().removeClass('active');
   $(window).bind('hashchange', function () {
     $('#tz-program .tab').find('a.tab-item[href="' + window.location.hash + '"]').addClass('active').tab('show').siblings().removeClass('active');
@@ -169,7 +171,16 @@ $(function () {
       $(this).addClass('active').tab('show').siblings().removeClass('active');
     }
   });
-  // 服务器托管页面collapse切换
+  /**
+   * 服务器托管页面collapse切换
+   */
+  $('#tz-server-hosting .expand-item.collapse')
+      .on('show.bs.collapse', function () {
+        $('#tz-server-hosting .collapse-tab').find('a.' + $(this).attr('id')).addClass('active').siblings().removeClass('active');
+      })
+      .on('hidden.bs.collapse', function () {
+        $('#tz-server-hosting .collapse-tab').find('a.' + $(this).attr('id')).removeClass('active');
+      });
   let $target = $('#tz-server-hosting .collapse-tab').find('a.collapse-tab-item[href="' + window.location.hash + '"]');
   $target.addClass('active').siblings().removeClass('active');
   $('#tz-server-hosting' + ' #' + $target.attr('aria-controls')).collapse('show').siblings().collapse('hide');
@@ -180,7 +191,7 @@ $(function () {
   });
   $('#tz-server-hosting a.collapse-tab-item').on('click', function (e) {
     // e.preventDefault();
-    $(this).toggleClass('active').siblings().removeClass('active');
+    // $(this).toggleClass('active').siblings().removeClass('active');
     $('#tz-server-hosting .expand-item.collapse.in').collapse('toggle').siblings().collapse('hide');
   });
 });

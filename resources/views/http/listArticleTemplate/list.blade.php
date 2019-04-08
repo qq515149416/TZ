@@ -3,7 +3,7 @@
     <span class="pull-right">
         <a href="#">首页</a> >
         <a href="#">新闻中心</a> >
-        <a href="#" class="active">{{ $vars['content'] }}</a>
+        <a href="/article/{{ $vars['name'] }}" class="active">{{ $vars['content'] }}</a>
     </span>
 </h2>
 <ul>
@@ -11,7 +11,7 @@
     <li>
         <div class="media">
             <div class="media-left">
-                <a href="#">
+                <a href="/detail/{{ $vars['name'] }}/{{ $item->newsid }}">
                     <span class="date-day">
                     {{ date("d",strtotime($item->createdate)) }}
                     </span>
@@ -21,7 +21,7 @@
                 </a>
             </div>
             <div class="media-body">
-                <a href="#">
+                <a href="/detail/{{ $vars['name'] }}/{{ $item->newsid }}">
                     <h4 class="media-heading">
                         @if ($item->status)
                             <span class="top">置顶</span>

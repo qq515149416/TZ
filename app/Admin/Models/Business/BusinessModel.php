@@ -767,7 +767,7 @@ class BusinessModel extends Model
                            ->select('business_number','length','money','id','client_id','sales_id','business_type','machine_number','resource_detail','start_time','endding_time','business_status','remove_status','created_at','remove_reason')
                            ->get();
         if(!$under_business->isEmpty()){
-            $under_business = $this->totalMoney($new_business,4);
+            $under_business = $this->totalMoney($under_business,4);
             $code = 1;
         } else {
             $under_business['total'] = 0;
@@ -809,12 +809,10 @@ class BusinessModel extends Model
         //新注册客户量
         $create_total = DB::table('tz_users')
                        ->whereBetween('created_at',[$query_time['start_time'],$query_time['end_time']])
-                       ->whereNull('deleted_at')
                        ->whereBetween('status',[1,2])
                        ->count();
         $create_info = DB::table('tz_users')
                        ->whereBetween('created_at',[$query_time['start_time'],$query_time['end_time']])
-                       ->whereNull('deleted_at')
                        ->whereBetween('status',[1,2])
                        ->select('id','status','name','email','money','salesman_id','nickname','msg_phone','msg_qq','created_at')
                        ->get();

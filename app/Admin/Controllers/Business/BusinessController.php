@@ -174,7 +174,6 @@ class BusinessController extends Controller
         $time = $request->only(['start_time','end_time']);
         $new_business = new BusinessModel();
         $new_result = $new_business->newBusiness($time);
-        dd($new_result['data']);
         return tz_ajax_echo($new_result['data'],$new_result['msg'],$new_result['code']);
     }
 

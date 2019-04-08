@@ -823,10 +823,10 @@ class BusinessModel extends Model
                 $create_value->sales_name = DB::table('admin_users')->where(['id'=>$create_value->salesman_id])->value('name');
             }
             $return['code'] = 1;
-            $return['mag'] = '获取新增客户数据成功';
+            $return['msg'] = '获取新增客户数据成功';
         } else {
             $return['code'] = 0;
-            $return['mag'] = '暂无新增客户数据';
+            $return['msg'] = '暂无新增客户数据';
         }
         //总注册客户量
         $total = DB::table('tz_users')

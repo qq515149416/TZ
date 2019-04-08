@@ -830,7 +830,6 @@ class BusinessModel extends Model
         }
         //总注册客户量
         $total = DB::table('tz_users')
-                   ->whereNull('deleted_at')
                    ->whereBetween('status',[1,2])
                    ->count(); 
         $return['data'] = ['create_total'=>$create_total,'info'=>$create_info,'total'=>$total];
@@ -882,12 +881,8 @@ class BusinessModel extends Model
         $total_business = [];
         if($range == 1 || $range == 2){
             $removes = '<';
-            $select1 = 'price';
-            $select2 = 'duration';
         } elseif($range == 3 || $range == 4){
-            $removes = '=';
-            $select1 = 'price';
-            $select2 = '';
+            $removes = '='; 
         }
         foreach($business as $business_key => $business_value){
             if($range == 1 || $range == 2){
@@ -902,7 +897,7 @@ class BusinessModel extends Model
                        ->where('order_status','<',5)
                        ->where('remove_status',$removes,4)
                        ->whereNull('deleted_at')
-                       ->select($select1,$select2)
+                       ->select('price','duration')
                        ->get();
             if(!$order->isEmpty()){
                 foreach($order as $order_key => $order_value){

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Hash;
 use Encore\Admin\Facades\Admin;
 use App\Admin\Models\Statistics\RechargeStatistics;
-
+use App\Admin\Models\Customer\Customer;
 
 class RechargeModel extends Model
 {
@@ -369,104 +369,122 @@ class RechargeModel extends Model
 				
 			}
 		}
+		//如果是待审核状态
+		if($p == 'b'){
 
-		$test = DB::table('tz_recharge_flow')->where('trade_no',$trade->trade_no)->value('id');
-		if($test != null){
-			DB::rollBack();
-			$return['msg'] = '该审核单的充值流水已存在,请确认审核单';
-			return $return;
-		}
+			$test = DB::table('tz_recharge_flow')->where('trade_no',$trade->trade_no)->value('id');
+			if($test != null){
+				DB::rollBack();
+				$return['msg'] = '该审核单的充值流水已存在,请确认审核单';
+				return $return;
+			}
 
-		if($audit_res != true){
-			DB::rollBack();
-			$return['msg'] = '更新审核状态失败';
-			return $return;
-		}
+			if($audit_res != true){
+				DB::rollBack();
+				$return['msg'] = '更新审核状态失败';
+				return $return;
+			}
 
-		if($audit_status == -1){
-			DB::commit();
-			$return['msg'] 	= '审核成功,已驳回此充值单';
-			$return['code'] 	= 1;
-			return $return;
-			exit;
-		}
+			if($audit_status == -1){
+				DB::commit();
+				$return['msg'] 	= '审核成功,已驳回此充值单';
+				$return['code'] 	= 1;
+				return $return;
+				exit;
+			}
+			
+			$user_model = New Customer();
+			$update_user = $user_model->find($trade->user_id);
+			if($update_user == null){
+				DB::rollBack();
+				$return['msg'] = '获取客户信息失败';
+				return $return;
+			}
 
-		$money_before = DB::table('tz_users')->where('id',$trade->user_id)->value('money');
-		if($money_before == null){
-			DB::rollBack();
-			$return['msg'] = '获取客户余额失败';
-			return $return;
-		}
-		$money_after = bcadd($money_before,$trade->recharge_amount,2);
+			$money_before = $update_user->money;
 
-		switch ($trade->recharge_way) {
-			case '1':
-				$voucher = '腾正公帐(建设银行)';
-				break;
-			case '2':
-				$voucher = '腾正公帐(工商银行)';
-				break;
-			case '3':
-				$voucher = '腾正公帐(招商银行)';
-				break;
-			case '4':
-				$voucher = '腾正公帐(农业银行)';
-				break;
-			case '5':
-				$voucher = '正易公帐(中国银行)';
-				break;
-			case '6':
-				$voucher = '支付宝';
-				break;
-			case '7':
-				$voucher = '公帐支付宝';
-				break;
-			case '8':
-				$voucher = '财付通';
-				break;
-			case '9':
-				$voucher = '微信支付';
-				break;
-			case '10':
-				$voucher = '新支付宝';
-				break;
-			default:
-				$voucher = '无此状态';
-				break;
+			$money_after = bcadd($money_before,$trade->recharge_amount,2);
+
+			switch ($trade->recharge_way) {
+				case '1':
+					$voucher = '腾正公帐(建设银行)';
+					break;
+				case '2':
+					$voucher = '腾正公帐(工商银行)';
+					break;
+				case '3':
+					$voucher = '腾正公帐(招商银行)';
+					break;
+				case '4':
+					$voucher = '腾正公帐(农业银行)';
+					break;
+				case '5':
+					$voucher = '正易公帐(中国银行)';
+					break;
+				case '6':
+					$voucher = '支付宝';
+					break;
+				case '7':
+					$voucher = '公帐支付宝';
+					break;
+				case '8':
+					$voucher = '财付通';
+					break;
+				case '9':
+					$voucher = '微信支付';
+					break;
+				case '10':
+					$voucher = '新支付宝';
+					break;
+				default:
+					$voucher = '无此状态';
+					break;
+			}
+			$data = [
+				'user_id'		=> $trade->user_id,
+				'recharge_amount'	=> $trade->recharge_amount,
+				'recharge_way'		=> 3,
+				'trade_no'		=> $trade->trade_no,
+				'voucher'		=> $voucher,
+				'timestamp'		=> $trade->pay_at,
+				'trade_status'		=> 1,
+				'money_before'		=> $money_before,
+				'money_after'		=> $money_after,
+				'month'			=> date("Ym"),
+				'created_at'		=> date("Y-m-d H:i:s"),
+				'tax'			=> $trade->tax,
+			];
+			
+
+			$create_flow = DB::table('tz_recharge_flow')->insert($data);
+			if($create_flow != true){
+				DB::rollBack();
+				$return['msg'] = '创建充值流水失败';
+				return $return;
+			}
+
+			
+
+			$update_user->money = $money_after;
+
+			if($update_user->save()){
+				DB::commit();
+				$return['code'] 	= 1;
+				$return['msg'] 	= '审核成功,充值到账';
+				return $return;
+			}else{
+				DB::rollBack();
+				$return['msg'] = '更新用户余额失败';
+				return $return;
+			}
 		}
-		$data = [
-			'user_id'		=> $trade->user_id,
-			'recharge_amount'	=> $trade->recharge_amount,
-			'recharge_way'		=> 3,
-			'trade_no'		=> $trade->trade_no,
-			'voucher'		=> $voucher,
-			'timestamp'		=> $trade->pay_at,
-			'trade_status'		=> 1,
-			'money_before'		=> $money_before,
-			'money_after'		=> $money_after,
-			'month'			=> date("Ym"),
-			'created_at'		=> date("Y-m-d H:i:s"),
-			'tax'			=> $trade->tax,
-		];
+		//$update_money = DB::table('tz_users')->where('id',$trade->user_id)->update(['money' => $money_after]);
+		// if($update_money != true){
+		// 	DB::rollBack();
+		// 	$return['msg'] = '更新用户余额失败';
+		// 	return $return;
+		// }
 		
-
-		$create_flow = DB::table('tz_recharge_flow')->insert($data);
-		if($create_flow != true){
-			DB::rollBack();
-			$return['msg'] = '创建充值流水失败';
-			return $return;
-		}
-
-		$update_money = DB::table('tz_users')->where('id',$trade->user_id)->update(['money' => $money_after]);
-		if($update_money != true){
-			DB::rollBack();
-			$return['msg'] = '更新用户余额失败';
-			return $return;
-		}
-		DB::commit();
-		$return['code'] 	= 1;
-		$return['msg'] 	= '审核成功,充值到账';
-		return $return;
 	}
 
 

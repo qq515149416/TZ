@@ -15,6 +15,12 @@ class ArticleController extends Controller
         $new->withPath($page);
         return $new;
     }
+    public function content($id)
+    {
+        $new_connection = DB::connection('mysql_oldoa');
+        $new = $new_connection->table('news')->where('newsid',$id)->first();
+        return $new;
+    }
     public function index($type)
     {
         $template = "http/article";
@@ -22,6 +28,59 @@ class ArticleController extends Controller
             "company" => $this->new_list(2,"company"),
             "placard" => $this->new_list(1,"placard"),
             "industry" => $this->new_list(3,"industry")
+        ];
+        $type_contents_code = [
+            "company" => "公司动态",
+            "placard" => "公司公告",
+            "industry" => "行业动态"
+        ];
+        $nav = [
+            [
+                "name" => "company",
+                "url" => "/article/company",
+                "content" => $type_contents_code["company"]
+            ],
+            [
+                "name" => "placard",
+                "url" => "/article/placard",
+                "content" => $type_contents_code["placard"]
+            ],
+            [
+                "name" => "industry",
+                "url" => "/article/industry",
+                "content" => $type_contents_code["industry"]
+            ]
+        ];
+        return view($template,[
+            "type" => $type,
+            "data" => $newList,
+            "list" => [
+                "nav"=>$nav,
+                "content_list" => [
+                    [
+                        "name" => $type,
+                        "content" => $type_contents_code[$type],
+                        "template" => "http.listArticleTemplate.list"
+                    ]
+                    // [
+                    //     "name" => "placard",
+                    //     "content" => "公司公告",
+                    //     "template" => "http.listArticleTemplate.list"
+                    // ],
+                    // [
+                    //     "name" => "industry",
+                    //     "content" => "行业动态",
+                    //     "template" => "http.listArticleTemplate.list"
+                    // ]
+                ]
+            ]
+        ]);
+    }
+    public function detail($type,$id)
+    {
+        $template = "http/article";
+        $newList = [
+            $type => $this->content($id)
         ];
         return view($template,[
             "type" => $type,
@@ -46,26 +105,11 @@ class ArticleController extends Controller
                 ],
                 "content_list" => [
                     [
-                        "name" => "company",
-                        "content" => "公司动态",
-                        "template" => "http.listArticleTemplate.list"
-                    ],
-                    [
-                        "name" => "placard",
-                        "content" => "公司公告",
-                        "template" => "http.listArticleTemplate.list"
-                    ],
-                    [
-                        "name" => "industry",
-                        "content" => "行业动态",
-                        "template" => "http.listArticleTemplate.list"
+                        "name" => $type,
+                        "template" => "http.listArticleTemplate.detail"
                     ]
                 ]
             ]
         ]);
-    }
-    public function detail($type,$id)
-    {
-        return "类型是：$type,ID是$id";
     }
 }

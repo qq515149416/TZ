@@ -760,7 +760,7 @@ class BusinessModel extends Model
                        ->count();
         //新下架的业务信息
         $under_business = DB::table('tz_business')
-                           ->whereBetween('created_at',[$query_time['start_time'],$query_time['end_time']])
+                           ->whereBetween('updated_at',[$query_time['start_time'],$query_time['end_time']])
                            ->whereNull('deleted_at')
                            ->whereBetween('business_status',[0,6])
                            ->where(['remove_status'=>4])

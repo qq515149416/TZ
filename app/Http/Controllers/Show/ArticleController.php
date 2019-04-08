@@ -25,7 +25,47 @@ class ArticleController extends Controller
         ];
         return view($template,[
             "type" => $type,
-            "data" => $newList
+            "data" => $newList,
+            "list" => [
+                "nav"=>[
+                    [
+                        "name" => "company",
+                        "url" => "/article/company",
+                        "content" => "公司动态"
+                    ],
+                    [
+                        "name" => "placard",
+                        "url" => "/article/placard",
+                        "content" => "公司公告"
+                    ],
+                    [
+                        "name" => "industry",
+                        "url" => "/article/industry",
+                        "content" => "行业动态"
+                    ]
+                ],
+                "content_list" => [
+                    [
+                        "name" => "company",
+                        "content" => "公司动态",
+                        "template" => "http.listArticleTemplate.list"
+                    ],
+                    [
+                        "name" => "placard",
+                        "content" => "公司公告",
+                        "template" => "http.listArticleTemplate.list"
+                    ],
+                    [
+                        "name" => "industry",
+                        "content" => "行业动态",
+                        "template" => "http.listArticleTemplate.list"
+                    ]
+                ]
+            ]
         ]);
+    }
+    public function detail($type,$id)
+    {
+        return "类型是：$type,ID是$id";
     }
 }

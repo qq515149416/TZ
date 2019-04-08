@@ -28,15 +28,16 @@ Route::get('/verification_code', function () {
 Route::group([
     'middleware' => 'UserOperationLog'
 ], function () {
-    Route::get('/', 'Show\IndexController@index');
+    Route::get('/', 'Show\IndexController@index'); //网站首页
     Route::get('/page/{directory}/{p}', 'Show\PageController@index');
     Route::get('/promotion/ddk', 'Show\DdkPromotionController@index');
     Route::get('/aboutus/{page}', 'Show\AboutUsController@index');
     Route::get('/promotion/consumer', 'Show\ConsumerPromotionController@index');
     Route::get('/zuyong/{page}', 'Show\ServerRentController@index');
-    Route::get('/fangan', 'Show\ProgramController@index');
+    Route::get('/fangan/{page}', 'Show\ProgramController@index');
     Route::get('/tuoguan', 'Show\HostingController@index');
     Route::get('/article/{type}', 'Show\ArticleController@index');
+    Route::get('/detail/{type}/{id}', 'Show\ArticleController@detail');
 });
 
 /**

@@ -10,9 +10,9 @@
     <div id="article" class="row">
         @aboutusLayout(['title' => '新闻中心', 'subtitle' => '互联网行业资讯', 'descripts' => '帮你了解行业情况，介绍我们的情况'])
         @slot('nav')
-            <li role="presentation" class="{{ $type === 'company' ? 'active' : '' }}"><a href="#company" aria-controls="company" role="tab" data-toggle="tab">公司动态</a></li>
-            <li role="presentation" class="{{ $type === 'placard' ? 'active' : '' }}"><a href="#placard" aria-controls="placard" role="tab" data-toggle="tab">公司公告</a></li>
-            <li role="presentation" class="{{ $type === 'industry' ? 'active' : '' }}"><a href="#industry" aria-controls="industry" role="tab" data-toggle="tab">行业动态</a></li>
+            <li role="presentation" class="{{ $type === 'company' ? 'active' : '' }}"><a href="/article/company" aria-controls="company" role="tab" data-toggle="tab">公司动态</a></li>
+            <li role="presentation" class="{{ $type === 'placard' ? 'active' : '' }}"><a href="/article/placard" aria-controls="placard" role="tab" data-toggle="tab">公司公告</a></li>
+            <li role="presentation" class="{{ $type === 'industry' ? 'active' : '' }}"><a href="/article/industry" aria-controls="industry" role="tab" data-toggle="tab">行业动态</a></li>
         @endslot
             <div role="tabpanel" class="tab-pane {{ $type === 'company' ? 'active' : '' }} clearfix" id="company">
                 <h2>
@@ -54,7 +54,9 @@
                     </li>
                     @endforeach
                 </ul>
-                {{ $data['company']->links() }}
+                <div class="paginate">
+                    {{ $data['company']->links() }}
+                </div>
             </div>
             <div role="tabpanel" class="tab-pane {{ $type === 'placard' ? 'active' : '' }} clearfix" id="placard">
                 <h2>
@@ -96,6 +98,9 @@
                     </li>
                     @endforeach
                 </ul>
+                <div class="paginate">
+                    {{ $data['placard']->links() }}
+                </div>
             </div>
             <div role="tabpanel" class="tab-pane {{ $type === 'industry' ? 'active' : '' }} clearfix" id="industry">
                 <h2>
@@ -137,6 +142,9 @@
                     </li>
                     @endforeach
                 </ul>
+                <div class="paginate">
+                    {{ $data['industry']->links() }}
+                </div>
             </div>
         @endaboutusLayout
     </div>

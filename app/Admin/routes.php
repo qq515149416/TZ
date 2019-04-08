@@ -420,6 +420,13 @@ Route::group([
         $router->post('select_users','Business\BusinessController@selectUsers');
         $router->post('security_insert','Business\BusinessController@securityInsertBusiness');
         $router->post('security_order','Business\OrdersController@securityInsertOrders');
+
+        /**
+         * IDC业务数据统计相关
+         */
+        $router->post('new_business','Business\BusinessController@newBusiness');
+        $router->post('under_business','Business\BusinessController@underBusiness');
+        $router->post('new_registration','Business\BusinessController@newRegistration');
     });
 
 

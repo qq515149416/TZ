@@ -686,4 +686,264 @@ class BusinessModel extends Model
         return $cabinets;
     }
 
+    /**
+     * 一段时间内新增业务数据的相关信息(新增业务数据详情,统计数据)
+     * @param  array $time 统计的起始时间和结束时间
+     * @return array       返回相关的数据结果
+     */
+    public function newBusiness($time){
+        $query_time = $this->queryTime($time);//获取起始时间和结束时间
+
+        //新增业务量
+        $new_total = DB::table('tz_business')
+                       ->whereBetween('created_at',[$query_time['start_time'],$query_time['end_time']])
+                       ->whereNull('deleted_at')
+                       ->whereBetween('business_status',[0,4])
+                       ->whereBetween('remove_status',[0,3])
+                       ->count();
+        //新增的业务数据信息
+        $new_business = DB::table('tz_business')
+                           ->whereBetween('created_at',[$query_time['start_time'],$query_time['end_time']])
+                           ->whereNull('deleted_at')
+                           ->whereBetween('business_status',[0,4])
+                           ->whereBetween('remove_status',[0,3])
+                           ->select('business_number','length','money','id','client_id','sales_id','business_type','machine_number','resource_detail','start_time','endding_time','business_status','remove_status','created_at')
+                           ->get();
+        if(!$new_business->isEmpty()){
+            $new_business = $this->totalMoney($new_business,2);
+            $code = 1;
+        } else {
+            $new_business['total'] = 0;
+            $code = 0;
+        }
+        //总业务量
+        $total = DB::table('tz_business')
+                   ->whereNull('deleted_at')
+                   ->whereBetween('business_status',[0,4])
+                   ->whereBetween('remove_status',[0,3])
+                   ->count();
+        //所有在用的业务数据信息
+        $business = DB::table('tz_business')
+                       ->whereNull('deleted_at')
+                       ->whereBetween('business_status',[0,4])
+                       ->whereBetween('remove_status',[0,3])
+                       ->select('business_number','length','money')
+                       ->get();
+        if(!$business->isEmpty()){
+            $business = $this->totalMoney($business,1);
+        } else {
+            $business['total'] = 0;
+        }
+        return  [
+            'code' => $code,
+            'data' => ['business'=>isset($new_business['business'])?$new_business['business']:$new_business,'new_total'=>$new_total,'new_money'=>$new_business['total'],'total'=>$total,'total_money'=>$business['total']],
+            'msg' => '新增业务相关数据获取成功'
+        ];
+
+
+    }
+
+    /**
+     * 一段时间内新增下架业务数据的相关信息(新增业务数据详情,统计数据)
+     * @param  array $time 统计的起始时间和结束时间
+     * @return array       返回相关的数据结果
+     */
+    public function underBusiness($time){
+        $query_time = $this->queryTime($time);//获取起始时间和结束时间
+
+        //新下架业务量
+        $under_total = DB::table('tz_business')
+                       ->whereBetween('updated_at',[$query_time['start_time'],$query_time['end_time']])
+                       ->whereNull('deleted_at')
+                       ->whereBetween('business_status',[0,6])
+                       ->where(['remove_status'=>4])
+                       ->count();
+        //新下架的业务信息
+        $under_business = DB::table('tz_business')
+                           ->whereBetween('created_at',[$query_time['start_time'],$query_time['end_time']])
+                           ->whereNull('deleted_at')
+                           ->whereBetween('business_status',[0,6])
+                           ->where(['remove_status'=>4])
+                           ->select('business_number','length','money','id','client_id','sales_id','business_type','machine_number','resource_detail','start_time','endding_time','business_status','remove_status','created_at','remove_reason')
+                           ->get();
+        if(!$under_business->isEmpty()){
+            $under_business = $this->totalMoney($new_business,4);
+            $code = 1;
+        } else {
+            $under_business['total'] = 0;
+            $code = 0;
+        }
+        //总下架业务量
+        $total = DB::table('tz_business')
+                   ->whereNull('deleted_at')
+                   ->whereBetween('business_status',[0,6])
+                   ->where(['remove_status'=>4])
+                   ->count();
+        //所有下架的业务信息
+        $business = DB::table('tz_business')
+                       ->whereNull('deleted_at')
+                       ->whereBetween('business_status',[0,6])
+                       ->where(['remove_status'=>4])
+                       ->select('business_number','length','money')
+                       ->get();
+        if(!$business->isEmpty()){
+            $business = $this->totalMoney($business,3);
+        } else {
+            $business['total'] = 0;
+        }
+        return  [
+            'code' => $code,
+            'data' => ['business'=>isset($under_business['business'])?$under_business['business']:$under_business,'under_total'=>$under_total,'under_money'=>$under_business['total'],'total'=>$total,'total_money'=>$business['total']],
+            'msg' => '下架业务相关数据获取成功'
+        ];  
+    }
+
+    /**
+     * 获取某段时间内新注册客户
+     * @param  array $time 起始时间和结束时间
+     * @return array       返回相关的数据信息
+     */
+    public function newRegistration($time){
+        $query_time = $this->queryTime($time);//获取起始时间和结束时间
+
+        //新注册客户量
+        $create_total = DB::table('tz_users')
+                       ->whereBetween('created_at',[$query_time['start_time'],$query_time['end_time']])
+                       ->whereNull('deleted_at')
+                       ->whereBetween('status',[1,2])
+                       ->count();
+        $create_info = DB::table('tz_users')
+                       ->whereBetween('created_at',[$query_time['start_time'],$query_time['end_time']])
+                       ->whereNull('deleted_at')
+                       ->whereBetween('status',[1,2])
+                       ->select('id','status','name','email','money','salesman_id','nickname','msg_phone','msg_qq','created_at')
+                       ->get();
+        if(!$create_info->isEmpty()){
+            $status = [0=>'拉黑',1=>'未验证',2=>'正常'];
+            foreach($create_info as $create_key=>$create_value){
+                $create_value->user_status = $status[$create_value->status];
+                $create_value->sales_name = DB::table('admin_users')->where(['id'=>$create_value->salesman_id])->value('name');
+            }
+            $return['code'] = 1;
+            $return['mag'] = '获取新增客户数据成功';
+        } else {
+            $return['code'] = 0;
+            $return['mag'] = '暂无新增客户数据';
+        }
+        //总注册客户量
+        $total = DB::table('tz_users')
+                   ->whereNull('deleted_at')
+                   ->whereBetween('status',[1,2])
+                   ->count(); 
+        $return['data'] = ['create_total'=>$create_total,'info'=>$create_info,'total'=>$total];
+        return $return;
+
+    }
+
+    /**
+     * 计算查询的起始时间和结束时间
+     * @param  array $query_time start_time--查询时间段的开始时间 end_time--查询时间段的结束时间
+     * @return array             返回查询的起始时间和结束时间
+     */
+    public function queryTime($query_time){
+        if(!isset($query_time['start_time']) && !isset($query_time['end_time'])){//当查询开始间和结束时间都未设置时
+
+            $end_time = date('Y-m-d H:i:s',time());//结束时间等于当前时间
+            $month = date('Y-m',time());//获取结束时间所属自然月
+            $start_time = $month.'-01 00:00:00';//获取结束时间所属自然月的第一天的零点为查询的开始时间
+
+        } elseif(isset($query_time['start_time']) && !isset($query_time['end_time'])){//当设置查询开始时间，未设置结束时间时
+
+            $start_time = date('Y-m-d H:i:s',$query_time['start_time']);//起始时间等于设置的起始时间
+            $month = date('Y-m',$query_time['start_time']);//获取开始时间所属自然月
+            $last_day = date('t',$month);//获取开始时间所属自然月的总天数
+            $end_time = $month.'-'.$last_day.' 23:59:59';//结束时间设置为开始时间所属自然月的最后一天的23:59:59
+
+        } elseif(!isset($query_time['start_time']) && isset($query_time['end_time'])){//当起始时间未设置，结束时间设置时
+
+            $end_time = date('Y-m-d H:i:s',$query_time['end_time']);//结束时间等于设置的结束时间
+            $month = date('Y-m',$query_time['end_time']);//获取结束时间所属的自然月
+            $start_time = $month.'-01 00:00:00';//获取结束时间所属自然月的第一天的零点为查询的开始时间
+
+        } elseif(isset($query_time['start_time']) && isset($query_time['end_time'])){//当查询的起始时间和结束时间都设置时
+
+            $start_time = date('Y-m-d H:i:s',$query_time['start_time']);//起始时间等于设置的起始时间
+            $end_time = date('Y-m-d H:i:s',$query_time['end_time']);//结束时间等于设置的结束时间
+        }
+        return ['start_time'=>$start_time,'end_time'=>$end_time];
+    }
+
+    /**
+     * 统计业务的营业额
+     * @param  array  $business 所有业务的数据
+     * @param  integer $range    1--代表统计所有的未下架的业务，2--代表统计某一段时间内的新增业务，3--代表统计所有下架业务，4--代表统计某一段时间内下架的业务
+     * @return array            返回修改后的相关业务数据
+     */
+    public function totalMoney($business,$range=1){
+        $total = 0;
+        $total_business = [];
+        if($range == 1 || $range == 2){
+            $removes = '<';
+            $select1 = 'price';
+            $select2 = 'duration';
+        } elseif($range == 3 || $range == 4){
+            $removes = '=';
+            $select1 = 'price';
+            $select2 = '';
+        }
+        foreach($business as $business_key => $business_value){
+            if($range == 1 || $range == 2){
+                $single_total = bcmul($business_value->money,$business_value->length,2);//每笔业务的总营业额
+            } elseif($range == 3 || $range == 4){
+                $single_total = $business_value->money;//每笔业务的月营业额
+            }
+            
+            $order = DB::table('tz_orders')
+                       ->where(['business_sn'=>$business_value->business_number])
+                       ->where('resource_type','>',3)
+                       ->where('order_status','<',5)
+                       ->where('remove_status',$removes,4)
+                       ->whereNull('deleted_at')
+                       ->select($select1,$select2)
+                       ->get();
+            if(!$order->isEmpty()){
+                foreach($order as $order_key => $order_value){
+                    if($range == 1 || $range == 2){
+                       $order_money = bcmul($order_value->price,$order_value->duration,2);//每笔资源的总营业额
+                    } elseif($range == 3 || $range == 4){
+                        $order_money = $order_value->price;//每笔资源的月营业额
+                    }
+                    $single_total = bcadd($single_total,$order_money,2);//每笔业务的总营业额
+                }   
+            }
+            if($range == 2 || $range == 4){//当统计新增业务数据时
+                $business_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜'];
+                $business_status = ['-1'=>'取消','-2'=>'审核不通过',0=>'审核中',1=>'未付款使用',2=>'付款使用中',3=>'未使用',4=>'锁定中',5=>'到期',6=>'退款'];
+                $remove_status = [0=>'正常',1=>'下架申请中',2=>'等待机房处理',3=>'清空下架中',4=>'下架完成'];
+                $business_value->sales_name = DB::table('admin_users')->where(['id'=>$business_value->sales_id])->value('name');
+                $client_name = DB::table('tz_users')->where(['id'=>$business_value->client_id])->select('name','email','nickname','msg_phone','msg_qq')->first();
+                $email = $client_name->email ? $client_name->email : $client_name->name;
+                $email = $email ? $email : $client_name->nickname;
+                $qq = isset($client_name->msg_qq)?$client_name->msg_qq:'';
+                $phone = isset($client_name->msg_phone)?$client_name->msg_phone:'';
+                $business_value->client_name = '用户:'.$email.'QQ:'.$qq.'手机:'.$phone;
+                $resource_detail =  json_decode($business_value->resource_detail);
+                $business_value->ip = isset($resource_detail->ip_detail)?$resource_detail->ip_detail:'';
+                $business_value->cabinet = isset($resource_detail->cabinets)?$resource_detail->cabinets:'';
+                $business_value->machineroom = isset($resource_detail->machineroom_name)?$resource_detail->machineroom_name:'';
+                $business_value->type = $business_type[$business_value->business_type];
+                $business_value->status = $business_status[$business_value->business_status];
+                $business_value->remove = $remove_status[$business_value->remove_status];
+                $business_value->single_total = $single_total;//将每笔的业务营业额统计进去
+                $taotal_business['business'][]=$business_value;//将含对应业务营业额的数据形成新的数据
+            }
+             
+            $total = bcadd($total,$single_total,2);//总营业额        
+        }
+        $taotal_business['total'] =  $total;
+        return $taotal_business;
+    }
+
+
+
 }

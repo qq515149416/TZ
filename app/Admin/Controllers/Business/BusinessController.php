@@ -164,4 +164,41 @@ class BusinessController extends Controller
         $result = $business->securityInsertBusiness($insert);
         return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
     }
+
+    /**
+     * 获取某个时间段的新增业务数据
+     * @param  Request $request start_time--查询时间段的开始时间 end_time--查询时间段的结束时间
+     * @return json           返回相关的查询数据
+     */
+    public function newBusiness(Request $request){
+        $time = $request->only(['start_time','end_time']);
+        $new_business = new BusinessModel();
+        $new_result = $new_business->newBusiness($time);
+        dd($new_result['data']);
+        return tz_ajax_echo($new_result['data'],$new_result['msg'],$new_result['code']);
+    }
+
+    /**
+     * 获取某个时间段的流失业务数据
+     * @param  Request $request start_time--查询时间段的开始时间 end_time--查询时间段的结束时间
+     * @return json           返回相关的查询数据
+     */
+    public function underBusiness(Request $request){
+        $time = $request->only(['start_time','end_time']);
+        $under_business = new BusinessModel();
+        $under_result = $under_business->underBusiness($time);
+        return tz_ajax_echo($under_result['data'],$under_result['msg'],$under_result['code']);
+    }
+
+    /**
+     * 获取某个时间段的新注册客户数据
+     * @param  Request $request start_time--查询时间段的开始时间 end_time--查询时间段的结束时间
+     * @return json           返回相关的查询数据
+     */
+    public function newRegistration(Request $request){
+        $time = $request->only(['start_time','end_time']);
+        $registra_business = new BusinessModel();
+        $registra_result = $registra_business->newRegistration($time);
+        return tz_ajax_echo($registra_result['data'],$registra_result['msg'],$registra_result['code']);
+    }
 }

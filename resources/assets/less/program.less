@@ -79,23 +79,25 @@
         font-size: 14px;
         line-height: 40px;
         letter-spacing: 2.8px;
-        color: #fff;
         text-decoration: none;
-        background: linear-gradient(to right, #b9ccfc 0%, #6d8fff 50%);
-        background: -o-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
-        background: -ms-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
-        background: -moz-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
-        background: -webkit-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
+        color: #043fc4;
+        background: #fff;
+        //color: #fff;
+        //background: linear-gradient(to right, #b9ccfc 0%, #6d8fff 50%);
+        //background: -o-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
+        //background: -ms-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
+        //background: -moz-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
+        //background: -webkit-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
         -webkit-transition: background .4s ease-in-out;
         -moz-transition: background .4s ease-in-out;
         -ms-transition: background .4s ease-in-out;
         -o-transition: background .4s ease-in-out;
         transition: background .4s ease-in-out;
 
-        &:hover {
-          color: #043fc4;
-          background: #fff;
-        }
+        //&:hover {
+        //  color: #043fc4;
+        //  background: #fff;
+        //}
       }
     }
 
@@ -323,7 +325,7 @@
       }
 
       .adv {
-        background: url("../images/program/game/game-adv.png") no-repeat center 70%;
+        background: url("../images/program/game/game-adv-bg.png") no-repeat center 70%;
       }
     }
 
@@ -485,7 +487,7 @@
 
       .adv {
         height: 546px;
-        background: url("../images/program/chess/chess-adv.png") no-repeat center 70%;
+        background: url("../images/program/chess/chess-adv-bg.png") no-repeat center 70%;
 
         .item {
           height: 140px;
@@ -523,7 +525,7 @@
 
       .adv {
         height: 710px;
-        background: url("../images/program/finance/finance-adv.png") no-repeat 48.5% 58%;
+        background: url("../images/program/finance/finance-adv-bg.png") no-repeat 48.5% 58%;
 
         .cont {
           .item {
@@ -563,7 +565,7 @@
 
       .adv {
         height: 710px;
-        background: url("../images/program/streaming-media/streaming-media-adv.png") no-repeat 48.5% 70%;
+        background: url("../images/program/streaming-media/streaming-media-adv-bg.png") no-repeat 48.5% 70%;
       }
     }
 
@@ -699,7 +701,7 @@
 
       .adv {
         height: 710px;
-        background: url("../images/program/mobile-app/mobile-app-adv.png") no-repeat 48.5% 70%;
+        background: url("../images/program/mobile-app/mobile-app-adv-bg.png") no-repeat 48.5% 70%;
 
         .item {
           width: 320px;
@@ -738,11 +740,12 @@
 
         .consult-btn {
           border-color: #1e2251;
-          color: #1e2251;
+          background-color: #1e2251;
 
           &:hover {
-            background-color: #fff;
+            color: #1e2251;
             border-color: #fff;
+            background-color: #fff;
           }
         }
 
@@ -772,10 +775,116 @@
 
       .adv {
         height: 600px;
-        background: url("../images/program/education-cloud/education-cloud-adv.png") no-repeat center 70%;
+        background: url("../images/program/education-cloud/education-cloud-adv-bg.png") no-repeat center 70%;
 
         .cont {
           margin-top: 65px;
+        }
+      }
+    }
+
+    /* 政务云 */
+
+    #government_cloud {
+      .banner {
+        background-image: url("../images/program/government-cloud/government-cloud-banner-bg.png");
+      }
+
+      .problem {
+        height: 620px;
+
+        .card {
+          width: 570px;
+          height: 176px;
+          padding-left: 60px;
+          padding-right: 60px;
+
+          &-body {
+            p {
+              text-align: left;
+              padding-left: 50px;
+            }
+          }
+        }
+      }
+
+      .arch {
+        height: 1200px;
+        background-image: url("../images/program/government-cloud/government-cloud-arch-bg.png");
+
+        .consult-btn {
+          color: #091233;
+          background: #fff;
+        }
+
+        .desc {
+          color: #fff;
+        }
+      }
+
+      .adv {
+        height: 660px;
+        background: url("../images/program/government-cloud/government-cloud-adv-bg.png") no-repeat center 60%;
+
+        .cont {
+          margin-top: 60px;
+
+          .item {
+            width: 290px;
+            height: 180px;
+          }
+        }
+      }
+    }
+
+    /* 网站部署 */
+
+    #website_deployment {
+      .banner {
+        background-image: url("../images/program/website-deployment/website-deployment-banner-bg.png");
+      }
+
+      .problem {
+        height: 700px;
+
+        .card {
+          width: 570px;
+          height: 215px;
+
+          &-body {
+            p {
+              text-align: left;
+              padding-left: 50px;
+            }
+          }
+        }
+      }
+
+      .arch {
+        height: 990px;
+        background-image: url("../images/program/website-deployment/website-deployment-arch-bg.png");
+
+        .consult-btn {
+          color: #091233;
+          background: #fff;
+        }
+
+        .desc {
+          color: #fff;
+        }
+      }
+
+      .adv {
+        height: 640px;
+        background: url("../images/program/website-deployment/website-deployment-adv-bg.png") no-repeat center 70%;
+
+        .cont {
+          margin-top: 60px;
+
+          .item {
+            width: 350px;
+            height: 160px;
+          }
         }
       }
     }

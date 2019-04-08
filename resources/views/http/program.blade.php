@@ -181,7 +181,7 @@
                     <div class="column">
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv1.png") }}" alt="adv1" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-1.png") }}" alt="adv1" />
                                 <span>自动DDoS清洗系统</span>
                             </div>
                             <div class="item-body">
@@ -194,7 +194,7 @@
                         </div>
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv2.png") }}" alt="adv2" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-2.png") }}" alt="adv2" />
                                 <span>游戏更新智能分发</span>
                             </div>
                             <div class="item-body">
@@ -207,7 +207,7 @@
                         </div>
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv3.png") }}" alt="adv3" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-3.png") }}" alt="adv3" />
                                 <span>游戏体验畅通无阻</span>
                             </div>
                             <div class="item-body">
@@ -222,7 +222,7 @@
                     <div class="column">
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv4.png") }}" alt="adv4" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-4.png") }}" alt="adv4" />
                                 <span>海量游戏日志存储</span>
                             </div>
                             <div class="item-body">
@@ -235,7 +235,7 @@
                         </div>
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv5.png") }}" alt="adv5" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-5.png") }}" alt="adv5" />
                                 <span>负载均衡平滑拓展</span>
                             </div>
                             <div class="item-body">
@@ -248,7 +248,7 @@
                         </div>
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv6.png") }}" alt="adv6" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-6.png") }}" alt="adv6" />
                                 <span>操作简便一键完成</span>
                             </div>
                             <div class="item-body">
@@ -263,7 +263,7 @@
             </div>
         </div>
         <!-- 棋牌云 -->
-        <div class="tab-pane active" id="chess" role="tabpanel" aria-labelledby="chess-tab">
+        <div class="tab-pane" id="chess" role="tabpanel" aria-labelledby="chess-tab">
             <!-- banner -->
             <div class="banner">
                 <div class="title">
@@ -341,7 +341,7 @@
                     <div class="column">
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv1.png") }}" alt="adv1" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-1.png") }}" alt="adv1" />
                                 <span>轻松应对DDoS攻击</span>
                             </div>
                             <div class="item-body">
@@ -353,7 +353,7 @@
                         </div>
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv2.png") }}" alt="adv2" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-2.png") }}" alt="adv2" />
                                 <span>可信赖防御系统</span>
                             </div>
                             <div class="item-body">
@@ -368,7 +368,7 @@
                     <div class="column">
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv3.png") }}" alt="adv3" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-3.png") }}" alt="adv3" />
                                 <span>智能加速不卡顿</span>
                             </div>
                             <div class="item-body">
@@ -379,7 +379,7 @@
                         </div>
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv4.png") }}" alt="adv4" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-4.png") }}" alt="adv4" />
                                 <span>海量日志数据分析</span>
                             </div>
                             <div class="item-body">
@@ -393,7 +393,7 @@
             </div>
         </div>
         <!-- 金融云 -->
-        <div class="tab-pane active" id="finance" role="tabpanel" aria-labelledby="finance-tab">
+        <div class="tab-pane" id="finance" role="tabpanel" aria-labelledby="finance-tab">
             <!-- banner -->
             <div class="banner">
                 <div class="title" style="color: #fff;">
@@ -477,7 +477,7 @@
                     <div class="column">
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv1.png") }}" alt="adv1" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-1.png") }}" alt="adv1" />
                                 <span>双重防御系统</span>
                             </div>
                             <div class="item-body">
@@ -489,7 +489,7 @@
                         </div>
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv2.png") }}" alt="adv2" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-2.png") }}" alt="adv2" />
                                 <span>近源分流防护</span>
                             </div>
                             <div class="item-body">
@@ -502,7 +502,7 @@
                         </div>
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv3.png") }}" alt="adv3" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-3.png") }}" alt="adv3" />
                                 <span>BGP多线线路</span>
                             </div>
                             <div class="item-body">
@@ -518,7 +518,7 @@
                     <div class="column">
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv4.png") }}" alt="adv4" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-4.png") }}" alt="adv4" />
                                 <span>集群技术管理</span>
                             </div>
                             <div class="item-body">
@@ -531,7 +531,7 @@
                         </div>
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv5.png") }}" alt="adv5" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-5.png") }}" alt="adv5" />
                                 <span>自动清洗系统</span>
                             </div>
                             <div class="item-body">
@@ -544,7 +544,7 @@
                         </div>
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv6.png") }}" alt="adv6" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-6.png") }}" alt="adv6" />
                                 <span>低成本高性能</span>
                             </div>
                             <div class="item-body">
@@ -561,7 +561,7 @@
             </div>
         </div>
         <!-- 流媒体 -->
-        <div class="tab-pane active" id="streaming_media" role="tabpanel" aria-labelledby="streaming-media-tab">
+        <div class="tab-pane" id="streaming_media" role="tabpanel" aria-labelledby="streaming-media-tab">
             <!-- banner -->
             <div class="banner">
                 <div class="title" style="color: #fff;">
@@ -643,7 +643,7 @@
                     <div class="column">
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv1.png") }}" alt="adv1" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-1.png") }}" alt="adv1" />
                                 <span>企业级的固态硬盘</span>
                             </div>
                             <div class="item-body">
@@ -656,7 +656,7 @@
                         </div>
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv2.png") }}" alt="adv2" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-2.png") }}" alt="adv2" />
                                 <span>集群消除单点故障</span>
                             </div>
                             <div class="item-body">
@@ -669,7 +669,7 @@
                         </div>
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv3.png") }}" alt="adv3" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-3.png") }}" alt="adv3" />
                                 <span>负载均衡平滑拓展</span>
                             </div>
                             <div class="item-body">
@@ -684,7 +684,7 @@
                     <div class="column">
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv4.png") }}" alt="adv4" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-4.png") }}" alt="adv4" />
                                 <span>优质宽带质量接入</span>
                             </div>
                             <div class="item-body">
@@ -697,7 +697,7 @@
                         </div>
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv5.png") }}" alt="adv5" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-5.png") }}" alt="adv5" />
                                 <span>CDN智能分发服务</span>
                             </div>
                             <div class="item-body">
@@ -710,7 +710,7 @@
                         </div>
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv6.png") }}" alt="adv6" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-6.png") }}" alt="adv6" />
                                 <span>多层安全体系保障</span>
                             </div>
                             <div class="item-body">
@@ -726,7 +726,7 @@
             </div>
         </div>
         <!-- 移动APP -->
-        <div class="tab-pane active" id="mobile_app" role="tabpanel" aria-labelledby="mobile-app-tab">
+        <div class="tab-pane" id="mobile_app" role="tabpanel" aria-labelledby="mobile-app-tab">
             <!-- banner -->
             <div class="banner">
                 <div class="title" style="color: #fff;">
@@ -826,7 +826,7 @@
                     <div class="column">
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv1.png") }}" alt="adv1" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-1.png") }}" alt="adv1" />
                                 <span>集群管理系统</span>
                             </div>
                             <div class="item-body">
@@ -837,7 +837,7 @@
                         </div>
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv2.png") }}" alt="adv2" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-2.png") }}" alt="adv2" />
                                 <span>万兆带宽接入</span>
                             </div>
                             <div class="item-body">
@@ -848,7 +848,7 @@
                         </div>
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv3.png") }}" alt="adv3" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-3.png") }}" alt="adv3" />
                                 <span>总出口达10T</span>
                             </div>
                             <div class="item-body">
@@ -861,7 +861,7 @@
                     <div class="column">
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv4.png") }}" alt="adv4" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-4.png") }}" alt="adv4" />
                                 <span>CDN智能加速</span>
                             </div>
                             <div class="item-body">
@@ -872,7 +872,7 @@
                         </div>
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv5.png") }}" alt="adv5" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-5.png") }}" alt="adv5" />
                                 <span>冗余机制完善</span>
                             </div>
                             <div class="item-body">
@@ -883,7 +883,7 @@
                         </div>
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv6.png") }}" alt="adv6" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-6.png") }}" alt="adv6" />
                                 <span>弹性增值服务</span>
                             </div>
                             <div class="item-body">
@@ -897,7 +897,7 @@
             </div>
         </div>
         <!-- 教育云 -->
-        <div class="tab-pane active" id="education_cloud" role="tabpanel" aria-labelledby="education-cloud-tab">
+        <div class="tab-pane" id="education_cloud" role="tabpanel" aria-labelledby="education-cloud-tab">
             <!-- banner -->
             <div class="banner">
                 <div class="title" style="color: #fff;">
@@ -994,7 +994,7 @@
                     <div class="column">
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv1.png") }}" alt="adv1" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-1.png") }}" alt="adv1" />
                                 <span>面向教育管理者</span>
                             </div>
                             <div class="item-body">
@@ -1005,7 +1005,7 @@
                         </div>
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv3.png") }}" alt="adv3" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-3.png") }}" alt="adv3" />
                                 <span>面向家长</span>
                             </div>
                             <div class="item-body">
@@ -1018,7 +1018,7 @@
                     <div class="column">
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv2.png") }}" alt="adv2" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-2.png") }}" alt="adv2" />
                                 <span>面向教师</span>
                             </div>
                             <div class="item-body">
@@ -1029,12 +1029,288 @@
                         </div>
                         <div class="item">
                             <div class="item-title">
-                                <img class="order" src="{{ asset("/images/program/adv4.png") }}" alt="adv4" />
+                                <img class="order" src="{{ asset("/images/program/adv-icon-4.png") }}" alt="adv4" />
                                 <span>面向学生</span>
                             </div>
                             <div class="item-body">
                                 <p>
                                     以学生成长档案为核心，通过全新的智能式、协作式、探索式手段开展学习与评价，全面提高学生的综合素质与能力。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 政务云 -->
+        <div class="tab-pane" id="government_cloud" role="tabpanel" aria-labelledby="government-cloud-tab">
+            <!-- banner -->
+            <div class="banner">
+                <div class="title" style="color: #fff;">
+                    <h2 class="text">政务云安全解决方案</h2>
+                    <h5 class="sub-text">
+                        基于政务应用系统的综合安全防御需求，一站式解决系统利用率低、能源消耗高、各政务系统相互隔离、安全性能差等核心问题<br/>
+                        构建安全、合规、互访、可靠的绿色政务云平台
+                    </h5>
+                </div>
+                <a class="apply-btn" href="javascript: void(0);">立即申请</a>
+            </div>
+            <!--面临问题-->
+            <div class="problem">
+                <h2 class="title">政务云面临的问题</h2>
+                <img class="d-block" src="{{ asset("/images/program/rectangle.png") }}" />
+                <div class="card-container">
+                    <div class="card">
+                        <div class="card-title">
+                            <img class="icon" src="{{ asset("/images/program/icon23.png") }}" />
+                            <span class="text">ISV安全开发能力不足</span>
+                        </div>
+                        <div class="card-body">
+                            <p>对于应用软件源代码安全风险意识不足；容易导致Web应用系统存在安全漏洞。</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">
+                            <img class="icon" src="{{ asset("/images/program/icon24.png") }}" />
+                            <span class="text">缺乏纵深防御体系</span>
+                        </div>
+                        <div class="card-body">
+                            <p>黑客攻击手法也非常多样化；而传统安全防护手段强调单点防护，缺乏纵深防御体系支撑。</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">
+                            <img class="icon" src="{{ asset("/images/program/icon11.png") }}" />
+                            <span class="text">缺乏未知威胁检测能力</span>
+                        </div>
+                        <div class="card-body">
+                            <p>传统安全防护设备均基于静态策略及已知特征进行“黑白名单”式的规则匹配，无法应对复杂Web攻击。</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">
+                            <img class="icon" src="{{ asset("/images/program/icon25.png") }}" />
+                            <span class="text">缺乏整体持续监控能力</span>
+                        </div>
+                        <div class="card-body">
+                            <p>部分政务单位具有一定的安全能力，但缺乏整体的持续监控能力；而在持续攻击时代，显然有些力不从心。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--架构部署-->
+            <div class="arch">
+                <h2 class="title" style="color: #fff;">解决方案构架部署</h2>
+                <img class="d-block" src="{{ asset("/images/program/white-rectangle.png") }}">
+                <div class="cont">
+                    <img class="arch-img" src="{{ asset("/images/program/government-cloud-arch.png") }}"
+                    alt="政务云解决方案构架部署图" />
+                    <div style="max-width: 1180px; margin: 0 auto; text-align: center;">
+                        <div class="desc">
+                            <div style="display: inline-block;">
+                                <h5 style="font-weight: 600;">多项增值安全服务内容选择</h5>
+                                <p>1.支持标配安全产品能力升级</p>
+                                <p>2.提供多项安全审计产品选择</p>
+                                <p>3.有机结合第三方安全产品</p>
+                            </div>
+                            <div style="display: inline-block; margin-left: 80px;">
+                                <h5 style="font-weight: 600;">典型政务应用安全架构</h5>
+                                <p>腾正政务云专属客户，只需开通云资源服务，便可免费获得以下标配的多项高等级安全能力</p>
+                                <p style="font-weight: 600;">标配的高等级安全能力</p>
+                                <p>主机安全防御能力Web安全防御能力DDoS攻击防御能力</p>
+                            </div>
+                        </div>
+                        <br/>
+                        <a class="consult-btn" href="javascript: void(0);">立即咨询</a>
+                    </div>
+                </div>
+            </div>
+            <!--优势-->
+            <div class="adv">
+                <h2 class="title">政务云服务优势</h2>
+                <img class="d-block" src="{{ asset("/images/program/rectangle.png") }}" />
+                <div class="cont">
+                    <div class="column">
+                        <div class="item">
+                            <div class="item-title">
+                                <img class="order" src="{{ asset("/images/program/adv-icon-1.png") }}" alt="adv1" />
+                                <span>满足政府监管单位的合规要求</span>
+                            </div>
+                            <div class="item-body">
+                                <p>
+                                    腾正科技为东莞电子政务搭建的云平台涵盖IaaS层、PaaS层、DaaS层、SaaS层（包括云盘文控、政务网信息监查平台、统一门户平台、市政信息推送平台）、安全体系、运维服务体系。有效的整合了已有资源，初步实现了全市政务信息化的统一管理。
+                                </p>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title">
+                                <img class="order" src="{{ asset("/images/program/adv-icon-3.png") }}" alt="adv3" />
+                                <span>弹性资源按需分配成本更低</span>
+                            </div>
+                            <div class="item-body">
+                                <p>
+                                    IT硬件零投入，云设施零维护量，随时按需开通、释放资源，快速敏捷满足不同时期政务业务需求，有效降低了政务成本。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="item">
+                            <div class="item-title">
+                                <img class="order" src="{{ asset("/images/program/adv-icon-2.png") }}" alt="adv2" />
+                                <span>多层安全体系保障政务云安全</span>
+                            </div>
+                            <div class="item-body">
+                                <p>
+                                    平台具备独特的产品架构，兼容多种品牌的服务器，通过应用安全、系统安全、数据安全、网络安全全方位控制，建立一套完备的安全体系，达到安全稳定服务高效有序便捷的管理目的，有效提升东莞政务工作效率。 </p>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title">
+                                <img class="order" src="{{ asset("/images/program/adv-icon-4.png") }}" alt="adv4" />
+                                <span>全生命周期一条龙服务支撑</span>
+                            </div>
+                            <div class="item-body">
+                                <p>
+                                    专业的服务团队一对一专属架构师提供从上云培训、认证服务，到上云专业服务及云上保障服务，全面保障政务云平台数据信息安全。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 网站部署 -->
+        <div class="tab-pane" id="website_deployment" role="tabpanel" aria-labelledby="website-deployment-tab">
+            <!-- banner -->
+            <div class="banner">
+                <div class="title" style="color: #fff;">
+                    <h2 class="text">网站及部署解决解决方案</h2>
+                    <h5 class="sub-text">
+                        灵活弹性自动化的基础IT设施建设、 按需付费的服务模式以及0成本的运维IT服务体系<br/>
+                        为企业及开发者用户量身构建从0到N的网站全生命周期一站式闭环服务
+                    </h5>
+                </div>
+                <a class="apply-btn" href="javascript: void(0);">立即申请</a>
+            </div>
+            <!--面临问题-->
+            <div class="problem">
+                <h2 class="title">网站云面临的问题</h2>
+                <img class="d-block" src="{{ asset("/images/program/rectangle.png") }}" />
+                <div class="card-container">
+                    <div class="card">
+                        <div class="card-title">
+                            <img class="icon" src="{{ asset("/images/program/icon26.png") }}" />
+                            <span class="text">配置选型</span>
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                如果用户已经拥有网站程序，那么就需要根据实际业务情况选择合适的云服务器，并在服务器上部署程序运行所需要的语言环境。如果用户初次使用云服务，那么如何选择CPU，硬盘，内存，带宽的大小就成为用户首先遇到的问题。
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">
+                            <img class="icon" src="{{ asset("/images/program/icon27.png") }}" />
+                            <span class="text">安全隐患</span>
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                网站部署OK后，如何规避网络攻击、网页内容被篡改，木马植入，数据库泄漏，黑客勒索等安全风险？如何保障网站安全稳定运行？如果自行搭建安全体系往往会让成本成倍的增长，而且很复杂。无疑给用户带来更大的成本以及时间压力。
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">
+                            <img class="icon" src="{{ asset("/images/program/icon28.png") }}" />
+                            <span class="text">数据备份</span>
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                随着网站的发展，积累的数据越来越多，比如静态文件（代码、图片等）和数据库数据。如果需要用户实时自行备份，那所花费的时间以及精力无疑也会成倍的增长。所以解决如何解决数据备份又是企业以及开发者面临的问题之一！
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">
+                            <img class="icon" src="{{ asset("/images/program/icon29.png") }}" />
+                            <span class="text">I/O读写</span>
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                大部分网站都属于交互型网站，速度快，能让多处理器的性能发挥出来。当前技术条件下，I/O是系统性能提高的瓶颈，I/O问题没有解决好，处理器数量增加不一定带来性能的提升，新增资源有可能被I/O全部消耗掉。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--架构部署-->
+            <div class="arch">
+                <h2 class="title" style="color: #fff;">解决方案构架部署</h2>
+                <img class="d-block" src="{{ asset("/images/program/white-rectangle.png") }}">
+                <div class="cont">
+                    <img class="arch-img" src="{{ asset("/images/program/website-deployment-arch.png") }}"
+                    alt="网站部署解决方案构架部署图" />
+                    <div>
+                        <p class="desc">
+                            网站及部署解决方案为企业以及开发者用户实现灵活弹性自动化的基础IT设施建设、 按需付费的服务模式以及0成本的运维IT服务体系。
+                            把传统的IDC数据中心改造成了一个高度简化、标准化、<br/>
+                            自动化和弹性灵活的云数据中心。使得企业以及开发者的IT支撑系统从“成本中心”而转型成为推动企业核心业务不断发展的引擎。
+                        </p>
+                        <br/>
+                        <a class="consult-btn" href="javascript: void(0);">立即咨询</a>
+                    </div>
+                </div>
+            </div>
+            <!--优势-->
+            <div class="adv">
+                <h2 class="title">网站云服务优势</h2>
+                <img class="d-block" src="{{ asset("/images/program/rectangle.png") }}" />
+                <div class="cont">
+                    <div class="column">
+                        <div class="item">
+                            <div class="item-title">
+                                <img class="order" src="{{ asset("/images/program/adv-icon-1.png") }}" alt="adv1" />
+                                <span>弹性扩展</span>
+                            </div>
+                            <div class="item-body">
+                                <p>
+                                    当网站用户在面对云服务器配置选型的问题时，腾正科技针对网站用户个性的配置选择需求、同时可临时资源扩展的诉求，支持产品随时随地秒级扩展IT资源，轻松解决配置选型问题，高效便捷，节约成本。
+                                </p>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title">
+                                <img class="order" src="{{ asset("/images/program/adv-icon-3.png") }}" alt="adv3" />
+                                <span>自带防御</span>
+                            </div>
+                            <div class="item-body">
+                                <p>
+                                    随着互联网的发展，DDOS、CC攻击已成为非常普遍的攻击模式。网站安全稳定运行成为了每个用户的愿望！腾正科技网站解决方案，针对这一问题，各个已开放的节点自带默认防御峰值。真正从根本上解决网络安全问题，保护用户网站免受攻击威胁！
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="item">
+                            <div class="item-title">
+                                <img class="order" src="{{ asset("/images/program/adv-icon-2.png") }}" alt="adv2" />
+                                <span>全景备份</span>
+                            </div>
+                            <div class="item-body">
+                                <p>
+                                    针对网站用户面临的备份问题，腾正科技推出高效便捷的实时全景备份/全景恢复功能。用户可以自定义备份事件，通过控制台一键备份，使数据安全在得到最大的保证的同时，降低用户备份成本。
+                                </p>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title">
+                                <img class="order" src="{{ asset("/images/program/adv-icon-4.png") }}" alt="adv4" />
+                                <span>1V1专席客服</span>
+                            </div>
+                            <div class="item-body">
+                                <p>
+                                    网站用户上云前期面临多种多样的个性化问题，随时都需要有人来协助解如环境部署、数据迁移、售后运维等问题。但行业传统工单服务模式已被用户广为诟病，因此腾正进行改革创新，每个用户配备1名专席客服，在工作时间帮助用户解决疑难杂症。
                                 </p>
                             </div>
                         </div>

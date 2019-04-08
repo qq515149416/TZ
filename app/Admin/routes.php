@@ -423,9 +423,9 @@ Route::group([
         /**
          * IDC业务数据统计相关
          */
-        $router->post('new_business','Business\BusinessController@newBusiness');
-        $router->post('under_business','Business\BusinessController@underBusiness');
-        $router->post('new_registration','Business\BusinessController@newRegistration');
+        $router->get('new_business','Business\BusinessController@newBusiness');
+        $router->get('under_business','Business\BusinessController@underBusiness');
+        $router->get('new_registration','Business\BusinessController@newRegistration');
     });
 
 

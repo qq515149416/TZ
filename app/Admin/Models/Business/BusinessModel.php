@@ -711,7 +711,6 @@ class BusinessModel extends Model
                            ->get();
         if(!$new_business->isEmpty()){
             $new_business = $this->totalMoney($new_business,2);
-            $code = 1;
         } else {
             $new_business['total'] = 0;
         }
@@ -734,7 +733,7 @@ class BusinessModel extends Model
             $business['total'] = 0;
         }
         return  [
-            'code' => $code,
+            'code' => 1,
             'data' => ['business'=>isset($new_business['business'])?$new_business['business']:$new_business,'new_total'=>$new_total,'new_money'=>$new_business['total'],'total'=>$total,'total_money'=>$business['total']],
             'msg' => '新增业务相关数据获取成功'
         ];
@@ -767,7 +766,6 @@ class BusinessModel extends Model
                            ->get();
         if(!$under_business->isEmpty()){
             $under_business = $this->totalMoney($under_business,4);
-            $code = 1;
         } else {
             $under_business['total'] = 0;
         }
@@ -790,7 +788,7 @@ class BusinessModel extends Model
             $business['total'] = 0;
         }
         return  [
-            'code' => $code,
+            'code' => 1,
             'data' => ['business'=>isset($under_business['business'])?$under_business['business']:$under_business,'under_total'=>$under_total,'under_money'=>$under_business['total'],'total'=>$total,'total_money'=>$business['total']],
             'msg' => '下架业务相关数据获取成功'
         ];  
@@ -823,6 +821,7 @@ class BusinessModel extends Model
             $return['code'] = 1;
             $return['msg'] = '获取新增客户数据成功';
         } else {
+            $return['code'] = 1;
             $return['msg'] = '暂无新增客户数据';
         }
         //总注册客户量

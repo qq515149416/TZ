@@ -150,7 +150,7 @@ class RechargeController extends Controller
 	 * @return 
 	 */
 	public function editAuditRecharge(RechargeRequest $request){
-		$info = $request->only(['recharge_amount','recharge_way','trade_id','time']);
+		$info = $request->only(['recharge_way','trade_id','time']);
 	
 		$model = new RechargeModel();
 		$res = $model->editAuditRecharge($info['recharge_amount'],$info['recharge_way'],$info['trade_id'],$info['time']);

@@ -192,9 +192,18 @@ class StoreModel extends Model
 			if($business->user_id == null){
 				$ip['user'] = '客户信息错误';
 			}else{
-				$user = DB::table('tz_users')->select(['name','nickname'])->where('id',$business->user_id)->first();
-				$ip['user'] = $user->name;
-				$ip['nickname']	= $user->nickname;
+				$user = DB::table('tz_users')->select(['name','nickname','email'])->where('id',$business->user_id)->first();
+				if($user->email != null){
+					$ip['user'] = $user->email;
+				}else{
+					$ip['user'] = $user->name;
+				}
+				
+				if($user->nickname != null){
+					$ip['nickname']	= $user->nickname;
+				}else{
+					$ip['nickname']	= '未设置昵称';
+				}	
 			}
 			
 		}

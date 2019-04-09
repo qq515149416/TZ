@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 
 class ProgramController extends Controller
 {
-    public function index()
+    public function index($page)
     {
-        return view("http/program");
+        return view("http/program",[
+            "page" => $page
+        ]);
     }
 }

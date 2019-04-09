@@ -10,142 +10,15 @@
     <div id="article" class="row">
         @aboutusLayout(['title' => '新闻中心', 'subtitle' => '互联网行业资讯', 'descripts' => '帮你了解行业情况，介绍我们的情况'])
         @slot('nav')
-            <li role="presentation" class="{{ $type === 'company' ? 'active' : '' }}"><a href="/article/company" aria-controls="company" role="tab" data-toggle="tab">公司动态</a></li>
-            <li role="presentation" class="{{ $type === 'placard' ? 'active' : '' }}"><a href="/article/placard" aria-controls="placard" role="tab" data-toggle="tab">公司公告</a></li>
-            <li role="presentation" class="{{ $type === 'industry' ? 'active' : '' }}"><a href="/article/industry" aria-controls="industry" role="tab" data-toggle="tab">行业动态</a></li>
+            @foreach ($list['nav'] as $i => $item)
+                <li role="presentation" class="{{ $type === $item['name'] ? 'active' : '' }}"><a href="{{ $item['url'] }}" aria-controls="{{ $item['name'] }}" role="tab" data-toggle="tab">{{ $item['content'] }}</a></li>
+            @endforeach
         @endslot
-            <div role="tabpanel" class="tab-pane {{ $type === 'company' ? 'active' : '' }} clearfix" id="company">
-                <h2>
-                    公司动态
-                    <span class="pull-right">
-                        <a href="#">首页</a> >
-                        <a href="#">新闻中心</a> >
-                        <a href="#" class="active">公司动态</a>
-                    </span>
-                </h2>
-                <ul>
-                    @foreach ($data['company'] as $i => $item)
-                    <li>
-                        <div class="media">
-                            <div class="media-left">
-                                <a href="#">
-                                    <span class="date-day">
-                                    {{ date("d",strtotime($item->createdate)) }}
-                                    </span>
-                                    <span class="date-years">
-                                    {{ date("Y.m",strtotime($item->createdate)) }}
-                                    </span>
-                                </a>
-                            </div>
-                            <div class="media-body">
-                                <a href="#">
-                                    <h4 class="media-heading">
-                                        @if ($item->status)
-                                            <span class="top">置顶</span>
-                                        @endif
-                                        {{ $item->titles }}
-                                    </h4>
-                                    <p>
-                                    {{ $item->digest }}
-                                    </p>
-                                </a>
-                            </div>
-                        </div>
-                    </li>
-                    @endforeach
-                </ul>
-                <div class="paginate">
-                    {{ $data['company']->links() }}
+            @foreach ($list['content_list'] as $i => $item)
+                <div role="tabpanel" class="tab-pane {{ $type === $item['name'] ? 'active' : '' }} clearfix" id="{{ $item['name'] }}">
+                    @include($item['template'],['data' => $data[$item['name']], 'vars' => $item])
                 </div>
-            </div>
-            <div role="tabpanel" class="tab-pane {{ $type === 'placard' ? 'active' : '' }} clearfix" id="placard">
-                <h2>
-                    公司公告
-                    <span class="pull-right">
-                        <a href="#">首页</a> >
-                        <a href="#">新闻中心</a> >
-                        <a href="#" class="active">公司公告</a>
-                    </span>
-                </h2>
-                <ul>
-                    @foreach ($data['placard'] as $i => $item)
-                    <li>
-                        <div class="media">
-                            <div class="media-left">
-                                <a href="#">
-                                    <span class="date-day">
-                                    {{ date("d",strtotime($item->createdate)) }}
-                                    </span>
-                                    <span class="date-years">
-                                    {{ date("Y.m",strtotime($item->createdate)) }}
-                                    </span>
-                                </a>
-                            </div>
-                            <div class="media-body">
-                                <a href="#">
-                                    <h4 class="media-heading">
-                                        @if ($item->status)
-                                            <span class="top">置顶</span>
-                                        @endif
-                                        {{ $item->titles }}
-                                    </h4>
-                                    <p>
-                                    {{ $item->digest }}
-                                    </p>
-                                </a>
-                            </div>
-                        </div>
-                    </li>
-                    @endforeach
-                </ul>
-                <div class="paginate">
-                    {{ $data['placard']->links() }}
-                </div>
-            </div>
-            <div role="tabpanel" class="tab-pane {{ $type === 'industry' ? 'active' : '' }} clearfix" id="industry">
-                <h2>
-                    行业动态
-                    <span class="pull-right">
-                        <a href="#">首页</a> >
-                        <a href="#">新闻中心</a> >
-                        <a href="#" class="active">行业动态</a>
-                    </span>
-                </h2>
-                <ul>
-                    @foreach ($data['industry'] as $i => $item)
-                    <li>
-                        <div class="media">
-                            <div class="media-left">
-                                <a href="#">
-                                    <span class="date-day">
-                                    {{ date("d",strtotime($item->createdate)) }}
-                                    </span>
-                                    <span class="date-years">
-                                    {{ date("Y.m",strtotime($item->createdate)) }}
-                                    </span>
-                                </a>
-                            </div>
-                            <div class="media-body">
-                                <a href="#">
-                                    <h4 class="media-heading">
-                                        @if ($item->status)
-                                            <span class="top">置顶</span>
-                                        @endif
-                                        {{ $item->titles }}
-                                    </h4>
-                                    <p>
-                                    {{ $item->digest }}
-                                    </p>
-                                </a>
-                            </div>
-                        </div>
-                    </li>
-                    @endforeach
-                </ul>
-                <div class="paginate">
-                    {{ $data['industry']->links() }}
-                </div>
-            </div>
+            @endforeach
         @endaboutusLayout
     </div>
 @endsection

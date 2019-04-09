@@ -115,6 +115,7 @@ Route::group([
             $router->get('/machineProcessing', 'Show\MachineProcessingController@index');
             $router->get('/newTypeManagement', 'Show\NewTypeManagementController@index');
             $router->get('/defenseBusinesReview', 'Show\DefenseBusinessReviewController@index');
+            $router->get('/customerStatistics', 'Show\CustomerStatisticsController@index');
 
         });
 
@@ -383,7 +384,7 @@ Route::group([
         $router->get('show_renew_order', 'Business\OrdersController@showRenewOrder');//展示续费的订单
         $router->get('renew_pay', 'Business\OrdersController@renewPay');//支付续费的订单
         $router->get('tran_orders','Business\OrdersController@tranOrders');
-        
+
         $router->post('insertresource', 'Business\OrdersController@insertResource');//新购资源
         // $router->post('renewresource', 'Business\OrdersController@renewResource');//续费资源
 
@@ -401,7 +402,7 @@ Route::group([
         $router->get('showAllRecharge', 'Business\RechargeController@getAllRecharge');//财务用查看所有客户充值流水信息接口
         //$router->get('editAuditRecharge', 'Business\RechargeController@editAuditRecharge');//财务用更改充值审核单接口
 
-        
+
         /**
          * 转移业务员相关
          */
@@ -419,6 +420,13 @@ Route::group([
         $router->post('select_users','Business\BusinessController@selectUsers');
         $router->post('security_insert','Business\BusinessController@securityInsertBusiness');
         $router->post('security_order','Business\OrdersController@securityInsertOrders');
+
+        /**
+         * IDC业务数据统计相关
+         */
+        $router->get('new_business','Business\BusinessController@newBusiness');
+        $router->get('under_business','Business\BusinessController@underBusiness');
+        $router->get('new_registration','Business\BusinessController@newRegistration');
     });
 
 
@@ -509,10 +517,10 @@ Route::group([
             $router->get('subExamine', 'DefenseIp\RemoveController@subExamine');//提交审核
             $router->get('goExamine', 'DefenseIp\RemoveController@goExamine');//进行审核
             $router->get('showExamine', 'DefenseIp\RemoveController@showExamine');//查看正在审核的下架申请
-            
+
             $router->post('setTarget', 'DefenseIp\SetController@setTarget');//配置目标IP
 
-            
+
         });
 
         /**

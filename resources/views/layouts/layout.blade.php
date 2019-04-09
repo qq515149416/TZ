@@ -189,28 +189,28 @@
                         <span class="dropdown-icon"></span>
                         <ul>
                             <li>
-                                <a href="/fangan#game">游戏</a>
+                                <a href="/fangan/game">游戏</a>
                             </li>
                             <li>
-                                <a href="/fangan#chess">棋牌</a>
+                                <a href="/fangan/chess">棋牌</a>
                             </li>
                             <li>
-                                <a href="/fangan#finance">金融</a>
+                                <a href="/fangan/finance">金融</a>
                             </li>
                             <li>
-                                <a href="/fangan#streaming_media">流媒体</a>
+                                <a href="/fangan/streaming_media">流媒体</a>
                             </li>
                             <li>
-                                <a href="/fangan#mobile_app">移动APP</a>
+                                <a href="/fangan/mobile_app">移动APP</a>
                             </li>
                             <li>
-                                <a href="/fangan#education_cloud">教育云</a>
+                                <a href="/fangan/education_cloud">教育云</a>
                             </li>
                             <li>
-                                <a href="/fangan#government_cloud">政务云</a>
+                                <a href="/fangan/government_cloud">政务云</a>
                             </li>
                             <li>
-                                <a href="/fangan#smart_city">网站部署</a>
+                                <a href="/fangan/website_deployment">网站部署</a>
                             </li>
                         </ul>
                     </div>

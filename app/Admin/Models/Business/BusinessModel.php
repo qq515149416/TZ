@@ -696,14 +696,14 @@ class BusinessModel extends Model
 
         //新增业务量
         $new_total = DB::table('tz_business')
-                       ->whereBetween('created_at',[$query_time['start_time'],$query_time['end_time']])
+                       ->whereBetween('start_time',[$query_time['start_time'],$query_time['end_time']])
                        ->whereNull('deleted_at')
                        ->whereBetween('business_status',[0,4])
                        ->whereBetween('remove_status',[0,3])
                        ->count();
         //新增的业务数据信息
         $new_business = DB::table('tz_business')
-                           ->whereBetween('created_at',[$query_time['start_time'],$query_time['end_time']])
+                           ->whereBetween('start_time',[$query_time['start_time'],$query_time['end_time']])
                            ->whereNull('deleted_at')
                            ->whereBetween('business_status',[0,4])
                            ->whereBetween('remove_status',[0,3])

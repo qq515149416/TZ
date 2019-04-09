@@ -9,51 +9,59 @@
 @section('content')
 <div id="tz-program">
     <div class="tab" role="tablist">
-        <a class="tab-item active"
+        <a class="tab-item"
            id="game-tab"
-           href="#game"
+           href="/fangan/game"
+           data-target="#game"
            role="tab"
            aria-controls="game"
            aria-selected="true">游戏</a>
         <a class="tab-item"
            id="chess-tab"
-           href="#chess"
+           href="/fangan/chess"
+           data-target="#chess"
            role="tab"
            aria-controls="chess"
            aria-selected="false">棋牌</a>
         <a class="tab-item"
            id="finance-tab"
-           href="#finance"
+           href="/fangan/finance"
+           data-target="#finance"
            role="tab"
            aria-controls="finance"
            aria-selected="false">金融</a>
         <a class="tab-item"
            id="streaming-media-tab"
-           href="#streaming_media"
+           href="/fangan/streaming_media"
+           data-target="#streaming_media"
            role="tab"
            aria-controls="streaming_media"
            aria-selected="false">流媒体</a>
         <a class="tab-item"
            id="mobile-app-tab"
-           href="#mobile_app"
+           href="/fangan/mobile_app"
+           data-target="#mobile_app"
            role="tab"
            aria-controls="mobile_app"
            aria-selected="false">移动APP</a>
         <a class="tab-item"
            id="education-cloud-tab"
-           href="#education_cloud"
+           href="/fangan/education_cloud"
+           data-target="#education_cloud"
            role="tab"
            aria-controls="education_cloud"
            aria-selected="false">教育云</a>
         <a class="tab-item"
            id="government-cloud-tab"
-           href="#government_cloud"
+           href="/fangan/government_cloud"
+           data-target="#government_cloud"
            role="tab"
            aria-controls="government_cloud"
            aria-selected="false">政务云</a>
         <a class="tab-item"
            id="website-deployment-tab"
-           href="#website_deployment"
+           href="/fangan/website_deployment"
+           data-target="#website_deployment"
            role="tab"
            aria-controls="website_deployment"
            aria-selected="false">网站部署</a>
@@ -61,7 +69,7 @@
     <!--主体内容-->
     <div class="content tab-content">
         <!-- 游戏云 -->
-        <div class="tab-pane in active" id="game" role="tabpanel" aria-labelledby="game-tab">
+        <div class="tab-pane" id="game" role="tabpanel" aria-labelledby="game-tab">
             <!-- banner -->
             <div class="banner">
                 <div class="title" style="color: #fff;">

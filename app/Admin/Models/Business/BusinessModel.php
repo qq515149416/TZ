@@ -734,7 +734,7 @@ class BusinessModel extends Model
         }
         return  [
             'code' => 1,
-            'data' => ['business'=>isset($new_business['business'])?$new_business['business']:$new_business,'new_total'=>$new_total,'new_money'=>$new_business['total'],'total'=>$total,'total_money'=>$business['total']],
+            'data' => ['business'=>isset($new_business['business'])?$new_business['business']:[],'new_total'=>$new_total,'new_money'=>$new_business['total'],'total'=>$total,'total_money'=>$business['total']],
             'msg' => '新增业务相关数据获取成功'
         ];
 
@@ -789,7 +789,7 @@ class BusinessModel extends Model
         }
         return  [
             'code' => 1,
-            'data' => ['business'=>isset($under_business['business'])?$under_business['business']:$under_business,'under_total'=>$under_total,'under_money'=>$under_business['total'],'total'=>$total,'total_money'=>$business['total']],
+            'data' => ['business'=>isset($under_business['business'])?$under_business['business']:[],'under_total'=>$under_total,'under_money'=>$under_business['total'],'total'=>$total,'total_money'=>$business['total']],
             'msg' => '下架业务相关数据获取成功'
         ];  
     }

@@ -1,4 +1,5 @@
 import "./article";
+
 window.onscroll = function () {
   if ($(document).scrollTop() > 82) {
     // console.log($(document).scrollTop());
@@ -159,18 +160,20 @@ $(function () {
   /**
    * 解决方案页tab切换
    */
-  $('#tz-program .tab').find('a.tab-item[href="' + window.location.hash + '"]').addClass('active').tab('show').siblings().removeClass('active');
-  $(window).bind('hashchange', function () {
-    $('#tz-program .tab').find('a.tab-item[href="' + window.location.hash + '"]').addClass('active').tab('show').siblings().removeClass('active');
-  });
-  $('#tz-program a.tab-item').on('click', function (e) {
-    // e.preventDefault();
-    if ($(this).hasClass('active')) {
-      e.preventDefault();
-    } else {
-      $(this).addClass('active').tab('show').siblings().removeClass('active');
-    }
-  });
+  const hash = '#' + window.location.pathname.slice(window.location.pathname.lastIndexOf('/') + 1)
+  $('#tz-program .tab').find('a.tab-item[data-target="' + hash + '"]').addClass('active').tab('show').siblings().removeClass('active');
+  // $('#tz-program .tab').find('a.tab-item[href="' + window.location.hash + '"]').addClass('active').tab('show').siblings().removeClass('active');
+  // $(window).bind('hashchange', function () {
+  //   $('#tz-program .tab').find('a.tab-item[href="' + window.location.hash + '"]').addClass('active').tab('show').siblings().removeClass('active');
+  // });
+  // $('#tz-program a.tab-item').on('click', function (e) {
+  //   // e.preventDefault();
+  //   if ($(this).hasClass('active')) {
+  //     e.preventDefault();
+  //   } else {
+  //     $(this).addClass('active').tab('show').siblings().removeClass('active');
+  //   }
+  // });
   /**
    * 服务器托管页面collapse切换
    */

@@ -8,6 +8,31 @@
     <blockquote>
         <p>{{ $data->digest }}</p>
     </blockquote>
-
+    <div class="article-content">
+        {!! $data->content !!}
+    </div>
+    <div class="article-footer clearfix">
+        <div class="pull-left">
+            <p>
+                上一篇：
+                @if ($prev_data)
+                    <a href="#">{{ $prev_data->titles }}</a>
+                @else
+                    <span>没有了</span>
+                @endif
+            </p>
+            <p>
+            下一篇：
+            @if ($next_data)
+                <a href="#">{{ $next_data->titles }}</a>
+            @else
+                <span>没有了</span>
+            @endif
+            </p>
+        </div>
+        <div class="pull-right">
+            <img src="{{ asset("/images/article_break.png") }}" alt="" />
+        </div>
+    </div>
 </article>
 

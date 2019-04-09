@@ -131,6 +131,42 @@
   background-color: #cdd2e2;
   border-radius: 0 0 4px 4px;
 }
+#article .content-list .tab-content .article-header {
+  text-align: center;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #333333;
+}
+#article .content-list .tab-content .article-header h1 {
+  font-size: 32px;
+  color: #333333;
+  margin: 0;
+  margin-bottom: 17px;
+  font-weight: normal;
+}
+#article .content-list .tab-content .article-header time {
+  font-size: 14px;
+  color: #666666;
+}
+#article .content-list .tab-content .article-article blockquote {
+  padding: 20px;
+  background-color: #ededed;
+  border: 1px solid #d2d2d2;
+  border-radius: 10px;
+  margin-top: 30px;
+  margin-bottom: 38px;
+}
+#article .content-list .tab-content .article-article blockquote p {
+  font-size: 14px;
+  color: #666666;
+  line-height: 25px;
+}
+#article .content-list .tab-content .article-footer {
+  padding-top: 30px;
+  border-top: 1px solid #a0a0a0;
+}
+#article .content-list .tab-content .article-footer p {
+  font-size: 14px;
+}
 #article .content-list .tab-content .paginate {
   text-align: right;
 }

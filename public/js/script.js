@@ -65,20 +65,6 @@
 /************************************************************************/
 /******/ ({
 
-/***/ 215:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-$(function () {
-   $("#article .content-list .nav-tabs li a").click(function (e) {
-      location.href = $(this).attr("href");
-   });
-});
-
-/***/ }),
-
 /***/ 47:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -93,7 +79,7 @@ module.exports = __webpack_require__(48);
 "use strict";
 
 
-__webpack_require__(215);
+__webpack_require__(49);
 
 window.onscroll = function () {
   if ($(document).scrollTop() > 82) {
@@ -286,6 +272,20 @@ $(function () {
     // $(this).toggleClass('active').siblings().removeClass('active');
     $('#tz-server-hosting .expand-item.collapse.in').collapse('toggle').siblings().collapse('hide');
   });
+});
+
+/***/ }),
+
+/***/ 49:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+$(function () {
+   $("#article .content-list .nav-tabs li a").click(function (e) {
+      location.href = $(this).attr("href");
+   });
 });
 
 /***/ })

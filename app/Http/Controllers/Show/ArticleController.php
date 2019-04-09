@@ -21,6 +21,20 @@ class ArticleController extends Controller
         $new = $new_connection->table('news')->where('newsid',$id)->first();
         return $new;
     }
+    public function prev_content($id)
+    {
+        $prev_id = $id + 1;
+        $new_connection = DB::connection('mysql_oldoa');
+        $new = $new_connection->table('news')->where('newsid',$prev_id)->first();
+        return $new;
+    }
+    public function next_content($id)
+    {
+        $next_id = $id - 1;
+        $new_connection = DB::connection('mysql_oldoa');
+        $new = $new_connection->table('news')->where('newsid',$next_id)->first();
+        return $new;
+    }
     public function index($type)
     {
         $template = "http/article";
@@ -85,6 +99,8 @@ class ArticleController extends Controller
         return view($template,[
             "type" => $type,
             "data" => $newList,
+            "prev_data" => $this->prev_content($id),
+            "next_data" => $this->next_content($id),
             "list" => [
                 "nav"=>[
                     [

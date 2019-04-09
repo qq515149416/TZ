@@ -714,7 +714,6 @@ class BusinessModel extends Model
             $code = 1;
         } else {
             $new_business['total'] = 0;
-            $code = 0;
         }
         //总业务量
         $total = DB::table('tz_business')
@@ -771,7 +770,6 @@ class BusinessModel extends Model
             $code = 1;
         } else {
             $under_business['total'] = 0;
-            $code = 0;
         }
         //总下架业务量
         $total = DB::table('tz_business')
@@ -825,7 +823,6 @@ class BusinessModel extends Model
             $return['code'] = 1;
             $return['msg'] = '获取新增客户数据成功';
         } else {
-            $return['code'] = 0;
             $return['msg'] = '暂无新增客户数据';
         }
         //总注册客户量

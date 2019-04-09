@@ -210,7 +210,7 @@
                                 <a href="/fangan/government_cloud">政务云</a>
                             </li>
                             <li>
-                                <a href="/fangan/smart_city">网站部署</a>
+                                <a href="/fangan/website_deployment">网站部署</a>
                             </li>
                         </ul>
                     </div>

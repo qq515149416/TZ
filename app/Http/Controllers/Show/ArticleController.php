@@ -21,18 +21,18 @@ class ArticleController extends Controller
         $new = $new_connection->table('news')->where('newsid',$id)->first();
         return $new;
     }
-    public function prev_content($id)
+    public function prev_content($id,$type)
     {
         $prev_id = $id + 1;
         $new_connection = DB::connection('mysql_oldoa');
-        $new = $new_connection->table('news')->where('newsid',$prev_id)->first();
+        $new = $new_connection->table('news')->where('sid', $type)->where('newsid',$prev_id)->first();
         return $new;
     }
-    public function next_content($id)
+    public function next_content($id,$type)
     {
         $next_id = $id - 1;
         $new_connection = DB::connection('mysql_oldoa');
-        $new = $new_connection->table('news')->where('newsid',$next_id)->first();
+        $new = $new_connection->table('news')->where('sid', $type)->where('newsid',$next_id)->first();
         return $new;
     }
     public function index($type)
@@ -93,14 +93,19 @@ class ArticleController extends Controller
     public function detail($type,$id)
     {
         $template = "http/article";
+        $type_code = [
+            "company" => 2,
+            "placard" => 1,
+            "industry" => 3
+        ];
         $newList = [
             $type => $this->content($id)
         ];
         return view($template,[
             "type" => $type,
             "data" => $newList,
-            "prev_data" => $this->prev_content($id),
-            "next_data" => $this->next_content($id),
+            "prev_data" => $this->prev_content($id,$type_code[$type]),
+            "next_data" => $this->next_content($id,$type_code[$type]),
             "list" => [
                 "nav"=>[
                     [

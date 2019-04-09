@@ -65,20 +65,6 @@
 /************************************************************************/
 /******/ ({
 
-/***/ 215:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-$(function () {
-   $("#article .content-list .nav-tabs li a").click(function (e) {
-      location.href = $(this).attr("href");
-   });
-});
-
-/***/ }),
-
 /***/ 47:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -93,7 +79,7 @@ module.exports = __webpack_require__(48);
 "use strict";
 
 
-__webpack_require__(215);
+__webpack_require__(49);
 
 window.onscroll = function () {
   if ($(document).scrollTop() > 82) {
@@ -253,18 +239,20 @@ $(function () {
   /**
    * 解决方案页tab切换
    */
-  $('#tz-program .tab').find('a.tab-item[href="' + window.location.hash + '"]').addClass('active').tab('show').siblings().removeClass('active');
-  $(window).bind('hashchange', function () {
-    $('#tz-program .tab').find('a.tab-item[href="' + window.location.hash + '"]').addClass('active').tab('show').siblings().removeClass('active');
-  });
-  $('#tz-program a.tab-item').on('click', function (e) {
-    // e.preventDefault();
-    if ($(this).hasClass('active')) {
-      e.preventDefault();
-    } else {
-      $(this).addClass('active').tab('show').siblings().removeClass('active');
-    }
-  });
+  var hash = '#' + window.location.pathname.slice(window.location.pathname.lastIndexOf('/') + 1);
+  $('#tz-program .tab').find('a.tab-item[data-target="' + hash + '"]').addClass('active').tab('show').siblings().removeClass('active');
+  // $('#tz-program .tab').find('a.tab-item[href="' + window.location.hash + '"]').addClass('active').tab('show').siblings().removeClass('active');
+  // $(window).bind('hashchange', function () {
+  //   $('#tz-program .tab').find('a.tab-item[href="' + window.location.hash + '"]').addClass('active').tab('show').siblings().removeClass('active');
+  // });
+  // $('#tz-program a.tab-item').on('click', function (e) {
+  //   // e.preventDefault();
+  //   if ($(this).hasClass('active')) {
+  //     e.preventDefault();
+  //   } else {
+  //     $(this).addClass('active').tab('show').siblings().removeClass('active');
+  //   }
+  // });
   /**
    * 服务器托管页面collapse切换
    */
@@ -286,6 +274,20 @@ $(function () {
     // $(this).toggleClass('active').siblings().removeClass('active');
     $('#tz-server-hosting .expand-item.collapse.in').collapse('toggle').siblings().collapse('hide');
   });
+});
+
+/***/ }),
+
+/***/ 49:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+$(function () {
+   $("#article .content-list .nav-tabs li a").click(function (e) {
+      location.href = $(this).attr("href");
+   });
 });
 
 /***/ })

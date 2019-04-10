@@ -31,7 +31,9 @@
             </p>
         </div>
         <div class="pull-right">
-            <img src="{{ asset("/images/article_break.png") }}" alt="" />
+            <a href="/article/{{ $vars['name'] }}">
+                <img src="{{ asset("/images/article_break.png") }}" alt="" />
+            </a>
         </div>
     </div>
 </article>

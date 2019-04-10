@@ -72,7 +72,7 @@ class WhiteListController extends Controller
 	 */
 	public function checkWhiteList(WhiteListRequest $request){
 		
-			$checkdata = $request->only(['white_status','check_note','id']);
+			$checkdata = $request->only(['white_status','check_note','id','record_number']);
 			$check = new WhiteListModel();
 			$return = $check->checkWhiteList($checkdata);
 			return tz_ajax_echo($return['data'],$return['msg'],$return['code']);

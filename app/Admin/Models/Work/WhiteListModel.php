@@ -224,6 +224,13 @@ class WhiteListModel extends Model
 				'code'	=> 0,
 			];
 		}
+		if($row->record_number == null && $checkdata['white_status'] == 1 && !isset($checkdata['record_number'])){
+			return [
+				'data'	=> '',
+				'msg'	=> '若需通过,请填写备案编号',
+				'code'	=> 0,
+			];
+		}
 		//获取审核者信息
 		$admin_id = Admin::user()->id;
 		$fullname = (array)$this->staff($admin_id);
@@ -234,11 +241,15 @@ class WhiteListModel extends Model
 				'code'	=> 0,
 			];
 		}
+
 		$row->check_id 	= $admin_id;
 		$row->check_number	= $fullname['work_number'];
 
 		$row->check_time 	= date('Y-m-d H:i:s',time());
 		$row->white_status 	= $checkdata['white_status'];
+		if(isset($checkdata['record_number'])){
+			$row->record_number 	= $checkdata['record_number'];
+		}
 		if(isset($checkdata['check_note'])){
 			$row->check_note 	= $checkdata['check_note'];
 		}

@@ -692,7 +692,7 @@ class BusinessModel extends Model
      * @return array       返回相关的数据结果
      */
     public function newBusiness($time){
-        
+
         $query_time = $this->queryTime($time);//获取起始时间和结束时间
         //新增业务量
         $new_total = DB::table('tz_business')
@@ -835,7 +835,7 @@ class BusinessModel extends Model
 
     /**
      * 计算查询的起始时间和结束时间
-     * @param  array $query_time start_time--查询时间段的开始时间 end_time--查询时间段的结束时间
+     * @param  array $query_time begin--查询时间段的开始时间 end--查询时间段的结束时间
      * @return array             返回查询的起始时间和结束时间
      */
     public function queryTime($query_time){

@@ -171,7 +171,7 @@ class BusinessController extends Controller
      * @return json           返回相关的查询数据
      */
     public function newBusiness(Request $request){
-        $time = $request->only(['start_time','end_time']);
+        $time = $request->only(['begin','end']);
         $new_business = new BusinessModel();
         $new_result = $new_business->newBusiness($time);
         return tz_ajax_echo($new_result['data'],$new_result['msg'],$new_result['code']);
@@ -183,7 +183,7 @@ class BusinessController extends Controller
      * @return json           返回相关的查询数据
      */
     public function underBusiness(Request $request){
-        $time = $request->only(['start_time','end_time']);
+        $time = $request->only(['begin','end']);
         $under_business = new BusinessModel();
         $under_result = $under_business->underBusiness($time);
         return tz_ajax_echo($under_result['data'],$under_result['msg'],$under_result['code']);
@@ -195,7 +195,7 @@ class BusinessController extends Controller
      * @return json           返回相关的查询数据
      */
     public function newRegistration(Request $request){
-        $time = $request->only(['start_time','end_time']);
+        $time = $request->only(['begin','end']);
         $registra_business = new BusinessModel();
         $registra_result = $registra_business->newRegistration($time);
         return tz_ajax_echo($registra_result['data'],$registra_result['msg'],$registra_result['code']);

@@ -55,7 +55,7 @@ class WechatController extends Controller
 		//赋值
 		$this->access_token = $check;
 	}
-
+	
 	public function test(Request $request){
 		$url 		= 'https://api.weixin.qq.com/cgi-bin/message/template/send?access_token='.$this->access_token;
 		$param 	= [
@@ -65,15 +65,15 @@ class WechatController extends Controller
 					'topcolor'	=> '#FF0000',
 					'data'		=> [
 								'user'	=> [
-										'value'	=> '黄小肥',
+										'value'	=> 'a',
 										'color'	=> '#173177',
 									],
 								'name'	=> [
-										'value'	=> '金金小宝贝的爱',
+										'value'	=> 'b',
 										'color'	=> '#173177',
 									],
 								'price'	=> [
-										'value'	=> '人民币 5201314.00 元',
+										'value'	=> '人民币 1000.00 元',
 										'color'	=> '#173177',
 									],
 								'num'	=> [
@@ -81,7 +81,7 @@ class WechatController extends Controller
 										'color'	=> '#173177',
 									],
 								'allPrice'	=> [
-										'value'	=> '人民币 5201314.00 元',
+										'value'	=> '人民币 1000.00 元',
 										'color'	=> '#173177',
 									],
 								'buyTime'	=> [
@@ -92,6 +92,57 @@ class WechatController extends Controller
 					];
 
 		dd($this->request_post($url , json_encode($param)));	
+	}
+	public function buySuccess(Request $request){
+		$touser = 'oAbLP50bLyG6jsaJH0oGOrNxJdKo';
+		$data = [
+				'user'	=> [
+						'value'	=> 'a',
+						'color'	=> '#173177',
+					],
+				'name'	=> [
+						'value'	=> 'b',
+						'color'	=> '#173177',
+					],
+				'price'	=> [
+						'value'	=> '人民币 1000.00 元',
+						'color'	=> '#173177',
+					],
+				'num'	=> [
+						'value'	=> '1件',
+						'color'	=> '#173177',
+					],
+				'allPrice'	=> [
+						'value'	=> '人民币 1000.00 元',
+						'color'	=> '#173177',
+					],
+				'buyTime'	=> [
+						'value'	=> '2019-04-04 15:43:00',
+						'color'	=> '#173177',
+					],
+			];
+		$template_id = 'oxoFr5nVvldmXCeB0kScayuaRK6HuFwfAb1i1j_4AW4';
+		$res = $this->templateMsg($touser,$template_id,$data,);
+		dd($res);
+	}
+
+	protected function templateMsg($touser,$template_id,$data){
+		$url 		= 'https://api.weixin.qq.com/cgi-bin/message/template/send?access_token='.$this->access_token;
+		$param 	= [
+					'touser'		=> $touser,
+					'template_id'	=> $template_id,
+					'url'		=> 'www.baidu.com',
+					'topcolor'	=> '#FF0000',
+					'data'		=> $data,
+					];
+
+		$res = $this->request_post($url , json_encode($param));	
+		$res = json_decode($res,true);
+		if($res['errcode'] != 0){
+			return false;
+		}else{
+			return true;
+		}
 	}
 
 	public function test2(Request $request){

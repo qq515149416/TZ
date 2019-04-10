@@ -25,14 +25,14 @@ class ArticleController extends Controller
     {
         $prev_id = $id + 1;
         $new_connection = DB::connection('mysql_oldoa');
-        $new = $new_connection->table('news')->where('sid', $type)->where('newsid',$prev_id)->first();
+        $new = $new_connection->table('news')->where('newsid',$prev_id)->first();
         return $new;
     }
     public function next_content($id,$type)
     {
         $next_id = $id - 1;
         $new_connection = DB::connection('mysql_oldoa');
-        $new = $new_connection->table('news')->where('sid', $type)->where('newsid',$next_id)->first();
+        $new = $new_connection->table('news')->where('newsid',$next_id)->first();
         return $new;
     }
     public function index($type)

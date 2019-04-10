@@ -38,6 +38,7 @@ Route::group([
     Route::get('/tuoguan', 'Show\HostingController@index');
     Route::get('/article/{type}', 'Show\ArticleController@index');
     Route::get('/detail/{type}/{id}', 'Show\ArticleController@detail');
+    Route::get('/15cdn/{page}', 'Show\CdnController@index');
 });
 
 /**

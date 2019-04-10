@@ -57,7 +57,7 @@ class WhiteListRequest extends FormRequest
 						'required',
 						'regex:#^(?!www|http)\w+(.\w+)+\w*$#',
 					],
-					'record_number' => 'required',
+					// 'record_number' => 'required',
 					];
 				break;
 			case 'check':

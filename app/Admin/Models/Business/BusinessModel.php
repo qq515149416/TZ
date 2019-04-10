@@ -692,8 +692,8 @@ class BusinessModel extends Model
      * @return array       返回相关的数据结果
      */
     public function newBusiness($time){
+        
         $query_time = $this->queryTime($time);//获取起始时间和结束时间
-
         //新增业务量
         $new_total = DB::table('tz_business')
                        ->whereBetween('start_time',[$query_time['start_time'],$query_time['end_time']])
@@ -839,29 +839,29 @@ class BusinessModel extends Model
      * @return array             返回查询的起始时间和结束时间
      */
     public function queryTime($query_time){
-        if(!isset($query_time['start_time']) && !isset($query_time['end_time'])){//当查询开始间和结束时间都未设置时
+        if(!isset($query_time['begin']) && !isset($query_time['end'])){//当查询开始间和结束时间都未设置时
 
-            $end_time = date('Y-m-d H:i:s',time());//结束时间等于当前时间
+            $end_time = date('Y-m-d',time());//结束时间等于当前时间
             $month = date('Y-m',time());//获取结束时间所属自然月
-            $start_time = $month.'-01 00:00:00';//获取结束时间所属自然月的第一天的零点为查询的开始时间
+            $start_time = $month.'-01';//获取结束时间所属自然月的第一天的零点为查询的开始时间
 
-        } elseif(isset($query_time['start_time']) && !isset($query_time['end_time'])){//当设置查询开始时间，未设置结束时间时
+        } elseif(isset($query_time['begin']) && !isset($query_time['end'])){//当设置查询开始时间，未设置结束时间时
 
-            $start_time = date('Y-m-d H:i:s',$query_time['start_time']);//起始时间等于设置的起始时间
-            $month = date('Y-m',$query_time['start_time']);//获取开始时间所属自然月
+            $start_time = date('Y-m-d',$query_time['begin']);//起始时间等于设置的起始时间
+            $month = date('Y-m',$query_time['begin']);//获取开始时间所属自然月
             $last_day = date('t',$month);//获取开始时间所属自然月的总天数
-            $end_time = $month.'-'.$last_day.' 23:59:59';//结束时间设置为开始时间所属自然月的最后一天的23:59:59
+            $end_time = $month.'-'.$last_day;//结束时间设置为开始时间所属自然月的最后一天的23:59:59
 
-        } elseif(!isset($query_time['start_time']) && isset($query_time['end_time'])){//当起始时间未设置，结束时间设置时
+        } elseif(!isset($query_time['begin']) && isset($query_time['end'])){//当起始时间未设置，结束时间设置时
 
-            $end_time = date('Y-m-d H:i:s',$query_time['end_time']);//结束时间等于设置的结束时间
-            $month = date('Y-m',$query_time['end_time']);//获取结束时间所属的自然月
-            $start_time = $month.'-01 00:00:00';//获取结束时间所属自然月的第一天的零点为查询的开始时间
+            $end_time = date('Y-m-d',$query_time['end']);//结束时间等于设置的结束时间
+            $month = date('Y-m',$query_time['end']);//获取结束时间所属的自然月
+            $start_time = $month.'-01';//获取结束时间所属自然月的第一天的零点为查询的开始时间
 
-        } elseif(isset($query_time['start_time']) && isset($query_time['end_time'])){//当查询的起始时间和结束时间都设置时
+        } elseif(isset($query_time['begin']) && isset($query_time['end'])){//当查询的起始时间和结束时间都设置时
 
-            $start_time = date('Y-m-d H:i:s',$query_time['start_time']);//起始时间等于设置的起始时间
-            $end_time = date('Y-m-d H:i:s',$query_time['end_time']);//结束时间等于设置的结束时间
+            $start_time = date('Y-m-d',$query_time['begin']);//起始时间等于设置的起始时间
+            $end_time = date('Y-m-d',$query_time['end']);//结束时间等于设置的结束时间
         }
         return ['start_time'=>$start_time,'end_time'=>$end_time];
     }
@@ -913,9 +913,10 @@ class BusinessModel extends Model
                 $client_name = DB::table('tz_users')->where(['id'=>$business_value->client_id])->select('name','email','nickname','msg_phone','msg_qq')->first();
                 $email = $client_name->email ? $client_name->email : $client_name->name;
                 $email = $email ? $email : $client_name->nickname;
-                $qq = isset($client_name->msg_qq)?$client_name->msg_qq:'';
-                $phone = isset($client_name->msg_phone)?$client_name->msg_phone:'';
-                $business_value->client_name = '用户:'.$email.'QQ:'.$qq.'手机:'.$phone;
+                // $qq = isset($client_name->msg_qq)?$client_name->msg_qq:'';
+                // $phone = isset($client_name->msg_phone)?$client_name->msg_phone:'';
+                // $business_value->client_name = '用户:'.$email.'QQ:'.$qq.'手机:'.$phone;
+                $business_value->client_name = $email;
                 $resource_detail =  json_decode($business_value->resource_detail);
                 $business_value->ip = isset($resource_detail->ip_detail)?$resource_detail->ip_detail:'';
                 $business_value->cabinet = isset($resource_detail->cabinets)?$resource_detail->cabinets:'';

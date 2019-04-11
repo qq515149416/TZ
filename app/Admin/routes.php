@@ -512,6 +512,7 @@ Route::group([
             $router->get('selectExpireList', 'DefenseIp\RemoveController@selectExpireList');  //查询过期业务
             $router->get('showBusinessByPackage', 'DefenseIp\RemoveController@showBusinessByPackage');  //查询某套餐所有业务
             $router->get('showBusinessByCustomer', 'DefenseIp\RemoveController@showBusinessByCustomer');  //查询某用户所有业务
+            $router->get('showBusinessBySite', 'DefenseIp\RemoveController@showBusinessBySite');  //查询某机房所有业务
             $router->get('getStatistics', 'DefenseIp\RemoveController@getStatistics');//查询高防的流量图
 
             $router->get('subExamine', 'DefenseIp\RemoveController@subExamine');//提交审核

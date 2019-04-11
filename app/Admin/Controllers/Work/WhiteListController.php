@@ -93,6 +93,19 @@ class WhiteListController extends Controller
 		
 	}
 
+	/**
+	 * 拉黑域名
+	 * @param  Request 	domain_name	-需要拉黑的域名
+	 * @return   json           	返回删除结果
+	 */
+	public function deleteWhiteList(WhiteListRequest $request){
+		
+			$id = $request->get('domain_name');
+			$delete = new WhiteListModel();
+			$result = $delete->deleteWhiteList($id);
+			return tz_ajax_echo('',$result['msg'],$result['code']);
+		
+	}
 
 	/**
 	 * 域名跳转

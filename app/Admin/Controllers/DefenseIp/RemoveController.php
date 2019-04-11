@@ -128,6 +128,20 @@ class RemoveController extends Controller
 		return tz_ajax_echo($list['data'],$list['msg'],$list['code']);
 	}
 
+	/**
+	 * 通过机房获取所有该机房所属业务
+	 */
+	public function showBusinessBySite(BusinessRequest $request)
+	{
+		$par = $request->only(['site_id']);
+		$site_id = $par['site_id'];
+
+		$model = new BusinessModel();
+		$list = $model->showBusiness($site_id,'site');
+		return tz_ajax_echo($list['data'],$list['msg'],$list['code']);
+	}
+
+
 		/**
 	 * 统计高防IP数据流量
 	 * 用于绘制流量图表

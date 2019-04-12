@@ -314,6 +314,7 @@ class WhiteListModel extends Model
 			//如果审核结果是拉黑的话
 			
 			//先检查审核单有没有已通过的审核单
+			$this->where('domain_name',$row->domain_name)
 		}
 		
 	}

@@ -281,9 +281,33 @@ class WhiteListModel extends Model
 				'code'	=> 1,
 			];		
 		}
+		$already = $this->where('domain_name','abc.abc')->get();
+
 		//审核结果如果是通过
 		if($checkdata['white_status'] == 1){
-			//如果是通过的话,就开始添加通行证
+			//如果是通过的话,就检查是否已经添加过
+			if(!$already->isEmpty()){
+				$already = $already->toArray();
+				for ($i=0; $i < count($already); $i++) { 
+					if($already[$i]['white_status'] == 1 ){
+						DB::rollBack();
+						return[
+							'data'	=> '',
+							'msg'	=> '白名单已存在',
+							'code'	=> 0,	
+						];
+					}elseif($already[$i]['white_status'] == 3 ){
+						DB::rollBack();
+						return[
+							'data'	=> '',
+							'msg'	=> '该域名已拉黑',
+							'code'	=> 0,	
+						];
+					}
+
+				}
+			}
+			//没添加过就开始添加通行证
 			$api_controller = new ApiController();
 			$room_id = DB::table('idc_ips')->where('ip',$row->white_ip)->value('ip_comproom');
 			//$room_id = 78;
@@ -310,11 +334,46 @@ class WhiteListModel extends Model
 				'code'	=> 1,
 			];
 			return $return;
-		}else{
+		}elseif ($checkdata['white_status'] == 3) {
 			//如果审核结果是拉黑的话
 			
 			//先检查审核单有没有已通过的审核单
-			$this->where('domain_name',$row->domain_name)
+			//如果是通过的话,就检查是否已经添加过
+			if(!$already->isEmpty()){
+				$already = $already->toArray();
+				for ($i=0; $i < count($already); $i++) { 
+					if($already[$i]['white_status'] == 3 ){
+						DB::rollBack();
+						return[
+							'data'	=> '',
+							'msg'	=> '该域名已拉黑',
+							'code'	=> 0,	
+						];
+					}elseif($already[$i]['white_status'] == 1 ){
+						$api_controller = new ApiController();
+						$room_id = DB::table('idc_ips')->where('ip',$already[$i]['white_ip'])->value('ip_comproom');
+						//$room_id = 78;
+						if($room_id == null){
+							DB::rollBack();
+							return[
+								'data'	=> '',
+								'msg'	=> 'ip无绑定机房',
+								'code'	=> 0,	
+							];
+						}
+						dd('666');
+					}
+
+				}
+			}
+			//如果没有同样域名审核单,或者之前的审核单是驳回的
+			DB::commit();
+			return[
+				'data'	=> '',
+				'msg'	=> '拉黑成功',
+				'code'	=> 1,	
+			];	
+			
 		}
 		
 	}

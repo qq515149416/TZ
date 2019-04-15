@@ -289,6 +289,7 @@ class CustomerModel extends Model
                     ->where(['oa_staff.department'=>$depart['depart_id']])
                     // ->whereIn('tz_jobs.slug',[2,3])
                     ->select('admin_users.id','admin_users.name')
+                    ->distinct()
                     ->get();
         if($clerk->isEmpty()){
             $return['data'] = [];

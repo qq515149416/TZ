@@ -38,6 +38,12 @@ class StoreRequest extends FormRequest
 					'site'			=> 'required|integer|exists:idc_machineroom,id',		
 				];
 				break;
+			case 'insertVer2':
+				$return = [
+					'ip_id'			=> 'required|array',
+					'protection_value'	=> 'required|integer',	
+				];
+				break;
 			case 'del':
 				$return = [
 					'del_id'			=> 'required|integer|exists:tz_defenseip_store,id',
@@ -57,6 +63,11 @@ class StoreRequest extends FormRequest
 			case 'show':
 				$return = [
 					'status'			=> 'required',
+					'site'			=> 'required'
+				];
+				break;
+			case 'showIdcIps':
+				$return = [
 					'site'			=> 'required'
 				];
 				break;
@@ -80,15 +91,17 @@ class StoreRequest extends FormRequest
 			'site.integer'			=> '地区格式错误',
 			'site.exists'			=> '无此机房',
 			'ip.array'			=> 'ip请用数组格式传值',
-			'del_id.required'		=> '请提供需删除的ip的id',
+			'del_id.required'			=> '请提供需删除的ip的id',
 			'edit_id.required'		=> '请提供需编辑的ip的id',
 			'edit_id.integer'			=> 'id格式错误',
 			'ip.required'			=> 'ip必须填写',
 			'ip.ip'				=> 'ip格式错误',
 			'edit_id.exists'			=> '需编辑的id不存在',
 			'del_id.exists'			=> '需删除的id不存在',
-			'status.required'		=> '请提供所需查询的使用状态',
+			'status.required'			=> '请提供所需查询的使用状态',
 			'site.required'			=> '请提供所需查询的地区',
+			'ip_id.array'			=> 'ip请用数组格式传值',
+			'ip_id.required'			=> '请填写ip地址',
 		];
 	}
 

@@ -55,6 +55,7 @@ Route::group([
         $router->post('alerting', 'Idc\IpsController@doEdit');//编辑IP信息
         $router->post('remove', 'Idc\IpsController@deleted');//删除IP信息
         $router->get('machineroom', 'Idc\IpsController@machineroom');//获取机房信息
+        $router->get('showIdcIps', 'DefenseIp\StoreController@showIdcIps');//按机房获取ip
     });
 
     //测试路由
@@ -483,6 +484,7 @@ Route::group([
             'prefix' => 'store',
         ], function (Router $router) {
             $router->post('insert', 'DefenseIp\StoreController@insert');//高防IP添加
+            $router->post('insertVer2', 'DefenseIp\StoreController@insertVer2');//高防IP添加
             $router->get('del', 'DefenseIp\StoreController@del');//删除
             $router->post('edit', 'DefenseIp\StoreController@edit'); //编辑
             $router->get('show', 'DefenseIp\StoreController@show');//获取资源信息

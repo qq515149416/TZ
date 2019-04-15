@@ -174,10 +174,16 @@ class Ips extends Model
                 $return['msg'] = '无此IP';
                 return $return;
             }
+            		if($edit->ip_status != 0){
+            			return [
+            				'code'	=> 0,
+            				'msg'	=> 'ip正在使用,无法修改',
+            			];
+            		}
 			$edit->vlan = $data['vlan'];
 			// $edit->ip = $data['ip'];
 			$edit->ip_company = $data['ip_company'];
-			$edit->ip_status = $data['ip_status'];
+			// $edit->ip_status = $data['ip_status'];
 			$edit->ip_lock = $data['ip_lock'];
 			$edit->ip_note = $data['ip_note'];
 			$edit->ip_comproom = $data['ip_comproom'];
@@ -234,6 +240,12 @@ class Ips extends Model
 			return [
 				'code'  => 0,
 				'msg'   => '无此id',
+			];
+		}
+		if ($mod->ip_lock != 0) {
+			return [
+				'code'  => 3,
+				'msg'   => 'ip锁定中,无法删除',
 			];
 		}
 		if($mod->ip_status != 0){

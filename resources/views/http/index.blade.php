@@ -20,14 +20,21 @@
             <li data-target="#carousel-example-generic" data-slide-to="1">
                 <span class="progress"></span>
             </li>
-            <!-- <li data-target="#carousel-example-generic" data-slide-to="2">
+            <li data-target="#carousel-example-generic" data-slide-to="2">
                 <span class="progress"></span>
-            </li> -->
+            </li>
         </ol>
 
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox">
             <div class="item active">
+                <a href="javascript:;" onclick="randomqq()" target="_blank">
+                    <img src="{{ asset("/images/banner/gaofangIP.png") }}" alt="...">
+                    <div class="carousel-caption">
+                    </div>
+                </a>
+            </div>
+            <div class="item">
                 <a href="/promotion/consumer" target="_blank">
                     <img src="{{ asset("/images/banner/consumer.png") }}" alt="...">
                     <div class="carousel-caption">

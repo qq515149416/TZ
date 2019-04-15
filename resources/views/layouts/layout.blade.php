@@ -477,67 +477,67 @@
                         <ul class="clearfix">
                             <li>
                                 <a href="http://wpa.qq.com/msgrd?v=3&uin=2885655958&site=qq&menu=yes">
-                                    <img alt="给我发消息" src="http://wpa.qq.com/pa?p=1:2885655958:4">
+                                    <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
                                     成龙
                                 </a>
                             </li>
                             <li>
                                 <a href="http://wpa.qq.com/msgrd?v=3&uin=2853978330&site=qq&menu=yes">
-                                    <img alt="给我发消息" src="http://wpa.qq.com/pa?p=1:2885655958:4">
+                                    <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
                                     禹豪
                                 </a>
                             </li>
                             <li>
                                 <a href="http://wpa.qq.com/msgrd?v=3&uin=2885650826&site=qq&menu=yes">
-                                    <img alt="给我发消息" src="http://wpa.qq.com/pa?p=1:2885655958:4">
+                                    <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
                                     唐康
                                 </a>
                             </li>
                             <li>
                                 <a href="http://wpa.qq.com/msgrd?v=3&uin=2851506995&site=qq&menu=yes">
-                                    <img alt="给我发消息" src="http://wpa.qq.com/pa?p=1:2885655958:4">
+                                    <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
                                     秋霞
                                 </a>
                             </li>
                             <li>
                                 <a href="http://wpa.qq.com/msgrd?v=3&uin=2851506994&site=qq&menu=yes">
-                                    <img alt="给我发消息" src="http://wpa.qq.com/pa?p=1:2885655958:4">
+                                    <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
                                     思恩
                                 </a>
                             </li>
                             <li>
                                 <a href="http://wpa.qq.com/msgrd?v=3&uin=2851506993&site=qq&menu=yes">
-                                    <img alt="给我发消息" src="http://wpa.qq.com/pa?p=1:2885655958:4">
+                                    <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
                                     国东
                                 </a>
                             </li>
                             <li>
                                 <a href="http://wpa.qq.com/msgrd?v=3&uin=2853978331&site=qq&menu=yes">
-                                    <img alt="给我发消息" src="http://wpa.qq.com/pa?p=1:2885655958:4">
+                                    <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
                                     帅东
                                 </a>
                             </li>
                             <li>
                                 <a href="http://wpa.qq.com/msgrd?v=3&uin=2853978334&site=qq&menu=yes">
-                                    <img alt="给我发消息" src="http://wpa.qq.com/pa?p=1:2885655958:4">
+                                    <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
                                     嘉辉
                                 </a>
                             </li>
                             <li>
                                 <a href="http://wpa.qq.com/msgrd?v=3&uin=2851506997&site=qq&menu=yes">
-                                    <img alt="给我发消息" src="http://wpa.qq.com/pa?p=1:2885655958:4">
+                                    <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
                                     小叶
                                 </a>
                             </li>
                             <li>
                                 <a href="http://wpa.qq.com/msgrd?v=3&uin=2851506992&site=qq&menu=yes">
-                                    <img alt="给我发消息" src="http://wpa.qq.com/pa?p=1:2885655958:4">
+                                    <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
                                     镜雄
                                 </a>
                             </li>
                             <li>
                                 <a href="http://wpa.qq.com/msgrd?v=3&uin=2851506990&site=qq&menu=yes">
-                                    <img alt="给我发消息" src="http://wpa.qq.com/pa?p=1:2885655958:4">
+                                    <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
                                     小庞
                                 </a>
                             </li>
@@ -551,7 +551,7 @@
                     <div class="content">
                         <div class="contact-item">
                             <a href="http://wpa.qq.com/msgrd?v=3&uin=800093515&site=qq&menu=yes">
-                                <img alt="给我发消息" src="http://wpa.qq.com/pa?p=1:2885655958:4">
+                                <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
                                 800093515
                             </a>
                         </div>

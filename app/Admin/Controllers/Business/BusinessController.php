@@ -10,6 +10,8 @@ use App\Admin\Models\Idc\MachineModel;
 use App\Admin\Models\Idc\Cabinet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Admin\Requests\Business\BusinessRequest;
+
 
 /**
  * 后台业务控制器
@@ -57,7 +59,7 @@ class BusinessController extends Controller
      * @param  Request $request [description]
      * @return json           返回订单创建的提示信息
      */
-    public function insertBusiness(Request $request){
+    public function insertBusiness(BusinessRequest $request){
 		$insert = $request->only(['client_id','machine_number','resource_detail','money','length','business_note','business_type']);
 		$business = new BusinessModel();
 		$return = $business->insertBusiness($insert);
@@ -158,7 +160,7 @@ class BusinessController extends Controller
      * @param  Request $request [description]
      * @return [type]           [description]
      */
-    public function securityInsertBusiness(Request $request){
+    public function securityInsertBusiness(BusinessRequest $request){
         $insert = $request->only(['client_id','sales_id','resource_id','money','length','business_note','business_type']);
         $business = new BusinessModel();
         $result = $business->securityInsertBusiness($insert);

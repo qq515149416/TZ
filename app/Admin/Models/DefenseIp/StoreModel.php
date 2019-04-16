@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Hash;
 use Encore\Admin\Facades\Admin;
-
+use App\Admin\Models\Idc\Ips;
 
 class StoreModel extends Model
 {
@@ -50,6 +50,86 @@ class StoreModel extends Model
 			];
 		}
 		return $return;
+	}
+
+	public function insertVer2($ip_id,$protection_value){
+		//ip库模型
+		$idc_ip_model = new Ips();
+
+		//获取没锁定未使用的指定ip
+		$idc_ip = $idc_ip_model
+			->whereIn('id',$ip_id)
+			->where('ip_lock',0)
+			->where('ip_status',0)
+			->get()
+			->toArray();
+		//如果数量对不上,就证明有不符合条件ip,返回错误
+		if (count($idc_ip) != count($ip_id) ) {
+			//找出不符合的
+			for ($i=0; $i < count($idc_ip); $i++) { 
+				$key = array_search($idc_ip[$i]['id'],$ip_id);
+				if(isset($key)){
+					unset($ip_id[$key]);
+				}
+			}
+			$msg = '';
+			foreach ($ip_id as $k => $v) {
+				$msg.= " {$v} , ";
+			}
+			//返回错误
+			return [
+				'data' 	=> '',
+				'msg'	=> $msg.'这些id的ip 已锁或者使用中或者不存在!',
+				'code'	=> 0,
+			];
+		}
+		//如果没错,就开事务,改状态锁定
+		DB::beginTransaction();
+
+		//把符合状态的状态给改掉
+		$data = [
+			'ip_lock'		=> 1,
+			'ip_note'	=> '已转入高防ip库,锁定中',
+		];	
+		$lock_res = $idc_ip_model
+			->whereIn('id',$ip_id)
+			->where('ip_lock',0)
+			->where('ip_status',0)
+			->update($data);
+
+		if(!$lock_res){
+			DB::rollBack();
+			return [
+				'data' 	=> '',
+				'msg'	=> '锁ip失败',
+				'code'	=> 0,
+			];
+		}
+		
+		for ($j=0; $j < count($idc_ip); $j++) { 
+		
+			$ip_arr = [
+				'ip'			=> $idc_ip[$j]['ip'],
+				'status'			=> 0,
+				'protection_value'	=> $protection_value,
+				'site'			=> $idc_ip[$j]['ip_comproom'],
+			];
+			$res = $this->create($ip_arr);
+			if($res == false){
+				DB::rollBack();
+				return [
+					'data' 	=> '',
+					'msg'	=> '高防ip录入失败',
+					'code'	=> 0,
+				];
+			}
+		}
+		DB::commit();
+		return [
+			'data' 	=> '',
+			'msg'	=> '录入成功',
+			'code'	=> 1,
+		];
 	}
 
 	public function del($del_id){

@@ -338,7 +338,6 @@ class WhiteListModel extends Model
 			//如果审核结果是拉黑的话
 			
 			//先检查审核单有没有已通过的审核单
-			//如果是通过的话,就检查是否已经添加过
 			if(!$already->isEmpty()){
 				$already = $already->toArray();
 				for ($i=0; $i < count($already); $i++) { 
@@ -352,7 +351,7 @@ class WhiteListModel extends Model
 					}elseif($already[$i]['white_status'] == 1 ){
 						$api_controller = new ApiController();
 						$room_id = DB::table('idc_ips')->where('ip',$already[$i]['white_ip'])->value('ip_comproom');
-						//$room_id = 78;
+					
 						if($room_id == null){
 							DB::rollBack();
 							return[
@@ -361,10 +360,27 @@ class WhiteListModel extends Model
 								'code'	=> 0,	
 							];
 						}
-						dd('666');
+						// $del_res = $api_controller->delWhiteList($domain,$room_id);
+						//这个正式上线需要替换
+						$del_res = [
+							'code'	=> 1,
+						];
+						if($del_res['code'] != 1){
+							DB::rollBack();
+							return[
+								'data'	=> '',
+								'msg'	=> '拉黑失败',
+								'code'	=> 0,	
+							];
+						}	
 					}
-
 				}
+				DB::commit();
+				return[
+					'data'	=> '',
+					'msg'	=> '拉黑成功',
+					'code'	=> 0,	
+				];
 			}
 			//如果没有同样域名审核单,或者之前的审核单是驳回的
 			DB::commit();

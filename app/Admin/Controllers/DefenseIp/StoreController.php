@@ -7,7 +7,7 @@ use Encore\Admin\Controllers\ModelForm;
 use App\Admin\Models\DefenseIp\StoreModel;
 use Illuminate\Http\Request;
 use App\Admin\Requests\DefenseIp\StoreRequest;
-
+use App\Admin\Models\Idc\Ips;
 
 class StoreController extends Controller
 {
@@ -69,6 +69,26 @@ class StoreController extends Controller
 		
 
 		return tz_ajax_echo($ip_list['data'],$ip_list['msg'],$ip_list['code']);
+	}
+
+	public function showIdcIps(StoreRequest $request){
+		$model = new Ips();
+		$par = $request->only('site');
+		$ip_list = $model->where('ip_comproom',$par['site'])->get();
+		if(!$ip_list->isEmpty()){
+			return tz_ajax_echo($ip_list,'获取成功',1);	
+		}else{
+			return tz_ajax_echo([],'暂无数据',1);
+		}
+	}
+
+	public function insertVer2(StoreRequest $request){
+		$model = new StoreModel();
+
+		$par = $request->only(['ip_id','protection_value']);
+
+		$insert = $model->insertVer2($par['ip_id'],$par['protection_value'] );
+		return tz_ajax_echo($insert['data'],$insert['msg'],$insert['code']);
 	}
 
 	public function form(){

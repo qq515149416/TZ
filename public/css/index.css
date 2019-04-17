@@ -3891,3 +3891,18 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background-color: #fff;
   color: #043fc4;
 }
+#gfPromotion {
+  background: url(/images/gfPromotion.png?8f09c260830255a3c153c5088d3dab23) no-repeat;
+  background-size: 100% 100%;
+  padding-top: 680px;
+  padding-bottom: 294px;
+}
+#gfPromotion .product {
+  margin: 0 auto;
+  width: 1034px;
+  height: 776px;
+  background-color: #fff;
+  padding: 0 66px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}

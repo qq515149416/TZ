@@ -484,7 +484,7 @@ Route::group([
             'prefix' => 'store',
         ], function (Router $router) {
             $router->post('insert', 'DefenseIp\StoreController@insert');//高防IP添加
-            $router->post('insertVer2', 'DefenseIp\StoreController@insertVer2');//高防IP添加
+            // $router->post('insertVer2', 'DefenseIp\StoreController@insertVer2');//高防IP添加
             $router->get('del', 'DefenseIp\StoreController@del');//删除
             $router->post('edit', 'DefenseIp\StoreController@edit'); //编辑
             $router->get('show', 'DefenseIp\StoreController@show');//获取资源信息

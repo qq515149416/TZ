@@ -20,39 +20,39 @@ class StoreModel extends Model
 	protected $dates = ['deleted_at'];
 	protected $fillable = ['ip', 'status','site','protection_value'];
 
-	public function insert($ip,$protection_value,$site){
-		//DB::beginTransaction();
-		$fail_arr = [];
-		for ($i=0; $i < count($ip); $i++) { 
+	// public function insert($ip,$protection_value,$site){
+	// 	//DB::beginTransaction();
+	// 	$fail_arr = [];
+	// 	for ($i=0; $i < count($ip); $i++) { 
 		
-			$ip_arr = [
-				'ip'			=> $ip[$i],
-				'status'			=> 0,
-				'protection_value'	=> $protection_value,
-				'site'			=> $site,
-			];
-			$res = $this->create($ip_arr);
-			if($res == false){
-				$fail_arr[] = $ip[$i];
-			}
-		}
-		if(count($fail_arr) != 0){
-			$return = [
-				'data' 	=> $fail_arr,
-				'msg'	=> '以下ip录入失败!',
-				'code'	=> 0,
-			];
-		}else{
-			$return = [
-				'data' 	=> '',
-				'msg'	=> '录入成功!',
-				'code'	=> 1,
-			];
-		}
-		return $return;
-	}
+	// 		$ip_arr = [
+	// 			'ip'			=> $ip[$i],
+	// 			'status'			=> 0,
+	// 			'protection_value'	=> $protection_value,
+	// 			'site'			=> $site,
+	// 		];
+	// 		$res = $this->create($ip_arr);
+	// 		if($res == false){
+	// 			$fail_arr[] = $ip[$i];
+	// 		}
+	// 	}
+	// 	if(count($fail_arr) != 0){
+	// 		$return = [
+	// 			'data' 	=> $fail_arr,
+	// 			'msg'	=> '以下ip录入失败!',
+	// 			'code'	=> 0,
+	// 		];
+	// 	}else{
+	// 		$return = [
+	// 			'data' 	=> '',
+	// 			'msg'	=> '录入成功!',
+	// 			'code'	=> 1,
+	// 		];
+	// 	}
+	// 	return $return;
+	// }
 
-	public function insertVer2($ip_id,$protection_value){
+	public function insert($ip_id,$protection_value){
 		//ip库模型
 		$idc_ip_model = new Ips();
 
@@ -133,6 +133,7 @@ class StoreModel extends Model
 	}
 
 	public function del($del_id){
+
 		$ip = $this->find($del_id);
 	
 		if($ip->status != 0){
@@ -142,10 +143,32 @@ class StoreModel extends Model
 				'code'	=> 0,
 			];
 		}
-		
+		DB::beginTransaction();
+
 		$del = $ip->delete();
-	
-		if($del == true){
+		
+		if($del == true){		//删除成功后,要到ip库那解锁
+			$idc_ip_model = new Ips();
+			$idc_ip = $idc_ip_model->where('ip',$ip->ip)->first();
+			if($idc_ip == null){
+				DB::rollBack();
+				return [
+					'data'	=> [],
+					'msg'	=> '获取ip库ip失败',
+					'code'	=> 0,
+				];
+			}
+			$idc_ip->ip_lock = 0;
+			if(!$idc_ip->save()){
+				DB::rollBack();
+				return [
+					'data'	=> [],
+					'msg'	=> 'ip库ip解锁失败',
+					'code'	=> 0,
+				];
+			}
+			DB::commit();
+
 			return [
 				'data'	=> '',
 				'msg'	=> '删除成功',
@@ -174,15 +197,42 @@ class StoreModel extends Model
 			return $return;
 		}
 
-		// $ip_model->ip 		= $par['ip'];
-		$ip_model->site 	= $par['site'];
+		//编辑的话,把ip库的也改
+
+		DB::beginTransaction();
+		if($ip_model->site != $par['site']){
+			$ip_model->site 		= $par['site'];
+
+			$idc_ip_model = new Ips();
+			$idc_ip = $idc_ip_model->where('ip',$ip_model->ip)->first();
+			if($idc_ip == null){
+				DB::rollBack();
+				return [
+					'data'	=> [],
+					'msg'	=> '获取ip库ip失败',
+					'code'	=> 0,
+				];
+			}
+			$idc_ip->ip_comproom = $par['site'];
+			if(!$idc_ip->save()){
+				DB::rollBack();
+				return [
+					'data'	=> [],
+					'msg'	=> '编辑ip库ip所属机房失败',
+					'code'	=> 0,
+				];
+			}
+		}
+		
 		$ip_model->protection_value 		= $par['protection_value'];
 		$res = $ip_model->save();
 	
 		if($res != true){
+			DB::rollBack();
 			$return['msg']	= '修改失败';
 			$return['code']	= 0;
 		}else{
+			DB::commit();
 			$return['msg']	= '修改成功';
 			$return['code']	= 1;
 		}

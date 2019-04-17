@@ -6,6 +6,7 @@ namespace App\Admin\Models\Idc;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
+use App\Admin\Models\DefenseIp\StoreModel;
 
 class Ips extends Model
 {
@@ -35,7 +36,7 @@ class Ips extends Model
 		if(!$index->isEmpty()){
 			// 判断存在数据就对部分需要转换的数据进行数据转换的操作
 			$ip_company = [0=>'电信公司',1=>'移动公司',2=>'联通公司'];
-			$ip_status = [0=>'未使用',1=>'使用中',2=>'使用(内部机器主IP)',3=>'使用(托管主机的主IP)'];
+			$ip_status = [0=>'未使用',1=>'使用中',2=>'使用(内部机器主IP)',3=>'使用(托管主机的主IP)',4=>'使用(高防业务)'];
 			$ip_lock = [0=>'未锁定',1=>'锁定'];
 
 			foreach($index as $ipkey=>$ipvalue) {
@@ -187,10 +188,40 @@ class Ips extends Model
 			$edit->ip_lock = $data['ip_lock'];
 			$edit->ip_note = $data['ip_note'];
 			$edit->ip_comproom = $data['ip_comproom'];
+
+			DB::beginTransaction();
+
 			$row = $edit->save();
+			//如果编辑成功了
 			if($row != false){
-				$return['code'] = 1;
-				$return['msg'] = '修改IP信息成功！！';
+				//查查高防库有没有
+				$d_ip_model = new StoreModel();
+				$d_ip = $d_ip_model->where('ip',$edit->ip)->first();
+				if($d_ip == null){	//没有的话就成功
+
+					DB::commit();
+					$return['code'] = 1;
+					$return['msg'] = '修改IP信息成功！！';
+				}else{			//有的话就把高防的也改了
+
+					$d_ip->site = $data['ip_comproom'];
+					if($d_ip->save()){
+						DB::commit();
+						return [
+							'data'	=> [],
+							'msg'	=> '修改IP信息成功！！',
+							'code'	=> 1,
+						];	
+					}else{
+						DB::rollBack();
+						return [
+							'data'	=> [],
+							'msg'	=> '修改IP信息失败！！',
+							'code'	=> 1,
+						];
+					}
+				}
+				
 			} else {
 				$return['code'] = 0;
 				$return['msg'] = '修改IP信息失败！！！';

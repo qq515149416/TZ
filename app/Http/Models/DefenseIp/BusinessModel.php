@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\DefenseIp\ApiController;
-
+use App\Admin\Models\Idc\Ips;
+use App\Admin\Models\DefenseIp\StoreModel;
 
 class BusinessModel extends Model
 {
@@ -54,8 +55,8 @@ class BusinessModel extends Model
 		}
 		return [
 			'data'	=> '',
-		'msg'	=> '提交下架审核成功',
-		'code'	=> 1,
+			'msg'	=> '提交下架审核成功',
+			'code'	=> 1,
 		];
 	}
 
@@ -98,7 +99,47 @@ class BusinessModel extends Model
 				'code'	=> 1,
 			];
 		}
-		//如果不是1,就是3(确定下架),就调用解绑接口,把客户ip和高防ip解绑
+
+		//如果不是1,就是3(确定下架),需要把ip释放出来回到未使用状态
+		//更新高防IP使用状态
+		$d_ip 	= StoreModel::where('id',$business->ip_id)->first();
+		if($d_ip == null){
+			DB::rollBack();
+			return [
+				'data'	=> '',
+				'msg'	=> '高防ip信息获取失败',
+				'code'	=> 0,
+			];
+		}
+		$idc_ip 	= Ips::where('ip',$d_ip->ip)->first();
+		if($idc_ip == null){
+			DB::rollBack();
+			return [
+				'data'	=> '',
+				'msg'	=> 'ip资源库ip信息获取失败',
+				'code'	=> 0,
+			];
+		}
+		$d_ip->status = 0;
+		$idc_ip->ip_status = 0;
+		if (!$d_ip->save()) {
+			DB::rollBack();
+			return [
+				'data'	=> '',
+				'msg'	=> '高防ip使用状态更改失败',
+				'code'	=> 0,
+			];
+		}
+		if (!$idc_ip->save()) {
+			DB::rollBack();
+			return [
+				'data'	=> '',
+				'msg'	=> 'ip库ip使用状态更改失败',
+				'code'	=> 0,
+			];
+		}
+
+		//调用解绑接口,把客户ip和高防ip解绑
 	$apiController = new ApiController();
 		$ip = DB::table('tz_defenseip_store')->where('id',$business->ip_id)->value('ip');
 
@@ -112,23 +153,14 @@ class BusinessModel extends Model
 			'code'	=> 0,
 			];
 		}
-		//解绑成功后,需要把ip释放出来回到未使用状态
-		$release_ip = DB::table('tz_defenseip_store')->where('id',$business->ip_id)->update(['status' => 0]);
-		if($release_ip != 1){
-			DB::rollBack();
-			return [
-				'data'	=> '',
-			'msg'	=> '释放高防IP失败,请检查数据库',
-			'code'	=> 0,
-			];
-		}	
+		
 		//释放完IP之后提交事务并返回成功信息
 		DB::commit();
-	return [
-		'data'	=> '',
-		'msg'	=> '审核成功,业务已下架',
-		'code'	=> 1,
-	];
+		return [
+			'data'	=> '',
+			'msg'	=> '审核成功,业务已下架',
+			'code'	=> 1,
+		];
 	}
 
 	public function showExamine()

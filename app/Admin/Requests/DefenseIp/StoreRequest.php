@@ -31,14 +31,14 @@ class StoreRequest extends FormRequest
 		$par = $this->only(['edit_id']);
 
 		switch ($method) {
+			// case 'insert':
+			// 	$return = [
+			// 		'ip'			=> 'required|array',
+			// 		'protection_value'	=> 'required|integer',
+			// 		'site'			=> 'required|integer|exists:idc_machineroom,id',		
+			// 	];
+			// 	break;
 			case 'insert':
-				$return = [
-					'ip'			=> 'required|array',
-					'protection_value'	=> 'required|integer',
-					'site'			=> 'required|integer|exists:idc_machineroom,id',		
-				];
-				break;
-			case 'insertVer2':
 				$return = [
 					'ip_id'			=> 'required|array',
 					'protection_value'	=> 'required|integer',	
@@ -56,7 +56,7 @@ class StoreRequest extends FormRequest
 				$return = [
 					'edit_id'			=> 'required|integer|exists:tz_defenseip_store,id',
 					// 'ip'			=> 'required|ip|unique:tz_defenseip_store,ip,'.$par['edit_id'],
-					'site'			=> 'required|integer',
+					// 'site'			=> 'required|integer',
 					'protection_value'	=> 'required|integer',
 				];
 				break;

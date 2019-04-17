@@ -10,6 +10,8 @@ use Encore\Admin\Facades\Admin;
 use App\Admin\Models\DefenseIp\OrderModel; //后台高防ip的订单模型
 use App\Admin\Models\Business\OrdersModel; //后台的订单支付模型
 use Carbon\Carbon;
+use App\Admin\Models\Idc\Ips;
+use App\Admin\Models\DefenseIp\StoreModel;
 
 class BusinessModel extends Model
 {
@@ -153,15 +155,53 @@ class BusinessModel extends Model
 			}
 
 			//更新高防IP使用状态
-			$update_ip = DB::table('tz_defenseip_store')->where('id',$business->ip_id)->update(['status' => 1]);
-			if($update_ip != 1){
+			$d_ip 	= StoreModel::where('id',$business->ip_id)->first();
+			if($d_ip == null){
 				DB::rollBack();
-				return[
+				return [
 					'data'	=> '',
-					'msg'	=> 'IP更新使用状态失败',
+					'msg'	=> '高防ip信息获取失败',
 					'code'	=> 0,
 				];
 			}
+			$idc_ip 	= Ips::where('ip',$d_ip->ip)->first();
+			if($idc_ip == null){
+				DB::rollBack();
+				return [
+					'data'	=> '',
+					'msg'	=> 'ip资源库ip信息获取失败',
+					'code'	=> 0,
+				];
+			}
+			$d_ip->status = 1;
+			$idc_ip->ip_status = 4;
+			if (!$d_ip->save()) {
+				DB::rollBack();
+				return [
+					'data'	=> '',
+					'msg'	=> '高防ip使用状态更改失败',
+					'code'	=> 0,
+				];
+			}
+			if (!$idc_ip->save()) {
+				DB::rollBack();
+				return [
+					'data'	=> '',
+					'msg'	=> 'ip库ip使用状态更改失败',
+					'code'	=> 0,
+				];
+			}
+			// $update_ip = DB::table('tz_defenseip_store')->where('id',$business->ip_id)->update(['status' => 1]);
+			// $update_idc_ip = DB::table('idc_ips')->where('id',$business->ip_id)->update(['ip_status' => 4]);
+
+			// if($update_ip == 0 || $update_idc_ip == 0){
+			// 	DB::rollBack();
+			// 	return[
+			// 		'data'	=> '',
+			// 		'msg'	=> 'IP更新使用状态失败',
+			// 		'code'	=> 0,
+			// 	];
+			// }
 
 			DB::commit();
 			return [

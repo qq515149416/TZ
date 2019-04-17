@@ -89,7 +89,7 @@ class StoreModel extends Model
 		//把符合状态的状态给改掉
 		$data = [
 			'ip_lock'		=> 1,
-			'ip_note'	=> '已转入高防ip库,锁定中',
+			// 'ip_note'	=> '已转入高防ip库,锁定中',
 		];	
 		$lock_res = $idc_ip_model
 			->whereIn('id',$ip_id)
@@ -107,14 +107,14 @@ class StoreModel extends Model
 		}
 		
 		for ($j=0; $j < count($idc_ip); $j++) { 
-		
+			
 			$ip_arr = [
-				'ip'			=> $idc_ip[$j]['ip'],
+				// 'ip'			=> $idc_ip[$j]['ip'],
 				'status'			=> 0,
 				'protection_value'	=> $protection_value,
 				'site'			=> $idc_ip[$j]['ip_comproom'],
 			];
-			$res = $this->create($ip_arr);
+			$res = $this->updateOrCreate(['ip' => $idc_ip[$j]['ip'] ], $ip_arr);
 			if($res == false){
 				DB::rollBack();
 				return [

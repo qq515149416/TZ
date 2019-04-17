@@ -51,7 +51,11 @@ class InfoController extends Controller
             if ($storeData != null) {
                 $storeData                          = $storeData->toArray();
                 $listData[$key]['defense_ip']       = $storeData['ip']; //列表数组中添加高防IP
-                $listData[$key]['status_cn']        = $this->checkStatus($value['end_at']);  //追加业务状态
+                if($listData[$key]['status'] == 4){
+                    $listData[$key]['status_cn'] = '试用中';
+                }else{
+                    $listData[$key]['status_cn']        = $this->checkStatus($value['end_at']);  //追加业务状态
+                }
                 $listData[$key]['protection_value'] = $storeData['protection_value'];  //防御值
             } else {
                 $listData[$key]['defense_ip']       = 'ip不存在,请联系客服'; //列表数组中添加高防IP

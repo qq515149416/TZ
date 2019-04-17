@@ -167,6 +167,10 @@
 #article .content-list .tab-content .article-footer p {
   font-size: 14px;
 }
+#article .content-list .tab-content .article-footer p a {
+  color: #666666;
+  text-decoration: none;
+}
 #article .content-list .tab-content .article-footer img {
   width: 50px;
   height: 50px;

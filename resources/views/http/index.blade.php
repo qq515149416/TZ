@@ -27,6 +27,13 @@
 
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox">
+            <!-- <div class="item active">
+                <a href="javascript:;" onclick="randomqq()" target="_blank">
+                    <img src="{{ asset("/images/banner/gaofangIP.jpg") }}" alt="...">
+                    <div class="carousel-caption">
+                    </div>
+                </a>
+            </div> -->
             <div class="item active">
                 <a href="/promotion/consumer" target="_blank">
                     <img src="{{ asset("/images/banner/consumer.png") }}" alt="...">

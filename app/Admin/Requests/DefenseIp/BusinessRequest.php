@@ -53,6 +53,12 @@ class BusinessRequest extends FormRequest
 					'customer_id'		=> 'required|exists:tz_users,id',
 				];
 				break;
+			case 'showBusinessBySite':
+				$return = [
+					'site_id'			=> 'required',
+				];
+				break;
+				
 			case 'upExamineDefenseIp':
 				$return = [
 					'business_id'		=> 'required|exists:tz_defenseip_business,id',	
@@ -87,12 +93,12 @@ class BusinessRequest extends FormRequest
 		
 		return  [
 			'start_time.required'			=> '请填写业务计费开始时间',
-			'start_time.date'			=> '业务计费开始时间格式错误',
+			'start_time.date'				=> '业务计费开始时间格式错误',
 			'buy_time.required'			=> '请填写购买时长',
 			'buy_time.integer'			=> '购买时长需为整数',
 			'business_id.required'			=> '请选择业务id',
 			'business_id.exists'			=> '不存在此业务id',
-			'status.required'			=> '请选择审核结果',
+			'status.required'				=> '请选择审核结果',
 			'package_id.required'			=> '请提供套餐id',
 			'customer_id.required'			=> '请提供用户id',
 			'customer_id.exists'			=> '用户id不存在',
@@ -103,6 +109,7 @@ class BusinessRequest extends FormRequest
 			'timestamp.required'			=> '请填写查询时间',
 			'ip.required'				=> '请填写需查询ip',
 			'ip.ip'					=> 'ip格式错误',
+			'site_id.required'			=> '请选择机房',
 		];
 	}
 

@@ -94,6 +94,7 @@ class WhiteListController extends Controller
 	}
 
 
+
 	/**
 	 * 域名跳转
 	 * domain

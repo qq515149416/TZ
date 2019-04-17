@@ -174,12 +174,12 @@ class WhiteListModel extends Model
 				return $return;
 			}
 
-			if($v->white_status == 1 ){
-				if($v->white_ip == $insertdata['white_ip']){
-					$return['msg']	= '该域名审核申请单已通过,请勿重复提交';
-					return $return;	
-				}
-			}
+			// if($v->white_status == 1 ){
+			// 	if($v->white_ip == $insertdata['white_ip']){
+			// 		$return['msg']	= '该域名审核申请单已通过,请勿重复提交';
+			// 		return $return;	
+			// 	}
+			// }
 			if($v->white_status == 0 ){
 				if($v->white_ip == $insertdata['white_ip']){
 					$return['msg']	= '该域名审核申请单正在审核中,请勿重复提交';
@@ -209,6 +209,8 @@ class WhiteListModel extends Model
 	 * @return [type]            [description]
 	 */
 	public function checkWhiteList($checkdata){
+
+		//获取审核单信息
 		$row = $this->find($checkdata['id']);
 		if($row == null){
 			return [
@@ -217,6 +219,7 @@ class WhiteListModel extends Model
 				'code'	=> 0,
 			];
 		}
+		//如果审核单已经审核过
 		if($row->white_status != 0){
 			return [
 				'data'	=> '',
@@ -224,13 +227,7 @@ class WhiteListModel extends Model
 				'code'	=> 0,
 			];
 		}
-		if($row->record_number == null && $checkdata['white_status'] == 1 && !isset($checkdata['record_number'])){
-			return [
-				'data'	=> '',
-				'msg'	=> '若需通过,请填写备案编号',
-				'code'	=> 0,
-			];
-		}
+
 		//获取审核者信息
 		$admin_id = Admin::user()->id;
 		$fullname = (array)$this->staff($admin_id);
@@ -241,7 +238,16 @@ class WhiteListModel extends Model
 				'code'	=> 0,
 			];
 		}
-
+		//如果要通过审核,就要有备案编号
+		if($row->record_number == null && $checkdata['white_status'] == 1 && !isset($checkdata['record_number'])){
+			return [
+				'data'	=> '',
+				'msg'	=> '若需通过,请填写备案编号',
+				'code'	=> 0,
+			];
+		}
+		
+		//更新审核单信息
 		$row->check_id 	= $admin_id;
 		$row->check_number	= $fullname['work_number'];
 
@@ -253,19 +259,21 @@ class WhiteListModel extends Model
 		if(isset($checkdata['check_note'])){
 			$row->check_note 	= $checkdata['check_note'];
 		}
-		//更新审核结果到申请单上
+
 		DB::beginTransaction();//开启事务处理
 
 		$save_res = $row->save($checkdata);
-		if($save_res == false) {
+		if(!$save_res){
 			DB::rollBack();
-			$return['data'] = '';
-			$return['code'] = 0;
-			$return['msg'] = '白名单审核失败';
+			return [
+				'data'	=> '',
+				'msg'	=> '白名单审核失败',
+				'code'	=> 1,
+			];
 			return $return;	
 		}
-		//判断审核状态,如果不是通过,就直接返回审核结果
-		if($checkdata['white_status'] != 1){
+		//判断审核状态,如果是不通过,就直接返回审核结果
+		if($checkdata['white_status'] == 2){
 			DB::commit();
 			return [
 				'data'	=> '',
@@ -273,34 +281,120 @@ class WhiteListModel extends Model
 				'code'	=> 1,
 			];		
 		}
-		//如果是通过的话,就开始添加通行证
-		$api_controller = new ApiController();
-		$room_id = DB::table('idc_ips')->where('ip',$row->white_ip)->value('ip_comproom');
-		//$room_id = 78;
-		if($room_id == null){
-			DB::rollBack();
+		$already = $this->where('domain_name','abc.abc')->get();
+
+		//审核结果如果是通过
+		if($checkdata['white_status'] == 1){
+			//如果是通过的话,就检查是否已经添加过
+			if(!$already->isEmpty()){
+				$already = $already->toArray();
+				for ($i=0; $i < count($already); $i++) { 
+					if($already[$i]['white_status'] == 1 ){
+						DB::rollBack();
+						return[
+							'data'	=> '',
+							'msg'	=> '白名单已存在',
+							'code'	=> 0,	
+						];
+					}elseif($already[$i]['white_status'] == 3 ){
+						DB::rollBack();
+						return[
+							'data'	=> '',
+							'msg'	=> '该域名已拉黑',
+							'code'	=> 0,	
+						];
+					}
+
+				}
+			}
+			//没添加过就开始添加通行证
+			$api_controller = new ApiController();
+			$room_id = DB::table('idc_ips')->where('ip',$row->white_ip)->value('ip_comproom');
+			//$room_id = 78;
+			if($room_id == null){
+				DB::rollBack();
+				return[
+					'data'	=> '',
+					'msg'	=> 'ip无绑定机房',
+					'code'	=> 0,	
+				];
+			}
+
+			//更改状态成功,开始调用API塞到白名单的数据库
+			$domain = $row->domain_name;
+			$insert_res = $api_controller->createWhiteList($domain,$room_id);
+			if($insert_res['code'] != 1){
+				DB::rollBack();
+				return $insert_res;
+			}
+			DB::commit();
+			$return = [
+				'data'	=> '',
+				'msg'	=> '审核成功,已为域名添加通行证',
+				'code'	=> 1,
+			];
+			return $return;
+		}elseif ($checkdata['white_status'] == 3) {
+			//如果审核结果是拉黑的话
+			
+			//先检查审核单有没有已通过的审核单
+			if(!$already->isEmpty()){
+				$already = $already->toArray();
+				for ($i=0; $i < count($already); $i++) { 
+					if($already[$i]['white_status'] == 3 ){
+						DB::rollBack();
+						return[
+							'data'	=> '',
+							'msg'	=> '该域名已拉黑',
+							'code'	=> 0,	
+						];
+					}elseif($already[$i]['white_status'] == 1 ){
+						$api_controller = new ApiController();
+						$room_id = DB::table('idc_ips')->where('ip',$already[$i]['white_ip'])->value('ip_comproom');
+					
+						if($room_id == null){
+							DB::rollBack();
+							return[
+								'data'	=> '',
+								'msg'	=> 'ip无绑定机房',
+								'code'	=> 0,	
+							];
+						}
+						// $del_res = $api_controller->delWhiteList($domain,$room_id);
+						//这个正式上线需要替换
+						$del_res = [
+							'code'	=> 1,
+						];
+						if($del_res['code'] != 1){
+							DB::rollBack();
+							return[
+								'data'	=> '',
+								'msg'	=> '拉黑失败',
+								'code'	=> 0,	
+							];
+						}	
+					}
+				}
+				DB::commit();
+				return[
+					'data'	=> '',
+					'msg'	=> '拉黑成功',
+					'code'	=> 0,	
+				];
+			}
+			//如果没有同样域名审核单,或者之前的审核单是驳回的
+			DB::commit();
 			return[
 				'data'	=> '',
-				'msg'	=> 'ip无绑定机房',
-				'code'	=> 0,	
-			];
+				'msg'	=> '拉黑成功',
+				'code'	=> 1,	
+			];	
+			
 		}
-
-		//更改状态成功,开始调用API塞到白名单的数据库
-		$domain = $row->domain_name;
-		$insert_res = $api_controller->createWhiteList($domain,$room_id);
-		if($insert_res['code'] != 1){
-			DB::rollBack();
-			return $insert_res;
-		}
-		DB::commit();
-		$return = [
-			'data'	=> '',
-			'msg'	=> '审核成功,已为域名添加通行证',
-			'code'	=> 1,
-		];
-		return $return;
+		
 	}
+
+	
 
 	/**
 	 * 删除白名单信息

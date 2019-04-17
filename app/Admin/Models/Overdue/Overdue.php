@@ -45,6 +45,7 @@ class  Overdue extends Model
 			->where('tz_business.sales_id',$sales_id)
 			->where('tz_business.endding_time','<',$end_time)
 			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name'))
+			->whereNull('tz_business.deleted_at')
 			->orderBy('tz_business.endding_time','asc')
 			->get();	
 		}else{
@@ -55,6 +56,7 @@ class  Overdue extends Model
 			->where('tz_business.business_type',3)
 			->where('tz_business.endding_time','<',$end_time)
 			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name'))
+			->whereNull('tz_business.deleted_at')
 			->orderBy('tz_business.endding_time','asc')
 			->get();
 		}
@@ -101,6 +103,7 @@ class  Overdue extends Model
 			->where('tz_business.business_type',3)
 			->where('tz_business.business_status',1)
 			->where('tz_business.sales_id',$sales_id)
+			->whereNull('tz_business.deleted_at')
 			->orderBy('tz_business.endding_time','asc')
 			->get();	
 		}else{
@@ -111,6 +114,7 @@ class  Overdue extends Model
 			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name,tz_business.start_time'))
 			->where('tz_business.business_type',3)
 			->where('tz_business.business_status',1)
+			->whereNull('tz_business.deleted_at')
 			->orderBy('tz_business.endding_time','asc')
 			->get();	
 		}
@@ -152,6 +156,7 @@ class  Overdue extends Model
 			->where('tz_business.sales_id',$sales_id)
 			->where('tz_business.endding_time','<',$end_time)
 			->where('tz_business.remove_status',0)
+			->whereNull('tz_business.deleted_at')
 			->orderBy('tz_business.endding_time','asc')
 			->get();	
 		}else{
@@ -162,6 +167,7 @@ class  Overdue extends Model
 			->whereIn('tz_business.business_type',['1','2'])
 			->where('tz_business.endding_time','<',$end_time)
 			->where('tz_business.remove_status',0)
+			->whereNull('tz_business.deleted_at')
 			->orderBy('tz_business.endding_time','asc')
 			->get();	
 		}
@@ -353,6 +359,7 @@ class  Overdue extends Model
 			->where('tz_business.business_status',1)
 			->whereIn('tz_business.remove_status',[0,1])
 			->where('tz_business.business_type','!=',3)
+			->whereNull('tz_business.deleted_at')
 			->orderBy('tz_business.start_time','desc')
 			->get();	
 		}else{
@@ -363,6 +370,7 @@ class  Overdue extends Model
 			->where('tz_business.business_status',1)
 			->whereIn('tz_business.remove_status',[0,1])
 			->where('tz_business.business_type','!=',3)
+			->whereNull('tz_business.deleted_at')
 			->orderBy('tz_business.start_time','desc')
 			->get();	
 		}
@@ -400,6 +408,7 @@ class  Overdue extends Model
 			->where('tz_business.sales_id',$sales_id)
 			->where('tz_business.business_type','!=',3)
 			->where('tz_business.remove_status','!=',0)
+			->whereNull('tz_business.deleted_at')
 			->orderBy('tz_business.start_time','desc')
 			->get();	
 		}else{
@@ -409,6 +418,7 @@ class  Overdue extends Model
 			->select(DB::raw('c.ip,tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,tz_business.business_type,tz_business.start_time'))
 			->where('tz_business.business_type','!=',3)
 			->where('tz_business.remove_status','!=',0)
+			->whereNull('tz_business.deleted_at')
 			->orderBy('tz_business.start_time','desc')
 			->get();	
 		}
@@ -512,7 +522,7 @@ class  Overdue extends Model
 	public function removeXiaJia($list){
 		$arr = [];
 		for ($i=0; $i < count($list); $i++) { 
-			$check_remove = DB::table('tz_business')->where('business_number',$list[$i]->business_sn)->value('remove_status');
+			$check_remove = DB::table('tz_business')->where('business_number',$list[$i]->business_sn)->whereNull('deleted_at')->value('remove_status');
 			if($check_remove == 0 || $check_remove == 1){
 				$arr[] = $list[$i];
 			}

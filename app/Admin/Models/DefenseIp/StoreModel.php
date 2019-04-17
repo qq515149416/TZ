@@ -183,6 +183,7 @@ class StoreModel extends Model
 		}
 	}
 
+	//编辑只修改防御值
 	public function edit($par){
 		$return['data'] = '';
 		$ip_model = $this->find($par['edit_id']);
@@ -199,40 +200,40 @@ class StoreModel extends Model
 
 		//编辑的话,把ip库的也改
 
-		DB::beginTransaction();
-		if($ip_model->site != $par['site']){
-			$ip_model->site 		= $par['site'];
+		// DB::beginTransaction();
+		// if($ip_model->site != $par['site']){
+		// 	$ip_model->site 		= $par['site'];
 
-			$idc_ip_model = new Ips();
-			$idc_ip = $idc_ip_model->where('ip',$ip_model->ip)->first();
-			if($idc_ip == null){
-				DB::rollBack();
-				return [
-					'data'	=> [],
-					'msg'	=> '获取ip库ip失败',
-					'code'	=> 0,
-				];
-			}
-			$idc_ip->ip_comproom = $par['site'];
-			if(!$idc_ip->save()){
-				DB::rollBack();
-				return [
-					'data'	=> [],
-					'msg'	=> '编辑ip库ip所属机房失败',
-					'code'	=> 0,
-				];
-			}
-		}
+		// 	$idc_ip_model = new Ips();
+		// 	$idc_ip = $idc_ip_model->where('ip',$ip_model->ip)->first();
+		// 	if($idc_ip == null){
+		// 		DB::rollBack();
+		// 		return [
+		// 			'data'	=> [],
+		// 			'msg'	=> '获取ip库ip失败',
+		// 			'code'	=> 0,
+		// 		];
+		// 	}
+		// 	$idc_ip->ip_comproom = $par['site'];
+		// 	if(!$idc_ip->save()){
+		// 		DB::rollBack();
+		// 		return [
+		// 			'data'	=> [],
+		// 			'msg'	=> '编辑ip库ip所属机房失败',
+		// 			'code'	=> 0,
+		// 		];
+		// 	}
+		// }
 		
 		$ip_model->protection_value 		= $par['protection_value'];
 		$res = $ip_model->save();
 	
-		if($res != true){
-			DB::rollBack();
+		if(!$res){
+			// DB::rollBack();
 			$return['msg']	= '修改失败';
 			$return['code']	= 0;
 		}else{
-			DB::commit();
+			// DB::commit();
 			$return['msg']	= '修改成功';
 			$return['code']	= 1;
 		}

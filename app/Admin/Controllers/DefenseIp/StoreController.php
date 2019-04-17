@@ -49,7 +49,7 @@ class StoreController extends Controller
 
 	public function edit(StoreRequest $request){
 		$model = new StoreModel();
-		$par = $request->only(['edit_id','site','protection_value']);
+		$par = $request->only(['edit_id','protection_value']);
 		$edit_res = $model->edit($par);
 
 		return tz_ajax_echo($edit_res['data'],$edit_res['msg'],$edit_res['code']);

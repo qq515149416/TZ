@@ -3977,14 +3977,14 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   color: #043fc4;
 }
 .tz-protection-content .feature {
-  height: 580px;
   text-align: center;
   padding-top: 40px;
+  padding-bottom: 30px;
   background-color: #fff;
 }
 .tz-protection-content .feature .cont {
   max-width: 1180px;
-  margin: 0 auto;
+  margin: 15px auto 0;
   text-align: left;
 }
 .tz-protection-content .feature .cont .item-container {

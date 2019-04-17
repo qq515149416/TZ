@@ -32,7 +32,7 @@
         <h2 class="title"> DDOS 高防 IP 特点</h2>
         <img class="d-block" src="{{ asset("/images/highDefenseIp/rectangle.png") }}" />
         <div class="cont">
-            <img src="{{ asset("/images/highDefenseIp/feature-logo.png") }}" />
+            <img style="margin-top: -10px;" src="{{ asset("/images/highDefenseIp/feature-logo.png") }}" />
             <div class="item-container">
                 <div class="item">
                     <h5 class="item-title">海量DDoS清洗能力</h5>

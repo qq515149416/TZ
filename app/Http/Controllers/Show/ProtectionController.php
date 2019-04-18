@@ -9,6 +9,9 @@ class ProtectionController extends Controller
     public function index($page)
     {
         switch ($page) {
+            case 'index':
+                return view("http/protection");
+                break;
             case 'high-defense-ip':
                 return view("http/highDefenseIp");
                 break;

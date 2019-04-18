@@ -7,8 +7,141 @@
         margin: 0 auto;
         width: 1034px;
         height: 776px;
+        background: url(../images/promotion/gfPromotion_CP_BG.png) no-repeat;
+        background-size: 100% 100%;
         background-color: #fff;
         padding: 0 66px;
         box-sizing: border-box;
+        position: relative;
+        &::after {
+            content: "";
+            position: absolute;
+            width: 115px;
+            height: 35px;
+            right: 0;
+            top: 40px;
+            background: url(../images/promotion/gfPromotion_BQ_.png) no-repeat;
+        }
+        header {
+            margin-bottom: 40px;
+        }
+        footer {
+            padding-top: 64px - (60px / 2px);
+            h4 {
+                font-size: 16px;
+                margin: 0;
+                color: #4f4f4f;
+                margin-bottom: 12px;
+            }
+            p {
+                font-size: 14px;
+                margin-bottom: 10px;
+                span {
+                    color: #ea2d2b;
+                }
+                &:last-of-type {
+                    margin: 0;
+                }
+            }
+        }
+        article {
+            border-top: 1px solid #e7e7e7;
+            border-bottom: 1px solid #e7e7e7;
+            padding: 44px 0;
+            h4 {
+                font-size: 18px;
+                margin: 0;
+                color: #28140b;
+                margin-bottom: 30px;
+            }
+            .market {
+                margin-top: 78px;
+                .sell {
+                    .price {
+                        font-size: 25px;
+                        color: #eb2e2c;
+                        margin: 0;
+                        span.tip {
+                            margin-left: 20px;
+                            font-size: 16px;
+                        }
+                    }
+                    .original-price {
+                        margin: 0;
+                        margin-top: 14px;
+                        color: #9c9c9c;
+                        font-size: 16px;
+                        text-decoration: line-through;
+                    }
+                }
+                .buy {
+                    a {
+                        display: block;
+                        color: #fff;
+                        text-decoration: none;
+                        width: 440px;
+                        height: 60px;
+                        text-align: center;
+                        line-height: 60px;
+                        background-color: #04cd7f;
+                        border-radius: 4px;
+                        font-size: 20px;
+                    }
+                }
+            }
+            .config {
+                ul {
+                    list-style: none;
+                    margin: 0;
+                    padding: 0;
+                    display: flex;
+                    &:last-of-type {
+                        margin-top: 40px;
+                        &::after {
+                            content: "";
+                            display: block;
+                            flex: 1;
+                        }
+                    }
+                    li {
+                        flex: 1;
+                        text-align: center;
+                        border-right: 1px solid #e6e6e6;
+                        &:last-of-type {
+                            border-right: none;
+                        }
+                        span {
+                            display: block;
+                            font-size: 16px;
+                            color: #4f4f4f;
+                            &.value {
+                                color: #08cc82;
+                                margin-top: 12px;
+                            }
+                        }
+                        &:nth-of-type(3) {
+                            flex: 2;
+                        }
+                    }
+                }
+            }
+        }
+        h3 {
+            font-size: 23px;
+            margin: 0;
+            padding-top: 46px;
+            padding-bottom: 23px + 3px;
+            color: #28140b;
+            position: relative;
+            &::after {
+                content: "";
+                width: 62px;
+                height: 3px;
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                background-color: #112d42;
+            }
+        }
     }
 }

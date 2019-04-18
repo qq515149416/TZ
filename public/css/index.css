@@ -4476,8 +4476,143 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin: 0 auto;
   width: 1034px;
   height: 776px;
+  background: url(/images/gfPromotion_CP_BG.png?8a89479267222d293a76303de7953636) no-repeat;
+  background-size: 100% 100%;
   background-color: #fff;
   padding: 0 66px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  position: relative;
+}
+#gfPromotion .product::after {
+  content: "";
+  position: absolute;
+  width: 115px;
+  height: 35px;
+  right: 0;
+  top: 40px;
+  background: url(/images/gfPromotion_BQ_.png?addb62e0328d8ae2e02e79b9c1c00850) no-repeat;
+}
+#gfPromotion .product header {
+  margin-bottom: 40px;
+}
+#gfPromotion .product footer {
+  padding-top: 34px;
+}
+#gfPromotion .product footer h4 {
+  font-size: 16px;
+  margin: 0;
+  color: #4f4f4f;
+  margin-bottom: 12px;
+}
+#gfPromotion .product footer p {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+#gfPromotion .product footer p span {
+  color: #ea2d2b;
+}
+#gfPromotion .product footer p:last-of-type {
+  margin: 0;
+}
+#gfPromotion .product article {
+  border-top: 1px solid #e7e7e7;
+  border-bottom: 1px solid #e7e7e7;
+  padding: 44px 0;
+}
+#gfPromotion .product article h4 {
+  font-size: 18px;
+  margin: 0;
+  color: #28140b;
+  margin-bottom: 30px;
+}
+#gfPromotion .product article .market {
+  margin-top: 78px;
+}
+#gfPromotion .product article .market .sell .price {
+  font-size: 25px;
+  color: #eb2e2c;
+  margin: 0;
+}
+#gfPromotion .product article .market .sell .price span.tip {
+  margin-left: 20px;
+  font-size: 16px;
+}
+#gfPromotion .product article .market .sell .original-price {
+  margin: 0;
+  margin-top: 14px;
+  color: #9c9c9c;
+  font-size: 16px;
+  text-decoration: line-through;
+}
+#gfPromotion .product article .market .buy a {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  width: 440px;
+  height: 60px;
+  text-align: center;
+  line-height: 60px;
+  background-color: #04cd7f;
+  border-radius: 4px;
+  font-size: 20px;
+}
+#gfPromotion .product article .config ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+#gfPromotion .product article .config ul:last-of-type {
+  margin-top: 40px;
+}
+#gfPromotion .product article .config ul:last-of-type::after {
+  content: "";
+  display: block;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+#gfPromotion .product article .config ul li {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  text-align: center;
+  border-right: 1px solid #e6e6e6;
+}
+#gfPromotion .product article .config ul li:last-of-type {
+  border-right: none;
+}
+#gfPromotion .product article .config ul li span {
+  display: block;
+  font-size: 16px;
+  color: #4f4f4f;
+}
+#gfPromotion .product article .config ul li span.value {
+  color: #08cc82;
+  margin-top: 12px;
+}
+#gfPromotion .product article .config ul li:nth-of-type(3) {
+  -webkit-box-flex: 2;
+      -ms-flex: 2;
+          flex: 2;
+}
+#gfPromotion .product h3 {
+  font-size: 23px;
+  margin: 0;
+  padding-top: 46px;
+  padding-bottom: 26px;
+  color: #28140b;
+  position: relative;
+}
+#gfPromotion .product h3::after {
+  content: "";
+  width: 62px;
+  height: 3px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background-color: #112d42;
 }

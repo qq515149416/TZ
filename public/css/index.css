@@ -4470,7 +4470,6 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background: url(/images/gfPromotion.png?8f09c260830255a3c153c5088d3dab23) no-repeat;
   background-size: 100% 100%;
   padding-top: 680px;
-  padding-bottom: 294px;
 }
 #gfPromotion .product {
   margin: 0 auto;
@@ -4483,6 +4482,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   position: relative;
+  margin-bottom: 100px;
 }
 #gfPromotion .product::after {
   content: "";

@@ -4538,6 +4538,9 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin-left: 20px;
   font-size: 16px;
 }
+#gfPromotion .product article .market .sell .price span.amount {
+  font-size: 32px;
+}
 #gfPromotion .product article .market .sell .original-price {
   margin: 0;
   margin-top: 14px;

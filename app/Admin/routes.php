@@ -428,6 +428,7 @@ Route::group([
         $router->get('new_business','Business\BusinessController@newBusiness');
         $router->get('under_business','Business\BusinessController@underBusiness');
         $router->get('new_registration','Business\BusinessController@newRegistration');
+        $router->get('changemarket','Business\BusinessController@changeMarket');
     });
 
 

@@ -481,6 +481,7 @@ class  Overdue extends Model
 				->whereIn('resource_type',[1,2,3,4,5,6,7,8,9])
 				->whereNull('deleted_at')
 				->whereIn('remove_status',[0,1])
+				->where('payable_money','>',0)
 				->get()
 				->toArray();
 		}else{
@@ -489,6 +490,7 @@ class  Overdue extends Model
 				->whereIn('resource_type',[1,2,3,4,5,6,7,8,9])
 				->whereNull('deleted_at')
 				->whereIn('remove_status',[0,1])
+				->where('payable_money','>',0)
 				->get()
 				->toArray();
 		}
@@ -522,9 +524,12 @@ class  Overdue extends Model
 	public function removeXiaJia($list){
 		$arr = [];
 		for ($i=0; $i < count($list); $i++) { 
-			$check_remove = DB::table('tz_business')->where('business_number',$list[$i]->business_sn)->whereNull('deleted_at')->value('remove_status');
-			if($check_remove == 0 || $check_remove == 1){
-				$arr[] = $list[$i];
+			$check = DB::table('tz_business')->where('business_number',$list[$i]->business_sn)->whereNull('deleted_at')->first();
+			
+			if($check->remove_status == 0 || $check->remove_status == 1 ){
+				if($check->business_status == 1 || $check->business_status == 2 || $check->business_status == 5){
+					$arr[] = $list[$i];
+				}
 			}
 		}
 		return $arr;

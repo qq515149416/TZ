@@ -29,36 +29,47 @@ class ServerRentController extends Controller
                     "machines" => [
                         [
                             "line" => "衡阳电信",
-                            "format" => "八核16线程Xeon E5530*2/L5630*2",
-                            "ram" => "8G",
-                            "disk" => "1T SATA",
-                            "bandwidth" => "G口20M独享",
+                            "format" => "8核16线程（E5530*2）",
+                            "ram" => "16G",
+                            "disk" => "240G SSD/500G SATA/1T SATA",
+                            "bandwidth" => "G口20M",
+                            "ip" => "1个",
+                            "defense" => "无（企业）",
+                            "monthlyPay" => 700,
+                            "annualFee" => 700 * 12
+                        ],
+                        [
+                            "line" => "衡阳电信",
+                            "format" => "8核16线程（E5530*2）",
+                            "ram" => "16G",
+                            "disk" => "240G SSD/500G SATA/1T SATA",
+                            "bandwidth" => "G口20M",
                             "ip" => "1个",
                             "defense" => "40G",
-                            "monthlyPay" => "700",
-                            "annualFee" => "7700"
+                            "monthlyPay" => 700,
+                            "annualFee" => 700 * 12
                         ],
                         [
                             "line" => "衡阳电信",
-                            "format" => "八核16线程Xeon E5530*2/L5630*2",
-                            "ram" => "8G",
-                            "disk" => "1T SATA",
-                            "bandwidth" => "G口20M独享",
+                            "format" => "8核16线程（E5530*2）",
+                            "ram" => "16G",
+                            "disk" => "240G SSD/500G SATA/1T SATA",
+                            "bandwidth" => "G口20M",
                             "ip" => "1个",
                             "defense" => "80G",
-                            "monthlyPay" => "1200",
-                            "annualFee" => "13200"
+                            "monthlyPay" => 1100,
+                            "annualFee" => 1100 * 12
                         ],
                         [
                             "line" => "衡阳电信",
-                            "format" => "八核16线程Xeon E5530*2/L5630*2",
-                            "ram" => "8G",
-                            "disk" => "1T SATA",
-                            "bandwidth" => "G口50M独享",
+                            "format" => "8核16线程（E5530*2）",
+                            "ram" => "16G",
+                            "disk" => "240G SSD/500G SATA/1T SATA",
+                            "bandwidth" => "G口20M",
                             "ip" => "1个",
                             "defense" => "120G",
-                            "monthlyPay" => "1800",
-                            "annualFee" => "19800"
+                            "monthlyPay" => 1800,
+                            "annualFee" => 1800 * 12
                         ]
                     ]
                 ],
@@ -70,103 +81,103 @@ class ServerRentController extends Controller
                     "machines" => [
                         [
                             "line" => "惠州电信",
-                            "format" => "四核8线程 Xeon X5672",
-                            "ram" => "8G",
-                            "disk" => "240G SSD(固态)",
-                            "bandwidth" => "G口20M独享",
+                            "format" => "8核16线程（E5530*2）",
+                            "ram" => "16G",
+                            "disk" => "240G SSD/500G SATA/1T SATA",
+                            "bandwidth" => "G口20M",
                             "ip" => "1个",
-                            "defense" => "50G",
-                            "monthlyPay" => "800",
-                            "annualFee" => "8800"
+                            "defense" => "无（企业）",
+                            "monthlyPay" => 800,
+                            "annualFee" => 800 * 12
                         ],
-                        [
-                            "line" => "惠州电信",
-                            "format" => "八核16线程 Xeon E5530*2",
-                            "ram" => "8G",
-                            "disk" => "300G SAS/1T SATA",
-                            "bandwidth" => "G口20M独享",
-                            "ip" => "1个",
-                            "defense" => "50G",
-                            "monthlyPay" => "800",
-                            "annualFee" => "8800"
-                        ],
-                        [
-                            "line" => "惠州电信",
-                            "format" => "酷睿I7-3770",
-                            "ram" => "8G",
-                            "disk" => "240G SSD(固态)",
-                            "bandwidth" => "G口20M独享",
-                            "ip" => "1个",
-                            "defense" => "50G",
-                            "monthlyPay" => "900",
-                            "annualFee" => "9900"
-                        ],
-                        [
-                            "line" => "惠州电信",
-                            "format" => "四核8线程 Xeon X5672",
-                            "ram" => "8G",
-                            "disk" => "240G SSD(固态)",
-                            "bandwidth" => "G口20M独享",
-                            "ip" => "1个",
-                            "defense" => "100G",
-                            "monthlyPay" => "1600",
-                            "annualFee" => "17600"
-                        ],
-                        [
-                            "line" => "惠州电信",
-                            "format" => "八核16线程 Xeon E5530*2",
-                            "ram" => "8G",
-                            "disk" => "300G SAS/1T SATA",
-                            "bandwidth" => "G口20M独享",
-                            "ip" => "1个",
-                            "defense" => "100G",
-                            "monthlyPay" => "1600",
-                            "annualFee" => "17600"
-                        ],
-                        [
-                            "line" => "惠州电信",
-                            "format" => "酷睿I7-3770",
-                            "ram" => "8G",
-                            "disk" => "240G SSD(固态)",
-                            "bandwidth" => "G口20M独享",
-                            "ip" => "1个",
-                            "defense" => "100G",
-                            "monthlyPay" => "1700",
-                            "annualFee" => "18700"
-                        ],
-                        [
-                            "line" => "惠州电信",
-                            "format" => "四核8线程 Xeon X5672",
-                            "ram" => "8G",
-                            "disk" => "240G SSD(固态)",
-                            "bandwidth" => "G口50M独享",
-                            "ip" => "1个",
-                            "defense" => "150G",
-                            "monthlyPay" => "2200",
-                            "annualFee" => "24200"
-                        ],
-                        [
-                            "line" => "惠州电信",
-                            "format" => "八核16线程 Xeon E5530*2",
-                            "ram" => "8G",
-                            "disk" => "300G SAS/1T SATA",
-                            "bandwidth" => "G口50M独享",
-                            "ip" => "1个",
-                            "defense" => "150G",
-                            "monthlyPay" => "2200",
-                            "annualFee" => "24200"
-                        ],
-                        [
-                            "line" => "惠州电信",
-                            "format" => "酷睿I7-3770",
-                            "ram" => "8G",
-                            "disk" => "240G SSD(固态)",
-                            "bandwidth" => "G口50M独享",
-                            "ip" => "1个",
-                            "defense" => "150G",
-                            "monthlyPay" => "2300",
-                            "annualFee" => "25300"
-                        ]
+                        // [
+                        //     "line" => "惠州电信",
+                        //     "format" => "八核16线程 Xeon E5530*2",
+                        //     "ram" => "8G",
+                        //     "disk" => "300G SAS/1T SATA",
+                        //     "bandwidth" => "G口20M独享",
+                        //     "ip" => "1个",
+                        //     "defense" => "50G",
+                        //     "monthlyPay" => "800",
+                        //     "annualFee" => "8800"
+                        // ],
+                        // [
+                        //     "line" => "惠州电信",
+                        //     "format" => "酷睿I7-3770",
+                        //     "ram" => "8G",
+                        //     "disk" => "240G SSD(固态)",
+                        //     "bandwidth" => "G口20M独享",
+                        //     "ip" => "1个",
+                        //     "defense" => "50G",
+                        //     "monthlyPay" => "900",
+                        //     "annualFee" => "9900"
+                        // ],
+                        // [
+                        //     "line" => "惠州电信",
+                        //     "format" => "四核8线程 Xeon X5672",
+                        //     "ram" => "8G",
+                        //     "disk" => "240G SSD(固态)",
+                        //     "bandwidth" => "G口20M独享",
+                        //     "ip" => "1个",
+                        //     "defense" => "100G",
+                        //     "monthlyPay" => "1600",
+                        //     "annualFee" => "17600"
+                        // ],
+                        // [
+                        //     "line" => "惠州电信",
+                        //     "format" => "八核16线程 Xeon E5530*2",
+                        //     "ram" => "8G",
+                        //     "disk" => "300G SAS/1T SATA",
+                        //     "bandwidth" => "G口20M独享",
+                        //     "ip" => "1个",
+                        //     "defense" => "100G",
+                        //     "monthlyPay" => "1600",
+                        //     "annualFee" => "17600"
+                        // ],
+                        // [
+                        //     "line" => "惠州电信",
+                        //     "format" => "酷睿I7-3770",
+                        //     "ram" => "8G",
+                        //     "disk" => "240G SSD(固态)",
+                        //     "bandwidth" => "G口20M独享",
+                        //     "ip" => "1个",
+                        //     "defense" => "100G",
+                        //     "monthlyPay" => "1700",
+                        //     "annualFee" => "18700"
+                        // ],
+                        // [
+                        //     "line" => "惠州电信",
+                        //     "format" => "四核8线程 Xeon X5672",
+                        //     "ram" => "8G",
+                        //     "disk" => "240G SSD(固态)",
+                        //     "bandwidth" => "G口50M独享",
+                        //     "ip" => "1个",
+                        //     "defense" => "150G",
+                        //     "monthlyPay" => "2200",
+                        //     "annualFee" => "24200"
+                        // ],
+                        // [
+                        //     "line" => "惠州电信",
+                        //     "format" => "八核16线程 Xeon E5530*2",
+                        //     "ram" => "8G",
+                        //     "disk" => "300G SAS/1T SATA",
+                        //     "bandwidth" => "G口50M独享",
+                        //     "ip" => "1个",
+                        //     "defense" => "150G",
+                        //     "monthlyPay" => "2200",
+                        //     "annualFee" => "24200"
+                        // ],
+                        // [
+                        //     "line" => "惠州电信",
+                        //     "format" => "酷睿I7-3770",
+                        //     "ram" => "8G",
+                        //     "disk" => "240G SSD(固态)",
+                        //     "bandwidth" => "G口50M独享",
+                        //     "ip" => "1个",
+                        //     "defense" => "150G",
+                        //     "monthlyPay" => "2300",
+                        //     "annualFee" => "25300"
+                        // ]
                     ]
                 ],
                 "xian" => [
@@ -177,81 +188,81 @@ class ServerRentController extends Controller
                     "machines" => [
                         [
                             "line" => "西安电信",
-                            "format" => "E5530*2 8核",
-                            "ram" => "8G",
-                            "disk" => "240G SSD/1T SATA",
-                            "bandwidth" => "100M",
+                            "format" => "8核16线程（E5530*2）",
+                            "ram" => "16G",
+                            "disk" => "240G SSD/500G SATA/1T SATA",
+                            "bandwidth" => "G口20M",
                             "ip" => "1个",
-                            "defense" => "100G",
-                            "monthlyPay" => 1399,
-                            "annualFee" => 1399 * 12
+                            "defense" => "无（企业）",
+                            "monthlyPay" => 800,
+                            "annualFee" => 800 * 12
                         ],
                         [
                             "line" => "西安电信",
-                            "format" => "E5530*2 8核",
-                            "ram" => "8G",
-                            "disk" => "300G SAS/1T SATA",
-                            "bandwidth" => "100M",
+                            "format" => "8核16线程（E5530*2）",
+                            "ram" => "16G",
+                            "disk" => "240G SSD/500G SATA/1T SATA",
+                            "bandwidth" => "G口50M",
                             "ip" => "1个",
-                            "defense" => "200G",
-                            "monthlyPay" => 2599,
-                            "annualFee" => 2599 * 12
+                            "defense" => "80G",
+                            "monthlyPay" => 800,
+                            "annualFee" => 800 * 12
                         ],
                         [
                             "line" => "西安电信",
-                            "format" => "X5672*2 8核",
-                            "ram" => "8G",
-                            "disk" => "240G SSD/IT SATA",
-                            "bandwidth" => "100M",
-                            "ip" => "1个",
-                            "defense" => "200G",
-                            "monthlyPay" => 3099,
-                            "annualFee" => 3099 * 12
-                        ],
-                        [
-                            "line" => "西安电信",
-                            "format" => "X5672*2 8核",
+                            "format" => "8核16线程（E5530*2）",
                             "ram" => "32G",
-                            "disk" => "240G SSD/IT SATA",
-                            "bandwidth" => "100M",
+                            "disk" => "240G SSD/500G SATA/1T SATA",
+                            "bandwidth" => "G口100M",
+                            "ip" => "1个",
+                            "defense" => "160G",
+                            "monthlyPay" => 1500,
+                            "annualFee" => 1500 * 12
+                        ],
+                        [
+                            "line" => "西安电信",
+                            "format" => "8核16线程（E5530*2）",
+                            "ram" => "32G",
+                            "disk" => "240G SSD/500G SATA/1T SATA",
+                            "bandwidth" => "G口200M",
                             "ip" => "1个",
                             "defense" => "300G",
-                            "monthlyPay" => 4999,
-                            "annualFee" => 4999 * 12
+                            "monthlyPay" => 3000,
+                            "annualFee" => 3000 * 12
                         ],
                         [
                             "line" => "西安电信",
-                            "format" => "E5530*2 8核",
-                            "ram" => "8G",
-                            "disk" => "240G SSD",
-                            "bandwidth" => "10M独享",
+                            "format" => "定制",
+                            "ram" => "定制",
+                            "disk" => "定制",
+                            "bandwidth" => "G口无限带宽",
                             "ip" => "1个",
-                            "defense" => "无防",
-                            "monthlyPay" => 899,
-                            "annualFee" => 899 * 12
+                            "defense" => "500G+云堤",
+                            "monthlyPay" => "定制",
+                            "annualFee" => "定制"
                         ],
-                        [
-                            "line" => "西安电信",
-                            "format" => "E5530*2 8核",
-                            "ram" => "16G",
-                            "disk" => "300G SAS",
-                            "bandwidth" => "50M独享",
-                            "ip" => "1个",
-                            "defense" => "无防",
-                            "monthlyPay" => 1799,
-                            "annualFee" => 1799 * 12
-                        ],
-                        [
-                            "line" => "西安电信",
-                            "format" => "E5530*2 8核",
-                            "ram" => "32G",
-                            "disk" => "300G SAS/1T SATA",
-                            "bandwidth" => "100M独享",
-                            "ip" => "1个",
-                            "defense" => "无防",
-                            "monthlyPay" => 2399,
-                            "annualFee" => 2399 * 12
-                        ]
+                        // [
+                        //     "line" => "西安电信",
+                        //     "format" => "E5530*2 8核",
+                        //     "ram" => "16G",
+                        //     "disk" => "300G SAS",
+                        //     "bandwidth" => "50M独享",
+                        //     "ip" => "1个",
+                        //     "defense" => "无防",
+                        //     "monthlyPay" => 1799,
+                        //     "annualFee" => 1799 * 12
+                        // ],
+                        // [
+                        //     "line" => "西安电信",
+                        //     "format" => "E5530*2 8核",
+                        //     "ram" => "32G",
+                        //     "disk" => "300G SAS/1T SATA",
+                        //     "bandwidth" => "100M独享",
+                        //     "ip" => "1个",
+                        //     "defense" => "无防",
+                        //     "monthlyPay" => 2399,
+                        //     "annualFee" => 2399 * 12
+                        // ]
                     ]
                 ]
             ]

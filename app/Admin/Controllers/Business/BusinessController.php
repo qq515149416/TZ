@@ -169,7 +169,7 @@ class BusinessController extends Controller
 
     /**
      * 获取某个时间段的新增业务数据
-     * @param  Request $request start_time--查询时间段的开始时间 end_time--查询时间段的结束时间
+     * @param  Request $request begin--查询时间段的开始时间 end--查询时间段的结束时间
      * @return json           返回相关的查询数据
      */
     public function newBusiness(Request $request){
@@ -181,7 +181,7 @@ class BusinessController extends Controller
 
     /**
      * 获取某个时间段的流失业务数据
-     * @param  Request $request start_time--查询时间段的开始时间 end_time--查询时间段的结束时间
+     * @param  Request $request begin--查询时间段的开始时间 end--查询时间段的结束时间
      * @return json           返回相关的查询数据
      */
     public function underBusiness(Request $request){
@@ -193,7 +193,7 @@ class BusinessController extends Controller
 
     /**
      * 获取某个时间段的新注册客户数据
-     * @param  Request $request start_time--查询时间段的开始时间 end_time--查询时间段的结束时间
+     * @param  Request $request begin--查询时间段的开始时间 end--查询时间段的结束时间
      * @return json           返回相关的查询数据
      */
     public function newRegistration(Request $request){
@@ -201,5 +201,17 @@ class BusinessController extends Controller
         $registra_business = new BusinessModel();
         $registra_result = $registra_business->newRegistration($time);
         return tz_ajax_echo($registra_result['data'],$registra_result['msg'],$registra_result['code']);
+    }
+
+    /**
+     * 获取市场的变化（统计订单的变化）
+     * @param  Request $request begin--查询时间段的开始时间 end--查询时间段的结束时间 name--查询的对象是业务员/客户
+     * @return json           返回相关的查询数据
+     */
+    public function changeMarket(Request $request){
+        $search = $request->only(['begin','end','name']);
+        $change = new BusinessModel();
+        $change_result = $change->changeMarket($search);
+        return tz_ajax_echo($change_result['data'],$change_result['msg'],$change_result['code']);
     }
 }

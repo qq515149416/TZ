@@ -56,16 +56,16 @@
                         <span class="dropdown-icon"></span>
                         <dl>
                             <dt>
-                                <a href="/page/tz/easy">安全防护</a>
+                                <a href="/protection/index">安全防护</a>
                             </dt>
                             <dd>
-                                <a href="/page/tz/easy">高防CDN</a>
+                                <a href="/protection/high-defense-cdn">高防CDN</a>
                             </dd>
                             <dd>
-                                <a href="/dist/highDefense.html">DDOS高防IP</a>
+                                <a href="/protection/high-defense-ip">DDOS高防IP</a>
                             </dd>
                             <dd>
-                                <a href="/page/tz/easy">防C盾</a>
+                                <a href="/protection/c-shield">防C盾</a>
                             </dd>
                         </dl>
                         <dl>

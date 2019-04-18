@@ -17,8 +17,8 @@
 //     return view()->file(dirname(public_path()).'/resources/index/highDefense.html');
 // });
 
-Route::get('/socketurl',function() {
-    return tz_ajax_echo(env("SOCKET_URL","http://localhost:8120"), "获取成功", 1);
+Route::get('/socketurl', function () {
+    return tz_ajax_echo(env("SOCKET_URL", "http://localhost:8120"), "获取成功", 1);
 });
 
 Route::get('/verification_code', function () {
@@ -39,13 +39,15 @@ Route::group([
     Route::get('/article/{type}', 'Show\ArticleController@index');
     Route::get('/detail/{type}/{id}', 'Show\ArticleController@detail');
     Route::get('/15cdn/{page}', 'Show\CdnController@index');
+    Route::get('/gaofangchuxiao', 'Show\GfPromotionController@index');
+    Route::get('/protection/{page}', 'Show\ProtectionController@index');
 });
 
 /**
  * 测试组
  */
 Route::group([
-    'prefix'     => 'test',
+    'prefix' => 'test',
     'middleware' => 'UserOperationLog'
 ], function () {
 
@@ -62,7 +64,7 @@ Route::group([
     Route::get('loginCheck', 'TzAuth\LoginController@loginCheck'); //检测登录状态
     Route::get('time', 'Test\TimeController@time'); //测试时间
     Route::get('user', 'Test\TimeController@time'); //测试时间
-    Route::get ('xun','Test\XunsearchController@test');//测试迅搜索
+    Route::get('xun', 'Test\XunsearchController@test');//测试迅搜索
     Route::get('gf', 'DefenseIp\ApiController@addTest');    //检查状态
 
 });
@@ -80,7 +82,7 @@ Route::group([
  * 腾正Auth   (登录注册验证)
  */
 Route::group([
-    'prefix'     => 'auth',
+    'prefix' => 'auth',
     'middleware' => 'UserOperationLog',
 ], function () {
 
@@ -114,7 +116,7 @@ Route::group([
  * 用户后台组   (所有用户后台路由此组下)
  */
 Route::group([
-    'prefix'     => 'home',
+    'prefix' => 'home',
     'middleware' => 'UserOperationLog',
 ], function () {
 
@@ -175,9 +177,9 @@ Route::group([
             Route::get('getOrderById', 'Customer\OrderController@getOrderById');
 
             Route::post('renewresource', 'Customer\OrderController@renewResource');//续费
-            Route::get('all_renew','Customer\OrderController@allRenew');//获取业务下续费的资源
-            Route::get('show_renew_order','Customer\OrderController@showRenewOrder');//展示续费的订单
-            Route::get('renew_pay','Customer\OrderController@payRenew');//续费订单支付
+            Route::get('all_renew', 'Customer\OrderController@allRenew');//获取业务下续费的资源
+            Route::get('show_renew_order', 'Customer\OrderController@showRenewOrder');//展示续费的订单
+            Route::get('renew_pay', 'Customer\OrderController@payRenew');//续费订单支付
 
             Route::get('show_white_list', 'Customer\WhiteListController@showWhiteList');
             Route::post('insert_white_list', 'Customer\WhiteListController@insertWhiteList');
@@ -201,9 +203,9 @@ Route::group([
             //以下订单
             Route::post('payOrderByBalance', 'Customer\OrderController@payOrderByBalance');
 
-            Route::get('flows','Customer\OrderController@flows');
+            Route::get('flows', 'Customer\OrderController@flows');
 
-            Route::get('get_sales','Customer\BusinessController@getSales');
+            Route::get('get_sales', 'Customer\BusinessController@getSales');
 
         });
     });

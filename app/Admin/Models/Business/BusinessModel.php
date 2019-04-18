@@ -833,6 +833,58 @@ class BusinessModel extends Model
 
     }
 
+    public function changeMarket($search){
+        $begin_end = $this->queryTime($search);
+        // $name = '';
+        // if(isset($search['name']) && !empty($search['name'])){
+        //     $table = substr($search['name'],0,stripos($search['name'],'|'));
+        //     $value = substr($search['name'],stripos($search['name'],'|')+1);
+        //     if($table == 'tz_users'){
+        //         $customer = DB::table($table)->orWhere(['name'=>$value])
+        //                         ->orWhere(['nickname'=>$value])
+        //                         ->orWhere(['email'=>$value])
+        //                         ->select('id','name','nickname','email')
+        //                         ->first();
+        //         $name = $customer->name?$customer->name:$customer->nickname;
+        //         $name = $name?$name:$customer->email;
+        //     } elseif($table == 'admin_users'){
+        //         $business = DB::table($table)->where(['name'=>$value])->select('id','name')->first();
+        //         $name = $business->name;
+        //     }
+        // }
+        // $people = isset($customer->id)?$customer->id:(isset($business->id)?$business->id:'*');
+        $orders_total = DB::table('tz_orders')
+                        ->whereBetween('created_at',[$begin_end['start_time'],$begin_end['end_time']])
+                        ->whereBetween('order_status',[0,4])
+                        ->whereNull('deleted_at')
+                        ->count();
+        $orders_info = DB::table('tz_orders')
+                        ->whereBetween('created_at',[$begin_end['start_time'],$begin_end['end_time']])
+                        ->whereBetween('order_status',[0,4])
+                        ->whereNull('deleted_at')
+                        ->select('id','customer_id','business_id','resource_type','machine_sn','price','duration','created_at')
+                        ->get();
+        $total = 0;
+        if(!$orders_info->isEmpty()){
+            foreach($orders_info as $info_key => $info){
+                $resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn',11=>'高防IP'];
+                $info->type = $resource_type[$info->resource_type];
+                $money = bcmul($info->price,$info->duration,2);
+                $info->money = $money;
+                $total = bcadd($total,$money,2);
+                $info->salesman = DB::table('admin_users')->where(['id'=>$info->business_id])->value('name');
+                $client_name = DB::table('tz_users')->where(['id'=>$info->customer_id])->select('name','email','nickname','msg_phone','msg_qq')->first();
+                $email = $client_name->email ? $client_name->email : $client_name->name;
+                $email = $email ? $email : $client_name->nickname;
+                $info->customer = $email;
+            }
+        }
+        $return['code'] = 1;
+        $return['msg'] = '';
+        $return['data'] = ['orders_total'=>$orders_total,'info'=>$orders_info?$orders_info:[],'total'=>$total];
+        return $return;
+    }
+
     /**
      * 计算查询的起始时间和结束时间
      * @param  array $query_time begin--查询时间段的开始时间 end--查询时间段的结束时间

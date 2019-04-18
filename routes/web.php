@@ -38,12 +38,9 @@ Route::group([
     Route::get('/tuoguan', 'Show\HostingController@index');
     Route::get('/article/{type}', 'Show\ArticleController@index');
     Route::get('/detail/{type}/{id}', 'Show\ArticleController@detail');
-<<<<<<< HEAD
     Route::get('/15cdn/{page}', 'Show\CdnController@index');
     Route::get('/gaofangchuxiao', 'Show\GfPromotionController@index');
-=======
     Route::get('/protection/{page}', 'Show\ProtectionController@index');
->>>>>>> e96a1e159c3af004748cb0c5fc51287118e7c113
 });
 
 /**

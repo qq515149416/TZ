@@ -168,68 +168,64 @@ class Ips extends Model
 	 * @return array       返回信息和状态
 	 */
 	public function doEdit($data){
-		if($data && $data['id']+0) {
-			$edit = $this->find($data['id']);
-            if(empty($edit)){
+		if($data) {
+			$edit = $this->select("vlan","ip","ip_company","ip_status","ip_lock","ip_note","ip_comproom")->find($data['id']);
+			if(empty($edit)){
                 $return['code'] = 0;
-                $return['msg'] = '无此IP';
+                $return['msg'] = '(#101)无此IP';
                 return $return;
             }
-            		if($edit->ip_status != 0){
-            			return [
-            				'code'	=> 0,
-            				'msg'	=> 'ip正在使用,无法修改',
-            			];
+            DB::beginTransaction();
+            if($edit->ip_status == $data['ip_status'] && $data['ip_status'] != 0){//当ip的状态不是未使用的时候，且状态与数据表里的状态一致
+            	if($edit->ip_note != $data['ip_note']){//当备注不一样的时候进行修改
+            		$row = DB::table('idc_ips')->where(['id'=>$data['id']])->update(['ip_note'=>$data['ip_note']]);
+            	} else {
+            		$row = 1;
+            	}
+            	if($row == 0){
+            		DB::rollBack();
+            		$return['code'] = 0;
+					$return['msg'] = '(#102)修改信息失败';
+            	}
+            } else{//当IP状态是所有的状态时，且传递的状态与数据表里的状态不一致时
+            	if($edit->ip_status != 0){//判断IP状态是否为0，不为0则代表IP在使用，不给予修改
+		        	$return['code'] = 0;
+					$return['msg'] = '(#103)此IP正在,无法进行修改';
+					return $return;
+            	}
+            	if($edit->ip_comproom != $data['ip_comproom']){//当修改IP所在机房时
+            		$defense = DB::table('tz_defenseip_store')->where(['ip'=>$edit->ip])->whereNull('deleted_at')->select('id')->first();
+            		if(!empty($defense)){//当高防库里存在此IP信息时进行机房的修改
+            			$result = DB::table('tz_defenseip_store')->where(['id'=>$defense->id])->update(['site'=>$data['ip_comproom']]);
+            			if($result == 0){
+            				DB::rollBack();
+            				$return['code'] = 0;
+							$return['msg'] = '(#104)此IP信息修改失败';
+							return $return;
+            			}
             		}
-			$edit->vlan = $data['vlan'];
-			// $edit->ip = $data['ip'];
-			$edit->ip_company = $data['ip_company'];
-			// $edit->ip_status = $data['ip_status'];
-			$edit->ip_lock = $data['ip_lock'];
-			$edit->ip_note = $data['ip_note'];
-			$edit->ip_comproom = $data['ip_comproom'];
-
-			DB::beginTransaction();
-
-			$row = $edit->save();
-			//如果编辑成功了
-			if($row != false){
-				//查查高防库有没有
-				$d_ip_model = new StoreModel();
-				$d_ip = $d_ip_model->where('ip',$edit->ip)->first();
-				if($d_ip == null){	//没有的话就成功
-
-					DB::commit();
-					$return['code'] = 1;
-					$return['msg'] = '修改IP信息成功！！';
-				}else{			//有的话就把高防的也改了
-
-					$d_ip->site = $data['ip_comproom'];
-					if($d_ip->save()){
-						DB::commit();
-						return [
-							'data'	=> [],
-							'msg'	=> '修改IP信息成功！！',
-							'code'	=> 1,
-						];	
-					}else{
-						DB::rollBack();
-						return [
-							'data'	=> [],
-							'msg'	=> '修改IP信息失败！！',
-							'code'	=> 1,
-						];
-					}
-				}
-				
-			} else {
-				$return['code'] = 0;
-				$return['msg'] = '修改IP信息失败！！！';
-			}
+            	}
+            	/**
+            	 * 当机房不修改时，执行正常的修改流程
+            	 * @var [type]
+            	 */
+            	$row = DB::table('idc_ips')->where(['id'=>$data['id']])->update($data);
+            	if($row == 0){
+            		DB::rollBack();
+    				$return['code'] = 0;
+					$return['msg'] = '(#105)此IP信息修改失败';
+					return $return;
+            	}
+            }
+            /**
+             * 当所有的事件都成功时进行修改数据的事务提交
+             */
+            DB::commit();
+            $return['code'] = 1;
+			$return['msg'] = 'IP信息修改成功';
 		} else {
-			// echo 123;
 			$return['code'] = 0;
-			$return['msg'] = '确保信息正确';
+			$return['msg'] = '(#106)确保信息正确';
 		}
 		return $return;
 	}

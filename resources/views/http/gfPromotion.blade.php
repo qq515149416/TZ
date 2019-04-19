@@ -55,7 +55,7 @@
                 <div class="market clearfix">
                     <div class="sell pull-left">
                         <p class="price">
-                            ¥1500元/月<span class="tip">限时促销</span>
+                            <span class="amount">¥1500</span>元/月<span class="tip">限时促销</span>
                         </p>
                         <p class="original-price">
                             原价 ¥3000

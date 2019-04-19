@@ -117,6 +117,7 @@ Route::group([
             $router->get('/newTypeManagement', 'Show\NewTypeManagementController@index');
             $router->get('/defenseBusinesReview', 'Show\DefenseBusinessReviewController@index');
             $router->get('/customerStatistics', 'Show\CustomerStatisticsController@index');
+            $router->get('/businessStatistics', 'Show\BusinessStatisticsController@index');
 
         });
 

@@ -2301,7 +2301,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   padding-top: 83px;
   color: #fff;
   text-align: center;
-  background-image: url(/images/server-rent-banner-bg.png?fbb67add78596bef8b8434641a45220b);
+  background: url(/images/server-rent-banner-bg.png?fbb67add78596bef8b8434641a45220b) no-repeat center;
   background-size: cover;
 }
 #tz-server-rent-content .banner .title {
@@ -2535,7 +2535,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin-top: -78px;
   position: relative;
   text-align: center;
-  background: url(/images/common-question-bg.png?5994d19b749ba842c38ed870df4db534) no-repeat;
+  background: url(/images/common-question-bg.png?5994d19b749ba842c38ed870df4db534) no-repeat center;
   background-size: cover;
 }
 #tz-server-rent-content .common-question .title {
@@ -3170,16 +3170,16 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   color: #043fc4;
 }
 #tz-program .content #game .banner {
-  background-image: url(/images/game-banner-bg.png?70f07cea6da876f74947ecc8224d8659);
+  background: url(/images/game-banner-bg.png?70f07cea6da876f74947ecc8224d8659) no-repeat center;
 }
 #tz-program .content #game .arch {
-  background-image: url(/images/game-arch-bg.png?aeb381af904a4d8292c7f5c71f1fb1f2);
+  background: url(/images/game-arch-bg.png?aeb381af904a4d8292c7f5c71f1fb1f2) no-repeat center;
 }
 #tz-program .content #game .adv {
   background: url(/images/game-adv-bg.png?de6c44551eb078692cc6598120b898dc) no-repeat center 70%;
 }
 #tz-program .content #chess .banner {
-  background-image: url(/images/chess-banner-bg.png?a81b0245d73a9f2b88501846afd7735b);
+  background: url(/images/chess-banner-bg.png?a81b0245d73a9f2b88501846afd7735b) no-repeat center;
 }
 #tz-program .content #chess .problem {
   height: 530px;
@@ -3255,7 +3255,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #tz-program .content #chess .arch {
   max-width: 100%;
   height: 660px;
-  background: url(/images/chess-arch-bg.png?8aae1b6552c2838d8a0dc0e726d4ff18) no-repeat;
+  background: url(/images/chess-arch-bg.png?8aae1b6552c2838d8a0dc0e726d4ff18) no-repeat center;
   background-size: 100% 100%;
 }
 #tz-program .content #chess .arch .title {
@@ -3298,7 +3298,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   height: 140px;
 }
 #tz-program .content #finance .banner {
-  background-image: url(/images/finance-banner-bg.png?cb640bcc47513f23060eb6143e330009);
+  background: url(/images/finance-banner-bg.png?cb640bcc47513f23060eb6143e330009) no-repeat center;
 }
 #tz-program .content #finance .problem {
   height: 650px;
@@ -3313,7 +3313,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz-program .content #finance .arch {
   height: 1100px;
-  background-image: url(/images/finance-arch-bg.png?e329461e923c3a58f116cb444e5e5a02);
+  background: url(/images/finance-arch-bg.png?e329461e923c3a58f116cb444e5e5a02) no-repeat center;
 }
 #tz-program .content #finance .adv {
   height: 710px;
@@ -3323,7 +3323,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   width: 320px;
 }
 #tz-program .content #streaming_media .banner {
-  background-image: url(/images/streaming-media-banner-bg.png?28ffacd1c8c6956941b2336ebb182582);
+  background: url(/images/streaming-media-banner-bg.png?28ffacd1c8c6956941b2336ebb182582) no-repeat center;
 }
 #tz-program .content #streaming_media .problem {
   height: 650px;
@@ -3338,14 +3338,14 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz-program .content #streaming_media .arch {
   height: 1210px;
-  background-image: url(/images/streaming-media-arch-bg.png?93fbe0bd35321d798720b629287506bb);
+  background: url(/images/streaming-media-arch-bg.png?93fbe0bd35321d798720b629287506bb) no-repeat center;
 }
 #tz-program .content #streaming_media .adv {
   height: 710px;
   background: url(/images/streaming-media-adv-bg.png?6f7fc5e2b991b9f6cc80ab5fd13e93d3) no-repeat 48.5% 70%;
 }
 #tz-program .content #mobile_app .banner {
-  background-image: url(/images/mobile-app-banner-bg.png?35a34261413158a4f4f85ce149b7d567);
+  background: url(/images/mobile-app-banner-bg.png?35a34261413158a4f4f85ce149b7d567) no-repeat center;
 }
 #tz-program .content #mobile_app .problem {
   height: 620px;
@@ -3418,7 +3418,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz-program .content #mobile_app .arch {
   height: 1320px;
-  background-image: url(/images/mobile-app-arch-bg.png?67334bf1ec360a5f0df602882a452608);
+  background: url(/images/mobile-app-arch-bg.png?67334bf1ec360a5f0df602882a452608) no-repeat center;
 }
 #tz-program .content #mobile_app .arch .cont {
   position: relative;
@@ -3448,7 +3448,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   width: 320px;
 }
 #tz-program .content #education_cloud .banner {
-  background-image: url(/images/education-cloud-banner-bg.png?2010c80cc8fb90a26b23ccbfc242d666);
+  background: url(/images/education-cloud-banner-bg.png?2010c80cc8fb90a26b23ccbfc242d666) no-repeat center;
 }
 #tz-program .content #education_cloud .problem {
   height: 700px;
@@ -3465,7 +3465,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz-program .content #education_cloud .arch {
   height: 1210px;
-  background-image: url(/images/education-cloud-arch-bg.png?14f83e4808959ead541b7e1d7522394e);
+  background: url(/images/education-cloud-arch-bg.png?14f83e4808959ead541b7e1d7522394e) no-repeat center;
 }
 #tz-program .content #education_cloud .arch .consult-btn {
   border-color: #1e2251;
@@ -3512,7 +3512,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin-top: 65px;
 }
 #tz-program .content #government_cloud .banner {
-  background-image: url(/images/government-cloud-banner-bg.png?c03da09f2045264f0fe9000040bdc3a1);
+  background: url(/images/government-cloud-banner-bg.png?c03da09f2045264f0fe9000040bdc3a1) no-repeat center;
 }
 #tz-program .content #government_cloud .problem {
   height: 620px;
@@ -3529,7 +3529,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz-program .content #government_cloud .arch {
   height: 1200px;
-  background-image: url(/images/government-cloud-arch-bg.png?cbd1a530b38258c4a0c6ef066d599287);
+  background: url(/images/government-cloud-arch-bg.png?cbd1a530b38258c4a0c6ef066d599287) no-repeat center;
 }
 #tz-program .content #government_cloud .arch .consult-btn {
   color: #091233;
@@ -3550,7 +3550,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   height: 180px;
 }
 #tz-program .content #website_deployment .banner {
-  background-image: url(/images/website-deployment-banner-bg.png?3d16521dcd386174e55f1d3d59a3154a);
+  background: url(/images/website-deployment-banner-bg.png?3d16521dcd386174e55f1d3d59a3154a) no-repeat center;
 }
 #tz-program .content #website_deployment .problem {
   height: 700px;
@@ -3565,7 +3565,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz-program .content #website_deployment .arch {
   height: 990px;
-  background-image: url(/images/website-deployment-arch-bg.png?36c4d6730e65d3780a9ae1cd528a20a6);
+  background: url(/images/website-deployment-arch-bg.png?36c4d6730e65d3780a9ae1cd528a20a6) no-repeat center;
 }
 #tz-program .content #website_deployment .arch .consult-btn {
   color: #091233;
@@ -3595,7 +3595,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   padding-top: 83px;
   color: #fff;
   text-align: center;
-  background-image: url(/images/hosting-banner-bg.png?fbb67add78596bef8b8434641a45220b);
+  background: url(/images/hosting-banner-bg.png?fbb67add78596bef8b8434641a45220b) no-repeat center;
   background-size: cover;
 }
 #tz-server-hosting .banner .title {
@@ -3819,7 +3819,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin-top: -78px;
   position: relative;
   text-align: center;
-  background: url(/images/common-question-bg.png?5994d19b749ba842c38ed870df4db534) no-repeat;
+  background: url(/images/common-question-bg.png?5994d19b749ba842c38ed870df4db534) no-repeat center;
   background-size: cover;
 }
 #tz-server-hosting .common-question .title {
@@ -3909,6 +3909,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   padding-top: 83px;
   color: #fff;
   text-align: center;
+  background: url(/images/protection-banner-bg.png?61246c1f839b6eaaf360a11503b3b44f) no-repeat center;
   background-size: cover;
 }
 .tz-protection-content .banner .cont {
@@ -3917,13 +3918,13 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   padding: 0px 55px;
 }
 .tz-protection-content .banner .cont .title {
-  text-align: left;
+  text-align: center;
   color: #fff;
 }
 .tz-protection-content .banner .cont .title .text {
   font-size: 50px;
   line-height: 72px;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   letter-spacing: 3.75px;
 }
 .tz-protection-content .banner .cont .title .sub-text {
@@ -3941,8 +3942,9 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   line-height: 40px;
   letter-spacing: 2.8px;
   text-decoration: none;
-  color: #05060a;
+  color: #043fc4;
   background: #fff;
+  margin: 0 auto;
 }
 .tz-protection-content .banner .tab {
   position: absolute;
@@ -4203,7 +4205,14 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   color: #043fc4;
 }
 #high-defense-cdn .banner {
-  background-image: url(/images/cdn-banner-bg.png?add3f0e445513b09a77c712ea1e81f60);
+  background: url(/images/cdn-banner-bg.png?add3f0e445513b09a77c712ea1e81f60) no-repeat center;
+}
+#high-defense-cdn .banner .title {
+  text-align: left;
+}
+#high-defense-cdn .banner .apply-btn {
+  color: #05060a;
+  margin: unset;
 }
 #high-defense-cdn .function {
   background-image: url(/images/cdn-function-bg.png?4b0a0f70a996a4ac452d0e2d6e52d66d);
@@ -4216,7 +4225,14 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   cursor: pointer;
 }
 #high-defense-ip .banner {
-  background-image: url(/images/ip-banner-bg.png?983eeccaab9a5aecb781559649155a9c);
+  background: url(/images/ip-banner-bg.png?983eeccaab9a5aecb781559649155a9c) no-repeat center;
+}
+#high-defense-ip .banner .title {
+  text-align: left;
+}
+#high-defense-ip .banner .apply-btn {
+  color: #05060a;
+  margin: unset;
 }
 #high-defense-ip .feature .item-container {
   width: calc(100% - 385px);
@@ -4259,7 +4275,14 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   opacity: 1;
 }
 #c-shield .banner {
-  background-image: url(/images/cshield-banner-bg.png?42ce8cbd4ebbbc345696130e85c25c17);
+  background: url(/images/cshield-banner-bg.png?42ce8cbd4ebbbc345696130e85c25c17) no-repeat center;
+}
+#c-shield .banner .title {
+  text-align: left;
+}
+#c-shield .banner .apply-btn {
+  color: #05060a;
+  margin: unset;
 }
 #c-shield .package {
   padding-top: 40px;
@@ -4470,7 +4493,6 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background: url(/images/gfPromotion.png?8f09c260830255a3c153c5088d3dab23) no-repeat;
   background-size: 100% 100%;
   padding-top: 680px;
-  padding-bottom: 294px;
 }
 #gfPromotion .product {
   margin: 0 auto;
@@ -4483,6 +4505,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   position: relative;
+  margin-bottom: 100px;
 }
 #gfPromotion .product::after {
   content: "";
@@ -4537,6 +4560,9 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #gfPromotion .product article .market .sell .price span.tip {
   margin-left: 20px;
   font-size: 16px;
+}
+#gfPromotion .product article .market .sell .price span.amount {
+  font-size: 32px;
 }
 #gfPromotion .product article .market .sell .original-price {
   margin: 0;

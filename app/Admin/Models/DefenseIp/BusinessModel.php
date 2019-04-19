@@ -87,7 +87,9 @@ class BusinessModel extends Model
 			'code'	=> 1,
 		];
 	}
-
+	/**
+	*	进行审核的方法	
+	**/
 	public function upExamineDefenseIp($business_id,$res){
 		//建立业务模型
 		$business = $this->find($business_id);
@@ -415,7 +417,8 @@ class BusinessModel extends Model
 				'order_type'		=> $order_type,
 				'machine_sn'		=> $business->package_id,
 				'resource'		=> DB::table('tz_defenseip_store')->where('id',$business->ip_id)->value('ip'),
-				'price'			=> $business->price,
+				//价格是根据业务申请时的套餐价格而定,往后不会更改,除非你手动去改它
+				'price'			=> $business->price,								
 				'duration'		=> $buy_time,
 				'payable_money'	=> bcmul($business->price,$buy_time,2),
 				'end_time'		=> $end_time,

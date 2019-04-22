@@ -73,8 +73,12 @@ class StoreController extends Controller
 
 	public function showIdcIps(StoreRequest $request){
 		$model = new Ips();
-		$par = $request->only('site');
-		$ip_list = $model->where('ip_comproom',$par['site'])->get();
+		
+		$ip_list = $model
+			->where('ip_lock',0)
+			->where('ip_status',0)
+			->get();
+
 		if(!$ip_list->isEmpty()){
 			return tz_ajax_echo($ip_list,'获取成功',1);	
 		}else{

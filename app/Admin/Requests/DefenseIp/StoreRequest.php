@@ -66,10 +66,10 @@ class StoreRequest extends FormRequest
 					'site'			=> 'required'
 				];
 				break;
-			case 'showIdcIps':
-				$return = [
-					'site'			=> 'required'
-				];
+			// case 'showIdcIps':
+			// 	$return = [
+			// 		'site'			=> 'required'
+			// 	];
 				break;
 			default:
 	

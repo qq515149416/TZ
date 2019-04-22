@@ -27,8 +27,8 @@ class MachineRoom extends FormRequest
     {
         return [
 //            'title'=>'required|min:10|email',
-            'room_id'   => 'required|unique:idc_machineroom,machine_room_id',
-            'room_name' => 'required|unique:idc_machineroom,machine_room_name',
+            'machine_room_id'   => 'required|unique:idc_machineroom,machine_room_id',
+            'machine_room_name' => 'required|unique:idc_machineroom,machine_room_name',
 
         ];
     }
@@ -41,10 +41,10 @@ class MachineRoom extends FormRequest
     public function messages()
     {
         return [
-            'room_id.required'   => '机房编号必须填写',
-            'room_id.unique'     => '机房编号重复',
-            'room_name.required' => '机房中文名必须填写',
-            'room_name.unique'   => '机房名重复',
+            'machine_room_id.required'   => '机房编号必须填写',
+            'machine_room_id.unique'     => '机房编号重复',
+            'machine_room_name.required' => '机房中文名必须填写',
+            'machine_room_name.unique'   => '机房名重复',
         ];
     }
 

@@ -1267,7 +1267,7 @@ class Order extends Model
 					$machine['business_end'] = $renew_value['end_time'];
 					//如果是租用机器的，在续费支付成功时，将业务编号和到期时间及资源状态进行更新
 					$machine['own_business'] = $order->business_sn;
-					$machine['used_status'] = 1;
+					$machine['used_status'] = 2;
 					$where = ['own_business'=>$order->business_sn,'machine_num'=>$order->machine_sn];
 					$result = DB::table('idc_machine')->where($where)->update($machine);
 					break;
@@ -1276,7 +1276,7 @@ class Order extends Model
 					$machine['business_end'] = $renew_value['end_time'];
 					//如果是托管机器的，在续费支付成功时，将业务编号和到期时间及资源状态进行更新
 					$machine['own_business'] = $order->business_sn;
-					$machine['used_status'] = 1;
+					$machine['used_status'] = 2;
 					$where = ['own_business'=>$order->business_sn,'machine_num'=>$order->machine_sn];
 					$result = DB::table('idc_machine')->where($where)->update($machine);
 					break;

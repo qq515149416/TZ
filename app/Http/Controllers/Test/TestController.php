@@ -92,10 +92,10 @@ class TestController extends Controller
      *
      *
      */
-    public function hd()
+    public function info()
     {
 
-//        return view('hd');
+        dump($_SERVER);
 
     }
 }

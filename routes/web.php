@@ -66,6 +66,7 @@ Route::group([
     Route::get('user', 'Test\TimeController@time'); //测试时间
     Route::get('xun', 'Test\XunsearchController@test');//测试迅搜索
     Route::get('gf', 'DefenseIp\ApiController@addTest');    //检查状态
+//    Route::get('info', 'Test\TestController@info');    //检查状态
 
 });
 

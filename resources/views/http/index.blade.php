@@ -771,7 +771,7 @@
                 <div class="new-item">
                     <h3>公司新闻</h3>
                     <div class="preview">
-                        <a href="/page/news/{{ $company_news[0]->newsid }}.html">
+                        <a href="/detail/company/{{ $company_news[0]->newsid }}">
                             <div class="type-info">
                                 <h4>{{ mb_substr($company_news[0]->titles,0,15,'utf-8') }}</h4>
                                 <p>{{ date("Y.m.d",strtotime($company_news[0]->createdate)) }}</p>
@@ -783,8 +783,8 @@
                         @foreach ($company_news as $i => $item)
                             @if ($i > 1 && $i < 6)
                                 <li>
-                                    <a href="/page/news/{{ $item->newsid }}.html" class="title">{{ mb_substr($item->titles,0,15,'utf-8') }}</a>
-                                    <a href="/page/news/{{ $item->newsid }}.html" class="date">{{ date("Y.m.d",strtotime($item->createdate)) }}</a>
+                                    <a href="/detail/company/{{ $item->newsid }}" class="title">{{ mb_substr($item->titles,0,15,'utf-8') }}</a>
+                                    <a href="/detail/company/{{ $item->newsid }}" class="date">{{ date("Y.m.d",strtotime($item->createdate)) }}</a>
                                 </li>
                             @endif
                         @endforeach
@@ -802,14 +802,14 @@
                         </li> -->
                     </ul>
                     <div class="new-item-btn">
-                        <a href="/page/tz/zynews">查看更多</a>
+                        <a href="/article/company">查看更多</a>
                     </div>
                 </div>
 
                 <div class="new-item">
                     <h3>公司公告</h3>
                     <div class="preview">
-                        <a href="/page/news/{{ $company_announcement[0]->newsid }}.html">
+                        <a href="/detail/placard/{{ $company_announcement[0]->newsid }}">
                             <div class="type-info">
                                 <h4>{{ mb_substr($company_announcement[0]->titles,0,15,'utf-8') }}</h4>
                                 <p>{{ date("Y.m.d",strtotime($company_announcement[0]->createdate)) }}</p>
@@ -822,8 +822,8 @@
                             @if ($i > 1 && $i < 6)
                                 <li>
                                     <!-- {{ $item->titles }} -->
-                                    <a href="/page/news/{{ $item->newsid }}.html" class="title">{{ mb_substr($item->titles,0,15,'utf-8') }}</a>
-                                    <a href="/page/news/{{ $item->newsid }}.html" class="date">{{ date("Y.m.d",strtotime($item->createdate)) }}</a>
+                                    <a href="/detail/placard/{{ $item->newsid }}.html" class="title">{{ mb_substr($item->titles,0,15,'utf-8') }}</a>
+                                    <a href="/detail/placard/{{ $item->newsid }}.html" class="date">{{ date("Y.m.d",strtotime($item->createdate)) }}</a>
                                 </li>
                             @endif
                         @endforeach
@@ -841,14 +841,14 @@
                         </li> -->
                     </ul>
                     <div class="new-item-btn">
-                        <a href="/page/tz/zynews">查看更多</a>
+                        <a href="/article/placard">查看更多</a>
                     </div>
                 </div>
 
                 <div class="new-item">
                     <h3>行业动态</h3>
                     <div class="preview">
-                        <a href="/page/news/{{ $industry_news[0]->newsid }}.html">
+                        <a href="/detail/industry/{{ $industry_news[0]->newsid }}">
                             <div class="type-info">
                                 <h4>{{ mb_substr($industry_news[0]->titles,0,15,'utf-8') }}</h4>
                                 <p>{{ date("Y.m.d",strtotime($industry_news[0]->createdate)) }}</p>
@@ -860,8 +860,8 @@
                         @foreach ($industry_news as $i => $item)
                             @if ($i > 1 && $i < 6)
                                 <li>
-                                    <a href="/page/news/{{ $item->newsid }}.html" class="title">{{ mb_substr($item->titles,0,15,'utf-8') }}</a>
-                                    <a href="/page/news/{{ $item->newsid }}.html" class="date">{{ date("Y.m.d",strtotime($item->createdate)) }}</a>
+                                    <a href="/detail/industry/{{ $item->newsid }}" class="title">{{ mb_substr($item->titles,0,15,'utf-8') }}</a>
+                                    <a href="/detail/industry/{{ $item->newsid }}" class="date">{{ date("Y.m.d",strtotime($item->createdate)) }}</a>
                                 </li>
                             @endif
                         @endforeach
@@ -879,7 +879,7 @@
                         </li> -->
                     </ul>
                     <div class="new-item-btn">
-                        <a href="/page/tz/zynews">查看更多</a>
+                        <a href="/article/industry">查看更多</a>
                     </div>
                 </div>
 

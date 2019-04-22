@@ -55,7 +55,7 @@ Route::group([
         $router->post('alerting', 'Idc\IpsController@doEdit');//编辑IP信息
         $router->post('remove', 'Idc\IpsController@deleted');//删除IP信息
         $router->get('machineroom', 'Idc\IpsController@machineroom');//获取机房信息
-        $router->get('showIdcIps', 'DefenseIp\StoreController@showIdcIps');//按机房获取ip
+        $router->get('showIdcIps', 'DefenseIp\StoreController@showIdcIps');//获取ip资源库未使用ip
     });
 
     //测试路由

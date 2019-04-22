@@ -75,6 +75,7 @@ class StoreController extends Controller
 		$model = new Ips();
 		
 		$ip_list = $model
+			->select(['id','ip'])
 			->where('ip_lock',0)
 			->where('ip_status',0)
 			->get();

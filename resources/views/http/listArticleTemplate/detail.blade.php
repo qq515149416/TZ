@@ -16,7 +16,7 @@
             <p>
                 上一篇：
                 @if ($prev_data)
-                    <a href="#">{{ $prev_data->titles }}</a>
+                    <a href="/detail/{{ $reverse_type[$prev_data->sid] }}/{{ $prev_data->newsid }}">{{ $prev_data->titles }}</a>
                 @else
                     <span>没有了</span>
                 @endif
@@ -24,7 +24,7 @@
             <p>
             下一篇：
             @if ($next_data)
-                <a href="#">{{ $next_data->titles }}</a>
+                <a href="/detail/{{ $reverse_type[$next_data->sid] }}/{{ $next_data->newsid }}">{{ $next_data->titles }}</a>
             @else
                 <span>没有了</span>
             @endif

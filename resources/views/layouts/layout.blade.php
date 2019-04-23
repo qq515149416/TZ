@@ -7,6 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>腾正科技-@yield('title')</title>
     <link rel="stylesheet" href="{{ admin_asset("/vendor/laravel-admin/AdminLTE/bootstrap/css/bootstrap.min.css") }}">
+    <link rel="shortcut icon" href="{{ asset("/favicon.ico") }}" type="image/x-icon" />
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ admin_asset("/vendor/laravel-admin/font-awesome/css/font-awesome.min.css") }}">
     <link rel="stylesheet" href="{{ asset("/css/swiper.min.css") }}" />

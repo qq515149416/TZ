@@ -822,8 +822,8 @@
                             @if ($i > 1 && $i < 6)
                                 <li>
                                     <!-- {{ $item->titles }} -->
-                                    <a href="/detail/placard/{{ $item->newsid }}.html" class="title">{{ mb_substr($item->titles,0,15,'utf-8') }}</a>
-                                    <a href="/detail/placard/{{ $item->newsid }}.html" class="date">{{ date("Y.m.d",strtotime($item->createdate)) }}</a>
+                                    <a href="/detail/placard/{{ $item->newsid }}" class="title">{{ mb_substr($item->titles,0,15,'utf-8') }}</a>
+                                    <a href="/detail/placard/{{ $item->newsid }}" class="date">{{ date("Y.m.d",strtotime($item->createdate)) }}</a>
                                 </li>
                             @endif
                         @endforeach

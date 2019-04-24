@@ -7,7 +7,7 @@ use App\Admin\Models\TzUsers\TzUsers;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use App\Admin\Models\Idc\Ips;
-use App\Admin\Requests\Idc\IpsRequest;
+use App\Admin\Requests\Business\TzUserRequest;
 use Illuminate\Http\Request;
 
 class InfoController extends Controller
@@ -32,6 +32,7 @@ class InfoController extends Controller
      *      email      邮箱
      *      name       登陆名
      *      money      余额
+     *      nickname   用户昵称
      */
     public function getUserInfo(Request $request)
     {
@@ -59,9 +60,10 @@ class InfoController extends Controller
      *   msg_phone  用户手机号码 （仅用于后台显示）
      *   msg_qq     用户QQ号码   （仅用于后台显示）
      *   remarks    用户备注信息
-     *
+     *   name       用户名
+     *   nickname   用户昵称
      */
-    public function updateUserInfo(Request $request)
+    public function updateUserInfo(TzUserRequest $request)
     {
         $TzUsersM = new TzUsers();//实例化客户用户模型
         $updateData = $request->all();//获取参数

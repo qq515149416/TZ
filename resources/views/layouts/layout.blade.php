@@ -86,9 +86,9 @@
                             <dd>
                                 <a href="/zuyong/sanxian">三线服务器租用</a>
                             </dd>
-                            <dd>
+                            <!-- <dd>
                                 <a href="/zuyong/bgp">BGP服务器租用</a>
-                            </dd>
+                            </dd> -->
                         </dl>
                         <dl style="text-align: center;">
                             <dt>

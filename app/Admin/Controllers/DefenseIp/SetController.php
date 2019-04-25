@@ -71,11 +71,12 @@ class SetController extends Controller
 		}
 
 		$defense_ip = StoreModel::find($businessData->ip_id);//根根据高防ID资源获取IP
+
 		if($defense_ip == null){
 			DB::rollBack();
 			return tz_ajax_echo([], '高防ip获取失败,请查看数据库', 0); 
 		}
-		
+		$apiModel = new ApiController();
 		//调用api接口,先是尝试插入
 		$apiData                    = json_decode($apiModel->createTarget($defense_ip->ip, $targetIp), true); //使用api接口更新目标IP地址
 

@@ -639,9 +639,9 @@ Route::group([
         'prefix' => 'links',
     ], function (Router $router) {
         $router->get('show', 'News\LinksController@show');//获取友情链接
-        $router->post('insert', 'News\LinksController@insert');//添加友情链接
-        $router->post('edit', 'News\LinksController@edit');//编辑友情链接
-        $router->post('del', 'News\LinksController@del');//删除友情链接
+        $router->get('insert', 'News\LinksController@insert');//添加友情链接
+        $router->get('edit', 'News\LinksController@edit');//编辑友情链接
+        $router->get('del', 'News\LinksController@del');//删除友情链接
     });
 
 });

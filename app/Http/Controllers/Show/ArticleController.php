@@ -98,12 +98,18 @@ class ArticleController extends Controller
             "placard" => 1,
             "industry" => 3
         ];
+        $reverse_type_code = [
+            "2" => "company",
+            "1" => "placard",
+            "3" => "industry"
+        ];
         $newList = [
             $type => $this->content($id)
         ];
         return view($template,[
             "type" => $type,
             "data" => $newList,
+            "reverse_type" => $reverse_type_code,
             "prev_data" => $this->prev_content($id,$type_code[$type]),
             "next_data" => $this->next_content($id,$type_code[$type]),
             "list" => [

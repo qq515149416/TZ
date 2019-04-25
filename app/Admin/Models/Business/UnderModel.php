@@ -50,7 +50,7 @@ class UnderModel extends Model
                     return $return;
                 }
                 //查找业务关联的资源
-                $resources = DB::table('tz_orders')->where(['business_sn' => $apply['business_number'], 'remove_status' => 0])->where('price', '>', '0.00')->where('resource_type', '>', 3)->orderBy('end_time', 'desc')->get(['order_sn', 'resource_type', 'machine_sn', 'resource', 'price', 'end_time'])->groupBy('machine_sn')->toArray();
+                $resources = DB::table('tz_orders')->where(['business_sn' => $apply['business_number'], 'remove_status' => 0])->where('resource_type', '>', 3)->orderBy('end_time', 'desc')->get(['order_sn', 'resource_type', 'machine_sn', 'resource', 'price', 'end_time'])->groupBy('machine_sn')->toArray();
 
                 if (!empty($resources)) {//存在业务关联的资源，进一步进行查找资源的最新情况
                     $resource_keys = array_keys($resources);//获取分组后的资源编号

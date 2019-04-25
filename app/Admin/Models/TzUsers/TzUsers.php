@@ -26,7 +26,7 @@ class TzUsers extends Model
         //根据用户ID获取相关信息
         $userInfo = $this
             ->where('id', $uId)
-            ->select('id', 'msg_phone', 'msg_qq', 'remarks', 'email', 'name', 'money')
+            ->select('id', 'msg_phone', 'msg_qq', 'remarks', 'email', 'name', 'money','nickname')
             ->get();
 
         return $userInfo;
@@ -50,6 +50,8 @@ class TzUsers extends Model
                 'msg_phone' => $updateData['msg_phone'],
                 'msg_qq'=>$updateData['msg_qq'],
                 'remarks'=>$updateData['remarks'],
+                'name'  => $updateData['name'],
+                'nickname' => $updateData['nickname'],
             ]);
 
         return $res;

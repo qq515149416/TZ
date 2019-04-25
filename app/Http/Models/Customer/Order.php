@@ -1253,7 +1253,7 @@ class Order extends Model
 			}
 			$duration = bcadd($renew_value['duration'],$order->duration);//更新累计时长
 			$pay_time = date('Y-m-d H:i:s',time());//更新支付时间
-			$update_order = DB::table('tz_orders')->where(['order_sn'=>$renew_value['order_number']])->update(['duration'=>$duration,'end_time'=>$renew_value['end_time'],'pay_time'=>$pay_time]); 
+			$update_order = DB::table('tz_orders')->where(['order_sn'=>$renew_value['order_number']])->update(['duration'=>$duration,'end_time'=>$renew_value['end_time']); 
 			if($update_order == 0){//更新累计时长，到期时间，支付时间失败
 				DB::rollBack();
 				$return['data'] = '';

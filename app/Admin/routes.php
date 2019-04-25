@@ -632,6 +632,18 @@ Route::group([
 
     });
 
+    /**
+     * 友情链接管理
+     */
+    Route::group([
+        'prefix' => 'links',
+    ], function (Router $router) {
+        $router->get('show', 'News\NewsTypeController@showNewsType');//获取友情链接
+        $router->post('insert', 'News\NewsTypeController@insertNewsType');//添加友情链接
+        $router->post('edit', 'News\NewsTypeController@editNewsType');//编辑友情链接
+        $router->post('del', 'News\NewsTypeController@deleteNewsType');//删除友情链接
+    });
+
 });
 
 

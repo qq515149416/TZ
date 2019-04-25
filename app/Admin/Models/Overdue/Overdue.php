@@ -44,8 +44,9 @@ class  Overdue extends Model
 			->where('tz_business.business_type',3)
 			->where('tz_business.sales_id',$sales_id)
 			->where('tz_business.endding_time','<',$end_time)
-			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name'))
 			->whereNull('tz_business.deleted_at')
+			->where('tz_business.business_status','>=',0)
+			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name'))
 			->orderBy('tz_business.endding_time','asc')
 			->get();	
 		}else{
@@ -55,8 +56,9 @@ class  Overdue extends Model
 			->leftjoin('idc_machineroom as c','b.machineroom_id','=','c.id')
 			->where('tz_business.business_type',3)
 			->where('tz_business.endding_time','<',$end_time)
-			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name'))
+			->where('tz_business.business_status','>=',0)
 			->whereNull('tz_business.deleted_at')
+			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name'))	
 			->orderBy('tz_business.endding_time','asc')
 			->get();
 		}
@@ -156,6 +158,7 @@ class  Overdue extends Model
 			->where('tz_business.sales_id',$sales_id)
 			->where('tz_business.endding_time','<',$end_time)
 			->where('tz_business.remove_status',0)
+			->where('tz_business.business_status','>=',0)
 			->whereNull('tz_business.deleted_at')
 			->orderBy('tz_business.endding_time','asc')
 			->get();	
@@ -167,6 +170,7 @@ class  Overdue extends Model
 			->whereIn('tz_business.business_type',['1','2'])
 			->where('tz_business.endding_time','<',$end_time)
 			->where('tz_business.remove_status',0)
+			->where('tz_business.business_status','>=',0)
 			->whereNull('tz_business.deleted_at')
 			->orderBy('tz_business.endding_time','asc')
 			->get();	

@@ -66,8 +66,8 @@
                         <td>G口20M独享</td>
                         <td>1个</td>
                         <td>40G</td>
-                        <td>650</td>
-                        <td>7100</td>
+                        <td>450</td>
+                        <td>4750</td>
                         <td>
                             <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
                         </td>
@@ -80,8 +80,8 @@
                         <td>G口20M独享</td>
                         <td>1个</td>
                         <td>40G</td>
-                        <td>750</td>
-                        <td>8250</td>
+                        <td>550</td>
+                        <td>5850</td>
                         <td>
                             <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
                         </td>
@@ -94,8 +94,8 @@
                         <td>G口20M独享</td>
                         <td>1个</td>
                         <td>40G</td>
-                        <td>750</td>
-                        <td>8250</td>
+                        <td>550</td>
+                        <td>5850</td>
                         <td>
                             <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
                         </td>
@@ -108,8 +108,8 @@
                         <td>G口20M独享</td>
                         <td>1个</td>
                         <td>40G</td>
-                        <td>950</td>
-                        <td>9900</td>
+                        <td>700</td>
+                        <td>7500</td>
                         <td>
                             <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
                         </td>
@@ -153,8 +153,8 @@
                         <td>G口20M独享</td>
                         <td>1个</td>
                         <td>50G</td>
-                        <td>700</td>
-                        <td>7700</td>
+                        <td>500</td>
+                        <td>5300</td>
                         <td>
                             <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
                         </td>
@@ -167,8 +167,8 @@
                         <td>G口20M独享</td>
                         <td>1个</td>
                         <td>50G</td>
-                        <td>900</td>
-                        <td>9900</td>
+                        <td>700</td>
+                        <td>7500</td>
                         <td>
                             <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
                         </td>
@@ -181,8 +181,8 @@
                         <td>G口20M独享</td>
                         <td>1对</td>
                         <td>50G</td>
-                        <td>800</td>
-                        <td>8800</td>
+                        <td>600</td>
+                        <td>6400</td>
                         <td>
                             <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
                         </td>
@@ -195,8 +195,8 @@
                         <td>G口20M独享</td>
                         <td>1对</td>
                         <td>50G</td>
-                        <td>1100</td>
-                        <td>12100</td>
+                        <td>900</td>
+                        <td>9700</td>
                         <td>
                             <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
                         </td>
@@ -206,6 +206,169 @@
             </div>
         </div>
         <div class="expand-item collapse" id="xi-an">
+        <h1 class="expand-item-title">陕西西安机房</h1>
+            <hr style="height: 1px; background-color: #333; margin-bottom: 10px;"/>
+            <p class="expand-item-desc">
+            陕西西安机房，国家AAAA级机房，机房建筑面积53851平方米，拥有5000个42U标准机柜；机房不仅采用直连互联网骨干点的10T总带宽，还采用320G 集群防火墙设置，为客户提供安全可靠、快速全面的数据存放业务及其它增值服务；在电力设备方面，西安机房从三向不同局向的变电所引入市电，不间断电源系统配置分为240V直流系统和UPS系统，系统自动切换，持续供电保障。</p>
+            <p class="expand-item-desc">
+                机房等级：国家 <span style="color: #ea0000; font-weight: 600;">AAAA</span> 级机房
+                <br/>
+                <a href="javascript: void(0);" class="scene-btn">查看机房实景</a>
+            </p>
+            <p class="expand-item-desc">典型客户：</p>
+            <div class="table-container">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th scope="col" style="width: calc(100% / 9);">线路</th>
+                        <th scope="col" style="width: calc(100% / 9);">规格</th>
+                        <th scope="col" style="width: calc(100% / 9);">电流</th>
+                        <th scope="col" style="width: calc(100% / 9);">带宽</th>
+                        <th scope="col" style="width: calc(100% / 9);">IP数</th>
+                        <th scope="col" style="width: calc(100% / 9);">防御</th>
+                        <th scope="col" style="width: calc(100% / 9);">月付</th>
+                        <th scope="col" style="width: calc(100% / 9);">年付</th>
+                        <th scope="col" style="width: calc(100% / 9);">购买</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!--******-->
+                    <tr>
+                        <th>西安电信</th>
+                        <td>1U</td>
+                        <td><0.7A</td>
+                        <td>G口20M独享</td>
+                        <td>1个</td>
+                        <td>50G</td>
+                        <td>500</td>
+                        <td>5300</td>
+                        <td>
+                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
+                        </td>
+                    </tr>
+                    <!--******-->
+                    <tr>
+                        <th>西安电信</th>
+                        <td>2U</td>
+                        <td><0.7A</td>
+                        <td>G口20M独享</td>
+                        <td>1个</td>
+                        <td>50G</td>
+                        <td>700</td>
+                        <td>7500</td>
+                        <td>
+                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
+                        </td>
+                    </tr>
+                    <!--******-->
+                    <tr>
+                        <th>西安联通</th>
+                        <td>1U</td>
+                        <td><0.7A</td>
+                        <td>G口20M独享</td>
+                        <td>1个</td>
+                        <td>50G</td>
+                        <td>500</td>
+                        <td>5300</td>
+                        <td>
+                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
+                        </td>
+                    </tr>
+                    <!--******-->
+                    <tr>
+                        <th>西安联通</th>
+                        <td>2U</td>
+                        <td><0.7A</td>
+                        <td>G口20M独享</td>
+                        <td>1个</td>
+                        <td>50G</td>
+                        <td>700</td>
+                        <td>7500</td>
+                        <td>
+                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>西安移动</th>
+                        <td>1U</td>
+                        <td><0.7A</td>
+                        <td>G口20M独享</td>
+                        <td>1个</td>
+                        <td>50G</td>
+                        <td>500</td>
+                        <td>5300</td>
+                        <td>
+                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>西安移动</th>
+                        <td>2U</td>
+                        <td><0.7A</td>
+                        <td>G口20M独享</td>
+                        <td>1个</td>
+                        <td>50G</td>
+                        <td>700</td>
+                        <td>7500</td>
+                        <td>
+                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>西安双线</th>
+                        <td>1U</td>
+                        <td><0.7A</td>
+                        <td>G口20M独享</td>
+                        <td>1对</td>
+                        <td>50G</td>
+                        <td>600</td>
+                        <td>6400</td>
+                        <td>
+                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>西安双线</th>
+                        <td>2U</td>
+                        <td><0.7A</td>
+                        <td>G口20M独享</td>
+                        <td>1对</td>
+                        <td>50G</td>
+                        <td>900</td>
+                        <td>9700</td>
+                        <td>
+                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>西安三线</th>
+                        <td>1U</td>
+                        <td><0.7A</td>
+                        <td>G口20M独享</td>
+                        <td>1对</td>
+                        <td>50G</td>
+                        <td>750</td>
+                        <td>8200</td>
+                        <td>
+                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>西安三线</th>
+                        <td>2U</td>
+                        <td><0.7A</td>
+                        <td>G口20M独享</td>
+                        <td>1对</td>
+                        <td>50G</td>
+                        <td>1050</td>
+                        <td>11500</td>
+                        <td>
+                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="expand-item collapse" id="hang-zhou">
         </div>

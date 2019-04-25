@@ -3658,11 +3658,11 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin-bottom: -2px;
 }
 #tz-server-hosting .expand-item {
-  height: 620px;
   margin: 0 auto;
   width: 1180px;
   text-align: left;
   color: #666;
+  padding-bottom: 86px;
 }
 #tz-server-hosting .expand-item-title {
   padding-top: 40px;
@@ -3684,6 +3684,9 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #tz-server-hosting .expand-item .table-container {
   margin-top: 40px;
   text-align: center;
+}
+#tz-server-hosting .expand-item .table-container .table-bordered {
+  margin: 0;
 }
 #tz-server-hosting .expand-item .table-container .table-bordered thead th {
   border-bottom-width: 0 !important;

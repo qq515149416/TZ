@@ -638,10 +638,10 @@ Route::group([
     Route::group([
         'prefix' => 'links',
     ], function (Router $router) {
-        $router->get('show', 'News\NewsTypeController@showNewsType');//获取友情链接
-        $router->post('insert', 'News\NewsTypeController@insertNewsType');//添加友情链接
-        $router->post('edit', 'News\NewsTypeController@editNewsType');//编辑友情链接
-        $router->post('del', 'News\NewsTypeController@deleteNewsType');//删除友情链接
+        $router->get('show', 'News\LinksController@show');//获取友情链接
+        $router->post('insert', 'News\LinksController@insert');//添加友情链接
+        $router->post('edit', 'News\LinksController@edit');//编辑友情链接
+        $router->post('del', 'News\LinksController@del');//删除友情链接
     });
 
 });

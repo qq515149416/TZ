@@ -18,7 +18,12 @@ class WechatController extends Controller
 	use ModelForm;
 	protected $access_token = '';
 	protected $appid = '';
-	public function __construct(Request $request){
+
+	/**
+	* 构造函数,缓存里有通行证(access_token)就直接用缓存的,过期了没有了就去微信接口里获取并存到缓存里
+	*
+	**/
+	function __construct(Request $request){
 		//判断通行证缓存是否存在
 		$APPID 		= config('wechat.wechat_appid');
 		$this->appid 	= $APPID;
@@ -55,8 +60,128 @@ class WechatController extends Controller
 		//赋值
 		$this->access_token = $check;
 	}
-	
+
+	/**
+	* 查找标签下用户
+	*
+	**/
+
 	public function test(Request $request){
+		$url 		= 'https://api.weixin.qq.com/cgi-bin/tags/getidlist?access_token='.$this->access_token;
+
+		$param 	= [   
+					"openid" =>     
+						"oAbLP5wfrdcL9CAWboeXrw_AQIPI",    
+						  
+				];
+
+		
+		$param = json_encode($param,JSON_UNESCAPED_UNICODE);
+	
+		 dd($this->request_post($url,$param));	
+	}
+
+
+	/**
+	* 为用户打标签
+	*
+	**/
+
+	public function label(Request $request){
+		$url 		= 'https://api.weixin.qq.com/cgi-bin/tags/members/batchtagging?access_token='.$this->access_token;
+
+		$param 	= [   
+					"openid_list" => [//粉丝列表    
+						"oAbLP5wfrdcL9CAWboeXrw_AQIPI",    
+						],   
+					"tagid" => 100
+				];
+
+		
+		$param = json_encode($param,JSON_UNESCAPED_UNICODE);
+	
+		 dd($this->request_post($url,$param));	
+	}
+
+	/**
+	* 添加标签
+	*
+	**/
+
+	public function addTag(Request $request){
+		$url 		= 'https://api.weixin.qq.com/cgi-bin/tags/create?access_token='.$this->access_token;
+
+		$param 	= [
+					"tag" =>
+						[ 
+							"name" => "工作人员" 
+						]
+
+					];
+
+		
+		$param = json_encode($param,JSON_UNESCAPED_UNICODE);
+	
+		 dd($this->request_post($url,$param));	
+	}
+
+	/**
+	* 设置专属菜单
+	*
+	**/
+
+	public function setExclusiveMenu(Request $request){
+		$url 		= 'https://api.weixin.qq.com/cgi-bin/menu/addconditional?access_token='.$this->access_token;
+
+		$param 	= [
+					"button" => [
+						[   
+							"type"	=> "click",
+							"name"	=> "这是客户端",
+							"key"	=> "V1001_TODAY_MUSIC"
+						],
+						[
+							"name"	=> "菜单",
+							"sub_button"	=> [
+								[    
+									"type"		=> "view",
+									"name"		=> "搜索",
+									"url"		=> "http://www.soso.com/"
+								],
+								[
+									"type"		=> "miniprogram",
+									"name"		=> "wxa",
+									"url"		=> "http://mp.weixin.qq.com",
+									"appid"		=> "wx286b93c14bbf93aa",
+									"pagepath"	=> "pages/lunar/index"
+								],
+								[
+									"type"		=> "click",
+									"name"		=> "赞一下我们",
+									"key"		=> "V1001_GOOD"
+								]
+							]
+						]
+					],
+
+					"matchrule" => [
+						"tag_id"	=> "101"
+					]
+				];
+
+		
+		$param = json_encode($param,JSON_UNESCAPED_UNICODE);
+	
+		 dd($this->request_post($url,$param));	
+	}
+
+
+	/**
+	* 设置普通菜单
+	*
+	**/
+
+	public function setMenu(Request $request){
 		$url 		= 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.$this->access_token;
 
 		$param 	= [
@@ -97,6 +222,11 @@ class WechatController extends Controller
 		 dd($this->request_post($url,$param));	
 	}
 
+
+	/**
+	* 购买成功信息 : 获取商品信息,完了就调用发送信息模板
+	*
+	**/
 	public function buySuccess(Request $request){
 		$touser = 'oAbLP50bLyG6jsaJH0oGOrNxJdKo';
 		$data = [
@@ -130,6 +260,10 @@ class WechatController extends Controller
 		dd($res);
 	}
 
+	/**
+	* 发送模板信息接口
+	*
+	**/
 	protected function templateMsg($touser,$template_id,$data){
 		$url 		= 'https://api.weixin.qq.com/cgi-bin/message/template/send?access_token='.$this->access_token;
 		$param 	= [
@@ -167,6 +301,11 @@ class WechatController extends Controller
 		curl_close($ch);//关闭curl
 		return $output;
 	}
+
+	/**
+	* curl -- post
+	*
+	**/
 
 	protected function request_post($url = '', $param = '') {
 		if (empty($url) || empty($param)) {

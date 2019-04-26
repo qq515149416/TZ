@@ -19,6 +19,7 @@ class LinksController extends Controller
 	 * @return json           返回对应机房的信息或者数据
 	 */
 	public function insert(Request $request){
+		dd('666');
 		$where = $request->only(['machineroom','business_type']);
 		$machine = new MachineModel();
 		$return = $machine->selectMachine($where);

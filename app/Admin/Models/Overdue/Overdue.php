@@ -41,12 +41,13 @@ class  Overdue extends Model
 			->select('business_number','client_name','endding_time','machine_number')		
 			->leftjoin('idc_cabinet as b','tz_business.machine_number','=','b.cabinet_id')
 			->leftjoin('idc_machineroom as c','b.machineroom_id','=','c.id')
+			->leftjoin('tz_users as d','tz_business.client_id','=','d.id')
 			->where('tz_business.business_type',3)
 			->where('tz_business.sales_id',$sales_id)
 			->where('tz_business.endding_time','<',$end_time)
 			->whereNull('tz_business.deleted_at')
 			->where('tz_business.business_status','>=',0)
-			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name'))
+			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name,d.nickname'))
 			->orderBy('tz_business.endding_time','asc')
 			->get();	
 		}else{
@@ -54,11 +55,12 @@ class  Overdue extends Model
 			->select('business_number','client_name','endding_time','machine_number')		
 			->leftjoin('idc_cabinet as b','tz_business.machine_number','=','b.cabinet_id')
 			->leftjoin('idc_machineroom as c','b.machineroom_id','=','c.id')
+			->leftjoin('tz_users as d','tz_business.client_id','=','d.id')
 			->where('tz_business.business_type',3)
 			->where('tz_business.endding_time','<',$end_time)
 			->where('tz_business.business_status','>=',0)
 			->whereNull('tz_business.deleted_at')
-			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name'))	
+			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name,d.nickname'))	
 			->orderBy('tz_business.endding_time','asc')
 			->get();
 		}
@@ -101,7 +103,8 @@ class  Overdue extends Model
 			->select('business_number','client_name','endding_time','machine_number')		
 			->leftjoin('idc_cabinet as b','tz_business.machine_number','=','b.cabinet_id')
 			->leftjoin('idc_machineroom as c','b.machineroom_id','=','c.id')	
-			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name,tz_business.start_time'))
+			->leftjoin('tz_users as d','tz_business.client_id','=','d.id')
+			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name,tz_business.start_time,d.nickname'))
 			->where('tz_business.business_type',3)
 			->where('tz_business.business_status',1)
 			->where('tz_business.sales_id',$sales_id)
@@ -112,8 +115,9 @@ class  Overdue extends Model
 			$list = $this
 			->select('business_number','client_name','endding_time','machine_number')		
 			->leftjoin('idc_cabinet as b','tz_business.machine_number','=','b.cabinet_id')
-			->leftjoin('idc_machineroom as c','b.machineroom_id','=','c.id')	
-			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name,tz_business.start_time'))
+			->leftjoin('idc_machineroom as c','b.machineroom_id','=','c.id')
+			->leftjoin('tz_users as d','tz_business.client_id','=','d.id')	
+			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name,tz_business.start_time,d.nickname'))
 			->where('tz_business.business_type',3)
 			->where('tz_business.business_status',1)
 			->whereNull('tz_business.deleted_at')
@@ -153,7 +157,8 @@ class  Overdue extends Model
 			$list = $this		
 			->leftjoin('idc_machine as b','tz_business.machine_number','=','b.machine_num')
 			->leftjoin('idc_ips as c','b.ip_id','=','c.id')
-			->select(DB::raw('c.ip,tz_business.id,tz_business.sales_id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number'))
+			->leftjoin('tz_users as d','tz_business.client_id','=','d.id')	
+			->select(DB::raw('c.ip,tz_business.id,tz_business.sales_id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,d.nickname'))
 			->whereIn('tz_business.business_type',['1','2'])
 			->where('tz_business.sales_id',$sales_id)
 			->where('tz_business.endding_time','<',$end_time)
@@ -166,7 +171,8 @@ class  Overdue extends Model
 			$list = $this		
 			->leftjoin('idc_machine as b','tz_business.machine_number','=','b.machine_num')
 			->leftjoin('idc_ips as c','b.ip_id','=','c.id')
-			->select(DB::raw('c.ip,tz_business.id,tz_business.sales_id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number'))
+			->leftjoin('tz_users as d','tz_business.client_id','=','d.id')	
+			->select(DB::raw('c.ip,tz_business.id,tz_business.sales_id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,d.nickname'))
 			->whereIn('tz_business.business_type',['1','2'])
 			->where('tz_business.endding_time','<',$end_time)
 			->where('tz_business.remove_status',0)
@@ -212,8 +218,9 @@ class  Overdue extends Model
 			if($resource_type == 0){
 				$list = DB::table('tz_orders as a')	
 				->leftjoin('idc_machine as b','a.business_sn','=','b.own_business')		
-				->leftjoin('idc_cabinet as c','b.cabinet','=','c.id')		
-				->select(DB::raw('a.id,a.business_sn,a.resource_type,a.customer_name,a.machine_sn as self_number,a.resource,a.end_time,b.machine_num,c.cabinet_id as cabinet_num'))		
+				->leftjoin('idc_cabinet as c','b.cabinet','=','c.id')	
+				->leftjoin('tz_users as d','a.customer_id','=','d.id')		
+				->select(DB::raw('a.id,a.business_sn,a.resource_type,a.customer_name,a.machine_sn as self_number,a.resource,a.end_time as endding_time,b.machine_num,c.cabinet_id as cabinet_num,d.nickname'))		
 				->where('a.end_time','<',$end_time)
 				->where('a.business_id',$sales_id)
 				->where('a.resource_type','>',3)
@@ -227,8 +234,9 @@ class  Overdue extends Model
 			}else{
 				$list = DB::table('tz_orders as a')	
 				->leftjoin('idc_machine as b','a.business_sn','=','b.own_business')		
-				->leftjoin('idc_cabinet as c','b.cabinet','=','c.id')		
-				->select(DB::raw('a.id,a.business_sn,a.resource_type,a.customer_name,a.machine_sn as self_number,a.resource,a.end_time,b.machine_num,c.cabinet_id as cabinet_num'))		
+				->leftjoin('idc_cabinet as c','b.cabinet','=','c.id')	
+				->leftjoin('tz_users as d','a.customer_id','=','d.id')		
+				->select(DB::raw('a.id,a.business_sn,a.resource_type,a.customer_name,a.machine_sn as self_number,a.resource,a.end_time as endding_time,b.machine_num,c.cabinet_id as cabinet_num,d.nickname'))		
 				->where('a.end_time','<',$end_time)
 				->where('a.business_id',$sales_id)
 				->where('a.resource_type','=',$resource_type)
@@ -243,8 +251,9 @@ class  Overdue extends Model
 			if($resource_type == 0){
 				$list = DB::table('tz_orders as a')	
 				->leftjoin('idc_machine as b','a.business_sn','=','b.own_business')		
-				->leftjoin('idc_cabinet as c','b.cabinet','=','c.id')		
-				->select(DB::raw('a.id,a.business_sn,a.resource_type,a.customer_name,a.machine_sn as self_number,a.resource,a.end_time,b.machine_num,c.cabinet_id as cabinet_num'))		
+				->leftjoin('idc_cabinet as c','b.cabinet','=','c.id')	
+				->leftjoin('tz_users as d','a.customer_id','=','d.id')		
+				->select(DB::raw('a.id,a.business_sn,a.resource_type,a.customer_name,a.machine_sn as self_number,a.resource,a.end_time as endding_time,b.machine_num,c.cabinet_id as cabinet_num,d.nickname'))		
 				->where('a.end_time','<',$end_time)
 				->where('a.resource_type','>',3)
 				->where('a.resource_type','<=',9)
@@ -257,8 +266,9 @@ class  Overdue extends Model
 			}else{
 				$list = DB::table('tz_orders as a')	
 				->leftjoin('idc_machine as b','a.business_sn','=','b.own_business')		
-				->leftjoin('idc_cabinet as c','b.cabinet','=','c.id')		
-				->select(DB::raw('a.id,a.business_sn,a.resource_type,a.customer_name,a.machine_sn as self_number,a.resource,a.end_time,b.machine_num,c.cabinet_id as cabinet_num'))		
+				->leftjoin('idc_cabinet as c','b.cabinet','=','c.id')
+				->leftjoin('tz_users as d','a.customer_id','=','d.id')			
+				->select(DB::raw('a.id,a.business_sn,a.resource_type,a.customer_name,a.machine_sn as self_number,a.resource,a.end_time as endding_time,b.machine_num,c.cabinet_id as cabinet_num,d.nickname'))		
 				->where('a.end_time','<',$end_time)
 				->where('a.resource_type','=',$resource_type)
 				->whereIn('a.order_status',[0,1,2])
@@ -268,7 +278,7 @@ class  Overdue extends Model
 				->get();	
 			}
 		}
-	
+
 		
 		if($list->isEmpty()){
 			if($way == 'overdue'){
@@ -312,22 +322,24 @@ class  Overdue extends Model
 					'customer_name'	=>  $list[$i]['customer_name'],
 					'cabinet_num'		=>  $list[$i]['cabinet_num'],
 					'machine_num'		=>  $list[$i]['machine_num'],
-					'end_time'		=>  $list[$i]['end_time'],
+					'endding_time'		=>  $list[$i]['endding_time'],
 					'resource'		=>  $list[$i]['resource'],
 					'resource_type'		=>  $type_list[ $list[$i]['resource_type'] ],
 					'self_number'		=>  $list[$i]['self_number'],
+					'nickname'		=> $list[$i]['nickname'],
 				];
 			}else{
-				if($list[$i]['end_time'] > $orr[ $list[$i]['self_number'] ]['end_time']){
+				if($list[$i]['endding_time'] > $orr[ $list[$i]['self_number'] ]['endding_time']){
 					$orr[ $list[$i]['self_number'] ] = [
 						'business_number'	=>  $list[$i]['business_sn'],
 						'customer_name'	=>  $list[$i]['customer_name'],
 						'cabinet_num'		=>  $list[$i]['cabinet_num'],
 						'machine_num'		=>  $list[$i]['machine_num'],
-						'end_time'		=>  $list[$i]['end_time'],
+						'endding_time'		=>  $list[$i]['endding_time'],
 						'resource'		=>  $list[$i]['resource'],
 						'resource_type'		=>  $type_list[ $list[$i]['resource_type'] ],
 						'self_number'		=>  $list[$i]['self_number'],
+						'nickname'		=>  $list[$i]['nickname'],
 					];
 				}
 			}	
@@ -358,7 +370,8 @@ class  Overdue extends Model
 			$list = $this		
 			->leftjoin('idc_machine as b','tz_business.machine_number','=','b.machine_num')
 			->leftjoin('idc_ips as c','b.ip_id','=','c.id')
-			->select(DB::raw('c.ip,tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,tz_business.business_type,tz_business.start_time'))
+			->leftjoin('tz_users as d','tz_business.client_id','=','d.id')	
+			->select(DB::raw('c.ip,tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,tz_business.business_type,tz_business.start_time,d.nickname'))
 			->where('tz_business.sales_id',$sales_id)
 			->where('tz_business.business_status',1)
 			->whereIn('tz_business.remove_status',[0,1])
@@ -370,7 +383,8 @@ class  Overdue extends Model
 			$list = $this		
 			->leftjoin('idc_machine as b','tz_business.machine_number','=','b.machine_num')
 			->leftjoin('idc_ips as c','b.ip_id','=','c.id')
-			->select(DB::raw('c.ip,tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,tz_business.business_type,tz_business.start_time'))
+			->leftjoin('tz_users as d','tz_business.client_id','=','d.id')
+			->select(DB::raw('c.ip,tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,tz_business.business_type,tz_business.start_time,d.nickname'))
 			->where('tz_business.business_status',1)
 			->whereIn('tz_business.remove_status',[0,1])
 			->where('tz_business.business_type','!=',3)
@@ -408,7 +422,8 @@ class  Overdue extends Model
 			$list = $this		
 			->leftjoin('idc_machine as b','tz_business.machine_number','=','b.machine_num')
 			->leftjoin('idc_ips as c','b.ip_id','=','c.id')
-			->select(DB::raw('c.ip,tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,tz_business.business_type,tz_business.start_time'))
+			->leftjoin('tz_users as d','tz_business.client_id','=','d.id')
+			->select(DB::raw('c.ip,tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,tz_business.business_type,tz_business.start_time,d.nickname'))
 			->where('tz_business.sales_id',$sales_id)
 			->where('tz_business.business_type','!=',3)
 			->where('tz_business.remove_status','!=',0)
@@ -419,7 +434,8 @@ class  Overdue extends Model
 			$list = $this		
 			->leftjoin('idc_machine as b','tz_business.machine_number','=','b.machine_num')
 			->leftjoin('idc_ips as c','b.ip_id','=','c.id')
-			->select(DB::raw('c.ip,tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,tz_business.business_type,tz_business.start_time'))
+			->leftjoin('tz_users as d','tz_business.client_id','=','d.id')
+			->select(DB::raw('c.ip,tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,tz_business.business_type,tz_business.start_time,d.nickname'))
 			->where('tz_business.business_type','!=',3)
 			->where('tz_business.remove_status','!=',0)
 			->whereNull('tz_business.deleted_at')
@@ -462,6 +478,10 @@ class  Overdue extends Model
 		}
 		$status = [ 0 => '预留状态' , 1 => '正在使用' , 2 => '申请下架' , 3 => '已下架' , 4 => '试用'];
 		for ($i=0; $i < count($list); $i++) { 
+			$list[$i]->nickname = DB::table('tz_users')->where('id',$list[$i]->user_id)->value('nickname');
+			if($list[$i]->nickname == null){
+				$list[$i]->nickname = '客户信息获取失败';
+			}
 			$list[$i]->status =  $status[$list[$i]->status];
 		}
 		return [
@@ -480,6 +500,7 @@ class  Overdue extends Model
 		$sales_id	= Admin::user()->id;
 		if(Admin::user()->isAdministrator() != 1){
 			$list = DB::table('tz_orders')
+				->select('*','end_time as endding_time')
 				->where('business_id',$sales_id)
 				->where('order_status',0)
 				->whereIn('resource_type',[1,2,3,4,5,6,7,8,9])
@@ -490,6 +511,7 @@ class  Overdue extends Model
 				->toArray();
 		}else{
 			$list = DB::table('tz_orders')
+				->select('*','end_time as endding_time')
 				->where('order_status',0)
 				->whereIn('resource_type',[1,2,3,4,5,6,7,8,9])
 				->whereNull('deleted_at')
@@ -512,6 +534,10 @@ class  Overdue extends Model
 		$order_status = [ '0' => '待支付' , '1' => '已支付' , '2' => '已支付' , '3' => '订单完成' , '4' => '到期' , '5' => '取消' , '6' => '申请退款', '8' => '退款完成'];
 		$order_type = [ '1' => '新购' , '2' => '续费'];
 		for ($i=0; $i < count($list); $i++) { 
+			$list[$i]->nickname = DB::table('tz_users')->where('id',$list[$i]->customer_id)->value('nickname');
+			if($list[$i]->nickname == null){
+				$list[$i]->nickname = '客户信息获取失败';
+			}
 			$list[$i]->order_status =  $order_status[$list[$i]->order_status];
 			$list[$i]->resource_type =  $resource_type[$list[$i]->resource_type];
 		}

@@ -50,11 +50,14 @@ class SearchModel extends Model
                 $business['type'] = $business_type[$business['business_type']];//业务类型
                 $business['status'] = $business_status[$business['business_status']];//业务状态
                 $resource = $this->searchResources($business['business_number']);
-                $customer = DB::table('tz_users')->where(['id'=>$business['client_id']])->select('msg_qq','msg_phone')->first();
+                $customer = DB::table('tz_users')->where(['id'=>$business['client_id']])->select('msg_qq','msg_phone','remarks')->first();
                 if(!empty($customer)){
                     $qq = isset($customer->msg_qq)?$customer->msg_qq:'';
                     $phone = isset($customer->msg_phone)?$customer->msg_phone:'';
-                    $business['client_name'] = '用户:'.$business['client_name'].'QQ:'.$qq.'手机:'.$phone;
+                    $business['client_name'] = '用户:'.$business['client_name'].
+                                                'QQ:'.$qq.
+                                                '手机:'.$phone.
+                                                '备注:'.$customer->remarks;
                 }
                 $ip = [];
                 $total_bandwidth = 0;

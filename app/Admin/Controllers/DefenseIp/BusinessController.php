@@ -64,9 +64,9 @@ class BusinessController extends Controller
 
 		$business_id = $par['business_id'];
 		$buy_time = $par['buy_time'];
-
+		
 		if(isset($par['start_time'])){
-			$start_time = $par['start_time'];
+			$start_time = date("Y-m-d H:i",$par['start_time']) ;
 		}else{
 			$start_time = 0;
 		}

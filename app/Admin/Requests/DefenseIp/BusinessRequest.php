@@ -69,7 +69,7 @@ class BusinessRequest extends FormRequest
 				$return = [
 					'business_id'		=> 'required|exists:tz_defenseip_business,id',	
 					'buy_time'		=> 'required|integer',
-					'start_time'		=> 'date',
+					'start_time'		=> 'integer',
 				];
 				break;
 			case 'getStatistics':
@@ -93,7 +93,7 @@ class BusinessRequest extends FormRequest
 		
 		return  [
 			'start_time.required'			=> '请填写业务计费开始时间',
-			'start_time.date'				=> '业务计费开始时间格式错误',
+			'start_time.integer'			=> '业务计费开始时间格式错误',
 			'buy_time.required'			=> '请填写购买时长',
 			'buy_time.integer'			=> '购买时长需为整数',
 			'business_id.required'			=> '请选择业务id',

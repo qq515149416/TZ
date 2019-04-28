@@ -853,14 +853,26 @@ class BusinessModel extends Model
         //     }
         // }
         // $people = isset($customer->id)?$customer->id:(isset($business->id)?$business->id:'*');
+        $status = [0,4];//查找的订单状态区间，默认0-4
+        $remove = [0,4];//查找下架状态的区间，默认所有状态0-4
+        if(isset($search['str'])){
+            if($search['str'] == 2){//当str为2时代表查找下架的状态还未下架完成,0-3
+                $remove = [0,3];
+            }
+            if($search['str'] == 3){//当str为2时代表查找下架的状态还完成,4
+                $remove = [4,4];
+            }
+        }
         $orders_total = DB::table('tz_orders')
                         ->whereBetween('created_at',[$begin_end['start_time'],$begin_end['end_time']])
-                        ->whereBetween('order_status',[0,4])
+                        ->whereBetween('order_status',$status)
+                        ->whereBetween('remove_status',$remove)
                         ->whereNull('deleted_at')
                         ->count();
         $orders_info = DB::table('tz_orders')
                         ->whereBetween('created_at',[$begin_end['start_time'],$begin_end['end_time']])
-                        ->whereBetween('order_status',[0,4])
+                        ->whereBetween('order_status',$status)
+                        ->whereBetween('remove_status',$remove)
                         ->whereNull('deleted_at')
                         ->select('id','customer_id','business_id','resource_type','machine_sn','price','duration','created_at')
                         ->get();

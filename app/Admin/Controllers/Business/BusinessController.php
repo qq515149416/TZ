@@ -209,7 +209,7 @@ class BusinessController extends Controller
      * @return json           返回相关的查询数据
      */
     public function changeMarket(Request $request){
-        $search = $request->only(['begin','end','name']);
+        $search = $request->only(['begin','end','name','str']);
         $change = new BusinessModel();
         $change_result = $change->changeMarket($search);
         return tz_ajax_echo($change_result['data'],$change_result['msg'],$change_result['code']);

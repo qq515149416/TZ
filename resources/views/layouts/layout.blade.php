@@ -120,6 +120,12 @@
                             <dd>
                                 <a href="/page/tz/15cdn">动态加速网络</a>
                             </dd>
+                            <dd>
+                                <a href="/page/tz/15cdn">流媒体点播加速</a>
+                            </dd>
+                            <dd>
+                                <a href="/page/tz/15cdn">流媒体直播加速</a>
+                            </dd>
                         </dl>
                         <dl>
                             <dt>

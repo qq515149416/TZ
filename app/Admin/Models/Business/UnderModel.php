@@ -436,7 +436,7 @@ class UnderModel extends Model
         foreach ($orders as $key => $value) {
             $rData = $this->getResourceData($value->business_sn); //根据业务号获取机柜和IP信息
             $orders[$key]->ip =  $rData['ip'];    //ip放入到订单数据中
-            $orders[$key]->cabinet_id= $rData['cabinet_id'];  //机柜编号放入到订单订单数据中
+            $orders[$key]->cabinets= $rData['cabinet_id'];  //机柜编号放入到订单订单数据中
         }
 
 

@@ -45,7 +45,11 @@ class OverdueRequest extends FormRequest
 					'resource_type' 		=> 'required',
 				];
 				break;
-			
+			case 'showOverdueResDetX':
+				$return = [
+					'resource_type' 		=> 'required',
+				];
+				break;
 			default:
 	
 				break;

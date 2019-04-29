@@ -45,22 +45,24 @@ class LinksRequest extends FormRequest
 		
 			case 'insert':
 				$return = [
-					'audit_status'		=> 'required',			
+					'name'			=> 'required',	
+					'url'			=> 'required|url',
+					'order'			=> 'integer',	
 				];
 				break;
 			case 'del':
 				$return = [
-					'audit_status'		=> 'required',			
+					'del_id'			=> 'required',			
 				];
 				break;
 			case 'edit':
 				$return = [
-					'audit_status'		=> 'required',			
+					'edit_id'			=> 'required',			
 				];
 				break;
 			case 'show':
 				$return = [
-					'audit_status'		=> 'required',			
+							
 				];
 				break;
 
@@ -77,7 +79,12 @@ class LinksRequest extends FormRequest
 	{
 		
 		return  [
-			'user_id.required'		=> '请提供所需充值客户id',
+			'name.required'		=> '请填写友情链接名称',
+			'url.required'		=> '请填写友情链接地址',
+			'order.integer'		=> '排序格式错误',
+			'url.url'			=> 'url格式错误',
+			'del_id.required'		=> '请提供需删除id',
+			'edit_id.required'	=> '请提供需编辑id',
 		];
 	}
 

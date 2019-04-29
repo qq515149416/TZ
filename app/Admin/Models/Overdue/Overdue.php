@@ -29,14 +29,27 @@ class  Overdue extends Model
 	* @param  
 	* @return  
 	*/
-	public function showOverdueCabinet(){
+	public function showOverdueCabinet($need = 0){
 		$sales_id	= Admin::user()->id;
 		$return['data'] 	= '';
 		$return['code']	= 0;
 		//获取查询提醒过期天数时间
 		$end_time = date('Y-m-d H:i:s',$this->overtime*24*60*60+time());
 		// 查询已到提醒日期的业务
-		if(Admin::user()->isAdministrator() != 1){
+		if(Admin::user()->isAdministrator() == 1 || $need == '*'){
+			$list = $this
+			->select('business_number','client_name','endding_time','machine_number')		
+			->leftjoin('idc_cabinet as b','tz_business.machine_number','=','b.cabinet_id')
+			->leftjoin('idc_machineroom as c','b.machineroom_id','=','c.id')
+			->leftjoin('tz_users as d','tz_business.client_id','=','d.id')
+			->where('tz_business.business_type',3)
+			->where('tz_business.endding_time','<',$end_time)
+			->where('tz_business.business_status','>=',0)
+			->whereNull('tz_business.deleted_at')
+			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name,d.nickname'))	
+			->orderBy('tz_business.endding_time','asc')
+			->get();
+		}else{
 			$list = $this
 			->select('business_number','client_name','endding_time','machine_number')		
 			->leftjoin('idc_cabinet as b','tz_business.machine_number','=','b.cabinet_id')
@@ -50,19 +63,6 @@ class  Overdue extends Model
 			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name,d.nickname'))
 			->orderBy('tz_business.endding_time','asc')
 			->get();	
-		}else{
-			$list = $this
-			->select('business_number','client_name','endding_time','machine_number')		
-			->leftjoin('idc_cabinet as b','tz_business.machine_number','=','b.cabinet_id')
-			->leftjoin('idc_machineroom as c','b.machineroom_id','=','c.id')
-			->leftjoin('tz_users as d','tz_business.client_id','=','d.id')
-			->where('tz_business.business_type',3)
-			->where('tz_business.endding_time','<',$end_time)
-			->where('tz_business.business_status','>=',0)
-			->whereNull('tz_business.deleted_at')
-			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name,d.nickname'))	
-			->orderBy('tz_business.endding_time','asc')
-			->get();
 		}
 				
 		if($list->isEmpty()){
@@ -93,12 +93,24 @@ class  Overdue extends Model
 	* @param  
 	* @return  
 	*/
-	public function showUnpaidCabinet(){
+	public function showUnpaidCabinet($need = 0){
 		$sales_id	= Admin::user()->id;
 		$return['data'] 	= '';
 		$return['code']	= 0;
 		// 查询已到提醒日期的业务
-		if(Admin::user()->isAdministrator() != 1){
+		if(Admin::user()->isAdministrator() == 1 || $need == '*'){
+			$list = $this
+			->select('business_number','client_name','endding_time','machine_number')		
+			->leftjoin('idc_cabinet as b','tz_business.machine_number','=','b.cabinet_id')
+			->leftjoin('idc_machineroom as c','b.machineroom_id','=','c.id')
+			->leftjoin('tz_users as d','tz_business.client_id','=','d.id')	
+			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name,tz_business.start_time,d.nickname'))
+			->where('tz_business.business_type',3)
+			->where('tz_business.business_status',1)
+			->whereNull('tz_business.deleted_at')
+			->orderBy('tz_business.endding_time','asc')
+			->get();	
+		}else{
 			$list = $this
 			->select('business_number','client_name','endding_time','machine_number')		
 			->leftjoin('idc_cabinet as b','tz_business.machine_number','=','b.cabinet_id')
@@ -108,18 +120,6 @@ class  Overdue extends Model
 			->where('tz_business.business_type',3)
 			->where('tz_business.business_status',1)
 			->where('tz_business.sales_id',$sales_id)
-			->whereNull('tz_business.deleted_at')
-			->orderBy('tz_business.endding_time','asc')
-			->get();	
-		}else{
-			$list = $this
-			->select('business_number','client_name','endding_time','machine_number')		
-			->leftjoin('idc_cabinet as b','tz_business.machine_number','=','b.cabinet_id')
-			->leftjoin('idc_machineroom as c','b.machineroom_id','=','c.id')
-			->leftjoin('tz_users as d','tz_business.client_id','=','d.id')	
-			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name,tz_business.start_time,d.nickname'))
-			->where('tz_business.business_type',3)
-			->where('tz_business.business_status',1)
 			->whereNull('tz_business.deleted_at')
 			->orderBy('tz_business.endding_time','asc')
 			->get();	
@@ -145,7 +145,7 @@ class  Overdue extends Model
 	* @param  
 	* @return  
 	*/
-	public function showOverdueMachine(){
+	public function showOverdueMachine($need = 0){
 		$sales_id	= Admin::user()->id;
 
 		$return['data'] 	= '';
@@ -153,14 +153,13 @@ class  Overdue extends Model
 		//获取查询提醒过期天数时间
 		$end_time = date('Y-m-d H:i:s',$this->overtime*24*60*60+time());
 		// 查询已到提醒日期的业务
-		if(Admin::user()->isAdministrator() != 1){
+		if(Admin::user()->isAdministrator() == 1 || $need == '*'){
 			$list = $this		
 			->leftjoin('idc_machine as b','tz_business.machine_number','=','b.machine_num')
 			->leftjoin('idc_ips as c','b.ip_id','=','c.id')
 			->leftjoin('tz_users as d','tz_business.client_id','=','d.id')	
 			->select(DB::raw('c.ip,tz_business.id,tz_business.sales_id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,d.nickname'))
 			->whereIn('tz_business.business_type',['1','2'])
-			->where('tz_business.sales_id',$sales_id)
 			->where('tz_business.endding_time','<',$end_time)
 			->where('tz_business.remove_status',0)
 			->where('tz_business.business_status','>=',0)
@@ -174,6 +173,7 @@ class  Overdue extends Model
 			->leftjoin('tz_users as d','tz_business.client_id','=','d.id')	
 			->select(DB::raw('c.ip,tz_business.id,tz_business.sales_id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,d.nickname'))
 			->whereIn('tz_business.business_type',['1','2'])
+			->where('tz_business.sales_id',$sales_id)
 			->where('tz_business.endding_time','<',$end_time)
 			->where('tz_business.remove_status',0)
 			->where('tz_business.business_status','>=',0)
@@ -198,7 +198,7 @@ class  Overdue extends Model
 	}
 
 
-	public function showOverdueRes($way,$resource_type=0){
+	public function showOverdueRes($way,$need = 0,$resource_type=0){
 		$sales_id	= Admin::user()->id;
 		$return['data'] 	= '';
 		$return['code']	= 0;
@@ -214,7 +214,38 @@ class  Overdue extends Model
 		} 
 		
 		// 查询已到提醒日期的业务
-		if(Admin::user()->isAdministrator() != 1){
+		if(Admin::user()->isAdministrator() == 1 || $need == '*'){
+			if($resource_type == 0){
+				$list = DB::table('tz_orders as a')	
+				->leftjoin('idc_machine as b','a.business_sn','=','b.own_business')		
+				->leftjoin('idc_cabinet as c','b.cabinet','=','c.id')	
+				->leftjoin('tz_users as d','a.customer_id','=','d.id')		
+				->select(DB::raw('a.id,a.business_sn,a.resource_type,a.customer_name,a.machine_sn as self_number,a.resource,a.end_time as endding_time,b.machine_num,c.cabinet_id as cabinet_num,d.nickname'))		
+				->where('a.end_time','<',$end_time)
+				->where('a.resource_type','>',3)
+				->where('a.resource_type','<=',9)
+				->whereIn('a.order_status',[0,1,2])
+				->whereIn('a.remove_status',$remove_status)		//还没下架的
+				->whereNull('a.deleted_at')
+				->orderBy('a.end_time','asc')
+				->get();	
+		
+			}else{
+				$list = DB::table('tz_orders as a')	
+				->leftjoin('idc_machine as b','a.business_sn','=','b.own_business')		
+				->leftjoin('idc_cabinet as c','b.cabinet','=','c.id')
+				->leftjoin('tz_users as d','a.customer_id','=','d.id')			
+				->select(DB::raw('a.id,a.business_sn,a.resource_type,a.customer_name,a.machine_sn as self_number,a.resource,a.end_time as endding_time,b.machine_num,c.cabinet_id as cabinet_num,d.nickname'))		
+				->where('a.end_time','<',$end_time)
+				->where('a.resource_type','=',$resource_type)
+				->whereIn('a.order_status',[0,1,2])
+				->whereIn('a.remove_status',$remove_status)		//还没下架的
+				->whereNull('a.deleted_at')
+				->orderBy('a.end_time','asc')
+				->get();	
+			}
+		}else{
+
 			if($resource_type == 0){
 				$list = DB::table('tz_orders as a')	
 				->leftjoin('idc_machine as b','a.business_sn','=','b.own_business')		
@@ -239,37 +270,6 @@ class  Overdue extends Model
 				->select(DB::raw('a.id,a.business_sn,a.resource_type,a.customer_name,a.machine_sn as self_number,a.resource,a.end_time as endding_time,b.machine_num,c.cabinet_id as cabinet_num,d.nickname'))		
 				->where('a.end_time','<',$end_time)
 				->where('a.business_id',$sales_id)
-				->where('a.resource_type','=',$resource_type)
-				->whereIn('a.order_status',[0,1,2])
-				->whereIn('a.remove_status',$remove_status)		//还没下架的
-				->whereNull('a.deleted_at')
-				->orderBy('a.end_time','asc')
-				->get();	
-
-			}
-		}else{
-			if($resource_type == 0){
-				$list = DB::table('tz_orders as a')	
-				->leftjoin('idc_machine as b','a.business_sn','=','b.own_business')		
-				->leftjoin('idc_cabinet as c','b.cabinet','=','c.id')	
-				->leftjoin('tz_users as d','a.customer_id','=','d.id')		
-				->select(DB::raw('a.id,a.business_sn,a.resource_type,a.customer_name,a.machine_sn as self_number,a.resource,a.end_time as endding_time,b.machine_num,c.cabinet_id as cabinet_num,d.nickname'))		
-				->where('a.end_time','<',$end_time)
-				->where('a.resource_type','>',3)
-				->where('a.resource_type','<=',9)
-				->whereIn('a.order_status',[0,1,2])
-				->whereIn('a.remove_status',$remove_status)		//还没下架的
-				->whereNull('a.deleted_at')
-				->orderBy('a.end_time','asc')
-				->get();	
-		
-			}else{
-				$list = DB::table('tz_orders as a')	
-				->leftjoin('idc_machine as b','a.business_sn','=','b.own_business')		
-				->leftjoin('idc_cabinet as c','b.cabinet','=','c.id')
-				->leftjoin('tz_users as d','a.customer_id','=','d.id')			
-				->select(DB::raw('a.id,a.business_sn,a.resource_type,a.customer_name,a.machine_sn as self_number,a.resource,a.end_time as endding_time,b.machine_num,c.cabinet_id as cabinet_num,d.nickname'))		
-				->where('a.end_time','<',$end_time)
 				->where('a.resource_type','=',$resource_type)
 				->whereIn('a.order_status',[0,1,2])
 				->whereIn('a.remove_status',$remove_status)		//还没下架的
@@ -361,18 +361,17 @@ class  Overdue extends Model
 	* @param  
 	* @return  
 	*/
-	public function showUnpaidMachine(){
+	public function showUnpaidMachine($need = 0){
 		$sales_id	= Admin::user()->id;
 		$return['data'] 	= '';
 		$return['code']	= 0;
 		// 查询已到提醒日期的业务
-		if(Admin::user()->isAdministrator() != 1){
+		if(Admin::user()->isAdministrator() == 1 || $need == '*'){
 			$list = $this		
 			->leftjoin('idc_machine as b','tz_business.machine_number','=','b.machine_num')
 			->leftjoin('idc_ips as c','b.ip_id','=','c.id')
-			->leftjoin('tz_users as d','tz_business.client_id','=','d.id')	
+			->leftjoin('tz_users as d','tz_business.client_id','=','d.id')
 			->select(DB::raw('c.ip,tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,tz_business.business_type,tz_business.start_time,d.nickname'))
-			->where('tz_business.sales_id',$sales_id)
 			->where('tz_business.business_status',1)
 			->whereIn('tz_business.remove_status',[0,1])
 			->where('tz_business.business_type','!=',3)
@@ -383,8 +382,9 @@ class  Overdue extends Model
 			$list = $this		
 			->leftjoin('idc_machine as b','tz_business.machine_number','=','b.machine_num')
 			->leftjoin('idc_ips as c','b.ip_id','=','c.id')
-			->leftjoin('tz_users as d','tz_business.client_id','=','d.id')
+			->leftjoin('tz_users as d','tz_business.client_id','=','d.id')	
 			->select(DB::raw('c.ip,tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,tz_business.business_type,tz_business.start_time,d.nickname'))
+			->where('tz_business.sales_id',$sales_id)
 			->where('tz_business.business_status',1)
 			->whereIn('tz_business.remove_status',[0,1])
 			->where('tz_business.business_type','!=',3)
@@ -413,12 +413,23 @@ class  Overdue extends Model
 	* @param  
 	* @return  
 	*/
-	public function showXiaJiaMachine(){
+	public function showXiaJiaMachine($need = 0){
 		$sales_id	= Admin::user()->id;
 		$return['data'] 	= '';
 		$return['code']	= 0;
 		// 查询已到提醒日期的业务
-		if(Admin::user()->isAdministrator() != 1){
+		if(Admin::user()->isAdministrator() == 1 || $need == '*'){
+			$list = $this		
+			->leftjoin('idc_machine as b','tz_business.machine_number','=','b.machine_num')
+			->leftjoin('idc_ips as c','b.ip_id','=','c.id')
+			->leftjoin('tz_users as d','tz_business.client_id','=','d.id')
+			->select(DB::raw('c.ip,tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,tz_business.business_type,tz_business.start_time,d.nickname'))
+			->where('tz_business.business_type','!=',3)
+			->where('tz_business.remove_status','!=',0)
+			->whereNull('tz_business.deleted_at')
+			->orderBy('tz_business.start_time','desc')
+			->get();		
+		}else{
 			$list = $this		
 			->leftjoin('idc_machine as b','tz_business.machine_number','=','b.machine_num')
 			->leftjoin('idc_ips as c','b.ip_id','=','c.id')
@@ -429,18 +440,7 @@ class  Overdue extends Model
 			->where('tz_business.remove_status','!=',0)
 			->whereNull('tz_business.deleted_at')
 			->orderBy('tz_business.start_time','desc')
-			->get();	
-		}else{
-			$list = $this		
-			->leftjoin('idc_machine as b','tz_business.machine_number','=','b.machine_num')
-			->leftjoin('idc_ips as c','b.ip_id','=','c.id')
-			->leftjoin('tz_users as d','tz_business.client_id','=','d.id')
-			->select(DB::raw('c.ip,tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,tz_business.business_type,tz_business.start_time,d.nickname'))
-			->where('tz_business.business_type','!=',3)
-			->where('tz_business.remove_status','!=',0)
-			->whereNull('tz_business.deleted_at')
-			->orderBy('tz_business.start_time','desc')
-			->get();	
+			->get();
 		}
 		
 		if($list->isEmpty()){
@@ -461,9 +461,9 @@ class  Overdue extends Model
 	* @param  
 	* @return  
 	*/
-	public function showTrialDefenseIp(){
+	public function showTrialDefenseIp($need = 0){
 
-		if(Admin::user()->isAdministrator() != 1){
+		if(Admin::user()->isAdministrator() == 1 || $need == '*'){
 			$list = DB::table('tz_defenseip_business')->where('status',4)->whereNull('deleted_at')->get()->toArray();
 		}else{
 			$list = DB::table('tz_defenseip_business')->where('status',4)->whereNull('deleted_at')->get()->toArray();
@@ -496,12 +496,11 @@ class  Overdue extends Model
 	* @param  
 	* @return  
 	*/
-	public function showUnpaidIdcOrder(){
+	public function showUnpaidIdcOrder($need = 0){
 		$sales_id	= Admin::user()->id;
-		if(Admin::user()->isAdministrator() != 1){
+		if(Admin::user()->isAdministrator() == 1 || $need == '*'){
 			$list = DB::table('tz_orders')
 				->select('*','end_time as endding_time')
-				->where('business_id',$sales_id)
 				->where('order_status',0)
 				->whereIn('resource_type',[1,2,3,4,5,6,7,8,9])
 				->whereNull('deleted_at')
@@ -512,6 +511,7 @@ class  Overdue extends Model
 		}else{
 			$list = DB::table('tz_orders')
 				->select('*','end_time as endding_time')
+				->where('business_id',$sales_id)
 				->where('order_status',0)
 				->whereIn('resource_type',[1,2,3,4,5,6,7,8,9])
 				->whereNull('deleted_at')
@@ -564,4 +564,5 @@ class  Overdue extends Model
 		}
 		return $arr;
 	}
+
 }

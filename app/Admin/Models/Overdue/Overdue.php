@@ -29,7 +29,7 @@ class  Overdue extends Model
 	* @param  
 	* @return  
 	*/
-	public function showOverdueCabinet($need = 0){
+	public function showOverdueCabinet($need = 1){
 		$sales_id	= Admin::user()->id;
 		$return['data'] 	= '';
 		$return['code']	= 0;
@@ -93,7 +93,7 @@ class  Overdue extends Model
 	* @param  
 	* @return  
 	*/
-	public function showUnpaidCabinet($need = 0){
+	public function showUnpaidCabinet($need = 1){
 		$sales_id	= Admin::user()->id;
 		$return['data'] 	= '';
 		$return['code']	= 0;
@@ -145,7 +145,7 @@ class  Overdue extends Model
 	* @param  
 	* @return  
 	*/
-	public function showOverdueMachine($need = 0){
+	public function showOverdueMachine($need = 1){
 		$sales_id	= Admin::user()->id;
 
 		$return['data'] 	= '';
@@ -198,7 +198,7 @@ class  Overdue extends Model
 	}
 
 
-	public function showOverdueRes($way,$need = 0,$resource_type=0){
+	public function showOverdueRes($way,$need = 1,$resource_type=0){
 		$sales_id	= Admin::user()->id;
 		$return['data'] 	= '';
 		$return['code']	= 0;
@@ -214,7 +214,8 @@ class  Overdue extends Model
 		} 
 		
 		// 查询已到提醒日期的业务
-		if(Admin::user()->isAdministrator() == 1 || $need == '*'){
+
+		if(Admin::user()->isAdministrator() || $need == '*'){
 			if($resource_type == 0){
 				$list = DB::table('tz_orders as a')	
 				->leftjoin('idc_machine as b','a.business_sn','=','b.own_business')		
@@ -229,7 +230,7 @@ class  Overdue extends Model
 				->whereNull('a.deleted_at')
 				->orderBy('a.end_time','asc')
 				->get();	
-		
+				
 			}else{
 				$list = DB::table('tz_orders as a')	
 				->leftjoin('idc_machine as b','a.business_sn','=','b.own_business')		
@@ -243,6 +244,7 @@ class  Overdue extends Model
 				->whereNull('a.deleted_at')
 				->orderBy('a.end_time','asc')
 				->get();	
+			
 			}
 		}else{
 
@@ -276,9 +278,9 @@ class  Overdue extends Model
 				->whereNull('a.deleted_at')
 				->orderBy('a.end_time','asc')
 				->get();	
+			
 			}
 		}
-
 		
 		if($list->isEmpty()){
 			if($way == 'overdue'){
@@ -361,7 +363,7 @@ class  Overdue extends Model
 	* @param  
 	* @return  
 	*/
-	public function showUnpaidMachine($need = 0){
+	public function showUnpaidMachine($need = 1){
 		$sales_id	= Admin::user()->id;
 		$return['data'] 	= '';
 		$return['code']	= 0;
@@ -413,7 +415,7 @@ class  Overdue extends Model
 	* @param  
 	* @return  
 	*/
-	public function showXiaJiaMachine($need = 0){
+	public function showXiaJiaMachine($need = 1){
 		$sales_id	= Admin::user()->id;
 		$return['data'] 	= '';
 		$return['code']	= 0;
@@ -461,7 +463,7 @@ class  Overdue extends Model
 	* @param  
 	* @return  
 	*/
-	public function showTrialDefenseIp($need = 0){
+	public function showTrialDefenseIp($need = 1){
 
 		if(Admin::user()->isAdministrator() == 1 || $need == '*'){
 			$list = DB::table('tz_defenseip_business')->where('status',4)->whereNull('deleted_at')->get()->toArray();
@@ -496,7 +498,7 @@ class  Overdue extends Model
 	* @param  
 	* @return  
 	*/
-	public function showUnpaidIdcOrder($need = 0){
+	public function showUnpaidIdcOrder($need = 1){
 		$sales_id	= Admin::user()->id;
 		if(Admin::user()->isAdministrator() == 1 || $need == '*'){
 			$list = DB::table('tz_orders')

@@ -38,6 +38,14 @@ class OverdueController extends Controller
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
 
+	public function showOverdueCabinetX(){
+		
+		$customerModel = new Overdue();
+		$res = $customerModel->showOverdueCabinet('*');
+		
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
+
 	/**
 	* 查找5天内到期或过期未续费的租用主机,提醒时间可在模型类里$overtime设置
 	* @return json 返回相关的信息
@@ -50,7 +58,13 @@ class OverdueController extends Controller
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
 
-	
+	public function showOverdueMachineX(){
+
+		$customerModel = new Overdue();
+		$res = $customerModel->showOverdueMachine('*');
+		
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
 
 	
 	
@@ -66,6 +80,13 @@ class OverdueController extends Controller
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
 
+	public function showUnpaidMachineX(){
+
+		$customerModel = new Overdue();
+		$res = $customerModel->showUnpaidMachine('*');
+	
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
 	/**
 	* 查找最近下架主机
 	* @return json 返回相关的信息
@@ -74,6 +95,14 @@ class OverdueController extends Controller
 
 		$customerModel = new Overdue();
 		$res = $customerModel->showXiaJiaMachine();
+		
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
+
+	public function showXiaJiaMachineX(){
+
+		$customerModel = new Overdue();
+		$res = $customerModel->showXiaJiaMachine('*');
 		
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
@@ -90,7 +119,13 @@ class OverdueController extends Controller
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
 
+	public function showUnpaidCabinetX(){
 
+		$customerModel = new Overdue();
+		$res = $customerModel->showUnpaidCabinet('*');
+		
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
 	/**
 	* 查找5天内到期或过期未续费的资源,提醒时间可在模型类里$overtime设置
 	* @return json 返回相关的信息
@@ -103,6 +138,13 @@ class OverdueController extends Controller
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
 
+	public function showOverdueResX(){
+	
+		$customerModel = new Overdue();
+		$res = $customerModel->showOverdueRes('overdue','*');
+		
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
 	/**
 	* 查找最近下架资源
 	* @return json 返回相关的信息
@@ -115,6 +157,13 @@ class OverdueController extends Controller
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
 
+	public function showXiaJiaResX(){
+	
+		$customerModel = new Overdue();
+		$res = $customerModel->showOverdueRes('xiajia','*');
+		
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
 	/**
 	* 查找5天内到期或过期未续费的资源详细类型
 	* @return json 返回相关的信息
@@ -124,11 +173,20 @@ class OverdueController extends Controller
 		$customerModel = new Overdue();
 		$info = $request->only(['resource_type']);
 		$resource_type = $info['resource_type'];
-		$res = $customerModel->showOverdueRes('overdue',$resource_type);
+		$res = $customerModel->showOverdueRes('overdue',0,$resource_type);
 	
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
 
+	public function showOverdueResDetX(OverdueRequest $request){
+
+		$customerModel = new Overdue();
+		$info = $request->only(['resource_type']);
+		$resource_type = $info['resource_type'];
+		$res = $customerModel->showOverdueRes('overdue','*',$resource_type);
+	
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
 	/**
 	* 查找试用中高防IP业务
 	* @return json 返回相关的信息
@@ -141,6 +199,13 @@ class OverdueController extends Controller
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
 	
+	public function showTrialDefenseIpX(OverdueRequest $request){
+
+		$model = new Overdue();
+		$res = $model->showTrialDefenseIp('*');
+	
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
 	/**
 	* 查找未付款的idc业务订单
 	* @return json 返回相关的信息
@@ -153,4 +218,11 @@ class OverdueController extends Controller
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
 
+	public function showUnpaidIdcOrderX(OverdueRequest $request){
+	
+		$model = new Overdue();
+		$res = $model->showUnpaidIdcOrder('*');
+	
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
 }

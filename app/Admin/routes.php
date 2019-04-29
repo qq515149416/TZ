@@ -470,6 +470,17 @@ Route::group([
         $router->get('showTrialDefenseIp', 'Overdue\OverdueController@showTrialDefenseIp');//查找试用中高防IP业务
         $router->get('showUnpaidIdcOrder', 'Overdue\OverdueController@showUnpaidIdcOrder');//查找未付款的idc业务订单
 
+        //以下是因权限问题,分出来给管理层看的
+        $router->get('showOverdueCabinetX', 'Overdue\OverdueController@showOverdueCabinetX');//查找5天内到期的机柜
+        $router->get('showOverdueMachineX', 'Overdue\OverdueController@showOverdueMachineX');//查找5天内到期的机器
+        $router->get('showOverdueResX', 'Overdue\OverdueController@showOverdueResX');//查找5天内到期资源
+        $router->get('showUnpaidMachineX', 'Overdue\OverdueController@showUnpaidMachineX'); //查找未支付使用中的机器
+        $router->get('showXiaJiaMachineX', 'Overdue\OverdueController@showXiaJiaMachineX');//查找最近下架的机器
+        $router->get('showUnpaidCabinetX', 'Overdue\OverdueController@showUnpaidCabinetX');//查找未支付使用中的机柜
+        $router->get('showXiaJiaResX', 'Overdue\OverdueController@showXiaJiaResX');//查找下架资源
+        $router->get('showOverdueResDetX', 'Overdue\OverdueController@showOverdueResDetX');//按类型查找接近过期资源
+        $router->get('showTrialDefenseIpX', 'Overdue\OverdueController@showTrialDefenseIpX');//查找试用中高防IP业务
+        $router->get('showUnpaidIdcOrderX', 'Overdue\OverdueController@showUnpaidIdcOrderX');//查找未付款的idc业务订单
     });
 
     /**

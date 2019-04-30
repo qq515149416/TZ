@@ -115,16 +115,20 @@
                 <div class="card-body-hover">
                     <h5 class="title">网站类业务</h5>
                     <img class="icon" src="{{ asset("/images/highDefenseIp/icon-7.png") }}"">
-                    <p style="color:#2139b7;">适用行业：金融、电商、企业门户类网站</p>
-                    <p>网站类业务是最容易受到攻击的，因为黑客可通过DNS解析轻松获取网站服务器的真实IP，然后对服务器IP进行大流量ddos/cc攻击，导致网站访问缓慢或直接瘫痪。</p>
+                    <p style="color: #2139b7;">适用行业：金融、电商、企业门户类网站</p>
+                    <p style="line-height: 24px;">
+                        网站类业务是最容易受到攻击的，因为黑客可通过DNS解析轻松获取网站服务器的真实IP，然后对服务器IP进行大流量ddos/cc攻击，导致网站访问缓慢或直接瘫痪。
+                    </p>
                 </div>
             </div>
             <div class="card">
                 <div class="card-body-hover">
                     <h5 class="title">游戏类业务</h5>
                     <img class="icon" src="{{ asset("/images/highDefenseIp/icon-8.png") }}"">
-                    <p style="color:#2139b7;">适用行业：各类型端游、手游等网络游戏产品，各类型应用程序产品</p>
-                    <p>游戏类是攻击最严重的行业，同行恶意竞争者通过各种攻击手段，让大批量游戏玩家频繁掉线，玩游戏卡顿，攻击停服，甚至无法登陆接入游戏，最终让大批玩家流失。</p>
+                    <p style="color: #2139b7;">适用行业：各类型端游、手游等网络游戏产品，各类型应用程序产品</p>
+                    <p style="line-height: 24px;">
+                        游戏类是攻击最严重的行业，同行恶意竞争者通过各种攻击手段，让大批量游戏玩家频繁掉线，玩游戏卡顿，攻击停服，甚至无法登陆接入游戏，最终让大批玩家流失。
+                    </p>
                 </div>
             </div>
         </div>

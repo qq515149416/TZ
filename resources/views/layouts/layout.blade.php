@@ -92,7 +92,7 @@
                         </dl>
                         <dl style="text-align: center;">
                             <dt>
-                                <a href="javascript:;">服务器托管</a>
+                                <a href="/tuoguan">服务器托管</a>
                             </dt>
                             <dd>
                                 <a href="/tuoguan#hengyang" style="margin-right: -10px;">衡阳服务器托管</a>

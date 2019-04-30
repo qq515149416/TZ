@@ -467,8 +467,11 @@ class PayOrder extends Model
 						$return['code'] = 3;
 						return $return;
 					}
-					$end = Carbon::now()->addMonth($row['duration'])->toDateTimeString();
-
+					/**** 生成业务信息 ****/
+					
+					$start_time = Carbon::now();
+					$start = $start_time->toDateTimeString();
+					$end = $start_time->addMonth($row['duration'])->toDateTimeString();
 					$business = [
 						'business_number'   => $row['business_sn'],
 						'user_id'       => $row['customer_id'],
@@ -476,9 +479,15 @@ class PayOrder extends Model
 						'ip_id'         => $sale_ip->id,
 						'price'         => $package->price,
 						'status'            => 1,
-						'end_at'            => $end,
 						'created_at'        => date("Y-m-d H:i:s"),
+						'start_time'	=> $start,
+						'end_at'		=> $end,
 					];
+					
+					/****/
+
+
+
 					$build_business = DB::table('tz_defenseip_business')->insert($business);
 
 					if($build_business != true){

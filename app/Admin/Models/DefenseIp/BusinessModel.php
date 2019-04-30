@@ -288,7 +288,7 @@ class BusinessModel extends Model
 	* @param  $business_id  -业务id ; $buy_time  -购买时长 ;$start_time -试用业务转正需要用到,开始计费时间
 	* @return 
 	*/
-	public function renew($business_id,$buy_time,$start_time=0){
+	public function renew($business_id,$buy_time,$start_time='no'){
 		//获取后台登录人员id
 		$user_id = Admin::user()->id;
 		//获取业务信息
@@ -339,12 +339,23 @@ class BusinessModel extends Model
 		}
 
 		//判断如果是试用业务的话,是否有传开始计费时间
-		if($business->status == 4 && $start_time == 0){
-			return [
+		if($business->status == 4){
+			if ($start_time == 'no') {
+				return [
 					'data'	=> '',
 					'msg'	=> '业务为试用,请选择开始计费时间',
 					'code'	=> 0,
 				]; 
+			}else{
+				$business->start_time = $start_time;
+				if(!$business->save()){
+					return [
+						'data'	=> '',
+						'msg'	=> '业务开始计费时间录入失败',
+						'code'	=> 0,
+					]; 
+				}
+			}
 		}
 		//获取订单模型
 		$orderModel = new OrderModel();

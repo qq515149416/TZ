@@ -146,7 +146,7 @@ class UnderModel extends Model
                 } else {
                     $where = [];
                 }
-                $history = DB::table('tz_business')->where($where)->whereBetween('remove_status',[1,4])->orderBy('updated_at', 'desc')->select('client_name', 'sales_name', 'business_number', 'machine_number', 'business_type', 'business_note', 'remove_reason', 'resource_detail', 'remove_status')->get();
+                $history = DB::table('tz_business')->where($where)->whereBetween('remove_status',[1,4])->orderBy('updated_at', 'desc')->select('client_name', 'sales_name', 'business_number', 'machine_number', 'business_type', 'business_note', 'remove_reason', 'resource_detail', 'remove_status','money as price','length','updated_at')->get();
                 if (!empty($history)) {
                     $business_type = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜'];
                     $remove_status = [0 => '正常使用', 1 => '下架申请中', 2 => '机房处理中', 3 => '清空下架中', 4 => '下架完成'];
@@ -170,7 +170,7 @@ class UnderModel extends Model
                 } else {
                     $where = [];
                 }
-                $history = DB::table('tz_orders')->where($where)->where('resource_type', '>', 3)->whereBetween('remove_status',[1,4])->orderBy('updated_at', 'desc')->select('business_sn', 'order_sn', 'customer_name', 'resource_type', 'business_name', 'machine_sn', 'resource', 'remove_status', 'remove_reason')->get();
+                $history = DB::table('tz_orders')->where($where)->where('resource_type', '>', 3)->whereBetween('remove_status',[1,4])->orderBy('updated_at', 'desc')->select('business_sn', 'order_sn', 'customer_name', 'resource_type', 'business_name', 'machine_sn', 'resource', 'remove_status', 'remove_reason','price','duration as length','updated_at')->get();
                 if (!empty($history)) {
                     $resource_type = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜', 4 => 'IP', 5 => 'CPU', 6 => '硬盘', 7 => '内存', 8 => '带宽', 9 => '防护', 10 => 'cdn', 11 => '高防IP'];
                     $remove_status = [0 => '正常使用', 1 => '下架申请中', 2 => '机房处理中', 3 => '清空下架中', 4 => '下架完成'];

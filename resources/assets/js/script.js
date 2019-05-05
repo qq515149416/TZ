@@ -197,4 +197,28 @@ $(function () {
     // $(this).toggleClass('active').siblings().removeClass('active');
     $('#tz-server-hosting .expand-item.collapse.in').collapse('toggle').siblings().collapse('hide');
   });
+  /**
+   * 安全防护主页-产品矩阵的hover效果
+   */
+  $('#tz-protection .product-matrix .item').on('mouseover', function (e) {
+    let $parent = $(this).parent('.item-group');
+    $parent.find('.item-group-title').css('color', '#2139b7');
+    $parent.find('.flow-line').hide()
+    $parent.find('.flow-line-hover').show();
+    $parent.on('mouseleave', function (e) {
+      $(this).find('.item-group-title').css('color', '#959595');
+      $(this).find('.flow-line').show();
+      $(this).find('.flow-line-hover').hide();
+    });
+  });
+  /**
+   * 安全防护主页-客户应用场景的tab切换
+   */
+  $('#tz-protection .client-scene a.tab-item').on('click', function (e) {
+    if ($(this).hasClass('active')) {
+      e.preventDefault();
+    } else {
+      $(this).addClass('active').tab('show').siblings().removeClass('active');
+    }
+  });
 });

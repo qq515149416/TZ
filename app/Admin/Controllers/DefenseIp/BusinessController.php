@@ -68,7 +68,7 @@ class BusinessController extends Controller
 		if(isset($par['start_time'])){
 			$start_time = date("Y-m-d H:i",$par['start_time']) ;
 		}else{
-			$start_time = 0;
+			$start_time = 'no';
 		}
 	
 		$makeOrder = $model->renew($business_id,$buy_time,$start_time);

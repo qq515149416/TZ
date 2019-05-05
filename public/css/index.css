@@ -1619,9 +1619,6 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   transition: all 0.5s;
   text-decoration: none;
 }
-.news .news-body .new-list .new-item ul li a.title {
-  float: left;
-}
 .news .news-body .new-list .new-item ul li a.date {
   float: right;
 }

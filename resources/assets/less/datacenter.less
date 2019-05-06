@@ -1,0 +1,206 @@
+#datacenter {
+    .banner {
+        border-top: 1px solid transparent;
+        height: 561px;
+        background-color: #10142e;
+        text-align: center;
+        h2 {
+            margin-top: 173px;
+            margin-bottom: 25px;
+            color: #fff;
+            font-size: 50px;
+            font-weight: normal;
+        }
+        p {
+            font-size: 16px;
+            color: #fff;
+            // letter-spacing: 50px;
+            line-height: 28px;
+            margin: 0 auto;
+            margin-bottom: 49px;
+            width: 754px;
+        }
+        a {
+            display: inline-block;
+            height: 40px;
+            width: 180px;
+            text-align: center;
+            line-height: 40px;
+            color: #043fc4;
+            text-decoration: none;
+            // letter-spacing: 200px;
+            background-color: #fff;
+            border-radius: 20px;
+        }
+        nav {
+            margin-top: 83px;
+            ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                width: 280px * 3px + (2px * 20px);
+                margin: 0 auto;
+                li {
+                    float: left;
+                    margin-right: 20px;
+                    cursor: pointer;
+                    a {
+                        text-align: center;
+                        font-size: 18px;
+                        width: 280px;
+                        height: 64px;
+                        line-height: 64px;
+                        display: block;
+                        text-decoration: none;
+                        color: #ffffff;
+                        background: linear-gradient(to right,#b9ccfc,#6d8fff);
+                        border-radius: 10px;
+                        transition: all .5s;
+                        &.aticve {
+                            background: #fff;
+                            color: #043fc4;
+                        }
+                        &:hover {
+                            background: #fff;
+                            color: #043fc4;
+                        }
+                    }
+                    &:last-of-type {
+                        margin: 0;
+                    }
+
+                }
+            }
+        }
+    }
+    .main {
+        padding: 80px 0 82px 0;
+        >h3 {
+           margin: 0;
+           font-size: 26px;
+           color: #333333;
+           padding-bottom: 33px;
+           margin-bottom: 40px;
+           text-align: center;
+           position: relative;
+           &::after {
+               content: "";
+               position: absolute;
+               height: 6px;
+               width: 52px;
+               background-color: #2139b7;
+               left: 50%;
+               bottom: 0;
+               transform: translateX(-50%);
+               border-radius: 3px;
+           }
+        }
+        >.data {
+            width: 1180px;
+            margin: 0 auto;
+            >.tz-thumbnail {
+                width: 340px;
+                height: 422px;
+                background-color: #d9d9d9;
+            }
+            >.info {
+                >ul {
+                    list-style: none;
+                    margin: 0;
+                    margin-bottom: 28px;
+                    padding: 0;
+                    border: 1px solid #dcdcdc;
+                    >li {
+                        border-bottom: 1px solid #dcdcdc;
+                        display: flex;
+                        >.title {
+                            width: 189px;
+                        }
+                        >.value {
+                            width: 608px;
+                        }
+                        >span {
+                            // width: 189px;
+                            height: 51px;
+                            line-height: 51px;
+                            text-align: center;
+                            border-right: 1px solid #dcdcdc;
+                            &:last-of-type {
+                                border: none;
+                            }
+                            font-size: 14px;
+                            color: #666666;
+                            strong {
+                                font-weight: normal;
+                                color: #f00101;
+                                margin: 0 5px;
+                            }
+                        }
+                        &:last-of-type {
+                            border: none;
+                        }
+                    }
+                }
+                >nav {
+                    >a {
+                        display: inline-block;
+                        text-decoration: none;
+                        line-height: 28px;
+                        height: 28px;
+                        border: 1px solid #2139b7;
+                        padding: 0 20px;
+                        letter-spacing: 4px;
+                        margin-right: 10px;
+                        color: #3f53c1;
+                        border-radius: 4px;
+                        font-size: 14px;
+                        transition: all .5s;
+                        &:hover {
+                            background-color: #2139b7;
+                            color: #fff;
+                        }
+                        &:last-of-type {
+                            margin: 0;
+                        }
+                    }
+                }
+            }
+        }
+        >.quality {
+            margin-top: 80px;
+            padding-top: 70px;
+            background-color: #263ab8;
+            border-radius: 100px 100px 0 0;
+            >h3 {
+                margin: 0;
+                font-size: 26px;
+                color: #fff;
+                padding-bottom: 33px;
+                margin-bottom: 40px;
+                text-align: center;
+                position: relative;
+                &::after {
+                    content: "";
+                    position: absolute;
+                    height: 6px;
+                    width: 52px;
+                    background-color: #fff;
+                    left: 50%;
+                    bottom: 0;
+                    transform: translateX(-50%);
+                    border-radius: 3px;
+                }
+             }
+             >ul {
+                 list-style: none;
+                 margin: 0;
+                 padding: 0;
+                 width: 1180px;
+                 margin: 0 auto;
+                 li {
+                     float: left;
+                 }
+             }
+        }
+    }
+}

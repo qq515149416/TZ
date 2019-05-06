@@ -17,9 +17,9 @@
             <li data-target="#carousel-example-generic" data-slide-to="0" class="active">
                 <span class="progress"></span>
             </li>
-            <li data-target="#carousel-example-generic" data-slide-to="1">
+            <!-- <li data-target="#carousel-example-generic" data-slide-to="1">
                 <span class="progress"></span>
-            </li>
+            </li> -->
             <!-- <li data-target="#carousel-example-generic" data-slide-to="2">
                 <span class="progress"></span>
             </li> -->
@@ -62,13 +62,13 @@
                     </div>
                 </a>
             </div> -->
-            <div class="item">
+            <!-- <div class="item">
                 <a href="http://yun.zeisp.com/cloudbuy.html" target="_blank">
                     <img src="{{ asset("/images/banner/xianyun.png") }}" alt="...">
                     <div class="carousel-caption">
                     </div>
                 </a>
-            </div>
+            </div> -->
             <!-- <div class="item">
                 <a href="http://www.15cdn.com/" target="_blank">
                     <img src="{{ asset("/images/banner/kai.png") }}" alt="...">

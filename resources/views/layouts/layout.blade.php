@@ -92,7 +92,7 @@
                         </dl>
                         <dl style="text-align: center;">
                             <dt>
-                                <a href="javascript:;">服务器托管</a>
+                                <a href="/tuoguan">服务器托管</a>
                             </dt>
                             <dd>
                                 <a href="/tuoguan#hengyang" style="margin-right: -10px;">衡阳服务器托管</a>
@@ -106,25 +106,25 @@
                         </dl>
                         <dl style="text-align: right;">
                             <dt>
-                                <a style="margin-right: 38px;" href="/page/tz/15cdn">CDN</a>
+                                <a style="margin-right: 38px;" href="/15cdn/index">CDN</a>
                             </dt>
                             <dd>
-                                <a style="margin-right: 24px;" href="/page/tz/15cdn">视频加速</a>
+                                <a style="margin-right: 24px;" href="/cdn/tz/15cdn">视频加速</a>
                             </dd>
                             <dd>
-                                <a href="/page/tz/15cdn">静态内容加速</a>
+                                <a href="/15cdn/sca">静态内容加速</a>
                             </dd>
                             <dd>
-                                <a href="/page/tz/15cdn">下载分发加速</a>
+                                <a href="/15cdn/dda">下载分发加速</a>
                             </dd>
                             <dd>
-                                <a href="/page/tz/15cdn">动态加速网络</a>
+                                <a href="/15cdn/dsa">动态加速网络</a>
                             </dd>
                             <dd>
-                                <a href="/page/tz/15cdn">流媒体点播加速</a>
+                                <a href="/15cdn/smvoda">流媒体点播加速</a>
                             </dd>
                             <dd>
-                                <a href="/page/tz/15cdn">流媒体直播加速</a>
+                                <a href="/15cdn/smlba">流媒体直播加速</a>
                             </dd>
                         </dl>
                         <dl>

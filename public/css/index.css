@@ -5843,3 +5843,15 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #tz-sca .banner {
   background: url(/images/sca-banner-bg.png?5746e983cf7876da3250119d2bec42fc) no-repeat center;
 }
+#tz-dd .banner {
+  background: url(/images/dda-banner-bg.png?d9374a810d4e4359c0ad06a3885ce290) no-repeat center;
+}
+#tz-dd .usage-scenario .item {
+  width: calc(100% / 7);
+}
+#tz-dsa .banner {
+  background: url(/images/dsa-banner-bg.png?4d4345b2cba09a4de03686a284c5c197) no-repeat center;
+}
+#tz-dsa .usage-scenario .item {
+  width: calc(100% / 7);
+}

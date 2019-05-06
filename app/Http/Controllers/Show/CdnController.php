@@ -15,17 +15,17 @@ class CdnController extends Controller
             case 'sca':
                 return view("http/staticContentAcceleration");
                 break;
-            case 'dd':
-                return view("http/downloadDelivery");
+            case 'dda':
+                return view("http/downloadDeliveryAcceleration");
                 break;
             case 'dsa':
-                return view("http/dynamicSiteAccelerator");
-                break;
-            case 'smlba':
-                return view("http/liveBroadcastAcceleration");
+                return view("http/dynamicSiteAcceleration");
                 break;
             case 'smvoda':
                 return view("http/vodAcceleration");
+                break;
+            case 'smlba':
+                return view("http/liveAcceleration");
                 break;
         }
     }

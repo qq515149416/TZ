@@ -115,16 +115,16 @@
                                 <a href="/15cdn/sca">静态内容加速</a>
                             </dd>
                             <dd>
-                                <a href="/page/tz/15cdn">下载分发加速</a>
+                                <a href="/15cdn/dda">下载分发加速</a>
                             </dd>
                             <dd>
-                                <a href="/page/tz/15cdn">动态加速网络</a>
+                                <a href="/15cdn/dsa">动态加速网络</a>
                             </dd>
                             <dd>
-                                <a href="/page/tz/15cdn">流媒体点播加速</a>
+                                <a href="/15cdn/smvoda">流媒体点播加速</a>
                             </dd>
                             <dd>
-                                <a href="/page/tz/15cdn">流媒体直播加速</a>
+                                <a href="/15cdn/smlba">流媒体直播加速</a>
                             </dd>
                         </dl>
                         <dl>

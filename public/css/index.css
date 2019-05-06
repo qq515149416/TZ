@@ -5840,6 +5840,16 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
           transform: translateX(-50%);
   border-radius: 3px;
 }
+#datacenter .main > .quality > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 1180px;
+  margin: 0 auto;
+}
+#datacenter .main > .quality > ul li {
+  float: left;
+}
 #tz-sca .banner {
   background: url(/images/sca-banner-bg.png?5746e983cf7876da3250119d2bec42fc) no-repeat center;
 }

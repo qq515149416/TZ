@@ -121,7 +121,7 @@
                     </p>
                 </div>
             </div>
-            <div style="margin: 0 auto; line-height: 170px;">
+            <div class="item" style="border: none; line-height: 81px; text-align: center;">
                 <img src="{{ asset("/images/dynamicSiteAcceleration/ellipsis-icon.png") }}" />
             </div>
         </div>

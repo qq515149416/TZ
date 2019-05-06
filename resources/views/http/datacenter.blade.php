@@ -82,7 +82,7 @@
                 </div>
             </div>
             <section class="quality">
-                <h3>星级机房&nbsp;&nbsp;&nbsp;&nbsp;品质保障</h3>
+                <h3>星级机房&nbsp;&nbsp;品质保障</h3>
                 <ul>
                     <li>
                         <img src="{{ asset("/images/datacenter/quality_icon_01.png") }}" alt="" />

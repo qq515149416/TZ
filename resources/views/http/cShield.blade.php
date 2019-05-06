@@ -51,7 +51,7 @@
                             加速<br/>
                             特惠体验
                         </th>
-                        <td>2TB</td>
+                        <td>1TB</td>
                         <td>1个</td>
                         <td>
                             <span style="color: #ea0000;">100元/月</span>

@@ -514,7 +514,7 @@ class DataTransfer extends Model
 				'content'		=> $old_news[$i]->content,
 				'seoKeywords'		=> $old_news[$i]->seoKeywords,
 				'seoTitle'		=> $old_news[$i]->seoTitle,
-				'seoDescription'	=> $old_news[$i]->seoDescription,
+				'seoDescription'		=> $old_news[$i]->seoDescription,
 				'digest'			=> $old_news[$i]->digest,
 				'created_at'		=> $old_news[$i]->createdate,
 			];

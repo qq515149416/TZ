@@ -324,7 +324,7 @@ class RechargeModel extends Model
 				throw new Exception($error,0);  
 			}
 			//检查流水是否已存在
-			$test = DB::table('tz_recharge_flow')->where('trade_no',$trade->trade_no)->value('id');
+			$test = DB::table('tz_recharge_flow')->where('trade_no',$trade->trade_no)->whereNull('deleted_at')->value('id');
 			if($test != null){
 				$error = '该审核单的充值流水已存在,请确认审核单';
 				throw new Exception($error,3);  
@@ -546,6 +546,7 @@ class RechargeModel extends Model
 						->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.nickname,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.id,b.tax'))
 						->where('b.trade_status',1)
 						->where('tz_users.salesman_id',$clerk_id)
+						->whereNull('deleted_at')
 						->orderBy('b.timestamp','desc')
 						->get();    
 				 break;
@@ -556,6 +557,7 @@ class RechargeModel extends Model
 						->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.nickname,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.id,b.tax'))
 						->where('b.trade_status',1)
 						->where('tz_users.id',$key)
+						->whereNull('deleted_at')
 						->orderBy('b.timestamp','desc')
 						->get();    
 				 break;
@@ -565,6 +567,7 @@ class RechargeModel extends Model
 						->leftjoin('tz_recharge_flow as b','tz_users.id','=','b.user_id')
 						->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.nickname,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.id,b.tax'))
 						->where('b.trade_status',1)
+						->whereNull('deleted_at')
 						->orderBy('b.timestamp','desc')
 						->get();    
 				 break;
@@ -575,6 +578,7 @@ class RechargeModel extends Model
 						->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.nickname,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.id,b.tax'))
 						->where('b.trade_status',1)
 						->where('b.month',$key)
+						->whereNull('deleted_at')
 						->orderBy('b.timestamp','desc')
 						->get();    
 				 break;

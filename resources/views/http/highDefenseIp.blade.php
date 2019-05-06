@@ -19,7 +19,7 @@
                     保障用户的访问质量和对内容提供商的黏度。
                 </h5>
             </div>
-            <a class="apply-btn" href="javascript: void(0);">立即申请</a>
+            <a class="apply-btn" href="https://www.tzidc.com/dist/highDefense.html">立即申请</a>
         </div>
         <div class="tab">
             <a class="tab-item" href="/protection/high-defense-cdn">高防CDN</a>

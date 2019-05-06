@@ -22,14 +22,10 @@
         </div>
         <div class="tab">
             <a class="tab-item active" href="/15cdn/sca">静态内容加速</a>
-            <a class="tab-item" href="javascript: void(0);">下载分发加速</a>
-            <a class="tab-item" href="javascript: void(0);">动态加速网络</a>
-            <a class="tab-item" href="javascript: void(0);">流媒体点播加速</a>
-            <a class="tab-item" href="javascript: void(0);">流媒体直播加速</a>
-            <!--            <a class="tab-item" href="/15cdn/dd">下载分发加速</a>-->
-            <!--            <a class="tab-item" href="/15cdn/dsa">动态加速网络</a>-->
-            <!--            <a class="tab-item" href="/15cdn/smlba">流媒体点播加速</a>-->
-            <!--            <a class="tab-item" href="/15cdn/smvoda">流媒体直播加速</a>-->
+            <a class="tab-item" href="/15cdn/dda">下载分发加速</a>
+            <a class="tab-item" href="/15cdn/dsa">动态加速网络</a>
+            <a class="tab-item" href="/15cdn/smvoda">流媒体点播加速</a>
+            <a class="tab-item" href="/15cdn/smlba">流媒体直播加速</a>
         </div>
     </div>
     <!--产品优势-->
@@ -38,7 +34,7 @@
         <img class="d-block" src="{{ asset("/images/cdn/rectangle.png") }}" />
         <div class="item-container">
             <div class="item">
-                <img class="icon" src="{{ asset("/images/staticContentAcceleration/adv-icon-1.png") }}"">
+                <img class="icon" src="{{ asset("/images/staticContentAcceleration/adv-icon-1.png") }}" />
                 <div class="text">
                     <h5 class="title">节点丰富</h5>
                     <p class="desc">
@@ -46,7 +42,7 @@
                 </div>
             </div>
             <div class="item">
-                <img class="icon" src="{{ asset("/images/staticContentAcceleration/adv-icon-2.png") }}"">
+                <img class="icon" src="{{ asset("/images/staticContentAcceleration/adv-icon-2.png") }}" />
                 <div class="text">
                     <h5 class="title">全面防护</h5>
                     <p class="desc">
@@ -54,7 +50,7 @@
                 </div>
             </div>
             <div class="item">
-                <img class="icon" src="{{ asset("/images/staticContentAcceleration/adv-icon-3.png") }}"">
+                <img class="icon" src="{{ asset("/images/staticContentAcceleration/adv-icon-3.png") }}" />
                 <div class="text">
                     <h5 class="title">一键接入</h5>
                     <p class="desc">
@@ -62,7 +58,7 @@
                 </div>
             </div>
             <div class="item">
-                <img class="icon" src="{{ asset("/images/staticContentAcceleration/adv-icon-4.png") }}"">
+                <img class="icon" src="{{ asset("/images/staticContentAcceleration/adv-icon-4.png") }}" />
                 <div class="text">
                     <h5 class="title">性价比高</h5>
                     <p class="desc">
@@ -77,28 +73,28 @@
         <img class="d-block" src="{{ asset("/images/cdn/white-rectangle.png") }}" />
         <div class="item-container">
             <div class="item">
-                <img class="icon" src="{{ asset("/images/staticContentAcceleration/function-icon-1.png") }}"">
+                <img class="icon" src="{{ asset("/images/staticContentAcceleration/function-icon-1.png") }}" />
                 <div class="text">
                     <h5 class="title">源站保护</h5>
                     <p class="desc">从需求分析、加速建议、效果测试，直至客户服务，都有完善的专业化流程。专业化的管理平台，让客户更直观，更实时查询各种统计数据。</p>
                 </div>
             </div>
             <div class="item">
-                <img class="icon" src="{{ asset("/images/staticContentAcceleration/function-icon-2.png") }}"">
+                <img class="icon" src="{{ asset("/images/staticContentAcceleration/function-icon-2.png") }}" />
                 <div class="text">
                     <h5 class="title">跨ISP访问</h5>
                     <p class="desc">15CDN在网络部署上具有完备的安全机制，可以有效地预防黑客入侵，抵御DDOS及CC攻击，在保护源站的基础上同时保证了网络质量。</p>
                 </div>
             </div>
             <div class="item">
-                <img class="icon" src="{{ asset("/images/staticContentAcceleration/function-icon-3.png") }}"">
+                <img class="icon" src="{{ asset("/images/staticContentAcceleration/function-icon-3.png") }}" />
                 <div class="text">
                     <h5 class="title">带宽优化</h5>
                     <p class="desc">通过内容管理技术，网站可以非常方便地实现对发布到CDN网络中的内容进行管理，保证用户看到的内容与源站完全同步。</p>
                 </div>
             </div>
             <div class="item">
-                <img class="icon" src="{{ asset("/images/staticContentAcceleration/function-icon-4.png") }}"">
+                <img class="icon" src="{{ asset("/images/staticContentAcceleration/function-icon-4.png") }}" />
                 <div class="text">
                     <h5 class="title">报表统计</h5>
                     <p class="desc">整个CDN网络的运行状态实行7X24小时全网监控、集中维护，保证问题能够得到及时有效的解决。</p>
@@ -115,27 +111,27 @@
             <hr class="divider">
             <div class="item-container">
                 <div class="item">
-                    <img class="icon" src="{{ asset("/images/staticContentAcceleration/customer-icon-1.png") }}"">
+                    <img class="icon" src="{{ asset("/images/staticContentAcceleration/customer-icon-1.png") }}" />
                     <p class="text">门户类网站</p>
                 </div>
                 <div class="item">
-                    <img class="icon" src="{{ asset("/images/staticContentAcceleration/customer-icon-2.png") }}"">
+                    <img class="icon" src="{{ asset("/images/staticContentAcceleration/customer-icon-2.png") }}" />
                     <p class="text">电子商务类网站</p>
                 </div>
                 <div class="item">
-                    <img class="icon" src="{{ asset("/images/staticContentAcceleration/customer-icon-3.png") }}"">
+                    <img class="icon" src="{{ asset("/images/staticContentAcceleration/customer-icon-3.png") }}" />
                     <p class="text">企业类网站</p>
                 </div>
                 <div class="item">
-                    <img class="icon" src="{{ asset("/images/staticContentAcceleration/customer-icon-4.png") }}"">
+                    <img class="icon" src="{{ asset("/images/staticContentAcceleration/customer-icon-4.png") }}" />
                     <p class="text">新闻类网站</p>
                 </div>
                 <div class="item">
-                    <img class="icon" src="{{ asset("/images/staticContentAcceleration/customer-icon-5.png") }}"">
+                    <img class="icon" src="{{ asset("/images/staticContentAcceleration/customer-icon-5.png") }}" />
                     <p class="text">娱乐/游戏类网站</p>
                 </div>
                 <div class="item">
-                    <img class="icon" src="{{ asset("/images/staticContentAcceleration/customer-icon-6.png") }}"">
+                    <img class="icon" src="{{ asset("/images/staticContentAcceleration/customer-icon-6.png") }}" />
                     <p class="text">证券类网站</p>
                 </div>
             </div>

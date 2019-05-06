@@ -22,14 +22,10 @@
         </div>
         <div class="tab">
             <a class="tab-item" href="/15cdn/sca">静态内容加速</a>
-            <a class="tab-item" href="javascript: void(0);">下载分发加速</a>
-            <a class="tab-item" href="javascript: void(0);">动态加速网络</a>
-            <a class="tab-item" href="javascript: void(0);">流媒体点播加速</a>
-            <a class="tab-item" href="javascript: void(0);">流媒体直播加速</a>
-            <!--            <a class="tab-item" href="/15cdn/dd">下载分发加速</a>-->
-            <!--            <a class="tab-item" href="/15cdn/dsa">动态加速网络</a>-->
-            <!--            <a class="tab-item" href="/15cdn/smlba">流媒体点播加速</a>-->
-            <!--            <a class="tab-item" href="/15cdn/smvoda">流媒体直播加速</a>-->
+            <a class="tab-item" href="/15cdn/dda">下载分发加速</a>
+            <a class="tab-item" href="/15cdn/dsa">动态加速网络</a>
+            <a class="tab-item" href="/15cdn/smvoda">流媒体点播加速</a>
+            <a class="tab-item" href="/15cdn/smlba">流媒体直播加速</a>
         </div>
     </div>
     <!--套餐推荐-->
@@ -161,42 +157,42 @@
         <h5 class="sub-title" style="color: #fff;">采用先进技术，提供个性化行业解决方案，帮您实现更丰富的业务需求</h5>
         <div class="item-container">
             <div class="item">
-                <img class="icon" src="{{ asset("/images/cdn/adv-icon-1.png") }}"">
+                <img class="icon" src="{{ asset("/images/cdn/adv-icon-1.png") }}" />
                 <div class="text">
                     <h5 class="title">服务更专业</h5>
                     <p class="desc">从需求分析、加速建议、效果测试，直至客户服务，都有完善的专业化流程。专业化的管理平台，让客户更直观，更实时查询各种统计数据。</p>
                 </div>
             </div>
             <div class="item">
-                <img class="icon" src="{{ asset("/images/cdn/adv-icon-2.png") }}"">
+                <img class="icon" src="{{ asset("/images/cdn/adv-icon-2.png") }}" />
                 <div class="text">
                     <h5 class="title">安全性更高</h5>
                     <p class="desc">15CDN在网络部署上具有完备的安全机制，可以有效地预防黑客入侵，抵御DDOS及CC攻击，在保护源站的基础上同时保证了网络质量。</p>
                 </div>
             </div>
             <div class="item">
-                <img class="icon" src="{{ asset("/images/cdn/adv-icon-3.png") }}"">
+                <img class="icon" src="{{ asset("/images/cdn/adv-icon-3.png") }}" />
                 <div class="text">
                     <h5 class="title">内容管理更简单</h5>
                     <p class="desc">通过内容管理技术，网站可以非常方便地实现对发布到CDN网络中的内容进行管理，保证用户看到的内容与源站完全同步。</p>
                 </div>
             </div>
             <div class="item">
-                <img class="icon" src="{{ asset("/images/cdn/adv-icon-4.png") }}"">
+                <img class="icon" src="{{ asset("/images/cdn/adv-icon-4.png") }}" />
                 <div class="text">
                     <h5 class="title">丰富的监控系统</h5>
                     <p class="desc">整个CDN网络的运行状态实行7X24小时全网监控、集中维护，保证问题能够得到及时有效的解决。</p>
                 </div>
             </div>
             <div class="item">
-                <img class="icon" src="{{ asset("/images/cdn/adv-icon-5.png") }}"">
+                <img class="icon" src="{{ asset("/images/cdn/adv-icon-5.png") }}" />
                 <div class="text">
                     <h5 class="title">操作简单</h5>
                     <p class="desc">使用15CDN服务，对于互联网用户的访问是完全透明的，网站方面的切换过程简单易行，操作方便。完善的冗余机制在设备、节点和网络三个层面上实现了完善的冗余，保证在设备或节点出现故障时，不会影响用户的正常访问。</p>
                 </div>
             </div>
             <div class="item">
-                <img class="icon" src="{{ asset("/images/cdn/adv-icon-6.png") }}"">
+                <img class="icon" src="{{ asset("/images/cdn/adv-icon-6.png") }}" />
                 <div class="text">
                     <h5 class="title">业务更全面</h5>
                     <p class="desc">15CND始终以客户为导向，提供基于互联网的 CDN 解决方案，产品涵盖静态、动态页面加速；文件上传、存储、分发。我们为更多的新型网站提供专业的CDN服务，如新闻类站点、政府类站点、金融类站点、游戏类站点、视频及娱乐等平台。</p>

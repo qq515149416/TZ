@@ -106,13 +106,13 @@
                         </dl>
                         <dl style="text-align: right;">
                             <dt>
-                                <a style="margin-right: 38px;" href="/page/tz/15cdn">CDN</a>
+                                <a style="margin-right: 38px;" href="/15cdn/index">CDN</a>
                             </dt>
                             <dd>
-                                <a style="margin-right: 24px;" href="/page/tz/15cdn">视频加速</a>
+                                <a style="margin-right: 24px;" href="/cdn/tz/15cdn">视频加速</a>
                             </dd>
                             <dd>
-                                <a href="/page/tz/15cdn">静态内容加速</a>
+                                <a href="/15cdn/sca">静态内容加速</a>
                             </dd>
                             <dd>
                                 <a href="/page/tz/15cdn">下载分发加速</a>

@@ -298,6 +298,14 @@ $(function () {
       $(this).addClass('active').tab('show').siblings().removeClass('active');
     }
   });
+  /**
+   * CDN栏目主页-常见问题的日期hover
+   */
+  $('#tz-cdn .common-question .text').hover(function () {
+    $(this).siblings('.date').addClass('active');
+  }, function () {
+    $(this).siblings('.date').removeClass('active');
+  });
 });
 
 /***/ }),

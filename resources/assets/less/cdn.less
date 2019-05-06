@@ -104,6 +104,7 @@
 
   .package {
     padding-top: 40px;
+    padding-bottom: 50px;
     text-align: center;
 
     .desc {
@@ -134,7 +135,6 @@
         vertical-align: middle;
         color: #444;
         letter-spacing: 1.2px;
-        border-bottom-width: 2px;
         border: 1px solid #d2d2d2;
       }
 
@@ -145,6 +145,7 @@
             padding: 10px 40px;
             vertical-align: middle;
             border: 1px solid #d2d2d2;
+            line-height: 26px;
           }
         }
       }
@@ -184,6 +185,300 @@
       &:hover {
         background-color: #e60012;
         color: #fff;
+      }
+    }
+  }
+
+  .product-adv, .product-function {
+    text-align: center;
+    padding-top: 40px;
+    padding-bottom: 60px;
+    background: url("../images/cdn/cdn-adv-bg.png") no-repeat center;
+    background-size: cover;
+
+    .item-container {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 40px auto 0;
+
+      .item {
+        position: relative;
+        width: 580px;
+        margin: 10px;
+        padding: 20px 23px;
+        border: 1px solid #fff;
+        border-radius: 10px;
+        text-align: left;
+
+        .icon {
+          display: inline-block;
+          margin-top: 3px;
+          vertical-align: top;
+        }
+
+        .text {
+          width: ~"calc(100% - 75px)";
+          display: inline-block;
+          padding-left: 17px;
+          color: #fff;
+
+          .title {
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            margin-top: 0;
+            margin-bottom: 10px;
+            text-align: left;
+            color: #fff;
+          }
+
+          .desc {
+            line-height: 26px;
+            text-align: left;
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .service-matrix {
+    position: relative;
+    padding-top: 40px;
+    height: 685px;
+    text-align: center;
+
+    .item-container {
+      position: absolute;
+      left: 50%;
+      -webkit-transform: translateX(-50%);
+      -moz-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+      -o-transform: translateX(-50%);
+      transform: translateX(-50%);
+      top: 0;
+      width: 1200px;
+      height: 100%;
+      background: url("../images/cdn/cdn-service-matrix-bg.png") no-repeat 75% center;
+      padding-left: 65px;
+      padding-top: 168px;
+    }
+
+    .item {
+      width: 610px;
+      padding-left: 20px;
+      padding-right: 20px;
+      margin-bottom: 20px;
+
+      .title {
+        margin-top: 0;
+        margin-bottom: 5px;
+        text-align: left;
+        color: #333;
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 0.8px;
+      }
+
+      .desc {
+        text-align: left;
+        color: #666;
+        line-height: 26px;
+      }
+    }
+  }
+
+  .common-question {
+    padding-top: 40px;
+    padding-bottom: 60px;
+    text-align: center;
+    background: url("../images/cdn/cdn-common-question-bg.png") no-repeat center 0%;
+
+    .list-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      max-width: 1200px;
+      margin: 30px auto 0;
+    }
+
+    .list-group {
+      width: 350px;
+      text-align: center;
+    }
+
+    .list-group-item {
+      display: inline-block;
+      width: 100%;
+      padding: 15px 0;
+      background: url("../images/cdn/dot.png") no-repeat 1% center;
+      color: #666;
+      font-size: 14px;
+      list-style-type: none;
+      border: none;
+      border-radius: unset;
+      border-bottom: 1px solid #bdbdbd;
+
+      .text {
+        float: left;
+        color: inherit;
+        text-indent: 1.6em;
+
+        &:hover {
+          color: #3046bc;
+        }
+      }
+
+      .date {
+        float: right;
+
+        &.active {
+          color: #3046bc;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .usage-scenario {
+    padding-top: 40px;
+    padding-bottom: 60px;
+    text-align: center;
+    background: url("../images/cdn/cdn-usage-scenario-bg.png") no-repeat center 0%;
+
+    .customer, .target {
+      width: 1200px;
+      margin: 20px auto 0;
+      text-align: center;
+
+      .title {
+        display: inline-block;
+        font-size: 16px;
+        font-weight: 600;
+        color: #2139b7;
+        line-height: 36px;
+        letter-spacing: 0.8px;
+        border-bottom: 1.5px solid #263cb5;
+      }
+
+      .divider {
+        width: ~"calc(100% - 20px)";
+        border-width: 1.5px;
+        border-color: #dbdbdb;
+        margin-top: -21.5px;
+        margin-bottom: 30px;
+      }
+
+      .item-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+      }
+
+      .icon {
+        margin-bottom: 15px;
+      }
+
+      .text {
+        color: #333;
+        font-weight: 600;
+        letter-spacing: 0.7px;
+      }
+
+    }
+  }
+
+  .consult {
+    height: 192px;
+    background: url("../images/cdn/consult-bg.png") no-repeat center;
+    background-size: cover;
+    text-align: center;
+    padding-top: 30px;
+
+    .title {
+      color: #fff;
+      font-size: 26px;
+      line-height: 41px;
+      margin-bottom: 20px;
+      font-weight: unset;
+    }
+
+    .consult-btn {
+      padding: 8px 40px;
+      font-size: 14px;
+      line-height: 41px;
+      color: #fff;
+      letter-spacing: 2.8px;
+      text-decoration: none;
+      background-color: transparent;
+      border: 1px solid #fff;
+      border-radius: 17px;
+      -webkit-transition: all .4s ease-in-out;
+      -moz-transition: all .4s ease-in-out;
+      -ms-transition: all .4s ease-in-out;
+      -o-transition: all .4s ease-in-out;
+      transition: all .4s ease-in-out;
+
+      &:hover {
+        background-color: #fff;
+        color: #043fc4;
+      }
+    }
+  }
+
+  &.common {
+
+    .banner {
+      .cont {
+        padding-left: 0;
+      }
+
+      .text {
+        text-align: left;
+      }
+
+      .sub-text {
+        text-align: left;
+      }
+    }
+
+    .product-adv {
+      background: unset;
+
+      .item-container {
+        margin-top: 5px;
+      }
+
+      .item {
+        margin: 0 10px;
+        padding: 20px;
+        border: none;
+        border-radius: unset;
+        text-align: center;
+
+        .icon {
+          display: block;
+          margin: 0 auto 20px;
+        }
+
+        .text {
+          width: unset;
+          display: block;
+          padding-left: 0;
+
+          .title {
+            text-align: center;
+            color: #444;
+          }
+
+          .desc {
+            text-align: center;
+            color: #666;
+          }
+        }
       }
     }
   }

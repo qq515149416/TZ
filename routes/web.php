@@ -43,6 +43,7 @@ Route::group([
     Route::get('/protection/{page}', 'Show\ProtectionController@index');
     Route::get('/test', 'Show\TestController@index');
     Route::get('/15cdn/{page}', 'Show\CdnController@index');
+    Route::get('/datacenter', 'Show\DataCenterController@index');
 });
 
 /**

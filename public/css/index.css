@@ -5372,3 +5372,196 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background-color: #e60012;
   color: #fff;
 }
+#datacenter .banner {
+  border-top: 1px solid transparent;
+  height: 561px;
+  background-color: #10142e;
+  text-align: center;
+}
+#datacenter .banner h2 {
+  margin-top: 173px;
+  margin-bottom: 25px;
+  color: #fff;
+  font-size: 50px;
+  font-weight: normal;
+}
+#datacenter .banner p {
+  font-size: 16px;
+  color: #fff;
+  line-height: 28px;
+  margin: 0 auto;
+  margin-bottom: 49px;
+  width: 754px;
+}
+#datacenter .banner a {
+  display: inline-block;
+  height: 40px;
+  width: 180px;
+  text-align: center;
+  line-height: 40px;
+  color: #043fc4;
+  text-decoration: none;
+  background-color: #fff;
+  border-radius: 20px;
+}
+#datacenter .banner nav {
+  margin-top: 83px;
+}
+#datacenter .banner nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 880px;
+  margin: 0 auto;
+}
+#datacenter .banner nav ul li {
+  float: left;
+  margin-right: 20px;
+  cursor: pointer;
+}
+#datacenter .banner nav ul li a {
+  text-align: center;
+  font-size: 18px;
+  width: 280px;
+  height: 64px;
+  line-height: 64px;
+  display: block;
+  text-decoration: none;
+  color: #ffffff;
+  background: -webkit-gradient(linear, left top, right top, from(#b9ccfc), to(#6d8fff));
+  background: linear-gradient(to right, #b9ccfc, #6d8fff);
+  border-radius: 10px;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+#datacenter .banner nav ul li a.aticve {
+  background: #fff;
+  color: #043fc4;
+}
+#datacenter .banner nav ul li a:hover {
+  background: #fff;
+  color: #043fc4;
+}
+#datacenter .banner nav ul li:last-of-type {
+  margin: 0;
+}
+#datacenter .main {
+  padding: 80px 0 82px 0;
+}
+#datacenter .main > h3 {
+  margin: 0;
+  font-size: 26px;
+  color: #333333;
+  padding-bottom: 33px;
+  margin-bottom: 40px;
+  text-align: center;
+  position: relative;
+}
+#datacenter .main > h3::after {
+  content: "";
+  position: absolute;
+  height: 6px;
+  width: 52px;
+  background-color: #2139b7;
+  left: 50%;
+  bottom: 0;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  border-radius: 3px;
+}
+#datacenter .main > .data {
+  width: 1180px;
+  margin: 0 auto;
+}
+#datacenter .main > .data > .tz-thumbnail {
+  width: 340px;
+  height: 422px;
+  background-color: #d9d9d9;
+}
+#datacenter .main > .data > .info > ul {
+  list-style: none;
+  margin: 0;
+  margin-bottom: 28px;
+  padding: 0;
+  border: 1px solid #dcdcdc;
+}
+#datacenter .main > .data > .info > ul > li {
+  border-bottom: 1px solid #dcdcdc;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+#datacenter .main > .data > .info > ul > li > .title {
+  width: 189px;
+}
+#datacenter .main > .data > .info > ul > li > .value {
+  width: 608px;
+}
+#datacenter .main > .data > .info > ul > li > span {
+  height: 51px;
+  line-height: 51px;
+  text-align: center;
+  border-right: 1px solid #dcdcdc;
+  font-size: 14px;
+  color: #666666;
+}
+#datacenter .main > .data > .info > ul > li > span:last-of-type {
+  border: none;
+}
+#datacenter .main > .data > .info > ul > li > span strong {
+  font-weight: normal;
+  color: #f00101;
+  margin: 0 5px;
+}
+#datacenter .main > .data > .info > ul > li:last-of-type {
+  border: none;
+}
+#datacenter .main > .data > .info > nav > a {
+  display: inline-block;
+  text-decoration: none;
+  line-height: 28px;
+  height: 28px;
+  border: 1px solid #2139b7;
+  padding: 0 20px;
+  letter-spacing: 4px;
+  margin-right: 10px;
+  color: #3f53c1;
+  border-radius: 4px;
+  font-size: 14px;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+#datacenter .main > .data > .info > nav > a:hover {
+  background-color: #2139b7;
+  color: #fff;
+}
+#datacenter .main > .data > .info > nav > a:last-of-type {
+  margin: 0;
+}
+#datacenter .main > .quality {
+  margin-top: 80px;
+  padding-top: 70px;
+  background-color: #263ab8;
+  border-radius: 100px 100px 0 0;
+}
+#datacenter .main > .quality > h3 {
+  margin: 0;
+  font-size: 26px;
+  color: #fff;
+  padding-bottom: 33px;
+  margin-bottom: 40px;
+  text-align: center;
+  position: relative;
+}
+#datacenter .main > .quality > h3::after {
+  content: "";
+  position: absolute;
+  height: 6px;
+  width: 52px;
+  background-color: #fff;
+  left: 50%;
+  bottom: 0;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  border-radius: 3px;
+}

@@ -314,22 +314,6 @@ $(function () {
       $(this).addClass('active').tab('show').siblings().removeClass('active');
     }
   });
-  /**
-   * 安全防护主页-常见问题的日期hover
-   */
-  $('#tz-protection .common-question .text').hover(function () {
-    $(this).siblings('.date').addClass('active');
-  }, function () {
-    $(this).siblings('.date').removeClass('active');
-  });
-  /**
-   * CDN栏目主页-常见问题的日期hover
-   */
-  $('#tz-cdn .common-question .text').hover(function () {
-    $(this).siblings('.date').addClass('active');
-  }, function () {
-    $(this).siblings('.date').removeClass('active');
-  });
   //   高防ip购买
   $("#purchaseTime").on("shown.bs.modal", function (event) {
     var purchaseTime = $(this);

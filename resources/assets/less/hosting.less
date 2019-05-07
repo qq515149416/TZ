@@ -320,15 +320,22 @@
             float: left;
             color: inherit;
 
-            &:hover {
-              color: #3046bc;
+            &:focus {
+              text-decoration: none;
             }
           }
 
           .date {
             float: right;
+            color: inherit;
 
-            &.active {
+            &:focus {
+              text-decoration: none;
+            }
+          }
+
+          &:hover {
+            .text, .date {
               color: #3046bc;
               text-decoration: underline;
             }

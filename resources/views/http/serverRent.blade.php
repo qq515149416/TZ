@@ -327,7 +327,7 @@
       <p class="text">服务器租用常见问题</p>
       <p class="sub-text">关注腾正，关注IDC，关注云计算，关注信息安全,关注互联网动向</p>
     </div>
-    <div class="content">
+    <div class="list-container">
       <ul class="list-group">
         <li class="list-group-item">
           <a class="text" href="javascript: void(0);"><span>网页游戏服务器租用如何选择？</span></a>

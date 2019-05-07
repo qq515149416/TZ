@@ -2564,18 +2564,13 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   float: left;
   color: inherit;
 }
-#tz-server-rent-content .common-question .list-container .list-group .list-group-item .text:focus {
-  text-decoration: none;
+#tz-server-rent-content .common-question .list-container .list-group .list-group-item .text:hover {
+  color: #3046bc;
 }
 #tz-server-rent-content .common-question .list-container .list-group .list-group-item .date {
   float: right;
-  color: inherit;
 }
-#tz-server-rent-content .common-question .list-container .list-group .list-group-item .date:focus {
-  text-decoration: none;
-}
-#tz-server-rent-content .common-question .list-container .list-group .list-group-item:hover .text,
-#tz-server-rent-content .common-question .list-container .list-group .list-group-item:hover .date {
+#tz-server-rent-content .common-question .list-container .list-group .list-group-item .date.active {
   color: #3046bc;
   text-decoration: underline;
 }
@@ -3851,18 +3846,13 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   float: left;
   color: inherit;
 }
-#tz-server-hosting .common-question .list-container .list-group .list-group-item .text:focus {
-  text-decoration: none;
+#tz-server-hosting .common-question .list-container .list-group .list-group-item .text:hover {
+  color: #3046bc;
 }
 #tz-server-hosting .common-question .list-container .list-group .list-group-item .date {
   float: right;
-  color: inherit;
 }
-#tz-server-hosting .common-question .list-container .list-group .list-group-item .date:focus {
-  text-decoration: none;
-}
-#tz-server-hosting .common-question .list-container .list-group .list-group-item:hover .text,
-#tz-server-hosting .common-question .list-container .list-group .list-group-item:hover .date {
+#tz-server-hosting .common-question .list-container .list-group .list-group-item .date.active {
   color: #3046bc;
   text-decoration: underline;
 }
@@ -4637,6 +4627,91 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #high-defense-cdn .function .item:hover {
   background-color: #8692ff;
   cursor: pointer;
+}
+#highDefenseProduct .highDefenseProduct {
+  text-align: center;
+  padding-top: 40px;
+  padding-bottom: 30px;
+  background-color: #fff;
+}
+#highDefenseProduct .highDefenseProduct .title {
+  color: #333;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: 1.3px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+#highDefenseProduct .highDefenseProduct .sub-title {
+  margin-top: 20px;
+  color: #999;
+}
+#highDefenseProduct .highDefenseProduct .product {
+  margin-top: 30px;
+}
+#highDefenseProduct .highDefenseProduct .product-item {
+  padding-bottom: 28px;
+  border: 1px solid #eee;
+  -webkit-box-shadow: 0px 3px 10px #ccc;
+          box-shadow: 0px 3px 10px #ccc;
+  background-color: #fff;
+}
+#highDefenseProduct .highDefenseProduct .product-item h2 {
+  margin-top: 30px;
+  margin-bottom: 20px;
+  font-size: 18px;
+  color: #333;
+  font-weight: normal;
+}
+#highDefenseProduct .highDefenseProduct .product-item .config p {
+  width: 80%;
+  margin: 0px auto;
+  margin-top: 7px;
+  text-align: left;
+  padding-left: 20px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid #e5e5e5;
+  font-size: 12px;
+  color: #666;
+}
+#highDefenseProduct .highDefenseProduct .product-item .product-item-btn {
+  margin-top: 20px;
+}
+#highDefenseProduct .highDefenseProduct .product-item .product-item-btn .btn {
+  border: 1px solid #1f86ed;
+  color: #666;
+  border-radius: 2px;
+}
+#highDefenseProduct .highDefenseProduct .product-item .product-item-btn .btn:hover {
+  border: 1px solid #1f86ed;
+  background: #1f86ed;
+  color: #fff;
+}
+#highDefenseProduct .highDefenseProduct .product-item .product-item-price {
+  margin: 13px auto;
+  font-size: 12px;
+  color: #4c4c4c;
+  height: 80px;
+  line-height: 30px;
+  position: relative;
+}
+#highDefenseProduct .highDefenseProduct .product-item .product-item-price span:first-of-type {
+  display: inline-block;
+  font-size: 20px;
+  color: #f84;
+  border: 1px solid #eee;
+  width: 80px;
+  height: 80px;
+  border-radius: 80px;
+  line-height: 80px;
+  text-align: center;
+  margin: 0px auto;
+}
+#highDefenseProduct .highDefenseProduct .product-item .product-item-price span:last-of-type {
+  line-height: 16px;
+  font-size: 14px;
+  position: relative;
+  bottom: -25px;
 }
 #high-defense-ip .banner {
   background: url(/images/ip-banner-bg.png?983eeccaab9a5aecb781559649155a9c) no-repeat center;
@@ -5527,18 +5602,13 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   color: inherit;
   text-indent: 1.6em;
 }
-.tz-cdn-content .common-question .list-group-item .text:focus {
-  text-decoration: none;
+.tz-cdn-content .common-question .list-group-item .text:hover {
+  color: #3046bc;
 }
 .tz-cdn-content .common-question .list-group-item .date {
-  color: inherit;
   float: right;
 }
-.tz-cdn-content .common-question .list-group-item .date:focus {
-  text-decoration: none;
-}
-.tz-cdn-content .common-question .list-group-item:hover .text,
-.tz-cdn-content .common-question .list-group-item:hover .date {
+.tz-cdn-content .common-question .list-group-item .date.active {
   color: #3046bc;
   text-decoration: underline;
 }
@@ -5835,7 +5905,6 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #datacenter .main > .quality {
   margin-top: 80px;
   padding-top: 70px;
-  padding-bottom: 48px;
   background-color: #263ab8;
   border-radius: 100px 100px 0 0;
 }
@@ -5864,6 +5933,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   list-style: none;
   margin: 0;
   padding: 0;
+  padding-bottom: 48px;
   width: 1180px;
   margin: 0 auto;
 }

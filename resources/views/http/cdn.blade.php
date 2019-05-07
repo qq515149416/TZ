@@ -188,16 +188,14 @@
                 <img class="icon" src="{{ asset("/images/cdn/adv-icon-5.png") }}" />
                 <div class="text">
                     <h5 class="title">操作简单</h5>
-                    <p class="desc">
-                        使用15CDN服务，对于互联网用户的访问是完全透明的，网站方面的切换过程简单易行，操作方便。完善的冗余机制在设备、节点和网络三个层面上实现了完善的冗余，保证在设备或节点出现故障时，不会影响用户的正常访问。</p>
+                    <p class="desc">使用15CDN服务，对于互联网用户的访问是完全透明的，网站方面的切换过程简单易行，操作方便。完善的冗余机制在设备、节点和网络三个层面上实现了完善的冗余，保证在设备或节点出现故障时，不会影响用户的正常访问。</p>
                 </div>
             </div>
             <div class="item">
                 <img class="icon" src="{{ asset("/images/cdn/adv-icon-6.png") }}" />
                 <div class="text">
                     <h5 class="title">业务更全面</h5>
-                    <p class="desc">15CND始终以客户为导向，提供基于互联网的 CDN
-                        解决方案，产品涵盖静态、动态页面加速；文件上传、存储、分发。我们为更多的新型网站提供专业的CDN服务，如新闻类站点、政府类站点、金融类站点、游戏类站点、视频及娱乐等平台。</p>
+                    <p class="desc">15CND始终以客户为导向，提供基于互联网的 CDN 解决方案，产品涵盖静态、动态页面加速；文件上传、存储、分发。我们为更多的新型网站提供专业的CDN服务，如新闻类站点、政府类站点、金融类站点、游戏类站点、视频及娱乐等平台。</p>
                 </div>
             </div>
         </div>
@@ -237,29 +235,7 @@
             <ul class="list-group">
                 <li class="list-group-item">
                     <a class="text" href="javascript: void(0);"><span>什么是CDN技术？</span></a>
-                    <a class="date" href="javascript: void(0);">2019.01.21</a>
-                </li>
-                <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>CDN适用哪些场景？ </span></a>
-                    <a class="date" href="javascript: void(0);">2019.01.21</a>
-                </li>
-                <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>什么内容分发网络CDN？</span></a>
-                    <a class="date" href="javascript: void(0);">2019.01.21</a>
-                </li>
-                <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>CDN支持哪些业务类型？</span></a>
-                    <a class="date" href="javascript: void(0);">2019.01.21</a>
-                </li>
-                <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>CDN支持二级域名加速么？</span></a>
-                    <a class="date" href="javascript: void(0);">2019.01.21</a>
-                </li>
-            </ul>
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>CDN加速怎么收费？</span></a>
-                    <a class="date" href="javascript: void(0);">2019.01.21</a>
+                    <span class="date">2019.01.21</span>
                 </li>
                 <li class="list-group-item">
                     <a class="text" href="javascript: void(0);"><span>CDN适用哪些场景？ </span></a>
@@ -267,37 +243,59 @@
                 </li>
                 <li class="list-group-item">
                     <a class="text" href="javascript: void(0);"><span>什么内容分发网络CDN？</span></a>
-                    <a class="date" href="javascript: void(0);">2019.01.21</a>
+                    <span class="date">2019.01.21</span>
                 </li>
                 <li class="list-group-item">
                     <a class="text" href="javascript: void(0);"><span>CDN支持哪些业务类型？</span></a>
-                    <a class="date" href="javascript: void(0);">2019.01.21</a>
+                    <span class="date">2019.01.21</span>
                 </li>
                 <li class="list-group-item">
                     <a class="text" href="javascript: void(0);"><span>CDN支持二级域名加速么？</span></a>
-                    <a class="date" href="javascript: void(0);">2019.01.21</a>
+                    <span class="date">2019.01.21</span>
+                </li>
+            </ul>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <a class="text" href="javascript: void(0);"><span>CDN加速怎么收费？</span></a>
+                    <span class="date">2019.01.21</span>
+                </li>
+                <li class="list-group-item">
+                    <a class="text" href="javascript: void(0);"><span>CDN适用哪些场景？ </span></a>
+                    <span class="date">2019.01.21</span>
+                </li>
+                <li class="list-group-item">
+                    <a class="text" href="javascript: void(0);"><span>什么内容分发网络CDN？</span></a>
+                    <span class="date">2019.01.21</span>
+                </li>
+                <li class="list-group-item">
+                    <a class="text" href="javascript: void(0);"><span>CDN支持哪些业务类型？</span></a>
+                    <span class="date">2019.01.21</span>
+                </li>
+                <li class="list-group-item">
+                    <a class="text" href="javascript: void(0);"><span>CDN支持二级域名加速么？</span></a>
+                    <span class="date">2019.01.21</span>
                 </li>
             </ul>
             <ul class="list-group">
                 <li class="list-group-item">
                     <a class="text" href="javascript: void(0);"><span>CDN加速对SEO有什么影响？</span></a>
-                    <a class="date" href="javascript: void(0);">2019.01.21</a>
+                    <span class="date">2019.01.21</span>
                 </li>
                 <li class="list-group-item">
                     <a class="text" href="javascript: void(0);"><span>CDN适用哪些场景？ </span></a>
-                    <a class="date" href="javascript: void(0);">2019.01.21</a>
+                    <span class="date">2019.01.21</span>
                 </li>
                 <li class="list-group-item">
                     <a class="text" href="javascript: void(0);"><span>什么内容分发网络CDN？</span></a>
-                    <a class="date" href="javascript: void(0);">2019.01.21</a>
+                    <span class="date">2019.01.21</span>
                 </li>
                 <li class="list-group-item">
                     <a class="text" href="javascript: void(0);"><span>CDN支持哪些业务类型？</span></a>
-                    <a class="date" href="javascript: void(0);">2019.01.21</a>
+                    <span class="date">2019.01.21</span>
                 </li>
                 <li class="list-group-item">
                     <a class="text" href="javascript: void(0);"><span>CDN支持二级域名加速么？</span></a>
-                    <a class="date" href="javascript: void(0);">2019.01.21</a>
+                    <span class="date">2019.01.21</span>
                 </li>
             </ul>
         </div>

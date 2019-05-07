@@ -182,7 +182,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background-color: transparent;
   border: none;
   padding: 0;
-  font-size: 16px;
+  font-size: 18px;
   margin-bottom: 0;
 }
 .tz-navbar-style .container-fluid {
@@ -208,7 +208,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   float: right;
 }
 .tz-navbar-style ul.navbar-nav:last-of-type li a {
-  width: 100px;
+  width: 110px;
   text-align: center;
 }
 .tz-navbar-style ul.navbar-nav {
@@ -225,7 +225,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   left: 50%;
   -webkit-transform: translateX(-50%) translateY(1px);
           transform: translateX(-50%) translateY(1px);
-  width: 513px;
+  width: 533px;
   background-color: #fff;
   border-radius: 4px;
   padding: 0 40px;
@@ -258,7 +258,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-navbar-style ul.navbar-nav li .dropdown-mark ul li a {
   height: auto;
   color: #444444;
-  line-height: 14px;
+  line-height: 16px;
   font-size: 14px;
 }
 .tz-navbar-style ul.navbar-nav li .dropdown-mark ul li a:hover {
@@ -270,14 +270,14 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-navbar-style ul.navbar-nav li .dropdown-mark dl {
   margin: 0;
   float: left;
-  width: 108.25px;
+  width: 113.25px;
   height: 184px;
 }
 .tz-navbar-style ul.navbar-nav li .dropdown-mark dl dt {
   margin-bottom: 12px;
   padding-bottom: 12px;
   border-bottom: 1px solid #dddddd;
-  line-height: 14px;
+  line-height: 16px;
 }
 .tz-navbar-style ul.navbar-nav li .dropdown-mark dl dt a {
   color: #444444;
@@ -285,8 +285,8 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   text-decoration: none;
 }
 .tz-navbar-style ul.navbar-nav li .dropdown-mark dl dd {
-  padding-bottom: 12px;
-  line-height: 12px;
+  padding-bottom: 14px;
+  line-height: 14px;
 }
 .tz-navbar-style ul.navbar-nav li .dropdown-mark dl dd a {
   font-size: 14px;

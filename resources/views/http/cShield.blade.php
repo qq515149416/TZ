@@ -23,7 +23,7 @@
         </div>
         <div class="tab">
             <a class="tab-item" href="/protection/high-defense-cdn">高防CDN</a>
-            <a class="tab-item" href="/protection/high-defense-ip"> DDOS高防IP</a>
+            <a class="tab-item" href="/dist/highDefense.html"> DDOS高防IP</a>
             <a class="tab-item active" href="/protection/c-shield">防C盾</a>
         </div>
     </div>

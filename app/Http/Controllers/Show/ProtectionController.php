@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Show;
 
 use App\Http\Controllers\Controller;
 
+use App\Http\Models\DefenseIp\PackageModel;
+
 class ProtectionController extends Controller
 {
     public function index($page)
@@ -22,5 +24,14 @@ class ProtectionController extends Controller
                 return view("http/cShield");
                 break;
         }
+    }
+    public function gaofang()
+    {
+        $model = new PackageModel();
+
+		$list = $model->showPackage();
+        return view("http/highDefenseIp",[
+            "data" => $list['data']
+        ]);
     }
 }

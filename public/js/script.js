@@ -330,6 +330,22 @@ $(function () {
   }, function () {
     $(this).siblings('.date').removeClass('active');
   });
+  //   高防ip购买
+  $("#purchaseTime").on("shown.bs.modal", function (event) {
+    var purchaseTime = $(this);
+    purchaseTime.find(".btn.ok").click(function () {
+      $.get(location.protocol + "//" + location.hostname + "/home/defenseIp/buyDefenseIpNow", {
+        package_id: event.relatedTarget.dataset.id,
+        buy_time: purchaseTime.find(".duration").val()
+      }, function (data) {
+        alert(data.msg);
+        if (data.code == 1) {
+          // console.log(data.data);
+          location.href = "/dist/highDefensePay.html?orderid=" + data.data;
+        }
+      });
+    });
+  });
 });
 
 /***/ }),

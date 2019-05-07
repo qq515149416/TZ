@@ -17,6 +17,7 @@ html .tz-kefu {
   top: 50%;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
+  z-index: 99;
 }
 body .tz-kefu .tz-kefu-item,
 html .tz-kefu .tz-kefu-item {
@@ -261,7 +262,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-navbar-style ul.navbar-nav li .dropdown-mark ul li a {
   height: auto;
   color: #444444;
-  line-height: 16px;
+  line-height: 14px;
   font-size: 14px;
 }
 .tz-navbar-style ul.navbar-nav li .dropdown-mark ul li a:hover {

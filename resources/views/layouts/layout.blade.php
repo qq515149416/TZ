@@ -65,7 +65,7 @@
                                 <a href="/protection/high-defense-cdn">高防CDN</a>
                             </dd>
                             <dd>
-                                <a href="/protection/high-defense-ip">DDOS高防IP</a>
+                                <a href="/dist/highDefense.html">DDOS高防IP</a>
                             </dd>
                             <dd>
                                 <a href="/protection/c-shield">防C盾</a>

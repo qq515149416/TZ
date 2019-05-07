@@ -2564,13 +2564,18 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   float: left;
   color: inherit;
 }
-#tz-server-rent-content .common-question .list-container .list-group .list-group-item .text:hover {
-  color: #3046bc;
+#tz-server-rent-content .common-question .list-container .list-group .list-group-item .text:focus {
+  text-decoration: none;
 }
 #tz-server-rent-content .common-question .list-container .list-group .list-group-item .date {
   float: right;
+  color: inherit;
 }
-#tz-server-rent-content .common-question .list-container .list-group .list-group-item .date.active {
+#tz-server-rent-content .common-question .list-container .list-group .list-group-item .date:focus {
+  text-decoration: none;
+}
+#tz-server-rent-content .common-question .list-container .list-group .list-group-item:hover .text,
+#tz-server-rent-content .common-question .list-container .list-group .list-group-item:hover .date {
   color: #3046bc;
   text-decoration: underline;
 }
@@ -3846,13 +3851,18 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   float: left;
   color: inherit;
 }
-#tz-server-hosting .common-question .list-container .list-group .list-group-item .text:hover {
-  color: #3046bc;
+#tz-server-hosting .common-question .list-container .list-group .list-group-item .text:focus {
+  text-decoration: none;
 }
 #tz-server-hosting .common-question .list-container .list-group .list-group-item .date {
   float: right;
+  color: inherit;
 }
-#tz-server-hosting .common-question .list-container .list-group .list-group-item .date.active {
+#tz-server-hosting .common-question .list-container .list-group .list-group-item .date:focus {
+  text-decoration: none;
+}
+#tz-server-hosting .common-question .list-container .list-group .list-group-item:hover .text,
+#tz-server-hosting .common-question .list-container .list-group .list-group-item:hover .date {
   color: #3046bc;
   text-decoration: underline;
 }
@@ -5602,13 +5612,18 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   color: inherit;
   text-indent: 1.6em;
 }
-.tz-cdn-content .common-question .list-group-item .text:hover {
-  color: #3046bc;
+.tz-cdn-content .common-question .list-group-item .text:focus {
+  text-decoration: none;
 }
 .tz-cdn-content .common-question .list-group-item .date {
+  color: inherit;
   float: right;
 }
-.tz-cdn-content .common-question .list-group-item .date.active {
+.tz-cdn-content .common-question .list-group-item .date:focus {
+  text-decoration: none;
+}
+.tz-cdn-content .common-question .list-group-item:hover .text,
+.tz-cdn-content .common-question .list-group-item:hover .date {
   color: #3046bc;
   text-decoration: underline;
 }

@@ -275,22 +275,6 @@ $(function () {
     $('#tz-server-hosting .expand-item.collapse.in').collapse('toggle').siblings().collapse('hide');
   });
   /**
-   * 服务器托管页-常见问题的日期hover
-   */
-  $('#tz-server-hosting .common-question .text').hover(function () {
-    $(this).siblings('.date').addClass('active');
-  }, function () {
-    $(this).siblings('.date').removeClass('active');
-  });
-  /**
-   * 服务器租用主页-常见问题的日期hover
-   */
-  $('#tz-server-rent-content .common-question .text').hover(function () {
-    $(this).siblings('.date').addClass('active');
-  }, function () {
-    $(this).siblings('.date').removeClass('active');
-  });
-  /**
    * 安全防护主页-产品矩阵的hover效果
    */
   $('#tz-protection .product-matrix .item').on('mouseover', function (e) {
@@ -314,6 +298,7 @@ $(function () {
       $(this).addClass('active').tab('show').siblings().removeClass('active');
     }
   });
+
   //   高防ip购买
   $("#purchaseTime").on("shown.bs.modal", function (event) {
     var purchaseTime = $(this);

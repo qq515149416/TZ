@@ -1005,7 +1005,7 @@ class ServerRentController extends Controller
                 ]
             ]
         ];
-        if($page!=="index"&&$page!=="gaofang") {
+        if($page!=="index") {
             $template = "http/product";
         }
         // dump($data[$page]);

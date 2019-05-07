@@ -70,9 +70,6 @@
                             <dd>
                                 <a href="/protection/c-shield">防C盾</a>
                             </dd>
-                            <dd>
-                                <a href="/zuyong/gaofang">高防服务器</a>
-                            </dd>
                         </dl>
                         <dl>
                             <dt>
@@ -499,9 +496,9 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="http://wpa.qq.com/msgrd?v=3&uin=2851506992&site=qq&menu=yes">
+                                <a href="http://wpa.qq.com/msgrd?v=3&uin=2885650826&site=qq&menu=yes">
                                     <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
-                                    镜雄
+                                    唐康
                                 </a>
                             </li>
                             <li>
@@ -541,12 +538,11 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="http://wpa.qq.com/msgrd?v=3&uin=2885650826&site=qq&menu=yes">
+                                <a href="http://wpa.qq.com/msgrd?v=3&uin=2851506992&site=qq&menu=yes">
                                     <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
-                                    唐康
+                                    镜雄
                                 </a>
                             </li>
-
                             <li>
                                 <a href="http://wpa.qq.com/msgrd?v=3&uin=2851506990&site=qq&menu=yes">
                                     <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">

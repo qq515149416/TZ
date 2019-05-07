@@ -11,10 +11,9 @@
   <!-- banner -->
   <div class="banner">
     <div class="title" style="color: #fff;">
-      <p class="text">{{ $page==='gaofang' ? '高防服务器' : '服务器租用' }}</p>
-      <p class="sub-text">{{ $page==='gaofang' ? '为您提供高级防御解决方案，T级流量清洗，为您业务保驾护航！' : '为您提供定制化硬件采购解决方案，满足您不同时期业务发展需求！' }}</p>
+      <p class="text">服务器租用</p>
+      <p class="sub-text">为您提供定制化硬件采购解决方案，满足您不同时期业务发展需求！</p>
     </div>
-    @if ($page!=='gaofang')
     <div class="bottom">
         <a class="btn-link {{ $page == 'dianxin' ? 'active' : '' }}" href="/zuyong/dianxin">电信服务器租用</a>
         <a class="btn-link {{ $page == 'liantong' ? 'active' : '' }}" href="/zuyong/liantong">联通服务器租用</a>
@@ -22,7 +21,6 @@
         <a class="btn-link {{ $page == 'sanxian' ? 'active' : '' }}" href="/zuyong/sanxian">三线服务器租用</a>
         <!-- <a class="btn-link {{ $page == 'bgp' ? 'active' : '' }}" href="/zuyong/bgp">BGP服务器租用</a> -->
     </div>
-    @endif
   </div>
   <!-- 热销产品 -->
   <div class="hot-product">
@@ -35,32 +33,28 @@
       <div style="margin-top: 95px;">
         <div class="item">
           <div class="front">
-            <img src="{{ $page!=='gaofang' ? asset("/images/serverRent/hzsx.png") : asset("/images/serverRent/gffwq.png") }}" alt="惠州双线">
-            <p class="desc">{{ $page==='gaofang' ? '百G清洗-游戏级' : '惠州双线 50G防御' }}</p>
-            <p class="price"><span style="font-size: 30px;">{{ $page==='gaofang' ? '1000' : '900' }}</span> 元/月</p>
+            <img src="{{ asset("/images/serverRent/hzsx.png") }}" alt="惠州双线">
+            <p class="desc">惠州双线 50G防御</p>
+            <p class="price"><span style="font-size: 30px;">900</span> 元/月</p>
           </div>
           <div class="back">
             <div class="card">
               <div class="card-body">
-                <p class="card-title">{{ $page==='gaofang' ? '百G清洗-游戏级' : '惠州双线 50G防御' }}</p>
+                <p class="card-title">惠州双线 50G防御</p>
                 <hr style="margin-top: 20px; margin-bottom: 30px;"/>
                 <div class="card-text">
                   <p class="desc">
-                    CPU：{{ $page==='gaofang' ? 'I7' : '八核16线程 Xeon E5530 * 2' }}
+                    CPU：八核16线程 Xeon E5530 * 2
                     <br/>
-                    内存：{{ $page==='gaofang' ? '8G' : '8G' }}
+                    内存：8G
                     <br/>
-                    硬盘：{{ $page==='gaofang' ? '240G（固态硬盘）' : '300G SAS/1T SATA' }}
+                    硬盘：300G SAS/1T SATA
                     <br/>
-                    带宽：{{ $page==='gaofang' ? '100M' : 'G口（20M独享）' }}
-                    @if ($page==='gaofang')
-                    <br/>
-                    防御：200G
-                    @endif
+                    带宽：G口（20M独享）
                   </p>
                   <hr style="margin-top: 30px; margin-bottom: 30px;"/>
                   <p class="price">
-                    <span style="font-size: 36px;font-weight: bold;">{{ $page==='gaofang' ? '1000' : '900' }}</span> 元/月
+                    <span style="font-size: 36px;font-weight: bold;">900</span> 元/月
                   </p>
                   <a class="detail-link" href="javascrpt: void(0);">了解详情</a>
                 </div>
@@ -70,32 +64,28 @@
         </div>
         <div class="item">
           <div class="front">
-            <img src="{{ $page!=='gaofang' ? asset("/images/serverRent/hysx.png") : asset("/images/serverRent/gffwq.png") }}" alt="衡阳双线">
-            <p class="desc">{{ $page==='gaofang' ? '毫秒清洗-微端级' : '衡阳双线 40G防御' }}</p>
-            <p class="price"><span style="font-size: 30px;">{{ $page==='gaofang' ? '3500' : '900' }}</span> 元/月</p>
+            <img src="{{ asset("/images/serverRent/hysx.png") }}" alt="衡阳双线">
+            <p class="desc">衡阳双线 40G防御</p>
+            <p class="price"><span style="font-size: 30px;">900</span> 元/月</p>
           </div>
           <div class="back">
             <div class="card">
               <div class="card-body">
-                <p class="card-title">{{ $page==='gaofang' ? '毫秒清洗-微端级' : '衡阳双线 40G防御' }}</p>
+                <p class="card-title">衡阳双线 40G防御</p>
                 <hr style="margin-top: 20px; margin-bottom: 30px;"/>
                 <div class="card-text">
                   <p class="desc">
-                    CPU：{{ $page==='gaofang' ? 'E5530' : 'Xeon E5530 * 2/L5630 * 2' }}
+                    CPU：Xeon E5530 * 2/L5630 * 2
                     <br/>
-                    内存：{{ $page==='gaofang' ? '16G' : '8G' }}
+                    内存：8G
                     <br/>
-                    硬盘：{{ $page==='gaofang' ? '240G（固态硬盘）' : '1T SATA' }}
+                    硬盘：1T SATA
                     <br/>
-                    带宽：{{ $page==='gaofang' ? '100M' : 'G口（20M独享）' }}
-                    @if ($page==='gaofang')
-                    <br/>
-                    防御：320G
-                    @endif
+                    带宽：G口（20M独享）
                   </p>
                   <hr style="margin-top: 30px; margin-bottom: 30px;"/>
                   <p class="price">
-                    <span style="font-size: 36px;font-weight: bold;">{{ $page==='gaofang' ? '3500' : '900' }}</span> 元/月
+                    <span style="font-size: 36px;font-weight: bold;">900</span> 元/月
                   </p>
                   <a class="detail-link" href="javascrpt: void(0);">了解详情</a>
                 </div>
@@ -104,32 +94,27 @@
         <div class="item">
           <div class="front">
             <img src="{{ asset("/images/serverRent/gffwq.png") }}" alt="高防服务器">
-            <p class="desc">{{ $page==='gaofang' ? '棋牌游戏-旗舰级' : '高防320G抗D+无限CC' }}</p>
-            <p class="price"><span style="font-size: 30px;">{{ $page==='gaofang' ? '10000' : '3500' }}</span> 元/月</p>
+            <p class="desc">高防320G抗D+无限CC</p>
+            <p class="price"><span style="font-size: 30px;">3500</span> 元/月</p>
           </div>
           <div class="back">
             <div class="card">
               <div class="card-body">
-                <p class="card-title">{{ $page==='gaofang' ? '棋牌游戏-旗舰级' : '高防320G抗D+无限CC' }}</p>
+                <p class="card-title">高防320G抗D+无限CC</p>
                 <hr style="margin-top: 20px; margin-bottom: 30px;"/>
                 <div class="card-text">
                   <p class="desc">
-
-                      CPU：{{ $page==='gaofang' ? 'X5672' : '八核16线程 Xeon E5570 * 2' }}
+                    CPU：八核16线程 Xeon E5570 * 2
                     <br/>
-                    内存：{{ $page==='gaofang' ? '32G' : '16G' }}
+                    内存：16G
                     <br/>
-                    硬盘：{{ $page==='gaofang' ? '240G（固态硬盘）' : '240G（固态硬盘）' }}
+                    硬盘：240G（固态硬盘）
                     <br/>
-                    带宽：{{ $page==='gaofang' ? '100M' : 'G口（100M独享）' }}
-                    @if ($page==='gaofang')
-                    <br/>
-                    防御：IT
-                    @endif
+                    带宽：G口（100M独享）
                   </p>
                   <hr style="margin-top: 30px; margin-bottom: 30px;"/>
                   <p class="price">
-                    <span style="font-size: 36px;font-weight: bold;">{{ $page==='gaofang' ? '10000' : '3500' }}</span> 元/月
+                    <span style="font-size: 36px;font-weight: bold;">3500</span> 元/月
                   </p>
                   <a class="detail-link" href="javascrpt: void(0);">了解详情</a>
                 </div>
@@ -138,27 +123,17 @@
         </div>
         <div class="item">
           <div class="front">
-            <img src="{{ $page!=='gaofang' ? asset("/images/serverRent/hzdx.png") : asset("/images/serverRent/gffwq.png") }}" alt="惠州电信">
-            <p class="desc">{{ $page==='gaofang' ? 'T级高防IP-逆天级' : '惠州电信(100M活动促销)' }}</p>
-            <p class="price">
-                @if ($page==='gaofang')
-                <span style="font-size: 30px;">在线购买</span>
-                @else
-                <span style="font-size: 30px;">1299</span> 元/月
-                @endif
-
-            </p>
+            <img src="{{ asset("/images/serverRent/hzdx.png") }}" alt="惠州电信">
+            <p class="desc">惠州电信(100M活动促销)</p>
+            <p class="price"><span style="font-size: 30px;">1299</span> 元/月</p>
           </div>
           <div class="back">
             <div class="card">
               <div class="card-body">
-                <p class="card-title">{{ $page==='gaofang' ? 'T级高防IP-逆天级' : '惠州电信(100M活动促销)' }}</p>
+                <p class="card-title">惠州电信(100M活动促销)</p>
                 <hr style="margin-top: 20px; margin-bottom: 30px;"/>
                 <div class="card-text">
                   <p class="desc">
-                  @if ($page==='gaofang')
-                    DDOS防护：1024G峰值
-                  @else
                     CPU：八核16线程 Xeon E5530 * 2
                     <br/>
                     内存：8G
@@ -166,16 +141,10 @@
                     硬盘：300G SAS/1T SATA
                     <br/>
                     带宽：G口（100M独享）
-                  @endif
-
                   </p>
                   <hr style="margin-top: 30px; margin-bottom: 30px;"/>
                   <p class="price">
-                  @if ($page==='gaofang')
-                  <span style="font-size: 36px;font-weight: bold;">在线购买</span>
-                    @else
                     <span style="font-size: 36px;font-weight: bold;">1299</span> 元/月
-                    @endif
                   </p>
                   <a class="detail-link" href="javascrpt: void(0);">了解详情</a>
                 </div>

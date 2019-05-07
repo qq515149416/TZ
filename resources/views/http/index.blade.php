@@ -1,11 +1,11 @@
 
 @extends('layouts.layout')
 
-@section('title', '腾正科技-专业IDC服务商,云主机，高防服务器，高防IP，服务器租用,服务器托管，带宽租用,CDN加速')
+@section('title', '专业IDC服务商,云主机，高防服务器，高防IP，服务器租用,服务器托管，带宽租用,CDN加速')
 
-@section('keywords', '云主机，高防服务器，高防IP，服务器租用,服务器托管，带宽租用,CDN加速,高防CDN,云服务器,机柜租用,云计算,IDC服务器商,腾正科技')
+@section('keywords', '云主机,高防服务器,高防IP,服务器租用,服务器托管,带宽租用,CDN加速,高防CDN,云服务器,机柜租用,云计算,IDC 服务器商,网络安全服务商')
 
-@section('description', '腾正科技专业IDC服务提供商，主营服务器租用、服务器托管、机柜大带宽租用、云主机、高防服务器、高防IP、CDN加速等数据存储、计算及安全综合应用解决方案服务。')
+@section('description', '专业IDC服务提供商，主营服务器租用、服务器托管、机柜租用、大带宽租用、云主机、高防服务器、高防IP、CDN加速等数据存储、计算及安全综合应用解决方案服务。')
 
 @section('content')
 
@@ -17,9 +17,9 @@
             <li data-target="#carousel-example-generic" data-slide-to="0" class="active">
                 <span class="progress"></span>
             </li>
-            <li data-target="#carousel-example-generic" data-slide-to="1">
+            <!-- <li data-target="#carousel-example-generic" data-slide-to="1">
                 <span class="progress"></span>
-            </li>
+            </li> -->
             <!-- <li data-target="#carousel-example-generic" data-slide-to="2">
                 <span class="progress"></span>
             </li> -->
@@ -48,13 +48,13 @@
                     </div>
                 </a>
             </div>
-            <div class="item">
-                <a href="/dist/highDefense.html" target="_blank">
-                    <img src="{{ asset("/images/banner/gaofang.png") }}" alt="...">
+            <!-- <div class="item">
+                <a href="/promotion/consumer" target="_blank">
+                    <img src="{{ asset("/images/banner/consumer.png") }}" alt="...">
                     <div class="carousel-caption">
                     </div>
                 </a>
-            </div>
+            </div> -->
             <!-- <div class="item">
                 <a href="/promotion/ddk" target="_blank">
                     <img src="{{ asset("/images/banner/ddk.jpg") }}" alt="...">

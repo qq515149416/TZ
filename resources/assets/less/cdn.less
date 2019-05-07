@@ -327,15 +327,22 @@
         color: inherit;
         text-indent: 1.6em;
 
-        &:hover {
-          color: #3046bc;
+        &:focus {
+          text-decoration: none;
         }
       }
 
       .date {
+        color: inherit;
         float: right;
 
-        &.active {
+        &:focus {
+          text-decoration: none;
+        }
+      }
+
+      &:hover {
+        .text, .date {
           color: #3046bc;
           text-decoration: underline;
         }
@@ -375,6 +382,7 @@
       .item-container {
         display: flex;
         flex-direction: row;
+        flex-wrap: wrap;
         justify-content: space-around;
       }
 
@@ -449,7 +457,7 @@
       background: unset;
 
       .item-container {
-        margin-top: 5px;
+        margin-top: 10px;
       }
 
       .item {

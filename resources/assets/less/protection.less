@@ -537,10 +537,19 @@
         float: left;
         color: inherit;
         text-indent: 1.6em;
+
+        &:hover {
+          color: #3046bc;
+        }
       }
 
       .date {
         float: right;
+
+        &.active {
+          color: #3046bc;
+          text-decoration: underline;
+        }
       }
     }
   }

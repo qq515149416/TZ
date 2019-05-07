@@ -83,8 +83,26 @@
             </div>
             <section class="quality">
                 <h3>星级机房&nbsp;&nbsp;品质保障</h3>
-                <ul>
+                <ul class="clearfix">
                     <li>
+                        <img src="{{ asset("/images/datacenter/quality_icon_01.png") }}" alt="" />
+                        <h4>
+                            电力供应
+                        </h4>
+                        <p>
+                            双路市电输入，2个独立变电站，两路电源互为热备；供电路采用A/B路物理隔离安全模式，配置2N冗余热备份UPS供电系统，单路UPS系统配备15分钟蓄电池，保障电源不间断供应
+                        </p>
+                    </li>
+                    <li>
+                        <img src="{{ asset("/images/datacenter/quality_icon_01.png") }}" alt="" />
+                        <h4>
+                            电力供应
+                        </h4>
+                        <p>
+                            双路市电输入，2个独立变电站，两路电源互为热备；供电路采用A/B路物理隔离安全模式，配置2N冗余热备份UPS供电系统，单路UPS系统配备15分钟蓄电池，保障电源不间断供应
+                        </p>
+                    </li>
+                    <li class="last">
                         <img src="{{ asset("/images/datacenter/quality_icon_01.png") }}" alt="" />
                         <h4>
                             电力供应
@@ -111,25 +129,7 @@
                             双路市电输入，2个独立变电站，两路电源互为热备；供电路采用A/B路物理隔离安全模式，配置2N冗余热备份UPS供电系统，单路UPS系统配备15分钟蓄电池，保障电源不间断供应
                         </p>
                     </li>
-                    <li>
-                        <img src="{{ asset("/images/datacenter/quality_icon_01.png") }}" alt="" />
-                        <h4>
-                            电力供应
-                        </h4>
-                        <p>
-                            双路市电输入，2个独立变电站，两路电源互为热备；供电路采用A/B路物理隔离安全模式，配置2N冗余热备份UPS供电系统，单路UPS系统配备15分钟蓄电池，保障电源不间断供应
-                        </p>
-                    </li>
-                    <li>
-                        <img src="{{ asset("/images/datacenter/quality_icon_01.png") }}" alt="" />
-                        <h4>
-                            电力供应
-                        </h4>
-                        <p>
-                            双路市电输入，2个独立变电站，两路电源互为热备；供电路采用A/B路物理隔离安全模式，配置2N冗余热备份UPS供电系统，单路UPS系统配备15分钟蓄电池，保障电源不间断供应
-                        </p>
-                    </li>
-                    <li>
+                    <li class="last">
                         <img src="{{ asset("/images/datacenter/quality_icon_01.png") }}" alt="" />
                         <h4>
                             电力供应

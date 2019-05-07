@@ -31,8 +31,8 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">
-                <img src="{{ asset("/images/logo.png") }}" alt="" />
+            <a class="navbar-brand" href="/">
+                <img src="{{ asset("/images/logo.png") }}" alt="腾正科技" />
             </a>
             </div>
 
@@ -51,7 +51,8 @@
                 @endif
             </ul>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/">首页 <span class="sr-only">(current)</span></a></li>
+                <!-- <li class="active"><a href="/">首页 <span class="sr-only">(current)</span></a></li> -->
+                <li><a href="/page/tz/preferential">最新活动</a></li>
                 <li>
                     <a href="javascript:;">产品服务</a>
                     <div class="dropdown-mark">
@@ -64,7 +65,7 @@
                                 <a href="/protection/high-defense-cdn">高防CDN</a>
                             </dd>
                             <dd>
-                                <a href="/protection/high-defense-ip">DDOS高防IP</a>
+                                <a href="/dist/highDefense.html">DDOS高防IP</a>
                             </dd>
                             <dd>
                                 <a href="/protection/c-shield">防C盾</a>
@@ -104,7 +105,7 @@
                                 <a href="/tuoguan#xian" style="margin-right: -10px;">西安服务器托管</a>
                             </dd>
                         </dl>
-                        <dl style="text-align: right;">
+                        <dl style="text-align: left;text-indent: 31px;">
                             <dt>
                                 <a style="margin-right: 38px;" href="/15cdn/index">CDN</a>
                             </dt>
@@ -172,26 +173,6 @@
                     </div>
                 </li>
                 <li>
-                    <a href="javascript:;">数据中心</a>
-                    <div class="dropdown-mark" style="width: auto; height: auto; padding-bottom: 20px; padding-right: 20px; padding-left: 20px; text-align: center;">
-                        <span class="dropdown-icon"></span>
-                        <ul>
-                            <li>
-                                <a href="/page/tz/dcenter">惠州数据中心</a>
-                            </li>
-                            <li>
-                                <a href="/page/tz/dcenter">衡阳数据中心</a>
-                            </li>
-                            <li>
-                                <a href="/page/tz/dcenter">西安数据中心</a>
-                            </li>
-                            <li>
-                                <a href="/page/tz/dcenter">嘉兴数据中心</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
                     <a href="javascript:;">解决方案</a>
                     <div class="dropdown-mark" style="width: auto; height: auto; padding-bottom: 20px; padding-right: 20px; padding-left: 20px; text-align: center;">
                         <span class="dropdown-icon"></span>
@@ -223,7 +204,26 @@
                         </ul>
                     </div>
                 </li>
-                <li><a href="/page/tz/preferential">最新活动</a></li>
+                <li>
+                    <a href="javascript:;">数据中心</a>
+                    <div class="dropdown-mark" style="width: auto; height: auto; padding-bottom: 20px; padding-right: 20px; padding-left: 20px; text-align: center;">
+                        <span class="dropdown-icon"></span>
+                        <ul>
+                            <li>
+                                <a href="/page/tz/dcenter">惠州数据中心</a>
+                            </li>
+                            <li>
+                                <a href="/page/tz/dcenter">衡阳数据中心</a>
+                            </li>
+                            <li>
+                                <a href="/page/tz/dcenter">西安数据中心</a>
+                            </li>
+                            <li>
+                                <a href="/page/tz/dcenter">嘉兴数据中心</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
                 <li>
                     <a href="javascript:;">新闻中心</a>
                     <div class="dropdown-mark" style="width: auto; height: auto; padding-bottom: 20px; padding-right: 20px; padding-left: 20px; text-align: center;">

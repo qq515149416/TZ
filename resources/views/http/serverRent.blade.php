@@ -89,9 +89,7 @@
                   </p>
                   <a class="detail-link" href="javascrpt: void(0);">了解详情</a>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
         <div class="item">
           <div class="front">
@@ -120,7 +118,6 @@
                   </p>
                   <a class="detail-link" href="javascrpt: void(0);">了解详情</a>
                 </div>
-              </div>
             </div>
           </div>
         </div>
@@ -151,252 +148,192 @@
                   </p>
                   <a class="detail-link" href="javascrpt: void(0);">了解详情</a>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
-  <!-- 产品优势 -->
-  <div class="product-adv">
-    <div class="title">
-      <p class="text">产品优势</p>
-      <p class="sub-text">多样化的产品，帮您实现更丰富的业务需求</p>
-    </div>
-    <div class="content">
-      <div style="margin-top: 60px;">
-        <div class="item" style="margin-right: 460px;">
-          <img src="{{ asset("/images/serverRent/high-safe-icon.png") }}" alt="高安全">
-          <div class="item-content">
-            <h5 class="title">高安全</h5>
-            <P class="desc">
-              高防御的网络架构，有效防御DDOS，<br/>
-              CC，UDP，SYN等多种类型的攻击，确保<br/>
-              用户网络安全稳定运营
-            </P>
-          </div>
+    <!-- 服务支持 -->
+    <div class="service-support">
+        <div class="title" style="color: #fff;">
+            <p class="text">服务支持</p>
+            <p class="sub-text">提供业内专业的技术支持</p>
         </div>
-        <div class="item" style="margin-right: 10px;">
-          <img src="{{ asset("/images/serverRent/strong-perf-icon.png") }}" alt="强性能">
-          <div class="item-content">
-            <h5 class="title">强性能</h5>
-            <P class="desc">
-              采用海外高端品牌服务器，戴尔，惠普，<br/>
-              浪潮，实现用户数据的高效处理
-            </P>
-          </div>
+        <div class="table-container container">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col" style="width: 15%;"></th>
+                    <th scope="col" style="width: 36%;">增值服务项</th>
+                    <th scope="col" style="width: 17%;">网络服务器</th>
+                    <th scope="col" style="width: 17%;">服务时间</th>
+                    <th scope="col" style="width: 15%;">服务价格</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th rowspan="3">IDC 技术支持</th>
+                    <td>贴心服务，专人接待负责连接调试</td>
+                    <td>是</td>
+                    <td>7&times;24小时</td>
+                    <td>免费</td>
+                </tr>
+                <tr>
+                    <td>专业维护机制</td>
+                    <td>是</td>
+                    <td>7&times;24小时</td>
+                    <td>免费</td>
+                </tr>
+                <tr>
+                    <td>重启服务</td>
+                    <td>是</td>
+                    <td>7&times;24小时</td>
+                    <td>免费</td>
+                </tr>
+                <!--******-->
+                <tr>
+                    <th rowspan="3">系统管理服务</th>
+                    <td>系统优势</td>
+                    <td>是</td>
+                    <td>7&times;24小时</td>
+                    <td>免费</td>
+                </tr>
+                <tr>
+                    <td>免费CC防护</td>
+                    <td>是</td>
+                    <td>7&times;24小时</td>
+                    <td>免费</td>
+                </tr>
+                <tr>
+                    <td>免费故障排查处理</td>
+                    <td>是</td>
+                    <td>7&times;24小时</td>
+                    <td>免费</td>
+                </tr>
+                <!--******-->
+                <tr>
+                    <th rowspan="3">IDC 技术支持</th>
+                    <td>良好的机房设施，网络安全稳定</td>
+                    <td>是</td>
+                    <td>7&times;24小时</td>
+                    <td>免费</td>
+                </tr>
+                <tr>
+                    <td>电信骨干网接入，网络连通率高达99.99%</td>
+                    <td>是</td>
+                    <td>7&times;24小时</td>
+                    <td>免费</td>
+                </tr>
+                <tr>
+                    <td>专业互联网安全团队</td>
+                    <td>是</td>
+                    <td>5&times;8小时</td>
+                    <td>免费</td>
+                </tr>
+                <!--******-->
+                <tr>
+                    <th rowspan="4">其他</th>
+                    <td>免费网络流量报告</td>
+                    <td>是</td>
+                    <td>7&times;24小时</td>
+                    <td>免费</td>
+                </tr>
+                <tr>
+                    <td>全天候维护工程师团队</td>
+                    <td>是</td>
+                    <td>7&times;24小时</td>
+                    <td>免费</td>
+                </tr>
+                <tr>
+                    <td>监控管理</td>
+                    <td>是</td>
+                    <td>7&times;24小时</td>
+                    <td>免费</td>
+                </tr>
+                <tr>
+                    <td>良好的服务等级</td>
+                    <td>是</td>
+                    <td>5&times;8小时</td>
+                    <td>免费</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
-      </div>
-      <div style="margin-top: 15px;">
-        <div class="item" style="margin-right: 472px;">
-          <img src="{{ asset("/images/serverRent/fast-icon.png") }}" alt="快速度">
-          <div class="item-content">
-            <h5 class="title">快速度</h5>
-            <P class="desc">
-              自建IDC数据中心，带宽资源充足，已形<br/>
-              成骨干网为节点的互联网网络架构，实<br/>
-              现用户快速流畅的访问体验
-            </P>
-          </div>
+    </div>
+    <!-- 常见问题 -->
+    <div class="common-question">
+        <div class="title">
+            <p class="text">服务器租用常见问题</p>
+            <p class="sub-text">关注腾正，关注IDC，关注云计算，关注信息安全,关注互联网动向</p>
         </div>
-        <div class="item" style="margin-right: 22px;">
-          <img src="{{ asset("/images/serverRent/quickly-response-icon.png") }}" alt="秒响应">
-          <div class="item-content">
-            <h5 class="title">秒响应</h5>
-            <P class="desc">
-              技术驻点机房7*24*365技术支持，全<br/>
-              年无休，贴心细致的售前咨询和及时的<br/>
-              售后服务，及时为客户排忧解难
-            </P>
-          </div>
+        <div class="list-container">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <a class="text" href="javascript: void(0);">网页游戏服务器租用如何选择？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
+                </li>
+                <li class="list-group-item">
+                    <a class="text" href="javascript: void(0);">网页游戏服务器租用如何选择？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
+                </li>
+                <li class="list-group-item">
+                    <a class="text" href="javascript: void(0);">网页游戏服务器租用如何选择？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
+                </li>
+                <li class="list-group-item">
+                    <a class="text" href="javascript: void(0);">网页游戏服务器租用如何选择？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
+                </li>
+                <li class="list-group-item">
+                    <a class="text" href="javascript: void(0);">网页游戏服务器租用如何选择？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
+                </li>
+                <li class="list-group-item">
+                    <a class="text" href="javascript: void(0);">网页游戏服务器租用如何选择？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
+                </li>
+                <li class="list-group-item">
+                    <a class="text" href="javascript: void(0);">网页游戏服务器租用如何选择？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
+                </li>
+                <li class="list-group-item">
+                    <a class="text" href="javascript: void(0);">网页游戏服务器租用如何选择？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
+                </li>
+                <li class="list-group-item">
+                    <a class="text" href="javascript: void(0);">网页游戏服务器租用如何选择？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
+                </li>
+                <li class="list-group-item">
+                    <a class="text" href="javascript: void(0);">网页游戏服务器租用如何选择？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
+                </li>
+                <li class="list-group-item">
+                    <a class="text" href="javascript: void(0);">网页游戏服务器租用如何选择？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
+                </li>
+                <li class="list-group-item">
+                    <a class="text" href="javascript: void(0);">网页游戏服务器租用如何选择？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
+                </li>
+                <li class="list-group-item">
+                    <a class="text" href="javascript: void(0);">网页游戏服务器租用如何选择？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
+                </li>
+                <li class="list-group-item">
+                    <a class="text" href="javascript: void(0);">网页游戏服务器租用如何选择？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
+                </li>
+                <li class="list-group-item">
+                    <a class="text" href="javascript: void(0);">网页游戏服务器租用如何选择？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
+                </li>
+            </ul>
         </div>
-      </div>
     </div>
-  </div>
-  <!-- 服务支持 -->
-  <div class="service-support">
-    <div class="title" style="color: #fff;">
-      <p class="text">服务支持</p>
-      <p class="sub-text">提供业内专业的技术支持</p>
+    <div class="consult">
+        <div class="title" style="color: #fff; margin-bottom: 20px;">
+            <p class="text">服务器租用-腾正科技IDC运营专家</p>
+        </div>
+        <a class="consult-btn" href="javascript: void(0);">立即咨询</a>
     </div>
-    <div class="table-container container">
-      <table class="table table-bordered">
-        <thead>
-        <tr>
-          <th scope="col" style="width: 15%;"></th>
-          <th scope="col" style="width: 36%;">增值服务项</th>
-          <th scope="col" style="width: 17%;">网络服务器</th>
-          <th scope="col" style="width: 17%;">服务时间</th>
-          <th scope="col" style="width: 15%;">服务价格</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <th rowspan="3">IDC 技术支持</th>
-          <td>贴心服务，专人接待负责连接调试</td>
-          <td>是</td>
-          <td>7&times;24小时</td>
-          <td>免费</td>
-        </tr>
-        <tr>
-          <td>专业维护机制</td>
-          <td>是</td>
-          <td>7&times;24小时</td>
-          <td>免费</td>
-        </tr>
-        <tr>
-          <td>重启服务</td>
-          <td>是</td>
-          <td>7&times;24小时</td>
-          <td>免费</td>
-        </tr>
-        <!--******-->
-        <tr>
-          <th rowspan="3">系统管理服务</th>
-          <td>系统优势</td>
-          <td>是</td>
-          <td>7&times;24小时</td>
-          <td>免费</td>
-        </tr>
-        <tr>
-          <td>免费CC防护</td>
-          <td>是</td>
-          <td>7&times;24小时</td>
-          <td>免费</td>
-        </tr>
-        <tr>
-          <td>免费故障排查处理</td>
-          <td>是</td>
-          <td>7&times;24小时</td>
-          <td>免费</td>
-        </tr>
-        <!--******-->
-        <tr>
-          <th rowspan="3">IDC 技术支持</th>
-          <td>良好的机房设施，网络安全稳定</td>
-          <td>是</td>
-          <td>7&times;24小时</td>
-          <td>免费</td>
-        </tr>
-        <tr>
-          <td>电信骨干网接入，网络连通率高达99.99%</td>
-          <td>是</td>
-          <td>7&times;24小时</td>
-          <td>免费</td>
-        </tr>
-        <tr>
-          <td>专业互联网安全团队</td>
-          <td>是</td>
-          <td>5&times;8小时</td>
-          <td>免费</td>
-        </tr>
-        <!--******-->
-        <tr>
-          <th rowspan="4">其他</th>
-          <td>免费网络流量报告</td>
-          <td>是</td>
-          <td>7&times;24小时</td>
-          <td>免费</td>
-        </tr>
-        <tr>
-          <td>全天候维护工程师团队</td>
-          <td>是</td>
-          <td>7&times;24小时</td>
-          <td>免费</td>
-        </tr>
-        <tr>
-          <td>监控管理</td>
-          <td>是</td>
-          <td>7&times;24小时</td>
-          <td>免费</td>
-        </tr>
-        <tr>
-          <td>良好的服务等级</td>
-          <td>是</td>
-          <td>5&times;8小时</td>
-          <td>免费</td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <!-- 常见问题 -->
-  <div class="common-question">
-    <div class="title">
-      <p class="text">服务器租用常见问题</p>
-      <p class="sub-text">关注腾正，关注IDC，关注云计算，关注信息安全,关注互联网动向</p>
-    </div>
-    <div class="content">
-      <ul class="list-group">
-        <li class="list-group-item">
-          <a class="text" href="javascript: void(0);"><span>网页游戏服务器租用如何选择？</span></a>
-          <span class="date">2019.01.21</span>
-        </li>
-        <li class="list-group-item">
-          <a class="text" href="javascript: void(0);"><span>网页游戏服务器租用如何选择？</span></a>
-          <span class="date">2019.01.21</span>
-        </li>
-        <li class="list-group-item">
-          <a class="text" href="javascript: void(0);"><span>网页游戏服务器租用如何选择？</span></a>
-          <span class="date">2019.01.21</span>
-        </li>
-        <li class="list-group-item">
-          <a class="text" href="javascript: void(0);"><span>网页游戏服务器租用如何选择？</span></a>
-          <span class="date">2019.01.21</span>
-        </li>
-        <li class="list-group-item">
-          <a class="text" href="javascript: void(0);"><span>网页游戏服务器租用如何选择？</span></a>
-          <span class="date">2019.01.21</span>
-        </li>
-        <li class="list-group-item">
-          <a class="text" href="javascript: void(0);"><span>网页游戏服务器租用如何选择？</span></a>
-          <span class="date">2019.01.21</span>
-        </li>
-        <li class="list-group-item">
-          <a class="text" href="javascript: void(0);"><span>网页游戏服务器租用如何选择？</span></a>
-          <span class="date">2019.01.21</span>
-        </li>
-        <li class="list-group-item">
-          <a class="text" href="javascript: void(0);"><span>网页游戏服务器租用如何选择？</span></a>
-          <span class="date">2019.01.21</span>
-        </li>
-        <li class="list-group-item">
-          <a class="text" href="javascript: void(0);"><span>网页游戏服务器租用如何选择？</span></a>
-          <span class="date">2019.01.21</span>
-        </li>
-        <li class="list-group-item">
-          <a class="text" href="javascript: void(0);"><span>网页游戏服务器租用如何选择？</span></a>
-          <span class="date">2019.01.21</span>
-        </li>
-        <li class="list-group-item">
-          <a class="text" href="javascript: void(0);"><span>网页游戏服务器租用如何选择？</span></a>
-          <span class="date">2019.01.21</span>
-        </li>
-        <li class="list-group-item">
-          <a class="text" href="javascript: void(0);"><span>网页游戏服务器租用如何选择？</span></a>
-          <span class="date">2019.01.21</span>
-        </li>
-        <li class="list-group-item">
-          <a class="text" href="javascript: void(0);"><span>网页游戏服务器租用如何选择？</span></a>
-          <span class="date">2019.01.21</span>
-        </li>
-        <li class="list-group-item">
-          <a class="text" href="javascript: void(0);"><span>网页游戏服务器租用如何选择？</span></a>
-          <span class="date">2019.01.21</span>
-        </li>
-        <li class="list-group-item">
-          <a class="text" href="javascript: void(0);"><span>网页游戏服务器租用如何选择？</span></a>
-          <span class="date">2019.01.21</span>
-        </li>
-      </ul>
-    </div>
-  </div>
-  <div class="consult">
-    <div class="title" style="color: #fff; margin-bottom: 20px;">
-      <p class="text">服务器租用-腾正科技IDC运营专家</p>
-    </div>
-    <a class="consult-btn" href="javascript: void(0);">立即咨询</a>
-  </div>
 </div>
 @endsection

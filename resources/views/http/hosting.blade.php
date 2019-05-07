@@ -206,10 +206,11 @@
             </div>
         </div>
         <div class="expand-item collapse" id="xi-an">
-        <h1 class="expand-item-title">陕西西安机房</h1>
+            <h1 class="expand-item-title">陕西西安机房</h1>
             <hr style="height: 1px; background-color: #333; margin-bottom: 10px;"/>
             <p class="expand-item-desc">
-            陕西西安机房，国家AAAA级机房，机房建筑面积53851平方米，拥有5000个42U标准机柜；机房不仅采用直连互联网骨干点的10T总带宽，还采用320G 集群防火墙设置，为客户提供安全可靠、快速全面的数据存放业务及其它增值服务；在电力设备方面，西安机房从三向不同局向的变电所引入市电，不间断电源系统配置分为240V直流系统和UPS系统，系统自动切换，持续供电保障。</p>
+                陕西西安机房，国家AAAA级机房，机房建筑面积53851平方米，拥有5000个42U标准机柜；机房不仅采用直连互联网骨干点的10T总带宽，还采用320G
+                集群防火墙设置，为客户提供安全可靠、快速全面的数据存放业务及其它增值服务；在电力设备方面，西安机房从三向不同局向的变电所引入市电，不间断电源系统配置分为240V直流系统和UPS系统，系统自动切换，持续供电保障。</p>
             <p class="expand-item-desc">
                 机房等级：国家 <span style="color: #ea0000; font-weight: 600;">AAAA</span> 级机房
                 <br/>
@@ -529,9 +530,7 @@
         <div class="title" style="color: #333;">
             <h2 class="text">托管流程</h2>
             <h5 class="sub-text">专业服务器托管服务商，网络出口够大，后期扩展更有保障</h5>
-            <div style="height: 320px;">
-                <img src="{{ asset("/images/hosting/deposit-process.png") }}" alt="托管流程图">
-            </div>
+            <img src="{{ asset("/images/hosting/deposit-process.png") }}" alt="托管流程图">
         </div>
     </div>
     <!-- 常见问题 -->
@@ -543,64 +542,64 @@
         <div class="list-container">
             <ul class="list-group">
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>什么是服务器托管？</span></a>
-                    <span class="date">2019.01.21</span>
+                    <a class="text" href="javascript: void(0);">什么是服务器托管？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>服务器托管有哪些好处？</span></a>
-                    <span class="date">2019.01.21</span>
+                    <a class="text" href="javascript: void(0);">服务器托管有哪些好处？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>服务器托管的U是什么意思？</span></a>
-                    <span class="date">2019.01.19</span>
+                    <a class="text" href="javascript: void(0);">服务器托管的U是什么意思？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.19</a>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>服务器托管BGP机房是什么意思？</span></a>
-                    <span class="date">2019.01.18</span>
+                    <a class="text" href="javascript: void(0);">服务器托管BGP机房是什么意思？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.18</a>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>腾正科技的服务器托管怎么样？</span></a>
-                    <span class="date">2019.01.17</span>
+                    <a class="text" href="javascript: void(0);">腾正科技的服务器托管怎么样？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.17</a>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>托管一台服务器多少钱？</span></a>
-                    <span class="date">2019.01.14</span>
+                    <a class="text" href="javascript: void(0);">托管一台服务器多少钱？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.14</a>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>托管一台服务器多少钱？</span></a>
-                    <span class="date">2019.01.14</span>
+                    <a class="text" href="javascript: void(0);">托管一台服务器多少钱？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.14</a>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>托管一台服务器多少钱？</span></a>
-                    <span class="date">2019.01.14</span>
+                    <a class="text" href="javascript: void(0);">托管一台服务器多少钱？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.14</a>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>托管一台服务器多少钱？</span></a>
-                    <span class="date">2019.01.14</span>
+                    <a class="text" href="javascript: void(0);">托管一台服务器多少钱？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.14</a>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>托管一台服务器多少钱？</span></a>
-                    <span class="date">2019.01.14</span>
+                    <a class="text" href="javascript: void(0);">托管一台服务器多少钱？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.14</a>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>托管一台服务器多少钱？</span></a>
-                    <span class="date">2019.01.14</span>
+                    <a class="text" href="javascript: void(0);">托管一台服务器多少钱？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.14</a>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>托管一台服务器多少钱？</span></a>
-                    <span class="date">2019.01.14</span>
+                    <a class="text" href="javascript: void(0);">托管一台服务器多少钱？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.14</a>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>托管一台服务器多少钱？</span></a>
-                    <span class="date">2019.01.14</span>
+                    <a class="text" href="javascript: void(0);">托管一台服务器多少钱？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.14</a>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>托管一台服务器多少钱？</span></a>
-                    <span class="date">2019.01.14</span>
+                    <a class="text" href="javascript: void(0);">托管一台服务器多少钱？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.14</a>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);"><span>托管一台服务器多少钱？</span></a>
-                    <span class="date">2019.01.14</span>
+                    <a class="text" href="javascript: void(0);">托管一台服务器多少钱？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.14</a>
                 </li>
             </ul>
         </div>

@@ -163,6 +163,7 @@ body,html {
     background-color: transparent;
     border: none;
     padding: 0;
+    font-size: 18px;
     .container-fluid {
         padding: 0;
         width: 1180px;
@@ -179,11 +180,14 @@ body,html {
         display: -moz-flex;
         align-items: center;
     }
+    ul.navbar-nav:first-of-type {
+        margin-left: 20px;
+    }
     ul.navbar-nav:last-of-type {
         float: right;
         li {
             a {
-                width: 100px;
+                width: 110px;
                 text-align: center;
             }
         }
@@ -205,7 +209,7 @@ body,html {
                 top: 82px;
                 left: 50%;
                 transform: translateX(-50%) translateY(1px);
-                width: 513px;
+                width: 598px;
                 // height: 369px;
                 background-color: #fff;
                 border-radius: 4px;
@@ -234,7 +238,7 @@ body,html {
                             height: auto;
                             color: #444444;
                             // font-weight: bold;
-                            line-height: 14px;
+                            line-height: 16px;
                             font-size: 14px;
                             // text-decoration: none;
                             &:hover {
@@ -251,25 +255,25 @@ body,html {
                     margin: 0;
                     // margin-top: 40px;
                     float: left;
-                    width: (513px-(40px*2px)) / 4px;
+                    width: (598px-(40px*2px)) / 4px;
                     height: 184px;
                     dt {
                         margin-bottom: 12px;
                         padding-bottom: 12px;
                         border-bottom: 1px solid #dddddd;
-                        line-height: 14px;
+                        line-height: 16px;
                         a {
                             color: #444444;
-                            font-size: 14px;
+                            font-size: 16px;
                             text-decoration: none;
                         }
 
                     }
                     dd {
-                        padding-bottom: 12px;
-                        line-height: 12px;
+                        padding-bottom: 14px;
+                        line-height: 14px;
                         a {
-                            font-size: 12px;
+                            font-size: 14px;
                             color: #666666;
                             transition: all .5s;
                             // text-decoration: none;

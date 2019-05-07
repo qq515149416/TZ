@@ -298,13 +298,22 @@ $(function () {
       $(this).addClass('active').tab('show').siblings().removeClass('active');
     }
   });
-  /**
-   * CDN栏目主页-常见问题的日期hover
-   */
-  $('#tz-cdn .common-question .text').hover(function () {
-    $(this).siblings('.date').addClass('active');
-  }, function () {
-    $(this).siblings('.date').removeClass('active');
+
+  //   高防ip购买
+  $("#purchaseTime").on("shown.bs.modal", function (event) {
+    var purchaseTime = $(this);
+    purchaseTime.find(".btn.ok").click(function () {
+      $.get(location.protocol + "//" + location.hostname + "/home/defenseIp/buyDefenseIpNow", {
+        package_id: event.relatedTarget.dataset.id,
+        buy_time: purchaseTime.find(".duration").val()
+      }, function (data) {
+        alert(data.msg);
+        if (data.code == 1) {
+          // console.log(data.data);
+          location.href = "/dist/highDefensePay.html?orderid=" + data.data;
+        }
+      });
+    });
   });
 });
 

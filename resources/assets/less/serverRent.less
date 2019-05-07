@@ -302,25 +302,13 @@
   }
 
   .common-question {
-    height: 678px;
-    margin-top: -78px;
-    position: relative;
+    padding: 70px 0 80px;
     text-align: center;
     background: url("../images/serverRent/common-question-bg.png") no-repeat center;
     background-size: cover;
 
-    .title {
-      position: absolute;
-      top: 200px;
-      left: 0;
-      right: 0;
-    }
-
-    .content {
-      position: absolute;
-      top: 320px;
-      left: 0;
-      right: 0;
+    .list-container {
+      margin-top: 40px;
       text-align: center;
 
       .list-group {
@@ -345,10 +333,19 @@
           .text {
             float: left;
             color: inherit;
+
+            &:hover {
+              color: #3046bc;
+            }
           }
 
           .date {
             float: right;
+
+            &.active {
+              color: #3046bc;
+              text-decoration: underline;
+            }
           }
         }
       }

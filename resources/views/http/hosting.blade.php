@@ -529,9 +529,7 @@
         <div class="title" style="color: #333;">
             <h2 class="text">托管流程</h2>
             <h5 class="sub-text">专业服务器托管服务商，网络出口够大，后期扩展更有保障</h5>
-            <div style="height: 320px;">
-                <img src="{{ asset("/images/hosting/deposit-process.png") }}" alt="托管流程图">
-            </div>
+            <img src="{{ asset("/images/hosting/deposit-process.png") }}" alt="托管流程图">
         </div>
     </div>
     <!-- 常见问题 -->

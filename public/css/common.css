@@ -182,6 +182,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background-color: transparent;
   border: none;
   padding: 0;
+  font-size: 16px;
   margin-bottom: 0;
 }
 .tz-navbar-style .container-fluid {
@@ -280,7 +281,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 .tz-navbar-style ul.navbar-nav li .dropdown-mark dl dt a {
   color: #444444;
-  font-size: 14px;
+  font-size: 16px;
   text-decoration: none;
 }
 .tz-navbar-style ul.navbar-nav li .dropdown-mark dl dd {
@@ -288,7 +289,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   line-height: 12px;
 }
 .tz-navbar-style ul.navbar-nav li .dropdown-mark dl dd a {
-  font-size: 12px;
+  font-size: 14px;
   color: #666666;
   -webkit-transition: all 0.5s;
   transition: all 0.5s;

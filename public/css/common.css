@@ -204,6 +204,9 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
       -ms-flex-align: center;
           align-items: center;
 }
+.tz-navbar-style ul.navbar-nav:first-of-type {
+  margin-left: 20px;
+}
 .tz-navbar-style ul.navbar-nav:last-of-type {
   float: right;
 }
@@ -225,7 +228,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   left: 50%;
   -webkit-transform: translateX(-50%) translateY(1px);
           transform: translateX(-50%) translateY(1px);
-  width: 533px;
+  width: 598px;
   background-color: #fff;
   border-radius: 4px;
   padding: 0 40px;
@@ -270,7 +273,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-navbar-style ul.navbar-nav li .dropdown-mark dl {
   margin: 0;
   float: left;
-  width: 113.25px;
+  width: 129.5px;
   height: 184px;
 }
 .tz-navbar-style ul.navbar-nav li .dropdown-mark dl dt {

@@ -105,7 +105,7 @@
                                 <a href="/tuoguan#xian" style="margin-right: -10px;">西安服务器托管</a>
                             </dd>
                         </dl>
-                        <dl style="text-align: right;">
+                        <dl style="text-align: left;text-indent: 31px;">
                             <dt>
                                 <a style="margin-right: 38px;" href="/15cdn/index">CDN</a>
                             </dt>

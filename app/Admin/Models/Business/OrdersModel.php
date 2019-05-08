@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Session;
 use XS;
 use XSDocument;
 use Illuminate\Support\Facades\Redis;
+use App\Admin\Models\Business\BusinessModel;
 
 /**
  * 后台订单模型
@@ -50,14 +51,40 @@ class OrdersModel extends Model
 	 * @param  array $where 订单的状态
 	 * @return array        返回相关的数据信息和提示状态及信息
 	 */
-	public function financeOrders(){
+	public function financeOrders($data){
+		$business = new BusinessModel();
+		$time = $business->queryTime($data);
+		// dd($time);
 		$result = DB::table('tz_orders_flow as flow')
 					->join('tz_users as users','flow.customer_id','=','users.id')
 					->join('admin_users as admin','flow.business_id','=','admin.id')
+					->whereBetween('flow.pay_time',[$time['start_time'],$time['end_time']])
 					->whereNull('flow.deleted_at')
 					->select('flow.id as flow_id','flow.business_number','flow.serial_number','flow.payable_money','flow.actual_payment','flow.preferential_amount','flow.pay_time','flow.before_money','flow.after_money','flow.created_at','flow.flow_type','users.name as customer_name','users.email as customer_email','users.nickname as customer_nick_name','admin.name as business_name')
 					->orderBy('flow.pay_time','desc')
-					->get();
+					->get()
+					->toArray();
+		//应付金额
+		$payable = DB::table('tz_orders_flow')
+					->whereBetween('pay_time',[$time['start_time'],$time['end_time']])
+					->whereNull('deleted_at')
+					->sum('payable_money');
+		//实际支付金额
+		$paytrue = DB::table('tz_orders_flow')
+					->whereBetween('pay_time',[$time['start_time'],$time['end_time']])
+					->whereNull('deleted_at')
+					->sum('actual_payment');
+		//优惠金额
+		$discount = DB::table('tz_orders_flow')
+					->whereBetween('pay_time',[$time['start_time'],$time['end_time']])
+					->whereNull('deleted_at')
+					->sum('preferential_amount');
+		//查询总量
+		$total = DB::table('tz_orders_flow')
+					->whereBetween('pay_time',[$time['start_time'],$time['end_time']])
+					->whereNull('deleted_at')
+					->count();
+		// dd($result);
 		if(!empty($result)){
 			foreach($result as $key=>$value){
 				$flow_type = [1=>'新购',2=>'续费'];
@@ -65,7 +92,7 @@ class OrdersModel extends Model
 				$value->customer_email = $value->customer_email?$value->customer_email:$value->customer_name;
 				$value->customer_email = $value->customer_email?$value->customer_email:$value->customer_nick_name;
 			}
-			$return['data'] = $result;
+			$return['data'] = ['info'=>$result,'payable'=>$payable,'paytrue'=>$paytrue,'discount'=>$discount,'total'=>$total];
 			$return['code'] = 1;
 			$return['msg'] = '客户流水获取成功！';
 		} else {

@@ -20,14 +20,15 @@ class OrdersController extends Controller
 	 * @return json 返回订单的相关数据和状态信息和状态
 	 */
 	public function financeOrders(Request $request){
-		$data = $request->only(['order_status','customer_id']);
+		// $data = $request->only(['order_status','customer_id']);
 		$finance = new OrdersModel();
 		// dd($data);
-		$par = [];
-		foreach ($data as $k => $v) {
-			$par['tz_orders.'.$k] = $v;
-		}
-		$result = $finance->financeOrders($par);
+		// $par = [];
+		// foreach ($data as $k => $v) {
+		// 	$par['tz_orders.'.$k] = $v;
+		// }
+		$data = $request->only(['begin','end']);
+		$result = $finance->financeOrders($data);
 						
 		return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
 	}

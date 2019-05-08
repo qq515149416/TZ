@@ -32,7 +32,7 @@ class TzUserRequest extends FormRequest
 		}
 		if(Request()->nickname != null){
 			$return = [
-				'name' => 'sometimes|unique:tz_users,nickname,'.Request()->uid.',id',	
+				'nickname' => 'sometimes|unique:tz_users,nickname,'.Request()->uid.',id',	
 			];
 		}
 		return $return;

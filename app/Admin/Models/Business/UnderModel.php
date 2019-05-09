@@ -28,15 +28,15 @@ class UnderModel extends Model
         }
         switch ($apply['type']) {
             case 1:
-                $business_result = DB::table('tz_business')->where(['business_number' => $apply['business_number']])->select('remove_status', 'business_number', 'business_type', 'machine_number')->first();
+                $business_result = DB::table('tz_business')->where(['business_number' => $apply['business_number']])->select('remove_status', 'business_number', 'business_type', 'machine_number','order_number')->first();
                 if (empty($business_result)) {//不存在业务
                     $return['code'] = 0;
-                    $return['msg']  = '无此业务，无法申请下架';
+                    $return['msg']  = '(#101)无此业务，无法申请下架';
                     return $return;
                 }
                 if ($business_result->remove_status > 0) {//业务已处于下架状态的
                     $return['code'] = 0;
-                    $return['msg']  = '此业务正在下架中，请勿重复申请操作!';
+                    $return['msg']  = '(#102)此业务正在下架中，请勿重复申请操作!';
                     return $return;
                 }
                 $remove['remove_reason'] = $apply['remove_reason'];//下架缘由
@@ -46,8 +46,17 @@ class UnderModel extends Model
                 if ($business_remove == 0) {//更新失败
                     DB::rollBack();
                     $return['code'] = 0;
-                    $return['msg']  = '业务申请下架失败';
+                    $return['msg']  = '(#103)业务申请下架失败';
                     return $return;
+                }
+                if($business_result->order_number != null){//存在机器的订单，则同时对该机器的订单进行下架状态的改变
+                    $order_removes = DB::table('tz_orders')->where(['order_sn'=>$business_result->order_number])->update($remove);
+                    if($order_removes == 0){
+                        DB::rollBack();
+                        $return['code'] = 0;
+                        $return['msg']  = '(#104)业务申请下架失败';
+                        return $return;
+                    }
                 }
                 //查找业务关联的资源
                 $resources = DB::table('tz_orders')->where(['business_sn' => $apply['business_number'], 'remove_status' => 0])->where('resource_type', '>', 3)->orderBy('end_time', 'desc')->get(['order_sn', 'resource_type', 'machine_sn', 'resource', 'price', 'end_time'])->groupBy('machine_sn')->toArray();
@@ -69,7 +78,7 @@ class UnderModel extends Model
                             if ($order_row == 0) {//关联业务的资源同步下架失败
                                 DB::rollBack();
                                 $return['code'] = 0;
-                                $return['msg']  = '业务关联资源申请下架失败';
+                                $return['msg']  = '(#105)业务关联资源申请下架失败';
                                 return $return;
                             }
                         }
@@ -211,15 +220,15 @@ class UnderModel extends Model
         }
         switch ($edit['type']) {
             case 1:
-                $business = DB::table('tz_business')->where(['business_number' => $edit['business_number']])->select('remove_status', 'remove_reason', 'business_type', 'machine_number', 'business_number', 'resource_detail')->first();
+                $business = DB::table('tz_business')->where(['business_number' => $edit['business_number']])->select('remove_status', 'remove_reason', 'business_type', 'machine_number', 'business_number', 'resource_detail','order_number')->first();
                 if (empty($business)) {//不存在需要下架的业务，直接返回
                     $return['code'] = 0;
-                    $return['msg']  = '无对应业务';
+                    $return['msg']  = '(#101)无对应业务';
                     return $return;
                 }
                 if ($business->remove_status < 1 || $business->remove_status == 4) {//当业务未提交申请或已下架，直接返回
                     $return['code'] = 0;
-                    $return['msg']  = '业务已完成下架/暂未提交下架申请';
+                    $return['msg']  = '(#102)业务已完成下架/暂未提交下架申请';
                     return $return;
                 }
                 if (isset($edit['remove_status'])) {
@@ -279,17 +288,26 @@ class UnderModel extends Model
                     if ($row == 0) {
                         DB::rollBack();
                         $return['code'] = 0;
-                        $return['msg']  = '业务相关机器下架状态修改失败';
+                        $return['msg']  = '(#103)业务相关机器下架状态修改失败';
                     }
                     $update['remove_status'] = 4;
 
                 }
                 $update['updated_at'] = date('Y-m-d H:i:s',time());
+                if($business->order_number != null){//存在机器的订单，则同时对该机器的订单进行下架状态的改变
+                    $order_removes = DB::table('tz_orders')->where(['order_sn'=>$business->order_number])->update($update);
+                    if($order_removes == 0){
+                        DB::rollBack();
+                        $return['code'] = 0;
+                        $return['msg']  = '(#104)业务下架状态修改失败';
+                        return $return;
+                    }
+                }
                 $remove = DB::table('tz_business')->where(['business_number' => $edit['business_number']])->update($update);
                 if ($remove == 0) {
                     DB::rollBack();
                     $return['code'] = 0;
-                    $return['msg']  = '业务下架状态修改失败';
+                    $return['msg']  = '(#105)业务下架状态修改失败';
                 } else {
                     DB::commit();
                     $return['code'] = 1;
@@ -527,5 +545,27 @@ class UnderModel extends Model
 //            ->where('machine_num', $businessData->machine_number)
 //            ->select('idc_cabinet.cabinet_id', 'idc_ips.ip')
 //            ->first();
+    }
+
+    public function tranUnder(){
+        $business = DB::table('tz_business')->whereBetween('remove_status',[1,4])->select('order_number','updated_at','created_at','machineroom','remove_status')->get();
+        $return['data'] = [];
+        if(!empty($business)){
+            foreach($business as $key=>$value){
+                $remove['updated_at'] = $value->updated_at;
+                if($value->created_at > $value->updated_at){
+                    $remove['updated_at'] = $value->created_at;
+                }
+                $remove['remove_status'] = $value->remove_status;
+                $remove['machineroom'] = $value->machineroom;
+                $order = DB::table('tz_orders')->where(['order_sn'=>$value->order_number])->update($remove);
+                if($order != 0){
+                    array_push($return['data'],$value->order_number);
+                } else {
+                    array_push($return['data'],$value->order_number);
+                }
+            }
+        }
+        return $return;
     }
 }

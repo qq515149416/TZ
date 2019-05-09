@@ -26,6 +26,7 @@ Route::group([
     $router->get('ip/test', 'Idc\IpsController@test');
     $router->get('account/test', 'Hr\AccountController@test');
     $router->post('test/search', 'Search\DbSearchController@doSearch');//测试数据库搜索路由
+    $router->get('tranUnder','Business\UnderController@tranUnder');//下架状态的同步
 
     // 显示通讯录
     $router->get('staff/staff_list', 'Hr\EmployeeInformationController@showEmployee');//内部员工通讯录

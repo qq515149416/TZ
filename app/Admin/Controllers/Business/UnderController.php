@@ -107,4 +107,10 @@ class UnderController extends Controller
         return tz_ajax_echo($return['data'],$return['msg'],1);
     }
 
+    public function tranUnder(){
+        $tran = new UnderModel();
+        $result = $tran->tranUnder();
+        return tz_ajax_echo($result['data'],'',1);
+    }
+
 }

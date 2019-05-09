@@ -835,7 +835,7 @@ class BusinessModel extends Model
 
     /**
      * 获取订单的变化（统计订单）
-     * @param  [type] $search [description]
+     * @param  array $search begin--查询开始时间 end--查询结束时间 str--1=>查找所有,2=>未下架,3=>下架,4=>所有在用
      * @return [type]         [description]
      */
     public function changeMarket($search){
@@ -879,7 +879,7 @@ class BusinessModel extends Model
                         ->whereNull('deleted_at')
                         ->select('id','customer_id','business_id','resource_type','machine_sn','price','duration',$time.' as created_at')
                         ->get();
-        //统计符合条件的单价总量
+        //统计符合条件的月营收
         $month_total = DB::table('tz_orders')
                         ->whereBetween($time,[$begin_end['start_time'],$begin_end['end_time']])
                         ->whereBetween('order_status',$status)

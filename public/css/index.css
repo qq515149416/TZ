@@ -2306,6 +2306,10 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background: url(/images/server-rent-banner-bg.png?fbb67add78596bef8b8434641a45220b) no-repeat center;
   background-size: cover;
 }
+#tz-server-rent-content .banner.gaofang {
+  background: url(/images/gaofang.png?d62091a8827263c4ac41e2a98c049fc8) no-repeat center;
+  background-size: cover;
+}
 #tz-server-rent-content .banner .title {
   margin-top: 140px;
 }
@@ -5998,6 +6002,16 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #datacenter .main > .quality > .problem > .problem-list dl {
   float: left;
+  width: 349px;
+}
+#datacenter .main > .quality > .problem > .problem-list dl dt {
+  padding: 8px 0;
+  padding-left: 26px;
+  border-bottom: 1px solid #bfbfbf;
+}
+#datacenter .main > .quality > .problem > .problem-list dl dt span {
+  font-size: 16px;
+  color: #444444;
 }
 #tz-sca .banner {
   background: url(/images/sca-banner-bg.png?5746e983cf7876da3250119d2bec42fc) no-repeat center;

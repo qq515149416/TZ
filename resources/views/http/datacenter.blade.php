@@ -144,9 +144,9 @@
                     <p>关注腾正，关注IDC，关注云计算，关注信息安全,关注互联网动向</p>
                     <div class="problem-list clearfix">
                         <dl>
-                            <dt>
-                                <span>最新活动</span>
-                                <a href="#">查看更多>></a>
+                            <dt class="clearfix">
+                                <span class="pull-left">最新活动</span>
+                                <a class="pull-right" href="#">查看更多>></a>
                             </dt>
                             <dd>
                                 <a href="#">西安高防服务器限时抢购</a>

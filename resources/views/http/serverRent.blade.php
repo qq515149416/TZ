@@ -9,11 +9,13 @@
 @section('content')
 <div id="tz-server-rent-content">
     <!-- banner -->
-    <div class="banner">
+    <div class="banner {{ $page==='gaofang' ? 'gaofang' : ''  }}">
+        @if ($page!=='gaofang')
         <div class="title" style="color: #fff;">
             <p class="text">{{ $productData['title'] }}</p>
             <p class="sub-text">{{ $productData['description'] }}</p>
         </div>
+        @endif
         @if ($page!=='gaofang')
         <div class="bottom">
             <a class="btn-link {{ $page == 'dianxin' ? 'active' : '' }}" href="/zuyong/dianxin">电信服务器租用</a>

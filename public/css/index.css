@@ -3982,7 +3982,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 .tz-protection-content .banner .tab-item {
   display: inline-block;
-  width: 378px;
+  width: 250px;
   height: 63px;
   line-height: 63px;
   border-radius: 8px;
@@ -6000,18 +6000,23 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   width: 1180px;
   margin: 0 auto;
 }
-#datacenter .main > .quality > .problem > .problem-list dl {
+#datacenter .main > .quality > .problem > .problem-list > dl {
   float: left;
   width: 349px;
 }
-#datacenter .main > .quality > .problem > .problem-list dl dt {
+#datacenter .main > .quality > .problem > .problem-list > dl > dt {
   padding: 8px 0;
   padding-left: 26px;
   border-bottom: 1px solid #bfbfbf;
 }
-#datacenter .main > .quality > .problem > .problem-list dl dt span {
+#datacenter .main > .quality > .problem > .problem-list > dl > dt > span {
   font-size: 16px;
   color: #444444;
+}
+#datacenter .main > .quality > .problem > .problem-list > dl > dt > a {
+  font-size: 14px;
+  color: #2139b7;
+  text-decoration: none;
 }
 #tz-sca .banner {
   background: url(/images/sca-banner-bg.png?5746e983cf7876da3250119d2bec42fc) no-repeat center;

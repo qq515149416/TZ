@@ -10,9 +10,29 @@ class ProtectionController extends Controller
 {
     public function index($page)
     {
+        $tabs = [
+            [
+                "name" => "高防CDN",
+                "href" => "/protection/high-defense-cdn"
+            ],
+            [
+                "name" => "DDOS高防IP",
+                "href" => "/dist/highDefense.html"
+            ],
+            [
+                "name" => "防C盾",
+                "href" => "/protection/c-shield"
+            ],
+            [
+                "name" => "高防服务器",
+                "href" => "/zuyong/gaofang"
+            ]
+        ];
         switch ($page) {
             case 'index':
-                return view("http/protection");
+                return view("http/protection",[
+                    "tabs" => $tabs
+                ]);
                 break;
             case 'high-defense-ip':
                 // $model = new PackageModel();
@@ -24,20 +44,43 @@ class ProtectionController extends Controller
                 return redirect()->action('Show\ProtectionController@gaofang');
                 break;
             case 'high-defense-cdn':
-                return view("http/highDefenseCdn");
+                return view("http/highDefenseCdn",[
+                    "tabs" => $tabs
+                ]);
                 break;
             case 'c-shield':
-                return view("http/cShield");
+                return view("http/cShield",[
+                    "tabs" => $tabs
+                ]);
                 break;
         }
     }
     public function gaofang()
     {
+        $tabs = [
+            [
+                "name" => "高防CDN",
+                "href" => "/protection/high-defense-cdn"
+            ],
+            [
+                "name" => "DDOS高防IP",
+                "href" => "/dist/highDefense.html"
+            ],
+            [
+                "name" => "防C盾",
+                "href" => "/protection/c-shield"
+            ],
+            [
+                "name" => "高防服务器",
+                "href" => "/zuyong/gaofang"
+            ]
+        ];
         $model = new PackageModel();
 
 		$list = $model->showPackage();
         return view("http/highDefenseIp",[
-            "data" => $list['data']
+            "data" => $list['data'],
+            "tabs" => $tabs
         ]);
     }
 }

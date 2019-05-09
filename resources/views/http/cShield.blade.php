@@ -22,9 +22,12 @@
             <a class="apply-btn" href="javascript: void(0);">立即申请</a>
         </div>
         <div class="tab">
-            <a class="tab-item" href="/protection/high-defense-cdn">高防CDN</a>
+            @foreach ($tabs as $item)
+                <a class="tab-item" href="{{ $item['href'] }}">{{ $item['name'] }}</a>
+            @endforeach
+            <!-- <a class="tab-item" href="/protection/high-defense-cdn">高防CDN</a>
             <a class="tab-item" href="/dist/highDefense.html"> DDOS高防IP</a>
-            <a class="tab-item active" href="/protection/c-shield">防C盾</a>
+            <a class="tab-item active" href="/protection/c-shield">防C盾</a> -->
         </div>
     </div>
     <!--组合套餐-->

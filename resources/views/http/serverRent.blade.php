@@ -29,8 +29,8 @@
     <!-- 热销产品 -->
     <div class="hot-product">
         <div class="title">
-            <p class="text">热销产品</p>
-            <p class="sub-text">超值特惠多种高性能组合套餐，您高性能应用场景的需求</p>
+            <p class="text">{{ $page==='gaofang' ? '高防服务器热销产品' : '热销产品'  }}</p>
+            <p class="sub-text">超值特惠多种高性能组合套餐，满足您核心应用场景需求</p>
         </div>
         <div class="content">
             <img class="d-block" src="{{ asset("/images/serverRent/rectangle.png") }}">

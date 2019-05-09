@@ -655,6 +655,18 @@ Route::group([
         $router->post('del', 'News\LinksController@del');//删除友情链接
     });
 
+    /**
+     * 促销活动管理
+     */
+    Route::group([
+        'prefix' => 'promotion',
+    ], function (Router $router) {
+        $router->get('show', 'News\PromotionController@show');//获取友情链接
+        $router->post('insert', 'News\PromotionController@insert');//添加友情链接
+        $router->post('edit', 'News\PromotionController@edit');//编辑友情链接
+        $router->post('del', 'News\PromotionController@del');//删除友情链接
+    });
+
 });
 
 

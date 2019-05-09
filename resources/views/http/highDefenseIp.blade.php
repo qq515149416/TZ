@@ -22,9 +22,50 @@
             <a class="apply-btn" href="https://www.tzidc.com/dist/highDefense.html">立即申请</a>
         </div>
         <div class="tab">
-            <a class="tab-item" href="/protection/high-defense-cdn">高防CDN</a>
-            <a class="tab-item active" href="/protection/high-defense-ip">DDOS高防IP</a>
-            <a class="tab-item" href="/protection/c-shield">防C盾</a>
+            @foreach ($tabs as $item)
+                <a class="tab-item" href="{{ $item['href'] }}">{{ $item['name'] }}</a>
+            @endforeach
+            <!-- <a class="tab-item" href="/protection/high-defense-cdn">高防CDN</a>
+            <a class="tab-item active" href="/dist/highDefense.html">DDOS高防IP</a>
+            <a class="tab-item" href="/protection/c-shield">防C盾</a> -->
+        </div>
+    </div>
+    <!-- 高防ip套餐 -->
+    <div id="highDefenseProduct">
+        <div class="highDefenseProduct text-center">
+            <h3 class="title">
+                高防IP产品
+            </h3>
+            <img class="d-block" src="{{ asset("/images/highDefenseIp/rectangle.png") }}" />
+            <p class="sub-title">
+                我们基于用户的需求主导产品研发，提供丰富、安全、易用、灵活的产品
+            </p>
+            <div class="product">
+                <div class="container">
+                    <div class="row" id="highDefenseIpList">
+                        @foreach ($data as $item)
+                        <div class="col-md-3">
+                            <div class="product-item">
+                                <h2>{{ $item['name'] }}</h2>
+                                <div class="product-item-price">
+                                    <span>{{ $item['price'] }}</span>
+                                    <span>元/月</span>
+                                </div>
+                                <div class="config">
+                                    <p>防护：{{ $item['protection_value'] }}</p>
+                                    <p>机房：{{ $item['site'] }}</p>
+                                </div>
+                                <div class="product-item-btn">
+                                    <a class="btn btn-default" data-toggle="modal" data-target="#purchaseTime" data-id="{{ $item['id'] }}" href="javascript:;" role="button">立刻购买</a>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
     <!--特点-->
@@ -139,6 +180,28 @@
             腾正高防专家，在岗 1 分钟，安全 60 秒
         </h2>
         <a class="consult-btn" href="javascript: void(0);">立即咨询</a>
+    </div>
+    <!-- 购买时长 -->
+    <div class="modal fade" id="purchaseTime" tabindex="-1" role="dialog" aria-labelledby="purchaseTimeLabel">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="purchaseTimeLabel">购买时长</h4>
+            </div>
+            <div class="modal-body">
+                <select class="form-control duration">
+                    <option value="1">一个月</option>
+                    <option value="6">六个月</option>
+                    <option value="12">一个年</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cancel" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary ok">确定</button>
+            </div>
+        </div>
+        </div>
     </div>
 </div>
 @endsection

@@ -17,6 +17,7 @@ html .tz-kefu {
   top: 50%;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
+  z-index: 99;
 }
 body .tz-kefu .tz-kefu-item,
 html .tz-kefu .tz-kefu-item {
@@ -261,7 +262,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-navbar-style ul.navbar-nav li .dropdown-mark ul li a {
   height: auto;
   color: #444444;
-  line-height: 16px;
+  line-height: 14px;
   font-size: 14px;
 }
 .tz-navbar-style ul.navbar-nav li .dropdown-mark ul li a:hover {
@@ -2305,6 +2306,10 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background: url(/images/server-rent-banner-bg.png?fbb67add78596bef8b8434641a45220b) no-repeat center;
   background-size: cover;
 }
+#tz-server-rent-content .banner.gaofang {
+  background: url(/images/gaofang.png?d62091a8827263c4ac41e2a98c049fc8) no-repeat center;
+  background-size: cover;
+}
 #tz-server-rent-content .banner .title {
   margin-top: 140px;
 }
@@ -3977,7 +3982,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 .tz-protection-content .banner .tab-item {
   display: inline-block;
-  width: 378px;
+  width: 250px;
   height: 63px;
   line-height: 63px;
   border-radius: 8px;
@@ -4637,6 +4642,91 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #high-defense-cdn .function .item:hover {
   background-color: #8692ff;
   cursor: pointer;
+}
+#highDefenseProduct .highDefenseProduct {
+  text-align: center;
+  padding-top: 40px;
+  padding-bottom: 30px;
+  background-color: #fff;
+}
+#highDefenseProduct .highDefenseProduct .title {
+  color: #333;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: 1.3px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+#highDefenseProduct .highDefenseProduct .sub-title {
+  margin-top: 20px;
+  color: #999;
+}
+#highDefenseProduct .highDefenseProduct .product {
+  margin-top: 30px;
+}
+#highDefenseProduct .highDefenseProduct .product-item {
+  padding-bottom: 28px;
+  border: 1px solid #eee;
+  -webkit-box-shadow: 0px 3px 10px #ccc;
+          box-shadow: 0px 3px 10px #ccc;
+  background-color: #fff;
+}
+#highDefenseProduct .highDefenseProduct .product-item h2 {
+  margin-top: 30px;
+  margin-bottom: 20px;
+  font-size: 18px;
+  color: #333;
+  font-weight: normal;
+}
+#highDefenseProduct .highDefenseProduct .product-item .config p {
+  width: 80%;
+  margin: 0px auto;
+  margin-top: 7px;
+  text-align: left;
+  padding-left: 20px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid #e5e5e5;
+  font-size: 12px;
+  color: #666;
+}
+#highDefenseProduct .highDefenseProduct .product-item .product-item-btn {
+  margin-top: 20px;
+}
+#highDefenseProduct .highDefenseProduct .product-item .product-item-btn .btn {
+  border: 1px solid #1f86ed;
+  color: #666;
+  border-radius: 2px;
+}
+#highDefenseProduct .highDefenseProduct .product-item .product-item-btn .btn:hover {
+  border: 1px solid #1f86ed;
+  background: #1f86ed;
+  color: #fff;
+}
+#highDefenseProduct .highDefenseProduct .product-item .product-item-price {
+  margin: 13px auto;
+  font-size: 12px;
+  color: #4c4c4c;
+  height: 80px;
+  line-height: 30px;
+  position: relative;
+}
+#highDefenseProduct .highDefenseProduct .product-item .product-item-price span:first-of-type {
+  display: inline-block;
+  font-size: 20px;
+  color: #f84;
+  border: 1px solid #eee;
+  width: 80px;
+  height: 80px;
+  border-radius: 80px;
+  line-height: 80px;
+  text-align: center;
+  margin: 0px auto;
+}
+#highDefenseProduct .highDefenseProduct .product-item .product-item-price span:last-of-type {
+  line-height: 16px;
+  font-size: 14px;
+  position: relative;
+  bottom: -25px;
 }
 #high-defense-ip .banner {
   background: url(/images/ip-banner-bg.png?983eeccaab9a5aecb781559649155a9c) no-repeat center;
@@ -5835,7 +5925,6 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #datacenter .main > .quality {
   margin-top: 80px;
   padding-top: 70px;
-  padding-bottom: 48px;
   background-color: #263ab8;
   border-radius: 100px 100px 0 0;
 }
@@ -5886,6 +5975,48 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   color: rgba(255, 255, 255, 0.3);
   line-height: 25px;
   font-size: 14px;
+}
+#datacenter .main > .quality > .problem {
+  padding-top: 80px;
+  background-color: #fff;
+  border-radius: 100px 100px 0 0;
+}
+#datacenter .main > .quality > .problem > h3 {
+  margin: 0;
+  font-size: 26px;
+  color: #333333;
+  text-align: center;
+  position: relative;
+}
+#datacenter .main > .quality > .problem > p {
+  text-align: center;
+  margin: 0;
+  margin-top: 20px;
+  color: #666666;
+  font-size: 14px;
+  margin-bottom: 40px;
+}
+#datacenter .main > .quality > .problem > .problem-list {
+  width: 1180px;
+  margin: 0 auto;
+}
+#datacenter .main > .quality > .problem > .problem-list > dl {
+  float: left;
+  width: 349px;
+}
+#datacenter .main > .quality > .problem > .problem-list > dl > dt {
+  padding: 8px 0;
+  padding-left: 26px;
+  border-bottom: 1px solid #bfbfbf;
+}
+#datacenter .main > .quality > .problem > .problem-list > dl > dt > span {
+  font-size: 16px;
+  color: #444444;
+}
+#datacenter .main > .quality > .problem > .problem-list > dl > dt > a {
+  font-size: 14px;
+  color: #2139b7;
+  text-decoration: none;
 }
 #tz-sca .banner {
   background: url(/images/sca-banner-bg.png?5746e983cf7876da3250119d2bec42fc) no-repeat center;

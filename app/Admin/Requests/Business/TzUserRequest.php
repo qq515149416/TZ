@@ -24,12 +24,19 @@ class TzUserRequest extends FormRequest
 	 */
 	public function rules()
 	{	
-		return [
-
-			'name' => 'sometimes|unique:tz_users,name,'.Request()->uid.',id',
-			'nickname' => 'sometimes|unique:tz_users,nickname,'.Request()->uid.',id'
-					
-		];
+		$return = [];
+		if(Request()->name != null){
+			$return = [
+				'name' => 'sometimes|unique:tz_users,name,'.Request()->uid.',id',	
+			];
+		}
+		if(Request()->nickname != null){
+			$return = [
+				'nickname' => 'sometimes|unique:tz_users,nickname,'.Request()->uid.',id',	
+			];
+		}
+		return $return;
+		
 	}
 
 	public function messages()

@@ -192,11 +192,14 @@ class Order extends Model
 				if($package == null){
 					return false;
 				}
-				$list->site = DB::table('idc_machineroom')->where('id',$package->site)->value('machine_room_name');
-				if ($list->site == null) {
-					$list->site = '套餐地区错误,请核对数据库';
+				switch ($package->site) {
+					case '1':
+						$list->site = '西安';
+						break;
+					default:
+						$list->site = '套餐地区错误,请核对数据库';
+						break;
 				}
-				
 				$list->protection_value = $package->protection_value;
 				$list->resource_type = '高防IP';
 				break;

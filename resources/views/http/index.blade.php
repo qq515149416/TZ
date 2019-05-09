@@ -1,11 +1,11 @@
 
 @extends('layouts.layout')
 
-@section('title', '专业IDC服务商,云主机，高防服务器，高防IP，服务器租用,服务器托管，带宽租用,CDN加速')
+@section('title', '腾正科技-专业IDC服务商,云主机，高防服务器，高防IP，服务器租用,服务器托管，带宽租用,CDN加速')
 
-@section('keywords', '云主机,高防服务器,高防IP,服务器租用,服务器托管,带宽租用,CDN加速,高防CDN,云服务器,机柜租用,云计算,IDC 服务器商,网络安全服务商')
+@section('keywords', '云主机，高防服务器，高防IP，服务器租用,服务器托管，带宽租用,CDN加速,高防CDN,云服务器,机柜租用,云计算,IDC服务器商,腾正科技')
 
-@section('description', '专业IDC服务提供商，主营服务器租用、服务器托管、机柜租用、大带宽租用、云主机、高防服务器、高防IP、CDN加速等数据存储、计算及安全综合应用解决方案服务。')
+@section('description', '腾正科技专业IDC服务提供商，主营服务器租用、服务器托管、机柜大带宽租用、云主机、高防服务器、高防IP、CDN加速等数据存储、计算及安全综合应用解决方案服务。')
 
 @section('content')
 
@@ -17,12 +17,12 @@
             <li data-target="#carousel-example-generic" data-slide-to="0" class="active">
                 <span class="progress"></span>
             </li>
-            <!-- <li data-target="#carousel-example-generic" data-slide-to="1">
+            <li data-target="#carousel-example-generic" data-slide-to="1">
                 <span class="progress"></span>
-            </li> -->
-            <!-- <li data-target="#carousel-example-generic" data-slide-to="2">
+            </li>
+            <li data-target="#carousel-example-generic" data-slide-to="2">
                 <span class="progress"></span>
-            </li> -->
+            </li>
         </ol>
 
         <!-- Wrapper for slides -->
@@ -42,26 +42,27 @@
                 </a>
             </div> -->
             <div class="item active">
+                <a href="/zuyong/gaofang" target="_blank">
+                    <img src="{{ asset("/images/banner/gaofangServer.png") }}" alt="...">
+                    <div class="carousel-caption">
+                    </div>
+                </a>
+            </div>
+            <div class="item">
                 <a href="http://yun.zeisp.com/cloudbuy.html" target="_blank">
                     <img src="{{ asset("/images/banner/yun.jpg") }}" alt="...">
                     <div class="carousel-caption">
                     </div>
                 </a>
             </div>
-            <!-- <div class="item">
-                <a href="/promotion/consumer" target="_blank">
-                    <img src="{{ asset("/images/banner/consumer.png") }}" alt="...">
+            <div class="item">
+                <a href="/dist/highDefense.html" target="_blank">
+                    <img src="{{ asset("/images/banner/gaofang.png") }}" alt="...">
                     <div class="carousel-caption">
                     </div>
                 </a>
-            </div> -->
-            <!-- <div class="item">
-                <a href="/promotion/ddk" target="_blank">
-                    <img src="{{ asset("/images/banner/ddk.jpg") }}" alt="...">
-                    <div class="carousel-caption">
-                    </div>
-                </a>
-            </div> -->
+            </div>
+
             <!-- <div class="item">
                 <a href="http://yun.zeisp.com/cloudbuy.html" target="_blank">
                     <img src="{{ asset("/images/banner/xianyun.png") }}" alt="...">
@@ -92,21 +93,21 @@
     <div class="hot-products row">
         <div class="container clearfix">
             <div class="hot-products-item">
-                <a href="/promotion/consumer">
+                <a href="/zuyong/gaofang">
                     <h3>安全防护</h3>
                     <p>抵御SYN、CC、DNS等 多种攻击，实现有效防护</p>
                     <span class="more"></span>
                 </a>
             </div>
             <div class="hot-products-item">
-                <a href="/page/tz/zytg">
+                <a href="/tuoguan">
                     <h3>服务器托管</h3>
                     <p>多线路组合，多城布点， 7×24的专人维护以及监控服务</p>
                     <span class="more"></span>
                 </a>
             </div>
             <div class="hot-products-item">
-                <a href="/page/tz/zygfzy">
+                <a href="/zuyong/index">
                     <h3>服务器租用</h3>
                     <p>品牌服务器，根据行业特点、 客户规模量身打造租用方案</p>
                     <span class="more"></span>

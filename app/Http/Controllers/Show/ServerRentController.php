@@ -19,6 +19,52 @@ class ServerRentController extends Controller
         // }
         // dump($date);
         $template = "http/serverRent";
+        $productData = [
+            "title" => "服务器租用",
+            "description" => "为您提供定制化硬件采购解决方案，满足您不同时期业务发展需求！",
+            "data" => [
+                [
+                    "name" => "惠州双线 50G防御",
+                    "price" => 900,
+                    "cpu" => "八核16线程 Xeon E5530 * 2",
+                    "ram" => "8G",
+                    "hardDisk" => "300G SAS/1T SATA",
+                    "bandwidth" => "G口（20M独享）",
+                    "defense" => 0,
+                    "top" => false
+                ],
+                [
+                    "name" => "衡阳双线 40G防御",
+                    "price" => 900,
+                    "cpu" => "Xeon E5530 * 2/L5630 * 2",
+                    "ram" => "8G",
+                    "hardDisk" => "1T SATA",
+                    "bandwidth" => "G口（20M独享）",
+                    "defense" => 0,
+                    "top" => false
+                ],
+                [
+                    "name" => "高防320G抗D+无限CC",
+                    "price" => 3500,
+                    "cpu" => "八核16线程 Xeon E5570 * 2",
+                    "ram" => "16G",
+                    "hardDisk" => "240G（固态硬盘）",
+                    "bandwidth" => "G口（100M独享）",
+                    "defense" => 0,
+                    "top" => false
+                ],
+                [
+                    "name" => "惠州电信(100M活动促销)",
+                    "price" => 1299,
+                    "cpu" => "八核16线程 Xeon E5530 * 2",
+                    "ram" => "8G",
+                    "hardDisk" => "300G SAS/1T SATA",
+                    "bandwidth" => "G口（100M独享）",
+                    "defense" => 0,
+                    "top" => false
+                ]
+            ]
+        ];
         $data = [
             "sanxian" => [
                 "hunan" => [
@@ -1005,13 +1051,58 @@ class ServerRentController extends Controller
                 ]
             ]
         ];
-        if($page!=="index") {
+        if($page!=="index"&&$page!=="gaofang") {
             $template = "http/product";
+        }
+        if($page==="gaofang") {
+            $productData = [
+                "title" => "高防服务器",
+                "description" => "为您提供高级防御解决方案，T级流量清洗，为您业务保驾护航！",
+                "data" => [
+                    [
+                        "name" => "百G清洗-游戏级",
+                        "price" => 888,
+                        "cpu" => "I7",
+                        "ram" => "8G",
+                        "hardDisk" => "240G（固态硬盘）",
+                        "bandwidth" => "100M",
+                        "defense" => "200G",
+                        "top" => true
+                    ],
+                    [
+                        "name" => "毫秒清洗-微端级",
+                        "price" => 3500,
+                        "cpu" => "E5530",
+                        "ram" => "16G",
+                        "hardDisk" => "240G（固态硬盘）",
+                        "bandwidth" => "100M",
+                        "defense" => "320G",
+                        "top" => false
+                    ],
+                    [
+                        "name" => "棋牌游戏-旗舰级",
+                        "price" => 10000,
+                        "cpu" => "X5672",
+                        "ram" => "32G",
+                        "hardDisk" => "240G（固态硬盘）",
+                        "bandwidth" => "100M",
+                        "defense" => "1T",
+                        "top" => false
+                    ],
+                    [
+                        "name" => "T级高防IP-逆天级",
+                        "price" => "在线购买",
+                        "ddos" => "1024G峰值",
+                        "top" => false
+                    ]
+                ]
+            ];
         }
         // dump($data[$page]);
         return view($template,[
             "page" => $page,
-            "data" => array_key_exists($page,$data) ? $data[$page] : []
+            "data" => array_key_exists($page,$data) ? $data[$page] : [],
+            "productData" => $productData
         ]);
     }
 }

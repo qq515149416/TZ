@@ -833,119 +833,59 @@ class BusinessModel extends Model
 
     }
 
+    /**
+     * 获取订单的变化（统计订单）
+     * @param  array $search begin--查询开始时间 end--查询结束时间 str--1=>查找所有,2=>未下架,3=>下架,4=>所有在用
+     * @return [type]         [description]
+     */
     public function changeMarket($search){
-        // $name = '';
-        // if(isset($search['name']) && !empty($search['name'])){
-        //     $table = substr($search['name'],0,stripos($search['name'],'|'));
-        //     $value = substr($search['name'],stripos($search['name'],'|')+1);
-        //     if($table == 'tz_users'){
-        //         $customer = DB::table($table)->orWhere(['name'=>$value])
-        //                         ->orWhere(['nickname'=>$value])
-        //                         ->orWhere(['email'=>$value])
-        //                         ->select('id','name','nickname','email')
-        //                         ->first();
-        //         $name = $customer->name?$customer->name:$customer->nickname;
-        //         $name = $name?$name:$customer->email;
-        //     } elseif($table == 'admin_users'){
-        //         $business = DB::table($table)->where(['name'=>$value])->select('id','name')->first();
-        //         $name = $business->name;
-        //     }
-        // }
-        // $people = isset($customer->id)?$customer->id:(isset($business->id)?$business->id:'*');
-        $status = [0,4];//查找的订单状态区间，默认0-4
-        $remove = [0,3];
-        if(isset($search['str'])){
-            if($search['str'] == 1){//当str为2时代表查找下架的状态还未下架完成,0-3
-                $remove = [0,4];//查找下架状态的区间，默认所有状态0-4
-            }
-            if($search['str'] == 2){//当str为2时代表查找下架的状态还未下架完成,0-3
-                $remove = [0,3];
-            }
-            if($search['str'] == 3){//当str为2时代表查找下架的状态还完成,4
-                $remove = [4,4];
-            }
-            if($search['str'] != 4){
-                $begin_end = $this->queryTime($search);
-                $orders_total = DB::table('tz_orders')
-                        ->join('tz_business','tz_orders.business_sn','=','tz_business.business_number')
-                        ->whereBetween('tz_orders.created_at',[$begin_end['start_time'],$begin_end['end_time']])
-                        ->whereBetween('order_status',$status)
-                        ->whereBetween('tz_orders.remove_status',$remove)
-                        ->whereBetween('tz_business.remove_status',[0,3])
-                        ->whereBetween('tz_business.business_status',[0,4])
-                        ->whereNull('tz_orders.deleted_at')
-                        ->whereNull('tz_business.deleted_at')
-                        ->count();
-                $orders_info = DB::table('tz_orders')
-                        // ->whereBetween('created_at',[$begin_end['start_time'],$begin_end['end_time']])
-                        // ->whereBetween('order_status',$status)
-                        // ->whereBetween('remove_status',$remove)
-                        // ->whereNull('deleted_at')
-                        ->join('tz_business','tz_orders.business_sn','=','tz_business.business_number')
-                        ->whereBetween('tz_orders.created_at',[$begin_end['start_time'],$begin_end['end_time']])
-                        ->whereBetween('order_status',$status)
-                        ->whereBetween('tz_orders.remove_status',$remove)
-                        ->whereBetween('tz_business.remove_status',[0,3])
-                        ->whereBetween('tz_business.business_status',[0,4])
-                        ->whereNull('tz_orders.deleted_at')
-                        ->whereNull('tz_business.deleted_at')
-                        ->select('tz_orders.id','tz_orders.customer_id','tz_orders.business_id','tz_orders.resource_type','tz_orders.machine_sn','tz_orders.price','tz_orders.duration','tz_orders.created_at')
-                        ->get();
-            } else {
-                $orders_total = DB::table('tz_orders')
-                        ->join('tz_business','tz_orders.business_sn','=','tz_business.business_number')
-                        ->whereBetween('order_status',$status)
-                        ->whereBetween('tz_orders.remove_status',$remove)
-                        // ->whereNull('deleted_at')
-                        ->whereBetween('tz_business.remove_status',[0,3])
-                        ->whereBetween('tz_business.business_status',[0,4])
-                        ->whereNull('tz_orders.deleted_at')
-                        ->whereNull('tz_business.deleted_at')
-                        ->count();
-                $orders_info = DB::table('tz_orders')
-                        // ->whereBetween('created_at',[$begin_end['start_time'],$begin_end['end_time']])
-                        // ->whereBetween('order_status',$status)
-                        // ->whereBetween('remove_status',$remove)
-                        // ->whereNull('deleted_at')
-                        ->join('tz_business','tz_orders.business_sn','=','tz_business.business_number')
-                        ->whereBetween('order_status',$status)
-                        ->whereBetween('tz_orders.remove_status',$remove)
-                        // ->whereNull('deleted_at')
-                        ->whereBetween('tz_business.remove_status',[0,3])
-                        ->whereBetween('tz_business.business_status',[0,4])
-                        ->whereNull('tz_orders.deleted_at')
-                        ->whereNull('tz_business.deleted_at')
-                        ->select('tz_orders.id','tz_orders.customer_id','tz_orders.business_id','tz_orders.resource_type','tz_orders.machine_sn','tz_orders.price','tz_orders.duration','tz_orders.created_at')
-                        ->get(); 
-            }
-        } else {
-                
-               $orders_total = DB::table('tz_orders')
-                        ->join('tz_business','tz_orders.business_sn','=','tz_business.business_number')
-                        ->whereBetween('order_status',$status)
-                        ->whereBetween('tz_orders.remove_status',$remove)
-                        // ->whereNull('deleted_at')
-                        ->whereBetween('tz_business.remove_status',[0,3])
-                        ->whereBetween('tz_business.business_status',[0,4])
-                        ->whereNull('tz_orders.deleted_at')
-                        ->whereNull('tz_business.deleted_at')
-                        ->count();
-                $orders_info = DB::table('tz_orders')
-                        // ->whereBetween('created_at',[$begin_end['start_time'],$begin_end['end_time']])
-                        // ->whereBetween('order_status',$status)
-                        // ->whereBetween('remove_status',$remove)
-                        // ->whereNull('deleted_at')
-                        ->join('tz_business','tz_orders.business_sn','=','tz_business.business_number')
-                        ->whereBetween('order_status',$status)
-                        ->whereBetween('tz_orders.remove_status',$remove)
-                        // ->whereNull('deleted_at')
-                        ->whereBetween('tz_business.remove_status',[0,3])
-                        ->whereBetween('tz_business.business_status',[0,4])
-                        ->whereNull('tz_orders.deleted_at')
-                        ->whereNull('tz_business.deleted_at')
-                        ->select('tz_orders.id','tz_orders.customer_id','tz_orders.business_id','tz_orders.resource_type','tz_orders.machine_sn','tz_orders.price','tz_orders.duration','tz_orders.created_at')
-                        ->get(); 
+        if(!isset($search['str'])){
+            $search['str'] = 4;
         }
+        $status = [0,4];//查找的订单状态区间，默认0-4
+        $remove = [0,3];//默认查找在用未下架的业务订单
+        $time = 'created_at';//默认以创建时间为查询条件
+        switch ($search['str']) {
+            case 1:
+                $begin_end = $this->queryTime($search);
+                $remove = [0,4];//查找所有出现过的业务订单
+                break;
+            case 2:
+                $begin_end = $this->queryTime($search);
+                $remove = [0,3];//查找在用未下架的业务订单
+                break;
+            case 3:
+                $begin_end = $this->queryTime($search);
+                $remove = [4,4];//查找已下架的业务订单
+                $time = 'updated_at';//下架时以下架时间作为查询条件
+                break;
+            default:
+                $begin_end['start_time'] = '1970-01-01';
+                $begin_end['end_time'] = date('Y-m-d',time());
+                break;
+        }
+        //统计订单数量
+        $orders_total = DB::table('tz_orders')
+                        ->whereBetween($time,[$begin_end['start_time'],$begin_end['end_time']])
+                        ->whereBetween('order_status',$status)
+                        ->whereBetween('remove_status',$remove)
+                        ->whereNull('deleted_at')
+                        ->count();
+        //查询符合条件的数据
+        $orders_info = DB::table('tz_orders')
+                        ->whereBetween($time,[$begin_end['start_time'],$begin_end['end_time']])
+                        ->whereBetween('order_status',$status)
+                        ->whereBetween('remove_status',$remove)
+                        ->whereNull('deleted_at')
+                        ->select('id','customer_id','business_id','resource_type','machine_sn','price','duration',$time.' as created_at')
+                        ->get();
+        //统计符合条件的月营收
+        $month_total = DB::table('tz_orders')
+                        ->whereBetween($time,[$begin_end['start_time'],$begin_end['end_time']])
+                        ->whereBetween('order_status',$status)
+                        ->whereBetween('remove_status',$remove)
+                        ->whereNull('deleted_at')
+                        ->sum('price'); 
         $total = 0;
         if(!$orders_info->isEmpty()){
             foreach($orders_info as $info_key => $info){
@@ -963,7 +903,7 @@ class BusinessModel extends Model
         }
         $return['code'] = 1;
         $return['msg'] = '';
-        $return['data'] = ['orders_total'=>$orders_total,'info'=>$orders_info?$orders_info:[],'total'=>$total];
+        $return['data'] = ['orders_total'=>$orders_total,'info'=>$orders_info?$orders_info:[],'total'=>$total,'month_total'=>$month_total];
         return $return;
     }
 

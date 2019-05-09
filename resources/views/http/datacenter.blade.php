@@ -139,6 +139,30 @@
                         </p>
                     </li>
                 </ul>
+                <section class="problem">
+                    <h3>IDC常见问题</h3>
+                    <p>关注腾正，关注IDC，关注云计算，关注信息安全,关注互联网动向</p>
+                    <div class="problem-list clearfix">
+                        <dl>
+                            <dt class="clearfix">
+                                <span class="pull-left">最新活动</span>
+                                <a class="pull-right" href="#">查看更多>></a>
+                            </dt>
+                            <dd>
+                                <a href="#">西安高防服务器限时抢购</a>
+                            </dd>
+                            <dd>
+                                <a href="#">腾正云全新升级，免费体验通知</a>
+                            </dd>
+                            <dd>
+                                <a href="#">腾正云价格调整公告</a>
+                            </dd>
+                            <dd>
+                                <a href="#">腾正云免费体验 下单买一送一</a>
+                            </dd>
+                        </dl>
+                    </div>
+                </section>
             </section>
         </section>
     </div>

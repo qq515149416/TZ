@@ -142,7 +142,7 @@
                 <section class="problem">
                     <h3>IDC常见问题</h3>
                     <p>关注腾正，关注IDC，关注云计算，关注信息安全,关注互联网动向</p>
-                    <div class="problem-list">
+                    <div class="problem-list clearfix">
                         <dl>
                             <dt>
                                 <span>最新活动</span>

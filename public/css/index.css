@@ -2306,6 +2306,10 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background: url(/images/server-rent-banner-bg.png?fbb67add78596bef8b8434641a45220b) no-repeat center;
   background-size: cover;
 }
+#tz-server-rent-content .banner.gaofang {
+  background: url(/images/gaofang.png?d62091a8827263c4ac41e2a98c049fc8) no-repeat center;
+  background-size: cover;
+}
 #tz-server-rent-content .banner .title {
   margin-top: 140px;
 }
@@ -5921,7 +5925,6 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #datacenter .main > .quality {
   margin-top: 80px;
   padding-top: 70px;
-  padding-bottom: 48px;
   background-color: #263ab8;
   border-radius: 100px 100px 0 0;
 }
@@ -5972,6 +5975,43 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   color: rgba(255, 255, 255, 0.3);
   line-height: 25px;
   font-size: 14px;
+}
+#datacenter .main > .quality > .problem {
+  padding-top: 80px;
+  background-color: #fff;
+  border-radius: 100px 100px 0 0;
+}
+#datacenter .main > .quality > .problem > h3 {
+  margin: 0;
+  font-size: 26px;
+  color: #333333;
+  text-align: center;
+  position: relative;
+}
+#datacenter .main > .quality > .problem > p {
+  text-align: center;
+  margin: 0;
+  margin-top: 20px;
+  color: #666666;
+  font-size: 14px;
+  margin-bottom: 40px;
+}
+#datacenter .main > .quality > .problem > .problem-list {
+  width: 1180px;
+  margin: 0 auto;
+}
+#datacenter .main > .quality > .problem > .problem-list dl {
+  float: left;
+  width: 349px;
+}
+#datacenter .main > .quality > .problem > .problem-list dl dt {
+  padding: 8px 0;
+  padding-left: 26px;
+  border-bottom: 1px solid #bfbfbf;
+}
+#datacenter .main > .quality > .problem > .problem-list dl dt span {
+  font-size: 16px;
+  color: #444444;
 }
 #tz-sca .banner {
   background: url(/images/sca-banner-bg.png?5746e983cf7876da3250119d2bec42fc) no-repeat center;

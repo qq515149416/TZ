@@ -15,7 +15,13 @@ class ProtectionController extends Controller
                 return view("http/protection");
                 break;
             case 'high-defense-ip':
-                return view("http/highDefenseIp");
+                // $model = new PackageModel();
+
+                // $list = $model->showPackage();
+                // return view("http/highDefenseIp",[
+                //     "data" => $list['data']
+                // ]);
+                return redirect()->action('Show\ProtectionController@gaofang');
                 break;
             case 'high-defense-cdn':
                 return view("http/highDefenseCdn");

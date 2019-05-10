@@ -155,13 +155,18 @@ class UnderModel extends Model
                 } else {
                     $where = [];
                 }
-                $history = DB::table('tz_business')->where($where)->whereBetween('remove_status',[1,4])->orderBy('updated_at', 'desc')->select('client_name', 'sales_name', 'business_number', 'machine_number', 'business_type', 'business_note', 'remove_reason', 'resource_detail', 'remove_status','money as price','length','updated_at')->get();
+                $history = DB::table('tz_business')->where($where)->whereBetween('remove_status',[1,4])->orderBy('updated_at', 'desc')->select('client_id', 'sales_id', 'business_number', 'machine_number', 'business_type', 'business_note', 'remove_reason', 'resource_detail', 'remove_status','money as price','length','updated_at')->get();
                 if (!empty($history)) {
                     $business_type = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜'];
                     $remove_status = [0 => '正常使用', 1 => '下架申请中', 2 => '机房处理中', 3 => '清空下架中', 4 => '下架完成'];
                     foreach ($history as $history_key => $history_value) {
                         $history_value->resourcetype  = $business_type[$history_value->business_type];
                         $history_value->remove_status = $remove_status[$history_value->remove_status];
+                        $history_value->sales_name = DB::table('admin_users')->where(['id'=> $history_value->sales_id])->value('name');
+                        $client_name = DB::table('tz_users')->where(['id'=> $history_value->client_id])->select('name','email','nickname','msg_phone','msg_qq')->first();
+                        $email = $client_name->email ? $client_name->email : $client_name->name;
+                        $email = $email ? $email : $client_name->nickname;
+                        $history_value->client_name = $email;
                     }
                     $return['data'] = $history;
                     $return['code'] = 1;
@@ -179,13 +184,18 @@ class UnderModel extends Model
                 } else {
                     $where = [];
                 }
-                $history = DB::table('tz_orders')->where($where)->where('resource_type', '>', 3)->whereBetween('remove_status',[1,4])->orderBy('updated_at', 'desc')->select('business_sn', 'order_sn', 'customer_name', 'resource_type', 'business_name', 'machine_sn', 'resource', 'remove_status', 'remove_reason','price','duration as length','updated_at')->get();
+                $history = DB::table('tz_orders')->where($where)->where('resource_type', '>', 3)->whereBetween('remove_status',[1,4])->orderBy('updated_at', 'desc')->select('business_sn', 'order_sn', 'customer_id', 'resource_type', 'business_id', 'machine_sn', 'resource', 'remove_status', 'remove_reason','price','duration as length','updated_at')->get();
                 if (!empty($history)) {
                     $resource_type = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜', 4 => 'IP', 5 => 'CPU', 6 => '硬盘', 7 => '内存', 8 => '带宽', 9 => '防护', 10 => 'cdn', 11 => '高防IP'];
                     $remove_status = [0 => '正常使用', 1 => '下架申请中', 2 => '机房处理中', 3 => '清空下架中', 4 => '下架完成'];
                     foreach ($history as $history_key => $history_value) {
                         $history_value->resourcetype  = $resource_type[$history_value->resource_type];
                         $history_value->remove_status = $remove_status[$history_value->remove_status];
+                        $history_value->business_name = DB::table('admin_users')->where(['id'=> $history_value->business_id])->value('name');
+                        $client_name = DB::table('tz_users')->where(['id'=> $history_value->customer_id])->select('name','email','nickname','msg_phone','msg_qq')->first();
+                        $email = $client_name->email ? $client_name->email : $client_name->name;
+                        $email = $email ? $email : $client_name->nickname;
+                        $history_value->customer_name = $email;
                     }
                     $return['data'] = $history;
                     $return['code'] = 1;
@@ -429,13 +439,18 @@ class UnderModel extends Model
         if ($staff->slug == 4) {
             $where['machineroom'] = $staff->department;
         }
-        $business = DB::table('tz_business')->where($where)->whereBetween('remove_status', [1, 3])->select('client_name', 'sales_name', 'business_number', 'machine_number', 'business_type', 'business_note', 'remove_reason', 'resource_detail', 'remove_status')->get();
+        $business = DB::table('tz_business')->where($where)->whereBetween('remove_status', [1, 3])->select('client_id', 'sales_id', 'business_number', 'machine_number', 'business_type', 'business_note', 'remove_reason', 'resource_detail', 'remove_status')->get();
         if (!empty($business)) {
             $business_type = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜'];
             $remove_status = [0 => '正常使用', 1 => '下架申请中', 2 => '机房处理中', 3 => '清空下架中', 4 => '下架完成'];
             foreach ($business as $business_key => $business_value) {
                 $business_value->resource_type = $business_type[$business_value->business_type];
                 $business_value->removestatus  = $remove_status[$business_value->remove_status];
+                $business_value->sales_name = DB::table('admin_users')->where(['id'=> $business_value->sales_id])->value('name');
+                $client_name = DB::table('tz_users')->where(['id'=> $business_value->client_id])->select('name','email','nickname','msg_phone','msg_qq')->first();
+                $email = $client_name->email ? $client_name->email : $client_name->name;
+                $email = $email ? $email : $client_name->nickname;
+                $business_value->client_name = $email;
                 $resource_detail = json_decode($business_value->resource_detail);
                 $business_value->machineroom_name = $resource_detail->machineroom_name;
                 if($business_value->business_type != 3){
@@ -447,7 +462,7 @@ class UnderModel extends Model
                 }
             }
         }
-        $orders = DB::table('tz_orders')->where($where)->where('resource_type', '>', 3)->whereBetween('remove_status', [1, 3])->orderBy('updated_at', 'desc')->select('order_sn', 'business_sn', 'customer_name', 'resource_type', 'business_name', 'machine_sn', 'resource', 'remove_reason', 'remove_status')->get();
+        $orders = DB::table('tz_orders')->where($where)->where('resource_type', '>', 3)->whereBetween('remove_status', [1, 3])->orderBy('updated_at', 'desc')->select('order_sn', 'business_sn', 'customer_id', 'resource_type', 'business_id', 'machine_sn', 'resource', 'remove_reason', 'remove_status')->get();
 
 
         //遍历查询  资源所属业务的机器所在的机柜  和 IP
@@ -464,6 +479,11 @@ class UnderModel extends Model
             foreach ($orders as $orders_key => $orders_value) {
                 $orders_value->resourcetype = $resource_type[$orders_value->resource_type];
                 $orders_value->removestatus = $remove_status[$orders_value->remove_status];
+                $orders_value->business_name = DB::table('admin_users')->where(['id'=> $orders_value->business_id])->value('name');
+                $client_name = DB::table('tz_users')->where(['id'=> $orders_value->customer_id])->select('name','email','nickname','msg_phone','msg_qq')->first();
+                $email = $client_name->email ? $client_name->email : $client_name->name;
+                $email = $email ? $email : $client_name->nickname;
+                $orders_value->customer_name = $email;
             }
         }
         $result         = ['business' => $business, 'orders' => $orders];

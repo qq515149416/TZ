@@ -114,7 +114,7 @@ class BusinessModel extends Model
      */
     public function securityBusiness()
     {
-        $result = $this->whereBetween('business_status',[0,5])->where('remove_status','<',4)->orderBy('created_at','desc')->get(['id', 'client_id', 'client_name', 'sales_id', 'sales_name', 'order_number', 'business_number', 'business_type', 'machine_number', 'resource_detail', 'business_status', 'money', 'length', 'business_note','created_at','start_time','endding_time','remove_status']);
+        $result = $this->whereBetween('business_status',[0,5])->where('remove_status','<',4)->orderBy('created_at','desc')->get(['id', 'client_id', 'sales_id', 'order_number', 'business_number', 'business_type', 'machine_number', 'resource_detail', 'business_status', 'money', 'length', 'business_note','created_at','start_time','endding_time','remove_status']);
         if (!$result->isEmpty()) {
             $business_status = [-1 => '取消', -2 => '审核不通过', 0 => '审核中', 1 => '未付款使用', 2 => '付款使用中', 3 => '未付用', 4 => '锁定中', 5 => '到期', 6 => '退款'];
             $business_type   = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜'];
@@ -123,6 +123,11 @@ class BusinessModel extends Model
                 $result[$check]['status'] = $business_status[$check_value['business_status']];
                 $result[$check]['type']   = $business_type[$check_value['business_type']];
                 $result[$check]['remove'] = $remove_status[$check_value['remove_status']];
+                $check_value->sales_name = DB::table('admin_users')->where(['id'=>$check_value->sales_id])->value('name');
+                $client_name = DB::table('tz_users')->where(['id'=>$check_value->client_id])->select('name','email','nickname','msg_phone','msg_qq')->first();
+                $email = $client_name->email ? $client_name->email : $client_name->name;
+                $email = $email ? $email : $client_name->nickname;
+                $check_value->client_name = $email;
                 $resource_detail = json_decode($check_value['resource_detail']);
                 $result[$check]['machineroom_name'] = $resource_detail->machineroom_name;
                 if($check_value['business_type'] != 3){
@@ -987,9 +992,6 @@ class BusinessModel extends Model
                 $client_name = DB::table('tz_users')->where(['id'=>$business_value->client_id])->select('name','email','nickname','msg_phone','msg_qq')->first();
                 $email = $client_name->email ? $client_name->email : $client_name->name;
                 $email = $email ? $email : $client_name->nickname;
-                // $qq = isset($client_name->msg_qq)?$client_name->msg_qq:'';
-                // $phone = isset($client_name->msg_phone)?$client_name->msg_phone:'';
-                // $business_value->client_name = '用户:'.$email.'QQ:'.$qq.'手机:'.$phone;
                 $business_value->client_name = $email;
                 $resource_detail =  json_decode($business_value->resource_detail);
                 $business_value->ip = isset($resource_detail->ip_detail)?$resource_detail->ip_detail:'';

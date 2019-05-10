@@ -116,7 +116,7 @@ class OrdersModel extends Model
 					->whereBetween('tz_orders.remove_status',[0,3])
                     ->whereNull('tz_orders.deleted_at')
 					->orderBy('tz_orders.created_at','desc')
-					->select('tz_orders.id','tz_orders.order_sn','tz_orders.customer_name','tz_orders.business_sn','tz_orders.business_name','tz_orders.resource_type','tz_orders.order_type','tz_orders.resource','tz_orders.price','tz_orders.duration','tz_orders.payable_money','tz_orders.end_time','tz_orders.serial_number','tz_orders.pay_time','tz_orders.order_status','tz_orders.order_note','tz_orders.created_at','tz_orders_flow.before_money','tz_orders_flow.after_money','tz_orders.remove_status')
+					->select('tz_orders.id','tz_orders.order_sn','tz_orders.customer_id','tz_orders.business_sn','tz_orders.business_id','tz_orders.resource_type','tz_orders.order_type','tz_orders.resource','tz_orders.price','tz_orders.duration','tz_orders.payable_money','tz_orders.end_time','tz_orders.serial_number','tz_orders.pay_time','tz_orders.order_status','tz_orders.order_note','tz_orders.created_at','tz_orders_flow.before_money','tz_orders_flow.after_money','tz_orders.remove_status')
 					->get();
 
 		if(!$result->isEmpty()){
@@ -131,6 +131,11 @@ class OrdersModel extends Model
                 $ovalue->status = $ovalue->order_status;
 				$ovalue->order_status = $order_status[$ovalue->order_status];
 				$ovalue->remove_status = $remove_status[$ovalue->remove_status];
+				$ovalue->business_name = DB::table('admin_users')->where(['id'=>$ovalue->business_id])->value('name');
+                $client_name = DB::table('tz_users')->where(['id'=>$ovalue->customer_id])->select('name','email','nickname','msg_phone','msg_qq')->first();
+                $email = $client_name->email ? $client_name->email : $client_name->name;
+                $email = $email ? $email : $client_name->nickname;
+                $ovalue->customer_name = $email;
 			}
 			$return['data'] = $result;
 			$return['code'] = 1;

@@ -46,7 +46,7 @@ class PromotionRequest extends FormRequest
 			case 'insert':
 				$return = [
 				
-					'order'			=> 'integer',	
+					'pro_order'		=> 'integer',	
 					'img'			=> 'required',
 					 'link'			=> 'required|url',		
 					 'title'			=> 'required',
@@ -86,7 +86,7 @@ class PromotionRequest extends FormRequest
 		return  [
 			'img.required'		=> '请填写图片地址',
 			'link.required'		=> '请填写跳转链接地址',
-			'order.integer'		=> '排序格式错误',
+			'pro_order.integer'	=> '排序格式错误',
 			'link.url'			=> '链接格式错误',
 			'title.required'		=> '请填写活动标题',
 			'digest.required'		=> '请填写活动摘要',

@@ -20,7 +20,7 @@ class PromotionController extends Controller
 	 */
 	public function insert(PromotionRequest $request){
 		
-		$par = $request->only(['img', 'link','title','top','digest','end_at','order']);
+		$par = $request->only(['img', 'link','title','top','digest','end_at','pro_order']);
 
 		$par['img'] = json_encode($par['img']);
 		$par['link'] = json_encode($par['link']);
@@ -60,7 +60,7 @@ class PromotionController extends Controller
 	 * @return json    
 	 */
 	public function edit(PromotionRequest $request){
-		$par = $request->only(['img', 'link','title','top','digest','end_at','order','edit_id','sale_status']);
+		$par = $request->only(['img', 'link','title','top','digest','end_at','pro_order','edit_id','sale_status']);
 
 		$links_model = new PromotionModel();
 		if(isset($par['img'])){

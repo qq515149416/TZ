@@ -42,7 +42,7 @@ class SearchModel extends Model
         $search_result = [];
         //$result_key  = 0;
         foreach($xs_result as $xs_key => $xs_value){
-            $business = $this->where(['business_number'=>$xs_value['business_sn']])->whereBetween('remove_status',[0,1])->select('id','client_name','client_id','sales_name','business_number','business_type','machine_number','resource_detail','money','client_id','length','start_time','endding_time','business_status')->first();
+            $business = $this->where(['business_number'=>$xs_value['business_sn']])->whereBetween('remove_status',[0,1])->select('id','client_id','sales_id','business_number','business_type','machine_number','resource_detail','money','client_id','length','start_time','endding_time','business_status')->first();
             if(!empty($business)){
                 $business = $business->toArray();
                 $business_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜'];
@@ -50,11 +50,15 @@ class SearchModel extends Model
                 $business['type'] = $business_type[$business['business_type']];//业务类型
                 $business['status'] = $business_status[$business['business_status']];//业务状态
                 $resource = $this->searchResources($business['business_number']);
-                $customer = DB::table('tz_users')->where(['id'=>$business['client_id']])->select('msg_qq','msg_phone','remarks')->first();
+                $ovalue->business_name = DB::table('admin_users')->where(['id'=>$business['sales_id']])->value('name');
+                $ovalue->customer_name = $email;
+                $customer = DB::table('tz_users')->where(['id'=>$business['client_id']])->select('name','email','nickname','msg_qq','msg_phone','remarks')->first();
                 if(!empty($customer)){
                     $qq = isset($customer->msg_qq)?$customer->msg_qq:'';
                     $phone = isset($customer->msg_phone)?$customer->msg_phone:'';
-                    $business['client_name'] = '用户:'.$business['client_name'].
+                    $email = $customer->email ? $$customer->email : $customer->name;
+                    $email = $email ? $email : $customer->nickname;
+                    $business['client_name'] = '用户:'.$email.
                                                 'QQ:'.$qq.
                                                 '手机:'.$phone.
                                                 '备注:'.$customer->remarks;

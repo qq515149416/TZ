@@ -992,9 +992,6 @@ class BusinessModel extends Model
                 $client_name = DB::table('tz_users')->where(['id'=>$business_value->client_id])->select('name','email','nickname','msg_phone','msg_qq')->first();
                 $email = $client_name->email ? $client_name->email : $client_name->name;
                 $email = $email ? $email : $client_name->nickname;
-                // $qq = isset($client_name->msg_qq)?$client_name->msg_qq:'';
-                // $phone = isset($client_name->msg_phone)?$client_name->msg_phone:'';
-                // $business_value->client_name = '用户:'.$email.'QQ:'.$qq.'手机:'.$phone;
                 $business_value->client_name = $email;
                 $resource_detail =  json_decode($business_value->resource_detail);
                 $business_value->ip = isset($resource_detail->ip_detail)?$resource_detail->ip_detail:'';

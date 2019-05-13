@@ -431,6 +431,8 @@ Route::group([
         $router->get('under_business','Business\BusinessController@underBusiness');
         $router->get('new_registration','Business\BusinessController@newRegistration');
         $router->get('changemarket','Business\BusinessController@changeMarket');
+
+        $router->post('register', 'Business\CustomerController@registerClerk');//后台替客户注册账号
     });
 
 
@@ -654,6 +656,18 @@ Route::group([
         $router->post('insert', 'News\LinksController@insert');//添加友情链接
         $router->post('edit', 'News\LinksController@edit');//编辑友情链接
         $router->post('del', 'News\LinksController@del');//删除友情链接
+    });
+
+    /**
+     * 促销活动管理
+     */
+    Route::group([
+        'prefix' => 'promotion',
+    ], function (Router $router) {
+        $router->get('show', 'News\PromotionController@show');//获取友情链接
+        $router->post('insert', 'News\PromotionController@insert');//添加友情链接
+        $router->post('edit', 'News\PromotionController@edit');//编辑友情链接
+        $router->post('del', 'News\PromotionController@del');//删除友情链接
     });
 
 });

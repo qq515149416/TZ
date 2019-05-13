@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Hash;
 use Encore\Admin\Facades\Admin;
 use App\Admin\Models\Business\BusinessModel;
+use XS;
+use XSDocument;
 
 /**
  * 所有客户信息
@@ -385,5 +387,38 @@ class CustomerModel extends Model
             $return['msg'] = '客户绑定失败';
         }
         return $return;
+    }
+
+    /**
+     * 后台注册客户
+     * @param  [type] $data [description]
+     * @return [type]       [description]
+     */
+    public function registerClerk($data){
+        unset($data['password_confirmation']);
+        $data['pwd_ver'] = 1;
+        $data['salesman_id'] = Admin::user()->id;
+        $row = $this->create($data);
+        if($row != false){
+            /**
+             * 将先注册的账户相关信息放入索引文件
+             * @var XS
+             */
+            $xunsearch    = new XS('customer');
+            $index        = $xunsearch->index;
+            $doc['id']    = strtolower($row['id']);
+            $doc['name'] = strtolower($data['name']);
+            $doc['nickname'] = strtolower($data['nickname']);
+            $document     = new \XSDocument($doc);
+            $index->update($document);
+            $index->flushIndex();
+            $return['code'] = 1;
+            $return['msg'] = '客户信息注册成功';
+        } else {
+            $return['code'] = 1;
+            $return['msg'] = '客户信息注册失败';
+        }
+        return $return;
+
     }
 }

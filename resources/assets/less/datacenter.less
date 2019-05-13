@@ -2,7 +2,9 @@
     .banner {
         border-top: 1px solid transparent;
         height: 561px;
-        background-color: #10142e;
+        // background-color: #10142e;
+        background: url(../images/datacenter/datacenter_banner.png) no-repeat;
+        background-size: 100% 100%;
         text-align: center;
         h2 {
             margin-top: 173px;
@@ -74,7 +76,7 @@
         }
     }
     .main {
-        padding: 80px 0 82px 0;
+        padding: 80px 0 0 0;
         >h3 {
            margin: 0;
            font-size: 26px;
@@ -170,7 +172,9 @@
             margin-top: 80px;
             padding-top: 70px;
             // padding-bottom: 48px;
-            background-color: #263ab8;
+            // background-color: #263ab8;
+            background: url(../images/datacenter/quality.png) no-repeat;
+            background-size: 100% 70%;
             border-radius: 100px 100px 0 0;
             >h3 {
                 margin: 0;
@@ -223,6 +227,7 @@
                 padding-top: 80px;
                 background-color: #fff;
                 border-radius: 100px 100px 0 0;
+                padding-bottom: 59px;
                 >h3 {
                     margin: 0;
                     font-size: 26px;
@@ -246,6 +251,12 @@
                     >dl {
                         float: left;
                         width: 349px;
+                        margin-right: 66px;
+                        @top: 25px/2px;
+                        @left: 5px;
+                        &:last-of-type {
+                            margin: 0;
+                        }
                         >dt {
                             padding: 8px 0;
                             >span {
@@ -259,10 +270,71 @@
                             }
                             padding-left: 26px;
                             border-bottom: 1px solid #bfbfbf;
+
+                            background: url(../images/datacenter/title_icon.png) no-repeat @left @top;
+                        }
+                        &:nth-of-type(2) {
+                            >dt {
+                                background: url(../images/datacenter/title_icon_2.png) no-repeat @left @top;
+                            }
+                        }
+                        &:nth-of-type(3) {
+                            >dt {
+                                background: url(../images/datacenter/title_icon_3.png) no-repeat @left @top;
+                            }
+                        }
+                        >dd {
+                            padding: 10px 0;
+                            border-bottom: 1px dashed #d2d2d2;
+                            padding-left: 24px;
+                            // list-style-type: disc;
+                            @top: 38px/2px;
+                            @left: 12px;
+                            background: url(../images/datacenter/list_style_type.png) no-repeat @left @top;
+                            &:last-of-type {
+                                border: none;
+                            }
+                            a {
+                                text-decoration: none;
+                                font-size: 14px;
+                                color: #666666;
+                            }
                         }
                     }
                  }
              }
         }
     }
+    .jumbotron.footer {
+        height: 193px;
+        padding: 0;
+        box-sizing: border-box;
+        margin: 0;
+        background: url(../images/product/productBg3.png) no-repeat;
+        background-size: 100% 100%;
+        text-align: center;
+          h4 {
+              margin: 0;
+            //   margin-top: 60px;
+            padding-top: 60px;
+              margin-bottom: 24px;
+              font-size: 26px;
+              color: #fff;
+          }
+          a {
+              display: inline-block;
+              text-decoration: none;
+              width: 150px;
+              height: 32px;
+              line-height: 32px - 2px;
+              border: 1px solid #fff;
+              color: #fff;
+              text-align: center;
+              font-size: 14px;
+              border-radius: 17px;
+          }
+      }
+      .jumbotron {
+        border-radius: 0;
+      }
 }

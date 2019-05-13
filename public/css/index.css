@@ -5759,7 +5759,8 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #datacenter .banner {
   border-top: 1px solid transparent;
   height: 561px;
-  background-color: #10142e;
+  background: url(/images/datacenter_banner.png?c3dcf62abd38f0e5a6f35df5e1ece73f) no-repeat;
+  background-size: 100% 100%;
   text-align: center;
 }
 #datacenter .banner h2 {
@@ -5830,7 +5831,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin: 0;
 }
 #datacenter .main {
-  padding: 80px 0 82px 0;
+  padding: 80px 0 0 0;
 }
 #datacenter .main > h3 {
   margin: 0;
@@ -5925,7 +5926,8 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #datacenter .main > .quality {
   margin-top: 80px;
   padding-top: 70px;
-  background-color: #263ab8;
+  background: url(/images/quality.png?0cc5756d114d72cd4f4b569973c55563) no-repeat;
+  background-size: 100% 70%;
   border-radius: 100px 100px 0 0;
 }
 #datacenter .main > .quality > h3 {
@@ -5980,6 +5982,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   padding-top: 80px;
   background-color: #fff;
   border-radius: 100px 100px 0 0;
+  padding-bottom: 59px;
 }
 #datacenter .main > .quality > .problem > h3 {
   margin: 0;
@@ -6003,11 +6006,16 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #datacenter .main > .quality > .problem > .problem-list > dl {
   float: left;
   width: 349px;
+  margin-right: 66px;
+}
+#datacenter .main > .quality > .problem > .problem-list > dl:last-of-type {
+  margin: 0;
 }
 #datacenter .main > .quality > .problem > .problem-list > dl > dt {
   padding: 8px 0;
   padding-left: 26px;
   border-bottom: 1px solid #bfbfbf;
+  background: url(/images/title_icon.png?cc392e29b7fb47653ec14c2639069b9d) no-repeat 5px 12.5px;
 }
 #datacenter .main > .quality > .problem > .problem-list > dl > dt > span {
   font-size: 16px;
@@ -6017,6 +6025,58 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   font-size: 14px;
   color: #2139b7;
   text-decoration: none;
+}
+#datacenter .main > .quality > .problem > .problem-list > dl:nth-of-type(2) > dt {
+  background: url(/images/title_icon_2.png?acd5a6950587d609df2d92a541c77150) no-repeat 5px 12.5px;
+}
+#datacenter .main > .quality > .problem > .problem-list > dl:nth-of-type(3) > dt {
+  background: url(/images/title_icon_3.png?7ccf494fbf393e195abe6bf0a165e237) no-repeat 5px 12.5px;
+}
+#datacenter .main > .quality > .problem > .problem-list > dl > dd {
+  padding: 10px 0;
+  border-bottom: 1px dashed #d2d2d2;
+  padding-left: 24px;
+  background: url(/images/list_style_type.png?53647fdc3ec4a781e499cd38ee51b718) no-repeat 12px 19px;
+}
+#datacenter .main > .quality > .problem > .problem-list > dl > dd:last-of-type {
+  border: none;
+}
+#datacenter .main > .quality > .problem > .problem-list > dl > dd a {
+  text-decoration: none;
+  font-size: 14px;
+  color: #666666;
+}
+#datacenter .jumbotron.footer {
+  height: 193px;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0;
+  background: url(/images/productBg3.png?873be73ca8b181a461885d23307b2c61) no-repeat;
+  background-size: 100% 100%;
+  text-align: center;
+}
+#datacenter .jumbotron.footer h4 {
+  margin: 0;
+  padding-top: 60px;
+  margin-bottom: 24px;
+  font-size: 26px;
+  color: #fff;
+}
+#datacenter .jumbotron.footer a {
+  display: inline-block;
+  text-decoration: none;
+  width: 150px;
+  height: 32px;
+  line-height: 30px;
+  border: 1px solid #fff;
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+  border-radius: 17px;
+}
+#datacenter .jumbotron {
+  border-radius: 0;
 }
 #tz-sca .banner {
   background: url(/images/sca-banner-bg.png?5746e983cf7876da3250119d2bec42fc) no-repeat center;

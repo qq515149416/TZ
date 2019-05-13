@@ -431,6 +431,8 @@ Route::group([
         $router->get('under_business','Business\BusinessController@underBusiness');
         $router->get('new_registration','Business\BusinessController@newRegistration');
         $router->get('changemarket','Business\BusinessController@changeMarket');
+
+        $router->post('register', 'Business\CustomerController@registerClerk');//后台替客户注册账号
     });
 
 

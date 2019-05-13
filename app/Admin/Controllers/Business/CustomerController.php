@@ -98,6 +98,18 @@ class CustomerController extends Controller
         return tz_ajax_echo($insert_result,$insert_result['msg'],$insert_result['code']); 
     }
 
+    /**
+     * 后台注册客户
+     * @param  CustomerRequest $request 'name'--用户名,'nickname'--昵称,'password'--密码,'password_confirmation'--确认密码,'msg_qq'--客户QQ,'msg_phone'--客户手机,'remarks'--备注
+     * @return [type]                   [description]
+     */
+    public function registerClerk(CustomerRequest $request){
+        $register_info = $request->only(['name','nickname','password','password_confirmation','msg_qq','msg_phone','remarks']);
+        $register = new CustomerModel();
+        $result = $register->registerClerk($register_info);
+        return tz_ajax_echo($result,$result['msg'],$result['code']);
+    }
+
 
 
 }

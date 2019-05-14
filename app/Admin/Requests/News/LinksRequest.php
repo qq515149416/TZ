@@ -47,7 +47,7 @@ class LinksRequest extends FormRequest
 				$return = [
 					'name'			=> 'required',	
 					'url'			=> 'required|url',
-					'order'			=> 'integer',	
+					'links_order'		=> 'integer',	
 				];
 				break;
 			case 'del':
@@ -81,7 +81,7 @@ class LinksRequest extends FormRequest
 		return  [
 			'name.required'		=> '请填写友情链接名称',
 			'url.required'		=> '请填写友情链接地址',
-			'order.integer'		=> '排序格式错误',
+			'links_order.integer'	=> '排序格式错误',
 			'url.url'			=> 'url格式错误',
 			'del_id.required'		=> '请提供需删除id',
 			'edit_id.required'	=> '请提供需编辑id',

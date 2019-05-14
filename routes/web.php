@@ -33,7 +33,7 @@ Route::group([
     Route::get('/promotion/ddk', 'Show\DdkPromotionController@index');
     Route::get('/aboutus/{page}', 'Show\AboutUsController@index');
     Route::get('/promotion/consumer', 'Show\ConsumerPromotionController@index');
-    Route::get('/zuyong/{page}/{room?}', 'Show\ServerRentController@index');
+    Route::get('/zuyong/{page}', 'Show\ServerRentController@index');
     Route::get('/fangan/{page}', 'Show\ProgramController@index');
     Route::get('/tuoguan', 'Show\HostingController@index');
     Route::get('/article/{type}', 'Show\ArticleController@index');
@@ -42,9 +42,9 @@ Route::group([
     Route::get('/gaofangchuxiao', 'Show\GfPromotionController@index');
     Route::get('/protection/{page}', 'Show\ProtectionController@index');
     Route::get('/test', 'Show\TestController@index');
+    Route::get('/15cdn/{page}', 'Show\CdnController@index');
     Route::get('/datacenter', 'Show\DataCenterController@index');
     Route::get('/dist/highDefense.html', 'Show\ProtectionController@gaofang');
-    Route::get('/cabinet-rent/{page}', 'Show\CabinetRentController@index');
 });
 
 /**
@@ -78,10 +78,16 @@ Route::group([
 Route::group([
     'prefix' => 'news',
 ], function () {
-    //测试
     Route::get('getNews', 'News\NewsController@getNewsList');
     Route::get('getNewsDetails', 'News\NewsController@getNewsDetails');
 });
+
+Route::group([
+    'prefix' => 'links',
+], function () {
+    Route::get('getLinks', 'News\LinksController@getLinks');
+});
+
 
 /**
  * 腾正Auth   (登录注册验证)

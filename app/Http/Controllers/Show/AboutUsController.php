@@ -8,9 +8,6 @@ class AboutUsController extends Controller
 {
     public function index($page)
     {
-        $tkd = [
-
-        ];
         return view("http/aboutUs",[
             "page" => $page
         ]);

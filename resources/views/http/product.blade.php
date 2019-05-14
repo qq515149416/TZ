@@ -1,10 +1,10 @@
 @extends('layouts.layout')
 
-@section('title', '专业IDC服务商,云主机，高防服务器，高防IP，服务器租用,服务器托管，带宽租用,CDN加速')
+@section('title', $tdk['title'])
 
-@section('keywords', '云主机,高防服务器,高防IP,服务器租用,服务器托管,带宽租用,CDN加速,高防CDN,云服务器,机柜租用,云计算,IDC 服务器商,网络安全服务商')
+@section('keywords', $tdk['keywords'])
 
-@section('description', '专业IDC服务提供商，主营服务器租用、服务器托管、机柜租用、大带宽租用、云主机、高防服务器、高防IP、CDN加速等数据存储、计算及安全综合应用解决方案服务。')
+@section('description', $tdk['description'])
 
 @section('content')
     <div id="server_product" class="row">
@@ -15,10 +15,10 @@
             <p class="sub-text">为您提供定制化硬件采购解决方案，满足您不同时期业务发展需求！</p>
             </div>
             <div class="bottom">
-            <a class="btn-link {{ $page == 'dianxin' ? 'active' : '' }}" href="/zuyong/dianxin">电信服务器租用</a>
-            <a class="btn-link {{ $page == 'liantong' ? 'active' : '' }}" href="/zuyong/liantong">联通服务器租用</a>
-            <a class="btn-link {{ $page == 'shuangxian' ? 'active' : '' }}" href="/zuyong/shuangxian">双线服务器租用</a>
-            <a class="btn-link {{ $page == 'sanxian' ? 'active' : '' }}" href="/zuyong/sanxian">三线服务器租用</a>
+            <a class="btn-link {{ $page == 'dianxin' ? 'active' : '' }}" href="/zuyong/dianxin/hunan">电信服务器租用</a>
+            <a class="btn-link {{ $page == 'liantong' ? 'active' : '' }}" href="/zuyong/liantong/hunan">联通服务器租用</a>
+            <a class="btn-link {{ $page == 'shuangxian' ? 'active' : '' }}" href="/zuyong/shuangxian/hunan">双线服务器租用</a>
+            <a class="btn-link {{ $page == 'sanxian' ? 'active' : '' }}" href="/zuyong/sanxian/hunan">三线服务器租用</a>
             <!-- <a class="btn-link {{ $page == 'bgp' ? 'active' : '' }}" href="/zuyong/bgp">BGP服务器租用</a> -->
             </div>
         </div>
@@ -29,17 +29,17 @@
 
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#hengyang" aria-controls="hengyang" role="tab" data-toggle="tab">湖南衡阳机房</a></li>
-                        <li role="presentation"><a href="#huizhou" aria-controls="huizhou" role="tab" data-toggle="tab">广东惠州机房</a></li>
-                        <li role="presentation"><a href="#xian" aria-controls="xian" role="tab" data-toggle="tab">陕西西安机房</a></li>
+                        <li role="presentation" class="{{ $room == 'hunan' ? 'active' : '' }}"><a href="/zuyong/{{$page}}/hunan">湖南衡阳机房</a></li>
+                        <li role="presentation" class="{{ $room == 'guangdong' ? 'active' : '' }}"><a href="/zuyong/{{$page}}/guangdong">广东惠州机房</a></li>
+                        <li role="presentation" class="{{ $room == 'xian' ? 'active' : '' }}"><a href="/zuyong/{{$page}}/xian">陕西西安机房</a></li>
                     </ul>
 
                     <!-- Tab panes -->
                     <div class="tab-content">
                         @if(count($data))
-                            @tabpanel(['status' => 'active', 'id' => 'hengyang', 'index' => 'hunan'])
-                            @tabpanel(['status' => '', 'id' => 'huizhou', 'index' => 'huizhou'])
-                            @tabpanel(['status' => '', 'id' => 'xian', 'index' => 'xian'])
+                            @tabpanel(['status' => ($room == 'hunan' ? 'active' : ''), 'id' => 'hengyang', 'index' => 'hunan'])
+                            @tabpanel(['status' => ($room == 'guangdong' ? 'active' : ''), 'id' => 'huizhou', 'index' => 'huizhou'])
+                            @tabpanel(['status' => ($room == 'xian' ? 'active' : ''), 'id' => 'xian', 'index' => 'xian'])
                         @endif
                     </div>
 

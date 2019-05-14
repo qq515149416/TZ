@@ -1,10 +1,10 @@
 @extends('layouts.layout')
 
-@section('title', '专业IDC服务商,云主机，高防服务器，高防IP，服务器租用,服务器托管，带宽租用,CDN加速')
+@section('title', '动态加速网络-动态内容加速-CDN动态加速-动态cdn-免费cdn[腾正科技]')
 
-@section('keywords', '云主机,高防服务器,高防IP,服务器租用,服务器托管,带宽租用,CDN加速,高防CDN,云服务器,机柜租用,云计算,IDC 服务器商,网络安全服务商')
+@section('keywords', '动态加速网络,CDN动态加速,动态cdn,免费cdn申请,动态内容加速,免费网络加速')
 
-@section('description', '专业IDC服务提供商，主营服务器租用、服务器托管、机柜租用、大带宽租用、云主机、高防服务器、高防IP、CDN加速等数据存储、计算及安全综合应用解决方案服务。')
+@section('description', '15CDN动态加速网络针对动态请求高并发、更新快等传输特点，通过遍布全国的优质节点+腾正15CDN网络智能系统，使动态内容通过安全可靠的最优传输路径快速分发给用户，解决响应慢、丢包、服务不稳定等问题。')
 
 @section('content')
 <div id="tz-dsa" class="tz-cdn-content common">

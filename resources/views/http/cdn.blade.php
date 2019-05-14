@@ -1,10 +1,10 @@
 @extends('layouts.layout')
 
-@section('title', '专业IDC服务商,云主机，高防服务器，高防IP，服务器租用,服务器托管，带宽租用,CDN加速')
+@section('title', '15CDN-CDN价格-网站CDN加速-免费cdn申请-CDN服务商[腾正科技]')
 
-@section('keywords', '云主机,高防服务器,高防IP,服务器租用,服务器托管,带宽租用,CDN加速,高防CDN,云服务器,机柜租用,云计算,IDC 服务器商,网络安全服务商')
+@section('keywords', '15CDN,CDN服务商,图片CDN加速，网站CDN加速,CDN价格,免费cdn申请,CDN解决方案')
 
-@section('description', '专业IDC服务提供商，主营服务器租用、服务器托管、机柜租用、大带宽租用、云主机、高防服务器、高防IP、CDN加速等数据存储、计算及安全综合应用解决方案服务。')
+@section('description', '腾正15CDN是一款针对文字、图片、音视频、娱乐、软件下载及提供实时动态服务类网站CDN加速的安全产品，产品自带智能分发加速、攻击防护、加快收录于一体，价格优惠，在线即可免费CDN试用申请，实现您站点快速、安全、稳定运行。')
 
 @section('content')
 <div id="tz-cdn" class="tz-cdn-content">

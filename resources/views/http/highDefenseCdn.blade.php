@@ -1,10 +1,10 @@
 @extends('layouts.layout')
 
-@section('title', '专业IDC服务商,云主机，高防服务器，高防IP，服务器租用,服务器托管，带宽租用,CDN加速')
+@section('title', '高防CDN-集群高防cdn-棋牌游戏cdn高防-免备案高防cdn加速[腾正科技]')
 
-@section('keywords', '云主机,高防服务器,高防IP,服务器租用,服务器托管,带宽租用,CDN加速,高防CDN,云服务器,机柜租用,云计算,IDC 服务器商,网络安全服务商')
+@section('keywords', '高防CDN,集群高防cdn,棋牌游戏cdn高防,免备案高防cdn,抗ddos高防CDN')
 
-@section('description', '专业IDC服务提供商，主营服务器租用、服务器托管、机柜租用、大带宽租用、云主机、高防服务器、高防IP、CDN加速等数据存储、计算及安全综合应用解决方案服务。')
+@section('description', '高防CDN将源站内容分发至最接近网民的节点，使用户就近取得所需内容，在加速同时保护源站。腾正提供优质抗DDOS、CC攻击集群高防CDN，免备案高防CDN及游戏棋牌CDN高防等服务。')
 
 @section('content')
 <div class="tz-protection-content" id="high-defense-cdn">
@@ -23,7 +23,7 @@
         </div>
         <div class="tab">
             @foreach ($tabs as $item)
-                <a class="tab-item" href="{{ $item['href'] }}">{{ $item['name'] }}</a>
+                <a class="tab-item {{$item['name'] === '高防CDN' ? 'active' : ''}}" href="{{ $item['href'] }}">{{ $item['name'] }}</a>
             @endforeach
             <!-- <a class="tab-item active" href="/protection/high-defense-cdn">高防CDN</a>
             <a class="tab-item" href="/dist/highDefense.html"> DDOS高防IP</a>

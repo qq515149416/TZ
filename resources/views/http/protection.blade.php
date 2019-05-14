@@ -1,10 +1,10 @@
 @extends('layouts.layout')
 
-@section('title', '专业IDC服务商,云主机，高防服务器，高防IP，服务器租用,服务器托管，带宽租用,CDN加速')
+@section('title', '网络安全防护-网站安全防护-DDOS防火墙-CC攻击防御-安全解决方案[腾正科技]')
 
-@section('keywords', '云主机,高防服务器,高防IP,服务器租用,服务器托管,带宽租用,CDN加速,高防CDN,云服务器,机柜租用,云计算,IDC 服务器商,网络安全服务商')
+@section('keywords', '网络安全防护,网站安全防护,DDOS防火墙,防CC攻击,DDOS防御，CC攻击防御,安全解决方案')
 
-@section('description', '专业IDC服务提供商，主营服务器租用、服务器托管、机柜租用、大带宽租用、云主机、高防服务器、高防IP、CDN加速等数据存储、计算及安全综合应用解决方案服务。')
+@section('description', '网络信息安全问题日趋严重，涉及经济，政治、私隐等领域。腾正科技为您量身构建IDC安全防护解决方案,隐藏源站IP+T级集群防火墙+独立流量清洗+CC防御组合过滤精确识别，防御DDOS、CC等攻击，确保您业务安全持续可用。')
 
 @section('content')
 
@@ -25,8 +25,6 @@
             @foreach ($tabs as $item)
                 <a class="tab-item" href="{{ $item['href'] }}">{{ $item['name'] }}</a>
             @endforeach
-            <!-- <a class="tab-item" href="/dist/highDefense.html"> DDOS高防IP</a>
-            <a class="tab-item" href="/protection/c-shield">防C盾</a> -->
         </div>
     </div>
     <!--产品矩阵-->
@@ -362,24 +360,24 @@
                     <a href="javascript: void(0);" class="more">查看更多>></a>
                 </div>
                 <li class="list-item">
-                    <a class="text" href="javascript: void(0);"><span>什么是CDN技术？</span></a>
-                    <span class="date">2019.01.21</span>
+                    <a class="text" href="javascript: void(0);">什么是CDN技术？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
                 </li>
                 <li class="list-item">
-                    <a class="text" href="javascript: void(0);"><span>CDN适用哪些场景？</span></a>
-                    <span class="date">2019.01.21</span>
+                    <a class="text" href="javascript: void(0);">CDN适用哪些场景？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
                 </li>
                 <li class="list-item">
-                    <a class="text" href="javascript: void(0);"><span>什么内容分发网络CDN？</span></a>
-                    <span class="date">2019.01.21</span>
+                    <a class="text" href="javascript: void(0);">什么内容分发网络CDN？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
                 </li>
                 <li class="list-item">
-                    <a class="text" href="javascript: void(0);"><span>CDN容易遭到什么类型的攻击？</span></a>
-                    <span class="date">2019.01.21</span>
+                    <a class="text" href="javascript: void(0);">CDN容易遭到什么类型的攻击？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
                 </li>
                 <li class="list-item">
-                    <a class="text" href="javascript: void(0);"><span>高防产品如何支持Websocket&WSS？</span></a>
-                    <span class="date">2019.01.21</span>
+                    <a class="text" href="javascript: void(0);">高防产品如何支持Websocket&WSS？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
                 </li>
             </ul>
             <ul class="list-group">
@@ -389,24 +387,24 @@
                     <a href="javascript: void(0);" class="more">查看更多>></a>
                 </div>
                 <li class="list-item">
-                    <a class="text" href="javascript: void(0);"><span>什么是DDos高防IP？</span></a>
-                    <span class="date">2019.01.21</span>
+                    <a class="text" href="javascript: void(0);">什么是DDos高防IP？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
                 </li>
                 <li class="list-item">
-                    <a class="text" href="javascript: void(0);"><span>高防IP如何部署？</span></a>
-                    <span class="date">2019.01.21</span>
+                    <a class="text" href="javascript: void(0);">高防IP如何部署？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
                 </li>
                 <li class="list-item">
-                    <a class="text" href="javascript: void(0);"><span>高防IP与堡垒机的区别？</span></a>
-                    <span class="date">2019.01.21</span>
+                    <a class="text" href="javascript: void(0);">高防IP与堡垒机的区别？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
                 </li>
                 <li class="list-item">
-                    <a class="text" href="javascript: void(0);"><span>高防IP的工作原理是什么？</span></a>
-                    <span class="date">2019.01.21</span>
+                    <a class="text" href="javascript: void(0);">高防IP的工作原理是什么？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
                 </li>
                 <li class="list-item">
-                    <a class="text" href="javascript: void(0);"><span>高防IP的场景应用分析</span></a>
-                    <span class="date">2019.01.21</span>
+                    <a class="text" href="javascript: void(0);">高防IP的场景应用分析</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
                 </li>
             </ul>
             <ul class="list-group">
@@ -416,24 +414,24 @@
                     <a href="javascript: void(0);" class="more">查看更多>></a>
                 </div>
                 <li class="list-item">
-                    <a class="text" href="javascript: void(0);"><span>什么是防C盾？</span></a>
-                    <span class="date">2019.01.21</span>
+                    <a class="text" href="javascript: void(0);">什么是防C盾？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
                 </li>
                 <li class="list-item">
-                    <a class="text" href="javascript: void(0);"><span>防C盾的工作原理是？</span></a>
-                    <span class="date">2019.01.21</span>
+                    <a class="text" href="javascript: void(0);">防C盾的工作原理是？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
                 </li>
                 <li class="list-item">
-                    <a class="text" href="javascript: void(0);"><span>防C盾的场景应用分析</span></a>
-                    <span class="date">2019.01.21</span>
+                    <a class="text" href="javascript: void(0);">防C盾的场景应用分析</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
                 </li>
                 <li class="list-item">
-                    <a class="text" href="javascript: void(0);"><span>面对CC攻击企业该如何防御？</span></a>
-                    <span class="date">2019.01.21</span>
+                    <a class="text" href="javascript: void(0);">面对CC攻击企业该如何防御？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
                 </li>
                 <li class="list-item">
-                    <a class="text" href="javascript: void(0);"><span>黑客是如何发起CC攻击的？</span></a>
-                    <span class="date">2019.01.21</span>
+                    <a class="text" href="javascript: void(0);">黑客是如何发起CC攻击的？</a>
+                    <a class="date" href="javascript: void(0);">2019.01.21</a>
                 </li>
             </ul>
         </div>

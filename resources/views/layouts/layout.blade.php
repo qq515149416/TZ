@@ -147,16 +147,16 @@
                         </dl>
                         <dl>
                             <dt>
-                                <a href="/page/tz/zyddk">机柜租用</a>
+                                <a href="javascript: void(0);">机柜租用</a>
                             </dt>
                             <dd>
-                                <a href="/page/tz/zyddk">惠州机柜租用</a>
+                                <a href="/cabinet-rent/huizhou">惠州机柜租用</a>
                             </dd>
                             <dd>
-                                <a href="/page/tz/zyddk">衡阳机柜租用</a>
+                                <a href="/cabinet-rent/hengyang">衡阳机柜租用</a>
                             </dd>
                             <dd>
-                                <a href="/page/tz/zyddk">西安机柜租用</a>
+                                <a href="/cabinet-rent/xian">西安机柜租用</a>
                             </dd>
                         </dl>
                         <dl style="text-align: center;">

@@ -1,10 +1,10 @@
 @extends('layouts.layout')
 
-@section('title', '专业IDC服务商,云主机，高防服务器，高防IP，服务器租用,服务器托管，带宽租用,CDN加速')
+@section('title', '静态内容加速-CDN静态网页加速-静态页面加速-免费cdn申请[腾正科技]')
 
-@section('keywords', '云主机,高防服务器,高防IP,服务器租用,服务器托管,带宽租用,CDN加速,高防CDN,云服务器,机柜租用,云计算,IDC 服务器商,网络安全服务商')
+@section('keywords', '静态内容加速,CDN静态网页加速,静态页面加速,CDN服务商,CDN静态加速，免费cdn申请')
 
-@section('description', '专业IDC服务提供商，主营服务器租用、服务器托管、机柜租用、大带宽租用、云主机、高防服务器、高防IP、CDN加速等数据存储、计算及安全综合应用解决方案服务。')
+@section('description', '15CDN静态网页加速服务将源站网页内容如html文件、flash动画、及各种文件类型图片缓存于CDN服务商腾正15CDN中心网络中，用缓存技术将这些文件cache在15CDN边缘节点上，实现加速体验目的。')
 
 @section('content')
 <div id="tz-sca" class="tz-cdn-content common">

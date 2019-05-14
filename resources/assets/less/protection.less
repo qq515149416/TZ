@@ -105,7 +105,8 @@
       &-item {
         display: inline-block;
         // width: 378px;
-        width: 250px;
+        // width: 250px;
+        width: ~"calc(100% / 4.88)";
         height: 63px;
         line-height: 63px;
         border-radius: 8px;
@@ -457,7 +458,7 @@
             left: 0;
             height: 100%;
             background-color: #2139b7;
-            .animation(progress-active, 4.5s, ease, 0s, 1, normal, forwards);
+            .animation(progress-active, 5.5s, ease, 0s, 1, normal, forwards);
           }
         }
       }
@@ -539,15 +540,22 @@
         color: inherit;
         text-indent: 1.6em;
 
-        &:hover {
-          color: #3046bc;
+        &:focus {
+          text-decoration: none;
         }
       }
 
       .date {
         float: right;
+        color: inherit;
 
-        &.active {
+        &:focus {
+          text-decoration: none;
+        }
+      }
+
+      &:hover {
+        .text, .date {
           color: #3046bc;
           text-decoration: underline;
         }

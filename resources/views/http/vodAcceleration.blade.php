@@ -1,10 +1,10 @@
 @extends('layouts.layout')
 
-@section('title', '专业IDC服务商,云主机，高防服务器，高防IP，服务器租用,服务器托管，带宽租用,CDN加速')
+@section('title', '流媒体点播加速-视频点播CDN加速-视频CDN-视频CDN解决方案[腾正科技]')
 
-@section('keywords', '云主机,高防服务器,高防IP,服务器租用,服务器托管,带宽租用,CDN加速,高防CDN,云服务器,机柜租用,云计算,IDC 服务器商,网络安全服务商')
+@section('keywords', '流媒体点播加速,视频点播CDN加速,视频CDN,视频CDN解决方案,CDN流媒体点播加速')
 
-@section('description', '专业IDC服务提供商，主营服务器租用、服务器托管、机柜租用、大带宽租用、云主机、高防服务器、高防IP、CDN加速等数据存储、计算及安全综合应用解决方案服务。')
+@section('description', '15CDN流媒体点播加速将源站大量的流媒体内容（视频、声音和数据等）通过最佳链路传输到腾正流媒体专用存储设备中，再利用15CDN网络的协同性能，实现视频点播CDN加速，达到用户自由定位提升访问粘性。')
 
 @section('content')
 <div id="tz-voda" class="tz-cdn-content common">

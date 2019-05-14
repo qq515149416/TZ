@@ -42,9 +42,9 @@ Route::group([
     Route::get('/gaofangchuxiao', 'Show\GfPromotionController@index');
     Route::get('/protection/{page}', 'Show\ProtectionController@index');
     Route::get('/test', 'Show\TestController@index');
-    Route::get('/15cdn/{page}', 'Show\CdnController@index');
     Route::get('/datacenter', 'Show\DataCenterController@index');
     Route::get('/dist/highDefense.html', 'Show\ProtectionController@gaofang');
+    Route::get('/cabinet-rent/{page}', 'Show\CabinetRentController@index');
 });
 
 /**

@@ -1,10 +1,10 @@
 @extends('layouts.layout')
 
-@section('title', '专业IDC服务商,云主机，高防服务器，高防IP，服务器租用,服务器托管，带宽租用,CDN加速')
+@section('title', '流媒体直播加速-视频直播CDN加速-视频CDN-视频CDN解决方案')
 
-@section('keywords', '云主机,高防服务器,高防IP,服务器租用,服务器托管,带宽租用,CDN加速,高防CDN,云服务器,机柜租用,云计算,IDC 服务器商,网络安全服务商')
+@section('keywords', '流媒体直播加速,视频直播CDN加速,视频CDN,视频CDN解决方案,视频CDN价格')
 
-@section('description', '专业IDC服务提供商，主营服务器租用、服务器托管、机柜租用、大带宽租用、云主机、高防服务器、高防IP、CDN加速等数据存储、计算及安全综合应用解决方案服务。')
+@section('description', '15CDN流媒体直播加速将源站采用广播方式通过网络为用户提供实时采集的视频流，并通过最佳链路传输到腾正流媒体专用存储设备中，再15CDN网络自身的协同性能，实现视频直播CDN加速。')
 
 @section('content')
 <div id="tz-lba" class="tz-cdn-content common">

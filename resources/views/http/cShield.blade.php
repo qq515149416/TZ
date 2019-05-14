@@ -1,10 +1,10 @@
 @extends('layouts.layout')
 
-@section('title', '专业IDC服务商,云主机，高防服务器，高防IP，服务器租用,服务器托管，带宽租用,CDN加速')
+@section('title', '防C盾-抗CC防火墙-防CC攻击-隐藏源站IP-CC防御专家[腾正科技]')
 
-@section('keywords', '云主机,高防服务器,高防IP,服务器租用,服务器托管,带宽租用,CDN加速,高防CDN,云服务器,机柜租用,云计算,IDC 服务器商,网络安全服务商')
+@section('keywords', '防C盾,抗CC防火墙,防CC攻击,隐藏源站IP,CC防御，防cc攻击软件,CC高防')
 
-@section('description', '专业IDC服务提供商，主营服务器租用、服务器托管、机柜租用、大带宽租用、云主机、高防服务器、高防IP、CDN加速等数据存储、计算及安全综合应用解决方案服务。')
+@section('description', '防C盾是腾正科技自研针对CC攻击接入C盾进行高防御的攻击防护体系,利用CNAME特性隐藏源站IP，防止源站真实IP暴露，一键开启DDos和CC防御，零误封，可跨地域跨机房使用。')
 
 @section('content')
 <div class="tz-protection-content" id="c-shield">
@@ -23,7 +23,7 @@
         </div>
         <div class="tab">
             @foreach ($tabs as $item)
-                <a class="tab-item" href="{{ $item['href'] }}">{{ $item['name'] }}</a>
+                <a class="tab-item {{$item['name'] === '防C盾' ? 'active' : ''}}" href="{{ $item['href'] }}">{{ $item['name'] }}</a>
             @endforeach
             <!-- <a class="tab-item" href="/protection/high-defense-cdn">高防CDN</a>
             <a class="tab-item" href="/dist/highDefense.html"> DDOS高防IP</a>

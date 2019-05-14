@@ -3982,7 +3982,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 .tz-protection-content .banner .tab-item {
   display: inline-block;
-  width: 250px;
+  width: calc(100% / 4.88);
   height: 63px;
   line-height: 63px;
   border-radius: 8px;
@@ -4305,8 +4305,8 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   left: 0;
   height: 100%;
   background-color: #2139b7;
-  -webkit-animation: progress-active 4.5s ease 0s 1 normal forwards;
-  animation: progress-active 4.5s ease 0s 1 normal forwards;
+  -webkit-animation: progress-active 5.5s ease 0s 1 normal forwards;
+  animation: progress-active 5.5s ease 0s 1 normal forwards;
 }
 .tz-protection-content .customer-case .image-container {
   display: -webkit-inline-box;
@@ -4387,13 +4387,18 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   color: inherit;
   text-indent: 1.6em;
 }
-.tz-protection-content .common-question .list-item .text:hover {
-  color: #3046bc;
+.tz-protection-content .common-question .list-item .text:focus {
+  text-decoration: none;
 }
 .tz-protection-content .common-question .list-item .date {
   float: right;
+  color: inherit;
 }
-.tz-protection-content .common-question .list-item .date.active {
+.tz-protection-content .common-question .list-item .date:focus {
+  text-decoration: none;
+}
+.tz-protection-content .common-question .list-item:hover .text,
+.tz-protection-content .common-question .list-item:hover .date {
   color: #3046bc;
   text-decoration: underline;
 }
@@ -5604,7 +5609,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   display: inline-block;
   width: 100%;
   padding: 15px 0;
-  background: url(/images/dot.png?f515b923e04bf2bf16b91efffc84d820) no-repeat 1% center;
+  background: url(/images/cdn-dot.png?f515b923e04bf2bf16b91efffc84d820) no-repeat 1% center;
   color: #666;
   font-size: 14px;
   list-style-type: none;
@@ -6128,4 +6133,236 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz-lba .usage-scenario .target {
   margin-top: -10px;
+}
+.tz-cabinet-rent {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+.tz-cabinet-rent .title {
+  color: #333;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: 1.3px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.tz-cabinet-rent .sub-title {
+  color: #666;
+  font-size: 14px;
+}
+.tz-cabinet-rent .banner {
+  position: relative;
+  height: 563px;
+  padding-top: 83px;
+  color: #fff;
+  text-align: center;
+  background-size: cover;
+}
+.tz-cabinet-rent .banner .cont {
+  max-width: 1180px;
+  margin: 60px auto 0;
+  padding: 0px 55px;
+}
+.tz-cabinet-rent .banner .cont .title {
+  text-align: center;
+  color: #fff;
+}
+.tz-cabinet-rent .banner .cont .title .text {
+  font-size: 50px;
+  line-height: 72px;
+  margin-bottom: 20px;
+  letter-spacing: 3.75px;
+}
+.tz-cabinet-rent .banner .cont .title .sub-text {
+  font-size: 16px;
+  letter-spacing: 0.8px;
+  margin-bottom: 60px;
+  line-height: 30px;
+}
+.tz-cabinet-rent .banner .cont .apply-btn {
+  display: block;
+  width: 180px;
+  height: 40px;
+  border-radius: 20px;
+  font-size: 14px;
+  line-height: 40px;
+  letter-spacing: 2.8px;
+  text-decoration: none;
+  color: #043fc4;
+  background: #fff;
+  margin: 0 auto;
+}
+.tz-cabinet-rent .banner .tab {
+  position: absolute;
+  top: 480px;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  text-align: center;
+}
+.tz-cabinet-rent .banner .tab-item {
+  display: inline-block;
+  width: 380px;
+  height: 63px;
+  margin: 0 10px 18px;
+  color: #fff;
+  font-size: 18px;
+  line-height: 63px;
+  letter-spacing: 3.6px;
+  border-radius: 8px;
+  text-decoration: none;
+  -webkit-transition: background 0.4s ease-in-out;
+  transition: background 0.4s ease-in-out;
+  background: -webkit-gradient(linear, left top, right top, from(#b9ccfc), color-stop(50%, #6d8fff));
+  background: linear-gradient(to right, #b9ccfc 0%, #6d8fff 50%);
+  background: -webkit-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
+}
+.tz-cabinet-rent .banner .tab-item.active,
+.tz-cabinet-rent .banner .tab-item:hover {
+  background: #fff;
+  color: #043fc4;
+}
+.tz-cabinet-rent .guarantee {
+  text-align: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+.tz-cabinet-rent .guarantee .item-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  max-width: 1200px;
+  margin: 10px auto 0;
+}
+.tz-cabinet-rent .guarantee .item-container .item {
+  position: relative;
+  width: calc(100% / 3.2);
+  margin: 20px 12px;
+  text-align: center;
+}
+.tz-cabinet-rent .guarantee .item-container .item .icon {
+  display: block;
+  margin: 0 auto 10px;
+}
+.tz-cabinet-rent .guarantee .item-container .item .text .title {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  margin-top: 0;
+  margin-bottom: 12px;
+  text-align: center;
+  color: #fff;
+}
+.tz-cabinet-rent .guarantee .item-container .item .text .desc {
+  margin-bottom: 0;
+  line-height: 26px;
+  text-align: center;
+  color: #c2c1c1;
+}
+.tz-cabinet-rent .common-question {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  text-align: center;
+  background: url(/images/cabinet-rent-question-bg.png?3052b2837034c8473ebd6717e9bc4415) no-repeat center;
+  background-size: cover;
+}
+.tz-cabinet-rent .common-question .list-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  max-width: 1200px;
+  margin: 20px auto 0;
+}
+.tz-cabinet-rent .common-question .list-group {
+  width: 350px;
+  text-align: center;
+}
+.tz-cabinet-rent .common-question .list-group-item {
+  display: inline-block;
+  width: 100%;
+  padding: 15px 0;
+  background: url(/images/cr-dot.png?b2b9e4fb720d442332e8e1f0ff022206) no-repeat 1% center;
+  color: #666;
+  font-size: 14px;
+  list-style-type: none;
+  border: none;
+  border-radius: unset;
+  border-bottom: 1px solid #bdbdbd;
+}
+.tz-cabinet-rent .common-question .list-group-item .text {
+  float: left;
+  color: inherit;
+  text-indent: 1.6em;
+}
+.tz-cabinet-rent .common-question .list-group-item .text:focus {
+  text-decoration: none;
+}
+.tz-cabinet-rent .common-question .list-group-item .date {
+  color: inherit;
+  float: right;
+}
+.tz-cabinet-rent .common-question .list-group-item .date:focus {
+  text-decoration: none;
+}
+.tz-cabinet-rent .common-question .list-group-item:hover {
+  background: url(/images/cr-dot-active.png?c0d2802c35a1794d9d8f519cdb8c8b7d) no-repeat 1% center;
+}
+.tz-cabinet-rent .common-question .list-group-item:hover .text,
+.tz-cabinet-rent .common-question .list-group-item:hover .date {
+  color: #3046bc;
+  text-decoration: underline;
+}
+.tz-cabinet-rent .consult {
+  height: 192px;
+  background: url(/images/consult-bg.png?a1969ebe1f11504363e327805c08b8d0) no-repeat center;
+  background-size: cover;
+  text-align: center;
+  padding-top: 30px;
+}
+.tz-cabinet-rent .consult .title {
+  color: #fff;
+  font-size: 26px;
+  line-height: 41px;
+  margin-bottom: 20px;
+  font-weight: unset;
+}
+.tz-cabinet-rent .consult .consult-btn {
+  padding: 8px 40px;
+  font-size: 14px;
+  line-height: 41px;
+  color: #fff;
+  letter-spacing: 2.8px;
+  text-decoration: none;
+  background-color: transparent;
+  border: 1px solid #fff;
+  border-radius: 17px;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+.tz-cabinet-rent .consult .consult-btn:hover {
+  background-color: #fff;
+  color: #043fc4;
+}
+#huizhou-cabinet .banner {
+  background: url(/images/huizhou-banner-bg.png?d0ec013106f5fb84ca98054e3b77fa8e) no-repeat center;
+  background-size: cover;
+}
+#huizhou-cabinet .guarantee {
+  background: url(/images/huizhou-guarantee-bg.png?3acb5237f731d7787573d3761471c4c0) no-repeat center;
+  background-size: cover;
 }

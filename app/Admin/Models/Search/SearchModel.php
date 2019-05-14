@@ -30,7 +30,7 @@ class SearchModel extends Model
         return $result;
     } 
 
-    /**
+   /**
      * 进行对应业务的搜索
      * @param  array $xs_result 搜索所需的条件
      * @return array           返回搜索的结果
@@ -56,7 +56,7 @@ class SearchModel extends Model
                 if(!empty($customer)){
                     $qq = isset($customer->msg_qq)?$customer->msg_qq:'';
                     $phone = isset($customer->msg_phone)?$customer->msg_phone:'';
-                    $email = $customer->email ? $$customer->email : $customer->name;
+                    $email = $customer->email ? $customer->email : $customer->name;
                     $email = $email ? $email : $customer->nickname;
                     $business['client_name'] = '用户:'.$email.
                                                 'QQ:'.$qq.

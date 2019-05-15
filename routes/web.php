@@ -89,6 +89,11 @@ Route::group([
     Route::get('getLinks', 'News\LinksController@getLinks');
 });
 
+Route::group([
+    'prefix' => 'promotion',
+], function () {
+    Route::get('getPro', 'News\PromotionController@getPro');
+});
 
 /**
  * 腾正Auth   (登录注册验证)

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Admin\Models\News;
+namespace App\Http\Models\News;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -18,82 +18,49 @@ class PromotionModel extends Model
 	protected $dates = ['deleted_at'];
 	protected $fillable = ['img', 'link','title','top','digest','end_at','pro_order','sale_status'];  
 
-	public function insert($par){
-		return $this->create($par);
-
-	}
-
-	public function del($del_id){
-		$link = $this->find($del_id);
-		if($link == null){
-			return [
-				'data'	=> [],
-				'msg'	=> '不存在',
-				'code'	=> 0,
-			];
+	public function getPro($need){
+		switch ($need) {
+			case '*':
+				$pro = $this->orderBy('pro_order','asc')->get();
+				break;
+			case 'top':
+				$pro = $this->where('top',1)->orderBy('pro_order','asc')->get();
+				break;
+			case '0':
+				$pro = $this->where('sale_status',0)->orderBy('pro_order','asc')->get();
+				break;
+			case '1':
+				$pro = $this->where('sale_status',1)->orderBy('pro_order','asc')->get();
+				break;
+			case '2':
+				$pro = $this->where('sale_status',2)->orderBy('pro_order','asc')->get();
+				break;
+			default:
+				return [
+					'data'	=> [],
+					'msg'	=> '请填写正确需求',
+					'code'	=> 0,
+				];
+				break;
 		}
-		$del_res = $link->delete();
-		if($del_res){
-			return [
-				'data'	=> [],
-				'msg'	=> '删除成功',
-				'code'	=> 1,
-			];
-		}else{
-			return [
-				'data'	=> [],
-				'msg'	=> '删除失败',
-				'code'	=> 0,
-			];
-		}
-	}
 
-	public function edit($par){
-		$link = $this->find($par['edit_id']);
-		if($link == null){
-			return [
-				'data'	=> [],
-				'msg'	=> '不存在',
-				'code'	=> 0,
-			];
-		}
-		$edit_res = $link->update($par);
-
-		if($edit_res){
-			return [
-				'data'	=> [],
-				'msg'	=> '编辑成功',
-				'code'	=> 1,
-			];
-		}else{
-			return [
-				'data'	=> [],
-				'msg'	=> '编辑失败',
-				'code'	=> 0,
-			];
-		}
-	}
-
-	public function show(){
-		$pro = $this->get();
 		if ($pro->isEmpty()) {
 			return [
 				'data'	=> [],
 				'msg'	=> '无数据',
 				'code'	=> 1,
 			];
-		}else{
-			foreach ($pro as $k => $v) {
-				$v = $this->trans($v);
-			}
-
-			return [
-				'data'	=> $pro,
-				'msg'	=> '获取成功',
-				'code'	=> 1,
-			];
-		}	
+		}
+		foreach ($pro as $k => $v) {
+			$v = $this->trans($v);
+		}
+		return [
+			'data'	=> $pro,
+			'msg'	=> '获取成功',
+			'code'	=> 1,
+		];
 	}
+
 
 	protected function trans($pro){
 

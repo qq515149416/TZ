@@ -16,7 +16,7 @@ class LinksModel extends Model
 	protected $primaryKey = 'id';
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
-	protected $fillable = ['name', 'url','sort','image','description','user','order'];  
+	protected $fillable = ['name', 'url','sort','image','description','user','links_order'];  
 
 	public function insert($par){
 		return $this->create($par);
@@ -83,12 +83,21 @@ class LinksModel extends Model
 				'code'	=> 1,
 			];
 		}else{
+
+			foreach ($link as $k => $v) {
+				$v = $this->trans($v);
+			}
 			return [
 				'data'	=> $link,
 				'msg'	=> '获取成功',
 				'code'	=> 1,
 			];
-		}
-		
+		}	
+	}
+
+	public function trans($link){
+		$link->url = json_decode($link->url);
+
+		return $link;
 	}
 }

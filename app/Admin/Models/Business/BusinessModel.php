@@ -132,7 +132,7 @@ class BusinessModel extends Model
                 $result[$check]['machineroom_name'] = $resource_detail->machineroom_name;
                 if($check_value['business_type'] != 3){
                     $result[$check]['cabinets'] = $resource_detail->cabinets;
-                    $result[$check]['ip'] = $resource_detail->ip;
+                    $result[$check]['ip'] = isset($resource_detail->ip)?$resource_detail->ip:'暂未配置IP';
                 } else {    
                     $result[$check]['cabinets'] = $resource_detail->cabinet_id;
                     $result[$check]['ip'] = '';

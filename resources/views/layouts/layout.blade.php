@@ -79,16 +79,16 @@
                                 <a href="/zuyong/index">服务器租用</a>
                             </dt>
                             <dd>
-                                <a href="/zuyong/dianxin">电信服务器租用</a>
+                                <a href="/zuyong/dianxin/hunan">电信服务器租用</a>
                             </dd>
                             <dd>
-                                <a href="/zuyong/liantong">联通服务器租用</a>
+                                <a href="/zuyong/liantong/hunan">联通服务器租用</a>
                             </dd>
                             <dd>
-                                <a href="/zuyong/shuangxian">双线服务器租用</a>
+                                <a href="/zuyong/shuangxian/hunan">双线服务器租用</a>
                             </dd>
                             <dd>
-                                <a href="/zuyong/sanxian">三线服务器租用</a>
+                                <a href="/zuyong/sanxian/hunan">三线服务器租用</a>
                             </dd>
                             <!-- <dd>
                                 <a href="/zuyong/bgp">BGP服务器租用</a>

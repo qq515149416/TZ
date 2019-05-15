@@ -37,7 +37,7 @@
             <p class="expand-item-desc">
                 机房概况：腾正科技湖南衡阳机房总建筑面积约3000㎡，采用T3+标准机房，BGP三线（电信、联通、移动），1300余个机柜42U国际标准机柜，860G直连中国电信骨干网。</p>
             <p class="expand-item-desc">
-                机房等级：国家 <span style="color: #ea0000; font-weight: 600;">AAAA</span> 级机房
+                机房等级：准T3机房
                 <br/>
                 <a href="javascript: void(0);" class="scene-btn">查看机房实景</a>
             </p>
@@ -124,7 +124,7 @@
             <p class="expand-item-desc">
                 机房概况：腾正科技广东惠州机房总建筑面积约8000㎡，采用T3+标准机房，BGP三线（电信、联通、移动），2800余个机柜42U国际标准机柜，1600G直连中国华南地区国际出口电信骨干网，300G+集群防火墙，毫秒级的网络连接实时数据备份管理。</p>
             <p class="expand-item-desc">
-                机房等级：国家 <span style="color: #ea0000; font-weight: 600;">AAAA</span> 级机房
+                机房等级：准T3机房
                 <br/>
                 <a href="javascript: void(0);" class="scene-btn">查看机房实景</a>
             </p>
@@ -212,7 +212,7 @@
                 陕西西安机房，国家AAAA级机房，机房建筑面积53851平方米，拥有5000个42U标准机柜；机房不仅采用直连互联网骨干点的10T总带宽，还采用320G
                 集群防火墙设置，为客户提供安全可靠、快速全面的数据存放业务及其它增值服务；在电力设备方面，西安机房从三向不同局向的变电所引入市电，不间断电源系统配置分为240V直流系统和UPS系统，系统自动切换，持续供电保障。</p>
             <p class="expand-item-desc">
-                机房等级：国家 <span style="color: #ea0000; font-weight: 600;">AAAA</span> 级机房
+                机房等级：准T4机房
                 <br/>
                 <a href="javascript: void(0);" class="scene-btn">查看机房实景</a>
             </p>

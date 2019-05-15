@@ -122,6 +122,39 @@
             </div>
         </div>
     </div>
+    <div class="product row">
+        <div class="container">
+            <h2>为你提供产品和服务</h2>
+            <p>专注而极致，客户至上，务实创新</p>
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#home" aria-controls="home" role="tab" data-toggle="tab">
+                        <span class="icon"></span>
+                        高防服务器
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
+                        <span class="icon"></span>
+                        云计算
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">
+                        <span class="icon"></span>
+                        高防IP
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="home">...</div>
+            <div role="tabpanel" class="tab-pane" id="profile">...</div>
+            <div role="tabpanel" class="tab-pane" id="messages">...</div>
+        </div>
+    </div>
     <div class="service row">
         <div class="service-head">
             <div class="container">
@@ -148,16 +181,16 @@
                                 <div class="product-item-option">
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <span class="option-btn small">华中</span>
+                                            <span class="option-btn small" data-url="/zuyong/dianxin/hunan">华中</span>
                                         </div>
                                         <div class="col-md-3">
-                                            <span class="option-btn small">华南</span>
+                                            <span class="option-btn small" data-url="/zuyong/dianxin/guangdong">华南</span>
                                         </div>
                                         <div class="col-md-3">
                                             <span class="option-btn small">华东</span>
                                         </div>
                                         <div class="col-md-3">
-                                            <span class="option-btn small">西北</span>
+                                            <span class="option-btn small" data-url="/zuyong/dianxin/xian">西北</span>
                                         </div>
                                     </div>
                                 </div>

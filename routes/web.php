@@ -33,7 +33,7 @@ Route::group([
     Route::get('/promotion/ddk', 'Show\DdkPromotionController@index');
     Route::get('/aboutus/{page}', 'Show\AboutUsController@index');
     Route::get('/promotion/consumer', 'Show\ConsumerPromotionController@index');
-    Route::get('/zuyong/{page}', 'Show\ServerRentController@index');
+    Route::get('/zuyong/{page}/{room?}', 'Show\ServerRentController@index');
     Route::get('/fangan/{page}', 'Show\ProgramController@index');
     Route::get('/tuoguan', 'Show\HostingController@index');
     Route::get('/article/{type}', 'Show\ArticleController@index');
@@ -45,6 +45,7 @@ Route::group([
     Route::get('/15cdn/{page}', 'Show\CdnController@index');
     Route::get('/datacenter', 'Show\DataCenterController@index');
     Route::get('/dist/highDefense.html', 'Show\ProtectionController@gaofang');
+    Route::get('/cabinet-rent/{page}', 'Show\CabinetRentController@index');
 });
 
 /**

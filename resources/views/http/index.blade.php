@@ -193,7 +193,7 @@
                                 </div>
                             </div>
                             <div class="text-right price">
-                                <a href="#" class="buy">888元</a>
+                                <a href="/zuyong/gaofang" class="buy">888元</a>
                             </div>
                         </li>
                         <li>
@@ -230,7 +230,7 @@
                                 </div>
                             </div>
                             <div class="text-right price">
-                                <a href="#" class="buy">3500元</a>
+                                <a href="/zuyong/gaofang" class="buy">3500元</a>
                             </div>
                         </li>
                     </ul>
@@ -273,7 +273,7 @@
                                 </div>
                             </div>
                             <div class="text-right price">
-                                <a href="#" class="buy">139元</a>
+                                <a href="http://yun.zeisp.com/cloudbuy.html" class="buy">139元</a>
                             </div>
                         </li>
                         <li>
@@ -310,7 +310,7 @@
                                 </div>
                             </div>
                             <div class="text-right price">
-                                <a href="#" class="buy">559元</a>
+                                <a href="http://yun.zeisp.com/cloudbuy.html" class="buy">559元</a>
                             </div>
                         </li>
                     </ul>
@@ -340,7 +340,7 @@
                                </div>
                             </div>
                             <div class="text-right price">
-                                <a href="#" class="buy">1300元</a>
+                                <a href="/dist/highDefense.html" class="buy">1300元</a>
                             </div>
                         </li>
                         <li>
@@ -364,7 +364,7 @@
                                </div>
                             </div>
                             <div class="text-right price">
-                                <a href="#" class="buy">3888元</a>
+                                <a href="/dist/highDefense.html" class="buy">3888元</a>
                             </div>
                         </li>
                     </ul>

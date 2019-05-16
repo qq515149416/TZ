@@ -101,10 +101,151 @@
     }
   }
 
-  .guarantee {
-    text-align: center;
+  .machine-room {
+    width: 1180px;
     padding-top: 50px;
     padding-bottom: 50px;
+    margin: 0 auto;
+    text-align: center;
+
+    .intro {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    #carousel-album {
+      width: 340px;
+      height: 425px;
+
+      &:hover {
+        .mask {
+          display: block;
+        }
+
+        .carousel-indicators {
+          visibility: visible;
+        }
+      }
+    }
+
+    .carousel-indicators {
+      bottom: 2px;
+      visibility: hidden;
+
+      li {
+        margin: 1px 4px;
+        background-color: #979797;
+        border: 1px solid #979797;
+      }
+
+      .active {
+        width: 10px;
+        height: 10px;
+        background-color: #fff;
+        border: 1px solid #fff;
+      }
+    }
+
+    .carousel-inner {
+      .item {
+        height: 425px;
+      }
+
+      img {
+        height: 100%;
+      }
+    }
+
+    .mask {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("../../images/cabinetRent/shade.png") no-repeat center 100%;
+    }
+
+    .desc {
+      width: 800px;
+    }
+
+    .table-bordered {
+      margin: 40px 0 25px;
+    }
+
+    th {
+      text-align: center;
+      vertical-align: middle;
+      background: #eeeff3;
+      color: #333;
+      letter-spacing: 2.8px;
+      border: 1px solid #d6d7e1;
+    }
+
+    tr {
+      height: 50px;
+
+      td {
+        line-height: 34px;
+        color: #666;
+        border: 1px solid #d6d7e1;
+      }
+    }
+
+    .btn-container {
+      text-align: right;
+    }
+
+    .button {
+      display: inline-block;
+      margin-right: 20px;
+      padding: 10px 35px;
+      color: #2139b7;
+      background-color: #fff;
+      border: 1px solid #2139b7;
+      border-radius: 6px;
+      letter-spacing: 2.8px;
+      text-decoration: none;
+      -webkit-transition: all .4s ease-in-out;
+      -moz-transition: all .4s ease-in-out;
+      -ms-transition: all .4s ease-in-out;
+      -o-transition: all .4s ease-in-out;
+      transition: all .4s ease-in-out;
+
+      &:hover {
+        background-color: #2139b7;
+        color: #fff;
+      }
+    }
+
+    .purchase-btn {
+      padding: 8px 40px;
+      color: #666;
+      font-size: 12px;
+      letter-spacing: 1.2px;
+      background-color: #dcdcdc;
+      text-decoration: none;
+      border-radius: 4px;
+      -webkit-transition: all .4s ease-in-out;
+      -moz-transition: all .4s ease-in-out;
+      -ms-transition: all .4s ease-in-out;
+      -o-transition: all .4s ease-in-out;
+      transition: all .4s ease-in-out;
+
+      &:hover {
+        background-color: #ea0000;
+        color: #fffefe;
+      }
+    }
+  }
+
+  .guarantee {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    text-align: center;
 
     .item-container {
       display: flex;
@@ -143,6 +284,70 @@
             color: #c2c1c1;
           }
         }
+      }
+    }
+  }
+
+  .certificate {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    text-align: center;
+    background: url("../../images/cabinetRent/certificate-bg.png") no-repeat center;
+    background-size: cover;
+
+    #carousel-cert {
+      width: 1180px;
+      margin: 40px auto 20px;
+      padding-bottom: 45px;
+    }
+
+    .carousel-indicators {
+      bottom: 0;
+
+      li {
+        margin: 1px 4px;
+      }
+
+      .active {
+        width: 10px;
+        height: 10px;
+      }
+    }
+
+    .wrapper {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    .cert {
+      width: 138px;
+
+      &.horizontal {
+        width: 287px;
+      }
+
+      .title {
+        font-size: 14px;
+        margin-top: 15px;
+        color: #fff;
+        line-height: 22px;
+        text-align: center;
+        font-weight: normal;
+      }
+    }
+
+    .image {
+      width: 138px;
+      height: 198px;
+      text-align: center;
+      line-height: 195px;
+      background: url("../../images/cabinetRent/v-rectangle.png") no-repeat center;
+
+      &.horizontal {
+        width: 287px;
+        height: 198px;
+        background: url("../../images/cabinetRent/h-rectangle.png") no-repeat center;
       }
     }
   }
@@ -246,4 +451,5 @@
       }
     }
   }
+
 }

@@ -612,7 +612,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 .product {
   background-color: #ffffff;
-  padding-top: 80px;
+  padding-top: 64px;
 }
 .product .container {
   width: 1200px;
@@ -785,11 +785,11 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   border-bottom: 3px solid transparent;
 }
 .product .nav-tabs li a > div {
-  margin-bottom: 33px;
+  margin-bottom: 14px;
 }
 .product .nav-tabs li a span {
   display: inline-block;
-  width: 66px;
+  width: 60px;
   height: 66px;
 }
 .product .nav-tabs li a:hover,

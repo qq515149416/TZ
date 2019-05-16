@@ -243,9 +243,15 @@ class OrdersModel extends Model
 		}
 		$insert_data['order_type'] = 1;
 		$insert_data['payable_money'] = bcmul((string)$insert_data['price'],(string)$insert_data['duration'],2);//计算价格
-		$sales_id = Admin::user()->id;
-		$insert_data['business_id'] = $sales_id;
-		$insert_data['business_name'] = Admin::user()->name?Admin::user()->name:Admin::user()->username;
+		$client = DB::table('tz_users')->where(['id'=>$insert_data['customer_id'],'status'=>2])->select('id','name','email','salesman_id')->first();
+        if(!$client){
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg']  = '客户不存在或账号未验证/异常,请确认后再创建资源订单!';
+            return $return;
+        }
+		$insert_data['business_id'] = $client->salesman_id;
+		$insert_data['business_name'] = DB::table('admin_users')->where(['id'=>$client->salesman_id])->value('name');
 		$insert_data['created_at'] = date('Y-m-d H:i:s',time());
 		DB::beginTransaction();//开启事务处理
 		$row = DB::table('tz_orders')->insertGetId($insert_data);

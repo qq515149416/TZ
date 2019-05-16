@@ -35,7 +35,7 @@ class BusinessModel extends Model
             return $return;
         }
         //业务编号的生成规则：前两位（1-3的随机数）+ 年月日（如:20180830） + 时间戳的后5位数 + 7-9随机数（业务编号产生）
-        $client = DB::table('tz_users')->where(['id'=>$insert['client_id'],'status'=>2])->select('id','name','email')->first();
+        $client = DB::table('tz_users')->where(['id'=>$insert['client_id'],'status'=>2])->select('id','name','email','salesman_id')->first();
         if(!$client){
             $return['data'] = '';
             $return['code'] = 0;
@@ -49,9 +49,8 @@ class BusinessModel extends Model
         $insert['business_status'] = 0;
         $insert['client_name'] = $client->name?$client->name:$client->email;
         // 对应业务员的信息
-        $sales_id             = Admin::user()->id;
-        $insert['sales_id']   = $sales_id;
-        $insert['sales_name'] = Admin::user()->name?Admin::user()->name:Admin::user()->username;
+        $insert['sales_id']   = $client->salesman_id;
+        $insert['sales_name'] = DB::table('admin_users')->where(['id'=>$client->salesman_id])->value('name');
         $insert['created_at'] = date('Y-m-d H:i:s',time());
         //业务开始时间
         $start_time = date('Y-m-d H:i:s',time());

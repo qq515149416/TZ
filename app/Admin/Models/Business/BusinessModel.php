@@ -882,7 +882,7 @@ class BusinessModel extends Model
                         ->whereBetween('order_status',$status)
                         ->whereBetween('remove_status',$remove)
                         ->whereNull('deleted_at')
-                        ->select('id','customer_id','business_id','resource_type','machine_sn','price','duration',$time.' as created_at')
+                        ->select('id','customer_id','business_id','resource_type','business_sn','machine_sn','price','duration',$time.' as created_at')
                         ->get();
         //统计符合条件的月营收
         $month_total = DB::table('tz_orders')
@@ -904,6 +904,28 @@ class BusinessModel extends Model
                 $email = $client_name->email ? $client_name->email : $client_name->name;
                 $email = $email ? $email : $client_name->nickname;
                 $info->customer = $email;
+                if($info->resource_type == 11){
+                    $business = DB::table('tz_defenseip_business as business')
+                                   ->join('tz_defenseip_store as store','business.ip_id','=','store.id')
+                                   ->join('idc_machineroom as room','store.site','=','room.id')
+                                   ->where('business.business_number',$info->business_sn)
+                                   ->select('store.ip','room.machine_room_name as machineroom_name')
+                                   ->first();
+                    if(!empty($business)){
+                        $info->machine_sn = $business->ip;
+                    }
+                } else {
+                    $resource_detail = DB::table('tz_business')->where('business_number',$info->business_sn)->select('resource_detail')->first();
+                    if(!empty($resource_detail)){
+                        $business = json_decode($resource_detail->resource_detail);
+                    }
+                }
+                if(!empty($business)){
+                    $info->machineroom_name = $business->machineroom_name;
+                } else {
+                    $info->machineroom_name = '机房不明';
+                }
+
             }
         }
         $return['code'] = 1;

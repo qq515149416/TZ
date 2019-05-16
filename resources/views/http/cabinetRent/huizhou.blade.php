@@ -26,7 +26,114 @@
             <a class="tab-item" href="/cabinetRent/xian">西安机柜租用</a>
         </div>
     </div>
-    <!--保障-->
+    <!--机房-->
+    <div class="machine-room">
+        <h2 class="title">广东惠州机房</h2>
+        <img class="d-block" src="{{ asset("/images/cabinetRent/rectangle.png") }}" />
+        <div class="intro">
+            <div id="carousel-album" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-album" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-album" data-slide-to="1"></li>
+                    <li data-target="#carousel-album" data-slide-to="2"></li>
+                </ol>
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                    <div class="item active">
+                        <img src="{{ asset("/images/cabinetRent/huizhou/room-photo-1.jpg") }}" alt="广东惠州机房照片1"/>
+                        <div class="mask"></div>
+                    </div>
+                    <div class="item">
+                        <img src="{{ asset("/images/cabinetRent/huizhou/room-photo-2.jpg") }}" alt="广东惠州机房照片2"/>
+                        <div class="mask"></div>
+                    </div>
+                    <div class="item">
+                        <img src="{{ asset("/images/cabinetRent/huizhou/room-photo-3.jpg") }}" alt="广东惠州机房照片3"/>
+                        <div class="mask"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="desc">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td style="width: 190px;">数据中心级别</td>
+                            <td>国家<span style="font-weight: 600; color: #f00101;"> AAAAA </span>级机房</td>
+                        </tr>
+                        <tr>
+                            <td>机房面积</td>
+                            <td>8000平方米</td>
+                        </tr>
+                        <tr>
+                            <td>机柜总数</td>
+                            <td>2800个，42U国际标准机柜</td>
+                        </tr>
+                        <tr>
+                            <td>出口总带宽</td>
+                            <td>1.6T，直连中国华南地区国际出口电信骨干网</td>
+                        </tr>
+                        <tr>
+                            <td>防火墙设备</td>
+                            <td>480G集群防火墙（百万兆级别）+云堤独立清洗400G</td>
+                        </tr>
+                        <tr>
+                            <td>电力设备</td>
+                            <td>独立引入两路电力供应，市电线路的冗余备份、智能UPS系统冗余备份的柴油发电组</td>
+                        </tr>
+                        <tr>
+                            <td>数据中心地址</td>
+                            <td>广东省惠州市惠城区东湖二街东平互联网数据中心</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="btn-container">
+                    <a class="button" href="javascript: void(0);">查看详情</a>
+                    <a class="button" href="javascript: void(0);">在线咨询</a>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col" style="width: calc(100% / 7);">数据中心</th>
+                    <th scope="col" style="width: calc(100% / 7);">规格</th>
+                    <th scope="col" style="width: calc(100% / 7);">电流</th>
+                    <th scope="col" style="width: calc(100% / 7);">带宽</th>
+                    <th scope="col" style="width: calc(100% / 7);">IP数</th>
+                    <th scope="col" style="width: calc(100% / 7);">月付</th>
+                    <th scope="col" style="width: calc(100% / 7);">购买</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--******-->
+                <tr>
+                    <th>惠州电信</th>
+                    <td>42U</td>
+                    <td>≤12A</td>
+                    <td>100M独享</td>
+                    <td>18个</td>
+                    <td>7000</td>
+                    <td>
+                        <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
+                    </td>
+                </tr>
+                <!--******-->
+                <tr>
+                    <th>惠州电信</th>
+                    <td>42U</td>
+                    <td>≤12A</td>
+                    <td>100M独享</td>
+                    <td>18对</td>
+                    <td>9500</td>
+                    <td>
+                        <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--服务保障-->
     <div class="guarantee">
         <h2 class="title" style="color: #fff;">专业服务 六大保障</h2>
         <img class="d-block" src="{{ asset("/images/cabinetRent/white-rectangle.png") }}" />
@@ -83,6 +190,58 @@
                     <p class="desc">
                         自有机房，即开即用，随时可扩展网络托管设备，助您快速实现业务部署，抢占市场先机。
                     </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--相关资质证书-->
+    <div class="certificate">
+        <h2 class="title" style="color: #fff;">相关资质证书</h2>
+        <img class="d-block" src="{{ asset("/images/cabinetRent/white-rectangle.png") }}" />
+        <div id="carousel-cert" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-cert" data-slide-to="0" class="active"></li>
+            </ol>
+            <div class="carousel-inner" role="listbox">
+                <div class="item active">
+                    <div class="wrapper">
+                        <div class="cert horizontal">
+                            <div class="image horizontal">
+                                <img src="{{ asset("/images/cabinetRent/广播电视节目制作经营许可证.png") }}" alt="广播电视节目制作经营许可证" />
+                            </div>
+                            <h5 class="title">广播电视节目制作经营许可证</h5>
+                        </div>
+                        <div class="cert">
+                            <div class="image">
+                                <img src="{{ asset("/images/cabinetRent/固定网国内数据传送业务经营许可证.png") }}" alt="固定网国内数据传送业务经营许可证" />
+                            </div>
+                            <h5 class="title">固定网国内数据传送业务经营许可证</h5>
+                        </div>
+                        <div class="cert">
+                            <div class="image">
+                                <img src="{{ asset("/images/cabinetRent/腾正增值电信业务经营许可证.png") }}" alt="腾正增值电信业务经营许可证" />
+                            </div>
+                            <h5 class="title">腾正增值电信业务经营许可证</h5>
+                        </div>
+                        <div class="cert">
+                            <div class="image">
+                                <img src="{{ asset("/images/cabinetRent/网络文化经营许可证.png") }}" alt="网络文化经营许可证" />
+                            </div>
+                            <h5 class="title">网络文化经营许可证</h5>
+                        </div>
+                        <div class="cert">
+                            <div class="image">
+                                <img src="{{ asset("/images/cabinetRent/质量管理体系认证.png") }}" alt="质量管理体系认证" />
+                            </div>
+                            <h5 class="title">质量管理体系认证</h5>
+                        </div>
+                        <div class="cert">
+                            <div class="image">
+                                <img src="{{ asset("/images/cabinetRent/腾正防火墙系统.png") }}" alt="腾正防火墙系统" />
+                            </div>
+                            <h5 class="title">腾正防火墙系统</h5>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

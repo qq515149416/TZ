@@ -6071,6 +6071,17 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   height: 422px;
   background-color: #d9d9d9;
 }
+#datacenter .main > .data > .tz-thumbnail #thumbnail {
+  height: 100%;
+}
+#datacenter .main > .data > .tz-thumbnail #thumbnail img {
+  width: 422px;
+  height: 340px;
+  -webkit-transform-origin: center center;
+          transform-origin: center center;
+  -webkit-transform: rotate(90deg) translateX(40px);
+          transform: rotate(90deg) translateX(40px);
+}
 #datacenter .main > .data > .info > ul {
   list-style: none;
   margin: 0;

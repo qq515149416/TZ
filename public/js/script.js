@@ -299,6 +299,26 @@ $(function () {
     }
   });
 
+  // 数据中心机房图片
+
+  var roomSwiper = new Swiper('#thumbnail', {
+    direction: 'horizontal', // 垂直切换选项
+    loop: true, // 循环模式选项
+    autoplay: true,
+    // 如果需要分页器
+    pagination: {
+      el: '.swiper-pagination'
+    }
+  });
+  //鼠标覆盖停止自动切换
+  roomSwiper.el.onmouseover = function () {
+    roomSwiper.autoplay.stop();
+  };
+
+  roomSwiper.el.onmouseout = function () {
+    roomSwiper.autoplay.start();
+  };
+
   //   高防ip购买
   $("#purchaseTime").on("shown.bs.modal", function (event) {
     var purchaseTime = $(this);

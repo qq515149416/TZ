@@ -851,33 +851,33 @@ class BusinessModel extends Model
         $time = 'created_at';//默认以创建时间为查询条件
         switch ($search['str']) {
             case 1:
-                $begin_end = $this->queryTime($search);
+               // $begin_end = $this->queryTime($search);
                 $remove = [0,4];//查找所有出现过的业务订单
                 break;
             case 2:
-                $begin_end = $this->queryTime($search);
+                //$begin_end = $this->queryTime($search);
                 $remove = [0,3];//查找在用未下架的业务订单
                 break;
             case 3:
-                $begin_end = $this->queryTime($search);
+                //$begin_end = $this->queryTime($search);
                 $remove = [4,4];//查找已下架的业务订单
                 $time = 'updated_at';//下架时以下架时间作为查询条件
                 break;
             default:
-                $begin_end['start_time'] = '1970-01-01';
-                $begin_end['end_time'] = date('Y-m-d',time());
+                //$begin_end['start_time'] = '1970-01-01';
+                //$begin_end['end_time'] = date('Y-m-d',time());
                 break;
         }
         //统计订单数量
         $orders_total = DB::table('tz_orders')
-                        ->whereBetween($time,[$begin_end['start_time'],$begin_end['end_time']])
+                        //->whereBetween($time,[$begin_end['start_time'],$begin_end['end_time']])
                         ->whereBetween('order_status',$status)
                         ->whereBetween('remove_status',$remove)
                         ->whereNull('deleted_at')
                         ->count();
         //查询符合条件的数据
         $orders_info = DB::table('tz_orders')
-                        ->whereBetween($time,[$begin_end['start_time'],$begin_end['end_time']])
+                        //->whereBetween($time,[$begin_end['start_time'],$begin_end['end_time']])
                         ->whereBetween('order_status',$status)
                         ->whereBetween('remove_status',$remove)
                         ->whereNull('deleted_at')
@@ -885,7 +885,7 @@ class BusinessModel extends Model
                         ->get();
         //统计符合条件的月营收
         $month_total = DB::table('tz_orders')
-                        ->whereBetween($time,[$begin_end['start_time'],$begin_end['end_time']])
+                       // ->whereBetween($time,[$begin_end['start_time'],$begin_end['end_time']])
                         ->whereBetween('order_status',$status)
                         ->whereBetween('remove_status',$remove)
                         ->whereNull('deleted_at')

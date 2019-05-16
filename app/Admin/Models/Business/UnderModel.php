@@ -148,14 +148,34 @@ class UnderModel extends Model
             $return['msg']  = '无法获取下架历史记录';
             return $return;
         }
+        $clerk_id = Admin::user()->id;
+        $slug = DB::table('oa_staff')->join('tz_jobs','oa_staff.job','=','tz_jobs.id')
+                ->where(['oa_staff.admin_users_id'=> $clerk_id])
+                ->select('tz_jobs.slug')
+                ->first();
+        if(empty($slug)){
+            $return['data'] = [];
+            $return['code'] = 0;
+            $return['msg'] = '请先完善您的个人信息';
+            return $return;
+        }
         switch ($type['type']) {
             case 1:
-                if(Admin::user()->inRoles(['salesman'])){
+                // if(Admin::user()->inRoles(['salesman','operations','finance','HR','product','network_dimension','net_sec'])){
+                //     $where = ['sales_id' => Admin::user()->id];
+                // } else {
+                //     $where = [];
+                // }
+                if($slug->slug != 3){//非业务员进入此区间
+                    if(Admin::user()->inRoles(['salesman','operations','finance','HR','product','network_dimension','net_sec'])){//不是主管的按是否自己客户查看
+                        $where = ['sales_id' => Admin::user()->id];
+                    } else {//主管人员查看客户信息
+                        $where = [];
+                    }
+                } else {//是业务人员按客户所绑定业务员查看
                     $where = ['sales_id' => Admin::user()->id];
-                } else {
-                    $where = [];
                 }
-                $history = DB::table('tz_business')->where($where)->whereBetween('remove_status',[1,4])->orderBy('updated_at', 'desc')->select('client_id', 'sales_id', 'business_number', 'machine_number', 'business_type', 'business_note', 'remove_reason', 'resource_detail', 'remove_status','money as price','length','updated_at')->get();
+                    $history = DB::table('tz_business')->where($where)->whereBetween('remove_status',[1,4])->orderBy('updated_at', 'desc')->select('client_id', 'sales_id', 'business_number', 'machine_number', 'business_type', 'business_note', 'remove_reason', 'resource_detail', 'remove_status','money as price','length','updated_at')->get();
                 if (!empty($history)) {
                     $business_type = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜'];
                     $remove_status = [0 => '正常使用', 1 => '下架申请中', 2 => '机房处理中', 3 => '清空下架中', 4 => '下架完成'];
@@ -179,10 +199,19 @@ class UnderModel extends Model
                 return $return;
                 break;
             case 2:
-                if(Admin::user()->inRoles(['salesman'])){
+                // if(Admin::user()->inRoles(['salesman'])){
+                //     $where = ['business_id' => Admin::user()->id];
+                // } else {
+                //     $where = [];
+                // }
+                if($slug->slug != 3){//非业务员进入此区间
+                    if(Admin::user()->inRoles(['salesman','operations','finance','HR','product','network_dimension','net_sec'])){//不是主管的按是否自己客户查看
+                        $where = ['business_id' => Admin::user()->id];
+                    } else {//主管人员查看客户信息
+                        $where = [];
+                    }
+                } else {//是业务人员按客户所绑定业务员查看
                     $where = ['business_id' => Admin::user()->id];
-                } else {
-                    $where = [];
                 }
                 $history = DB::table('tz_orders')->where($where)->where('resource_type', '>', 3)->whereBetween('remove_status',[1,4])->orderBy('updated_at', 'desc')->select('business_sn', 'order_sn', 'customer_id', 'resource_type', 'business_id', 'machine_sn', 'resource', 'remove_status', 'remove_reason','price','duration as length','updated_at')->get();
                 if (!empty($history)) {

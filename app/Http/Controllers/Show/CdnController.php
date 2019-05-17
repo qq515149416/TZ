@@ -10,22 +10,22 @@ class CdnController extends Controller
     {
         switch ($page) {
             case 'index':
-                return view("http/cdn");
+                return view("http/cdn/cdn");
                 break;
             case 'sca':
-                return view("http/staticContentAcceleration");
+                return view("http/cdn/staticContentAcceleration");
                 break;
             case 'dda':
-                return view("http/downloadDeliveryAcceleration");
+                return view("http/cdn/downloadDeliveryAcceleration");
                 break;
             case 'dsa':
-                return view("http/dynamicSiteAcceleration");
+                return view("http/cdn/dynamicSiteAcceleration");
                 break;
             case 'smvoda':
-                return view("http/vodAcceleration");
+                return view("http/cdn/vodAcceleration");
                 break;
             case 'smlba':
-                return view("http/liveAcceleration");
+                return view("http/cdn/liveAcceleration");
                 break;
         }
     }

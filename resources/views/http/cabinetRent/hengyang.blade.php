@@ -7,7 +7,7 @@
 @section('description', '专业IDC服务提供商，主营服务器租用、服务器托管、机柜租用、大带宽租用、云主机、高防服务器、高防IP、CDN加速等数据存储、计算及安全综合应用解决方案服务。')
 
 @section('content')
-<div class="tz-cabinet-rent" id="huizhou-cabinet">
+<div class="tz-cabinet-rent" id="hengyang-cabinet">
     <!--banner-->
     <div class="banner">
         <div class="cont">
@@ -41,15 +41,15 @@
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner" role="listbox">
                     <div class="item active">
-                        <img src="{{ asset("/images/cabinetRent/hengyang/room-photo-1.jpg") }}" alt="广东惠州机房照片1"/>
+                        <img src="{{ asset("/images/cabinetRent/hengyang/room-photo-1.jpg") }}" alt="湖南衡阳机房照片1"/>
                         <div class="mask"></div>
                     </div>
                     <div class="item">
-                        <img src="{{ asset("/images/cabinetRent/hengyang/room-photo-2.jpg") }}" alt="广东惠州机房照片2"/>
+                        <img src="{{ asset("/images/cabinetRent/hengyang/room-photo-2.jpg") }}" alt="湖南衡阳机房照片2"/>
                         <div class="mask"></div>
                     </div>
                     <div class="item">
-                        <img src="{{ asset("/images/cabinetRent/hengyang/room-photo-3.jpg") }}" alt="广东惠州机房照片3"/>
+                        <img src="{{ asset("/images/cabinetRent/hengyang/room-photo-3.jpg") }}" alt="湖南衡阳机房照片3"/>
                         <div class="mask"></div>
                     </div>
                 </div>
@@ -257,7 +257,7 @@
                     <a class="date" href="javascript: void(0);">2019.01.21</a>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);">机柜租用好吗？ </a>
+                    <a class="text" href="javascript: void(0);">机柜租用好吗？</a>
                     <a class="date" href="javascript: void(0);">2019.01.21</a>
                 </li>
                 <li class="list-group-item">
@@ -279,7 +279,7 @@
                     <a class="date" href="javascript: void(0);">2019.01.21</a>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);">机柜租用好吗？ </a>
+                    <a class="text" href="javascript: void(0);">机柜租用好吗？</a>
                     <a class="date" href="javascript: void(0);">2019.01.21</a>
                 </li>
                 <li class="list-group-item">
@@ -301,7 +301,7 @@
                     <a class="date" href="javascript: void(0);">2019.01.21</a>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);">机柜租用好吗？ </a>
+                    <a class="text" href="javascript: void(0);">机柜租用好吗？</a>
                     <a class="date" href="javascript: void(0);">2019.01.21</a>
                 </li>
                 <li class="list-group-item">

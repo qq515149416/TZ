@@ -52,7 +52,7 @@
             </ul>
             <ul class="nav navbar-nav">
                 <!-- <li class="active"><a href="/">首页 <span class="sr-only">(current)</span></a></li> -->
-                <li><a href="/page/tz/preferential">最新活动</a></li>
+                <li><a href="/activity">最新活动</a></li>
                 <li>
                     <a href="javascript:;">产品服务</a>
                     <div class="dropdown-mark">
@@ -161,16 +161,16 @@
                         </dl>
                         <dl style="text-align: center;">
                             <dt>
-                                <a href="/page/tz/zyddk" style="margin-left: -14px;">带宽租用</a>
+                                <a href="javascript: void(0);" style="margin-left: -14px;">带宽租用</a>
                             </dt>
                             <dd>
-                                <a href="/page/tz/zyddk" style="margin-right: 4px;">惠州带宽租用</a>
+                                <a href="/bandwidth-rent/huizhou" style="margin-right: 4px;">惠州带宽租用</a>
                             </dd>
                             <dd>
-                                <a href="/page/tz/zyddk" style="margin-right: 4px;">衡阳带宽租用</a>
+                                <a href="/bandwidth-rent/hengyang" style="margin-right: 4px;">衡阳带宽租用</a>
                             </dd>
                             <dd>
-                                <a href="/page/tz/zyddk" style="margin-right: 4px;">西安带宽租用</a>
+                                <a href="/bandwidth-rent/xian" style="margin-right: 4px;">西安带宽租用</a>
                             </dd>
                         </dl>
                     </div>

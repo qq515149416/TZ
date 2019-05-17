@@ -1525,7 +1525,7 @@ class OrdersModel extends Model
 				return $return;
 			}
 		}
-		$order = DB::table('tz_orders')->where('resource_type','<',11)get(['order_sn','resource_type']);
+		$order = DB::table('tz_orders')->where('resource_type','<',11)->get(['order_sn','resource_type']);
 		foreach($order as $key => $value){
 			$o = substr($value->order_sn,1,8).substr(microtime(),2,6).mt_rand(10, 99);
 			if($value->resource_type < 4){

@@ -21,9 +21,9 @@
             <a class="apply-btn" href="javascript: void(0);">立即申请</a>
         </div>
         <div class="tab">
-            <a class="tab-item active" href="/cabinetRent/huizhou">惠州机柜租用</a>
-            <a class="tab-item" href="/cabinetRent/hengyang">衡阳机柜租用</a>
-            <a class="tab-item" href="/cabinetRent/xian">西安机柜租用</a>
+            <a class="tab-item active" href="/cabinet-rent/huizhou">惠州机柜租用</a>
+            <a class="tab-item" href="/cabinet-rent/hengyang">衡阳机柜租用</a>
+            <a class="tab-item" href="/cabinet-rent/xian">西安机柜租用</a>
         </div>
     </div>
     <!--机房-->
@@ -59,7 +59,7 @@
                     <tbody>
                         <tr>
                             <td style="width: 190px;">数据中心级别</td>
-                            <td>国家<span style="font-weight: 600; color: #f00101;"> AAAAA </span>级机房</td>
+                            <td>准<span style="font-weight: 600; color: #f00101;"> T3 </span>级机房</td>
                         </tr>
                         <tr>
                             <td>机房面积</td>
@@ -71,7 +71,7 @@
                         </tr>
                         <tr>
                             <td>出口总带宽</td>
-                            <td>1.6T，直连中国华南地区国际出口电信骨干网</td>
+                            <td>1600G，直连中国华南地区国际出口电信骨干网</td>
                         </tr>
                         <tr>
                             <td>防火墙设备</td>
@@ -120,7 +120,7 @@
                 </tr>
                 <!--******-->
                 <tr>
-                    <th>惠州电信</th>
+                    <th>惠州双线</th>
                     <td>42U</td>
                     <td>≤12A</td>
                     <td>100M独享</td>
@@ -139,7 +139,7 @@
         <img class="d-block" src="{{ asset("/images/cabinetRent/white-rectangle.png") }}" />
         <div class="item-container">
             <div class="item">
-                <img class="icon" src="{{ asset("/images/cabinetRent/huizhou/guarantee-icon-1.png") }}" />
+                <img class="icon" src="{{ asset("/images/cabinetRent/guarantee-icon-1.png") }}" />
                 <div class="text">
                     <h5 class="title">安全服务</h5>
                     <p class="desc">
@@ -148,7 +148,7 @@
                 </div>
             </div>
             <div class="item">
-                <img class="icon" src="{{ asset("/images/cabinetRent/huizhou/guarantee-icon-2.png") }}" />
+                <img class="icon" src="{{ asset("/images/cabinetRent/guarantee-icon-2.png") }}" />
                 <div class="text">
                     <h5 class="title">软件服务</h5>
                     <p class="desc">
@@ -157,7 +157,7 @@
                 </div>
             </div>
             <div class="item">
-                <img class="icon" src="{{ asset("/images/cabinetRent/huizhou/guarantee-icon-3.png") }}" />
+                <img class="icon" src="{{ asset("/images/cabinetRent/guarantee-icon-3.png") }}" />
                 <div class="text">
                     <h5 class="title">技术支持</h5>
                     <p class="desc">
@@ -166,7 +166,7 @@
                 </div>
             </div>
             <div class="item">
-                <img class="icon" src="{{ asset("/images/cabinetRent/huizhou/guarantee-icon-4.png") }}" />
+                <img class="icon" src="{{ asset("/images/cabinetRent/guarantee-icon-4.png") }}" />
                 <div class="text">
                     <h5 class="title">硬件服务</h5>
                     <p class="desc">
@@ -175,7 +175,7 @@
                 </div>
             </div>
             <div class="item">
-                <img class="icon" src="{{ asset("/images/cabinetRent/huizhou/guarantee-icon-5.png") }}" />
+                <img class="icon" src="{{ asset("/images/cabinetRent/guarantee-icon-5.png") }}" />
                 <div class="text">
                     <h5 class="title">开源节流</h5>
                     <p class="desc">
@@ -184,7 +184,7 @@
                 </div>
             </div>
             <div class="item">
-                <img class="icon" src="{{ asset("/images/cabinetRent/huizhou/guarantee-icon-6.png") }}" />
+                <img class="icon" src="{{ asset("/images/cabinetRent/guarantee-icon-6.png") }}" />
                 <div class="text">
                     <h5 class="title">灵活部署</h5>
                     <p class="desc">

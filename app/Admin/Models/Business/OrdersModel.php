@@ -1527,7 +1527,8 @@ class OrdersModel extends Model
         if(empty($client)){//客户信息不存在/拉黑
             $return['data'] = '';
             $return['code'] = 0;
-            $return['msg']  = '(#103)客户不存在/客户不属于业务员:'.$sales->name?$sales->name:$sales->username.'/账号未验证/异常,请确认后再创建业务!';
+			$name = $sales->name?$sales->name:$sales->username;
+            $return['msg']  = '(#103)客户不存在/客户不属于业务员:'.$name.'/账号未验证/异常,请确认后再创建业务!';
             return $return;
         }
         $business = DB::table('tz_business')->where(['id'=>$insert_data['business_id'],'client_id'=>$insert_data['customer_id'],'sales_id'=>$insert_data['sales_id'],'remove_status'=>0])->whereBetween('business_status',[0,3])->select('business_number','id','resource_detail')->first();

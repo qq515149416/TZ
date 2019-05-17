@@ -300,7 +300,7 @@ $(function () {
   });
 
   // 数据中心机房图片
-  if (document.getElementById("#thumbnail")) {
+  if (document.getElementById("thumbnail")) {
     var roomSwiper = new Swiper('#thumbnail', {
       direction: 'horizontal', // 垂直切换选项
       loop: true, // 循环模式选项

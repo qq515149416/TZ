@@ -213,16 +213,13 @@
                         <span class="dropdown-icon"></span>
                         <ul>
                             <li>
-                                <a href="/page/tz/dcenter">惠州数据中心</a>
+                                <a href="/datacenter/huizhou">惠州数据中心</a>
                             </li>
                             <li>
-                                <a href="/page/tz/dcenter">衡阳数据中心</a>
+                                <a href="/datacenter/hengyang">衡阳数据中心</a>
                             </li>
                             <li>
-                                <a href="/page/tz/dcenter">西安数据中心</a>
-                            </li>
-                            <li>
-                                <a href="/page/tz/dcenter">嘉兴数据中心</a>
+                                <a href="/datacenter/xian">西安数据中心</a>
                             </li>
                         </ul>
                     </div>

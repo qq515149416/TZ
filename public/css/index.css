@@ -6076,11 +6076,11 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #datacenter .main > .data > .tz-thumbnail #thumbnail img {
   width: 422px;
-  height: 340px;
+  height: 422px;
   -webkit-transform-origin: center center;
           transform-origin: center center;
-  -webkit-transform: rotate(90deg) translateX(40px);
-          transform: rotate(90deg) translateX(40px);
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
 }
 #datacenter .main > .data > .info > ul {
   list-style: none;

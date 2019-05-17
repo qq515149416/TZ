@@ -87,12 +87,12 @@
                         </li>
                     </ul>
                     <nav>
-                        <a href="javascript:;">下载机房信息</a>
-                        <a href="javascript:;">租用</a>
-                        <a href="javascript:;">机柜</a>
-                        <a href="javascript:;">托管</a>
-                        <a href="javascript:;">防御</a>
-                        <a href="javascript:;">宽带</a>
+                        <a href="javascript:;" id="downloadRoom" data-page="{{ $page }}">下载机房信息</a>
+                        <a href="/zuyong/index">租用</a>
+                        <a href="/cabinet-rent/huizhou">机柜</a>
+                        <a href="/tuoguan#hengyang">托管</a>
+                        <a href="/zuyong/gaofang">防御</a>
+                        <a href="/bandwidth-rent/huizhou">宽带</a>
                     </nav>
                 </div>
             </div>

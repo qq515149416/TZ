@@ -46,6 +46,8 @@ Route::group([
     Route::get('/datacenter/{page}', 'Show\DataCenterController@index');
     Route::get('/dist/highDefense.html', 'Show\ProtectionController@gaofang');
     Route::get('/cabinet-rent/{page}', 'Show\CabinetRentController@index');
+    Route::get('/bandwidth-rent/{page}', 'Show\BandwidthRentController@index');
+    Route::get('/activity', 'Show\LatestActivityController@index');
 });
 
 /**

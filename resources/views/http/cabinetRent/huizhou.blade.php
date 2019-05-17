@@ -257,7 +257,7 @@
                     <a class="date" href="javascript: void(0);">2019.01.21</a>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);">机柜租用好吗？ </a>
+                    <a class="text" href="javascript: void(0);">机柜租用好吗？</a>
                     <a class="date" href="javascript: void(0);">2019.01.21</a>
                 </li>
                 <li class="list-group-item">
@@ -279,7 +279,7 @@
                     <a class="date" href="javascript: void(0);">2019.01.21</a>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);">机柜租用好吗？ </a>
+                    <a class="text" href="javascript: void(0);">机柜租用好吗？</a>
                     <a class="date" href="javascript: void(0);">2019.01.21</a>
                 </li>
                 <li class="list-group-item">
@@ -301,7 +301,7 @@
                     <a class="date" href="javascript: void(0);">2019.01.21</a>
                 </li>
                 <li class="list-group-item">
-                    <a class="text" href="javascript: void(0);">机柜租用好吗？ </a>
+                    <a class="text" href="javascript: void(0);">机柜租用好吗？</a>
                     <a class="date" href="javascript: void(0);">2019.01.21</a>
                 </li>
                 <li class="list-group-item">

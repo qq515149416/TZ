@@ -532,7 +532,8 @@ class BusinessModel extends Model
         if(empty($client)){//客户信息不存在/拉黑
             $return['data'] = '';
             $return['code'] = 0;
-            $return['msg']  = '(#103)客户不存在/客户不属于业务员:'.$sales->name?$sales->name:$sales->username.'/账号未验证/异常,请确认后再创建业务!';
+            $name = $sales->name?$sales->name:$sales->username;
+            $return['msg']  = '(#103)客户不存在/客户不属于业务员:'.$name.'/账号未验证/异常,请确认后再创建业务!';
             return $return;
         }
         DB::beginTransaction();//开启事务处理

@@ -43,8 +43,8 @@ class BusinessModel extends Model
             return $return;
         }
         DB::beginTransaction();//开启事务处理
-        $business_id = mt_rand(10000,20000);
-        $business_sn               = $this->businesssn($business_id,$insert['business_type']);
+        // $business_id = mt_rand(10000,20000);
+        $business_sn               = $this->businesssn();
         $insert['business_number'] = $business_sn;
         $insert['business_status'] = 0;
         $insert['client_name'] = $client->name?$client->name:$client->email;
@@ -229,8 +229,8 @@ class BusinessModel extends Model
         // 如果审核为通过则继续进行订单表的生成
         DB::beginTransaction();//开启事务处理
         
-        // 订单号的生成规则：前两位（4-6的随机数）+ 年月日（如:20180830） + 时间戳的后2位数 + 1-3随机数
-        $order_sn                 = $this->ordersn($check->id,$check->business_type);
+       
+        $order_sn                 = $this->ordersn();
         $business['order_number'] = $order_sn;
         $business['updated_at']   = date('Y-m-d H:i:s',time());
         $business_row             = DB::table('tz_business')->where($check_where)->update($business);
@@ -376,8 +376,9 @@ class BusinessModel extends Model
      * @return [type] [description]
      */
     public function businesssn($business_id=100,$business_type=1){
-        $time= bcadd(time(),$business_id);
-        $business_sn = mt_rand(1, 3) . date("Ymd", time()) . substr($time, 6, 4) . $business_id .mt_rand(7, 9);
+        // $time= bcadd(time(),$business_id);
+        // $business_sn = mt_rand(1, 3) . date("Ymd", time()) . substr($time, 6, 4) . $business_id .mt_rand(7, 9);
+        $business_sn = create_number();//调用创建单号的公共函数
         //业务编号的生成规则：前两位（1-3的随机数）+ 年月日（如:20180830） + 时间戳的后5位数 + 7-9随机数（业务编号产生）
         // $business_sn = mt_rand(1,3).date('YmdHis').$time.mt_rand(20,99).'1'.$business_type;
         $business = $this->where('business_number',$business_sn)->select('business_number','machine_number')->first();
@@ -397,8 +398,9 @@ class BusinessModel extends Model
      * @return [type] [description]
      */
     public function ordersn($resource_id=100,$resource_type=1){
-        $time = bcadd(time(),$resource_id,0);
-        $order_sn = mt_rand(4, 6) . date("Ymd", time()) . substr($time, 6, 4) . $resource_id .mt_rand(1, 3).'1';
+        // $time = bcadd(time(),$resource_id,0);
+        // $order_sn = mt_rand(4, 6) . date("Ymd", time()) . substr($time, 6, 4) . $resource_id .mt_rand(1, 3).'1';
+        $order_sn = create_number();//调用创建单号的公共函数,
         $order = DB::table('tz_orders')->where('order_sn',$order_sn)->select('order_sn','machine_sn')->first();
         $session = session()->has('O'.$order_sn);
         if(!empty($order)){
@@ -532,7 +534,8 @@ class BusinessModel extends Model
         if(empty($client)){//客户信息不存在/拉黑
             $return['data'] = '';
             $return['code'] = 0;
-            $return['msg']  = '(#103)客户不存在/客户不属于业务员:'.$sales->name?$sales->name:$sales->username.'/账号未验证/异常,请确认后再创建业务!';
+            $name = $sales->name?$sales->name:$sales->username;
+            $return['msg']  = '(#103)客户不存在/客户不属于业务员:'.$name.'/账号未验证/异常,请确认后再创建业务!';
             return $return;
         }
         DB::beginTransaction();//开启事务处理
@@ -579,8 +582,8 @@ class BusinessModel extends Model
             $machine->cabinetid = $machine->id;
             $machine->id = $machine->cabinet_id;
         }
-        $business_id = mt_rand(10000,20000);
-        $business_sn               = $this->businesssn($business_id,$insert_data['business_type']);
+        // $business_id = mt_rand(10000,20000);
+        $business_sn               = $this->businesssn();
         $insert['business_number'] = $business_sn;
         $insert['business_status'] = 0;
         $insert['client_id'] = $insert_data['client_id']; 
@@ -851,7 +854,7 @@ class BusinessModel extends Model
         $time = 'created_at';//默认以创建时间为查询条件
         switch ($search['str']) {
             case 1:
-               // $begin_end = $this->queryTime($search);
+                //$begin_end = $this->queryTime($search);
                 $remove = [0,4];//查找所有出现过的业务订单
                 break;
             case 2:
@@ -865,7 +868,7 @@ class BusinessModel extends Model
                 break;
             default:
                 //$begin_end['start_time'] = '1970-01-01';
-                //$begin_end['end_time'] = date('Y-m-d',time());
+                $begin_end['end_time'] = date('Y-m-d',time());
                 break;
         }
         //统计订单数量

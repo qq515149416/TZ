@@ -207,12 +207,12 @@ class OrdersController extends Controller
 	 * @param  Request $request [description]
 	 * @return [type]           [description]
 	 */
-	public function tranOrders(Request $request){
-		$tran = $request->only(['business_sn']);
-		$do_tran = new OrdersModel();
-		$do_result = $do_tran->tranOrders($tran);
-		return tz_ajax_echo($do_result['data'],$do_result['msg'],$do_result['code']);
-	}
+	// public function tranOrders(Request $request){
+	// 	$tran = $request->only(['business_sn']);
+	// 	$do_tran = new OrdersModel();
+	// 	$do_result = $do_tran->tranOrders($tran);
+	// 	return tz_ajax_echo($do_result['data'],$do_result['msg'],$do_result['code']);
+	// }
 
 	/**
 	 * 信安代为录入相关的资源

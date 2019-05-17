@@ -54,8 +54,8 @@ class WhiteListModel extends Model
      */
     public function insertWhiteList($insert_data){
     	if($insert_data){
-    		$white_number = mt_rand(41,70).date("Ymd",time()).substr(time(),8,2);
-    		$insert_data['white_number'] = (int)$white_number;
+    		$white_number = create_number();
+    		$insert_data['white_number'] = $white_number;
     		$insert_data['customer_id'] = Auth::id();
     		$insert_data['customer_name'] = Auth::user()->name?Auth::user()->name:Auth::user()->email;
     		$insert_data['submit_id'] = Auth::id();

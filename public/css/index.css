@@ -6370,6 +6370,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   padding-top: 83px;
   color: #fff;
   text-align: center;
+  background: url(/images/banner-bg.png?d0ec013106f5fb84ca98054e3b77fa8e) no-repeat center;
   background-size: cover;
 }
 .tz-cabinet-rent .banner .cont {
@@ -6559,6 +6560,8 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   padding-top: 50px;
   padding-bottom: 50px;
   text-align: center;
+  background: url(/images/guarantee-bg.png?3acb5237f731d7787573d3761471c4c0) no-repeat center;
+  background-size: cover;
 }
 .tz-cabinet-rent .guarantee .item-container {
   display: -webkit-box;
@@ -6750,12 +6753,4 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-cabinet-rent .consult .consult-btn:hover {
   background-color: #fff;
   color: #043fc4;
-}
-#huizhou-cabinet .banner {
-  background: url(/images/huizhou-banner-bg.png?d0ec013106f5fb84ca98054e3b77fa8e) no-repeat center;
-  background-size: cover;
-}
-#huizhou-cabinet .guarantee {
-  background: url(/images/huizhou-guarantee-bg.png?3acb5237f731d7787573d3761471c4c0) no-repeat center;
-  background-size: cover;
 }

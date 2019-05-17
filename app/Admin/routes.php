@@ -386,7 +386,7 @@ Route::group([
         $router->get('all_renew', 'Business\OrdersController@allRenew');//获取业务下续费的资源
         $router->get('show_renew_order', 'Business\OrdersController@showRenewOrder');//展示续费的订单
         $router->get('renew_pay', 'Business\OrdersController@renewPay');//支付续费的订单
-        $router->get('tran_orders','Business\OrdersController@tranOrders');
+        //$router->get('tran_orders','Business\OrdersController@tranOrders');
 
         $router->post('insertresource', 'Business\OrdersController@insertResource');//新购资源
         // $router->post('renewresource', 'Business\OrdersController@renewResource');//续费资源

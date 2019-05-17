@@ -219,10 +219,12 @@ class MachineModel extends Model
 			return $return;
 		}
 		DB::beginTransaction();//开启事务
-		if($machine->used_status == 1){
-			$return['code'] = 0;
-			$return['msg'] = '(#102)机器:'.$machine->machine_num.'有业务在锁定,无法进行修改!';
-			return $return;
+		if($machine->business_type == 1 || $machine->business_type == 2){
+			if($machine->used_status == 1){
+				$return['code'] = 0;
+				$return['msg'] = '(#102)机器:'.$machine->machine_num.'有业务在锁定,无法进行修改!';
+				return $return;
+			}
 		}
 		/**
 		 * 机器的IP字段是否更改

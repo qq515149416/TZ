@@ -112,9 +112,9 @@
                             <dt>
                                 <a style="margin-right: 38px;" href="/15cdn/index">CDN</a>
                             </dt>
-                            <dd>
+                            <!-- <dd>
                                 <a style="margin-right: 24px;" href="/cdn/tz/15cdn">视频加速</a>
-                            </dd>
+                            </dd> -->
                             <dd>
                                 <a href="/15cdn/sca">静态内容加速</a>
                             </dd>

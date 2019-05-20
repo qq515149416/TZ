@@ -41,15 +41,11 @@
                 <div class="tz-thumbnail pull-left">
                     <div class="swiper-container" id="thumbnail">
                         <div class="swiper-wrapper">
+                            @foreach ($data['thumbnails'] as $thumbnail)
                             <div class="swiper-slide">
-                                <img src="{{ asset("/images/room/huizhou01.jpg") }}" alt="..." />
+                                <img src="{{ asset($thumbnail) }}" alt="..." />
                             </div>
-                            <div class="swiper-slide">
-                                <img src="{{ asset("/images/room/huizhou01.jpg") }}" alt="..." />
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="{{ asset("/images/room/huizhou01.jpg") }}" alt="..." />
-                            </div>
+                            @endforeach
                         </div>
                         <!-- 如果需要分页器 -->
                         <div class="swiper-pagination"></div>

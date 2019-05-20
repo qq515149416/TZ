@@ -95,12 +95,12 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th scope="col" style="width: calc(100% / 6);">数据中心</th>
-                    <th scope="col" style="width: calc(100% / 6);">线路</th>
-                    <th scope="col" style="width: calc(100% / 6);">带宽</th>
-                    <th scope="col" style="width: calc(100% / 6);">月付</th>
-                    <th scope="col" style="width: calc(100% / 6);">年付</th>
-                    <th scope="col" style="width: calc(100% / 6);">购买</th>
+                    <th scope="col" style="width: calc(100% / 7);">数据中心</th>
+                    <th scope="col" style="width: calc(100% / 7);">线路</th>
+                    <th scope="col" style="width: calc(100% / 7);">带宽</th>
+                    <th scope="col" style="width: calc(100% / 7);">月付</th>
+                    <th scope="col" style="width: calc(100% / 7);">年付</th>
+                    <th scope="col" style="width: calc(100% / 7.88);">购买</th>
                 </tr>
             </thead>
             <tbody>

@@ -300,5 +300,12 @@
             </ul>
         </div>
     </div>
+    <!--立即咨询-->
+    <div class="consult">
+        <h2 class="title">
+            智能云端技术，CDN加速首选！免费CDN申请
+        </h2>
+        <a class="consult-btn" href="javascript: void(0);">立即咨询</a>
+    </div>
 </div>
 @endsection

@@ -8,6 +8,7 @@ use App\Http\Models\DefenseIp\StoreModel;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use App\Exceptions\Handler;
+use Illuminate\Support\Facades\DB;
 
 class CheckExpire extends Command
 {
@@ -51,9 +52,10 @@ class CheckExpire extends Command
 //        $this->info($this->getEndBusiness());
 
 
-        $this->check();
+        // $this->check();
 
-        $this->info('END');//输出结束
+        // $this->info('END');//输出结束
+        $this->checkOrders();
     }
 
 
@@ -143,6 +145,25 @@ class CheckExpire extends Command
     protected function getNowTime()
     {
         return Carbon::now();
+    }
+
+    protected function checkOrders(){
+        $orders = DB::table('tz_orders')
+                    ->whereNull('deleted_at')
+                    ->where(['order_status'=>0,'resource_type'=>11])
+                    ->select('id','created_at','business_sn')
+                    ->get();
+        if(!$orders->isEmpty()){
+            foreach($orders as $key => $value){
+                $business = DB::table('tz_defenseip_business')->where(['business_number'=>$value->business_sn])->select('id')->first();
+                if(empty($business)){
+                    if(time()-strtotime($value->created_at) > 3600){
+                        $row = DB::table('tz_orders')->where(['id'=>$value->id])->update(['deleted_at'=>date('Y-m-d H:i:s')]);
+                    }
+                }
+            }
+        }
+
     }
 
 

@@ -32,15 +32,16 @@ class XADefenseDataModel extends Model
 //        $ip = '113.141.160.136';
 
         //==============END===============
-        $data = DB::connection('mysql_xagf')
-            ->table("fyip_5max")
-            ->select('id', 'time', 'bandwidth_down', 'upstream_bandwidth_up')
-            ->where('ipaddress', '=', $ip)
-            ->whereBetween('time', [$startDate, $endDate])
-            ->get(['time', 'bandwidth_down', 'upstream_bandwidth_up'])
-            ->toArray();
-
-        if (!$data) {
+        $today0 = strtotime(date("Y-m-d", time()));
+        if ($endDate < $today0) {
+            $data = DB::connection('mysql_xagf')
+                ->table("fyip_5max")
+                ->select('id', 'time', 'bandwidth_down', 'upstream_bandwidth_up')
+                ->where('ipaddress', '=', $ip)
+                ->whereBetween('time', [$startDate, $endDate])
+                ->get(['time', 'bandwidth_down', 'upstream_bandwidth_up'])
+                ->toArray();
+        } else {
             $data = $this
                 ->select('id', 'time', 'bandwidth_down', 'upstream_bandwidth_up')
                 ->where('ipaddress', '=', $ip)
@@ -49,6 +50,24 @@ class XADefenseDataModel extends Model
                 ->get(['time', 'bandwidth_down', 'upstream_bandwidth_up'])
                 ->toArray();
         }
+
+//        $data = DB::connection('mysql_xagf')
+//            ->table("fyip_5max")
+//            ->select('id', 'time', 'bandwidth_down', 'upstream_bandwidth_up')
+//            ->where('ipaddress', '=', $ip)
+//            ->whereBetween('time', [$startDate, $endDate])
+//            ->get(['time', 'bandwidth_down', 'upstream_bandwidth_up'])
+//            ->toArray();
+//
+//        if (!$data) {
+//            $data = $this
+//                ->select('id', 'time', 'bandwidth_down', 'upstream_bandwidth_up')
+//                ->where('ipaddress', '=', $ip)
+//                ->whereBetween('time', [$startDate, $endDate])
+//                ->orderBy('time', 'desc')
+//                ->get(['time', 'bandwidth_down', 'upstream_bandwidth_up'])
+//                ->toArray();
+//        }
 
 
         return $data;

@@ -98,6 +98,4 @@ class SetController extends Controller
 	}
 
 	
-
-	
 }

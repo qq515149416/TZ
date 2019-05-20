@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\DefenseIp\ApiController;
 use App\Admin\Models\Idc\Ips;
 use App\Admin\Models\DefenseIp\StoreModel;
+use App\Http\Models\DefenseIp\OverlayBelongModel;
+
 
 class BusinessModel extends Model
 {
@@ -139,18 +141,38 @@ class BusinessModel extends Model
 			];
 		}
 
+		//把没下架的叠加包全都下架掉
+		
+		$update_djb	= OverlayBelongModel::where('target_business',$business->business_number)
+					->where('status',1)
+					->update(['status' => 2]);			
+		
+		//把防御值回归默认值
 		//调用解绑接口,把客户ip和高防ip解绑
-	$apiController = new ApiController();
-		$ip = DB::table('tz_defenseip_store')->where('id',$business->ip_id)->value('ip');
+		$apiController = new ApiController();
 
-		$delRes = $apiController->deleteTarget($ip);
+		//记得正式上线换回来
+		$set_res = $api_model->setProtectionValue($d_ip->ip, $d_ip->protection_value);
+
+		//$set_res = $apiController->setProtectionValue('1.1.1.1', 0);
+	
+		if ($set_res != 'editok' && $set_res != 'ok') {
+			DB::rollBack();
+			return [
+				'data'	=> [],
+				'msg'	=> '更新业务防御峰值失败',
+				'code'	=> 0,
+			];
+		}
+
+		$delRes = $apiController->deleteTarget($d_ip->ip);
 		//解绑失败的话,事务回滚,回到待审核状态
 		if($delRes != 0){
 			DB::rollBack();
 			return [
 				'data'	=> '',
-			'msg'	=> '解绑失败,业务审核失败',
-			'code'	=> 0,
+				'msg'	=> '解绑失败,业务审核失败',
+				'code'	=> 0,
 			];
 		}
 		

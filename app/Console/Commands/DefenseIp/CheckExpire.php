@@ -147,6 +147,10 @@ class CheckExpire extends Command
         return Carbon::now();
     }
 
+    /**
+     * 检查过期的高防且不存在业务的订单并进行软删除
+     * @return [type] [description]
+     */
     protected function checkOrders(){
         $orders = DB::table('tz_orders')
                     ->whereNull('deleted_at')

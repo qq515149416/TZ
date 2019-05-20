@@ -96,13 +96,13 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th scope="col" style="width: calc(100% / 7);">数据中心</th>
-                <th scope="col" style="width: calc(100% / 7);">规格</th>
-                <th scope="col" style="width: calc(100% / 7);">电流</th>
-                <th scope="col" style="width: calc(100% / 7);">带宽</th>
-                <th scope="col" style="width: calc(100% / 7);">IP数</th>
-                <th scope="col" style="width: calc(100% / 7);">月付</th>
-                <th scope="col" style="width: calc(100% / 7);">购买</th>
+                <th scope="col" style="width: calc(100% / 7.2);">数据中心</th>
+                <th scope="col" style="width: calc(100% / 7.2);">规格</th>
+                <th scope="col" style="width: calc(100% / 7.2);">电流</th>
+                <th scope="col" style="width: calc(100% / 7.2);">带宽</th>
+                <th scope="col" style="width: calc(100% / 7.2);">IP数</th>
+                <th scope="col" style="width: calc(100% / 7.2);">月付</th>
+                <th scope="col" style="width: calc(100% / 6.8);">购买</th>
             </tr>
             </thead>
             <tbody>
@@ -225,7 +225,8 @@
                         </div>
                         <div class="cert">
                             <div class="image">
-                                <img src="{{ asset("/images/cabinetRent/固定网国内数据传送业务经营许可证.png") }}" alt="固定网国内数据传送业务经营许可证" />
+                                <img src="{{ asset("/images/cabinetRent/固定网国内数据传送业务经营许可证.png") }}"
+                                alt="固定网国内数据传送业务经营许可证" />
                             </div>
                             <h5 class="title">固定网国内数据传送业务经营许可证</h5>
                         </div>

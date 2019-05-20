@@ -226,4 +226,27 @@ class OrdersController extends Controller
 		return tz_ajax_echo($insert_result['data'],$insert_result['msg'],$insert_result['code']);
 	}
 
+	/**
+	 * 根据条件获取符合条件的资源
+	 * @return [type] [description]
+	 */
+	public function getResource(Request $request){
+		$get = $request->only(['order_id','resource_type']);
+		$get_resource = new OrdersModel();
+		$get_result = $get_resource->getResource($get);
+		return tz_ajax_echo($get_result['data'],$get_result['msg'],$get_result['code']);
+	}
+
+	/**
+	 * 更换资源
+	 * @param  Request $request [description]
+	 * @return [type]           [description]
+	 */
+	public function changeResource(Request $request){
+		$change = $request->only(['order_id','resource_type','resource_id']);
+		$change_resource = new OrdersModel();
+		$change_result = $change_resource->changeResource($change);
+		return tz_ajax_echo($change_result['data'],$change_result['msg'],$change_result['code']);
+	}
+
 }

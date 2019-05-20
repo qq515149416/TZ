@@ -1785,5 +1785,25 @@ class OrdersModel extends Model
 		return $length;
 	}
 
+	public function getResource($get){
+		if(empty($get)){
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#101)条件不足,无法进行相关操作';
+			return $return;
+		}
+		$order = DB::table('tz_orders');
+
+	}
+
+	public function changeResource($change){
+		if(empty($change)){
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#101)条件不足,无法进行相关操作';
+			return $return;
+		}
+	}
+
 
 }

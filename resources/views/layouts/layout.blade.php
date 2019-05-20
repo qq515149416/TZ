@@ -176,33 +176,33 @@
                     </div>
                 </li>
                 <li>
-                    <a href="javascript:;">解决方案</a>
+                    <a href="javascript: void(0);">解决方案</a>
                     <div class="dropdown-mark" style="width: auto; height: auto; padding-bottom: 20px; padding-right: 20px; padding-left: 20px; text-align: center;">
                         <span class="dropdown-icon"></span>
                         <ul>
                             <li>
-                                <a href="/fangan/game">游戏</a>
+                                <a href="/solution/game">游戏</a>
                             </li>
                             <li>
-                                <a href="/fangan/chess">棋牌</a>
+                                <a href="/solution/chess">棋牌</a>
                             </li>
                             <li>
-                                <a href="/fangan/finance">金融</a>
+                                <a href="/solution/finance">金融</a>
                             </li>
                             <li>
-                                <a href="/fangan/streaming_media">流媒体</a>
+                                <a href="/solution/streaming_media">流媒体</a>
                             </li>
                             <li>
-                                <a href="/fangan/mobile_app">移动APP</a>
+                                <a href="/solution/mobile_app">移动APP</a>
                             </li>
                             <li>
-                                <a href="/fangan/education_cloud">教育云</a>
+                                <a href="/solution/education_cloud">教育云</a>
                             </li>
                             <li>
-                                <a href="/fangan/government_cloud">政务云</a>
+                                <a href="/solution/government_cloud">政务云</a>
                             </li>
                             <li>
-                                <a href="/fangan/website_deployment">网站部署</a>
+                                <a href="/solution/website_deployment">网站部署</a>
                             </li>
                         </ul>
                     </div>

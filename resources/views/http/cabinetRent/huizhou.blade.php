@@ -96,13 +96,13 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th scope="col" style="width: calc(100% / 7);">数据中心</th>
-                    <th scope="col" style="width: calc(100% / 7);">规格</th>
-                    <th scope="col" style="width: calc(100% / 7);">电流</th>
-                    <th scope="col" style="width: calc(100% / 7);">带宽</th>
-                    <th scope="col" style="width: calc(100% / 7);">IP数</th>
-                    <th scope="col" style="width: calc(100% / 7);">月付</th>
-                    <th scope="col" style="width: calc(100% / 7);">购买</th>
+                    <th scope="col" style="width: calc(100% / 7.2);">数据中心</th>
+                    <th scope="col" style="width: calc(100% / 7.2);">规格</th>
+                    <th scope="col" style="width: calc(100% / 7.2);">电流</th>
+                    <th scope="col" style="width: calc(100% / 7.2);">带宽</th>
+                    <th scope="col" style="width: calc(100% / 7.2);">IP数</th>
+                    <th scope="col" style="width: calc(100% / 7.2);">月付</th>
+                    <th scope="col" style="width: calc(100% / 6.8);">购买</th>
                 </tr>
             </thead>
             <tbody>

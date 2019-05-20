@@ -2536,7 +2536,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz-server-rent-content .banner .bottom .btn-link {
   display: inline-block;
-  width: 220px;
+  width: 280px;
   height: 63px;
   line-height: 63px;
   border-radius: 8px;
@@ -3097,11 +3097,11 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   width: 1181px;
   margin: 0 auto;
 }
-#tz-program {
+.tz-solution {
   margin-left: -15px;
   margin-right: -15px;
 }
-#tz-program .tab {
+.tz-solution .tab {
   position: absolute;
   top: 480px;
   left: 0;
@@ -3109,7 +3109,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   z-index: 2;
   text-align: center;
 }
-#tz-program .tab-item {
+.tz-solution .tab-item {
   display: inline-block;
   width: 130px;
   height: 63px;
@@ -3128,12 +3128,12 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background: linear-gradient(to right, #b9ccfc 0%, #6d8fff 50%);
   background: -webkit-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
 }
-#tz-program .tab-item.active,
-#tz-program .tab-item:hover {
+.tz-solution .tab-item.active,
+.tz-solution .tab-item:hover {
   background: #fff;
   color: #043fc4;
 }
-#tz-program .content {
+.tz-solution .content {
   text-align: center;
   /* 游戏 */
   /* 棋牌 */
@@ -3144,7 +3144,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   /* 政务云 */
   /* 网站部署 */
 }
-#tz-program .content .banner {
+.tz-solution .content .banner {
   position: relative;
   height: 563px;
   padding-top: 83px;
@@ -3152,22 +3152,22 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   text-align: center;
   background-size: cover;
 }
-#tz-program .content .banner .title {
+.tz-solution .content .banner .title {
   margin-top: 60px;
   color: #fff;
 }
-#tz-program .content .banner .title .text {
+.tz-solution .content .banner .title .text {
   font-size: 50px;
   line-height: 72px;
   margin-bottom: 25px;
   letter-spacing: 3.75px;
 }
-#tz-program .content .banner .title .sub-text {
+.tz-solution .content .banner .title .sub-text {
   font-size: 16px;
   letter-spacing: 0.8px;
   line-height: 30px;
 }
-#tz-program .content .banner .apply-btn {
+.tz-solution .content .banner .apply-btn {
   display: block;
   width: 180px;
   height: 40px;
@@ -3182,12 +3182,12 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   -webkit-transition: background 0.4s ease-in-out;
   transition: background 0.4s ease-in-out;
 }
-#tz-program .content .problem {
+.tz-solution .content .problem {
   height: 700px;
   padding-top: 60px;
   background-color: #fff;
 }
-#tz-program .content .problem .title {
+.tz-solution .content .problem .title {
   color: #333;
   font-size: 26px;
   font-weight: 600;
@@ -3195,7 +3195,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   text-align: center;
   margin-bottom: 20px;
 }
-#tz-program .content .problem .card-container {
+.tz-solution .content .problem .card-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3211,7 +3211,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
           justify-content: center;
   margin: 30px auto 0;
 }
-#tz-program .content .problem .card-container .card {
+.tz-solution .content .problem .card-container .card {
   width: 380px;
   height: 206px;
   border: 1px solid #dcdcdc;
@@ -3220,38 +3220,38 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin: 10px;
   text-align: center;
 }
-#tz-program .content .problem .card-container .card-title {
+.tz-solution .content .problem .card-container .card-title {
   text-align: left;
   margin-bottom: 12px;
 }
-#tz-program .content .problem .card-container .card-title .icon {
+.tz-solution .content .problem .card-container .card-title .icon {
   display: inline-block;
   margin-top: -5px;
 }
-#tz-program .content .problem .card-container .card-title .text {
+.tz-solution .content .problem .card-container .card-title .text {
   color: #333;
   font-size: 16px;
   font-weight: 600;
   letter-spacing: 0.8px;
   margin-left: 18px;
 }
-#tz-program .content .problem .card-container .card-body ul {
+.tz-solution .content .problem .card-container .card-body ul {
   padding-left: 48px;
 }
-#tz-program .content .problem .card-container .card-body ul li {
+.tz-solution .content .problem .card-container .card-body ul li {
   text-align: left;
   padding-left: 5px;
   margin-bottom: 8px;
 }
-#tz-program .content .problem .card-container .card-body p {
+.tz-solution .content .problem .card-container .card-body p {
   line-height: 26px;
 }
-#tz-program .content .arch {
+.tz-solution .content .arch {
   height: 1000px;
   background-size: 100% 100%;
   padding-top: 50px;
 }
-#tz-program .content .arch .title {
+.tz-solution .content .arch .title {
   color: #121931;
   font-size: 26px;
   font-weight: 600;
@@ -3259,10 +3259,10 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   text-align: center;
   margin-bottom: 20px;
 }
-#tz-program .content .arch .cont {
+.tz-solution .content .arch .cont {
   margin-top: 40px;
 }
-#tz-program .content .arch .cont .desc {
+.tz-solution .content .arch .cont .desc {
   color: #363f5b;
   font-size: 14px;
   line-height: 25px;
@@ -3270,7 +3270,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   display: inline-block;
   margin: 50px auto 40px;
 }
-#tz-program .content .arch .cont .consult-btn {
+.tz-solution .content .arch .cont .consult-btn {
   width: 180px;
   height: 40px;
   display: inline-block;
@@ -3285,15 +3285,15 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   -webkit-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out;
 }
-#tz-program .content .arch .cont .consult-btn:hover {
+.tz-solution .content .arch .cont .consult-btn:hover {
   background-color: #fff;
   color: #043fc4;
 }
-#tz-program .content .adv {
+.tz-solution .content .adv {
   height: 686px;
   padding-top: 45px;
 }
-#tz-program .content .adv .title {
+.tz-solution .content .adv .title {
   color: #121931;
   font-size: 26px;
   font-weight: 600;
@@ -3301,7 +3301,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   text-align: center;
   margin-bottom: 20px;
 }
-#tz-program .content .adv .cont {
+.tz-solution .content .adv .cont {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3317,7 +3317,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   max-width: 1180px;
   margin: 30px auto 0;
 }
-#tz-program .content .adv .cont .column {
+.tz-solution .content .adv .cont .column {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3326,43 +3326,43 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
       -ms-flex-direction: column;
           flex-direction: column;
 }
-#tz-program .content .adv .cont .item {
+.tz-solution .content .adv .cont .item {
   width: 340px;
   height: 120px;
   text-align: left;
   margin-bottom: 50px;
 }
-#tz-program .content .adv .cont .item-title {
+.tz-solution .content .adv .cont .item-title {
   color: #2b3555;
   font-size: 16px;
   font-weight: 600;
   line-height: 41px;
 }
-#tz-program .content .adv .cont .item-title .order {
+.tz-solution .content .adv .cont .item-title .order {
   display: inline-block;
   vertical-align: super;
   margin-right: -5px;
 }
-#tz-program .content .adv .cont .item-body {
+.tz-solution .content .adv .cont .item-body {
   color: #33394e;
   font-size: 14px;
   line-height: 22px;
   padding-left: 20px;
 }
-#tz-program .content .consult {
+.tz-solution .content .consult {
   height: 192px;
   background: url(/images/consult-bg.png?ea1b0ccf74fe5f03daa52d067e80b31c) no-repeat center center;
   background-size: cover;
   text-align: center;
   padding-top: 30px;
 }
-#tz-program .content .consult .title {
+.tz-solution .content .consult .title {
   color: #fff;
   font-size: 26px;
   line-height: 41px;
   margin-bottom: 20px;
 }
-#tz-program .content .consult .consult-btn {
+.tz-solution .content .consult .consult-btn {
   padding: 8px 40px;
   font-size: 14px;
   line-height: 41px;
@@ -3375,26 +3375,26 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   -webkit-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out;
 }
-#tz-program .content .consult .consult-btn:hover {
+.tz-solution .content .consult .consult-btn:hover {
   background-color: #fff;
   color: #043fc4;
 }
-#tz-program .content #game .banner {
+.tz-solution .content #game .banner {
   background: url(/images/game-banner-bg.png?70f07cea6da876f74947ecc8224d8659) no-repeat center;
 }
-#tz-program .content #game .arch {
+.tz-solution .content #game .arch {
   background: url(/images/game-arch-bg.png?aeb381af904a4d8292c7f5c71f1fb1f2) no-repeat center;
 }
-#tz-program .content #game .adv {
+.tz-solution .content #game .adv {
   background: url(/images/game-adv-bg.png?de6c44551eb078692cc6598120b898dc) no-repeat center 70%;
 }
-#tz-program .content #chess .banner {
+.tz-solution .content #chess .banner {
   background: url(/images/chess-banner-bg.png?a81b0245d73a9f2b88501846afd7735b) no-repeat center;
 }
-#tz-program .content #chess .problem {
+.tz-solution .content #chess .problem {
   height: 530px;
 }
-#tz-program .content #chess .problem .card {
+.tz-solution .content #chess .problem .card {
   position: relative;
   height: 290px;
   padding-left: 35px;
@@ -3402,7 +3402,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   -webkit-transition: all 0.4s;
   transition: all 0.4s;
 }
-#tz-program .content #chess .problem .card-title {
+.tz-solution .content #chess .problem .card-title {
   position: relative;
   top: 50%;
   -webkit-transform: translateY(-50%);
@@ -3411,14 +3411,14 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   transition: all 0.4s;
   text-align: center;
 }
-#tz-program .content #chess .problem .card-title .text {
+.tz-solution .content #chess .problem .card-title .text {
   margin-top: 20px;
   margin-left: 0;
 }
-#tz-program .content #chess .problem .card-title .hover-icon {
+.tz-solution .content #chess .problem .card-title .hover-icon {
   display: none;
 }
-#tz-program .content #chess .problem .card-title .divider {
+.tz-solution .content #chess .problem .card-title .divider {
   width: 20px;
   height: 1px;
   background-color: #4d4d4d;
@@ -3426,7 +3426,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   -webkit-transition: all 0.4s;
   transition: all 0.4s;
 }
-#tz-program .content #chess .problem .card-body {
+.tz-solution .content #chess .problem .card-body {
   position: relative;
   top: 15%;
   color: #fff;
@@ -3434,44 +3434,44 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   -webkit-transition: all 0.4s;
   transition: all 0.4s;
 }
-#tz-program .content #chess .problem .card:hover {
+.tz-solution .content #chess .problem .card:hover {
   background: -webkit-gradient(linear, left top, right top, from(#284af3), color-stop(60%, #6d8fff));
   background: linear-gradient(to right, #284af3 0%, #6d8fff 60%);
   background: -webkit-linear-gradient(left, #284af3 0%, #6d8fff 60%);
 }
-#tz-program .content #chess .problem .card:hover .card-title {
+.tz-solution .content #chess .problem .card:hover .card-title {
   text-align: center;
   top: 25%;
 }
-#tz-program .content #chess .problem .card:hover .card-title .icon {
+.tz-solution .content #chess .problem .card:hover .card-title .icon {
   display: none;
 }
-#tz-program .content #chess .problem .card:hover .card-title .hover-icon {
+.tz-solution .content #chess .problem .card:hover .card-title .hover-icon {
   display: inline-block;
 }
-#tz-program .content #chess .problem .card:hover .card-title .text {
+.tz-solution .content #chess .problem .card:hover .card-title .text {
   color: #fff;
 }
-#tz-program .content #chess .problem .card:hover .card-title .divider {
+.tz-solution .content #chess .problem .card:hover .card-title .divider {
   width: 34px;
   height: 1px;
   background-color: #fff;
   border-top: unset;
 }
-#tz-program .content #chess .problem .card:hover .card-body {
+.tz-solution .content #chess .problem .card:hover .card-body {
   top: 0;
   opacity: 1;
 }
-#tz-program .content #chess .arch {
+.tz-solution .content #chess .arch {
   max-width: 100%;
   height: 660px;
   background: url(/images/chess-arch-bg.png?8aae1b6552c2838d8a0dc0e726d4ff18) no-repeat center;
   background-size: 100% 100%;
 }
-#tz-program .content #chess .arch .title {
+.tz-solution .content #chess .arch .title {
   color: #fff;
 }
-#tz-program .content #chess .arch .cont {
+.tz-solution .content #chess .arch .cont {
   position: relative;
   height: 400px;
   max-width: 1240px;
@@ -3479,7 +3479,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin-right: auto;
   text-align: center;
 }
-#tz-program .content #chess .arch .cont .arch-text {
+.tz-solution .content #chess .arch .cont .arch-text {
   position: absolute;
   top: 10px;
   left: 30px;
@@ -3488,83 +3488,83 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   text-align: left;
   color: #fff;
 }
-#tz-program .content #chess .arch .cont .arch-text .desc {
+.tz-solution .content #chess .arch .cont .arch-text .desc {
   margin-top: 0;
   margin-bottom: 60px;
   color: #fff;
 }
-#tz-program .content #chess .arch .cont .arch-img {
+.tz-solution .content #chess .arch .cont .arch-img {
   position: absolute;
   top: -20px;
   right: 20px;
   -webkit-transform: scale(0.9);
   transform: scale(0.9);
 }
-#tz-program .content #chess .adv {
+.tz-solution .content #chess .adv {
   height: 546px;
   background: url(/images/chess-adv-bg.png?38ab74a7678e2f35e10a1b4cd54385e3) no-repeat center 70%;
 }
-#tz-program .content #chess .adv .item {
+.tz-solution .content #chess .adv .item {
   height: 140px;
 }
-#tz-program .content #finance .banner {
+.tz-solution .content #finance .banner {
   background: url(/images/finance-banner-bg.png?cb640bcc47513f23060eb6143e330009) no-repeat center;
 }
-#tz-program .content #finance .problem {
+.tz-solution .content #finance .problem {
   height: 650px;
 }
-#tz-program .content #finance .problem .card {
+.tz-solution .content #finance .problem .card {
   width: 570px;
   height: 190px;
 }
-#tz-program .content #finance .problem .card-body p {
+.tz-solution .content #finance .problem .card-body p {
   text-align: left;
   padding-left: 50px;
 }
-#tz-program .content #finance .arch {
+.tz-solution .content #finance .arch {
   height: 1100px;
   background: url(/images/finance-arch-bg.png?e329461e923c3a58f116cb444e5e5a02) no-repeat center;
 }
-#tz-program .content #finance .adv {
+.tz-solution .content #finance .adv {
   height: 710px;
   background: url(/images/finance-adv-bg.png?6dd2d0583e3f5fe90f32e4e2b551f77b) no-repeat 48.5% 58%;
 }
-#tz-program .content #finance .adv .cont .item {
+.tz-solution .content #finance .adv .cont .item {
   width: 320px;
 }
-#tz-program .content #streaming_media .banner {
+.tz-solution .content #streaming-media .banner {
   background: url(/images/streaming-media-banner-bg.png?28ffacd1c8c6956941b2336ebb182582) no-repeat center;
 }
-#tz-program .content #streaming_media .problem {
+.tz-solution .content #streaming-media .problem {
   height: 650px;
 }
-#tz-program .content #streaming_media .problem .card {
+.tz-solution .content #streaming-media .problem .card {
   width: 570px;
   height: 190px;
 }
-#tz-program .content #streaming_media .problem .card-body p {
+.tz-solution .content #streaming-media .problem .card-body p {
   text-align: left;
   padding-left: 50px;
 }
-#tz-program .content #streaming_media .arch {
+.tz-solution .content #streaming-media .arch {
   height: 1210px;
   background: url(/images/streaming-media-arch-bg.png?93fbe0bd35321d798720b629287506bb) no-repeat center;
 }
-#tz-program .content #streaming_media .adv {
+.tz-solution .content #streaming-media .adv {
   height: 710px;
   background: url(/images/streaming-media-adv-bg.png?6f7fc5e2b991b9f6cc80ab5fd13e93d3) no-repeat 48.5% 70%;
 }
-#tz-program .content #mobile_app .banner {
+.tz-solution .content #mobile-app .banner {
   background: url(/images/mobile-app-banner-bg.png?35a34261413158a4f4f85ce149b7d567) no-repeat center;
 }
-#tz-program .content #mobile_app .problem {
+.tz-solution .content #mobile-app .problem {
   height: 620px;
 }
-#tz-program .content #mobile_app .problem .card {
+.tz-solution .content #mobile-app .problem .card {
   position: relative;
   height: 176px;
 }
-#tz-program .content #mobile_app .problem .card-title {
+.tz-solution .content #mobile-app .problem .card-title {
   position: relative;
   top: 50%;
   -webkit-transform: translateY(-50%);
@@ -3575,11 +3575,11 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   opacity: 1;
   z-index: 2;
 }
-#tz-program .content #mobile_app .problem .card-title .text {
+.tz-solution .content #mobile-app .problem .card-title .text {
   margin-top: 20px;
   margin-left: 0;
 }
-#tz-program .content #mobile_app .problem .card-body {
+.tz-solution .content #mobile-app .problem .card-body {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -3595,102 +3595,102 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   opacity: 0;
   z-index: 3;
 }
-#tz-program .content #mobile_app .problem .card-body:nth-child(0) {
+.tz-solution .content #mobile-app .problem .card-body:nth-child(0) {
   background: url(/images/problem-bg-1.png?7e0c6a90b614ee1dad1afe48f55d9f85) no-repeat 100% 100%;
 }
-#tz-program .content #mobile_app .problem .card-body:nth-child(1) {
+.tz-solution .content #mobile-app .problem .card-body:nth-child(1) {
   background: url(/images/problem-bg-2.png?7792a860ce4c6c5c5bad25542805e293) no-repeat 100% 100%;
 }
-#tz-program .content #mobile_app .problem .card-body:nth-child(2) {
+.tz-solution .content #mobile-app .problem .card-body:nth-child(2) {
   background: url(/images/problem-bg-3.png?d6766121bb56f0e4a9b2381ad1c228e2) no-repeat 100% 100%;
 }
-#tz-program .content #mobile_app .problem .card-body:nth-child(3) {
+.tz-solution .content #mobile-app .problem .card-body:nth-child(3) {
   background: url(/images/problem-bg-4.png?a9889e258ba777a7283584def6c2c2e2) no-repeat 100% 100%;
 }
-#tz-program .content #mobile_app .problem .card-body:nth-child(4) {
+.tz-solution .content #mobile-app .problem .card-body:nth-child(4) {
   background: url(/images/problem-bg-5.png?6affcacc32a52ca794d21d692d555c41) no-repeat 100% 100%;
 }
-#tz-program .content #mobile_app .problem .card-body:nth-child(5) {
+.tz-solution .content #mobile-app .problem .card-body:nth-child(5) {
   background: url(/images/problem-bg-6.png?4d513718eb2486400b32c6252aaa5d93) no-repeat 100% 100%;
 }
-#tz-program .content #mobile_app .problem .card-body p {
+.tz-solution .content #mobile-app .problem .card-body p {
   margin-bottom: 0;
   display: table-cell;
   text-align: center;
   vertical-align: middle;
   line-height: 26px;
 }
-#tz-program .content #mobile_app .problem .card:hover .card-title {
+.tz-solution .content #mobile-app .problem .card:hover .card-title {
   opacity: 0;
 }
-#tz-program .content #mobile_app .problem .card:hover .card-body {
+.tz-solution .content #mobile-app .problem .card:hover .card-body {
   opacity: 1;
 }
-#tz-program .content #mobile_app .arch {
+.tz-solution .content #mobile-app .arch {
   height: 1320px;
   background: url(/images/mobile-app-arch-bg.png?67334bf1ec360a5f0df602882a452608) no-repeat center;
 }
-#tz-program .content #mobile_app .arch .cont {
+.tz-solution .content #mobile-app .arch .cont {
   position: relative;
   max-width: 1180px;
   margin-left: auto;
   margin-right: auto;
 }
-#tz-program .content #mobile_app .arch .cont .desc {
+.tz-solution .content #mobile-app .arch .cont .desc {
   margin-top: 0;
   margin-bottom: 15px;
   text-indent: 2em;
 }
-#tz-program .content #mobile_app .arch .cont .consult-btn {
+.tz-solution .content #mobile-app .arch .cont .consult-btn {
   border-color: #2139b7;
   background-color: #2139b7;
 }
-#tz-program .content #mobile_app .arch .cont .consult-btn:hover {
+.tz-solution .content #mobile-app .arch .cont .consult-btn:hover {
   color: #2139b7;
   border-color: #fff;
   background-color: #fff;
 }
-#tz-program .content #mobile_app .adv {
+.tz-solution .content #mobile-app .adv {
   height: 710px;
   background: url(/images/mobile-app-adv-bg.png?538960dd8f47b0ef46cbb5c6ca41f3cf) no-repeat 48.5% 70%;
 }
-#tz-program .content #mobile_app .adv .item {
+.tz-solution .content #mobile-app .adv .item {
   width: 320px;
 }
-#tz-program .content #education_cloud .banner {
+.tz-solution .content #education-cloud .banner {
   background: url(/images/education-cloud-banner-bg.png?2010c80cc8fb90a26b23ccbfc242d666) no-repeat center;
 }
-#tz-program .content #education_cloud .problem {
+.tz-solution .content #education-cloud .problem {
   height: 700px;
 }
-#tz-program .content #education_cloud .problem .card {
+.tz-solution .content #education-cloud .problem .card {
   width: 570px;
   height: 215px;
   padding-left: 60px;
   padding-right: 60px;
 }
-#tz-program .content #education_cloud .problem .card-body p {
+.tz-solution .content #education-cloud .problem .card-body p {
   text-align: left;
   padding-left: 50px;
 }
-#tz-program .content #education_cloud .arch {
+.tz-solution .content #education-cloud .arch {
   height: 1210px;
   background: url(/images/education-cloud-arch-bg.png?14f83e4808959ead541b7e1d7522394e) no-repeat center;
 }
-#tz-program .content #education_cloud .arch .consult-btn {
+.tz-solution .content #education-cloud .arch .consult-btn {
   border-color: #1e2251;
   background-color: #1e2251;
 }
-#tz-program .content #education_cloud .arch .consult-btn:hover {
+.tz-solution .content #education-cloud .arch .consult-btn:hover {
   color: #1e2251;
   border-color: #fff;
   background-color: #fff;
 }
-#tz-program .content #education_cloud .arch .desc {
+.tz-solution .content #education-cloud .arch .desc {
   margin-top: 40px;
   margin-bottom: 30px;
 }
-#tz-program .content #education_cloud .arch .desc .list-group {
+.tz-solution .content #education-cloud .arch .desc .list-group {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3705,7 +3705,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
           justify-content: space-between;
   text-align: left;
 }
-#tz-program .content #education_cloud .arch .desc .list-group .list-group-item {
+.tz-solution .content #education-cloud .arch .desc .list-group .list-group-item {
   display: inline-block;
   padding-top: 0;
   padding-bottom: 0;
@@ -3714,84 +3714,84 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   border: none;
   border-radius: unset;
 }
-#tz-program .content #education_cloud .adv {
+.tz-solution .content #education-cloud .adv {
   height: 600px;
   background: url(/images/education-cloud-adv-bg.png?555ba2b76e0025fd65bd9ee6dd41188a) no-repeat center 70%;
 }
-#tz-program .content #education_cloud .adv .cont {
+.tz-solution .content #education-cloud .adv .cont {
   margin-top: 65px;
 }
-#tz-program .content #government_cloud .banner {
+.tz-solution .content #government-cloud .banner {
   background: url(/images/government-cloud-banner-bg.png?c03da09f2045264f0fe9000040bdc3a1) no-repeat center;
 }
-#tz-program .content #government_cloud .problem {
+.tz-solution .content #government-cloud .problem {
   height: 620px;
 }
-#tz-program .content #government_cloud .problem .card {
+.tz-solution .content #government-cloud .problem .card {
   width: 570px;
   height: 176px;
   padding-left: 60px;
   padding-right: 60px;
 }
-#tz-program .content #government_cloud .problem .card-body p {
+.tz-solution .content #government-cloud .problem .card-body p {
   text-align: left;
   padding-left: 50px;
 }
-#tz-program .content #government_cloud .arch {
+.tz-solution .content #government-cloud .arch {
   height: 1200px;
   background: url(/images/government-cloud-arch-bg.png?cbd1a530b38258c4a0c6ef066d599287) no-repeat center;
 }
-#tz-program .content #government_cloud .arch .consult-btn {
+.tz-solution .content #government-cloud .arch .consult-btn {
   color: #091233;
   background: #fff;
 }
-#tz-program .content #government_cloud .arch .desc {
+.tz-solution .content #government-cloud .arch .desc {
   color: #fff;
 }
-#tz-program .content #government_cloud .adv {
+.tz-solution .content #government-cloud .adv {
   height: 660px;
   background: url(/images/government-cloud-adv-bg.png?6b97d8d988ae0176a9c157bd8dc99125) no-repeat center 60%;
 }
-#tz-program .content #government_cloud .adv .cont {
+.tz-solution .content #government-cloud .adv .cont {
   margin-top: 60px;
 }
-#tz-program .content #government_cloud .adv .cont .item {
+.tz-solution .content #government-cloud .adv .cont .item {
   width: 290px;
   height: 180px;
 }
-#tz-program .content #website_deployment .banner {
+.tz-solution .content #website-deployment .banner {
   background: url(/images/website-deployment-banner-bg.png?3d16521dcd386174e55f1d3d59a3154a) no-repeat center;
 }
-#tz-program .content #website_deployment .problem {
+.tz-solution .content #website-deployment .problem {
   height: 700px;
 }
-#tz-program .content #website_deployment .problem .card {
+.tz-solution .content #website-deployment .problem .card {
   width: 570px;
   height: 215px;
 }
-#tz-program .content #website_deployment .problem .card-body p {
+.tz-solution .content #website-deployment .problem .card-body p {
   text-align: left;
   padding-left: 50px;
 }
-#tz-program .content #website_deployment .arch {
+.tz-solution .content #website-deployment .arch {
   height: 990px;
   background: url(/images/website-deployment-arch-bg.png?36c4d6730e65d3780a9ae1cd528a20a6) no-repeat center;
 }
-#tz-program .content #website_deployment .arch .consult-btn {
+.tz-solution .content #website-deployment .arch .consult-btn {
   color: #091233;
   background: #fff;
 }
-#tz-program .content #website_deployment .arch .desc {
+.tz-solution .content #website-deployment .arch .desc {
   color: #fff;
 }
-#tz-program .content #website_deployment .adv {
+.tz-solution .content #website-deployment .adv {
   height: 640px;
   background: url(/images/website-deployment-adv-bg.png?ee885b796221336228ed7200aa28af3c) no-repeat center 70%;
 }
-#tz-program .content #website_deployment .adv .cont {
+.tz-solution .content #website-deployment .adv .cont {
   margin-top: 60px;
 }
-#tz-program .content #website_deployment .adv .cont .item {
+.tz-solution .content #website-deployment .adv .cont .item {
   width: 350px;
   height: 160px;
 }
@@ -4185,7 +4185,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 .tz-protection-content .banner .tab-item {
   display: inline-block;
-  width: calc(100% / 4.88);
+  width: 280px;
   height: 63px;
   line-height: 63px;
   border-radius: 8px;
@@ -5670,8 +5670,9 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   display: block;
   width: 240px;
   margin: 15px auto 0;
-  padding: 8px 20px;
+  padding: 0 20px;
   color: #fff;
+  line-height: 30px;
   letter-spacing: 2.8px;
   background-color: #aaa;
   text-decoration: none;
@@ -5855,7 +5856,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-cdn-content .usage-scenario .customer .title,
 .tz-cdn-content .usage-scenario .target .title {
   display: inline-block;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   color: #2139b7;
   line-height: 36px;
@@ -5891,6 +5892,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-cdn-content .usage-scenario .customer .text,
 .tz-cdn-content .usage-scenario .target .text {
   color: #333;
+  font-size: 16px;
   font-weight: 600;
   letter-spacing: 0.7px;
 }
@@ -6545,7 +6547,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   padding: 8px 40px;
   color: #666;
   font-size: 12px;
-  letter-spacing: 1.2px;
+  letter-spacing: 2.8px;
   background-color: #dcdcdc;
   text-decoration: none;
   border-radius: 4px;
@@ -6955,7 +6957,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   padding: 8px 40px;
   color: #666;
   font-size: 12px;
-  letter-spacing: 1.2px;
+  letter-spacing: 2.8px;
   background-color: #dcdcdc;
   text-decoration: none;
   border-radius: 4px;

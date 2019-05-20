@@ -433,6 +433,11 @@ Route::group([
         $router->get('changemarket','Business\BusinessController@changeMarket');
 
         $router->post('register', 'Business\CustomerController@registerClerk');//后台替客户注册账号
+
+        /**
+         * 更换资源相关
+         */
+        $router->get('getresource','Business\OrdersController@getResource');
     });
 
 

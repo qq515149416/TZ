@@ -4,6 +4,7 @@ namespace App\Http\Models\DefenseIp;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class XADefenseDataModel extends Model
 {
@@ -25,20 +26,59 @@ class XADefenseDataModel extends Model
      * 根据IP查询相关数据
      *
      */
-    public function getByIp($ip,$startDate,$endDate)
+    public function getByIp($ip, $startDate, $endDate)
     {
         //============测试数据=================
 //        $ip = '113.141.160.136';
 
         //==============END===============
-        $data=$this
-            ->select('id','time','bandwidth_down','upstream_bandwidth_up')
-            ->where('ipaddress','=',$ip)
-            ->whereBetween('time',[$startDate,$endDate ])
-            ->orderBy('time','desc')
-            ->get(['time','bandwidth_down','upstream_bandwidth_up'])
-            ->toArray();
+        $today0 = strtotime(date("Y-m-d", time()));
+        if ($endDate < $today0) {
+            $data = DB::connection('mysql_xagf')
+                ->table("fyip_5max")
+                ->select('id', 'time', 'bandwidth_down', 'upstream_bandwidth_up')
+                ->where('ipaddress', '=', $ip)
+                ->whereBetween('time', [$startDate, $endDate])
+                ->get(['time', 'bandwidth_down', 'upstream_bandwidth_up'])
+                ->toArray();
+        } else {
+            $data = $this
+                ->select('id', 'time', 'bandwidth_down', 'upstream_bandwidth_up')
+                ->where('ipaddress', '=', $ip)
+                ->whereBetween('time', [$startDate, $endDate])
+                ->orderBy('time', 'desc')
+                ->get(['time', 'bandwidth_down', 'upstream_bandwidth_up'])
+                ->toArray();
+        }
+
+//        $data = DB::connection('mysql_xagf')
+//            ->table("fyip_5max")
+//            ->select('id', 'time', 'bandwidth_down', 'upstream_bandwidth_up')
+//            ->where('ipaddress', '=', $ip)
+//            ->whereBetween('time', [$startDate, $endDate])
+//            ->get(['time', 'bandwidth_down', 'upstream_bandwidth_up'])
+//            ->toArray();
+//
+//        if (!$data) {
+//            $data = $this
+//                ->select('id', 'time', 'bandwidth_down', 'upstream_bandwidth_up')
+//                ->where('ipaddress', '=', $ip)
+//                ->whereBetween('time', [$startDate, $endDate])
+//                ->orderBy('time', 'desc')
+//                ->get(['time', 'bandwidth_down', 'upstream_bandwidth_up'])
+//                ->toArray();
+//        }
+
+
         return $data;
+    }
+
+    public function getByIp5Min($ip, $startDate, $endDate)
+    {
+
+//        dump($data);
+//        return $data;
+//            $data2=DB::commit()
     }
 
 }

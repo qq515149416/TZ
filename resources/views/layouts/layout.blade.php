@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>腾正科技-@yield('title')</title>
+    <title>{{ request()->path() === "/" ? '腾正科技-' : '' }}@yield('title')</title>
     <link rel="stylesheet" href="{{ admin_asset("/vendor/laravel-admin/AdminLTE/bootstrap/css/bootstrap.min.css") }}">
     <link rel="shortcut icon" href="{{ asset("/favicon.ico") }}" type="image/x-icon" />
     <link rel="icon" sizes="any" mask href="{{ asset("/favicon.svg") }}">

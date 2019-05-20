@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>腾正科技-@yield('title')</title>
+    <title>{{ request()->path() === "/" ? '腾正科技-' : '' }}@yield('title')</title>
     <link rel="stylesheet" href="{{ admin_asset("/vendor/laravel-admin/AdminLTE/bootstrap/css/bootstrap.min.css") }}">
     <link rel="shortcut icon" href="{{ asset("/favicon.ico") }}" type="image/x-icon" />
     <link rel="icon" sizes="any" mask href="{{ asset("/favicon.svg") }}">
@@ -52,7 +52,7 @@
             </ul>
             <ul class="nav navbar-nav">
                 <!-- <li class="active"><a href="/">首页 <span class="sr-only">(current)</span></a></li> -->
-                <li><a href="/page/tz/preferential">最新活动</a></li>
+                <li><a href="/activity">最新活动</a></li>
                 <li>
                     <a href="javascript:;">产品服务</a>
                     <div class="dropdown-mark">
@@ -112,9 +112,9 @@
                             <dt>
                                 <a style="margin-right: 38px;" href="/15cdn/index">CDN</a>
                             </dt>
-                            <dd>
+                            <!-- <dd>
                                 <a style="margin-right: 24px;" href="/cdn/tz/15cdn">视频加速</a>
-                            </dd>
+                            </dd> -->
                             <dd>
                                 <a href="/15cdn/sca">静态内容加速</a>
                             </dd>
@@ -161,48 +161,48 @@
                         </dl>
                         <dl style="text-align: center;">
                             <dt>
-                                <a href="/page/tz/zyddk" style="margin-left: -14px;">带宽租用</a>
+                                <a href="javascript: void(0);" style="margin-left: -14px;">带宽租用</a>
                             </dt>
                             <dd>
-                                <a href="/page/tz/zyddk" style="margin-right: 4px;">惠州带宽租用</a>
+                                <a href="/bandwidth-rent/huizhou" style="margin-right: 4px;">惠州带宽租用</a>
                             </dd>
                             <dd>
-                                <a href="/page/tz/zyddk" style="margin-right: 4px;">衡阳带宽租用</a>
+                                <a href="/bandwidth-rent/hengyang" style="margin-right: 4px;">衡阳带宽租用</a>
                             </dd>
                             <dd>
-                                <a href="/page/tz/zyddk" style="margin-right: 4px;">西安带宽租用</a>
+                                <a href="/bandwidth-rent/xian" style="margin-right: 4px;">西安带宽租用</a>
                             </dd>
                         </dl>
                     </div>
                 </li>
                 <li>
-                    <a href="javascript:;">解决方案</a>
+                    <a href="javascript: void(0);">解决方案</a>
                     <div class="dropdown-mark" style="width: auto; height: auto; padding-bottom: 20px; padding-right: 20px; padding-left: 20px; text-align: center;">
                         <span class="dropdown-icon"></span>
                         <ul>
                             <li>
-                                <a href="/fangan/game">游戏</a>
+                                <a href="/solution/game">游戏</a>
                             </li>
                             <li>
-                                <a href="/fangan/chess">棋牌</a>
+                                <a href="/solution/chess">棋牌</a>
                             </li>
                             <li>
-                                <a href="/fangan/finance">金融</a>
+                                <a href="/solution/finance">金融</a>
                             </li>
                             <li>
-                                <a href="/fangan/streaming_media">流媒体</a>
+                                <a href="/solution/streaming_media">流媒体</a>
                             </li>
                             <li>
-                                <a href="/fangan/mobile_app">移动APP</a>
+                                <a href="/solution/mobile_app">移动APP</a>
                             </li>
                             <li>
-                                <a href="/fangan/education_cloud">教育云</a>
+                                <a href="/solution/education_cloud">教育云</a>
                             </li>
                             <li>
-                                <a href="/fangan/government_cloud">政务云</a>
+                                <a href="/solution/government_cloud">政务云</a>
                             </li>
                             <li>
-                                <a href="/fangan/website_deployment">网站部署</a>
+                                <a href="/solution/website_deployment">网站部署</a>
                             </li>
                         </ul>
                     </div>
@@ -213,16 +213,13 @@
                         <span class="dropdown-icon"></span>
                         <ul>
                             <li>
-                                <a href="/page/tz/dcenter">惠州数据中心</a>
+                                <a href="/datacenter/huizhou">惠州数据中心</a>
                             </li>
                             <li>
-                                <a href="/page/tz/dcenter">衡阳数据中心</a>
+                                <a href="/datacenter/hengyang">衡阳数据中心</a>
                             </li>
                             <li>
-                                <a href="/page/tz/dcenter">西安数据中心</a>
-                            </li>
-                            <li>
-                                <a href="/page/tz/dcenter">嘉兴数据中心</a>
+                                <a href="/datacenter/xian">西安数据中心</a>
                             </li>
                         </ul>
                     </div>

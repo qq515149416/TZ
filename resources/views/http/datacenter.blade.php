@@ -17,17 +17,17 @@
                 <nav>
                     <ul>
                         <li>
-                            <a href="javascript:;">
+                            <a class="{{ $page === 'huizhou' ? 'aticve' : '' }}" href="/datacenter/huizhou">
                                 惠州数据中心
                             </a>
                         </li>
                         <li>
-                            <a href="javascript:;">
+                            <a class="{{ $page === 'hengyang' ? 'aticve' : '' }}" href="/datacenter/hengyang">
                                 衡阳数据中心
                             </a>
                         </li>
                         <li>
-                            <a href="javascript:;">
+                            <a class="{{ $page === 'xian' ? 'aticve' : '' }}" href="/datacenter/xian">
                                 西安数据中心
                             </a>
                         </li>
@@ -39,45 +39,56 @@
             <h3>惠州数据中心</h3>
             <div class="data clearfix">
                 <div class="tz-thumbnail pull-left">
+                    <div class="swiper-container" id="thumbnail">
+                        <div class="swiper-wrapper">
+                            @foreach ($data['thumbnails'] as $thumbnail)
+                            <div class="swiper-slide">
+                                <img src="{{ asset($thumbnail) }}" alt="..." />
+                            </div>
+                            @endforeach
+                        </div>
+                        <!-- 如果需要分页器 -->
+                        <div class="swiper-pagination"></div>
+                    </div>
                 </div>
                 <div class="info pull-right">
                     <ul>
                         <li>
                             <span class="title">数据中心级别</span>
-                            <span class="value">国家<strong>AAAAA</strong>级机房</span>
+                            <span class="value">{!! $data['level'] !!}</span>
                         </li>
                         <li>
                             <span class="title">机房面积</span>
-                            <span class="value">8000 平方米</span>
+                            <span class="value">{{ $data['area'] }}</span>
                         </li>
                         <li>
                             <span class="title">机柜总数</span>
-                            <span class="value">1288 个，42U 国际标准机柜</span>
+                            <span class="value">{{ $data['total'] }}</span>
                         </li>
                         <li>
                             <span class="title">出口总带宽</span>
-                            <span class="value">860G 直连中国电信骨干网</span>
+                            <span class="value">{{ $data['bandwidth'] }}</span>
                         </li>
                         <li>
                             <span class="title">防火墙设备</span>
-                            <span class="value">200G 集群防火墙</span>
+                            <span class="value">{{ $data['firewall'] }}</span>
                         </li>
                         <li>
                             <span class="title">电力设备</span>
-                            <span class="value">两路市电，UPS 艾默生力博特 Hipluse 系统，美国卡特 2000KVA 柴油发电机组</span>
+                            <span class="value">{{ $data['power'] }}</span>
                         </li>
                         <li>
                             <span class="title">数据中心地址</span>
-                            <span class="value">湖南省衡阳市石鼓区蒸水桥北互联网数据中心</span>
+                            <span class="value">{{ $data['address'] }}</span>
                         </li>
                     </ul>
                     <nav>
-                        <a href="javascript:;">下载机房信息</a>
-                        <a href="javascript:;">租用</a>
-                        <a href="javascript:;">机柜</a>
-                        <a href="javascript:;">托管</a>
-                        <a href="javascript:;">防御</a>
-                        <a href="javascript:;">宽带</a>
+                        <a href="javascript:;" id="downloadRoom" data-page="{{ $page }}">下载机房信息</a>
+                        <a href="/zuyong/index">租用</a>
+                        <a href="/cabinet-rent/huizhou">机柜</a>
+                        <a href="/tuoguan#hengyang">托管</a>
+                        <a href="/zuyong/gaofang">防御</a>
+                        <a href="/bandwidth-rent/huizhou">宽带</a>
                     </nav>
                 </div>
             </div>

@@ -38,12 +38,16 @@ class CustomerModel extends Model
             $return['msg'] = '请先完善您的个人信息';
             return $return;
         }
-
         // dd($slug);
-        if($slug->slug == 3){
+        if($slug->slug != 3){//非业务员进入此区间
+            if(Admin::user()->inRoles(['salesman','operations','finance','HR','product','network_dimension','net_sec'])){//不是主管的按是否自己客户查看
+                $where['salesman_id'] = $clerk_id;
+            } else {//主管人员查看客户信息
+                $where = [];
+            }
+            
+        } else {//是业务人员按客户所绑定业务员查看
             $where['salesman_id'] = $clerk_id;
-        } else {
-            $where = [];
         }
         if(!empty($id)){
             $where['id'] = $id;

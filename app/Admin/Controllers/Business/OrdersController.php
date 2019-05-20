@@ -207,12 +207,12 @@ class OrdersController extends Controller
 	 * @param  Request $request [description]
 	 * @return [type]           [description]
 	 */
-	public function tranOrders(Request $request){
-		$tran = $request->only(['business_sn']);
-		$do_tran = new OrdersModel();
-		$do_result = $do_tran->tranOrders($tran);
-		return tz_ajax_echo($do_result['data'],$do_result['msg'],$do_result['code']);
-	}
+	// public function tranOrders(Request $request){
+	// 	$tran = $request->only(['business_sn']);
+	// 	$do_tran = new OrdersModel();
+	// 	$do_result = $do_tran->tranOrders($tran);
+	// 	return tz_ajax_echo($do_result['data'],$do_result['msg'],$do_result['code']);
+	// }
 
 	/**
 	 * 信安代为录入相关的资源
@@ -224,6 +224,29 @@ class OrdersController extends Controller
 		$security_insert = new OrdersModel();
 		$insert_result = $security_insert->securityInsertOrders($insert);
 		return tz_ajax_echo($insert_result['data'],$insert_result['msg'],$insert_result['code']);
+	}
+
+	/**
+	 * 根据条件获取符合条件的资源
+	 * @return [type] [description]
+	 */
+	public function getResource(Request $request){
+		$get = $request->only(['order_id','resource_type']);
+		$get_resource = new OrdersModel();
+		$get_result = $get_resource->getResource($get);
+		return tz_ajax_echo($get_result['data'],$get_result['msg'],$get_result['code']);
+	}
+
+	/**
+	 * 更换资源
+	 * @param  Request $request [description]
+	 * @return [type]           [description]
+	 */
+	public function changeResource(Request $request){
+		$change = $request->only(['order_id','resource_type','resource_id']);
+		$change_resource = new OrdersModel();
+		$change_result = $change_resource->changeResource($change);
+		return tz_ajax_echo($change_result['data'],$change_result['msg'],$change_result['code']);
 	}
 
 }

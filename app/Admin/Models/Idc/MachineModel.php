@@ -219,10 +219,12 @@ class MachineModel extends Model
 			return $return;
 		}
 		DB::beginTransaction();//开启事务
-		if($machine->used_status == 1){
-			$return['code'] = 0;
-			$return['msg'] = '(#102)机器:'.$machine->machine_num.'有业务在锁定,无法进行修改!';
-			return $return;
+		if($machine->business_type == 1 || $machine->business_type == 2){
+			if($machine->used_status == 1){
+				$return['code'] = 0;
+				$return['msg'] = '(#102)机器:'.$machine->machine_num.'有业务在锁定,无法进行修改!';
+				return $return;
+			}
 		}
 		/**
 		 * 机器的IP字段是否更改
@@ -270,23 +272,25 @@ class MachineModel extends Model
 				$detail['ip_id'] = 	$editdata['ip_id'];	
 			}
 		}
-		if($machine->used_status == 2 && $machine->used_status != $editdata['used_status']){
-			DB::rollBack();
-			$return['code'] = 0;
-			$return['msg'] = '(#105)机器有业务在使用,无法进行修改';
-			return $return;
-		}
-		if($machine->used_status != 1 && $editdata['used_status'] == 1){
-			DB::rollBack();
-			$return['code'] = 0;
-			$return['msg'] = '(#106)业务锁定状态只能添加业务时锁定,无法手动修改为此状态';
-			return $return;
-		}
-		if($machine->used_status != 2 && $editdata['used_status'] == 2){
-			DB::rollBack();
-			$return['code'] = 0;
-			$return['msg'] = '(#107)使用中状态只能业务审核通过后自动修改为此状态,无法手动修改为此状态';
-			return $return;
+		if($machine->business_type == 1 || $machine->business_type == 2){
+			if($machine->used_status == 2 && $machine->used_status != $editdata['used_status']){
+				DB::rollBack();
+				$return['code'] = 0;
+				$return['msg'] = '(#105)机器有业务在使用,无法进行修改';
+				return $return;
+			}
+			if($machine->used_status != 1 && $editdata['used_status'] == 1){
+				DB::rollBack();
+				$return['code'] = 0;
+				$return['msg'] = '(#106)业务锁定状态只能添加业务时锁定,无法手动修改为此状态';
+				return $return;
+			}
+			if($machine->used_status != 2 && $editdata['used_status'] == 2){
+				DB::rollBack();
+				$return['code'] = 0;
+				$return['msg'] = '(#107)使用中状态只能业务审核通过后自动修改为此状态,无法手动修改为此状态';
+				return $return;
+			}
 		}
 		if($machine->used_status == 2){//当机器的状态为使用中时，更改业务里面的resource_detail字段
 			$business = DB::table('tz_business')->where(['business_number'=>$machine->own_business])->whereBetween('business_status',[0,4])->whereBetween('remove_status',[0,1])->select('id','business_number','machine_number','resource_detail')->first();
@@ -860,11 +864,14 @@ class MachineModel extends Model
 				echo '机器:'.$value['machine_num'].'的使用状态为'.$value['used_status'].'<br>';
 				if($value['used_status'] == 1){
 					$update = DB::table('idc_machine')->where(['id'=>$value['id']])->update(['used_status'=>2]);
-				} elseif($value['used_status'] == 2){
-					$update = DB::table('idc_machine')->where(['id'=>$value['id']])->update(['used_status'=>3]);
-				} elseif($value['used_status'] == 3){
-					$update = DB::table('idc_machine')->where(['id'=>$value['id']])->update(['used_status'=>4]);
+				} else {
+					$update = 1;
 				}
+				// elseif($value['used_status'] == 2){
+				// 	$update = DB::table('idc_machine')->where(['id'=>$value['id']])->update(['used_status'=>3]);
+				// } elseif($value['used_status'] == 3){
+				// 	$update = DB::table('idc_machine')->where(['id'=>$value['id']])->update(['used_status'=>4]);
+				// }
 				if($update == 0){
 					DB::rollBack();
 					$return['data'] = '';

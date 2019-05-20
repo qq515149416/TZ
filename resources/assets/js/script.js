@@ -158,23 +158,6 @@ $(function () {
     }
   });
   /**
-   * 解决方案页tab切换
-   */
-  const hash = '#' + window.location.pathname.slice(window.location.pathname.lastIndexOf('/') + 1)
-  $('#tz-program .tab').find('a.tab-item[data-target="' + hash + '"]').addClass('active').tab('show').siblings().removeClass('active');
-  // $('#tz-program .tab').find('a.tab-item[href="' + window.location.hash + '"]').addClass('active').tab('show').siblings().removeClass('active');
-  // $(window).bind('hashchange', function () {
-  //   $('#tz-program .tab').find('a.tab-item[href="' + window.location.hash + '"]').addClass('active').tab('show').siblings().removeClass('active');
-  // });
-  // $('#tz-program a.tab-item').on('click', function (e) {
-  //   // e.preventDefault();
-  //   if ($(this).hasClass('active')) {
-  //     e.preventDefault();
-  //   } else {
-  //     $(this).addClass('active').tab('show').siblings().removeClass('active');
-  //   }
-  // });
-  /**
    * 服务器托管页面collapse切换
    */
   $('#tz-server-hosting .expand-item.collapse')
@@ -222,6 +205,37 @@ $(function () {
     }
   });
 
+// 数据中心机房图片
+if(document.getElementById("thumbnail")) {
+    var roomSwiper = new Swiper ('#thumbnail', {
+        direction: 'horizontal', // 垂直切换选项
+        loop: true, // 循环模式选项
+        autoplay: true,
+        // 如果需要分页器
+        pagination: {
+          el: '.swiper-pagination',
+        }
+      });
+      //鼠标覆盖停止自动切换
+      roomSwiper.el.onmouseover = function(){
+        roomSwiper.autoplay.stop();
+      }
+
+      roomSwiper.el.onmouseout = function(){
+        roomSwiper.autoplay.start();
+      }
+}
+
+if(document.getElementById("downloadRoom")) {
+    $("#downloadRoom").click(function() {
+        $.get("/datacenter/json/"+$(this).attr("data-page"),function(data) {
+            if(data.code==1) {
+                tableToExcel([data.data]);
+            }
+        });
+    });
+}
+
 //   高防ip购买
   $("#purchaseTime").on("shown.bs.modal",function(event) {
     let purchaseTime = $(this);
@@ -239,3 +253,33 @@ $(function () {
     });
 });
 });
+function tableToExcel(jsonData){
+    //列标题
+    let str = '<tr><td>数据中心级别</td><td>机房面积</td><td>机柜总数</td><td>出口总带宽</td><td>防火墙设备</td><td>电力设备</td><td>数据中心地址</td></tr>';
+    //循环遍历，每行加入tr标签，每个单元格加td标签
+    for(let i = 0 ; i < jsonData.length ; i++ ){
+      str+='<tr>';
+      for(let item in jsonData[i]){
+          //增加\t为了不让表格显示科学计数法或者其他格式
+          str+=`<td>${ jsonData[i][item] + '\t'}</td>`;
+      }
+      str+='</tr>';
+    }
+    //Worksheet名
+    let worksheet = 'Sheet1'
+    let uri = 'data:application/vnd.ms-excel;base64,';
+
+    //下载的表格模板数据
+    let template = `<html xmlns:o="urn:schemas-microsoft-com:office:office"
+    xmlns:x="urn:schemas-microsoft-com:office:excel"
+    xmlns="http://www.w3.org/TR/REC-html40">
+    <head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>
+      <x:Name>${worksheet}</x:Name>
+      <x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet>
+      </x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]-->
+      </head><body><table>${str}</table></body></html>`;
+    //下载模板
+    window.location.href = uri + base64(template);
+}
+//输出base64编码
+function base64 (s) { return window.btoa(unescape(encodeURIComponent(s))) }

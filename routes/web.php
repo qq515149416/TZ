@@ -34,7 +34,7 @@ Route::group([
     Route::get('/aboutus/{page}', 'Show\AboutUsController@index');
     Route::get('/promotion/consumer', 'Show\ConsumerPromotionController@index');
     Route::get('/zuyong/{page}/{room?}', 'Show\ServerRentController@index');
-    Route::get('/fangan/{page}', 'Show\ProgramController@index');
+    Route::get('/solution/{page}', 'Show\SolutionController@index');
     Route::get('/tuoguan', 'Show\HostingController@index');
     Route::get('/article/{type}', 'Show\ArticleController@index');
     Route::get('/detail/{type}/{id}', 'Show\ArticleController@detail');
@@ -43,9 +43,12 @@ Route::group([
     Route::get('/protection/{page}', 'Show\ProtectionController@index');
     Route::get('/test', 'Show\TestController@index');
     Route::get('/15cdn/{page}', 'Show\CdnController@index');
-    Route::get('/datacenter', 'Show\DataCenterController@index');
+    Route::get('/datacenter/{page}', 'Show\DataCenterController@index');
+    Route::get('/datacenter/json/{page}', 'Show\DataCenterController@roomData');
     Route::get('/dist/highDefense.html', 'Show\ProtectionController@gaofang');
     Route::get('/cabinet-rent/{page}', 'Show\CabinetRentController@index');
+    Route::get('/bandwidth-rent/{page}', 'Show\BandwidthRentController@index');
+    Route::get('/activity', 'Show\LatestActivityController@index');
 });
 
 /**

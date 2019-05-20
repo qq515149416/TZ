@@ -30,7 +30,7 @@ class ProtectionController extends Controller
         ];
         switch ($page) {
             case 'index':
-                return view("http/protection",[
+                return view("http/protection/protection",[
                     "tabs" => $tabs
                 ]);
                 break;
@@ -44,12 +44,12 @@ class ProtectionController extends Controller
                 return redirect()->action('Show\ProtectionController@gaofang');
                 break;
             case 'high-defense-cdn':
-                return view("http/highDefenseCdn",[
+                return view("http/protection/highDefenseCdn",[
                     "tabs" => $tabs
                 ]);
                 break;
             case 'c-shield':
-                return view("http/cShield",[
+                return view("http/protection/cShield",[
                     "tabs" => $tabs
                 ]);
                 break;
@@ -78,7 +78,7 @@ class ProtectionController extends Controller
         $model = new PackageModel();
 
 		$list = $model->showPackage();
-        return view("http/highDefenseIp",[
+        return view("http/protection/highDefenseIp",[
             "data" => $list['data'],
             "tabs" => $tabs
         ]);

@@ -193,3 +193,15 @@ function time_calculation($date,$duration = 1,$time_unit = 'month'){
  	
     return $end_date;
 }
+
+/**
+ * 创建单号
+ * @return string 返回生成的单号
+ * 说明:重复率:百万低于1%(数据可能存在一定误差),位数:16位,
+ * 返回后检验是否存在此号,如有重新调用此方法重新生成单号
+ * 格式:日期(年月日)+微秒数第3位开始截6个+10-99的随机数
+ */
+function create_number(){
+	$number = date('Ymd',time()).substr(microtime(),2,6).mt_rand(10, 99);
+	return $number;
+}

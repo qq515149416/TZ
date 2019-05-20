@@ -100,7 +100,7 @@ class WorkOrderModel extends Model
             return $return;
         }
 		// 工单号的生成
-		$worknumber = mt_rand(71,99).date("Ymd",time()).substr(time(),8,2);
+		$worknumber = create_number();
 		$insert_data['work_order_number'] = $worknumber;//工单号
 		$insert_data['customer_id'] = Auth::user()->id;//客户id,方便对应客户查看对应业务的工单
 		$insert_data['clerk_id'] = $business->sales_id;//业务员id,方便业务员查看自己客户的工单

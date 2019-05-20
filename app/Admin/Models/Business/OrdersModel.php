@@ -117,7 +117,7 @@ class OrdersModel extends Model
 					->whereBetween('tz_orders.remove_status',[0,3])
                     ->whereNull('tz_orders.deleted_at')
 					->orderBy('tz_orders.created_at','desc')
-					->select('tz_orders.id','tz_orders.order_sn','tz_orders.customer_id','tz_orders.business_sn','tz_orders.business_id','tz_orders.resource_type','tz_orders.order_type','tz_orders.resource','tz_orders.price','tz_orders.duration','tz_orders.payable_money','tz_orders.end_time','tz_orders.serial_number','tz_orders.pay_time','tz_orders.order_status','tz_orders.order_note','tz_orders.created_at','tz_orders_flow.before_money','tz_orders_flow.after_money','tz_orders.remove_status')
+					->select('tz_orders.id','tz_orders.order_sn','tz_orders.customer_id','tz_orders.business_sn','tz_orders.business_id','tz_orders.resource_type','tz_orders.order_type','tz_orders.resource','tz_orders.price','tz_orders.duration','tz_orders.machine_sn','tz_orders.payable_money','tz_orders.end_time','tz_orders.serial_number','tz_orders.pay_time','tz_orders.order_status','tz_orders.order_note','tz_orders.created_at','tz_orders_flow.before_money','tz_orders_flow.after_money','tz_orders.remove_status')
 					->get();
 
 		if(!$result->isEmpty()){
@@ -235,7 +235,7 @@ class OrdersModel extends Model
 		$insert_data['end_time'] = $end_time;
 		$resource_id = isset($insert_data['resource_id'])?$insert_data['resource_id']:mt_rand(1000,9999);
 		unset($insert_data['resource_id']);
-		$order_sn =$this->ordersn($resource_id,$insert_data['resource_type']);
+		$order_sn =$this->ordersn();
 		$insert_data['order_sn'] = $order_sn;
 		if($insert_data['resource_type'] == 8){//带宽的时候生成专属的带宽序号
 			$insert_data['machine_sn'] = 'BW'.date("Ymd",time()).substr(time(),8,2).chr(mt_rand(65,90));
@@ -244,9 +244,15 @@ class OrdersModel extends Model
 		}
 		$insert_data['order_type'] = 1;
 		$insert_data['payable_money'] = bcmul((string)$insert_data['price'],(string)$insert_data['duration'],2);//计算价格
-		$sales_id = Admin::user()->id;
-		$insert_data['business_id'] = $sales_id;
-		$insert_data['business_name'] = Admin::user()->name?Admin::user()->name:Admin::user()->username;
+		$client = DB::table('tz_users')->where(['id'=>$insert_data['customer_id'],'status'=>2])->select('id','name','email','salesman_id')->first();
+        if(!$client){
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg']  = '客户不存在或账号未验证/异常,请确认后再创建资源订单!';
+            return $return;
+        }
+		$insert_data['business_id'] = $client->salesman_id;
+		$insert_data['business_name'] = DB::table('admin_users')->where(['id'=>$client->salesman_id])->value('name');
 		$insert_data['created_at'] = date('Y-m-d H:i:s',time());
 		DB::beginTransaction();//开启事务处理
 		$row = DB::table('tz_orders')->insertGetId($insert_data);
@@ -652,7 +658,7 @@ class OrdersModel extends Model
 			$length = bcadd($business->length,$renew['length'],0);
 			$order['end_time'] = $endding_time;//订单到期时间
 			$order['duration'] = $renew['length'];//订单时长
-			$order['order_sn'] = $this->orderSn($business->id,$business->business_type);//订单关联业务
+			$order['order_sn'] = $this->ordersn();//订单关联业务
 			$order['order_number'] = $business->order_number;
 			$order['customer_name'] = $business->client_name;
 			$order['business_name'] = Admin::user()->name?Admin::user()->name:Admin::user()->username;
@@ -690,7 +696,7 @@ class OrdersModel extends Model
                     $end_time = time_calculation($order_result->end_time,$renew['length'],'month');
                     $order['end_time'] = $end_time;
                     $order['duration'] = $renew['length'];//订单时长
-                    $order['order_sn'] = $this->orderSn($order_result->id,$order_result->resource_type);//订单关联业务
+                    $order['order_sn'] = $this->ordersn();//订单关联业务
                     $order['order_number'] = $value;
                     $order['customer_name'] = $order_result->customer_name;
                     $order['business_name'] = Admin::user()->name?Admin::user()->name:Admin::user()->username;
@@ -955,16 +961,17 @@ class OrdersModel extends Model
      * @return [type] [description]
      */
     public function ordersn($resource_id=100,$resource_type=1){
-    	$time = bcadd(time(),$resource_id,0);
-        $order_sn = mt_rand(4, 6) . date("Ymd", time()) . substr($time, 6, 4) . $resource_id .mt_rand(1, 3).'1';
+    	// $time = bcadd(time(),$resource_id,0);
+     //    $order_sn = mt_rand(4, 6) . date("Ymd", time()) . substr($time, 6, 4) . $resource_id .mt_rand(1, 3).'1';
+    	$order_sn = create_number();//调用创建单号的公共函数
         // $order_sn = mt_rand(4,6).date('YmdHis').$time.mt_rand(10,99).'1'.$resource_type;
         $order = DB::table('tz_orders')->where('order_sn',$order_sn)->select('order_sn','machine_sn')->first();
         $redis = Redis::connection('orders');
         if(!empty($order)){
-            $this->ordersn($resource_id,$resource_type);
+            $this->ordersn();
         }
         if($redis->exists('O'.$order_sn) != 0){
-        	$this->ordersn($resource_id,$resource_type);
+        	$this->ordersn();
         }
         return $order_sn;
     }
@@ -1002,7 +1009,7 @@ class OrdersModel extends Model
 		if(!isset($type)){
 			$type = mt_rand(11,20);
 		}
-		$order_sn = 'R'.$this->ordersn($id,$type);
+		$order_sn = 'R'.$this->ordersn();
 		$redis = Redis::connection('orders');
 		if($redis->exists($order_sn) != 0  || $redis->exists('M'.$order_sn) != 0 || $redis->exists('C'.$order_sn) != 0){
 			$this->redisPrimaryKey($id,$type);
@@ -1405,121 +1412,164 @@ class OrdersModel extends Model
 		return $return;
 	}
 
-	/**
-	 * 转换续费订单的操作
-	 * @param  [type] $tran [description]
-	 * @return [type]       [description]
-	 */
-	public function tranOrders($tran){
-		if(!$tran){
-			$return['data'] = '';
-			$return['code'] = 0;
-			$return['msg']  = '无法获取该业务下的所有资源信息';
-			return $return;
-		}
-		$tran['order_type'] = 1;
-		//查找对应业务的所有新购订单
-		$all = $this->where($tran)->whereBetween('order_status',[1,3])->whereBetween('remove_status',[0,3])->get(['id','order_sn','duration','order_type','order_status','resource_type','machine_sn','resource','price','end_time','remove_status']);
-		if(empty($all)){
-			$return['data'] = '';
-			$return['code'] = 0;
-			$return['msg']  = '该业务下暂无相关订单,请核实';
-			return $return;
-		}
-		DB::beginTransaction();//开启事务
-		$duration = [];//接收相关的订单id
-		foreach($all as $key=>$value){
-			//统计所有有效订单的总时长
-			$length = $this->where(['business_sn'=>$tran['business_sn'],'machine_sn'=>$value['machine_sn']])->whereBetween('order_status',[1,3])->whereBetween('remove_status',[0,3])->sum('duration');
-			//获取对应业务下的所有对应资源的订单id(要保留的订单id作为订单集合数组的键)
-			$ids = $this->where(['business_sn'=>$tran['business_sn'],'machine_sn'=>$value['machine_sn']])->whereBetween('order_status',[1,3])->whereBetween('remove_status',[0,3])->whereNotIn('id',[$value['id']])->get(['id'])->toArray();
-			if(!empty($ids)){
-				$duration[$value['id']] = $ids;
-			}
-			//获取最近的到期时间
-			$end_time = $this->where(['business_sn'=>$tran['business_sn'],'machine_sn'=>$value['machine_sn']])->whereBetween('order_status',[1,3])->whereBetween('remove_status',[0,3])->orderBy('end_time','desc')->value('end_time');
-			if($length != $value['duration'] || $end_time != $value['end_time'] ){//当到期时间/时长跟所查找的订单中的任一不一致时进行更新操作
-				$order = DB::table('tz_orders')->where(['id'=>$value['id']])->update(['end_time'=>$end_time,'duration'=>$length,'order_status'=>1]);
-				if($order == 0){//更新操作失败直接返回
-					DB::rollBack();
-					$return['data'] = '';
-					$return['code'] = 0;
-					$return['msg']  = $value['order_sn'].'订单更新失败';
-					return $return;
-				}
-			}
-		}
+	// /**
+	//  * 转换续费订单的操作
+	//  * @param  [type] $tran [description]
+	//  * @return [type]       [description]
+	//  */
+	// public function tranOrders($tran){
+	// 	// if(!$tran){
+	// 	// 	$return['data'] = '';
+	// 	// 	$return['code'] = 0;
+	// 	// 	$return['msg']  = '无法获取该业务下的所有资源信息';
+	// 	// 	return $return;
+	// 	// }
+	// 	// $tran['order_type'] = 1;
+	// 	// //查找对应业务的所有新购订单
+	// 	// $all = $this->where($tran)->whereBetween('order_status',[1,3])->whereBetween('remove_status',[0,3])->get(['id','order_sn','duration','order_type','order_status','resource_type','machine_sn','resource','price','end_time','remove_status']);
+	// 	// if(empty($all)){
+	// 	// 	$return['data'] = '';
+	// 	// 	$return['code'] = 0;
+	// 	// 	$return['msg']  = '该业务下暂无相关订单,请核实';
+	// 	// 	return $return;
+	// 	// }
+	// 	// DB::beginTransaction();//开启事务
+	// 	// $duration = [];//接收相关的订单id
+	// 	// foreach($all as $key=>$value){
+	// 	// 	//统计所有有效订单的总时长
+	// 	// 	$length = $this->where(['business_sn'=>$tran['business_sn'],'machine_sn'=>$value['machine_sn']])->whereBetween('order_status',[1,3])->whereBetween('remove_status',[0,3])->sum('duration');
+	// 	// 	//获取对应业务下的所有对应资源的订单id(要保留的订单id作为订单集合数组的键)
+	// 	// 	$ids = $this->where(['business_sn'=>$tran['business_sn'],'machine_sn'=>$value['machine_sn']])->whereBetween('order_status',[1,3])->whereBetween('remove_status',[0,3])->whereNotIn('id',[$value['id']])->get(['id'])->toArray();
+	// 	// 	if(!empty($ids)){
+	// 	// 		$duration[$value['id']] = $ids;
+	// 	// 	}
+	// 	// 	//获取最近的到期时间
+	// 	// 	$end_time = $this->where(['business_sn'=>$tran['business_sn'],'machine_sn'=>$value['machine_sn']])->whereBetween('order_status',[1,3])->whereBetween('remove_status',[0,3])->orderBy('end_time','desc')->value('end_time');
+	// 	// 	if($length != $value['duration'] || $end_time != $value['end_time'] ){//当到期时间/时长跟所查找的订单中的任一不一致时进行更新操作
+	// 	// 		$order = DB::table('tz_orders')->where(['id'=>$value['id']])->update(['end_time'=>$end_time,'duration'=>$length,'order_status'=>1]);
+	// 	// 		if($order == 0){//更新操作失败直接返回
+	// 	// 			DB::rollBack();
+	// 	// 			$return['data'] = '';
+	// 	// 			$return['code'] = 0;
+	// 	// 			$return['msg']  = $value['order_sn'].'订单更新失败';
+	// 	// 			return $return;
+	// 	// 		}
+	// 	// 	}
+	// 	// }
 
-		if(empty($duration)){
-			DB::rollBack();
-			$return['data'] = '';
-			$return['code'] = 0;
-			$return['msg']  = $tran['business_sn'].'下的订单集合不存在,请核查';
-			return $return;
-		}
+	// 	// if(empty($duration)){
+	// 	// 	DB::rollBack();
+	// 	// 	$return['data'] = '';
+	// 	// 	$return['code'] = 0;
+	// 	// 	$return['msg']  = $tran['business_sn'].'下的订单集合不存在,请核查';
+	// 	// 	return $return;
+	// 	// }
 
-		foreach ($duration as $key => $value) {//进行订单集合的进一步获取，变为一维数组
-			$id[$key] = [];//新数组接收订单集合
-			foreach($value as $v_k=>$v){
-				if($v['id'] != $key){//订单id与要保留的id不一致进行数组的更新
-					array_push($id[$key],$v['id']);
-				}
-			}
-		}
-		//新的订单集合为空
-		if(empty($id)){
-			DB::rollBack();
-			$return['data'] = '';
-			$return['code'] = 0;
-			$return['msg']  = $tran['business_sn'].'下的订单集合不存在,请核查！';
-			return $return;
-		}
-		//查找对应的有效支付流水
-		$data = DB::table('tz_orders_flow')->where(['business_number'=>$tran['business_sn']])->whereNotNull('business_number')->whereNotNull('order_id')->select('id')->get();
-		if(empty($data)){//支付流水没找到
-			DB::rollBack();
-			$return['data'] = '';
-			$return['code'] = 0;
-			$return['msg']  = $tran['business_sn'].'下的支付流水不存在,请进一步确认';
-			return $return;
-		}
-		//进行支付流失的order_id字段的更新
-		foreach($data as $key=>$value){
-			foreach($id as $ky=>$val){
-				$old_id = DB::table('tz_orders_flow')->where(['business_number'=>$tran['business_sn'],'id'=>$value->id])->whereNotNull('business_number')->whereNotNull('order_id')->value('order_id');
-				if(!empty($old_id)){
-					$order_id = str_replace($val,$ky,$old_id);
-					if($order_id != $old_id){
-						$update = DB::table('tz_orders_flow')->where(['business_number'=>$tran['business_sn'],'id'=>$value->id])->update(['order_id'=>$order_id]);
-						if($update == 0){
-							DB::rollBack();
-							$return['data'] = '';
-							$return['code'] = 0;
-							$return['msg']  = $tran['business_sn'].'下的支付流水更新失败,请核查！';
-							return $return;
-						}
-					}
+	// 	// foreach ($duration as $key => $value) {//进行订单集合的进一步获取，变为一维数组
+	// 	// 	$id[$key] = [];//新数组接收订单集合
+	// 	// 	foreach($value as $v_k=>$v){
+	// 	// 		if($v['id'] != $key){//订单id与要保留的id不一致进行数组的更新
+	// 	// 			array_push($id[$key],$v['id']);
+	// 	// 		}
+	// 	// 	}
+	// 	// }
+	// 	// //新的订单集合为空
+	// 	// if(empty($id)){
+	// 	// 	DB::rollBack();
+	// 	// 	$return['data'] = '';
+	// 	// 	$return['code'] = 0;
+	// 	// 	$return['msg']  = $tran['business_sn'].'下的订单集合不存在,请核查！';
+	// 	// 	return $return;
+	// 	// }
+	// 	// //查找对应的有效支付流水
+	// 	// $data = DB::table('tz_orders_flow')->where(['business_number'=>$tran['business_sn']])->whereNotNull('business_number')->whereNotNull('order_id')->select('id')->get();
+	// 	// if(empty($data)){//支付流水没找到
+	// 	// 	DB::rollBack();
+	// 	// 	$return['data'] = '';
+	// 	// 	$return['code'] = 0;
+	// 	// 	$return['msg']  = $tran['business_sn'].'下的支付流水不存在,请进一步确认';
+	// 	// 	return $return;
+	// 	// }
+	// 	// //进行支付流失的order_id字段的更新
+	// 	// foreach($data as $key=>$value){
+	// 	// 	foreach($id as $ky=>$val){
+	// 	// 		$old_id = DB::table('tz_orders_flow')->where(['business_number'=>$tran['business_sn'],'id'=>$value->id])->whereNotNull('business_number')->whereNotNull('order_id')->value('order_id');
+	// 	// 		if(!empty($old_id)){
+	// 	// 			$order_id = str_replace($val,$ky,$old_id);
+	// 	// 			if($order_id != $old_id){
+	// 	// 				$update = DB::table('tz_orders_flow')->where(['business_number'=>$tran['business_sn'],'id'=>$value->id])->update(['order_id'=>$order_id]);
+	// 	// 				if($update == 0){
+	// 	// 					DB::rollBack();
+	// 	// 					$return['data'] = '';
+	// 	// 					$return['code'] = 0;
+	// 	// 					$return['msg']  = $tran['business_sn'].'下的支付流水更新失败,请核查！';
+	// 	// 					return $return;
+	// 	// 				}
+	// 	// 			}
 
-				}
-			}
-		}
-		foreach($id as $key=>$vl){
-			$delete = DB::table('tz_orders')->where(['business_sn'=>$tran['business_sn'],'id'=>$vl])->update(['deleted_at'=>date('Y-m-d H:i:s')]);
-			if($delete == 0){
-				DB::rollBack();
-				$return['data'] = '';
-				$return['code'] = 0;
-				$return['msg']  = 'id:'.$val.'的订单删除失败,请核对';
-				return $return;
-			}
-		}
-		DB::commit();
-		$return['data'] = 1;
-		$return['code'] = 1;
-		$return['msg']  = $tran['business_sn'].'下的订单和支付流水更新成功';
-		return $return;
+	// 	// 		}
+	// 	// 	}
+	// 	// }
+	// 	// foreach($id as $key=>$vl){
+	// 	// 	$delete = DB::table('tz_orders')->where(['business_sn'=>$tran['business_sn'],'id'=>$vl])->update(['deleted_at'=>date('Y-m-d H:i:s')]);
+	// 	// 	if($delete == 0){
+	// 	// 		DB::rollBack();
+	// 	// 		$return['data'] = '';
+	// 	// 		$return['code'] = 0;
+	// 	// 		$return['msg']  = 'id:'.$val.'的订单删除失败,请核对';
+	// 	// 		return $return;
+	// 	// 	}
+	// 	// }
+	// 	// DB::commit();
+	// 	// $return['data'] = 1;
+	// 	// $return['code'] = 1;
+	// 	// $return['msg']  = $tran['business_sn'].'下的订单和支付流水更新成功';
+	// 	// return $return;
+	// 	$business = DB::table('tz_business')->get(['business_number','id']);
+	// 	// dd($business);
+	// 	DB::beginTransaction();
+	// 	foreach($business as $key => $value){
+	// 		$num = substr($value->business_number,1,8);
+	// 		$number = $num.substr(microtime(),2,6).mt_rand(10, 99);
+	// 		$cpu = DB::table('idc_cpu')->where(['service_num'=>$value->business_number])->update(['service_num'=>$number]);
+	// 		$harddisk = DB::table('idc_harddisk')->where(['service_num'=>$value->business_number])->update(['service_num'=>$number]);
+	// 		$ip = DB::table('idc_ips')->where(['own_business'=>$value->business_number])->update(['own_business'=>$number]);
+	// 		$machine = DB::table('idc_machine')->where(['own_business'=>$value->business_number])->update(['own_business'=>$number]);
+	// 		$memory = DB::table('idc_memory')->where(['service_num'=>$value->business_number])->update(['service_num'=>$number]);
+	// 		$orders = DB::table('tz_orders')->where(['business_sn'=>$value->business_number])->update(['business_sn'=>$number]);
+	// 		$flow = DB::table('tz_orders_flow')->where(['business_number'=>$value->business_number])->update(['business_number'=>$number]);
+	// 		$work = DB::table('tz_work_order')->where(['business_num'=>$value->business_number])->update(['business_num'=>$number]);
+	// 		$b = DB::table('tz_business')->where(['business_number'=>$value->business_number])->update(['business_number'=>$number]);
+	// 		if($b ==0){
+	// 			DB::rollBack();
+	// 			$return['data'] = '';
+	// 			$return['code'] = 0;
+	// 			$return['msg']  = '业务号转换失败';
+	// 			return $return;
+	// 		}
+	// 	}
+	// 	$order = DB::table('tz_orders')->where('resource_type','<',11)->get(['order_sn','resource_type']);
+	// 	foreach($order as $key => $value){
+	// 		$o = substr($value->order_sn,1,8).substr(microtime(),2,6).mt_rand(10, 99);
+	// 		if($value->resource_type < 4){
+	// 			$bu = DB::table('tz_business')->where(['order_number'=>$value->order_sn])->update(['order_number'=>$o]);
+	// 		}
+	// 		$oo = DB::table('tz_orders')->where(['order_sn'=>$value->order_sn])->update(['order_sn'=>$o]);
+	// 		if($oo = 0){
+	// 			DB::rollBack();
+	// 			$return['data'] = '';
+	// 			$return['code'] = 0;
+	// 			$return['msg']  = '订单号转换失败';
+	// 			return $return;
+	// 		}
+	// 	}
+	// 	DB::commit();
+	// 	$return['data'] = 1;
+	// 	$return['code'] = 1;
+	// 	$return['msg']  = '更新成功';
+	// 	return $return;
 
-	}
+	// }
 
 	/**
 	 * 信安代为录入相关的资源数据
@@ -1544,7 +1594,8 @@ class OrdersModel extends Model
         if(empty($client)){//客户信息不存在/拉黑
             $return['data'] = '';
             $return['code'] = 0;
-            $return['msg']  = '(#103)客户不存在/客户不属于业务员:'.$sales->name?$sales->name:$sales->username.'/账号未验证/异常,请确认后再创建业务!';
+			$name = $sales->name?$sales->name:$sales->username;
+            $return['msg']  = '(#103)客户不存在/客户不属于业务员:'.$name.'/账号未验证/异常,请确认后再创建业务!';
             return $return;
         }
         $business = DB::table('tz_business')->where(['id'=>$insert_data['business_id'],'client_id'=>$insert_data['customer_id'],'sales_id'=>$insert_data['sales_id'],'remove_status'=>0])->whereBetween('business_status',[0,3])->select('business_number','id','resource_detail')->first();
@@ -1632,7 +1683,7 @@ class OrdersModel extends Model
 		}
 		$insert['business_sn'] = $business->business_number;
 		$resource_id = isset($insert_data['resource_id'])?$insert_data['resource_id']:mt_rand(1000,9999);
-		$order_sn =$this->ordersn($resource_id,$insert_data['resource_type']);
+		$order_sn =$this->ordersn();
 		$insert['order_sn'] = $order_sn;
 		$insert['customer_id'] = $insert_data['customer_id'];
 		$insert['customer_name'] =  $client->name?$client->name:$client->email;
@@ -1755,6 +1806,26 @@ class OrdersModel extends Model
 		$redis = Redis::connection('orders');
 		$length = $redis->llen($parimary_key);
 		return $length;
+	}
+
+	public function getResource($get){
+		if(empty($get)){
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#101)条件不足,无法进行相关操作';
+			return $return;
+		}
+		$order = DB::table('tz_orders');
+
+	}
+
+	public function changeResource($change){
+		if(empty($change)){
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#101)条件不足,无法进行相关操作';
+			return $return;
+		}
 	}
 
 

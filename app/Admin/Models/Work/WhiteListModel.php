@@ -138,7 +138,7 @@ class WhiteListModel extends Model
 			];
 		}
 		// 创建白名单编号
-		$whitenumber = mt_rand(41,70).date("Ymd",time()).substr(time(),8,2);
+		$whitenumber = create_number();
 		$insertdata['white_number'] 	= $whitenumber;
 		// 当前登陆用户的信息，作为提交者信息
 		$check = $this->checkIP($insertdata['white_ip']);

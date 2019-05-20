@@ -129,7 +129,232 @@
 }
 
 .product {
+    .container {
+        width: 1200px;
+        padding: 0;
+    }
     background-color: #ffffff;
+    padding-top: 70px - 6px;
+    h2 {
+        color: #333333;
+        font-size: 26px;
+        margin: 0;
+        margin-bottom: 21px;
+        font-family: "微软雅黑";
+        text-align: center;
+    }
+    p {
+        color: #666666;
+        font-size: 14px;
+        text-align: center;
+        margin-bottom: 37px;
+    }
+    .tab-pane {
+        // height: 220px;
+        padding: 30px 0;
+        background-color: #e6eaf6;
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            li {
+                &:last-of-type {
+                    margin-left: 20px;
+                }
+                float: left;
+                // height: 161px;
+                width: 580px;
+                background-color: #fff;
+                padding-left: 33px;
+                padding-top: 33px;
+                padding-bottom: 18px;
+                border-radius: 4px;
+                box-sizing: border-box;
+                .price {
+                    padding-top: 22px;
+                    padding-right: 20px;
+                    a {
+                        display: inline-block;
+                        height: 30px;
+                        // width: 80px;
+                        background-color: #e6eaf6;
+                        border-radius: 15px;
+                        font-size: 14px;
+                        color: #3251ed;
+                        text-align: left;
+                        padding: 0 10px;
+                        padding-right: 25px;
+                        line-height: 30px;
+                        text-decoration: none;
+                        position: relative;
+                        &::after {
+                            content: "";
+                            position: absolute;
+                            right: -30px / 2px + 6px;
+                            top: 0;
+                            width: 30px;
+                            height: 30px;
+                            background: url(../images/product/productBuy.png) no-repeat center center;
+                            background-color: #3251ed;
+                            border-radius: 100%;
+                        }
+                    }
+                }
+                .config {
+                    span {
+                        color: #444444;
+                        font-size: 20px;
+                    }
+                    span.key {
+                        background: url(../images/product/key.png) no-repeat;
+                        background-size: 100% 100%;
+                        padding: 0 10px;
+                        font-size: 14px;
+                        color: #3251ed;
+                        position: relative;
+                        top: -3px;
+                    }
+                }
+                .descripts {
+                    margin-top: 27px;
+                    span {
+                        color: #aeb6cf;
+                        font-size: 14px;
+                    }
+                }
+                .config,.descripts {
+                    display: flex;
+                    >div {
+                        flex: 1;
+                    }
+                }
+            }
+        }
+    }
+    .nav-tabs {
+        display: flex;
+        border: none;
+        li {
+            flex: 1;
+            &:nth-of-type(1) {
+                a {
+                    span {
+                        background: url(../images/product/productIcon1.png) no-repeat;
+                    }
+                    &:hover,
+                    &:focus {
+                        span {
+                            background: url(../images/product/productIcon1_active.png) no-repeat;
+                        }
+                    }
+                }
+                &.active {
+                    a {
+                        span {
+                            background: url(../images/product/productIcon1_active.png) no-repeat;
+                        }
+                    }
+                }
+            }
+            &:nth-of-type(2) {
+                a {
+                    span {
+                        background: url(../images/product/productIcon2.png) no-repeat;
+                    }
+                    &:hover,
+                    &:focus {
+                        span {
+                            background: url(../images/product/productIcon2_active.png) no-repeat;
+                        }
+                    }
+                }
+                &.active {
+                    a {
+                        span {
+                            background: url(../images/product/productIcon2_active.png) no-repeat;
+                        }
+                    }
+                }
+            }
+            &:nth-of-type(3) {
+                a {
+                    span {
+                        background: url(../images/product/productIcon3.png) no-repeat;
+                    }
+                    &:hover,
+                    &:focus {
+                        span {
+                            background: url(../images/product/productIcon3_active.png) no-repeat;
+                        }
+                    }
+                }
+                &.active {
+                    a {
+                        span {
+                            background: url(../images/product/productIcon3_active.png) no-repeat;
+                        }
+                    }
+                }
+            }
+            &.active {
+                a {
+                    border-bottom: 3px solid #3251ed;
+                    position: relative;
+                    color: #3251ed;
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        width: 5px;
+                        height: 5px;
+                        border: 5px solid transparent;
+                        border-bottom: 5px solid #3251ed;
+                        bottom: 0;
+                        left: 50%;
+                        transform: translateX(-50%);
+
+                    }
+                }
+            }
+            a {
+                padding: 0;
+                display: block;
+                text-align: center;
+                border: none;
+                color: #5e6d81;
+                font-size: 16px;
+                >div {
+                    margin-bottom: 33px - 15px - 4px;
+                }
+                span {
+                    display: inline-block;
+                    width: 60px;
+                    height: 66px;
+                }
+                padding-bottom: 30px;
+                border-bottom: 3px solid transparent;
+                &:hover,
+                &:focus {
+                    border: none;
+                    background-color: transparent;
+                    border-bottom: 3px solid #3251ed;
+                    position: relative;
+                    color: #3251ed;
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        width: 5px;
+                        height: 5px;
+                        border: 5px solid transparent;
+                        border-bottom: 5px solid #3251ed;
+                        bottom: 0;
+                        left: 50%;
+                        transform: translateX(-50%);
+
+                    }
+                }
+            }
+        }
+    }
 }
 
 .banner {
@@ -1525,22 +1750,21 @@
 @import "./promotion.less";
 @import "./aboutus.less";
 @import "./serverRent.less";
-@import "./program.less";
+@import "./solution.less";
 @import "./hosting.less";
-@import "./protection.less";
-@import "./highDefenseCdn.less";
-@import "./highDefenseIp.less";
-@import "./cShield.less";
+@import "./protection/protection.less";
+@import "./protection/highDefenseCdn.less";
+@import "./protection/highDefenseIp.less";
+@import "./protection/cShield.less";
 @import "./gfPromotion.less";
 @import "./test.less";
-@import "./cdn.less";
+@import "./cdn/cdn.less";
+@import "./cdn/staticContentAcceleration.less";
+@import "./cdn/downloadDeliveryAcceleration.less";
+@import "./cdn/dynamicSiteAcceleration.less";
+@import "./cdn/vodAcceleration.less";
+@import "./cdn/liveAcceleration.less";
 @import "./datacenter.less";
-@import "./staticContentAcceleration.less";
-@import "./downloadDeliveryAcceleration.less";
-@import "./dynamicSiteAcceleration.less";
-@import "./vodAcceleration.less";
-@import "./liveAcceleration.less";
 @import "./cabinetRent/common.less";
-@import "./cabinetRent/huizhou.less";
-@import "./cabinetRent/hengyang.less";
-@import "./cabinetRent/xian.less";
+@import "./bandwidthRent/common.less";
+@import "./latestActivity.less";

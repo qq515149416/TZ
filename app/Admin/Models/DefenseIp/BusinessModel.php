@@ -23,7 +23,7 @@ class BusinessModel extends Model
 	protected $primaryKey = 'id'; //主键
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
-	protected $fillable = ['business_number', 'user_id','package_id','ip_id','target_ip','price','status','end_at','created_at'];
+	protected $fillable = ['business_number', 'user_id','package_id','ip_id','target_ip','price','status','end_at','created_at','extra_protection'];
 	protected $time_limit = 60;//两次购买的时间限制
 
 	/**

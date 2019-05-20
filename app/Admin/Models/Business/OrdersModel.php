@@ -10,6 +10,7 @@ use App\Admin\Models\Idc\Ips;
 use App\Admin\Models\Idc\Cpu;
 use App\Admin\Models\Idc\Harddisk;
 use App\Admin\Models\Idc\Memory;
+use App\Admin\Models\DefenseIp\OverlayBelongModel;
 use Illuminate\Support\Carbon;//使用该包做到期时间的计算
 use Encore\Admin\Facades\Admin;
 use Illuminate\Support\Facades\Session;
@@ -120,7 +121,7 @@ class OrdersModel extends Model
 					->get();
 
 		if(!$result->isEmpty()){
-			$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn'];
+			$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn',11=>'高防IP',12=>'流量叠加包'];
 			$order_type = [1=>'新购',2=>'续费'];
 			$order_status = [0=>'待支付',1=>'已支付',2=>'财务确认',3=>'订单完成',4=>'到期',5=>'取消',6=>'申请退款',7=>'正在支付',8=>'退款完成'];
 			$remove_status = [0 => '正常使用', 1 => '下架申请中', 2 => '机房处理中', 3 => '清空下架中', 4 => '下架完成'];
@@ -595,7 +596,7 @@ class OrdersModel extends Model
 		// dd($resource);
 		if(!empty($resource)){
 			foreach($resource as $key=>$value){
-				$resource_type = [ '1' => '租用主机' , '2' => '托管主机' , '3' => '租用机柜' , '4' => 'IP' , '5' => 'CPU' , '6' => '硬盘' , '7' => '内存' , '8' => '带宽' , '9' => '防护' , '10' => 'cdn','11'=>'高防IP'];
+				$resource_type = [ '1' => '租用主机' , '2' => '托管主机' , '3' => '租用机柜' , '4' => 'IP' , '5' => 'CPU' , '6' => '硬盘' , '7' => '内存' , '8' => '带宽' , '9' => '防护' , '10' => 'cdn','11'=>'高防IP','12'=>'流量叠加包'];
 				// $resource[$key]['resourcetype'] = $resource_type[$value['resource_type']];
 			}
 			$orders = ['IP'=>$this->filter($resource,4),'cpu'=>$this->filter($resource,5),'harddisk'=>$this->filter($resource,6),'memory'=>$this->filter($resource,7),'bandwidth'=>$this->filter($resource,8),'protected'=>$this->filter($resource,9),'cdn'=>$this->filter($resource,10)];
@@ -624,7 +625,7 @@ class OrdersModel extends Model
 		}
 		$order_str = '';//用于记录创建的续费订单的订单号
 		$primary_key = '';
-		$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn'];
+		$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn',11=>'高防IP',12=>'流量叠加包'];
 		if(isset($renew['business_number'])){//传递了业务编号的进行业务查找和续费
 			$renew_order = [];//用于存储新增的订单的id，用于存储进redis，方便后续调用订单
 			$business_where = [
@@ -1381,6 +1382,28 @@ class OrdersModel extends Model
 					return $return;
 				}
 				$return['data'] = ['end' => $end];
+			}
+		}elseif ($row['resource_type'] == 12) { //如果订单是叠加包的话
+			//生成归属信息
+
+			$belong = [
+				'overlay_id'	=> $row['machine_sn'],
+				'user_id'	=> $row['customer_id'],
+				'buy_time'	=> $pay_time,
+				'order_sn'	=> $row['order_sn'],
+				'status'		=> 0
+			];
+			
+			$belong_model = new OverlayBelongModel();
+			//duration记录购买数量,买了多少个就生成多少个
+			for ($i=0; $i < $row['duration']; $i++) { 
+				if(!$belong_model->create($belong)){
+					return [
+						'data'	=> [],
+						'msg'	=> '用户增加所属叠加包失败',
+						'code'	=> 3,
+					];
+				}
 			}
 		}
 

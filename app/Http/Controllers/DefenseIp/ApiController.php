@@ -111,7 +111,23 @@ class ApiController extends Controller
         return $res;
     }
 
+      /**
+     * 设置ip的防御峰值
+     *
+     * @param $ip
+     * @param $protection_value
+     * @return mixed
+     */
+    public function setProtectionValue($ip, $protection_value)
+    {
 
+        $url = 'http://xa.tzidc.com/apivip.php?vip_ip='.$ip.'&vip_in_m='.$protection_value.'&radio=0&key=F7FD9KF87KD830927FJF8JDHF';
+   
+        $res = $this->executeCurl($url,null,'GET');
+  
+        return $res;
+    }
+    
 
 
 

@@ -433,6 +433,11 @@ Route::group([
         $router->get('changemarket','Business\BusinessController@changeMarket');
 
         $router->post('register', 'Business\CustomerController@registerClerk');//后台替客户注册账号
+
+        /**
+         * 更换资源相关
+         */
+        $router->get('getresource','Business\OrdersController@getResource');
     });
 
 
@@ -669,6 +674,23 @@ Route::group([
         $router->post('edit', 'News\PromotionController@edit');//编辑友情链接
         $router->post('del', 'News\PromotionController@del');//删除友情链接
     });
+
+    /**
+     * 叠加包
+     */
+    Route::group([
+        'prefix' => 'overlay',
+    ], function (Router $router) {
+        $router->get('show', 'DefenseIp\OverlayController@show');//展示叠加包资源
+        $router->get('insert', 'DefenseIp\OverlayController@insert');//添加叠加包资源
+        $router->get('edit', 'DefenseIp\OverlayController@edit');//编辑叠加包资源
+        $router->get('del', 'DefenseIp\OverlayController@del');//删除叠加包资源
+
+        $router->get('buyNowByAdmin', 'DefenseIp\OverlayController@buyNowByAdmin');//购买叠加包接口
+        $router->get('showBelong', 'DefenseIp\OverlayController@showBelong');//展示某客户所属叠加包接口
+        $router->get('useOverlayToDIP', 'DefenseIp\OverlayController@useOverlayToDIP');//将叠加包使用到高防ip接口
+    });
+
 
 });
 

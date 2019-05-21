@@ -10,6 +10,7 @@ use App\Admin\Models\Idc\Ips;
 use App\Admin\Models\Idc\Cpu;
 use App\Admin\Models\Idc\Harddisk;
 use App\Admin\Models\Idc\Memory;
+use App\Admin\Models\DefenseIp\OverlayBelongModel;
 use Illuminate\Support\Carbon;//使用该包做到期时间的计算
 use Encore\Admin\Facades\Admin;
 use Illuminate\Support\Facades\Session;
@@ -120,7 +121,7 @@ class OrdersModel extends Model
 					->get();
 
 		if(!$result->isEmpty()){
-			$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn'];
+			$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn',11=>'高防IP',12=>'流量叠加包'];
 			$order_type = [1=>'新购',2=>'续费'];
 			$order_status = [0=>'待支付',1=>'已支付',2=>'财务确认',3=>'订单完成',4=>'到期',5=>'取消',6=>'申请退款',7=>'正在支付',8=>'退款完成'];
 			$remove_status = [0 => '正常使用', 1 => '下架申请中', 2 => '机房处理中', 3 => '清空下架中', 4 => '下架完成'];
@@ -595,7 +596,7 @@ class OrdersModel extends Model
 		// dd($resource);
 		if(!empty($resource)){
 			foreach($resource as $key=>$value){
-				$resource_type = [ '1' => '租用主机' , '2' => '托管主机' , '3' => '租用机柜' , '4' => 'IP' , '5' => 'CPU' , '6' => '硬盘' , '7' => '内存' , '8' => '带宽' , '9' => '防护' , '10' => 'cdn','11'=>'高防IP'];
+				$resource_type = [ '1' => '租用主机' , '2' => '托管主机' , '3' => '租用机柜' , '4' => 'IP' , '5' => 'CPU' , '6' => '硬盘' , '7' => '内存' , '8' => '带宽' , '9' => '防护' , '10' => 'cdn','11'=>'高防IP','12'=>'流量叠加包'];
 				// $resource[$key]['resourcetype'] = $resource_type[$value['resource_type']];
 			}
 			$orders = ['IP'=>$this->filter($resource,4),'cpu'=>$this->filter($resource,5),'harddisk'=>$this->filter($resource,6),'memory'=>$this->filter($resource,7),'bandwidth'=>$this->filter($resource,8),'protected'=>$this->filter($resource,9),'cdn'=>$this->filter($resource,10)];
@@ -624,7 +625,7 @@ class OrdersModel extends Model
 		}
 		$order_str = '';//用于记录创建的续费订单的订单号
 		$primary_key = '';
-		$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn'];
+		$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn',11=>'高防IP',12=>'流量叠加包'];
 		if(isset($renew['business_number'])){//传递了业务编号的进行业务查找和续费
 			$renew_order = [];//用于存储新增的订单的id，用于存储进redis，方便后续调用订单
 			$business_where = [
@@ -1382,6 +1383,28 @@ class OrdersModel extends Model
 				}
 				$return['data'] = ['end' => $end];
 			}
+		}elseif ($row['resource_type'] == 12) { //如果订单是叠加包的话
+			//生成归属信息
+
+			$belong = [
+				'overlay_id'	=> $row['machine_sn'],
+				'user_id'	=> $row['customer_id'],
+				'buy_time'	=> $pay_time,
+				'order_sn'	=> $row['order_sn'],
+				'status'		=> 0
+			];
+			
+			$belong_model = new OverlayBelongModel();
+			//duration记录购买数量,买了多少个就生成多少个
+			for ($i=0; $i < $row['duration']; $i++) { 
+				if(!$belong_model->create($belong)){
+					return [
+						'data'	=> [],
+						'msg'	=> '用户增加所属叠加包失败',
+						'code'	=> 3,
+					];
+				}
+			}
 		}
 
 		$return['msg'] = '更新成功!!';
@@ -1783,6 +1806,135 @@ class OrdersModel extends Model
 		$redis = Redis::connection('orders');
 		$length = $redis->llen($parimary_key);
 		return $length;
+	}
+
+	/**
+	 * 获取更换的资源数据
+	 * @param  array $get --order_id订单id，--resource_type--资源类型 --machineroom机房,--ip_company运营商
+	 * @return [type]      [description]
+	 */
+	public function getResource($get){
+
+		if(empty($get)){
+
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#101)条件不足,无法进行相关操作';
+			return $return;
+		}
+		if(!isset($get['resource_type'])){
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#102)请确认数据无误';
+			return $return;
+		}
+		if(!isset($get['order_id'])){
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#103)请选择需要更换的资源';
+			return $return;
+		}
+		$order = DB::table('tz_orders')
+		           ->join('tz_business','tz_orders.business_sn','=','tz_business.business_number')
+		           ->where(['tz_orders.id'=>$get['order_id']])
+		           ->whereNull('tz_orders.deleted_at')
+		           ->whereBetween('tz_orders.remove_status',[0,3])
+		           ->select('tz_business.resource_detail','tz_orders.id','tz_orders.order_sn','tz_orders.machine_sn','tz_orders.resource','tz_orders.price','tz_orders.duration','tz_orders.end_time','tz_orders.resource_type')
+		           ->first();
+
+		if(!empty($order)){
+
+			$resource_detail = json_decode($order->resource_detail);
+			$machineroom = $resource_detail->machineroom_id;
+
+		} else {
+
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#104)请确认需要更换的资源无误';
+			return $return;
+
+		}
+		
+		if($order->resource_type > 3){//当资源类型不是机器/机柜时
+			
+			if($get['resource_type'] != $order->resource_type){//资源类型与订单的资源类型不一致
+				$return['data'] = [];
+				$return['code'] = 0;
+				$return['msg'] = '(#105)非法操作';
+				return $return;
+			}
+			
+		}
+		switch ($get['resource_type']) {
+			case 1://租用机器
+			case 2://托管机器
+				$machineroom = isset($get['machineroom'])?$get['machineroom']:$machineroom;
+				$resource = DB::table('idc_machine')
+							   ->join('idc_ips','idc_machine.ip_id','=','idc_ips.id')
+							   ->join('idc_machineroom','idc_machine.machineroom','=','idc_machineroom.id')
+							   ->join('idc_cabinet','idc_machine.cabinet','=','idc_cabinet.id')
+							   ->where(['business_type'=>$get['resource_type'],'used_status'=>0,'machine_status'=>0,'machineroom'=>$machineroom])
+							   ->get(['idc_machine.id','idc_machine.machine_num','idc_machine.cpu','idc_machine.memory','idc_machine.harddisk','idc_machine.cabinet','idc_machine.ip_id','idc_machine.machineroom','idc_machine.bandwidth','idc_machine.protect','idc_machine.loginname','idc_machine.loginpass','idc_machine.machine_type','idc_machineroom.id as machineroom_id','idc_machineroom.machine_room_name as machineroom_name','idc_cabinet.cabinet_id as cabinets','idc_ips.ip','idc_ips.ip_company']);
+				if(!$resource->isEmpty()){
+					$ip_company = [0=>'电信',1=>'移动',2=>'联通'];
+					foreach($resource as $resource_key => $resource_value){
+						$resource_value->ip_detail = $resource_value->ip.'('.$ip_company[$resource_value->ip_company].')';
+						unset($resource_value->ip_company);
+					}
+				}
+				break;
+			case 3://租用机柜
+				$resource = DB::table('idc_cabinet')
+							   ->join('idc_machineroom','idc_cabinet.machineroom_id','=','idc_machineroom.id')
+							   ->get(['idc_cabinet.id as cabinetid','cabinet_id','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
+				break;
+			case 4://IP
+				$ip_company = isset($get['ip_company'])?$get['ip_company']:0;
+				$resource = DB::table('idc_ips')->where(['ip_status'=>0,'ip_lock'=>0,'ip_comproom'=>$machineroom,'ip_company'=>$ip_company])->get(['id','ip','ip_company']);
+				break;
+			case 5://CPU
+				$resource = DB::table('idc_cpu')->where(['cpu_used'=>0,'room_id'=>$machineroom])->get(['id','cpu_number','cpu_param']);
+				break;
+			case 6://硬盘
+				$resource = DB::table('idc_harddisk')->where(['harddisk_used'=>0,'room_id'=>$machineroom])->get(['id','harddisk_number','harddisk_param']);
+				break;
+			case 7://内存
+				$resource = DB::table('idc_memory')->where(['memory_used'=>0,'room_id'=>$machineroom])->get(['id','memory_number','memory_param']);
+				break;
+			// case 8://带宽
+				
+			// 	break;
+			// case 9://防护
+				
+			// 	break;
+			// case 10://cdn
+				
+			// 	break;
+			// case 11://高防
+				
+			// 	break;
+		}
+		if($resource->isEmpty()){
+			$return['data'] = $resource;
+			$return['code'] = 0;
+			$return['msg'] = '无对应数据';
+			return $return;
+		} else {
+			$return['data'] = $resource;
+			$return['code'] = 1;
+			$return['msg'] = '资源数据获取成功';
+			return $return;
+		}
+	}
+
+	public function changeResource($change){
+		if(empty($change)){
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#101)条件不足,无法进行相关操作';
+			return $return;
+		}
 	}
 
 

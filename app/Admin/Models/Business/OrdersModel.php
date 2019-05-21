@@ -1935,6 +1935,60 @@ class OrdersModel extends Model
 			$return['msg'] = '(#101)条件不足,无法进行相关操作';
 			return $return;
 		}
+		if(!isset($change['order_id'])){
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#102)需要更换的资源无法确定';
+			return $return;
+		}
+		if(!isset($change['resource_type'])){
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#103)请确认你需要更换的资源种类';
+			return $return;
+		}
+		if(!isset($change['resource_id'])){
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#104)更换的资源无法确定';
+			return $return;
+		}
+		$order = DB::table('tz_orders')
+		           ->where(['id'=>$change['order_id']])
+		           ->whereNull('deleted_at')
+		           ->whereBetween('remove_status',[0,3])
+		           ->select('id','order_sn','machine_sn','resource','resource_type','business_sn','customer_id','business_id')
+		           ->first();
+		if(empty($order)){
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#105)请确认需要更换的资源无误';
+			return $return;
+		}
+		switch ($change['resource_type']) {
+			case 1:
+			case 2:
+				
+				break;
+			
+			case 3:
+				
+				break;
+			case 4:
+				
+				break;
+			case 5:
+				
+				break;
+			case 6:
+				
+				break;
+			case 7:
+				
+				break;
+		}
+		
+
 	}
 
 

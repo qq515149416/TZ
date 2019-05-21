@@ -1815,7 +1815,14 @@ class OrdersModel extends Model
 			$return['msg'] = '(#101)条件不足,无法进行相关操作';
 			return $return;
 		}
-		$order = DB::table('tz_orders');
+		$order = DB::table('tz_orders')
+		           ->join('tz_business','tz_orders.business_sn','=','tz_business.business_number')
+		           ->where(['id'=>$get['order_id']])
+		           ->whereNull('tz_orders.deleted_at')
+		           ->whereBetween('tz_orders.remove_status',[0,3])
+		           ->select('tz_business.resource_detail')
+		           ->first();
+		dd($order);
 
 	}
 

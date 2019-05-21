@@ -1968,23 +1968,34 @@ class OrdersModel extends Model
 		switch ($change['resource_type']) {
 			case 1:
 			case 2:
-				
+				$update = DB::table('idc_machine')
+				            ->where(['id'=>$change['resource_id'],'business_type'=>$get['resource_type'],'used_status'=>0,'machine_status'=>0])
+				            ->update(['used_status'=>1,'own_business'=>$order->business_sn]);
+
 				break;
 			
 			case 3:
-				
+				$update = 1;
 				break;
-			case 4:
-				
+			case 4://ip
+				$update = DB::table('idc_ips')
+							->where(['ip_status'=>0,'ip_lock'=>0,'id'=>$change['resource_id']])
+							->update(['ip_lock'=>1,'own_business'=>$order->business_sn]);
 				break;
-			case 5:
-				
+			case 5://cpu
+				$update = DB::table('idc_cpu')
+							->where(['cpu_used'=>0,'id'=>$change['resource_id']])
+							->update(['cpu_used'=>1,'service_num'=>$order->business_sn]);
 				break;
-			case 6:
-				
+			case 6://硬盘
+				$update = DB::table('idc_memory')
+							->where(['harddisk_used'=>0,'id'=>$change['resource_id']])
+							->update(['harddisk_used'=>1,'service_num'=>$order->business_sn]);
 				break;
-			case 7:
-				
+			case 7://内存
+				$update = DB::table('idc_memory')
+							->where(['memory_used'=>0,'id'=>$change['resource_id']])
+							->update(['memory_used'=>1,'service_num'=>$order->business_sn]);
 				break;
 		}
 		

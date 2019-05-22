@@ -483,62 +483,7 @@
                         售前QQ
                     </div>
                     <div class="content">
-                        <ul class="clearfix">
-                            <li>
-                                <a href="http://wpa.qq.com/msgrd?v=3&uin=2885655958&site=qq&menu=yes">
-                                    <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
-                                    成龙
-                                </a>
-                            </li>
-                            <li>
-                                <a href="http://wpa.qq.com/msgrd?v=3&uin=2853978330&site=qq&menu=yes">
-                                    <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
-                                    禹豪
-                                </a>
-                            </li>
-                            <li>
-                                <a href="http://wpa.qq.com/msgrd?v=3&uin=2851506992&site=qq&menu=yes">
-                                    <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
-                                    镜雄
-                                </a>
-                            </li>
-                            <li>
-                                <a href="http://wpa.qq.com/msgrd?v=3&uin=2851506995&site=qq&menu=yes">
-                                    <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
-                                    秋霞
-                                </a>
-                            </li>
-                            <li>
-                                <a href="http://wpa.qq.com/msgrd?v=3&uin=2851506993&site=qq&menu=yes">
-                                    <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
-                                    国东
-                                </a>
-                            </li>
-                            <li>
-                                <a href="http://wpa.qq.com/msgrd?v=3&uin=2853978331&site=qq&menu=yes">
-                                    <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
-                                    帅东
-                                </a>
-                            </li>
-                            <li>
-                                <a href="http://wpa.qq.com/msgrd?v=3&uin=2853978334&site=qq&menu=yes">
-                                    <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
-                                    嘉辉
-                                </a>
-                            </li>
-                            <li>
-                                <a href="http://wpa.qq.com/msgrd?v=3&uin=2851506990&site=qq&menu=yes">
-                                    <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
-                                    小庞
-                                </a>
-                            </li>
-                            <li>
-                                <a href="http://wpa.qq.com/msgrd?v=3&uin=2853978335&site=qq&menu=yes">
-                                    <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
-                                    小健
-                                </a>
-                            </li>
-                        </ul>
+                        @getContacts()
                     </div>
                 </div>
                 <div class="item m12">

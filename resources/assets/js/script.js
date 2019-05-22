@@ -233,6 +233,7 @@ if(document.getElementById("product")) {
         // 如果需要分页器
         pagination: {
           el: '.swiper-pagination',
+          clickable :true
         }
     });
 }

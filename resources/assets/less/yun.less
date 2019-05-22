@@ -187,6 +187,7 @@
         }
     }
     .advantage {
+        height: auto;
         padding: 104px 0;
         padding-bottom: 70px;
         background: linear-gradient(to bottom, #ffffff 60%, rgba(1, 43, 164, .08));
@@ -204,7 +205,33 @@
             text-align: center;
         }
         #product {
-            height: 300px + 40px;
+            height: 288px + 40px;
+            .swiper-slide:nth-of-type(2) {
+                ul {
+                    > li {
+                        &:nth-of-type(1) {
+                            > .icon {
+                                background: url(../images/yun/yun_performance.png) no-repeat center top;
+                            }
+                        }
+                        &:nth-of-type(2) {
+                            > .icon {
+                                background: url(../images/yun/yun_deploy.png) no-repeat center top;
+                            }
+                        }
+                        &:nth-of-type(3) {
+                            > .icon {
+                                background: url(../images/yun/yun_backup.png) no-repeat center top;
+                            }
+                        }
+                        &:last-of-type {
+                            > .icon {
+                                background: url(../images/yun/yun_whole_network.png) no-repeat center top;
+                            }
+                        }
+                    }
+                }
+            }
             .swiper-slide:nth-of-type(1) {
                 ul {
                     > li {
@@ -233,13 +260,26 @@
             }
             > .swiper-pagination {
                 // top: 40px;
-                bottom: -40px;
+                bottom: 0;
+                >span {
+                    width: 52px;
+                    height: 6px;
+                    border-radius: 3px;
+                    background-color: #b5bef0;
+                    margin-right: 20px;
+                    &:last-of-type {
+                        margin: 0;
+                    }
+                    &.swiper-pagination-bullet-active {
+                        background-color: #2139b7;
+                    }
+                }
             }
             ul {
                 list-style: none;
                 margin: 0 auto;
                 padding: 0;
-                width: ((259px + (11px * 2px)) * 4px) + (20px * 3px);
+                width: (259px * 4px) + (20px * 3px);
                 > li {
                     float: left;
                     width: 259px;

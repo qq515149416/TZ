@@ -7699,6 +7699,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin-top: 14px;
 }
 #tz_yun .advantage {
+  height: auto;
   padding: 104px 0;
   padding-bottom: 70px;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(60%, #ffffff), to(rgba(1, 43, 164, 0.08)));
@@ -7718,7 +7719,19 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   text-align: center;
 }
 #tz_yun .advantage #product {
-  height: 340px;
+  height: 328px;
+}
+#tz_yun .advantage #product .swiper-slide:nth-of-type(2) ul > li:nth-of-type(1) > .icon {
+  background: url(/images/yun_performance.png?5a2eef303ac9cb396e1f4bf75d1ed2e2) no-repeat center top;
+}
+#tz_yun .advantage #product .swiper-slide:nth-of-type(2) ul > li:nth-of-type(2) > .icon {
+  background: url(/images/yun_deploy.png?0e08ceb55835925350f886227e25c774) no-repeat center top;
+}
+#tz_yun .advantage #product .swiper-slide:nth-of-type(2) ul > li:nth-of-type(3) > .icon {
+  background: url(/images/yun_backup.png?7999ab13275583cce113303259ea76fc) no-repeat center top;
+}
+#tz_yun .advantage #product .swiper-slide:nth-of-type(2) ul > li:last-of-type > .icon {
+  background: url(/images/yun_whole_network.png?fe846ebd8bd6f2e586b3a9c8c6d3d3f1) no-repeat center top;
 }
 #tz_yun .advantage #product .swiper-slide:nth-of-type(1) ul > li:nth-of-type(1) > .icon {
   background: url(/images/yun_migrate.png?524a3acb7d91dbf4dae0ea2b51c657f3) no-repeat center top;
@@ -7733,13 +7746,26 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background: url(/images/yun_defense.png?f1262592c7cc55ddafe99e57e2a9c849) no-repeat center top;
 }
 #tz_yun .advantage #product > .swiper-pagination {
-  bottom: -40px;
+  bottom: 0;
+}
+#tz_yun .advantage #product > .swiper-pagination > span {
+  width: 52px;
+  height: 6px;
+  border-radius: 3px;
+  background-color: #b5bef0;
+  margin-right: 20px;
+}
+#tz_yun .advantage #product > .swiper-pagination > span:last-of-type {
+  margin: 0;
+}
+#tz_yun .advantage #product > .swiper-pagination > span.swiper-pagination-bullet-active {
+  background-color: #2139b7;
 }
 #tz_yun .advantage #product ul {
   list-style: none;
   margin: 0 auto;
   padding: 0;
-  width: 1184px;
+  width: 1096px;
 }
 #tz_yun .advantage #product ul > li {
   float: left;

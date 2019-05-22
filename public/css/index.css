@@ -7371,9 +7371,32 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   float: left;
   width: 232px;
   border: 1px solid #d2d2d2;
-  border-radius: 2px;
+  border-radius: 4px;
   padding-bottom: 30px;
   margin-left: -1px;
+  position: relative;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+  background-color: #fff;
+}
+#tz_yun .package .list > li:hover {
+  border: 1px solid #4173f3;
+  z-index: 99;
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+}
+#tz_yun .package .list > li:hover header {
+  background: linear-gradient(120deg, #3251ed, #6d8fff);
+}
+#tz_yun .package .list > li:hover header h4 {
+  color: #fff;
+}
+#tz_yun .package .list > li:hover section ul li {
+  color: #2139b7;
+}
+#tz_yun .package .list > li:hover a {
+  background-color: #2139b7;
+  color: #fff;
 }
 #tz_yun .package .list > li header {
   width: 100%;
@@ -7389,6 +7412,8 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz_yun .package .list > li section {
   padding: 30px 20px;
+  padding-bottom: 0;
+  height: 108px;
 }
 #tz_yun .package .list > li section h5 {
   font-size: 14px;

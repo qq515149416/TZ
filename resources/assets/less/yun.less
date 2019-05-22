@@ -90,9 +90,34 @@
                 float: left;
                 width: 232px;
                 border: 1px solid #d2d2d2;
-                border-radius: 2px;
+                border-radius: 4px;
                 padding-bottom: 30px;
                 margin-left: -1px;
+                position: relative;
+                transition: all .5s;
+                background-color: #fff;
+                &:hover {
+                    border: 1px solid #4173f3;
+                    z-index: 99;
+                    transform: scale(1.1);
+                    header {
+                        background: linear-gradient(120deg,#3251ed,#6d8fff);
+                        h4 {
+                            color: #fff;
+                        }
+                    }
+                    section {
+                        ul {
+                            li {
+                                color: #2139b7;
+                            }
+                        }
+                    }
+                    a {
+                        background-color: #2139b7;
+                        color: #fff;
+                    }
+                }
                 header {
                     width: 100%;
                     text-align: center;
@@ -107,6 +132,8 @@
                 }
                 section {
                     padding: 30px 20px;
+                    padding-bottom: 0;
+                    height: 78px + 30px;
                     h5 {
                         font-size: 14px;
                         color: #333333;
@@ -156,6 +183,31 @@
                     margin: 0 auto;
                     margin-top: 14px;
                 }
+            }
+        }
+    }
+    .advantage {
+        padding: 104px 0;
+        padding-bottom: 70px;
+        > h3 {
+            font-size: 26px;
+            color: #333333;
+            margin: 0;
+            margin-bottom: 22px;
+            text-align: center;
+        }
+        > p {
+            font-size: 14px;
+            color: #666666;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        > ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            > li {
+                float: left;
             }
         }
     }

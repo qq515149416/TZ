@@ -2130,6 +2130,11 @@ class OrdersModel extends Model
 
 	}
 
+	/**
+	 * 对更换记录进行审核操作
+	 * @param  array $check --change_id更换记录id,--change_status更换记录审核状态(1-通过/-1-不通过),--chenck_note审核不通过时的备注
+	 * @return [type]        [description]
+	 */
 	public function checkChange($check){
 		if(empty($check)){
 			$return['data'] = [];
@@ -2143,6 +2148,35 @@ class OrdersModel extends Model
 			$return['code'] = 0;
 			$return['msg'] = '(#102)请确认你要审核的记录';
 			return $return;
+		}
+
+		$change = DB::table('tz_resource_change')
+		            ->where(['id'=>$check['change_id']])
+		            ->whereNull('deleted_at')
+		            ->select('id','business','change_number','change_status','before_resource_type','before_resource_number','after_resource_type','after_resource_number')
+		            ->first();
+		if(empty($change)){
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#103)无对应的更换记录';
+			return $return;
+		}
+		if($change->change_status == '-1' || $change->change_status == 3){
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#104)此更换记录已完成/不通过,无法再操作';
+			return $return;
+		}
+		switch ($change->change_status) {
+			case 0:
+				
+				break;
+			case 1:
+				
+				break;
+			case 2:
+				
+				break;
 		}
 	}
 

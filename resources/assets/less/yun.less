@@ -1,0 +1,162 @@
+#tz_yun {
+    .banner {
+        height: 561px;
+        text-align: center;
+        background: url(../images/yun/yun_banner_bg.png) no-repeat;
+        background-size: 100% 100%;
+        border-top: 1px solid #2a5cde;
+        h2 {
+            color: #ffffff;
+            font-size: 50px;
+            margin-top: 182px;
+            margin-bottom: 46px;
+        }
+        p {
+            font-size: 16px;
+            color: #fff;
+            // letter-spacing: 50px;
+            line-height: 28px;
+            width: 810px;
+            margin: 0 auto;
+        }
+        nav {
+            margin-top: 110px;
+            ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                width: 380px * 3px + (2px * 20px);
+                margin: 0 auto;
+                li {
+                    float: left;
+                    margin-right: 20px;
+                    cursor: pointer;
+                    a {
+                        text-align: center;
+                        font-size: 18px;
+                        width: 380px;
+                        height: 64px;
+                        line-height: 64px;
+                        display: block;
+                        text-decoration: none;
+                        color: #ffffff;
+                        background: linear-gradient(to right,#b9ccfc,#6d8fff);
+                        border-radius: 10px;
+                        transition: all .5s;
+                        &.aticve {
+                            background: #fff;
+                            color: #043fc4;
+                        }
+                        &:hover {
+                            background: #fff;
+                            color: #043fc4;
+                        }
+                    }
+                    &:last-of-type {
+                        margin: 0;
+                    }
+
+                }
+            }
+        }
+    }
+    .package {
+        h3 {
+            font-size: 22px;
+            color: #333333;
+            padding-bottom: 38px;
+            margin: 74px auto 46px;
+            width: 100px;
+            text-align: center;
+            position: relative;
+            &::after {
+                content: "";
+                position: absolute;
+                top: 60px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 50px;
+                height: 6px;
+                border-radius: 3px;
+                background-color: #2139b7;
+            }
+        }
+        .list {
+            list-style: none;
+            margin: 0 auto;
+            padding: 0;
+            width: 234px * 5px;
+            > li {
+                float: left;
+                width: 232px;
+                border: 1px solid #d2d2d2;
+                border-radius: 2px;
+                padding-bottom: 30px;
+                margin-left: -1px;
+                header {
+                    width: 100%;
+                    text-align: center;
+                    height: 63px;
+                    background-color: #e5e5e5;
+                    h4 {
+                        font-size: 18px;
+                        color: #222222;
+                        line-height: 63px;
+                        margin: 0;
+                    }
+                }
+                section {
+                    padding: 30px 20px;
+                    h5 {
+                        font-size: 14px;
+                        color: #333333;
+                        margin: 0;
+                        margin-bottom: 10px;
+                    }
+                    p {
+                        margin: 0;
+                        line-height: 18px;
+                        color: #666666;
+                        font-size: 12px;
+                    }
+                    ul {
+                        list-style-type: disc;
+                        // padding-left: 30px;
+                        li {
+                            font-size: 12px;
+                            color: #666666;
+                            line-height: 18px;
+                        }
+                    }
+                    &:last-of-type {
+                        padding-left: 0;
+                        padding-right: 0;
+                    }
+                }
+                .price {
+                    text-align: center;
+                    font-size: 12px;
+                    color: #444444;
+                    .value {
+                        font-size: 18px;
+                        color: #2139b7;
+                    }
+                }
+                a {
+                    display: block;
+                    width: 134px;
+                    line-height: 27px;
+                    height: 27px;
+                    font-size: 12px;
+                    color: #2139b7;
+                    text-decoration: none;
+                    border: 1px solid #2139b7;
+                    border-radius: 4px;
+                    text-align: center;
+                    margin: 0 auto;
+                    margin-top: 14px;
+                }
+            }
+        }
+    }
+}

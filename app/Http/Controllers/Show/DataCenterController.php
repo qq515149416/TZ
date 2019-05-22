@@ -58,6 +58,9 @@ class DataCenterController extends Controller
     {
         $data = [
             "hengyang" => [
+                "title" => "衡阳数据中心-新一代数据中心-IDC数据中心-服务器租用托管[腾正科技]",
+                "keywords" => "衡阳数据中心,湖南新一代数据中心,湖南数据中心，衡阳电信数据中心，IDC数据中心，服务器租用托管",
+                "description" => "衡阳数据中心,自主准T3级IDC机房,云数据中心,提供优质的服务器租用,主机托管,机柜大带宽租用相关服务，资深网络工程师机房7*24小时专业技术保障！",
                 "level" => "国家<strong>AAAAA</strong>级机房",
                 "area" => "8000 平方米",
                 "total" => "1288 个，42U 国际标准机柜",
@@ -72,6 +75,9 @@ class DataCenterController extends Controller
                 ]
             ],
             "huizhou" => [
+                "title" => "惠州数据中心-新一代数据中心-IDC数据中心-服务器租用托管[腾正科技]",
+                "keywords" => "惠州数据中心,广东新一代数据中心,广东数据中心,东莞数据中心,东莞idc数据中心,IDC数据中心，服务器租用托管",
+                "description" => "惠州数据中心,自主准T3级IDC机房,机房面积8000m²，全网骨干网络接入，双重防火墙+T级云堤清洗组合防御系统，为用户提供安全可靠的服务器租用,主机托管,机柜大带宽租用相关服务，资深网络工程师机房7*24小时专业技术保障！",
                 "level" => "国家<strong>AAAAA</strong>级机房",
                 "area" => "8000 平方米",
                 "total" => "2800 个,42U 国际标准机柜",
@@ -86,6 +92,9 @@ class DataCenterController extends Controller
                 ]
             ],
             "xian" => [
+                "title" => "西安数据中心-新一代数据中心-IDC数据中心-服务器租用托管[腾正科技]",
+                "keywords" => "西安数据中心，陕西新一代数据中心，陕西数据中心,西安电信数据中心，IDC数据中心，服务器租用托管",
+                "description" => "西安数据中心,自主准T4级IDC机房,云数据中心,提供优质的高防IP，高防服务器，服务器租用,主机托管及机柜大带宽租用相关服务，资深网络工程师机房7*24小时专业技术保障！",
                 "level" => "国家<strong>AAAA</strong>级机房",
                 "area" => "53851平方米",
                 "total" => "5000个，42U标准机柜",

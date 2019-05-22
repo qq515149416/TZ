@@ -231,7 +231,7 @@ class OrdersController extends Controller
 	 * @return [type] [description]
 	 */
 	public function getResource(Request $request){
-		$get = $request->only(['order_id','resource_type']);
+		$get = $request->only(['order_id','resource_type','machineroom','ip_company']);
 		$get_resource = new OrdersModel();
 		$get_result = $get_resource->getResource($get);
 		return tz_ajax_echo($get_result['data'],$get_result['msg'],$get_result['code']);

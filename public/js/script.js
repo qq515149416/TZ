@@ -274,7 +274,7 @@ $(function () {
   /**
    * 安全防护主页-客户应用场景的tab切换
    */
-  $('#tz-protection .client-scene a.tab-item').on('click', function (e) {
+  $('#protection .client-scene a.tab-item').on('click', function (e) {
     if ($(this).hasClass('active')) {
       e.preventDefault();
     } else {

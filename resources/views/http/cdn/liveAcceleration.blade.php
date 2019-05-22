@@ -30,8 +30,7 @@
     </div>
     <!--产品优势-->
     <div class="product-adv">
-        <h2 class="title">产品优势</h2>
-        <img class="d-block" src="{{ asset("/images/cdn/rectangle.png") }}" />
+        <h2 class="title black">产品优势</h2>
         <div class="item-container">
             <div class="item">
                 <img class="icon" src="{{ asset("/images/liveAcceleration/adv-icon-1.png") }}" />
@@ -82,8 +81,7 @@
     </div>
     <!--产品功能-->
     <div class="product-function">
-        <h2 class="title" style="color: #fff;">产品功能</h2>
-        <img class="d-block" src="{{ asset("/images/cdn/white-rectangle.png") }}" />
+        <h2 class="title white">产品功能</h2>
         <div class="item-container">
             <div class="item">
                 <img class="icon" src="{{ asset("/images/liveAcceleration/function-icon-1.png") }}" />
@@ -137,8 +135,7 @@
     </div>
     <!--使用场景-->
     <div class="usage-scenario">
-        <h2 class="title">使用场景</h2>
-        <img class="d-block" src="{{ asset("/images/cdn/rectangle.png") }}" />
+        <h2 class="title black">使用场景</h2>
         <div class="customer">
             <h3 class="title">客户群体</h3>
             <hr class="divider">

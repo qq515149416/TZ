@@ -37,7 +37,6 @@
             <!--面临问题-->
             <div class="problem">
                 <h2 class="title">棋牌游戏面临的问题</h2>
-                <img class="d-block" src="{{ asset("/images/program/rectangle.png") }}" />
                 <div class="card-container">
                     <div class="card">
                         <div class="card-title">
@@ -79,7 +78,6 @@
             <!--架构部署-->
             <div class="arch">
                 <h2 class="title">解决方案构架部署</h2>
-                <img class="d-block" src="{{ asset("/images/program/white-rectangle.png") }}">
                 <div class="cont">
                     <div class="arch-text">
                         <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 15px;">架构说明</h4>
@@ -94,7 +92,6 @@
             <!--优势-->
             <div class="adv">
                 <h2 class="title">棋牌游戏服务优势</h2>
-                <img class="d-block" src="{{ asset("/images/program/rectangle.png") }}" />
                 <div class="cont">
                     <div class="column">
                         <div class="item">

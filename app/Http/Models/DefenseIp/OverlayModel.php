@@ -1,17 +1,15 @@
 <?php
 
 
-namespace App\Admin\Models\DefenseIp;
+namespace App\Http\Models\DefenseIp;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
-use Encore\Admin\Facades\Admin;
-use App\Admin\Models\DefenseIp\OrderModel; //后台高防ip的订单模型
-use App\Admin\Models\Business\OrdersModel; //后台的订单支付模型
+use Illuminate\Support\Facades\Auth;
+use App\Http\Models\Customer\PayOrder;
 use App\Admin\Models\DefenseIp\BusinessModel;
-
-use App\Admin\Models\DefenseIp\OverlayBelongModel; //后台的订单支付模型
+use App\Http\Models\DefenseIp\OverlayBelongModel; 
 use Carbon\Carbon;
 use App\Http\Controllers\DefenseIp\ApiController;
 
@@ -28,136 +26,16 @@ class OverlayModel extends Model
 	protected $fillable = ['name', 'description','site','protection_value','price','validity_period','sell_status'];
 	protected $time_limit = 60;//两次购买的时间限制
 
-	/**
-	 *
-	 */
-	public function insert($par){
-		return $this->create($par);
-	}
 	
-	public function del($del_id){
-		$overlay = $this->find($del_id);
-		if($overlay == null){
-			return [
-				'data'	=> [],
-				'msg'	=> '不存在',
-				'code'	=> 0,
-			];
-		}
-		$del_res = $overlay->delete();
-		if($del_res){
-			return [
-				'data'	=> [],
-				'msg'	=> '删除成功',
-				'code'	=> 1,
-			];
-		}else{
-			return [
-				'data'	=> [],
-				'msg'	=> '删除失败',
-				'code'	=> 0,
-			];
-		}
-	}
 
-	public function edit($par){
-		$overlay = $this->find($par['edit_id']);
-		if($overlay == null){
-			return [
-				'data'	=> [],
-				'msg'	=> '不存在',
-				'code'	=> 0,
-			];
-		}
-		$edit_res = $overlay->update($par);
+	public function buyNowByCustomer($par){
+		//获取登录中用户id
+		$user = Auth::user();
+		$user_id = $user->id;
+		//检测用户是否在时间限制内生成过订单
+		$pay_model = new PayOrder();
 
-		if($edit_res){
-			return [
-				'data'	=> [],
-				'msg'	=> '编辑成功',
-				'code'	=> 1,
-			];
-		}else{
-			return [
-				'data'	=> [],
-				'msg'	=> '编辑失败',
-				'code'	=> 0,
-			];
-		}
-	}
-
-	public function show($site){
-		$overlay = $this->where('site',$site)->get();
-		if($overlay->isEmpty()){
-			return [
-				'data'	=> [],
-				'msg'	=> '无此机房叠加包',
-				'code'	=> 1,
-			];
-		}else{
-			foreach ($overlay as $k => $v) {
-				$v = $this->trans($v);
-			}
-			return [
-				'data'	=> $overlay,
-				'msg'	=> '获取成功',
-				'code'	=> 1,
-			];
-		}
-	}
-
-	public function trans($overlay){
-		switch ($overlay->sell_status) {
-			case '0':
-				$overlay->sell_status = '下架中';
-				break;
-			case '1':
-				$overlay->sell_status = '上架中';
-				break;
-			default:
-				$overlay->sell_status = '未知状态';
-				break;
-		}
-		return $overlay;
-	}
-
-	protected function checkAdminUser($customer_id){
-		$admin_user_id 	= Admin::user()->id;
-		$customer = DB::table('tz_users')->where('id',$customer_id)->first();
-		if ($customer == null) {
-			return [
-				'data'	=> [],
-				'msg'	=> '客户信息获取失败',
-				'code'	=> 0,
-			];
-		}
-		if($admin_user_id != $customer->salesman_id)
-		{
-			return [
-				'data'	=> [],
-				'msg'	=> '该客户不属于您',
-				'code'	=> 0,
-			];
-		}
-		return [
-			'data'	=> $customer,
-			'msg'	=> '获取成功',
-			'code'	=> 1,
-		];
-	}
-
-	public function buyNowByAdmin($par){
-		$admin_user_id 	= Admin::user()->id;
-		$checkAdminUser = $this->checkAdminUser($par['user_id']);
-		if ($checkAdminUser['code'] != 1) {
-			return $checkAdminUser;
-		}else{
-			$customer = $checkAdminUser['data'];
-		}
-		$pay_model = new OrdersModel();
-
-		$check_time_limit = $pay_model->where('customer_id',$par['user_id'])->max('created_at');
-		
+		$check_time_limit = $pay_model->where('customer_id',$user_id)->max('created_at');
 		if ($check_time_limit != null) {
 			$check_time = strtotime($check_time_limit);
 			if (bcsub(time(),$check_time,0) < $this->time_limit) {
@@ -179,6 +57,7 @@ class OverlayModel extends Model
 				'code'	=> 0,
 			];
 		}
+
 		if ($overlay->sell_status != 1) {
 			return [
 				'data'	=> [],
@@ -187,29 +66,24 @@ class OverlayModel extends Model
 			];
 		}
 
-		$order_model = new OrderModel();
-		//检测有没有填写自定义价格,没有的话就用默认的原价,有的话就按自定义的付款
-		if (!isset($par['price'])) {
-			$par['price'] = $overlay->price;
-		}
-		
 		$order = [
-			'order_sn'		=> 'DJB_'.time().'_admin_'.$admin_user_id,
+			'order_sn'		=> 'DJB_'.time().$user_id,
 			'business_sn'		=> '叠加包',
-			'customer_id'		=> $par['user_id'],
-			'customer_name'	=> $customer->name,
-			'business_id'		=> $admin_user_id,
-			'business_name'	=> DB::table('admin_users')->where('id',$admin_user_id)->value('name'),
+			'customer_id'		=> $user_id,
+			'customer_name'	=> $user->nickname,
+			'business_id'		=> $user->salesman_id,
+			'business_name'	=> DB::table('admin_users')->where('id',$user->salesman_id)->value('name'),
 			'resource_type'		=> 12,
 			'order_type'		=> 1,
 			'machine_sn'		=> $par['overlay_id'],
 			'resource'		=> $overlay->name,
-			'price'			=> $par['price'],
+			'price'			=> $overlay->price,
 			'duration'		=> $par['buy_num'],
-			'payable_money'	=> bcmul($par['price'], $par['buy_num'],2),
+			'payable_money'	=> bcmul($overlay->price, $par['buy_num'],2),
 			'order_status'		=> 0,
 		];
-		$make_order = $order_model->create($order);
+		$make_order = $pay_model->create($order);
+
 		if(!$make_order){
 			DB::rollBack();
 			return [
@@ -236,11 +110,12 @@ class OverlayModel extends Model
 	}
 
 	public function showBelong($par){
+		$user_id = Auth::user()->id;
 		$belong_model = new OverlayBelongModel();
 		switch ($par['status']) {
 			case '*':
 				$overlay = $belong_model
-					->where('tz_overlay_belong.user_id',$par['user_id'])
+					->where('tz_overlay_belong.user_id',$user_id)
 					->leftJoin('tz_overlay as b','b.id', '=' , 'tz_overlay_belong.overlay_id')
 					->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period'])
 					->get();
@@ -248,7 +123,7 @@ class OverlayModel extends Model
 			case '1':
 				$overlay = $belong_model
 					->where('tz_overlay_belong.status',1)
-					->where('tz_overlay_belong.user_id',$par['user_id'])
+					->where('tz_overlay_belong.user_id',$user_id)
 					->leftJoin('tz_overlay as b','b.id', '=' , 'tz_overlay_belong.overlay_id')
 					->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period'])
 					->get();
@@ -256,7 +131,7 @@ class OverlayModel extends Model
 			case '0':
 				$overlay = $belong_model
 					->where('tz_overlay_belong.status',0)
-					->where('tz_overlay_belong.user_id',$par['user_id'])
+					->where('tz_overlay_belong.user_id',$user_id)
 					->leftJoin('tz_overlay as b','b.id', '=' , 'tz_overlay_belong.overlay_id')
 					->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period'])
 					->get();
@@ -339,6 +214,15 @@ class OverlayModel extends Model
 				'code'	=> 0,
 			];
 		}
+		$user_id = Auth::user()->id;
+		if ($belong->user_id != $user_id) {
+			return [
+				'data'	=> [],
+				'msg'	=> '叠加包不属于您',
+				'code'	=> 0,
+			];
+		}
+
 		if($belong->user_id != $business->user_id){
 			return [
 				'data'	=> [],
@@ -347,11 +231,7 @@ class OverlayModel extends Model
 			];
 		}
 
-		//判断是否所属客户
-		$checkAdminUser = $this->checkAdminUser($belong->user_id);
-		if($checkAdminUser['code'] != 1){
-			return $checkAdminUser;
-		}
+		
 
 		//获取高防ip业务所在机房
 		$d_ip = DB::table('tz_defenseip_store')->whereNull('deleted_at')->where('id',$business->ip_id)->first();
@@ -362,6 +242,7 @@ class OverlayModel extends Model
 				'code'	=> 0,
 			];
 		}
+
 		$d_ip_site = $d_ip->site;
 		
 		//获取叠加包信息
@@ -410,6 +291,7 @@ class OverlayModel extends Model
 		$business_update_info = [
 			'extra_protection'	=> $after_extra_protection,
 		];
+	
 		$business_update_res = $business->update($business_update_info);
 
 		if(!$business_update_res){
@@ -424,9 +306,10 @@ class OverlayModel extends Model
 		$api_model = new ApiController();
 
 		//记得正式上线换回来
-		$set_res = $api_model->setProtectionValue($d_ip->ip, $after_protection);
-
-		//$set_res = $api_model->setProtectionValue('1.1.1.1', 0);
+		//$set_res = $api_model->setProtectionValue($d_ip->ip, $after_protection);
+	
+		$set_res = $api_model->setProtectionValue('1.1.1.1', 0);
+		
 		if ($set_res != 'editok' && $set_res != 'ok') {
 			DB::rollBack();
 			return [

@@ -245,6 +245,21 @@ Route::group([
         });
     });
 
+    //用户购买和使用叠加包
+    Route::group([
+        'prefix' => 'overlay',
+    ], function () {
+        Route::group([
+            'middleware' => 'CheckLogin',
+        ], function () {
+            Route::post('buyNowByCustomer', 'DefenseIp\OverlayController@buyNowByCustomer');
+            Route::get('showBelong', 'DefenseIp\OverlayController@showBelong');
+            Route::post('useOverlayToDIP', 'DefenseIp\OverlayController@useOverlayToDIP');
+        });
+    });
+
+
+
     /**
      * 用户信息
      */

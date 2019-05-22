@@ -28,8 +28,7 @@
     </div>
     <!--机房-->
     <div class="machine-room">
-        <h2 class="title">广东惠州机房</h2>
-        <img class="d-block" src="{{ asset("/images/cabinetRent/rectangle.png") }}" />
+        <h2 class="title black">广东惠州机房</h2>
         <div class="intro">
             <div id="carousel-album" class="carousel slide" data-ride="carousel">
                 <!-- Indicators -->
@@ -135,8 +134,7 @@
     </div>
     <!--服务保障-->
     <div class="guarantee">
-        <h2 class="title" style="color: #fff;">专业服务 六大保障</h2>
-        <img class="d-block" src="{{ asset("/images/cabinetRent/white-rectangle.png") }}" />
+        <h2 class="title white">专业服务 六大保障</h2>
         <div class="item-container">
             <div class="item">
                 <img class="icon" src="{{ asset("/images/cabinetRent/guarantee-icon-1.png") }}" />
@@ -196,8 +194,7 @@
     </div>
     <!--相关资质证书-->
     <div class="certificate">
-        <h2 class="title" style="color: #fff;">相关资质证书</h2>
-        <img class="d-block" src="{{ asset("/images/cabinetRent/white-rectangle.png") }}" />
+        <h2 class="title white">相关资质证书</h2>
         <div id="carousel-cert" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carousel-cert" data-slide-to="0" class="active"></li>

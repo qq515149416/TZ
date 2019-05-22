@@ -90,9 +90,34 @@
                 float: left;
                 width: 232px;
                 border: 1px solid #d2d2d2;
-                border-radius: 2px;
+                border-radius: 4px;
                 padding-bottom: 30px;
                 margin-left: -1px;
+                position: relative;
+                transition: all .5s;
+                background-color: #fff;
+                &:hover {
+                    border: 1px solid #4173f3;
+                    z-index: 99;
+                    transform: scale(1.1);
+                    header {
+                        background: linear-gradient(120deg,#3251ed,#6d8fff);
+                        h4 {
+                            color: #fff;
+                        }
+                    }
+                    section {
+                        ul {
+                            li {
+                                color: #2139b7;
+                            }
+                        }
+                    }
+                    a {
+                        background-color: #2139b7;
+                        color: #fff;
+                    }
+                }
                 header {
                     width: 100%;
                     text-align: center;
@@ -107,6 +132,8 @@
                 }
                 section {
                     padding: 30px 20px;
+                    padding-bottom: 0;
+                    height: 78px + 30px;
                     h5 {
                         font-size: 14px;
                         color: #333333;
@@ -158,5 +185,89 @@
                 }
             }
         }
+    }
+    .advantage {
+        padding: 104px 0;
+        padding-bottom: 70px;
+        background: linear-gradient(to bottom, #ffffff 60%, rgba(1, 43, 164, .08));
+        > h3 {
+            font-size: 26px;
+            color: #333333;
+            margin: 0;
+            margin-bottom: 22px;
+            text-align: center;
+        }
+        > p {
+            font-size: 14px;
+            color: #666666;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        #product {
+            height: 300px + 40px;
+            .swiper-slide:nth-of-type(1) {
+                ul {
+                    > li {
+                        &:nth-of-type(1) {
+                            > .icon {
+                                background: url(../images/yun/yun_migrate.png) no-repeat center top;
+                            }
+                        }
+                        &:nth-of-type(2) {
+                            > .icon {
+                                background: url(../images/yun/yun_adjustment.png) no-repeat center top;
+                            }
+                        }
+                        &:nth-of-type(3) {
+                            > .icon {
+                                background: url(../images/yun/yun_layering.png) no-repeat center top;
+                            }
+                        }
+                        &:last-of-type {
+                            > .icon {
+                                background: url(../images/yun/yun_defense.png) no-repeat center top;
+                            }
+                        }
+                    }
+                }
+            }
+            > .swiper-pagination {
+                // top: 40px;
+                bottom: -40px;
+            }
+            ul {
+                list-style: none;
+                margin: 0 auto;
+                padding: 0;
+                width: ((259px + (11px * 2px)) * 4px) + (20px * 3px);
+                > li {
+                    float: left;
+                    width: 259px;
+                    padding: 0 11px;
+                    margin-right: 20px;
+                    background: linear-gradient(to bottom, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 50%);
+                    box-shadow: 0 -90px 40px rgba(1, 43, 164, .08);
+                    &:last-of-type {
+                        margin: 0;
+                    }
+                    > .icon {
+                        height: 124px;
+                    }
+                    > h4 {
+                        color: #2139b7;
+                        font-size: 16px;
+                        margin: 0;
+                        margin-bottom: 15px;
+                        text-align: center;
+                    }
+                    > p {
+                        font-size: 14px;
+                        color: #444444;
+                        line-height: 24px;
+                    }
+                }
+            }
+        }
+
     }
 }

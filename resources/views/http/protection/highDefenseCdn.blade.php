@@ -7,7 +7,7 @@
 @section('description', '高防CDN将源站内容分发至最接近网民的节点，使用户就近取得所需内容，在加速同时保护源站。腾正提供优质抗DDOS、CC攻击集群高防CDN，免备案高防CDN及游戏棋牌CDN高防等服务。')
 
 @section('content')
-<div class="tz-protection-content" id="high-defense-cdn">
+<div class="tz-protection" id="high-defense-cdn">
     <!--banner-->
     <div class="banner">
         <div class="cont">
@@ -32,8 +32,7 @@
     </div>
     <!--特点-->
     <div class="feature">
-        <h2 class="title">高防 CDN 特点</h2>
-        <img class="d-block" src="{{ asset("/images/highDefenseCdn/rectangle.png") }}" />
+        <h2 class="title black">高防 CDN 特点</h2>
         <div class="cont">
             <img src="{{ asset("/images/highDefenseCdn/feature-logo.png") }}" />
             <div class="item-container">
@@ -62,8 +61,7 @@
     </div>
     <!--功能-->
     <div class="function">
-        <h2 class="title">高防 CDN 功能</h2>
-        <img class="d-block" src="{{ asset("/images/highDefenseCdn/white-rectangle.png") }}" />
+        <h2 class="title white">高防 CDN 功能</h2>
         <div class="item-container">
             <div class="item">
                 <img class="icon" src="{{ asset("/images/highDefenseCdn/icon-1.png") }}"">
@@ -112,8 +110,7 @@
     <!--应用场景&使用步骤-->
     <div class="scenario">
         <div>
-            <h2 class="title">应用场景</h2>
-            <img class="d-block" src="{{ asset("/images/highDefenseCdn/rectangle.png") }}" />
+            <h2 class="title black">应用场景</h2>
             <div class="card-container">
                 <div class="card">
                     <div class="card-body">
@@ -166,8 +163,7 @@
             </div>
         </div>
         <div style="margin-top: 50px">
-            <h2 class="title">使用步骤</h2>
-            <img class="d-block" src="{{ asset("/images/highDefenseCdn/rectangle.png") }}" />
+            <h2 class="title black">使用步骤</h2>
             <img class="step-diagram" src="{{ asset("/images/highDefenseCdn/step-diagram.png") }}" alt="高防CDN使用步骤" />
         </div>
     </div>

@@ -40,7 +40,7 @@
         <h3>
             推荐套餐
         </h3>
-        <ul class="list">
+        <ul class="list clearfix">
             <li>
                 <header>
                     <h4>
@@ -186,7 +186,7 @@
         <div class="swiper-container" id="product">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                    <ul>
+                    <ul class="clearfix">
                         <li>
                             <div class="icon">
                             </div>
@@ -195,6 +195,36 @@
                             </h4>
                             <p>
                             打破地域限制，轻松应对时间空间带来的运营困扰，最快仅需5分钟，即可将数据从一机房迁移至另一机房。
+                            </p>
+                        </li>
+                        <li>
+                            <div class="icon">
+                            </div>
+                            <h4>
+                            资源自由调整
+                            </h4>
+                            <p>
+                            用户可根据云服务器实际应用情况随时调整内存，硬盘，带宽，IP等资源，以应对支撑业务的需求，提高业务的安全性及稳定性。
+                            </p>
+                        </li>
+                        <li>
+                            <div class="icon">
+                            </div>
+                            <h4>
+                            三层存储技术
+                            </h4>
+                            <p>
+                            缓存、沉淀、备份层，三层分别对数据进行处理、缓存与灾备，三层间实时同步，数据安全性达到99.999%，高可用性达到99.99%。
+                            </p>
+                        </li>
+                        <li>
+                            <div class="icon">
+                            </div>
+                            <h4>
+                            云防御
+                            </h4>
+                            <p>
+                            采用自带硬防节点，西安云服务器可享免费100G防御，最高实现3.4T防御峰值，有效防御DDoS、CC等恶意攻击，保障用户网络安全。
                             </p>
                         </li>
                     </ul>

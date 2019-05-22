@@ -189,6 +189,7 @@
     .advantage {
         padding: 104px 0;
         padding-bottom: 70px;
+        background: linear-gradient(to bottom, #ffffff 60%, rgba(1, 43, 164, .08));
         > h3 {
             font-size: 26px;
             color: #333333;
@@ -202,13 +203,71 @@
             margin-bottom: 40px;
             text-align: center;
         }
-        > ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            > li {
-                float: left;
+        #product {
+            height: 300px + 40px;
+            .swiper-slide:nth-of-type(1) {
+                ul {
+                    > li {
+                        &:nth-of-type(1) {
+                            > .icon {
+                                background: url(../images/yun/yun_migrate.png) no-repeat center top;
+                            }
+                        }
+                        &:nth-of-type(2) {
+                            > .icon {
+                                background: url(../images/yun/yun_adjustment.png) no-repeat center top;
+                            }
+                        }
+                        &:nth-of-type(3) {
+                            > .icon {
+                                background: url(../images/yun/yun_layering.png) no-repeat center top;
+                            }
+                        }
+                        &:last-of-type {
+                            > .icon {
+                                background: url(../images/yun/yun_defense.png) no-repeat center top;
+                            }
+                        }
+                    }
+                }
+            }
+            > .swiper-pagination {
+                // top: 40px;
+                bottom: -40px;
+            }
+            ul {
+                list-style: none;
+                margin: 0 auto;
+                padding: 0;
+                width: ((259px + (11px * 2px)) * 4px) + (20px * 3px);
+                > li {
+                    float: left;
+                    width: 259px;
+                    padding: 0 11px;
+                    margin-right: 20px;
+                    background: linear-gradient(to bottom, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 50%);
+                    box-shadow: 0 -90px 40px rgba(1, 43, 164, .08);
+                    &:last-of-type {
+                        margin: 0;
+                    }
+                    > .icon {
+                        height: 124px;
+                    }
+                    > h4 {
+                        color: #2139b7;
+                        font-size: 16px;
+                        margin: 0;
+                        margin-bottom: 15px;
+                        text-align: center;
+                    }
+                    > p {
+                        font-size: 14px;
+                        color: #444444;
+                        line-height: 24px;
+                    }
+                }
             }
         }
+
     }
 }

@@ -637,6 +637,15 @@
     <script src="{{ asset("/js/swiper.animate1.0.3.min.js") }}"></script>
     <script src="{{ asset("/js/script.js") }}"></script>
     <script>
+    var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?8deb12c6d7082ff4fe26287eb984ab3c";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+    <script>
         var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253197097'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "w.cnzz.com/c.php%3Fid%3D1253197097' type='text/javascript'%3E%3C/script%3E"));
         var rs = [
             {"site":3,"rank":1,"email":"2885655958@qq.com","contactname":"成龙","contactid":35,"qq":"2885655958","mobile":"13790423606"},

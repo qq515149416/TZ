@@ -225,6 +225,17 @@ if(document.getElementById("thumbnail")) {
         roomSwiper.autoplay.start();
       }
 }
+// 云的产品优势
+if(document.getElementById("product")) {
+    var roomSwiper = new Swiper ('#product', {
+        direction: 'horizontal', // 垂直切换选项
+        // loop: true, // 循环模式选项
+        // 如果需要分页器
+        pagination: {
+          el: '.swiper-pagination',
+        }
+    });
+}
 
 if(document.getElementById("downloadRoom")) {
     $("#downloadRoom").click(function() {

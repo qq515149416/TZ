@@ -7462,3 +7462,74 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin: 0 auto;
   margin-top: 14px;
 }
+#tz_yun .advantage {
+  padding: 104px 0;
+  padding-bottom: 70px;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(60%, #ffffff), to(rgba(1, 43, 164, 0.08)));
+  background: linear-gradient(to bottom, #ffffff 60%, rgba(1, 43, 164, 0.08));
+}
+#tz_yun .advantage > h3 {
+  font-size: 26px;
+  color: #333333;
+  margin: 0;
+  margin-bottom: 22px;
+  text-align: center;
+}
+#tz_yun .advantage > p {
+  font-size: 14px;
+  color: #666666;
+  margin-bottom: 40px;
+  text-align: center;
+}
+#tz_yun .advantage #product {
+  height: 340px;
+}
+#tz_yun .advantage #product .swiper-slide:nth-of-type(1) ul > li:nth-of-type(1) > .icon {
+  background: url(/images/yun_migrate.png?524a3acb7d91dbf4dae0ea2b51c657f3) no-repeat center top;
+}
+#tz_yun .advantage #product .swiper-slide:nth-of-type(1) ul > li:nth-of-type(2) > .icon {
+  background: url(/images/yun_adjustment.png?46f28a5650aefb7314e258fbbc339eef) no-repeat center top;
+}
+#tz_yun .advantage #product .swiper-slide:nth-of-type(1) ul > li:nth-of-type(3) > .icon {
+  background: url(/images/yun_layering.png?f8ed37b266a620cb3e76474a0ba65743) no-repeat center top;
+}
+#tz_yun .advantage #product .swiper-slide:nth-of-type(1) ul > li:last-of-type > .icon {
+  background: url(/images/yun_defense.png?f1262592c7cc55ddafe99e57e2a9c849) no-repeat center top;
+}
+#tz_yun .advantage #product > .swiper-pagination {
+  bottom: -40px;
+}
+#tz_yun .advantage #product ul {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  width: 1184px;
+}
+#tz_yun .advantage #product ul > li {
+  float: left;
+  width: 259px;
+  padding: 0 11px;
+  margin-right: 20px;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(50%, #ffffff), color-stop(50%, rgba(255, 255, 255, 0)));
+  background: linear-gradient(to bottom, #ffffff 50%, rgba(255, 255, 255, 0) 50%);
+  -webkit-box-shadow: 0 -90px 40px rgba(1, 43, 164, 0.08);
+          box-shadow: 0 -90px 40px rgba(1, 43, 164, 0.08);
+}
+#tz_yun .advantage #product ul > li:last-of-type {
+  margin: 0;
+}
+#tz_yun .advantage #product ul > li > .icon {
+  height: 124px;
+}
+#tz_yun .advantage #product ul > li > h4 {
+  color: #2139b7;
+  font-size: 16px;
+  margin: 0;
+  margin-bottom: 15px;
+  text-align: center;
+}
+#tz_yun .advantage #product ul > li > p {
+  font-size: 14px;
+  color: #444444;
+  line-height: 24px;
+}

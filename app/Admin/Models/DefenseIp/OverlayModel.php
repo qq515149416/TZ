@@ -174,7 +174,11 @@ class OverlayModel extends Model
 		}
 
 		$order_model = new OrderModel();
-
+		//检测有没有填写自定义价格,没有的话就用默认的原价,有的话就按自定义的付款
+		if (!isset($par['price'])) {
+			$par['price'] = $overlay->price;
+		}
+		
 		$order = [
 			'order_sn'		=> 'DJB_'.time().'_admin_'.$admin_user_id,
 			'business_sn'		=> '叠加包',

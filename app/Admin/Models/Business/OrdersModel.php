@@ -2130,5 +2130,21 @@ class OrdersModel extends Model
 
 	}
 
+	public function checkChange($check){
+		if(empty($check)){
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#101)条件不足,无法进行审核操作';
+			return $return;
+		}
+
+		if(!isset($check['change_id'])){
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#102)请确认你要审核的记录';
+			return $return;
+		}
+	}
+
 
 }

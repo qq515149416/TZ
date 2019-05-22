@@ -249,4 +249,16 @@ class OrdersController extends Controller
 		return tz_ajax_echo($change_result['data'],$change_result['msg'],$change_result['code']);
 	}
 
+	/**
+	 * 审核更换资源
+	 * @param  Request $request [description]
+	 * @return [type]           [description]
+	 */
+	public function checkChange(Request $request){
+		$check = $request->only(['change_id','change_status','check_note']);
+		$chenck_resource = new OrdersModel();
+		$check_result = $chenck_resource->checkChange($check);
+		return tz_ajax_echo($check_result['data'],$check_result['msg'],$check_result['code']);
+	}
+
 }

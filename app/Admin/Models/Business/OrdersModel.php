@@ -2169,10 +2169,17 @@ class OrdersModel extends Model
 		}
 		switch ($change->change_status) {
 			case 0:
-				
+				$change_status = isset($check['change_status'])?$check['change_status']:0;
+				$check_note = isset($check['check_note'])?$check['check_note']:'';
+				$update = DB::table('tz_resource_change')
+				            ->where(['id'=>$check['change_id']])
+				            ->update(['change_status'=>$change_status,'check_note'=>$check_note]);
 				break;
 			case 1:
-				
+				$change_status = 2;
+				$update = DB::table('tz_resource_change')
+				            ->where(['id'=>$check['change_id']])
+				            ->update(['change_status'=>$change_status);
 				break;
 			case 2:
 				

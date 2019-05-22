@@ -7,7 +7,7 @@
 @section('description', '防C盾是腾正科技自研针对CC攻击接入C盾进行高防御的攻击防护体系,利用CNAME特性隐藏源站IP，防止源站真实IP暴露，一键开启DDos和CC防御，零误封，可跨地域跨机房使用。')
 
 @section('content')
-<div class="tz-protection-content" id="c-shield">
+<div class="tz-protection" id="c-shield">
     <!--banner-->
     <div class="banner">
         <div class="cont">
@@ -33,8 +33,7 @@
     <!--组合套餐-->
     <div class="package">
         <div class="accelerate">
-            <h2 class="title">加速套餐<span style="font-weight: normal;"> | 高强度高防CC攻击，在岗1分钟，安全60秒</span></h2>
-            <img class="d-block" src="{{ asset("/images/highDefenseCdn/rectangle.png") }}" />
+            <h2 class="title black">加速套餐<span style="font-weight: normal;"> | 高强度高防CC攻击，在岗1分钟，安全60秒</span></h2>
             <div class="table-container">
                 <table class="table table-bordered">
                     <thead>
@@ -142,8 +141,7 @@
             </div>
         </div>
         <div class="idc-hot-sale">
-            <h2 class="title">IDC 热销套餐<span style="font-weight: normal;"> | 企业服务器 + CDN 加速更加实惠</span></h2>
-            <img class="d-block" src="{{ asset("/images/highDefenseCdn/rectangle.png") }}" />
+            <h2 class="title black">IDC 热销套餐<span style="font-weight: normal;"> | 企业服务器 + CDN 加速更加实惠</span></h2>
             <div class="header">
                 <div class="item">
                     <div class="title">IDC + CDN 优惠套 1</div>
@@ -198,8 +196,7 @@
             </div>
         </div>
         <div class="tzclound-hot-sale">
-            <h2 class="title">腾正云热销套餐<span style="font-weight: normal;"> | 企业服务器 + CDN 加速更加实惠</span></h2>
-            <img class="d-block" src="{{ asset("/images/highDefenseCdn/rectangle.png") }}" />
+            <h2 class="title black">腾正云热销套餐<span style="font-weight: normal;"> | 企业服务器 + CDN 加速更加实惠</span></h2>
             <div class="header">
                 <div class="item">
                     <div class="title">云 + CDN 优惠套 1</div>
@@ -267,8 +264,7 @@
     </div>
     <!--功能-->
     <div class="function">
-        <h2 class="title">防 C 盾功能</h2>
-        <img class="d-block" src="{{ asset("/images/highDefenseCdn/white-rectangle.png") }}" />
+        <h2 class="title white">防 C 盾功能</h2>
         <div class="item-container">
             <div class="item">
                 <img class="icon" src="{{ asset("/images/highDefenseCdn/icon-1.png") }}"">
@@ -322,8 +318,7 @@
     </div>
     <!--特点-->
     <div class="feature">
-        <h2 class="title">防 C 盾特点</h2>
-        <img class="d-block" src="{{ asset("/images/cShield/rectangle.png") }}" />
+        <h2 class="title black">防 C 盾特点</h2>
         <div class="card-container">
             <div class="card">
                 <div class="card-body">

@@ -78,7 +78,7 @@ class OverlayRequest extends FormRequest
 				$return = [
 					'overlay_id'			=> 'required|exists:tz_overlay,id', 
 					'buy_num'			=> 'required|integer|min:1',
-					'price'				=> 'required|numeric',
+					'price'				=> 'numeric',
 					'user_id'			=> 'required|exists:tz_users,id',
 				];
 				break;

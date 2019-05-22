@@ -8,7 +8,7 @@
 
 @section('content')
 
-<div id="tz-protection" class="tz-protection-content">
+<div id="protection" class="tz-protection">
     <!--banner-->
     <div class="banner">
         <div class="cont">
@@ -29,8 +29,7 @@
     </div>
     <!--产品矩阵-->
     <div class="product-matrix">
-        <h2 class="title">产品矩阵</h2>
-        <img class="d-block" src="{{ asset("/images/protection/rectangle.png") }}" />
+        <h2 class="title black">产品矩阵</h2>
         <div class="item-container">
             <div class="row">
                 <div class="item-group">
@@ -103,8 +102,7 @@
     </div>
     <!--产品优势-->
     <div class="product-adv">
-        <h2 class="title">产品优势</h2>
-        <img class="d-block" src="{{ asset("/images/protection/rectangle.png") }}" />
+        <h2 class="title black">产品优势</h2>
         <div class="card-container">
             <div class="card">
                 <img class="icon" src="{{ asset("/images/protection/adv-icon-1.png") }}" />
@@ -131,8 +129,7 @@
     </div>
     <!--节点介绍-->
     <div class="node-intro">
-        <h2 class="title" style="color: #fff;">节点介绍</h2>
-        <img class="d-block" src="{{ asset("/images/protection/white-rectangle.png") }}" />
+        <h2 class="title white">节点介绍</h2>
         <div class="item-container">
             <div class="item">
                 <div style="display: inline-block; width: calc(100% - 50px);">
@@ -170,8 +167,7 @@
     </div>
     <!--客户应用场景-->
     <div class="client-scene">
-        <h2 class="title" style="color: #fff;">客户应用场景</h2>
-        <img class="d-block" src="{{ asset("/images/protection/white-rectangle.png") }}" />
+        <h2 class="title white">客户应用场景</h2>
         <div class="tab" role="tablist">
             <a class="tab-item active"
                id="service-tab"
@@ -239,8 +235,7 @@
     </div>
     <!--客户案例-->
     <div class="customer-case">
-        <h2 class="title">客户案例</h2>
-        <img class="d-block" src="{{ asset("/images/protection/rectangle.png") }}" />
+        <h2 class="title black">客户案例</h2>
         <div class="carousel-container">
             <div id="carousel-customer" class="carousel slide" data-ride="carousel">
                 <!-- Indicators -->

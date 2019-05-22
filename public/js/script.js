@@ -274,7 +274,7 @@ $(function () {
   /**
    * 安全防护主页-客户应用场景的tab切换
    */
-  $('#tz-protection .client-scene a.tab-item').on('click', function (e) {
+  $('#protection .client-scene a.tab-item').on('click', function (e) {
     if ($(this).hasClass('active')) {
       e.preventDefault();
     } else {
@@ -301,6 +301,18 @@ $(function () {
     roomSwiper.el.onmouseout = function () {
       roomSwiper.autoplay.start();
     };
+  }
+  // 云的产品优势
+  if (document.getElementById("product")) {
+    var roomSwiper = new Swiper('#product', {
+      direction: 'horizontal', // 垂直切换选项
+      // loop: true, // 循环模式选项
+      // 如果需要分页器
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true
+      }
+    });
   }
 
   if (document.getElementById("downloadRoom")) {

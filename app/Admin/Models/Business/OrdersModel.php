@@ -1842,20 +1842,15 @@ class OrdersModel extends Model
 		           ->select('tz_business.resource_detail','tz_orders.id','tz_orders.order_sn','tz_orders.machine_sn','tz_orders.resource','tz_orders.price','tz_orders.duration','tz_orders.end_time','tz_orders.resource_type')
 		           ->first();
 
-		if(!empty($order)){
-
-			$resource_detail = json_decode($order->resource_detail);
-			$machineroom = $resource_detail->machineroom_id;
-
-		} else {
-
+		if(empty($order)){
 			$return['data'] = [];
 			$return['code'] = 0;
 			$return['msg'] = '(#104)请确认需要更换的资源无误';
 			return $return;
 
 		}
-		
+		$resource_detail = json_decode($order->resource_detail);
+		$machineroom = $resource_detail->machineroom_id;
 		if($order->resource_type > 3){//当资源类型不是机器/机柜时
 			
 			if($get['resource_type'] != $order->resource_type){//资源类型与订单的资源类型不一致
@@ -1902,18 +1897,6 @@ class OrdersModel extends Model
 			case 7://内存
 				$resource = DB::table('idc_memory')->where(['memory_used'=>0,'room_id'=>$machineroom])->get(['id','memory_number','memory_param']);
 				break;
-			// case 8://带宽
-				
-			// 	break;
-			// case 9://防护
-				
-			// 	break;
-			// case 10://cdn
-				
-			// 	break;
-			// case 11://高防
-				
-			// 	break;
 		}
 		if($resource->isEmpty()){
 			$return['data'] = $resource;
@@ -1928,6 +1911,11 @@ class OrdersModel extends Model
 		}
 	}
 
+	/**
+	 * 进行更换资源记录的生成及相关操作
+	 * @param  array $change order_id--订单id，resource_type--资源类型, resource_id--更换为的资源id
+	 * @return [type]         [description]
+	 */
 	public function changeResource($change){
 		if(empty($change)){
 			$return['data'] = [];
@@ -1954,10 +1942,11 @@ class OrdersModel extends Model
 			return $return;
 		}
 		$order = DB::table('tz_orders')
-		           ->where(['id'=>$change['order_id']])
-		           ->whereNull('deleted_at')
-		           ->whereBetween('remove_status',[0,3])
-		           ->select('id','order_sn','machine_sn','resource','resource_type','business_sn','customer_id','business_id')
+		           ->join('tz_business','tz_orders.business_sn','=','tz_business.business_number')
+		           ->where(['tz_orders.id'=>$change['order_id']])
+		           ->whereNull('tz_orders.deleted_at')
+		           ->whereBetween('tz_orders.remove_status',[0,3])
+		           ->select('tz_business.resource_detail','tz_orders.resource_type','tz_orders.customer_id','tz_orders.business_id','tz_orders.resource','tz_orders.machine_sn')
 		           ->first();
 		if(empty($order)){
 			$return['data'] = [];
@@ -1965,41 +1954,196 @@ class OrdersModel extends Model
 			$return['msg'] = '(#105)请确认需要更换的资源无误';
 			return $return;
 		}
+		$resource_detail = json_decode($order->resource_detail);
+		$machineroom = $resource_detail->machineroom_id;
+		$cabinet = $resource_detail->cabinet;
+		$ip = $resource_detail->ip_id;
+		/**
+		 * 更换前的资源相关信息
+		 */
+		if($order->resource_type == 8 || $order->resource_type == 9){
+			$change_data['before_resource_number'] = $order->resource;
+		} else {
+			$change_data['before_resource_number'] = $order->machine_sn;
+		}
+		
+		$change_data['before_machineroom'] = $machineroom;
+		$change_data['before_cabinet'] = $cabinet;
+		$change_data['before_ip'] = $ip;
+		$change_data['before_resource_type'] = $order->resource_type;
+
+		$change_data['customer_id'] = $order->customer_id;
+		$change_data['sales_id'] = $order->business_id;
+
+		DB::beginTransaction();
 		switch ($change['resource_type']) {
 			case 1:
-			case 2:
+			case 2:                      
+				$resource = DB::table('idc_machine')
+							   ->where(['id'=>$change['resource_id'],'business_type'=>$get['resource_type'],'used_status'=>0,'machine_status'=>0])
+							   ->select('id','machine_num','cpu','memory','harddisk','cabinet','ip_id','machineroom') 
+							   ->first();
+				if(empty($resource)){
+					$return['data'] = [];
+					$return['code'] = 0;
+					$return['msg'] = '(#106)资源可能已被使用,请更换';
+					return $return;
+				}
+				$change_data['after_resource_number'] = $resource->machine_num;
+				$change_data['after_machineroom'] = $resource->machineroom;
+				$change_data['after_cabinet'] = $resource->cabinet;
+				$change_data['after_ip'] = $resource->ip_id;
 				$update = DB::table('idc_machine')
 				            ->where(['id'=>$change['resource_id'],'business_type'=>$get['resource_type'],'used_status'=>0,'machine_status'=>0])
 				            ->update(['used_status'=>1,'own_business'=>$order->business_sn]);
 
 				break;
-			
 			case 3:
+				$resource = DB::table('idc_cabinet')
+							  ->where(['id'=>$change['resource_id']])
+							  ->select('id','cabinet_id','machineroom_id')
+							  ->first();
+				if(empty($resource)){
+					$return['data'] = [];
+					$return['code'] = 0;
+					$return['msg'] = '(#107)所选资源不存在,请更换';
+					return $return;
+				}
+				$change_data['after_resource_number'] = $resource->cabinet_id;
+				$change_data['after_machineroom'] = $resource->machineroom_id;
+				$change_data['after_cabinet'] = $resource->cabinet_id;
+				$change_data['after_ip'] = 0;
 				$update = 1;
-				break;
 			case 4://ip
+				$resource = DB::table('idc_ips')
+							->where(['ip_status'=>0,'ip_lock'=>0,'id'=>$change['resource_id']])
+							->select('id','ip')
+							->first();
+				if(empty($resource)){
+					$return['data'] = [];
+					$return['code'] = 0;
+					$return['msg'] = '(#108)所选资源不存在/已被使用,请更换';
+					return $return;
+				}
+				$change_data['after_resource_number'] = $resource->ip;
+				$change_data['after_machineroom'] = $machineroom;
+				$change_data['after_cabinet'] = $cabinet;
+				$change_data['after_ip'] = $ip;
 				$update = DB::table('idc_ips')
 							->where(['ip_status'=>0,'ip_lock'=>0,'id'=>$change['resource_id']])
 							->update(['ip_lock'=>1,'own_business'=>$order->business_sn]);
 				break;
 			case 5://cpu
+				$resource = DB::table('idc_cpu')
+							  ->where(['cpu_used'=>0,'id'=>$change['resource_id']])
+							  ->select('id','cpu_number')
+							  ->first();
+				if(empty($resource)){
+					$return['data'] = [];
+					$return['code'] = 0;
+					$return['msg'] = '(#109)所选资源不存在/已被使用,请更换';
+					return $return;
+				}
+				$change_data['after_resource_number'] = $resource->cpu_number;
+				$change_data['after_machineroom'] = $machineroom;
+				$change_data['after_cabinet'] = $cabinet;
+				$change_data['after_ip'] = $ip;			  
 				$update = DB::table('idc_cpu')
 							->where(['cpu_used'=>0,'id'=>$change['resource_id']])
 							->update(['cpu_used'=>1,'service_num'=>$order->business_sn]);
 				break;
 			case 6://硬盘
-				$update = DB::table('idc_memory')
+				$resource = DB::table('idc_harddisk')
+							  ->where(['harddisk_used'=>0,'id'=>$change['resource_id']])
+							  ->select('id','harddisk_number')
+							  ->first();
+				if(empty($resource)){
+					$return['data'] = [];
+					$return['code'] = 0;
+					$return['msg'] = '(#109)所选资源不存在/已被使用,请更换';
+					return $return;
+				}
+				$change_data['after_resource_number'] = $resource->harddisk_number;
+				$change_data['after_machineroom'] = $machineroom;
+				$change_data['after_cabinet'] = $cabinet;
+				$change_data['after_ip'] = $ip;
+				$update = DB::table('idc_harddisk')
 							->where(['harddisk_used'=>0,'id'=>$change['resource_id']])
 							->update(['harddisk_used'=>1,'service_num'=>$order->business_sn]);
 				break;
 			case 7://内存
+				$resource = DB::table('idc_memory')
+							  ->where(['memory_used'=>0,'id'=>$change['resource_id']])
+							  ->select('id','memory_number')
+							  ->first();
+				if(empty($resource)){
+					$return['data'] = [];
+					$return['code'] = 0;
+					$return['msg'] = '(#110)所选资源不存在/已被使用,请更换';
+					return $return;
+				}
+				$change_data['after_resource_number'] = $resource->memory_number;
+				$change_data['after_machineroom'] = $machineroom;
+				$change_data['after_cabinet'] = $cabinet;
+				$change_data['after_ip'] = $ip;
 				$update = DB::table('idc_memory')
 							->where(['memory_used'=>0,'id'=>$change['resource_id']])
 							->update(['memory_used'=>1,'service_num'=>$order->business_sn]);
 				break;
+			case 8://带宽
+			case 9://防护
+				$change_data['after_resource_number'] = $change['resource_id'];
+				$change_data['after_machineroom'] = $machineroom;
+				$change_data['after_cabinet'] = $cabinet;
+				$change_data['after_ip'] = $ip;
+				$update = 1;
+				break;
+			default:
+				$update = 1;
+				break;
 		}
-		
+		if($update == 0){
+			DB::rollBack();
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#111)资源更换失败';
+			return $return;
+		}
+		$change_data['after_resource_type'] = $change['resource_type'];
+		$change_data['change_number'] = create_number();
+		$change_data['created_at'] = date('Y-m-d H:i:s',time());
+		$change_data['change_reason'] = $change['change_reason'];
+		$result = DB::table('tz_resource_change')->insert($change_data);
+		if($result == 0){
+			DB::rollBack();
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#112)资源更换失败';
+			return $return;
+		} else {
+			DB::commit();
+			$return['data'] = [];
+			$return['code'] = 1;
+			$return['msg'] = '资源更换成功';
+			return $return;
+		}
 
+	}
+
+	public function checkChange($check){
+		if(empty($check)){
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#101)条件不足,无法进行审核操作';
+			return $return;
+		}
+
+		if(!isset($check['change_id'])){
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#102)请确认你要审核的记录';
+			return $return;
+		}
 	}
 
 

@@ -202,8 +202,7 @@
     </div>
     <!--服务矩阵-->
     <div class="service-matrix">
-        <h2 class="title">服务矩阵</h2>
-        <img class="d-block" src="{{ asset("/images/cdn/rectangle.png") }}" />
+        <h2 class="title black">服务矩阵</h2>
         <div class="item-container">
             <div class="item">
                 <h5 class="title">静态内容加速</h5>

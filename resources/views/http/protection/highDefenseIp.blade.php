@@ -7,7 +7,7 @@
 @section('description', '腾正DDoS高防IP是针对互联网服务器在遭受大流量DDoS攻击后导致服务不可用的情况下，推出的付费增值服务，通过配置高防IP将攻击流量引到高防IP达到隐藏源站IP保护源站安全稳定，提升用户体验和对内容提供商的黏度。')
 
 @section('content')
-<div class="tz-protection-content" id="high-defense-ip">
+<div class="tz-protection" id="high-defense-ip">
     <!--banner-->
     <div class="banner">
         <div class="cont">
@@ -33,10 +33,7 @@
     <!-- 高防ip套餐 -->
     <div id="highDefenseProduct">
         <div class="highDefenseProduct text-center">
-            <h3 class="title">
-                高防IP产品
-            </h3>
-            <img class="d-block" src="{{ asset("/images/highDefenseIp/rectangle.png") }}" />
+            <h2 class="title black">高防IP产品</h2>
             <p class="sub-title">
                 我们基于用户的需求主导产品研发，提供丰富、安全、易用、灵活的产品
             </p>
@@ -61,17 +58,14 @@
                             </div>
                         </div>
                         @endforeach
-
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
     <!--特点-->
     <div class="feature">
-        <h2 class="title"> DDOS 高防 IP 特点</h2>
-        <img class="d-block" src="{{ asset("/images/highDefenseIp/rectangle.png") }}" />
+        <h2 class="title black"> DDOS 高防 IP 特点</h2>
         <div class="cont">
             <img style="margin-top: -10px;" src="{{ asset("/images/highDefenseIp/feature-logo.png") }}" />
             <div class="item-container">
@@ -100,8 +94,7 @@
     </div>
     <!--功能-->
     <div class="function">
-        <h2 class="title"> DDOS 高防 IP 功能</h2>
-        <img class="d-block" src="{{ asset("/images/highDefenseIp/rectangle.png") }}" />
+        <h2 class="title black"> DDOS 高防 IP 功能</h2>
         <div class="item-container">
             <div class="item">
                 <img class="icon" src="{{ asset("/images/highDefenseIp/icon-1.png") }}"">
@@ -149,8 +142,7 @@
     </div>
     <!--应用场景-->
     <div class="scenario">
-        <h2 class="title" style="color: #fff;">应用场景</h2>
-        <img class="d-block" src="{{ asset("/images/highDefenseIp/white-rectangle.png") }}" />
+        <h2 class="title white">应用场景</h2>
         <div class="card-container">
             <div class="card">
                 <div class="card-body-hover">

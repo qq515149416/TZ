@@ -36,7 +36,6 @@
             <!--面临问题-->
             <div class="problem">
                 <h2 class="title">网站云面临的问题</h2>
-                <img class="d-block" src="{{ asset("/images/program/rectangle.png") }}" />
                 <div class="card-container">
                     <div class="card">
                         <div class="card-title">
@@ -86,8 +85,7 @@
             </div>
             <!--架构部署-->
             <div class="arch">
-                <h2 class="title" style="color: #fff;">解决方案构架部署</h2>
-                <img class="d-block" src="{{ asset("/images/program/white-rectangle.png") }}">
+                <h2 class="title">解决方案构架部署</h2>
                 <div class="cont">
                     <img class="arch-img" src="{{ asset("/images/program/website-deployment-arch.png") }}"
                     alt="网站部署解决方案构架部署图" />
@@ -105,7 +103,6 @@
             <!--优势-->
             <div class="adv">
                 <h2 class="title">网站云服务优势</h2>
-                <img class="d-block" src="{{ asset("/images/program/rectangle.png") }}" />
                 <div class="cont">
                     <div class="column">
                         <div class="item">

@@ -243,10 +243,22 @@ class OrdersController extends Controller
 	 * @return [type]           [description]
 	 */
 	public function changeResource(Request $request){
-		$change = $request->only(['order_id','resource_type','resource_id']);
+		$change = $request->only(['order_id','resource_type','resource_id','change_reason']);
 		$change_resource = new OrdersModel();
 		$change_result = $change_resource->changeResource($change);
 		return tz_ajax_echo($change_result['data'],$change_result['msg'],$change_result['code']);
+	}
+
+	/**
+	 * 审核更换资源
+	 * @param  Request $request [description]
+	 * @return [type]           [description]
+	 */
+	public function checkChange(Request $request){
+		$check = $request->only(['change_id','change_status','check_note']);
+		$chenck_resource = new OrdersModel();
+		$check_result = $chenck_resource->checkChange($check);
+		return tz_ajax_echo($check_result['data'],$check_result['msg'],$check_result['code']);
 	}
 
 }

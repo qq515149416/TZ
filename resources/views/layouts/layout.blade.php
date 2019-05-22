@@ -483,62 +483,7 @@
                         售前QQ
                     </div>
                     <div class="content">
-                        <ul class="clearfix">
-                            <li>
-                                <a href="http://wpa.qq.com/msgrd?v=3&uin=2885655958&site=qq&menu=yes">
-                                    <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
-                                    成龙
-                                </a>
-                            </li>
-                            <li>
-                                <a href="http://wpa.qq.com/msgrd?v=3&uin=2853978330&site=qq&menu=yes">
-                                    <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
-                                    禹豪
-                                </a>
-                            </li>
-                            <li>
-                                <a href="http://wpa.qq.com/msgrd?v=3&uin=2851506992&site=qq&menu=yes">
-                                    <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
-                                    镜雄
-                                </a>
-                            </li>
-                            <li>
-                                <a href="http://wpa.qq.com/msgrd?v=3&uin=2851506995&site=qq&menu=yes">
-                                    <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
-                                    秋霞
-                                </a>
-                            </li>
-                            <li>
-                                <a href="http://wpa.qq.com/msgrd?v=3&uin=2851506993&site=qq&menu=yes">
-                                    <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
-                                    国东
-                                </a>
-                            </li>
-                            <li>
-                                <a href="http://wpa.qq.com/msgrd?v=3&uin=2853978331&site=qq&menu=yes">
-                                    <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
-                                    帅东
-                                </a>
-                            </li>
-                            <li>
-                                <a href="http://wpa.qq.com/msgrd?v=3&uin=2853978334&site=qq&menu=yes">
-                                    <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
-                                    嘉辉
-                                </a>
-                            </li>
-                            <li>
-                                <a href="http://wpa.qq.com/msgrd?v=3&uin=2851506990&site=qq&menu=yes">
-                                    <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
-                                    小庞
-                                </a>
-                            </li>
-                            <li>
-                                <a href="http://wpa.qq.com/msgrd?v=3&uin=2853978335&site=qq&menu=yes">
-                                    <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
-                                    小健
-                                </a>
-                            </li>
-                        </ul>
+                        @getContacts()
                     </div>
                 </div>
                 <div class="item m12">
@@ -636,6 +581,15 @@
     <script src="{{ asset("/js/swiper.min.js") }}"></script>
     <script src="{{ asset("/js/swiper.animate1.0.3.min.js") }}"></script>
     <script src="{{ asset("/js/script.js") }}"></script>
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?8deb12c6d7082ff4fe26287eb984ab3c";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
     <script>
         var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253197097'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "w.cnzz.com/c.php%3Fid%3D1253197097' type='text/javascript'%3E%3C/script%3E"));
         var rs = [

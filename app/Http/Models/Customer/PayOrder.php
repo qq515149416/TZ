@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-
+use App\Http\Models\DefenseIp\OverlayBelongModel;
 use App\Http\Models\Customer\UserCenter;
 
 class PayOrder extends Model
@@ -136,7 +136,7 @@ class PayOrder extends Model
 
 		$serial_number = 'tz_'.time().'_'.$user_id;
 		$payable_money = '0.00';
-		$pay_time = date("Y-m-d h:i:s");
+		$pay_time = date("Y-m-d H:i:s");
 		$order_id_arr = [];
 		$idc_arr = array(1,2,3,4,5,6,7,8,9);
 		$defenseip_arr = array(11);
@@ -545,6 +545,28 @@ class PayOrder extends Model
 				}
 				$return['data'] = ['end' => $end];
 			}	
+		}elseif ($row['resource_type'] == 12) { //如果订单是叠加包的话
+			//生成归属信息
+
+			$belong = [
+				'overlay_id'	=> $row['machine_sn'],
+				'user_id'	=> $row['customer_id'],
+				'buy_time'	=> $pay_time,
+				'order_sn'	=> $row['order_sn'],
+				'status'		=> 0
+			];
+			
+			$belong_model = new OverlayBelongModel();
+			//duration记录购买数量,买了多少个就生成多少个
+			for ($i=0; $i < $row['duration']; $i++) { 
+				if(!$belong_model->create($belong)){
+					return [
+						'data'	=> [],
+						'msg'	=> '用户增加所属叠加包失败',
+						'code'	=> 3,
+					];
+				}
+			}
 		}
 
 		$return['msg'] = '更新成功!!';

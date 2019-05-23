@@ -2186,9 +2186,9 @@ class OrdersModel extends Model
 									      ->update(['own_business'=>'','business_end'=>NULL,'used_status'=>0]);
 						break;
 
-					case 3:
+					// case 3:
 						
-						break;
+					// 	break;
 
 					case 4://ip
 						$after_update = DB::table('idc_ips')
@@ -2252,7 +2252,16 @@ class OrdersModel extends Model
 					break;
 
 				case 3:
-					
+					$cabinet = DB::table('idc_cabinet')->where(['cabinet_id' => $change->before_resource_number])->select('own_business')->first();//获取机柜原来的业务号
+                    if (!empty($cabinet)) {
+                        $array = explode(',', $cabinet->own_business);//先将原本的业务数据转换为数组
+                    } else {
+                        $array = [];
+                    }
+                    $key = array_search($order->business_sn, $array);//查找要删除的业务编号在数组的位置的键
+                    array_splice($array, $key, 1);//根据查找的对应键进行删除
+                    $own_business = implode(',', $array);//将数组转换为字符串
+                    $before = DB::table('idc_cabinet')->where(['cabinet_id' => $change->before_resource_number])->update(['own_business'=>$own_business]);
 					break;
 
 				case 4://ip
@@ -2335,7 +2344,42 @@ class OrdersModel extends Model
 								->update(['business_end'=>$order->end_time,'used_status'=>2]);
 					break;
 				case 3:
-					
+					$cabinet = DB::table('idc_cabinet')
+								 ->join('idc_machineroom','idc_cabinet.machineroom_id','=','idc_machineroom.id')
+					             ->where(['cabinet_id'=>$change->after_resource_number])
+					             ->select('idc_cabinet.id as cabinetid','idc_cabinet.cabinet_id','idc_cabinet.machineroom_id','idc_machineroom.machine_room_name as machineroom_name','idc_cabinet.own_business')
+					             ->first()->toArray();
+		            if(empty($cabinet)){
+		            	DB::rollBack();
+						$return['data'] = [];
+						$return['code'] = 0;
+						$return['msg'] = '(#110)无对应资源更换';
+						return $return;
+		            }
+		            $cabinet['id'] = $cabinet['cabinet_id'];
+		            $own_business = trim($cabinet['own_business'].','.$order->business_sn,' '.',');
+		            unset($cabinet['own_business']);
+		            $business_update = DB::table('tz_business')
+										->where(['business_number'=>$order->business_sn])
+										->update(['machine_number'=>$cabinet['cabinet_id'],'resource_detail'=>json_encode($cabinet)]);
+					if($business_update == 0){
+						DB::rollBack();
+						$return['data'] = [];
+						$return['code'] = 0;
+						$return['msg'] = '(#111)资源更换失败';
+						return $return;
+					}
+					$order_update = DB::table('tz_orders')
+									  ->where(['id'=>$change->business])
+									  ->update(['machine_sn'=>$cabinet['cabinet_id'],'resource'=>$cabinet['cabinet_id'],'resource_type'=>$change->after_resource_type]);
+					if($order_update == 0){
+						DB::rollBack();
+						$return['data'] = [];
+						$return['code'] = 0;
+						$return['msg'] = '(#112)资源更换失败';
+						return $return;
+					}
+		            $after = DB::table('idc_cabinet')->where('cabinet_id', $order['machine_sn'])->update(['own_business'=>$own_business]);
 					break;
 				case 4://ip
 					$ip = DB::table('idc_ips')
@@ -2346,7 +2390,7 @@ class OrdersModel extends Model
 						DB::rollBack();
 						$return['data'] = [];
 						$return['code'] = 0;
-						$return['msg'] = '(#110)无对应的IP资源';
+						$return['msg'] = '(#113)无对应的IP资源';
 						return $return;
 					}
 					$ip_company = [0=>'电信公司',1=>'移动公司',2=>'联通公司'];
@@ -2358,7 +2402,7 @@ class OrdersModel extends Model
 						DB::rollBack();
 						$return['data'] = [];
 						$return['code'] = 0;
-						$return['msg'] = '(#111)资源更换失败';
+						$return['msg'] = '(#114)资源更换失败';
 						return $return;
 					}
 					$after = DB::table('idc_ips')
@@ -2374,7 +2418,7 @@ class OrdersModel extends Model
 						DB::rollBack();
 						$return['data'] = [];
 						$return['code'] = 0;
-						$return['msg'] = '(#112)无对应的CPU资源';
+						$return['msg'] = '(#115)无对应的CPU资源';
 						return $return;
 					}
 					$order_update = DB::table('tz_orders')
@@ -2384,7 +2428,7 @@ class OrdersModel extends Model
 						DB::rollBack();
 						$return['data'] = [];
 						$return['code'] = 0;
-						$return['msg'] = '(#113)资源更换失败';
+						$return['msg'] = '(#116)资源更换失败';
 						return $return;
 					}
 					$after = DB::table('idc_cpu')
@@ -2400,7 +2444,7 @@ class OrdersModel extends Model
 						DB::rollBack();
 						$return['data'] = [];
 						$return['code'] = 0;
-						$return['msg'] = '(#114)无对应的硬盘资源';
+						$return['msg'] = '(#117)无对应的硬盘资源';
 						return $return;
 					}
 					$order_update = DB::table('tz_orders')
@@ -2410,7 +2454,7 @@ class OrdersModel extends Model
 						DB::rollBack();
 						$return['data'] = [];
 						$return['code'] = 0;
-						$return['msg'] = '(#115)资源更换失败';
+						$return['msg'] = '(#118)资源更换失败';
 						return $return;
 					}
 					$after = DB::table('idc_harddisk')
@@ -2426,7 +2470,7 @@ class OrdersModel extends Model
 						DB::rollBack();
 						$return['data'] = [];
 						$return['code'] = 0;
-						$return['msg'] = '(#116)无对应的内存资源';
+						$return['msg'] = '(#119)无对应的内存资源';
 						return $return;
 					}
 					$order_update = DB::table('tz_orders')
@@ -2436,7 +2480,7 @@ class OrdersModel extends Model
 						DB::rollBack();
 						$return['data'] = [];
 						$return['code'] = 0;
-						$return['msg'] = '(#117)资源更换失败';
+						$return['msg'] = '(#120)资源更换失败';
 						return $return;
 					}
 					$after = DB::table('idc_memory')
@@ -2458,7 +2502,7 @@ class OrdersModel extends Model
 				DB::rollBack();
 				$return['data'] = [];
 				$return['code'] = 0;
-				$return['msg'] = '(#118)资源更换失败';
+				$return['msg'] = '(#121)资源更换失败';
 				return $return;
 			}
 			$update = DB::table('tz_resource_change')
@@ -2469,7 +2513,7 @@ class OrdersModel extends Model
 
 			$return['data'] = [];
 			$return['code'] = 0;
-			$return['msg'] = '(#119)此更换记录已完成/不通过,无法再操作';
+			$return['msg'] = '(#122)此更换记录已完成/不通过,无法再操作';
 			return $return;
 
 		}
@@ -2484,7 +2528,7 @@ class OrdersModel extends Model
 			DB::rollBack();
 			$return['data'] = [];
 			$return['code'] = 0;
-			$return['msg'] = '(#120)更换资源审核操作失败';
+			$return['msg'] = '(#123)更换资源审核操作失败';
 		}
 		return $return;
 	}

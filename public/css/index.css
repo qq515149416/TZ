@@ -7795,3 +7795,65 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   color: #444444;
   line-height: 24px;
 }
+#tz_yun .features {
+  padding: 70px 0;
+}
+#tz_yun .features h3 {
+  color: #ffffff;
+  font-size: 26px;
+  margin: 0;
+  text-align: center;
+  padding-bottom: 30px;
+  margin-bottom: 40px;
+  position: relative;
+}
+#tz_yun .features h3::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  bottom: 0;
+  width: 51px;
+  height: 6px;
+  background-color: #fff;
+  border-radius: 3px;
+}
+#tz_yun .features ul {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  width: 1180px;
+}
+#tz_yun .features ul li {
+  border: 1px solid #ffffff;
+}
+#tz_yun .features ul li > div {
+  float: left;
+  border-right: 1px solid #fff;
+  font-size: 16px;
+  color: #fff;
+}
+#tz_yun .features ul li > div:last-of-type {
+  border: none;
+}
+#tz_yun .features ul li .feature {
+  width: 178px;
+  height: 89px;
+  line-height: 89px;
+  letter-spacing: 15px;
+  background-color: #122275;
+  opacity: 0.5;
+}
+#tz_yun .features ul li .dec-item p {
+  margin: 0;
+  padding: 25px 20px;
+  line-height: 25px;
+}
+#tz_yun .features ul li .dec-item p.table-item {
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 45px;
+  line-height: 45px;
+  border-bottom: 1px dashed #a0a0a0;
+}

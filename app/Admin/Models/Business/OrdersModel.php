@@ -2153,7 +2153,7 @@ class OrdersModel extends Model
 		$change = DB::table('tz_resource_change')
 		            ->where(['id'=>$check['change_id']])
 		            ->whereNull('deleted_at')
-		            ->select('id','business','change_number','change_status','before_resource_type','before_resource_number','after_resource_type','after_resource_number')
+		            ->select('id','business','change_number','change_status','before_resource_type','before_resource_number','after_resource_type','after_resource_number','customer_id')
 		            ->first();
 		if(empty($change)){
 			$return['data'] = [];
@@ -2342,6 +2342,17 @@ class OrdersModel extends Model
 					$after = DB::table('idc_machine')
 								->where(['machine_num'=>$change->after_resource_number,'own_business'=>$order->business_sn])
 								->update(['business_end'=>$order->end_time,'used_status'=>2]);
+					$xunsearch = new XS('business');
+		            $index = $xunsearch->index;
+		            $doc['ip'] = isset($resource['ip'])?strtolower($resource['ip']):'';
+		            $doc['cpu'] = isset($resource['cpu'])?strtolower($resource['cpu']):'';
+		            $doc['memory'] = isset($resource['memory'])?strtolower($resource['memory']):'';
+		            $doc['harddisk'] = isset($resource['harddisk'])?strtolower($resource['harddisk']):'';
+		            $doc['id'] = strtolower($order->id);
+		            $doc['business_sn'] = strtolower($order->business_sn);
+		            $doc['machine_number'] = strtolower($resource['machine_num']);
+		            $doc['client'] = strtolower($change->customer_id);
+		            $document = new \XSDocument($doc);
 					break;
 				case 3:
 					$cabinet = DB::table('idc_cabinet')
@@ -2380,6 +2391,13 @@ class OrdersModel extends Model
 						return $return;
 					}
 		            $after = DB::table('idc_cabinet')->where('cabinet_id', $order['machine_sn'])->update(['own_business'=>$own_business]);
+		            $xunsearch = new XS('business');
+		            $index = $xunsearch->index;
+		            $doc['id'] = strtolower($order->id);
+		            $doc['business_sn'] = strtolower($order->business_sn);
+		            $doc['machine_number'] = strtolower($cabinet['cabinet_id']);
+		            $doc['client'] = strtolower($change->customer_id);
+		            $document = new \XSDocument($doc);
 					break;
 				case 4://ip
 					$ip = DB::table('idc_ips')
@@ -2408,6 +2426,13 @@ class OrdersModel extends Model
 					$after = DB::table('idc_ips')
 							->where(['ip'=>$change->after_resource_number,'own_business'=>$order->business_sn])
 							->update(['ip_status'=>1,'ip_lock'=>0,'business_end'=>$order->end_time]);
+					$xunsearch = new XS('orders');
+		    		$index = $xunsearch->index;
+		            $doc['id'] = strtolower($order->id);
+					$doc['machine_sn'] = strtolower($ip->ip);
+					$doc['business_sn'] = strtolower($order->business_sn);
+					$doc['order_sn'] = strtolower($order->order_sn);
+		    		$document = new \XSDocument($doc);
 					break;
 				case 5://cpu
 					$cpu = DB::table('idc_cpu')
@@ -2434,6 +2459,13 @@ class OrdersModel extends Model
 					$after = DB::table('idc_cpu')
 							   ->where(['cpu_number'=>$change->after_resource_number,'service_num'=>$order->business_sn])
 							   ->update(['cpu_used'=>1,'business_end'=>$order->end_time]);
+					$xunsearch = new XS('orders');
+		    		$index = $xunsearch->index;
+		            $doc['id'] = strtolower($order->id);
+					$doc['machine_sn'] = strtolower($cpu->cpu_number);
+					$doc['business_sn'] = strtolower($order->business_sn);
+					$doc['order_sn'] = strtolower($order->order_sn);
+		    		$document = new \XSDocument($doc);
 					break;
 				case 6://硬盘
 					$harddisk = DB::table('idc_harddisk')
@@ -2460,6 +2492,13 @@ class OrdersModel extends Model
 					$after = DB::table('idc_harddisk')
 							   ->where(['harddisk_number'=>$change->after_resource_number,'service_num'=>$order->business_sn])
 							   ->update(['harddisk_used'=>1,'business_end'=>$order->end_time]);
+					$xunsearch = new XS('orders');
+		    		$index = $xunsearch->index;
+		            $doc['id'] = strtolower($order->id);
+					$doc['machine_sn'] = strtolower($harddisk->harddisk_number);
+					$doc['business_sn'] = strtolower($order->business_sn);
+					$doc['order_sn'] = strtolower($order->order_sn);
+		    		$document = new \XSDocument($doc);
 					break;
 				case 7://内存
 					$memory = DB::table('idc_memory')
@@ -2486,6 +2525,13 @@ class OrdersModel extends Model
 					$after = DB::table('idc_memory')
 							   ->where(['memory_number'=>$change->after_resource_number,'service_num'=>$order->business_sn])
 							   ->update(['memory_used'=>1,'business_end'=>$order->end_time]);
+					$xunsearch = new XS('orders');
+		    		$index = $xunsearch->index;
+		            $doc['id'] = strtolower($order->id);
+					$doc['machine_sn'] = strtolower($memory->memory_number);
+					$doc['business_sn'] = strtolower($order->business_sn);
+					$doc['order_sn'] = strtolower($order->order_sn);
+		    		$document = new \XSDocument($doc);
 					break;
 				case 8://带宽
 					$after = DB::table('tz_orders')
@@ -2519,6 +2565,11 @@ class OrdersModel extends Model
 		}
 
 		if($update != 0){
+			if($change->change_status == 2){
+				$index->update($document);
+    			$index->flushIndex();
+			}
+			
 			DB::commit();
 			$return['data'] = [];
 			$return['code'] = 1;
@@ -2531,6 +2582,28 @@ class OrdersModel extends Model
 			$return['msg'] = '(#123)更换资源审核操作失败';
 		}
 		return $return;
+	}
+
+	public function getChange(){
+		$where = [];
+		$orwhere = [];
+		if(Admin::user()->inRoles(['salesman'])){
+			$where = ['sales_id'=>Admin::user()->id];
+		} elseif(Admin::user()->inRoles(['operations'])){
+			$depart = DB::table('oa_staff')
+						->join('idc_machineroom','oa_staff.department','=','idc_machineroom.list_order')
+						->where(['admin_users_id'=>Admin::user()->id])
+						->value('idc_machineroom.id');
+			$where = ['before_machineroom'=>$depart];
+			$orwhere = ['after_machineroom'=>$depart];
+		}
+		$change = DB::table('tz_resource_change as change')
+					->join('tz_orders','change.business','=','tz_orders.id')
+					->where($where)
+					->orWhere($orwhere)
+					->whereNull('change.deleted_at')
+					->get();
+
 	}
 
 

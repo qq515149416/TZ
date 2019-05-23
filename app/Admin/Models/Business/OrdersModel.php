@@ -2598,12 +2598,18 @@ class OrdersModel extends Model
 			$orwhere = ['after_machineroom'=>$depart];
 		}
 		$change = DB::table('tz_resource_change as change')
-					->join('tz_orders','change.business','=','tz_orders.id')
+					->join('tz_orders as orders','change.business','=','tz_orders.id')
+					->join('admin_users as admin','change.sales_id','=','admin_users.id')
 					->where($where)
 					->orWhere($orwhere)
 					->whereNull('change.deleted_at')
-					->get();
-
+					->get(['change.id','change.change_number','change.before_resource_type','change.before_resource_number','change.before_machineroom','change.before_cabinet','change.before_ip','change.after_resource_type','change.after_resource_number','change.after_machineroom','change.after_cabinet','change.after_ip','change.sales_id','change.customer_id','change.change_time','change.change_status','change.change_reason','change.check_note','change.created_at','orders.order_sn','orders.business_sn','admin.name']);
+		if($change->isEmpty()){
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '暂无数据';
+			return $rteturn;
+		}
 	}
 
 

@@ -2161,30 +2161,199 @@ class OrdersModel extends Model
 			$return['msg'] = '(#103)无对应的更换记录';
 			return $return;
 		}
-		if($change->change_status == '-1' || $change->change_status == 3){
+		$order = DB::table('tz_orders')
+					->where(['id'=>$change->business])
+					->whereBetween('remove_status',[0,3])
+					->select('id','business_sn','order_sn','machine_sn')
+					->first();
+		if(empty($order)){
+			
 			$return['data'] = [];
 			$return['code'] = 0;
-			$return['msg'] = '(#104)此更换记录已完成/不通过,无法再操作';
+			$return['msg'] = '(#104)无对应的资源订单';
 			return $return;
 		}
-		switch ($change->change_status) {
-			case 0:
-				$change_status = isset($check['change_status'])?$check['change_status']:0;
-				$check_note = isset($check['check_note'])?$check['check_note']:'';
-				$update = DB::table('tz_resource_change')
-				            ->where(['id'=>$check['change_id']])
-				            ->update(['change_status'=>$change_status,'check_note'=>$check_note]);
-				break;
-			case 1:
-				$change_status = 2;
-				$update = DB::table('tz_resource_change')
-				            ->where(['id'=>$check['change_id']])
-				            ->update(['change_status'=>$change_status]);
-				break;
-			case 2:
-				
-				break;
+		DB::beginTransaction();
+		if ($change->change_status == 0){
+
+			$change_status = isset($check['change_status'])?$check['change_status']:0;
+			if($change_status == '-1'){
+				switch ($change->after_resource_type) {
+					case 1:
+					case 2:
+						$after_update = DB::table('idc_machine')
+									      ->where(['machine_num'=>$change->after_resource_number,'own_business'=>$order->business_sn])
+									      ->update(['own_business'=>'','business_end'=>NULL,'used_status'=>0]);
+						break;
+
+					case 3:
+						
+						break;
+
+					case 4://ip
+						$after_update = DB::table('idc_ips')
+									      ->where(['ip'=>$change->after_resource_number,'own_business'=>$order->business_sn])
+									      ->update(['own_business'=>'','business_end'=>NULL,'ip_status'=>0,'ip_lock'=>0]);
+						break;
+
+					case 5://cpu
+						$after_update = DB::table('idc_cpu')
+									      ->where(['cpu_number'=>$change->after_resource_number,'service_num'=>$order->business_sn])
+									      ->update(['service_num'=>'','business_end'=>NULL,'cpu_used'=>0]);
+						break;
+
+					case 6://硬盘
+						$after_update = DB::table('idc_harddisk')
+									      ->where(['harddisk_number'=>$change->after_resource_number,'service_num'=>$order->business_sn])
+									      ->update(['service_num'=>'','business_end'=>NULL,'harddisk_used'=>0]);
+						break;
+
+					case 7://内存
+						$after_update = DB::table('idc_memory')
+									      ->where(['memory_number'=>$change->after_resource_number,'service_num'=>$order->business_sn])
+									      ->update(['service_num'=>'','business_end'=>NULL,'memory_used'=>0]);
+						break;
+
+					default:
+						$after_update = 1;
+						break;
+
+				}
+
+				if($after_update == 0){
+					DB::rollBack();
+					$return['data'] = [];
+					$return['code'] = 0;
+					$return['msg'] = '(#105)审核失败';
+					return $return;
+				}
+
+			}
+
+			$check_note = isset($check['check_note'])?$check['check_note']:'';
+			$update = DB::table('tz_resource_change')
+			            ->where(['id'=>$check['change_id']])
+			            ->update(['change_status'=>$change_status,'check_note'=>$check_note]);
+
+		} elseif ($change->change_status == 1){
+
+			$update = DB::table('tz_resource_change')
+			            ->where(['id'=>$check['change_id']])
+			            ->update(['change_status'=>2]);
+
+		} elseif ($change->change_status == 2){
+			
+			switch ($change->before_resource_type) {
+				case 1:
+				case 2:
+					$before = DB::table('idc_machine')
+								->where(['machine_num'=>$change->before_resource_number,'own_business'=>$order->business_sn])
+								->update(['own_business'=>'','business_end'=>NULL,'used_status'=>0]);
+					break;
+
+				case 3:
+					
+					break;
+
+				case 4://ip
+					$before = DB::table('idc_ips')
+								->where(['ip'=>$change->before_resource_number,'own_business'=>$order->business_sn])
+								->update(['own_business'=>'','business_end'=>NULL,'ip_status'=>0]);
+					break;
+
+				case 5://cpu
+					$before = DB::table('idc_cpu')
+								->where(['cpu_number'=>$change->before_resource_number,'service_num'=>$order->business_sn])
+								->update(['service_num'=>'','business_end'=>NULL,'cpu_used'=>0]);
+					break;
+
+				case 6://硬盘
+					$before = DB::table('idc_harddisk')
+								->where(['harddisk_number'=>$change->before_resource_number,'service_num'=>$order->business_sn])
+								->update(['service_num'=>'','business_end'=>NULL,'harddisk_used'=>0]);
+					break;
+
+				case 7://内存
+					$before = DB::table('idc_memory')
+								->where(['memory_number'=>$change->before_resource_number,'service_num'=>$order->business_sn])
+								->update(['service_num'=>'','business_end'=>NULL,'memory_used'=>0]);
+					break;
+
+				default:
+					$before = 1;
+					break;
+			}
+			if($before == 0){
+				DB::rollBack();
+				$return['data'] = [];
+				$return['code'] = 0;
+				$return['msg'] = '(#106)更换资源审核操作失败';
+				return $return;
+			}
+			switch ($change->after_resource_type) {
+				case 1:
+				case 2:
+					$resource = DB::table('idc_machine')
+							   ->join('idc_ips','idc_machine.ip_id','=','idc_ips.id')
+							   ->join('idc_machineroom','idc_machine.machineroom','=','idc_machineroom.id')
+							   ->join('idc_cabinet','idc_machine.cabinet','=','idc_cabinet.id')
+							   ->where(['machine_num'=>$change->after_resource_number,'own_business'=>$order->business_sn])
+							   ->select('idc_machine.id','idc_machine.machine_num','idc_machine.cpu','idc_machine.memory','idc_machine.harddisk','idc_machine.cabinet','idc_machine.ip_id','idc_machine.machineroom','idc_machine.bandwidth','idc_machine.protect','idc_machine.loginname','idc_machine.loginpass','idc_machine.machine_type','idc_machineroom.id as machineroom_id','idc_machineroom.machine_room_name as machineroom_name','idc_cabinet.cabinet_id as cabinets','idc_ips.ip','idc_ips.ip_company')
+							   ->first();
+					if(empty($resource)){
+						DB::rollBack();
+						$return['data'] = [];
+						$return['code'] = 0;
+						$return['msg'] = '(#107)无对应的资源可更换';
+						return $return;
+					}
+
+					break;
+				case 3:
+					
+					break;
+				case 4:
+					
+					break;
+				case 5:
+					
+					break;
+				case 6:
+					
+					break;
+				case 7:
+					
+					break;
+				case 8:
+					
+					break;
+				default:
+					
+					break;
+			}
+
+		} else {
+
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#107)此更换记录已完成/不通过,无法再操作';
+			return $return;
+
 		}
+
+		if($update != 0){
+			DB::commit();
+			$return['data'] = [];
+			$return['code'] = 1;
+			$return['msg'] = '资源更换审核操作成功';
+			
+		}  else {
+			DB::rollBack();
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#108)更换资源审核操作失败';
+		}
+		return $return;
 	}
 
 

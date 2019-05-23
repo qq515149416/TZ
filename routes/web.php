@@ -252,6 +252,7 @@ Route::group([
         Route::group([
             'middleware' => 'CheckLogin',
         ], function () {
+            Route::get('showOverlay', 'DefenseIp\OverlayController@showOverlay');
             Route::post('buyNowByCustomer', 'DefenseIp\OverlayController@buyNowByCustomer');
             Route::get('showBelong', 'DefenseIp\OverlayController@showBelong');
             Route::post('useOverlayToDIP', 'DefenseIp\OverlayController@useOverlayToDIP');

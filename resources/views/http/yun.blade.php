@@ -278,6 +278,25 @@
             <div class="swiper-pagination"></div>
         </div>
     </div>
+    <div class="features">
+        <h3>
+            产品功能
+        </h3>
+        <ul>
+            <li class="clearfix">
+                <div class="feature">
+                    计算
+                </div>
+                <div class="dec-item">
+                    <p class="table-item">丰富的实例规格，灵活扩容，支撑用户业务发展</p>
+                    <p class="table-item">广东、湖南、陕西、吉林、浙江五大节点，满足用户多样化需求</p>
+                </div>
+                <div class="dec-item">
+                    <p>云服务器提供丰富的实例规格(CPU、内存）和带宽、云盘选择，支持随时升级，满足各种业务需求。99.99%的高可用性，为业务的稳定运行提供保障</p>
+                </div>
+            </li>
+        </ul>
+    </div>
 </div>
 
 @endsection

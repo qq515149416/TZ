@@ -13,7 +13,13 @@ use Carbon\Carbon;
 class OverlayController extends Controller
 {
 	
-	
+	public function showOverlay(OverlayRequest $request){
+		$model = new OverlayModel();
+
+		$res = $model->showOverlay();
+
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);	
+	}
 
 	/**
 	 *  后台工作人员为客户购买叠加包

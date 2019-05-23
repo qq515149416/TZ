@@ -39,6 +39,7 @@ class XADefenseDataModel extends Model
                 ->select('id', 'time', 'bandwidth_down', 'upstream_bandwidth_up')
                 ->where('ipaddress', '=', $ip)
                 ->whereBetween('time', [$startDate, $endDate])
+                ->orderBy('time', 'desc')
                 ->get(['time', 'bandwidth_down', 'upstream_bandwidth_up'])
                 ->toArray();
         } else {

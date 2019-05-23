@@ -27,6 +27,30 @@ class OverlayModel extends Model
 	protected $time_limit = 60;//两次购买的时间限制
 
 	
+	public function showOverlay(){
+		$overlay = $this->where('sell_status',1)->get();
+
+		if ($overlay->isEmpty()) {
+			return [
+				'data'	=> [],
+				'msg'	=> '无上架叠加包',
+				'code'	=> 1,
+			];
+		}
+		foreach ($overlay as $k => $v) {
+			$v = $this->transO($v);
+		}
+		return [
+			'data'	=> $overlay,
+			'msg'	=> '获取成功',
+			'code'	=> 1,
+		];
+	}
+	protected function transO($overlay){
+		$overlay->machine_room_name = DB::table('idc_machineroom')->where('id',$overlay->site)->value('machine_room_name');
+		return $overlay;
+	}
+
 
 	public function buyNowByCustomer($par){
 		//获取登录中用户id

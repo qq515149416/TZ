@@ -2179,7 +2179,7 @@ class OrdersModel extends Model
 				$change_status = 2;
 				$update = DB::table('tz_resource_change')
 				            ->where(['id'=>$check['change_id']])
-				            ->update(['change_status'=>$change_status);
+				            ->update(['change_status'=>$change_status]);
 				break;
 			case 2:
 				

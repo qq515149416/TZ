@@ -60,11 +60,11 @@ class OverlayController extends Controller
 	 *  展示叠加包
 	 */
 	public function show(OverlayRequest $request){
-		$par = $request->only(['site']);
+		$par = $request->only(['site','sell_status']);
 
 		$model = new OverlayModel();
 
-		$res = $model->show($par['site']);
+		$res = $model->show($par);
 
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);	
 	}

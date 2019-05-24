@@ -119,6 +119,7 @@ Route::group([
             $router->get('/defenseBusinesReview', 'Show\DefenseBusinessReviewController@index');
             $router->get('/customerStatistics', 'Show\CustomerStatisticsController@index');
             $router->get('/businessStatistics', 'Show\BusinessStatisticsController@index');
+            $router->get('/overlay', 'Show\OverlayController@index');
 
         });
 

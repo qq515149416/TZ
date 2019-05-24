@@ -19,6 +19,10 @@ class LinksModel extends Model
 	protected $fillable = ['name', 'url','sort','image','description','user','links_order'];  
 
 	public function insert($par){
+		$par['url'] = json_encode($par['url']);
+		if (isset($par['image'])) {
+			$par['image'] = json_encode($par['image']);
+		}
 		return $this->create($par);
 
 	}
@@ -57,6 +61,13 @@ class LinksModel extends Model
 				'code'	=> 0,
 			];
 		}
+		if (isset($par['image'])) {
+			$par['image'] = json_encode($par['image']);
+		}
+		if (isset($par['url'])) {
+			$par['url'] = json_encode($par['url']);
+		}
+
 		$edit_res = $link->update($par);
 
 		if($edit_res){
@@ -97,6 +108,18 @@ class LinksModel extends Model
 
 	public function trans($link){
 		$link->url = json_decode($link->url);
+		$link->image = json_decode($link->image);
+		switch ($link->sort) {
+			case '0':
+				$link->sort = '友情链接';
+				break;
+			case '1':
+				$link->sort = '轮播图';
+				break;
+			default:
+				# code...
+				break;
+		}
 
 		return $link;
 	}

@@ -20,7 +20,7 @@ class LinksController extends Controller
 	 */
 	public function insert(LinksRequest $request){
 		
-		$par = $request->only(['name','url','sort','description','user','links_order']);
+		$par = $request->only(['name','url','sort','description','user','links_order','image']);
 
 		$links_model = new LinksModel();
 		$return = $links_model->insert($par);
@@ -53,7 +53,7 @@ class LinksController extends Controller
 	 * @return json    
 	 */
 	public function edit(LinksRequest $request){
-		$par = $request->only(['name','url','sort','description','user','links_order','edit_id']);
+		$par = $request->only(['name','url','sort','description','user','links_order','edit_id','image']);
 
 		$links_model = new LinksModel();
 

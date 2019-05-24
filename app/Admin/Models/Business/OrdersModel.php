@@ -1882,20 +1882,32 @@ class OrdersModel extends Model
 			case 3://租用机柜
 				$resource = DB::table('idc_cabinet')
 							   ->join('idc_machineroom','idc_cabinet.machineroom_id','=','idc_machineroom.id')
-							   ->get(['idc_cabinet.id as cabinetid','cabinet_id','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
+							   ->get(['idc_cabinet.id','cabinet_id','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
 				break;
 			case 4://IP
 				$ip_company = isset($get['ip_company'])?$get['ip_company']:0;
-				$resource = DB::table('idc_ips')->where(['ip_status'=>0,'ip_lock'=>0,'ip_comproom'=>$machineroom,'ip_company'=>$ip_company])->get(['id','ip','ip_company']);
+				$resource = DB::table('idc_ips')
+							  ->join('idc_machineroom','idc_ips.ip_comproom','=','idc_machineroom.id')
+				              ->where(['ip_status'=>0,'ip_lock'=>0,'ip_comproom'=>$machineroom,'ip_company'=>$ip_company])
+				              ->get(['id','ip','ip_company','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
 				break;
 			case 5://CPU
-				$resource = DB::table('idc_cpu')->where(['cpu_used'=>0,'room_id'=>$machineroom])->get(['id','cpu_number','cpu_param']);
+				$resource = DB::table('idc_cpu')
+							  ->join('idc_machineroom','idc_cpu.room_id','=','idc_machineroom.id')
+				              ->where(['cpu_used'=>0,'room_id'=>$machineroom])
+				              ->get(['id','cpu_number','cpu_param','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
 				break;
 			case 6://硬盘
-				$resource = DB::table('idc_harddisk')->where(['harddisk_used'=>0,'room_id'=>$machineroom])->get(['id','harddisk_number','harddisk_param']);
+				$resource = DB::table('idc_harddisk')
+ 							  ->join('idc_machineroom','idc_harddisk.room_id','=','idc_machineroom.id')
+				              ->where(['harddisk_used'=>0,'room_id'=>$machineroom])
+				              ->get(['id','harddisk_number','harddisk_param','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
 				break;
 			case 7://内存
-				$resource = DB::table('idc_memory')->where(['memory_used'=>0,'room_id'=>$machineroom])->get(['id','memory_number','memory_param']);
+				$resource = DB::table('idc_memory')
+							  ->join('idc_machineroom','idc_memory.room_id','=','idc_machineroom.id')
+				              ->where(['memory_used'=>0,'room_id'=>$machineroom])
+				              ->get(['id','memory_number','memory_param','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
 				break;
 		}
 		if($resource->isEmpty()){
@@ -2185,10 +2197,6 @@ class OrdersModel extends Model
 									      ->where(['machine_num'=>$change->after_resource_number,'own_business'=>$order->business_sn])
 									      ->update(['own_business'=>'','business_end'=>NULL,'used_status'=>0]);
 						break;
-
-					// case 3:
-						
-					// 	break;
 
 					case 4://ip
 						$after_update = DB::table('idc_ips')
@@ -2584,7 +2592,11 @@ class OrdersModel extends Model
 		return $return;
 	}
 
-	public function getChange(){
+	/**
+	 * 获取更换申请记录表
+	 * @return [type] [description]
+	 */
+	public function getChange($data){
 		$where = [];
 		$orwhere = [];
 		if(Admin::user()->inRoles(['salesman'])){
@@ -2597,19 +2609,104 @@ class OrdersModel extends Model
 			$where = ['before_machineroom'=>$depart];
 			$orwhere = ['after_machineroom'=>$depart];
 		}
+		if(isset($data['order_id'])){
+			$where['business'] = $data['order_id'];
+		}
 		$change = DB::table('tz_resource_change as change')
 					->join('tz_orders as orders','change.business','=','tz_orders.id')
 					->join('admin_users as admin','change.sales_id','=','admin_users.id')
 					->where($where)
 					->orWhere($orwhere)
 					->whereNull('change.deleted_at')
-					->get(['change.id','change.change_number','change.before_resource_type','change.before_resource_number','change.before_machineroom','change.before_cabinet','change.before_ip','change.after_resource_type','change.after_resource_number','change.after_machineroom','change.after_cabinet','change.after_ip','change.sales_id','change.customer_id','change.change_time','change.change_status','change.change_reason','change.check_note','change.created_at','orders.order_sn','orders.business_sn','admin.name']);
+					->get(['change.id','change.change_number','change.before_resource_type','change.before_resource_number','change.before_machineroom','change.before_cabinet','change.before_ip','change.after_resource_type','change.after_resource_number','change.after_machineroom','change.after_cabinet','change.after_ip','change.sales_id','change.customer_id','change.change_time','change.change_status','change.change_reason','change.check_note','change.created_at','orders.order_sn','orders.business_sn','admin.name as sales_name']);
 		if($change->isEmpty()){
 			$return['data'] = [];
 			$return['code'] = 0;
 			$return['msg'] = '暂无数据';
 			return $rteturn;
 		}
+		foreach($change as $key => $value){
+			$customer = DB::table('tz_users')->where(['id'=>$value->customer_id])->select('email','name','nickname')->first();
+			if(empty($customer)){
+				$value->customer_name = '佚名';
+			} else {
+				$customer_name = $customer->email ? $customer->email : $customer->name;
+				$customer_name = $customer_name ? $customer_name : $customer->nickname;
+				$value->customer_name = $customer;
+			}
+			$value->before_machineroom_name = DB::table('idc_machineroom')->where(['id'=>$value->before_machineroom])->value('machine_room_name');
+			$value->after_machineroom_name = DB::table('idc_machineroom')->where(['id'=>$value->after_machineroom])->value('machine_room_name');
+			$value->before_cabinet_name = DB::table('idc_cabinet')->where(['id'=>$value->before_cabinet])->value('cabinet_id');
+			$value->after_cabinet_name = DB::table('idc_cabinet')->where(['id'=>$value->after_cabinet])->value('cabinet_id');
+			$value->before_ip_detail = DB::table('idc_ips')->where(['id'=>$value->before_ip])->value('ip');
+			$value->after_ip_detail = DB::table('idc_ips')->where(['id'=>$value->after_ip])->value('ip');
+			$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn',11=>'高防IP',12=>'流量叠加包'];
+			$value->before_type = $resource_type[$value->before_resource_type];
+			$value->after_type = $resource_type[$value->after_resource_type];
+			$status = ['-1'=>'审核不通过',0=>'待审核',1=>'待更换',2=>'机房处理中',3=>'完成'];
+			$value->status = $status[$value->change_status]; 
+		}
+		$return['data'] = $change;
+		$return['code'] = 1;
+		$return['msg'] = '数据获取成功';
+		return $rteturn;
+	}
+
+	/**
+	 * 获取相关的可更换的订单
+	 * @param  array $get --business_sn业务号,--resource_type资源类型
+	 * @return [type]      [description]
+	 */
+	public function getOrders($get){
+		if(empty($get)){
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#101)无法获取对应的数据';
+			return $return;
+		}
+		if(!isset($get['business_sn'])){
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#102)无法获取对应的数据';
+			return $return;
+		}
+		$sign = '<';
+		$type = 4;
+		if(isset($get['resource_type'])){
+			$sign = '=';
+			$type = $get['resource_type'];
+		}
+		$orders = DB::table('tz_orders')
+					->where('resource_type',$sign,$type)
+					->where(['remove_status'=>0,'business_sn'=>$get['business_sn']])
+					->whereBetween('order_status',[0,3])
+					->whereNull('deleted_at')
+					->orderBy('end_time','desc')
+					->get(['order_sn','resource_type','machine_sn','resource','price','end_time','duration','id'])
+					->groupBy('machine_sn');
+		if($orders->isEmpty()){
+			$return['data'] = $orders;
+			$return['code'] = 0;
+			$return['msg'] = '暂无数据';
+			return $return;
+		}
+		$order_value = [];
+		foreach ($orders as $key => $value) {
+			foreach($value as $vkey => $vvalue){
+				if($vvalue->resource_type < 3){
+					$business = DB::table('tz_business')->where(['business_number'=>$get['business_sn']])->value('resource_detail');
+					$detail = json_decode($business);
+					$vvalue->resource = $detail->ip;
+				}
+				array_push($order_value,$vvalue);
+			}
+
+		}
+		$return['data'] = $order_value;
+		$return['code'] = 1;
+		$return['msg'] = '订单数据获取成功';
+		return $return;	
+
 	}
 
 

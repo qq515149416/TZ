@@ -59,7 +59,7 @@ class OverlayRequest extends FormRequest
 			case 'show':
 				$return = [
 					'site'				=> 'required', 
-			
+					'sell_status'			=> 'required|in:0,1,*',
 				];
 				break;
 			case 'showBelong':
@@ -101,7 +101,7 @@ class OverlayRequest extends FormRequest
 			'protection_value.required'		=> '请填写叠加包防御值',
 			'price.required'				=> '请填写叠加包单价',
 			'price.numeric'				=> '价格格式错误',
-			'validity_period.required'		=> '请填写叠加包有效期',
+			'validity_period.required'			=> '请填写叠加包有效期',
 			'del_id.required'				=> '请填写需要删除的id',
 			'del_id.exists'				=> 'ID不存在',
 			'edit_id.required'			=> '请填写需要编辑的id',
@@ -116,6 +116,8 @@ class OverlayRequest extends FormRequest
 			'status.required'				=> '请选择查询的状态',
 			'business_number.required'		=> '请选择使用叠加包的业务',	
 			'belong_id.required'			=> '请选择使用的叠加包id',
+			'sell_status.required'			=> '请填写需要查询的上下架状态',
+			'sell_status.in'				=> '*-所有 ; 0-下架中 ; 1-上架中',
 		];
 	}
 

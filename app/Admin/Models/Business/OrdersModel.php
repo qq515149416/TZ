@@ -1834,6 +1834,10 @@ class OrdersModel extends Model
 			$return['msg'] = '(#103)请选择需要更换的资源';
 			return $return;
 		}
+		/**
+		 * 获取对应订单的数据
+		 * @var [type]
+		 */
 		$order = DB::table('tz_orders')
 		           ->join('tz_business','tz_orders.business_sn','=','tz_business.business_number')
 		           ->where(['tz_orders.id'=>$get['order_id']])
@@ -1849,6 +1853,10 @@ class OrdersModel extends Model
 			return $return;
 
 		}
+		/**
+		 * 获取业务所在机房
+		 * @var [type]
+		 */
 		$resource_detail = json_decode($order->resource_detail);
 		$machineroom = $resource_detail->machineroom_id;
 		if($order->resource_type > 3){//当资源类型不是机器/机柜时
@@ -1861,7 +1869,7 @@ class OrdersModel extends Model
 			}
 			
 		}
-		switch ($get['resource_type']) {
+		switch ($get['resource_type']) {//根据资源类型获取对应的可更换的资源数据
 			case 1://租用机器
 			case 2://托管机器
 				$machineroom = isset($get['machineroom'])?$get['machineroom']:$machineroom;
@@ -1953,6 +1961,10 @@ class OrdersModel extends Model
 			$return['msg'] = '(#104)更换的资源无法确定';
 			return $return;
 		}
+		/**
+		 * 获取对应订单的数据
+		 * @var [type]
+		 */
 		$order = DB::table('tz_orders')
 		           ->join('tz_business','tz_orders.business_sn','=','tz_business.business_number')
 		           ->where(['tz_orders.id'=>$change['order_id']])
@@ -1966,6 +1978,10 @@ class OrdersModel extends Model
 			$return['msg'] = '(#105)请确认需要更换的资源无误';
 			return $return;
 		}
+		/**
+		 * 获取业务的所在机房，机柜，所绑定的机器IP
+		 * @var [type]
+		 */
 		$resource_detail = json_decode($order->resource_detail);
 		$machineroom = $resource_detail->machineroom_id;
 		$cabinet = $resource_detail->cabinet;
@@ -1987,8 +2003,11 @@ class OrdersModel extends Model
 		$change_data['customer_id'] = $order->customer_id;
 		$change_data['sales_id'] = $order->business_id;
 
+		/**
+		 * 进行对应要更换的资源锁定并生成更换记录表所需的字段数据
+		 */
 		DB::beginTransaction();
-		switch ($change['resource_type']) {
+		switch ($change['resource_type']) {//根据资源类型进行更换资源的锁定并生成更换记录表所需的字段数据
 			case 1:
 			case 2:                      
 				$resource = DB::table('idc_machine')
@@ -2162,6 +2181,10 @@ class OrdersModel extends Model
 			return $return;
 		}
 
+		/**
+		 * 审核前获取对应的更换记录数据
+		 * @var [type]
+		 */
 		$change = DB::table('tz_resource_change')
 		            ->where(['id'=>$check['change_id']])
 		            ->whereNull('deleted_at')
@@ -2173,6 +2196,10 @@ class OrdersModel extends Model
 			$return['msg'] = '(#103)无对应的更换记录';
 			return $return;
 		}
+		/**
+		 * 获取原订单的数据
+		 * @var [type]
+		 */
 		$order = DB::table('tz_orders')
 					->where(['id'=>$change->business])
 					->whereBetween('remove_status',[0,3])
@@ -2185,11 +2212,14 @@ class OrdersModel extends Model
 			$return['msg'] = '(#104)无对应的资源订单';
 			return $return;
 		}
+		/**
+		 * 根据不同的情况进行审核操作
+		 */
 		DB::beginTransaction();
-		if ($change->change_status == 0){
+		if ($change->change_status == 0){//更换资源记录为待审核状态
 			$check_note = isset($check['check_note'])?$check['check_note']:'';
 			$change_status = isset($check['change_status'])?$check['change_status']:0;
-			if($change_status == '-1'){
+			if($change_status == '-1'){//审核不通过时，对前期锁定的资源进行复位
 				switch ($change->after_resource_type) {
 					case 1:
 					case 2:
@@ -2238,30 +2268,30 @@ class OrdersModel extends Model
 				$update = DB::table('tz_resource_change')
 			            ->where(['id'=>$check['change_id']])
 			            ->update(['change_status'=>$change_status,'check_note'=>$check_note,'updated_at'=>date('Y-m-d H:i:s',time()),'change_time'=>date('Y-m-d H:i:s',time())]);
-			} else {
+			} else {//审核通过时直接更改记录单状态，进入下一环节
 				$update = DB::table('tz_resource_change')
 			            ->where(['id'=>$check['change_id']])
 			            ->update(['change_status'=>$change_status,'check_note'=>$check_note,'updated_at'=>date('Y-m-d H:i:s',time())]);
 			}
 			
 
-		} elseif ($change->change_status == 1){
+		} elseif ($change->change_status == 1){//当记录单为审核通过时，进行下一环节机房的处理
 
 			$update = DB::table('tz_resource_change')
 			            ->where(['id'=>$check['change_id']])
 			            ->update(['change_status'=>2,'updated_at'=>date('Y-m-d H:i:s',time())]);
 
-		} elseif ($change->change_status == 2){
+		} elseif ($change->change_status == 2){//当记录单已经为机房处理时，进行记录单的完成状态改变
 			
-			switch ($change->before_resource_type) {
-				case 1:
-				case 2:
+			switch ($change->before_resource_type) {//根据更换前的资源类型对更换前的资源进行对应的解除使用状态
+				case 1://租用机器
+				case 2://托管机器
 					$before = DB::table('idc_machine')
 								->where(['machine_num'=>$change->before_resource_number,'own_business'=>$order->business_sn])
 								->update(['own_business'=>'','business_end'=>NULL,'used_status'=>0]);
 					break;
 
-				case 3:
+				case 3://租用机柜
 					$cabinet = DB::table('idc_cabinet')->where(['cabinet_id' => $change->before_resource_number])->select('own_business')->first();//获取机柜原来的业务号
                     if (!empty($cabinet)) {
                         $array = explode(',', $cabinet->own_business);//先将原本的业务数据转换为数组
@@ -2302,16 +2332,20 @@ class OrdersModel extends Model
 					$before = 1;
 					break;
 			}
-			if($before == 0){
+			if($before == 0){//更换前的资源复位失败，操作直接失败，事物回滚并返回
 				DB::rollBack();
 				$return['data'] = [];
 				$return['code'] = 0;
 				$return['msg'] = '(#106)更换资源审核操作失败';
 				return $return;
 			}
-			switch ($change->after_resource_type) {
-				case 1:
-				case 2:
+			switch ($change->after_resource_type) {//根据更换后的资源类型对相对应的更换后的资源进行使用锁定，并对相对应的订单/业务的数据进行更新
+				case 1://租用机器
+				case 2://托管机器
+					/**
+					 * 获取租用/托管机器的数据，判断是否存在该机器
+					 * @var [type]
+					 */
 					$resource = DB::table('idc_machine')
 							   ->join('idc_ips','idc_machine.ip_id','=','idc_ips.id')
 							   ->join('idc_machineroom','idc_machine.machineroom','=','idc_machineroom.id')
@@ -2329,6 +2363,10 @@ class OrdersModel extends Model
 					$ip_company = [0=>'电信',1=>'移动',2=>'联通'];
 					$resource['ip_detail'] = $resource['ip'].'('.$ip_company[$resource['ip_company']].')';
 					unset($resource['ip_company']);
+					/**
+					 * 进行业务绑定的机器数据进行相对应的更新
+					 * @var [type]
+					 */
 					$business_update = DB::table('tz_business')
 										->where(['business_number'=>$order->business_sn])
 										->update(['machine_number'=>$resource['machine_num'],'resource_detail'=>json_encode($resource)]);
@@ -2339,6 +2377,10 @@ class OrdersModel extends Model
 						$return['msg'] = '(#108)资源更换失败';
 						return $return;
 					}
+					/**
+					 * 对应的订单数据进行更新
+					 * @var [type]
+					 */
 					$order_update = DB::table('tz_orders')
 									  ->where(['id'=>$change->business])
 									  ->update(['machine_sn'=>$resource['machine_num'],'resource'=>$resource['machine_num'],'resource_type'=>$change->after_resource_type]);
@@ -2349,9 +2391,17 @@ class OrdersModel extends Model
 						$return['msg'] = '(#109)资源更换失败';
 						return $return;
 					}
+					/**
+					 * 对应机器进行使用锁定
+					 * @var [type]
+					 */
 					$after = DB::table('idc_machine')
 								->where(['machine_num'=>$change->after_resource_number,'own_business'=>$order->business_sn])
 								->update(['business_end'=>$order->end_time,'used_status'=>2]);
+					/**
+					 * 更新进对应的索引文件
+					 * @var XS
+					 */
 					$xunsearch = new XS('business');
 		            $index = $xunsearch->index;
 		            $doc['ip'] = isset($resource['ip'])?strtolower($resource['ip']):'';
@@ -2364,7 +2414,11 @@ class OrdersModel extends Model
 		            $doc['client'] = strtolower($change->customer_id);
 		            $document = new \XSDocument($doc);
 					break;
-				case 3:
+				case 3://租用机柜
+					/**
+					 * 是否存在该机柜
+					 * @var [type]
+					 */
 					$cabinet = DB::table('idc_cabinet')
 								 ->join('idc_machineroom','idc_cabinet.machineroom_id','=','idc_machineroom.id')
 					             ->where(['cabinet_id'=>$change->after_resource_number])
@@ -2380,6 +2434,10 @@ class OrdersModel extends Model
 		            $cabinet['id'] = $cabinet['cabinet_id'];
 		            $own_business = trim($cabinet['own_business'].','.$order->business_sn,' '.',');
 		            unset($cabinet['own_business']);
+		            /**
+		             * 对应机柜数据更新进对应的业务单
+		             * @var [type]
+		             */
 		            $business_update = DB::table('tz_business')
 										->where(['business_number'=>$order->business_sn])
 										->update(['machine_number'=>$cabinet['cabinet_id'],'resource_detail'=>json_encode($cabinet)]);
@@ -2390,6 +2448,10 @@ class OrdersModel extends Model
 						$return['msg'] = '(#111)资源更换失败';
 						return $return;
 					}
+					/**
+					 * 对应机柜数据更新进订单
+					 * @var [type]
+					 */
 					$order_update = DB::table('tz_orders')
 									  ->where(['id'=>$change->business])
 									  ->update(['machine_sn'=>$cabinet['cabinet_id'],'resource'=>$cabinet['cabinet_id'],'resource_type'=>$change->after_resource_type]);
@@ -2400,7 +2462,15 @@ class OrdersModel extends Model
 						$return['msg'] = '(#112)资源更换失败';
 						return $return;
 					}
+					/**
+					 * 更新对应机柜的使用状态
+					 * @var [type]
+					 */
 		            $after = DB::table('idc_cabinet')->where('cabinet_id', $order['machine_sn'])->update(['own_business'=>$own_business]);
+		            /**
+		             * 更新进对应的索引文件
+		             * @var XS
+		             */
 		            $xunsearch = new XS('business');
 		            $index = $xunsearch->index;
 		            $doc['id'] = strtolower($order->id);
@@ -2410,6 +2480,10 @@ class OrdersModel extends Model
 		            $document = new \XSDocument($doc);
 					break;
 				case 4://ip
+					/**
+					 * 是否存在IP
+					 * @var [type]
+					 */
 					$ip = DB::table('idc_ips')
 							->where(['ip'=>$change->after_resource_number,'own_business'=>$order->business_sn])
 							->select('ip','ip_company')
@@ -2423,6 +2497,10 @@ class OrdersModel extends Model
 					}
 					$ip_company = [0=>'电信公司',1=>'移动公司',2=>'联通公司'];
 					$ip_detail = $ip->ip.$ip_company[$ip->ip_company];
+					/**
+					 * 更新进对应订单
+					 * @var [type]
+					 */
 					$order_update = DB::table('tz_orders')
 									  ->where(['id'=>$change->business])
 									  ->update(['machine_sn'=>$ip->ip,'resource'=>$ip_detail,'resource_type'=>$change->after_resource_type]);
@@ -2433,9 +2511,17 @@ class OrdersModel extends Model
 						$return['msg'] = '(#114)资源更换失败';
 						return $return;
 					}
+					/**
+					 * 对应资源进行使用锁定
+					 * @var [type]
+					 */
 					$after = DB::table('idc_ips')
 							->where(['ip'=>$change->after_resource_number,'own_business'=>$order->business_sn])
 							->update(['ip_status'=>1,'ip_lock'=>0,'business_end'=>$order->end_time]);
+					/**
+					 * 更新进对应的索引文件
+					 * @var XS
+					 */
 					$xunsearch = new XS('orders');
 		    		$index = $xunsearch->index;
 		            $doc['id'] = strtolower($order->id);
@@ -2445,6 +2531,10 @@ class OrdersModel extends Model
 		    		$document = new \XSDocument($doc);
 					break;
 				case 5://cpu
+					/**
+					 * 查找对应的资源是否存在
+					 * @var [type]
+					 */
 					$cpu = DB::table('idc_cpu')
 							 ->where(['cpu_number'=>$change->after_resource_number,'service_num'=>$order->business_sn])
 							 ->select('cpu_number','cpu_param')
@@ -2456,6 +2546,10 @@ class OrdersModel extends Model
 						$return['msg'] = '(#115)无对应的CPU资源';
 						return $return;
 					}
+					/**
+					 * 将对应的资源信息更进对应的订单
+					 * @var [type]
+					 */
 					$order_update = DB::table('tz_orders')
 									  ->where(['id'=>$change->business])
 									  ->update(['machine_sn'=>$cpu->cpu_number,'resource'=>$cpu->cpu_param,'resource_type'=>$change->after_resource_type]);
@@ -2466,9 +2560,17 @@ class OrdersModel extends Model
 						$return['msg'] = '(#116)资源更换失败';
 						return $return;
 					}
+					/**
+					 * 锁定对应资源的使用状态
+					 * @var [type]
+					 */
 					$after = DB::table('idc_cpu')
 							   ->where(['cpu_number'=>$change->after_resource_number,'service_num'=>$order->business_sn])
 							   ->update(['cpu_used'=>1,'business_end'=>$order->end_time]);
+					/**
+					 * 更进对应的索引文件
+					 * @var XS
+					 */
 					$xunsearch = new XS('orders');
 		    		$index = $xunsearch->index;
 		            $doc['id'] = strtolower($order->id);
@@ -2478,6 +2580,10 @@ class OrdersModel extends Model
 		    		$document = new \XSDocument($doc);
 					break;
 				case 6://硬盘
+					/**
+					 * 查找对应的资源是否存在
+					 * @var [type]
+					 */
 					$harddisk = DB::table('idc_harddisk')
 							 ->where(['harddisk_number'=>$change->after_resource_number,'service_num'=>$order->business_sn])
 							 ->select('harddisk_number','harddisk_param')
@@ -2489,6 +2595,10 @@ class OrdersModel extends Model
 						$return['msg'] = '(#117)无对应的硬盘资源';
 						return $return;
 					}
+					/**
+					 * 将对应的资源信息更进对应的订单
+					 * @var [type]
+					 */
 					$order_update = DB::table('tz_orders')
 									  ->where(['id'=>$change->business])
 									  ->update(['machine_sn'=>$harddisk->harddisk_number,'resource'=>$harddisk->harddisk_param,'resource_type'=>$change->after_resource_type]);
@@ -2499,9 +2609,17 @@ class OrdersModel extends Model
 						$return['msg'] = '(#118)资源更换失败';
 						return $return;
 					}
+					/**
+					 * 锁定对应资源的使用状态
+					 * @var [type]
+					 */
 					$after = DB::table('idc_harddisk')
 							   ->where(['harddisk_number'=>$change->after_resource_number,'service_num'=>$order->business_sn])
 							   ->update(['harddisk_used'=>1,'business_end'=>$order->end_time]);
+					/**
+					 * 更进对应的索引文件
+					 * @var XS
+					 */
 					$xunsearch = new XS('orders');
 		    		$index = $xunsearch->index;
 		            $doc['id'] = strtolower($order->id);
@@ -2511,6 +2629,10 @@ class OrdersModel extends Model
 		    		$document = new \XSDocument($doc);
 					break;
 				case 7://内存
+					/**
+					 * 查找对应的资源是否存在
+					 * @var [type]
+					 */
 					$memory = DB::table('idc_memory')
 							 ->where(['memory_number'=>$change->after_resource_number,'service_num'=>$order->business_sn])
 							 ->select('memory_number','memory_param')
@@ -2522,6 +2644,10 @@ class OrdersModel extends Model
 						$return['msg'] = '(#119)无对应的内存资源';
 						return $return;
 					}
+					/**
+					 * 将对应的资源信息更进对应的订单
+					 * @var [type]
+					 */
 					$order_update = DB::table('tz_orders')
 									  ->where(['id'=>$change->business])
 									  ->update(['machine_sn'=>$memory->memory_number,'resource'=>$memory->memory_param,'resource_type'=>$change->after_resource_type]);
@@ -2532,9 +2658,17 @@ class OrdersModel extends Model
 						$return['msg'] = '(#120)资源更换失败';
 						return $return;
 					}
+					/**
+					 * 锁定对应资源的使用状态
+					 * @var [type]
+					 */
 					$after = DB::table('idc_memory')
 							   ->where(['memory_number'=>$change->after_resource_number,'service_num'=>$order->business_sn])
 							   ->update(['memory_used'=>1,'business_end'=>$order->end_time]);
+					/**
+					 * 更进对应的索引文件
+					 * @var XS
+					 */
 					$xunsearch = new XS('orders');
 		    		$index = $xunsearch->index;
 		            $doc['id'] = strtolower($order->id);
@@ -2544,11 +2678,19 @@ class OrdersModel extends Model
 		    		$document = new \XSDocument($doc);
 					break;
 				case 8://带宽
+					/**
+					 * 将对应的资源信息更进对应的订单
+					 * @var [type]
+					 */
 					$after = DB::table('tz_orders')
 									  ->where(['id'=>$change->business])
 									  ->update(['resource'=>$change->after_resource_number,'resource_type'=>$change->after_resource_type]);
 					break;
 				case 9://防护
+					/**
+					 * 将对应的资源信息更进对应的订单
+					 * @var [type]
+					 */
 					$after = DB::table('tz_orders')
 									  ->where(['id'=>$change->business])
 									  ->update(['resource'=>$change->after_resource_number,'resource_type'=>$change->after_resource_type]);
@@ -2561,6 +2703,11 @@ class OrdersModel extends Model
 				$return['msg'] = '(#121)资源更换失败';
 				return $return;
 			}
+
+			/**
+			 * 对应的记录单状态进行更新
+			 * @var [type]
+			 */
 			$update = DB::table('tz_resource_change')
 			            ->where(['id'=>$check['change_id']])
 			            ->update(['change_status'=>3,'change_time'=>date('Y-m-d H:i:s',time()),'updated_at'=>date('Y-m-d H:i:s',time())]);
@@ -2601,9 +2748,9 @@ class OrdersModel extends Model
 	public function getChange($data){
 		$where = [];
 		$orwhere = [];
-		if(Admin::user()->inRoles(['salesman'])){
+		if(Admin::user()->inRoles(['salesman'])){//业务员根据业务员id进行对应数据的获取
 			$where = ['sales_id'=>Admin::user()->id];
-		} elseif(Admin::user()->inRoles(['operations'])){
+		} elseif(Admin::user()->inRoles(['operations'])){//运维根据所在机房获取
 			$depart = DB::table('oa_staff')
 						->join('idc_machineroom','oa_staff.department','=','idc_machineroom.list_order')
 						->where(['admin_users_id'=>Admin::user()->id])
@@ -2611,9 +2758,13 @@ class OrdersModel extends Model
 			$where = ['before_machineroom'=>$depart];
 			$orwhere = ['after_machineroom'=>$depart];
 		}
-		if(isset($data['order_id'])){
+		if(isset($data['order_id'])){//根据订单id获取
 			$where['business'] = $data['order_id'];
 		}
+		/**
+		 * 获取对应的更换记录单
+		 * @var [type]
+		 */
 		$change = DB::table('tz_resource_change as change')
 					->join('tz_orders as orders','change.business','=','tz_orders.id')
 					->join('admin_users as admin','change.sales_id','=','admin_users.id')
@@ -2628,6 +2779,10 @@ class OrdersModel extends Model
 			return $rteturn;
 		}
 		foreach($change as $key => $value){
+			/**
+			 * 客户信息的获取
+			 * @var [type]
+			 */
 			$customer = DB::table('tz_users')->where(['id'=>$value->customer_id])->select('email','name','nickname')->first();
 			if(empty($customer)){
 				$value->customer_name = '佚名';
@@ -2636,6 +2791,10 @@ class OrdersModel extends Model
 				$customer_name = $customer_name ? $customer_name : $customer->nickname;
 				$value->customer_name = $customer;
 			}
+			/**
+			 * 对应更换前后的机房，机柜，IP信息，资源类型以及记录单的状态的转换
+			 * @var [type]
+			 */
 			$value->before_machineroom_name = DB::table('idc_machineroom')->where(['id'=>$value->before_machineroom])->value('machine_room_name');
 			$value->after_machineroom_name = DB::table('idc_machineroom')->where(['id'=>$value->after_machineroom])->value('machine_room_name');
 			$value->before_cabinet_name = DB::table('idc_cabinet')->where(['id'=>$value->before_cabinet])->value('cabinet_id');

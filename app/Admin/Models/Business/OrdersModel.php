@@ -2186,10 +2186,6 @@ class OrdersModel extends Model
 									      ->update(['own_business'=>'','business_end'=>NULL,'used_status'=>0]);
 						break;
 
-					// case 3:
-						
-					// 	break;
-
 					case 4://ip
 						$after_update = DB::table('idc_ips')
 									      ->where(['ip'=>$change->after_resource_number,'own_business'=>$order->business_sn])
@@ -2637,6 +2633,63 @@ class OrdersModel extends Model
 		$return['code'] = 1;
 		$return['msg'] = '数据获取成功';
 		return $rteturn;
+	}
+
+	/**
+	 * 获取相关的可更换的订单
+	 * @param  array $get --business_sn业务号,--resource_type资源类型
+	 * @return [type]      [description]
+	 */
+	public function getOrders($get){
+		if(empty($get)){
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#101)无法获取对应的数据';
+			return $return;
+		}
+		if(!isset($get['business_sn'])){
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#102)无法获取对应的数据';
+			return $return;
+		}
+		$sign = '<';
+		$type = 4;
+		if(isset($get['resource_type'])){
+			$sign = '=';
+			$type = $get['resource_type'];
+		}
+		$orders = DB::table('tz_orders')
+					->where('resource_type',$sign,$type)
+					->where(['remove_status'=>0,'business_sn'=>$get['business_sn']])
+					->whereBetween('order_status',[0,3])
+					->whereNull('deleted_at')
+					->orderBy('end_time','desc')
+					->get(['order_sn','resource_type','machine_sn','resource','price','end_time','duration','id'])
+					->groupBy('machine_sn');
+		if($orders->isEmpty()){
+			$return['data'] = $orders;
+			$return['code'] = 0;
+			$return['msg'] = '暂无数据';
+			return $return;
+		}
+		$order_value = [];
+		foreach ($orders as $key => $value) {
+			foreach($value as $vkey => $vvalue){
+				if($vvalue->resource_type < 3){
+					$business = DB::table('tz_business')->where(['business_number'=>$get['business_sn']])->value('resource_detail');
+					$detail = json_decode($business);
+					$vvalue->resource = $detail->ip;
+				}
+				array_push($order_value,$vvalue);
+			}
+
+		}
+		$return['data'] = $order_value;
+		$return['code'] = 1;
+		$return['msg'] = '订单数据获取成功';
+		return $return;	
+
 	}
 
 

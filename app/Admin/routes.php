@@ -437,7 +437,10 @@ Route::group([
         /**
          * 更换资源相关
          */
-        $router->get('getresource','Business\OrdersController@getResource');
+        $router->post('getresource','Business\OrdersController@getResource');
+        $router->post('change','Business\OrdersController@changeResource');
+        $router->post('checkchange','Business\OrdersController@checkChange');
+        $router->get('getchange','Business\OrdersController@getChange');
     });
 
 

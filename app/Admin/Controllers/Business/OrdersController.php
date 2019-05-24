@@ -261,4 +261,14 @@ class OrdersController extends Controller
 		return tz_ajax_echo($check_result['data'],$check_result['msg'],$check_result['code']);
 	}
 
+	/**
+	 * 获取更换资源记录
+	 * @return [type] [description]
+	 */
+	public function getChange(){
+		$get_change = new OrdersModel();
+		$get_result = $get_change->getChange();
+		return tz_ajax_echo($get_result['data'],$get_result['msg'],$get_result['code']);
+	}
+
 }

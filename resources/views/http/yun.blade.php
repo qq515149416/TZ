@@ -283,7 +283,7 @@
             产品功能
         </h3>
         <ul>
-            <li class="clearfix">
+            <li>
                 <div class="feature">
                     计算
                 </div>
@@ -295,8 +295,198 @@
                     <p>云服务器提供丰富的实例规格(CPU、内存）和带宽、云盘选择，支持随时升级，满足各种业务需求。99.99%的高可用性，为业务的稳定运行提供保障</p>
                 </div>
             </li>
+            <li>
+                <div class="feature">
+                    存储
+                </div>
+                <div class="dec-item">
+                    <p>
+                        三层存储技术，支撑用户数据自动生成备份，切实保障用户数据安全，满足不同的I/O性能要求
+                    </p>
+                </div>
+                <div class="dec-item">
+                    <p>采用腾正云三层存储革新技术，自动分层缓存、沉淀、备份数据保障用户数据完整性、可用性，数据安全性高达99.999%</p>
+                </div>
+            </li>
+            <li>
+                <div class="feature">
+                    安全
+                </div>
+                <div class="dec-item">
+                    <p class="table-item">网络安全、服务器安全等基础防护</p>
+                    <p class="table-item">云监控监测，实时预警</p>
+                </div>
+                <div class="dec-item">
+                    <p>提供DDoS防护、DNS劫持检测、入侵检测、漏洞扫描、网页木马检测、登录防护等安全服务对服务器的监控报警服务，提供实时监控，性能高低一目了然</p>
+                </div>
+            </li>
+            <li>
+                <div class="feature">
+                    管理
+                </div>
+                <div class="dec-item">
+                    <p>提供控制台、远程终端和 API 等多种管理方式，给您完全管理权限</p>
+                </div>
+                <div class="dec-item">
+                    <p>提供web控制台、API两种方式，能够轻松的开通、关闭、重启、升级云服务器；提供CPU、内存、硬盘IO的实时监控和报表，随时了解云服务器运行情况</p>
+                </div>
+            </li>
+            <li>
+                <div class="feature">
+                    <span>网络</span>
+                </div>
+                <div class="dec-item">
+                    <p>全网骨干网接入，承诺独享，多运营商覆盖</p>
+                </div>
+                <div class="dec-item">
+                    <p>覆盖多个地区的极速公网体验，提供灵活的网络规划选择</p>
+                </div>
+            </li>
         </ul>
     </div>
+    <div class="yun-map">
+        <div class="idx_box_wp index-partners">
+        <div class="map-bg">
+        <div class="zzidc-auto">
+        <div class="zzidc-tit">
+        <h2 class="gfff">多个数据中心·秒级响应全球</h2>
+        <div class="line-row"></div>
+        </div>
+        <div class="map-main">
+        <div class="map-left">
+        <div class="circle-tit"> 即将部署节点 </div>
+        <div class="marker-tit"> 已部署节点 </div>
+        <div class="dz-list">
+        <div class="dz-item">浙江</div>
+        <div class="dz-item">辽宁</div>
+        <div class="dz-item">陕西</div>
+        <div class="dz-item">湖南</div>
+        <div class="dz-item">广东</div>
+        </div>
+        </div>
+        <style>
+        .ntkj{width: 132px;height: 44px;position: absolute;z-index: 100;color: #fff;}
+        </style>
+        <!--即将部署节点-->
+        <!--节点开始-->
+        <div class="circlebox" style="left: 370px;top: 120px;"><span class="circle2"></span><span class="pulse2"></span></div>
+        <div class="ntkj" style="left: 390px;top: 113px;">美国</div>
+        <!--节点结束-->
+        <!--节点开始-->
+        <div class="circlebox" style="right: 240px;top: 207px;"><span class="circle2"></span><span class="pulse2"></span></div>
+        <div class="ntkj" style="right: 90px;top: 204px;">香港</div>
+        <!--节点结束-->
+        <!--节点开始-->
+        <div class="circlebox" style="right: 180px;top: 165px;"><span class="circle2"></span><span class="pulse2"></span></div>
+        <div class="ntkj" style="right: 30px;top: 155px;">日本</div>
+        <!--节点结束-->
+        <!--节点开始-->
+        <div class="circlebox" style="right: 235px;top: 171px;"><span class="circle2"></span><span class="pulse2"></span></div>
+        <div class="ntkj" style="right: 85px;top: 162px;">浙江</div>
+        <!--节点结束-->
+        <!--节点开始-->
+        <div class="circlebox" style="right: 225px;top: 161px;"><span class="circle2"></span><span class="pulse2"></span></div>
+        <div class="ntkj" style="right: 130px;top: 148px;">上海</div>
+        <!--节点结束-->
+        <!--节点开始-->
+        <div class="circlebox" style="right: 210px;top: 145px;"><span class="circle2"></span><span class="pulse2"></span></div>
+        <div class="ntkj" style="right: 88px;top: 118px;">辽宁</div>
+        <!--节点结束-->
+        <!--已部署节点-->
+        <!--节点开始-->
+        <div class="circlebox" style="left: 940px;top: 142px;"><span class="circle"></span><span class="pulse"></span></div>
+        <div class="ntkj" style="right: 170px;top: 135px;">陕西</div>
+        <!--节点结束-->
+        <!--节点开始-->
+        <div class="circlebox" style="left: 948px;top: 177px;"><span class="circle"></span><span class="pulse"></span></div>
+        <div class="ntkj" style="right: 160px;top: 170px;">湖南</div>
+        <!--节点结束-->
+        <!--节点开始-->
+        <div class="circlebox" style="left: 959px;top: 191px;"><span class="circle"></span><span class="pulse"></span></div>
+        <div class="ntkj" style="right: 90px;top: 184px;">广东</div>
+        <!--节点结束-->
+        </div>
+        </div>
+        </div>
+        </div>
+    </div>
+    <div class="problem">
+        <h3>云主机常见问题</h3>
+        <p>关注腾正，关注IDC，关注云计算，关注信息安全,关注互联网动向</p>
+        <div class="list clearfix">
+            <ul>
+                <li>
+                    <a href="javascript:;" class="pull-left">什么是云主机？</a>
+                    <a href="javascript:;" class="pull-right">2019.01.21</a>
+                </li>
+                <li>
+                    <a href="javascript:;" class="pull-left">云服务器和云虚拟主机有什么区别？</a>
+                    <a href="javascript:;" class="pull-right">2019.01.21</a>
+                </li>
+                <li>
+                    <a href="javascript:;" class="pull-left">云服务器和云虚拟主机的区别、利弊？</a>
+                    <a href="javascript:;" class="pull-right">2019.01.22</a>
+                </li>
+                <li>
+                    <a href="javascript:;" class="pull-left">云主机哪家好？怎么选择？</a>
+                    <a href="javascript:;" class="pull-right">2019.01.15</a>
+                </li>
+                <li>
+                    <a href="javascript:;" class="pull-left">香港云主机哪个牌子好？</a>
+                    <a href="javascript:;" class="pull-right">2019.01.15</a>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <a href="javascript:;" class="pull-left">什么是云主机？</a>
+                    <a href="javascript:;" class="pull-right">2019.01.21</a>
+                </li>
+                <li>
+                    <a href="javascript:;" class="pull-left">云服务器和云虚拟主机有什么区别？</a>
+                    <a href="javascript:;" class="pull-right">2019.01.21</a>
+                </li>
+                <li>
+                    <a href="javascript:;" class="pull-left">云服务器和云虚拟主机的区别、利弊？</a>
+                    <a href="javascript:;" class="pull-right">2019.01.22</a>
+                </li>
+                <li>
+                    <a href="javascript:;" class="pull-left">云主机哪家好？怎么选择？</a>
+                    <a href="javascript:;" class="pull-right">2019.01.15</a>
+                </li>
+                <li>
+                    <a href="javascript:;" class="pull-left">香港云主机哪个牌子好？</a>
+                    <a href="javascript:;" class="pull-right">2019.01.15</a>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <a href="javascript:;" class="pull-left">什么是云主机？</a>
+                    <a href="javascript:;" class="pull-right">2019.01.21</a>
+                </li>
+                <li>
+                    <a href="javascript:;" class="pull-left">云服务器和云虚拟主机有什么区别？</a>
+                    <a href="javascript:;" class="pull-right">2019.01.21</a>
+                </li>
+                <li>
+                    <a href="javascript:;" class="pull-left">云服务器和云虚拟主机的区别、利弊？</a>
+                    <a href="javascript:;" class="pull-right">2019.01.22</a>
+                </li>
+                <li>
+                    <a href="javascript:;" class="pull-left">云主机哪家好？怎么选择？</a>
+                    <a href="javascript:;" class="pull-right">2019.01.15</a>
+                </li>
+                <li>
+                    <a href="javascript:;" class="pull-left">香港云主机哪个牌子好？</a>
+                    <a href="javascript:;" class="pull-right">2019.01.15</a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+    <section class="jumbotron footer">
+        <h4><span>懂防御，更懂服务！</span> —— 加入腾正云，助力快速业务部署</h4>
+        <a href="javascript:;">立即咨询</a>
+    </section>
 </div>
 
 @endsection

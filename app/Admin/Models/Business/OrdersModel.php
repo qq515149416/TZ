@@ -2642,7 +2642,9 @@ class OrdersModel extends Model
 			$value->after_ip_detail = DB::table('idc_ips')->where(['id'=>$value->after_ip])->value('ip');
 			$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn',11=>'高防IP',12=>'流量叠加包'];
 			$value->before_type = $resource_type[$value->before_resource_type];
-			$value->after_type = $resource_type[$value->after_resource_type]; 
+			$value->after_type = $resource_type[$value->after_resource_type];
+			$status = ['-1'=>'审核不通过',0=>'待审核',1=>'待更换',2=>'机房处理中',3=>'完成'];
+			$value->status = $status[$value->change_status]; 
 		}
 		$return['data'] = $change;
 		$return['code'] = 1;

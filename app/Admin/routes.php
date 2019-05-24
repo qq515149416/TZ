@@ -119,6 +119,7 @@ Route::group([
             $router->get('/defenseBusinesReview', 'Show\DefenseBusinessReviewController@index');
             $router->get('/customerStatistics', 'Show\CustomerStatisticsController@index');
             $router->get('/businessStatistics', 'Show\BusinessStatisticsController@index');
+            $router->get('/overlay', 'Show\OverlayController@index');
 
         });
 
@@ -441,7 +442,7 @@ Route::group([
         $router->post('change','Business\OrdersController@changeResource');//提交更换信息
         $router->post('checkchange','Business\OrdersController@checkChange');//审核更换记录
         $router->get('getchange','Business\OrdersController@getChange');//获取更换记录
-        $router->get('getorders','Business\OrdersController@getOrders');//获取相关的可更换的订单
+        // $router->get('getorders','Business\OrdersController@getOrders');//获取相关的可更换的订单
     });
 
 

@@ -265,9 +265,10 @@ class OrdersController extends Controller
 	 * 获取更换资源记录
 	 * @return [type] [description]
 	 */
-	public function getChange(){
+	public function getChange(Request $request){
+		$data = $request->only(['order_id']);
 		$get_change = new OrdersModel();
-		$get_result = $get_change->getChange();
+		$get_result = $get_change->getChange($data);
 		return tz_ajax_echo($get_result['data'],$get_result['msg'],$get_result['code']);
 	}
 

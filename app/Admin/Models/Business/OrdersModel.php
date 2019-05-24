@@ -2596,7 +2596,7 @@ class OrdersModel extends Model
 	 * 获取更换申请记录表
 	 * @return [type] [description]
 	 */
-	public function getChange(){
+	public function getChange($data){
 		$where = [];
 		$orwhere = [];
 		if(Admin::user()->inRoles(['salesman'])){
@@ -2608,6 +2608,9 @@ class OrdersModel extends Model
 						->value('idc_machineroom.id');
 			$where = ['before_machineroom'=>$depart];
 			$orwhere = ['after_machineroom'=>$depart];
+		}
+		if(isset($data['order_id'])){
+			$where['business'] = $data['order_id'];
 		}
 		$change = DB::table('tz_resource_change as change')
 					->join('tz_orders as orders','change.business','=','tz_orders.id')

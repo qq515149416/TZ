@@ -2584,6 +2584,10 @@ class OrdersModel extends Model
 		return $return;
 	}
 
+	/**
+	 * 获取更换申请记录表
+	 * @return [type] [description]
+	 */
 	public function getChange(){
 		$where = [];
 		$orwhere = [];
@@ -2603,13 +2607,36 @@ class OrdersModel extends Model
 					->where($where)
 					->orWhere($orwhere)
 					->whereNull('change.deleted_at')
-					->get(['change.id','change.change_number','change.before_resource_type','change.before_resource_number','change.before_machineroom','change.before_cabinet','change.before_ip','change.after_resource_type','change.after_resource_number','change.after_machineroom','change.after_cabinet','change.after_ip','change.sales_id','change.customer_id','change.change_time','change.change_status','change.change_reason','change.check_note','change.created_at','orders.order_sn','orders.business_sn','admin.name']);
+					->get(['change.id','change.change_number','change.before_resource_type','change.before_resource_number','change.before_machineroom','change.before_cabinet','change.before_ip','change.after_resource_type','change.after_resource_number','change.after_machineroom','change.after_cabinet','change.after_ip','change.sales_id','change.customer_id','change.change_time','change.change_status','change.change_reason','change.check_note','change.created_at','orders.order_sn','orders.business_sn','admin.name as sales_name']);
 		if($change->isEmpty()){
 			$return['data'] = [];
 			$return['code'] = 0;
 			$return['msg'] = '暂无数据';
 			return $rteturn;
 		}
+		foreach($change as $key => $value){
+			$customer = DB::table('tz_users')->where(['id'=>$value->customer_id])->select('email','name','nickname')->first();
+			if(empty($customer)){
+				$value->customer_name = '佚名';
+			} else {
+				$customer_name = $customer->email ? $customer->email : $customer->name;
+				$customer_name = $customer_name ? $customer_name : $customer->nickname;
+				$value->customer_name = $customer;
+			}
+			$value->before_machineroom_name = DB::table('idc_machineroom')->where(['id'=>$value->before_machineroom])->value('machine_room_name');
+			$value->after_machineroom_name = DB::table('idc_machineroom')->where(['id'=>$value->after_machineroom])->value('machine_room_name');
+			$value->before_cabinet_name = DB::table('idc_cabinet')->where(['id'=>$value->before_cabinet])->value('cabinet_id');
+			$value->after_cabinet_name = DB::table('idc_cabinet')->where(['id'=>$value->after_cabinet])->value('cabinet_id');
+			$value->before_ip_detail = DB::table('idc_ips')->where(['id'=>$value->before_ip])->value('ip');
+			$value->after_ip_detail = DB::table('idc_ips')->where(['id'=>$value->after_ip])->value('ip');
+			$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn',11=>'高防IP',12=>'流量叠加包'];
+			$value->before_type = $resource_type[$value->before_resource_type];
+			$value->after_type = $resource_type[$value->after_resource_type]; 
+		}
+		$return['data'] = $change;
+		$return['code'] = 1;
+		$return['msg'] = '数据获取成功';
+		return $rteturn;
 	}
 
 

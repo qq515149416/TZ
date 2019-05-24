@@ -1886,16 +1886,28 @@ class OrdersModel extends Model
 				break;
 			case 4://IP
 				$ip_company = isset($get['ip_company'])?$get['ip_company']:0;
-				$resource = DB::table('idc_ips')->where(['ip_status'=>0,'ip_lock'=>0,'ip_comproom'=>$machineroom,'ip_company'=>$ip_company])->get(['id','ip','ip_company']);
+				$resource = DB::table('idc_ips')
+							  ->join('idc_machineroom','idc_ips.ip_comproom','=','idc_machineroom.id')
+				              ->where(['ip_status'=>0,'ip_lock'=>0,'ip_comproom'=>$machineroom,'ip_company'=>$ip_company])
+				              ->get(['id','ip','ip_company','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
 				break;
 			case 5://CPU
-				$resource = DB::table('idc_cpu')->where(['cpu_used'=>0,'room_id'=>$machineroom])->get(['id','cpu_number','cpu_param']);
+				$resource = DB::table('idc_cpu')
+							  ->join('idc_machineroom','idc_cpu.room_id','=','idc_machineroom.id')
+				              ->where(['cpu_used'=>0,'room_id'=>$machineroom])
+				              ->get(['id','cpu_number','cpu_param','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
 				break;
 			case 6://硬盘
-				$resource = DB::table('idc_harddisk')->where(['harddisk_used'=>0,'room_id'=>$machineroom])->get(['id','harddisk_number','harddisk_param']);
+				$resource = DB::table('idc_harddisk')
+ 							  ->join('idc_machineroom','idc_harddisk.room_id','=','idc_machineroom.id')
+				              ->where(['harddisk_used'=>0,'room_id'=>$machineroom])
+				              ->get(['id','harddisk_number','harddisk_param','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
 				break;
 			case 7://内存
-				$resource = DB::table('idc_memory')->where(['memory_used'=>0,'room_id'=>$machineroom])->get(['id','memory_number','memory_param']);
+				$resource = DB::table('idc_memory')
+							  ->join('idc_machineroom','idc_memory.room_id','=','idc_machineroom.id')
+				              ->where(['memory_used'=>0,'room_id'=>$machineroom])
+				              ->get(['id','memory_number','memory_param','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
 				break;
 		}
 		if($resource->isEmpty()){

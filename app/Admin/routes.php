@@ -419,28 +419,28 @@ Route::group([
         /**
          * 信安录入业务时进行相关信息的获取
          */
-        $router->get('select_sales','Business\BusinessController@selectSalesman');
-        $router->post('select_users','Business\BusinessController@selectUsers');
-        $router->post('security_insert','Business\BusinessController@securityInsertBusiness');
-        $router->post('security_order','Business\OrdersController@securityInsertOrders');
+        $router->get('select_sales','Business\BusinessController@selectSalesman');//选择业务员
+        $router->post('select_users','Business\BusinessController@selectUsers');//选择客户
+        $router->post('security_insert','Business\BusinessController@securityInsertBusiness');//录入业务
+        $router->post('security_order','Business\OrdersController@securityInsertOrders');//录入资源
 
         /**
          * IDC业务数据统计相关
          */
-        $router->get('new_business','Business\BusinessController@newBusiness');
-        $router->get('under_business','Business\BusinessController@underBusiness');
-        $router->get('new_registration','Business\BusinessController@newRegistration');
-        $router->get('changemarket','Business\BusinessController@changeMarket');
+        $router->get('new_business','Business\BusinessController@newBusiness');//新增业务统计
+        $router->get('under_business','Business\BusinessController@underBusiness');//下架业务统计
+        $router->get('new_registration','Business\BusinessController@newRegistration');//新注册统计
+        $router->get('changemarket','Business\BusinessController@changeMarket');//业务统计
 
         $router->post('register', 'Business\CustomerController@registerClerk');//后台替客户注册账号
 
         /**
          * 更换资源相关
          */
-        $router->post('getresource','Business\OrdersController@getResource');
-        $router->post('change','Business\OrdersController@changeResource');
-        $router->post('checkchange','Business\OrdersController@checkChange');
-        $router->get('getchange','Business\OrdersController@getChange');
+        $router->post('getresource','Business\OrdersController@getResource');//获取可更换的资源
+        $router->post('change','Business\OrdersController@changeResource');//提交更换信息
+        $router->post('checkchange','Business\OrdersController@checkChange');//审核更换记录
+        $router->get('getchange','Business\OrdersController@getChange');//获取更换记录
     });
 
 

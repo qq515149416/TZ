@@ -2187,7 +2187,7 @@ class OrdersModel extends Model
 		}
 		DB::beginTransaction();
 		if ($change->change_status == 0){
-
+			$check_note = isset($check['check_note'])?$check['check_note']:'';
 			$change_status = isset($check['change_status'])?$check['change_status']:0;
 			if($change_status == '-1'){
 				switch ($change->after_resource_type) {
@@ -2235,19 +2235,21 @@ class OrdersModel extends Model
 					$return['msg'] = '(#105)审核失败';
 					return $return;
 				}
-
-			}
-
-			$check_note = isset($check['check_note'])?$check['check_note']:'';
-			$update = DB::table('tz_resource_change')
+				$update = DB::table('tz_resource_change')
 			            ->where(['id'=>$check['change_id']])
-			            ->update(['change_status'=>$change_status,'check_note'=>$check_note]);
+			            ->update(['change_status'=>$change_status,'check_note'=>$check_note,'updated_at'=>date('Y-m-d H:i:s',time()),'change_time'=>date('Y-m-d H:i:s',time())]);
+			} else {
+				$update = DB::table('tz_resource_change')
+			            ->where(['id'=>$check['change_id']])
+			            ->update(['change_status'=>$change_status,'check_note'=>$check_note,'updated_at'=>date('Y-m-d H:i:s',time())]);
+			}
+			
 
 		} elseif ($change->change_status == 1){
 
 			$update = DB::table('tz_resource_change')
 			            ->where(['id'=>$check['change_id']])
-			            ->update(['change_status'=>2]);
+			            ->update(['change_status'=>2,'updated_at'=>date('Y-m-d H:i:s',time())]);
 
 		} elseif ($change->change_status == 2){
 			
@@ -2561,7 +2563,7 @@ class OrdersModel extends Model
 			}
 			$update = DB::table('tz_resource_change')
 			            ->where(['id'=>$check['change_id']])
-			            ->update(['change_status'=>3]);
+			            ->update(['change_status'=>3,'change_time'=>date('Y-m-d H:i:s',time()),'updated_at'=>date('Y-m-d H:i:s',time())]);
 
 		} else {
 

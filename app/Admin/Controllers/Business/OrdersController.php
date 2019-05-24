@@ -265,10 +265,23 @@ class OrdersController extends Controller
 	 * 获取更换资源记录
 	 * @return [type] [description]
 	 */
-	public function getChange(){
+	public function getChange(Request $request){
+		$data = $request->only(['order_id']);
 		$get_change = new OrdersModel();
-		$get_result = $get_change->getChange();
+		$get_result = $get_change->getChange($data);
 		return tz_ajax_echo($get_result['data'],$get_result['msg'],$get_result['code']);
 	}
+
+	// /**
+	//  * 获取相关的可更换的订单
+	//  * @param  Request $request --business_sn业务号,--resource_type资源类型
+	//  * @return [type]           [description]
+	//  */
+	// public function getOrders(Request $request){
+	// 	$get_orders = $request->only(['business_sn','resource_type']);
+	// 	$get = new OrdersModel();
+	// 	$get_result = $get->getOrders($get_orders);
+	// 	return tz_ajax_echo($get_result['data'],$get_result['msg'],$get_result['code']);
+	// }
 
 }

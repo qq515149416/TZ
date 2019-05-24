@@ -86,8 +86,22 @@ class OverlayModel extends Model
 		}
 	}
 
-	public function show($site){
-		$overlay = $this->where('site',$site)->get();
+	public function show($par){
+		if($par['site'] == '*'){
+			if ($par['sell_status'] == '*') {
+				$overlay = $this->get();
+			}else{
+				$overlay = $this->where('sell_status',$par['sell_status'])->get();
+			}
+			
+		}else{
+			if ($par['sell_status'] == '*') {
+				$overlay = $this->where('site',$par['site'])->get();
+			}else{
+				$overlay = $this->where('site',$par['site'])->where('sell_status',$par['sell_status'])->get();
+			}
+		}
+		
 		if($overlay->isEmpty()){
 			return [
 				'data'	=> [],
@@ -118,6 +132,7 @@ class OverlayModel extends Model
 				$overlay->sell_status = '未知状态';
 				break;
 		}
+		$overlay->machine_room_name = DB::table('idc_machineroom')->where('id',$overlay->site)->value('machine_room_name');
 		return $overlay;
 	}
 

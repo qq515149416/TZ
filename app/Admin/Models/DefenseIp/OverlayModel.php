@@ -168,6 +168,9 @@ class OverlayModel extends Model
 			return $checkAdminUser;
 		}else{
 			$customer = $checkAdminUser['data'];
+			if ($customer->name == null) {
+				$customer->name = $customer->email;
+			}
 		}
 		$pay_model = new OrdersModel();
 

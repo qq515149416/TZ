@@ -120,6 +120,7 @@ Route::group([
             $router->get('/customerStatistics', 'Show\CustomerStatisticsController@index');
             $router->get('/businessStatistics', 'Show\BusinessStatisticsController@index');
             $router->get('/overlay', 'Show\OverlayController@index');
+            $router->get('/overlayBusiness', 'Show\OverlayBusinessController@index');
 
         });
 

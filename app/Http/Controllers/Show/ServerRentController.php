@@ -339,8 +339,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口50M",
                             "ip" => "3个",
                             "defense" => "80G",
-                            "monthlyPay" => 1100,
-                            "annualFee" => 1100 * 12
+                            "monthlyPay" => 1400,
+                            "annualFee" => 12000
                         ],
                         [
                             "line" => "西安三线",
@@ -350,8 +350,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口100M",
                             "ip" => "3个",
                             "defense" => "160G",
-                            "monthlyPay" => 1800,
-                            "annualFee" => 1800 * 12
+                            "monthlyPay" => 2200,
+                            "annualFee" => 20400
                         ],
                         [
                             "line" => "西安三线",
@@ -361,8 +361,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口200M",
                             "ip" => "3个",
                             "defense" => "300G",
-                            "monthlyPay" => 3300,
-                            "annualFee" => 3300 * 12
+                            "monthlyPay" => 3900,
+                            "annualFee" => 38400
                         ],
                         [
                             "line" => "西安三线",
@@ -415,8 +415,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口20M",
                             "ip" => "1对",
                             "defense" => "无（企业）",
-                            "monthlyPay" => 850,
-                            "annualFee" => 850 * 12
+                            "monthlyPay" => 1000,
+                            "annualFee" => 9600
                         ],
                         [
                             "line" => "衡阳双线",
@@ -426,8 +426,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口20M",
                             "ip" => "1对",
                             "defense" => "40G",
-                            "monthlyPay" => 850,
-                            "annualFee" => 850 * 12
+                            "monthlyPay" => 1000,
+                            "annualFee" => 9600
                         ],
                         [
                             "line" => "衡阳双线",
@@ -437,8 +437,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口20M",
                             "ip" => "1对",
                             "defense" => "80G",
-                            "monthlyPay" => 1250,
-                            "annualFee" => 1250 * 12
+                            "monthlyPay" => 1500,
+                            "annualFee" => 14400
                         ],
                         [
                             "line" => "衡阳双线",
@@ -448,8 +448,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口20M",
                             "ip" => "1对",
                             "defense" => "120G",
-                            "monthlyPay" => 1950,
-                            "annualFee" => 1950 * 12
+                            "monthlyPay" => 2200,
+                            "annualFee" => 22800
                         ]
                     ]
                 ],
@@ -467,8 +467,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口20M",
                             "ip" => "1个",
                             "defense" => "无（企业）",
-                            "monthlyPay" => 950,
-                            "annualFee" => 950 * 12
+                            "monthlyPay" => 1200,
+                            "annualFee" => 10800
                         ],
                         // [
                         //     "line" => "惠州电信",
@@ -585,8 +585,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口50M",
                             "ip" => "1对",
                             "defense" => "80G",
-                            "monthlyPay" => 950,
-                            "annualFee" => 950 * 12
+                            "monthlyPay" => 1100,
+                            "annualFee" => 10800
                         ],
                         [
                             "line" => "西安双线",
@@ -596,8 +596,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口100M",
                             "ip" => "1对",
                             "defense" => "160G",
-                            "monthlyPay" => 1650,
-                            "annualFee" => 1650 * 12
+                            "monthlyPay" => 1900,
+                            "annualFee" => 19200
                         ],
                         [
                             "line" => "西安双线",
@@ -607,8 +607,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口200M",
                             "ip" => "1对",
                             "defense" => "300G",
-                            "monthlyPay" => 3150,
-                            "annualFee" => 3150 * 12
+                            "monthlyPay" => 3600,
+                            "annualFee" => 37200
                         ],
                         [
                             "line" => "西安双线",
@@ -907,8 +907,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口20M",
                             "ip" => "1个",
                             "defense" => "无（企业）",
-                            "monthlyPay" => 700,
-                            "annualFee" => 700 * 12
+                            "monthlyPay" => 800,
+                            "annualFee" => 7200
                         ],
                         [
                             "line" => "衡阳电信",
@@ -918,8 +918,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口20M",
                             "ip" => "1个",
                             "defense" => "40G",
-                            "monthlyPay" => 700,
-                            "annualFee" => 700 * 12
+                            "monthlyPay" => 800,
+                            "annualFee" => 7200
                         ],
                         [
                             "line" => "衡阳电信",
@@ -929,8 +929,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口20M",
                             "ip" => "1个",
                             "defense" => "80G",
-                            "monthlyPay" => 1100,
-                            "annualFee" => 1100 * 12
+                            "monthlyPay" => 1300,
+                            "annualFee" => 12000
                         ],
                         [
                             "line" => "衡阳电信",
@@ -940,8 +940,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口20M",
                             "ip" => "1个",
                             "defense" => "120G",
-                            "monthlyPay" => 1800,
-                            "annualFee" => 1800 * 12
+                            "monthlyPay" => 2000,
+                            "annualFee" => 20400
                         ]
                     ]
                 ],
@@ -959,8 +959,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口20M",
                             "ip" => "1个",
                             "defense" => "无（企业）",
-                            "monthlyPay" => 800,
-                            "annualFee" => 800 * 12
+                            "monthlyPay" => 1000,
+                            "annualFee" => 8400
                         ],
                         // [
                         //     "line" => "惠州电信",
@@ -1077,8 +1077,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口50M",
                             "ip" => "1个",
                             "defense" => "80G",
-                            "monthlyPay" => 800,
-                            "annualFee" => 800 * 12
+                            "monthlyPay" => 900,
+                            "annualFee" => 8400
                         ],
                         [
                             "line" => "西安电信",
@@ -1088,8 +1088,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口100M",
                             "ip" => "1个",
                             "defense" => "160G",
-                            "monthlyPay" => 1500,
-                            "annualFee" => 1500 * 12
+                            "monthlyPay" => 1700,
+                            "annualFee" => 16800
                         ],
                         [
                             "line" => "西安电信",
@@ -1099,8 +1099,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口200M",
                             "ip" => "1个",
                             "defense" => "300G",
-                            "monthlyPay" => 3000,
-                            "annualFee" => 3000 * 12
+                            "monthlyPay" => 3400,
+                            "annualFee" => 34800
                         ],
                         [
                             "line" => "西安电信",

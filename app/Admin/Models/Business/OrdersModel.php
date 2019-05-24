@@ -1882,7 +1882,7 @@ class OrdersModel extends Model
 			case 3://租用机柜
 				$resource = DB::table('idc_cabinet')
 							   ->join('idc_machineroom','idc_cabinet.machineroom_id','=','idc_machineroom.id')
-							   ->get(['idc_cabinet.id as cabinetid','cabinet_id','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
+							   ->get(['idc_cabinet.id','cabinet_id','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
 				break;
 			case 4://IP
 				$ip_company = isset($get['ip_company'])?$get['ip_company']:0;

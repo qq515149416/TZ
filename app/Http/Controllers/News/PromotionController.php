@@ -20,7 +20,6 @@ class PromotionController extends Controller
 
 		$return = $model->getPro($par['need']);
 
-		dd($return);
 	}
   
 }

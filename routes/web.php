@@ -256,6 +256,7 @@ Route::group([
             Route::post('buyNowByCustomer', 'DefenseIp\OverlayController@buyNowByCustomer');
             Route::get('showBelong', 'DefenseIp\OverlayController@showBelong');
             Route::post('useOverlayToDIP', 'DefenseIp\OverlayController@useOverlayToDIP');
+            Route::post('useOverlayToIDC', 'DefenseIp\OverlayController@useOverlayToIDC');
         });
     });
 

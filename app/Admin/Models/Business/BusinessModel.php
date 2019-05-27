@@ -896,7 +896,7 @@ class BusinessModel extends Model
         $total = 0;
         if(!$orders_info->isEmpty()){
             foreach($orders_info as $info_key => $info){
-                $resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn',11=>'高防IP'];
+                $resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn',11=>'高防IP',12=>'流量叠加包'];
                 $info->type = $resource_type[$info->resource_type];
                 $money = bcmul($info->price,$info->duration,2);
                 $info->money = $money;

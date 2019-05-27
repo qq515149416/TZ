@@ -1897,25 +1897,25 @@ class OrdersModel extends Model
 				$resource = DB::table('idc_ips')
 							  ->join('idc_machineroom','idc_ips.ip_comproom','=','idc_machineroom.id')
 				              ->where(['ip_status'=>0,'ip_lock'=>0,'ip_comproom'=>$machineroom,'ip_company'=>$ip_company])
-				              ->get(['id','ip','ip_company','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
+				              ->get(['idc_ips.id','ip','ip_company','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
 				break;
 			case 5://CPU
 				$resource = DB::table('idc_cpu')
 							  ->join('idc_machineroom','idc_cpu.room_id','=','idc_machineroom.id')
 				              ->where(['cpu_used'=>0,'room_id'=>$machineroom])
-				              ->get(['id','cpu_number','cpu_param','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
+				              ->get(['idc_cpu.id','cpu_number','cpu_param','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
 				break;
 			case 6://硬盘
 				$resource = DB::table('idc_harddisk')
  							  ->join('idc_machineroom','idc_harddisk.room_id','=','idc_machineroom.id')
 				              ->where(['harddisk_used'=>0,'room_id'=>$machineroom])
-				              ->get(['id','harddisk_number','harddisk_param','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
+				              ->get(['idc_harddsik.id','harddisk_number','harddisk_param','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
 				break;
 			case 7://内存
 				$resource = DB::table('idc_memory')
 							  ->join('idc_machineroom','idc_memory.room_id','=','idc_machineroom.id')
 				              ->where(['memory_used'=>0,'room_id'=>$machineroom])
-				              ->get(['id','memory_number','memory_param','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
+				              ->get(['idc_memory.id','memory_number','memory_param','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
 				break;
 		}
 		if($resource->isEmpty()){
@@ -1970,7 +1970,7 @@ class OrdersModel extends Model
 		           ->where(['tz_orders.id'=>$change['order_id']])
 		           ->whereNull('tz_orders.deleted_at')
 		           ->whereBetween('tz_orders.remove_status',[0,3])
-		           ->select('tz_business.resource_detail','tz_orders.resource_type','tz_orders.customer_id','tz_orders.business_id','tz_orders.resource','tz_orders.machine_sn')
+		           ->select('tz_business.resource_detail','tz_orders.resource_type','tz_orders.customer_id','tz_orders.business_id','tz_orders.resource','tz_orders.machine_sn','tz_orders.business_sn')
 		           ->first();
 		if(empty($order)){
 			$return['data'] = [];
@@ -2011,7 +2011,7 @@ class OrdersModel extends Model
 			case 1:
 			case 2:                      
 				$resource = DB::table('idc_machine')
-							   ->where(['id'=>$change['resource_id'],'business_type'=>$get['resource_type'],'used_status'=>0,'machine_status'=>0])
+							   ->where(['id'=>$change['resource_id'],'business_type'=>$change['resource_type'],'used_status'=>0,'machine_status'=>0])
 							   ->select('id','machine_num','cpu','memory','harddisk','cabinet','ip_id','machineroom') 
 							   ->first();
 				if(empty($resource)){
@@ -2025,7 +2025,7 @@ class OrdersModel extends Model
 				$change_data['after_cabinet'] = $resource->cabinet;
 				$change_data['after_ip'] = $resource->ip_id;
 				$update = DB::table('idc_machine')
-				            ->where(['id'=>$change['resource_id'],'business_type'=>$get['resource_type'],'used_status'=>0,'machine_status'=>0])
+				            ->where(['id'=>$change['resource_id'],'business_type'=>$change['resource_type'],'used_status'=>0,'machine_status'=>0])
 				            ->update(['used_status'=>1,'own_business'=>$order->business_sn]);
 
 				break;

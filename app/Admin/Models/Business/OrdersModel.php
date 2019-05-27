@@ -2011,7 +2011,7 @@ class OrdersModel extends Model
 			case 1:
 			case 2:                      
 				$resource = DB::table('idc_machine')
-							   ->where(['id'=>$change['resource_id'],'business_type'=>$get['resource_type'],'used_status'=>0,'machine_status'=>0])
+							   ->where(['id'=>$change['resource_id'],'business_type'=>$change['resource_type'],'used_status'=>0,'machine_status'=>0])
 							   ->select('id','machine_num','cpu','memory','harddisk','cabinet','ip_id','machineroom') 
 							   ->first();
 				if(empty($resource)){
@@ -2025,7 +2025,7 @@ class OrdersModel extends Model
 				$change_data['after_cabinet'] = $resource->cabinet;
 				$change_data['after_ip'] = $resource->ip_id;
 				$update = DB::table('idc_machine')
-				            ->where(['id'=>$change['resource_id'],'business_type'=>$get['resource_type'],'used_status'=>0,'machine_status'=>0])
+				            ->where(['id'=>$change['resource_id'],'business_type'=>$change['resource_type'],'used_status'=>0,'machine_status'=>0])
 				            ->update(['used_status'=>1,'own_business'=>$order->business_sn]);
 
 				break;

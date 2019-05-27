@@ -60,5 +60,17 @@ class OverlayController extends Controller
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);	
 	}
 
+	/**
+	 * 将叠加包绑定到IDC业务的机器IP上
+	 * @param  Request $request [description]
+	 * @return [type]           [description]
+	 */
+	public function useOverlayToIDC(Request $request){
+		$param = $request->only(['belong_id','order_id']);
+		$model = new OverlayModel();
+		$result = $model->useOverlayToIDC($param);
+		return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
+	}
+
 	
 }

@@ -26,7 +26,7 @@ class CpuRequest extends FormRequest
     public function rules()
     {
         $return = [
-            'cpu_number'   => "required|unique:idc_cpu",
+            'cpu_number'   => "required|unique:idc_cpu,".Request()->id.',id,deleted_at,Null',
             'cpu_param'    => 'required',
         ];
         //检测表单中是否存在id,并靠此决定验证规则

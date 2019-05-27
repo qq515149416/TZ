@@ -31,7 +31,7 @@ class MachineRequest extends FormRequest
 
         if($array_path[$count_path-1] == 'insertmachine'){
             return [
-                'machine_num' => 'required|unique:idc_machine,machine_num',
+                'machine_num' => 'required|unique:idc_machine,machine_num,'.Request()->id.',id,deleted_at,Null',
                 'cpu' => 'required',
                 'memory' => 'required',
                 'harddisk' => 'required',
@@ -51,7 +51,7 @@ class MachineRequest extends FormRequest
         } elseif($array_path[$count_path-1] == 'editmachine'){
             $id = Request('id');
             return [
-                'machine_num' => 'sometimes|unique:idc_machine,machine_num,'.$id,
+                'machine_num' => 'sometimes|unique:idc_machine,machine_num,'.$id.',id,deleted_at,Null',
                 'cpu' => 'sometimes',
                 'memory' => 'sometimes',
                 'harddisk' => 'sometimes',

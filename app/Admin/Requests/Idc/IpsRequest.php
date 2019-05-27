@@ -33,7 +33,7 @@ class IpsRequest extends FormRequest
 
         if($array_path[$count_path-1] == 'insert'){
             return [    
-                'ip_start' => 'required|ip|unique:idc_ips,ip',
+                'ip_start' => 'required|ip|unique:idc_ips,ip,'.Request()->id.',id,deleted_at,Null',
                 'ip_end' => 'sometimes|nullable|ip|unique:idc_ips,ip',
                 'vlan' => 'required|integer',
                 'ip_company' => 'required|integer|min:0|max:2',
@@ -45,7 +45,7 @@ class IpsRequest extends FormRequest
             $id = (int)Request('id');
             return [
                 'id' => 'required|integer',    
-                'ip_start' => 'sometimes|ip|unique:idc_ips,ip,'.$id,
+                'ip_start' => 'sometimes|ip|unique:idc_ips,ip,'.$id.',id,deleted_at,Null',
                 'vlan' => 'sometimes|integer',
                 'ip_company' => 'sometimes|integer|min:0|max:2',
                 'ip_status' => 'sometimes|integer|min:0|max:3',

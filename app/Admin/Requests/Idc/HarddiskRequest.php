@@ -35,7 +35,7 @@ class HarddiskRequest extends FormRequest
     {
         //检测表单中是否存在id,并靠此决定验证规则
         $return = [
-            'harddisk_number'   => "required|unique:idc_harddisk",
+            'harddisk_number'   => "required|unique:idc_harddisk,".Request()->id.',id,deleted_at,Null',
             'harddisk_param'    => 'required',
         ];
         $info = $this->all();

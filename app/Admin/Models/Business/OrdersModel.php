@@ -1970,7 +1970,7 @@ class OrdersModel extends Model
 		           ->where(['tz_orders.id'=>$change['order_id']])
 		           ->whereNull('tz_orders.deleted_at')
 		           ->whereBetween('tz_orders.remove_status',[0,3])
-		           ->select('tz_business.resource_detail','tz_orders.resource_type','tz_orders.customer_id','tz_orders.business_id','tz_orders.resource','tz_orders.machine_sn')
+		           ->select('tz_business.resource_detail','tz_orders.resource_type','tz_orders.customer_id','tz_orders.business_id','tz_orders.resource','tz_orders.machine_sn','tz_orders.business_sn')
 		           ->first();
 		if(empty($order)){
 			$return['data'] = [];

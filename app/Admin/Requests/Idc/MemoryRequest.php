@@ -35,7 +35,7 @@ class MemoryRequest extends FormRequest
 	{
 		//检测表单中是否存在id,并靠此决定验证规则
 		$return = [
-			'memory_number'	=> "required|unique:idc_memory",
+			'memory_number'	=> "required|unique:idc_memory,".Request()->id.',id,deleted_at,Null',
 			'memory_param'	=> 'required',
 			'room_id'                 	=> 'required',
 		];

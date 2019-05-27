@@ -461,4 +461,132 @@ class OverlayModel extends Model
 			'code'	=> 1,
 		];
 	}
+
+	/**
+	 * 叠加包绑定对应的IDC业务
+	 * @param  array $param --belong_id所属叠加包id,--order_id所需绑定叠加包的机器业务订单id
+	 * @return [type]        [description]
+	 */
+	public function useOverlayToIDC($param){
+		if(!isset($param['belong_id'])){//未设置流量包所属的id
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#101)无法确定需要绑定的叠加包';
+			return $return;
+		}
+
+		if(!isset($param['order_id'])){//未设置需要绑定订单的id
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#102)无法确定你需要绑定叠加包的业务';
+			return $return;
+		}
+
+		$belong = OverlayBelongModel::find($param['belong_id']);//查找流量包所属的数据
+
+		if(empty($belong)){//不存在流量包所属数据
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#103)你需绑定的叠加包业务不存在';
+			return $return;
+		}
+
+		if($belong->status != 0){//流量包已被使用
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#104)该叠加包已被使用,请重新选择';
+			return $return;
+		}
+
+		$overlay = DB::table('tz_overlay')
+					 ->where(['id'=>$belong->overlay_id])
+					 ->select('id','site','protection_value','validity_period')
+					 ->first();//查找对应的流量包的所对应的防护等参数
+		
+		if(empty($overlay)){//不存在
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#105)未找到对应的叠加套餐,请与管理员联系核实';
+			return $return;
+		}
+
+		$idc_orders = DB::table('tz_orders')
+						->join('tz_business','tz_orders.business_sn','=','tz_business.business_number')
+						->where(['tz_orders.id'=>$param['order_id']])
+						->select('tz_orders.machine_sn','tz_orders.order_sn','tz_orders.resource_type','tz_business.resource_detail','tz_orders.customer_id')
+						->first();//查找对应要绑定的订单
+
+		if(empty($idc_orders)){//不存在对应的要绑定的订单
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#106)没有找到需要绑定叠加包的业务';
+			return $return;
+		}
+
+		if($idc_orders->customer_id != $belong->user_id){//订单与流量包所属客户不一致
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#107)叠加包与需要绑定叠加包的业务不属于同一客户';
+			return $return;
+		}
+
+		$resource_detail = json_decode($idc_orders->resource_detail);
+
+		if($resource_detail->machineroom_id != $overlay->site){//机房不一致
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#108)叠加包与需要绑定叠加包的所属机房不一致';
+			return $return;
+		}
+
+		if($idc_orders->resource_type == 1 || $idc_orders->resource_type == 2){//租用/托管机器默认使用主IP
+			$ip = $resource_detail->ip;
+		} elseif ($idc_orders->resource_type == 4 ){//对应的IP资源
+			$ip = $idc_orders->machine_sn;
+		} else {//其他无IP的不给予绑定
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#109)请确定IP';
+			return $return;
+		}
+
+		DB::beginTransaction();
+		$update['use_time'] = date('Y-m-d H:i:s',time());
+		$update['target_business'] = $idc_orders->order_sn;
+		$update['status'] = 1;
+		$use_time = $overlay->validity_period*24*3600;
+		//结束的时间
+		$update['end_time'] = date('Y-m-d H:i:s',bcadd(time(),$use_time,0));
+		$belong_update = DB::table('tz_overlay_belong')->where(['id'=>$param['belong_id']])->update($update);//对应的订单号更新进流量包所属
+		if($belong_update == 0){
+			DB::rollBack();
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#110)叠加包绑定失败';
+			return $return;
+		}
+
+		/**
+		 * 将对应的IP根据对应的流量值进行api接口存入
+		 * @var ApiController
+		 */
+		$api = new ApiController();
+
+		$api_result = $api->setProtectionValue($ip, $overlay->protection_value);
+
+		if($api_result != 'editok' && $api_result != 'ok') {//存入失败
+			DB::rollBack();
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#111)叠加包绑定失败';
+			return $return;
+		}
+
+		DB::commit();
+		$return['data'] = [];
+		$return['code'] = 1;
+		$return['msg'] = '叠加包绑定成功';
+		return $return;
+
+	}
 }

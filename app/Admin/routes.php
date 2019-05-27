@@ -695,6 +695,7 @@ Route::group([
         $router->post('buyNowByAdmin', 'DefenseIp\OverlayController@buyNowByAdmin');//购买叠加包接口
         $router->get('showBelong', 'DefenseIp\OverlayController@showBelong');//展示某客户所属叠加包接口
         $router->post('useOverlayToDIP', 'DefenseIp\OverlayController@useOverlayToDIP');//将叠加包使用到高防ip接口
+        $router->post('useOverlayToIDC', 'DefenseIp\OverlayController@useOverlayToIDC');//将叠加包使用到IDC业务接口
     });
 
 

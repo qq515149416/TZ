@@ -1890,6 +1890,7 @@ class OrdersModel extends Model
 			case 3://租用机柜
 				$resource = DB::table('idc_cabinet')
 							   ->join('idc_machineroom','idc_cabinet.machineroom_id','=','idc_machineroom.id')
+							   ->where(['idc_cabinet.machineroom_id'=>$machineroom])
 							   ->get(['idc_cabinet.id','cabinet_id','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
 				break;
 			case 4://IP
@@ -2045,6 +2046,7 @@ class OrdersModel extends Model
 				$change_data['after_cabinet'] = $resource->cabinet_id;
 				$change_data['after_ip'] = 0;
 				$update = 1;
+				break;
 			case 4://ip
 				$resource = DB::table('idc_ips')
 							->where(['ip_status'=>0,'ip_lock'=>0,'id'=>$change['resource_id']])

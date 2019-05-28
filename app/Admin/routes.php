@@ -675,10 +675,10 @@ Route::group([
     Route::group([
         'prefix' => 'promotion',
     ], function (Router $router) {
-        $router->get('show', 'News\PromotionController@show');//获取友情链接
-        $router->post('insert', 'News\PromotionController@insert');//添加友情链接
-        $router->post('edit', 'News\PromotionController@edit');//编辑友情链接
-        $router->post('del', 'News\PromotionController@del');//删除友情链接
+        $router->get('show', 'News\PromotionController@show');//获取促销活动
+        $router->post('insert', 'News\PromotionController@insert');//添加促销活动
+        $router->post('edit', 'News\PromotionController@edit');//编辑促销活动
+        $router->post('del', 'News\PromotionController@del');//删除促销活动
     });
 
     /**

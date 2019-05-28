@@ -14,12 +14,14 @@ class PromotionController extends Controller
 {
 
 	public function getPro(PromotionRequest $request){
+
 		$par = $request->only(['need']);
 
 		$model = new PromotionModel();
 
 		$return = $model->getPro($par['need']);
 
+		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
 	}
   
 }

@@ -1962,6 +1962,18 @@ class OrdersModel extends Model
 			$return['msg'] = '(#104)更换的资源无法确定';
 			return $return;
 		}
+
+		$changes = DB::table('tz_resource_change')
+					->where(['business'=>$change['order_id']])
+					->whereBetween('change_status',[0,2])
+					->whereNull('deleted_at')
+					->get();
+		if(!$change->isEmpty()){
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#112)该订单资源存在更换未完成,不能重复提交,请等待完成后再申请';
+			return $return;
+		}
 		/**
 		 * 获取对应订单的数据
 		 * @var [type]
@@ -2422,11 +2434,11 @@ class OrdersModel extends Model
 					 * 是否存在该机柜
 					 * @var [type]
 					 */
-					$cabinet = DB::table('idc_cabinet')
+					$cabinet = get_object_vars(DB::table('idc_cabinet')
 								 ->join('idc_machineroom','idc_cabinet.machineroom_id','=','idc_machineroom.id')
 					             ->where(['cabinet_id'=>$change->after_resource_number])
 					             ->select('idc_cabinet.id as cabinetid','idc_cabinet.cabinet_id','idc_cabinet.machineroom_id','idc_machineroom.machine_room_name as machineroom_name','idc_cabinet.own_business')
-					             ->first()->toArray();
+					             ->first());
 		            if(empty($cabinet)){
 		            	DB::rollBack();
 						$return['data'] = [];

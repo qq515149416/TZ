@@ -1968,7 +1968,7 @@ class OrdersModel extends Model
 					->whereBetween('change_status',[0,2])
 					->whereNull('deleted_at')
 					->get();
-		if(!$change->isEmpty()){
+		if(!$changes->isEmpty()){
 			$return['data'] = [];
 			$return['code'] = 0;
 			$return['msg'] = '(#112)该订单资源存在更换未完成,不能重复提交,请等待完成后再申请';

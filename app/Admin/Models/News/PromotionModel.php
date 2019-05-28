@@ -16,7 +16,7 @@ class PromotionModel extends Model
 	protected $primaryKey = 'id';
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
-	protected $fillable = ['img', 'link','title','top','digest','end_at','pro_order','sale_status'];  
+	protected $fillable = ['img', 'link','title','top','digest','end_at','pro_order','start_at'];  
 
 	public function insert($par){
 		return $this->create($par);
@@ -110,20 +110,7 @@ class PromotionModel extends Model
 				$pro->top = "未知状态";
 				break;
 		}
-		switch ($pro->sale_status) {
-			case '0':
-				$pro->sale_status = "活动结束";
-				break;
-			case '1':
-				$pro->sale_status = "在售";
-				break;
-			case '2':
-				$pro->sale_status = "预备中";
-				break;
-			default:
-				$pro->sale_status = "未知状态";
-				break;
-		}
+		
 		return $pro;
 	}
 }

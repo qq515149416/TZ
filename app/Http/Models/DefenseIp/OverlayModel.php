@@ -55,6 +55,13 @@ class OverlayModel extends Model
 	public function buyNowByCustomer($par){
 		//获取登录中用户id
 		$user = Auth::user();
+		if($user->nickname == null){
+			$user->nickname = $user->email;
+			if ($user->email == null) {
+				$user->nickname = $user->name;
+			}
+		}
+		
 		$user_id = $user->id;
 		//检测用户是否在时间限制内生成过订单
 		$pay_model = new PayOrder();

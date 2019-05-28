@@ -472,6 +472,9 @@
 
     </div>
     <div class="tz-kefu">
+        <div class="tz-kefu-help tz-kefu-item">
+            <span class="tz-kefu-item-btn"></span>
+        </div>
         <div class="tz-kefu-qq tz-kefu-item">
             <span class="tz-kefu-item-btn"></span>
             <div class="tz-kefu-item-info">

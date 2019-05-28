@@ -16,24 +16,25 @@ class PromotionModel extends Model
 	protected $primaryKey = 'id';
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
-	protected $fillable = ['img', 'link','title','top','digest','end_at','pro_order','sale_status'];  
+	protected $fillable = ['img', 'link','title','top','digest','end_at','pro_order','start_at'];  
 
 	public function getPro($need){
+		$now = date("Y-m-d H:i:s");
 		switch ($need) {
-			case '*':
-				$pro = $this->orderBy('pro_order','asc')->get();
+			case '*':		//所有的促销活动
+				$pro = $this->orderBy('pro_order','desc')->get();
 				break;
-			case 'top':
-				$pro = $this->where('top',1)->orderBy('pro_order','asc')->get();
+			case 'top':	//置顶的促销活动
+				$pro = $this->where('top',1)->where('start_at','<',$now)->where('end_at','>',$now)->orderBy('pro_order','desc')->get();
 				break;
-			case '0':
-				$pro = $this->where('sale_status',0)->orderBy('pro_order','asc')->get();
+			case '0':		//已结束的促销活动
+				$pro = $this->where('end_at','<',$now)->orderBy('pro_order','desc')->get();
 				break;
-			case '1':
-				$pro = $this->where('sale_status',1)->orderBy('pro_order','asc')->get();
+			case '1':		//正在生效的促销活动
+				$pro = $this->where('start_at','<',$now)->where('end_at','>',$now)->orderBy('pro_order','desc')->get();
 				break;
-			case '2':
-				$pro = $this->where('sale_status',2)->orderBy('pro_order','asc')->get();
+			case '2':		//还没开始的促销活动
+				$pro = $this->where('start_at','>',$now)->orderBy('pro_order','desc')->get();
 				break;
 			default:
 				return [
@@ -77,20 +78,7 @@ class PromotionModel extends Model
 				$pro->top = "未知状态";
 				break;
 		}
-		switch ($pro->sale_status) {
-			case '0':
-				$pro->sale_status = "活动结束";
-				break;
-			case '1':
-				$pro->sale_status = "在售";
-				break;
-			case '2':
-				$pro->sale_status = "预备中";
-				break;
-			default:
-				$pro->sale_status = "未知状态";
-				break;
-		}
+	
 		return $pro;
 	}
 }

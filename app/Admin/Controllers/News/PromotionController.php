@@ -20,13 +20,16 @@ class PromotionController extends Controller
 	 */
 	public function insert(PromotionRequest $request){
 		
-		$par = $request->only(['img', 'link','title','top','digest','end_at','pro_order']);
+		$par = $request->only(['img', 'link','title','top','digest','end_at','pro_order','start_at']);
 
 		$par['img'] = json_encode($par['img']);
 		$par['link'] = json_encode($par['link']);
 
 		if($par['end_at']<date('Y-m-d H:i:s')){
 			return tz_ajax_echo([],'结束时间需比当前时间大',0);
+		}
+		if($par['end_at']<$par['start_at']){
+			return tz_ajax_echo([],'结束时间需比开始时间大',0);
 		}
 
 		$links_model = new PromotionModel();
@@ -60,7 +63,7 @@ class PromotionController extends Controller
 	 * @return json    
 	 */
 	public function edit(PromotionRequest $request){
-		$par = $request->only(['img', 'link','title','top','digest','end_at','pro_order','edit_id','sale_status']);
+		$par = $request->only(['img', 'link','title','top','digest','end_at','pro_order','edit_id','start_at']);
 
 		$links_model = new PromotionModel();
 		if(isset($par['img'])){

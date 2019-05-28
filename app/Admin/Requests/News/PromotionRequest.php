@@ -48,11 +48,12 @@ class PromotionRequest extends FormRequest
 				
 					'pro_order'		=> 'integer',	
 					'img'			=> 'required',
-					 'link'			=> 'required|url',		
-					 'title'			=> 'required',
-					 'top'			=> 'integer|min:0|max:1',
-					 'digest'			=> 'required',
-					 'end_at'		=> 'required|date',
+					'link'			=> 'required|url',		
+					'title'			=> 'required',
+					'top'			=> 'integer|min:0|max:1',
+					'digest'			=> 'required',
+					'end_at'			=> 'required|date',
+					'start_at'		=> 'required|date',
 				];
 				break;
 			case 'del':
@@ -92,6 +93,8 @@ class PromotionRequest extends FormRequest
 			'digest.required'		=> '请填写活动摘要',
 			'end_at.required'	=> '请填写活动结束时间',
 			'end_at.date'		=> '活动结束时间格式错误',
+			'start_at.required'	=> '请填写活动开始时间',
+			'start_at.date'		=> '活动开始时间格式错误',
 			'top.integer'		=> '置顶状态:0-不置顶 ; 1-置顶',
 			'top.min'		=> '置顶状态:0-不置顶 ; 1-置顶',
 			'top.max'		=> '置顶状态:0-不置顶 ; 1-置顶',

@@ -1869,10 +1869,10 @@ class OrdersModel extends Model
 			}
 			
 		}
+		$machineroom = isset($get['machineroom'])?$get['machineroom']:$machineroom;
 		switch ($get['resource_type']) {//根据资源类型获取对应的可更换的资源数据
 			case 1://租用机器
 			case 2://托管机器
-				$machineroom = isset($get['machineroom'])?$get['machineroom']:$machineroom;
 				$resource = DB::table('idc_machine')
 							   ->join('idc_ips','idc_machine.ip_id','=','idc_ips.id')
 							   ->join('idc_machineroom','idc_machine.machineroom','=','idc_machineroom.id')
@@ -1890,6 +1890,7 @@ class OrdersModel extends Model
 			case 3://租用机柜
 				$resource = DB::table('idc_cabinet')
 							   ->join('idc_machineroom','idc_cabinet.machineroom_id','=','idc_machineroom.id')
+							   ->where(['idc_cabinet.machineroom_id'=>$machineroom])
 							   ->get(['idc_cabinet.id','cabinet_id','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
 				break;
 			case 4://IP
@@ -1959,6 +1960,18 @@ class OrdersModel extends Model
 			$return['data'] = [];
 			$return['code'] = 0;
 			$return['msg'] = '(#104)更换的资源无法确定';
+			return $return;
+		}
+
+		$changes = DB::table('tz_resource_change')
+					->where(['business'=>$change['order_id']])
+					->whereBetween('change_status',[0,2])
+					->whereNull('deleted_at')
+					->get();
+		if(!$changes->isEmpty()){
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#112)该订单资源存在更换未完成,不能重复提交,请等待完成后再申请';
 			return $return;
 		}
 		/**
@@ -2045,6 +2058,7 @@ class OrdersModel extends Model
 				$change_data['after_cabinet'] = $resource->cabinet_id;
 				$change_data['after_ip'] = 0;
 				$update = 1;
+				break;
 			case 4://ip
 				$resource = DB::table('idc_ips')
 							->where(['ip_status'=>0,'ip_lock'=>0,'id'=>$change['resource_id']])
@@ -2370,7 +2384,7 @@ class OrdersModel extends Model
 					 */
 					$business_update = DB::table('tz_business')
 										->where(['business_number'=>$order->business_sn])
-										->update(['machine_number'=>$resource['machine_num'],'resource_detail'=>json_encode($resource)]);
+										->update(['machine_number'=>$resource['machine_num'],'resource_detail'=>json_encode($resource),'business_type'=>$change->after_resource_type]);
 					if($business_update == 0){
 						DB::rollBack();
 						$return['data'] = [];
@@ -2420,11 +2434,11 @@ class OrdersModel extends Model
 					 * 是否存在该机柜
 					 * @var [type]
 					 */
-					$cabinet = DB::table('idc_cabinet')
+					$cabinet = get_object_vars(DB::table('idc_cabinet')
 								 ->join('idc_machineroom','idc_cabinet.machineroom_id','=','idc_machineroom.id')
 					             ->where(['cabinet_id'=>$change->after_resource_number])
 					             ->select('idc_cabinet.id as cabinetid','idc_cabinet.cabinet_id','idc_cabinet.machineroom_id','idc_machineroom.machine_room_name as machineroom_name','idc_cabinet.own_business')
-					             ->first()->toArray();
+					             ->first());
 		            if(empty($cabinet)){
 		            	DB::rollBack();
 						$return['data'] = [];
@@ -2441,7 +2455,7 @@ class OrdersModel extends Model
 		             */
 		            $business_update = DB::table('tz_business')
 										->where(['business_number'=>$order->business_sn])
-										->update(['machine_number'=>$cabinet['cabinet_id'],'resource_detail'=>json_encode($cabinet)]);
+										->update(['machine_number'=>$cabinet['cabinet_id'],'resource_detail'=>json_encode($cabinet),'business_type'=>$change->after_resource_type]);
 					if($business_update == 0){
 						DB::rollBack();
 						$return['data'] = [];
@@ -2467,7 +2481,7 @@ class OrdersModel extends Model
 					 * 更新对应机柜的使用状态
 					 * @var [type]
 					 */
-		            $after = DB::table('idc_cabinet')->where('cabinet_id', $order['machine_sn'])->update(['own_business'=>$own_business]);
+		            $after = DB::table('idc_cabinet')->where(['cabinet_id'=>$change->after_resource_number])->update(['own_business'=>$own_business]);
 		            /**
 		             * 更新进对应的索引文件
 		             * @var XS

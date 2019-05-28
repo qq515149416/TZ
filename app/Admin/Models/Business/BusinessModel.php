@@ -353,9 +353,9 @@ class BusinessModel extends Model
                     $result[$check]['remove'] = $remove_status[$check_value['remove_status']];
                     $resource_detail = json_decode($check_value['resource_detail']);
                     if($check_value['business_type'] != 3){
-                        $result[$check]['cabinets'] = $resource_detail->cabinets;
+                        $result[$check]['cabinets'] = isset($resource_detail->cabinets)?$resource_detail->cabinets:'';
                     } else {    
-                        $result[$check]['cabinets'] = $resource_detail->cabinet_id;
+                        $result[$check]['cabinets'] = isset($resource_detail->cabinet_id)?$resource_detail->cabinet_id:'';
                     }
                 }
                 $return['data'] = $result;

@@ -2777,7 +2777,7 @@ class OrdersModel extends Model
 			$return['data'] = [];
 			$return['code'] = 0;
 			$return['msg'] = '暂无数据';
-			return $rteturn;
+			return $return;
 		}
 		foreach($change as $key => $value){
 			/**
@@ -2811,7 +2811,7 @@ class OrdersModel extends Model
 		$return['data'] = $change;
 		$return['code'] = 1;
 		$return['msg'] = '数据获取成功';
-		return $rteturn;
+		return $return;
 	}
 
 	// /**

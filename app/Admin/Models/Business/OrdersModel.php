@@ -2384,7 +2384,7 @@ class OrdersModel extends Model
 					 */
 					$business_update = DB::table('tz_business')
 										->where(['business_number'=>$order->business_sn])
-										->update(['machine_number'=>$resource['machine_num'],'resource_detail'=>json_encode($resource)]);
+										->update(['machine_number'=>$resource['machine_num'],'resource_detail'=>json_encode($resource),'business_type'=>$change->after_resource_type]);
 					if($business_update == 0){
 						DB::rollBack();
 						$return['data'] = [];
@@ -2455,7 +2455,7 @@ class OrdersModel extends Model
 		             */
 		            $business_update = DB::table('tz_business')
 										->where(['business_number'=>$order->business_sn])
-										->update(['machine_number'=>$cabinet['cabinet_id'],'resource_detail'=>json_encode($cabinet)]);
+										->update(['machine_number'=>$cabinet['cabinet_id'],'resource_detail'=>json_encode($cabinet),'business_type'=>$change->after_resource_type]);
 					if($business_update == 0){
 						DB::rollBack();
 						$return['data'] = [];

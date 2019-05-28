@@ -91,7 +91,7 @@
                                             <span style="font-size: 36px;font-weight: bold;">{{ $item['price'] }}</span> 元/月
                                             @endif
                                         </p>
-                                        <a class="detail-link" href="javascript: void(0);">了解详情</a>
+                                        <a class="detail-link" href="javascript: void(0);" onclick="randomqq()">了解详情</a>
                                     </div>
                                 </div>
                             </div>

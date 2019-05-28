@@ -65,7 +65,13 @@ class ArticleController extends Controller
                 "content" => $type_contents_code["industry"]
             ]
         ];
+        $tdk = [
+            "title" => $type_contents_code[$type]."[腾正科技]",
+            "description" => "专业IDC服务提供商，主营服务器租用、服务器托管、机柜租用、大带宽租用、云主机、高防服务器、高防IP、CDN加速等数据存储、计算及安全综合应用解决方案服务。",
+            "keywords" => "云主机,高防服务器,高防IP,服务器租用,服务器托管,带宽租用,CDN加速,高防CDN,云服务器,机柜租用,云计算,IDC 服务器商,网络安全服务商"
+        ];
         return view($template,[
+            "tdk" => $tdk,
             "type" => $type,
             "data" => $newList,
             "list" => [
@@ -92,6 +98,7 @@ class ArticleController extends Controller
     }
     public function detail($type,$id)
     {
+
         $template = "http/article";
         $type_code = [
             "company" => 2,
@@ -106,7 +113,13 @@ class ArticleController extends Controller
         $newList = [
             $type => $this->content($id)
         ];
+        $tdk = [
+            "title" => $newList[$type]->seoTitle,
+            "description" => $newList[$type]->seoDescription,
+            "keywords" => $newList[$type]->seoKeywords
+        ];
         return view($template,[
+            "tdk" => $tdk,
             "type" => $type,
             "data" => $newList,
             "reverse_type" => $reverse_type_code,

@@ -121,6 +121,7 @@ Route::group([
             $router->get('/businessStatistics', 'Show\BusinessStatisticsController@index');
             $router->get('/overlay', 'Show\OverlayController@index');
             $router->get('/overlayBusiness', 'Show\OverlayBusinessController@index');
+            $router->get('/resourceHistory', 'Show\ResourceHistoryController@index');
 
         });
 

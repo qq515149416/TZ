@@ -139,6 +139,14 @@ html .tz-kefu .tz-kefu-item.tz-kefu-wx .tz-kefu-item-info img {
   -webkit-transform: translateX(-2px);
           transform: translateX(-2px);
 }
+body .tz-kefu .tz-kefu-item.tz-kefu-help .tz-kefu-item-btn,
+html .tz-kefu .tz-kefu-item.tz-kefu-help .tz-kefu-item-btn {
+  background: url(/images/kefu66.png?24fd21cf3341ecdab165c7e21c46a1aa) no-repeat right top;
+}
+body .tz-kefu .tz-kefu-item.tz-kefu-help .tz-kefu-item-btn:hover,
+html .tz-kefu .tz-kefu-item.tz-kefu-help .tz-kefu-item-btn:hover {
+  background: url(/images/kefu06.png?e5bd504280a0b5438da70743bb83a3cc) no-repeat right top;
+}
 body .tz-kefu .tz-kefu-item.tz-kefu-beian .tz-kefu-item-btn,
 html .tz-kefu .tz-kefu-item.tz-kefu-beian .tz-kefu-item-btn {
   background: url(/images/kefu33.png?fcb22f34c62d5ccb4d71be02bbf7b83f) no-repeat right top;

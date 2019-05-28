@@ -2144,6 +2144,7 @@ class OrdersModel extends Model
 		$change_data['change_number'] = create_number();
 		$change_data['created_at'] = date('Y-m-d H:i:s',time());
 		$change_data['change_reason'] = $change['change_reason'];
+		$change_data['business'] = $change['order_id'];
 		$result = DB::table('tz_resource_change')->insert($change_data);
 		if($result == 0){
 			DB::rollBack();
@@ -2346,13 +2347,13 @@ class OrdersModel extends Model
 					 * 获取租用/托管机器的数据，判断是否存在该机器
 					 * @var [type]
 					 */
-					$resource = DB::table('idc_machine')
+					$resource = get_object_vars(DB::table('idc_machine')
 							   ->join('idc_ips','idc_machine.ip_id','=','idc_ips.id')
 							   ->join('idc_machineroom','idc_machine.machineroom','=','idc_machineroom.id')
 							   ->join('idc_cabinet','idc_machine.cabinet','=','idc_cabinet.id')
-							   ->where(['machine_num'=>$change->after_resource_number,'own_business'=>$order->business_sn])
+							   ->where(['machine_num'=>$change->after_resource_number,'idc_machine.own_business'=>$order->business_sn])
 							   ->select('idc_machine.id','idc_machine.machine_num','idc_machine.cpu','idc_machine.memory','idc_machine.harddisk','idc_machine.cabinet','idc_machine.ip_id','idc_machine.machineroom','idc_machine.bandwidth','idc_machine.protect','idc_machine.loginname','idc_machine.loginpass','idc_machine.machine_type','idc_machineroom.id as machineroom_id','idc_machineroom.machine_room_name as machineroom_name','idc_cabinet.cabinet_id as cabinets','idc_ips.ip','idc_ips.ip_company')
-							   ->first()->toArray();
+							   ->first());	
 					if(empty($resource)){
 						DB::rollBack();
 						$return['data'] = [];
@@ -2766,8 +2767,8 @@ class OrdersModel extends Model
 		 * @var [type]
 		 */
 		$change = DB::table('tz_resource_change as change')
-					->join('tz_orders as orders','change.business','=','tz_orders.id')
-					->join('admin_users as admin','change.sales_id','=','admin_users.id')
+					->join('tz_orders as orders','change.business','=','orders.id')
+					->join('admin_users as admin','change.sales_id','=','admin.id')
 					->where($where)
 					->orWhere($orwhere)
 					->whereNull('change.deleted_at')
@@ -2776,7 +2777,7 @@ class OrdersModel extends Model
 			$return['data'] = [];
 			$return['code'] = 0;
 			$return['msg'] = '暂无数据';
-			return $rteturn;
+			return $return;
 		}
 		foreach($change as $key => $value){
 			/**
@@ -2789,7 +2790,7 @@ class OrdersModel extends Model
 			} else {
 				$customer_name = $customer->email ? $customer->email : $customer->name;
 				$customer_name = $customer_name ? $customer_name : $customer->nickname;
-				$value->customer_name = $customer;
+				$value->customer_name = $customer_name;
 			}
 			/**
 			 * 对应更换前后的机房，机柜，IP信息，资源类型以及记录单的状态的转换
@@ -2810,7 +2811,7 @@ class OrdersModel extends Model
 		$return['data'] = $change;
 		$return['code'] = 1;
 		$return['msg'] = '数据获取成功';
-		return $rteturn;
+		return $return;
 	}
 
 	// /**

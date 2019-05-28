@@ -22,16 +22,23 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive("getContacts", function($expression) {
             $index = new Contacts();
             $contacts = $index->index();
-            $element = '<ul class="clearfix">';
-            foreach($contacts['data'] as $key => $val) {
-                $element.='<li>';
-                $element.='<a href="http://wpa.qq.com/msgrd?v=3&uin='.$val->qq.'&site=qq&menu=yes">';
-                $element.='<img alt="给我发消息" src="'.asset("/images/button_old_41.gif").'">';
-                $element.=$val->contactname.'</a>';
-                $element.='</a></li>';
+            $returnValue = "";
+            if($expression=='"html"') {
+                $element = '<ul class="clearfix">';
+                foreach($contacts['data'] as $key => $val) {
+                    $element.='<li>';
+                    $element.='<a href="http://wpa.qq.com/msgrd?v=3&uin='.$val->qq.'&site=qq&menu=yes">';
+                    $element.='<img alt="给我发消息" src="'.asset("/images/button_old_41.gif").'">';
+                    $element.=$val->contactname.'</a>';
+                    $element.='</a></li>';
+                }
+                $element.="</ul>";
+                $returnValue = $element;
             }
-            $element.="</ul>";
-            return "<?php echo '$element'; ?>";
+            if($expression=='"json"') {
+                $returnValue = json_encode($contacts['data']);
+            }
+            return "<?php  echo '$returnValue'; ?>";
         });
         Blade::component('layouts.aboutus', 'aboutusLayout');
         Blade::include('http.productTemplate.tabpanel', 'tabpanel');

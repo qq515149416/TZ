@@ -484,7 +484,7 @@ class UnderModel extends Model
                 $business_value->machineroom_name = $resource_detail->machineroom_name;
                 if($business_value->business_type != 3){
                     $business_value->cabinets = $resource_detail->cabinets;
-                    $business_value->ip = $resource_detail->ip;
+                    $business_value->ip = isset($resource_detail->ip)?$resource_detail->ip:'';
                 } else {
                     $business_value->cabinets = $resource_detail->cabinet_id;
                     $business_value->ip = '';

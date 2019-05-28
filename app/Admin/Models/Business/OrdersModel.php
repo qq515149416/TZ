@@ -2481,7 +2481,7 @@ class OrdersModel extends Model
 					 * 更新对应机柜的使用状态
 					 * @var [type]
 					 */
-		            $after = DB::table('idc_cabinet')->where(['cabinet_id'=>$order->machine_sn])->update(['own_business'=>$own_business]);
+		            $after = DB::table('idc_cabinet')->where(['cabinet_id'=>$change->after_resource_number])->update(['own_business'=>$own_business]);
 		            /**
 		             * 更新进对应的索引文件
 		             * @var XS

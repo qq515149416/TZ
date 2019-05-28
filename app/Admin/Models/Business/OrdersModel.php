@@ -1869,10 +1869,10 @@ class OrdersModel extends Model
 			}
 			
 		}
+		$machineroom = isset($get['machineroom'])?$get['machineroom']:$machineroom;
 		switch ($get['resource_type']) {//根据资源类型获取对应的可更换的资源数据
 			case 1://租用机器
 			case 2://托管机器
-				$machineroom = isset($get['machineroom'])?$get['machineroom']:$machineroom;
 				$resource = DB::table('idc_machine')
 							   ->join('idc_ips','idc_machine.ip_id','=','idc_ips.id')
 							   ->join('idc_machineroom','idc_machine.machineroom','=','idc_machineroom.id')

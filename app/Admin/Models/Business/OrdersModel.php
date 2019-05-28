@@ -2790,7 +2790,7 @@ class OrdersModel extends Model
 			} else {
 				$customer_name = $customer->email ? $customer->email : $customer->name;
 				$customer_name = $customer_name ? $customer_name : $customer->nickname;
-				$value->customer_name = $customer;
+				$value->customer_name = $customer_name;
 			}
 			/**
 			 * 对应更换前后的机房，机柜，IP信息，资源类型以及记录单的状态的转换

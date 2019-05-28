@@ -2144,6 +2144,7 @@ class OrdersModel extends Model
 		$change_data['change_number'] = create_number();
 		$change_data['created_at'] = date('Y-m-d H:i:s',time());
 		$change_data['change_reason'] = $change['change_reason'];
+		$change_data['business'] = $change['order_id'];
 		$result = DB::table('tz_resource_change')->insert($change_data);
 		if($result == 0){
 			DB::rollBack();

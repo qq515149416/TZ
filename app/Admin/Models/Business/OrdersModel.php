@@ -2767,8 +2767,8 @@ class OrdersModel extends Model
 		 * @var [type]
 		 */
 		$change = DB::table('tz_resource_change as change')
-					->join('tz_orders as orders','change.business','=','tz_orders.id')
-					->join('admin_users as admin','change.sales_id','=','admin_users.id')
+					->join('tz_orders as orders','change.business','=','orders.id')
+					->join('admin_users as admin','change.sales_id','=','admin.id')
 					->where($where)
 					->orWhere($orwhere)
 					->whereNull('change.deleted_at')

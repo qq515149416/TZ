@@ -114,7 +114,7 @@ class ArticleController extends Controller
             $type => $this->content($id)
         ];
         $tdk = [
-            "title" => $newList[$type]->titles,
+            "title" => $newList[$type]->seoTitle,
             "description" => $newList[$type]->seoDescription,
             "keywords" => $newList[$type]->seoKeywords
         ];

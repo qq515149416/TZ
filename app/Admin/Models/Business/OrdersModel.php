@@ -2347,13 +2347,13 @@ class OrdersModel extends Model
 					 * 获取租用/托管机器的数据，判断是否存在该机器
 					 * @var [type]
 					 */
-					$resource = DB::table('idc_machine')
+					$resource = get_object_vars(DB::table('idc_machine')
 							   ->join('idc_ips','idc_machine.ip_id','=','idc_ips.id')
 							   ->join('idc_machineroom','idc_machine.machineroom','=','idc_machineroom.id')
 							   ->join('idc_cabinet','idc_machine.cabinet','=','idc_cabinet.id')
 							   ->where(['machine_num'=>$change->after_resource_number,'idc_machine.own_business'=>$order->business_sn])
 							   ->select('idc_machine.id','idc_machine.machine_num','idc_machine.cpu','idc_machine.memory','idc_machine.harddisk','idc_machine.cabinet','idc_machine.ip_id','idc_machine.machineroom','idc_machine.bandwidth','idc_machine.protect','idc_machine.loginname','idc_machine.loginpass','idc_machine.machine_type','idc_machineroom.id as machineroom_id','idc_machineroom.machine_room_name as machineroom_name','idc_cabinet.cabinet_id as cabinets','idc_ips.ip','idc_ips.ip_company')
-							   ->first()->toArray();
+							   ->first());	
 					if(empty($resource)){
 						DB::rollBack();
 						$return['data'] = [];

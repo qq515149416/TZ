@@ -19,7 +19,7 @@
                     访问速度。适用于站点加速、游戏、点播、直播等场景。
                 </h5>
             </div>
-            <a class="apply-btn" href="javascript: void(0);">立即申请</a>
+            <a class="apply-btn" href="https://www.15cdn.com/">立即申请</a>
         </div>
         <div class="tab">
             @foreach ($tabs as $item)
@@ -172,7 +172,7 @@
         <h2 class="title">
             腾正高防专家，在岗 1 分钟，安全 60 秒
         </h2>
-        <a class="consult-btn" href="javascript: void(0);">立即咨询</a>
+        <a class="consult-btn" href="javascript: void(0);" onclick="randomqq();">立即咨询</a>
     </div>
 </div>
 @endsection

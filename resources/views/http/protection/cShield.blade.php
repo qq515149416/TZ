@@ -19,7 +19,7 @@
                     分析，数据灾备系统，防篡改，防盗链，防访问限制，源站保护功能。
                 </h5>
             </div>
-            <a class="apply-btn" href="javascript: void(0);">立即申请</a>
+            <a class="apply-btn" href="https://www.15cdn.com/">立即申请</a>
         </div>
         <div class="tab">
             @foreach ($tabs as $item)
@@ -63,7 +63,7 @@
                             网站的用户访问速度和服务的高可用性
                         </td>
                         <td>
-                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
+                            <a href="javascript: void(0);" class="purchase-btn" onclick="randomqq();">立即购买</a>
                         </td>
                     </tr>
                     <!--******-->
@@ -82,7 +82,7 @@
                             访问安全，适用于文学类站点、小型图片站等
                         </td>
                         <td>
-                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
+                            <a href="javascript: void(0);" class="purchase-btn" onclick="randomqq();">立即购买</a>
                         </td>
                     </tr>
                     <!--******-->
@@ -101,7 +101,7 @@
                             显示及用户下载速度，适用各类图库、下载站等
                         </td>
                         <td>
-                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
+                            <a href="javascript: void(0);" class="purchase-btn" onclick="randomqq();">立即购买</a>
                         </td>
                     </tr>
                     </tbody>
@@ -133,7 +133,7 @@
                             分布式防御流量200G，无限防御CC攻击。
                         </td>
                         <td>
-                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
+                            <a href="javascript: void(0);" class="purchase-btn" onclick="randomqq();">立即购买</a>
                         </td>
                     </tr>
                     </tbody>
@@ -191,8 +191,8 @@
                 </div>
             </div>
             <div class="btn-container">
-                <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
-                <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
+                <a href="javascript: void(0);" class="purchase-btn" onclick="randomqq();">立即购买</a>
+                <a href="javascript: void(0);" class="purchase-btn" onclick="randomqq();">立即购买</a>
             </div>
         </div>
         <div class="tzclound-hot-sale">
@@ -257,8 +257,8 @@
                 </div>
             </div>
             <div class="btn-container">
-                <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
-                <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
+                <a href="javascript: void(0);" class="purchase-btn" onclick="randomqq();">立即购买</a>
+                <a href="javascript: void(0);" class="purchase-btn" onclick="randomqq();">立即购买</a>
             </div>
         </div>
     </div>
@@ -369,7 +369,7 @@
         <h2 class="title">
             腾正高防专家，在岗 1 分钟，安全 60 秒
         </h2>
-        <a class="consult-btn" href="javascript: void(0);">立即咨询</a>
+        <a class="consult-btn" href="javascript: void(0);" onclick="randomqq();">立即咨询</a>
     </div>
 </div>
 @endsection

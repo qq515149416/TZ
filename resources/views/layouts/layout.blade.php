@@ -282,34 +282,34 @@
                 <dl>
                     <dt>产品中心</dt>
                     <dd>
-                        <a href="javascript:;">服务器租赁</a>
+                        <a href="/zuyong/index">服务器租赁</a>
                     </dd>
                     <dd>
-                        <a href="javascript:;">服务器托管 </a>
+                        <a href="/tuoguan#hengyang">服务器托管 </a>
                     </dd>
                     <dd>
-                        <a href="javascript:;">高防服务器</a>
+                        <a href="/zuyong/gaofang">高防服务器</a>
                     </dd>
                     <dd>
-                        <a href="javascript:;">高防IP</a>
+                        <a href="/dist/highDefense.html">高防IP</a>
                     </dd>
                     <dd>
-                        <a href="javascript:;">CDN加速</a>
+                        <a href="/15cdn/sca">CDN加速</a>
                     </dd>
                     <dd>
-                        <a href="javascript:;">网络安全</a>
+                        <a href="/protection/index">网络安全</a>
                     </dd>
                 </dl>
                 <dl>
                     <dt>增值服务</dt>
                     <dd>
-                        <a href="javascript:;">腾正云</a>
+                        <a href="https://yun.zeisp.com/cloudbuy.html">腾正云</a>
                     </dd>
                     <dd>
-                        <a href="javascript:;">防C盾</a>
+                        <a href="/protection/c-shield">防C盾</a>
                     </dd>
                     <dd>
-                        <a href="javascript:;">15CDN</a>
+                        <a href="/15cdn/index">15CDN</a>
                     </dd>
                 </dl>
                 <dl>
@@ -321,7 +321,7 @@
                         <a href="javascript:;">白名单审核</a>
                     </dd>
                     <dd>
-                        <a href="javascript:;">支付中心</a>
+                        <a href="/aboutus/lianxi">支付中心</a>
                     </dd>
                     <dd>
                         <a href="javascript:;">帮助中心</a>
@@ -330,13 +330,13 @@
                 <dl>
                     <dt>新闻资讯</dt>
                     <dd>
-                        <a href="javascript:;">公司新闻</a>
+                        <a href="/article/company">公司动态</a>
                     </dd>
                     <dd>
-                        <a href="javascript:;">公司公告</a>
+                        <a href="/article/placard">公司公告</a>
                     </dd>
                     <dd>
-                        <a href="javascript:;">优惠活动</a>
+                        <a href="/article/industry">行业动态</a>
                     </dd>
                 </dl>
                 <dl class="contact-us">

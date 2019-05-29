@@ -31,7 +31,12 @@ class OverlayRequest extends FormRequest
 		$par = $this->only(['edit_id']);
 		
 		switch ($method) {
-			
+			case 'showOverlay':
+				$return = [
+					'site'				=> 'required', 
+					'sell_status'			=> 'required|in:0,1,*',
+				];
+				break;
 			
 			case 'showBelong':
 				$return = [
@@ -72,6 +77,10 @@ class OverlayRequest extends FormRequest
 			'status.required'				=> '请选择查询的状态',
 			'business_number.required'		=> '请选择使用叠加包的业务',	
 			'belong_id.required'			=> '请选择使用的叠加包id',
+			'sell_status.required'			=> '请填写需要查询的上下架状态',
+			'sell_status.in'				=> '*-所有 ; 0-下架中 ; 1-上架中',
+			'site.required'				=> '请填写叠加包机房',
+			'site.exists'				=> '机房不存在',
 		];
 	}
 

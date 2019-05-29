@@ -14,9 +14,11 @@ class OverlayController extends Controller
 {
 	
 	public function showOverlay(OverlayRequest $request){
+		$par = $request->only(['site','sell_status']);
+
 		$model = new OverlayModel();
 
-		$res = $model->showOverlay();
+		$res = $model->showOverlay($par);
 
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);	
 	}

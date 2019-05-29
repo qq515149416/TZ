@@ -27,13 +27,26 @@ class OverlayModel extends Model
 	protected $time_limit = 60;//两次购买的时间限制
 
 	
-	public function showOverlay(){
-		$overlay = $this->where('sell_status',1)->get();
+	public function showOverlay($par){
+		if($par['site'] == '*'){
+			if ($par['sell_status'] == '*') {
+				$overlay = $this->get();
+			}else{
+				$overlay = $this->where('sell_status',$par['sell_status'])->get();
+			}
+			
+		}else{
+			if ($par['sell_status'] == '*') {
+				$overlay = $this->where('site',$par['site'])->get();
+			}else{
+				$overlay = $this->where('site',$par['site'])->where('sell_status',$par['sell_status'])->get();
+			}
+		}
 
 		if ($overlay->isEmpty()) {
 			return [
 				'data'	=> [],
-				'msg'	=> '无上架叠加包',
+				'msg'	=> '无数据',
 				'code'	=> 1,
 			];
 		}
@@ -47,15 +60,8 @@ class OverlayModel extends Model
 		];
 	}
 	protected function transO($overlay){
-		$machineroom = DB::table('idc_machineroom')->where('id',$overlay->site)->first();
-		if($machineroom != null){
-			$overlay->machine_room_name = $machineroom->machine_room_name;
-			$overlay->machine_room_id = $machineroom->id;	
-		}else{
-			$overlay->machine_room_name = '机房信息错误';
-			$overlay->machine_room_id = '机房信息错误';	
-		}
-		
+		$overlay->machine_room_name = DB::table('idc_machineroom')->where('id',$overlay->site)->value('machine_room_name');
+
 		return $overlay;
 	}
 

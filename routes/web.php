@@ -49,7 +49,7 @@ Route::group([
     Route::get('/cabinet-rent/{page}', 'Show\CabinetRentController@index');
     Route::get('/bandwidth-rent/{page}', 'Show\BandwidthRentController@index');
     Route::get('/activity', 'Show\LatestActivityController@index');
-    Route::get('/yun', 'Show\YunController@index');
+    Route::get('/yun/{page}', 'Show\YunController@index');
 });
 
 /**

@@ -19,17 +19,17 @@
         <nav>
             <ul>
                 <li>
-                    <a class="aticve" href="/yun/huizhou">
+                    <a class="{{ $page == 'huizhou' ? 'aticve' : '' }}" href="/yun/huizhou">
                         惠州云服务器
                     </a>
                 </li>
                 <li>
-                    <a href="/yun/hengyang">
+                    <a class="{{ $page == 'hengyang' ? 'aticve' : '' }}" href="/yun/hengyang">
                         衡阳云服务器
                     </a>
                 </li>
                 <li>
-                    <a href="/yun/xian">
+                    <a class="{{ $page == 'xian' ? 'aticve' : '' }}" href="/yun/xian">
                         西安云服务器
                     </a>
                 </li>

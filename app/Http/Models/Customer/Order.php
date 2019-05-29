@@ -102,6 +102,15 @@ class Order extends Model
             $value->status 	= $value->order_status;
             $value->order_status 	= $order_status[$value->order_status];
 			$value->business_name	= $admin_name[$value->business_id];
+			$business = DB::table('tz_business')->where(['business_number'=>$value->business_sn])->whereNull('deleted_at')->value('resource_detail');
+			if(empty($business)){
+				$value->machineroom_id = 0;
+				$value->machineroom_name = '';
+			} else {
+				$resource = json_decode($business);
+				$value->machineroom_id = isset($resource->machineroom_id)?$resource->machineroom_id:0;
+				$value->machineroom_name = isset($resource->machineroom_name)?$resource->machineroom_name:'';
+			}
 		}
 
 		return $order;

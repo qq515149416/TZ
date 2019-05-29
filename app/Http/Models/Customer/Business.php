@@ -50,20 +50,9 @@ class Business extends Model
 				$business[$key]['type'] = $value['business_type'];
 				$business[$key]['business_type'] = $business_type[$value['business_type']];	
 				$business[$key]['remove_status'] = $remove_status[$value['remove_status']];
-
-				$business_info = DB::table('idc_machine as a')
-						->leftJoin('idc_machineroom as b','b.id','=','a.machineroom')
-						->select('a.machineroom as room_id','b.machine_room_name as room_name')
-						->where('a.own_business',$business[$key]['business_number'])
-						->whereNull('a.deleted_at')
-						->first();
-				if ($business_info == null) {
-					$business[$key]['room_id'] = '获取机房信息失败';
-					$business[$key]['room_name'] = '获取机房信息失败';
-				}else{
-					$business[$key]['room_id'] = $business_info->room_id;
-					$business[$key]['room_name'] = $business_info->room_name;
-				}
+				$resource = json_decode($value['resource_detail']);
+				$business[$key]['machineroom_id'] = isset($resource->machineroom_id)?$resource->machineroom_id:0;
+				$business[$key]['machineroom_name'] = isset($resource->machineroom_name)?$resource->machineroom_name:'';	
 			}
 			$return['data'] = $business;
 			$return['code'] = 1;

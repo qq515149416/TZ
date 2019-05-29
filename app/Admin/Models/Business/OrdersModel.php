@@ -1910,7 +1910,7 @@ class OrdersModel extends Model
 				$resource = DB::table('idc_harddisk')
  							  ->join('idc_machineroom','idc_harddisk.room_id','=','idc_machineroom.id')
 				              ->where(['harddisk_used'=>0,'room_id'=>$machineroom])
-				              ->get(['idc_harddsik.id','harddisk_number','harddisk_param','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
+				              ->get(['idc_harddisk.id','harddisk_number','harddisk_param','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
 				break;
 			case 7://内存
 				$resource = DB::table('idc_memory')
@@ -1918,6 +1918,11 @@ class OrdersModel extends Model
 				              ->where(['memory_used'=>0,'room_id'=>$machineroom])
 				              ->get(['idc_memory.id','memory_number','memory_param','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
 				break;
+			case 8:
+			case 9:
+				$resource = DB::table('idc_memory')
+				              ->get(['id','memory_number','memory_param']);
+			 	break;
 		}
 		if($resource->isEmpty()){
 			$return['data'] = $resource;
@@ -1983,7 +1988,7 @@ class OrdersModel extends Model
 		           ->where(['tz_orders.id'=>$change['order_id']])
 		           ->whereNull('tz_orders.deleted_at')
 		           ->whereBetween('tz_orders.remove_status',[0,3])
-		           ->select('tz_business.resource_detail','tz_orders.resource_type','tz_orders.customer_id','tz_orders.business_id','tz_orders.resource','tz_orders.machine_sn','tz_orders.business_sn')
+		           ->select('tz_business.resource_detail','tz_business.business_type','tz_orders.resource_type','tz_orders.customer_id','tz_orders.business_id','tz_orders.resource','tz_orders.machine_sn','tz_orders.business_sn')
 		           ->first();
 		if(empty($order)){
 			$return['data'] = [];
@@ -1996,9 +2001,15 @@ class OrdersModel extends Model
 		 * @var [type]
 		 */
 		$resource_detail = json_decode($order->resource_detail);
-		$machineroom = $resource_detail->machineroom_id;
-		$cabinet = $resource_detail->cabinet;
-		$ip = $resource_detail->ip_id;
+		if($order->business_type == 3){
+			$cabinet = isset($resource_detail->cabinetid)?$resource_detail->cabinetid:0;
+			$ip = 0;
+		} else {
+			$cabinet = isset($resource_detail->cabinet)?$resource_detail->cabinet:0;
+			$ip = isset($resource_detail->ip_id)?$resource_detail->ip_id:0;
+		}
+		$machineroom = isset($resource_detail->machineroom_id)?$resource_detail->machineroom_id:0;
+		
 		/**
 		 * 更换前的资源相关信息
 		 */
@@ -2603,7 +2614,7 @@ class OrdersModel extends Model
 							 ->where(['harddisk_number'=>$change->after_resource_number,'service_num'=>$order->business_sn])
 							 ->select('harddisk_number','harddisk_param')
 							 ->first();
-					if(empty($cpu)){
+					if(empty($harddisk)){
 						DB::rollBack();
 						$return['data'] = [];
 						$return['code'] = 0;
@@ -2700,6 +2711,10 @@ class OrdersModel extends Model
 					$after = DB::table('tz_orders')
 									  ->where(['id'=>$change->business])
 									  ->update(['resource'=>$change->after_resource_number,'resource_type'=>$change->after_resource_type]);
+					$xunsearch = new XS('orders');
+		    		$index = $xunsearch->index;
+		    		$doc['id'] = strtolower($order->id);
+		    		$document = new \XSDocument($doc);
 					break;
 				case 9://防护
 					/**
@@ -2709,6 +2724,10 @@ class OrdersModel extends Model
 					$after = DB::table('tz_orders')
 									  ->where(['id'=>$change->business])
 									  ->update(['resource'=>$change->after_resource_number,'resource_type'=>$change->after_resource_type]);
+					$xunsearch = new XS('orders');
+		    		$index = $xunsearch->index;
+		    		$doc['id'] = strtolower($order->id);
+		    		$document = new \XSDocument($doc);
 					break;
 			}
 			if($after == 0){

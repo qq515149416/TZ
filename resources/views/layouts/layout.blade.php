@@ -607,6 +607,7 @@
                 aElement.setAttribute("target","_blank");
                 document.body.appendChild(aElement);
             }
+            document.getElementById("toLink").href = "http://wpa.qq.com/msgrd?v=3&uin="+rs[num].qq+"&site=qq&menu=yes";
             document.getElementById("toLink").click();
         }
     </script>

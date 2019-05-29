@@ -478,12 +478,27 @@ class  Overdue extends Model
 				'code'	=> 1,
 			];
 		}
-		$status = [ 0 => '预留状态' , 1 => '正在使用' , 2 => '申请下架' , 3 => '已下架' , 4 => '试用'];
+		$status = [ 0 => '预留状态' , 1 => '正在使用' , 2 => '申请下架' , 3 => '已下架' , 4 => '试用' ,5 => '待审核'];
 		for ($i=0; $i < count($list); $i++) { 
-			$list[$i]->nickname = DB::table('tz_users')->where('id',$list[$i]->user_id)->value('nickname');
-			if($list[$i]->nickname == null){
+			$user = DB::table('tz_users')->where('id',$list[$i]->user_id)->first();
+			if($user == null){
 				$list[$i]->nickname = '客户信息获取失败';
+			}else{
+				if ($user->nickname != null) {
+					$list[$i]->nickname = $user->nickname;
+				}else{
+					if ($user->email != null) {
+						$list[$i]->nickname = $user->email;
+					}else{
+						if ($user->name != null) {
+							$list[$i]->nickname = $user->name;
+						}else{
+							$list[$i]->nickname = '客户信息获取失败';
+						}
+					}
+				}
 			}
+
 			$list[$i]->status =  $status[$list[$i]->status];
 		}
 		return [

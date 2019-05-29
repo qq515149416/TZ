@@ -599,7 +599,15 @@
         function randomqq(){
             var num = Math.random();
             num = Math.ceil(num *rs.length)-1;
-            window.location.href="http://wpa.qq.com/msgrd?v=3&uin="+rs[num].qq+"&site=qq&menu=yes";
+            // window.location.href="http://wpa.qq.com/msgrd?v=3&uin="+rs[num].qq+"&site=qq&menu=yes";
+            if(!document.getElementById("toLink")) {
+                var aElement = document.createElement("a");
+                aElement.setAttribute("id","toLink");
+                aElement.setAttribute("href","http://wpa.qq.com/msgrd?v=3&uin="+rs[num].qq+"&site=qq&menu=yes");
+                aElement.setAttribute("target","_blank");
+                document.body.appendChild(aElement);
+            }
+            document.getElementById("toLink").click();
         }
     </script>
 </body>

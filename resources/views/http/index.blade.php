@@ -426,16 +426,16 @@
                                 <div class="product-item-option">
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <span class="option-btn small">BGP</span>
+                                            <span class="option-btn small" data-url="/tuoguan#hengyang">BGP</span>
                                         </div>
                                         <div class="col-md-3">
-                                            <span class="option-btn small">单 线</span>
+                                            <span class="option-btn small" data-url="/tuoguan#hengyang">单 线</span>
                                         </div>
                                         <div class="col-md-3">
-                                            <span class="option-btn small">双 线</span>
+                                            <span class="option-btn small" data-url="/tuoguan#hengyang">双 线</span>
                                         </div>
                                         <div class="col-md-3">
-                                            <span class="option-btn small">三 线</span>
+                                            <span class="option-btn small" data-url="/tuoguan#hengyang">三 线</span>
                                         </div>
                                     </div>
                                 </div>
@@ -451,7 +451,7 @@
                                 <div class="product-item-option">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <span class="option-btn large">42U&nbsp;&nbsp;&nbsp;&nbsp;100M</span>
+                                            <span class="option-btn large" data-url="/cabinet-rent/huizhou">42U&nbsp;&nbsp;&nbsp;&nbsp;100M</span>
                                         </div>
                                     </div>
                                 </div>
@@ -467,16 +467,16 @@
                                 <div class="product-item-option">
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <span class="option-btn small">100M</span>
+                                            <span class="option-btn small" data-url="/bandwidth-rent/huizhou">100M</span>
                                         </div>
                                         <div class="col-md-3">
-                                            <span class="option-btn small">500M</span>
+                                            <span class="option-btn small" data-url="/bandwidth-rent/huizhou">500M</span>
                                         </div>
                                         <div class="col-md-3">
-                                            <span class="option-btn small">1G</span>
+                                            <span class="option-btn small" data-url="/bandwidth-rent/huizhou">1G</span>
                                         </div>
                                         <div class="col-md-3">
-                                            <span class="option-btn small">10G</span>
+                                            <span class="option-btn small" data-url="/bandwidth-rent/huizhou">10G</span>
                                         </div>
                                     </div>
                                 </div>
@@ -492,16 +492,16 @@
                                 <div class="product-item-option">
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <span class="option-btn small">100G</span>
+                                            <span class="option-btn small" data-url="/zuyong/gaofang">100G</span>
                                         </div>
                                         <div class="col-md-3">
-                                            <span class="option-btn small">200G</span>
+                                            <span class="option-btn small" data-url="/zuyong/gaofang">200G</span>
                                         </div>
                                         <div class="col-md-3">
-                                            <span class="option-btn small">300G</span>
+                                            <span class="option-btn small" data-url="/zuyong/gaofang">300G</span>
                                         </div>
                                         <div class="col-md-3">
-                                            <span class="option-btn small">500G</span>
+                                            <span class="option-btn small" data-url="/zuyong/gaofang">500G</span>
                                         </div>
                                     </div>
                                 </div>
@@ -588,7 +588,7 @@
                                     <b>CDN加速</b> - 站长套餐
                                 </h3>
                                 <div class="info">
-                                    <p>月度总流量：2TB</p>
+                                    <p>月度总流量：1TB</p>
                                     <p>域名数量：1个</p>
                                     <p>产品说明：供网页和小文件加速服务帮助客户提升网站的用户访问速度和服务的高可用性</p>
                                 </div>
@@ -611,13 +611,13 @@
                                 <div class="product-item-option">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <span class="option-btn middle" data-attrs="[{attr: '月度总流量',val: '2TB'},{attr: '域名数量',val: '1个'}]" data-url="http://www.15cdn.com/" data-title="CDN 加速" data-subtitle="站长套餐" data-price="100" data-dec="供网页和小文件加速服务帮助客户提升网站的用户访问速度和服务的高可用性">站长套餐</span>
+                                            <span class="option-btn middle" data-attrs="[{attr: '月度总流量',val: '1TB'},{attr: '域名数量',val: '1个'}]" data-url="/15cdn/index" data-title="CDN 加速" data-subtitle="站长套餐" data-price="100" data-dec="供网页和小文件加速服务帮助客户提升网站的用户访问速度和服务的高可用性">站长套餐</span>
                                         </div>
                                         <div class="col-md-4">
-                                            <span class="option-btn middle" data-attrs="[{attr: '月度总流量',val: '5TB'},{attr: '域名数量',val: '2个'}]" data-url="http://www.15cdn.com/" data-title="CDN 加速" data-subtitle="企业加速" data-price="500" data-dec="网页静态资源优化加速，全站HTTPS保证网站访问安全，适用于文学类站点、小型图片站等">企业加速</span>
+                                            <span class="option-btn middle" data-attrs="[{attr: '月度总流量',val: '5TB'},{attr: '域名数量',val: '2个'}]" data-url="/15cdn/index" data-title="CDN 加速" data-subtitle="企业加速" data-price="500" data-dec="网页静态资源优化加速，全站HTTPS保证网站访问安全，适用于文学类站点、小型图片站等">企业加速</span>
                                         </div>
                                         <div class="col-md-4">
-                                            <span class="option-btn middle" data-attrs="[{attr: '月度总流量',val: '10T'},{attr: '域名数量',val: '3个'}]" data-url="http://www.15cdn.com/" data-title="CDN 加速" data-subtitle="VIP加速" data-price="800" data-dec="图片、文件下载加速分发，多节点融合提高图片显示及用户下载速度，适用各类图库、下载站等">VIP加速</span>
+                                            <span class="option-btn middle" data-attrs="[{attr: '月度总流量',val: '10T'},{attr: '域名数量',val: '3个'}]" data-url="/15cdn/index" data-title="CDN 加速" data-subtitle="VIP加速" data-price="800" data-dec="图片、文件下载加速分发，多节点融合提高图片显示及用户下载速度，适用各类图库、下载站等">VIP加速</span>
                                         </div>
                                     </div>
                                 </div>
@@ -634,13 +634,13 @@
                                 <div class="product-item-option">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <span class="option-btn middle" data-attrs="[{attr: '防护IP数',val: '20000/小时'},{attr: '防护峰值',val: '100G'},{attr: '域名数量',val: '3个'}]" data-url="http://www.15cdn.com/" data-title="防C盾" data-subtitle="专业版" data-price="999" data-dec="企业网站，论坛，小说站，游戏网站，电子商务平台等">专业版</span>
+                                            <span class="option-btn middle" data-attrs="[{attr: '防护IP数',val: '20000/小时'},{attr: '防护峰值',val: '100G'},{attr: '域名数量',val: '3个'}]" data-url="/protection/c-shield" data-title="防C盾" data-subtitle="专业版" data-price="999" data-dec="企业网站，论坛，小说站，游戏网站，电子商务平台等">专业版</span>
                                         </div>
                                         <div class="col-md-4">
-                                            <span class="option-btn middle" data-attrs="[{attr: '防护IP数',val: '100000/小时'},{attr: '防护峰值',val: '150G'},{attr: '域名数量',val: '5个'}]" data-url="http://www.15cdn.com/" data-title="防C盾" data-subtitle="精英版" data-price="5000" data-dec="企业网站，论坛，小说站，游戏网站，电子商务平台等">精英版</span>
+                                            <span class="option-btn middle" data-attrs="[{attr: '防护IP数',val: '100000/小时'},{attr: '防护峰值',val: '150G'},{attr: '域名数量',val: '5个'}]" data-url="/protection/c-shield" data-title="防C盾" data-subtitle="精英版" data-price="5000" data-dec="企业网站，论坛，小说站，游戏网站，电子商务平台等">精英版</span>
                                         </div>
                                         <div class="col-md-4">
-                                            <span class="option-btn middle" data-attrs="[{attr: '防护IP数',val: '200000/小时'},{attr: '防护峰值',val: '200G'},{attr: '域名数量',val: '10个'}]" data-url="http://www.15cdn.com/" data-title="防C盾" data-subtitle="尊享版" data-price="10000" data-dec="企业网站，论坛，小说站，游戏网站，电子商务平台等">尊享版</span>
+                                            <span class="option-btn middle" data-attrs="[{attr: '防护IP数',val: '200000/小时'},{attr: '防护峰值',val: '200G'},{attr: '域名数量',val: '10个'}]" data-url="/protection/c-shield" data-title="防C盾" data-subtitle="尊享版" data-price="10000" data-dec="企业网站，论坛，小说站，游戏网站，电子商务平台等">尊享版</span>
                                         </div>
                                     </div>
                                 </div>
@@ -656,10 +656,10 @@
                                 <div class="product-item-option">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <span class="option-btn large" data-attrs="[]" data-url="http://www.15cdn.com/" data-title="DDOS防护" data-subtitle="TCP攻击" data-price="0" data-dec="配置腾正云高防IP，隐藏源站IP，接入腾正云新一代高防解决方案，防御TCP攻击效果更显著">TCP攻击</span>
+                                            <span class="option-btn large" data-attrs="[]" data-url="/dist/highDefense.html" data-title="DDOS防护" data-subtitle="TCP攻击" data-price="0" data-dec="配置腾正云高防IP，隐藏源站IP，接入腾正云新一代高防解决方案，防御TCP攻击效果更显著">TCP攻击</span>
                                         </div>
                                         <div class="col-md-6">
-                                            <span class="option-btn large" data-attrs="[]" data-url="http://www.15cdn.com/" data-title="DDOS防护" data-subtitle="UDP洪水攻击" data-price="0" data-dec="自主研发安全牵引系统防C盾有效防DDOS，SYN等多种类型攻击，无视CC，UDP攻击，确保用户业务安全，稳定运行">UDP洪水攻击</span>
+                                            <span class="option-btn large" data-attrs="[]" data-url="/dist/highDefense.html" data-title="DDOS防护" data-subtitle="UDP洪水攻击" data-price="0" data-dec="自主研发安全牵引系统防C盾有效防DDOS，SYN等多种类型攻击，无视CC，UDP攻击，确保用户业务安全，稳定运行">UDP洪水攻击</span>
                                         </div>
                                     </div>
                                 </div>
@@ -675,19 +675,19 @@
                                 <div class="product-item-option">
                                     <div class="row">
                                         <div class="col-md-4 mt10">
-                                            <span class="option-btn middle" data-disabled="false">50G</span>
+                                            <span class="option-btn middle" data-disabled="false" data-url="/zuyong/gaofang">50G</span>
                                         </div>
                                         <div class="col-md-4 mt10">
-                                            <span class="option-btn middle" data-disabled="false">100G</span>
+                                            <span class="option-btn middle" data-disabled="false" data-url="/zuyong/gaofang">100G</span>
                                         </div>
                                         <div class="col-md-4 mt10">
-                                            <span class="option-btn middle" data-disabled="false">200G</span>
+                                            <span class="option-btn middle" data-disabled="false" data-url="/zuyong/gaofang">200G</span>
                                         </div>
                                         <div class="col-md-4 mt10">
-                                            <span class="option-btn middle" data-disabled="false">300G</span>
+                                            <span class="option-btn middle" data-disabled="false" data-url="/zuyong/gaofang">300G</span>
                                         </div>
                                         <div class="col-md-4 mt10">
-                                            <span class="option-btn middle" data-disabled="false">1800G</span>
+                                            <span class="option-btn middle" data-disabled="false" data-url="/zuyong/gaofang">1800G</span>
                                         </div>
                                     </div>
                                 </div>
@@ -848,7 +848,7 @@
                                             游戏行业前期通过渠道推广和口碑传播，用户数量增长比较快，需要不定期增加新的游戏服务器或者增加新的游戏大区。腾正科技成熟技术团队专业打造游戏云解决方案，利用自有机房游戏云专属服务器集群、云服务器弹性扩展、负载均衡功能等，完美决运行卡顿、掉线、攻击停服、玩家分析缺失、游戏直播接入困难等常见问题
                                             </p>
                                             <div class="solution-item-button">
-                                                <a href="javascript:;">查看详情</a>
+                                                <a href="/solution/game">查看详情</a>
                                             </div>
                                         </div>
                                     </div>
@@ -866,7 +866,7 @@
                                             棋牌游戏安不安全直接关乎运营商的直接利益，一旦出现游戏频繁遭受恶意攻击，频繁出现外挂这两种情况，不管游戏有多好玩，画面有多美，你的游戏都必死无疑。腾正科技利用高防御系统及云服务器弹性扩展和负载均衡功能，随时增减云服务器，增加缓存服务器、数据库I/O分离、轻松应对海量玩家同时在线和平台信息安全
                                             </p>
                                             <div class="solution-item-button">
-                                                <a href="javascript:;">查看详情</a>
+                                                <a href="/solution/chess">查看详情</a>
                                             </div>
                                          </div>
                                     </div>
@@ -886,7 +886,7 @@
                                             金融行业网站对金融企业有着举足轻重的作用，攻击多，网页打开速度慢，用户体验下降等是目前金融行业网站的通病。腾正科技根据金融行业的业务特点，为P2P、小贷、典当、担保、众筹等小微金融企业提供个性化定制高防系列解决方案，解决金融行业互联互通、海量访问、数据安全等问题，同时降低企业投入及运维成本
                                             </p>
                                             <div class="solution-item-button">
-                                                <a href="javascript:;">查看详情</a>
+                                                <a href="/solution/finance">查看详情</a>
                                             </div>
                                          </div>
                                     </div>
@@ -903,7 +903,7 @@
                                             流媒体已被广泛应用于互联网，包括新闻发布，在线直播，视频点播，网络电台，音乐下载等方面。腾正科技自主CDN加速1000+节点网络分发服务，为流媒体输出所需要的巨大数据流量和并发数据流提供了可承受强大的数据处理量的高性能服务器和畅通的网络环境，实现负载均衡、自动分配用户流量、服务器平滑扩展需求
                                             </p>
                                             <div class="solution-item-button">
-                                                <a href="javascript:;">查看详情</a>
+                                                <a href="/solution/streaming_media">查看详情</a>
                                             </div>
                                          </div>
                                     </div>
@@ -927,7 +927,7 @@
                                             随着无线网络和智能手机的快速普及，种类繁多的移动端应用层出不穷。移动开发者除了需要关注自身应用的逻辑，还需面临如何提升用户的访问速度，如何进行统计分析，如何解决域名劫持和调度不精准等难题。腾正科技推出以移动服务产品为基础的通用移动APP解决方案，旨在为开发者提供快速实现的移动应用基础服务
                                             </p>
                                             <div class="solution-item-button">
-                                                <a href="javascript:;">查看详情</a>
+                                                <a href="/solution/mobile_app">查看详情</a>
                                             </div>
                                         </div>
                                     </div>
@@ -944,7 +944,7 @@
                                             响应教育局以云计算技术推动东莞教育信息化高速发展的战略规划，吸取目前在建或已建各地教育信息化管理系统的优点，结合东莞市教育实际情况和特点，建设具东莞特点的教育云平台。平台以“统一的基础架构、统一的应用支撑、统一的数据标准、统一的技术架构”为设计原则，构建面向多个使用者的核心方案体系
                                             </p>
                                             <div class="solution-item-button">
-                                                <a href="javascript:;">查看详情</a>
+                                                <a href="/solution/education_cloud">查看详情</a>
                                             </div>
                                         </div>
                                     </div>
@@ -961,7 +961,7 @@
                                             随着东莞电子政务的快速发展，各单位将越来越多的服务器托管在市电子政务办公共机房内，机房承载能力接近基线。而如何解决系统利用率低，能源消耗高，各种电子政务系统相互隔离，系统间无法有效继承，系统的整体安全性能较差，系统缺乏有效的监管及自治机制等难题成为搭建政务云平台必须要解决的问题
                                             </p>
                                             <div class="solution-item-button">
-                                                <a href="javascript:;">查看详情</a>
+                                                <a href="/solution/government_cloud">查看详情</a>
                                             </div>
                                         </div>
                                     </div>
@@ -978,7 +978,7 @@
                                             1V1专席客服7*24小时从产品咨询、主机选型、环境部署、数据迁移、测试、监控、防御、售后运维等提供一条龙服务，帮助用户解决疑难杂症。更有VIP解决方案专家，为您复杂与特殊需求提供量身定制最佳实践方案，把传统的IDC数据中心改造成一个高度简化、标准化、自动化和弹性灵活的云数据中心，助您无忧上云！
                                             </p>
                                             <div class="solution-item-button">
-                                                <a href="javascript:;">查看详情</a>
+                                                <a href="/solution/website_deployment">查看详情</a>
                                             </div>
                                         </div>
                                     </div>

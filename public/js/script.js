@@ -124,6 +124,9 @@ $(function () {
       var item = $(this);
       $(this).find(".body .option-btn").click(function () {
         if ($(this).attr("data-disabled") == "false") {
+          if ($(this).attr("data-url")) {
+            location.href = $(this).attr("data-url");
+          }
           return;
         }
         $(item).find(".body .mark").slideDown();
@@ -179,6 +182,14 @@ $(function () {
         $(item).find(".body .mark .backtrack").click(function () {
           $(item).find(".body .mark").slideUp();
         });
+      });
+    } else {
+      var item = $(this);
+      console.log(item.find(".body .option-btn"));
+      item.find(".body .option-btn").click(function () {
+        if ($(this).attr("data-url")) {
+          location.href = $(this).attr("data-url");
+        }
       });
     }
   });

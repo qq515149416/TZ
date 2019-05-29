@@ -47,7 +47,15 @@ class OverlayModel extends Model
 		];
 	}
 	protected function transO($overlay){
-		$overlay->machine_room_name = DB::table('idc_machineroom')->where('id',$overlay->site)->value('machine_room_name');
+		$machineroom = DB::table('idc_machineroom')->where('id',$overlay->site)->first();
+		if($machineroom != null){
+			$overlay->machine_room_name = $machineroom->machine_room_name;
+			$overlay->machine_room_id = $machineroom->id;	
+		}else{
+			$overlay->machine_room_name = '机房信息错误';
+			$overlay->machine_room_id = '机房信息错误';	
+		}
+		
 		return $overlay;
 	}
 
@@ -148,7 +156,8 @@ class OverlayModel extends Model
 				$overlay = $belong_model
 					->where('tz_overlay_belong.user_id',$user_id)
 					->leftJoin('tz_overlay as b','b.id', '=' , 'tz_overlay_belong.overlay_id')
-					->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period'])
+					->leftJoin('idc_machineroom as c' , 'c.id' , '=' , 'b.site')
+					->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period','c.machine_room_name','c.id as machine_room_id'])
 					->get();
 				break;
 			case '1':
@@ -156,7 +165,8 @@ class OverlayModel extends Model
 					->where('tz_overlay_belong.status',1)
 					->where('tz_overlay_belong.user_id',$user_id)
 					->leftJoin('tz_overlay as b','b.id', '=' , 'tz_overlay_belong.overlay_id')
-					->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period'])
+					->leftJoin('idc_machineroom as c' , 'c.id' , '=' , 'b.site')
+					->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period','c.machine_room_name','c.id as machine_room_id'])
 					->get();
 				break;
 			case '0':
@@ -164,7 +174,8 @@ class OverlayModel extends Model
 					->where('tz_overlay_belong.status',0)
 					->where('tz_overlay_belong.user_id',$user_id)
 					->leftJoin('tz_overlay as b','b.id', '=' , 'tz_overlay_belong.overlay_id')
-					->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period'])
+					->leftJoin('idc_machineroom as c' , 'c.id' , '=' , 'b.site')
+					->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period','c.machine_room_name','c.id as machine_room_id'])
 					->get();
 				break;
 			default:
@@ -208,6 +219,7 @@ class OverlayModel extends Model
 				$overlay->status = '未知状态';
 				break;
 		}
+		
 		return $overlay;
 	}
 

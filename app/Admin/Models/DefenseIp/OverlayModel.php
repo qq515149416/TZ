@@ -132,14 +132,7 @@ class OverlayModel extends Model
 				$overlay->sell_status = '未知状态';
 				break;
 		}
-		$machineroom = DB::table('idc_machineroom')->where('id',$overlay->site)->first();
-		if($machineroom != null){
-			$overlay->machine_room_name = $machineroom->machine_room_name;
-			$overlay->machine_room_id = $machineroom->id;	
-		}else{
-			$overlay->machine_room_name = '机房信息错误';
-			$overlay->machine_room_id = '机房信息错误';	
-		}
+		$overlay->machine_room_name = DB::table('idc_machineroom')->where('id',$overlay->site)->value('machine_room_name');
 		return $overlay;
 	}
 

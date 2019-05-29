@@ -19,7 +19,7 @@
                     为企业及开发者用户量身构建从0到N的网站全生命周期一站式闭环服务
                 </h5>
             </div>
-            <a class="apply-btn" href="javascript: void(0);">立即申请</a>
+            <a class="apply-btn" href="javascript: void(0);" onclick="randomqq();">立即申请</a>
         </div>
         <div class="tab">
             @foreach ($tabs as $item)
@@ -436,7 +436,7 @@
         <h2 class="title">
             腾正高防专家，在岗 1 分钟，安全 60 秒
         </h2>
-        <a class="consult-btn" href="javascript: void(0);">立即咨询</a>
+        <a class="consult-btn" href="javascript: void(0);" onclick="randomqq();">立即咨询</a>
     </div>
 </div>
 

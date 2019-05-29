@@ -171,7 +171,7 @@
         <h2 class="title">
             腾正高防专家，在岗 1 分钟，安全 60 秒
         </h2>
-        <a class="consult-btn" href="javascript: void(0);">立即咨询</a>
+        <a class="consult-btn" href="javascript: void(0);" onclick="randomqq();">立即咨询</a>
     </div>
     <!-- 购买时长 -->
     <div class="modal fade" id="purchaseTime" tabindex="-1" role="dialog" aria-labelledby="purchaseTimeLabel">

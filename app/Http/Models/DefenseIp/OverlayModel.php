@@ -157,11 +157,14 @@ class OverlayModel extends Model
 	public function showBelong($par){
 		$user_id = Auth::user()->id;
         $belong_model = new OverlayBelongModel();
-        $par['status'] = $par['status'] === "0" ? '*' : $par['status'];
         $overlay = $belong_model
                     ->when($par['status'], function ($query, $role) {
-                        $role = $role === '*' ? 0 : $role;
                         return $query->where('tz_overlay_belong.status',$role);
+                    },function ($query, $role) {
+                        if($role==="0") {
+                            return $query->where('tz_overlay_belong.status',$role);
+                        }
+                        return $query;
                     })
 					->where('tz_overlay_belong.user_id',$user_id)
 					->leftJoin('tz_overlay as b','b.id', '=' , 'tz_overlay_belong.overlay_id')

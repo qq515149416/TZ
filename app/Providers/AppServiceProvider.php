@@ -38,6 +38,19 @@ class AppServiceProvider extends ServiceProvider
             if($expression=='"json"') {
                 $returnValue = json_encode($contacts['data']);
             }
+            if($expression=='"table"') {
+                $element = '';
+                foreach($contacts['data'] as $key => $val) {
+                    $element.='<tr>';
+                    $element.='<td>姓名：'.$val->contactname.'</td>';
+                    $element.='<td>电话：'.$val->mobile.'</td>';
+                    $element.='<td>QQ：'.$val->qq.'</td>';
+                    $element.='<td>邮箱：'.$val->email.'</td>';
+                    $element.='</tr>';
+                }
+                $element.="";
+                $returnValue = $element;
+            }
             return "<?php  echo '$returnValue'; ?>";
         });
         Blade::component('layouts.aboutus', 'aboutusLayout');

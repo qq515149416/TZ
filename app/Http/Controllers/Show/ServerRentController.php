@@ -1169,7 +1169,7 @@ class ServerRentController extends Controller
                     ],
                     [
                         "name" => "棋牌游戏-旗舰级",
-                        "price" => 10000,
+                        "price" => "定制咨询",
                         "cpu" => "X5672",
                         "ram" => "32G",
                         "hardDisk" => "240G（固态硬盘）",

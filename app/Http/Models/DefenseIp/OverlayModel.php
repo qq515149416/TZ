@@ -155,19 +155,19 @@ class OverlayModel extends Model
 	}
 
 	public function showBelong($par){
-        global $_par;
-        $_par = $par;
 		$user_id = Auth::user()->id;
         $belong_model = new OverlayBelongModel();
+        $par['status'] = $par['status'] === "0" ? '*' : $par['status'];
         $overlay = $belong_model
-                    ->when($par['status']!=="*", function ($query, $role) {
-                        return $query->where('tz_overlay_belong.status',$GLOBALS['_par']['status']);
+                    ->when($par['status'], function ($query, $role) {
+                        $role = $role === '*' ? 0 : $role;
+                        return $query->where('tz_overlay_belong.status',$role);
                     })
 					->where('tz_overlay_belong.user_id',$user_id)
 					->leftJoin('tz_overlay as b','b.id', '=' , 'tz_overlay_belong.overlay_id')
                     ->leftJoin('idc_machineroom as c' , 'c.id' , '=' , 'b.site')
-                    ->when($par['site']!=="*", function ($query, $role) {
-                        return $query->where('c.id',$GLOBALS['_par']['site']);
+                    ->when($par['site'], function ($query, $role) {
+                        return $query->where('c.id',$role);
                     })
 					->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period','c.machine_room_name','c.id as machine_room_id'])
 					->get();

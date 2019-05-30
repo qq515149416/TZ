@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Models\Customer\PayOrder;
 use App\Admin\Models\DefenseIp\BusinessModel;
-use App\Http\Models\DefenseIp\OverlayBelongModel; 
+use App\Http\Models\DefenseIp\OverlayBelongModel;
 use Carbon\Carbon;
 use App\Http\Controllers\DefenseIp\ApiController;
 
@@ -17,7 +17,7 @@ class OverlayModel extends Model
 {
 
 	use SoftDeletes;
-	
+
 
 	protected $table = 'tz_overlay'; //表
 	protected $primaryKey = 'id'; //主键
@@ -26,7 +26,7 @@ class OverlayModel extends Model
 	protected $fillable = ['name', 'description','site','protection_value','price','validity_period','sell_status'];
 	protected $time_limit = 60;//两次购买的时间限制
 
-	
+
 	public function showOverlay($par){
 		if($par['site'] == '*'){
 			if ($par['sell_status'] == '*') {
@@ -34,7 +34,7 @@ class OverlayModel extends Model
 			}else{
 				$overlay = $this->where('sell_status',$par['sell_status'])->get();
 			}
-			
+
 		}else{
 			if ($par['sell_status'] == '*') {
 				$overlay = $this->where('site',$par['site'])->get();
@@ -75,7 +75,7 @@ class OverlayModel extends Model
 				$user->nickname = $user->name;
 			}
 		}
-		
+
 		$user_id = $user->id;
 		//检测用户是否在时间限制内生成过订单
 		$pay_model = new PayOrder();
@@ -138,14 +138,14 @@ class OverlayModel extends Model
 			];
 		}
 
-		
+
 		$pay_res = $pay_model->payOrderByBalance([$make_order->id],0);
 
 		if($pay_res['code'] != 1){
 			DB::rollBack();
 			return $pay_res;
 		}
-		
+
 		DB::commit();
 		return [
 			'data'	=> [],
@@ -156,33 +156,34 @@ class OverlayModel extends Model
 
 	public function showBelong($par){
 		$user_id = Auth::user()->id;
-		$belong_model = new OverlayBelongModel();
+        $belong_model = new OverlayBelongModel();
+        $overlay = NULL;
 		switch ($par['status']) {
 			case '*':
 				$overlay = $belong_model
 					->where('tz_overlay_belong.user_id',$user_id)
 					->leftJoin('tz_overlay as b','b.id', '=' , 'tz_overlay_belong.overlay_id')
-					->leftJoin('idc_machineroom as c' , 'c.id' , '=' , 'b.site')
-					->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period','c.machine_room_name','c.id as machine_room_id'])
-					->get();
+					->leftJoin('idc_machineroom as c' , 'c.id' , '=' , 'b.site');
+					// ->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period','c.machine_room_name','c.id as machine_room_id'])
+					// ->get();
 				break;
 			case '1':
 				$overlay = $belong_model
 					->where('tz_overlay_belong.status',1)
 					->where('tz_overlay_belong.user_id',$user_id)
 					->leftJoin('tz_overlay as b','b.id', '=' , 'tz_overlay_belong.overlay_id')
-					->leftJoin('idc_machineroom as c' , 'c.id' , '=' , 'b.site')
-					->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period','c.machine_room_name','c.id as machine_room_id'])
-					->get();
+					->leftJoin('idc_machineroom as c' , 'c.id' , '=' , 'b.site');
+					// ->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period','c.machine_room_name','c.id as machine_room_id'])
+					// ->get();
 				break;
 			case '0':
 				$overlay = $belong_model
 					->where('tz_overlay_belong.status',0)
 					->where('tz_overlay_belong.user_id',$user_id)
 					->leftJoin('tz_overlay as b','b.id', '=' , 'tz_overlay_belong.overlay_id')
-					->leftJoin('idc_machineroom as c' , 'c.id' , '=' , 'b.site')
-					->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period','c.machine_room_name','c.id as machine_room_id'])
-					->get();
+					->leftJoin('idc_machineroom as c' , 'c.id' , '=' , 'b.site');
+					// ->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period','c.machine_room_name','c.id as machine_room_id'])
+					// ->get();
 				break;
 			default:
 				return [
@@ -191,7 +192,11 @@ class OverlayModel extends Model
 					'code'	=> 0,
 				];
 				break;
-		}
+        }
+        if($par['site']!=="*") {
+            $overlay->where("c.id",$par['site']);
+        }
+        $overlay->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period','c.machine_room_name','c.id as machine_room_id'])->get();
 		if($overlay->isEmpty()){
 			return [
 				'data'	=> [],
@@ -202,7 +207,7 @@ class OverlayModel extends Model
 		foreach ($overlay as $k => $v) {
 			$v = $this->transBelong($v);
 		}
-		
+
 		return [
 			'data'	=> $overlay,
 			'msg'	=> '获取成功',
@@ -225,7 +230,7 @@ class OverlayModel extends Model
 				$overlay->status = '未知状态';
 				break;
 		}
-		
+
 		return $overlay;
 	}
 
@@ -280,7 +285,7 @@ class OverlayModel extends Model
 			];
 		}
 
-		
+
 
 		//获取高防ip业务所在机房
 		$d_ip = DB::table('tz_defenseip_store')->whereNull('deleted_at')->where('id',$business->ip_id)->first();
@@ -293,7 +298,7 @@ class OverlayModel extends Model
 		}
 
 		$d_ip_site = $d_ip->site;
-		
+
 		//获取叠加包信息
 		$overlay = $this->withTrashed()->find($belong->overlay_id);
 		if($overlay->site != $d_ip_site){
@@ -334,13 +339,13 @@ class OverlayModel extends Model
 		//计算额外的叠加包流量峰值
 		$after_extra_protection = bcadd($business->extra_protection, $overlay->protection_value,0);
 		//计算业务该有的流量峰值
-		
+
 		$after_protection = bcadd($d_ip->protection_value, $after_extra_protection,0);
-		
+
 		$business_update_info = [
 			'extra_protection'	=> $after_extra_protection,
 		];
-	
+
 		$business_update_res = $business->update($business_update_info);
 
 		if(!$business_update_res){
@@ -356,9 +361,9 @@ class OverlayModel extends Model
 
 		//记得正式上线换回来
 		//$set_res = $api_model->setProtectionValue($d_ip->ip, $after_protection);
-	
+
 		$set_res = $api_model->setProtectionValue('1.1.1.1', 0);
-		
+
 		if ($set_res != 'editok' && $set_res != 'ok') {
 			DB::rollBack();
 			return [
@@ -423,7 +428,7 @@ class OverlayModel extends Model
 					 ->where(['id'=>$belong->overlay_id])
 					 ->select('id','site','protection_value','validity_period')
 					 ->first();//查找对应的流量包的所对应的防护等参数
-		
+
 		if(empty($overlay)){//不存在
 			$return['data'] = [];
 			$return['code'] = 0;

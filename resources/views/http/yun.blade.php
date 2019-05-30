@@ -19,17 +19,17 @@
         <nav>
             <ul>
                 <li>
-                    <a class="aticve" href="/yun/huizhou">
+                    <a class="{{ $page == 'huizhou' ? 'aticve' : '' }}" href="/yun/huizhou">
                         惠州云服务器
                     </a>
                 </li>
                 <li>
-                    <a href="/yun/hengyang">
+                    <a class="{{ $page == 'hengyang' ? 'aticve' : '' }}" href="/yun/hengyang">
                         衡阳云服务器
                     </a>
                 </li>
                 <li>
-                    <a href="/yun/xian">
+                    <a class="{{ $page == 'xian' ? 'aticve' : '' }}" href="/yun/xian">
                         西安云服务器
                     </a>
                 </li>
@@ -66,7 +66,7 @@
                     <span class="value">39</span>
                     元&nbsp;/&nbsp;月起
                 </div>
-                <a href="javascript:;">立即选购</a>
+                <a href="https://yun.zeisp.com/cloudbuy.html" target="_blank">立即选购</a>
             </li>
             <li>
                 <header>
@@ -93,7 +93,7 @@
                     <span class="value">99</span>
                     元&nbsp;/&nbsp;月起
                 </div>
-                <a href="javascript:;">立即选购</a>
+                <a href="https://yun.zeisp.com/cloudbuy.html" target="_blank">立即选购</a>
             </li>
             <li>
                 <header>
@@ -120,7 +120,7 @@
                     <span class="value">599</span>
                     元&nbsp;/&nbsp;月起
                 </div>
-                <a href="javascript:;">立即选购</a>
+                <a href="https://yun.zeisp.com/cloudbuy.html" target="_blank">立即选购</a>
             </li>
             <li>
                 <header>
@@ -147,7 +147,7 @@
                     <span class="value">199</span>
                     元&nbsp;/&nbsp;月起
                 </div>
-                <a href="javascript:;">立即选购</a>
+                <a href="https://yun.zeisp.com/cloudbuy.html" target="_blank">立即选购</a>
             </li>
             <li>
                 <header>
@@ -174,7 +174,7 @@
                     <span class="value">279</span>
                     元&nbsp;/&nbsp;月起
                 </div>
-                <a href="javascript:;">立即选购</a>
+                <a href="https://yun.zeisp.com/cloudbuy.html" target="_blank">立即选购</a>
             </li>
         </ul>
     </div>

@@ -131,7 +131,7 @@ class BusinessController extends Controller
         $salesman = DB::table('admin_users')
                         ->join('oa_staff','admin_users.id','=','oa_staff.admin_users_id')
                         ->join('tz_department','oa_staff.department','=','tz_department.id')
-                        ->where('tz_department.sign',4)
+                        // ->where('tz_department.sign',4)
                         ->select('admin_users.id','admin_users.name')
                         ->distinct()
                         ->get();

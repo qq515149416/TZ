@@ -133,16 +133,16 @@
                         </dl>
                         <dl>
                             <dt>
-                                <a href="/page/tz/tzCloud">腾正云</a>
+                                <a href="javascript:;">腾正云</a>
                             </dt>
                             <dd>
-                                <a href="/page/tz/tzCloud">惠州云服务器</a>
+                                <a href="/yun/huizhou">惠州云服务器</a>
                             </dd>
                             <dd>
-                                <a href="/page/tz/tzCloud">衡阳云服务器</a>
+                                <a href="/yun/hengyang">衡阳云服务器</a>
                             </dd>
                             <dd>
-                                <a href="/page/tz/tzCloud">西安云服务器</a>
+                                <a href="/yun/xian">西安云服务器</a>
                             </dd>
                         </dl>
                         <dl>

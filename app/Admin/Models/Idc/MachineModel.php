@@ -587,6 +587,8 @@ class MachineModel extends Model
 			if(!empty($ips)){
 				$ips->ip_detail = $ips->ip.$ip_company[$ips->ip_company];
 			}
+		} elseif($ip_id == 0){
+			$ips = 'IP暂未选择';
 		} else {
 			$ips = DB::table('idc_ips')->where(['ip_status'=>0])->whereNull('deleted_at')->select('id','ip','ip_company','ip_comproom')->get();
 			$ip_company = [0=>'电信',1=>'移动',2=>'联通'];

@@ -1,9 +1,35 @@
+@font-face {
+  font-family: 'pingFang';
+  src: url(/fonts/PingFang_Bold.eot?3750644e22c584075747601c47df00f3);
+  src: url(/fonts/PingFang_Bold.woff?087cbef9ca2b6bd612f4712e23045298) format('woff'), url(/fonts/PingFang_Bold.ttf?dd25b35dcb7ba4476cbaa9a9592e39e2) format('truetype'), url(/fonts/PingFang_Bold.svg?daa902cc691583edaa741a08f9913145) format('svg');
+  font-weight: bold;
+}
+@font-face {
+  font-family: 'pingFang';
+  src: url(/fonts/PingFang_Medium_0.eot?bdbf7e000dc0b71d2b6f445e70a1e23c);
+  src: url(/fonts/PingFang_Medium_0.woff?7ddf61add84d338280ed1059641da293) format('woff'), url(/fonts/PingFang_Medium_0.ttf?15974853bc3294ef68e7e6d58fe74fd7) format('truetype'), url(/fonts/PingFang_Medium_0.svg?bbf9d5f064f98eb324ce47ba4e560116) format('svg');
+  font-weight: normal;
+}
 body,
 html {
   margin: 0;
   padding: 0;
-  font-family: "\5FAE\8F6F\96C5\9ED1";
+  font-family: "pingFang";
   overflow-x: hidden;
+}
+body h1,
+html h1,
+body h2,
+html h2,
+body h3,
+html h3,
+body h4,
+html h4,
+body h5,
+html h5,
+body h6,
+html h6 {
+  font-weight: bold;
 }
 body .main,
 html .main {

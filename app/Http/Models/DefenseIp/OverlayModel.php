@@ -181,35 +181,12 @@ class OverlayModel extends Model
 				'code'	=> 0,
 			];
 		}
-		foreach ($overlay as $k => $v) {
-			$v = $this->transBelong($v);
-		}
-
 		return [
 			'data'	=> $overlay,
 			'msg'	=> '获取成功',
 			'code'	=> 1,
 		];
-	}
-
-	protected function transBelong($overlay){
-		switch ($overlay->status) {
-			case '2':
-				$overlay->status = '已使用完毕';
-				break;
-			case '1':
-				$overlay->status = '生效中';
-				break;
-			case '0':
-				$overlay->status = '未使用';
-				break;
-			default:
-				$overlay->status = '未知状态';
-				break;
-		}
-
-		return $overlay;
-	}
+    }
 
 	public function useOverlayToDIP($par){
 		//获取业务信息

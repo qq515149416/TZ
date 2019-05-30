@@ -562,6 +562,8 @@ class MachineModel extends Model
 	public function cabinet($cabinet_id){
 		if($cabinet_id){
 			$cabinet = DB::table('idc_cabinet')->where(['id'=>$cabinet_id])->value('cabinet_id');
+		} elseif($cabinet_id == 0) {
+			$cabinet = '机柜暂未选择';
 		} else {
 			$cabinet = DB::table('idc_cabinet')->whereNull('deleted_at')->select('id','machineroom_id','cabinet_id','use_type')->get();
 			$use_type = [0=>'内部机柜',1=>'客户机柜'];

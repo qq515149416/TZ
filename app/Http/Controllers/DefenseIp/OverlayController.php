@@ -12,7 +12,7 @@ use Carbon\Carbon;
 
 class OverlayController extends Controller
 {
-	
+
 	public function showOverlay(OverlayRequest $request){
 		$par = $request->only(['site','sell_status']);
 
@@ -20,7 +20,7 @@ class OverlayController extends Controller
 
 		$res = $model->showOverlay($par);
 
-		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);	
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
 
 	/**
@@ -28,25 +28,28 @@ class OverlayController extends Controller
 	 */
 	public function buyNowByCustomer(OverlayRequest $request){
 		$par = $request->only(['overlay_id','buy_num']);
-		
+
 		$model = new OverlayModel();
 
 		$res = $model->buyNowByCustomer($par);
 
-		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);	
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
 
 	/**
 	 *  展示客户所属叠加包
 	 */
 	public function showBelong(OverlayRequest $request){
-		$par = $request->only(['status']);
-
+		// $par = $request->only(['status','site']);
+        $par = [
+            'status' => $request->input('status', ''),
+            'site' => $request->input('site', '')
+        ];
 		$model = new OverlayModel();
 
 		$res = $model->showBelong($par);
 
-		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);	
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
 
 	/**
@@ -59,7 +62,7 @@ class OverlayController extends Controller
 
 		$res = $model->useOverlayToDIP($par);
 
-		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);	
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
 
 	/**
@@ -74,5 +77,5 @@ class OverlayController extends Controller
 		return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
 	}
 
-	
+
 }

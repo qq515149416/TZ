@@ -158,46 +158,32 @@ class OverlayModel extends Model
 		$user_id = Auth::user()->id;
         $belong_model = new OverlayBelongModel();
         $overlay = NULL;
-		switch ($par['status']) {
-			case '*':
-				$overlay = $belong_model
+        if($par['status']!=="*" && $par['site']!=="*") {
+            $overlay = $belong_model
+					->where('tz_overlay_belong.status',$par['status'])
 					->where('tz_overlay_belong.user_id',$user_id)
 					->leftJoin('tz_overlay as b','b.id', '=' , 'tz_overlay_belong.overlay_id')
-					->leftJoin('idc_machineroom as c' , 'c.id' , '=' , 'b.site');
-					// ->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period','c.machine_room_name','c.id as machine_room_id'])
-					// ->get();
-				break;
-			case '1':
-				$overlay = $belong_model
-					->where('tz_overlay_belong.status',1)
+                    ->leftJoin('idc_machineroom as c' , 'c.id' , '=' , 'b.site')
+					->where('c.id',$par['site'])
+					->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period','c.machine_room_name','c.id as machine_room_id'])
+					->get();
+        } else if($par['status']!=="*") {
+            $overlay = $belong_model
+					->where('tz_overlay_belong.status',$par['status'])
 					->where('tz_overlay_belong.user_id',$user_id)
 					->leftJoin('tz_overlay as b','b.id', '=' , 'tz_overlay_belong.overlay_id')
-					->leftJoin('idc_machineroom as c' , 'c.id' , '=' , 'b.site');
-					// ->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period','c.machine_room_name','c.id as machine_room_id'])
-					// ->get();
-				break;
-			case '0':
-				$overlay = $belong_model
-					->where('tz_overlay_belong.status',0)
+					->leftJoin('idc_machineroom as c' , 'c.id' , '=' , 'b.site')
+					->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period','c.machine_room_name','c.id as machine_room_id'])
+					->get();
+        } else {
+            $overlay = $belong_model
 					->where('tz_overlay_belong.user_id',$user_id)
 					->leftJoin('tz_overlay as b','b.id', '=' , 'tz_overlay_belong.overlay_id')
-					->leftJoin('idc_machineroom as c' , 'c.id' , '=' , 'b.site');
-					// ->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period','c.machine_room_name','c.id as machine_room_id'])
-					// ->get();
-				break;
-			default:
-				return [
-					'data'	=> [],
-					'msg'	=> '无此状态',
-					'code'	=> 0,
-				];
-				break;
+					->leftJoin('idc_machineroom as c' , 'c.id' , '=' , 'b.site')
+					->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period','c.machine_room_name','c.id as machine_room_id'])
+					->get();
         }
-        if($par['site']!=="*") {
-            $overlay->where("c.id",$par['site']);
-        }
-        $overlay->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period','c.machine_room_name','c.id as machine_room_id'])->get();
-		if($overlay->isEmpty()){
+        if($overlay->isEmpty()){
 			return [
 				'data'	=> [],
 				'msg'	=> '无叠加包',

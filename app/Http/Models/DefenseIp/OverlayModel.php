@@ -155,34 +155,22 @@ class OverlayModel extends Model
 	}
 
 	public function showBelong($par){
+        global $_par;
+        $_par = $par;
 		$user_id = Auth::user()->id;
         $belong_model = new OverlayBelongModel();
-        $overlay = NULL;
-        if($par['status']!=="*" && $par['site']!=="*") {
-            $overlay = $belong_model
-					->where('tz_overlay_belong.status',$par['status'])
+        $overlay = $belong_model
+                    ->when($par['status']!=="*", function ($query, $role) {
+                        return $query->where('tz_overlay_belong.status',$GLOBALS['_par']['status']);
+                    })
 					->where('tz_overlay_belong.user_id',$user_id)
 					->leftJoin('tz_overlay as b','b.id', '=' , 'tz_overlay_belong.overlay_id')
                     ->leftJoin('idc_machineroom as c' , 'c.id' , '=' , 'b.site')
-					->where('c.id',$par['site'])
+                    ->when($par['site']!=="*", function ($query, $role) {
+                        return $query->where('c.id',$GLOBALS['_par']['site']);
+                    })
 					->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period','c.machine_room_name','c.id as machine_room_id'])
 					->get();
-        } else if($par['status']!=="*") {
-            $overlay = $belong_model
-					->where('tz_overlay_belong.status',$par['status'])
-					->where('tz_overlay_belong.user_id',$user_id)
-					->leftJoin('tz_overlay as b','b.id', '=' , 'tz_overlay_belong.overlay_id')
-					->leftJoin('idc_machineroom as c' , 'c.id' , '=' , 'b.site')
-					->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period','c.machine_room_name','c.id as machine_room_id'])
-					->get();
-        } else {
-            $overlay = $belong_model
-					->where('tz_overlay_belong.user_id',$user_id)
-					->leftJoin('tz_overlay as b','b.id', '=' , 'tz_overlay_belong.overlay_id')
-					->leftJoin('idc_machineroom as c' , 'c.id' , '=' , 'b.site')
-					->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period','c.machine_room_name','c.id as machine_room_id'])
-					->get();
-        }
         if($overlay->isEmpty()){
 			return [
 				'data'	=> [],

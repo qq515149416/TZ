@@ -14,7 +14,7 @@ body,
 html {
   margin: 0;
   padding: 0;
-  font-family: "pingFang";
+  font-family: "pingFang", "\5FAE\8F6F\96C5\9ED1";
   overflow-x: hidden;
 }
 body h1,
@@ -29,6 +29,7 @@ body h5,
 html h5,
 body h6,
 html h6 {
+  font-family: "pingFang";
   font-weight: bold;
 }
 body .main,
@@ -5638,6 +5639,15 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   line-height: 40px;
   text-align: center;
   margin-top: 4px;
+}
+.idx_box_wp.index-partners .test-font .t1 {
+  font-weight: 700;
+}
+.idx_box_wp.index-partners .test-font .t2 {
+  font-weight: 400;
+}
+.idx_box_wp.index-partners .test-font .t3 {
+  font-weight: 500;
 }
 @keyframes warn {
   0% {

@@ -46,7 +46,7 @@ class  Overdue extends Model
 			->where('tz_business.endding_time','<',$end_time)
 			->where('tz_business.business_status','>=',0)
 			->whereNull('tz_business.deleted_at')
-			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name,d.nickname'))	
+			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name,d.nickname,d.email,d.name'))	
 			->orderBy('tz_business.endding_time','asc')
 			->get();
 		}else{
@@ -60,7 +60,7 @@ class  Overdue extends Model
 			->where('tz_business.endding_time','<',$end_time)
 			->whereNull('tz_business.deleted_at')
 			->where('tz_business.business_status','>=',0)
-			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name,d.nickname'))
+			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name,d.nickname,d.email,d.name'))
 			->orderBy('tz_business.endding_time','asc')
 			->get();	
 		}
@@ -72,7 +72,19 @@ class  Overdue extends Model
 				'code'	=> 1,
 			];
 		}
-		
+		foreach ($list as $k => $v) {
+			if ($v->nickname == null) {
+				if ($v->email == null) {
+					if ($v->name == null) {
+						$v->nickname = '客户信息不完整';
+					}else{
+						$v->nickname = $v->name;
+					}
+				}else{
+					$v->nickname = $v->email;
+				}
+			}
+		}
 		$return['data'] 	= $list;
 		$return['msg'] 	= '获取成功';
 		$return['code']	= 1;
@@ -104,7 +116,7 @@ class  Overdue extends Model
 			->leftjoin('idc_cabinet as b','tz_business.machine_number','=','b.cabinet_id')
 			->leftjoin('idc_machineroom as c','b.machineroom_id','=','c.id')
 			->leftjoin('tz_users as d','tz_business.client_id','=','d.id')	
-			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name,tz_business.start_time,d.nickname'))
+			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name,tz_business.start_time,d.nickname,d.email,d.name'))
 			->where('tz_business.business_type',3)
 			->where('tz_business.business_status',1)
 			->whereNull('tz_business.deleted_at')
@@ -116,7 +128,7 @@ class  Overdue extends Model
 			->leftjoin('idc_cabinet as b','tz_business.machine_number','=','b.cabinet_id')
 			->leftjoin('idc_machineroom as c','b.machineroom_id','=','c.id')	
 			->leftjoin('tz_users as d','tz_business.client_id','=','d.id')
-			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name,tz_business.start_time,d.nickname'))
+			->select(DB::raw('tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number as cabinet_number,c.machine_room_name,tz_business.start_time,d.nickname,d.email,d.name'))
 			->where('tz_business.business_type',3)
 			->where('tz_business.business_status',1)
 			->where('tz_business.sales_id',$sales_id)
@@ -124,7 +136,21 @@ class  Overdue extends Model
 			->orderBy('tz_business.endding_time','asc')
 			->get();	
 		}
-			
+
+		foreach ($list as $k => $v) {
+			if ($v->nickname == null) {
+				if ($v->email == null) {
+					if ($v->name == null) {
+						$v->nickname = '客户信息不完整';
+					}else{
+						$v->nickname = $v->name;
+					}
+				}else{
+					$v->nickname = $v->email;
+				}
+			}
+		}
+
 		if($list->isEmpty()){
 			return [
 				'data'	=> [], 
@@ -158,7 +184,7 @@ class  Overdue extends Model
 			->leftjoin('idc_machine as b','tz_business.machine_number','=','b.machine_num')
 			->leftjoin('idc_ips as c','b.ip_id','=','c.id')
 			->leftjoin('tz_users as d','tz_business.client_id','=','d.id')	
-			->select(DB::raw('c.ip,tz_business.id,tz_business.sales_id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,d.nickname'))
+			->select(DB::raw('c.ip,tz_business.id,tz_business.sales_id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,d.nickname,d.email,d.name'))
 			->whereIn('tz_business.business_type',['1','2'])
 			->where('tz_business.endding_time','<',$end_time)
 			->where('tz_business.remove_status',0)
@@ -171,7 +197,7 @@ class  Overdue extends Model
 			->leftjoin('idc_machine as b','tz_business.machine_number','=','b.machine_num')
 			->leftjoin('idc_ips as c','b.ip_id','=','c.id')
 			->leftjoin('tz_users as d','tz_business.client_id','=','d.id')	
-			->select(DB::raw('c.ip,tz_business.id,tz_business.sales_id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,d.nickname'))
+			->select(DB::raw('c.ip,tz_business.id,tz_business.sales_id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,d.nickname,d.email,d.name'))
 			->whereIn('tz_business.business_type',['1','2'])
 			->where('tz_business.sales_id',$sales_id)
 			->where('tz_business.endding_time','<',$end_time)
@@ -181,7 +207,21 @@ class  Overdue extends Model
 			->orderBy('tz_business.endding_time','asc')
 			->get();	
 		}
-		
+
+		foreach ($list as $k => $v) {
+			if ($v->nickname == null) {
+				if ($v->email == null) {
+					if ($v->name == null) {
+						$v->nickname = '客户信息不完整';
+					}else{
+						$v->nickname = $v->name;
+					}
+				}else{
+					$v->nickname = $v->email;
+				}
+			}
+		}
+
 		if($list->isEmpty()){
 			return [
 				'data'	=> [], 
@@ -221,7 +261,7 @@ class  Overdue extends Model
 				->leftjoin('idc_machine as b','a.business_sn','=','b.own_business')		
 				->leftjoin('idc_cabinet as c','b.cabinet','=','c.id')	
 				->leftjoin('tz_users as d','a.customer_id','=','d.id')		
-				->select(DB::raw('a.id,a.business_sn,a.resource_type,a.customer_name,a.machine_sn as self_number,a.resource,a.end_time as endding_time,b.machine_num,c.cabinet_id as cabinet_num,d.nickname'))		
+				->select(DB::raw('a.id,a.business_sn,a.resource_type,a.customer_name,a.machine_sn as self_number,a.resource,a.end_time as endding_time,b.machine_num,c.cabinet_id as cabinet_num,d.nickname,d.email,d.name'))		
 				->where('a.end_time','<',$end_time)
 				->where('a.resource_type','>',3)
 				->where('a.resource_type','<=',9)
@@ -236,7 +276,7 @@ class  Overdue extends Model
 				->leftjoin('idc_machine as b','a.business_sn','=','b.own_business')		
 				->leftjoin('idc_cabinet as c','b.cabinet','=','c.id')
 				->leftjoin('tz_users as d','a.customer_id','=','d.id')			
-				->select(DB::raw('a.id,a.business_sn,a.resource_type,a.customer_name,a.machine_sn as self_number,a.resource,a.end_time as endding_time,b.machine_num,c.cabinet_id as cabinet_num,d.nickname'))		
+				->select(DB::raw('a.id,a.business_sn,a.resource_type,a.customer_name,a.machine_sn as self_number,a.resource,a.end_time as endding_time,b.machine_num,c.cabinet_id as cabinet_num,d.nickname,d.email,d.name'))		
 				->where('a.end_time','<',$end_time)
 				->where('a.resource_type','=',$resource_type)
 				->whereIn('a.order_status',[0,1,2])
@@ -253,7 +293,7 @@ class  Overdue extends Model
 				->leftjoin('idc_machine as b','a.business_sn','=','b.own_business')		
 				->leftjoin('idc_cabinet as c','b.cabinet','=','c.id')	
 				->leftjoin('tz_users as d','a.customer_id','=','d.id')		
-				->select(DB::raw('a.id,a.business_sn,a.resource_type,a.customer_name,a.machine_sn as self_number,a.resource,a.end_time as endding_time,b.machine_num,c.cabinet_id as cabinet_num,d.nickname'))		
+				->select(DB::raw('a.id,a.business_sn,a.resource_type,a.customer_name,a.machine_sn as self_number,a.resource,a.end_time as endding_time,b.machine_num,c.cabinet_id as cabinet_num,d.nickname,d.email,d.name'))		
 				->where('a.end_time','<',$end_time)
 				->where('a.business_id',$sales_id)
 				->where('a.resource_type','>',3)
@@ -269,7 +309,7 @@ class  Overdue extends Model
 				->leftjoin('idc_machine as b','a.business_sn','=','b.own_business')		
 				->leftjoin('idc_cabinet as c','b.cabinet','=','c.id')	
 				->leftjoin('tz_users as d','a.customer_id','=','d.id')		
-				->select(DB::raw('a.id,a.business_sn,a.resource_type,a.customer_name,a.machine_sn as self_number,a.resource,a.end_time as endding_time,b.machine_num,c.cabinet_id as cabinet_num,d.nickname'))		
+				->select(DB::raw('a.id,a.business_sn,a.resource_type,a.customer_name,a.machine_sn as self_number,a.resource,a.end_time as endding_time,b.machine_num,c.cabinet_id as cabinet_num,d.nickname,d.email,d.name'))		
 				->where('a.end_time','<',$end_time)
 				->where('a.business_id',$sales_id)
 				->where('a.resource_type','=',$resource_type)
@@ -281,7 +321,21 @@ class  Overdue extends Model
 			
 			}
 		}
-		
+
+		foreach ($list as $k => $v) {
+			if ($v->nickname == null) {
+				if ($v->email == null) {
+					if ($v->name == null) {
+						$v->nickname = '客户信息不完整';
+					}else{
+						$v->nickname = $v->name;
+					}
+				}else{
+					$v->nickname = $v->email;
+				}
+			}
+		}
+
 		if($list->isEmpty()){
 			if($way == 'overdue'){
 				if($resource_type == 0){
@@ -373,7 +427,7 @@ class  Overdue extends Model
 			->leftjoin('idc_machine as b','tz_business.machine_number','=','b.machine_num')
 			->leftjoin('idc_ips as c','b.ip_id','=','c.id')
 			->leftjoin('tz_users as d','tz_business.client_id','=','d.id')
-			->select(DB::raw('c.ip,tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,tz_business.business_type,tz_business.start_time,d.nickname'))
+			->select(DB::raw('c.ip,tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,tz_business.business_type,tz_business.start_time,d.nickname,d.email,d.name'))
 			->where('tz_business.business_status',1)
 			->whereIn('tz_business.remove_status',[0,1])
 			->where('tz_business.business_type','!=',3)
@@ -385,7 +439,7 @@ class  Overdue extends Model
 			->leftjoin('idc_machine as b','tz_business.machine_number','=','b.machine_num')
 			->leftjoin('idc_ips as c','b.ip_id','=','c.id')
 			->leftjoin('tz_users as d','tz_business.client_id','=','d.id')	
-			->select(DB::raw('c.ip,tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,tz_business.business_type,tz_business.start_time,d.nickname'))
+			->select(DB::raw('c.ip,tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,tz_business.business_type,tz_business.start_time,d.nickname,d.email,d.name'))
 			->where('tz_business.sales_id',$sales_id)
 			->where('tz_business.business_status',1)
 			->whereIn('tz_business.remove_status',[0,1])
@@ -401,6 +455,19 @@ class  Overdue extends Model
 				'msg'	=> '暂无未付款使用中机器',
 				'code'	=> 1,
 			];
+		}
+		foreach ($list as $k => $v) {
+			if ($v->nickname == null) {
+				if ($v->email == null) {
+					if ($v->name == null) {
+						$v->nickname = '客户信息不完整';
+					}else{
+						$v->nickname = $v->name;
+					}
+				}else{
+					$v->nickname = $v->email;
+				}
+			}
 		}
 		$return['data'] 	= $list;
 		$return['msg'] 	= '获取成功';
@@ -425,7 +492,7 @@ class  Overdue extends Model
 			->leftjoin('idc_machine as b','tz_business.machine_number','=','b.machine_num')
 			->leftjoin('idc_ips as c','b.ip_id','=','c.id')
 			->leftjoin('tz_users as d','tz_business.client_id','=','d.id')
-			->select(DB::raw('c.ip,tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,tz_business.business_type,tz_business.start_time,d.nickname'))
+			->select(DB::raw('c.ip,tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,tz_business.business_type,tz_business.start_time,d.nickname,d.email,d.name'))
 			->where('tz_business.business_type','!=',3)
 			->where('tz_business.remove_status','!=',0)
 			->whereNull('tz_business.deleted_at')
@@ -436,7 +503,7 @@ class  Overdue extends Model
 			->leftjoin('idc_machine as b','tz_business.machine_number','=','b.machine_num')
 			->leftjoin('idc_ips as c','b.ip_id','=','c.id')
 			->leftjoin('tz_users as d','tz_business.client_id','=','d.id')
-			->select(DB::raw('c.ip,tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,tz_business.business_type,tz_business.start_time,d.nickname'))
+			->select(DB::raw('c.ip,tz_business.id,tz_business.business_number,tz_business.client_name,tz_business.endding_time,tz_business.machine_number,tz_business.business_type,tz_business.start_time,d.nickname,d.email,d.name'))
 			->where('tz_business.sales_id',$sales_id)
 			->where('tz_business.business_type','!=',3)
 			->where('tz_business.remove_status','!=',0)
@@ -452,6 +519,21 @@ class  Overdue extends Model
 				'code'	=> 1,
 			];
 		}
+
+		foreach ($list as $k => $v) {
+			if ($v->nickname == null) {
+				if ($v->email == null) {
+					if ($v->name == null) {
+						$v->nickname = '客户信息不完整';
+					}else{
+						$v->nickname = $v->name;
+					}
+				}else{
+					$v->nickname = $v->email;
+				}
+			}
+		}
+
 		$return['data'] 	= $list;
 		$return['msg'] 	= '获取成功';
 		$return['code']	= 1;
@@ -551,10 +633,25 @@ class  Overdue extends Model
 		$order_status = [ '0' => '待支付' , '1' => '已支付' , '2' => '已支付' , '3' => '订单完成' , '4' => '到期' , '5' => '取消' , '6' => '申请退款', '8' => '退款完成'];
 		$order_type = [ '1' => '新购' , '2' => '续费'];
 		for ($i=0; $i < count($list); $i++) { 
-			$list[$i]->nickname = DB::table('tz_users')->where('id',$list[$i]->customer_id)->value('nickname');
-			if($list[$i]->nickname == null){
+			$user = DB::table('tz_users')->where('id',$list[$i]->customer_id)->first();
+			if($user == null){
 				$list[$i]->nickname = '客户信息获取失败';
+			}else{
+				if ($user->nickname != null) {
+					$list[$i]->nickname = $user->nickname;
+				}else{
+					if ($user->email != null) {
+						$list[$i]->nickname = $user->email;
+					}else{
+						if ($user->name != null) {
+							$list[$i]->nickname = $user->name;
+						}else{
+							$list[$i]->nickname = '客户信息获取失败';
+						}
+					}
+				}
 			}
+			
 			$list[$i]->order_status =  $order_status[$list[$i]->order_status];
 			$list[$i]->resource_type =  $resource_type[$list[$i]->resource_type];
 		}

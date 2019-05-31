@@ -328,15 +328,15 @@ class BusinessModel extends Model
 
 		//判断计费开始时间是否符合区间
 
-		if($start_time != 0){
-			if($start_time < $business->examine_time || $start_time > date("Y-m-d H:i:s",time()) ){
-				return [
-					'data'	=> '',
-					'msg'	=> '业务计费开始时间只能从 审核时间 到 当前时间内选择',
-					'code'	=> 0,
-				]; 
-			}
-		}
+		// if($start_time != 0){
+		// 	if($start_time < $business->examine_time || $start_time > date("Y-m-d H:i:s",time()) ){
+		// 		return [
+		// 			'data'	=> '',
+		// 			'msg'	=> '业务计费开始时间只能从 审核时间 到 当前时间内选择',
+		// 			'code'	=> 0,
+		// 		]; 
+		// 	}
+		// }
 
 		//判断如果是试用业务的话,是否有传开始计费时间
 		if($business->status == 4){

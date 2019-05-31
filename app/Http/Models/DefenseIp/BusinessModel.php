@@ -152,7 +152,7 @@ class BusinessModel extends Model
 		$apiController = new ApiController();
 
 		//记得正式上线换回来
-		$set_res = $api_model->setProtectionValue($d_ip->ip, $d_ip->protection_value);
+		$set_res = $apiController->setProtectionValue($d_ip->ip, $d_ip->protection_value);
 
 		//$set_res = $apiController->setProtectionValue('1.1.1.1', 0);
 	

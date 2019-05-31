@@ -79,13 +79,24 @@ class OverdueDJB extends Command
 
 		//循环每个此类叠加包
 		foreach ($pastOverlay as $k => $v) {
-			$type = DB::table('tz_business_relevance')->where('business_id',$v->target_business)->value('type');
-			if ($type == 2) {	//如果是高防业务
-				$res = $this->delPastDIP($v);	//调用高防下架方法
-				if($res){
+
+			//检测是否存在于高防业务表
+			$checkDIP = BusinessModel::where('business_number',$v->target_business)->first();
+  			if ($checkDIP) {
+  				$res = $this->delPastDIP($v);	//调用高防下架方法
+				if($res){		//成功的话,num+1
 					$num++;
 				}
-			}	
+  			}
+
+  			//别管这段
+			// $type = DB::table('tz_business_relevance')->where('business_id',$v->target_business)->value('type');
+			// if ($type == 2) {	//如果是高防业务
+			// 	$res = $this->delPastDIP($v);	//调用高防下架方法
+			// 	if($res){
+			// 		$num++;
+			// 	}
+			// }	
 		}   
 		return $num;    
 	}

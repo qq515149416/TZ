@@ -80,6 +80,7 @@ class RechargeStatisticsRequest extends FormRequest
 	public function failedValidation(Validator $validator) {
 		$msg = $validator->errors()->first();
 		header('Content-type:application/json');
-		exit('{"code": 0,"data":[],"msg":"'.$msg.'"}'); 
+        header('Cache-control:no-cache');
+        exit('{"code": 0,"data":[],"msg":"'.$msg.'"}');
 	}
 }

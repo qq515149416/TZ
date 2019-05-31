@@ -1,34 +1,32 @@
 @font-face {
-  font-family: 'pingFang';
-  src: url(/fonts/PingFang_Bold.eot?3750644e22c584075747601c47df00f3);
-  src: url(/fonts/PingFang_Bold.woff?087cbef9ca2b6bd612f4712e23045298) format('woff'), url(/fonts/PingFang_Bold.ttf?dd25b35dcb7ba4476cbaa9a9592e39e2) format('truetype'), url(/fonts/PingFang_Bold.svg?daa902cc691583edaa741a08f9913145) format('svg');
-  font-weight: bold;
-}
-@font-face {
-  font-family: 'pingFang';
-  src: url(/fonts/PingFang_Medium_0.eot?bdbf7e000dc0b71d2b6f445e70a1e23c);
-  src: url(/fonts/PingFang_Medium_0.woff?7ddf61add84d338280ed1059641da293) format('woff'), url(/fonts/PingFang_Medium_0.ttf?15974853bc3294ef68e7e6d58fe74fd7) format('truetype'), url(/fonts/PingFang_Medium_0.svg?bbf9d5f064f98eb324ce47ba4e560116) format('svg');
-  font-weight: normal;
-}
-@font-face {
   font-family: 'pingFangExtraLight';
   src: url(/fonts/PingFang_ExtraLight.eot?b2b760a47cfd600726bad361d6ff0831);
-  src: url(/fonts/PingFang_ExtraLight.woff?ec44809a10b3078107ef50ee3356e3c9) format('woff'), url(/fonts/PingFang_ExtraLight.ttf?e5e1a97169fc1e01b19ea7a14919ebe0) format('truetype'), url(/fonts/PingFang_ExtraLight.svg?2c96f57969aa0751c9b6c295b28b04e4) format('svg');
-}
-@font-face {
-  font-family: 'pingFangHeavy';
-  src: url(/fonts/PingFang_Heavy_0.eot?184418136760b26babf02e01ecfafacd);
-  src: url(/fonts/PingFang_Heavy_0.woff?1af360b62fc177b27111c4dc454ddcd4) format('woff'), url(/fonts/PingFang_Heavy_0.ttf?1c97d8de88f3e2936c2595978a781990) format('truetype'), url(/fonts/PingFang_Heavy_0.svg?410c50cb48948210bf9822ae2a194fc0) format('svg');
+  src: url(/fonts/PingFang_ExtraLight.woff?ec44809a10b3078107ef50ee3356e3c9) format('woff'), url(/fonts/PingFang_ExtraLight.ttf?e5e1a97169fc1e01b19ea7a14919ebe0) format('truetype'), url(/fonts/PingFang_ExtraLight.svg?b8454a466262a1eb39cd7b6d5e53ad36) format('svg');
 }
 @font-face {
   font-family: 'pingFangLight';
   src: url(/fonts/PingFang_Light_0.eot?87f1481e54a642c23d7e7218bdb2436f);
-  src: url(/fonts/PingFang_Light_0.woff?83117de04e4575ca626d821b4ee28cc9) format('woff'), url(/fonts/PingFang_Light_0.ttf?ca3ad0e3097cdf7515dfa75aff6b3cc3) format('truetype'), url(/fonts/PingFang_Light_0.svg?c5f6f2174cabafd81a0b6b4cb6ec0b3e) format('svg');
+  src: url(/fonts/PingFang_Light_0.woff?83117de04e4575ca626d821b4ee28cc9) format('woff'), url(/fonts/PingFang_Light_0.ttf?ca3ad0e3097cdf7515dfa75aff6b3cc3) format('truetype'), url(/fonts/PingFang_Light_0.svg?ad56fb4552ceb93caae71babcdbe6e19) format('svg');
 }
 @font-face {
   font-family: 'pingFangRegular';
   src: url(/fonts/PingFang_Regular_0.eot?ae526a45e86910b264bdad0e8b2ebf31);
-  src: url(/fonts/PingFang_Regular_0.woff?808ea89d856e8b0dd0e26e021cd74dc1) format('woff'), url(/fonts/PingFang_Regular_0.ttf?75225b297e757308c3bfeca013396be6) format('truetype'), url(/fonts/PingFang_Regular_0.svg?ed6c367a2535d9efc87f60a14f497125) format('svg');
+  src: url(/fonts/PingFang_Regular_0.woff?808ea89d856e8b0dd0e26e021cd74dc1) format('woff'), url(/fonts/PingFang_Regular_0.ttf?75225b297e757308c3bfeca013396be6) format('truetype'), url(/fonts/PingFang_Regular_0.svg?6ca1ffa34e60d9f36974ac5ed764e239) format('svg');
+}
+@font-face {
+  font-family: 'pingFang';
+  src: url(/fonts/PingFang_Medium_0.eot?bdbf7e000dc0b71d2b6f445e70a1e23c);
+  src: url(/fonts/PingFang_Medium_0.woff?7ddf61add84d338280ed1059641da293) format('woff'), url(/fonts/PingFang_Medium_0.ttf?15974853bc3294ef68e7e6d58fe74fd7) format('truetype'), url(/fonts/PingFang_Medium_0.svg?e5299f5a6711ffb57b71dfca14f2ff35) format('svg');
+}
+@font-face {
+  font-family: 'pingFangBold';
+  src: url(/fonts/PingFang_Bold.eot?3750644e22c584075747601c47df00f3);
+  src: url(/fonts/PingFang_Bold.woff?087cbef9ca2b6bd612f4712e23045298) format('woff'), url(/fonts/PingFang_Bold.ttf?dd25b35dcb7ba4476cbaa9a9592e39e2) format('truetype'), url(/fonts/PingFang_Bold.svg?e8135f2f1aad288f7ca8327504e276cb) format('svg');
+}
+@font-face {
+  font-family: 'pingFangHeavy';
+  src: url(/fonts/PingFang_Heavy_0.eot?184418136760b26babf02e01ecfafacd);
+  src: url(/fonts/PingFang_Heavy_0.woff?1af360b62fc177b27111c4dc454ddcd4) format('woff'), url(/fonts/PingFang_Heavy_0.ttf?1c97d8de88f3e2936c2595978a781990) format('truetype'), url(/fonts/PingFang_Heavy_0.svg?f53a351e263e29f3ab6be78a020b745e) format('svg');
 }
 body,
 html {
@@ -50,15 +48,10 @@ html h5,
 body h6,
 html h6 {
   font-family: "pingFang";
-  font-weight: bold;
 }
 body .font-extra-light,
 html .font-extra-light {
   font-family: "pingFangExtraLight";
-}
-body .font-heavy,
-html .font-heavy {
-  font-family: "pingFangHeavy";
 }
 body .font-light,
 html .font-light {
@@ -67,6 +60,18 @@ html .font-light {
 body .font-regular,
 html .font-regular {
   font-family: "pingFangRegular";
+}
+body .font-medium,
+html .font-medium {
+  font-family: 'pingFangMedium';
+}
+body .font-bold,
+html .font-bold {
+  font-family: 'pingFangBold';
+}
+body .font-heavy,
+html .font-heavy {
+  font-family: "pingFangHeavy";
 }
 body .main,
 html .main {
@@ -238,7 +243,6 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
   border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-  position: absolute;
   left: 50%;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
@@ -303,8 +307,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   width: 598px;
   background-color: #fff;
   border-radius: 4px;
-  padding: 0 40px;
-  padding-top: 40px;
+  padding: 40px 40px 0;
   -webkit-box-shadow: 0 0 54px rgba(2, 17, 91, 0.26);
           box-shadow: 0 0 54px rgba(2, 17, 91, 0.26);
 }
@@ -2866,9 +2869,11 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   padding-top: 50px;
 }
 #tz-server-rent-content .consult .consult-btn {
-  padding: 8px 40px;
+  display: inline-block;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  width: 152px;
   font-size: 14px;
-  line-height: 41px;
   color: #fff;
   letter-spacing: 2.8px;
   text-decoration: none;
@@ -3482,9 +3487,11 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin-bottom: 20px;
 }
 .tz-solution .content .consult .consult-btn {
-  padding: 8px 40px;
+  display: inline-block;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  width: 152px;
   font-size: 14px;
-  line-height: 41px;
   color: #fff;
   letter-spacing: 2.8px;
   text-decoration: none;
@@ -4240,7 +4247,10 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin-top: 0;
 }
 #tz-server-hosting .consult .consult-btn {
-  padding: 8px 40px;
+  display: inline-block;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  width: 152px;
   font-size: 14px;
   color: #fff;
   letter-spacing: 2.8px;
@@ -5005,9 +5015,11 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   font-weight: unset;
 }
 .tz-protection .consult .consult-btn {
-  padding: 8px 40px;
+  display: inline-block;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  width: 152px;
   font-size: 14px;
-  line-height: 41px;
   color: #fff;
   letter-spacing: 2.8px;
   text-decoration: none;
@@ -6149,9 +6161,11 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   font-weight: unset;
 }
 .tz-cdn-content .consult .consult-btn {
-  padding: 8px 40px;
+  display: inline-block;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  width: 152px;
   font-size: 14px;
-  line-height: 41px;
   color: #fff;
   letter-spacing: 2.8px;
   text-decoration: none;
@@ -7025,9 +7039,11 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   font-weight: unset;
 }
 .tz-cabinet-rent .consult .consult-btn {
-  padding: 8px 40px;
+  display: inline-block;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  width: 152px;
   font-size: 14px;
-  line-height: 41px;
   color: #fff;
   letter-spacing: 2.8px;
   text-decoration: none;
@@ -7474,9 +7490,11 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   font-weight: unset;
 }
 .tz-bandwidth-rent .consult .consult-btn {
-  padding: 8px 40px;
+  display: inline-block;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  width: 152px;
   font-size: 14px;
-  line-height: 41px;
   color: #fff;
   letter-spacing: 2.8px;
   text-decoration: none;
@@ -8244,4 +8262,121 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz_yun .jumbotron {
   border-radius: 0;
+}
+#tz-help-center {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+#tz-help-center .banner {
+  position: relative;
+  height: 423px;
+  padding-top: 83px;
+  text-align: center;
+  color: #fff;
+  background: url(/images/help-banner-bg.png?a2e011ab08fe5d8f0f7737d30815a8a7) no-repeat center;
+  background-size: cover;
+}
+#tz-help-center .banner .title {
+  margin-top: 64px;
+  font-size: 50px;
+  line-height: 72px;
+  letter-spacing: 3.75px;
+}
+#tz-help-center .banner .search-container {
+  position: relative;
+  width: 800px;
+  margin: 28px auto 18px;
+}
+#tz-help-center .banner .search-input {
+  width: 100%;
+  height: 50px;
+  border: 1px solid #9d9dfe;
+  border-radius: 25px;
+  background-color: transparent;
+  padding: 15px 45px;
+  font-size: 16px;
+  color: #a1a1ff;
+  caret-color: #a1a1ff;
+  letter-spacing: 0.8px;
+}
+#tz-help-center .banner .search-input::-webkit-input-placeholder {
+  color: #a1a1ff;
+}
+#tz-help-center .banner .search-input:focus {
+  outline: unset;
+}
+#tz-help-center .banner .search-btn {
+  position: absolute;
+  top: 0;
+  right: -20px;
+  width: 180px;
+  height: 50px;
+  font-size: 16px;
+  letter-spacing: 3.2px;
+  border-radius: 25px;
+  color: #110d40;
+  background-color: #fff;
+}
+#tz-help-center .banner .search-btn:focus {
+  outline: unset;
+}
+#tz-help-center .banner .search-btn:active {
+  -webkit-box-shadow: unset;
+          box-shadow: unset;
+}
+#tz-help-center .banner .popular-keyword {
+  width: 800px;
+  margin: 0 auto;
+  text-align: left;
+  text-indent: 4.5rem;
+  font-size: 0;
+}
+#tz-help-center .banner .keyword {
+  margin: 0;
+  font-size: 14px;
+  color: #ffd543;
+  letter-spacing: 1.05px;
+}
+#tz-help-center .banner .keyword:focus,
+#tz-help-center .banner .keyword:hover {
+  text-decoration: none;
+}
+#tz-help-center .banner .keyword:not(:last-child):after {
+  content: "|";
+  color: #9d9dfe;
+  margin: 0 9px;
+}
+#tz-help-center .consult {
+  height: 193px;
+  background: url(/images/help-consult-bg.png?ea1b0ccf74fe5f03daa52d067e80b31c) no-repeat center;
+  background-size: cover;
+  text-align: center;
+  padding-top: 30px;
+}
+#tz-help-center .consult .title {
+  margin-top: 22.5px;
+  color: #fff;
+  font-size: 26px;
+  line-height: 41px;
+  margin-bottom: 20px;
+  font-weight: unset;
+}
+#tz-help-center .consult .consult-btn {
+  display: inline-block;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  width: 152px;
+  font-size: 14px;
+  color: #fff;
+  letter-spacing: 2.8px;
+  text-decoration: none;
+  background-color: transparent;
+  border: 1px solid #fff;
+  border-radius: 17px;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+#tz-help-center .consult .consult-btn:hover {
+  background-color: #fff;
+  color: #043fc4;
 }

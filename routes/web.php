@@ -50,6 +50,7 @@ Route::group([
     Route::get('/bandwidth-rent/{page}', 'Show\BandwidthRentController@index');
     Route::get('/activity', 'Show\LatestActivityController@index');
     Route::get('/yun/{page}', 'Show\YunController@index');
+    Route::get('/help', 'Show\HelpCenterController@index');
 });
 
 /**

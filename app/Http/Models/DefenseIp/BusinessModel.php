@@ -240,13 +240,13 @@ class BusinessModel extends Model
 				$list = $this->where('user_id',$id)->where('status','!=',3)->get()->toArray();
 				break;
 			case 'site':
-				$list = $this->where('user_id',$id)
-					->where('status','!=',3)
-					->get()
-					->toArray();
+				// $list = $this->where('user_id',$id)
+				// 	->where('status','!=',3)
+				// 	->get()
+				// 	->toArray();
 				$list = $this
 					->leftjoin('tz_defenseip_store as b','tz_defenseip_business.ip_id','=','b.id')
-					->select(DB::raw('tz_defenseip_business.*'))
+					->select(DB::raw('tz_defenseip_business.*,b.protection_value as ori_protection_value'))
 					->where('tz_defenseip_business.status','!=',3)
 					->where('b.site',$id)
 					->get()
@@ -270,6 +270,7 @@ class BusinessModel extends Model
 			];
 		}
 		for ($i=0; $i < count($list); $i++) { 
+			$list[$i]['protection_value'] = bcadd($list[$i]['ori_protection_value'], $list[$i]['extra_protection'] , 0); 
 			$list[$i]['user_name'] = DB::table('tz_users')->where('id',$list[$i]['user_id'])->value('name');
 			if($list[$i]['user_name'] == null){
 				$list[$i]['user_name'] = DB::table('tz_users')->where('id',$list[$i]['user_id'])->value('email');

@@ -78,13 +78,16 @@ class SetController extends Controller
 		}
 		$apiModel = new ApiController();
 		//调用api接口,先是尝试插入
-		$apiData                    = json_decode($apiModel->createTarget($defense_ip->ip, $targetIp), true); //使用api接口更新目标IP地址
 
+		$apiData                    = json_decode($apiModel->createTarget($defense_ip->ip, $targetIp), true); //使用api接口更新目标IP地址
+		//$apiData                    = json_decode($apiModel->createTarget('1.1.1.1', '2.2.2.3'), true);
+	
 		//$apiData = json_decode('{"code":0,"msg":"ok","data":{"id":18,"type":0,"state":0,"node_id":1,"ip":"1.1.1.1","vip":"2.2.2.2","utime":1554257150}}',true);
 		//判断是否插入成功
 		if ( $apiData['code'] != 0 ) {	
 			//插入失败的话,尝试更新
 			$apiData2                   = json_decode($apiModel->updateTarget($defense_ip->ip, $targetIp), true); //使用api接口更新目标IP地址
+			//$apiData2                   = json_decode($apiModel->updateTarget('1.1.1.1', '2.2.2.3'), true); //使用api接口更新目标IP地址
 			//判断是否成功更新
 			if($apiData2['code'] != 0){
 			//如果还是失败,回退,返回失败

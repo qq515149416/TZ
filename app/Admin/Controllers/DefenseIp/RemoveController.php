@@ -170,8 +170,9 @@ class RemoveController extends Controller
  
 		$data = $XADefenseDataModel->getByIp($par['ip'], $startDate, $endDate); //获取数据
 
-
-	//        判断有无获取到数据
+//        $data= $XADefenseDataModel->getByIp5Min($par['ip'], 1558095200, 1558081600);
+//        dump($data2);
+        //        判断有无获取到数据
 		if (!$data) {
 			return tz_ajax_echo([], '无流量数据', 0);
 		}

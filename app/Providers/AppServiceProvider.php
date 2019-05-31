@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
                 $element = '<ul class="clearfix">';
                 foreach($contacts['data'] as $key => $val) {
                     $element.='<li>';
-                    $element.='<a href="http://wpa.qq.com/msgrd?v=3&uin='.$val->qq.'&site=qq&menu=yes">';
+                    $element.='<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin='.$val->qq.'&site=qq&menu=yes">';
                     $element.='<img alt="给我发消息" src="'.asset("/images/button_old_41.gif").'">';
                     $element.=$val->contactname.'</a>';
                     $element.='</a></li>';
@@ -37,6 +37,19 @@ class AppServiceProvider extends ServiceProvider
             }
             if($expression=='"json"') {
                 $returnValue = json_encode($contacts['data']);
+            }
+            if($expression=='"table"') {
+                $element = '';
+                foreach($contacts['data'] as $key => $val) {
+                    $element.='<tr>';
+                    $element.='<td>姓名：'.$val->contactname.'</td>';
+                    $element.='<td>电话：'.$val->mobile.'</td>';
+                    $element.='<td>QQ：'.$val->qq.'</td>';
+                    $element.='<td>邮箱：'.$val->email.'</td>';
+                    $element.='</tr>';
+                }
+                $element.="";
+                $returnValue = $element;
             }
             return "<?php  echo '$returnValue'; ?>";
         });

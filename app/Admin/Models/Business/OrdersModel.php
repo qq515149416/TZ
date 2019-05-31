@@ -2181,7 +2181,7 @@ class OrdersModel extends Model
 			DB::commit();
 			$return['data'] = [];
 			$return['code'] = 1;
-			$return['msg'] = '资源更换成功';
+			$return['msg'] = '资源更换成功,请在资源更换后注意其他绑定资源的机房一致';
 			return $return;
 		}
 

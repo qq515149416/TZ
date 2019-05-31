@@ -6365,6 +6365,14 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #datacenter .main > .data > .tz-thumbnail #thumbnail {
   height: 100%;
 }
+#datacenter .main > .data > .tz-thumbnail #thumbnail .swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background: #979797;
+}
+#datacenter .main > .data > .tz-thumbnail #thumbnail .swiper-pagination-bullet-active {
+  background: #fff;
+}
 #datacenter .main > .data > .tz-thumbnail #thumbnail img {
   width: 340px;
   height: 422px;

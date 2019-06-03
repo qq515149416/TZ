@@ -214,4 +214,16 @@ class BusinessController extends Controller
         $change_result = $change->changeMarket($search);
         return tz_ajax_echo($change_result['data'],$change_result['msg'],$change_result['code']);
     }
+
+    /**
+     * 市场变化统计的时候统计充值记录
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function marketRecharge(Request $request){
+        $rechrge = $request->only(['startTime','endTime']);
+        $market = new BusinessModel();
+        $recharge_result = $market->marketRecharge($recharge);
+        return tz_ajax_echo($recharge_result['data'],$recharge_result['msg'],$recharge_result['code']);
+    }
 }

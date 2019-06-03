@@ -434,6 +434,7 @@ Route::group([
         $router->get('under_business','Business\BusinessController@underBusiness');//下架业务统计
         $router->get('new_registration','Business\BusinessController@newRegistration');//新注册统计
         $router->get('changemarket','Business\BusinessController@changeMarket');//业务统计
+        $router->get('marketrecharge','Business\BusinessController@marketRecharge');//业务统计的充值统计
 
         $router->post('register', 'Business\CustomerController@registerClerk');//后台替客户注册账号
 

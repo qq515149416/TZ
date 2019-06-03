@@ -217,14 +217,14 @@ class OverlayModel extends Model
 			'customer_id'		=> $par['user_id'],
 			'customer_name'	=> $customer->name,
 			'business_id'		=> $admin_user_id,
-			'business_name'	=> DB::table('admin_users')->where('id',$admin_user_id)->value('name'),
+			'business_name'		=> DB::table('admin_users')->where('id',$admin_user_id)->value('name'),
 			'resource_type'		=> 12,
 			'order_type'		=> 1,
 			'machine_sn'		=> $par['overlay_id'],
 			'resource'		=> $overlay->name,
 			'price'			=> $par['price'],
 			'duration'		=> $par['buy_num'],
-			'payable_money'	=> bcmul($par['price'], $par['buy_num'],2),
+			'payable_money'		=> bcmul($par['price'], $par['buy_num'],2),
 			'order_status'		=> 0,
 		];
 		$make_order = $order_model->create($order);
@@ -428,6 +428,16 @@ class OverlayModel extends Model
 		
 		$after_protection = bcadd($d_ip->protection_value, $after_extra_protection,0);
 		
+		//如果流量峰值超过300,不予通过
+		if ($after_protection > 300) {
+			DB::rollBack();
+			return [
+				'data'	=> [],
+				'msg'	=> '叠加包最高防御峰值不能超过300,请联系管理员调整',
+				'code'	=> 0,
+			];
+		}
+
 		$business_update_info = [
 			'extra_protection'	=> $after_extra_protection,
 		];

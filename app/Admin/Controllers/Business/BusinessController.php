@@ -221,7 +221,7 @@ class BusinessController extends Controller
      * @return [type]           [description]
      */
     public function marketRecharge(Request $request){
-        $rechrge = $request->only(['startTime','endTime']);
+        $recharge = $request->only(['startTime','endTime']);
         $market = new BusinessModel();
         $recharge_result = $market->marketRecharge($recharge);
         return tz_ajax_echo($recharge_result['data'],$recharge_result['msg'],$recharge_result['code']);

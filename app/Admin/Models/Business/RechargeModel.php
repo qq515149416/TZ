@@ -569,7 +569,8 @@ class RechargeModel extends Model
 						->where('b.trade_status',1)
 						->whereNull('deleted_at')
 						->orderBy('b.timestamp','desc')
-						->get();    
+						->get();   
+			
 				 break;
 
 			case 'byMonth':
@@ -587,7 +588,7 @@ class RechargeModel extends Model
 					$flow = '';
 				 break;
 		 } 
-	   
+	   	
 		if($flow->isEmpty()){
 			$return['data'] = [];
 			$return['msg'] = '无数据';

@@ -295,6 +295,16 @@ class OverlayModel extends Model
 		//计算业务该有的流量峰值
 
 		$after_protection = bcadd($d_ip->protection_value, $after_extra_protection,0);
+		
+		//如果流量峰值超过300,不予通过
+		if ($after_protection > 300) {
+			DB::rollBack();
+			return [
+				'data'	=> [],
+				'msg'	=> '叠加包最高防御峰值不能超过300,请联系管理员调整',
+				'code'	=> 0,
+			];
+		}
 
 		$business_update_info = [
 			'extra_protection'	=> $after_extra_protection,
@@ -314,9 +324,9 @@ class OverlayModel extends Model
 		$api_model = new ApiController();
 
 		//记得正式上线换回来
-		//$set_res = $api_model->setProtectionValue($d_ip->ip, $after_protection);
+		$set_res = $api_model->setProtectionValue($d_ip->ip, $after_protection);
 
-		$set_res = $api_model->setProtectionValue('1.1.1.1', 0);
+		//$set_res = $api_model->setProtectionValue('1.1.1.1', 0);
 
 		if ($set_res != 'editok' && $set_res != 'ok') {
 			DB::rollBack();

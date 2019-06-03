@@ -38,6 +38,13 @@
                 </a>
             </div> -->
             <div class="item active">
+                <a href="/dist/highDefense.html" target="_blank">
+                    <img src="{{ asset("/images/banner/duanwu.jpg") }}" alt="...">
+                    <div class="carousel-caption">
+                    </div>
+                </a>
+            </div>
+            <div class="item">
                 <a href="/zuyong/gaofang" target="_blank">
                     <img src="{{ asset("/images/banner/gaofangServer.png") }}" alt="...">
                     <div class="carousel-caption">
@@ -51,13 +58,7 @@
                     </div>
                 </a>
             </div> -->
-            <div class="item">
-                <a href="http://yun.zeisp.com/cloudbuy.html" target="_blank">
-                    <img src="{{ asset("/images/banner/yun.jpg") }}" alt="...">
-                    <div class="carousel-caption">
-                    </div>
-                </a>
-            </div>
+
             <div class="item">
                 <a href="/dist/highDefense.html" target="_blank">
                     <img src="{{ asset("/images/banner/gaofang.png") }}" alt="...">

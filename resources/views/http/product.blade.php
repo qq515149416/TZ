@@ -11,8 +11,11 @@
         <!-- banner -->
         <div class="banner">
             <div class="title" style="color: #fff;">
-            <p class="text">服务器租用</p>
-            <p class="sub-text">为您提供定制化硬件采购解决方案，满足您不同时期业务发展需求！</p>
+                <h2 class="text font-bold">服务器租用</h2>
+                <h4 class="sub-text font-regular">
+                    自主准T4、T3机房，从服务器设备、环境到维护的一站式服务，为您提供定制化硬件采购解决方案<br/>
+                    以租用的方式独享专用高性能服务器及全完自主管理权限，满足您不同时期业务发展需求！
+                </h4>
             </div>
             <div class="bottom">
             <a class="btn-link {{ $page == 'dianxin' ? 'active' : '' }}" href="/zuyong/dianxin/hunan">电信服务器租用</a>

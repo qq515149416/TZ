@@ -1,32 +1,32 @@
 @font-face {
   font-family: 'pingFangExtraLight';
   src: url(/fonts/PingFang_ExtraLight.eot?b2b760a47cfd600726bad361d6ff0831);
-  src: url(/fonts/PingFang_ExtraLight.woff?ec44809a10b3078107ef50ee3356e3c9) format('woff'), url(/fonts/PingFang_ExtraLight.ttf?e5e1a97169fc1e01b19ea7a14919ebe0) format('truetype'), url(/fonts/PingFang_ExtraLight.svg?2c96f57969aa0751c9b6c295b28b04e4) format('svg');
+  src: url(/fonts/PingFang_ExtraLight.woff?ec44809a10b3078107ef50ee3356e3c9) format('woff'), url(/fonts/PingFang_ExtraLight.ttf?e5e1a97169fc1e01b19ea7a14919ebe0) format('truetype'), url(/fonts/PingFang_ExtraLight.svg?b8454a466262a1eb39cd7b6d5e53ad36) format('svg');
 }
 @font-face {
   font-family: 'pingFangLight';
   src: url(/fonts/PingFang_Light_0.eot?87f1481e54a642c23d7e7218bdb2436f);
-  src: url(/fonts/PingFang_Light_0.woff?83117de04e4575ca626d821b4ee28cc9) format('woff'), url(/fonts/PingFang_Light_0.ttf?ca3ad0e3097cdf7515dfa75aff6b3cc3) format('truetype'), url(/fonts/PingFang_Light_0.svg?c5f6f2174cabafd81a0b6b4cb6ec0b3e) format('svg');
+  src: url(/fonts/PingFang_Light_0.woff?83117de04e4575ca626d821b4ee28cc9) format('woff'), url(/fonts/PingFang_Light_0.ttf?ca3ad0e3097cdf7515dfa75aff6b3cc3) format('truetype'), url(/fonts/PingFang_Light_0.svg?ad56fb4552ceb93caae71babcdbe6e19) format('svg');
 }
 @font-face {
   font-family: 'pingFangRegular';
   src: url(/fonts/PingFang_Regular_0.eot?ae526a45e86910b264bdad0e8b2ebf31);
-  src: url(/fonts/PingFang_Regular_0.woff?808ea89d856e8b0dd0e26e021cd74dc1) format('woff'), url(/fonts/PingFang_Regular_0.ttf?75225b297e757308c3bfeca013396be6) format('truetype'), url(/fonts/PingFang_Regular_0.svg?ed6c367a2535d9efc87f60a14f497125) format('svg');
+  src: url(/fonts/PingFang_Regular_0.woff?808ea89d856e8b0dd0e26e021cd74dc1) format('woff'), url(/fonts/PingFang_Regular_0.ttf?75225b297e757308c3bfeca013396be6) format('truetype'), url(/fonts/PingFang_Regular_0.svg?6ca1ffa34e60d9f36974ac5ed764e239) format('svg');
 }
 @font-face {
   font-family: 'pingFang';
   src: url(/fonts/PingFang_Medium_0.eot?bdbf7e000dc0b71d2b6f445e70a1e23c);
-  src: url(/fonts/PingFang_Medium_0.woff?7ddf61add84d338280ed1059641da293) format('woff'), url(/fonts/PingFang_Medium_0.ttf?15974853bc3294ef68e7e6d58fe74fd7) format('truetype'), url(/fonts/PingFang_Medium_0.svg?bbf9d5f064f98eb324ce47ba4e560116) format('svg');
+  src: url(/fonts/PingFang_Medium_0.woff?7ddf61add84d338280ed1059641da293) format('woff'), url(/fonts/PingFang_Medium_0.ttf?15974853bc3294ef68e7e6d58fe74fd7) format('truetype'), url(/fonts/PingFang_Medium_0.svg?e5299f5a6711ffb57b71dfca14f2ff35) format('svg');
 }
 @font-face {
   font-family: 'pingFangBold';
   src: url(/fonts/PingFang_Bold.eot?3750644e22c584075747601c47df00f3);
-  src: url(/fonts/PingFang_Bold.woff?087cbef9ca2b6bd612f4712e23045298) format('woff'), url(/fonts/PingFang_Bold.ttf?dd25b35dcb7ba4476cbaa9a9592e39e2) format('truetype'), url(/fonts/PingFang_Bold.svg?daa902cc691583edaa741a08f9913145) format('svg');
+  src: url(/fonts/PingFang_Bold.woff?087cbef9ca2b6bd612f4712e23045298) format('woff'), url(/fonts/PingFang_Bold.ttf?dd25b35dcb7ba4476cbaa9a9592e39e2) format('truetype'), url(/fonts/PingFang_Bold.svg?e8135f2f1aad288f7ca8327504e276cb) format('svg');
 }
 @font-face {
   font-family: 'pingFangHeavy';
   src: url(/fonts/PingFang_Heavy_0.eot?184418136760b26babf02e01ecfafacd);
-  src: url(/fonts/PingFang_Heavy_0.woff?1af360b62fc177b27111c4dc454ddcd4) format('woff'), url(/fonts/PingFang_Heavy_0.ttf?1c97d8de88f3e2936c2595978a781990) format('truetype'), url(/fonts/PingFang_Heavy_0.svg?410c50cb48948210bf9822ae2a194fc0) format('svg');
+  src: url(/fonts/PingFang_Heavy_0.woff?1af360b62fc177b27111c4dc454ddcd4) format('woff'), url(/fonts/PingFang_Heavy_0.ttf?1c97d8de88f3e2936c2595978a781990) format('truetype'), url(/fonts/PingFang_Heavy_0.svg?f53a351e263e29f3ab6be78a020b745e) format('svg');
 }
 body,
 html {
@@ -2194,34 +2194,24 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #aboutus .banner {
   height: 562px;
-  background: url(/images/aboutusBanner.png?79ce94258ea929f993eba7ed9daa34f5) no-repeat;
+  background: url(/images/aboutusBanner.png?15a35061b47b315a53bcc497e5df64d0) no-repeat center;
   background-size: 100% 100%;
   border-top: 1px solid transparent;
   margin-top: -1px;
   text-align: center;
+  color: #fff;
 }
-#aboutus .banner h2 {
+#aboutus .banner .title {
   margin-top: 190px;
-  text-align: center;
+  margin-bottom: 16px;
   font-size: 60px;
-  color: #fff;
-  margin-bottom: 0;
+  line-height: 72px;
+  letter-spacing: 4.5px;
 }
-#aboutus .banner h3 {
-  font-size: 24px;
-  text-align: center;
-  color: #fff;
-}
-#aboutus .banner p {
-  margin: 0;
-  margin-top: 34px;
-  padding: 10px 20px;
-  display: inline-block;
-  font-size: 14px;
-  color: #fff;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
+#aboutus .banner .sub-title {
+  font-size: 16px;
+  letter-spacing: 0.8px;
+  line-height: 28px;
 }
 #aboutus .content-list {
   width: 1176px;
@@ -2580,7 +2570,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   padding-top: 83px;
   color: #fff;
   text-align: center;
-  background: url(/images/server-rent-banner-bg.png?fbb67add78596bef8b8434641a45220b) no-repeat center;
+  background: url(/images/server-rent-banner-bg.png?b2cea809383abd135a8da87148aba511) no-repeat center;
   background-size: cover;
 }
 #tz-server-rent-content .banner.gaofang {
@@ -2597,9 +2587,9 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   letter-spacing: 4.5px;
 }
 #tz-server-rent-content .banner .title .sub-text {
-  font-size: 24px;
-  padding-left: 18px;
-  letter-spacing: 8.2px;
+  font-size: 16px;
+  letter-spacing: 0.8px;
+  line-height: 28px;
 }
 #tz-server-rent-content .banner .bottom {
   position: absolute;
@@ -2607,6 +2597,12 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   right: 0;
   bottom: 0;
   text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 #tz-server-rent-content .banner .bottom .btn-link {
   display: inline-block;
@@ -2683,22 +2679,6 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   height: 86px;
   border-bottom: 5px solid #2039b7;
   margin-bottom: 30px;
-}
-#tz-server-rent-content .hot-product .content .item .back .card-head:nth-of-type(1) {
-  background: url(/images/fwqHead01.png?a8af35962615dead54004ee484c1ba71) no-repeat;
-  background-size: 100% 100%;
-}
-#tz-server-rent-content .hot-product .content .item .back .card-head:nth-of-type(2) {
-  background: url(/images/fwqHead01.png?a8af35962615dead54004ee484c1ba71) no-repeat;
-  background-size: 100% 100%;
-}
-#tz-server-rent-content .hot-product .content .item .back .card-head:nth-of-type(3) {
-  background: url(/images/fwqHead01.png?a8af35962615dead54004ee484c1ba71) no-repeat;
-  background-size: 100% 100%;
-}
-#tz-server-rent-content .hot-product .content .item .back .card-head:nth-of-type(4) {
-  background: url(/images/fwqHead01.png?a8af35962615dead54004ee484c1ba71) no-repeat;
-  background-size: 100% 100%;
 }
 #tz-server-rent-content .hot-product .content .item .back .card-body {
   padding: 54px 30px;
@@ -2906,7 +2886,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   padding-top: 83px;
   color: #fff;
   text-align: center;
-  background-image: url(/images/server-rent-banner-bg.png?fbb67add78596bef8b8434641a45220b);
+  background-image: url(/images/server-rent-banner-bg.png?b2cea809383abd135a8da87148aba511);
   background-size: cover;
 }
 #server_product .banner .title {
@@ -2919,9 +2899,9 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   letter-spacing: 4.5px;
 }
 #server_product .banner .title .sub-text {
-  font-size: 24px;
-  padding-left: 18px;
-  letter-spacing: 8.2px;
+  font-size: 16px;
+  line-height: 28px;
+  letter-spacing: 0.8px;
 }
 #server_product .banner .bottom {
   position: absolute;
@@ -2929,6 +2909,12 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   right: 0;
   bottom: 0;
   text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 #server_product .banner .bottom .btn-link {
   display: inline-block;
@@ -3971,22 +3957,23 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   padding-top: 83px;
   color: #fff;
   text-align: center;
-  background: url(/images/hosting-banner-bg.png?fbb67add78596bef8b8434641a45220b) no-repeat center;
+  background: url(/images/hosting-banner-bg.jpg?42946cb5905aa3cc01c509408a302109) no-repeat center;
   background-size: cover;
 }
 #tz-server-hosting .banner .title {
   margin-top: 140px;
 }
 #tz-server-hosting .banner .title .text {
+  margin-bottom: 16px;
   font-size: 60px;
   line-height: 72px;
-  margin-bottom: 16px;
   letter-spacing: 4.5px;
 }
 #tz-server-hosting .banner .title .sub-text {
-  font-size: 24px;
-  padding-left: 18px;
-  letter-spacing: 8.2px;
+  margin-top: 10px;
+  font-size: 16px;
+  letter-spacing: 0.8px;
+  line-height: 28px;
 }
 #tz-server-hosting .banner .collapse-tab {
   position: absolute;

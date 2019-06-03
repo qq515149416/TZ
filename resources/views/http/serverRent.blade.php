@@ -12,8 +12,8 @@
     <div class="banner {{ $page==='gaofang' ? 'gaofang' : ''  }}">
         @if ($page!=='gaofang')
         <div class="title" style="color: #fff;">
-            <p class="text">{{ $productData['title'] }}</p>
-            <p class="sub-text">{{ $productData['description'] }}</p>
+            <p class="text font-bold">{{ $productData['title'] }}</p>
+            <p class="sub-text font-regular">{{ $productData['description'] }}</p>
         </div>
         @endif
         @if ($page!=='gaofang')

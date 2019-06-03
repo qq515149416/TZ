@@ -11,8 +11,11 @@
     <!-- banner -->
     <div class="banner">
         <div class="title" style="color: #fff;">
-            <h2 class="text">服务器托管</h2>
-            <h4 class="sub-text">您的托付，我们全力以赴！</h4>
+            <h2 class="text font-bold">服务器托管</h2>
+            <h4 class="sub-text font-regular">
+                摆脱虚拟主机受软硬件资源的限制，提供高性能的数据中心设备，线路租用和网络带宽，减少企业建设数据中心<br/>
+                布设通讯线路等高额费用。您的托付，我们全力以赴!
+            </h4>
         </div>
         <div class="collapse-tab">
             <a class="collapse-tab-item heng-yang" href="#hengyang" data-toggle="collapse"

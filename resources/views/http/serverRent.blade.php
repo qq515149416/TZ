@@ -34,10 +34,10 @@
         </div>
         <div class="content">
             <img class="d-block" src="{{ asset("/images/serverRent/rectangle.png") }}">
-            <div style="margin-top: 95px;">
+            <div class="clearfix d-block-container">
                 @foreach ($productData['data'] as $item)
                     <div class="item">
-                        <div class="front">
+                        <!-- <div class="front">
                             <img src="{{ $page!=='gaofang' ? asset("/images/serverRent/hzsx.png") : asset("/images/serverRent/gffwq.png") }}" alt="惠州双线">
                             <p class="desc">
                                 @if ($item['top'])
@@ -54,17 +54,16 @@
                             <span style="font-size: 30px;">{{ $item['price'] }}</span> 元/月
                             @endif
                             </p>
-                        </div>
+                        </div> -->
                         <div class="back">
                             <div class="card">
-                                <div class="card-body">
-                                    <p class="card-title">
-                                        @if ($item['top'])
-                                        <span style="font-weight: bold;color: #f00;">[促销]</span>
-                                        @endif
+                                <div class="card-head">
+                                    <p class="card-title {{ $item['top'] ? 'top' : '' }}">
+                                        <span>[促销]</span>
                                         {{ $item['name'] }}
                                     </p>
-                                    <hr style="margin-top: 20px; margin-bottom: 30px;"/>
+                                </div>
+                                <div class="card-body">
                                     <div class="card-text">
                                         <p class="desc">
 

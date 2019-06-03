@@ -886,13 +886,13 @@ class BusinessModel extends Model
                         ->whereNull('deleted_at')
                         ->select('id','customer_id','business_id','resource_type','business_sn','machine_sn','price','duration',$time.' as created_at')
                         ->get();
-        //统计符合条件的月营收
-        $month_total = DB::table('tz_orders')
-                       // ->whereBetween($time,[$begin_end['start_time'],$begin_end['end_time']])
-                        ->whereBetween('order_status',$status)
-                        ->whereBetween('remove_status',$remove)
-                        ->whereNull('deleted_at')
-                        ->sum('price'); 
+        // //统计符合条件的月营收
+        // $month_total = DB::table('tz_orders')
+        //                // ->whereBetween($time,[$begin_end['start_time'],$begin_end['end_time']])
+        //                 ->whereBetween('order_status',$status)
+        //                 ->whereBetween('remove_status',$remove)
+        //                 ->whereNull('deleted_at')
+        //                 ->sum('price'); 
         $total = 0;
         if(!$orders_info->isEmpty()){
             foreach($orders_info as $info_key => $info){
@@ -932,7 +932,46 @@ class BusinessModel extends Model
         }
         $return['code'] = 1;
         $return['msg'] = '';
-        $return['data'] = ['orders_total'=>$orders_total,'info'=>$orders_info?$orders_info:[],'total'=>$total,'month_total'=>$month_total];
+        $return['data'] = ['orders_total'=>$orders_total,'info'=>$orders_info?$orders_info:[],'total'=>$total];
+        return $return;
+    }
+
+    /**
+     * 市场变化统计的时候统计充值记录
+     * @param  [type] $time [description]
+     * @return [type]       [description]
+     */
+    public function marketRecharge($time){
+        if(!isset($time)){
+            $query_time['begin'] = 1388505600;//(2014-01-01 00:00:00);
+            $query_time['end'] = time();
+        }
+        if(!isset($time['startTime'])){
+            $query_time['begin'] = 1388505600;//(2014-01-01 00:00:00);
+        }
+        if(!isset($time['endTime'])){
+            $query_time['end'] = time();
+        }
+        if(isset($time['startTime']) && isset($time['endTime'])){
+            $query_time['begin'] = $time['startTime'];
+            $query_time['end'] = $time['endTime'];
+        }
+        $begin_end = $this->query_time($query_time);
+        $recharge_total = DB::table('tz_recharge_flow')
+                            ->where(['trade_status'=>1])
+                            ->where('created_at','>=',$begin_end['start_time'])
+                            ->where('created_at','<=',$begin_end['end_time'])
+                            ->whereNull('deleted_at')
+                            ->sum('recharge_amount');
+        $tax_total =  DB::table('tz_recharge_flow')
+                            ->where(['trade_status'=>1])
+                            ->where('created_at','>=',$begin_end['start_time'])
+                            ->where('created_at','<=',$begin_end['end_time'])
+                            ->whereNull('deleted_at')
+                            ->sum('tax');
+        $return['data'] = ['month_total'=>$recharge_total,'tax_total'=>$tax_total];
+        $return['msg'] = '';
+        $return['code'] = 1;
         return $return;
     }
 

@@ -141,8 +141,8 @@ class OverdueDJB extends Command
 					//更新现在的牵引值
 					$after_protection = bcadd($ori_protection_value, $extra_protection,0);
 					$api_controller = new ApiController();
-					//$res = $api_controller->setProtectionValue($d_ip->ip,$after_protection);
-					$res = $api_controller->setProtectionValue('1.1.1.1',0);
+					$res = $api_controller->setProtectionValue($d_ip->ip,$after_protection);
+					//$res = $api_controller->setProtectionValue('1.1.1.1',0);
 					if ($res != 'editok' && $res !='ok') {
 						DB::rollBack();
 						return false;

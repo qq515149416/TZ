@@ -314,7 +314,7 @@ class MachineModel extends Model
 				$detail['machineroom_id'] = $editdata['machineroom'];
 				$detail['machineroom_name'] = $this->machineroom($editdata['machineroom']);
 				$resource_detail = json_encode($detail);
-				$result = DB::table('tz_business')->where(['business_number'=>$machine->own_business])->update(['machine_number'=>$editdata['machine_num'],'resource_detail'=>$resource_detail]);
+				$result = DB::table('tz_business')->where(['business_number'=>$machine->own_business])->update(['machine_number'=>$editdata['machine_num'],'resource_detail'=>$resource_detail,'updated_at'=>date('Y-m-d H:i:s',time())]);
 				if($result == 0){
 					DB::rollBack();
 					$return['code'] = 0;

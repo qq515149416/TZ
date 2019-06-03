@@ -942,7 +942,6 @@ class BusinessModel extends Model
      * @return [type]       [description]
      */
     public function marketRecharge($time){
-        $query_time = [];
         if(!isset($time)){
             $query_time['begin'] = 1388505600;//(2014-01-01 00:00:00);
             $query_time['end'] = time();
@@ -957,7 +956,7 @@ class BusinessModel extends Model
             $query_time['begin'] = $time['startTime'];
             $query_time['end'] = $time['endTime'];
         }
-        $begin_end = $this->query_time($query_time);
+        $begin_end = $this->queryTime($query_time);
         $recharge_total = DB::table('tz_recharge_flow')
                             ->where(['trade_status'=>1])
                             ->where('created_at','>=',$begin_end['start_time'])

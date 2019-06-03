@@ -949,12 +949,12 @@ class BusinessModel extends Model
         if(!isset($time['startTime'])){
             $query_time['begin'] = 1388505600;//(2014-01-01 00:00:00);
         }
-        if(!isset($time['endTime']){
+        if(!isset($time['endTime'])){
             $query_time['end'] = time();
         }
-        if(isset($time['startTime'] && isset($time['endTime']){
-            $query_time['begin'] = isset($time['startTime'];
-            $query_time['end'] = isset($time['endTime']
+        if(isset($time['startTime']) && isset($time['endTime'])){
+            $query_time['begin'] = $time['startTime'];
+            $query_time['end'] = $time['endTime'];
         }
         $begin_end = $this->query_time($query_time);
         $recharge_total = DB::table('tz_recharge_flow')

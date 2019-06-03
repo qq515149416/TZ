@@ -942,6 +942,7 @@ class BusinessModel extends Model
      * @return [type]       [description]
      */
     public function marketRecharge($time){
+        $query_time = [];
         if(!isset($time)){
             $query_time['begin'] = 1388505600;//(2014-01-01 00:00:00);
             $query_time['end'] = time();

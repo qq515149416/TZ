@@ -55,9 +55,10 @@ class LoginByEmailRequest extends FormRequest
      */
     public function failedValidation(Validator $validator)
     {
-        header('Content-type:application/json');
         $msg = $validator->errors()->first();
-        exit('{"code": 0,"data":[],"msg":"' . $msg . '"}');
+        header('Content-type:application/json');
+        header('Cache-control:no-cache');
+        exit('{"code": 0,"data":[],"msg":"'.$msg.'"}');
     }
 
 

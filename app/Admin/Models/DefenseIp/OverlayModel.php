@@ -551,6 +551,27 @@ class OverlayModel extends Model
 			$return['msg'] = '(#108)叠加包与需要绑定叠加包的所属机房不一致';
 			return $return;
 		}
+		/**
+		 * 进行叠加包的一定时间内的累计统计
+		 * @var [type]
+		 */
+		$protected = DB::table('tz_overlay_belong as belong')
+						->join('tz_overlay as overlay','belong.overlay_id','=','overlay.id')
+						->where(['target_business'=>$idc_orders->order_sn,'belong.status'=>1])
+						->select('overlay.protection_value')
+						->get();
+		if(!$protected->isEmpty()){
+			$protection_value = $overlay->protection_value;
+			foreach ($protected as $pkey => $pvalue) {
+				$protection_value = bcadd($protection_value, $pvalue->protection_value);
+			}
+			if($protection_value >= 300){
+				$return['data'] = [];
+				$return['code'] = 0;
+				$return['msg'] = '(#112)叠加包的累计流量不能超过300,如需更大流量请联系管理员进行咨询调整';
+				return $return;
+			}
+		}
 
 		if($idc_orders->resource_type == 1 || $idc_orders->resource_type == 2){//租用/托管机器默认使用主IP
 			$ip = $resource_detail->ip;

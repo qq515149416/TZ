@@ -2680,6 +2680,22 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   border-bottom: 5px solid #2039b7;
   margin-bottom: 30px;
 }
+#tz-server-rent-content .hot-product .content .item .back .card-head:nth-of-type(1) {
+  background: url(/images/fwqHead01.png?a8af35962615dead54004ee484c1ba71) no-repeat;
+  background-size: 100% 100%;
+}
+#tz-server-rent-content .hot-product .content .item .back .card-head:nth-of-type(2) {
+  background: url(/images/fwqHead01.png?a8af35962615dead54004ee484c1ba71) no-repeat;
+  background-size: 100% 100%;
+}
+#tz-server-rent-content .hot-product .content .item .back .card-head:nth-of-type(3) {
+  background: url(/images/fwqHead01.png?a8af35962615dead54004ee484c1ba71) no-repeat;
+  background-size: 100% 100%;
+}
+#tz-server-rent-content .hot-product .content .item .back .card-head:nth-of-type(4) {
+  background: url(/images/fwqHead01.png?a8af35962615dead54004ee484c1ba71) no-repeat;
+  background-size: 100% 100%;
+}
 #tz-server-rent-content .hot-product .content .item .back .card-body {
   padding: 54px 30px;
   padding-top: 0;

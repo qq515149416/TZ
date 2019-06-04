@@ -1,7 +1,9 @@
 <header class="banner">
-    <h2>{{ $title }}</h2>
-    <h3>{{ $subtitle }}</h3>
-    <p>{{ $descripts }}</p>
+    <h2 class="title font-bold">{{ $title }}</h2>
+    <h4 class="sub-title font-regular">
+        {{ $subtitle }}<br/>
+        {{ $descripts }}
+    </h4>
 </header>
 <article class="content-list">
     <!-- Nav tabs -->

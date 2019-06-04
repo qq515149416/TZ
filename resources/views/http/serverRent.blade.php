@@ -12,8 +12,13 @@
     <div class="banner {{ $page==='gaofang' ? 'gaofang' : ''  }}">
         @if ($page!=='gaofang')
         <div class="title" style="color: #fff;">
-            <p class="text">{{ $productData['title'] }}</p>
-            <p class="sub-text">{{ $productData['description'] }}</p>
+<!--            <h2 class="text font-bold">{{ $productData['title'] }}</h2>-->
+<!--            <h4 class="sub-text font-regular">{{ $productData['description'] }}</h4>-->
+            <h2 class="text font-bold">服务器租用</h2>
+            <h4 class="sub-text font-regular">
+                自主准T4、T3机房，从服务器设备、环境到维护的一站式服务，为您提供定制化硬件采购解决方案<br/>
+                以租用的方式独享专用高性能服务器及全完自主管理权限，满足您不同时期业务发展需求！
+            </h4>
         </div>
         @endif
         @if ($page!=='gaofang')
@@ -34,10 +39,10 @@
         </div>
         <div class="content">
             <img class="d-block" src="{{ asset("/images/serverRent/rectangle.png") }}">
-            <div style="margin-top: 95px;">
+            <div class="clearfix d-block-container">
                 @foreach ($productData['data'] as $item)
                     <div class="item">
-                        <div class="front">
+                        <!-- <div class="front">
                             <img src="{{ $page!=='gaofang' ? asset("/images/serverRent/hzsx.png") : asset("/images/serverRent/gffwq.png") }}" alt="惠州双线">
                             <p class="desc">
                                 @if ($item['top'])
@@ -54,17 +59,16 @@
                             <span style="font-size: 30px;">{{ $item['price'] }}</span> 元/月
                             @endif
                             </p>
-                        </div>
+                        </div> -->
                         <div class="back">
                             <div class="card">
-                                <div class="card-body">
-                                    <p class="card-title">
-                                        @if ($item['top'])
-                                        <span style="font-weight: bold;color: #f00;">[促销]</span>
-                                        @endif
+                                <div class="card-head">
+                                    <p class="card-title {{ $item['top'] ? 'top' : '' }}">
+                                        <span>[促销]</span>
                                         {{ $item['name'] }}
                                     </p>
-                                    <hr style="margin-top: 20px; margin-bottom: 30px;"/>
+                                </div>
+                                <div class="card-body">
                                     <div class="card-text">
                                         <p class="desc">
 
@@ -90,7 +94,7 @@
                                             @if ($item['price']==='在线购买')
                                             <span style="font-size: 36px;font-weight: bold;">在线购买</span>
                                             @elseif ($item['price']==='定制咨询')
-                                            <span style="font-size: 30px;">定制咨询</span>
+                                            <span style="font-size: 36px;font-weight: bold;">定制咨询</span>
                                             @else
                                             <span style="font-size: 36px;font-weight: bold;">{{ $item['price'] }}</span> 元/月
                                             @endif

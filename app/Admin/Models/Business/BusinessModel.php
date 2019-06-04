@@ -886,13 +886,13 @@ class BusinessModel extends Model
                         ->whereNull('deleted_at')
                         ->select('id','customer_id','business_id','resource_type','business_sn','machine_sn','price','duration',$time.' as created_at')
                         ->get();
-        //统计符合条件的月营收
-        $month_total = DB::table('tz_orders')
-                       // ->whereBetween($time,[$begin_end['start_time'],$begin_end['end_time']])
-                        ->whereBetween('order_status',$status)
-                        ->whereBetween('remove_status',$remove)
-                        ->whereNull('deleted_at')
-                        ->sum('price'); 
+        // //统计符合条件的月营收
+        // $month_total = DB::table('tz_orders')
+        //                // ->whereBetween($time,[$begin_end['start_time'],$begin_end['end_time']])
+        //                 ->whereBetween('order_status',$status)
+        //                 ->whereBetween('remove_status',$remove)
+        //                 ->whereNull('deleted_at')
+        //                 ->sum('price'); 
         $total = 0;
         if(!$orders_info->isEmpty()){
             foreach($orders_info as $info_key => $info){
@@ -932,7 +932,46 @@ class BusinessModel extends Model
         }
         $return['code'] = 1;
         $return['msg'] = '';
-        $return['data'] = ['orders_total'=>$orders_total,'info'=>$orders_info?$orders_info:[],'total'=>$total,'month_total'=>$month_total];
+        $return['data'] = ['orders_total'=>$orders_total,'info'=>$orders_info?$orders_info:[],'total'=>$total];
+        return $return;
+    }
+
+    /**
+     * 市场变化统计的时候统计充值记录
+     * @param  [type] $time [description]
+     * @return [type]       [description]
+     */
+    public function marketRecharge($time){
+        if(!isset($time)){
+            $query_time['begin'] = 1388505600;//(2014-01-01 00:00:00);
+            $query_time['end'] = time();
+        }
+        if(!isset($time['startTime'])){
+            $query_time['begin'] = 1388505600;//(2014-01-01 00:00:00);
+        }
+        if(!isset($time['endTime'])){
+            $query_time['end'] = time();
+        }
+        if(isset($time['startTime']) && isset($time['endTime'])){
+            $query_time['begin'] = $time['startTime'];
+            $query_time['end'] = $time['endTime'];
+        }
+        $begin_end = $this->queryTime($query_time);
+        $recharge_total = DB::table('tz_recharge_flow')
+                            ->where(['trade_status'=>1])
+                            ->where('created_at','>=',$begin_end['start_time'])
+                            ->where('created_at','<=',$begin_end['end_time'])
+                            ->whereNull('deleted_at')
+                            ->sum('recharge_amount');
+        $tax_total =  DB::table('tz_recharge_flow')
+                            ->where(['trade_status'=>1])
+                            ->where('created_at','>=',$begin_end['start_time'])
+                            ->where('created_at','<=',$begin_end['end_time'])
+                            ->whereNull('deleted_at')
+                            ->sum('tax');
+        $return['data'] = ['month_total'=>$recharge_total,'tax_total'=>$tax_total];
+        $return['msg'] = '';
+        $return['code'] = 1;
         return $return;
     }
 
@@ -944,7 +983,7 @@ class BusinessModel extends Model
     public function queryTime($query_time){
         if(!isset($query_time['begin']) && !isset($query_time['end'])){//当查询开始间和结束时间都未设置时
 
-            $end_time = date('Y-m-d',time());//结束时间等于当前时间
+            $end_time = date('Y-m-d',strtotime("+1 day"));//结束时间等于当前时间往后推一天，即当前天的23:59:59
             $month = date('Y-m',time());//获取结束时间所属自然月
             $start_time = $month.'-01';//获取结束时间所属自然月的第一天的零点为查询的开始时间
 
@@ -953,18 +992,18 @@ class BusinessModel extends Model
             $start_time = date('Y-m-d',$query_time['begin']);//起始时间等于设置的起始时间
             $month = date('Y-m',$query_time['begin']);//获取开始时间所属自然月
             $last_day = date('t',$month);//获取开始时间所属自然月的总天数
-            $end_time = $month.'-'.$last_day;//结束时间设置为开始时间所属自然月的最后一天的23:59:59
+            $end_time = date('Y-m-d',strtotime($month.'-'.$last_day."+1 day"));//结束时间设置为开始时间所属自然月的最后一天的23:59:59
 
         } elseif(!isset($query_time['begin']) && isset($query_time['end'])){//当起始时间未设置，结束时间设置时
 
-            $end_time = date('Y-m-d',$query_time['end']);//结束时间等于设置的结束时间
+            $end_time = date('Y-m-d',strtotime($query_time['end']."+1 day"));//结束时间等于设置的结束时间
             $month = date('Y-m',$query_time['end']);//获取结束时间所属的自然月
             $start_time = $month.'-01';//获取结束时间所属自然月的第一天的零点为查询的开始时间
 
         } elseif(isset($query_time['begin']) && isset($query_time['end'])){//当查询的起始时间和结束时间都设置时
 
             $start_time = date('Y-m-d',$query_time['begin']);//起始时间等于设置的起始时间
-            $end_time = date('Y-m-d',$query_time['end']);//结束时间等于设置的结束时间
+            $end_time = date('Y-m-d',strtotime($query_time['end']."+1 day"));//结束时间等于设置的结束时间
         }
         return ['start_time'=>$start_time,'end_time'=>$end_time];
     }

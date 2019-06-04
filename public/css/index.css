@@ -1,32 +1,32 @@
 @font-face {
   font-family: 'pingFangExtraLight';
   src: url(/fonts/PingFang_ExtraLight.eot?b2b760a47cfd600726bad361d6ff0831);
-  src: url(/fonts/PingFang_ExtraLight.woff?ec44809a10b3078107ef50ee3356e3c9) format('woff'), url(/fonts/PingFang_ExtraLight.ttf?e5e1a97169fc1e01b19ea7a14919ebe0) format('truetype'), url(/fonts/PingFang_ExtraLight.svg?b8454a466262a1eb39cd7b6d5e53ad36) format('svg');
+  src: url(/fonts/PingFang_ExtraLight.woff?ec44809a10b3078107ef50ee3356e3c9) format('woff'), url(/fonts/PingFang_ExtraLight.ttf?e5e1a97169fc1e01b19ea7a14919ebe0) format('truetype'), url(/fonts/PingFang_ExtraLight.svg?2c96f57969aa0751c9b6c295b28b04e4) format('svg');
 }
 @font-face {
   font-family: 'pingFangLight';
   src: url(/fonts/PingFang_Light_0.eot?87f1481e54a642c23d7e7218bdb2436f);
-  src: url(/fonts/PingFang_Light_0.woff?83117de04e4575ca626d821b4ee28cc9) format('woff'), url(/fonts/PingFang_Light_0.ttf?ca3ad0e3097cdf7515dfa75aff6b3cc3) format('truetype'), url(/fonts/PingFang_Light_0.svg?ad56fb4552ceb93caae71babcdbe6e19) format('svg');
+  src: url(/fonts/PingFang_Light_0.woff?83117de04e4575ca626d821b4ee28cc9) format('woff'), url(/fonts/PingFang_Light_0.ttf?ca3ad0e3097cdf7515dfa75aff6b3cc3) format('truetype'), url(/fonts/PingFang_Light_0.svg?c5f6f2174cabafd81a0b6b4cb6ec0b3e) format('svg');
 }
 @font-face {
   font-family: 'pingFangRegular';
   src: url(/fonts/PingFang_Regular_0.eot?ae526a45e86910b264bdad0e8b2ebf31);
-  src: url(/fonts/PingFang_Regular_0.woff?808ea89d856e8b0dd0e26e021cd74dc1) format('woff'), url(/fonts/PingFang_Regular_0.ttf?75225b297e757308c3bfeca013396be6) format('truetype'), url(/fonts/PingFang_Regular_0.svg?6ca1ffa34e60d9f36974ac5ed764e239) format('svg');
+  src: url(/fonts/PingFang_Regular_0.woff?808ea89d856e8b0dd0e26e021cd74dc1) format('woff'), url(/fonts/PingFang_Regular_0.ttf?75225b297e757308c3bfeca013396be6) format('truetype'), url(/fonts/PingFang_Regular_0.svg?ed6c367a2535d9efc87f60a14f497125) format('svg');
 }
 @font-face {
   font-family: 'pingFang';
   src: url(/fonts/PingFang_Medium_0.eot?bdbf7e000dc0b71d2b6f445e70a1e23c);
-  src: url(/fonts/PingFang_Medium_0.woff?7ddf61add84d338280ed1059641da293) format('woff'), url(/fonts/PingFang_Medium_0.ttf?15974853bc3294ef68e7e6d58fe74fd7) format('truetype'), url(/fonts/PingFang_Medium_0.svg?e5299f5a6711ffb57b71dfca14f2ff35) format('svg');
+  src: url(/fonts/PingFang_Medium_0.woff?7ddf61add84d338280ed1059641da293) format('woff'), url(/fonts/PingFang_Medium_0.ttf?15974853bc3294ef68e7e6d58fe74fd7) format('truetype'), url(/fonts/PingFang_Medium_0.svg?bbf9d5f064f98eb324ce47ba4e560116) format('svg');
 }
 @font-face {
   font-family: 'pingFangBold';
   src: url(/fonts/PingFang_Bold.eot?3750644e22c584075747601c47df00f3);
-  src: url(/fonts/PingFang_Bold.woff?087cbef9ca2b6bd612f4712e23045298) format('woff'), url(/fonts/PingFang_Bold.ttf?dd25b35dcb7ba4476cbaa9a9592e39e2) format('truetype'), url(/fonts/PingFang_Bold.svg?e8135f2f1aad288f7ca8327504e276cb) format('svg');
+  src: url(/fonts/PingFang_Bold.woff?087cbef9ca2b6bd612f4712e23045298) format('woff'), url(/fonts/PingFang_Bold.ttf?dd25b35dcb7ba4476cbaa9a9592e39e2) format('truetype'), url(/fonts/PingFang_Bold.svg?daa902cc691583edaa741a08f9913145) format('svg');
 }
 @font-face {
   font-family: 'pingFangHeavy';
   src: url(/fonts/PingFang_Heavy_0.eot?184418136760b26babf02e01ecfafacd);
-  src: url(/fonts/PingFang_Heavy_0.woff?1af360b62fc177b27111c4dc454ddcd4) format('woff'), url(/fonts/PingFang_Heavy_0.ttf?1c97d8de88f3e2936c2595978a781990) format('truetype'), url(/fonts/PingFang_Heavy_0.svg?f53a351e263e29f3ab6be78a020b745e) format('svg');
+  src: url(/fonts/PingFang_Heavy_0.woff?1af360b62fc177b27111c4dc454ddcd4) format('woff'), url(/fonts/PingFang_Heavy_0.ttf?1c97d8de88f3e2936c2595978a781990) format('truetype'), url(/fonts/PingFang_Heavy_0.svg?410c50cb48948210bf9822ae2a194fc0) format('svg');
 }
 body,
 html {
@@ -2194,34 +2194,24 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #aboutus .banner {
   height: 562px;
-  background: url(/images/aboutusBanner.png?79ce94258ea929f993eba7ed9daa34f5) no-repeat;
+  background: url(/images/aboutusBanner.png?15a35061b47b315a53bcc497e5df64d0) no-repeat center;
   background-size: 100% 100%;
   border-top: 1px solid transparent;
   margin-top: -1px;
   text-align: center;
+  color: #fff;
 }
-#aboutus .banner h2 {
+#aboutus .banner .title {
   margin-top: 190px;
-  text-align: center;
+  margin-bottom: 16px;
   font-size: 60px;
-  color: #fff;
-  margin-bottom: 0;
+  line-height: 72px;
+  letter-spacing: 4.5px;
 }
-#aboutus .banner h3 {
-  font-size: 24px;
-  text-align: center;
-  color: #fff;
-}
-#aboutus .banner p {
-  margin: 0;
-  margin-top: 34px;
-  padding: 10px 20px;
-  display: inline-block;
-  font-size: 14px;
-  color: #fff;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
+#aboutus .banner .sub-title {
+  font-size: 16px;
+  letter-spacing: 0.8px;
+  line-height: 28px;
 }
 #aboutus .content-list {
   width: 1176px;
@@ -2580,7 +2570,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   padding-top: 83px;
   color: #fff;
   text-align: center;
-  background: url(/images/server-rent-banner-bg.png?fbb67add78596bef8b8434641a45220b) no-repeat center;
+  background: url(/images/server-rent-banner-bg.png?b2cea809383abd135a8da87148aba511) no-repeat center;
   background-size: cover;
 }
 #tz-server-rent-content .banner.gaofang {
@@ -2597,9 +2587,10 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   letter-spacing: 4.5px;
 }
 #tz-server-rent-content .banner .title .sub-text {
-  font-size: 24px;
-  padding-left: 18px;
-  letter-spacing: 8.2px;
+  margin-top: 10px;
+  font-size: 16px;
+  letter-spacing: 0.8px;
+  line-height: 28px;
 }
 #tz-server-rent-content .banner .bottom {
   position: absolute;
@@ -2607,6 +2598,12 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   right: 0;
   bottom: 0;
   text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 #tz-server-rent-content .banner .bottom .btn-link {
   display: inline-block;
@@ -2655,65 +2652,86 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   text-align: center;
   color: #444;
 }
+#tz-server-rent-content .hot-product .content .d-block-container {
+  margin: 0 auto;
+  margin-top: 50px;
+  width: 1177px;
+}
 #tz-server-rent-content .hot-product .content .item {
   position: relative;
-  display: inline-block;
+  float: left;
+  margin-right: 19px;
 }
-#tz-server-rent-content .hot-product .content .item .front {
-  -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
-  -webkit-transition: all 1.2s;
-  transition: all 1.2s;
-}
-#tz-server-rent-content .hot-product .content .item .front .desc {
-  font-size: 14px;
-  font-weight: bold;
-  line-height: 42px;
-}
-#tz-server-rent-content .hot-product .content .item .front .price {
-  color: #ffba00;
-  font-size: 12px;
-  line-height: 41px;
-  letter-spacing: 0.3px;
+#tz-server-rent-content .hot-product .content .item:last-of-type {
+  margin-right: 0;
 }
 #tz-server-rent-content .hot-product .content .item .back {
-  position: absolute;
-  bottom: 15px;
-  width: 293px;
+  width: 280px;
   height: 438px;
   text-align: left;
-  -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
-  -webkit-transform: rotateY(-180deg);
-  transform: rotateY(-180deg);
-  -webkit-transition: all 1.2s;
-  transition: all 1.2s;
 }
 #tz-server-rent-content .hot-product .content .item .back .card {
   background-color: #fff;
   border-radius: 6px;
+  border: 1px solid #e1e4eb;
   border-bottom: 6px solid #2139b7;
-  -webkit-box-shadow: 11px 2px 57px 0 rgba(2, 17, 91, 0.1);
-          box-shadow: 11px 2px 57px 0 rgba(2, 17, 91, 0.1);
+}
+#tz-server-rent-content .hot-product .content .item .back .card-head {
+  height: 86px;
+  border-bottom: 5px solid #2039b7;
+  margin-bottom: 30px;
+}
+#tz-server-rent-content .hot-product .content .item .back .card-head:nth-of-type(1) {
+  background: url(/images/fwqHead01.png?a8af35962615dead54004ee484c1ba71) no-repeat center;
+  background-size: 100% 100%;
+}
+#tz-server-rent-content .hot-product .content .item .back .card-head:nth-of-type(2) {
+  background: url(/images/fwqHead02.png?bc85e17056fecf6afa133bcda1d60a08) no-repeat;
+  background-size: 100% 100%;
+}
+#tz-server-rent-content .hot-product .content .item .back .card-head:nth-of-type(3) {
+  background: url(/images/fwqHead03.png?d15379e2702e7af71976cb6c2f46b4b2) no-repeat;
+  background-size: 100% 100%;
+}
+#tz-server-rent-content .hot-product .content .item .back .card-head:nth-of-type(4) {
+  background: url(/images/fwqHead04.png?4463f86d1db676408764f751ea6d695a) no-repeat;
+  background-size: 100% 100%;
 }
 #tz-server-rent-content .hot-product .content .item .back .card-body {
   padding: 54px 30px;
+  padding-top: 0;
 }
 #tz-server-rent-content .hot-product .content .item .back .card-title {
   font-size: 18px;
   font-weight: bold;
-  line-height: 24px;
+  line-height: 86px;
+  text-align: center;
+  color: #fff;
+  margin: 0;
+}
+#tz-server-rent-content .hot-product .content .item .back .card-title.top {
+  background: url(/images/fwqMark.png?1b6b9c98de1d7eede758f3052b02d9b1) no-repeat;
+  background-size: 100% 100%;
+}
+#tz-server-rent-content .hot-product .content .item .back .card-title.top span {
+  display: inline-block;
+}
+#tz-server-rent-content .hot-product .content .item .back .card-title span {
+  font-weight: bold;
+  color: #ffe002;
+  display: none;
 }
 #tz-server-rent-content .hot-product .content .item .back .card-text {
-  font-size: 14px;
+  font-size: 13px;
   line-height: 24px;
   text-align: center;
 }
 #tz-server-rent-content .hot-product .content .item .back .card-text .desc {
   text-align: left;
+  min-height: 120px;
 }
 #tz-server-rent-content .hot-product .content .item .back .card-text .price {
-  color: #ffc543;
+  color: #fe0000;
   font-size: 12px;
   line-height: 41px;
 }
@@ -2734,13 +2752,9 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   -webkit-box-shadow: 10px 1.5px 18px 0 rgba(31, 59, 182, 0.2);
           box-shadow: 10px 1.5px 18px 0 rgba(31, 59, 182, 0.2);
 }
-#tz-server-rent-content .hot-product .content .item:hover .front {
-  -webkit-transform: rotateY(-180deg);
-  transform: rotateY(-180deg);
-}
-#tz-server-rent-content .hot-product .content .item:hover .back {
-  -webkit-transform: rotateY(-360deg);
-  transform: rotateY(-360deg);
+#tz-server-rent-content .hot-product .content .item:hover {
+  -webkit-box-shadow: 0 0 57px 0 rgba(2, 17, 91, 0.1);
+          box-shadow: 0 0 57px 0 rgba(2, 17, 91, 0.1);
 }
 #tz-server-rent-content .product-adv {
   height: 607px;
@@ -2893,7 +2907,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   padding-top: 83px;
   color: #fff;
   text-align: center;
-  background-image: url(/images/server-rent-banner-bg.png?fbb67add78596bef8b8434641a45220b);
+  background: url(/images/server-rent-banner-bg.png?b2cea809383abd135a8da87148aba511) no-repeat center;
   background-size: cover;
 }
 #server_product .banner .title {
@@ -2906,9 +2920,9 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   letter-spacing: 4.5px;
 }
 #server_product .banner .title .sub-text {
-  font-size: 24px;
-  padding-left: 18px;
-  letter-spacing: 8.2px;
+  font-size: 16px;
+  line-height: 28px;
+  letter-spacing: 0.8px;
 }
 #server_product .banner .bottom {
   position: absolute;
@@ -2916,6 +2930,12 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   right: 0;
   bottom: 0;
   text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 #server_product .banner .bottom .btn-link {
   display: inline-block;
@@ -3958,22 +3978,23 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   padding-top: 83px;
   color: #fff;
   text-align: center;
-  background: url(/images/hosting-banner-bg.png?fbb67add78596bef8b8434641a45220b) no-repeat center;
+  background: url(/images/hosting-banner-bg.jpg?42946cb5905aa3cc01c509408a302109) no-repeat center;
   background-size: cover;
 }
 #tz-server-hosting .banner .title {
   margin-top: 140px;
 }
 #tz-server-hosting .banner .title .text {
+  margin-bottom: 16px;
   font-size: 60px;
   line-height: 72px;
-  margin-bottom: 16px;
   letter-spacing: 4.5px;
 }
 #tz-server-hosting .banner .title .sub-text {
-  font-size: 24px;
-  padding-left: 18px;
-  letter-spacing: 8.2px;
+  margin-top: 10px;
+  font-size: 16px;
+  letter-spacing: 0.8px;
+  line-height: 28px;
 }
 #tz-server-hosting .banner .collapse-tab {
   position: absolute;

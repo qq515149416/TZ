@@ -13,7 +13,7 @@
         <div class="cont">
             <div class="title">
                 <h2 class="text">流媒体点播加速</h2>
-                <h5 class="sub-text">
+                <h5 class="sub-text font-regular">
                     15CDN流媒体点播加速是将源站大量的流媒体内容（视频、声音和数据等）通过最佳的链路传输到腾正科技<br/>
                     流媒体专用存储设备中，并利用15CDN网络自身的协同性能，将这些大流量流媒体文件快速分层同步传输到<br/>
                     全国各加速节点上，实现为用户提供稳定可靠的音视频点播服务。

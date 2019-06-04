@@ -14,7 +14,7 @@
         <div class="title" style="color: #fff;">
 <!--            <h2 class="text font-bold">{{ $productData['title'] }}</h2>-->
 <!--            <h4 class="sub-text font-regular">{{ $productData['description'] }}</h4>-->
-            <h2 class="text font-bold">服务器租用</h2>
+            <h2 class="text">服务器租用</h2>
             <h4 class="sub-text font-regular">
                 自主准T4、T3机房，从服务器设备、环境到维护的一站式服务，为您提供定制化硬件采购解决方案<br/>
                 以租用的方式独享专用高性能服务器及全完自主管理权限，满足您不同时期业务发展需求！
@@ -34,11 +34,10 @@
     <!-- 热销产品 -->
     <div class="hot-product">
         <div class="title">
-            <p class="text">{{ $page==='gaofang' ? '高防服务器热销产品' : '热销产品'  }}</p>
-            <p class="sub-text">超值特惠多种高性能组合套餐，满足您核心应用场景需求</p>
+            <h2 class="text">{{ $page==='gaofang' ? '高防服务器热销产品' : '热销产品'  }}</h2>
+            <h5 class="sub-text">超值特惠多种高性能组合套餐，满足您核心应用场景需求</h5>
         </div>
         <div class="content">
-            <img class="d-block" src="{{ asset("/images/serverRent/rectangle.png") }}">
             <div class="clearfix d-block-container">
                 @foreach ($productData['data'] as $item)
                     <div class="item">
@@ -71,8 +70,6 @@
                                 <div class="card-body">
                                     <div class="card-text">
                                         <p class="desc">
-
-
                                             @if (array_key_exists('ddos',$item))
                                                 DDOS防护：{{ $item['ddos'] }}
                                             @else
@@ -112,8 +109,8 @@
     <!-- 产品优势 -->
     <div class="product-adv">
         <div class="title">
-            <p class="text">产品优势</p>
-            <p class="sub-text">多样化的产品，帮您实现更丰富的业务需求</p>
+            <h2 class="text">产品优势</h2>
+            <h5 class="sub-text">多样化的产品，帮您实现更丰富的业务需求</h5>
         </div>
         <div class="content">
             <div style="margin-top: 60px;">
@@ -167,9 +164,9 @@
     </div>
     <!-- 服务支持 -->
     <div class="service-support">
-        <div class="title" style="color: #fff;">
-            <p class="text">服务支持</p>
-            <p class="sub-text">提供业内专业的技术支持</p>
+        <div class="title">
+            <h2 class="text" style="color: #fff;">服务支持</h2>
+            <h5 class="sub-text" style="color: #bababa;">提供业内专业的技术支持</h5>
         </div>
         <div class="table-container container">
             <table class="table table-bordered">
@@ -275,8 +272,8 @@
     <!-- 常见问题 -->
     <div class="common-question">
         <div class="title">
-            <p class="text">服务器租用常见问题</p>
-            <p class="sub-text">关注腾正，关注IDC，关注云计算，关注信息安全,关注互联网动向</p>
+            <h2 class="text">服务器租用常见问题</h2>
+            <h5 class="sub-text">关注腾正，关注IDC，关注云计算，关注信息安全,关注互联网动向</h5>
         </div>
         <div class="list-container">
             <ul class="list-group">
@@ -344,8 +341,8 @@
         </div>
     </div>
     <div class="consult">
-        <div class="title" style="color: #fff; margin-bottom: 20px;">
-            <p class="text">服务器租用-腾正科技IDC运营专家</p>
+        <div class="title" style="margin-bottom: 20px;">
+            <h2 class="text" style="color: #fff;">服务器租用-腾正科技IDC运营专家</h2>
         </div>
         <a class="consult-btn" href="javascript: void(0);">立即咨询</a>
     </div>

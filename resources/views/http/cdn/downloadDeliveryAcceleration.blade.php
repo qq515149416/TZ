@@ -13,7 +13,7 @@
         <div class="cont">
             <div class="title">
                 <h2 class="text">下载分发加速</h2>
-                <h5 class="sub-text">
+                <h5 class="sub-text font-regular">
                     15CDN下载分发加速主针对新版本软件/补丁包、游戏安装包获取、手机ROM升级、应用程序包下载等业务<br/>
                     场景，提供稳定、优质的下载加速服务。海量弹性带宽储备，具备突发性超大流量承载能力，减少用户等待<br/>
                     时间，让业务用户获得极速的下载体验，提升用户转化率。

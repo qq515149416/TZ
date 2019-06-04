@@ -1,32 +1,32 @@
 @font-face {
   font-family: 'pingFangExtraLight';
   src: url(/fonts/PingFang_ExtraLight.eot?b2b760a47cfd600726bad361d6ff0831);
-  src: url(/fonts/PingFang_ExtraLight.woff?ec44809a10b3078107ef50ee3356e3c9) format('woff'), url(/fonts/PingFang_ExtraLight.ttf?e5e1a97169fc1e01b19ea7a14919ebe0) format('truetype'), url(/fonts/PingFang_ExtraLight.svg?2c96f57969aa0751c9b6c295b28b04e4) format('svg');
+  src: url(/fonts/PingFang_ExtraLight.woff?ec44809a10b3078107ef50ee3356e3c9) format('woff'), url(/fonts/PingFang_ExtraLight.ttf?e5e1a97169fc1e01b19ea7a14919ebe0) format('truetype'), url(/fonts/PingFang_ExtraLight.svg?b8454a466262a1eb39cd7b6d5e53ad36) format('svg');
 }
 @font-face {
   font-family: 'pingFangLight';
   src: url(/fonts/PingFang_Light_0.eot?87f1481e54a642c23d7e7218bdb2436f);
-  src: url(/fonts/PingFang_Light_0.woff?83117de04e4575ca626d821b4ee28cc9) format('woff'), url(/fonts/PingFang_Light_0.ttf?ca3ad0e3097cdf7515dfa75aff6b3cc3) format('truetype'), url(/fonts/PingFang_Light_0.svg?c5f6f2174cabafd81a0b6b4cb6ec0b3e) format('svg');
+  src: url(/fonts/PingFang_Light_0.woff?83117de04e4575ca626d821b4ee28cc9) format('woff'), url(/fonts/PingFang_Light_0.ttf?ca3ad0e3097cdf7515dfa75aff6b3cc3) format('truetype'), url(/fonts/PingFang_Light_0.svg?ad56fb4552ceb93caae71babcdbe6e19) format('svg');
 }
 @font-face {
   font-family: 'pingFangRegular';
   src: url(/fonts/PingFang_Regular_0.eot?ae526a45e86910b264bdad0e8b2ebf31);
-  src: url(/fonts/PingFang_Regular_0.woff?808ea89d856e8b0dd0e26e021cd74dc1) format('woff'), url(/fonts/PingFang_Regular_0.ttf?75225b297e757308c3bfeca013396be6) format('truetype'), url(/fonts/PingFang_Regular_0.svg?ed6c367a2535d9efc87f60a14f497125) format('svg');
+  src: url(/fonts/PingFang_Regular_0.woff?808ea89d856e8b0dd0e26e021cd74dc1) format('woff'), url(/fonts/PingFang_Regular_0.ttf?75225b297e757308c3bfeca013396be6) format('truetype'), url(/fonts/PingFang_Regular_0.svg?6ca1ffa34e60d9f36974ac5ed764e239) format('svg');
 }
 @font-face {
   font-family: 'pingFang';
   src: url(/fonts/PingFang_Medium_0.eot?bdbf7e000dc0b71d2b6f445e70a1e23c);
-  src: url(/fonts/PingFang_Medium_0.woff?7ddf61add84d338280ed1059641da293) format('woff'), url(/fonts/PingFang_Medium_0.ttf?15974853bc3294ef68e7e6d58fe74fd7) format('truetype'), url(/fonts/PingFang_Medium_0.svg?bbf9d5f064f98eb324ce47ba4e560116) format('svg');
+  src: url(/fonts/PingFang_Medium_0.woff?7ddf61add84d338280ed1059641da293) format('woff'), url(/fonts/PingFang_Medium_0.ttf?15974853bc3294ef68e7e6d58fe74fd7) format('truetype'), url(/fonts/PingFang_Medium_0.svg?e5299f5a6711ffb57b71dfca14f2ff35) format('svg');
 }
 @font-face {
   font-family: 'pingFangBold';
   src: url(/fonts/PingFang_Bold.eot?3750644e22c584075747601c47df00f3);
-  src: url(/fonts/PingFang_Bold.woff?087cbef9ca2b6bd612f4712e23045298) format('woff'), url(/fonts/PingFang_Bold.ttf?dd25b35dcb7ba4476cbaa9a9592e39e2) format('truetype'), url(/fonts/PingFang_Bold.svg?daa902cc691583edaa741a08f9913145) format('svg');
+  src: url(/fonts/PingFang_Bold.woff?087cbef9ca2b6bd612f4712e23045298) format('woff'), url(/fonts/PingFang_Bold.ttf?dd25b35dcb7ba4476cbaa9a9592e39e2) format('truetype'), url(/fonts/PingFang_Bold.svg?e8135f2f1aad288f7ca8327504e276cb) format('svg');
 }
 @font-face {
   font-family: 'pingFangHeavy';
   src: url(/fonts/PingFang_Heavy_0.eot?184418136760b26babf02e01ecfafacd);
-  src: url(/fonts/PingFang_Heavy_0.woff?1af360b62fc177b27111c4dc454ddcd4) format('woff'), url(/fonts/PingFang_Heavy_0.ttf?1c97d8de88f3e2936c2595978a781990) format('truetype'), url(/fonts/PingFang_Heavy_0.svg?410c50cb48948210bf9822ae2a194fc0) format('svg');
+  src: url(/fonts/PingFang_Heavy_0.woff?1af360b62fc177b27111c4dc454ddcd4) format('woff'), url(/fonts/PingFang_Heavy_0.ttf?1c97d8de88f3e2936c2595978a781990) format('truetype'), url(/fonts/PingFang_Heavy_0.svg?f53a351e263e29f3ab6be78a020b745e) format('svg');
 }
 body,
 html {
@@ -2581,12 +2581,14 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin-top: 140px;
 }
 #tz-server-rent-content .banner .title .text {
+  color: #fff;
   font-size: 60px;
   line-height: 72px;
   margin-bottom: 16px;
   letter-spacing: 4.5px;
 }
 #tz-server-rent-content .banner .title .sub-text {
+  color: #fff;
   margin-top: 10px;
   font-size: 16px;
   letter-spacing: 0.8px;
@@ -2628,15 +2630,15 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background: #fff;
   color: #043fc4;
 }
-#tz-server-rent-content .title {
-  color: #666;
-}
 #tz-server-rent-content .title .text {
+  color: #333;
   font-size: 26px;
   font-weight: 600;
   letter-spacing: 1.3px;
+  font-family: 'pingFangBold';
 }
 #tz-server-rent-content .title .sub-text {
+  color: #666;
   font-size: 14px;
   line-height: 40px;
   margin-top: -10px;
@@ -2644,9 +2646,31 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz-server-rent-content .hot-product {
   height: 735px;
-  padding-top: 70px;
+  padding-top: 50px;
   text-align: center;
   background-color: #fff;
+}
+#tz-server-rent-content .hot-product .title {
+  position: relative;
+  color: #333;
+  font-size: 26px;
+  font-family: 'pingFangBold';
+  letter-spacing: 1.3px;
+  text-align: center;
+  margin-bottom: 0;
+  padding-bottom: 34px;
+}
+#tz-server-rent-content .hot-product .title:after {
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  bottom: 0;
+  content: '';
+  width: 50px;
+  height: 6px;
+  background-color: #2139b7;
+  border-radius: 6px;
 }
 #tz-server-rent-content .hot-product .content {
   text-align: center;
@@ -2681,29 +2705,13 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   border-bottom: 5px solid #2039b7;
   margin-bottom: 30px;
 }
-#tz-server-rent-content .hot-product .content .item .back .card-head:nth-of-type(1) {
-  background: url(/images/fwqHead01.png?a8af35962615dead54004ee484c1ba71) no-repeat center;
-  background-size: 100% 100%;
-}
-#tz-server-rent-content .hot-product .content .item .back .card-head:nth-of-type(2) {
-  background: url(/images/fwqHead02.png?bc85e17056fecf6afa133bcda1d60a08) no-repeat;
-  background-size: 100% 100%;
-}
-#tz-server-rent-content .hot-product .content .item .back .card-head:nth-of-type(3) {
-  background: url(/images/fwqHead03.png?d15379e2702e7af71976cb6c2f46b4b2) no-repeat;
-  background-size: 100% 100%;
-}
-#tz-server-rent-content .hot-product .content .item .back .card-head:nth-of-type(4) {
-  background: url(/images/fwqHead04.png?4463f86d1db676408764f751ea6d695a) no-repeat;
-  background-size: 100% 100%;
-}
 #tz-server-rent-content .hot-product .content .item .back .card-body {
   padding: 54px 30px;
   padding-top: 0;
 }
 #tz-server-rent-content .hot-product .content .item .back .card-title {
   font-size: 18px;
-  font-weight: bold;
+  font-family: 'pingFangBold';
   line-height: 86px;
   text-align: center;
   color: #fff;
@@ -2756,9 +2764,25 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   -webkit-box-shadow: 0 0 57px 0 rgba(2, 17, 91, 0.1);
           box-shadow: 0 0 57px 0 rgba(2, 17, 91, 0.1);
 }
+#tz-server-rent-content .hot-product .content .item:nth-of-type(1) .card-head {
+  background: url(/images/fwqHead01.png?a8af35962615dead54004ee484c1ba71) no-repeat center;
+  background-size: 100% 100%;
+}
+#tz-server-rent-content .hot-product .content .item:nth-of-type(2) .card-head {
+  background: url(/images/fwqHead02.png?bc85e17056fecf6afa133bcda1d60a08) no-repeat center;
+  background-size: 100% 100%;
+}
+#tz-server-rent-content .hot-product .content .item:nth-of-type(3) .card-head {
+  background: url(/images/fwqHead03.png?d15379e2702e7af71976cb6c2f46b4b2) no-repeat center;
+  background-size: 100% 100%;
+}
+#tz-server-rent-content .hot-product .content .item:nth-of-type(4) .card-head {
+  background: url(/images/fwqHead04.png?4463f86d1db676408764f751ea6d695a) no-repeat center;
+  background-size: 100% 100%;
+}
 #tz-server-rent-content .product-adv {
   height: 607px;
-  padding-top: 70px;
+  padding-top: 50px;
   text-align: center;
   background: url(/images/product-adv-bg.png?2ce07f79bcb256a8ad8f902f54fc1563) no-repeat center center;
   background-size: cover;
@@ -2778,7 +2802,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz-server-rent-content .product-adv .content .item-content .title {
   color: #2139b7;
-  font-weight: bold;
+  font-family: 'pingFangBold';
   letter-spacing: 0.9px;
 }
 #tz-server-rent-content .product-adv .content .item-content .desc {
@@ -2788,7 +2812,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz-server-rent-content .service-support {
   height: 1010px;
-  padding-top: 70px;
+  padding-top: 50px;
   text-align: center;
   background: url(/images/service-support-bg.png?a8db1d3ffb0a3580c4d5562ed8f690b5) no-repeat center center;
   background-size: cover;
@@ -2805,7 +2829,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz-server-rent-content .service-support .table-container .table-bordered th {
   font-size: 14px;
-  font-weight: bold;
+  font-family: 'pingFangHeavy';
   letter-spacing: 2.8px;
   color: #fff;
   text-align: center;
@@ -2828,7 +2852,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   border-right: none;
 }
 #tz-server-rent-content .common-question {
-  padding: 70px 0 80px;
+  padding: 50px 0 80px;
   text-align: center;
   background: url(/images/common-question-bg.png?5994d19b749ba842c38ed870df4db534) no-repeat center;
   background-size: cover;
@@ -2918,6 +2942,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   line-height: 72px;
   margin-bottom: 16px;
   letter-spacing: 4.5px;
+  font-family: 'pingFangBold';
 }
 #server_product .banner .title .sub-text {
   font-size: 16px;
@@ -2974,7 +2999,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   color: #333333;
   text-align: center;
   margin: 0;
-  font-family: "\5FAE\8F6F\96C5\9ED1";
+  font-family: 'pingFangBold';
   padding-bottom: 32px;
   position: relative;
 }
@@ -2999,6 +3024,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   padding-bottom: 19px;
   border-bottom: 1px solid #333333;
   font-size: 32px;
+  font-family: 'pingFangBold';
   color: #333333;
 }
 #server_product .jumbotron.data-center .main-content .tab-content .tab-pane p {
@@ -3049,7 +3075,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background-color: #eeeff3;
   font-size: 14px;
   color: #333333;
-  font-weight: bold;
+  font-family: 'pingFangBold';
 }
 #server_product .jumbotron.data-center .main-content .tab-content .tab-pane .data-table .data-table-row .data-table-col:last-of-type {
   border-right: none;
@@ -3108,7 +3134,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #server_product .jumbotron.introduction article h4 {
   font-size: 18px;
-  font-weight: normal;
+  font-family: 'pingFangBold';
   color: #2139b7;
   margin: 0;
 }
@@ -3133,6 +3159,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #server_product .jumbotron.reason h4 {
   font-size: 26px;
   color: #ffffff;
+  font-family: 'pingFangBold';
   margin: 0;
   text-align: center;
 }
@@ -3150,6 +3177,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin: 10px 0;
   font-size: 16px;
   color: #ffffff;
+  font-family: 'pingFangBold';
 }
 #server_product .jumbotron.reason .reason-content div[class*="col-md"] p {
   margin: 0;
@@ -3173,6 +3201,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin-bottom: 24px;
   font-size: 26px;
   color: #fff;
+  font-family: 'pingFangBold';
 }
 #server_product .jumbotron.footer a {
   display: inline-block;
@@ -3261,8 +3290,9 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-solution .content .banner .title .text {
   font-size: 50px;
   line-height: 72px;
-  margin-bottom: 25px;
+  margin-bottom: 16px;
   letter-spacing: 3.75px;
+  font-family: 'pingFangBold';
 }
 .tz-solution .content .banner .title .sub-text {
   font-size: 16px;
@@ -3293,7 +3323,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   position: relative;
   color: #333;
   font-size: 26px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   letter-spacing: 1.3px;
   text-align: center;
   margin-bottom: 0;
@@ -3347,7 +3377,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-solution .content .problem .card-container .card-title .text {
   color: #333;
   font-size: 16px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   letter-spacing: 0.8px;
   margin-left: 18px;
 }
@@ -3371,7 +3401,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   position: relative;
   color: #121931;
   font-size: 26px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   letter-spacing: 1.3px;
   text-align: center;
   margin-bottom: 0;
@@ -3427,7 +3457,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   position: relative;
   color: #121931;
   font-size: 26px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   letter-spacing: 1.3px;
   text-align: center;
   margin-bottom: 0;
@@ -3479,7 +3509,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-solution .content .adv .cont .item-title {
   color: #2b3555;
   font-size: 16px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   line-height: 41px;
 }
 .tz-solution .content .adv .cont .item-title .order {
@@ -3505,6 +3535,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   font-size: 26px;
   line-height: 41px;
   margin-bottom: 20px;
+  font-family: 'pingFangBold';
 }
 .tz-solution .content .consult .consult-btn {
   display: inline-block;
@@ -3985,12 +4016,14 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin-top: 140px;
 }
 #tz-server-hosting .banner .title .text {
+  color: #fff;
   margin-bottom: 16px;
   font-size: 60px;
   line-height: 72px;
   letter-spacing: 4.5px;
 }
 #tz-server-hosting .banner .title .sub-text {
+  color: #fff;
   margin-top: 10px;
   font-size: 16px;
   letter-spacing: 0.8px;
@@ -4032,15 +4065,14 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background: #fff;
   color: #043fc4;
 }
-#tz-server-hosting .title {
-  color: #666;
-}
 #tz-server-hosting .title .text {
+  color: #333;
   font-size: 26px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   letter-spacing: 1.3px;
 }
 #tz-server-hosting .title .sub-text {
+  color: #666;
   font-size: 14px;
   line-height: 40px;
   margin-top: -10px;
@@ -4057,6 +4089,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   padding-top: 40px;
   font-size: 32px;
   color: #333;
+  font-family: 'pingFangBold';
 }
 #tz-server-hosting .expand-item .scene-btn {
   display: inline-block;
@@ -4087,6 +4120,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   color: #333;
   letter-spacing: 2.8px;
   border: 1px solid #d6d7e1;
+  font-family: 'pingFangHeavy';
 }
 #tz-server-hosting .expand-item .table-container tr {
   height: 50px;
@@ -4130,7 +4164,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz-server-hosting .performance-pk .table-container .table-bordered th {
   font-size: 14px;
-  font-weight: bold;
+  font-family: 'pingFangHeavy';
   letter-spacing: 2.8px;
   color: #666;
   text-align: center;
@@ -4172,7 +4206,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz-server-hosting .service-pk .table-container .table-bordered th {
   font-size: 14px;
-  font-weight: bold;
+  font-family: 'pingFangHeavy';
   letter-spacing: 2.8px;
   color: #fff;
   text-align: center;
@@ -4261,10 +4295,10 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   padding-top: 50px;
 }
 #tz-server-hosting .consult .title {
-  color: #fff;
   margin-bottom: 30px;
 }
 #tz-server-hosting .consult .title .text {
+  color: #fff;
   margin-top: 0;
 }
 #tz-server-hosting .consult .consult-btn {
@@ -4308,9 +4342,9 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 .tz-protection .title {
   position: relative;
+  font-family: 'pingFangBold';
   color: #333;
   font-size: 26px;
-  font-weight: 600;
   letter-spacing: 1.3px;
   text-align: center;
   margin-bottom: 20px;
@@ -4360,7 +4394,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-protection .banner .cont {
   max-width: 1180px;
   margin: 60px auto 0;
-  padding: 0px 55px;
+  padding: 0 55px;
 }
 .tz-protection .banner .cont .title {
   text-align: center;
@@ -4368,12 +4402,14 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 .tz-protection .banner .cont .title .text {
   font-size: 50px;
+  font-family: 'pingFangBold';
   line-height: 72px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   letter-spacing: 3.75px;
 }
 .tz-protection .banner .cont .title .sub-text {
   font-size: 16px;
+  font-family: 'pingFangRegular';
   letter-spacing: 0.8px;
   margin-bottom: 60px;
   line-height: 30px;
@@ -4470,7 +4506,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-protection .product-matrix .item-group-title {
   position: absolute;
   color: #959595;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   -webkit-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out;
 }
@@ -4538,7 +4574,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-protection .product-adv .card .title {
   color: #2139b7;
   font-size: 16px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   letter-spacing: 0.8px;
   margin-top: 35px;
   margin-bottom: 20px;
@@ -4604,7 +4640,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-protection .node-intro .item .title {
   color: #fff;
   font-size: 16px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   letter-spacing: 0.8px;
   margin-bottom: 12px;
   text-align: left;
@@ -4660,7 +4696,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   border: 1px solid #fff;
   color: #fff;
   font-size: 16px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   letter-spacing: 0.8px;
   text-align: center;
   text-decoration: none;
@@ -4680,7 +4716,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-protection .client-scene .tab-pane .text {
   padding-left: 35px;
   color: #fff;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   letter-spacing: 1.2px;
 }
 .tz-protection .client-scene .tab-pane .desc {
@@ -4862,7 +4898,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 .tz-protection .feature .cont .item-container .item-title {
   font-size: 16px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   letter-spacing: 0.8px;
   color: #2139b7;
   margin-bottom: 15px;
@@ -4917,7 +4953,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 .tz-protection .function .item-container .item .text .title {
   font-size: 16px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   letter-spacing: 0.8px;
   margin-top: 0;
   margin-bottom: 10px;
@@ -5087,10 +5123,11 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   letter-spacing: 1.3px;
   text-align: center;
   margin-bottom: 20px;
+  font-family: 'pingFangBold';
 }
 #highDefenseProduct .highDefenseProduct .sub-title {
   margin-top: 20px;
-  color: #999;
+  color: #666;
 }
 #highDefenseProduct .highDefenseProduct .product {
   margin-top: 30px;
@@ -5107,7 +5144,6 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin-bottom: 20px;
   font-size: 18px;
   color: #333;
-  font-weight: normal;
 }
 #highDefenseProduct .highDefenseProduct .product-item .config p {
   width: 80%;
@@ -5768,7 +5804,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   position: relative;
   color: #333;
   font-size: 26px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   letter-spacing: 1.3px;
   text-align: center;
   margin-bottom: 20px;
@@ -5822,7 +5858,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-cdn-content .banner .cont {
   max-width: 1180px;
   margin: 60px auto 0;
-  padding: 0px 55px;
+  padding: 0 55px;
 }
 .tz-cdn-content .banner .cont .title {
   text-align: center;
@@ -5831,8 +5867,9 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-cdn-content .banner .cont .title .text {
   font-size: 50px;
   line-height: 72px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   letter-spacing: 3.75px;
+  font-family: 'pingFangBold';
 }
 .tz-cdn-content .banner .cont .title .sub-text {
   font-size: 16px;
@@ -5916,6 +5953,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   text-align: center;
   vertical-align: middle;
   color: #444;
+  font-family: 'pingFangHeavy';
   letter-spacing: 1.2px;
   border: 1px solid #d2d2d2;
 }
@@ -5934,6 +5972,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-cdn-content .package .price {
   font-size: 24px;
   font-weight: 600;
+  font-family: 'pingFangBold';
   color: #043fc4;
   letter-spacing: 2.8px;
 }
@@ -6128,7 +6167,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-cdn-content .usage-scenario .target .title {
   display: inline-block;
   font-size: 18px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   color: #2139b7;
   line-height: 36px;
   letter-spacing: 0.8px;
@@ -6164,7 +6203,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-cdn-content .usage-scenario .target .text {
   color: #333;
   font-size: 16px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   letter-spacing: 0.7px;
 }
 .tz-cdn-content .consult {
@@ -6635,7 +6674,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   position: relative;
   color: #333;
   font-size: 26px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   letter-spacing: 1.3px;
   text-align: center;
   margin-bottom: 20px;
@@ -6689,7 +6728,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-cabinet-rent .banner .cont {
   max-width: 1180px;
   margin: 60px auto 0;
-  padding: 0px 55px;
+  padding: 0 55px;
 }
 .tz-cabinet-rent .banner .cont .title {
   text-align: center;
@@ -6698,7 +6737,8 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-cabinet-rent .banner .cont .title .text {
   font-size: 50px;
   line-height: 72px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
+  font-family: 'pingFangBold';
   letter-spacing: 3.75px;
 }
 .tz-cabinet-rent .banner .cont .title .sub-text {
@@ -6834,6 +6874,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   color: #333;
   letter-spacing: 2.8px;
   border: 1px solid #d6d7e1;
+  font-family: 'pingFangHeavy';
 }
 .tz-cabinet-rent .machine-room tr {
   height: 50px;
@@ -6924,7 +6965,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin-bottom: 0;
   line-height: 26px;
   text-align: center;
-  color: #c2c1c1;
+  color: #bababa;
 }
 .tz-cabinet-rent .certificate {
   padding-top: 50px;
@@ -7086,7 +7127,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   position: relative;
   color: #333;
   font-size: 26px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   letter-spacing: 1.3px;
   text-align: center;
   margin-bottom: 20px;
@@ -7140,7 +7181,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-bandwidth-rent .banner .cont {
   max-width: 1180px;
   margin: 60px auto 0;
-  padding: 0px 55px;
+  padding: 0 55px;
 }
 .tz-bandwidth-rent .banner .cont .title {
   text-align: center;
@@ -7149,8 +7190,9 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-bandwidth-rent .banner .cont .title .text {
   font-size: 50px;
   line-height: 72px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   letter-spacing: 3.75px;
+  font-family: 'pingFangBold';
 }
 .tz-bandwidth-rent .banner .cont .title .sub-text {
   font-size: 16px;
@@ -7285,6 +7327,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   color: #333;
   letter-spacing: 2.8px;
   border: 1px solid #d6d7e1;
+  font-family: 'pingFangHeavy';
 }
 .tz-bandwidth-rent .machine-room tr {
   height: 50px;
@@ -7375,7 +7418,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin-bottom: 0;
   line-height: 26px;
   text-align: center;
-  color: #c2c1c1;
+  color: #bababa;
 }
 .tz-bandwidth-rent .certificate {
   padding-top: 50px;
@@ -7544,10 +7587,11 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 .tz-latest-activity .banner .title {
   margin-top: 165px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   font-size: 50px;
   line-height: 72px;
   letter-spacing: 3.75px;
+  font-family: 'pingFangBold';
 }
 .tz-latest-activity .banner .sub-title {
   font-size: 16px;
@@ -7599,7 +7643,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 .tz-latest-activity .activity .card-body .title {
   font-size: 16px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   color: #333;
 }
 .tz-latest-activity .activity .card-body .desc {

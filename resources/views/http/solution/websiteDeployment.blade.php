@@ -26,7 +26,7 @@
             <div class="banner">
                 <div class="title" style="color: #fff;">
                     <h2 class="text">网站及部署解决解决方案</h2>
-                    <h5 class="sub-text">
+                    <h5 class="sub-text font-regular">
                         灵活弹性自动化的基础IT设施建设、 按需付费的服务模式以及0成本的运维IT服务体系<br/>
                         为企业及开发者用户量身构建从0到N的网站全生命周期一站式闭环服务
                     </h5>

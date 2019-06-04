@@ -89,7 +89,7 @@
                                             @if ($item['price']==='在线购买')
                                             <span style="font-size: 36px;font-weight: bold;">在线购买</span>
                                             @elseif ($item['price']==='定制咨询')
-                                            <span style="font-size: 30px;">定制咨询</span>
+                                            <span style="font-size: 36px;font-weight: bold;">定制咨询</span>
                                             @else
                                             <span style="font-size: 36px;font-weight: bold;">{{ $item['price'] }}</span> 元/月
                                             @endif

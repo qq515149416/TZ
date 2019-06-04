@@ -2689,15 +2689,15 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background-size: 100% 100%;
 }
 #tz-server-rent-content .hot-product .content .item .back .card-head:nth-of-type(2) {
-  background: url(/images/fwqHead01.png?a8af35962615dead54004ee484c1ba71) no-repeat;
+  background: url(/images/fwqHead02.png?bc85e17056fecf6afa133bcda1d60a08) no-repeat;
   background-size: 100% 100%;
 }
 #tz-server-rent-content .hot-product .content .item .back .card-head:nth-of-type(3) {
-  background: url(/images/fwqHead01.png?a8af35962615dead54004ee484c1ba71) no-repeat;
+  background: url(/images/fwqHead03.png?d15379e2702e7af71976cb6c2f46b4b2) no-repeat;
   background-size: 100% 100%;
 }
 #tz-server-rent-content .hot-product .content .item .back .card-head:nth-of-type(4) {
-  background: url(/images/fwqHead01.png?a8af35962615dead54004ee484c1ba71) no-repeat;
+  background: url(/images/fwqHead04.png?4463f86d1db676408764f751ea6d695a) no-repeat;
   background-size: 100% 100%;
 }
 #tz-server-rent-content .hot-product .content .item .back .card-body {
@@ -2712,12 +2712,16 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   color: #fff;
   margin: 0;
 }
+#tz-server-rent-content .hot-product .content .item .back .card-title.top {
+  background: url(/images/fwqMark.png?1b6b9c98de1d7eede758f3052b02d9b1) no-repeat;
+  background-size: 100% 100%;
+}
 #tz-server-rent-content .hot-product .content .item .back .card-title.top span {
   display: inline-block;
 }
 #tz-server-rent-content .hot-product .content .item .back .card-title span {
   font-weight: bold;
-  color: #fcde04;
+  color: #ffe002;
   display: none;
 }
 #tz-server-rent-content .hot-product .content .item .back .card-text {
@@ -2730,7 +2734,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   min-height: 120px;
 }
 #tz-server-rent-content .hot-product .content .item .back .card-text .price {
-  color: #ffc543;
+  color: #fe0000;
   font-size: 12px;
   line-height: 41px;
 }
@@ -2752,8 +2756,8 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
           box-shadow: 10px 1.5px 18px 0 rgba(31, 59, 182, 0.2);
 }
 #tz-server-rent-content .hot-product .content .item:hover {
-  -webkit-box-shadow: 11px 2px 57px 0 rgba(2, 17, 91, 0.1);
-          box-shadow: 11px 2px 57px 0 rgba(2, 17, 91, 0.1);
+  -webkit-box-shadow: 0 0 57px 0 rgba(2, 17, 91, 0.1);
+          box-shadow: 0 0 57px 0 rgba(2, 17, 91, 0.1);
 }
 #tz-server-rent-content .product-adv {
   height: 607px;

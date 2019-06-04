@@ -29,7 +29,7 @@ class PfmStatisticsController extends Controller
 
     /**
      * 查找统计表的相关信息
-     * @param    $month  月份,格式date("Ym");
+     * @param    
      * @return    json 返回相关的信息
      */
     public function index(PfmStatisticsRequest $request)

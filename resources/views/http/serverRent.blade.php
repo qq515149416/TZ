@@ -92,11 +92,11 @@
                                         <hr style="margin-top: 30px; margin-bottom: 30px;"/>
                                         <p class="price">
                                             @if ($item['price']==='在线购买')
-                                            <span style="font-size: 36px;font-weight: bold;">在线购买</span>
+                                            <span style="font-size: 28px;font-weight: bold;">在线购买</span>
                                             @elseif ($item['price']==='定制咨询')
-                                            <span style="font-size: 36px;font-weight: bold;">定制咨询</span>
+                                            <span style="font-size: 28px;font-weight: bold;">定制咨询</span>
                                             @else
-                                            <span style="font-size: 36px;font-weight: bold;">{{ $item['price'] }}</span> 元/月
+                                            <span style="font-size: 28px;font-weight: bold;">{{ $item['price'] }}</span> 元/月
                                             @endif
                                         </p>
                                         <a class="detail-link" href="javascript: void(0);" onclick="randomqq()">了解详情</a>

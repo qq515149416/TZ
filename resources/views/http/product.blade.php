@@ -11,7 +11,7 @@
         <!-- banner -->
         <div class="banner">
             <div class="title" style="color: #fff;">
-                <h2 class="text font-bold">服务器租用</h2>
+                <h2 class="text">服务器租用</h2>
                 <h4 class="sub-text font-regular">
                     自主准T4、T3机房，从服务器设备、环境到维护的一站式服务，为您提供定制化硬件采购解决方案<br/>
                     以租用的方式独享专用高性能服务器及全完自主管理权限，满足您不同时期业务发展需求！
@@ -29,7 +29,6 @@
             <div class="versionHeart">
                 <h2>数据中心</h2>
                 <div class="main-content">
-
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="{{ $room == 'hunan' ? 'active' : '' }}"><a href="/zuyong/{{$page}}/hunan">湖南衡阳机房</a></li>

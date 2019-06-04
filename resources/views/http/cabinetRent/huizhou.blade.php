@@ -13,7 +13,7 @@
         <div class="cont">
             <div class="title">
                 <h2 class="text">机柜租用</h2>
-                <h5 class="sub-text">
+                <h5 class="sub-text font-regular">
                     自主机房，全网骨干网络接入，超过1T总宽带接入，提供安全可靠的机柜租用方案，<br/>
                     电信、联通、双线、三线、BPG共5种线路选择
                 </h5>

@@ -13,7 +13,7 @@
         <div class="cont">
             <div class="title">
                 <h2 class="text">大带宽租用</h2>
-                <h5 class="sub-text">
+                <h5 class="sub-text font-regular">
                     五大机房大带宽资源保证 · 安全可靠的大带宽租用服务 · 高质量G口、万兆大带宽资源接入
                 </h5>
             </div>

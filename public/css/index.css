@@ -2581,12 +2581,14 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin-top: 140px;
 }
 #tz-server-rent-content .banner .title .text {
+  color: #fff;
   font-size: 60px;
   line-height: 72px;
   margin-bottom: 16px;
   letter-spacing: 4.5px;
 }
 #tz-server-rent-content .banner .title .sub-text {
+  color: #fff;
   margin-top: 10px;
   font-size: 16px;
   letter-spacing: 0.8px;
@@ -2628,15 +2630,15 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background: #fff;
   color: #043fc4;
 }
-#tz-server-rent-content .title {
-  color: #666;
-}
 #tz-server-rent-content .title .text {
+  color: #333;
   font-size: 26px;
   font-weight: 600;
   letter-spacing: 1.3px;
+  font-family: 'pingFangBold';
 }
 #tz-server-rent-content .title .sub-text {
+  color: #666;
   font-size: 14px;
   line-height: 40px;
   margin-top: -10px;
@@ -2644,9 +2646,31 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz-server-rent-content .hot-product {
   height: 735px;
-  padding-top: 70px;
+  padding-top: 50px;
   text-align: center;
   background-color: #fff;
+}
+#tz-server-rent-content .hot-product .title {
+  position: relative;
+  color: #333;
+  font-size: 26px;
+  font-family: 'pingFangBold';
+  letter-spacing: 1.3px;
+  text-align: center;
+  margin-bottom: 0;
+  padding-bottom: 34px;
+}
+#tz-server-rent-content .hot-product .title:after {
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  bottom: 0;
+  content: '';
+  width: 50px;
+  height: 6px;
+  background-color: #2139b7;
+  border-radius: 6px;
 }
 #tz-server-rent-content .hot-product .content {
   text-align: center;
@@ -2681,40 +2705,28 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   border-bottom: 5px solid #2039b7;
   margin-bottom: 30px;
 }
-#tz-server-rent-content .hot-product .content .item .back .card-head:nth-of-type(1) {
-  background: url(/images/fwqHead01.png?a8af35962615dead54004ee484c1ba71) no-repeat center;
-  background-size: 100% 100%;
-}
-#tz-server-rent-content .hot-product .content .item .back .card-head:nth-of-type(2) {
-  background: url(/images/fwqHead01.png?a8af35962615dead54004ee484c1ba71) no-repeat center;
-  background-size: 100% 100%;
-}
-#tz-server-rent-content .hot-product .content .item .back .card-head:nth-of-type(3) {
-  background: url(/images/fwqHead01.png?a8af35962615dead54004ee484c1ba71) no-repeat center;
-  background-size: 100% 100%;
-}
-#tz-server-rent-content .hot-product .content .item .back .card-head:nth-of-type(4) {
-  background: url(/images/fwqHead01.png?a8af35962615dead54004ee484c1ba71) no-repeat center;
-  background-size: 100% 100%;
-}
 #tz-server-rent-content .hot-product .content .item .back .card-body {
   padding: 54px 30px;
   padding-top: 0;
 }
 #tz-server-rent-content .hot-product .content .item .back .card-title {
   font-size: 18px;
-  font-weight: bold;
+  font-family: 'pingFangBold';
   line-height: 86px;
   text-align: center;
   color: #fff;
   margin: 0;
+}
+#tz-server-rent-content .hot-product .content .item .back .card-title.top {
+  background: url(/images/fwqMark.png?1b6b9c98de1d7eede758f3052b02d9b1) no-repeat;
+  background-size: 100% 100%;
 }
 #tz-server-rent-content .hot-product .content .item .back .card-title.top span {
   display: inline-block;
 }
 #tz-server-rent-content .hot-product .content .item .back .card-title span {
   font-weight: bold;
-  color: #fcde04;
+  color: #ffe002;
   display: none;
 }
 #tz-server-rent-content .hot-product .content .item .back .card-text {
@@ -2727,7 +2739,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   min-height: 120px;
 }
 #tz-server-rent-content .hot-product .content .item .back .card-text .price {
-  color: #ffc543;
+  color: #fe0000;
   font-size: 12px;
   line-height: 41px;
 }
@@ -2749,12 +2761,28 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
           box-shadow: 10px 1.5px 18px 0 rgba(31, 59, 182, 0.2);
 }
 #tz-server-rent-content .hot-product .content .item:hover {
-  -webkit-box-shadow: 11px 2px 57px 0 rgba(2, 17, 91, 0.1);
-          box-shadow: 11px 2px 57px 0 rgba(2, 17, 91, 0.1);
+  -webkit-box-shadow: 0 0 57px 0 rgba(2, 17, 91, 0.1);
+          box-shadow: 0 0 57px 0 rgba(2, 17, 91, 0.1);
+}
+#tz-server-rent-content .hot-product .content .item:nth-of-type(1) .card-head {
+  background: url(/images/fwqHead01.png?a8af35962615dead54004ee484c1ba71) no-repeat center;
+  background-size: 100% 100%;
+}
+#tz-server-rent-content .hot-product .content .item:nth-of-type(2) .card-head {
+  background: url(/images/fwqHead02.png?bc85e17056fecf6afa133bcda1d60a08) no-repeat center;
+  background-size: 100% 100%;
+}
+#tz-server-rent-content .hot-product .content .item:nth-of-type(3) .card-head {
+  background: url(/images/fwqHead03.png?d15379e2702e7af71976cb6c2f46b4b2) no-repeat center;
+  background-size: 100% 100%;
+}
+#tz-server-rent-content .hot-product .content .item:nth-of-type(4) .card-head {
+  background: url(/images/fwqHead04.png?4463f86d1db676408764f751ea6d695a) no-repeat center;
+  background-size: 100% 100%;
 }
 #tz-server-rent-content .product-adv {
   height: 607px;
-  padding-top: 70px;
+  padding-top: 50px;
   text-align: center;
   background: url(/images/product-adv-bg.png?2ce07f79bcb256a8ad8f902f54fc1563) no-repeat center center;
   background-size: cover;
@@ -2774,7 +2802,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz-server-rent-content .product-adv .content .item-content .title {
   color: #2139b7;
-  font-weight: bold;
+  font-family: 'pingFangBold';
   letter-spacing: 0.9px;
 }
 #tz-server-rent-content .product-adv .content .item-content .desc {
@@ -2784,7 +2812,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz-server-rent-content .service-support {
   height: 1010px;
-  padding-top: 70px;
+  padding-top: 50px;
   text-align: center;
   background: url(/images/service-support-bg.png?a8db1d3ffb0a3580c4d5562ed8f690b5) no-repeat center center;
   background-size: cover;
@@ -2801,7 +2829,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz-server-rent-content .service-support .table-container .table-bordered th {
   font-size: 14px;
-  font-weight: bold;
+  font-family: 'pingFangHeavy';
   letter-spacing: 2.8px;
   color: #fff;
   text-align: center;
@@ -2824,7 +2852,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   border-right: none;
 }
 #tz-server-rent-content .common-question {
-  padding: 70px 0 80px;
+  padding: 50px 0 80px;
   text-align: center;
   background: url(/images/common-question-bg.png?5994d19b749ba842c38ed870df4db534) no-repeat center;
   background-size: cover;
@@ -2914,6 +2942,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   line-height: 72px;
   margin-bottom: 16px;
   letter-spacing: 4.5px;
+  font-family: 'pingFangBold';
 }
 #server_product .banner .title .sub-text {
   font-size: 16px;
@@ -2970,7 +2999,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   color: #333333;
   text-align: center;
   margin: 0;
-  font-family: "\5FAE\8F6F\96C5\9ED1";
+  font-family: 'pingFangBold';
   padding-bottom: 32px;
   position: relative;
 }
@@ -2995,6 +3024,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   padding-bottom: 19px;
   border-bottom: 1px solid #333333;
   font-size: 32px;
+  font-family: 'pingFangBold';
   color: #333333;
 }
 #server_product .jumbotron.data-center .main-content .tab-content .tab-pane p {
@@ -3045,7 +3075,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background-color: #eeeff3;
   font-size: 14px;
   color: #333333;
-  font-weight: bold;
+  font-family: 'pingFangBold';
 }
 #server_product .jumbotron.data-center .main-content .tab-content .tab-pane .data-table .data-table-row .data-table-col:last-of-type {
   border-right: none;
@@ -3104,7 +3134,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #server_product .jumbotron.introduction article h4 {
   font-size: 18px;
-  font-weight: normal;
+  font-family: 'pingFangBold';
   color: #2139b7;
   margin: 0;
 }
@@ -3129,6 +3159,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #server_product .jumbotron.reason h4 {
   font-size: 26px;
   color: #ffffff;
+  font-family: 'pingFangBold';
   margin: 0;
   text-align: center;
 }
@@ -3146,6 +3177,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin: 10px 0;
   font-size: 16px;
   color: #ffffff;
+  font-family: 'pingFangBold';
 }
 #server_product .jumbotron.reason .reason-content div[class*="col-md"] p {
   margin: 0;
@@ -3169,6 +3201,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin-bottom: 24px;
   font-size: 26px;
   color: #fff;
+  font-family: 'pingFangBold';
 }
 #server_product .jumbotron.footer a {
   display: inline-block;
@@ -3257,8 +3290,9 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-solution .content .banner .title .text {
   font-size: 50px;
   line-height: 72px;
-  margin-bottom: 25px;
+  margin-bottom: 16px;
   letter-spacing: 3.75px;
+  font-family: 'pingFangBold';
 }
 .tz-solution .content .banner .title .sub-text {
   font-size: 16px;
@@ -3289,7 +3323,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   position: relative;
   color: #333;
   font-size: 26px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   letter-spacing: 1.3px;
   text-align: center;
   margin-bottom: 0;
@@ -3343,7 +3377,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-solution .content .problem .card-container .card-title .text {
   color: #333;
   font-size: 16px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   letter-spacing: 0.8px;
   margin-left: 18px;
 }
@@ -3367,7 +3401,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   position: relative;
   color: #121931;
   font-size: 26px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   letter-spacing: 1.3px;
   text-align: center;
   margin-bottom: 0;
@@ -3423,7 +3457,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   position: relative;
   color: #121931;
   font-size: 26px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   letter-spacing: 1.3px;
   text-align: center;
   margin-bottom: 0;
@@ -3475,7 +3509,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-solution .content .adv .cont .item-title {
   color: #2b3555;
   font-size: 16px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   line-height: 41px;
 }
 .tz-solution .content .adv .cont .item-title .order {
@@ -3501,6 +3535,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   font-size: 26px;
   line-height: 41px;
   margin-bottom: 20px;
+  font-family: 'pingFangBold';
 }
 .tz-solution .content .consult .consult-btn {
   display: inline-block;
@@ -3981,12 +4016,14 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin-top: 140px;
 }
 #tz-server-hosting .banner .title .text {
+  color: #fff;
   margin-bottom: 16px;
   font-size: 60px;
   line-height: 72px;
   letter-spacing: 4.5px;
 }
 #tz-server-hosting .banner .title .sub-text {
+  color: #fff;
   margin-top: 10px;
   font-size: 16px;
   letter-spacing: 0.8px;
@@ -4028,15 +4065,14 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background: #fff;
   color: #043fc4;
 }
-#tz-server-hosting .title {
-  color: #666;
-}
 #tz-server-hosting .title .text {
+  color: #333;
   font-size: 26px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   letter-spacing: 1.3px;
 }
 #tz-server-hosting .title .sub-text {
+  color: #666;
   font-size: 14px;
   line-height: 40px;
   margin-top: -10px;
@@ -4053,6 +4089,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   padding-top: 40px;
   font-size: 32px;
   color: #333;
+  font-family: 'pingFangBold';
 }
 #tz-server-hosting .expand-item .scene-btn {
   display: inline-block;
@@ -4083,6 +4120,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   color: #333;
   letter-spacing: 2.8px;
   border: 1px solid #d6d7e1;
+  font-family: 'pingFangHeavy';
 }
 #tz-server-hosting .expand-item .table-container tr {
   height: 50px;
@@ -4126,7 +4164,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz-server-hosting .performance-pk .table-container .table-bordered th {
   font-size: 14px;
-  font-weight: bold;
+  font-family: 'pingFangHeavy';
   letter-spacing: 2.8px;
   color: #666;
   text-align: center;
@@ -4168,7 +4206,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #tz-server-hosting .service-pk .table-container .table-bordered th {
   font-size: 14px;
-  font-weight: bold;
+  font-family: 'pingFangHeavy';
   letter-spacing: 2.8px;
   color: #fff;
   text-align: center;
@@ -4257,10 +4295,10 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   padding-top: 50px;
 }
 #tz-server-hosting .consult .title {
-  color: #fff;
   margin-bottom: 30px;
 }
 #tz-server-hosting .consult .title .text {
+  color: #fff;
   margin-top: 0;
 }
 #tz-server-hosting .consult .consult-btn {
@@ -4304,9 +4342,9 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 .tz-protection .title {
   position: relative;
+  font-family: 'pingFangBold';
   color: #333;
   font-size: 26px;
-  font-weight: 600;
   letter-spacing: 1.3px;
   text-align: center;
   margin-bottom: 20px;
@@ -4356,7 +4394,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-protection .banner .cont {
   max-width: 1180px;
   margin: 60px auto 0;
-  padding: 0px 55px;
+  padding: 0 55px;
 }
 .tz-protection .banner .cont .title {
   text-align: center;
@@ -4364,12 +4402,14 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 .tz-protection .banner .cont .title .text {
   font-size: 50px;
+  font-family: 'pingFangBold';
   line-height: 72px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   letter-spacing: 3.75px;
 }
 .tz-protection .banner .cont .title .sub-text {
   font-size: 16px;
+  font-family: 'pingFangRegular';
   letter-spacing: 0.8px;
   margin-bottom: 60px;
   line-height: 30px;
@@ -4466,7 +4506,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-protection .product-matrix .item-group-title {
   position: absolute;
   color: #959595;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   -webkit-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out;
 }
@@ -4534,7 +4574,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-protection .product-adv .card .title {
   color: #2139b7;
   font-size: 16px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   letter-spacing: 0.8px;
   margin-top: 35px;
   margin-bottom: 20px;
@@ -4600,7 +4640,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-protection .node-intro .item .title {
   color: #fff;
   font-size: 16px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   letter-spacing: 0.8px;
   margin-bottom: 12px;
   text-align: left;
@@ -4656,7 +4696,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   border: 1px solid #fff;
   color: #fff;
   font-size: 16px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   letter-spacing: 0.8px;
   text-align: center;
   text-decoration: none;
@@ -4676,7 +4716,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-protection .client-scene .tab-pane .text {
   padding-left: 35px;
   color: #fff;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   letter-spacing: 1.2px;
 }
 .tz-protection .client-scene .tab-pane .desc {
@@ -4858,7 +4898,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 .tz-protection .feature .cont .item-container .item-title {
   font-size: 16px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   letter-spacing: 0.8px;
   color: #2139b7;
   margin-bottom: 15px;
@@ -4913,7 +4953,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 .tz-protection .function .item-container .item .text .title {
   font-size: 16px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   letter-spacing: 0.8px;
   margin-top: 0;
   margin-bottom: 10px;
@@ -5083,10 +5123,11 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   letter-spacing: 1.3px;
   text-align: center;
   margin-bottom: 20px;
+  font-family: 'pingFangBold';
 }
 #highDefenseProduct .highDefenseProduct .sub-title {
   margin-top: 20px;
-  color: #999;
+  color: #666;
 }
 #highDefenseProduct .highDefenseProduct .product {
   margin-top: 30px;
@@ -5103,7 +5144,6 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin-bottom: 20px;
   font-size: 18px;
   color: #333;
-  font-weight: normal;
 }
 #highDefenseProduct .highDefenseProduct .product-item .config p {
   width: 80%;
@@ -5764,7 +5804,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   position: relative;
   color: #333;
   font-size: 26px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   letter-spacing: 1.3px;
   text-align: center;
   margin-bottom: 20px;
@@ -5818,7 +5858,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-cdn-content .banner .cont {
   max-width: 1180px;
   margin: 60px auto 0;
-  padding: 0px 55px;
+  padding: 0 55px;
 }
 .tz-cdn-content .banner .cont .title {
   text-align: center;
@@ -5827,8 +5867,9 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-cdn-content .banner .cont .title .text {
   font-size: 50px;
   line-height: 72px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   letter-spacing: 3.75px;
+  font-family: 'pingFangBold';
 }
 .tz-cdn-content .banner .cont .title .sub-text {
   font-size: 16px;
@@ -5912,6 +5953,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   text-align: center;
   vertical-align: middle;
   color: #444;
+  font-family: 'pingFangHeavy';
   letter-spacing: 1.2px;
   border: 1px solid #d2d2d2;
 }
@@ -5930,6 +5972,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-cdn-content .package .price {
   font-size: 24px;
   font-weight: 600;
+  font-family: 'pingFangBold';
   color: #043fc4;
   letter-spacing: 2.8px;
 }
@@ -6124,7 +6167,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-cdn-content .usage-scenario .target .title {
   display: inline-block;
   font-size: 18px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   color: #2139b7;
   line-height: 36px;
   letter-spacing: 0.8px;
@@ -6160,7 +6203,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-cdn-content .usage-scenario .target .text {
   color: #333;
   font-size: 16px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   letter-spacing: 0.7px;
 }
 .tz-cdn-content .consult {
@@ -6631,7 +6674,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   position: relative;
   color: #333;
   font-size: 26px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   letter-spacing: 1.3px;
   text-align: center;
   margin-bottom: 20px;
@@ -6685,7 +6728,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-cabinet-rent .banner .cont {
   max-width: 1180px;
   margin: 60px auto 0;
-  padding: 0px 55px;
+  padding: 0 55px;
 }
 .tz-cabinet-rent .banner .cont .title {
   text-align: center;
@@ -6694,7 +6737,8 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-cabinet-rent .banner .cont .title .text {
   font-size: 50px;
   line-height: 72px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
+  font-family: 'pingFangBold';
   letter-spacing: 3.75px;
 }
 .tz-cabinet-rent .banner .cont .title .sub-text {
@@ -6830,6 +6874,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   color: #333;
   letter-spacing: 2.8px;
   border: 1px solid #d6d7e1;
+  font-family: 'pingFangHeavy';
 }
 .tz-cabinet-rent .machine-room tr {
   height: 50px;
@@ -6920,7 +6965,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin-bottom: 0;
   line-height: 26px;
   text-align: center;
-  color: #c2c1c1;
+  color: #bababa;
 }
 .tz-cabinet-rent .certificate {
   padding-top: 50px;
@@ -7082,7 +7127,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   position: relative;
   color: #333;
   font-size: 26px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   letter-spacing: 1.3px;
   text-align: center;
   margin-bottom: 20px;
@@ -7136,7 +7181,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-bandwidth-rent .banner .cont {
   max-width: 1180px;
   margin: 60px auto 0;
-  padding: 0px 55px;
+  padding: 0 55px;
 }
 .tz-bandwidth-rent .banner .cont .title {
   text-align: center;
@@ -7145,8 +7190,9 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-bandwidth-rent .banner .cont .title .text {
   font-size: 50px;
   line-height: 72px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   letter-spacing: 3.75px;
+  font-family: 'pingFangBold';
 }
 .tz-bandwidth-rent .banner .cont .title .sub-text {
   font-size: 16px;
@@ -7281,6 +7327,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   color: #333;
   letter-spacing: 2.8px;
   border: 1px solid #d6d7e1;
+  font-family: 'pingFangHeavy';
 }
 .tz-bandwidth-rent .machine-room tr {
   height: 50px;
@@ -7371,7 +7418,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin-bottom: 0;
   line-height: 26px;
   text-align: center;
-  color: #c2c1c1;
+  color: #bababa;
 }
 .tz-bandwidth-rent .certificate {
   padding-top: 50px;
@@ -7540,10 +7587,11 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 .tz-latest-activity .banner .title {
   margin-top: 165px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   font-size: 50px;
   line-height: 72px;
   letter-spacing: 3.75px;
+  font-family: 'pingFangBold';
 }
 .tz-latest-activity .banner .sub-title {
   font-size: 16px;
@@ -7595,7 +7643,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 .tz-latest-activity .activity .card-body .title {
   font-size: 16px;
-  font-weight: 600;
+  font-family: 'pingFangBold';
   color: #333;
 }
 .tz-latest-activity .activity .card-body .desc {

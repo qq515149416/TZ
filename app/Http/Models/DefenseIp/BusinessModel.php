@@ -45,6 +45,13 @@ class BusinessModel extends Model
 				'code'	=> 0,
 			];
 		}
+		if ($business->status != 1 && $business->status != 4) {
+			return [
+				'data'	=> '',
+				'msg'	=> '业务未上架,无需下架',
+				'code'	=> 0,
+			];
+		}
 		$business->status = 2;
 		$res = $business->save();
 		if($res != true)

@@ -11,7 +11,7 @@
     <!-- banner -->
     <div class="banner">
         <div class="title" style="color: #fff;">
-            <h2 class="text font-bold">服务器托管</h2>
+            <h2 class="text">服务器托管</h2>
             <h4 class="sub-text font-regular">
                 摆脱虚拟主机受软硬件资源的限制，提供高性能的数据中心设备，线路租用和网络带宽，减少企业建设数据中心<br/>
                 布设通讯线路等高额费用。您的托付，我们全力以赴!
@@ -444,9 +444,9 @@
     </div>
     <!-- 服务支持pk -->
     <div class="service-pk">
-        <div class="title" style="color: #fff;">
-            <h2 class="text">服务支持PK</h2>
-            <h5 class="sub-text">专业服务，安心托管</h5>
+        <div class="title">
+            <h2 class="text" style="color: #fff;">服务支持PK</h2>
+            <h5 class="sub-text" style="color: #bababa;">专业服务，安心托管</h5>
         </div>
         <div class="table-container container">
             <table class="table table-bordered">

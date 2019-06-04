@@ -65,8 +65,8 @@ class  PfmStatistics extends Model
 		}
 
 		$order_arr = [];
-		$order_arr['总计'] = [
-			'user_id'		=> '总计',
+		$order_arr['count_all'] = [
+			'user_id'			=> '总计',
 			'user_name'		=> '总计',
 			'total_money'		=> 0,
 			'achievement'		=> 0,
@@ -133,23 +133,23 @@ class  PfmStatistics extends Model
 		$orr = [];
 		
 		foreach ($order_arr as $k => $v) {
-			if($k != '总计'){
+			if($k != 'count_all'){
 				$v['achievement'] 	= bcsub(bcadd($v['new_achievement'],$v['old_achievement'],2),$v['preferential_amount'],2);
 				$v['this_arrears']	= bcadd($v['new_arrears'],$v['old_arrears'],2);
 				$v['total_money']	= bcadd($v['achievement'],$v['this_arrears'],2);
-				$order_arr['总计']['achievement'] = bcadd($order_arr['总计']['achievement'],$v['achievement'] ,2);
-				$order_arr['总计']['new_achievement'] = bcadd($order_arr['总计']['new_achievement'],$v['new_achievement'] ,2);
-				$order_arr['总计']['old_achievement'] = bcadd($order_arr['总计']['old_achievement'],$v['old_achievement'] ,2);
-				$order_arr['总计']['this_arrears'] = bcadd($order_arr['总计']['this_arrears'],$v['this_arrears'] ,2);
-				$order_arr['总计']['new_arrears'] = bcadd($order_arr['总计']['new_arrears'],$v['new_arrears'] ,2);
-				$order_arr['总计']['old_arrears'] = bcadd($order_arr['总计']['old_arrears'],$v['old_arrears'] ,2);
-				$order_arr['总计']['all_arrears'] = bcadd($order_arr['总计']['all_arrears'],$v['all_arrears'] ,2);
-				$order_arr['总计']['preferential_amount'] = bcadd($order_arr['总计']['preferential_amount'],$v['preferential_amount'] ,2);
-				$order_arr['总计']['total_money'] = bcadd($order_arr['总计']['total_money'],$v['total_money'] ,2);
+				$order_arr['count_all']['achievement'] = bcadd($order_arr['count_all']['achievement'],$v['achievement'] ,2);
+				$order_arr['count_all']['new_achievement'] = bcadd($order_arr['count_all']['new_achievement'],$v['new_achievement'] ,2);
+				$order_arr['count_all']['old_achievement'] = bcadd($order_arr['count_all']['old_achievement'],$v['old_achievement'] ,2);
+				$order_arr['count_all']['this_arrears'] = bcadd($order_arr['count_all']['this_arrears'],$v['this_arrears'] ,2);
+				$order_arr['count_all']['new_arrears'] = bcadd($order_arr['count_all']['new_arrears'],$v['new_arrears'] ,2);
+				$order_arr['count_all']['old_arrears'] = bcadd($order_arr['count_all']['old_arrears'],$v['old_arrears'] ,2);
+				$order_arr['count_all']['all_arrears'] = bcadd($order_arr['count_all']['all_arrears'],$v['all_arrears'] ,2);
+				$order_arr['count_all']['preferential_amount'] = bcadd($order_arr['count_all']['preferential_amount'],$v['preferential_amount'] ,2);
+				$order_arr['count_all']['total_money'] = bcadd($order_arr['count_all']['total_money'],$v['total_money'] ,2);
 				$orr[] = $v;
 			}	
 		}
-		$orr[] = $order_arr['总计'];
+		$orr[] = $order_arr['count_all'];
 		$return['data'] 	= $orr;
 		$return['msg'] 	= '统计成功';
 		$return['code']	= 1;
@@ -280,7 +280,8 @@ class  PfmStatistics extends Model
 			->toArray();	
 	
 		if( count($already) == 0 && count($unpaid) == 0 ){
-			$return['msg'] 	= '获取数据失败';
+			$return['data']	= [];
+			$return['msg'] 	= '无数据';
 			$return['code'] 	= 0;
 			return $return;
 		}
@@ -418,8 +419,8 @@ class  PfmStatistics extends Model
 		}
 	
 		$order_arr = [];
-		$order_arr['总计'] = [
-			'user_id'			=> '总计',		
+		$order_arr['count_all'] = [
+			'user_id'				=> '总计',		
 			'user_name'			=> '总计',
 			'new_achievement'		=> 0,	
 			'old_achievement'		=> 0,
@@ -441,13 +442,13 @@ class  PfmStatistics extends Model
 
 			if($already[$i]->order_type == 1){
 				$order_arr[ $already[$i]->user_id ] ['new_achievement'] = $already[$i]->payable_money;	
-				$order_arr['总计']['new_achievement'] = bcadd($order_arr['总计']['new_achievement'],$already[$i]->payable_money,2);
+				$order_arr['count_all']['new_achievement'] = bcadd($order_arr['count_all']['new_achievement'],$already[$i]->payable_money,2);
 			}else{
 				$order_arr[ $already[$i]->user_id ] ['old_achievement'] = $already[$i]->payable_money;
-				$order_arr['总计']['old_achievement'] = bcadd($order_arr['总计']['old_achievement'],$already[$i]->payable_money,2);
+				$order_arr['count_all']['old_achievement'] = bcadd($order_arr['count_all']['old_achievement'],$already[$i]->payable_money,2);
 			}
 			$order_arr[ $already[$i]->user_id ]['total_money'] = bcadd($order_arr[ $already[$i]->user_id ]['total_money'],$already[$i]->payable_money,2);
-			$order_arr['总计']['total_money'] = bcadd($order_arr['总计']['total_money'],$already[$i]->payable_money,2);
+			$order_arr['count_all']['total_money'] = bcadd($order_arr['count_all']['total_money'],$already[$i]->payable_money,2);
 		}
 		$orr = [];
 		foreach ($order_arr as $k => $v) {

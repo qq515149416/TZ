@@ -742,4 +742,143 @@ class  PfmStatistics extends Model
 		
 		return $brr;
 	}
+
+	/**
+	 * 根据产品类型进行业务员业绩的统计
+	 * @param  array $time --begin查询开始时间,--end查询结束时间
+	 * @return [type]       [description]
+	 */
+	public function performance($time){
+		$begin_end = $this->queryTime($time);
+		//实付金额
+		$actual_payment = DB::table('tz_orders_flow')
+					->whereBetween('pay_time',[$begin_end['start_time'],$begin_end['end_time']])
+					->whereNull('deleted_at')
+					->sum('actual_payment');
+		//优惠金额
+		$preferential_amount = DB::table('tz_orders_flow')
+					->whereBetween('pay_time',[$begin_end['start_time'],$begin_end['end_time']])
+					->whereNull('deleted_at')
+					->sum('preferential_amount');
+		//应付金额
+		$payable_money = DB::table('tz_orders_flow')
+					->whereBetween('pay_time',[$begin_end['start_time'],$begin_end['end_time']])
+					->whereNull('deleted_at')
+					->sum('payable_money');
+
+		$admin_users = DB::table('admin_users')->get(['id','name'])->toArray();//查询全员营销人员
+		$idc_count = 0;//总计idc销售额
+		$defense = 0;//总计高防销售额
+		$flow = 0;//总计叠加包销售额
+		$cdn = 0;//总计cdn销售额
+		$cloud = 0;//总计云销售额
+		$total = 0;//总额
+
+		foreach($admin_users as $key=>$value){
+			/**
+			 * 每个业务员IDC销售额
+			 * @var [type]
+			 */
+			$value->idc_count = DB::table('tz_orders_flow as flow')
+					->join('tz_business as business','flow.business_number','=','business.business_number')
+					->where(['flow.business_id'=>$value->id])
+					->whereBetween('flow.pay_time',[$begin_end['start_time'],$begin_end['end_time']])
+					->whereNull('flow.deleted_at')
+					->whereNull('business.deleted_at')
+					->sum('actual_payment');
+			$idc_count = bcadd($idc_count,$value->idc_count,2);//总计IDC销售额
+
+			/**
+			 * 每个业务员高防销售额
+			 * @var [type]
+			 */
+			$value->defense_count = DB::table('tz_orders_flow as flow')
+					->join('tz_defenseip_business as business','flow.business_number','=','business.business_number')
+					->where(['flow.business_id'=>$value->id])
+					->whereBetween('flow.pay_time',[$begin_end['start_time'],$begin_end['end_time']])
+					->whereNull('flow.deleted_at')
+					->whereNull('business.deleted_at')
+					->sum('actual_payment');
+			$defense = bcadd($defense,$value->defense_count,2);//总计高防销售额
+
+			/**
+			 * 每个业务员叠加包销售额
+			 * @var [type]
+			 */
+			$value->flow_count = DB::table('tz_orders_flow as flow')
+					->join('tz_orders as business','flow.business_number','=','business.business_sn')
+					->where(['flow.business_id'=>$value->id,'business.resource_type'=>12])
+					->whereBetween('flow.pay_time',[$begin_end['start_time'],$begin_end['end_time']])
+					->whereNull('flow.deleted_at')
+					->whereNull('business.deleted_at')
+					->select('flow.id')
+					->distinct('flow.id')
+					->sum('actual_payment');
+			$flow = bcadd($flow,$value->flow_count,2);//总计叠加包销售额
+
+			$value->cdn_count = 0;//每个业务员cdn销售额
+			$cdn = bcadd($cdn,$value->cdn_count,2);//总计cdn销售额
+
+			$value->cloud_count = 0;//每个业务员云销售额
+			$cloud = bcadd($cloud,$value->cloud_count,2);//总计云销售额
+
+			/**
+			 * 每个业务员总销售额
+			 * @var [type]
+			 */
+			$value->sum = DB::table('tz_orders_flow')
+					->where(['business_id'=>$value->id])
+					->whereBetween('pay_time',[$begin_end['start_time'],$begin_end['end_time']])
+					->whereNull('deleted_at')
+					->sum('actual_payment');
+			$total = bcadd($value->sum,$total,2);//总销售额
+
+		}
+		//总计数据传入数组
+		$object = (object)['name'=>'总计','idc_count'=>$idc_count,'defense_count'=>$defense,'flow_count'=>$flow,'cdn_count'=>$cdn,'cloud_count'=>$cloud,'sum'=>$total];
+		array_unshift($admin_users,$object);
+		
+		$admin_users['actual_payment'] = $actual_payment;//实际付款
+		$admin_users['preferential_amount'] = $preferential_amount;//优惠额度
+		$admin_users['payable_money'] = $payable_money;//应付款
+
+		$return['code'] = 1;
+		$return['msg'] = '';
+		$return['data'] = $admin_users;
+		return $return;
+	}
+
+	/**
+     * 计算查询的起始时间和结束时间
+     * @param  array $query_time begin--查询时间段的开始时间 end--查询时间段的结束时间
+     * @return array             返回查询的起始时间和结束时间
+     */
+    public function queryTime($query_time){
+        if(!isset($query_time['begin']) && !isset($query_time['end'])){//当查询开始间和结束时间都未设置时
+
+            $end_time = date('Y-m-d',strtotime("+1 day"));//结束时间等于当前时间往后推一天，即当前天的23:59:59
+            $month = date('Y-m',time());//获取结束时间所属自然月
+            $start_time = $month.'-01';//获取结束时间所属自然月的第一天的零点为查询的开始时间
+
+        } elseif(isset($query_time['begin']) && !isset($query_time['end'])){//当设置查询开始时间，未设置结束时间时
+
+            $start_time = date('Y-m-d',$query_time['begin']);//起始时间等于设置的起始时间
+            $month = date('Y-m',$query_time['begin']);//获取开始时间所属自然月
+            $last_day = date('t',$month);//获取开始时间所属自然月的总天数
+            $end_time = date('Y-m-d',strtotime($month.'-'.$last_day."+1 day"));//结束时间设置为开始时间所属自然月的最后一天的23:59:59
+
+        } elseif(!isset($query_time['begin']) && isset($query_time['end'])){//当起始时间未设置，结束时间设置时
+
+            $end_time = date('Y-m-d',strtotime(date('Y-m-d',$query_time['end'])."+1 day"));//结束时间等于设置的结束时间
+            $month = date('Y-m',$query_time['end']);//获取结束时间所属的自然月
+            $start_time = $month.'-01';//获取结束时间所属自然月的第一天的零点为查询的开始时间
+
+        } elseif(isset($query_time['begin']) && isset($query_time['end'])){//当查询的起始时间和结束时间都设置时
+
+            $start_time = date('Y-m-d',$query_time['begin']);//起始时间等于设置的起始时间
+            $end_time = date('Y-m-d',strtotime(date('Y-m-d',$query_time['end'])."+1 day"));//结束时间等于设置的结束时间
+        }
+        return ['start_time'=>$start_time,'end_time'=>$end_time];
+    }
+
 }

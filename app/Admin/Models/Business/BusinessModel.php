@@ -983,7 +983,7 @@ class BusinessModel extends Model
     public function queryTime($query_time){
         if(!isset($query_time['begin']) && !isset($query_time['end'])){//当查询开始间和结束时间都未设置时
 
-            $end_time = date('Y-m-d',time());//结束时间等于当前时间
+            $end_time = date('Y-m-d',strtotime("+1 day"));//结束时间等于当前时间往后推一天，即当前天的23:59:59
             $month = date('Y-m',time());//获取结束时间所属自然月
             $start_time = $month.'-01';//获取结束时间所属自然月的第一天的零点为查询的开始时间
 
@@ -992,18 +992,18 @@ class BusinessModel extends Model
             $start_time = date('Y-m-d',$query_time['begin']);//起始时间等于设置的起始时间
             $month = date('Y-m',$query_time['begin']);//获取开始时间所属自然月
             $last_day = date('t',$month);//获取开始时间所属自然月的总天数
-            $end_time = $month.'-'.$last_day;//结束时间设置为开始时间所属自然月的最后一天的23:59:59
+            $end_time = date('Y-m-d',strtotime($month.'-'.$last_day."+1 day"));//结束时间设置为开始时间所属自然月的最后一天的23:59:59
 
         } elseif(!isset($query_time['begin']) && isset($query_time['end'])){//当起始时间未设置，结束时间设置时
 
-            $end_time = date('Y-m-d',$query_time['end']);//结束时间等于设置的结束时间
+            $end_time = date('Y-m-d',strtotime($query_time['end']."+1 day"));//结束时间等于设置的结束时间
             $month = date('Y-m',$query_time['end']);//获取结束时间所属的自然月
             $start_time = $month.'-01';//获取结束时间所属自然月的第一天的零点为查询的开始时间
 
         } elseif(isset($query_time['begin']) && isset($query_time['end'])){//当查询的起始时间和结束时间都设置时
 
             $start_time = date('Y-m-d',$query_time['begin']);//起始时间等于设置的起始时间
-            $end_time = date('Y-m-d',$query_time['end']);//结束时间等于设置的结束时间
+            $end_time = date('Y-m-d',strtotime($query_time['end']."+1 day"));//结束时间等于设置的结束时间
         }
         return ['start_time'=>$start_time,'end_time'=>$end_time];
     }

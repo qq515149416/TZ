@@ -2194,34 +2194,24 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #aboutus .banner {
   height: 562px;
-  background: url(/images/aboutusBanner.png?79ce94258ea929f993eba7ed9daa34f5) no-repeat;
+  background: url(/images/aboutusBanner.png?15a35061b47b315a53bcc497e5df64d0) no-repeat center;
   background-size: 100% 100%;
   border-top: 1px solid transparent;
   margin-top: -1px;
   text-align: center;
+  color: #fff;
 }
-#aboutus .banner h2 {
+#aboutus .banner .title {
   margin-top: 190px;
-  text-align: center;
+  margin-bottom: 16px;
   font-size: 60px;
-  color: #fff;
-  margin-bottom: 0;
+  line-height: 72px;
+  letter-spacing: 4.5px;
 }
-#aboutus .banner h3 {
-  font-size: 24px;
-  text-align: center;
-  color: #fff;
-}
-#aboutus .banner p {
-  margin: 0;
-  margin-top: 34px;
-  padding: 10px 20px;
-  display: inline-block;
-  font-size: 14px;
-  color: #fff;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
+#aboutus .banner .sub-title {
+  font-size: 16px;
+  letter-spacing: 0.8px;
+  line-height: 28px;
 }
 #aboutus .content-list {
   width: 1176px;
@@ -2580,7 +2570,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   padding-top: 83px;
   color: #fff;
   text-align: center;
-  background: url(/images/server-rent-banner-bg.png?fbb67add78596bef8b8434641a45220b) no-repeat center;
+  background: url(/images/server-rent-banner-bg.png?b2cea809383abd135a8da87148aba511) no-repeat center;
   background-size: cover;
 }
 #tz-server-rent-content .banner.gaofang {
@@ -2597,9 +2587,10 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   letter-spacing: 4.5px;
 }
 #tz-server-rent-content .banner .title .sub-text {
-  font-size: 24px;
-  padding-left: 18px;
-  letter-spacing: 8.2px;
+  margin-top: 10px;
+  font-size: 16px;
+  letter-spacing: 0.8px;
+  line-height: 28px;
 }
 #tz-server-rent-content .banner .bottom {
   position: absolute;
@@ -2607,6 +2598,12 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   right: 0;
   bottom: 0;
   text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 #tz-server-rent-content .banner .bottom .btn-link {
   display: inline-block;
@@ -2685,7 +2682,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin-bottom: 30px;
 }
 #tz-server-rent-content .hot-product .content .item .back .card-head:nth-of-type(1) {
-  background: url(/images/fwqHead01.png?a8af35962615dead54004ee484c1ba71) no-repeat;
+  background: url(/images/fwqHead01.png?a8af35962615dead54004ee484c1ba71) no-repeat center;
   background-size: 100% 100%;
 }
 #tz-server-rent-content .hot-product .content .item .back .card-head:nth-of-type(2) {
@@ -2910,7 +2907,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   padding-top: 83px;
   color: #fff;
   text-align: center;
-  background-image: url(/images/server-rent-banner-bg.png?fbb67add78596bef8b8434641a45220b);
+  background: url(/images/server-rent-banner-bg.png?b2cea809383abd135a8da87148aba511) no-repeat center;
   background-size: cover;
 }
 #server_product .banner .title {
@@ -2923,9 +2920,9 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   letter-spacing: 4.5px;
 }
 #server_product .banner .title .sub-text {
-  font-size: 24px;
-  padding-left: 18px;
-  letter-spacing: 8.2px;
+  font-size: 16px;
+  line-height: 28px;
+  letter-spacing: 0.8px;
 }
 #server_product .banner .bottom {
   position: absolute;
@@ -2933,6 +2930,12 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   right: 0;
   bottom: 0;
   text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 #server_product .banner .bottom .btn-link {
   display: inline-block;
@@ -3975,22 +3978,23 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   padding-top: 83px;
   color: #fff;
   text-align: center;
-  background: url(/images/hosting-banner-bg.png?fbb67add78596bef8b8434641a45220b) no-repeat center;
+  background: url(/images/hosting-banner-bg.jpg?42946cb5905aa3cc01c509408a302109) no-repeat center;
   background-size: cover;
 }
 #tz-server-hosting .banner .title {
   margin-top: 140px;
 }
 #tz-server-hosting .banner .title .text {
+  margin-bottom: 16px;
   font-size: 60px;
   line-height: 72px;
-  margin-bottom: 16px;
   letter-spacing: 4.5px;
 }
 #tz-server-hosting .banner .title .sub-text {
-  font-size: 24px;
-  padding-left: 18px;
-  letter-spacing: 8.2px;
+  margin-top: 10px;
+  font-size: 16px;
+  letter-spacing: 0.8px;
+  line-height: 28px;
 }
 #tz-server-hosting .banner .collapse-tab {
   position: absolute;

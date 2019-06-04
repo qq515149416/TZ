@@ -9,7 +9,7 @@
 
 @section('content')
     <div id="aboutus" class="row">
-        @aboutusLayout(['title' => '关于我们', 'subtitle' => '互联网应用支撑商', 'descripts' => '专注为您提供IDC·云计算服务·安全防护一站式产品解决方案，满足您不同时期业务发展需求'])
+        @aboutusLayout(['title' => '关于我们', 'subtitle' => '腾正科技-互联网应用支撑商', 'descripts' => '一家专注于互联网安全技术研究的现代网络综合服务性的高科技公司，为您提供IDC·云计算·安全防护一站式产品解决方案服务。'])
         @slot('nav')
             <li role="presentation" class="{{ $page === 'index' ? 'active' : '' }}"><a href="#descripts" aria-controls="descripts" role="tab" data-toggle="tab">公司介绍</a></li>
             <li role="presentation" class="{{ $page === 'rongyu' ? 'active' : '' }}"><a href="#rongyu" aria-controls="rongyu" role="tab" data-toggle="tab">荣誉资质</a></li>

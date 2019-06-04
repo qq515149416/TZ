@@ -1,33 +1,23 @@
 #article .banner {
   height: 562px;
-  background: url(/images/aboutusBanner.png?79ce94258ea929f993eba7ed9daa34f5) no-repeat;
+  background: url(/images/aboutusBanner.png?15a35061b47b315a53bcc497e5df64d0) no-repeat center;
   background-size: 100% 100%;
   border-top: 1px solid transparent;
   margin-top: -1px;
   text-align: center;
+  color: #fff;
 }
-#article .banner h2 {
+#article .banner .title {
   margin-top: 190px;
-  text-align: center;
+  margin-bottom: 16px;
   font-size: 60px;
-  color: #fff;
-  margin-bottom: 0;
+  line-height: 72px;
+  letter-spacing: 4.5px;
 }
-#article .banner h3 {
-  font-size: 24px;
-  text-align: center;
-  color: #fff;
-}
-#article .banner p {
-  margin: 0;
-  margin-top: 34px;
-  padding: 10px 20px;
-  display: inline-block;
-  font-size: 14px;
-  color: #fff;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
+#article .banner .sub-title {
+  font-size: 16px;
+  letter-spacing: 0.8px;
+  line-height: 28px;
 }
 #article .content-list {
   width: 1176px;
@@ -234,6 +224,9 @@
   color: #162fac;
   -webkit-box-shadow: 0 0 30px rgba(2, 17, 91, 0.16);
           box-shadow: 0 0 30px rgba(2, 17, 91, 0.16);
+}
+#article .banner {
+  background: url(/images/articleBanner.png?70a618d290c7192b98a68748afc646c1) no-repeat center;
 }
 #article .content-list .nav-tabs li a {
   width: 392px;

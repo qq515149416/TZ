@@ -24,6 +24,28 @@
             <a class="keyword font-regular" href="javascript: void(0);">网络安全</a>
         </div>
     </div>
+    <div class="content-container">
+        <div class="left-side">
+            <!--导航条-->
+            <div class="nav left">
+
+            </div>
+        </div>
+        <div class="right-side">
+            <!--头部路径导航-->
+            <div class="breadcrumb"></div>
+            <!--正文内容-->
+            <div class="content"></div>
+            <!--底部-->
+            <div class="footer">
+                <!--相关操作-->
+                <div class="control"></div>
+                <!--相关推荐-->
+                <div class="related-recommend"></div>
+            </div>
+        </div>
+    </div>
+
     <!--咨询-->
     <div class="consult">
         <h2 class="title font-medium">

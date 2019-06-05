@@ -12,9 +12,9 @@
     <div class="banner">
         <div class="cont">
             <div class="title">
-                <h2 class="text">高防 CDN </h2>
+                <h2 class="text">高防CDN</h2>
                 <h5 class="sub-text">
-                    高防 CDN 是指将源站内容分发至最接近网民的节点，使用户可就近取得所需内容，提高网民访问的响应速度<br/>
+                    高防CDN是指将源站内容分发至最接近网民的节点，使用户可就近取得所需内容，提高网民访问的响应速度<br/>
                     和成功率，同时能够保护源站。解决因地域、带宽、运营商接入等不同而带来的访问延迟问题，有效提升站点<br/>
                     访问速度。适用于站点加速、游戏、点播、直播等场景。
                 </h5>
@@ -32,7 +32,7 @@
     </div>
     <!--特点-->
     <div class="feature">
-        <h2 class="title black">高防 CDN 特点</h2>
+        <h2 class="title black">高防CDN特点</h2>
         <div class="cont">
             <img src="{{ asset("/images/highDefenseCdn/feature-logo.png") }}" />
             <div class="item-container">
@@ -61,7 +61,7 @@
     </div>
     <!--功能-->
     <div class="function">
-        <h2 class="title white">高防 CDN 功能</h2>
+        <h2 class="title white">高防CDN功能</h2>
         <div class="item-container">
             <div class="item">
                 <img class="icon" src="{{ asset("/images/highDefenseCdn/icon-1.png") }}"">
@@ -162,7 +162,7 @@
                 </div>
             </div>
         </div>
-        <div style="margin-top: 50px">
+        <div style="padding-top: 40px">
             <h2 class="title black">使用步骤</h2>
             <img class="step-diagram" src="{{ asset("/images/highDefenseCdn/step-diagram.png") }}" alt="高防CDN使用步骤" />
         </div>

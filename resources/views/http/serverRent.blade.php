@@ -15,7 +15,7 @@
 <!--            <h2 class="text font-bold">{{ $productData['title'] }}</h2>-->
 <!--            <h4 class="sub-text font-regular">{{ $productData['description'] }}</h4>-->
             <h2 class="text">服务器租用</h2>
-            <h4 class="sub-text font-regular">
+            <h4 class="sub-text">
                 自主准T4、T3机房，从服务器设备、环境到维护的一站式服务，为您提供定制化硬件采购解决方案<br/>
                 以租用的方式独享专用高性能服务器及全完自主管理权限，满足您不同时期业务发展需求！
             </h4>
@@ -45,7 +45,7 @@
                             <img src="{{ $page!=='gaofang' ? asset("/images/serverRent/hzsx.png") : asset("/images/serverRent/gffwq.png") }}" alt="惠州双线">
                             <p class="desc">
                                 @if ($item['top'])
-                                <span style="font-weight: bold;color: #f00;">[促销]</span>
+                                <span style="font-family: 'pingFangHeavy';color: #f00;">[促销]</span>
                                 @endif
                                 {{ $item['name'] }}
                             </p>
@@ -89,11 +89,11 @@
                                         <hr style="margin-top: 30px; margin-bottom: 30px;"/>
                                         <p class="price">
                                             @if ($item['price']==='在线购买')
-                                            <span style="font-size: 28px;font-weight: bold;">在线购买</span>
+                                            <span style="font-size: 28px; font-family: 'pingFangHeavy';">在线购买</span>
                                             @elseif ($item['price']==='定制咨询')
-                                            <span style="font-size: 28px;font-weight: bold;">定制咨询</span>
+                                            <span style="font-size: 28px;font-family: 'pingFangHeavy';">定制咨询</span>
                                             @else
-                                            <span style="font-size: 28px;font-weight: bold;">{{ $item['price'] }}</span> 元/月
+                                            <span style="font-size: 28px;font-family: 'pingFangHeavy';">{{ $item['price'] }}</span> 元/月
                                             @endif
                                         </p>
                                         <a class="detail-link" href="javascript: void(0);" onclick="randomqq()">了解详情</a>

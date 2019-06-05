@@ -12,7 +12,7 @@
     <div class="banner">
         <div class="cont">
             <div class="title">
-                <h2 class="text">DDOS 高防 IP</h2>
+                <h2 class="text">DDOS高防IP</h2>
                 <h5 class="sub-text">
                     腾正DDoS高防IP是针对互联网服务器（包括非腾正云主机）在遭受大流量DDoS攻击后导致服务不可用的<br/>
                     情况下，推出的付费增值服务，用户可通过配置高防IP，将攻击流量引流到高防IP，确保源站的稳定可靠，<br/>
@@ -65,7 +65,7 @@
     </div>
     <!--特点-->
     <div class="feature">
-        <h2 class="title black"> DDOS 高防 IP 特点</h2>
+        <h2 class="title black">DDOS高防IP特点</h2>
         <div class="cont">
             <img style="margin-top: -10px;" src="{{ asset("/images/highDefenseIp/feature-logo.png") }}" />
             <div class="item-container">
@@ -94,7 +94,7 @@
     </div>
     <!--功能-->
     <div class="function">
-        <h2 class="title black"> DDOS 高防 IP 功能</h2>
+        <h2 class="title black">DDOS高防IP功能</h2>
         <div class="item-container">
             <div class="item">
                 <img class="icon" src="{{ asset("/images/highDefenseIp/icon-1.png") }}"">
@@ -176,23 +176,23 @@
     <!-- 购买时长 -->
     <div class="modal fade" id="purchaseTime" tabindex="-1" role="dialog" aria-labelledby="purchaseTimeLabel">
         <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="purchaseTimeLabel">购买时长</h4>
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="purchaseTimeLabel">购买时长</h4>
+                </div>
+                <div class="modal-body">
+                    <select class="form-control duration">
+                        <option value="1">一个月</option>
+                        <option value="6">六个月</option>
+                        <option value="12">一个年</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default cancel" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary ok">确定</button>
+                </div>
             </div>
-            <div class="modal-body">
-                <select class="form-control duration">
-                    <option value="1">一个月</option>
-                    <option value="6">六个月</option>
-                    <option value="12">一个年</option>
-                </select>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default cancel" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary ok">确定</button>
-            </div>
-        </div>
         </div>
     </div>
 </div>

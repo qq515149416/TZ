@@ -24,9 +24,9 @@
         <div id="government-cloud">
             <!-- banner -->
             <div class="banner">
-                <div class="title" style="color: #fff;">
+                <div class="title">
                     <h2 class="text">政务云安全解决方案</h2>
-                    <h5 class="sub-text font-regular">
+                    <h5 class="sub-text">
                         基于政务应用系统的综合安全防御需求，一站式解决系统利用率低、能源消耗高、各政务系统相互隔离、安全性能差等核心问题<br/>
                         构建安全、合规、互访、可靠的绿色政务云平台
                     </h5>
@@ -84,15 +84,15 @@
                     <div style="max-width: 1180px; margin: 0 auto; text-align: center;">
                         <div class="desc">
                             <div style="display: inline-block;">
-                                <h5 style="font-family: 'pingFangBold';">多项增值安全服务内容选择</h5>
+                                <h5 style="font-family: 'pingFangHeavy';">多项增值安全服务内容选择</h5>
                                 <p>1.支持标配安全产品能力升级</p>
                                 <p>2.提供多项安全审计产品选择</p>
                                 <p>3.有机结合第三方安全产品</p>
                             </div>
                             <div style="display: inline-block; margin-left: 80px;">
-                                <h5 style="font-family: 'pingFangBold';">典型政务应用安全架构</h5>
+                                <h5 style="font-family: 'pingFangHeavy';">典型政务应用安全架构</h5>
                                 <p>腾正政务云专属客户，只需开通云资源服务，便可免费获得以下标配的多项高等级安全能力</p>
-                                <p style="font-family: 'pingFangBold';">标配的高等级安全能力</p>
+                                <p style="font-family: 'pingFangHeavy';">标配的高等级安全能力</p>
                                 <p>主机安全防御能力Web安全防御能力DDoS攻击防御能力</p>
                             </div>
                         </div>

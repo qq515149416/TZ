@@ -13,7 +13,7 @@
         <div class="cont">
             <div class="title">
                 <h2 class="text">大带宽租用</h2>
-                <h5 class="sub-text font-regular">
+                <h5 class="sub-text">
                     五大机房大带宽资源保证 · 安全可靠的大带宽租用服务 · 高质量G口、万兆大带宽资源接入
                 </h5>
             </div>
@@ -57,7 +57,7 @@
                     <tbody>
                         <tr>
                             <td style="width: 190px;">数据中心级别</td>
-                            <td>准<span style="font-weight: 600; color: #f00101;"> T3 </span>级机房</td>
+                            <td>准<span style="font-family: 'pingFangHeavy'; color: #f00101;"> T3 </span>级机房</td>
                         </tr>
                         <tr>
                             <td>机房面积</td>

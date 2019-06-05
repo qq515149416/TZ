@@ -24,9 +24,9 @@
         <div id="game">
             <!-- banner -->
             <div class="banner">
-                <div class="title" style="color: #fff;">
+                <div class="title">
                     <h2 class="text">游戏云解决方案</h2>
-                    <h5 class="sub-text font-regular">
+                    <h5 class="sub-text">
                         行业领先自研游戏生态系统，打造虚拟化、高可用的游戏集群，完美解决游戏客户运行卡顿、
                         <br/>
                         掉线、攻击停服、玩家分析缺失、游戏直播接入困难等常见问题

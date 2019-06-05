@@ -1,6 +1,7 @@
 #tz-server-rent-content {
   margin-left: -15px;
   margin-right: -15px;
+  font-family: 'pingFangMedium';
 
   .banner {
     position: relative;
@@ -25,6 +26,7 @@
         line-height: 72px;
         margin-bottom: 16px;
         letter-spacing: 4.5px;
+        font-family: 'pingFangBold';
       }
 
       .sub-text {
@@ -33,6 +35,7 @@
         font-size: 16px;
         letter-spacing: 0.8px;
         line-height: 28px;
+        font-family: 'pingFangRegular';
       }
     }
 
@@ -58,20 +61,21 @@
         font-size: 18px;
         letter-spacing: 3.2px;
         text-decoration: none;
-        -webkit-transition: all .4s ease-in-out;
-        -moz-transition: all .4s ease-in-out;
-        -ms-transition: all .4s ease-in-out;
-        -o-transition: all .4s ease-in-out;
-        transition: all .4s ease-in-out;
+        -webkit-transition: background .4s ease-in-out;
+        -moz-transition: background .4s ease-in-out;
+        -ms-transition: background .4s ease-in-out;
+        -o-transition: background .4s ease-in-out;
+        transition: background .4s ease-in-out;
         background: linear-gradient(to right, #b9ccfc 0%, #6d8fff 50%);
         background: -o-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
         background: -ms-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
         background: -moz-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
         background: -webkit-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
 
-        &:hover {
+        &:hover, &.active {
           background: #fff;
           color: #043fc4;
+          font-family: 'pingFangHeavy';
         }
       }
     }
@@ -81,7 +85,6 @@
     .text {
       color: #333;
       font-size: 26px;
-      font-weight: 600;
       letter-spacing: 1.3px;
       font-family: 'pingFangBold';
     }
@@ -92,6 +95,7 @@
       line-height: 40px;
       margin-top: -10px;
       margin-bottom: -2px;
+      font-family: 'pingFangMedium';
     }
   }
 
@@ -206,7 +210,7 @@
 
             &-title {
               font-size: 18px;
-              font-family: 'pingFangBold';
+              font-family: 'pingFangHeavy';
               line-height: 86px;
               text-align: center;
               color: #fff;
@@ -222,7 +226,6 @@
               }
 
               span {
-                font-weight: bold;
                 color: #ffe002;
                 display: none;
               }
@@ -341,7 +344,7 @@
 
           .title {
             color: #2139b7;
-            font-family: 'pingFangBold';
+            font-family: 'pingFangHeavy';
             letter-spacing: 0.9px;
           }
 
@@ -472,6 +475,10 @@
     background-size: cover;
     text-align: center;
     padding-top: 50px;
+
+    .text {
+      font-family: 'pingFangMedium';
+    }
 
     .consult-btn {
       display: inline-block;

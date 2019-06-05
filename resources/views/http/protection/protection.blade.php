@@ -346,7 +346,7 @@
     <!-- 常见问题 -->
     <div class="common-question">
         <h2 class="title">安全防护常见问题</h2>
-        <h5 style="color: #666;">关注腾正，关注IDC，关注云计算，关注信息安全,关注互联网动向</h5>
+        <h5 class="sub-title">关注腾正，关注IDC，关注云计算，关注信息安全，关注互联网动向</h5>
         <div class="list-container">
             <ul class="list-group">
                 <div class="list-header">

@@ -26,7 +26,7 @@
             <div class="banner">
                 <div class="title">
                     <h2 class="text">棋牌云解决方案</h2>
-                    <h5 class="sub-text font-regular">
+                    <h5 class="sub-text">
                         成熟技术团队，海量攻防实战积累，为游戏运营打造可信赖的安全解决方案，全方位解决
                         <br/>
                         卡顿掉线、欺诈作弊、外挂等常见问题，轻松应对海量玩家同时在线
@@ -80,7 +80,7 @@
                 <h2 class="title">解决方案构架部署</h2>
                 <div class="cont">
                     <div class="arch-text">
-                        <h4 style="font-size: 16px; font-family: 'pingFangBold'; margin-bottom: 15px;">架构说明</h4>
+                        <h4 style="font-size: 16px; font-family: 'pingFangHeavy'; margin-bottom: 15px;">架构说明</h4>
                         <p class="desc">
                             腾正科技棋牌游戏服务，从构建基础设施到游戏上线到后期精细化运营，腾正科技服务涵盖项目整个发展周期。在防御策略上采用三重防护设计，有效黑客入侵、预防恶意注册、流量作弊、撞库盗号、暴力破解、DDOS攻击、CC攻击、SYN攻击等，保障游戏交易平台及支付服务安全。
                         </p>

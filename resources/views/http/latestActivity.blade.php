@@ -10,7 +10,7 @@
 <div class="tz-latest-activity">
     <!--banner-->
     <div class="banner">
-        <h2 class="title">活动专题</h2>
+        <h2 class="title font-bold">活动专题</h2>
         <h5 class="sub-title font-regular">
             最新上线、专享特惠、精选秒杀、免费体验， 助力创未来
         </h5>
@@ -24,7 +24,7 @@
                     <span class="ongoing">活动中</span>
                 </div>
                 <div class="card-body">
-                    <h5 class="title">40G真实防御高防游戏云主机只需139元，续费价格不变</h5>
+                    <h5 class="title font-heavy">40G真实防御高防游戏云主机只需139元，续费价格不变</h5>
                     <p class="desc">5动全网 1降到底！40G真实防御高防游戏云主机，只需139元，续费价格不变！限时抢购进行中</p>
                 </div>
             </a>
@@ -34,7 +34,7 @@
                     <span class="ongoing">活动中</span>
                 </div>
                 <div class="card-body">
-                    <h5 class="title">游戏专配爆款200G高防服务器888限时抢购进行中</h5>
+                    <h5 class="title font-heavy">游戏专配爆款200G高防服务器888限时抢购进行中</h5>
                     <p class="desc">游戏专配爆款，开区保驾领航！200G高防服务器,100M独享带宽,SSD固态硬盘，机房直销888元火热抢购进行中……</p>
                 </div>
             </a>
@@ -44,7 +44,7 @@
                     <span class="ongoing">活动中</span>
                 </div>
                 <div class="card-body">
-                    <h5 class="title">腾正高防IP专业DDOS防御首选</h5>
+                    <h5 class="title font-heavy">腾正高防IP专业DDOS防御首选</h5>
                     <p class="desc">腾正高防IP专业DDOS防御首选，T+级防护系统，毫秒级过滤引擎，精准识别秒级响应，支持不同业务模式</p>
                 </div>
             </a>
@@ -54,7 +54,7 @@
                     <span class="end">活动结束</span>
                 </div>
                 <div class="card-body">
-                    <h5 class="title">腾正云春节聚惠30M独享宽带仅需39元/月</h5>
+                    <h5 class="title font-heavy">腾正云春节聚惠30M独享宽带仅需39元/月</h5>
                     <p class="desc">过了双12，春节福利又来了，30M云服务器低至39元/月，再次来袭！</p>
                 </div>
                 <div class="mask"></div>

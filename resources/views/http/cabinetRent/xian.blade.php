@@ -13,7 +13,7 @@
         <div class="cont">
             <div class="title">
                 <h2 class="text">机柜租用</h2>
-                <h5 class="sub-text font-regular">
+                <h5 class="sub-text">
                     自主机房，全网骨干网络接入，超过1T总宽带接入，提供安全可靠的机柜租用方案，<br/>
                     电信、联通、双线、三线、BPG共5种线路选择
                 </h5>
@@ -58,7 +58,7 @@
                     <tbody>
                     <tr>
                         <td style="width: 190px;">数据中心级别</td>
-                        <td>准<span style="font-weight: 600; color: #f00101;"> T4 </span>级机房</td>
+                        <td>准<span style="font-family: 'pingFangHeavy'; color: #f00101;"> T4 </span>级机房</td>
                     </tr>
                     <tr>
                         <td>机房面积</td>

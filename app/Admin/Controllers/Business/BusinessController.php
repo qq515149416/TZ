@@ -234,7 +234,7 @@ class BusinessController extends Controller
      */
     public function performanceOrder(Request $request){
         $data = $request->only(['begin','end','business_id']);
-        $orders = new OrdersModel();
+        $orders = new BusinessModel();
         $result = $orders->performanceOrder($data);
         return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
     }

@@ -996,14 +996,14 @@ class BusinessModel extends Model
 
         } elseif(!isset($query_time['begin']) && isset($query_time['end'])){//当起始时间未设置，结束时间设置时
 
-            $end_time = date('Y-m-d',strtotime($query_time['end']."+1 day"));//结束时间等于设置的结束时间
+            $end_time = date('Y-m-d',strtotime(date('Y-m-d',$query_time['end'])."+1 day"));//结束时间等于设置的结束时间
             $month = date('Y-m',$query_time['end']);//获取结束时间所属的自然月
             $start_time = $month.'-01';//获取结束时间所属自然月的第一天的零点为查询的开始时间
 
         } elseif(isset($query_time['begin']) && isset($query_time['end'])){//当查询的起始时间和结束时间都设置时
 
             $start_time = date('Y-m-d',$query_time['begin']);//起始时间等于设置的起始时间
-            $end_time = date('Y-m-d',strtotime($query_time['end']."+1 day"));//结束时间等于设置的结束时间
+            $end_time = date('Y-m-d',strtotime(date('Y-m-d',$query_time['end'])."+1 day"));//结束时间等于设置的结束时间
         }
         return ['start_time'=>$start_time,'end_time'=>$end_time];
     }

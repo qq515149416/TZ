@@ -55,7 +55,7 @@ class OrdersModel extends Model
 	public function financeOrders($data){
 		$business = new BusinessModel();
 		$time = $business->queryTime($data);
-		// dd($time);
+		
 		$result = DB::table('tz_orders_flow as flow')
 					->join('tz_users as users','flow.customer_id','=','users.id')
 					->join('admin_users as admin','flow.business_id','=','admin.id')

@@ -137,4 +137,16 @@ class PfmStatisticsController extends Controller
 
     }
 
+    /**
+     * 含分类业绩统计
+     * @param  Requests $request --begin统计开始时间,--end统计结束时间
+     * @return [type]            [description]
+     */
+    public function performance(Request $request){
+        $time = $request->only(['begin','end']);
+        $performance = new PfmStatistics();
+        $result = $performance->performance($time);
+        return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
+    }
+
 }

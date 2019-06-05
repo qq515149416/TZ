@@ -13,7 +13,7 @@
         <div class="cont">
             <div class="title">
                 <h2 class="text">静态内容加速</h2>
-                <h5 class="sub-text">
+                <h5 class="sub-text font-regular">
                     静态网页加速服务将源站的网页内容：html文件、flash动画、及各种文件类型的图片缓存于腾正科技<br/>
                     15CDN中心网络中，且文件可定期和不定期更新，用缓存技术将这些文件cache在腾正科技15CDN的<br/>
                     边缘节点上，实现终端用户就近访问的需求，达到加速体验目的。

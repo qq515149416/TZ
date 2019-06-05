@@ -26,7 +26,7 @@
             <div class="banner">
                 <div class="title" style="color: #fff;">
                     <h2 class="text">教育云解决方案</h2>
-                    <h5 class="sub-text">
+                    <h5 class="sub-text font-regular">
                         结合教育地域特性，为各种教育场景快速搭建智能化信息平台，将教育管理、教务、教学应用等系统集成化，<br/>
                         推进教育行业的数字化和智能化，促进行业的转型升级
                     </h5>
@@ -85,7 +85,7 @@
                     alt="教育云解决方案构架部署图" />
                     <div style="max-width: 1180px; margin: 0 auto;padding-left: 10px;padding-right: 10px;">
                         <div class="desc">
-                            <h5 style="text-align: left; color: #1e2251; font-weight: 600;">
+                            <h5 style="text-align: left; color: #1e2251; font-family: 'pingFangBold'">
                                 将教育管理、教务、教学应用等系统集成化，实现统一数据中心、统一身份认证、统一用户平台，创造“云端”服务：
                             </h5>
                             <ul class="list-group">

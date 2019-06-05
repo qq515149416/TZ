@@ -13,7 +13,7 @@
         <div class="cont">
             <div class="title">
                 <h2 class="text">流媒体直播加速</h2>
-                <h5 class="sub-text">
+                <h5 class="sub-text font-regular">
                     15CDN流媒体直播加速是将源站采用广播方式通过网络为用户提供实时采集的视频流，通过最佳链路传输<br/>
                     到腾正科技流媒体专用存储设备中，并利用15CDN网络自身的协同性能，将这些大流量流媒体文件进行快<br/>
                     速分层同步传输到全国各加速节点上，为用户提供稳定可靠的音视频点播服务。

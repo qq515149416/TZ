@@ -13,7 +13,7 @@
         <div class="cont">
             <div class="title">
                 <h2 class="text">动态加速网络</h2>
-                <h5 class="sub-text">
+                <h5 class="sub-text font-regular">
                     动态加速网络是针对网站网页中通过程序接口提取放在数据库或其他存储媒体中的内容而产生的服务，<br/>
                     这些内容需不断更新保持新鲜，因此终端每次访问内容都有所不同，利用基础CDN缓存技术无法解决<br/>
                     动态加速需求。而15CDN网络智能系统+自研的最优链路算法完美解决这一难题。

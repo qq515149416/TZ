@@ -1108,7 +1108,7 @@ class BusinessModel extends Model
                         ->join('admin_users as admin','orders.business_id','=','admin.id')
                         ->join('tz_users as users','orders.customer_id','=','users.id')
                         ->where(['orders.id'=>$id_value])
-                        ->select('orders.id','orders.resource_type','orders.machine_sn','orders.resource','orders.price','orders.duration','orders.end_time','admin.name as salesman','users.name','users.email','users.nickname')
+                        ->select('orders.id','orders.order_sn','orders.resource_type','orders.machine_sn','orders.resource','orders.price','orders.duration','orders.end_time','admin.name as salesman','users.name','users.email','users.nickname')
                         ->first();
             if(!empty($order)){
                 $customer = $order->name ? $order->name : $order->email;

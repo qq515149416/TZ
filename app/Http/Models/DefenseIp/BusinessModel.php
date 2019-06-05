@@ -172,9 +172,9 @@ class BusinessModel extends Model
 			];
 		}
 		
-		$delRes = $apiController->deleteTarget($d_ip->ip);
+		$delRes = json_decode($apiController->deleteTarget($d_ip->ip) ,true);
 		//解绑失败的话,事务回滚,回到待审核状态
-		if($delRes != 0){
+		if($delRes['code'] != 0){
 			DB::rollBack();
 			return [
 				'data'	=> '',

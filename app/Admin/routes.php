@@ -552,7 +552,8 @@ Route::group([
             $router->get('showExamine', 'DefenseIp\RemoveController@showExamine');//查看正在审核的下架申请
 
             $router->post('setTarget', 'DefenseIp\SetController@setTarget');//配置目标IP
-
+            $router->get('changeDIP', 'DefenseIp\SetController@changeDIP');//高防换服务IP
+            
 
         });
 

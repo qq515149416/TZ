@@ -1073,6 +1073,58 @@ class BusinessModel extends Model
         return $taotal_business;
     }
 
+    /**
+     * 根据业绩统计的业务员进行对应的业务订单查询
+     * @param  array $data --begin查询开始时间, --end查询结束时间,business_id业务员id
+     * @return [type]       [description]
+     */
+    public function performanceOrder($data){
+        $time = $this->queryTime($data);
+        $where = [];
+        if(isset($data['business_id'])){
+            $where['business_id'] = $data['business_id'];
+        }
+        $orders = [];
+        $flow = DB::table('tz_orders_flow')
+                    ->where($where)
+                    ->whereBetween('pay_time',[$time['start_time'],$time['end_time']])
+                    ->whereNull('deleted_at')
+                    ->get(['order_id']);
+
+        if($flow->isEmpty()){
+            $return['data'] = $orders;
+            $return['code'] = 0;
+            $return['msg'] = '暂无数据';
+            return $return;
+        }
+
+        $order_id = '';
+        foreach ($flow as $flow_key => $flow_value) {
+            $order_id = trim($order_id.','.trim($flow_value->order_id,'[]'),',');
+        }
+        $id = array_unique(explode(',',$order_id));
+        foreach ($id as $id_key => $id_value) {
+            $order = DB::table('tz_orders as orders')
+                        ->join('admin_users as admin','orders.business_id','=','admin.id')
+                        ->join('tz_users as users','orders.customer_id','=','users.id')
+                        ->where(['orders.id'=>$id_value])
+                        ->select('orders.id','orders.order_sn','orders.resource_type','orders.machine_sn','orders.resource','orders.price','orders.duration','orders.end_time','admin.name as salesman','users.name','users.email','users.nickname')
+                        ->first();
+            if(!empty($order)){
+                $customer = $order->name ? $order->name : $order->email;
+                $order->customer = $customer ? $customer : $order->nickname;
+                $resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn',11=>'高防IP',12=>'流量叠加包'];
+                $order->type = $resource_type[$order->resource_type];
+                array_push($orders,$order); 
+            }
+        }
+
+        $return['data'] = $orders;
+        $return['code'] = 1;
+        $return['msg'] = '数据获取成功';
+        return $return;
+
+    } 
 
 
 }

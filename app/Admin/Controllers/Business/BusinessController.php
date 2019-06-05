@@ -226,4 +226,16 @@ class BusinessController extends Controller
         $recharge_result = $market->marketRecharge($recharge);
         return tz_ajax_echo($recharge_result['data'],$recharge_result['msg'],$recharge_result['code']);
     }
+
+    /**
+     * 根据业绩统计的业务员进行对应的业务订单查询
+     * @param  Request $request --begin查询开始时间, --end查询结束时间,business_id业务员id
+     * @return [type]           [description]
+     */
+    public function performanceOrder(Request $request){
+        $data = $request->only(['begin','end','business_id']);
+        $orders = new OrdersModel();
+        $result = $orders->performanceOrder($data);
+        return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
+    }
 }

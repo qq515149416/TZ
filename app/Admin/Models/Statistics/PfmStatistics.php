@@ -839,6 +839,11 @@ class  PfmStatistics extends Model
 		$object = (object)['name'=>'总计','idc_count'=>$idc_count,'defense_count'=>$defense,'flow_count'=>$flow,'cdn_count'=>$cdn,'cloud_count'=>$cloud,'sum'=>$total];
 		array_unshift($admin_users,$object);
 		
+		//取出二维数组里面的sum字段的值
+		$sort_sum = array_column($admin_users,'sum');
+		//根据sum字段值进行降序排序,由多到少
+		array_multisort($sort_sum,SORT_DESC,$admin_users);
+
 		$data['actual_payment'] = $actual_payment;//实际付款
 		$data['preferential_amount'] = $preferential_amount;//优惠额度
 		$data['payable_money'] = $payable_money;//应付款

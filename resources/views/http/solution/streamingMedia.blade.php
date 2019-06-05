@@ -24,9 +24,9 @@
         <div id="streaming-media">
             <!-- banner -->
             <div class="banner">
-                <div class="title" style="color: #fff;">
+                <div class="title">
                     <h2 class="text">流媒体解决方案</h2>
-                    <h5 class="sub-text font-regular">
+                    <h5 class="sub-text">
                         个性化打造"清晰流畅、低时延、高并发"的流媒体服务，自研高性能防火墙确保数据安全，自主CDN加速<br/>
                         缩短用户等待时间，增强了用户体验质量和对内容提供商的黏度
                     </h5>

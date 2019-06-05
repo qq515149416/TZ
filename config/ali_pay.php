@@ -18,4 +18,5 @@ return [
 	'private_key' 	=> env('ALI_PRIVATE_KEY'),
 	'ali_public_key' 	=> env('ALI_PUBLIC_KEY'),
 	'app_id' 	=> env('ALI_APP_ID'),
+	'tz_url'        => env('APP_URL'),
 ];

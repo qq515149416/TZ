@@ -1,6 +1,7 @@
 .tz-solution {
   margin-left: -15px;
   margin-right: -15px;
+  font-family: 'pingFangMedium';
 
   .tab {
     position: absolute;
@@ -39,6 +40,7 @@
       &.active, &:hover {
         background: #fff;
         color: #043fc4;
+        font-family: 'pingFangHeavy';
       }
     }
   }
@@ -68,8 +70,9 @@
 
         .sub-text {
           font-size: 16px;
-          letter-spacing: 0.8px;
           line-height: 30px;
+          letter-spacing: 0.8px;
+          font-family: 'pingFangRegular';
         }
       }
 
@@ -91,11 +94,11 @@
         //background: -ms-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
         //background: -moz-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
         //background: -webkit-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
-        -webkit-transition: background .4s ease-in-out;
-        -moz-transition: background .4s ease-in-out;
-        -ms-transition: background .4s ease-in-out;
-        -o-transition: background .4s ease-in-out;
-        transition: background .4s ease-in-out;
+        //-webkit-transition: background .4s ease-in-out;
+        //-moz-transition: background .4s ease-in-out;
+        //-ms-transition: background .4s ease-in-out;
+        //-o-transition: background .4s ease-in-out;
+        //transition: background .4s ease-in-out;
 
         //&:hover {
         //  color: #043fc4;
@@ -106,7 +109,7 @@
 
     .problem {
       height: 700px;
-      padding-top: 60px;
+      padding-top: 50px;
       background-color: #fff;
 
       .title {
@@ -165,7 +168,7 @@
             .text {
               color: #333;
               font-size: 16px;
-              font-family: 'pingFangBold';
+              font-family: 'pingFangHeavy';
               letter-spacing: 0.8px;
               margin-left: 18px;
             }
@@ -192,7 +195,6 @@
 
     .arch {
       height: 1000px;
-      background-size: 100% 100%;
       padding-top: 50px;
 
       .title {
@@ -262,7 +264,7 @@
 
     .adv {
       height: 686px;
-      padding-top: 45px;
+      padding-top: 50px;
 
       .title {
         position: relative;
@@ -313,7 +315,7 @@
           &-title {
             color: #2b3555;
             font-size: 16px;
-            font-family: 'pingFangBold';
+            font-family: 'pingFangHeavy';
             line-height: 41px;
 
             .order {
@@ -345,7 +347,7 @@
         font-size: 26px;
         line-height: 41px;
         margin-bottom: 20px;
-        font-family: 'pingFangBold';
+        font-family: 'pingFangMedium';
       }
 
       .consult-btn {
@@ -378,10 +380,12 @@
     #game {
       .banner {
         background: url("../images/program/game/game-banner-bg.png") no-repeat center;
+        background-size: 100% 100%;
       }
 
       .arch {
         background: url("../images/program/game/game-arch-bg.png") no-repeat center;
+        background-size: 100% 100%;
       }
 
       .adv {
@@ -564,6 +568,7 @@
     #finance {
       .banner {
         background: url("../images/program/finance/finance-banner-bg.png") no-repeat center;
+        background-size: 100% 100%;
       }
 
       .problem {
@@ -585,6 +590,7 @@
       .arch {
         height: 1100px;
         background: url("../images/program/finance/finance-arch-bg.png") no-repeat center;
+        background-size: 100% 100%;
 
         .title {
           color: #fff;
@@ -612,6 +618,7 @@
     #streaming-media {
       .banner {
         background: url("../images/program/streaming-media/streaming-media-banner-bg.png") no-repeat center;
+        background-size: 100% 100%;
       }
 
       .problem {
@@ -633,6 +640,7 @@
       .arch {
         height: 1210px;
         background: url("../images/program/streaming-media/streaming-media-arch-bg.png") no-repeat center;
+        background-size: 100% 100%;
 
         .title {
           color: #fff;
@@ -654,6 +662,7 @@
     #mobile-app {
       .banner {
         background: url("../images/program/mobile-app/mobile-app-banner-bg.png") no-repeat center;
+        background-size: 100% 100%;
       }
 
       .problem {
@@ -705,30 +714,6 @@
             opacity: 0;
             z-index: 3;
 
-            &:nth-child(0) {
-              background: url("../images/program/mobile-app/problem-bg-1.png") no-repeat 100% 100%;
-            }
-
-            &:nth-child(1) {
-              background: url("../images/program/mobile-app/problem-bg-2.png") no-repeat 100% 100%;
-            }
-
-            &:nth-child(2) {
-              background: url("../images/program/mobile-app/problem-bg-3.png") no-repeat 100% 100%;
-            }
-
-            &:nth-child(3) {
-              background: url("../images/program/mobile-app/problem-bg-4.png") no-repeat 100% 100%;
-            }
-
-            &:nth-child(4) {
-              background: url("../images/program/mobile-app/problem-bg-5.png") no-repeat 100% 100%;
-            }
-
-            &:nth-child(5) {
-              background: url("../images/program/mobile-app/problem-bg-6.png") no-repeat 100% 100%;
-            }
-
             p {
               margin-bottom: 0;
               display: table-cell;
@@ -747,12 +732,49 @@
               opacity: 1;
             }
           }
+
+          &:nth-child(1) {
+            .card-body {
+              background: url("../images/program/mobile-app/problem-bg-1.png") no-repeat 100% 100%;
+            }
+          }
+
+          &:nth-child(2) {
+            .card-body {
+              background: url("../images/program/mobile-app/problem-bg-2.png") no-repeat 100% 100%;
+            }
+          }
+
+          &:nth-child(3) {
+            .card-body {
+              background: url("../images/program/mobile-app/problem-bg-3.png") no-repeat 100% 100%;
+            }
+          }
+
+          &:nth-child(4) {
+            .card-body {
+              background: url("../images/program/mobile-app/problem-bg-4.png") no-repeat 100% 100%;
+            }
+          }
+
+          &:nth-child(5) {
+            .card-body {
+              background: url("../images/program/mobile-app/problem-bg-5.png") no-repeat 100% 100%;
+            }
+          }
+
+          &:nth-child(6) {
+            .card-body {
+              background: url("../images/program/mobile-app/problem-bg-6.png") no-repeat 100% 100%;
+            }
+          }
         }
       }
 
       .arch {
         height: 1320px;
         background: url("../images/program/mobile-app/mobile-app-arch-bg.png") no-repeat center;
+        background-size: 100% 100%;
 
         .cont {
           position: relative;
@@ -794,6 +816,7 @@
     #education-cloud {
       .banner {
         background: url("../images/program/education-cloud/education-cloud-banner-bg.png") no-repeat center;
+        background-size: 100% 100%;
       }
 
       .problem {
@@ -817,6 +840,7 @@
       .arch {
         height: 1210px;
         background: url("../images/program/education-cloud/education-cloud-arch-bg.png") no-repeat center;
+        background-size: 100% 100%;
 
         .consult-btn {
           border-color: #1e2251;
@@ -868,6 +892,7 @@
     #government-cloud {
       .banner {
         background: url("../images/program/government-cloud/government-cloud-banner-bg.png") no-repeat center;
+        background-size: 100% 100%;
       }
 
       .problem {
@@ -891,6 +916,7 @@
       .arch {
         height: 1200px;
         background: url("../images/program/government-cloud/government-cloud-arch-bg.png") no-repeat center;
+        background-size: 100% 100%;
 
         .title {
           color: #fff;
@@ -930,6 +956,7 @@
     #website-deployment {
       .banner {
         background: url("../images/program/website-deployment/website-deployment-banner-bg.png") no-repeat center;
+        background-size: 100% 100%;
       }
 
       .problem {

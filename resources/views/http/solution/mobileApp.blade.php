@@ -24,9 +24,9 @@
         <div id="mobile-app">
             <!-- banner -->
             <div class="banner">
-                <div class="title" style="color: #fff;">
+                <div class="title">
                     <h2 class="text">移动APP云化解决方案</h2>
-                    <h5 class="sub-text font-regular">
+                    <h5 class="sub-text">
                         高效开发快速上云，助力业务快速发展！腾正科技旨在为开发者提供模块功能化的通用移动应用基础服务，<br/>
                         解决移动APP客户营销困难、高并发、数据安全调度不精准等难题
                     </h5>

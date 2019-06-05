@@ -85,7 +85,7 @@
                     alt="教育云解决方案构架部署图" />
                     <div style="max-width: 1180px; margin: 0 auto;padding-left: 10px;padding-right: 10px;">
                         <div class="desc">
-                            <h5 style="text-align: left; color: #1e2251; font-family: 'pingFangBold'">
+                            <h5 style="text-align: left; color: #1e2251; font-family: 'pingFangHeavy';">
                                 将教育管理、教务、教学应用等系统集成化，实现统一数据中心、统一身份认证、统一用户平台，创造“云端”服务：
                             </h5>
                             <ul class="list-group">

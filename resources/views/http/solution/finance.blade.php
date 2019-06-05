@@ -24,9 +24,9 @@
         <div id="finance">
             <!-- banner -->
             <div class="banner">
-                <div class="title" style="color: #fff;">
+                <div class="title">
                     <h2 class="text">金融云解决方案</h2>
-                    <h5 class="sub-text font-regular">
+                    <h5 class="sub-text">
                         个性化定制高防金融云解决方案，一站式服务解决金融行业互联互通、海量访问、数据安全、网页加速、成本高等问题，
                         <br/>
                         助您快速实现业务部署，抢占市场先机

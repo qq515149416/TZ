@@ -13,7 +13,7 @@
         <div class="cont">
             <div class="title">
                 <h2 class="text">15CDN</h2>
-                <h5 class="sub-text font-regular">
+                <h5 class="sub-text">
                     网站打不开怎么办？网站访问速度慢怎么办？15CDN一站式内容智能分发加速首选<br/>
                     为您的客户体验速度插上一对腾飞的翅膀！
                 </h5>
@@ -154,7 +154,7 @@
     <!--产品优势-->
     <div class="product-adv">
         <h2 class="title" style="color: #fff;">产品优势</h2>
-        <h5 class="sub-title" style="color: #bababa;">采用先进技术，提供个性化行业解决方案，帮您实现更丰富的业务需求</h5>
+        <h5 class="sub-title" style="color: #fff;">采用先进技术，提供个性化行业解决方案，帮您实现更丰富的业务需求</h5>
         <div class="item-container">
             <div class="item">
                 <img class="icon" src="{{ asset("/images/cdn/adv-icon-1.png") }}" />

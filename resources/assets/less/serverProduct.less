@@ -1,4 +1,6 @@
 #server_product {
+  font-family: 'pingFangMedium';
+
   .banner {
     position: relative;
     height: 563px;
@@ -23,6 +25,7 @@
         font-size: 16px;
         line-height: 28px;
         letter-spacing: 0.8px;
+        font-family: 'pingFangRegular';
       }
     }
 
@@ -48,32 +51,28 @@
         font-size: 18px;
         letter-spacing: 3.2px;
         text-decoration: none;
-        -webkit-transition: all .4s ease-in-out;
-        -moz-transition: all .4s ease-in-out;
-        -ms-transition: all .4s ease-in-out;
-        -o-transition: all .4s ease-in-out;
-        transition: all .4s ease-in-out;
+        -webkit-transition: background .4s ease-in-out;
+        -moz-transition: background .4s ease-in-out;
+        -ms-transition: background .4s ease-in-out;
+        -o-transition: background .4s ease-in-out;
+        transition: background .4s ease-in-out;
         background: linear-gradient(to right, #b9ccfc 0%, #6d8fff 50%);
         background: -o-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
         background: -ms-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
         background: -moz-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
         background: -webkit-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
 
-        &:hover {
+        &:hover, &.active {
           background: #fff;
           color: #043fc4;
-        }
-
-        &.active {
-          background: #fff;
-          color: #043fc4;
+          font-family: 'pingFangHeavy';
         }
       }
     }
   }
 
   .jumbotron.data-center {
-    padding: 80px 0 37px 0;
+    padding: 70px 0 37px 0;
     margin: 0;
     background-color: #ffffff;
 
@@ -168,7 +167,7 @@
                   background-color: #eeeff3;
                   font-size: 14px;
                   color: #333333;
-                  font-family: 'pingFangBold';
+                  font-family: 'pingFangHeavy';
                 }
 
                 &:last-of-type {
@@ -245,7 +244,7 @@
 
       h4 {
         font-size: 18px;
-        font-family: 'pingFangBold';
+        font-family: 'pingFangHeavy';
         color: #2139b7;
         margin: 0;
       }
@@ -264,7 +263,7 @@
   .jumbotron.reason {
     height: 628px;
     padding: 0;
-    padding-top: 80px;
+    padding-top: 70px;
     box-sizing: border-box;
     margin: 0;
     background: url(../images/product/productBg2.png) no-repeat;
@@ -273,7 +272,7 @@
     h4 {
       font-size: 26px;
       color: #ffffff;
-      font-family: 'pingFangBold';
+      font-family: 'pingFangHeavy';
       margin: 0;
       text-align: center;
     }
@@ -324,7 +323,7 @@
       margin-bottom: 24px;
       font-size: 26px;
       color: #fff;
-      font-family: 'pingFangBold';
+      font-family: 'pingFangMedium';
     }
 
     a {

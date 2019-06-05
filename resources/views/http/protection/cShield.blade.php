@@ -12,7 +12,7 @@
     <div class="banner">
         <div class="cont">
             <div class="title">
-                <h2 class="text">防 C 盾</h2>
+                <h2 class="text">防C盾</h2>
                 <h5 class="sub-text">
                     防C盾是腾正科技自研针对CC攻击接入C盾进行高防御的攻击防护体系，一键开启DDos和C防御，<br/>
                     零误封，可跨地域跨机房使用。具抗CC/DDOS攻击，防入侵监测系统，硬件监控系统，网络故障<br/>
@@ -33,7 +33,7 @@
     <!--组合套餐-->
     <div class="package">
         <div class="accelerate">
-            <h2 class="title black">加速套餐<span style="font-weight: normal;"> | 高强度高防CC攻击，在岗1分钟，安全60秒</span></h2>
+            <h2 class="title black">加速套餐<span style="font-family: 'pingFang';"> | 高强度高防CC攻击，在岗1分钟，安全60秒</span></h2>
             <div class="table-container">
                 <table class="table table-bordered">
                     <thead>
@@ -141,20 +141,20 @@
             </div>
         </div>
         <div class="idc-hot-sale">
-            <h2 class="title black">IDC 热销套餐<span style="font-weight: normal;"> | 企业服务器 + CDN 加速更加实惠</span></h2>
+            <h2 class="title black">IDC热销套餐<span style="font-family: 'pingFang';"> | 企业服务器 + CDN加速更加实惠</span></h2>
             <div class="header">
                 <div class="item">
-                    <div class="title">IDC + CDN 优惠套 1</div>
+                    <div class="title">IDC+CDN优惠套1</div>
                     <img class="d-block" src="{{ asset("/images/cShield/flow-line.png") }}" />
                 </div>
                 <div class="item">
-                    <div class="title">IDC + CDN 优惠套 2</div>
+                    <div class="title">IDC+CDN优惠套2</div>
                     <img class="d-block" src="{{ asset("/images/cShield/flow-line.png") }}" />
                 </div>
             </div>
             <div class="card-container">
                 <div class="card">
-                    <div class="card-title">衡阳电信 80G 防御</div>
+                    <div class="card-title">衡阳电信80G防御</div>
                     <div class="card-body">
                         <p>CPU：XeonE5530*2/L5630*2</p>
                         <p>内存：8G</p>
@@ -164,7 +164,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-title">CDN 加速企业版</div>
+                    <div class="card-title">CDN加速企业版</div>
                     <div class="card-body">
                         <p>总流量：5TB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;加速域名：2个</p>
                         <p>价格：500元/月</p>
@@ -172,7 +172,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-title">惠州 100G 防御</div>
+                    <div class="card-title">惠州100G防御</div>
                     <div class="card-body">
                         <p>CPU：XeonX5672</p>
                         <p>内存：8G</p>
@@ -182,7 +182,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-title">CDN 加速企业版</div>
+                    <div class="card-title">CDN加速企业版</div>
                     <div class="card-body">
                         <p>总流量：5TB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;加速域名：2个</p>
                         <p>价格：500元/月</p>
@@ -196,14 +196,14 @@
             </div>
         </div>
         <div class="tzclound-hot-sale">
-            <h2 class="title black">腾正云热销套餐<span style="font-weight: normal;"> | 企业服务器 + CDN 加速更加实惠</span></h2>
+            <h2 class="title black">腾正云热销套餐<span style="font-family: 'pingFang';"> | 企业服务器 + CDN加速更加实惠</span></h2>
             <div class="header">
                 <div class="item">
-                    <div class="title">云 + CDN 优惠套 1</div>
+                    <div class="title">云+CDN优惠套1</div>
                     <img class="d-block" src="{{ asset("/images/cShield/flow-line.png") }}" />
                 </div>
                 <div class="item">
-                    <div class="title">云 + CDN 优惠套 2</div>
+                    <div class="title">云+CDN优惠套2</div>
                     <img class="d-block" src="{{ asset("/images/cShield/flow-line.png") }}" />
                 </div>
             </div>
@@ -220,7 +220,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-title">CDN 加速体验版</div>
+                    <div class="card-title">CDN加速体验版</div>
                     <div class="card-body">
                         <p>总流量：50GB</p>
                         <p>加速域名：1个</p>
@@ -244,7 +244,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-title">CDN 加速体验版</div>
+                    <div class="card-title">CDN加速体验版</div>
                     <div class="card-body">
                         <p>总流量：50GB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;加速域名：1个</p>
                         <p>价格：100元/月</p>
@@ -264,7 +264,7 @@
     </div>
     <!--功能-->
     <div class="function">
-        <h2 class="title white">防 C 盾功能</h2>
+        <h2 class="title white">防C盾功能</h2>
         <div class="item-container">
             <div class="item">
                 <img class="icon" src="{{ asset("/images/highDefenseCdn/icon-1.png") }}"">
@@ -318,7 +318,7 @@
     </div>
     <!--特点-->
     <div class="feature">
-        <h2 class="title black">防 C 盾特点</h2>
+        <h2 class="title black">防C盾特点</h2>
         <div class="card-container">
             <div class="card">
                 <div class="card-body">

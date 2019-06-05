@@ -839,13 +839,13 @@ class  PfmStatistics extends Model
 		$object = (object)['name'=>'总计','idc_count'=>$idc_count,'defense_count'=>$defense,'flow_count'=>$flow,'cdn_count'=>$cdn,'cloud_count'=>$cloud,'sum'=>$total];
 		array_unshift($admin_users,$object);
 		
-		$admin_users['actual_payment'] = $actual_payment;//实际付款
-		$admin_users['preferential_amount'] = $preferential_amount;//优惠额度
-		$admin_users['payable_money'] = $payable_money;//应付款
-
+		$data['actual_payment'] = $actual_payment;//实际付款
+		$data['preferential_amount'] = $preferential_amount;//优惠额度
+		$data['payable_money'] = $payable_money;//应付款
+		$data['count'] = $admin_users;
 		$return['code'] = 1;
 		$return['msg'] = '';
-		$return['data'] = $admin_users;
+		$return['data'] = $data;
 		return $return;
 	}
 

@@ -298,6 +298,7 @@ Route::group([
         $router->get('pfmSmall', 'Statistics\PfmStatisticsController@pfmSmall');//业务员用业绩统计
         $router->get('test', 'Statistics\PfmStatisticsController@test');//计算时间区间内消费额度
         $router->get('performance','Statistics\PfmStatisticsController@performance');//产品类型业务业绩统计
+        $router->get('statistics','Statistics\PfmStatisticsController@statistics');//各类统计数据汇总
     });
 
     /**
@@ -553,7 +554,8 @@ Route::group([
             $router->get('showExamine', 'DefenseIp\RemoveController@showExamine');//查看正在审核的下架申请
 
             $router->post('setTarget', 'DefenseIp\SetController@setTarget');//配置目标IP
-
+            $router->get('changeDIP', 'DefenseIp\SetController@changeDIP');//高防换服务IP
+            
 
         });
 

@@ -149,4 +149,14 @@ class PfmStatisticsController extends Controller
         return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
     }
 
+    /**
+     * 总统计模块
+     * @return [type] [description]
+     */
+    public function statistics(){
+        $statistics = new PfmStatistics();
+        $result = $statistics->statistics();
+        return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
+    }
+
 }

@@ -887,4 +887,22 @@ class  PfmStatistics extends Model
         return ['start_time'=>$start_time,'end_time'=>$end_time];
     }
 
+    public function statistics(){
+
+    	$now = date('Y-m-d',time());//现在的日期
+    	
+    	$last_start = date('Y-m-01',strtotime($now.'-1 month'));//上个月的第一天
+
+    	$seven_end = date('Y-m-d',strtotime($now.'+1 day'));//7天/今天统计的结束日期（由于数据库的存储时间原因,所以日期需往后延一天）
+
+    	$seven_start = date('Y-m-d',strtotime($seven_end.'-7 day'));//7天统计的开始日期
+    	
+    	$month_start = date('Y-m-01',time());//当前月所在的第一天
+
+    	$month_last = date('Y-m-t',time());//当前月所在的最后一天
+
+    	$month_end = date('Y-m-d',strtotime($month_last.'+1 day'));//当前月统计的结束日期（由于数据库的存储时间原因,所以日期需往后延一天）
+    
+    }
+
 }

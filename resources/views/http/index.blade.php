@@ -1001,17 +1001,17 @@
                 <div class="case-item clearfix">
                     <span></span>
                     <span></span>
-                    <span></span>
-                    <span></span>
+                    <span onClick="open_blank_window('http://game.163.com/')"></span>
+                    <span onClick="open_blank_window('https://www.meiyijia.com.cn/')"></span>
                     <span></span>
                 </div>
                 <div class="case-item clearfix">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                    <span onClick="open_blank_window('http://www.dongguantong.com.cn:81/DGTCustomer/index.do')"></span>
+                    <span onClick="open_blank_window('http://www.togoodfin.com/category/110/1/10')"></span>
+                    <span onClick="open_blank_window('http://www.kycne.cn/?bopsrs=phxue')"></span>
+                    <span onClick="open_blank_window('https://www.jiaxunyun.com/')"></span>
+                    <span onClick="open_blank_window('http://cn.unionpay.com/')"></span>
+                    <span onClick="open_blank_window('http://www.dongguanbank.cn/')"></span>
                 </div>
                 <div class="case-item clearfix">
                     <span></span>

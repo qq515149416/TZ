@@ -600,14 +600,17 @@
             var num = Math.random();
             num = Math.ceil(num *rs.length)-1;
             // window.location.href="http://wpa.qq.com/msgrd?v=3&uin="+rs[num].qq+"&site=qq&menu=yes";
+            open_blank_window("http://wpa.qq.com/msgrd?v=3&uin="+rs[num].qq+"&site=qq&menu=yes");
+        }
+        function open_blank_window(url) {
             if(!document.getElementById("toLink")) {
                 var aElement = document.createElement("a");
                 aElement.setAttribute("id","toLink");
-                aElement.setAttribute("href","http://wpa.qq.com/msgrd?v=3&uin="+rs[num].qq+"&site=qq&menu=yes");
+                aElement.setAttribute("href",url);
                 aElement.setAttribute("target","_blank");
                 document.body.appendChild(aElement);
             }
-            document.getElementById("toLink").href = "http://wpa.qq.com/msgrd?v=3&uin="+rs[num].qq+"&site=qq&menu=yes";
+            document.getElementById("toLink").href = url;
             document.getElementById("toLink").click();
         }
     </script>

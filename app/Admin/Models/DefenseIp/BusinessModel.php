@@ -53,8 +53,8 @@ class BusinessModel extends Model
 			];
 		}
 
-		$check_ip = $this->checkStock($package_id);
-		if($check_ip == false){
+		$check_ip_res = $this->checkStock($package_id);
+		if($check_ip_res == false){
 			return[
 				'data'	=> '',
 				'msg'	=> '该套餐IP库存不足',
@@ -62,11 +62,24 @@ class BusinessModel extends Model
 			];
 		}
 
+		DB::beginTransaction();
+
+		$check_ip = $check_ip_res['ip'];
+
+		// $check_ip->status = 5;
+		// if ( !$check_ip->save() ) {
+		// 	return[
+		// 		'data'	=> '',
+		// 		'msg'	=> '高防ip使用状态更改失败',
+		// 		'code'	=> 0,
+		// 	];
+		// }
+
 		$data['business_number']	= 'G_'.time().'_admin_'.$user_id;
 		$data['user_id']			= $customer_id;
 		$data['package_id']		= $package_id;
 		// $data['ip_id']			= $check_ip->id;
-		$data['price']			= $check_ip->price;
+		$data['price']			= $check_ip_res['price'];
 		$data['status']			= 5;
 		$data['created_at']		= date("Y-m-d H:i:s");
 	
@@ -74,6 +87,7 @@ class BusinessModel extends Model
 		//因为可先使用后付款,创建待审核状态业务
 		$insert = $this->create($data);
 		if($insert == false){
+			DB::rollBack();
 			return[
 				'data'	=> '',
 				'msg'	=> '高防IP业务审核提交失败',
@@ -81,6 +95,7 @@ class BusinessModel extends Model
 			];
 		}
 		
+		DB::commit();
 		return[
 			'data'	=> '',
 			'msg'	=> '高防IP业务审核提交成功',
@@ -124,14 +139,16 @@ class BusinessModel extends Model
 				];
 			}
 		}elseif($res == 1){
-			$check_ip = $this->checkStock($business->package_id);
-			if($check_ip == false){
+			$check_ip_res = $this->checkStock($business->package_id);
+			if($check_ip_res == false){
 				return [
 					'data'	=> '',
 					'msg'	=> '该套餐IP库存不足',
 					'code'	=> 0,
 				];
 			}
+			$check_ip = $check_ip_res['ip'];
+			
 			$business->ip_id = $check_ip->id;
 			$business->status = 4;
 			$business->examine_time = date("Y-m-d H:i:s");
@@ -175,7 +192,7 @@ class BusinessModel extends Model
 					'code'	=> 0,
 				];
 			}
-			$d_ip->status = 1;
+			$d_ip->status = 4;
 			$idc_ip->ip_status = 4;
 			if (!$d_ip->save()) {
 				DB::rollBack();
@@ -220,8 +237,7 @@ class BusinessModel extends Model
 	public function checkStock($package_id){
 		$package = DB::table('tz_defenseip_package')->select(['site','protection_value','price'])->where('id',$package_id)->first();
 
-		$check_ip = DB::table('tz_defenseip_store')
-				->select(['id','ip'])
+		$check_ip = StoreModel::select(['id','ip'])
 				->where('deleted_at',null)
 				->where('site',$package->site)
 				->where('protection_value',$package->protection_value)
@@ -230,9 +246,12 @@ class BusinessModel extends Model
 		if($check_ip == NULL){
 			return false;
 		}else{
-			$check_ip->price = $package->price;
-			return $check_ip;
+			return [
+				'ip'	=> $check_ip,
+				'price'	=> $package->price,
+			];
 		}
+
 	}
 
 	public function showUpExamineDefenseIp(){
@@ -328,15 +347,15 @@ class BusinessModel extends Model
 
 		//判断计费开始时间是否符合区间
 
-		if($start_time != 0){
-			if($start_time < $business->examine_time || $start_time > date("Y-m-d H:i:s",time()) ){
-				return [
-					'data'	=> '',
-					'msg'	=> '业务计费开始时间只能从 审核时间 到 当前时间内选择',
-					'code'	=> 0,
-				]; 
-			}
-		}
+		// if($start_time != 0){
+		// 	if($start_time < $business->examine_time || $start_time > date("Y-m-d H:i:s",time()) ){
+		// 		return [
+		// 			'data'	=> '',
+		// 			'msg'	=> '业务计费开始时间只能从 审核时间 到 当前时间内选择',
+		// 			'code'	=> 0,
+		// 		]; 
+		// 	}
+		// }
 
 		//判断如果是试用业务的话,是否有传开始计费时间
 		if($business->status == 4){

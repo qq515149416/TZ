@@ -62,12 +62,14 @@ class InfoController extends Controller
 				$listData[$key]['status_cn']        = 'ip不存在,请联系客服';  //追加业务状态
 				$listData[$key]['protection_value'] = 'ip不存在,请联系客服';  //防御值
 			}
-		
+			
 			$listData[$key]['machine_room_id'] = $storeData['site'];
 			$listData[$key]['machine_room_name'] = DB::table('idc_machineroom')->where('id',$storeData['site'])->value('machine_room_name');
 			if ($listData[$key]['machine_room_name'] == null) {
 				$listData[$key]['machine_room_name'] = '机房信息错误';
 			}
+
+			$listData[$key]['protection_value'] = bcadd($listData[$key]['protection_value'], $listData[$key]['extra_protection'] , 0);
 		}
 		return tz_ajax_echo($listData, '获取高防IP列表成功', 1);
 	}

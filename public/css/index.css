@@ -1653,11 +1653,11 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background-size: 100% 100%;
 }
 .case .case-list .case-item:nth-of-type(3) > span:nth-of-type(4)::after {
-  background: url(/images/15.png?c8dde116beca497b8c9accf06d6c8d36) no-repeat center center;
+  background: url(/images/15.png?304fcf98710e87ec4bbc0bff932cf487) no-repeat center center;
   background-size: 100% 100%;
 }
 .case .case-list .case-item:nth-of-type(3) > span:nth-of-type(4):hover::after {
-  background: url(/images/15.1.png?304fcf98710e87ec4bbc0bff932cf487) no-repeat center center;
+  background: url(/images/15.1.png?c8dde116beca497b8c9accf06d6c8d36) no-repeat center center;
   background-size: 100% 100%;
 }
 .case .case-list .case-item:nth-of-type(3) > span:nth-of-type(5)::after {

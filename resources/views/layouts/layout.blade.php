@@ -427,19 +427,19 @@
             <div class="footer-links">
                 <span>友情链接：</span>
                 <span>
-                    <a href="#">IDC快讯</a>
+                    <a href="https://www.idckx.com/">IDC快讯</a>
                 </span>
                 <span>
-                    <a href="#">IDC资源发布</a>
+                    <a href="http://bbs.idckx.com/forum.php">IDC资源发布</a>
                 </span>
                 <span>
-                    <a href="#">腾正云</a>
+                    <a href="https://yun.zeisp.com/">腾正云</a>
                 </span>
-                <span>
+                <!-- <span>
                     <a href="#">下载联盟</a>
-                </span>
+                </span> -->
                 <span>
-                    <a href="#">15CDN</a>
+                    <a href="https://www.15cdn.com/">15CDN</a>
                 </span>
                 <span>
                     <a href="http://www.ip138.com/idc/">IDC公司</a>

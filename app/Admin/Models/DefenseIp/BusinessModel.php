@@ -66,6 +66,7 @@ class BusinessModel extends Model
 
 		$check_ip = $check_ip_res['ip'];
 
+		//如果要分配IP的话,就改下IP状态,和关联,下面审核通过那里记得也要改
 		// $check_ip->status = 5;
 		// if ( !$check_ip->save() ) {
 		// 	return[

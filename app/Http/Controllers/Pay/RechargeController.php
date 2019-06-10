@@ -107,8 +107,8 @@ class RechargeController extends Controller
 		];
 	
 		//生成支付宝跳转及ajax链接
-		$returnUrl	= config('ali_pay.tz_url');.'/home/recharge/payRechargeReturn';
-		$notifyUrl 	= config('ali_pay.tz_url');.'/home/recharge/payRechargeNotify';
+		$returnUrl	= config('ali_pay.tz_url').'/home/recharge/payRechargeReturn';
+		$notifyUrl 	= config('ali_pay.tz_url').'/home/recharge/payRechargeNotify';
 		//$notifyUrl 	= 'http://tz.jungor.cn/home/recharge/payRechargeNotify';
 
 		//生成支付宝链接
@@ -267,7 +267,7 @@ class RechargeController extends Controller
 		$trade_no 			= $data->out_trade_no;	//本地订单
 		$res = $this->AliCheckAndInsert($trade_no);
 		//跳转确认页面
-		$domain_name = config('ali_pay.tz_url');;
+		$domain_name = config('ali_pay.tz_url');
 		return redirect("{$domain_name}/auth/pay.html?order=".$trade_no);
 	}
 

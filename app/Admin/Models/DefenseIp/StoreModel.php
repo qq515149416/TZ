@@ -97,7 +97,7 @@ class StoreModel extends Model
 			->where('ip_status',0)
 			->update($data);
 
-		if(!$lock_res){
+		if(!$lock_res != count($ip_id) ){
 			DB::rollBack();
 			return [
 				'data' 	=> '',
@@ -285,7 +285,7 @@ class StoreModel extends Model
 
 	public function showUse(){
 		$ip_list = $this
-		->where('status',1)
+		->whereIn('status',[1,2,4,5])
 		->get()
 		->toArray();
 		if(count($ip_list) == 0){
@@ -347,8 +347,21 @@ class StoreModel extends Model
 				$ip['status'] = '未使用';
 				break;
 			case '1':
-				$ip['status'] = '已使用';
+				$ip['status'] = '正在使用';
 				break;
+			case '2':
+				$ip['status'] = '申请下架';
+				break;
+			case '3':
+				$ip['status'] = '已下架';
+				break;
+			case '4':
+				$ip['status'] = '试用';
+				break;
+			case '5':
+				$ip['status'] = '待审核';
+				break;
+
 			default:
 				$ip['status'] = '未知状态';
 				break;

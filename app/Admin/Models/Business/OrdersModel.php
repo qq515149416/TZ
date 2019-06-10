@@ -18,6 +18,7 @@ use XS;
 use XSDocument;
 use Illuminate\Support\Facades\Redis;
 use App\Admin\Models\Business\BusinessModel;
+use App\Admin\Models\DefenseIp\StoreModel;
 
 /**
  * 后台订单模型
@@ -1273,9 +1274,21 @@ class OrdersModel extends Model
 									->where('business_number',$row['business_sn'])
 									->whereNull('deleted_at')
 									->update($business);
-
+						
 						if($update_business == 0){
 							$return['msg']  = '更新业务到期时间失败!';
+							$return['code'] = 3;
+							return $return;
+						}
+						$d_ip = StoreModel::find($checkBusiness->ip_id);
+						if ($d_ip == null) {
+							$return['msg']  = '高防ip信息获取失败';
+							$return['code'] = 3;
+							return $return;
+						}
+						$d_ip->status = 1;
+						if (!$d_ip->save()) {
+							$return['msg']  = '高防ip状态更新失败';
 							$return['code'] = 3;
 							return $return;
 						}
@@ -1295,8 +1308,7 @@ class OrdersModel extends Model
 						$return['code'] = 2;
 						return $return;
 					}
-					$sale_ip = DB::table('tz_defenseip_store')
-							->select(['id','ip'])
+					$sale_ip = StoreModel::select(['id','ip'])
 							->where('site',$package->site)
 							->where('protection_value',$package->protection_value)
 							->where('status',0)
@@ -1307,8 +1319,9 @@ class OrdersModel extends Model
 						$return['code'] = 2;
 						return $return;
 					}
-					$update_ip =  DB::table('tz_defenseip_store')->where('id',$sale_ip->id)->whereNull('deleted_at')->update(['status' => 1]);
-					if($update_ip == 0){
+					$sale_ip->status = 1;
+					$update_ip =  $sale_ip->save();
+					if(!$update_ip){
 						$return['msg']  = '更新ip使用状态失败!';
 						$return['code'] = 3;
 						return $return;

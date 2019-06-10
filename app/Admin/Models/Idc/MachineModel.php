@@ -346,11 +346,30 @@ class MachineModel extends Model
 	 * @return [type]     [description]
 	 */
 	public function deleteMachine($id){
-		$res = $this->checkDel($id);
-		if($res['code'] != 1){
-			return $res;
+		
+		$machine = $this->find($id);
+
+		if($machine == null){
+			$return['code'] = 0;
+			$return['msg'] = '无法找到对应的机器信息请确认参数无误';
+			return $return;
 		}
-		$row = $this->where('id',$id)->delete();
+
+	    if($machine->ip_id != 0){
+	   		$return['code'] = 0;
+			$return['msg'] = '请先将该机器资源绑定的其他资源(如:IP)进行解除后再删除';
+			return $return;
+	    }
+		
+		if($machine->used_status == 1 || $machine->used_status == 2 || $machine->used_status == 3){
+			$used_status = [1=>'业务锁定',2=>'使用中',3=>'锁定使用'];
+			$return['code'] = 0;
+			$return['msg'] = '该机器已被'.$used_status[$machine->used_status].'请解除状态后再删除';
+			return $return;
+		}
+
+		$row = $this->where(['id'=>$id])->delete();
+
 		if($row != false){
 			$return['code'] = 1;
 			$return['msg'] = '删除机器信息成功！！';
@@ -358,8 +377,9 @@ class MachineModel extends Model
 			$return['code'] = 0;
 			$return['msg'] = '删除机器信息失败！！';
 		}
-			
+
 		return $return;
+	   		
 	}
 
 	protected function checkDel($id){

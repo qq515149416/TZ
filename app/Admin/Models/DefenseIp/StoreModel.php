@@ -97,7 +97,7 @@ class StoreModel extends Model
 			->where('ip_status',0)
 			->update($data);
 
-		if(!$lock_res != count($ip_id) ){
+		if($lock_res != count($ip_id) ){
 			DB::rollBack();
 			return [
 				'data' 	=> '',

@@ -1,10 +1,10 @@
 @extends('layouts.layout')
 
-@section('title', '游戏云解决方案-游戏服务器架构-CDN游戏加速[腾正科技]')
+@section('title', '移动APP解决方案-移动APP服务器安全防御-APP加速CDN[腾正科技]')
 
-@section('keywords', '游戏云解决方案,游戏云面临问题,游戏云架构部署,游戏服务器,游戏服务器架构，CDN游戏加速')
+@section('keywords', '移动APP解决方案,移动APP架构部署,移动APP服务器安全防御,移动APP加速,APP加速CDN')
 
-@section('description', '腾正科技游戏云解决方案，利用云服务器弹性扩展、负载均衡功能、自研高防御系统及CDN加速，打造虚拟化、高可用的游戏集群，解决游戏客户运行卡顿、掉线、攻击停服、玩家分析缺失、游戏直播接入困难等常见问题。')
+@section('description', '腾正科技移动APP解决方案，旨在为开发者提供模块功能化的通用移动应用基础服务，解决移动APP客户营销困难、访问速度、高并发、数据安全、域名劫持和调度不精准等难题，助力快速上云实现业务发展！')
 
 @section('content')
 <div class="tz-solution">

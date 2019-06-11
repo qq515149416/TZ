@@ -321,7 +321,7 @@
                         <a href="javascript:;">白名单审核</a>
                     </dd>
                     <dd>
-                        <a href="/aboutus/lianxi">支付中心</a>
+                        <a href="/aboutus/pay">支付中心</a>
                     </dd>
                     <dd>
                         <a href="javascript:;">帮助中心</a>

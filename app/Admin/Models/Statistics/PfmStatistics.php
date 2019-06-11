@@ -812,9 +812,11 @@ class  PfmStatistics extends Model
 					->whereBetween('flow.pay_time',[$begin_end['start_time'],$begin_end['end_time']])
 					->whereNull('flow.deleted_at')
 					->whereNull('business.deleted_at')
-					->select('flow.id')
-					->distinct('flow.id')
+					->select('flow.id','flow.actual_payment')
+					->distinct('id')
+					->get()
 					->sum('actual_payment');
+
 			$flow = bcadd($flow,$value->flow_count,2);//总计叠加包销售额
 
 			$value->cdn_count = 0;//每个业务员cdn销售额

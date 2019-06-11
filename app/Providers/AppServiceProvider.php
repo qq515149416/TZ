@@ -24,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
             $contacts = $index->index();
             $returnValue = "";
             if($expression=='"html"') {
+                $contacts['data'] = (array)array_rand($contacts['data'],10);
                 $element = '<ul class="clearfix">';
                 foreach($contacts['data'] as $key => $val) {
                     $element.='<li>';

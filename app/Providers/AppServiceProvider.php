@@ -16,13 +16,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $oContacts = new Contacts();
+        $contacts = $oContacts->index();
+        View::share('contacts', $contacts["data"]->random(10));
         //
         Blade::directive('join', function ($expression) {
             return "<?php echo implode('<br />',$expression); ?>";
         });
-        $index = new Contacts();
-        $contacts = $index->index();
-        View::share('contacts', $contacts);
         Blade::directive("getContacts", function($expression) {
             $index = new Contacts();
             $contacts = $index->index();

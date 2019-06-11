@@ -487,7 +487,7 @@
                     </div>
                     <div class="content">
                         <ul class="clearfix">
-                            @foreach ($contacts['data']->random(10) as $item)
+                            @foreach ($contacts as $item)
                                 <li>
                                     <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin={{$item->qq}}&site=qq&menu=yes">
                                         <img alt="给我发消息" src="{{asset('/images/button_old_41.gif')}}">

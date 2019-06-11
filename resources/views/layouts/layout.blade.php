@@ -486,12 +486,8 @@
                         售前QQ
                     </div>
                     <div class="content">
-                        @php
-                            $result = new App\Admin\Models\Others\Contacts();
-                            $contacts = $result->index()['data'];
-                        @endphp
                         <ul class="clearfix">
-                            @foreach ($contacts->random(10) as $item)
+                            @foreach ($contacts['data']->random(10) as $item)
                                 <li>
                                     <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin={{$item->qq}}&site=qq&menu=yes">
                                         <img alt="给我发消息" src="{{asset('/images/button_old_41.gif')}}">

@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use App\Admin\Models\Others\Contacts;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +20,9 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('join', function ($expression) {
             return "<?php echo implode('<br />',$expression); ?>";
         });
+        $index = new Contacts();
+        $contacts = $index->index();
+        View::share('contacts', $contacts);
         Blade::directive("getContacts", function($expression) {
             $index = new Contacts();
             $contacts = $index->index();

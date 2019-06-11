@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Http\Models\DefenseIp\OverlayBelongModel;
 use App\Http\Models\Customer\UserCenter;
+use App\Admin\Models\Idc\Ips;
 
 class PayOrder extends Model
 {
@@ -464,6 +465,20 @@ class PayOrder extends Model
 					$update_ip =  DB::table('tz_defenseip_store')->where('id',$sale_ip->id)->whereNull('deleted_at')->update(['status' => 1]);
 					if($update_ip == 0){
 						$return['msg']  = '更新ip使用状态失败!';
+						$return['code'] = 3;
+						return $return;
+					}
+
+					$idc_ip = Ips::where('ip',$sale_ip->ip)->first();
+					if ($idc_ip == null) {
+						$return['msg']  = 'ip资源库ip信息获取失败!';
+						$return['code'] = 3;
+						return $return;
+					}
+					$idc_ip->ip_note = '高防使用中!';
+					$idc_ip->ip_status = 1;
+					if (!$idc_ip->save()) {
+						$return['msg']  = 'ip资源库ip状态更改失败!';
 						$return['code'] = 3;
 						return $return;
 					}

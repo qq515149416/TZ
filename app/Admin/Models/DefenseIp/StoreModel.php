@@ -307,7 +307,7 @@ class StoreModel extends Model
 		];
 	}
 	private function getUseInfo($ip){
-		$business = DB::table('tz_defenseip_business')->where('ip_id',$ip['id'])->first();
+		$business = DB::table('tz_defenseip_business')->whereNull('deleted_at')->where('ip_id',$ip['id'])->first();
 		if($business == null){
 			$ip['target_ip'] = '无业务信息';
 			$ip['end_time'] = '无业务信息';	
@@ -324,16 +324,21 @@ class StoreModel extends Model
 				$ip['user'] = '客户信息错误';
 			}else{
 				$user = DB::table('tz_users')->select(['name','nickname','email'])->where('id',$business->user_id)->first();
-				if($user->email != null){
-					$ip['user'] = $user->email;
+				if ($user == null) {
+					$ip['user'] 	= '客户信息错误';
+					$ip['nickname']	= '客户信息错误';
 				}else{
-					$ip['user'] = $user->name;
-				}
-				
-				if($user->nickname != null){
-					$ip['nickname']	= $user->nickname;
-				}else{
-					$ip['nickname']	= '未设置昵称';
+					if($user->email != null){
+						$ip['user'] = $user->email;
+					}else{
+						$ip['user'] = $user->name;
+					}
+					
+					if($user->nickname != null){
+						$ip['nickname']	= $user->nickname;
+					}else{
+						$ip['nickname']	= '未设置昵称';
+					}
 				}	
 			}
 			

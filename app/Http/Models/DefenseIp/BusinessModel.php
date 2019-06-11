@@ -52,16 +52,36 @@ class BusinessModel extends Model
 				'code'	=> 0,
 			];
 		}
+		DB::beginTransaction();
+
+		$d_ip = StoreModel::find($business->ip_id);
+		if ($d_ip == null) {
+			return [
+				'data'	=> '',
+				'msg'	=> '高防IP信息获取失败',
+				'code'	=> 0,
+			];
+		}
+		$d_ip->status = 2;
+		if (!$d_ip->save() ) {
+			return [
+				'data'	=> '',
+				'msg'	=> '更改ip使用状态失败',
+				'code'	=> 0,
+			];
+		}
 		$business->status = 2;
 		$res = $business->save();
 		if($res != true)
 		{
+			DB::rollBack();
 			return [
 				'data'	=> '',
 				'msg'	=> '更改业务使用状态失败',
 				'code'	=> 0,
 			];
 		}
+		DB::commit();
 		return [
 			'data'	=> '',
 			'msg'	=> '提交下架审核成功',
@@ -87,8 +107,30 @@ class BusinessModel extends Model
 
 		 DB::beginTransaction();//开启事务处理
 
+		
 		 //更新审核结果
-		$business->status = $status;
+		if ($status == 3) {
+			$business->status = $status;
+		}else{
+			if ($status ==  1) {
+				 $d_ip = StoreModel::find($business->ip_id);
+				if ($business->end_at != null ) {	//说明原本是正在使用
+					$d_ip->status = $status;
+					$business->status = $status;
+				}else{
+					$d_ip->status = 4;
+					$business->status = 4;
+				}
+				if (!$d_ip->save()) {
+					return [
+						'data'	=> '',
+						'msg'	=> '高防ip使用状态更改失败',
+						'code'	=> 0,
+					];
+				}
+			}
+		}
+		
 		$res = $business->save();
 		//如果没成功就返回0
 		if($res != true)

@@ -24,9 +24,8 @@ class AppServiceProvider extends ServiceProvider
             $contacts = $index->index();
             $returnValue = "";
             if($expression=='"html"') {
-                $contacts['data'] = (array)array_rand($contacts['data'],10);
                 $element = '<ul class="clearfix">';
-                foreach($contacts['data'] as $key => $val) {
+                foreach($contacts['data']->random(10) as $key => $val) {
                     $element.='<li>';
                     $element.='<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin='.$val->qq.'&site=qq&menu=yes">';
                     $element.='<img alt="给我发消息" src="'.asset("/images/button_old_41.gif").'">';

@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use App\Admin\Models\Others\Contacts;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,6 +16,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $oContacts = new Contacts();
+        $contacts = $oContacts->index();
+        View::share('contacts', $contacts["data"]->random(10));
         //
         Blade::directive('join', function ($expression) {
             return "<?php echo implode('<br />',$expression); ?>";
@@ -23,14 +27,14 @@ class AppServiceProvider extends ServiceProvider
             $index = new Contacts();
             $contacts = $index->index();
             $returnValue = "";
-            if($expression=='"html"') {
+            if(strstr($expression,'html')) {
                 $element = '<ul class="clearfix">';
-                foreach($contacts['data'] as $key => $val) {
+                foreach($contacts['data']->random(10) as $key => $val) {
                     $element.='<li>';
                     $element.='<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin='.$val->qq.'&site=qq&menu=yes">';
                     $element.='<img alt="给我发消息" src="'.asset("/images/button_old_41.gif").'">';
                     $element.=$val->contactname.'</a>';
-                    $element.='</a></li>';
+                    $element.='</li>';
                 }
                 $element.="</ul>";
                 $returnValue = $element;

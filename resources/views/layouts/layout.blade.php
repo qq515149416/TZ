@@ -321,7 +321,7 @@
                         <a href="javascript:;">白名单审核</a>
                     </dd>
                     <dd>
-                        <a href="/aboutus/lianxi">支付中心</a>
+                        <a href="/aboutus/pay">支付中心</a>
                     </dd>
                     <dd>
                         <a href="javascript:;">帮助中心</a>
@@ -486,7 +486,16 @@
                         售前QQ
                     </div>
                     <div class="content">
-                        @getContacts("html")
+                        <ul class="clearfix">
+                            @foreach ($contacts as $item)
+                                <li>
+                                    <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin={{$item->qq}}&site=qq&menu=yes">
+                                        <img alt="给我发消息" src="{{asset('/images/button_old_41.gif')}}">
+                                        {{$item->contactname}}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
                     </div>
                 </div>
                 <div class="item m12">

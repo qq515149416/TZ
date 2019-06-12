@@ -44,10 +44,10 @@ class Contacts extends Model
             // 不存在数据
             $return['data'] = $result;
     		$return['code'] = 0;
-    		$return['msg'] = '暂无数据';	
+    		$return['msg'] = '暂无数据';
     	}
     	return $return;
-    	
+
     }
 
     /**
@@ -103,7 +103,7 @@ class Contacts extends Model
                 }
                 $return['data'] = $result;
                $return['code'] = 1;
-               $return['msg'] = '获取信息成功！！'; 
+               $return['msg'] = '获取信息成功！！';
             } else {
                 // 根据条件没有查询到数据
                 $return['data'] = $result;
@@ -131,16 +131,16 @@ class Contacts extends Model
         if($data && $data['id']+0) {
             //存在修改的数据进行修改操作
             $edit = $this->find($data['id']);
-            
+
             $edit->contactname = $data['contactname'];
             $edit->qq = $data['qq'];
             $edit->mobile = $data['mobile'];
             $edit->email = $data['email'];
             $edit->rank = $data['rank'];
             $edit->site = $data['site'];
-           
+
             $row = $edit->save();
-            
+
             if($row != false){
                 // 修改数据成功
                 $return['code'] = 1;
@@ -173,7 +173,7 @@ class Contacts extends Model
             if($row != false){
                 // 根据条件查询到数据
                $return['code'] = 1;
-               $return['msg'] = '删除信息成功！！'; 
+               $return['msg'] = '删除信息成功！！';
             } else {
                 // 根据条件没有删除到数据
                 $return['code'] = 0;

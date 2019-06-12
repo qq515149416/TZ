@@ -20,9 +20,9 @@
             <li data-target="#carousel-example-generic" data-slide-to="1">
                 <span class="progress"></span>
             </li>
-            <li data-target="#carousel-example-generic" data-slide-to="2">
+            <!-- <li data-target="#carousel-example-generic" data-slide-to="2">
                 <span class="progress"></span>
-            </li>
+            </li> -->
             <!-- <li data-target="#carousel-example-generic" data-slide-to="3">
                 <span class="progress"></span>
             </li> -->
@@ -44,13 +44,13 @@
                     </div>
                 </a>
             </div>
-            <div class="item">
+            <!-- <div class="item">
                 <a href="/zuyong/gaofang" target="_blank">
                     <img src="{{ asset("/images/banner/gaofangServer.png") }}" alt="...">
                     <div class="carousel-caption">
                     </div>
                 </a>
-            </div>
+            </div> -->
             <!-- <div class="item">
                 <a href="javascript:;" onclick="randomqq()" target="_blank">
                     <img src="{{ asset("/images/banner/gaofangBanner.jpg") }}" alt="...">

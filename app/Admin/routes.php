@@ -122,6 +122,8 @@ Route::group([
             $router->get('/overlay', 'Show\OverlayController@index');
             $router->get('/overlayBusiness', 'Show\OverlayBusinessController@index');
             $router->get('/resourceHistory', 'Show\ResourceHistoryController@index');
+            $router->resource('/links', 'Show\LinksController');
+
 
         });
 
@@ -555,7 +557,7 @@ Route::group([
 
             $router->post('setTarget', 'DefenseIp\SetController@setTarget');//配置目标IP
             $router->get('changeDIP', 'DefenseIp\SetController@changeDIP');//高防换服务IP
-            
+
 
         });
 

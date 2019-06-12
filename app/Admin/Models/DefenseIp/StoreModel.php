@@ -307,7 +307,7 @@ class StoreModel extends Model
 		];
 	}
 	private function getUseInfo($ip){
-		$business = DB::table('tz_defenseip_business')->whereNull('deleted_at')->where('ip_id',$ip['id'])->first();
+		$business = DB::table('tz_defenseip_business')->where('status','!=',3)->whereNull('deleted_at')->where('ip_id',$ip['id'])->first();
 		if($business == null){
 			$ip['target_ip'] = '无业务信息';
 			$ip['end_time'] = '无业务信息';	

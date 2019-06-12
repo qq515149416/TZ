@@ -39,7 +39,14 @@ class OrderModel extends Model
 				'code'	=> 0,
 			];
 		}
-		$package = DB::table('tz_defenseip_package')->select(['site','protection_value'])->where('id',$package_id)->first();
+		$package = DB::table('tz_defenseip_package')->select(['site','protection_value'])->whereNull('deleted_at')->where('id',$package_id)->first();
+
+		if($package == null){
+			$return['data'] 	= [];
+			$return['msg'] 	= '套餐不存在!';
+			$return['code']	= 0;
+			return $return;
+		}
 
 		$check_ip = DB::table('tz_defenseip_store')
 				->select(['id','ip'])
@@ -59,11 +66,20 @@ class OrderModel extends Model
 		$data['order_sn'] 		= 'GN_'.$time.'_'.$user_id;
 		$data['business_sn']		= 'G_'.$time.'_'.$user_id;
 		$data['customer_id']		= $user_id;
-		$data['customer_name']	= Auth::user()->name;
+		$data['customer_name']		= Auth::user()->name;
 		if($data['customer_name'] == null){
 			$data['customer_name']	= Auth::user()->email;
 		}
-		$data['business_id']		= Auth::user()->salesman_id;
+
+		if (Auth::user()->salesman_id == null) {
+			$return['data'] 	= [];
+			$return['msg'] 	= '请绑定业务员后购买!';
+			$return['code']	= 0;
+			return $return;
+		}else{
+			$data['business_id']		= Auth::user()->salesman_id;
+		}
+		
 		$data['business_name']		= DB::table('admin_users')->where('id',$data['business_id'])->value('name');
 		$data['resource_type']		= 11;
 		$data['order_type']		= 1;

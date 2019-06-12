@@ -194,7 +194,8 @@ class BusinessModel extends Model
 				];
 			}
 			$d_ip->status = 4;
-			$idc_ip->ip_status = 4;
+			$idc_ip->ip_status = 1;
+			$idc_ip->ip_note = '高防使用中!';
 			if (!$d_ip->save()) {
 				DB::rollBack();
 				return [

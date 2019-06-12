@@ -1326,6 +1326,21 @@ class OrdersModel extends Model
 						$return['code'] = 3;
 						return $return;
 					}
+					
+					$idc_ip = Ips::where('ip',$sale_ip->ip)->first();
+					if ($idc_ip == null) {
+						$return['msg']  = 'ip资源库ip信息获取失败!';
+						$return['code'] = 3;
+						return $return;
+					}
+					$idc_ip->ip_note = '高防使用中!';
+					$idc_ip->ip_status = 1;
+					if (!$idc_ip->save()) {
+						$return['msg']  = 'ip资源库ip状态更改失败!';
+						$return['code'] = 3;
+						return $return;
+					}
+
 					$end = time_calculation(date('Y-m-d H:i:s',time()),$row['duration'],'month');
 					// Carbon::now()->addMonth($row['duration'])->toDateTimeString();
 

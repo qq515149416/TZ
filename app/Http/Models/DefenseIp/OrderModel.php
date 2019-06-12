@@ -70,8 +70,10 @@ class OrderModel extends Model
 		if($data['customer_name'] == null){
 			$data['customer_name']	= Auth::user()->email;
 		}
+		
+		$admin_user = DB::table('admin_users')->where('id',Auth::user()->salesman_id)->first();
 
-		if (Auth::user()->salesman_id == null) {
+		if ($admin_user == null) {
 			$return['data'] 	= [];
 			$return['msg'] 	= '请绑定业务员后购买!';
 			$return['code']	= 0;

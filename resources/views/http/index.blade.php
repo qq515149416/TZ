@@ -20,9 +20,9 @@
             <li data-target="#carousel-example-generic" data-slide-to="1">
                 <span class="progress"></span>
             </li>
-            <li data-target="#carousel-example-generic" data-slide-to="2">
+            <!-- <li data-target="#carousel-example-generic" data-slide-to="2">
                 <span class="progress"></span>
-            </li>
+            </li> -->
             <!-- <li data-target="#carousel-example-generic" data-slide-to="3">
                 <span class="progress"></span>
             </li> -->
@@ -37,14 +37,14 @@
                     </div>
                 </a>
             </div> -->
-            <div class="item active">
+            <!-- <div class="item active">
                 <a href="javascript:;" onclick="randomqq()" target="_blank">
                     <img src="{{ asset("/images/banner/618.png") }}" alt="...">
                     <div class="carousel-caption">
                     </div>
                 </a>
-            </div>
-            <div class="item">
+            </div> -->
+            <div class="item active">
                 <a href="/dist/highDefense.html" target="_blank">
                     <img src="{{ asset("/images/banner/duanwu.jpg") }}" alt="...">
                     <div class="carousel-caption">

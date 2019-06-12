@@ -37,6 +37,13 @@
                     </div>
                 </a>
             </div> -->
+            <!-- <div class="item active">
+                <a href="javascript:;" onclick="randomqq()" target="_blank">
+                    <img src="{{ asset("/images/banner/618.png") }}" alt="...">
+                    <div class="carousel-caption">
+                    </div>
+                </a>
+            </div> -->
             <div class="item active">
                 <a href="/dist/highDefense.html" target="_blank">
                     <img src="{{ asset("/images/banner/duanwu.jpg") }}" alt="...">
@@ -44,13 +51,6 @@
                     </div>
                 </a>
             </div>
-            <!-- <div class="item">
-                <a href="/zuyong/gaofang" target="_blank">
-                    <img src="{{ asset("/images/banner/gaofangServer.png") }}" alt="...">
-                    <div class="carousel-caption">
-                    </div>
-                </a>
-            </div> -->
             <!-- <div class="item">
                 <a href="javascript:;" onclick="randomqq()" target="_blank">
                     <img src="{{ asset("/images/banner/gaofangBanner.jpg") }}" alt="...">

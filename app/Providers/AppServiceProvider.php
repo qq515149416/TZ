@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use App\Admin\Models\Others\Contacts;
+use App\Admin\Models\News\LinksModel;
+use App\Admin\Models\News\CarouselModel;
 use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +21,9 @@ class AppServiceProvider extends ServiceProvider
         $oContacts = new Contacts();
         $contacts = $oContacts->index();
         View::share('contacts', $contacts["data"]->random(10));
+        View::share('links', LinksModel::where('type',1)->orderBy('links_order', 'desc')->get());
+        View::share('search_links', LinksModel::where('type',2)->orderBy('links_order', 'desc')->get());
+        View::share('product_links', LinksModel::where('type',3)->orderBy('links_order', 'desc')->get());
         //
         Blade::directive('join', function ($expression) {
             return "<?php echo implode('<br />',$expression); ?>";

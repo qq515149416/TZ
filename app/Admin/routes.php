@@ -123,6 +123,7 @@ Route::group([
             $router->get('/overlayBusiness', 'Show\OverlayBusinessController@index');
             $router->get('/resourceHistory', 'Show\ResourceHistoryController@index');
             $router->resource('/links', 'Show\LinksController');
+            $router->resource('/carousel', 'Show\CarouselController');
 
 
         });

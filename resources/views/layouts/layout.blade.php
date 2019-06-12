@@ -366,10 +366,12 @@
             </div>
             <div class="footer-hot-products">
                 <span>热门产品：</span>
+                @foreach ($product_links as $item)
                 <span>
-                    <a href="#">免费套餐</a>
+                    <a href="{{$item->url}}">{{$item->name}}</a>
                 </span>
-                <span>
+                @endforeach
+                <!-- <span>
                     <a href="#">主机租用</a>
                 </span>
                 <span>
@@ -392,14 +394,16 @@
                 </span>
                 <span>
                     <a href="#">云主机</a>
-                </span>
+                </span> -->
             </div>
             <div class="footer-popular-searches">
                 <span>热门搜索：</span>
+                @foreach ($search_links as $item)
                 <span>
-                    <a href="#">网站备案</a>
+                    <a href="{{$item->url}}">{{$item->name}}</a>
                 </span>
-                <span>
+                @endforeach
+                <!-- <span>
                     <a href="#">白名单是什么</a>
                 </span>
                 <span>
@@ -422,28 +426,30 @@
                 </span>
                 <span>
                     <a href="#">云服务器价格</a>
-                </span>
+                </span> -->
             </div>
             <div class="footer-links">
                 <span>友情链接：</span>
+                @foreach ($links as $item)
                 <span>
-                    <a href="https://www.idckx.com/">IDC快讯</a>
+                    <a href="{{$item->url}}" target="_blank">{{$item->name}}</a>
                 </span>
-                <span>
+                @endforeach
+                <!-- <span>
                     <a href="http://bbs.idckx.com/forum.php">IDC资源发布</a>
                 </span>
                 <span>
                     <a href="https://yun.zeisp.com/">腾正云</a>
                 </span>
-                <!-- <span>
+                <span>
                     <a href="#">下载联盟</a>
-                </span> -->
+                </span>
                 <span>
                     <a href="https://www.15cdn.com/">15CDN</a>
                 </span>
                 <span>
                     <a href="http://www.ip138.com/idc/">IDC公司</a>
-                </span>
+                </span> -->
             </div>
         </div>
     </div>

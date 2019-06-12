@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\DB;
 
+use App\Admin\Models\News\CarouselModel;
+
 class IndexController extends Controller
 {
     public function new_list($sid)
@@ -19,7 +21,8 @@ class IndexController extends Controller
         return view("http/index",[
             "company_news" => $this->new_list(2),
             "company_announcement" => $this->new_list(1),
-            "industry_news" => $this->new_list(3)
+            "industry_news" => $this->new_list(3),
+            "carousels" => CarouselModel::where('type',1)->orderBy('order', 'desc')->get()
         ]);
     }
 }

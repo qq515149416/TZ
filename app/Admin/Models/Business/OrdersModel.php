@@ -111,6 +111,10 @@ class OrdersModel extends Model
 	 * @return array        返回相关的数据信息和提示状态及信息
 	 */
 	public function clerkOrders($where){
+		if(isset($where['id'])){
+			$where['tz_orders.id'] = $where['id'];
+			unset($where['id']);
+		}
 		// $where['remove_status'] = 0;
 		$result = DB::table('tz_orders')
 					->leftJoin('tz_orders_flow','tz_orders.serial_number','=','tz_orders_flow.serial_number')
@@ -237,7 +241,7 @@ class OrdersModel extends Model
 		$resource_id = isset($insert_data['resource_id'])?$insert_data['resource_id']:mt_rand(1000,9999);
 		unset($insert_data['resource_id']);
 		$order_sn =$this->ordersn();
-		$insert_data['order_sn'] = $order_sn;
+		// $insert_data['order_sn'] = $order_sn;
 		if($insert_data['resource_type'] == 8){//带宽的时候生成专属的带宽序号
 			$insert_data['machine_sn'] = 'BW'.date("Ymd",time()).substr(time(),8,2).chr(mt_rand(65,90));
 		} elseif($insert_data['resource_type'] == 9){//防护的时候生成专属的防护序号
@@ -254,7 +258,7 @@ class OrdersModel extends Model
         }
 		$insert_data['business_id'] = $client->salesman_id;
 		$insert_data['business_name'] = DB::table('admin_users')->where(['id'=>$client->salesman_id])->value('name');
-		$insert_data['created_at'] = date('Y-m-d H:i:s',time());
+		$insert_data['created_at'] = date('Y-m-d H:i:s',time());	
 		DB::beginTransaction();//开启事务处理
 		$row = DB::table('tz_orders')->insertGetId($insert_data);
 		if($row == false){

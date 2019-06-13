@@ -283,5 +283,18 @@ class OrdersController extends Controller
 	// 	$get_result = $get->getOrders($get_orders);
 	// 	return tz_ajax_echo($get_result['data'],$get_result['msg'],$get_result['code']);
 	// }
+	// 
+	
+	/**
+	 * 修改订单的价格/到期时间
+	 * @param  Request $request --id订单id,--price单价,--end_time到期时间
+	 * @return [type]           [description]
+	 */
+	public function updateOrders(Request $request){
+		$data = $request->only(['id','price','end_time']);
+		$update = new OrdersModel();
+		$result = $update->updateOrders($data);
+		return tz_ajax_echo($result,$result['msg'],$result['code']);
+	}
 
 }

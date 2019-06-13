@@ -109,4 +109,7 @@ return [
         'filter_clear'       => '显示全部',
         'filter_placeholder' => '过滤',
     ],
+    'search' => '搜索',
+    'continue_editing' => "继续编辑",
+    'detail' => "详细信息"
 ];

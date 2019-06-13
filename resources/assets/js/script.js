@@ -262,6 +262,7 @@ if(document.getElementById("downloadRoom")) {
 //   高防ip购买
   $("#purchaseTime").on("shown.bs.modal",function(event) {
     let purchaseTime = $(this);
+    purchaseTime.find(".btn.ok").off("click");
     purchaseTime.find(".btn.ok").click(function() {
         $.get(location.protocol+"//"+location.hostname+"/home/defenseIp/buyDefenseIpNow",{
             package_id: event.relatedTarget.dataset.id,

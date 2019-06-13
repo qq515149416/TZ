@@ -14,12 +14,14 @@
         <div id="carousel-example-generic" data-interval="2000" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
         <ol class="carousel-indicators">
-            <li data-target="#carousel-example-generic" data-slide-to="0" class="active">
+            @foreach ($carousels as $key => $item)
+            <li data-target="#carousel-example-generic" data-slide-to="{{$key}}" class="{{ $item->top ? 'active' : '' }}">
                 <span class="progress"></span>
             </li>
-            <li data-target="#carousel-example-generic" data-slide-to="1">
+            @endforeach
+            <!-- <li data-target="#carousel-example-generic" data-slide-to="1">
                 <span class="progress"></span>
-            </li>
+            </li> -->
             <!-- <li data-target="#carousel-example-generic" data-slide-to="2">
                 <span class="progress"></span>
             </li> -->
@@ -44,13 +46,15 @@
                     </div>
                 </a>
             </div> -->
-            <div class="item active">
-                <a href="/dist/highDefense.html" target="_blank">
-                    <img src="{{ asset("/images/banner/duanwu.jpg") }}" alt="...">
+            @foreach ($carousels as $item)
+            <div class="item {{ $item->top ? 'active' : '' }}">
+                <a href="{{$item->url}}" target="_blank">
+                    <img src="{{ url('upload/'.$item->image_url) }}" alt="{{$item->name}}">
                     <div class="carousel-caption">
                     </div>
                 </a>
             </div>
+            @endforeach
             <!-- <div class="item">
                 <a href="javascript:;" onclick="randomqq()" target="_blank">
                     <img src="{{ asset("/images/banner/gaofangBanner.jpg") }}" alt="...">
@@ -59,13 +63,13 @@
                 </a>
             </div> -->
 
-            <div class="item">
+            <!-- <div class="item">
                 <a href="/dist/highDefense.html" target="_blank">
                     <img src="{{ asset("/images/banner/gaofang.png") }}" alt="...">
                     <div class="carousel-caption">
                     </div>
                 </a>
-            </div>
+            </div> -->
 
             <!-- <div class="item">
                 <a href="http://yun.zeisp.com/cloudbuy.html" target="_blank">

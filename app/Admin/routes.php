@@ -123,6 +123,7 @@ Route::group([
             $router->get('/overlayBusiness', 'Show\OverlayBusinessController@index');
             $router->get('/resourceHistory', 'Show\ResourceHistoryController@index');
             $router->resource('/links', 'Show\LinksController');
+            $router->resource('/carousel', 'Show\CarouselController');
 
 
         });
@@ -451,6 +452,7 @@ Route::group([
         $router->post('checkchange','Business\OrdersController@checkChange');//审核更换记录
         $router->get('getchange','Business\OrdersController@getChange');//获取更换记录
         // $router->get('getorders','Business\OrdersController@getOrders');//获取相关的可更换的订单
+        $router->post('updateorder','Business\OrdersController@updateOrders');//修改订单的价格/到期时间
     });
 
 

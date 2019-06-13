@@ -111,6 +111,10 @@ class OrdersModel extends Model
 	 * @return array        返回相关的数据信息和提示状态及信息
 	 */
 	public function clerkOrders($where){
+		if(isset($where['id'])){
+			$where['tz_orders.id'] = $where['id'];
+			unset($where['id']);
+		}
 		// $where['remove_status'] = 0;
 		$result = DB::table('tz_orders')
 					->leftJoin('tz_orders_flow','tz_orders.serial_number','=','tz_orders_flow.serial_number')
@@ -254,7 +258,7 @@ class OrdersModel extends Model
         }
 		$insert_data['business_id'] = $client->salesman_id;
 		$insert_data['business_name'] = DB::table('admin_users')->where(['id'=>$client->salesman_id])->value('name');
-		$insert_data['created_at'] = date('Y-m-d H:i:s',time());
+		$insert_data['created_at'] = date('Y-m-d H:i:s',time());	
 		DB::beginTransaction();//开启事务处理
 		$row = DB::table('tz_orders')->insertGetId($insert_data);
 		if($row == false){
@@ -2929,7 +2933,92 @@ class OrdersModel extends Model
 	// 	$return['code'] = 1;
 	// 	$return['msg'] = '订单数据获取成功';
 	// 	return $return;	
-	
-	// } 
+	// }
+	 
+	/**
+	 * 修改订单的价格/到期时间
+	 * @param  array $update --id订单id,--price单价,--end_time到期时间
+	 * @return [type]         [description]
+	 */
+	public function updateOrders($update){
+		if(empty($update)){//没有传递任何参数的时候
+			$return['code'] = 0;
+			$return['msg'] = '(#101)无法修改订单相关信息';
+			return $return;
+		}
+
+		if(!isset($update['id'])){//没有传递订单id的时候
+			$return['code'] = 0;
+			$return['msg'] = '(#102)无法找到订单相关信息';
+			return $return;
+		}
+
+		if(isset($update['end_time'])){//传递了到期时间戳
+			$end_time = date('Y-m-d H:i:s',$update['end_time']);
+		}
+
+		/**
+		 * 根据订单id查找是否存在对应的订单
+		 * @var [type]
+		 */
+		$order = $this->whereBetween('order_status',[0,3])
+					->whereBetween('remove_status',[0,3])
+				    ->select('id','price','end_time','resource_type','business_sn')
+				    ->find($update['id']);
+		if(empty($order)){
+			$return['code'] = 0;
+			$return['msg'] = '(#103)查无此订单信息,请确认';
+			return $return;
+		}
+
+		/**
+		 * 当价格和到期时间跟原数据相同时，直接不修改
+		 * @var [type]
+		 */
+		if(isset($update['price']) && isset($end_time) && $update['price'] == $order->price && $end_time == $order->end_time){
+			$return['code'] = 0;
+			$return['msg'] = '(#104)无需更改订单信息';
+			return $return;
+		}
+
+		DB::beginTransaction();
+		if($order->resource_type < 4){//当类型是租用/托管主机/租用机柜时同时需要修改业务的相关单价和到期时间
+			$business = DB::table('tz_business')
+							->where(['business_number'=>$order->business_sn])
+							->whereBetween('remove_status',[0,3])
+							->whereNull('deleted_at')
+							->select('id','business_number')
+							->first();
+			if(empty($business)){//不存在对应的业务
+				$return['code'] = 0;
+				$return['msg'] = '(#105)查无此订单信息,请确认';
+				return $return;
+			}
+			$row = DB::table('tz_business')
+					->where(['business_number'=>$order->business_sn])
+					->update(['money'=>$update['price'],'endding_time'=>$end_time]);
+			if($row == 0){//更新相关业务信息失败
+				DB::rollBack();
+				$return['code'] = 0;
+				$return['msg'] = '(#106)修改订单信息失败';
+				return $return;
+			}
+		}
+
+		$update = DB::table('tz_orders')
+					->where(['id'=>$update['id']])
+					->update(['price'=>$update['price'],'end_time'=>$end_time]);
+		if($update == 0){//更新对应的订单信息失败
+			DB::rollBack();
+			$return['code'] = 0;
+			$return['msg'] = '(#107)修改订单信息失败';
+			
+		} else {//更新对应的订单信息成功
+			DB::commit();
+			$return['code'] = 1;
+			$return['msg'] = '修改订单信息成功';	
+		}
+		return $return;
+	} 
 
 }

@@ -241,7 +241,7 @@ class OrdersModel extends Model
 		$resource_id = isset($insert_data['resource_id'])?$insert_data['resource_id']:mt_rand(1000,9999);
 		unset($insert_data['resource_id']);
 		$order_sn =$this->ordersn();
-		// $insert_data['order_sn'] = $order_sn;
+		$insert_data['order_sn'] = $order_sn;
 		if($insert_data['resource_type'] == 8){//带宽的时候生成专属的带宽序号
 			$insert_data['machine_sn'] = 'BW'.date("Ymd",time()).substr(time(),8,2).chr(mt_rand(65,90));
 		} elseif($insert_data['resource_type'] == 9){//防护的时候生成专属的防护序号

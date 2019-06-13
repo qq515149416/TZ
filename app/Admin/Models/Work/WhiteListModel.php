@@ -309,7 +309,7 @@ class WhiteListModel extends Model
 			}
 			//没添加过就开始添加通行证
 			$api_controller = new ApiController();
-			$room_id = DB::table('idc_ips')->where('ip',$row->white_ip)->value('ip_comproom');
+			$room_id = DB::table('idc_ips')->where('ip',$row->white_ip)->whereNull('deleted_at')->value('ip_comproom');
 			//$room_id = 78;
 			if($room_id == null){
 				DB::rollBack();

@@ -8619,6 +8619,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #souvenir .product-superimposed > .product-content > .content p .indulgence b {
   font-size: 24px;
+  font-family: 'pingFangBold';
 }
 #souvenir .product-remind {
   margin: 0 auto;
@@ -8748,6 +8749,14 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   padding: 36px 0;
   background-color: #fff;
 }
+#souvenir .product-idc > ul > li > .content .key {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #a0a3a8;
+}
+#souvenir .product-idc > ul > li > .content .value {
+  font-size: 18px;
+}
 #souvenir .product-idc > ul > li > .content > footer {
   width: 422px;
   margin: 0 auto;
@@ -8763,7 +8772,6 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #souvenir .product-idc > ul > li > .content > footer > .price-info > .price > b {
   font-size: 70px;
-  font-family: arial;
   line-height: 70px;
 }
 #souvenir .product-idc > ul > li > .content > footer > .buy {

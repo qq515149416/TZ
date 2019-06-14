@@ -21,13 +21,13 @@
                     </header>
                     <div class="content">
                         <div class="row">
-                            <div class="col-md-2 text-center col-md-offset-1">
+                            <div class="col-md-2 text-center">
                                 <div class="row">
                                     <div class="key">
                                         CPU
                                     </div>
                                     <div class="value font-bold">
-                                        I7
+                                        8核
                                     </div>
                                 </div>
                             </div>
@@ -41,13 +41,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-2 text-center">
+                            <div class="col-md-3 text-center">
                                 <div class="row">
                                     <div class="key">
                                         硬盘
                                     </div>
                                     <div class="value font-bold">
-                                        240GSSD
+                                        300GSAS/1TSATA
                                     </div>
                                 </div>
                             </div>
@@ -90,7 +90,7 @@
                     </header>
                     <div class="content">
                         <div class="row">
-                            <div class="col-md-2 text-center col-md-offset-1">
+                            <div class="col-md-2 text-center">
                                 <div class="row">
                                     <div class="key">
                                         CPU
@@ -110,7 +110,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-2 text-center">
+                            <div class="col-md-3 text-center">
                                 <div class="row">
                                     <div class="key">
                                         硬盘

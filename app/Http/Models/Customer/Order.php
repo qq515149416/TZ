@@ -108,6 +108,7 @@ class Order extends Model
 				$value->machineroom_name = '';
 			} else {
 				$resource = json_decode($business);
+                $resource->machineroom_id=(int)$resource->machineroom_id;//TODO   临时处理bug 强制转换类型
 				$value->machineroom_id = isset($resource->machineroom_id)?$resource->machineroom_id:0;
 				$value->machineroom_name = isset($resource->machineroom_name)?$resource->machineroom_name:'';
 			}

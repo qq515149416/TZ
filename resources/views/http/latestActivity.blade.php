@@ -28,7 +28,7 @@
                     <p class="desc">特惠三重大礼畅游全网助力业务飞升</p>
                 </div>
             </a> -->
-            <a class="card" href="http://yun.zeisp.com/cloudbuy.html" target="_blank">
+            <a class="card disable" href="http://yun.zeisp.com/cloudbuy.html" target="_blank">
                 <div class="card-image">
                     <img src="{{ asset("/images/lastestActivity/activity-1.png") }}" />
                     <span class="ongoing">活动中</span>
@@ -38,7 +38,7 @@
                     <p class="desc">5动全网 1降到底！40G真实防御高防游戏云主机，只需139元，续费价格不变！限时抢购进行中</p>
                 </div>
             </a>
-            <a class="card" href="/zuyong/gaofang" target="_blank">
+            <a class="card disable" href="/zuyong/gaofang" target="_blank">
                 <div class="card-image">
                     <img src="{{ asset("/images/lastestActivity/activity-2.png") }}" />
                     <span class="ongoing">活动中</span>

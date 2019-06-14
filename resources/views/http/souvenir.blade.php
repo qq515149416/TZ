@@ -181,7 +181,7 @@
                                 <span class="indulgence">特惠价：<b>560</b></span>
                                 元/月
                             </p>
-                            <a href="#" class="buy">立即购买</a>
+                            <a href="javascript:randomqq();" class="buy">立即购买</a>
                         </div>
                         <div class="col-md-4">
                             <h4>100G防御流量</h4>
@@ -206,7 +206,7 @@
                                 <span class="indulgence">特惠价：<b>1050</b></span>
                                 元/月
                             </p>
-                            <a href="#" class="buy">立即购买</a>
+                            <a href="javascript:randomqq();" class="buy">立即购买</a>
                         </div>
                         <div class="col-md-4">
                             <h4>200G防御流量</h4>

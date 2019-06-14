@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * 促销活动管理模型
+ *
+ */
 
 class PromotionModel extends Model
 {
@@ -18,11 +22,18 @@ class PromotionModel extends Model
 	protected $dates = ['deleted_at'];
 	protected $fillable = ['img', 'link','title','top','digest','end_at','pro_order','start_at'];  
 
+
+	/**
+	 * 增
+	 */
 	public function insert($par){
 		return $this->create($par);
 
 	}
 
+	/**
+	 * 删
+	 */
 	public function del($del_id){
 		$link = $this->find($del_id);
 		if($link == null){
@@ -48,6 +59,9 @@ class PromotionModel extends Model
 		}
 	}
 
+	/**
+	 * 改
+	 */
 	public function edit($par){
 		$link = $this->find($par['edit_id']);
 		if($link == null){
@@ -74,6 +88,9 @@ class PromotionModel extends Model
 		}
 	}
 
+	/**
+	 * 查
+	 */
 	public function show(){
 		$pro = $this->get();
 		if ($pro->isEmpty()) {
@@ -95,6 +112,9 @@ class PromotionModel extends Model
 		}	
 	}
 
+	/**
+	 * 渲染数据
+	 */
 	protected function trans($pro){
 
 		$pro->img = json_decode($pro->img);

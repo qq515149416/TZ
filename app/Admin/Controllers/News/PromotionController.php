@@ -14,12 +14,14 @@ class PromotionController extends Controller
 {
 
 	/**
-	 * 添加友情链接
+	 * 添加促销活动
 	 * @param  Request $request [description]
+	 *$img 	-图片路径(用那个上传接口获取路径)	$link 	-活动链接 	$title 	-活动标题 	$top 	-置顶状态
+	 *$digest 	-活动摘要 	$end_at 	-结束时间 	$pro_order 	-排序 	$start_at 	-开始时间
 	 * @return json          
 	 */
 	public function insert(PromotionRequest $request){
-		
+		//获取信息
 		$par = $request->only(['img', 'link','title','top','digest','end_at','pro_order','start_at']);
 
 		$par['img'] = json_encode($par['img']);
@@ -45,7 +47,7 @@ class PromotionController extends Controller
 
 	/**
 	 * 删
-	 * @param  Request $request [description]
+	 * @param  Request $del_id 	-要删除的id
 	 * @return json         
 	 */
 	public function del(PromotionRequest $request){
@@ -59,7 +61,7 @@ class PromotionController extends Controller
 
 	/**
 	 * 改
-	 * @param  Request $request [description]
+	 * @param  Request  $edit_id 	-需编辑的id  ; 其余同上
 	 * @return json    
 	 */
 	public function edit(PromotionRequest $request){
@@ -80,8 +82,8 @@ class PromotionController extends Controller
 
 	/**
 	 * 查
-	 * @param  Request $request [description]
-	 * @return json           返回对应机房的信息或者数据
+	 * @param  Request  
+	 * @return json           返回所有促销活动信息
 	 */
 	public function show(PromotionRequest $request){
 	

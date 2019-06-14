@@ -293,14 +293,15 @@ class WhiteListModel extends Model
 			if(!$already->isEmpty()){
 				$already = $already->toArray();
 				for ($i=0; $i < count($already); $i++) { 
-					if($already[$i]['white_status'] == 1 ){
-						DB::rollBack();
-						return[
-							'data'	=> '',
-							'msg'	=> '白名单已存在',
-							'code'	=> 0,	
-						];
-					}elseif($already[$i]['white_status'] == 3 ){
+					// if($already[$i]['white_status'] == 1 ){
+					// 	DB::rollBack();
+					// 	return[
+					// 		'data'	=> '',
+					// 		'msg'	=> '白名单已存在',
+					// 		'code'	=> 0,	
+					// 	];
+					// }else
+					if($already[$i]['white_status'] == 3 ){
 						DB::rollBack();
 						return[
 							'data'	=> '',
@@ -327,6 +328,7 @@ class WhiteListModel extends Model
 			//更改状态成功,开始调用API塞到白名单的数据库
 			$domain = $row->domain_name;
 			$insert_res = $api_controller->createWhiteList($domain,$room_id);
+			// $insert_res = [ 'code' => 1];
 			if($insert_res['code'] != 1){
 				DB::rollBack();
 				return $insert_res;

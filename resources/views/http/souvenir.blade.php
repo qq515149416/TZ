@@ -194,14 +194,14 @@
                             </p>
                             <p class="font-medium">
                                 <span class="original">
-                                    <del>原价：300元/周</del>
+                                    <del>原价：500元/周</del>
                                 </span>
                                 <span class="indulgence">特惠价：<b>350</b></span>
                                 元/周
                             </p>
                             <p class="font-medium">
                                 <span class="original">
-                                    <del>原价：500元/月</del>
+                                    <del>原价：1500元/月</del>
                                 </span>
                                 <span class="indulgence">特惠价：<b>1050</b></span>
                                 元/月

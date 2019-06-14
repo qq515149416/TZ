@@ -23,6 +23,12 @@ class WhiteListModel extends Model
 	protected $dates = ['deleted_at'];
 	protected $fillable = [ 'white_number','white_ip','domain_name','record_number','binding_machine','customer_id','customer_name','submit_id','submit_name','submit','submit_note','check_time','check_note','white_status'];
 	
+	protected $user = '';
+
+	public function __construct(){
+		$this->user = Auth::user();
+	}
+
 	/**
 	 * 找出对应客户的工单
 	 * @param  [type] $white_status [description]
@@ -172,13 +178,15 @@ class WhiteListModel extends Model
 	public function cancelWhiteList($id){
 		
 		$whitelist = $this->find($id);
-		if ($whitelist == null) {
+
+		if ($whitelist == null || $whitelist->customer_id != $this->user->id) {
 			return [
 				'data'	=> [],
 				'msg'	=> '白名单不存在',
 				'code'	=> 0,
 			];
 		}
+
 		if ($whitelist->white_status != 0) {
 			return [
 				'data'	=> [],
@@ -186,6 +194,7 @@ class WhiteListModel extends Model
 				'code'	=> 0,
 			];
 		}
+
 
 		$whitelist->white_status = 4;
 		if (!$whitelist->save()) {

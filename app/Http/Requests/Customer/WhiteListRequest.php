@@ -56,7 +56,7 @@ class WhiteListRequest extends FormRequest
 					'white_ip'			=> 'required|ip',
 				];
 				break;
-			case 'cancel_white_list':
+			case 'cancelWhiteList':
 				$return = [
 					'cancel_id'			=> 'required|exists:tz_white_list,id',
 				];

@@ -18,6 +18,16 @@
     <!--活动-->
     <div class="activity">
         <div class="card-container">
+            <!-- <a class="card" href="/souvenir" target="_blank">
+                <div class="card-image">
+                    <img src="{{ asset("/images/lastestActivity/activity-5.jpg") }}" />
+                    <span class="ongoing">活动中</span>
+                </div>
+                <div class="card-body">
+                    <h5 class="title font-heavy">同行五载，感恩钜惠</h5>
+                    <p class="desc">特惠三重大礼畅游全网助力业务飞升</p>
+                </div>
+            </a> -->
             <a class="card" href="http://yun.zeisp.com/cloudbuy.html" target="_blank">
                 <div class="card-image">
                     <img src="{{ asset("/images/lastestActivity/activity-1.png") }}" />

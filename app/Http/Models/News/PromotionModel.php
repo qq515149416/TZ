@@ -18,13 +18,25 @@ class PromotionModel extends Model
 	protected $dates = ['deleted_at'];
 	protected $fillable = ['img', 'link','title','top','digest','end_at','pro_order','start_at'];  
 
+
+	/**
+	 * 获取指定状态的促销活动
+	 *	*	-所有的
+	 *	top 	-置顶的正在进行的
+	 *	0 	-已结束的
+	 *	1 	-正在进行的
+	 *	2 	-未开始的
+	 */
 	public function getPro($need){
+		//获取当前date
 		$now = date("Y-m-d H:i:s");
+
+		//根据所需选择对应sql  ,  用start_at 和 end_at 与 当前date进行比较获取
 		switch ($need) {
 			case '*':		//所有的促销活动
 				$pro = $this->orderBy('pro_order','desc')->get();
 				break;
-			case 'top':	//置顶的促销活动
+			case 'top':	//置顶的正在进行的促销活动
 				$pro = $this->where('top',1)->where('start_at','<',$now)->where('end_at','>',$now)->orderBy('pro_order','desc')->get();
 				break;
 			case '0':		//已结束的促销活动
@@ -52,6 +64,7 @@ class PromotionModel extends Model
 				'code'	=> 1,
 			];
 		}
+		//渲染数据
 		foreach ($pro as $k => $v) {
 			$v = $this->trans($v);
 		}
@@ -63,6 +76,9 @@ class PromotionModel extends Model
 	}
 
 
+	/**
+	 * 渲染数据
+	 */
 	protected function trans($pro){
 
 		$pro->img = json_decode($pro->img);
@@ -78,7 +94,7 @@ class PromotionModel extends Model
 				$pro->top = "未知状态";
 				break;
 		}
-	
+
 		return $pro;
 	}
 }

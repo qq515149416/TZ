@@ -23,11 +23,12 @@ class WhiteListModel extends Model
 	protected $dates = ['deleted_at'];
 	protected $fillable = [ 'white_number','white_ip','domain_name','record_number','binding_machine','customer_id','customer_name','submit_id','submit_name','submit','submit_note','check_time','check_note','white_status'];
 	
-	protected $user = '';
+	//不能开,开了有bug
+	// protected $abc = '';
 
-	public function __construct(){
-		$this->user = Auth::user();
-	}
+	// public function __construct(){
+	// 	$this->abc = Auth::user();
+	// }
 
 	/**
 	 * 找出对应客户的工单
@@ -109,9 +110,14 @@ class WhiteListModel extends Model
 	public function checkDomainName($domain_name){
 		$domain_name['customer_id'] = Auth::user()->id;
 		$status = $this->where($domain_name)->select('white_status')->first();
-		if(!empty($status)){
-			$return['code'] = 1;
-			$return['msg'] = '该域名您已提交过,请勿重复提交';
+		if(!empty($status) ){
+			if ($status->white_status == 0) {
+				$return['code'] = 1;
+				$return['msg'] = '该域名您已提交过,请勿重复提交';
+			}else{
+				$return['code'] = 0;
+				$return['msg'] = '';
+			}	
 		} else {
 			$return['code'] = 0;
 			$return['msg'] = '';
@@ -217,11 +223,11 @@ class WhiteListModel extends Model
 	 * @return 	array     返回提交结果及提示信息
 	 */
 	public function insertWhiteListForDIP($par){
-
+		//用正则查验下啥开头
 		$pattern = '/^((http){1}|w{3}|\W)/i';//意思是以  http  | www  |  非单词字符即 a-z A-Z 0-9的字符/
 
 		$res = preg_match($pattern,$par['domain_name'],$match);
-
+		//不行就踢
 		if( $res){
 			return [
 				'data'	=> [],
@@ -229,7 +235,10 @@ class WhiteListModel extends Model
 				'code'	=> 0,
 			];
 		}
-
+		
+		
+		
+		//获取提交的业务编号对应业务信息
 		$business = BusinessModel::where('business_number',$par['b_num'])->first();
 		if($business == null ){
 			return [
@@ -238,7 +247,7 @@ class WhiteListModel extends Model
 				'code'	=> 0,
 			];
 		}
-
+		//不是在用的不给过
 		if ($business->status != 1 && $business->status != 4) {
 			return [
 				'data'	=> [],
@@ -247,6 +256,7 @@ class WhiteListModel extends Model
 			];
 		}
 
+		//获取高防ip信息
 		$d_ip = StoreModel::find($business->ip_id);
 
 		if ($d_ip == null) {
@@ -256,7 +266,41 @@ class WhiteListModel extends Model
 				'code'	=> 0,
 			];
 		}
-		
+
+		//检查之前的提交情况
+		$checkWhiteList = $this->where('domain_name',$par['domain_name'])->get();
+
+		if (!$checkWhiteList->isEmpty()) {
+			foreach ($checkWhiteList as $k => $v) {
+				
+				//如果还是审核中,踢
+				if ($v->white_status == 0) {
+					return [
+						'data'	=> [],
+						'msg'	=> '该域名审核申请单正在审核中,请勿重复提交',
+						'code'	=> 0,
+					];
+				}
+				//如果已经是这个机房白名单的,踢
+				if ($v->white_status == 1 && $v->white_ip == $d_ip->ip) {
+					return [
+						'data'	=> [],
+						'msg'	=> '该域名已在白名单',
+						'code'	=> 0,
+					];
+				}
+				//如果是黑名单
+				if ($v->white_status == 3) {
+					return [
+						'data'	=> [],
+						'msg'	=> '该域名已被拉黑',
+						'code'	=> 0,
+					];
+				}
+			}
+		}
+
+		//获取对应的机房信息
 		$machineroom = MachineRoom::find($d_ip->site);
 
 		if ($machineroom == null) {
@@ -266,6 +310,7 @@ class WhiteListModel extends Model
 				'code'	=> 0,
 			];
 		}
+		//判断是否存在白名单接口
 		if (!$machineroom->white_list_add|| !$machineroom->white_list_key) {
 			return [
 				'data'	=> [],
@@ -273,6 +318,9 @@ class WhiteListModel extends Model
 				'code'	=> 0,
 			];
 		}
+
+		//拼起来,申请信息
+		// $user = $this->abc;
 		$user = Auth::user();
 		$white_number = create_number();
 		$submit = $user->nickname?$user->nickname:$user->email;
@@ -290,7 +338,7 @@ class WhiteListModel extends Model
 		$insert_data['submit_name'] 	= $submit;
 		$insert_data['submit'] 		= 1;
 		$insert_data['white_status'] 	= 0;
-	
+		
 		$res = $this->create($insert_data);
 		if ($res) {
 			return [

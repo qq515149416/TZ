@@ -77,7 +77,7 @@
                                 <span class="price">￥<b>800</b></span>
                                 <span class="unit">元/月</span>
                             </div>
-                            <a class="buy pull-right" href="javascript:;">立刻购买</a>
+                            <a class="buy pull-right" href="javascript:randomqq();">立刻购买</a>
                         </footer>
                     </div>
                 </li>
@@ -146,7 +146,7 @@
                                 <span class="price">￥<b>450</b></span>
                                 <span class="unit">元/月</span>
                             </div>
-                            <a class="buy pull-right" href="javascript:;">立刻购买</a>
+                            <a class="buy pull-right" href="javascript:randomqq();">立刻购买</a>
                         </footer>
                     </div>
                 </li>
@@ -231,7 +231,7 @@
                                 <span class="indulgence">特惠价：<b>1960</b></span>
                                 月/天
                             </p>
-                            <a href="#" class="buy">立即购买</a>
+                            <a href="javascript:randomqq();" class="buy">立即购买</a>
                         </div>
                     </div>
                 </div>

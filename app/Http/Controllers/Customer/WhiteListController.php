@@ -68,11 +68,11 @@ class WhiteListController extends Controller
 	 * @param  Request $request [description]
 	 * @return json           返回取消时的相关状态及提示信息
 	 */
-	public function cancelWhiteList(Request $request){
+	public function cancelWhiteList(WhiteListRequest $request){
 		$id = $request->only(['cancel_id']);
 		$cancel = new WhiteListModel();
-		$cancel_result = $cancel->cancelWhiteList($id);
-		return tz_ajax_echo($cancel_result,$cancel_result['msg'],$cancel_result['code']);
+		$cancel_result = $cancel->cancelWhiteList($id['cancel_id']);
+		return tz_ajax_echo($cancel_result['data'],$cancel_result['msg'],$cancel_result['code']);
 	}
 
 	public function test(Request $request){
@@ -88,6 +88,7 @@ class WhiteListController extends Controller
 	 * @return json           返回提交结果及提示信息
 	 */
 	public function insertWhiteListForDIP(WhiteListRequest $request){
+
 		$par = $request->only([ 'b_num'	, 'domain_name'	 , 'record_number' , 'submit_note']);
 		$model = new WhiteListModel();
 		$insert_res = $model->insertWhiteListForDIP($par);

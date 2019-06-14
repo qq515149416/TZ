@@ -30,7 +30,7 @@ class WhiteListRequest extends FormRequest
 		$method = $arr[count($arr)-1];
 		$return = [];
 		$par = $this->only(['edit_id']);
-
+		
 		switch ($method) {
 			case 'show_white_list':
 				$return = [
@@ -54,6 +54,11 @@ class WhiteListRequest extends FormRequest
 			case 'check_ip':
 				$return = [
 					'white_ip'			=> 'required|ip',
+				];
+				break;
+			case 'cancel_white_list':
+				$return = [
+					'cancel_id'			=> 'required|exists:tz_white_list,id',
 				];
 				break;
 			case 'insertWhiteListForDIP':
@@ -84,6 +89,8 @@ class WhiteListRequest extends FormRequest
 				'binding_machine.required' 	=> 'IP所属机器编号必须存在',
 				'b_num.required'		=> '请填写业务编号',
 				'b_num.exists'			=> '业务号不存在或已过期',
+				'cancel_id.required'		=> '请填写需取消的申请id',
+				'cancel_id.exists'			=> '该申请不存在',
 			];
 
 	}

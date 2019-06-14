@@ -56,7 +56,19 @@ class WhiteListModel extends Model
 	 * @return   array            返回相关的状态提示及信息
 	 */
 	public function insertWhiteList($insert_data){
-		if($insert_data){
+		if($insert_data){		
+			$pattern = '/^((http){1}|w{3}|\W)/i';//意思是以  http  | www  |  非单词字符即 a-z A-Z 0-9的字符/
+
+			$res = preg_match($pattern,$insertdata['domain_name'],$match);
+
+			if( $res){
+				return [
+					'data'	=> [],
+					'msg'	=> '域名格式错误,勿填 : http:// ; https ; www ; / ;',
+					'code'	=> 0,
+				];
+			}
+
 			$white_number = create_number();
 			$insert_data['white_number'] = $white_number;
 			$insert_data['customer_id'] = Auth::id();
@@ -158,21 +170,36 @@ class WhiteListModel extends Model
 	 * @return array     返回相关的状态及提示信息
 	 */
 	public function cancelWhiteList($id){
-		if($id){
-			$where['id'] = $id['cancel_id'];
-			$row = $this->where($where)->update(['white_status'=>4]);
-			if($row != false){
-				$return['code'] = 1;
-				$return['msg'] = '白名单申请取消成功';
-			} else {
-				$return['code'] = 0;
-				$return['msg'] = '白名单申请取消失败';
-			}
-		} else {
-			$return['code'] = 0;
-			$return['msg'] = '白名单申请无法取消';
+		
+		$whitelist = $this->find($id);
+		if ($whitelist == null) {
+			return [
+				'data'	=> [],
+				'msg'	=> '白名单不存在',
+				'code'	=> 0,
+			];
 		}
-		return $return;
+		if ($whitelist->white_status != 0) {
+			return [
+				'data'	=> [],
+				'msg'	=> '该申请已审核完毕,请勿重复提交',
+				'code'	=> 0,
+			];
+		}
+
+		$whitelist->white_status = 4;
+		if (!$whitelist->save()) {
+			return [
+				'data'	=> [],
+				'msg'	=> '取消申请失败',
+				'code'	=> 0,
+			];
+		}
+		return [
+			'data'	=> [],
+			'msg'	=> '取消申请成功',
+			'code'	=> 1,
+		];
 	}
 
 	/**
@@ -181,6 +208,19 @@ class WhiteListModel extends Model
 	 * @return 	array     返回提交结果及提示信息
 	 */
 	public function insertWhiteListForDIP($par){
+
+		$pattern = '/^((http){1}|w{3}|\W)/i';//意思是以  http  | www  |  非单词字符即 a-z A-Z 0-9的字符/
+
+		$res = preg_match($pattern,$par['domain_name'],$match);
+
+		if( $res){
+			return [
+				'data'	=> [],
+				'msg'	=> '域名格式错误,勿填 : http:// ; https ; www ; / ;',
+				'code'	=> 0,
+			];
+		}
+
 		$business = BusinessModel::where('business_number',$par['b_num'])->first();
 		if($business == null ){
 			return [

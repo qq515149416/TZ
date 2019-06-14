@@ -129,14 +129,18 @@ class WhiteListModel extends Model
 	 */
 	public function insertWhiteList($insertdata){
 		
-		$check_domain = strstr($insertdata['domain_name'],'/');
-		if($check_domain != false){
+		$pattern = '/^((http){1}|w{3}|\W)/i';//意思是以  http  | www  |  非单词字符即 a-z A-Z 0-9的字符/
+
+		$res = preg_match($pattern,$insertdata['domain_name'],$match);
+
+		if( $res){
 			return [
-				'data'	=> '',
+				'data'	=> [],
 				'msg'	=> '域名格式错误,勿填 : http:// ; https ; www ; / ;',
 				'code'	=> 0,
 			];
 		}
+
 		// 创建白名单编号
 		$whitenumber = create_number();
 		$insertdata['white_number'] 	= $whitenumber;
@@ -350,7 +354,7 @@ class WhiteListModel extends Model
 						];
 					}elseif($already[$i]['white_status'] == 1 ){
 						$api_controller = new ApiController();
-						$room_id = DB::table('idc_ips')->where('ip',$already[$i]['white_ip'])->value('ip_comproom');
+						$room_id = DB::table('idc_ips')->where('ip',$already[$i]['white_ip'])->whereNull('deleted_at')->value('ip_comproom');
 					
 						if($room_id == null){
 							DB::rollBack();

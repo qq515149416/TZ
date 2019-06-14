@@ -230,7 +230,7 @@ Route::group([
             Route::get('get_sales', 'Customer\BusinessController@getSales');
 
             //高防提交白名单
-            Route::get('insertWhiteListForDIP', 'Customer\WhiteListController@insertWhiteListForDIP');
+            Route::post('insertWhiteListForDIP', 'Customer\WhiteListController@insertWhiteListForDIP');
         });
     });
 

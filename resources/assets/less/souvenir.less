@@ -1,0 +1,285 @@
+#souvenir {
+    background: url(../images/souvenir/souvenir_bg.png) no-repeat #181e2d;
+    background-size: 100%;
+    padding-top: 830px;
+    .container {
+        width: 1200px;
+    }
+    .product-superimposed {
+        margin-top: 92px;
+        h3 {
+            margin: 0 auto;
+            // padding: 0 119px;
+            margin-bottom: 60px;
+            font-size: 30px;
+            font-weight: bold;
+            color: #ffffff;
+            width: 348px;
+            text-align: center;
+            position: relative;
+            &::before {
+                content: "";
+                position: absolute;
+                width: 119px;
+                height: 26px;
+                background: url(../images/souvenir/souvenir_bt_zuo.png) no-repeat;
+                left: -119px - 10px;
+                top: 4px;
+            }
+            &::after {
+                content: "";
+                position: absolute;
+                width: 119px;
+                height: 26px;
+                background: url(../images/souvenir/souvenir_bt_you.png) no-repeat;
+                right: -119px - 10px;
+                top: 4px;
+            }
+        }
+        > .product-content {
+            > header {
+                border-radius: 2px 2px 0 0;
+                height: 62px;
+                padding-left: 20px;
+                background: linear-gradient(to right,#f3cf83,#f9c16a);
+                font-size: 24px;
+                color: #181e2d;
+                line-height: 62px;
+                position: relative;
+                &::after {
+                    content: "";
+                    position: absolute;
+                    right: -4px;
+                    top: 10px;
+                    width: 158px;
+                    height: 37px;
+                    background: url(../images/souvenir/souvenir_bq_.png) no-repeat;
+                }
+            }
+            > .content {
+                border-radius: 0 0 2px 2px;
+                padding-top: 40px;
+                padding-bottom: 23px;
+                background-color: #fff;
+                text-align: center;
+                > .row {
+                    > .col-md-4 {
+                        position: relative;
+                        &:last-of-type {
+                            &::after {
+                                display: none;
+                            }
+                        }
+                        &::after {
+                            content: "";
+                            position: absolute;
+                            width: 2px;
+                            height: 168px;
+                            right: 0;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            background-color: #e2e3e5;
+                        }
+                    }
+                }
+                .buy {
+                    display: inline-block;
+                    width: 112px;
+                    height: 30px;
+                    line-height: 30px;
+                    text-align: center;
+                    font-size: 12px;
+                    color: #fff;
+                    background-color: #e01616;
+                    text-decoration: none;
+                }
+                h4 {
+                    margin: 0;
+                    margin-bottom: 28px;
+                    font-size: 24px;
+                    color: #181e2d;
+                }
+                p {
+                    margin: 0;
+                    margin-bottom: 16px;
+                    font-size: 12px;
+                    color: #4e4a4a;
+                    .original {
+                        font-size: 12px;
+                        color: #a0a3a8;
+                        margin-right: 13px;
+                    }
+                    .indulgence {
+                        font-size: 16px;
+                        font-weight: bold;
+                        color: #e01616;
+                        b {
+                            font-size: 24px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .product-remind {
+        margin: 0 auto;
+        margin-top: 92px;
+        margin-bottom: 198px;
+        width: 920px;
+        padding-top: 72px;
+        padding-bottom: 50px;
+        background-color: #fff;
+        position: relative;
+        border-radius: 2px;
+        &::before {
+            content: "";
+            position: absolute;
+            width: 170px;
+            height: 44px;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background: url(../images/souvenir/souvenir_bq_huodong.png) no-repeat;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            margin-left: 72px;
+            li {
+                margin-bottom: 20px;
+                color: #4e4a4a;
+                font-size: 14px;
+                padding-left: 23px;
+                position: relative;
+                span {
+                    color: #e01616;
+                }
+                &::before {
+                    content: attr(data-index);
+                    position: absolute;
+                    width: 16px;
+                    height: 16px;
+                    left: 0;
+                    top: 0;
+                    background-color: #e01616;
+                    text-align: center;
+                    line-height: 16px;
+                    border-radius: 100%;
+                    color: #fff;
+                }
+                &:last-of-type {
+                    margin: 0;
+                }
+            }
+        }
+    }
+    .product-idc {
+        h3 {
+            margin: 0 auto;
+            // padding: 0 119px;
+            margin-bottom: 60px;
+            font-size: 30px;
+            font-weight: bold;
+            color: #ffffff;
+            width: 348px;
+            text-align: center;
+            position: relative;
+            &::before {
+                content: "";
+                position: absolute;
+                width: 119px;
+                height: 26px;
+                background: url(../images/souvenir/souvenir_bt_zuo.png) no-repeat;
+                left: -119px - 10px;
+                top: 4px;
+            }
+            &::after {
+                content: "";
+                position: absolute;
+                width: 119px;
+                height: 26px;
+                background: url(../images/souvenir/souvenir_bt_you.png) no-repeat;
+                right: -119px - 10px;
+                top: 4px;
+            }
+        }
+        > ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            > li {
+                width: 564px;
+                height: 368px;
+                > header {
+                    height: 140px;
+                    padding-top: 40px;
+                    background: linear-gradient(to right,#f3cf83,#f9c169);
+                    position: relative;
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        right: -4px;
+                        top: 10px;
+                        width: 158px;
+                        height: 37px;
+                        background: url(../images/souvenir/souvenir_bq_.png) no-repeat;
+                    }
+                    > h4 {
+                        margin: 0;
+                        margin-bottom: 24px;
+                        padding-left: 20px;
+                        font-size: 24px;
+                        font-weight: normal;
+                        color: #181e2d;
+                    }
+                    > ul {
+                        margin: 0;
+                        list-style-type: disc;
+                        > li {
+                            color: #181e2d;
+                            font-size: 18px;
+                            line-height: 18px;
+                        }
+                    }
+                }
+                > .content {
+                    padding: 36px 0;
+                    background-color: #fff;
+                    > footer {
+                        width: 422px;
+                        margin: 0 auto;
+                        position: relative;
+                        margin-top: 44px;
+                        > .price-info {
+                            font-size: 18px;
+                            color: #4e4a4a;
+                            > .price {
+                                color: #e01616;
+                                > b {
+                                    font-size: 70px;
+                                    font-family: arial;
+                                    line-height: 70px;
+                                }
+                            }
+                        }
+                        > .buy {
+                            // display: inline-block;
+                            position: absolute;
+                            bottom: 4px;
+                            right: 0;
+                            width: 140px;
+                            height: 39px;
+                            text-align: center;
+                            line-height: 39px;
+                            font-size: 16px;
+                            color: #ffffff;
+                            background-color: #e01616;
+                            text-decoration: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

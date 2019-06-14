@@ -116,7 +116,7 @@ class CarouselController extends Controller
             $form->select('type', '类型')->options($types);
             $form->image("image_url","图片")->move('public/images/');
             $form->textarea('description', '描述');
-            $form->switch('top', '是否默认显示');
+            $form->switch('top', '是否默认显示')->rules('required');
             $form->number('order', '排序');
         });
     }

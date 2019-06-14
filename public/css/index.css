@@ -32,7 +32,7 @@ body,
 html {
   margin: 0;
   padding: 0;
-  font-family: "pingFang", "\5FAE\8F6F\96C5\9ED1";
+  font-family: "pingFang", "\5FAE\8F6F\96C5\9ED1", Arial, Helvetica, sans-serif;
   overflow-x: hidden;
 }
 body h1,
@@ -51,27 +51,27 @@ html h6 {
 }
 body .font-extra-light,
 html .font-extra-light {
-  font-family: "pingFangExtraLight" !important;
+  font-family: "pingFangExtraLight", "\5FAE\8F6F\96C5\9ED1", Arial, Helvetica, sans-serif !important;
 }
 body .font-light,
 html .font-light {
-  font-family: "pingFangLight" !important;
+  font-family: "pingFangLight", "\5FAE\8F6F\96C5\9ED1", Arial, Helvetica, sans-serif !important;
 }
 body .font-regular,
 html .font-regular {
-  font-family: "pingFangRegular" !important;
+  font-family: "pingFangRegular", "\5FAE\8F6F\96C5\9ED1", Arial, Helvetica, sans-serif !important;
 }
 body .font-medium,
 html .font-medium {
-  font-family: 'pingFangMedium' !important;
+  font-family: 'pingFangMedium', "\5FAE\8F6F\96C5\9ED1", Arial, Helvetica, sans-serif !important;
 }
 body .font-bold,
 html .font-bold {
-  font-family: 'pingFangBold' !important;
+  font-family: 'pingFangBold', "\5FAE\8F6F\96C5\9ED1", Arial, Helvetica, sans-serif !important;
 }
 body .font-heavy,
 html .font-heavy {
-  font-family: "pingFangHeavy" !important;
+  font-family: "pingFangHeavy", "\5FAE\8F6F\96C5\9ED1", Arial, Helvetica, sans-serif !important;
 }
 body .main,
 html .main {
@@ -8500,4 +8500,282 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #tz-help-center .consult .consult-btn:hover {
   background-color: #fff;
   color: #043fc4;
+}
+#souvenir {
+  background: url(/images/souvenir_bg.png?45e0bc7c9fc9694ed0d9cff07380bde9) no-repeat #181e2d;
+  background-size: 100%;
+  padding-top: 830px;
+}
+#souvenir .container {
+  width: 1200px;
+}
+#souvenir .product-superimposed {
+  margin-top: 92px;
+}
+#souvenir .product-superimposed h3 {
+  margin: 0 auto;
+  margin-bottom: 60px;
+  font-size: 30px;
+  font-weight: bold;
+  color: #ffffff;
+  width: 348px;
+  text-align: center;
+  position: relative;
+}
+#souvenir .product-superimposed h3::before {
+  content: "";
+  position: absolute;
+  width: 119px;
+  height: 26px;
+  background: url(/images/souvenir_bt_zuo.png?870b9708ae5ec167387e79ba939881d4) no-repeat;
+  left: -129px;
+  top: 4px;
+}
+#souvenir .product-superimposed h3::after {
+  content: "";
+  position: absolute;
+  width: 119px;
+  height: 26px;
+  background: url(/images/souvenir_bt_you.png?29b09115a746469df4e5db0fa4ad5a9e) no-repeat;
+  right: -129px;
+  top: 4px;
+}
+#souvenir .product-superimposed > .product-content > header {
+  border-radius: 2px 2px 0 0;
+  height: 62px;
+  padding-left: 20px;
+  background: -webkit-gradient(linear, left top, right top, from(#f3cf83), to(#f9c16a));
+  background: linear-gradient(to right, #f3cf83, #f9c16a);
+  font-size: 24px;
+  color: #181e2d;
+  line-height: 62px;
+  position: relative;
+}
+#souvenir .product-superimposed > .product-content > header::after {
+  content: "";
+  position: absolute;
+  right: -4px;
+  top: 10px;
+  width: 158px;
+  height: 37px;
+  background: url(/images/souvenir_bq_.png?27735eb82c7a061be55eb291da09da52) no-repeat;
+}
+#souvenir .product-superimposed > .product-content > .content {
+  border-radius: 0 0 2px 2px;
+  padding-top: 40px;
+  padding-bottom: 23px;
+  background-color: #fff;
+  text-align: center;
+}
+#souvenir .product-superimposed > .product-content > .content > .row > .col-md-4 {
+  position: relative;
+}
+#souvenir .product-superimposed > .product-content > .content > .row > .col-md-4:last-of-type::after {
+  display: none;
+}
+#souvenir .product-superimposed > .product-content > .content > .row > .col-md-4::after {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 168px;
+  right: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  background-color: #e2e3e5;
+}
+#souvenir .product-superimposed > .product-content > .content .buy {
+  display: inline-block;
+  width: 112px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  font-size: 12px;
+  color: #fff;
+  background-color: #e01616;
+  text-decoration: none;
+}
+#souvenir .product-superimposed > .product-content > .content h4 {
+  margin: 0;
+  margin-bottom: 28px;
+  font-size: 24px;
+  color: #181e2d;
+}
+#souvenir .product-superimposed > .product-content > .content p {
+  margin: 0;
+  margin-bottom: 16px;
+  font-size: 12px;
+  color: #4e4a4a;
+}
+#souvenir .product-superimposed > .product-content > .content p .original {
+  font-size: 12px;
+  color: #a0a3a8;
+  margin-right: 13px;
+}
+#souvenir .product-superimposed > .product-content > .content p .indulgence {
+  font-size: 16px;
+  font-weight: bold;
+  color: #e01616;
+}
+#souvenir .product-superimposed > .product-content > .content p .indulgence b {
+  font-size: 24px;
+}
+#souvenir .product-remind {
+  margin: 0 auto;
+  margin-top: 92px;
+  margin-bottom: 198px;
+  width: 920px;
+  padding-top: 72px;
+  padding-bottom: 50px;
+  background-color: #fff;
+  position: relative;
+  border-radius: 2px;
+}
+#souvenir .product-remind::before {
+  content: "";
+  position: absolute;
+  width: 170px;
+  height: 44px;
+  top: 0;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  background: url(/images/souvenir_bq_huodong.png?7b87db2232abad5cc322f5d40fe1a3a2) no-repeat;
+}
+#souvenir .product-remind ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-left: 72px;
+}
+#souvenir .product-remind ul li {
+  margin-bottom: 20px;
+  color: #4e4a4a;
+  font-size: 14px;
+  padding-left: 23px;
+  position: relative;
+}
+#souvenir .product-remind ul li span {
+  color: #e01616;
+}
+#souvenir .product-remind ul li::before {
+  content: attr(data-index);
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  left: 0;
+  top: 0;
+  background-color: #e01616;
+  text-align: center;
+  line-height: 16px;
+  border-radius: 100%;
+  color: #fff;
+}
+#souvenir .product-remind ul li:last-of-type {
+  margin: 0;
+}
+#souvenir .product-idc h3 {
+  margin: 0 auto;
+  margin-bottom: 60px;
+  font-size: 30px;
+  font-weight: bold;
+  color: #ffffff;
+  width: 348px;
+  text-align: center;
+  position: relative;
+}
+#souvenir .product-idc h3::before {
+  content: "";
+  position: absolute;
+  width: 119px;
+  height: 26px;
+  background: url(/images/souvenir_bt_zuo.png?870b9708ae5ec167387e79ba939881d4) no-repeat;
+  left: -129px;
+  top: 4px;
+}
+#souvenir .product-idc h3::after {
+  content: "";
+  position: absolute;
+  width: 119px;
+  height: 26px;
+  background: url(/images/souvenir_bt_you.png?29b09115a746469df4e5db0fa4ad5a9e) no-repeat;
+  right: -129px;
+  top: 4px;
+}
+#souvenir .product-idc > ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#souvenir .product-idc > ul > li {
+  width: 564px;
+  height: 368px;
+}
+#souvenir .product-idc > ul > li > header {
+  height: 140px;
+  padding-top: 40px;
+  background: -webkit-gradient(linear, left top, right top, from(#f3cf83), to(#f9c169));
+  background: linear-gradient(to right, #f3cf83, #f9c169);
+  position: relative;
+}
+#souvenir .product-idc > ul > li > header::after {
+  content: "";
+  position: absolute;
+  right: -4px;
+  top: 10px;
+  width: 158px;
+  height: 37px;
+  background: url(/images/souvenir_bq_.png?27735eb82c7a061be55eb291da09da52) no-repeat;
+}
+#souvenir .product-idc > ul > li > header > h4 {
+  margin: 0;
+  margin-bottom: 24px;
+  padding-left: 20px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #181e2d;
+}
+#souvenir .product-idc > ul > li > header > ul {
+  margin: 0;
+  list-style-type: disc;
+}
+#souvenir .product-idc > ul > li > header > ul > li {
+  color: #181e2d;
+  font-size: 18px;
+  line-height: 18px;
+}
+#souvenir .product-idc > ul > li > .content {
+  padding: 36px 0;
+  background-color: #fff;
+}
+#souvenir .product-idc > ul > li > .content > footer {
+  width: 422px;
+  margin: 0 auto;
+  position: relative;
+  margin-top: 44px;
+}
+#souvenir .product-idc > ul > li > .content > footer > .price-info {
+  font-size: 18px;
+  color: #4e4a4a;
+}
+#souvenir .product-idc > ul > li > .content > footer > .price-info > .price {
+  color: #e01616;
+}
+#souvenir .product-idc > ul > li > .content > footer > .price-info > .price > b {
+  font-size: 70px;
+  font-family: arial;
+  line-height: 70px;
+}
+#souvenir .product-idc > ul > li > .content > footer > .buy {
+  position: absolute;
+  bottom: 4px;
+  right: 0;
+  width: 140px;
+  height: 39px;
+  text-align: center;
+  line-height: 39px;
+  font-size: 16px;
+  color: #ffffff;
+  background-color: #e01616;
+  text-decoration: none;
 }

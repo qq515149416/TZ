@@ -51,6 +51,8 @@ Route::group([
     Route::get('/activity', 'Show\LatestActivityController@index');
     Route::get('/yun/{page}', 'Show\YunController@index');
     Route::get('/help', 'Show\HelpCenterController@index');
+    Route::get('/souvenir', 'Show\SouvenirController@index');
+
 });
 
 /**

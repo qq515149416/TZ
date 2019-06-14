@@ -18,35 +18,37 @@
     <!--活动-->
     <div class="activity">
         <div class="card-container">
-            <!-- <a class="card" href="/souvenir" target="_blank">
+            <a class="card" href="/souvenir" target="_blank">
                 <div class="card-image">
-                    <img src="{{ asset("/images/lastestActivity/activity-5.jpg") }}" />
+                    <img src="{{ asset("/images/lastestActivity/activity-5.png") }}" />
                     <span class="ongoing">活动中</span>
                 </div>
                 <div class="card-body">
-                    <h5 class="title font-heavy">同行五载，感恩钜惠</h5>
-                    <p class="desc">特惠三重大礼畅游全网助力业务飞升</p>
+                    <h5 class="title font-heavy">同行五载，感恩钜惠，谢谢一路有您</h5>
+                    <p class="desc">腾正科技6.20成立5周年感恩钜惠，感恩一路有您的支持！本次活动一年仅有一次，错过再等一年，点击查看活动详情。</p>
                 </div>
-            </a> -->
-            <a class="card" href="http://yun.zeisp.com/cloudbuy.html" target="_blank">
+            </a>
+            <a class="card disable" href="javascript: void(0);">
                 <div class="card-image">
                     <img src="{{ asset("/images/lastestActivity/activity-1.png") }}" />
-                    <span class="ongoing">活动中</span>
+                    <span class="end">活动结束</span>
                 </div>
                 <div class="card-body">
                     <h5 class="title font-heavy">40G真实防御高防游戏云主机只需139元，续费价格不变</h5>
                     <p class="desc">5动全网 1降到底！40G真实防御高防游戏云主机，只需139元，续费价格不变！限时抢购进行中</p>
                 </div>
+                <div class="mask"></div>
             </a>
-            <a class="card" href="/zuyong/gaofang" target="_blank">
+            <a class="card disable" href="javascript: void(0);">
                 <div class="card-image">
                     <img src="{{ asset("/images/lastestActivity/activity-2.png") }}" />
-                    <span class="ongoing">活动中</span>
+                    <span class="end">活动结束</span>
                 </div>
                 <div class="card-body">
                     <h5 class="title font-heavy">游戏专配爆款200G高防服务器888限时抢购进行中</h5>
                     <p class="desc">游戏专配爆款，开区保驾领航！200G高防服务器,100M独享带宽,SSD固态硬盘，机房直销888元火热抢购进行中……</p>
                 </div>
+                <div class="mask"></div>
             </a>
             <a class="card" href="/dist/highDefense.html" target="_blank">
                 <div class="card-image">
@@ -68,6 +70,9 @@
                     <p class="desc">过了双12，春节福利又来了，30M云服务器低至39元/月，再次来袭！</p>
                 </div>
                 <div class="mask"></div>
+            </a>
+            <a class="card disable" style="visibility: hidden;" href="javascript: void(0);">
+
             </a>
         </div>
     </div>

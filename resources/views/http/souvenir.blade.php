@@ -74,7 +74,7 @@
                         </div>
                         <footer class="clearfix">
                             <div class="price-info pull-left">
-                                <span class="price">￥<b>800</b></span>
+                                <span class="price">￥<b>888</b></span>
                                 <span class="unit">元/月</span>
                             </div>
                             <a class="buy pull-right" href="javascript:randomqq();">立刻购买</a>

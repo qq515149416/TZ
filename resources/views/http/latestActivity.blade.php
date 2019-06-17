@@ -39,6 +39,16 @@
                 </div>
                 <div class="mask"></div>
             </a>
+            <a class="card" href="/dist/highDefense.html" target="_blank">
+                <div class="card-image">
+                    <img src="{{ asset("/images/lastestActivity/activity-3.png") }}" />
+                    <span class="ongoing">活动中</span>
+                </div>
+                <div class="card-body">
+                    <h5 class="title font-heavy">腾正高防IP专业DDOS防御首选</h5>
+                    <p class="desc">腾正高防IP专业DDOS防御首选，T+级防护系统，毫秒级过滤引擎，精准识别秒级响应，支持不同业务模式</p>
+                </div>
+            </a>
             <a class="card disable" href="javascript: void(0);">
                 <div class="card-image">
                     <img src="{{ asset("/images/lastestActivity/activity-2.png") }}" />
@@ -49,16 +59,6 @@
                     <p class="desc">游戏专配爆款，开区保驾领航！200G高防服务器,100M独享带宽,SSD固态硬盘，机房直销888元火热抢购进行中……</p>
                 </div>
                 <div class="mask"></div>
-            </a>
-            <a class="card" href="/dist/highDefense.html" target="_blank">
-                <div class="card-image">
-                    <img src="{{ asset("/images/lastestActivity/activity-3.png") }}" />
-                    <span class="ongoing">活动中</span>
-                </div>
-                <div class="card-body">
-                    <h5 class="title font-heavy">腾正高防IP专业DDOS防御首选</h5>
-                    <p class="desc">腾正高防IP专业DDOS防御首选，T+级防护系统，毫秒级过滤引擎，精准识别秒级响应，支持不同业务模式</p>
-                </div>
             </a>
             <a class="card disable" href="javascript: void(0);">
                 <div class="card-image">

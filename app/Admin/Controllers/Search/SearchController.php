@@ -65,6 +65,7 @@ class SearchController extends Controller
      */
     public function xsdocuemnt($document = 'business',$search_condition = ''){
         $xunsearch = new XS($document);
-        return $xunsearch->search->setQuery($search_condition)->search();
+        $count = $xunsearch->search->count($search_condition);
+        return $xunsearch->search->setQuery($search_condition)->setLimit($count)->search();
     }
 }

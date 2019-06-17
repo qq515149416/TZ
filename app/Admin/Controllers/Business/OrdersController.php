@@ -282,8 +282,7 @@ class OrdersController extends Controller
 	// 	$get = new OrdersModel();
 	// 	$get_result = $get->getOrders($get_orders);
 	// 	return tz_ajax_echo($get_result['data'],$get_result['msg'],$get_result['code']);
-	// }
-	// 
+	// } 
 	
 	/**
 	 * 修改订单的价格/到期时间

@@ -40,7 +40,6 @@ class SearchModel extends Model
             return $search_result = [];
         }
         $search_result = [];
-        //$result_key  = 0;
         foreach($xs_result as $xs_key => $xs_value){
             $business = $this->where(['business_number'=>$xs_value['business_sn']])->whereBetween('remove_status',[0,1])->select('id','client_id','sales_id','business_number','business_type','machine_number','resource_detail','money','client_id','length','start_time','endding_time','business_status')->first();
             if(!empty($business)){

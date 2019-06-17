@@ -156,25 +156,30 @@ class OverlayModel extends Model
 
 	public function showBelong($par){
 		$user_id = Auth::user()->id;
-        $belong_model = new OverlayBelongModel();
-        $overlay = $belong_model
-                    ->when($par['status'], function ($query, $role) {
-                        return $query->where('tz_overlay_belong.status',$role);
-                    },function ($query, $role) {
-                        if($role==="0") {
-                            return $query->where('tz_overlay_belong.status',$role);
-                        }
-                        return $query;
-                    })
+		$belong_model = new OverlayBelongModel();
+	
+		$overlay = $belong_model
+					->when($par['status'] ,function ($query, $role) {
+						if ($role != '*') {
+							return $query->where('tz_overlay_belong.status',$role);
+						}
+					},function ($query, $role) {
+						if($role==="0") {
+							return $query->where('tz_overlay_belong.status',$role);
+						}
+						return $query;
+					})
 					->where('tz_overlay_belong.user_id',$user_id)
 					->leftJoin('tz_overlay as b','b.id', '=' , 'tz_overlay_belong.overlay_id')
-                    ->leftJoin('idc_machineroom as c' , 'c.id' , '=' , 'b.site')
-                    ->when($par['site'], function ($query, $role) {
-                        return $query->where('c.id',$role);
-                    })
+					->leftJoin('idc_machineroom as c' , 'c.id' , '=' , 'b.site')
+					->when($par['site'], function ($query, $role) {
+						if ($role != '*') {
+							return $query->where('c.id',$role);
+						}
+					})
 					->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period','c.machine_room_name','c.id as machine_room_id'])
 					->get();
-        if($overlay->isEmpty()){
+		if($overlay->isEmpty()){
 			return [
 				'data'	=> [],
 				'msg'	=> '无叠加包',
@@ -186,7 +191,7 @@ class OverlayModel extends Model
 			'msg'	=> '获取成功',
 			'code'	=> 1,
 		];
-    }
+	}
 
 	public function useOverlayToDIP($par){
 		//获取业务信息

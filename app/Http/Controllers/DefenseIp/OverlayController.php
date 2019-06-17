@@ -40,11 +40,12 @@ class OverlayController extends Controller
 	 *  展示客户所属叠加包
 	 */
 	public function showBelong(OverlayRequest $request){
-		// $par = $request->only(['status','site']);
-        $par = [
-            'status' => $request->input('status', ''),
-            'site' => $request->input('site', '')
-        ];
+		//$par = $request->only(['status','site']);
+		$par = [
+			'status' => $request->input('status', ''),
+			'site' => $request->input('site', '')
+		];
+				
 		$model = new OverlayModel();
 
 		$res = $model->showBelong($par);

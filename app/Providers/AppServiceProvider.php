@@ -21,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
         $oContacts = new Contacts();
         $contacts = $oContacts->index();
         View::share('contacts', $contacts["data"]->random(10));
+        // View::share('contacts', $contacts["data"]);
         View::share('links', LinksModel::where('type',1)->orderBy('links_order', 'desc')->get());
         View::share('search_links', LinksModel::where('type',2)->orderBy('links_order', 'desc')->get());
         View::share('product_links', LinksModel::where('type',3)->orderBy('links_order', 'desc')->get());
@@ -34,7 +35,9 @@ class AppServiceProvider extends ServiceProvider
             $returnValue = "";
             if(strstr($expression,'html')) {
                 $element = '<ul class="clearfix">';
-                foreach($contacts['data']->random(10) as $key => $val) {
+                // foreach($contacts['data']->random(10) as $key => $val) {
+                foreach($contacts['data'] as $key => $val) {
+
                     $element.='<li>';
                     $element.='<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin='.$val->qq.'&site=qq&menu=yes">';
                     $element.='<img alt="给我发消息" src="'.asset("/images/button_old_41.gif").'">';

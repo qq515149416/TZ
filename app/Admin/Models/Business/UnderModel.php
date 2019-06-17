@@ -28,7 +28,7 @@ class UnderModel extends Model
         }
         switch ($apply['type']) {
             case 1:
-                $business_result = DB::table('tz_business')->where(['business_number' => $apply['business_number']])->select('remove_status', 'business_number', 'business_type', 'machine_number','order_number')->first();
+                $business_result = DB::table('tz_business')->where(['business_number' => $apply['business_number']])->whereNull('deleted_at')->select('remove_status', 'business_number', 'business_type', 'machine_number','order_number')->first();
                 if (empty($business_result)) {//不存在业务
                     $return['code'] = 0;
                     $return['msg']  = '(#101)无此业务，无法申请下架';
@@ -42,7 +42,7 @@ class UnderModel extends Model
                 $remove['remove_reason'] = $apply['remove_reason'];//下架缘由
                 $remove['remove_status'] = 1;//申请下架的状态
                 DB::beginTransaction();//开启事务
-                $business_remove = DB::table('tz_business')->where(['business_number' => $apply['business_number']])->update($remove);//更新业务的下架状态
+                $business_remove = DB::table('tz_business')->where(['business_number' => $apply['business_number']])->whereNull('deleted_at')->update($remove);//更新业务的下架状态
                 if ($business_remove == 0) {//更新失败
                     DB::rollBack();
                     $return['code'] = 0;
@@ -50,7 +50,7 @@ class UnderModel extends Model
                     return $return;
                 }
                 if($business_result->order_number != null){//存在机器的订单，则同时对该机器的订单进行下架状态的改变
-                    $order_removes = DB::table('tz_orders')->where(['order_sn'=>$business_result->order_number])->update($remove);
+                    $order_removes = DB::table('tz_orders')->where(['order_sn'=>$business_result->order_number])->whereNull('deleted_at')->update($remove);
                     if($order_removes == 0){
                         DB::rollBack();
                         $return['code'] = 0;
@@ -68,7 +68,7 @@ class UnderModel extends Model
                         $business['business_sn']   = $apply['business_number'];
                         $business['remove_status'] = 0;
 
-                        $resource[$key] = DB::table('tz_orders')->where($business)->orderBy('end_time', 'desc')->select('order_sn', 'resource_type', 'machine_sn', 'resource', 'price', 'end_time', 'order_status')->first();
+                        $resource[$key] = DB::table('tz_orders')->where($business)->orderBy('end_time', 'desc')->whereNull('deleted_at')->select('order_sn', 'resource_type', 'machine_sn', 'resource', 'price', 'end_time', 'order_status')->first();
                     }
                     if (!empty($resource)) {//存在关联业务则继续对关联的资源进行同步下架
                         foreach ($resource as $resource_key => $resource_value) {

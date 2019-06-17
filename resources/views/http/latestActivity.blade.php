@@ -28,6 +28,16 @@
                     <p class="desc">腾正科技6.20成立5周年感恩钜惠，感恩一路有您的支持！本次活动一年仅有一次，错过再等一年，点击查看活动详情。</p>
                 </div>
             </a>
+            <a class="card" href="/dist/highDefense.html" target="_blank">
+                <div class="card-image">
+                    <img src="{{ asset("/images/lastestActivity/activity-3.png") }}" />
+                    <span class="ongoing">活动中</span>
+                </div>
+                <div class="card-body">
+                    <h5 class="title font-heavy">腾正高防IP专业DDOS防御首选</h5>
+                    <p class="desc">腾正高防IP专业DDOS防御首选，T+级防护系统，毫秒级过滤引擎，精准识别秒级响应，支持不同业务模式</p>
+                </div>
+            </a>
             <a class="card disable" href="javascript: void(0);">
                 <div class="card-image">
                     <img src="{{ asset("/images/lastestActivity/activity-1.png") }}" />
@@ -38,16 +48,6 @@
                     <p class="desc">5动全网 1降到底！40G真实防御高防游戏云主机，只需139元，续费价格不变！限时抢购进行中</p>
                 </div>
                 <div class="mask"></div>
-            </a>
-            <a class="card" href="/dist/highDefense.html" target="_blank">
-                <div class="card-image">
-                    <img src="{{ asset("/images/lastestActivity/activity-3.png") }}" />
-                    <span class="ongoing">活动中</span>
-                </div>
-                <div class="card-body">
-                    <h5 class="title font-heavy">腾正高防IP专业DDOS防御首选</h5>
-                    <p class="desc">腾正高防IP专业DDOS防御首选，T+级防护系统，毫秒级过滤引擎，精准识别秒级响应，支持不同业务模式</p>
-                </div>
             </a>
             <a class="card disable" href="javascript: void(0);">
                 <div class="card-image">

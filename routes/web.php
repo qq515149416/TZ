@@ -17,6 +17,7 @@
 //     return view()->file(dirname(public_path()).'/resources/index/highDefense.html');
 // });
 
+
 Route::get('/socketurl', function () {
     return tz_ajax_echo(env("SOCKET_URL", "http://localhost:8120"), "获取成功", 1);
 });

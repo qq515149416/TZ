@@ -478,9 +478,7 @@
 
     </div>
     <div class="tz-kefu">
-        <div class="tz-kefu-help tz-kefu-item">
-            <span class="tz-kefu-item-btn"></span>
-        </div>
+
         <div class="tz-kefu-qq tz-kefu-item">
             <span class="tz-kefu-item-btn"></span>
             <div class="tz-kefu-item-info">
@@ -502,6 +500,33 @@
                                 </li>
                             @endforeach
                         </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tz-kefu-mobile tz-kefu-item">
+            <span class="tz-kefu-item-btn"></span>
+            <div class="tz-kefu-item-info">
+                <div class="tz-kefu-dropdown">
+
+                </div>
+                <div class="item">
+                    <div class="title">
+                        电话地址
+                    </div>
+                    <div class="content">
+                        <div class="contact-item">
+                            <a href="#">
+                                <img alt="给我发消息" src="{{ asset("/images/iphone.png") }}">
+                                0769-22226555
+                            </a>
+                        </div>
+                        <div class="contact-item">
+                            <a href="#" class="clearfix">
+                                <img class="pull-left" alt="给我发消息" src="{{ asset("/images/position.png") }}">
+                                <span style="width: 120px;" class="pull-right">广东省东莞松山湖科技十路2栋B座</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div class="item m12">
@@ -549,6 +574,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
         <div class="tz-kefu-wx tz-kefu-item">
             <span class="tz-kefu-item-btn"></span>
@@ -562,33 +588,8 @@
         <div class="tz-kefu-beian tz-kefu-item">
             <span class="tz-kefu-item-btn"></span>
         </div>
-        <div class="tz-kefu-mobile tz-kefu-item">
+        <div class="tz-kefu-help tz-kefu-item">
             <span class="tz-kefu-item-btn"></span>
-            <div class="tz-kefu-item-info">
-                <div class="tz-kefu-dropdown">
-
-                </div>
-                <div class="item">
-                    <div class="title">
-                        电话地址
-                    </div>
-                    <div class="content">
-                        <div class="contact-item">
-                            <a href="#">
-                                <img alt="给我发消息" src="{{ asset("/images/iphone.png") }}">
-                                0769-22226555
-                            </a>
-                        </div>
-                        <div class="contact-item">
-                            <a href="#" class="clearfix">
-                                <img class="pull-left" alt="给我发消息" src="{{ asset("/images/position.png") }}">
-                                <span style="width: 120px;" class="pull-right">广东省东莞松山湖科技十路2栋B座</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
         <div class="tz-kefu-top tz-kefu-item">
             <span class="tz-kefu-item-btn"></span>

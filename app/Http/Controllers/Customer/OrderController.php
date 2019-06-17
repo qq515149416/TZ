@@ -36,10 +36,10 @@ class OrderController extends Controller
 		if(!Auth::check()){
 			return tz_ajax_echo('','请先登录',0);
 		}
-		$type = $request->only(['resource_type','business_sn','status']);
+		$par = $request->only(['resource_type','business_sn','status']);
 		$orderModel = new Order();
 		//根据id获取所属订单
-		$list = $orderModel->getList($type);
+		$list = $orderModel->getList($par);
 
 		if($list == false){
 			$return['msg'] 	= '无订单记录';

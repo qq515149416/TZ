@@ -9,18 +9,16 @@
 @section('content')
 <div id="tz-server-rent-content">
     <!-- banner -->
-    <div class="banner {{ $page==='gaofang' ? 'gaofang' : ''  }}">
-        @if ($page!=='gaofang')
+    <!-- {{ $page==='gaofang' ? 'gaofang' : ''  }} -->
+    <div class="banner">
         <div class="title" style="color: #fff;">
 <!--            <h2 class="text font-bold">{{ $productData['title'] }}</h2>-->
 <!--            <h4 class="sub-text font-regular">{{ $productData['description'] }}</h4>-->
-            <h2 class="text">服务器租用</h2>
+            <h2 class="text">{{ $productData['title'] }}</h2>
             <h4 class="sub-text">
-                自主准T4、T3机房，从服务器设备、环境到维护的一站式服务，为您提供定制化硬件采购解决方案<br/>
-                以租用的方式独享专用高性能服务器及全完自主管理权限，满足您不同时期业务发展需求！
+                {!! $productData['description'] !!}
             </h4>
         </div>
-        @endif
         @if ($page!=='gaofang')
         <div class="bottom">
             <a class="btn-link {{ $page == 'dianxin' ? 'active' : '' }}" href="/zuyong/dianxin/hunan">电信服务器租用</a>

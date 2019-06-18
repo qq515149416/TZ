@@ -20,7 +20,7 @@ class CustomerModel extends Model
 
     protected $table = 'tz_users';
     public $timestamps = true;
-    protected $fillable = ['name','nickname','password','password_confirmation','msg_qq','msg_phone','remarks','pwd_ver','salesman_id'];
+    protected $fillable = ['name','nickname','password','password_confirmation','msg_qq','msg_phone','remarks','pwd_ver','salesman_id','status'];
 
 	/**
 	 * 管理人员查看客户信息

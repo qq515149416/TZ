@@ -402,6 +402,7 @@ class CustomerModel extends Model
         unset($data['password_confirmation']);
         $data['pwd_ver'] = 1;
         $data['salesman_id'] = Admin::user()->id;
+        $data['status'] = 2;
         $row = $this->create($data);
         if($row != false){
             /**

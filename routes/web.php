@@ -36,7 +36,7 @@ Route::group([
     Route::get('/promotion/consumer', 'Show\ConsumerPromotionController@index');
     Route::get('/zuyong/{page}/{room?}', 'Show\ServerRentController@index');
     Route::get('/solution/{page}', 'Show\SolutionController@index');
-    Route::get('/tuoguan', 'Show\HostingController@index');
+    Route::get('/tuoguan/{page}', 'Show\HostingController@index');
     Route::get('/article/{type}', 'Show\ArticleController@index');
     Route::get('/detail/{type}/{id}', 'Show\ArticleController@detail');
     Route::get('/15cdn/{page}', 'Show\CdnController@index');

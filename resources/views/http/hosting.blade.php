@@ -1,10 +1,10 @@
 @extends('layouts.layout')
 
-@section('title', '服务器托管-主机托管-服务器托管价格-高防服务器托管[腾正科技]')
+@section('title', $tdk['title'])
 
-@section('keywords', '服务器托管,主机托管,服务器托管价格,高防服务器托管,杭州主机托管,广东服务器托管')
+@section('keywords', $tdk['keywords'])
 
-@section('description', '腾正科技准T4机房,为您提供全国BGP三线(电信、联通、移动)服务器托管、高防服务器托管、主机托管相关服务，价格优惠多种高性能配置套餐，满足不同应用场景的需求，Tel:0769-22226555')
+@section('description', $tdk['description'])
 
 @section('content')
 <div id="tz-server-hosting">
@@ -18,15 +18,9 @@
             </h4>
         </div>
         <div class="collapse-tab">
-            <a class="collapse-tab-item heng-yang" href="#hengyang" data-toggle="collapse"
-               data-target="#heng-yang"
-               aria-expanded="false" aria-controls="heng-yang">衡阳服务器托管</a>
-            <a class="collapse-tab-item hui-zhou" href="#huizhou" data-toggle="collapse"
-               data-target="#hui-zhou"
-               aria-expanded="false" aria-controls="hui-zhou">惠州服务器托管</a>
-            <a class="collapse-tab-item xi-an" href="#xian" data-toggle="collapse"
-               data-target="#xi-an"
-               aria-expanded="false" aria-controls="xi-an">西安服务器托管</a>
+            <a class="collapse-tab-item heng-yang {{ $page === 'hengyang' ? 'active' : '' }}" href="/tuoguan/hengyang">衡阳服务器托管</a>
+            <a class="collapse-tab-item hui-zhou {{ $page === 'huizhou' ? 'active' : '' }}" href="/tuoguan/huizhou">惠州服务器托管</a>
+            <a class="collapse-tab-item xi-an {{ $page === 'xian' ? 'active' : '' }}" href="/tuoguan/xian">西安服务器托管</a>
             <!-- <a class="collapse-tab-item hang-zhou" href="#hangzhou" data-toggle="collapse"
                data-target="#hang-zhou"
                aria-expanded="false" aria-controls="hang-zhou">杭州服务器托管</a> -->
@@ -34,17 +28,17 @@
     </div>
     <!-- 展开部分 -->
     <div class="expand-area">
-        <div class="expand-item collapse" id="heng-yang">
-            <h1 class="expand-item-title">湖南衡阳机房</h1>
+        <div class="expand-item">
+            <h1 class="expand-item-title">{{$data["name"]}}</h1>
             <hr style="height: 1px; background-color: #333; margin-bottom: 10px;"/>
             <p class="expand-item-desc">
-                机房概况：腾正科技湖南衡阳机房总建筑面积约3000㎡，采用T3+标准机房，BGP三线（电信、联通、移动），1300余个机柜42U国际标准机柜，860G直连中国电信骨干网。</p>
+                机房概况：{{$data["overview"]}}</p>
             <p class="expand-item-desc">
-                机房等级：准T3机房
+                机房等级：{{$data["grade"]}}
                 <br/>
-                <a href="javascript: void(0);" class="scene-btn">查看机房实景</a>
+                <a href="{{$data['detail_url']}}" class="scene-btn">查看机房实景</a>
             </p>
-            <p class="expand-item-desc">典型客户：</p>
+            <p class="expand-item-desc">典型客户：{{$data['customer_representative']}}</p>
             <div class="table-container">
                 <table class="table table-bordered">
                     <thead>
@@ -62,320 +56,28 @@
                     </thead>
                     <tbody>
                     <!--******-->
+                    @foreach ($data['data'] as $item)
                     <tr>
-                        <th>衡阳电信</th>
-                        <td>1U</td>
-                        <td><0.7A</td>
-                        <td>G口20M独享</td>
-                        <td>1个</td>
-                        <td>40G</td>
-                        <td>450</td>
-                        <td>4750</td>
+                        <th>{{ $item['line'] }}</th>
+                        <td>{{ $item['specification'] }}</td>
+                        <td>{{ $item['current'] }}</td>
+                        <td>{{ $item['bandwidth'] }}</td>
+                        <td>{{ $item['ip'] }}</td>
+                        <td>{{ $item['defense'] }}</td>
+                        <td>{{ $item['monthly_payment'] }}</td>
+                        <td>{{ $item['annual_fee'] }}</td>
                         <td>
-                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
+                            <a href="{{ $item['buy'] }}" class="purchase-btn">立即购买</a>
                         </td>
                     </tr>
-                    <!--******-->
-                    <tr>
-                        <th>衡阳电信</th>
-                        <td>2U</td>
-                        <td><0.7A</td>
-                        <td>G口20M独享</td>
-                        <td>1个</td>
-                        <td>40G</td>
-                        <td>550</td>
-                        <td>5850</td>
-                        <td>
-                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
-                        </td>
-                    </tr>
-                    <!--******-->
-                    <tr>
-                        <th>衡阳双线</th>
-                        <td>1U</td>
-                        <td><0.7A</td>
-                        <td>G口20M独享</td>
-                        <td>1个</td>
-                        <td>40G</td>
-                        <td>550</td>
-                        <td>5850</td>
-                        <td>
-                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
-                        </td>
-                    </tr>
-                    <!--******-->
-                    <tr>
-                        <th>衡阳双线</th>
-                        <td>2U</td>
-                        <td><0.7A</td>
-                        <td>G口20M独享</td>
-                        <td>1个</td>
-                        <td>40G</td>
-                        <td>700</td>
-                        <td>7500</td>
-                        <td>
-                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
-                        </td>
-                    </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
-        <div class="expand-item collapse" id="hui-zhou">
-            <h1 class="expand-item-title">广东惠州机房</h1>
-            <hr style="height: 1px; background-color: #333; margin-bottom: 10px;"/>
-            <p class="expand-item-desc">
-                机房概况：腾正科技广东惠州机房总建筑面积约8000㎡，采用T3+标准机房，BGP三线（电信、联通、移动），2800余个机柜42U国际标准机柜，1600G直连中国华南地区国际出口电信骨干网，300G+集群防火墙，毫秒级的网络连接实时数据备份管理。</p>
-            <p class="expand-item-desc">
-                机房等级：准T3机房
-                <br/>
-                <a href="javascript: void(0);" class="scene-btn">查看机房实景</a>
-            </p>
-            <p class="expand-item-desc">典型客户：</p>
-            <div class="table-container">
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th scope="col" style="width: calc(100% / 9);">线路</th>
-                        <th scope="col" style="width: calc(100% / 9);">规格</th>
-                        <th scope="col" style="width: calc(100% / 9);">电流</th>
-                        <th scope="col" style="width: calc(100% / 9);">带宽</th>
-                        <th scope="col" style="width: calc(100% / 9);">IP数</th>
-                        <th scope="col" style="width: calc(100% / 9);">防御</th>
-                        <th scope="col" style="width: calc(100% / 9);">月付</th>
-                        <th scope="col" style="width: calc(100% / 9);">年付</th>
-                        <th scope="col" style="width: calc(100% / 9);">购买</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <!--******-->
-                    <tr>
-                        <th>惠州电信</th>
-                        <td>1U</td>
-                        <td><0.7A</td>
-                        <td>G口20M独享</td>
-                        <td>1个</td>
-                        <td>50G</td>
-                        <td>500</td>
-                        <td>5300</td>
-                        <td>
-                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
-                        </td>
-                    </tr>
-                    <!--******-->
-                    <tr>
-                        <th>惠州电信</th>
-                        <td>2U</td>
-                        <td><0.7A</td>
-                        <td>G口20M独享</td>
-                        <td>1个</td>
-                        <td>50G</td>
-                        <td>700</td>
-                        <td>7500</td>
-                        <td>
-                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
-                        </td>
-                    </tr>
-                    <!--******-->
-                    <tr>
-                        <th>惠州双线</th>
-                        <td>1U</td>
-                        <td><0.7A</td>
-                        <td>G口20M独享</td>
-                        <td>1对</td>
-                        <td>50G</td>
-                        <td>600</td>
-                        <td>6400</td>
-                        <td>
-                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
-                        </td>
-                    </tr>
-                    <!--******-->
-                    <tr>
-                        <th>惠州双线</th>
-                        <td>2U</td>
-                        <td><0.7A</td>
-                        <td>G口20M独享</td>
-                        <td>1对</td>
-                        <td>50G</td>
-                        <td>900</td>
-                        <td>9700</td>
-                        <td>
-                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="expand-item collapse" id="xi-an">
-            <h1 class="expand-item-title">陕西西安机房</h1>
-            <hr style="height: 1px; background-color: #333; margin-bottom: 10px;"/>
-            <p class="expand-item-desc">
-                陕西西安机房，国家AAAA级机房，机房建筑面积53851平方米，拥有5000个42U标准机柜；机房不仅采用直连互联网骨干点的10T总带宽，还采用320G
-                集群防火墙设置，为客户提供安全可靠、快速全面的数据存放业务及其它增值服务；在电力设备方面，西安机房从三向不同局向的变电所引入市电，不间断电源系统配置分为240V直流系统和UPS系统，系统自动切换，持续供电保障。</p>
-            <p class="expand-item-desc">
-                机房等级：准T4机房
-                <br/>
-                <a href="javascript: void(0);" class="scene-btn">查看机房实景</a>
-            </p>
-            <p class="expand-item-desc">典型客户：</p>
-            <div class="table-container">
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th scope="col" style="width: calc(100% / 9);">线路</th>
-                        <th scope="col" style="width: calc(100% / 9);">规格</th>
-                        <th scope="col" style="width: calc(100% / 9);">电流</th>
-                        <th scope="col" style="width: calc(100% / 9);">带宽</th>
-                        <th scope="col" style="width: calc(100% / 9);">IP数</th>
-                        <th scope="col" style="width: calc(100% / 9);">防御</th>
-                        <th scope="col" style="width: calc(100% / 9);">月付</th>
-                        <th scope="col" style="width: calc(100% / 9);">年付</th>
-                        <th scope="col" style="width: calc(100% / 9);">购买</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <!--******-->
-                    <tr>
-                        <th>西安电信</th>
-                        <td>1U</td>
-                        <td><0.7A</td>
-                        <td>G口20M独享</td>
-                        <td>1个</td>
-                        <td>50G</td>
-                        <td>500</td>
-                        <td>5300</td>
-                        <td>
-                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
-                        </td>
-                    </tr>
-                    <!--******-->
-                    <tr>
-                        <th>西安电信</th>
-                        <td>2U</td>
-                        <td><0.7A</td>
-                        <td>G口20M独享</td>
-                        <td>1个</td>
-                        <td>50G</td>
-                        <td>700</td>
-                        <td>7500</td>
-                        <td>
-                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
-                        </td>
-                    </tr>
-                    <!--******-->
-                    <tr>
-                        <th>西安联通</th>
-                        <td>1U</td>
-                        <td><0.7A</td>
-                        <td>G口20M独享</td>
-                        <td>1个</td>
-                        <td>50G</td>
-                        <td>500</td>
-                        <td>5300</td>
-                        <td>
-                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
-                        </td>
-                    </tr>
-                    <!--******-->
-                    <tr>
-                        <th>西安联通</th>
-                        <td>2U</td>
-                        <td><0.7A</td>
-                        <td>G口20M独享</td>
-                        <td>1个</td>
-                        <td>50G</td>
-                        <td>700</td>
-                        <td>7500</td>
-                        <td>
-                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>西安移动</th>
-                        <td>1U</td>
-                        <td><0.7A</td>
-                        <td>G口20M独享</td>
-                        <td>1个</td>
-                        <td>50G</td>
-                        <td>500</td>
-                        <td>5300</td>
-                        <td>
-                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>西安移动</th>
-                        <td>2U</td>
-                        <td><0.7A</td>
-                        <td>G口20M独享</td>
-                        <td>1个</td>
-                        <td>50G</td>
-                        <td>700</td>
-                        <td>7500</td>
-                        <td>
-                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>西安双线</th>
-                        <td>1U</td>
-                        <td><0.7A</td>
-                        <td>G口20M独享</td>
-                        <td>1对</td>
-                        <td>50G</td>
-                        <td>600</td>
-                        <td>6400</td>
-                        <td>
-                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>西安双线</th>
-                        <td>2U</td>
-                        <td><0.7A</td>
-                        <td>G口20M独享</td>
-                        <td>1对</td>
-                        <td>50G</td>
-                        <td>900</td>
-                        <td>9700</td>
-                        <td>
-                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>西安三线</th>
-                        <td>1U</td>
-                        <td><0.7A</td>
-                        <td>G口20M独享</td>
-                        <td>1对</td>
-                        <td>50G</td>
-                        <td>750</td>
-                        <td>8200</td>
-                        <td>
-                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>西安三线</th>
-                        <td>2U</td>
-                        <td><0.7A</td>
-                        <td>G口20M独享</td>
-                        <td>1对</td>
-                        <td>50G</td>
-                        <td>1050</td>
-                        <td>11500</td>
-                        <td>
-                            <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="expand-item collapse" id="hang-zhou">
-        </div>
+
+        <!-- <div class="expand-item collapse" id="hang-zhou">
+        </div> -->
     </div>
     <!-- 性能pk -->
     <div class="performance-pk">

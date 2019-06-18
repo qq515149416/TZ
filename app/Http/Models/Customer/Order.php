@@ -50,25 +50,34 @@ class Order extends Model
 		return $result;
 	}
 
+	/*
+	*根据不同需求获取对应订单列表
+	*
+	*/
 	public function getList($type)
 	{
 		$user_id = Auth::user()->id;
+		if(isset($type['status'])) {
+			$where['tz_orders.order_status'] = $type['status'];
+		}
 		if(!isset($type['business_sn']) && !isset($type['resource_type'])){//从个人订单入口,不区分资源类型
 			$where['tz_orders.customer_id'] = $user_id;
+			
 		} elseif(!isset($type['business_sn']) && isset($type['resource_type'])) {//从个人订单入口，区分资源类型
 			$where['tz_orders.customer_id'] = $user_id;
 			$where['tz_orders.resource_type'] = $type['resource_type'];
+			
 		} elseif(isset($type['business_sn']) && !isset($type['resource_type'])){//从业务入口进入，对应业务的不区分资源类型
 			$where['tz_orders.customer_id'] = $user_id;
 			$where['tz_orders.business_sn'] = $type['business_sn'];
+			
 		} elseif(isset($type['business_sn']) && isset($type['resource_type'])){//从业务入口对应业务的对应类型资源
 			$where['tz_orders.customer_id'] = $user_id;
 			$where['tz_orders.business_sn'] = $type['business_sn'];
 			$where['tz_orders.resource_type'] = $type['resource_type'];
+			
 		}
-		if(isset($type['status'])) {
-			$where['tz_orders.order_status'] = $type['status'];
-		}
+		
 		$order = $this
 			->leftJoin('tz_orders_flow','tz_orders.serial_number','=','tz_orders_flow.serial_number')
 			->where($where)
@@ -84,8 +93,9 @@ class Order extends Model
 
 		//转换状态
 		$resource_type = [ '1' => '租用主机' , '2' => '托管主机' , '3' => '租用机柜' , '4' => 'IP' , '5' => 'CPU' , '6' => '硬盘' , '7' => '内存' , '8' => '带宽' , '9' => '防护' , '10' => 'cdn' , '11' => '高防IP' , '12' => '流量叠加包'];
-		$order_type = [ '1' => '新购' , '2' => '续费' ];
+		
 
+		$order_type = [ '1' => '新购' , '2' => '续费' ];
 		$order_status = [ '0' => '待支付' , '1' => '已支付' , '2' => '已支付' , '3' => '订单完成' , '4' => '到期' , '5' => '取消' , '6' => '申请退款', '8' => '退款完成'];
 		$remove_status = [0 => '正常使用', 1 => '下架申请中', 2 => '机房处理中', 3 => '清空下架中', 4 => '下架完成'];
 		$info = $this->getName('*');
@@ -95,31 +105,87 @@ class Order extends Model
 		}
 
 		foreach ($order as $key => $value) {
-			$value->remove_status = $remove_status[$value->remove_status];
+			$value->remove_status 		= $remove_status[$value->remove_status];
 			$value->type 			= $value->resource_type;
-			$value->resource_type 		= $resource_type[$value->resource_type];
 			$value->order_type 		= $order_type[$value->order_type];
-			$value->status 	= $value->order_status;
-			$value->order_status 	= $order_status[$value->order_status];
-			$value->business_name	= $admin_name[$value->business_id];
-			$business = DB::table('tz_business as a')
-					->leftJoin('idc_machine as b','a.machine_number','=','b.machine_num')
-					->leftJoin('idc_machineroom as c','b.machineroom','=','c.id')
-					->where(['a.business_number'=>$value->business_sn])
-					->whereNull('a.deleted_at')
-					->first(['c.id as machineroom_id' , 'c.machine_room_name as machineroom_name']);
+			$value->status 			= $value->order_status;
+			$value->order_status 		= $order_status[$value->order_status];
+			$value->business_name		= $admin_name[$value->business_id];
 
-			if(empty($business)){
-				$value->machineroom_id = 0;
-				$value->machineroom_name = '';
-			} else {
-				$value->machineroom_id = isset($business->machineroom_id)?$business->machineroom_id:0;
-				$value->machineroom_name = isset($business->machineroom_name)?$business->machineroom_name:'';
+			//这个是属于主机的分类数组
+			$machine_arr = [ 1 , 2 , 4 , 5 , 6 , 7 , 8 , 9 ];
+			//机柜的数组
+			$cabinet_arr = [ 3 ];
+			//cdn的数组
+			$cdn_arr = [ 10 ];
+			//高防的数组
+			$defenseip_arr = [ 11 ];
+			//叠加包的数组
+			$overlay_arr = [ 12 ];
+			//因为不同类型的订单要从不同的表里找机房信息
+			switch ($value->resource_type) {
+				case 1:
+				case 2:
+				case 4:
+				case 5:
+				case 6:
+				case 7:
+				case 8:
+				case 9:
+					//如果是属于主机类业务
+					//获取对应业务,从业务处找机房信息
+					$machine_room = DB::table('tz_business as a')
+						->leftJoin('idc_machine as b','a.machine_number','=','b.machine_num')
+						->leftJoin('idc_machineroom as c','b.machineroom','=','c.id')
+						->where(['a.business_number'=>$value->business_sn])
+						->whereNull('a.deleted_at')
+						->whereNull('b.deleted_at')
+						->first(['c.id as machineroom_id' , 'c.machine_room_name as machineroom_name']);
+	
+					break;
+				case 3:
+					//如果是机柜类业务
+					$machine_room = $this
+								->leftJoin('idc_cabinet as b' , 'tz_orders.machine_sn' , '=' , 'b.cabinet_id')
+								->leftJoin('idc_machineroom as c' , 'b.machineroom_id' , '=' , 'c.id')
+								->where(['tz_orders.business_sn' => $value->business_sn])
+								->whereNull('b.deleted_at')
+								->first(['c.id as machineroom_id' , 'c.machine_room_name as machineroom_name']);
+					break;
+				case 10:
+					//如果是cdn业务
+					break;
+				case 11:
+					//如果是高防类业务
+					$machine_room = $this
+								->leftJoin('tz_defenseip_package as b' , 'tz_orders.machine_sn' , '=' , 'b.id')
+								->leftJoin('idc_machineroom as c' , 'b.site' , '=' , 'c.id')
+								->where(['tz_orders.business_sn' => $value->business_sn])
+								->first(['c.id as machineroom_id' , 'c.machine_room_name as machineroom_name']);
+					break;
+				case 12:
+					//如果是叠加包类业务
+					$machine_room = $this
+								->leftJoin('tz_overlay as b' , 'tz_orders.machine_sn' , '=' , 'b.id')
+								->leftJoin('idc_machineroom as c' , 'b.site' , '=' , 'c.id')
+								->where(['tz_orders.business_sn' => $value->business_sn])
+								->first(['c.id as machineroom_id' , 'c.machine_room_name as machineroom_name']);
+					break;
+				default:
+					//dd('no');
+					break;	
 			}
+			$value->machineroom_id 	= isset($machine_room->machineroom_id)?$machine_room->machineroom_id:0;
+			$value->machineroom_name 	= isset($machine_room->machineroom_name)?$machine_room->machineroom_name:'';
+			$value->resource_type 		= $resource_type[$value->resource_type];
+
 		}
 
 		return $order;
 	}
+
+	
+	
 
 	public function getOrderById($order_id)
 	{

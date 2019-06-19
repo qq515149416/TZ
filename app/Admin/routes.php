@@ -124,6 +124,8 @@ Route::group([
             $router->get('/resourceHistory', 'Show\ResourceHistoryController@index');
             $router->resource('/links', 'Show\LinksController');
             $router->resource('/carousel', 'Show\CarouselController');
+            $router->resource('/nav', 'Show\NavController');
+            $router->get('/api/nav/select', 'Show\NavController@select');
 
 
         });

@@ -185,7 +185,6 @@ class WhiteListModel extends Model
 	public function cancelWhiteList($id){
 
 		$whitelist = $this->find($id);
-        dd($this->user);
 		if ($whitelist == null || $whitelist->customer_id != $this->user->id) {
 			return [
 				'data'	=> [],

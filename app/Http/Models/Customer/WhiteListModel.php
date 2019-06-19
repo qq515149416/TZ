@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Models\DefenseIp\BusinessModel;
 use App\Http\Models\DefenseIp\StoreModel;
 use App\Admin\Models\Idc\MachineRoom;
-
+use App\Http\Models\Customer\Order;
+use App\Http\Models\Customer\Business;
 /**
  * 前台客户有关的白名单的模型
  */
@@ -66,7 +67,7 @@ class WhiteListModel extends Model
 		if($insert_data){		
 			$pattern = '/^((http){1}|w{3}|\W)/i';//意思是以  http  | www  |  非单词字符即 a-z A-Z 0-9的字符/
 
-			$res = preg_match($pattern,$insertdata['domain_name'],$match);
+			$res = preg_match($pattern,$insert_data['domain_name'],$match);
 
 			if( $res){
 				return [
@@ -352,8 +353,86 @@ class WhiteListModel extends Model
 				'msg'	=> '提交申请失败',
 				'code'	=> 0,
 			];
+		}	
+	}
+	
+
+	/**
+	 *获取用户所有正在使用的业务里的IP
+	 * @param  array $id 对应的id
+	 * @return array     返回用户所有正在使用的业务里的IP
+	 */
+	public function getAllIP(){
+		$ips = [];
+		//获取用户信息
+		$user = Auth::user();
+		//获取用户订单内的使用中ip
+		$orders = Order::where('customer_id' , $user->id)		//指定用户
+				->leftJoin('tz_business as b','b.business_number','=','tz_orders.business_sn')
+				->where('tz_orders.resource_type',4)		//类型为ip
+				->where('b.remove_status' , 0)			//未下架
+				->where('tz_orders.remove_status',0)		//未下架
+				->whereIn('tz_orders.order_status',[0,1,2])	//订单正在使用
+				->whereIn('b.business_status',[1,2])		//正在使用
+				->get(['tz_orders.machine_sn as ip' , 'b.machine_number as m_num']);
+		//怼到ips数组里去
+		if (!$orders->isEmpty()) {
+			foreach ($orders as $k => $v) {
+				$ips[] = [
+					'white_ip'		=> $v->ip,
+					'description'		=> $v->m_num.' 编号机器的子IP',
+					'binding_machine'	=> $v->m_num,
+				];
+			}
 		}
-		
+
+		//获取用户业务里的主机ip,从使用中业务处找
+		$business = Business::where('client_id' , $user->id)			//指定用户machine_number
+					->leftJoin('idc_machine as b','b.machine_num','=','tz_business.machine_number')
+					->leftJoin('idc_ips as c' , 'c.id' , '=' , 'b.ip_id')
+					->whereIn('tz_business.business_type' , [1,2])	//业务类型为主机的
+					->whereNull('b.deleted_at')
+					->where('tz_business.remove_status' , 0)		//未下架
+					->whereIn('tz_business.business_status' , [1,2])	//正在使用
+					->get(['c.ip' ,'b.machine_num as m_num']);
+
+		if (!$orders->isEmpty()) {
+			foreach ($business as $k => $v) {
+				$ips[] = [
+					'white_ip'		=> $v->ip,
+					'description'		=> $v->m_num.' 编号机器的主IP',
+					'binding_machine'	=> $v->m_num,
+				];
+			}
+		}
+
+		//获取用户高防业务里的IP
+		$d_ip = BusinessModel::where('user_id' , $user->id)		//指定用户
+					->leftJoin('tz_defenseip_store as b' , 'b.id' , '=' , 'tz_defenseip_business.ip_id')
+					->whereIn('tz_defenseip_business.status' , [1,4])		//正在使用
+					->get(['b.ip' , 'tz_defenseip_business.business_number as b_num']);	
+		if(!$d_ip->isEmpty()){
+			foreach ($d_ip as $k => $v) {
+				$ips[] = [
+					'white_ip'		=> $v->ip,
+					'description'		=> '业务编号为 : '.$v->b_num.' 的高防IP',
+					'binding_machine'	=> '高防业务:'.$v->b_num,
+				];
+			}
+		}
+		if(count($ips) > 0){
+			return [
+				'data'	=> $ips,
+				'msg'	=> '获取成功',
+				'code'	=> 1,
+			];
+		}else{
+			return [
+				'data'	=> [],
+				'msg'	=> '无使用中IP',
+				'code'	=> 1,
+			];
+		}
 	}
 	
 }

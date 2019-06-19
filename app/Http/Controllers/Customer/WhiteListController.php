@@ -95,4 +95,17 @@ class WhiteListController extends Controller
 		return tz_ajax_echo($insert_res['data'],$insert_res['msg'],$insert_res['code']);
 	}
 
+	/**
+	 * 获取用户所有正在使用的业务里的IP,供提交白名单用
+	 * @param  Request $request [description]
+	 * @return json           返回提交结果及提示信息
+	 */
+	public function getAllIP(){
+		$model = new WhiteListModel();
+
+		$ips = $model->getAllIP();
+
+		return tz_ajax_echo($ips['data'],$ips['msg'],$ips['code']);
+	}
+
 }

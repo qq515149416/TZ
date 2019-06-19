@@ -234,6 +234,9 @@ Route::group([
 
             //高防提交白名单
             Route::post('insertWhiteListForDIP', 'Customer\WhiteListController@insertWhiteListForDIP');
+            //用户查看自己所有使用中业务里包含的ip,供提交白名单用
+             Route::get('getAllIP', 'Customer\WhiteListController@getAllIP');
+
         });
     });
 

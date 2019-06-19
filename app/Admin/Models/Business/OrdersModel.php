@@ -209,7 +209,7 @@ class OrdersModel extends Model
 
 	/**
 	 * 增加资源生成订单数据
-	 * @param  array $insert_data 部分要增加的数据
+	 * @param  array $insert_data --business_sn-要绑定的业务号,--customer_id-客户id,--resource_type-资源类型,--price-单价,--duration--时长,--resource_id--资源id
 	 * @return array              返回相关的订单号及状态提示及信息
 	 */
 	public function insertResource($insert_data){
@@ -217,109 +217,212 @@ class OrdersModel extends Model
 			// 如果资源数据为空
 			$return['data'] = '';
 			$return['code'] = 0;
-			$return['msg'] = '资源无法增加！！';
-			return $return;
-		}
-		//业务到期时间
-		$end_time = time_calculation(date('Y-m-d H:i:s',time()),$insert_data['duration'],'month');
-		$business = DB::table('tz_business')->where('business_number',$insert_data['business_sn'])->value('business_status');
-		if(empty($business)){
-			$return['data'] = '';
-			$return['code'] = 0;
-			$return['msg'] = '该业务可能不存在/已取消';
+			$return['msg'] = '(#101)资源无法增加！！';
 			return $return;
 		}
 
-		if($business<1 || $business>4){
+		if(!isset($insert_data['business_sn'])){//未传递绑定的主业务
+			$return['data'] = '';
+			$return['code'] = 0;
+			$return['msg'] = '(#102)该资源所需绑定的主业务无法确定';
+			return $return;
+		}
+
+		if(!isset($insert_data['customer_id'])){//未表明资源将会归属到哪位客户名下
+			$return['data'] = '';
+			$return['code'] = 0;
+			$return['msg'] = '(#103)请确认该资源将会归属到哪位客户名下';
+			return $return;
+		}
+
+		if(!isset($insert_data['price'])){//单价未设置
+			$return['data'] = '';
+			$return['code'] = 0;
+			$return['msg'] = '(#104)请确认资源单价';
+			return $return;
+		}
+
+		if(!isset($insert_data['duration'])){//时长未设置
+			$return['data'] = '';
+			$return['code'] = 0;
+			$return['msg'] = '(#105)请确认资源购买时长';
+			return $return;
+		}
+
+		if(!isset($insert_data['resource_type'])){//资源类型不明确
+			$return['data'] = '';
+			$return['code'] = 0;
+			$return['msg'] = '(#106)请确认资源类型';
+			return $return;
+		}
+
+		if(!isset($insert_data['resource_id'])){//资源不明确
+			$return['data'] = '';
+			$return['code'] = 0;
+			$return['msg'] = '(#107)请确认资源';
+			return $return;
+		}
+
+		/**
+		 * 根据传递的业务号进行主业务的查询
+		 * @var [type]
+		 */
+		$business = DB::table('tz_business')->where('business_number',$insert_data['business_sn'])->value('business_status');
+		if(empty($business)){//主业务不存在
+			$return['data'] = '';
+			$return['code'] = 0;
+			$return['msg'] = '(#108)该业务可能不存在/已取消';
+			return $return;
+		}
+		if($business<1 || $business>4){//业务状态未通过审核/其他非正常状态
 			$business_status = ['-1' => '取消', '-2' => '审核不通过', 0 => '审核中', 1 => '未付款使用', 2 => '付款使用中', 3 => '未付用', 4 => '锁定中', 5 => '到期', 6 => '退款'];
 			$return['data'] = '';
 			$return['code'] = 0;
-			$return['msg'] = '该业务无法添加资源,原因:'.$business_status[$business];
+			$return['msg'] = '(#109)该业务无法添加资源,原因:'.$business_status[$business];
 			return $return;
 		}
-		$insert_data['end_time'] = $end_time;
-		$resource_id = isset($insert_data['resource_id'])?$insert_data['resource_id']:mt_rand(1000,9999);
-		unset($insert_data['resource_id']);
-		$order_sn =$this->ordersn();
-		$insert_data['order_sn'] = $order_sn;
-		if($insert_data['resource_type'] == 8){//带宽的时候生成专属的带宽序号
-			$insert_data['machine_sn'] = 'BW'.date("Ymd",time()).substr(time(),8,2).chr(mt_rand(65,90));
-		} elseif($insert_data['resource_type'] == 9){//防护的时候生成专属的防护序号
-			$insert_data['machine_sn'] = 'DEF'.date("Ymd",time()).substr(time(),8,2).chr(mt_rand(65,90));
-		}
-		$insert_data['order_type'] = 1;
-		$insert_data['payable_money'] = bcmul((string)$insert_data['price'],(string)$insert_data['duration'],2);//计算价格
-		$client = DB::table('tz_users')->where(['id'=>$insert_data['customer_id'],'status'=>2])->select('id','name','email','salesman_id')->first();
-        if(!$client){
-            $return['data'] = '';
-            $return['code'] = 0;
-            $return['msg']  = '客户不存在或账号未验证/异常,请确认后再创建资源订单!';
-            return $return;
-        }
-		$insert_data['business_id'] = $client->salesman_id;
-		$insert_data['business_name'] = DB::table('admin_users')->where(['id'=>$client->salesman_id])->value('name');
-		$insert_data['created_at'] = date('Y-m-d H:i:s',time());	
-		DB::beginTransaction();//开启事务处理
-		$row = DB::table('tz_orders')->insertGetId($insert_data);
-		if($row == false){
-			// 资源订单生成失败
-			DB::rollBack();
+		$insert['business_sn'] = $insert_data['business_sn'];//绑定的业务号
+
+		/**
+		 * 客户信息
+		 */
+		$client = DB::table('tz_users')->where(['id'=>$insert_data['customer_id'],'status'=>2])->select('id','name','email','salesman_id','nickname')->first();
+		if(empty($client)){//客户信息未找到/账号异常
 			$return['data'] = '';
 			$return['code'] = 0;
-			$return['msg'] = '资源增加失败';
+			$return['msg'] = '(#110)客户不存在或账号未验证/异常,请确认后再创建资源订单!';
 			return $return;
 		}
-		$machine['business_end'] = $insert_data['end_time'];
+		$insert['business_id'] = $client->salesman_id;
+		$insert['business_name'] = DB::table('admin_users')->where(['id'=>$client->salesman_id])->value('name');
+		$client_name = isset($client->email) ? $client->email : $client->name;
+		$client_name = $client_name ? $client_name : $client->nickname;
+		$insert['customer_id'] = $insert_data['customer_id'];
+		$insert['customer_name'] = $client_name;
+
+		/**
+		 * 到期时间和应付价格
+		 * @var [type]
+		 */
+		$end_time = time_calculation(date('Y-m-d H:i:s',time()),$insert_data['duration'],'month');
+		$insert['end_time'] = $end_time;
+		$insert['order_type'] = 1;
+		$insert['payable_money'] = bcmul((string)$insert_data['price'],(string)$insert_data['duration'],2);//计算价格
+		$insert['duration'] = $insert_data['duration'];
+		$insert['price'] = $insert_data['price'];
+		$machine['business_end'] = $end_time;
+		DB::beginTransaction();//开启事务处理
 		switch ($insert_data['resource_type']) {
 			case 4:
+				$ip = DB::table('idc_ips')->where(['id'=>$insert_data['resource_id'],'ip_status'=>0,'ip_lock'=>0])->whereNull('deleted_at')->select('ip','ip_company')->first();
+				if(empty($ip)){
+					$return['data'] = '';
+					$return['code'] = 0;
+					$return['msg'] = '(#111)该IP资源不存在/已被使用,请重新选择';
+					return $return;
+				}
+				$ip_company = [0=>'电信公司',1=>'移动公司',2=>'联通公司'];
+				$insert['machine_sn'] = $ip->ip;
+				$insert['resource'] = $ip->ip.$ip_company[$ip->ip_company];
 				//更新IP表的所属业务编号，资源状态和到期时间
 				$machine['own_business'] = $insert_data['business_sn'];
 				$machine['ip_status'] = 1;
-				$result = DB::table('idc_ips')->where('ip',$insert_data['machine_sn'])->update($machine);
+				$result = DB::table('idc_ips')->where(['id'=>$insert_data['resource_id']])->update($machine);
 				break;
 			case 5:
+				$cpu = DB::table('idc_cpu')->where(['id'=>$insert_data['resource_id'],'cpu_used'=>0])->whereNull('deleted_at')->select('cpu_number','cpu_param')->first();
+				if(empty($cpu)){
+					$return['data'] = '';
+					$return['code'] = 0;
+					$return['msg'] = '(#112)该CPU资源不存在/已被使用,请重新选择';
+					return $return;
+				}
+				$insert['machine_sn'] = $cpu->cpu_number;
+				$insert['resource'] = $cpu->cpu_param;
 				//更新CPU表的所属业务编号，资源状态和到期时间
 				$machine['service_num'] = $insert_data['business_sn'];
 				$machine['cpu_used'] = 1;
-				$result = DB::table('idc_cpu')->where('cpu_number',$insert_data['machine_sn'])->update($machine);
+				$result = DB::table('idc_cpu')->where(['id'=>$insert_data['resource_id']])->update($machine);
 				break;
 			case 6:
+				$harddisk = DB::table('idc_harddisk')->where(['id'=>$insert_data['resource_id'],'harddisk_used'=>0])->whereNull('deleted_at')->select('harddisk_number','harddisk_param')->first();
+				if(empty($harddisk)){
+					$return['data'] = '';
+					$return['code'] = 0;
+					$return['msg'] = '(#113)该硬盘资源不存在/已被使用,请重新选择';
+					return $return;
+				}
+				$insert['machine_sn'] = $harddisk->harddisk_number;
+				$insert['resource'] = $harddisk->harddisk_param;
 			   //更新硬盘表的所属业务编号，资源状态和到期时间
 				$machine['service_num'] = $insert_data['business_sn'];
 				$machine['harddisk_used'] = 1;
-				$result = DB::table('idc_harddisk')->where('harddisk_number',$insert_data['machine_sn'])->update($machine);
+				$result = DB::table('idc_harddisk')->where(['id'=>$insert_data['resource_id']])->update($machine);
 				break;
 			case 7:
+				$memory = DB::table('idc_memory')->where(['id'=>$insert_data['resource_id'],'memory'=>0])->whereNull('deleted_at')->select('memory_number','memory_param')->first();
+				if(empty($memory)){
+					$return['data'] = '';
+					$return['code'] = 0;
+					$return['msg'] = '(#114)该内存资源不存在/已被使用,请重新选择';
+					return $return;
+				}
+				$insert['machine_sn'] = $memory->memory_number;
+				$insert['resource'] = $memory->memory_param;
 				//更新内存表的所属业务编号，资源状态和到期时间
 				$machine['service_num'] = $insert_data['business_sn'];
 				$machine['memory_used'] = 1;
-				$result = DB::table('idc_memory')->where('memory_number',$insert_data['machine_sn'])->update($machine);
+				$result = DB::table('idc_memory')->where(['id'=>$insert_data['resource_id']])->update($machine);
+				break;
+			case 8://带宽
+				$insert['machine_sn'] = 'BW'.date("Ymd",time()).substr(time(),8,2).chr(mt_rand(65,90));
+				$insert['resource'] = $insert_data['resource_id'];
+				$result = 1;
+				break;
+			case 9://防护
+				$insert['machine_sn'] = 'DEF'.date("Ymd",time()).substr(time(),8,2).chr(mt_rand(65,90));
+				$insert['resource'] = $insert_data['resource_id'];
+				$result = 1;
 				break;
 			default:
 				$result = 1;
 				break;
 		}
-		if($result != 0){
-			//所对应资源表的业务编号和到期时间，状态修改成功后进行事务提交
-			$xunsearch = new XS('orders');
-		    $index = $xunsearch->index;
-            $doc['id'] = strtolower($row);
-			$doc['machine_sn'] = strtolower($insert_data['machine_sn']);
-			$doc['business_sn'] = strtolower($insert_data['business_sn']);
-			$doc['order_sn'] = strtolower($order_sn);
-    		$document = new \XSDocument($doc);
-    		$index->update($document);
-    		$index->flushIndex();
-			DB::commit();
-			$return['data'] = $order_sn;
-			$return['code'] = 1;
-			$return['msg'] = '资源增加成功，请提醒客户及时支付，订单号:'.$order_sn;
-		} else {
+		if($result == 0){
 			DB::rollBack();
 			$return['data'] = '';
 			$return['code'] = 0;
-			$return['msg'] = '资源增加失败';
+			$return['msg'] = '(#115)资源增加失败';
+			return $return;
 		}
+
+		$order_sn =$this->ordersn();
+		$insert['order_sn'] = $order_sn;
+		$insert['created_at'] = date('Y-m-d H:i:s',time());
+		$insert['resource_type'] = $insert_data['resource_type'];	
+		$row = DB::table('tz_orders')->insertGetId($insert);
+		if($row == false){
+			// 资源订单生成失败
+			DB::rollBack();
+			$return['data'] = '';
+			$return['code'] = 0;
+			$return['msg'] = '(#116)资源增加失败';
+			return $return;
+		}
+		//所对应资源表的业务编号和到期时间，状态修改成功后进行事务提交
+		$xunsearch = new XS('orders');
+	    $index = $xunsearch->index;
+        $doc['id'] = strtolower($row);
+		$doc['machine_sn'] = strtolower($insert['machine_sn']);
+		$doc['business_sn'] = strtolower($insert['business_sn']);
+		$doc['order_sn'] = strtolower($order_sn);
+		$document = new \XSDocument($doc);
+		$index->update($document);
+		$index->flushIndex();
+		DB::commit();
+		$return['data'] = $order_sn;
+		$return['code'] = 1;
+		$return['msg'] = '资源增加成功，请提醒客户及时支付，订单号:'.$order_sn;
 		return $return;
 	}
 

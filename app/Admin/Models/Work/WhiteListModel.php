@@ -11,6 +11,9 @@ use App\Admin\Controllers\Work\ApiController;
 use App\Admin\Models\DefenseIp\BusinessModel;
 use App\Admin\Models\Idc\Ips;
 
+use App\Admin\Models\Business\BusinessModel as IdcBusinessModel;
+
+
 class WhiteListModel extends Model
 {
 	use  SoftDeletes;
@@ -25,30 +28,53 @@ class WhiteListModel extends Model
 	 * @return [type]        [description]
 	 */
 	public function checkIP($ip){
-		//前往IP库查找对应传入IP的状态
-		$idc_ip = Ips::where('ip',$ip)->select('id','ip_status','ip_lock','own_business')->first();
-		$idc_ip = $idc_ip->toArray();
-		$return['data']	= '';
-		$return['code']	= 0;
-		//判断IP的获取情况,返回失败信息
-		if($idc_ip == NULL){	
-			$return['msg']	= 'IP地址不存在';		
-			return $return;
-		}
+		// *****	这段暂时弃用,数据有bug不能这么查
+			
+		// 前往IP库查找对应传入IP的状态
+		// $idc_ip = Ips::where('ip',$ip)->select('id','ip_status','ip_lock','own_business')->first();
+		// $idc_ip = $idc_ip->toArray();
+		// $return['data']	= '';
+		// $return['code']	= 0;
+		// //判断IP的获取情况,返回失败信息
+		// if($idc_ip == NULL){	
+		// 	$return['msg']	= 'IP地址不存在';		
+		// 	return $return;
+		// }
 	
-		if($idc_ip['ip_status'] == 0){
-			$return['msg']	= '该IP尚未启用';		
-			return $return;
-		}
+		// if($idc_ip['ip_status'] == 0){
+		// 	$return['msg']	= '该IP尚未启用';		
+		// 	return $return;
+		// }
 		
-		//用获取的业务编号,前往业务表查找对应的机器编号及客户ID
-		$business = DB::table('tz_business')->where('business_number',$idc_ip['own_business'])->select('client_id','machine_number','business_status')->first();
-		if($business != NULL){
-			$business_status		= $business->business_status;
-			if($business_status != 2 && $business_status != 1){
-				$return['msg']	= '业务尚未启用';		
-				return $return;
-			}
+		// //用获取的业务编号,前往业务表查找对应的机器编号及客户ID
+		// $business = DB::table('tz_business')->where('business_number',$idc_ip['own_business'])->select('client_id','machine_number','business_status')->first();
+
+		// *****
+
+		/****	这段临时补上	****/
+		//idc业务里查
+		//查查主IP有没有
+		$business = IdcBusinessModel::leftJoin('idc_machine as b' , 'b.machine_num' , '=' , 'tz_business..machine_number')
+						->leftJoin('idc_ips as c' , 'c.id' , '=' , 'b.ip_id')
+						->where(['c.ip' => $ip])
+						->whereNull('c.deleted_at')
+						->whereNull('b.deleted_at')
+						->WhereIn('tz_business.business_status' , [1,2])
+						->first(['tz_business.client_id','tz_business.machine_number']);
+
+		//如果主IP没有,去订单表查副ip
+		if($business == null){
+			$business = IdcBusinessModel::leftJoin('tz_orders as c' , 'c.business_sn' , '=' , 'tz_business.business_number')
+						->where(['c.machine_sn' => $ip , 'c.remove_status' => 0])
+						->whereNull('c.deleted_at')
+						->WhereIn('tz_business.business_status' , [1,2])
+						->first(['tz_business.client_id','tz_business.machine_number']);
+		}
+
+
+		/****	end	****/
+		if($business != NULL){	//如果idc里有
+			
 
 			$info['machine_number']	= $business->machine_number;
 			$info['customer_id']		= $business->client_id;
@@ -60,12 +86,15 @@ class WhiteListModel extends Model
 			}
 			$info['customer_name'] 	= $customer->nickname?$customer->nickname:$customer->name;
 			$info['email']		= $customer->email;
-		}else{
+		}else{			//查查高防有没有
+
 		
 			$business = BusinessModel::leftJoin('tz_defenseip_store as b' , 'b.id' , '=' , 'tz_defenseip_business.ip_id' )
-							->where('b.ip' , $ip)
+							->where(['b.ip' => $ip ])
+							->whereIn('tz_defenseip_business.status' , [1,4])
 							->whereNull('b.deleted_at')
-							->first();
+							->first(['tz_defenseip_business.business_number' , 'tz_defenseip_business.user_id']);
+
 			if($business == null){
 				return [
 					'data'	=> [],

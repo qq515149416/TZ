@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 use Encore\Admin\Facades\Admin;
 use App\Admin\Controllers\Work\ApiController;
+use App\Admin\Models\DefenseIp\BusinessModel;
+use App\Admin\Models\Idc\Ips;
 
 class WhiteListModel extends Model
 {
@@ -24,69 +26,68 @@ class WhiteListModel extends Model
 	 */
 	public function checkIP($ip){
 		//前往IP库查找对应传入IP的状态
-		$ip = DB::table('idc_ips')->where('ip',$ip)->select('id','ip_status','ip_lock','own_business')->first();
-		$ip = json_decode(json_encode($ip),true);
+		$idc_ip = Ips::where('ip',$ip)->select('id','ip_status','ip_lock','own_business')->first();
+		$idc_ip = $idc_ip->toArray();
 		$return['data']	= '';
 		$return['code']	= 0;
 		//判断IP的获取情况,返回失败信息
-		if($ip == NULL){	
+		if($idc_ip == NULL){	
 			$return['msg']	= 'IP地址不存在';		
 			return $return;
 		}
-		if($ip['ip_lock'] == 1){
-			$return['msg']	= '该IP已锁定';		
-			return $return;
-		}
-		if($ip['ip_status'] == 0){
+	
+		if($idc_ip['ip_status'] == 0){
 			$return['msg']	= '该IP尚未启用';		
 			return $return;
 		}
-		if($ip['ip_status'] != 2){
-			//用获取的业务编号,前往业务表查找对应的机器编号及客户ID
-			$business = DB::table('tz_business')->where('business_number',$ip['own_business'])->select('client_id','machine_number','business_status')->first();
-			if($business == NULL){
-				$return['msg']	= '业务编号不存在';		
-				return $return;
-			}
+		
+		//用获取的业务编号,前往业务表查找对应的机器编号及客户ID
+		$business = DB::table('tz_business')->where('business_number',$idc_ip['own_business'])->select('client_id','machine_number','business_status')->first();
+		if($business != NULL){
 			$business_status		= $business->business_status;
-			if($business_status != 2 && $business_status != 3 && $business_status != 4){
+			if($business_status != 2 && $business_status != 1){
 				$return['msg']	= '业务尚未启用';		
 				return $return;
 			}
 
 			$info['machine_number']	= $business->machine_number;
 			$info['customer_id']		= $business->client_id;
-			$customer_id 	= $business->client_id;
 			//根据获得的客户ID查找客户可用信息
-			$customer = DB::table('tz_users')->where('id',$customer_id)->select('name','email')->first();
-			if($business == NULL){
+			$customer = DB::table('tz_users')->where('id',$info['customer_id'])->select('name','email','nickname')->first();
+			if($customer == NULL){
 				$return['msg']	= '客户id错误';		
 				return $return;
 			}
-			$info['customer_name'] 	= $customer->name;
+			$info['customer_name'] 	= $customer->nickname?$customer->nickname:$customer->name;
 			$info['email']		= $customer->email;
-
-			$return['data'] 	= $info;
-			$return['msg']	= '获取成功';
-			$return['code']	= 1;
 		}else{
-			$machine_number = DB::table('idc_machine')->where('ip_id',$ip['id'])->value('machine_num');
-			if($machine_number == null){
+		
+			$business = BusinessModel::leftJoin('tz_defenseip_store as b' , 'b.id' , '=' , 'tz_defenseip_business.ip_id' )
+							->where('b.ip' , $ip)
+							->whereNull('b.deleted_at')
+							->first();
+			if($business == null){
 				return [
-					'data'	=> '',
+					'data'	=> [],
+					'msg'	=> '业务编号不存在',
 					'code'	=> 0,
-					'msg'	=> 'ip未绑定机器',
 				];
 			}
-			$return['data'] 	= [
-				'customer_id'		=> 0,
-				'customer_name'	=> '腾正自用',
-				'machine_number'	=> $machine_number,
-			];
-			$return['msg']	= '内部用ip';
-			$return['code']	= 1;
+			$info['machine_number']	= $business->business_number;
+			$info['customer_id']		= $business->user_id;
+
+			$customer = DB::table('tz_users')->where('id',$info['customer_id'])->select('name','email','nickname')->first();
+			if($customer == NULL){
+				$return['msg']	= '客户id错误';		
+				return $return;
+			}
+			$info['customer_name'] 	= $customer->nickname?$customer->nickname:$customer->name;
+			$info['email']		= $customer->email;
 		}
 		
+		$return['data'] 	= $info;
+		$return['msg']	= '获取成功';
+		$return['code']	= 1;
 		
 		return $return;
 	}

@@ -40,7 +40,7 @@ class WhiteListModel extends Model
 		// 当前登陆用户的id
 		$user_id = Auth::id();
 		$white_status['customer_id'] = $user_id;
-		$list = $this->where($white_status)->get(['id','white_number','domain_name','record_number','binding_machine','customer_id','customer_name','submit_id','submit_name','submit_note','check_time','white_status','created_at']);
+		$list = $this->where($white_status)->get(['id','white_number','domain_name','record_number','binding_machine','customer_id','customer_name','submit_id','submit_name','submit_note','check_time','white_ip','white_status','created_at']);
 		if(!$list->isEmpty()){
 			$status = [0=>'审核中',1=>'审核通过',2=>'审核不通过',3=>'审核不通过'];
 			foreach($list as $list_key => $list_value){
@@ -186,7 +186,6 @@ class WhiteListModel extends Model
 
 		$whitelist = $this->find($id);
 		if ($whitelist == null || $whitelist->customer_id != Auth::user()->id) {
-
 			return [
 				'data'	=> [],
 				'msg'	=> '白名单不存在',

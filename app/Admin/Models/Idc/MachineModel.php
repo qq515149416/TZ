@@ -249,7 +249,12 @@ class MachineModel extends Model
 			 */
 			$new_ip = DB::table('idc_ips')->where(['id'=>$editdata['ip_id'],'ip_status'=>0,'ip_lock'=>0])->first();//查找新的未使用，未锁定的IP信息
 			if(!empty($new_ip)){//找到对应的新IP信息
-				$new_update =  DB::table('idc_ips')->where('id',$editdata['ip_id'])->update(['mac_num'=>$editdata['machine_num'],'ip_status'=>1]);
+				if($machine->used_status == 2){
+					$new_update =  DB::table('idc_ips')->where('id',$editdata['ip_id'])->update(['mac_num'=>$editdata['machine_num'],'ip_status'=>1,'own_business'=>$machine->own_business]);
+				} else {
+					$new_update =  DB::table('idc_ips')->where('id',$editdata['ip_id'])->update(['mac_num'=>$editdata['machine_num'],'ip_status'=>1]);
+				}
+				
 				if($new_update == 0){
 					DB::rollBack();
 					$return['code'] = 0;

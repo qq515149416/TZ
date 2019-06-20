@@ -186,7 +186,7 @@ class WhiteListModel extends Model
 		
 		$whitelist = $this->find($id);
 
-		if ($whitelist == null || $whitelist->customer_id != $this->user->id) {
+		if ($whitelist == null || $whitelist->customer_id != Auth::user()->id) {
 			return [
 				'data'	=> [],
 				'msg'	=> '白名单不存在',
@@ -396,7 +396,7 @@ class WhiteListModel extends Model
 					->whereIn('tz_business.business_status' , [1,2])	//正在使用
 					->get(['c.ip' ,'b.machine_num as m_num']);
 
-		if (!$orders->isEmpty()) {
+		if (!$business->isEmpty()) {
 			foreach ($business as $k => $v) {
 				$ips[] = [
 					'white_ip'		=> $v->ip,
@@ -416,7 +416,7 @@ class WhiteListModel extends Model
 				$ips[] = [
 					'white_ip'		=> $v->ip,
 					'description'		=> '业务编号为 : '.$v->b_num.' 的高防IP',
-					'binding_machine'	=> '高防业务:'.$v->b_num,
+					'binding_machine'	=> $v->b_num,
 				];
 			}
 		}

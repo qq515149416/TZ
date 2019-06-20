@@ -57,11 +57,11 @@ class OrdersController extends Controller
 
 	/**
 	 * 进行资源添加生成订单
-	 * @param  Request $request [description]
+	 * @param  Request $request --business_sn-要绑定的业务号,--customer_id-客户id,--resource_type-资源类型,--price-单价,--duration--时长,--resource_id--资源id
 	 * @return [type]           [description]
 	 */
 	public function insertResource(Request $request){
-		$insert_data = $request->only(['business_sn','customer_id','customer_name','resource_type','machine_sn','resource','price','duration','resource_id']);
+		$insert_data = $request->only(['business_sn','customer_id','resource_type','price','duration','resource_id']);
 		$insert = new OrdersModel();
 		$return = $insert->insertResource($insert_data);
 		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);

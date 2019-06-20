@@ -23,7 +23,7 @@ class WhiteListModel extends Model
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
 	protected $fillable = [ 'white_number','white_ip','domain_name','record_number','binding_machine','customer_id','customer_name','submit_id','submit_name','submit','submit_note','check_time','check_note','white_status'];
-	
+
 	//不能开,开了有bug
 	// protected $abc = '';
 
@@ -64,7 +64,7 @@ class WhiteListModel extends Model
 	 * @return   array            返回相关的状态提示及信息
 	 */
 	public function insertWhiteList($insert_data){
-		if($insert_data){		
+		if($insert_data){
 			$pattern = '/^((http){1}|w{3}|\W)/i';//意思是以  http  | www  |  非单词字符即 a-z A-Z 0-9的字符/
 
 			$res = preg_match($pattern,$insert_data['domain_name'],$match);
@@ -118,7 +118,7 @@ class WhiteListModel extends Model
 			}else{
 				$return['code'] = 0;
 				$return['msg'] = '';
-			}	
+			}
 		} else {
 			$return['code'] = 0;
 			$return['msg'] = '';
@@ -151,7 +151,7 @@ class WhiteListModel extends Model
 					$return['msg'] = '您暂未购买此IP使用';
 					return $return;
 				}
-					
+
 			} else {//IP使用状态为未使用即0时直接返回
 				$return['data'] = '';
 				$return['code'] = 0;
@@ -183,10 +183,10 @@ class WhiteListModel extends Model
 	 * @return array     返回相关的状态及提示信息
 	 */
 	public function cancelWhiteList($id){
-		
-		$whitelist = $this->find($id);
 
+		$whitelist = $this->find($id);
 		if ($whitelist == null || $whitelist->customer_id != Auth::user()->id) {
+
 			return [
 				'data'	=> [],
 				'msg'	=> '白名单不存在',
@@ -220,7 +220,7 @@ class WhiteListModel extends Model
 
 	/**
 	 * 高防提交白名单申请
-	 * @param  	array 
+	 * @param  	array
 	 * @return 	array     返回提交结果及提示信息
 	 */
 	public function insertWhiteListForDIP($par){
@@ -236,9 +236,9 @@ class WhiteListModel extends Model
 				'code'	=> 0,
 			];
 		}
-		
-		
-		
+
+
+
 		//获取提交的业务编号对应业务信息
 		$business = BusinessModel::where('business_number',$par['b_num'])->first();
 		if($business == null ){
@@ -273,7 +273,7 @@ class WhiteListModel extends Model
 
 		if (!$checkWhiteList->isEmpty()) {
 			foreach ($checkWhiteList as $k => $v) {
-				
+
 				//如果还是审核中,踢
 				if ($v->white_status == 0) {
 					return [
@@ -339,23 +339,23 @@ class WhiteListModel extends Model
 		$insert_data['submit_name'] 	= $submit;
 		$insert_data['submit'] 		= 1;
 		$insert_data['white_status'] 	= 0;
-		
+
 		$res = $this->create($insert_data);
 		if ($res) {
 			return [
 				'data'	=> [],
 				'msg'	=> '提交申请成功',
 				'code'	=> 1,
-			];	
+			];
 		}else{
 			return [
 				'data'	=> [],
 				'msg'	=> '提交申请失败',
 				'code'	=> 0,
 			];
-		}	
+		}
 	}
-	
+
 
 	/**
 	 *获取用户所有正在使用的业务里的IP
@@ -410,7 +410,7 @@ class WhiteListModel extends Model
 		$d_ip = BusinessModel::where('user_id' , $user->id)		//指定用户
 					->leftJoin('tz_defenseip_store as b' , 'b.id' , '=' , 'tz_defenseip_business.ip_id')
 					->whereIn('tz_defenseip_business.status' , [1,4])		//正在使用
-					->get(['b.ip' , 'tz_defenseip_business.business_number as b_num']);	
+					->get(['b.ip' , 'tz_defenseip_business.business_number as b_num']);
 		if(!$d_ip->isEmpty()){
 			foreach ($d_ip as $k => $v) {
 				$ips[] = [
@@ -434,5 +434,5 @@ class WhiteListModel extends Model
 			];
 		}
 	}
-	
+
 }

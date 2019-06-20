@@ -162,49 +162,16 @@ class ServerRentController extends Controller
                     "detail" => "#",
                     "machines" => [
                         [
-                            "line" => "衡阳三线",
-                            "format" => "8核16线程（E5530*2）",
-                            "ram" => "16G",
-                            "disk" => "240G SSD/500G SATA/1T SATA",
-                            "bandwidth" => "G口20M",
-                            "ip" => "3个",
-                            "defense" => "无（企业）",
-                            "monthlyPay" => 1000,
-                            "annualFee" => 1000 * 12
+                            "line" => "暂无",
+                            "format" => "/",
+                            "ram" => "/",
+                            "disk" => "/",
+                            "bandwidth" => "/",
+                            "ip" => "/",
+                            "defense" => "/",
+                            "monthlyPay" => "/",
+                            "annualFee" => "/"
                         ],
-                        [
-                            "line" => "衡阳三线",
-                            "format" => "8核16线程（E5530*2）",
-                            "ram" => "16G",
-                            "disk" => "240G SSD/500G SATA/1T SATA",
-                            "bandwidth" => "G口20M",
-                            "ip" => "3个",
-                            "defense" => "40G",
-                            "monthlyPay" => 1000,
-                            "annualFee" => 1000 * 12
-                        ],
-                        [
-                            "line" => "衡阳三线",
-                            "format" => "8核16线程（E5530*2）",
-                            "ram" => "16G",
-                            "disk" => "240G SSD/500G SATA/1T SATA",
-                            "bandwidth" => "G口20M",
-                            "ip" => "3个",
-                            "defense" => "80G",
-                            "monthlyPay" => 1400,
-                            "annualFee" => 1400 * 12
-                        ],
-                        [
-                            "line" => "衡阳三线",
-                            "format" => "8核16线程（E5530*2）",
-                            "ram" => "16G",
-                            "disk" => "240G SSD/500G SATA/1T SATA",
-                            "bandwidth" => "G口20M",
-                            "ip" => "3个",
-                            "defense" => "120G",
-                            "monthlyPay" => 2100,
-                            "annualFee" => 2100 * 12
-                        ]
                     ]
                 ],
                 "huizhou" => [
@@ -214,15 +181,15 @@ class ServerRentController extends Controller
                     "detail" => "#",
                     "machines" => [
                         [
-                            "line" => "惠州三线",
-                            "format" => "8核16线程（E5530*2）",
-                            "ram" => "16G",
-                            "disk" => "240G SSD/500G SATA/1T SATA",
-                            "bandwidth" => "G口20M",
-                            "ip" => "3个",
-                            "defense" => "无（企业）",
-                            "monthlyPay" => 1100,
-                            "annualFee" => 1100 * 12
+                            "line" => "暂无",
+                            "format" => "/",
+                            "ram" => "/",
+                            "disk" => "/",
+                            "bandwidth" => "/",
+                            "ip" => "/",
+                            "defense" => "/",
+                            "monthlyPay" => "/",
+                            "annualFee" => "/"
                         ],
                         // [
                         //     "line" => "惠州电信",
@@ -235,83 +202,6 @@ class ServerRentController extends Controller
                         //     "monthlyPay" => "800",
                         //     "annualFee" => "8800"
                         // ],
-                        // [
-                        //     "line" => "惠州电信",
-                        //     "format" => "酷睿I7-3770",
-                        //     "ram" => "8G",
-                        //     "disk" => "240G SSD(固态)",
-                        //     "bandwidth" => "G口20M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "50G",
-                        //     "monthlyPay" => "900",
-                        //     "annualFee" => "9900"
-                        // ],
-                        // [
-                        //     "line" => "惠州电信",
-                        //     "format" => "四核8线程 Xeon X5672",
-                        //     "ram" => "8G",
-                        //     "disk" => "240G SSD(固态)",
-                        //     "bandwidth" => "G口20M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "100G",
-                        //     "monthlyPay" => "1600",
-                        //     "annualFee" => "17600"
-                        // ],
-                        // [
-                        //     "line" => "惠州电信",
-                        //     "format" => "八核16线程 Xeon E5530*2",
-                        //     "ram" => "8G",
-                        //     "disk" => "300G SAS/1T SATA",
-                        //     "bandwidth" => "G口20M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "100G",
-                        //     "monthlyPay" => "1600",
-                        //     "annualFee" => "17600"
-                        // ],
-                        // [
-                        //     "line" => "惠州电信",
-                        //     "format" => "酷睿I7-3770",
-                        //     "ram" => "8G",
-                        //     "disk" => "240G SSD(固态)",
-                        //     "bandwidth" => "G口20M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "100G",
-                        //     "monthlyPay" => "1700",
-                        //     "annualFee" => "18700"
-                        // ],
-                        // [
-                        //     "line" => "惠州电信",
-                        //     "format" => "四核8线程 Xeon X5672",
-                        //     "ram" => "8G",
-                        //     "disk" => "240G SSD(固态)",
-                        //     "bandwidth" => "G口50M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "150G",
-                        //     "monthlyPay" => "2200",
-                        //     "annualFee" => "24200"
-                        // ],
-                        // [
-                        //     "line" => "惠州电信",
-                        //     "format" => "八核16线程 Xeon E5530*2",
-                        //     "ram" => "8G",
-                        //     "disk" => "300G SAS/1T SATA",
-                        //     "bandwidth" => "G口50M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "150G",
-                        //     "monthlyPay" => "2200",
-                        //     "annualFee" => "24200"
-                        // ],
-                        // [
-                        //     "line" => "惠州电信",
-                        //     "format" => "酷睿I7-3770",
-                        //     "ram" => "8G",
-                        //     "disk" => "240G SSD(固态)",
-                        //     "bandwidth" => "G口50M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "150G",
-                        //     "monthlyPay" => "2300",
-                        //     "annualFee" => "25300"
-                        // ]
                     ]
                 ],
                 "xian" => [
@@ -328,19 +218,19 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口20M",
                             "ip" => "3个",
                             "defense" => "无（企业）",
-                            "monthlyPay" => 1100,
-                            "annualFee" => 1100 * 12
+                            "monthlyPay" => 1500,
+                            "annualFee" => 1500 * 12
                         ],
                         [
                             "line" => "西安三线",
                             "format" => "8核16线程（E5530*2）",
                             "ram" => "16G",
                             "disk" => "240G SSD/500G SATA/1T SATA",
-                            "bandwidth" => "G口50M",
+                            "bandwidth" => "G口20M",
                             "ip" => "3个",
                             "defense" => "80G",
-                            "monthlyPay" => 1400,
-                            "annualFee" => 12000
+                            "monthlyPay" => 1500,
+                            "annualFee" => 1500 * 12
                         ],
                         [
                             "line" => "西安三线",
@@ -350,8 +240,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口100M",
                             "ip" => "3个",
                             "defense" => "160G",
-                            "monthlyPay" => 2200,
-                            "annualFee" => 20400
+                            "monthlyPay" => 2300,
+                            "annualFee" => 27600
                         ],
                         [
                             "line" => "西安三线",
@@ -361,8 +251,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口200M",
                             "ip" => "3个",
                             "defense" => "300G",
-                            "monthlyPay" => 3900,
-                            "annualFee" => 38400
+                            "monthlyPay" => 4000,
+                            "annualFee" => 48000
                         ],
                         [
                             "line" => "西安三线",
@@ -375,28 +265,6 @@ class ServerRentController extends Controller
                             "monthlyPay" => "定制",
                             "annualFee" => "定制"
                         ],
-                        // [
-                        //     "line" => "西安电信",
-                        //     "format" => "E5530*2 8核",
-                        //     "ram" => "16G",
-                        //     "disk" => "300G SAS",
-                        //     "bandwidth" => "50M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "无防",
-                        //     "monthlyPay" => 1799,
-                        //     "annualFee" => 1799 * 12
-                        // ],
-                        // [
-                        //     "line" => "西安电信",
-                        //     "format" => "E5530*2 8核",
-                        //     "ram" => "32G",
-                        //     "disk" => "300G SAS/1T SATA",
-                        //     "bandwidth" => "100M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "无防",
-                        //     "monthlyPay" => 2399,
-                        //     "annualFee" => 2399 * 12
-                        // ]
                     ]
                 ]
             ],
@@ -413,10 +281,10 @@ class ServerRentController extends Controller
                             "ram" => "16G",
                             "disk" => "240G SSD/500G SATA/1T SATA",
                             "bandwidth" => "G口20M",
-                            "ip" => "1对",
+                            "ip" => "2个",
                             "defense" => "无（企业）",
-                            "monthlyPay" => 1000,
-                            "annualFee" => 9600
+                            "monthlyPay" => 1100,
+                            "annualFee" => 10800
                         ],
                         [
                             "line" => "衡阳双线",
@@ -424,10 +292,10 @@ class ServerRentController extends Controller
                             "ram" => "16G",
                             "disk" => "240G SSD/500G SATA/1T SATA",
                             "bandwidth" => "G口20M",
-                            "ip" => "1对",
+                            "ip" => "2个",
                             "defense" => "40G",
-                            "monthlyPay" => 1000,
-                            "annualFee" => 9600
+                            "monthlyPay" => 1100,
+                            "annualFee" => 10800
                         ],
                         [
                             "line" => "衡阳双线",
@@ -435,10 +303,10 @@ class ServerRentController extends Controller
                             "ram" => "16G",
                             "disk" => "240G SSD/500G SATA/1T SATA",
                             "bandwidth" => "G口20M",
-                            "ip" => "1对",
+                            "ip" => "2个",
                             "defense" => "80G",
-                            "monthlyPay" => 1500,
-                            "annualFee" => 14400
+                            "monthlyPay" => 1600,
+                            "annualFee" => 15600
                         ],
                         [
                             "line" => "衡阳双线",
@@ -446,10 +314,10 @@ class ServerRentController extends Controller
                             "ram" => "16G",
                             "disk" => "240G SSD/500G SATA/1T SATA",
                             "bandwidth" => "G口20M",
-                            "ip" => "1对",
+                            "ip" => "2个",
                             "defense" => "120G",
-                            "monthlyPay" => 2200,
-                            "annualFee" => 22800
+                            "monthlyPay" => 2300,
+                            "annualFee" => 24000
                         ]
                     ]
                 ],
@@ -465,10 +333,10 @@ class ServerRentController extends Controller
                             "ram" => "16G",
                             "disk" => "240G SSD/500G SATA/1T SATA",
                             "bandwidth" => "G口20M",
-                            "ip" => "1个",
+                            "ip" => "2个",
                             "defense" => "无（企业）",
-                            "monthlyPay" => 1200,
-                            "annualFee" => 10800
+                            "monthlyPay" => 1300,
+                            "annualFee" => 12000
                         ],
                         // [
                         //     "line" => "惠州电信",
@@ -481,83 +349,6 @@ class ServerRentController extends Controller
                         //     "monthlyPay" => "800",
                         //     "annualFee" => "8800"
                         // ],
-                        // [
-                        //     "line" => "惠州电信",
-                        //     "format" => "酷睿I7-3770",
-                        //     "ram" => "8G",
-                        //     "disk" => "240G SSD(固态)",
-                        //     "bandwidth" => "G口20M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "50G",
-                        //     "monthlyPay" => "900",
-                        //     "annualFee" => "9900"
-                        // ],
-                        // [
-                        //     "line" => "惠州电信",
-                        //     "format" => "四核8线程 Xeon X5672",
-                        //     "ram" => "8G",
-                        //     "disk" => "240G SSD(固态)",
-                        //     "bandwidth" => "G口20M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "100G",
-                        //     "monthlyPay" => "1600",
-                        //     "annualFee" => "17600"
-                        // ],
-                        // [
-                        //     "line" => "惠州电信",
-                        //     "format" => "八核16线程 Xeon E5530*2",
-                        //     "ram" => "8G",
-                        //     "disk" => "300G SAS/1T SATA",
-                        //     "bandwidth" => "G口20M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "100G",
-                        //     "monthlyPay" => "1600",
-                        //     "annualFee" => "17600"
-                        // ],
-                        // [
-                        //     "line" => "惠州电信",
-                        //     "format" => "酷睿I7-3770",
-                        //     "ram" => "8G",
-                        //     "disk" => "240G SSD(固态)",
-                        //     "bandwidth" => "G口20M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "100G",
-                        //     "monthlyPay" => "1700",
-                        //     "annualFee" => "18700"
-                        // ],
-                        // [
-                        //     "line" => "惠州电信",
-                        //     "format" => "四核8线程 Xeon X5672",
-                        //     "ram" => "8G",
-                        //     "disk" => "240G SSD(固态)",
-                        //     "bandwidth" => "G口50M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "150G",
-                        //     "monthlyPay" => "2200",
-                        //     "annualFee" => "24200"
-                        // ],
-                        // [
-                        //     "line" => "惠州电信",
-                        //     "format" => "八核16线程 Xeon E5530*2",
-                        //     "ram" => "8G",
-                        //     "disk" => "300G SAS/1T SATA",
-                        //     "bandwidth" => "G口50M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "150G",
-                        //     "monthlyPay" => "2200",
-                        //     "annualFee" => "24200"
-                        // ],
-                        // [
-                        //     "line" => "惠州电信",
-                        //     "format" => "酷睿I7-3770",
-                        //     "ram" => "8G",
-                        //     "disk" => "240G SSD(固态)",
-                        //     "bandwidth" => "G口50M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "150G",
-                        //     "monthlyPay" => "2300",
-                        //     "annualFee" => "25300"
-                        // ]
                     ]
                 ],
                 "xian" => [
@@ -572,21 +363,21 @@ class ServerRentController extends Controller
                             "ram" => "16G",
                             "disk" => "240G SSD/500G SATA/1T SATA",
                             "bandwidth" => "G口20M",
-                            "ip" => "1对",
+                            "ip" => "2个",
                             "defense" => "无（企业）",
-                            "monthlyPay" => 950,
-                            "annualFee" => 950 * 12
+                            "monthlyPay" => 1200,
+                            "annualFee" => 14400
                         ],
                         [
                             "line" => "西安双线",
                             "format" => "8核16线程（E5530*2）",
                             "ram" => "16G",
                             "disk" => "240G SSD/500G SATA/1T SATA",
-                            "bandwidth" => "G口50M",
-                            "ip" => "1对",
+                            "bandwidth" => "G口20M",
+                            "ip" => "2个",
                             "defense" => "80G",
-                            "monthlyPay" => 1100,
-                            "annualFee" => 10800
+                            "monthlyPay" => 1200,
+                            "annualFee" => 14400
                         ],
                         [
                             "line" => "西安双线",
@@ -594,10 +385,10 @@ class ServerRentController extends Controller
                             "ram" => "32G",
                             "disk" => "240G SSD/500G SATA/1T SATA",
                             "bandwidth" => "G口100M",
-                            "ip" => "1对",
+                            "ip" => "2个",
                             "defense" => "160G",
-                            "monthlyPay" => 1900,
-                            "annualFee" => 19200
+                            "monthlyPay" => 2000,
+                            "annualFee" => 24000
                         ],
                         [
                             "line" => "西安双线",
@@ -605,10 +396,10 @@ class ServerRentController extends Controller
                             "ram" => "32G",
                             "disk" => "240G SSD/500G SATA/1T SATA",
                             "bandwidth" => "G口200M",
-                            "ip" => "1对",
+                            "ip" => "2个",
                             "defense" => "300G",
-                            "monthlyPay" => 3600,
-                            "annualFee" => 37200
+                            "monthlyPay" => 3700,
+                            "annualFee" => 44400
                         ],
                         [
                             "line" => "西安双线",
@@ -616,7 +407,7 @@ class ServerRentController extends Controller
                             "ram" => "定制",
                             "disk" => "定制",
                             "bandwidth" => "G口无限带宽",
-                            "ip" => "1对",
+                            "ip" => "2个",
                             "defense" => "500G+云堤",
                             "monthlyPay" => "定制",
                             "annualFee" => "定制"
@@ -661,8 +452,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口20M",
                             "ip" => "1个",
                             "defense" => "无（企业）",
-                            "monthlyPay" => 700,
-                            "annualFee" => 700 * 12
+                            "monthlyPay" => 900,
+                            "annualFee" => 8400
                         ],
                         [
                             "line" => "衡阳联通",
@@ -672,8 +463,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口20M",
                             "ip" => "1个",
                             "defense" => "40G",
-                            "monthlyPay" => 700,
-                            "annualFee" => 700 * 12
+                            "monthlyPay" => 900,
+                            "annualFee" => 8400
                         ],
                         [
                             "line" => "衡阳联通",
@@ -683,8 +474,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口20M",
                             "ip" => "1个",
                             "defense" => "80G",
-                            "monthlyPay" => 1100,
-                            "annualFee" => 1100 * 12
+                            "monthlyPay" => 1400,
+                            "annualFee" => 13200
                         ],
                         [
                             "line" => "衡阳联通",
@@ -694,8 +485,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口20M",
                             "ip" => "1个",
                             "defense" => "120G",
-                            "monthlyPay" => 1800,
-                            "annualFee" => 1800 * 12
+                            "monthlyPay" => 2100,
+                            "annualFee" => 21600
                         ]
                     ]
                 ],
@@ -713,8 +504,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口20M",
                             "ip" => "1个",
                             "defense" => "无（企业）",
-                            "monthlyPay" => 800,
-                            "annualFee" => 800 * 12
+                            "monthlyPay" => 1100,
+                            "annualFee" => 9600
                         ],
                         // [
                         //     "line" => "惠州电信",
@@ -727,83 +518,7 @@ class ServerRentController extends Controller
                         //     "monthlyPay" => "800",
                         //     "annualFee" => "8800"
                         // ],
-                        // [
-                        //     "line" => "惠州电信",
-                        //     "format" => "酷睿I7-3770",
-                        //     "ram" => "8G",
-                        //     "disk" => "240G SSD(固态)",
-                        //     "bandwidth" => "G口20M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "50G",
-                        //     "monthlyPay" => "900",
-                        //     "annualFee" => "9900"
-                        // ],
-                        // [
-                        //     "line" => "惠州电信",
-                        //     "format" => "四核8线程 Xeon X5672",
-                        //     "ram" => "8G",
-                        //     "disk" => "240G SSD(固态)",
-                        //     "bandwidth" => "G口20M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "100G",
-                        //     "monthlyPay" => "1600",
-                        //     "annualFee" => "17600"
-                        // ],
-                        // [
-                        //     "line" => "惠州电信",
-                        //     "format" => "八核16线程 Xeon E5530*2",
-                        //     "ram" => "8G",
-                        //     "disk" => "300G SAS/1T SATA",
-                        //     "bandwidth" => "G口20M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "100G",
-                        //     "monthlyPay" => "1600",
-                        //     "annualFee" => "17600"
-                        // ],
-                        // [
-                        //     "line" => "惠州电信",
-                        //     "format" => "酷睿I7-3770",
-                        //     "ram" => "8G",
-                        //     "disk" => "240G SSD(固态)",
-                        //     "bandwidth" => "G口20M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "100G",
-                        //     "monthlyPay" => "1700",
-                        //     "annualFee" => "18700"
-                        // ],
-                        // [
-                        //     "line" => "惠州电信",
-                        //     "format" => "四核8线程 Xeon X5672",
-                        //     "ram" => "8G",
-                        //     "disk" => "240G SSD(固态)",
-                        //     "bandwidth" => "G口50M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "150G",
-                        //     "monthlyPay" => "2200",
-                        //     "annualFee" => "24200"
-                        // ],
-                        // [
-                        //     "line" => "惠州电信",
-                        //     "format" => "八核16线程 Xeon E5530*2",
-                        //     "ram" => "8G",
-                        //     "disk" => "300G SAS/1T SATA",
-                        //     "bandwidth" => "G口50M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "150G",
-                        //     "monthlyPay" => "2200",
-                        //     "annualFee" => "24200"
-                        // ],
-                        // [
-                        //     "line" => "惠州电信",
-                        //     "format" => "酷睿I7-3770",
-                        //     "ram" => "8G",
-                        //     "disk" => "240G SSD(固态)",
-                        //     "bandwidth" => "G口50M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "150G",
-                        //     "monthlyPay" => "2300",
-                        //     "annualFee" => "25300"
-                        // ]
+
                     ]
                 ],
                 "xian" => [
@@ -820,8 +535,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口20M",
                             "ip" => "1个",
                             "defense" => "无（企业）",
-                            "monthlyPay" => 800,
-                            "annualFee" => 800 * 12
+                            "monthlyPay" => 1000,
+                            "annualFee" => 9600
                         ],
                         [
                             "line" => "西安联通",
@@ -831,8 +546,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口50M",
                             "ip" => "1个",
                             "defense" => "80G",
-                            "monthlyPay" => 800,
-                            "annualFee" => 800 * 12
+                            "monthlyPay" => 1000,
+                            "annualFee" => 9600
                         ],
                         [
                             "line" => "西安联通",
@@ -842,8 +557,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口100M",
                             "ip" => "1个",
                             "defense" => "160G",
-                            "monthlyPay" => 1500,
-                            "annualFee" => 1500 * 12
+                            "monthlyPay" => 1800,
+                            "annualFee" => 18000
                         ],
                         [
                             "line" => "西安联通",
@@ -853,8 +568,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口200M",
                             "ip" => "1个",
                             "defense" => "300G",
-                            "monthlyPay" => 3000,
-                            "annualFee" => 3000 * 12
+                            "monthlyPay" => 3500,
+                            "annualFee" => 36000
                         ],
                         [
                             "line" => "西安联通",
@@ -907,8 +622,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口20M",
                             "ip" => "1个",
                             "defense" => "无（企业）",
-                            "monthlyPay" => 800,
-                            "annualFee" => 7200
+                            "monthlyPay" => 900,
+                            "annualFee" => 8400
                         ],
                         [
                             "line" => "衡阳电信",
@@ -918,8 +633,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口20M",
                             "ip" => "1个",
                             "defense" => "40G",
-                            "monthlyPay" => 800,
-                            "annualFee" => 7200
+                            "monthlyPay" => 900,
+                            "annualFee" => 8400
                         ],
                         [
                             "line" => "衡阳电信",
@@ -929,8 +644,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口20M",
                             "ip" => "1个",
                             "defense" => "80G",
-                            "monthlyPay" => 1300,
-                            "annualFee" => 12000
+                            "monthlyPay" => 1400,
+                            "annualFee" => 13200
                         ],
                         [
                             "line" => "衡阳电信",
@@ -940,8 +655,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口20M",
                             "ip" => "1个",
                             "defense" => "120G",
-                            "monthlyPay" => 2000,
-                            "annualFee" => 20400
+                            "monthlyPay" => 2100,
+                            "annualFee" => 21600
                         ]
                     ]
                 ],
@@ -959,8 +674,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口20M",
                             "ip" => "1个",
                             "defense" => "无（企业）",
-                            "monthlyPay" => 1000,
-                            "annualFee" => 8400
+                            "monthlyPay" => 1100,
+                            "annualFee" => 9600
                         ],
                         // [
                         //     "line" => "惠州电信",
@@ -973,83 +688,6 @@ class ServerRentController extends Controller
                         //     "monthlyPay" => "800",
                         //     "annualFee" => "8800"
                         // ],
-                        // [
-                        //     "line" => "惠州电信",
-                        //     "format" => "酷睿I7-3770",
-                        //     "ram" => "8G",
-                        //     "disk" => "240G SSD(固态)",
-                        //     "bandwidth" => "G口20M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "50G",
-                        //     "monthlyPay" => "900",
-                        //     "annualFee" => "9900"
-                        // ],
-                        // [
-                        //     "line" => "惠州电信",
-                        //     "format" => "四核8线程 Xeon X5672",
-                        //     "ram" => "8G",
-                        //     "disk" => "240G SSD(固态)",
-                        //     "bandwidth" => "G口20M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "100G",
-                        //     "monthlyPay" => "1600",
-                        //     "annualFee" => "17600"
-                        // ],
-                        // [
-                        //     "line" => "惠州电信",
-                        //     "format" => "八核16线程 Xeon E5530*2",
-                        //     "ram" => "8G",
-                        //     "disk" => "300G SAS/1T SATA",
-                        //     "bandwidth" => "G口20M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "100G",
-                        //     "monthlyPay" => "1600",
-                        //     "annualFee" => "17600"
-                        // ],
-                        // [
-                        //     "line" => "惠州电信",
-                        //     "format" => "酷睿I7-3770",
-                        //     "ram" => "8G",
-                        //     "disk" => "240G SSD(固态)",
-                        //     "bandwidth" => "G口20M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "100G",
-                        //     "monthlyPay" => "1700",
-                        //     "annualFee" => "18700"
-                        // ],
-                        // [
-                        //     "line" => "惠州电信",
-                        //     "format" => "四核8线程 Xeon X5672",
-                        //     "ram" => "8G",
-                        //     "disk" => "240G SSD(固态)",
-                        //     "bandwidth" => "G口50M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "150G",
-                        //     "monthlyPay" => "2200",
-                        //     "annualFee" => "24200"
-                        // ],
-                        // [
-                        //     "line" => "惠州电信",
-                        //     "format" => "八核16线程 Xeon E5530*2",
-                        //     "ram" => "8G",
-                        //     "disk" => "300G SAS/1T SATA",
-                        //     "bandwidth" => "G口50M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "150G",
-                        //     "monthlyPay" => "2200",
-                        //     "annualFee" => "24200"
-                        // ],
-                        // [
-                        //     "line" => "惠州电信",
-                        //     "format" => "酷睿I7-3770",
-                        //     "ram" => "8G",
-                        //     "disk" => "240G SSD(固态)",
-                        //     "bandwidth" => "G口50M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "150G",
-                        //     "monthlyPay" => "2300",
-                        //     "annualFee" => "25300"
-                        // ]
                     ]
                 ],
                 "xian" => [
@@ -1066,8 +704,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口20M",
                             "ip" => "1个",
                             "defense" => "无（企业）",
-                            "monthlyPay" => 800,
-                            "annualFee" => 800 * 12
+                            "monthlyPay" => 1000,
+                            "annualFee" => 9600
                         ],
                         [
                             "line" => "西安电信",
@@ -1077,8 +715,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口50M",
                             "ip" => "1个",
                             "defense" => "80G",
-                            "monthlyPay" => 900,
-                            "annualFee" => 8400
+                            "monthlyPay" => 1000,
+                            "annualFee" => 9600
                         ],
                         [
                             "line" => "西安电信",
@@ -1088,8 +726,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口100M",
                             "ip" => "1个",
                             "defense" => "160G",
-                            "monthlyPay" => 1700,
-                            "annualFee" => 16800
+                            "monthlyPay" => 1800,
+                            "annualFee" => 18000
                         ],
                         [
                             "line" => "西安电信",
@@ -1099,8 +737,8 @@ class ServerRentController extends Controller
                             "bandwidth" => "G口200M",
                             "ip" => "1个",
                             "defense" => "300G",
-                            "monthlyPay" => 3400,
-                            "annualFee" => 34800
+                            "monthlyPay" => 3500,
+                            "annualFee" => 36000
                         ],
                         [
                             "line" => "西安电信",
@@ -1124,17 +762,6 @@ class ServerRentController extends Controller
                         //     "monthlyPay" => 1799,
                         //     "annualFee" => 1799 * 12
                         // ],
-                        // [
-                        //     "line" => "西安电信",
-                        //     "format" => "E5530*2 8核",
-                        //     "ram" => "32G",
-                        //     "disk" => "300G SAS/1T SATA",
-                        //     "bandwidth" => "100M独享",
-                        //     "ip" => "1个",
-                        //     "defense" => "无防",
-                        //     "monthlyPay" => 2399,
-                        //     "annualFee" => 2399 * 12
-                        // ]
                     ]
                 ]
             ]

@@ -18,9 +18,11 @@
             </h4>
         </div>
         <div class="collapse-tab">
-            <a class="collapse-tab-item heng-yang {{ $page === 'hengyang' ? 'active' : '' }}" href="/tuoguan/hengyang">衡阳服务器托管</a>
-            <a class="collapse-tab-item hui-zhou {{ $page === 'huizhou' ? 'active' : '' }}" href="/tuoguan/huizhou">惠州服务器托管</a>
-            <a class="collapse-tab-item xi-an {{ $page === 'xian' ? 'active' : '' }}" href="/tuoguan/xian">西安服务器托管</a>
+            @foreach ($nav as $item)
+            <a class="collapse-tab-item heng-yang {{ $page === $item->alias ? 'active' : '' }}" href="/tuoguan/{{ $item->alias }}">{{ $item->name }}</a>
+            @endforeach
+            <!-- <a class="collapse-tab-item hui-zhou {{ $page === 'huizhou' ? 'active' : '' }}" href="/tuoguan/huizhou">惠州服务器托管</a>
+            <a class="collapse-tab-item xi-an {{ $page === 'xian' ? 'active' : '' }}" href="/tuoguan/xian">西安服务器托管</a> -->
             <!-- <a class="collapse-tab-item hang-zhou" href="#hangzhou" data-toggle="collapse"
                data-target="#hang-zhou"
                aria-expanded="false" aria-controls="hang-zhou">杭州服务器托管</a> -->
@@ -59,13 +61,13 @@
                     @foreach ($data['data'] as $item)
                     <tr>
                         <th>{{ $item['line'] }}</th>
-                        <td>{{ $item['specification'] }}</td>
+                        <td>{{ $item['format'] }}</td>
                         <td>{{ $item['current'] }}</td>
                         <td>{{ $item['bandwidth'] }}</td>
                         <td>{{ $item['ip'] }}</td>
                         <td>{{ $item['defense'] }}</td>
-                        <td>{{ $item['monthly_payment'] }}</td>
-                        <td>{{ $item['annual_fee'] }}</td>
+                        <td>{{ $item['monthlyPay'] }}</td>
+                        <td>{{ $item['annualFee'] }}</td>
                         <td>
                             <a href="{{ $item['buy'] }}" class="purchase-btn">立即购买</a>
                         </td>

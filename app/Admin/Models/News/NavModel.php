@@ -30,4 +30,11 @@ class NavModel extends Model
             return $this->where("id",$value)->first();
         }
     }
+    /**
+     * 机房关联.
+     */
+    public function machineRooms()
+    {
+        return $this->belongsToMany('App\Admin\Models\News\MachineRoomModel','tz_machine_room_nav','nav_id','machine_room_id');
+    }
 }

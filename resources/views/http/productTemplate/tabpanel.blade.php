@@ -1,9 +1,10 @@
 <div role="tabpanel" class="tab-pane {{ $status }}" id="{{ $id }}">
-    <h3>{{ $data[$index]['room'] }}</h3>
-    <p>机房概况：{{ $data[$index]['overview'] }}</p>
+    <h3>{{ $machine_room->name }}</h3>
+    <p>机房概况：{{ $machine_room->overview }}</p>
     <p>
-        机房等级：国家 <span class="focus">{{ $data[$index]['grade'] }}</span> 级机房
-        <a href="{{ $data[$index]['detail'] }}">查看机房实景</a>
+        <!-- 国家 <span class="focus">AAA</span> 级机房 -->
+        机房等级：{{ $machine_room->grade }}
+        <a href="{{ $machine_room->detail_url }}">查看机房实景</a>
     </p>
     <div class="data-table">
         <div class="data-table-row">
@@ -35,7 +36,7 @@
                 年付
             </div>
         </div>
-        @foreach ($data[$index]['machines'] as $item)
+        @foreach ($data as $item)
         <div class="data-table-row">
             <div class="data-table-col thead">
                 {{ $item["line"] }}
@@ -47,7 +48,7 @@
                 {{ $item["ram"] }}
             </div>
             <div class="data-table-col">
-                {{ $item["disk"] }}
+                {{ $item["hardDisk"] }}
             </div>
             <div class="data-table-col">
                 {{ $item["bandwidth"] }}

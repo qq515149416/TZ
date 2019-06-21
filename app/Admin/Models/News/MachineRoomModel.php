@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Admin\Models\News;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Collection;
+use App\Admin\Models\News\NavModel;
+
+class MachineRoomModel extends Model
+{
+	use SoftDeletes;
+
+	protected $table = 'tz_machine_room';
+	protected $primaryKey = 'id';
+	public $timestamps = true;
+	protected $dates = ['deleted_at'];
+	protected $fillable = ['name', 'nav_id', 'overview','grade','detail_url','customer_representative','status'];
+
+    /**
+     * 导航关联.
+     */
+    public function navs()
+    {
+        return $this->belongsToMany(NavModel::class,'tz_machine_room_nav','machine_room_id','nav_id');
+    }
+}

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 use App\Admin\Models\News\NavModel;
+use Illuminate\Database\Eloquent\Builder;
 
 class MachineRoomModel extends Model
 {
@@ -16,8 +17,20 @@ class MachineRoomModel extends Model
 	protected $primaryKey = 'id';
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
-	protected $fillable = ['name', 'nav_id', 'overview','grade','detail_url','customer_representative','status'];
+	// protected $fillable = ['name', 'nav_id', 'overview','grade','detail_url','customer_representative','status'];
+    /**
+     *模型的「启动」方法.
+     *
+     * @return void
+     */
+    // protected static function boot()
+    // {
+    //     parent::boot();
 
+    //     static::addGlobalScope('status', function (Builder $builder) {
+    //         $builder->where('status', 1);
+    //     });
+    // }
     /**
      * 导航关联.
      */

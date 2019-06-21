@@ -129,7 +129,7 @@ class MachineRoomInfoController extends Controller
             $form->text('alias', '别名');
             $form->textarea('overview', '概况');
             $form->text('grade', '等级');
-            $form->switch('status', '状态')->value(1)->rules('required');
+            $form->switch('status', '状态')->default(1)->rules('required');
             $form->text('detail_url', '查看详细');
             $form->text('customer_representative', '典型客户');
             // $form->multipleSelect('navs',"所属导航")->options(NavModel::all()->pluck('name', 'id'));

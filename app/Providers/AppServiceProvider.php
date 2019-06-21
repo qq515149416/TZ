@@ -20,7 +20,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $oContacts = new Contacts();
         $contacts = $oContacts->index();
-        View::share('contacts', $contacts["data"]->random(10));
+        View::share('contacts', $contacts["data"]);
         // View::share('contacts', $contacts["data"]);
         View::share('links', LinksModel::where('type',1)->orderBy('links_order', 'desc')->get());
         View::share('search_links', LinksModel::where('type',2)->orderBy('links_order', 'desc')->get());

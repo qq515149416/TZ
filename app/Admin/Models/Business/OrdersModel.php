@@ -31,24 +31,6 @@ class OrdersModel extends Model
 	protected $dates = ['deleted_at'];
 
 	/**
-	 * 用于在获取续费的资源时分类
-	 * @param  array $array 需要分类的数据
-	 * @param  int $state 分类的条件
-	 * @return [type]        [description]
-	 */
-	private function filter($array,$state){
-		$this->state = $state;
-		$result = [];
-		$arr = array_filter($array,function($var) {
-			return $var['resource_type'] == $this->state;
-		});
-		foreach ($arr as $key => $value) {
-			array_push($result,$value);
-		}
-		return $result;
-	}
-
-	/**
 	 * 财务人员和管理人员查看支付流水
 	 * @param  array $where 订单的状态
 	 * @return array        返回相关的数据信息和提示状态及信息
@@ -694,20 +676,21 @@ class OrdersModel extends Model
 			return $return;
 		}
 		$business['remove_status']=0;
-		$all = $this->where($business)->where('resource_type','>',3)->orderBy('end_time','desc')->get(['order_sn','resource_type','machine_sn','resource','price','end_time'])->groupBy('machine_sn')->toArray();
-		// ->where('price','>','0.00')
-		$all_keys = array_keys($all);//获取分组后的资源编号
-		foreach($all_keys as $key=>$value){
-			$business['machine_sn'] = $value;
-			$resource[$key] = $this->where($business)->where('order_status','<',3)->orderBy('end_time','desc')->select('order_sn','resource_type','machine_sn','resource','price','end_time','order_status')->first();
-		}
-		// dd($resource);
+		//以资源编号为键的资源数组
+		$all = $this->where($business)->where('resource_type','>',3)->orderBy('end_time','desc')->get(['order_sn','resource_type','machine_sn','resource','price','end_time'])->groupBy('machine_sn');
+		$resource = $all->map(function($item,$key){//根据资源编号获取对应资源的最新一条订单（$key为$all的键）,map参考laravel模型的集合的可用方法
+			return $this->where(['machine_sn'=>$key])->where('order_status','<',3)->orderBy('end_time','desc')->select('order_sn','resource_type','machine_sn','resource','price','end_time','order_status')->first();
+		});
 		if(!empty($resource)){
-			foreach($resource as $key=>$value){
-				$resource_type = [ '1' => '租用主机' , '2' => '托管主机' , '3' => '租用机柜' , '4' => 'IP' , '5' => 'CPU' , '6' => '硬盘' , '7' => '内存' , '8' => '带宽' , '9' => '防护' , '10' => 'cdn','11'=>'高防IP','12'=>'流量叠加包'];
-				// $resource[$key]['resourcetype'] = $resource_type[$value['resource_type']];
-			}
-			$orders = ['IP'=>$this->filter($resource,4),'cpu'=>$this->filter($resource,5),'harddisk'=>$this->filter($resource,6),'memory'=>$this->filter($resource,7),'bandwidth'=>$this->filter($resource,8),'protected'=>$this->filter($resource,9),'cdn'=>$this->filter($resource,10)];
+			$orders = [//filter和values参考laravel模型的集合的可用方法
+				'IP'=>$resource->filter(function($value,$key){return $value->resource_type == 4;})->values(),
+				'cpu'=>$resource->filter(function($value,$key){return $value->resource_type == 5;})->values(),
+				'harddisk'=>$resource->filter(function($value,$key){return $value->resource_type == 6;})->values(),
+				'memory'=>$resource->filter(function($value,$key){return $value->resource_type == 7;})->values(),
+				'bandwidth'=>$resource->filter(function($value,$key){return $value->resource_type == 8;})->values(),
+				'protected'=>$resource->filter(function($value,$key){return $value->resource_type == 9;})->values(),
+				'cdn'=>$resource->filter(function($value,$key){return $value->resource_type == 10;})->values()
+			];
 			$return['data'] = $orders;
 			$return['code'] = 1;
 			$return['msg']  = '该业务下的其他资源信息获取成功';

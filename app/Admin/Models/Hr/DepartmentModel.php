@@ -28,7 +28,7 @@ class DepartmentModel extends Model
         //     $where = [];
         // }
         // ->where($where)
-    	$show_depart = $this->get(['id','depart_number','depart_name','sign','created_at','updated_at']);
+    	$show_depart = $this->orderBy('sign','desc')->orderBy('depart_number','desc')->get(['id','depart_number','depart_name','sign','created_at','updated_at']);
 		if(!$show_depart->isEmpty()){
     		$sign = [1=>'普通',2=>'工单初始部门',3=>'工单处理部门',4=>'业务部门'];
     		foreach($show_depart as $depart_key=>$depart_value){

@@ -21,10 +21,12 @@
         </div>
         @if ($page!=='gaofang')
         <div class="bottom">
-            <a class="btn-link {{ $page == 'dianxin' ? 'active' : '' }}" href="/zuyong/dianxin/hunan">电信服务器租用</a>
-            <a class="btn-link {{ $page == 'liantong' ? 'active' : '' }}" href="/zuyong/liantong/hunan">联通服务器租用</a>
+            @foreach ($nav as $item)
+                <a class="btn-link {{ $page == $item->alias ? 'active' : '' }}" href="/zuyong/{{ $item->alias }}/{{ $machine_rooms->first()['alias'] }}">{{ $item->name }}</a>
+            @endforeach
+            <!-- <a class="btn-link {{ $page == 'liantong' ? 'active' : '' }}" href="/zuyong/liantong/hunan">联通服务器租用</a>
             <a class="btn-link {{ $page == 'shuangxian' ? 'active' : '' }}" href="/zuyong/shuangxian/hunan">双线服务器租用</a>
-            <a class="btn-link {{ $page == 'sanxian' ? 'active' : '' }}" href="/zuyong/sanxian/hunan">三线服务器租用</a>
+            <a class="btn-link {{ $page == 'sanxian' ? 'active' : '' }}" href="/zuyong/sanxian/hunan">三线服务器租用</a> -->
             <!-- <a class="btn-link {{ $page == 'bgp' ? 'active' : '' }}" href="/zuyong/bgp">BGP服务器租用</a> -->
         </div>
         @endif
@@ -78,7 +80,7 @@
                                                 硬盘：{{ $item['hardDisk'] }}
                                                 <br/>
                                                 带宽：{{ $item['bandwidth'] }}
-                                                @if ($item['defense']!==0)
+                                                @if ($item['defense']!=0)
                                                 <br/>
                                                 防御：{{ $item['defense'] }}
                                                 @endif

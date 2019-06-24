@@ -126,8 +126,13 @@ Route::group([
             $router->resource('/carousel', 'Show\CarouselController');
             $router->resource('/nav', 'Show\NavController');
             $router->get('/api/nav/select', 'Show\NavController@select');
-
-
+            $router->resource('/machine_room_info', 'Show\MachineRoomInfoController');
+            $router->get('/api/machine_room_info/select', 'Show\MachineRoomInfoController@select');
+            $router->resource('/machine_info', 'Show\MachineInfoController');
+            $router->get('/api/machine_info/select/{type}', 'Show\MachineInfoController@select');
+            $router->resource('/recommend', 'Show\RecommendController');
+            $router->resource('/rusteeship_server', 'Show\RusteeshipServerController');
+            $router->get('/api/rusteeship_server/select/{type}', 'Show\RusteeshipServerController@select');
         });
 
     });

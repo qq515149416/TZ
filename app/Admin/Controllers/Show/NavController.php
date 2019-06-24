@@ -7,6 +7,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 use App\Admin\Models\News\NavModel;
+use App\Admin\Models\News\MachineRoomModel;
 use Encore\Admin\Form;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
@@ -61,6 +62,7 @@ class NavController extends Controller
 
                 $show->id('ID');
                 $show->name('名称');
+                $show->alias('别名');
                 $show->url('地址');
                 $show->type("类型")->using([
                     1 => '内部链接',
@@ -70,6 +72,9 @@ class NavController extends Controller
                 $show->seo_title("SEO标题");
                 $show->seo_keywords("SEO关键词");
                 $show->seo_description("SEO描述");
+                $show->machineRooms("所属机房")->as(function ($machineRooms) {
+                    return $machineRooms->pluck('name');
+                })->label();
                 $show->status("状态")->using([
                     1 => '正常',
                     0 => '隐藏'
@@ -97,6 +102,14 @@ class NavController extends Controller
                 }
                 return "一级导航";
             });
+            $grid->machineRooms("所属机房")->display(function ($machineRooms) {
+
+                $machineRooms = array_map(function ($machineRoom) {
+                    return "<span class='label label-success'>{$machineRoom['name']}</span>";
+                }, $machineRooms);
+
+                return join('&nbsp;', $machineRooms);
+            });
             $grid->column('seo_title','SEO标题');
             $grid->column('seo_keywords','SEO关键词');
             $grid->column('seo_description','SEO描述');
@@ -105,7 +118,7 @@ class NavController extends Controller
                     1 => '正常',
                     0 => '隐藏'
                 ];
-                return $types[$this->type];
+                return $types[$this->status];
             });
             $grid->filter(function($filter){
                 // 去掉默认的id过滤器
@@ -126,6 +139,7 @@ class NavController extends Controller
 
             $form->display('id', 'ID');
             $form->text('name', '名称');
+            $form->text('alias', '别称');
             $form->text('url', '网址');
             $types = [
                 1 => '内部链接',
@@ -133,11 +147,12 @@ class NavController extends Controller
             ];
             $form->select('type', '类型')->options($types);
             $form->textarea('description', '描述');
-            $form->switch('status', '状态')->rules('required');
+            $form->switch('status', '状态')->value(1)->rules('required');
             $form->text('seo_title', 'SEO标题');
             $form->text('seo_keywords', 'SEO关键词');
             $form->text('seo_description', 'SEO描述');
             $form->select('parent_id',"父级")->options('/tz_admin/show/api/nav/select')->default(0);
+            $form->multipleSelect('machineRooms',"所属机房")->options(MachineRoomModel::all()->pluck('name', 'id'));
         });
     }
     public function select()

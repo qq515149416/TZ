@@ -18,10 +18,13 @@
                 </h4>
             </div>
             <div class="bottom">
-            <a class="btn-link {{ $page == 'dianxin' ? 'active' : '' }}" href="/zuyong/dianxin/hunan">电信服务器租用</a>
+            @foreach ($nav as $item)
+                <a class="btn-link {{ $page == $item->alias ? 'active' : '' }}" href="/zuyong/{{ $item->alias }}/{{ $room }}">{{ $item->name }}</a>
+            @endforeach
+            <!-- <a class="btn-link {{ $page == 'dianxin' ? 'active' : '' }}" href="/zuyong/dianxin/hunan">电信服务器租用</a>
             <a class="btn-link {{ $page == 'liantong' ? 'active' : '' }}" href="/zuyong/liantong/hunan">联通服务器租用</a>
             <a class="btn-link {{ $page == 'shuangxian' ? 'active' : '' }}" href="/zuyong/shuangxian/hunan">双线服务器租用</a>
-            <a class="btn-link {{ $page == 'sanxian' ? 'active' : '' }}" href="/zuyong/sanxian/hunan">三线服务器租用</a>
+            <a class="btn-link {{ $page == 'sanxian' ? 'active' : '' }}" href="/zuyong/sanxian/hunan">三线服务器租用</a> -->
             <!-- <a class="btn-link {{ $page == 'bgp' ? 'active' : '' }}" href="/zuyong/bgp">BGP服务器租用</a> -->
             </div>
         </div>
@@ -31,18 +34,18 @@
                 <div class="main-content">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="{{ $room == 'hunan' ? 'active' : '' }}"><a href="/zuyong/{{$page}}/hunan">湖南衡阳机房</a></li>
-                        <li role="presentation" class="{{ $room == 'guangdong' ? 'active' : '' }}"><a href="/zuyong/{{$page}}/guangdong">广东惠州机房</a></li>
-                        <li role="presentation" class="{{ $room == 'xian' ? 'active' : '' }}"><a href="/zuyong/{{$page}}/xian">陕西西安机房</a></li>
+                        @foreach ($machine_rooms as $item)
+                            <li role="presentation" class="{{ $room == $item['alias'] ? 'active' : '' }}"><a href="/zuyong/{{$page}}/{{ $item['alias'] }}">{{$item['name']}}</a></li>
+                        @endforeach
+                        <!-- <li role="presentation" class="{{ $room == 'guangdong' ? 'active' : '' }}"><a href="/zuyong/{{$page}}/guangdong">广东惠州机房</a></li>
+                        <li role="presentation" class="{{ $room == 'xian' ? 'active' : '' }}"><a href="/zuyong/{{$page}}/xian">陕西西安机房</a></li> -->
                     </ul>
 
                     <!-- Tab panes -->
                     <div class="tab-content">
-                        @if(count($data))
-                            @tabpanel(['status' => ($room == 'hunan' ? 'active' : ''), 'id' => 'hengyang', 'index' => 'hunan'])
-                            @tabpanel(['status' => ($room == 'guangdong' ? 'active' : ''), 'id' => 'huizhou', 'index' => 'huizhou'])
-                            @tabpanel(['status' => ($room == 'xian' ? 'active' : ''), 'id' => 'xian', 'index' => 'xian'])
-                        @endif
+                        @foreach ($machine_rooms as $item)
+                            @tabpanel(['status' => ($room == $item['alias'] ? 'active' : ''),'id' => $item['id']])
+                        @endforeach
                     </div>
 
                 </div>

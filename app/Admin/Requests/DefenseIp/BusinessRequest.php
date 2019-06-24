@@ -31,7 +31,13 @@ class BusinessRequest extends FormRequest
 		$par = $this->only(['edit_id']);
 		
 		switch ($method) {
-			
+
+			case 'buyNowByAdmin':
+				$return = [
+					'package_id'		=> 'required|exists:tz_defenseip_package,id',	
+					'customer_id'		=> 'required'
+				];
+				break;
 			case 'subExamine':
 				$return = [
 					'business_id'		=> 'required|exists:tz_defenseip_business,id',	

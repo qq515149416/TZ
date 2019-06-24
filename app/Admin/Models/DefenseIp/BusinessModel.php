@@ -54,12 +54,9 @@ class BusinessModel extends Model
 		}
 
 		$check_ip_res = $this->checkStock($package_id);
-		if($check_ip_res == false){
-			return[
-				'data'	=> '',
-				'msg'	=> '该套餐IP库存不足',
-				'code'	=> 0,
-			];
+		
+		if($check_ip_res['code'] == 0){
+			return $check_ip_res;
 		}
 
 		DB::beginTransaction();
@@ -84,7 +81,6 @@ class BusinessModel extends Model
 		$data['status']			= 5;
 		$data['created_at']		= date("Y-m-d H:i:s");
 	
-		
 		//因为可先使用后付款,创建待审核状态业务
 		$insert = $this->create($data);
 		if($insert == false){
@@ -141,12 +137,8 @@ class BusinessModel extends Model
 			}
 		}elseif($res == 1){
 			$check_ip_res = $this->checkStock($business->package_id);
-			if($check_ip_res == false){
-				return [
-					'data'	=> '',
-					'msg'	=> '该套餐IP库存不足',
-					'code'	=> 0,
-				];
+			if($check_ip_res['code'] == 0){
+				return $check_ip_res;
 			}
 			$check_ip = $check_ip_res['ip'];
 			
@@ -237,20 +229,31 @@ class BusinessModel extends Model
 	*查询库存
 	*/
 	public function checkStock($package_id){
-		$package = DB::table('tz_defenseip_package')->select(['site','protection_value','price'])->where('id',$package_id)->first();
-
+		$package = DB::table('tz_defenseip_package')->select(['site','protection_value','price'])->whereNull('deleted_at')->where('id',$package_id)->first();
+		if ($package == null) {
+			return [
+				'data'	=> [],
+				'msg'	=> '套餐不存在',
+				'code'	=> 0,
+			];
+		}
 		$check_ip = StoreModel::select(['id','ip'])
-				->where('deleted_at',null)
+				->whereNull('deleted_at')
 				->where('site',$package->site)
 				->where('protection_value',$package->protection_value)
 				->where('status',0)
 				->first();	
 		if($check_ip == NULL){
-			return false;
+			return [
+				'data'	=> [],
+				'msg'	=> '套餐IP库存不足',
+				'code'	=> 0,
+			];
 		}else{
 			return [
 				'ip'	=> $check_ip,
 				'price'	=> $package->price,
+				'code'	=> 1,
 			];
 		}
 

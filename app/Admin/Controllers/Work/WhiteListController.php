@@ -107,4 +107,33 @@ class WhiteListController extends Controller
 		return redirect($url);
 	}
 
+	/**
+	 * 下载批量添加白名单申请的模板
+	 * 
+	 */
+	public function excelTemplate(Request $request)
+	{
+		$model = new WhiteListModel();
+		$model->excelTemplate();
+	}
+	
+
+	/**
+	* 处理excel批量添加白名单excel
+	* @param  
+	* @return 
+	*/
+	public function handleExcel(WhiteListRequest $request){
+		$file = $request->file('handle_excel');
+		
+		
+		if($file->getClientOriginalExtension() != 'xlsx'){//判断上传文件的后缀
+			return tz_ajax_echo([],'仅支持类型为xlsx的文件',0);
+		}
+		
+		$model = new WhiteListModel();
+		$res = $model->handleExcel($file);
+		
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
 }

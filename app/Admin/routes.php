@@ -370,6 +370,8 @@ Route::group([
         $router->post('check', 'Work\WhiteListController@checkWhiteList');//白名单申请单 审核接口
         $router->post('delete', 'Work\WhiteListController@deleteWhiteList');//白名单申请单 删除接口
         $router->get('skipBeian', 'Work\WhiteListController@skipBeian');//跳转到工信部备案
+        $router->get('excelTemplate', 'Work\WhiteListController@excelTemplate');//下载机器的批量模板
+        $router->post('handleExcel', 'Work\WhiteListController@handleExcel');//上传机器的批量添加数据
     });
 
 

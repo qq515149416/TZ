@@ -273,6 +273,7 @@ $(function () {
       }, function (data) {
         if (data.code == 1) {
           $('#buyOverlayPackage').modal('hide');
+          location.href = location.protocol + "//" + location.hostname + "/tz/member92019.html#/userOverlayPackage";
         }
         alert(data.msg);
       });

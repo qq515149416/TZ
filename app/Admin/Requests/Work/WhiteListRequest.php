@@ -40,6 +40,12 @@ class WhiteListRequest extends FormRequest
 		$return = [];
 
 		switch ($method) {
+			
+			case 'handleExcel':
+				$return = [
+					'handle_excel' 		=> 'required|file',
+				];
+				break;
 			case 'checkIP':
 				$return = [
 					'ip' 			=> 'required|ip',
@@ -86,7 +92,7 @@ class WhiteListRequest extends FormRequest
 			'white_status.max' 		=> '白名单状态 : 1-通过,2-不通过,3-拉黑',
 			'white_ip.required'		=> 'IP地址必须填写',
 			'white_ip.ip'			=> 'IP地址必须符合IP规范(如:192.168.1.1)',
-			'domain_name.required'	=> '域名必须填写',
+			'domain_name.required'		=> '域名必须填写',
 			'domain_name.regex'		=> '域名格式错误,勿填 : http:// ; https ; www ; / ;',
 			'record_number.required'	=> '备案编号必须填写',
 			'binding_machine.required'	=> '机器编号必须填写',
@@ -96,6 +102,9 @@ class WhiteListRequest extends FormRequest
 			'customer_name.required'	=> '客户姓名必须填写',
 			'id.required'			=> '请提供所需审核的编号',
 			'id.exists' 			=> '审核单id不存在',
+			'handle_excel.required' 		=> '请提交excel表格',
+			'handle_excel.file' 		=> 'excel格式错误',
+			'handle_excel.mimes' 		=> '只接收xlsx格式文件',
 		];
 	}
 

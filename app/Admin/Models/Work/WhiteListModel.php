@@ -13,6 +13,8 @@ use App\Admin\Models\Idc\Ips;
 
 use App\Admin\Models\Business\BusinessModel as IdcBusinessModel;
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class WhiteListModel extends Model
 {
@@ -208,12 +210,12 @@ class WhiteListModel extends Model
 				return $return;
 			}
 
-			// if($v->white_status == 1 ){
-			// 	if($v->white_ip == $insertdata['white_ip']){
-			// 		$return['msg']	= '该域名审核申请单已通过,请勿重复提交';
-			// 		return $return;	
-			// 	}
-			// }
+			if($v->white_status == 1 ){
+				if($v->white_ip == $insertdata['white_ip']){
+					$return['msg']	= '该域名审核申请单已通过,请勿重复提交';
+					return $return;	
+				}
+			}
 			if($v->white_status == 0 ){
 				if($v->white_ip == $insertdata['white_ip']){
 					$return['msg']	= '该域名审核申请单正在审核中,请勿重复提交';
@@ -461,4 +463,152 @@ class WhiteListModel extends Model
 					->select('work_number')->first();
 		return $staff;
 	}
+
+
+	/**
+	 * 下载excel模板
+	 * @return [type] [description]
+	 */
+	public function excelTemplate(){
+		$spreadsheet = new Spreadsheet();
+		$worksheet = $spreadsheet->getActiveSheet();
+		$worksheet->setTitle('白名单申请批量导入表格');
+		$worksheet->setCellValueByColumnAndRow(1, 1, '白名单申请批量导入表格');
+		$worksheet->getRowDimension('1')->setRowHeight(26);//头行高
+		// $row_value = ['IP(必填)','域名(必填)','备案编号(必填)','机器编号(必填)','客户姓名(必填)','备注(选填)'];//填写的字段
+		// $row = $worksheet->fromArray($row_value,NULL,'A4');//分配字段从A4开始填写（横向）
+		$worksheet->setCellValue('A4', 'IP(必填)')
+		            ->setCellValue('B4', '域名(必填)')
+		            ->setCellValue('C4', '备案编号(必填)')
+		            ->setCellValue('D4', '备注(选填)');
+
+		$highest_row = $worksheet->getHighestRow();//总行数
+		$highest_colum = $worksheet->getHighestColumn();//总列数
+
+		//标题样式
+		$title_font = [
+			'font' => [
+				'bold' => true,//加粗
+				'size' => '20px',//字体大小
+			],
+			'alignment' => [//内容居中
+				'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+			],
+		];
+		$worksheet->mergeCells('A1:'.$highest_colum.'1')->getStyle('A1:'.$highest_colum.'1')->applyFromArray($title_font);//设置标题样式
+		//说明内容
+		$worksheet->getCell('A2')->setValue("填写说明:按要求填上就好,高防的填个业务编号上去也行,你们自己看得懂就好,备注选填,别的都得填");
+		$worksheet->getStyle('A2')->getFont()->applyFromArray(['bold'=>TRUE,'size'=>'12px']);//说明内容样式
+		$worksheet->getRowDimension('2')->setRowHeight(26);//说明内容行高
+		$worksheet->mergeCells('A2:'.$highest_colum.'3')->getStyle('A2:'.$highest_colum.'3')->getAlignment()->setWrapText(true);//说明内容自动换行
+		//设置字段宽度
+		for($i='A';$i<=$highest_colum;$i++){
+			$worksheet->getColumnDimension($i)->setWidth(16);
+		}
+
+		/**
+		 * 下载模板
+		 * @var [type]
+		 */
+
+		$filename = '白名单申请批量导入表格模板.xlsx';
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Content-Disposition: attachment;filename="'.$filename.'"');
+		header('Cache-Control: max-age=0');
+		$writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+		$writer->save('php://output');
+		$spreadsheet->disconnectWorksheets();
+		unset($spreadsheet);
+		exit;
+	}
+
+	/**
+	 * 处理上传excel批量添加白名单申请
+	 * @return 
+	 */
+	public function handleExcel($file){
+		//获取操作人员信息
+		$admin_user 	= Admin::user();
+
+		$reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader('Xlsx');//读取excel文件
+		$spreadsheet = $reader->load($file->getRealPath());//加载文件
+		$worksheet = $spreadsheet->getActiveSheet();//获取表格的活动区域
+		// $highest_colum = $worksheet->getHighestColumn();//获取总的列数
+		$sheet = $spreadsheet->getSheet(0);   //excel中的第一张sheet
+		$highest_row = $sheet->getHighestRow();       // 取得总行数
+		// $highest_column = $sheet->getHighestColumn();   // 取得总列数
+
+		//如果没填东西就返回错误
+		if($highest_row < 5){
+			return [
+				'data'	=> [],
+				'msg'	=> '请填写内容',
+				'code'	=> 0,
+			];
+		}
+		//对比下列标题对不对得上
+		$arr = [
+			'A'	=> 'IP(必填)',
+			'B'	=> '域名(必填)',
+			'C'	=> '备案编号(必填)',
+			'D'	=> '备注(选填)',
+		];
+		//比对列标题
+		for ($i = 'A'; $i  <= 'D' ; $i ++) { 
+			$title = $worksheet->getCell($i . '4')->getValue();
+
+			if($title != $arr[$i]){
+				return [
+					'data'	=> [],
+					'msg'	=> '请下载最新excel表格并按格式填写',
+					'code'	=> 0,
+				];
+			}
+		}		
+
+		//失败数组
+		$fail_list = [];
+		//开关
+		$swi = 0;
+		for($k = 5 ; $k <= $highest_row ; $k++){//转换列名
+			//获取信息
+			$insertdata = [
+				'white_ip'		=> $worksheet->getCell('A' . $k)->getValue(),
+				'domain_name'		=> $worksheet->getCell('B' . $k)->getValue(),
+				'record_number'	=> $worksheet->getCell('C' . $k)->getValue(),
+				'submit_note'		=> $worksheet->getCell('D' . $k)->getValue(),
+			];
+			//一条条怼进去
+			$insert_res = $this->insertWhiteList($insertdata);
+
+			//如果怼失败了就返回失败信息
+			if($insert_res['code'] == 0){
+				//如果 有失败的,开关变1
+				$swi = 1;
+				$fail_list[] = [
+					'ip'		=> $insertdata['white_ip'],
+					'domain_name'	=> $insertdata['domain_name'],
+					'reason'		=> $insert_res['msg'],
+				];
+			}
+			
+		}
+
+		if ($swi == 0) {	//没有失败的
+			return [
+				'data'	=> [],
+				'msg'	=> '所有申请提交成功',
+				'code'	=> 1,
+			];
+		}else{		//有失败的
+			return [
+				'data'	=> $fail_list,
+				'msg'	=> '以下申请提交失败',
+				'code'	=> 0,
+			];
+		}
+		
+
+		//dd($colum_value);
+	}	
 }

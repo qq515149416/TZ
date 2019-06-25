@@ -363,7 +363,7 @@
                     <a href="#" class="active">发展历程</a>
                 </span>
             </h2>
-            <img src="{{ asset("/images/history.png") }}" alt="" />
+            <img style="width: 100%;" src="{{ asset("/images/history.png") }}" alt="" />
         </div>
         <div role="tabpanel" class="tab-pane {{ $page === 'lianxi' ? 'active' : '' }}" id="lianxi">
             <h2>

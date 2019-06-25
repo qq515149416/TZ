@@ -136,12 +136,13 @@ class MachineInfoController extends Controller
         return Admin::form(RentServerModel::class, function (Form $form) {
 
             $form->display('id', 'ID');
-            $form->text('hardDisk', '硬盘');
-            $form->text('bandwidth', '带宽');
-            $form->text('defense', '防御');
             $form->text('line', '线路');
             $form->text('format', '规格');
+            $form->text('ram', '内存');
+            $form->text('hardDisk', '硬盘');
+            $form->text('bandwidth', '带宽');
             $form->text('ip', 'IP');
+            $form->text('defense', '防御');
             $form->text('annualFee', '年付');
             $form->text('monthlyPay', '月付');
             $form->switch('status', '状态')->value(1)->rules('required');

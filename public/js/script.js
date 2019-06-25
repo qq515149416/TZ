@@ -81,6 +81,11 @@ module.exports = __webpack_require__(48);
 
 __webpack_require__(49);
 
+$.ajaxSetup({
+  headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  }
+});
 window.onscroll = function () {
   if ($(document).scrollTop() > 82) {
     // console.log($(document).scrollTop());
@@ -131,26 +136,26 @@ $(function () {
         }
         $(item).find(".body .mark").slideDown();
         if (i == 1) {
-          $(item).find(".body .mark h3").html("<b>" + $(this).attr("data-title") + "</b> - " + $(this).attr("data-subtitle"));
+          $(item).find(".body .mark h3").html('<b>' + $(this).attr("data-title") + '</b> - ' + $(this).attr("data-subtitle"));
           if ($(this).attr("data-attrs")) {
             var attrData = eval($(this).attr("data-attrs"));
             $(item).find(".body .mark .info .config ul").empty();
             var domstr = "";
             attrData.forEach(function (e) {
-              domstr += "<li>" + e.attr + "\uFF1A" + e.val + "</li>";
+              domstr += '<li>' + e.attr + '\uFF1A' + e.val + '</li>';
             });
             $(item).find(".body .mark .info .config ul").append(domstr);
           }
-          $(item).find(".body .mark .info p").html("" + $(this).attr("data-dec"));
+          $(item).find(".body .mark .info p").html('' + $(this).attr("data-dec"));
           if (Number($(this).attr("data-price"))) {
-            $(item).find(".body .mark .unit .price").html("" + $(this).attr("data-price"));
+            $(item).find(".body .mark .unit .price").html('' + $(this).attr("data-price"));
           } else {
             $(item).find(".body .mark .unit").html("&nbsp;");
           }
           $(item).find(".body .mark a").attr("href", $(this).attr("data-url"));
         }
         if (i == 2) {
-          $(item).find(".body .mark h3").html("<b>" + $(this).attr("data-title") + "</b> - " + $(this).attr("data-subtitle"));
+          $(item).find(".body .mark h3").html('<b>' + $(this).attr("data-title") + '</b> - ' + $(this).attr("data-subtitle"));
           if ($(this).attr("data-attrs")) {
             var attrData = eval($(this).attr("data-attrs"));
             $(item).find(".body .mark .info").empty();
@@ -158,13 +163,13 @@ $(function () {
               var domstr = "";
               attrData.forEach(function (e, i) {
 
-                domstr += "<p>" + e.attr + "\uFF1A" + e.val + "</p>";
+                domstr += '<p>' + e.attr + '\uFF1A' + e.val + '</p>';
               });
-              domstr += "<p>\u4EA7\u54C1\u8BF4\u660E\uFF1A" + $(this).attr("data-dec") + "</p>";
+              domstr += '<p>\u4EA7\u54C1\u8BF4\u660E\uFF1A' + $(this).attr("data-dec") + '</p>';
               $(item).find(".body .mark .info").append(domstr);
             } else {
               var domstr = "";
-              domstr += "<p>" + $(this).attr("data-dec") + "</p>";
+              domstr += '<p>' + $(this).attr("data-dec") + '</p>';
               $(item).find(".body .mark .info").append(domstr);
             }
           }
@@ -172,7 +177,7 @@ $(function () {
           // $(item).find(".body .mark .info p").eq(1).html(`域名数量：${$(this).attr("data-domain")}`);
           // $(item).find(".body .mark .info p").eq(2).html(`产品说明：${$(this).attr("data-dec")}`);
           if (Number($(this).attr("data-price"))) {
-            $(item).find(".body .mark .unit .price").html("" + $(this).attr("data-price"));
+            $(item).find(".body .mark .unit .price").html('' + $(this).attr("data-price"));
           } else {
             $(item).find(".body .mark .unit").html("&nbsp;");
           }
@@ -246,6 +251,32 @@ $(function () {
         longCertificateSwiper.slideNext();
       });
     }
+  });
+  //   叠加包购买
+  $("#buyOverlayPackage").on("shown.bs.modal", function (e) {
+    var showInfo = '';
+    showInfo += '<p>名称：' + $(e.relatedTarget).attr("data-name") + '</p>';
+    showInfo += '<p>天数：' + $(e.relatedTarget).attr("data-time") + '</p>';
+    showInfo += '<p>价格：' + $(e.relatedTarget).attr("data-price") + '</p>';
+    $(this).find(".show-info").empty().append(showInfo);
+    var post_id = $(e.relatedTarget).attr("data-id");
+    var oBuy_num = $(this).find("#buy_num");
+    $(this).find(".buy").off("click");
+    $(this).find(".buy").click(function () {
+      if (!oBuy_num.val()) {
+        alert("数量不能为空");
+        return;
+      }
+      $.post("/home/overlay/buyNowByCustomer", {
+        overlay_id: post_id,
+        buy_num: oBuy_num.val()
+      }, function (data) {
+        if (data.code == 1) {
+          $('#buyOverlayPackage').modal('hide');
+        }
+        alert(data.msg);
+      });
+    });
   });
   /**
    * 服务器托管页面collapse切换
@@ -362,7 +393,7 @@ function tableToExcel(jsonData) {
     str += '<tr>';
     for (var item in jsonData[i]) {
       //增加\t为了不让表格显示科学计数法或者其他格式
-      str += "<td>" + (jsonData[i][item] + '\t') + "</td>";
+      str += '<td>' + (jsonData[i][item] + '\t') + '</td>';
     }
     str += '</tr>';
   }
@@ -371,7 +402,7 @@ function tableToExcel(jsonData) {
   var uri = 'data:application/vnd.ms-excel;base64,';
 
   //下载的表格模板数据
-  var template = "<html xmlns:o=\"urn:schemas-microsoft-com:office:office\"\n    xmlns:x=\"urn:schemas-microsoft-com:office:excel\"\n    xmlns=\"http://www.w3.org/TR/REC-html40\">\n    <head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>\n      <x:Name>" + worksheet + "</x:Name>\n      <x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet>\n      </x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]-->\n      </head><body><table>" + str + "</table></body></html>";
+  var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office"\n    xmlns:x="urn:schemas-microsoft-com:office:excel"\n    xmlns="http://www.w3.org/TR/REC-html40">\n    <head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>\n      <x:Name>' + worksheet + '</x:Name>\n      <x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet>\n      </x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]-->\n      </head><body><table>' + str + '</table></body></html>';
   //下载模板
   window.location.href = uri + base64(template);
 }

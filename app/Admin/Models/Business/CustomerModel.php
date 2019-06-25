@@ -403,6 +403,7 @@ class CustomerModel extends Model
         $data['pwd_ver'] = 1;
         $data['salesman_id'] = Admin::user()->id;
         $data['status'] = 2;
+        $data['password'] = Hash::make($data['password']);
         $row = $this->create($data);
         if($row != false){
             /**

@@ -1,5 +1,10 @@
 import "./article";
 
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
 window.onscroll = function () {
   if ($(document).scrollTop() > 82) {
     // console.log($(document).scrollTop());
@@ -168,6 +173,32 @@ $(function () {
       });
     }
   });
+//   叠加包购买
+$("#buyOverlayPackage").on("shown.bs.modal",function(e) {
+    var showInfo = '';
+    showInfo += '<p>名称：'+$(e.relatedTarget).attr("data-name")+'</p>';
+    showInfo += '<p>天数：'+$(e.relatedTarget).attr("data-time")+'</p>';
+    showInfo += '<p>价格：'+$(e.relatedTarget).attr("data-price")+'</p>';
+    $(this).find(".show-info").empty().append(showInfo);
+    var post_id = $(e.relatedTarget).attr("data-id");
+    var oBuy_num = $(this).find("#buy_num");
+    $(this).find(".buy").off("click");
+    $(this).find(".buy").click(function() {
+        if(!oBuy_num.val()) {
+            alert("数量不能为空");
+            return ;
+        }
+        $.post("/home/overlay/buyNowByCustomer",{
+            overlay_id: post_id,
+            buy_num: oBuy_num.val()
+        },function(data) {
+            if(data.code==1) {
+                $('#buyOverlayPackage').modal('hide');
+            }
+            alert(data.msg);
+        });
+    });
+});
   /**
    * 服务器托管页面collapse切换
    */

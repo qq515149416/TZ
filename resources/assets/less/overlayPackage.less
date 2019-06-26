@@ -282,6 +282,118 @@
             }
         }
     }
+    .function {
+        padding: 70px 0;
+        background: #fff;
+        // text-align: center;
+        .function-list {
+            margin: 0 auto;
+            margin-top: 40px;
+            padding: 0;
+            list-style: none;
+            width: 1180px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            li {
+                width: 580px;
+                border: 1px solid #ccd0d9;
+                border-radius: 6px;
+                padding: 20px;
+                box-sizing: border-box;
+                margin-right: 20px;
+                margin-bottom: 20px;
+                &:nth-of-type(2n) {
+                    margin-right: 0;
+                }
+                &:nth-of-type(3n) {
+                    margin-bottom: 0;
+                }
+                &:nth-of-type(4n) {
+                    margin-bottom: 0;
+                }
+                h5 {
+                    font-size: 16px;
+                    color: #31313c;
+                    margin: 0;
+                    margin-bottom: 14px;
+                }
+                p {
+                    font-size: 14px;
+                    color: #60646e;
+                    line-height: 24px;
+                    width: 440px;
+                }
+            }
+        }
+    }
+    .scenes {
+        padding-top: 10px;
+        .scenes-list {
+            margin: 0 auto;
+            padding: 0;
+            list-style: none;
+            width: 1180px;
+            margin-top: 30px;
+            display: flex;
+            li {
+                width: 580px;
+                height: 184px;
+                border-radius: 6px;
+                box-sizing: border-box;
+                padding: 0 30px;
+                background: linear-gradient(to bottom,rgba(255,255,255,.3) 50%,rgba(99,135,250,.3)) #fff;
+                box-shadow: 0 16px 20px 8px rgba(11, 27, 96, .18);
+                margin-right: 20px;
+                position: relative;
+                &::after {
+                    content: "";
+                    position: absolute;
+                    width: 39px;
+                    height: 35px;
+                    top: 29px;
+                    right: 30px;
+                }
+                &:first-of-type {
+                    &::after {
+                        background: url(../images/overlayPackage/scenes_item_icon_1.png) no-repeat center center;
+                    }
+                }
+                &:last-of-type {
+                    margin: 0;
+                    &::after {
+                        background: url(../images/overlayPackage/scenes_item_icon_2.png) no-repeat center center;
+                    }
+                }
+                > h5 {
+                    margin-top: 48px;
+                    margin-bottom: 16px;
+                    font-size: 16px;
+                    color: #333333;
+                }
+                > span {
+                    font-size: 14px;
+                    color: #2139b7;
+                }
+                > p {
+                    margin-top: 6px;
+                    font-size: 14px;
+                    color: #666666;
+                    line-height: 24px;
+                }
+            }
+        }
+    }
+    .help {
+        margin: 80px 0;
+        .help-content {
+            margin: 0 auto;
+            margin-top: 42px;
+            width: 1105px;
+            height: 81px;
+            background: url(../images/overlayPackage/help.png) no-repeat;
+        }
+    }
     .introduction-title {
         text-align: center;
         font-size: 26px;
@@ -300,4 +412,41 @@
             transform: translateX(-50%);
         }
     }
+
+    .consult {
+        height: 192px;
+        background: url("../images/serverRent/bottom-bg.png") no-repeat center center;
+        background-size: cover;
+        text-align: center;
+        padding-top: 50px;
+
+        .text {
+          font-family: 'pingFangMedium';
+        }
+
+        .consult-btn {
+          display: inline-block;
+          padding-top: 6px;
+          padding-bottom: 6px;
+          width: 152px;
+          font-size: 14px;
+          color: #fff;
+          letter-spacing: 2.8px;
+          text-decoration: none;
+          background-color: transparent;
+          border: 1px solid #fff;
+          border-radius: 17px;
+          -webkit-transition: all .4s ease-in-out;
+          -moz-transition: all .4s ease-in-out;
+          -ms-transition: all .4s ease-in-out;
+          -o-transition: all .4s ease-in-out;
+          transition: all .4s ease-in-out;
+
+          &:hover {
+            background-color: #fff;
+            color: #043fc4;
+          }
+        }
+      }
+
 }

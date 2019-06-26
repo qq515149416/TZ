@@ -101,15 +101,15 @@
                     <th>活动价格</th>
                     <td style="padding-top: 20px; padding-bottom: 20px;">
                         <p class="price">100元/月</p>
-                        <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
+                        <a href="http://www.15cdn.com/" class="purchase-btn">立即购买</a>
                     </td>
                     <td>
                         <p class="price">500元/月</p>
-                        <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
+                        <a href="http://www.15cdn.com/" class="purchase-btn">立即购买</a>
                     </td>
                     <td>
                         <p class="price">800元/月</p>
-                        <a href="javascript: void(0);" class="purchase-btn">立即购买</a>
+                        <a href="http://www.15cdn.com/" class="purchase-btn">立即购买</a>
                     </td>
                 </tr>
                 </tbody>
@@ -144,7 +144,7 @@
                     </td>
                     <td style="padding-top: 20px; padding-bottom: 20px;">
                         <p class="price">不限</p>
-                        <a href="javascript: void(0);" class="purchase-btn" style="width: 163px;">立即购买</a>
+                        <a href="http://www.15cdn.com/" class="purchase-btn" style="width: 163px;">立即购买</a>
                     </td>
                 </tr>
                 </tbody>

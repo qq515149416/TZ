@@ -105,8 +105,86 @@
         </div>
     </div>
 
+    <div class="function">
+        <header class="introduction-title font-heavy">
+            DDoS 防御流量叠加包功能
+        </header>
+        <ul class="function-list">
+            <li class="clearfix">
+                <div class="pull-left">
+                    <img src="{{ asset("/images/overlayPackage/function_icon_3.png") }}" />
+                </div>
+                <div class="pull-right">
+                    <h5>防御弹性扩展</h5>
+                    <p>按不同业务及发展需求按天、按周、按月即买即用，防护阈值可随时弹性调整，在整个调整过程中服务无中断。</p>
+                </div>
+            </li>
+            <li class="clearfix">
+                <div class="pull-left">
+                    <img src="{{ asset("/images/overlayPackage/function_icon_1.png") }}" />
+                </div>
+                <div class="pull-right">
+                    <h5>自动全面防护</h5>
+                    <p>根据攻击的流量和连接数阀值来自动触发攻击防护，对威胁进行阻断过滤，确保源站稳定安全&业务正常运行。</p>
+                </div>
+            </li>
+            <li class="clearfix">
+                <div class="pull-left">
+                    <img src="{{ asset("/images/overlayPackage/function_icon_2.png") }}" />
+                </div>
+                <div class="pull-right">
+                    <h5>支持不同业务</h5>
+                    <p>支持网站和非网站业务，如各类大型游戏、支付金融平台、流媒体、政企等各类易受攻击且需高防御业务行业。</p>
+                </div>
+            </li>
+            <li class="clearfix">
+                <div class="pull-left">
+                    <img src="{{ asset("/images/overlayPackage/function_icon_4.png") }}" />
+                </div>
+                <div class="pull-right">
+                    <h5>全景数据分析</h5>
+                    <p>提供多纬度实时统计报表，如流量报表、DDoS和CC防护清洗报表、流量图等，让您及时获得当前服务详情。</p>
+                </div>
+            </li>
+        </ul>
+    </div>
 
+    <div class="scenes">
+        <header class="introduction-title font-heavy">
+            应用场景
+        </header>
+        <ul class="scenes-list">
+            <li>
+                <h5 class="font-heavy">
+                    网站类业务
+                </h5>
+                <span class="font-medium">适用行业：金融、电商、企业门户类网站</span>
+                <p class="font-medium">网站类业务是最容易受到攻击的，因为黑客可通过DNS解析轻松获取网站服务器的真实IP，然后对服务器IP进行大流量ddos/cc攻击，导致网站访问缓慢或直接瘫痪。</p>
+            </li>
+            <li>
+                <h5 class="font-heavy">
+                    游戏类业务
+                </h5>
+                <span class="font-medium">适用行业：各类型端游、手游等网络游戏产品，各类型应用程序产品</span>
+                <p class="font-medium">游戏类是攻击最严重的行业，同行恶意竞争者通过各种攻击手段，让大批量游戏玩家频繁掉线，玩游戏卡顿，攻击停服，甚至无法登陆接入游戏，最终让大批玩家流失。</p>
+            </li>
+        </ul>
+    </div>
+    <div class="help">
+        <header class="introduction-title font-heavy">
+            DDoS防御流量叠加包使用图解
+        </header>
+        <div class="help-content">
 
+        </div>
+    </div>
+
+    <div class="consult">
+        <div class="title" style="margin-bottom: 20px;">
+            <h2 class="text" style="color: #fff;">腾正高防专家，在岗 1 分钟，安全 60 秒</h2>
+        </div>
+        <a class="consult-btn" href="javascript: void(0);">立即咨询</a>
+    </div>
 
 <!-- 叠加包购买 -->
 <div class="modal fade" id="buyOverlayPackage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

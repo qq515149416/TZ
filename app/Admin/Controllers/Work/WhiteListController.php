@@ -80,16 +80,29 @@ class WhiteListController extends Controller
 	}
 
 	/**
+	 * 对白名单进行批量审核
+	 * @param  Request 	white_status	-审核结果;check_note	-备注;id 	-被审核的申请单ID
+	 * @return json           	返回审核结果录入状态
+	 */
+	public function checkWhiteListBatch(WhiteListRequest $request){
+
+			$checkdata = $request->only(['white_status','check_note','id_list']);
+			$check = new WhiteListModel();
+			$return = $check->checkWhiteListBatch($checkdata);
+			return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
+
+	}
+	/**
 	 * 删除对应的白名单信息
 	 * @param  Request 	delete_id	-需要删除的申请单ID
 	 * @return   json           	返回删除结果
 	 */
 	public function deleteWhiteList(WhiteListRequest $request){
 
-			$id = $request->get('delete_id');
+			$id = $request->only('delete_id');
 			$delete = new WhiteListModel();
 			$result = $delete->deleteWhiteList($id);
-			return tz_ajax_echo('',$result['msg'],$result['code']);
+			return tz_ajax_echo([],$result['msg'],$result['code']);
 
 	}
 

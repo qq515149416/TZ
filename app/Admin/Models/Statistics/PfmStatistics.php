@@ -620,7 +620,81 @@ class  PfmStatistics extends Model
 		}
 		return $arr;
 	}
+	//按机房分消费记录
+	public function test2($begin,$end){
+		$already = $this->where('pay_time','>',$begin)
+				->where('pay_time','<',$end)
+				->select(['business_number' , 'payable_money' ,'serial_number','customer_id','order_id' ,'pay_time'])
+				->get()
+				->toArray();
 
+		foreach ($already as $k => $v) {
+
+			if ($v['business_number'] == '叠加包') {
+				$machine_room = DB::table('tz_orders as a')
+							->leftjoin('tz_overlay as b' , 'b.id' , '=' , 'a.machine_sn')
+							->leftjoin('idc_machineroom as c' , 'c.id' , '=' , 'b.site')
+							->where('a.serial_number',$v['serial_number'])
+							->value('c.machine_room_name');
+				$already[$k]['type'] = '叠加包';
+			}else{	
+				$v['order_id'] = json_decode($v['order_id']);
+				if (is_array($v['order_id'])) {
+					$resource_type = DB::table('tz_orders')->where('id' , $v['order_id'][0])->value('resource_type');
+				}else{
+					$resource_type = DB::table('tz_orders')->where('id' , $v['order_id'])->value('resource_type');
+				}
+				
+				switch ($resource_type) {
+					case '1':
+					case '2':
+					case '3':
+					case '4':
+					case '5':
+					case '6':
+					case '7':
+					case '8':
+					case '9':
+
+					
+						$resource_detail = DB::table('tz_business')
+							->where('business_number',$v['business_number'])
+							->value('resource_detail');
+						$resource_detail = json_decode($resource_detail);
+						$machine_room = $resource_detail->machineroom_name;
+						$already[$k]['type'] = 'idc';
+						break;
+		
+					case '11':
+						$machine_room = DB::table('tz_defenseip_business as a')
+							->leftjoin('tz_defenseip_store as b' , 'b.id' , '=' , 'a.ip_id')
+							->leftjoin('idc_machineroom as c' , 'c.id' , '=' , 'b.site')
+							->where('a.business_number',$v['business_number'])
+							->value('c.machine_room_name');
+						$already[$k]['type'] = '高防';
+						break;
+					default:
+						$machine_room = '机房信息获取失败';
+						$already[$k]['type'] = '未知';
+						break;
+				}
+			}
+			$already[$k]['machine_room'] = $machine_room;
+			$customer_info =  DB::table('tz_users')->where('id',$v['customer_id'])->first(['name' , 'nickname' , 'email']);
+			if($customer_info == null){
+				$already[$k]['customer_name'] = '客户名字获取失败';
+			}else{
+				if ($customer_info->nickname != null) {
+					$already[$k]['customer_name'] = $customer_info->nickname;
+				}else{
+					$already[$k]['customer_name'] = $customer_info->email?$customer_info->email:$customer_info->name;
+				}
+			}
+		}
+		return $already;
+	}
+
+	//按客户分
 	public function test($begin,$end){
 		
 		$already = DB::table('tz_orders_flow as a')
@@ -664,7 +738,7 @@ class  PfmStatistics extends Model
 		$arr['heji'] = [
 			'already' 		=> 0,
 			'not'			=> 0,
-			'maybe'		=> 0,
+			'maybe'			=> 0,
 			'customer_id'		=> 0,
 			'customer_email'	=> '合计',
 			'customer_name'	=> '合计',
@@ -690,7 +764,7 @@ class  PfmStatistics extends Model
 				$arr[$v->customer_id] = [
 					'already' 		=> 0,
 					'not'			=> $v->money,
-					'maybe'		=> 0,
+					'maybe'			=> 0,
 					'customer_id'		=> $v->customer_id,
 					'customer_name'	=> $v->customer_name,
 					'customer_email'	=> $v->customer_email,

@@ -317,33 +317,8 @@ class WhiteListModel extends Model
 				'code'	=> 1,
 			];		
 		}
-		$already = $this->where('domain_name','abc.abc')->get();
 
-		//审核结果如果是通过
-		if($checkdata['white_status'] == 1){
-			//如果是通过的话,就检查是否已经添加过
-			if(!$already->isEmpty()){
-				$already = $already->toArray();
-				for ($i=0; $i < count($already); $i++) { 
-					// if($already[$i]['white_status'] == 1 ){
-					// 	DB::rollBack();
-					// 	return[
-					// 		'data'	=> '',
-					// 		'msg'	=> '白名单已存在',
-					// 		'code'	=> 0,	
-					// 	];
-					// }else
-					if($already[$i]['white_status'] == 3 ){
-						DB::rollBack();
-						return[
-							'data'	=> '',
-							'msg'	=> '该域名已拉黑',
-							'code'	=> 0,	
-						];
-					}
-
-				}
-			}
+		if ($checkdata['white_status'] == 1) {
 			//没添加过就开始添加通行证
 			$api_controller = new ApiController();
 			$room_id = DB::table('idc_ips')->where('ip',$row->white_ip)->whereNull('deleted_at')->value('ip_comproom');
@@ -375,63 +350,49 @@ class WhiteListModel extends Model
 		}elseif ($checkdata['white_status'] == 3) {
 			//如果审核结果是拉黑的话
 			
-			//先检查审核单有没有已通过的审核单
-			if(!$already->isEmpty()){
-				$already = $already->toArray();
-				for ($i=0; $i < count($already); $i++) { 
-					if($already[$i]['white_status'] == 3 ){
-						DB::rollBack();
-						return[
-							'data'	=> '',
-							'msg'	=> '该域名已拉黑',
-							'code'	=> 0,	
-						];
-					}elseif($already[$i]['white_status'] == 1 ){
-						$api_controller = new ApiController();
-						$room_id = DB::table('idc_ips')->where('ip',$already[$i]['white_ip'])->whereNull('deleted_at')->value('ip_comproom');
-					
-						if($room_id == null){
-							DB::rollBack();
-							return[
-								'data'	=> '',
-								'msg'	=> 'ip无绑定机房',
-								'code'	=> 0,	
-							];
-						}
-						// $del_res = $api_controller->delWhiteList($domain,$room_id);
-						//这个正式上线需要替换
-						$del_res = [
-							'code'	=> 1,
-						];
-						if($del_res['code'] != 1){
-							DB::rollBack();
-							return[
-								'data'	=> '',
-								'msg'	=> '拉黑失败',
-								'code'	=> 0,	
-							];
-						}	
-					}
-				}
-				DB::commit();
-				return[
-					'data'	=> '',
-					'msg'	=> '拉黑成功',
-					'code'	=> 0,	
-				];
-			}
-			//如果没有同样域名审核单,或者之前的审核单是驳回的
+			
+			// $api_controller = new ApiController();
+			// $room_id = DB::table('idc_ips')->where('ip',$already[$i]['white_ip'])->whereNull('deleted_at')->value('ip_comproom');
+		
+			// if($room_id == null){
+			// 	DB::rollBack();
+			// 	return[
+			// 		'data'	=> '',
+			// 		'msg'	=> 'ip无绑定机房',
+			// 		'code'	=> 0,	
+			// 	];
+			// }
+			// // 预留黑名单的接口
+			// // $del_res = $api_controller->delWhiteList($domain,$room_id);
+			// //这个正式上线需要替换
+			// $del_res = [
+			// 	'code'	=> 1,
+			// ];
+			// if($del_res['code'] != 1){
+			// 	DB::rollBack();
+			// 	return[
+			// 		'data'	=> '',
+			// 		'msg'	=> '拉黑失败',
+			// 		'code'	=> 0,	
+			// 	];
+			// }	
 			DB::commit();
 			return[
 				'data'	=> '',
 				'msg'	=> '拉黑成功',
 				'code'	=> 1,	
 			];	
-			
-		}
-		
+		}					
 	}
 
+	/**
+	 * 批量审核白名单接口
+	 * @param
+	 */
+	public function checkWhiteListBatch($checkdata){
+		dd('666');
+	}
+	
 	
 
 	/**
@@ -440,16 +401,49 @@ class WhiteListModel extends Model
 	 * @return [type]     [description]
 	 */
 	public function deleteWhitelist($id){
-		
-		$row = $this->where('id',$id)->delete();
-		if($row != false){
-			$return['code'] = 1;
-			$return['msg'] = '删除信息成功';
-		} else {
-			$return['code'] = 0;
-			$return['msg'] = '删除信息失败';
+		$white = $this->find($id);
+		if($white == null){
+			return [
+				'data'	=> [],
+				'msg'	=> '白名单不存在',
+				'code'	=> 0,
+			];
 		}
-		return $return;
+		//如果是已通过的白名单,那么从白名单库里去掉
+		$swi = 0;
+		$api_controller = new ApiController();
+		if ($white[0]->white_status == 1) {
+			$room_id = DB::table('idc_ips')->where('ip',$white[0]->white_ip)->whereNull('deleted_at')->value('ip_comproom');
+			$api_res = $api_controller->delWhiteList($white[0]->domain_name , $room_id);
+			if ($api_res['code'] != 1) {
+				return $api_res;
+			}
+			$swi = 1;
+		}
+
+		$row = $white[0]->delete();
+		if($row != false){
+			if ($swi == 1) {
+				return [
+					'data'	=> [],
+					'msg'	=> '删除信息成功,已删除库内该白名单',
+					'code'	=> 1,
+				];
+			}else{
+				return [
+					'data'	=> [],
+					'msg'	=> '删除信息成功',
+					'code'	=> 1,
+				];
+			}
+			
+		} else {
+			return [
+				'data'	=> [],
+				'msg'	=> '删除信息失败',
+				'code'	=> 0,
+			];
+		}
 	}
 
 
@@ -460,7 +454,9 @@ class WhiteListModel extends Model
 	 */
 	public function staff($admin_id) {
 		$staff = DB::table('oa_staff')->where('admin_users_id',$admin_id)
-					->select('work_number')->first();
+					->select('work_number')
+					->whereNull('deleted_at')
+					->first();
 		return $staff;
 	}
 
@@ -608,7 +604,7 @@ class WhiteListModel extends Model
 			];
 		}
 		
-
-		//dd($colum_value);
 	}	
+
+	
 }

@@ -372,6 +372,8 @@ Route::group([
         $router->get('skipBeian', 'Work\WhiteListController@skipBeian');//跳转到工信部备案
         $router->get('excelTemplate', 'Work\WhiteListController@excelTemplate');//下载机器的批量模板
         $router->post('handleExcel', 'Work\WhiteListController@handleExcel');//上传机器的批量添加数据
+        $router->post('checkWhiteListBatch', 'Work\WhiteListController@checkWhiteListBatch');//白名单申请单 批量审核接口
+        
     });
 
 

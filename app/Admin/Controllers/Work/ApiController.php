@@ -49,8 +49,8 @@ class ApiController extends Controller
 			];
 		}
 		$key 	= $info->white_list_key;
-		$url 	= $info->white_list_add.'?domain='.$domain.'&key='.$this->$key;
-		$url2 	= $info->white_list_add.'?domain=.'.$domain.'&key='.$this->$key;
+		$url 	= $info->white_list_add.'/domain.php?domain='.$domain.'&key='.$this->$key;
+		$url2 	= $info->white_list_add.'/domain.php?domain=.'.$domain.'&key='.$this->$key;
 		//真实环境用这个过白
 		$res = $this->executeCurl($url);
 		$res2 = $this->executeCurl($url2);
@@ -70,6 +70,56 @@ class ApiController extends Controller
 			$return = [
 				'data'	=> '',
 				'msg'	=> '域名添加通行证失败',
+				'code'	=> 0,
+			];
+		}
+		return $return;
+	}
+
+	/**
+	 *  删除白名单接口
+	 */
+	public function delWhiteList($domain,$room_id)
+	{
+		
+		$roomModel = new MachineRoom();
+		$info = $roomModel->find($room_id);
+		if($info == null){
+			return [
+				'data'	=> '',
+				'msg'	=> '机房不存在',
+				'code'	=> 0,
+			];
+		}
+		if(trim($info->white_list_add) == '' || trim($info->white_list_key) == ''){
+			return [
+				'data'	=> '',
+				'msg'	=> '机房暂无白名单接口,请设置',
+				'code'	=> 0,
+			];
+		}
+		$key 	= $info->white_list_key;
+		$url 	= $info->white_list_add.'/deletedomain.php?domain='.$domain.'&key='.$this->$key;
+		$url2 	= $info->white_list_add.'/deletedomain.php?domain=.'.$domain.'&key='.$this->$key;
+		//真实环境用这个过白
+		$res = $this->executeCurl($url);
+		$res2 = $this->executeCurl($url2);
+		// dd($url.'<br>'.$url2);
+		//测试的用这一个
+		// $res = true;
+		// $res2 = true;
+
+		if($res&&$res2){
+			$return = [
+				'data'	=> '',
+				'msg'	=> '域名删除通行证成功',
+				'code'	=> 1,
+			];
+			
+		}else{
+			$return = [
+				'data'	=> '',
+				'msg'	=> '域名删除通行证失败',
 				'code'	=> 0,
 			];
 		}

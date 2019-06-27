@@ -372,6 +372,8 @@ Route::group([
         $router->get('skipBeian', 'Work\WhiteListController@skipBeian');//跳转到工信部备案
         $router->get('excelTemplate', 'Work\WhiteListController@excelTemplate');//下载机器的批量模板
         $router->post('handleExcel', 'Work\WhiteListController@handleExcel');//上传机器的批量添加数据
+        $router->post('checkWhiteListBatch', 'Work\WhiteListController@checkWhiteListBatch');//白名单申请单 批量审核接口
+        
     });
 
 
@@ -462,6 +464,9 @@ Route::group([
         $router->get('getchange','Business\OrdersController@getChange');//获取更换记录
         // $router->get('getorders','Business\OrdersController@getOrders');//获取相关的可更换的订单
         $router->post('updateorder','Business\OrdersController@updateOrders');//修改订单的价格/到期时间
+
+        $router->get('unbound','Business\UnboundController@index');
+        $router->get('unbound/{uid}','Business\UnboundController@show');
     });
 
 

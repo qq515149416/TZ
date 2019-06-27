@@ -87,19 +87,57 @@ class PfmStatisticsController extends Controller
     {
         $par = $request->only(['begin', 'end']);
         
-        $begin = '2019-03-01 00:00:00';
-        $end   = '2019-03-31 23:59:59';
+        $begin = '2019-05-01 00:00:00';
+        $end   = '2019-05-31 23:59:59';
 
         $pfmModel = new PfmStatistics();
-        $res      = $pfmModel->test($begin, $end);
+        $res      = $pfmModel->test2($begin, $end);
 
-
-        $this->excel($res);
+        $this->excelTest($res);
 
 //        return tz_ajax_echo($res, '统计完成', 1);
     }
 
+    private function excelTest($data)
+    {
+//        $spreadsheet = new Spreadsheet();
+        $spreadsheet = new Spreadsheet();
+        $worksheet   = $spreadsheet->getActiveSheet();
+        $worksheet->setTitle('机器批量导入表格');
+        $row_value = ['业务编号', '消费金额', '消费类型', '所属机房', '客户名称' ,'支付时间'];//填写的字段
 
+        $worksheet->setCellValueByColumnAndRow(1, 1 ,'业务编号');
+        $worksheet->setCellValueByColumnAndRow(2, 1 ,'消费金额');
+        $worksheet->setCellValueByColumnAndRow(3, 1, '消费类型');
+        $worksheet->setCellValueByColumnAndRow(4, 1, '所属机房');
+        $worksheet->setCellValueByColumnAndRow(5, 1, '客户名称');
+        $worksheet->setCellValueByColumnAndRow(6, 1, '支付时间');
+
+
+        $j=2;
+        foreach ($data as $k => $v) {
+//            dump($v['already']);//已付款
+            $worksheet->setCellValueByColumnAndRow(1, $j,  $v['business_number']);
+            $worksheet->setCellValueByColumnAndRow(2, $j,  $v['payable_money']);
+            $worksheet->setCellValueByColumnAndRow(3, $j,  $v['type']);
+            $worksheet->setCellValueByColumnAndRow(4, $j,  $v['machine_room']);
+            $worksheet->setCellValueByColumnAndRow(5, $j,  $v['customer_name']);
+            $worksheet->setCellValueByColumnAndRow(6, $j,  $v['pay_time']);
+            $j++;
+        }
+
+
+        $filename = '5月统计.xlsx';
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output');
+        $spreadsheet->disconnectWorksheets();
+        unset($spreadsheet);
+        exit;
+
+    }
 
 
 

@@ -1996,6 +1996,7 @@ class OrdersModel extends Model
 							   ->join('idc_machineroom','idc_machine.machineroom','=','idc_machineroom.id')
 							   ->join('idc_cabinet','idc_machine.cabinet','=','idc_cabinet.id')
 							   ->where(['business_type'=>$get['resource_type'],'used_status'=>0,'machine_status'=>0,'machineroom'=>$machineroom])
+							   ->whereNull('idc_machine.deleted_at')
 							   ->get(['idc_machine.id','idc_machine.machine_num','idc_machine.cpu','idc_machine.memory','idc_machine.harddisk','idc_machine.cabinet','idc_machine.ip_id','idc_machine.machineroom','idc_machine.bandwidth','idc_machine.protect','idc_machine.loginname','idc_machine.loginpass','idc_machine.machine_type','idc_machineroom.id as machineroom_id','idc_machineroom.machine_room_name as machineroom_name','idc_cabinet.cabinet_id as cabinets','idc_ips.ip','idc_ips.ip_company']);
 				if(!$resource->isEmpty()){
 					$ip_company = [0=>'电信',1=>'移动',2=>'联通'];
@@ -2009,6 +2010,7 @@ class OrdersModel extends Model
 				$resource = DB::table('idc_cabinet')
 							   ->join('idc_machineroom','idc_cabinet.machineroom_id','=','idc_machineroom.id')
 							   ->where(['idc_cabinet.machineroom_id'=>$machineroom])
+							   ->whereNull('idc_cabinet.deleted_at')
 							   ->get(['idc_cabinet.id','cabinet_id','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
 				break;
 			case 4://IP
@@ -2016,24 +2018,28 @@ class OrdersModel extends Model
 				$resource = DB::table('idc_ips')
 							  ->join('idc_machineroom','idc_ips.ip_comproom','=','idc_machineroom.id')
 				              ->where(['ip_status'=>0,'ip_lock'=>0,'ip_comproom'=>$machineroom,'ip_company'=>$ip_company])
+				              ->whereNull('idc_ips.deleted_at')
 				              ->get(['idc_ips.id','ip','ip_company','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
 				break;
 			case 5://CPU
 				$resource = DB::table('idc_cpu')
 							  ->join('idc_machineroom','idc_cpu.room_id','=','idc_machineroom.id')
 				              ->where(['cpu_used'=>0,'room_id'=>$machineroom])
+				              ->whereNull('idc_cpu.deleted_at')
 				              ->get(['idc_cpu.id','cpu_number','cpu_param','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
 				break;
 			case 6://硬盘
 				$resource = DB::table('idc_harddisk')
  							  ->join('idc_machineroom','idc_harddisk.room_id','=','idc_machineroom.id')
 				              ->where(['harddisk_used'=>0,'room_id'=>$machineroom])
+				              ->whereNull('idc_harddisk.deleted_at')
 				              ->get(['idc_harddisk.id','harddisk_number','harddisk_param','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
 				break;
 			case 7://内存
 				$resource = DB::table('idc_memory')
 							  ->join('idc_machineroom','idc_memory.room_id','=','idc_machineroom.id')
 				              ->where(['memory_used'=>0,'room_id'=>$machineroom])
+				              ->whereNull('idc_memory.deleted_at')
 				              ->get(['idc_memory.id','memory_number','memory_param','idc_machineroom.id as machineroom_id','machine_room_name as machineroom_name']);
 				break;
 			case 8:

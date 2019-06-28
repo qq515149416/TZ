@@ -26,8 +26,8 @@ class UnboundController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->header('客户信息')
-            ->description('客户未绑定业务员')
+            ->header('客户管理')
+            ->description('客户信息')
             ->body($this->grid());
     }
 
@@ -41,7 +41,7 @@ class UnboundController extends Controller
     public function show($id, Content $content)
     {
         return $content
-            ->header('客户详情')
+            ->header('客户管理')
             ->description('客户信息详情')
             ->body($this->detail($id));
     }
@@ -92,13 +92,13 @@ class UnboundController extends Controller
         $grid->email('邮箱');
         $grid->nickname('昵称');
         $grid->money('余额');
-        $grid->salesman_id('业务员')->display(function(){
-            $salesman_id = [
-                Null=>'佚名',
-                0=>'佚名'
-            ];
-            return $salesman_id[$this->salesman_id];
-        });
+        $salesman = [Null=>'佚名',0=>'佚名'];
+        $admin = Administrator::get(['id','name']);
+        foreach ($admin as $key => $value) {
+            $salesman[$value['id']] = $value['name'];
+        }
+        $grid->salesman_id('业务员')->select($salesman);
+          
         $grid->column('status','状态')->display(function(){
             $status = [
                 0=>'<span class="badge bg-red">拉黑</span>',

@@ -15,11 +15,12 @@ class HostingController extends Controller
     {
         $tdk = NavModel::where('url','like','%'.$request->path().'%')->select("id","seo_title as title","seo_keywords as keywords","seo_description as description")->first();
         $data = NavModel::find($tdk->id)->machineRooms()->first()->toArray();
-        // dd(NavModel::where('alias','like','%'.$page.'%')->first());
+
         $data["data"] = RusteeshipServerModel::where([
             'machine_room_id' => $data["id"],
-            'nav_id' => NavModel::where('alias','like','%'.$page.'%')->first()->id
+            'nav_id' => NavModel::where('alias', $page)->first()->id
         ])->get();
+        // dd($data["data"]->toArray());
         // $data = [
         //     "hengyang" => [
         //         "name" => "湖南衡阳机房",

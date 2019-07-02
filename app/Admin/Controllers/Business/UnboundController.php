@@ -86,28 +86,23 @@ class UnboundController extends Controller
     {
         $grid = new Grid(new CustomerModel);
         $grid->disableFilter();
-        
-
         $grid->model()->where('salesman_id','=',Null)->orwhere('salesman_id','=',0);
         $grid->id('序号');
         $grid->name('用户名');
         $grid->email('邮箱');
         $grid->nickname('昵称');
         $grid->money('余额');
-        $salesman = [Null=>'佚名',0=>'佚名'];
+        $salesman = [0=>'佚名'];
         $admin = Administrator::get(['id','name']);
         foreach ($admin as $key => $value) {
             $salesman[$value['id']] = $value['name'];
         }
         $grid->salesman_id('业务员')->select($salesman);
-        $grid->column('status','状态')->display(function(){
-            $status = [
-                0=>'<span class="badge bg-red">拉黑</span>',
-                1=>'<span class="badge bg-yellow">未验证</span>',
-                2=>'<span class="badge bg-green">正常</span>'
-            ];
-            return $status[$this->status];
-        });
+        $grid->column('status','状态')->select([
+            0=>'<span class="badge bg-red">拉黑</span>',
+            1=>'<span class="badge bg-yellow">未验证</span>',
+            2=>'<span class="badge bg-green">正常</span>'
+        ]);
         $grid->msg_phone('联系方式');
         $grid->msg_qq('QQ');
         $grid->remarks('备注');

@@ -12,6 +12,7 @@ use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 use Encore\Admin\Auth\Database\Administrator;
 use Encore\Admin\Widgets\Table;
+use Illuminate\Http\Request;
 
 class UnboundController extends Controller
 {
@@ -26,8 +27,8 @@ class UnboundController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->header('客户信息')
-            ->description('客户未绑定业务员')
+            ->header('客户管理')
+            ->description('客户信息')
             ->body($this->grid());
     }
 
@@ -41,7 +42,7 @@ class UnboundController extends Controller
     public function show($id, Content $content)
     {
         return $content
-            ->header('客户详情')
+            ->header('客户管理')
             ->description('客户信息详情')
             ->body($this->detail($id));
     }
@@ -55,9 +56,10 @@ class UnboundController extends Controller
      */
     public function edit($id, Content $content)
     {
+        
         return $content
-            ->header('Edit')
-            ->description('description')
+            ->header('修改信息')
+            ->description('客户信息修改')
             ->body($this->form()->edit($id));
     }
 
@@ -84,29 +86,23 @@ class UnboundController extends Controller
     {
         $grid = new Grid(new CustomerModel);
         $grid->disableFilter();
-        
-
         $grid->model()->where('salesman_id','=',Null)->orwhere('salesman_id','=',0);
         $grid->id('序号');
         $grid->name('用户名');
         $grid->email('邮箱');
         $grid->nickname('昵称');
         $grid->money('余额');
-        $grid->salesman_id('业务员')->display(function(){
-            $salesman_id = [
-                Null=>'佚名',
-                0=>'佚名'
-            ];
-            return $salesman_id[$this->salesman_id];
-        });
-        $grid->column('status','状态')->display(function(){
-            $status = [
-                0=>'<span class="badge bg-red">拉黑</span>',
-                1=>'<span class="badge bg-yellow">未验证</span>',
-                2=>'<span class="badge bg-green">正常</span>'
-            ];
-            return $status[$this->status];
-        });
+        $salesman = [0=>'佚名'];
+        $admin = Administrator::get(['id','name']);
+        foreach ($admin as $key => $value) {
+            $salesman[$value['id']] = $value['name'];
+        }
+        $grid->salesman_id('业务员')->select($salesman);
+        $grid->column('status','状态')->select([
+            0=>'<span class="badge bg-red">拉黑</span>',
+            1=>'<span class="badge bg-yellow">未验证</span>',
+            2=>'<span class="badge bg-green">正常</span>'
+        ]);
         $grid->msg_phone('联系方式');
         $grid->msg_qq('QQ');
         $grid->remarks('备注');
@@ -115,7 +111,6 @@ class UnboundController extends Controller
         $grid->actions(function ($actions) {
             $actions->disableDelete();
             $actions->disableEdit();
-
         });  
         $grid->disableCreateButton();
         $grid->disableRowSelector();
@@ -172,19 +167,22 @@ class UnboundController extends Controller
     {
         $form = new Form(new CustomerModel);
 
-        $form->switch('status', 'Status')->default(1);
-        $form->text('name', 'Name');
-        $form->email('email', 'Email');
-        $form->password('password', 'Password');
-        $form->text('remember_token', 'Remember token');
-        $form->decimal('money', 'Money')->default(0.00);
-        $form->number('salesman_id', 'Salesman id');
-        $form->text('nickname', 'Nickname');
-        $form->switch('pwd_ver', 'Pwd ver');
-        $form->text('msg_phone', 'Msg phone');
-        $form->text('msg_qq', 'Msg qq');
-        $form->text('remarks', 'Remarks');
-
+        $salesman = [Null=>'佚名',0=>'佚名'];
+        $admin = Administrator::get(['id','name']);
+        foreach ($admin as $key => $value) {
+            $salesman[$value['id']] = $value['name'];
+        }
+        $form->text('name', '用户名');
+        $form->email('email', '邮箱');
+        $form->decimal('money', '余额')->readonly();
+        $form->select('salesman_id', '业务员')->options($salesman);
+        $form->text('nickname', '昵称');
+        $form->text('msg_phone', '联系方式');
+        $form->text('msg_qq', 'QQ');
+        $form->text('remarks', '备注');
+        $form->radio('status', '未验证')->options([0=>'拉黑',1=>'未验证',2=>'正常'])->default(1);
         return $form;
     }
+
+    
 }

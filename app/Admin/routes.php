@@ -468,7 +468,7 @@ Route::group([
         $router->get('unbound','Business\UnboundController@index');
         $router->get('unbound/{uid}','Business\UnboundController@show');
         $router->get('unbound/{uid}/edit','Business\UnboundController@edit');
-        $router->put('unbound/{uid}/update','Business\UnboundController');
+        // $router->put('unbound/{uid}/update','Business\UnboundController');
     });
 
 

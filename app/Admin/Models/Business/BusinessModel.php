@@ -281,7 +281,12 @@ class BusinessModel extends Model
                 return $return;
             }
             $ip_id = json_decode($check->resource_detail)->ip_id;
-            $row = DB::table('idc_ips')->where('id',  $ip_id)->update(['own_business' => $order['business_sn'],'mac_num'=>$order['machine_sn']]);
+            if($ip_id != 0){
+                $row = DB::table('idc_ips')->where('id',  $ip_id)->update(['own_business' => $order['business_sn'],'mac_num'=>$order['machine_sn']]);
+            } else {
+                $row = 1;
+            }
+            
 
         } else {
             // 如果是租用机柜的，在订单生成成功时，将业务编号和到期时间及资源状态进行更新

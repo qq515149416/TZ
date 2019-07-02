@@ -464,6 +464,11 @@ Route::group([
         $router->get('getchange','Business\OrdersController@getChange');//获取更换记录
         // $router->get('getorders','Business\OrdersController@getOrders');//获取相关的可更换的订单
         $router->post('updateorder','Business\OrdersController@updateOrders');//修改订单的价格/到期时间
+
+        $router->get('unbound','Business\UnboundController@index');
+        $router->get('unbound/{uid}','Business\UnboundController@show');
+        $router->get('unbound/{uid}/edit','Business\UnboundController@edit');
+        // $router->put('unbound/{uid}/update','Business\UnboundController');
     });
 
 

@@ -250,15 +250,15 @@ class WhiteListModel extends Model
 		$row = $this->find($checkdata['id']);
 		if($row == null){
 			return [
-				'data'	=> '',
+				'data'	=> $row,
 				'msg'	=> '审核单不存在',
-				'code'	=> 0,
+				'code'	=> 2,
 			];
 		}
 		//如果审核单已经审核过
 		if($row->white_status != 0){
 			return [
-				'data'	=> '',
+				'data'	=> $row,
 				'msg'	=> '该单已审核',
 				'code'	=> 0,
 			];
@@ -269,7 +269,7 @@ class WhiteListModel extends Model
 		$fullname = (array)$this->staff($admin_id);
 		if(count($fullname) == 0){
 			return [
-				'data'	=> '',
+				'data'	=> $row,
 				'msg'	=> '审核人员信息不完整,请填写完整再进行审核',
 				'code'	=> 0,
 			];
@@ -277,7 +277,7 @@ class WhiteListModel extends Model
 		//如果要通过审核,就要有备案编号
 		if($row->record_number == null && $checkdata['white_status'] == 1 && !isset($checkdata['record_number'])){
 			return [
-				'data'	=> '',
+				'data'	=> $row,
 				'msg'	=> '若需通过,请填写备案编号',
 				'code'	=> 0,
 			];
@@ -302,9 +302,9 @@ class WhiteListModel extends Model
 		if(!$save_res){
 			DB::rollBack();
 			return [
-				'data'	=> '',
+				'data'	=> $row,
 				'msg'	=> '白名单审核失败',
-				'code'	=> 1,
+				'code'	=> 0,
 			];
 			return $return;	
 		}
@@ -312,7 +312,7 @@ class WhiteListModel extends Model
 		if($checkdata['white_status'] == 2){
 			DB::commit();
 			return [
-				'data'	=> '',
+				'data'	=> $row,
 				'msg'	=> '审核成功',
 				'code'	=> 1,
 			];		
@@ -326,7 +326,7 @@ class WhiteListModel extends Model
 			if($room_id == null){
 				DB::rollBack();
 				return[
-					'data'	=> '',
+					'data'	=> $row,
 					'msg'	=> 'ip无绑定机房',
 					'code'	=> 0,	
 				];
@@ -342,7 +342,7 @@ class WhiteListModel extends Model
 			}
 			DB::commit();
 			$return = [
-				'data'	=> '',
+				'data'	=> $row,
 				'msg'	=> '审核成功,已为域名添加通行证',
 				'code'	=> 1,
 			];
@@ -378,7 +378,7 @@ class WhiteListModel extends Model
 			// }	
 			DB::commit();
 			return[
-				'data'	=> '',
+				'data'	=> $row,
 				'msg'	=> '拉黑成功',
 				'code'	=> 1,	
 			];	
@@ -390,7 +390,41 @@ class WhiteListModel extends Model
 	 * @param
 	 */
 	public function checkWhiteListBatch($checkdata){
-		dd('666');
+	
+		$data = [
+			'white_status'	=> $checkdata['white_status'],
+			'check_note'	=> isset($checkdata['check_note'])?$checkdata['check_note']:null,
+		];
+		$fail_list = [];
+		foreach ($checkdata['id_list'] as $k => $v) {
+			$data['id'] = $v;
+			$res = $this->checkWhiteList($data);
+			if ($res['code'] == 0) {
+				$fail_list[] = [
+					'domain_name'	=> $res['data']->domain_name,
+					'reason'		=> $res['msg'],
+				];
+			}elseif ($res['code'] == 2) {
+				$fail_list[] = [
+					'domain_name'	=> 'id 为' . $v,
+					'reason'		=> $res['msg'],
+				];
+			}
+		}
+
+		if (count($fail_list) == 0) {
+			return [
+				'data'	=> [],
+				'msg'	=> '所有申请审核成功',
+				'code'	=> 1,
+			];
+		}else{
+			return [
+				'data'	=> $fail_list,
+				'msg'	=> '以下申请审核失败',
+				'code'	=> 0,
+			];
+		}
 	}
 	
 	
@@ -409,6 +443,7 @@ class WhiteListModel extends Model
 				'code'	=> 0,
 			];
 		}
+		
 		//如果是已通过的白名单,那么从白名单库里去掉
 		$swi = 0;
 		$api_controller = new ApiController();

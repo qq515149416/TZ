@@ -86,26 +86,23 @@ class UnboundController extends Controller
     {
         $grid = new Grid(new CustomerModel);
         $grid->disableFilter();
-        
-
         $grid->model()->where('salesman_id','=',Null)->orwhere('salesman_id','=',0);
         $grid->id('序号');
         $grid->name('用户名');
         $grid->email('邮箱');
         $grid->nickname('昵称');
         $grid->money('余额');
-        $grid->salesman_id('业务员')->display(function(){
-            $salesman = [Null=>'佚名',0=>'佚名'];
-            return $salesman[$this->salesman_id];
-        });
-        $grid->column('status','状态')->display(function(){
-            $status = [
-                0=>'<span class="badge bg-red">拉黑</span>',
-                1=>'<span class="badge bg-yellow">未验证</span>',
-                2=>'<span class="badge bg-green">正常</span>'
-            ];
-            return $status[$this->status];
-        });
+        $salesman = [0=>'佚名'];
+        $admin = Administrator::get(['id','name']);
+        foreach ($admin as $key => $value) {
+            $salesman[$value['id']] = $value['name'];
+        }
+        $grid->salesman_id('业务员')->select($salesman);
+        $grid->column('status','状态')->select([
+            0=>'<span class="badge bg-red">拉黑</span>',
+            1=>'<span class="badge bg-yellow">未验证</span>',
+            2=>'<span class="badge bg-green">正常</span>'
+        ]);
         $grid->msg_phone('联系方式');
         $grid->msg_qq('QQ');
         $grid->remarks('备注');
@@ -113,6 +110,7 @@ class UnboundController extends Controller
         $grid->updated_at('更新时间');
         $grid->actions(function ($actions) {
             $actions->disableDelete();
+            $actions->disableEdit();
         });  
         $grid->disableCreateButton();
         $grid->disableRowSelector();
@@ -177,13 +175,12 @@ class UnboundController extends Controller
         $form->text('name', '用户名');
         $form->email('email', '邮箱');
         $form->decimal('money', '余额')->readonly();
-        $form->select('salesman_id', '佚名')->options($salesman);
+        $form->select('salesman_id', '业务员')->options($salesman);
         $form->text('nickname', '昵称');
         $form->text('msg_phone', '联系方式');
         $form->text('msg_qq', 'QQ');
         $form->text('remarks', '备注');
         $form->radio('status', '未验证')->options([0=>'拉黑',1=>'未验证',2=>'正常'])->default(1);
-        $form->setAction('update');
         return $form;
     }
 

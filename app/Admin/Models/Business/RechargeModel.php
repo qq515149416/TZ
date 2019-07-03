@@ -602,10 +602,12 @@ class RechargeModel extends Model
 				$salesman_id = DB::table('tz_users')->where('id',$flow[$i]['customer_id'])->value('salesman_id');		
 				$flow[$i]['recharge_way'] = $recharge_way[$flow[$i]['recharge_way']].' / 自助充值';
 				$flow[$i]['bank'] = $flow[$i]['recharge_way'];
+				$flow[$i]['remarks'] = '';
 			}else{
 				$salesman_id = DB::table('tz_recharge_admin')->where('trade_no',$flow[$i]['trade_no'])->value('recharge_uid');	
 				$auditor_id = DB::table('tz_recharge_admin')->where('trade_no',$flow[$i]['trade_no'])->value('auditor_id');
 				$bank_num = DB::table('tz_recharge_admin')->where('trade_no',$flow[$i]['trade_no'])->value('recharge_way');
+				$remarks =  DB::table('tz_recharge_admin')->where('trade_no',$flow[$i]['trade_no'])->value('remarks');
 				switch ($bank_num) {
 					case '1':
 						$bank = '腾正公帐(建设银行)';
@@ -643,6 +645,9 @@ class RechargeModel extends Model
 				}
 				$flow[$i]['recharge_way'] = DB::table('admin_users')->where('id',$auditor_id)->value('name').' / 审核';
 				$flow[$i]['bank'] = $bank;
+				if ($remarks !== null) {
+					$flow[$i]['remarks'] = $remarks;
+				}
 			}
 			$flow[$i]['salesman_name'] = DB::table('admin_users')->where('id',$salesman_id)->value('name');	
 			$flow[$i]['customer_name'] = $flow[$i]['customer_name'] ? $flow[$i]['customer_name'] : $flow[$i]['email'];

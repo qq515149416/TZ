@@ -987,7 +987,15 @@ class  PfmStatistics extends Model
 
 		}
 		//总计数据传入数组
-		$object = (object)['name'=>'总计','idc_count'=>$idc_count,'defense_count'=>$defense,'flow_count'=>$flow,'cdn_count'=>$cdn,'cloud_count'=>$cloud,'sum'=>$total];
+		$object = (object)[
+					'name'=>'总计',
+					'idc_count'=>$idc_count,
+					'defense_count'=>$defense,
+					'flow_count'=>$flow,
+					'cdn_count'=>$cdn,
+					'cloud_count'=>$cloud,
+					'sum'=>$total
+				];
 		array_unshift($admin_users,$object);
 		return $admin_users;
     }

@@ -86,7 +86,7 @@ class UnboundController extends Controller
     {
         $grid = new Grid(new CustomerModel);
         $grid->disableFilter();
-        $grid->model()->where('salesman_id','=',Null)->orwhere('salesman_id','=',0);
+        $grid->model()->where('salesman_id','=',Null)->orwhere('salesman_id','=',0)->orderBy('created_at','desc');
         $grid->id('序号');
         $grid->name('用户名');
         $grid->email('邮箱');

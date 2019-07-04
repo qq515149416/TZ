@@ -121,6 +121,7 @@ Route::group([
             $router->get('/businessStatistics', 'Show\BusinessStatisticsController@index');
             $router->get('/overlay', 'Show\OverlayController@index');
             $router->get('/overlayBusiness', 'Show\OverlayBusinessController@index');
+            $router->resource('/overlayBelong', 'Show\OverlayBelongController');
             $router->get('/resourceHistory', 'Show\ResourceHistoryController@index');
             $router->resource('/links', 'Show\LinksController');
             $router->resource('/carousel', 'Show\CarouselController');
@@ -722,6 +723,8 @@ Route::group([
         $router->get('showBelong', 'DefenseIp\OverlayController@showBelong');//展示某客户所属叠加包接口
         $router->post('useOverlayToDIP', 'DefenseIp\OverlayController@useOverlayToDIP');//将叠加包使用到高防ip接口
         $router->post('useOverlayToIDC', 'DefenseIp\OverlayController@useOverlayToIDC');//将叠加包使用到IDC业务接口
+        $router->get('showBelongBySite', 'DefenseIp\OverlayController@showBelongBySite');//展示指定机房叠加包接口
+
     });
 
 

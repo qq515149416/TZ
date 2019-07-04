@@ -15,6 +15,7 @@ use App\Admin\Models\DefenseIp\OverlayBelongModel; //后台的订单支付模型
 use Carbon\Carbon;
 use App\Http\Controllers\DefenseIp\ApiController;
 
+
 class OverlayModel extends Model
 {
 
@@ -307,6 +308,89 @@ class OverlayModel extends Model
 			'code'	=> 1,
 		];
 	}
+
+	public function showBelongBySite($par){
+	
+		$belong_model = new OverlayBelongModel();
+
+		$overlay = $belong_model
+			->leftJoin('tz_overlay as b','b.id', '=' , 'tz_overlay_belong.overlay_id')
+			->leftJoin('idc_machineroom as c' , 'c.id' , '=' , 'b.site')
+			->leftJoin('tz_users as d' , 'd.id' , '=' , 'tz_overlay_belong.user_id')
+			->leftJoin('admin_users as e' , 'e.id' , '=' , 'd.salesman_id')
+			->when($par['status'] ,function ($query, $role) {
+					if ($role != '*') {
+						return $query->where('tz_overlay_belong.status',$role);
+					}
+				},function ($query, $role) {
+					if($role==="0") {
+						return $query->where('tz_overlay_belong.status',$role);
+					}
+					return $query;
+				})
+			->when($par['site'], function ($query, $role) {
+						if ($role != '*') {
+							return $query->where('c.id',$role);
+						}
+					})
+			->select(['tz_overlay_belong.*','b.name as overlay_name','b.protection_value','b.validity_period','c.machine_room_name','c.id as machine_room_id' , 'd.nickname' , 'd.email' , 'd.name' , 'e.name as clerk_name'])
+			->get();
+		
+		if ($overlay->isEmpty()) {
+			return [
+				'data'	=> [],
+				'msg'	=> '无此类叠加包',
+				'code'	=> 1,
+			];
+		}
+		//转化状态,获取使用对象ip
+		foreach ($overlay as $k => $v) {
+			if ($v->status == 0) {
+				$v->ip = '';
+			}else{
+				//查查看在不在高防业务里
+				$ip = BusinessModel::leftJoin('tz_defenseip_store as b' , 'b.id' , '=' , 'tz_defenseip_business.ip_id')
+							->where('tz_defenseip_business.business_number' , $v->target_business)
+							->first(['b.ip']);
+
+				if ($ip != null) {	//在高防的话直接获取
+					$v->ip = $ip['ip'];
+				}else{		//不在高防就去找找idc
+					//idc的从订单表处找,因为存的是订单号
+					$idc = DB::table('tz_orders')->where('order_sn' , $v->target_business)->first(['machine_sn' , 'business_sn']);
+					if ($idc != null) {
+						if($idc->resource_type == 4){		//如果找出来是副ip,直接获取
+							$v->ip = $idc->machine_sn;
+						}elseif ($idc->resource_type == 1||$idc->resource_type == 2) {	//如果找出来是主机,去业务表的详情处找
+							$business = DB::table('tz_business')->where('business_number',$idc->business_sn)->first(['resource_detail']);
+							if ($business == null) {
+								$v->ip = '信息有误';
+							}else{
+								$resource_detail = json_decode($business->resource_detail);
+								$v->ip = $resource_detail['ip'];
+							}
+						}else{
+							$v->ip = '信息有误';
+						}
+					}else{
+						$v->ip = '信息有误';
+					}
+				}
+
+			}
+			$v->customer_name = $v->nickname?:$v->email;
+			$v->customer_name = $v->customer_name?:$v->name;
+			$v = $this->transBelong($v);
+		}
+
+		return [
+			'data'	=> $overlay->toArray(),
+			'msg'	=> '获取成功',
+			'code'	=> 1,
+		];
+		
+	}
+
 
 	protected function transBelong($overlay){
 		switch ($overlay->status) {

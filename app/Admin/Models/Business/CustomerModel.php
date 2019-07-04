@@ -40,14 +40,22 @@ class CustomerModel extends Model
         }
         
         if($slug->slug != 3){//非业务员进入此区间
+            // dd(Admin::user()->role);
             if(Admin::user()->inRoles(['salesman','operations','finance','HR','product','network_dimension','net_sec'])){//不是主管的按是否自己客户查看
                 $where['salesman_id'] = $clerk_id;
-            } else {//主管人员查看客户信息
+            } else  {//主管人员查看客户信息
+                $where = [];
+            }
+            if(Admin::user()->inRoles(['CMO'])){
                 $where = [];
             }
             
         } else {//是业务人员按客户所绑定业务员查看
             $where['salesman_id'] = $clerk_id;
+            if(Admin::user()->inRoles(['AE'])){
+                $where = [];
+            }
+            
         }
         if(!empty($id)){
             $where['id'] = $id;

@@ -842,7 +842,82 @@ class  PfmStatistics extends Model
 					->sum('payable_money');
 
 		$admin_users = DB::table('admin_users')->get(['id','name'])->toArray();//查询全员营销人员
-		$idc_count = 0;//总计idc销售额
+		
+		$admin_users = $this->total($admin_users,$begin_end);
+		//取出二维数组里面的sum字段的值
+		$sort_sum = array_column($admin_users,'sum');
+		//根据sum字段值进行降序排序,由多到少
+		array_multisort($sort_sum,SORT_DESC,$admin_users);
+
+		$data['actual_payment'] = $actual_payment;//实际付款
+		$data['preferential_amount'] = $preferential_amount;//优惠额度
+		$data['payable_money'] = $payable_money;//应付款
+		$data['count'] = $admin_users;
+		$return['code'] = 1;
+		$return['msg'] = '';
+		$return['data'] = $data;
+		return $return;
+	}
+
+	/**
+     * 计算查询的起始时间和结束时间
+     * @param  array $query_time begin--查询时间段的开始时间 end--查询时间段的结束时间
+     * @return array             返回查询的起始时间和结束时间
+     */
+    public function queryTime($query_time){
+        if(!isset($query_time['begin']) && !isset($query_time['end'])){//当查询开始间和结束时间都未设置时
+
+            $end_time = date('Y-m-d',strtotime("+1 day"));//结束时间等于当前时间往后推一天，即当前天的23:59:59
+            $month = date('Y-m',time());//获取结束时间所属自然月
+            $start_time = $month.'-01';//获取结束时间所属自然月的第一天的零点为查询的开始时间
+
+        } elseif(isset($query_time['begin']) && !isset($query_time['end'])){//当设置查询开始时间，未设置结束时间时
+
+            $start_time = date('Y-m-d',$query_time['begin']);//起始时间等于设置的起始时间
+            $month = date('Y-m',$query_time['begin']);//获取开始时间所属自然月
+            $last_day = date('t',$month);//获取开始时间所属自然月的总天数
+            $end_time = date('Y-m-d',strtotime($month.'-'.$last_day."+1 day"));//结束时间设置为开始时间所属自然月的最后一天的23:59:59
+
+        } elseif(!isset($query_time['begin']) && isset($query_time['end'])){//当起始时间未设置，结束时间设置时
+
+            $end_time = date('Y-m-d',strtotime(date('Y-m-d',$query_time['end'])."+1 day"));//结束时间等于设置的结束时间
+            $month = date('Y-m',$query_time['end']);//获取结束时间所属的自然月
+            $start_time = $month.'-01';//获取结束时间所属自然月的第一天的零点为查询的开始时间
+
+        } elseif(isset($query_time['begin']) && isset($query_time['end'])){//当查询的起始时间和结束时间都设置时
+
+            $start_time = date('Y-m-d',$query_time['begin']);//起始时间等于设置的起始时间
+            $end_time = date('Y-m-d',strtotime(date('Y-m-d',$query_time['end'])."+1 day"));//结束时间等于设置的结束时间
+        }
+        return ['start_time'=>$start_time,'end_time'=>$end_time];
+    }
+
+    public function statistics(){
+
+    	$now = date('Y-m-d',time());//现在的日期
+    	
+    	$last_start = date('Y-m-01',strtotime($now.'-1 month'));//上个月的第一天
+
+    	$seven_end = date('Y-m-d',strtotime($now.'+1 day'));//7天/今天统计的结束日期（由于数据库的存储时间原因,所以日期需往后延一天）
+
+    	$seven_start = date('Y-m-d',strtotime($seven_end.'-7 day'));//7天统计的开始日期
+    	
+    	$month_start = date('Y-m-01',time());//当前月所在的第一天
+
+    	$month_last = date('Y-m-t',time());//当前月所在的最后一天
+
+    	$month_end = date('Y-m-d',strtotime($month_last.'+1 day'));//当前月统计的结束日期（由于数据库的存储时间原因,所以日期需往后延一天）
+    
+    }
+
+    /**
+     * performance方法的统计复用
+     * @param  array $admin_users  机房集合/业务员集合
+     * @param  array $begin_end   查询的时间段
+     * @return [type]              [description]
+     */
+    protected function total($admin_users,$begin_end){
+    	$idc_count = 0;//总计idc销售额
 		$defense = 0;//总计高防销售额
 		$flow = 0;//总计叠加包销售额
 		$cdn = 0;//总计cdn销售额
@@ -912,73 +987,17 @@ class  PfmStatistics extends Model
 
 		}
 		//总计数据传入数组
-		$object = (object)['name'=>'总计','idc_count'=>$idc_count,'defense_count'=>$defense,'flow_count'=>$flow,'cdn_count'=>$cdn,'cloud_count'=>$cloud,'sum'=>$total];
+		$object = (object)[
+					'name'=>'总计',
+					'idc_count'=>$idc_count,
+					'defense_count'=>$defense,
+					'flow_count'=>$flow,
+					'cdn_count'=>$cdn,
+					'cloud_count'=>$cloud,
+					'sum'=>$total
+				];
 		array_unshift($admin_users,$object);
-		
-		//取出二维数组里面的sum字段的值
-		$sort_sum = array_column($admin_users,'sum');
-		//根据sum字段值进行降序排序,由多到少
-		array_multisort($sort_sum,SORT_DESC,$admin_users);
-
-		$data['actual_payment'] = $actual_payment;//实际付款
-		$data['preferential_amount'] = $preferential_amount;//优惠额度
-		$data['payable_money'] = $payable_money;//应付款
-		$data['count'] = $admin_users;
-		$return['code'] = 1;
-		$return['msg'] = '';
-		$return['data'] = $data;
-		return $return;
-	}
-
-	/**
-     * 计算查询的起始时间和结束时间
-     * @param  array $query_time begin--查询时间段的开始时间 end--查询时间段的结束时间
-     * @return array             返回查询的起始时间和结束时间
-     */
-    public function queryTime($query_time){
-        if(!isset($query_time['begin']) && !isset($query_time['end'])){//当查询开始间和结束时间都未设置时
-
-            $end_time = date('Y-m-d',strtotime("+1 day"));//结束时间等于当前时间往后推一天，即当前天的23:59:59
-            $month = date('Y-m',time());//获取结束时间所属自然月
-            $start_time = $month.'-01';//获取结束时间所属自然月的第一天的零点为查询的开始时间
-
-        } elseif(isset($query_time['begin']) && !isset($query_time['end'])){//当设置查询开始时间，未设置结束时间时
-
-            $start_time = date('Y-m-d',$query_time['begin']);//起始时间等于设置的起始时间
-            $month = date('Y-m',$query_time['begin']);//获取开始时间所属自然月
-            $last_day = date('t',$month);//获取开始时间所属自然月的总天数
-            $end_time = date('Y-m-d',strtotime($month.'-'.$last_day."+1 day"));//结束时间设置为开始时间所属自然月的最后一天的23:59:59
-
-        } elseif(!isset($query_time['begin']) && isset($query_time['end'])){//当起始时间未设置，结束时间设置时
-
-            $end_time = date('Y-m-d',strtotime(date('Y-m-d',$query_time['end'])."+1 day"));//结束时间等于设置的结束时间
-            $month = date('Y-m',$query_time['end']);//获取结束时间所属的自然月
-            $start_time = $month.'-01';//获取结束时间所属自然月的第一天的零点为查询的开始时间
-
-        } elseif(isset($query_time['begin']) && isset($query_time['end'])){//当查询的起始时间和结束时间都设置时
-
-            $start_time = date('Y-m-d',$query_time['begin']);//起始时间等于设置的起始时间
-            $end_time = date('Y-m-d',strtotime(date('Y-m-d',$query_time['end'])."+1 day"));//结束时间等于设置的结束时间
-        }
-        return ['start_time'=>$start_time,'end_time'=>$end_time];
-    }
-
-    public function statistics(){
-
-    	$now = date('Y-m-d',time());//现在的日期
-    	
-    	$last_start = date('Y-m-01',strtotime($now.'-1 month'));//上个月的第一天
-
-    	$seven_end = date('Y-m-d',strtotime($now.'+1 day'));//7天/今天统计的结束日期（由于数据库的存储时间原因,所以日期需往后延一天）
-
-    	$seven_start = date('Y-m-d',strtotime($seven_end.'-7 day'));//7天统计的开始日期
-    	
-    	$month_start = date('Y-m-01',time());//当前月所在的第一天
-
-    	$month_last = date('Y-m-t',time());//当前月所在的最后一天
-
-    	$month_end = date('Y-m-d',strtotime($month_last.'+1 day'));//当前月统计的结束日期（由于数据库的存储时间原因,所以日期需往后延一天）
-    
+		return $admin_users;
     }
 
 }

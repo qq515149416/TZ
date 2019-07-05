@@ -65,6 +65,7 @@ class OverdueDJB extends Command
 	 */
 	public function delPastOverlay()
 	{
+
 		$model = new OverlayBelongModel();
 		//当前date
 		$now = date("Y-m-d H:i:s");
@@ -86,6 +87,15 @@ class OverdueDJB extends Command
   				$res = $this->delPastDIP($v);	//调用高防下架方法
 				if($res){		//成功的话,num+1
 					$num++;
+				}
+  			}else{	//查查看idc
+  				$checkIDC = DB::table('tz_orders')->where('order_sn' , $v->target_business)->first(['machine_sn' , 'business_sn','resource_type']);
+				if ($checkIDC != null) {
+					$res = $this->delPastIDC($v);	//调用idc里下架的方法
+					if ($res) {
+						$num++;
+					}
+					
 				}
   			}
 
@@ -141,8 +151,8 @@ class OverdueDJB extends Command
 					//更新现在的牵引值
 					$after_protection = bcadd($ori_protection_value, $extra_protection,0);
 					$api_controller = new ApiController();
-					$res = $api_controller->setProtectionValue($d_ip->ip,$after_protection);
-					//$res = $api_controller->setProtectionValue('1.1.1.1',0);
+					//$res = $api_controller->setProtectionValue($d_ip->ip,$after_protection);
+					$res = $api_controller->setProtectionValue('1.1.1.1',0);
 					if ($res != 'editok' && $res !='ok') {
 						DB::rollBack();
 						return false;
@@ -156,6 +166,72 @@ class OverdueDJB extends Command
 		}else{
 			DB::rollBack();
 			return false;
+		}
+	}
+
+
+	public function delPastIDC($v)
+	{
+		DB::beginTransaction();
+		
+		//获取叠加包的防御值
+		$all_protection_value = DB::table('tz_overlay_belong as a')
+					->leftjoin('tz_overlay as b','a.overlay_id','=','b.id')
+					->where(['a.target_business'=>$v->target_business,'a.status'=>1])
+					->sum('b.protection_value');
+
+		$protection_value = DB::table('tz_overlay')->where('id',$v->overlay_id)->value('protection_value');
+	
+		if($protection_value == null || $all_protection_value == null){    //如果获取失败
+			DB::rollBack();
+			return false;
+		}else{              //获取成功的话就减掉
+
+			//去除掉过期叠加包防御值后的额外防御值
+			$after_protection = bcsub($all_protection_value, $protection_value,0);
+			if ($after_protection < 0 ) {
+				$after_protection = 0;
+			}
+
+			$idc = DB::table('tz_orders')->where('order_sn' , $v->target_business)->first(['machine_sn' , 'business_sn','resource_type']);
+
+			if ($idc != null) {
+				if($idc->resource_type == 4){		//如果找出来是副ip,直接获取
+					$ip = $idc->machine_sn;
+				}elseif ($idc->resource_type == 1||$idc->resource_type == 2) {	//如果找出来是主机,去业务表的详情处找
+					$business = DB::table('tz_business')->where('business_number',$idc->business_sn)->first(['resource_detail']);
+					if ($business == null) {
+						$ip = false;
+					}else{
+						$resource_detail = json_decode($business->resource_detail,true);
+						$ip = $resource_detail['ip'];
+					}
+				}else{
+					$ip = false;
+				}
+			}else{
+				$ip = false;
+			}
+			if ($ip == false) {
+				DB::rollBack();
+				return false;
+			}
+
+			$api_controller = new ApiController();
+			$v->status = 2;
+			if (!$v->save()) {
+				DB::rollBack();
+				return false;
+			}
+			//$res = $api_controller->setProtectionValue($ip,$after_protection);
+			$res = $api_controller->setProtectionValue('1.1.1.1',0);
+			if ($res != 'editok' && $res !='ok') {
+				DB::rollBack();
+				return false;
+			}else{
+				DB::commit();   
+				return true;	
+			}
 		}
 	}
 }

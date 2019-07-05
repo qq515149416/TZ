@@ -19,34 +19,34 @@ use App\Admin\Models\Business\OrdersModel;
 class  PfmStatistics extends Model
 {
    use SoftDeletes;
-   
+
 	protected $table = 'tz_orders_flow';
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
-	
+
 	// protected $fillable = ['user_id', 'achievement','total_money','this_arrears','all_arrears','month','updated_at'];
 
 	/**
 	* 统计idc业绩数据,财务用
 	* @param  $begin -开始时间 / $end -结束时间
-	* @return 
+	* @return
 	*/
 	public function getIdcStatisticsBig($begin,$end){
 		$begin = date("Y-m-d H:i:s",$begin);
 		$end = date("Y-m-d H:i:s",$end);
-		
+
 		//获取查询时间段内的已付费idc订单
-			
+
 		$already = DB::table('tz_orders_flow as a')
 			->select(DB::raw('sum(a.actual_payment) as payable_money, a.business_id as user_id,a.flow_type as order_type'))
-			->leftjoin('tz_business_relevance as b','a.business_number','=','b.business_id')			
+			->leftjoin('tz_business_relevance as b','a.business_number','=','b.business_id')
 			->where('a.pay_time','>',$begin)
 			->where('a.pay_time','<',$end)
 			->where('b.type',1)
 			->whereNull('a.deleted_at')
 			->groupBy('a.business_id','order_type')
 			->get()
-			->toArray();	
+			->toArray();
 		// dd($already);
 		//获取所有idc业务欠费订单
 		$unpaid = DB::table('tz_orders')
@@ -56,7 +56,7 @@ class  PfmStatistics extends Model
 			->whereIn('resource_type',[1,2,3,4,5,6,7,8,9])
 			->whereNull('deleted_at')
 			->get()
-			->toArray();	
+			->toArray();
 		// dd($unpaid);
 		if(count($already) == 0 && count($unpaid) == 0 ){
 			$return['msg'] 	= '获取数据失败';
@@ -79,7 +79,7 @@ class  PfmStatistics extends Model
 			'preferential_amount'	=> 0,
 		];
 		//开始统计
-		for ($i=0; $i < count($already); $i++) { 
+		for ($i=0; $i < count($already); $i++) {
 			if(!isset( $order_arr[ $already[$i]->user_id ] )){
 				$order_arr[ $already[$i]->user_id ] = [
 					'user_id'		=> $already[$i]->user_id,
@@ -97,13 +97,13 @@ class  PfmStatistics extends Model
 			}
 
 			if($already[$i]->order_type == 1){
-				$order_arr[ $already[$i]->user_id ] ['new_achievement'] = $already[$i]->payable_money;	
+				$order_arr[ $already[$i]->user_id ] ['new_achievement'] = $already[$i]->payable_money;
 			}else{
 				$order_arr[ $already[$i]->user_id ] ['old_achievement'] = $already[$i]->payable_money;
 			}
 		}
-		
-		for ($j=0; $j < count($unpaid); $j++) { 
+
+		for ($j=0; $j < count($unpaid); $j++) {
 			if(!isset( $order_arr[ $unpaid[$j]->user_id ] )){
 				$order_arr[ $unpaid[$j]->user_id ] = [
 					'user_id'		=> $unpaid[$j]->user_id,
@@ -119,19 +119,19 @@ class  PfmStatistics extends Model
 					'preferential_amount'	=> 0,
 				];
 			}
-	
-			if($unpaid[$j]->created_at > $begin && $unpaid[$j]->created_at < $end){				
+
+			if($unpaid[$j]->created_at > $begin && $unpaid[$j]->created_at < $end){
 				if($unpaid[$j]->order_type == 1){
 					$order_arr[ $unpaid[$j]->user_id ] ['new_arrears'] = bcadd($order_arr[ $unpaid[$j]->user_id ] ['new_arrears'],$unpaid[$j]->arrears,2);
 				}else{
 					$order_arr[ $unpaid[$j]->user_id ] ['old_arrears'] = bcadd($order_arr[ $unpaid[$j]->user_id ] ['old_arrears'],$unpaid[$j]->arrears,2);
 				}
 			}
-			$order_arr[ $unpaid[$j]->user_id ]['all_arrears'] 	= bcadd($order_arr[ $unpaid[$j]->user_id ]['all_arrears'],$unpaid[$j]->arrears,2);		
+			$order_arr[ $unpaid[$j]->user_id ]['all_arrears'] 	= bcadd($order_arr[ $unpaid[$j]->user_id ]['all_arrears'],$unpaid[$j]->arrears,2);
 		}
-		
+
 		$orr = [];
-		
+
 		foreach ($order_arr as $k => $v) {
 			if($k != 'count_all'){
 				$v['achievement'] 	= bcsub(bcadd($v['new_achievement'],$v['old_achievement'],2),$v['preferential_amount'],2);
@@ -147,7 +147,7 @@ class  PfmStatistics extends Model
 				$order_arr['count_all']['preferential_amount'] = bcadd($order_arr['count_all']['preferential_amount'],$v['preferential_amount'] ,2);
 				$order_arr['count_all']['total_money'] = bcadd($order_arr['count_all']['total_money'],$v['total_money'] ,2);
 				$orr[] = $v;
-			}	
+			}
 		}
 		$orr[] = $order_arr['count_all'];
 		$return['data'] 	= $orr;
@@ -158,7 +158,7 @@ class  PfmStatistics extends Model
 	/**
 	* 统计业绩数据,财务用
 	* @param  $begin -开始时间 / $end -结束时间
-	* @return 
+	* @return
 	*/
 	public function getIdcStatisticsBigByUser($begin,$end,$customer_id){
 		$begin = date("Y-m-d H:i:s",$begin);
@@ -172,7 +172,7 @@ class  PfmStatistics extends Model
 
 		$already = DB::table('tz_orders_flow as a')
 			->select(DB::raw('sum(a.actual_payment) as payable_money,a.flow_type as order_type'))
-			->leftjoin('tz_business_relevance as b','a.business_number','=','b.business_id')			
+			->leftjoin('tz_business_relevance as b','a.business_number','=','b.business_id')
 			->where('a.pay_time','>',$begin)
 			->where('a.pay_time','<',$end)
 			->where('a.customer_id',$customer_id)
@@ -180,7 +180,7 @@ class  PfmStatistics extends Model
 			->whereNull('a.deleted_at')
 			->get()
 			->toArray();
-			
+
 		//获取所有idc业务欠费订单
 		$unpaid = DB::table('tz_orders')
 			->select(['id','order_sn','serial_number','business_sn','customer_name','business_name','resource_type','order_type','machine_sn','resource','price','duration','payable_money','end_time','pay_time','order_status','order_note','remove_status','created_at'])
@@ -190,8 +190,8 @@ class  PfmStatistics extends Model
 			->whereNull('deleted_at')
 			->where('customer_id',$customer_id)
 			->get()
-			->toArray();	
-		
+			->toArray();
+
 		if(count($already) == 0 && count($unpaid) == 0 ){
 			return [
 				'data'	=> [],
@@ -212,31 +212,31 @@ class  PfmStatistics extends Model
 			'all_arrears'		=> 0,
 			'preferential_amount'	=> 0,
 		];
-		
+
 		//开始统计
-		for ($i=0; $i < count($already); $i++) { 
+		for ($i=0; $i < count($already); $i++) {
 			if($already[$i]->order_type == 1){
-				$order_arr['new_achievement'] = bcadd($order_arr['new_achievement'],$already[$i]->payable_money,2);	
+				$order_arr['new_achievement'] = bcadd($order_arr['new_achievement'],$already[$i]->payable_money,2);
 			}else{
 				$order_arr['old_achievement'] = bcadd($order_arr['old_achievement'],$already[$i]->payable_money,2);
-			}		
+			}
 		}
-		
-		for ($j=0; $j < count($unpaid); $j++) { 
-			if($unpaid[$j]->created_at > $begin && $unpaid[$j]->created_at < $end){				
+
+		for ($j=0; $j < count($unpaid); $j++) {
+			if($unpaid[$j]->created_at > $begin && $unpaid[$j]->created_at < $end){
 				if($unpaid[$j]->order_type == 1){
 					$order_arr ['new_arrears'] = bcadd($order_arr['new_arrears'],$unpaid[$j]->payable_money,2);
 				}else{
 					$order_arr['old_arrears'] = bcadd($order_arr['old_arrears'],$unpaid[$j]->payable_money,2);
 				}
 			}
-			$order_arr['all_arrears'] = bcadd($order_arr['all_arrears'],$unpaid[$j]->payable_money,2);		
+			$order_arr['all_arrears'] = bcadd($order_arr['all_arrears'],$unpaid[$j]->payable_money,2);
 		}
 		$order_arr['achievement'] = bcsub(bcadd($order_arr['new_achievement'],$order_arr['old_achievement'],2),$order_arr['preferential_amount'],2);
 		$order_arr['this_arrears'] = bcadd($order_arr['new_arrears'],$order_arr['old_arrears'],2);
 		$order_arr['total_money'] = bcadd($order_arr['achievement'],$order_arr['this_arrears'],2);
-		
-	
+
+
 
 		$return['data'] 	= [$order_arr];
 		$return['msg'] 	= '统计成功';
@@ -246,19 +246,19 @@ class  PfmStatistics extends Model
 	}
 
 	/**
-	* 
+	*
 	* @param  $begin -开始时间 / $end -结束时间
-	* @return 
+	* @return
 	*/
 	public function getIdcStatisticsSmall($begin,$end,$user_id){
 		$begin = date("Y-m-d H:i:s",$begin);
 		$end = date("Y-m-d H:i:s",$end);
-		
+
 		$orr = [];
 
 		$already = DB::table('tz_orders_flow as a')
 			->select(DB::raw('sum(a.actual_payment) as payable_money,a.flow_type as order_type'))
-			->leftjoin('tz_business_relevance as b','a.business_number','=','b.business_id')			
+			->leftjoin('tz_business_relevance as b','a.business_number','=','b.business_id')
 			->where('a.pay_time','>',$begin)
 			->where('a.pay_time','<',$end)
 			->where('a.business_id',$user_id)
@@ -277,15 +277,15 @@ class  PfmStatistics extends Model
 			->where('business_id',$user_id)
 			->whereNull('deleted_at')
 			->get()
-			->toArray();	
-	
+			->toArray();
+
 		if( count($already) == 0 && count($unpaid) == 0 ){
 			$return['data']	= [];
 			$return['msg'] 	= '无数据';
 			$return['code'] 	= 0;
 			return $return;
 		}
-		
+
 		$orr = [
 			'user_id'		=> $user_id,
 			'user_name'		=> DB::table('admin_users')->where('id',$user_id)->value('name'),
@@ -299,17 +299,17 @@ class  PfmStatistics extends Model
 			'all_arrears'		=> 0,
 			'preferential_amount'	=> 0,
 		];
-		
+
 		//开始统计
-		for ($i=0; $i < count($already); $i++) { 
+		for ($i=0; $i < count($already); $i++) {
 			if($already[$i]->order_type == 1){
 				$orr['new_achievement'] = $already[$i]->payable_money;
 			}else{
 				$orr['old_achievement'] = $already[$i]->payable_money;
 			}
 		}
-		
-		for ($j=0; $j < count($unpaid); $j++) { 
+
+		for ($j=0; $j < count($unpaid); $j++) {
 			if($unpaid[$j]->created_at > $begin && $unpaid[$j]->created_at < $end){
 				if($unpaid[$j]->order_type == 1){
 					$orr['new_arrears'] = bcadd($orr['new_arrears'],$unpaid[$j]->arrears,2);
@@ -329,16 +329,16 @@ class  PfmStatistics extends Model
 		$return['code']	= 1;
 		return $return;
 	}
-	
+
 	/**
 	* 统计高防IP业绩数据,财务用
 	* @param  $begin -开始时间 / $end -结束时间
-	* @return 
+	* @return
 	*/
 	public function getDefenseipStatisticsBigByUser($begin,$end,$customer_id){
 		$begin = date("Y-m-d H:i:s",$begin);
 		$end = date("Y-m-d H:i:s",$end);
-		
+
 		//获取查询时间段内的已付费高防IP订单
 		$already = DB::table('tz_orders')
 			->select(['id','order_sn','serial_number','business_sn','customer_name','business_name','resource_type','order_type','machine_sn','resource','price','duration','payable_money','end_time','pay_time','order_status','order_note','remove_status','created_at'])
@@ -350,7 +350,7 @@ class  PfmStatistics extends Model
 			->whereNull('deleted_at')
 			->groupBy('business_id','order_type')
 			->get()
-			->toArray();	
+			->toArray();
 
 		if(count($already) == 0){
 			return [
@@ -360,44 +360,44 @@ class  PfmStatistics extends Model
 			];
 		}
 
-		$order_arr= [	
+		$order_arr= [
 			'user_name'			=> $already[0]->customer_name,
-			'new_achievement'		=> 0,	
+			'new_achievement'		=> 0,
 			'old_achievement'		=> 0,
 			'preferential_amount'		=> 0,
 			'total_money'			=> 0,
 		];
 		//开始统计
-		for ($i=0; $i < count($already); $i++) { 
+		for ($i=0; $i < count($already); $i++) {
 			if($already[$i]->order_type == 1){
-				$order_arr['new_achievement'] = bcadd($order_arr['new_achievement'],$already[$i]->payable_money,2);	
+				$order_arr['new_achievement'] = bcadd($order_arr['new_achievement'],$already[$i]->payable_money,2);
 			}else{
 				$order_arr['old_achievement'] = bcadd($order_arr['old_achievement'],$already[$i]->payable_money,2);
 			}
 			$order_arr['total_money'] = bcadd($order_arr['total_money'],$already[$i]->payable_money,2);
 		}
-		for ($i=0; $i < count($already); $i++) { 
+		for ($i=0; $i < count($already); $i++) {
 			$already[$i] = $this->trans($already[$i]);
 		}
-		
+
 
 		$return['data'] 	= [$order_arr];
 		$return['msg'] 	= '统计成功';
 		$return['code']	= 1;
 		return $return;
 	}
-	
+
 
 
 	/**
 	* 统计指定客户高防IP消费情况,财务用
 	* @param  $begin -开始时间 / $end -结束时间
-	* @return 
+	* @return
 	*/
 	public function getDefenseipStatisticsBig($begin,$end){
 		$begin = date("Y-m-d H:i:s",$begin);
 		$end = date("Y-m-d H:i:s",$end);
-		
+
 		//获取查询时间段内的已付费高防IP订单
 		$already = DB::table('tz_orders')
 			->select(DB::raw('sum(payable_money) as payable_money, business_id as user_id,order_type'))
@@ -408,8 +408,8 @@ class  PfmStatistics extends Model
 			->whereNull('deleted_at')
 			->groupBy('business_id','order_type')
 			->get()
-			->toArray();	
-	
+			->toArray();
+
 		if(count($already) == 0){
 			return [
 				'data'	=> [],
@@ -417,23 +417,23 @@ class  PfmStatistics extends Model
 				'code'	=> 1,
 			];
 		}
-	
+
 		$order_arr = [];
 		$order_arr['count_all'] = [
-			'user_id'				=> '总计',		
+			'user_id'				=> '总计',
 			'user_name'			=> '总计',
-			'new_achievement'		=> 0,	
+			'new_achievement'		=> 0,
 			'old_achievement'		=> 0,
 			'preferential_amount'		=> 0,
 			'total_money'			=> 0,
 		];
 		//开始统计
-		for ($i=0; $i < count($already); $i++) { 
+		for ($i=0; $i < count($already); $i++) {
 			if(!isset( $order_arr[ $already[$i]->user_id ] )){
 				$order_arr[ $already[$i]->user_id ] = [
 					'user_id'		=> $already[$i]->user_id,
 					'user_name'		=> DB::table('admin_users')->where('id',$already[$i]->user_id)->value('name'),
-					'new_achievement'		=> 0,	
+					'new_achievement'		=> 0,
 					'old_achievement'		=> 0,
 					'preferential_amount'		=> 0,
 					'total_money'			=> 0,
@@ -441,7 +441,7 @@ class  PfmStatistics extends Model
 			}
 
 			if($already[$i]->order_type == 1){
-				$order_arr[ $already[$i]->user_id ] ['new_achievement'] = $already[$i]->payable_money;	
+				$order_arr[ $already[$i]->user_id ] ['new_achievement'] = $already[$i]->payable_money;
 				$order_arr['count_all']['new_achievement'] = bcadd($order_arr['count_all']['new_achievement'],$already[$i]->payable_money,2);
 			}else{
 				$order_arr[ $already[$i]->user_id ] ['old_achievement'] = $already[$i]->payable_money;
@@ -463,12 +463,12 @@ class  PfmStatistics extends Model
 	/**
 	* 统计高防IP业绩数据,财务用
 	* @param  $begin -开始时间 / $end -结束时间
-	* @return 
+	* @return
 	*/
 	public function getDefenseipStatisticsSmall($begin,$end,$user_id){
 		$begin = date("Y-m-d H:i:s",$begin);
 		$end = date("Y-m-d H:i:s",$end);
-		
+
 		//获取查询时间段内的已付费高防IP订单
 		$already = DB::table('tz_orders')
 			->select(DB::raw('payable_money,order_type'))
@@ -479,8 +479,8 @@ class  PfmStatistics extends Model
 			->where('pay_time','<',$end)
 			->whereNull('deleted_at')
 			->get()
-			->toArray();	
-	
+			->toArray();
+
 		if(count($already) == 0){
 			return [
 				'data'	=> [],
@@ -490,29 +490,29 @@ class  PfmStatistics extends Model
 		}
 
 		$order_arr = [
-			'new_achievement'		=> 0,	
+			'new_achievement'		=> 0,
 			'old_achievement'		=> 0,
 			'preferential_amount'		=> 0,
 			'total_money'			=> 0,
 		];
 		//开始统计
-		for ($i=0; $i < count($already); $i++) { 
-			
+		for ($i=0; $i < count($already); $i++) {
+
 			if($already[$i]->order_type == 1){
-				$order_arr['new_achievement'] = bcadd($order_arr['new_achievement'],$already[$i]->payable_money,2);	
+				$order_arr['new_achievement'] = bcadd($order_arr['new_achievement'],$already[$i]->payable_money,2);
 			}else{
 				$order_arr['old_achievement'] = bcadd($order_arr['old_achievement'],$already[$i]->payable_money,2);
 			}
 			$order_arr['total_money'] = bcadd($order_arr['total_money'],$already[$i]->payable_money,2);
 		}
-		
+
 
 		$return['data'] 	= $order_arr;
 		$return['msg'] 	= '统计成功';
 		$return['code']	= 1;
 		return $return;
 	}
-	
+
 	/*
 	*转换状态方法,适用订单
 	*/
@@ -523,7 +523,7 @@ class  PfmStatistics extends Model
 				break;
 			case '2':
 				$arr->order_type = '续费';
-				break;	
+				break;
 			default:
 				$arr->order_type = '无此类型';
 				break;
@@ -637,14 +637,14 @@ class  PfmStatistics extends Model
 							->where('a.serial_number',$v['serial_number'])
 							->value('c.machine_room_name');
 				$already[$k]['type'] = '叠加包';
-			}else{	
+			}else{
 				$v['order_id'] = json_decode($v['order_id']);
 				if (is_array($v['order_id'])) {
 					$resource_type = DB::table('tz_orders')->where('id' , $v['order_id'][0])->value('resource_type');
 				}else{
 					$resource_type = DB::table('tz_orders')->where('id' , $v['order_id'])->value('resource_type');
 				}
-				
+
 				switch ($resource_type) {
 					case '1':
 					case '2':
@@ -656,7 +656,7 @@ class  PfmStatistics extends Model
 					case '8':
 					case '9':
 
-					
+
 						$resource_detail = DB::table('tz_business')
 							->where('business_number',$v['business_number'])
 							->value('resource_detail');
@@ -664,7 +664,7 @@ class  PfmStatistics extends Model
 						$machine_room = $resource_detail->machineroom_name;
 						$already[$k]['type'] = 'idc';
 						break;
-		
+
 					case '11':
 						$machine_room = DB::table('tz_defenseip_business as a')
 							->leftjoin('tz_defenseip_store as b' , 'b.id' , '=' , 'a.ip_id')
@@ -696,7 +696,7 @@ class  PfmStatistics extends Model
 
 	//按客户分
 	public function test($begin,$end){
-		
+
 		$already = DB::table('tz_orders_flow as a')
 			->leftJoin('tz_users as b','a.customer_id','=','b.id')
 			->select('a.customer_id','b.name as customer_name','b.nickname as customer_nickname','b.email as customer_email',DB::raw('SUM(a.actual_payment) as money'))
@@ -706,7 +706,7 @@ class  PfmStatistics extends Model
 			->get();
 
 		$order_model = new OrdersModel();
-		
+
 		$not = DB::table('tz_orders as a')
 			->leftJoin('tz_users as b','a.customer_id','=','b.id')
 			->select('a.customer_id','b.name as customer_name','b.nickname as customer_nickname','b.email as customer_email',DB::raw('SUM(a.payable_money) as money'))
@@ -734,7 +734,7 @@ class  PfmStatistics extends Model
 			->where('a.remove_status',0)
 			->groupBy('a.customer_id')
 			->get();
-		
+
 		$arr['heji'] = [
 			'already' 		=> 0,
 			'not'			=> 0,
@@ -809,12 +809,12 @@ class  PfmStatistics extends Model
 			}
 			$arr['heji']['maybe'] = bcadd($arr['heji']['maybe'], $v->money,2);
 		}
-	
+
 		$brr = [];
 		foreach ($arr as $k => $v) {
 			$brr[] = $v;
 		}
-		
+
 		return $brr;
 	}
 
@@ -844,10 +844,10 @@ class  PfmStatistics extends Model
 			$admin_users = DB::table('admin_users')->get(['id','name'])->toArray();//查询全员营销人员
 			$where = 'flow.business_id';
 		} elseif($time['business_type'] == 2){
-			$admin_users = DB::table('idc_machineroom')->whereNull('deleted_at')->get(['id','machine_room_name as name']);//查机房
+			$admin_users = DB::table('idc_machineroom')->whereNull('deleted_at')->get(['id','machine_room_name as name'])->toArray();//查机房
 			$where = 'flow.room_id';
 		}
-		
+
 		$admin_users = $this->total($admin_users,$begin_end,$where);
 		//取出二维数组里面的sum字段的值
 		$sort_sum = array_column($admin_users,'sum');
@@ -900,19 +900,19 @@ class  PfmStatistics extends Model
     public function statistics(){
 
     	$now = date('Y-m-d',time());//现在的日期
-    	
+
     	$last_start = date('Y-m-01',strtotime($now.'-1 month'));//上个月的第一天
 
     	$seven_end = date('Y-m-d',strtotime($now.'+1 day'));//7天/今天统计的结束日期（由于数据库的存储时间原因,所以日期需往后延一天）
 
     	$seven_start = date('Y-m-d',strtotime($seven_end.'-7 day'));//7天统计的开始日期
-    	
+
     	$month_start = date('Y-m-01',time());//当前月所在的第一天
 
     	$month_last = date('Y-m-t',time());//当前月所在的最后一天
 
     	$month_end = date('Y-m-d',strtotime($month_last.'+1 day'));//当前月统计的结束日期（由于数据库的存储时间原因,所以日期需往后延一天）
-    
+
     }
 
     /**

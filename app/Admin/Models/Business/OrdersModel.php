@@ -1181,6 +1181,7 @@ class OrdersModel extends Model
 		$order_id_arr = [];
 		$idc_arr = array(1,2,3,4,5,6,7,8,9);
 		$defenseip_arr = array(11);
+		$overlay_arr = array(12);
 
 		DB::beginTransaction();//开启事务处理
 
@@ -1249,6 +1250,16 @@ class OrdersModel extends Model
 			$return['code'] = 0;
 			return $return;
 		}
+		
+		$room_id = '';
+		if(in_array($unpaidOrder[0]['resource_type'],$idc_arr) ){
+			$room = DB::table('tz_business')->where(['business_number'=>$unpaidOrder[0]['business_sn']])->value('resource_detail');
+			$room_id = json_decode($room)->machineroom_id;
+		}elseif(in_array($unpaidOrder[0]['resource_type'],$defenseip_arr)) {
+			$room_id = DB::table('tz_defenseip_package')->where('id',$unpaidOrder[0]['machine_sn'])->value('site');
+		}elseif (in_array($unpaidOrder[0]['resource_type'],$overlay_arr)) {
+			$room_id = DB::table('tz_overlay')->where('id',$unpaidOrder[0]['machine_sn'])->value('site');
+		}
 
 		$flow = [
 			'serial_number'     => $serial_number,
@@ -1264,6 +1275,7 @@ class OrdersModel extends Model
 			'after_money'       => $after_money,
 			'pay_time'      => $pay_time,
 			'business_number'	=> $business_number,
+			'room_id'		=> $room_id,
 		];
 		$creatFlow = DB::table('tz_orders_flow')->insert($flow);
 

@@ -840,81 +840,15 @@ class  PfmStatistics extends Model
 					->whereBetween('pay_time',[$begin_end['start_time'],$begin_end['end_time']])
 					->whereNull('deleted_at')
 					->sum('payable_money');
-
-		$admin_users = DB::table('admin_users')->get(['id','name'])->toArray();//查询全员营销人员
-		$idc_count = 0;//总计idc销售额
-		$defense = 0;//总计高防销售额
-		$flow = 0;//总计叠加包销售额
-		$cdn = 0;//总计cdn销售额
-		$cloud = 0;//总计云销售额
-		$total = 0;//总额
-
-		foreach($admin_users as $key=>$value){
-			/**
-			 * 每个业务员IDC销售额
-			 * @var [type]
-			 */
-			$value->idc_count = DB::table('tz_orders_flow as flow')
-					->join('tz_business as business','flow.business_number','=','business.business_number')
-					->where(['flow.business_id'=>$value->id])
-					->whereBetween('flow.pay_time',[$begin_end['start_time'],$begin_end['end_time']])
-					->whereNull('flow.deleted_at')
-					->whereNull('business.deleted_at')
-					->sum('actual_payment');
-			$idc_count = bcadd($idc_count,$value->idc_count,2);//总计IDC销售额
-
-			/**
-			 * 每个业务员高防销售额
-			 * @var [type]
-			 */
-			$value->defense_count = DB::table('tz_orders_flow as flow')
-					->join('tz_defenseip_business as business','flow.business_number','=','business.business_number')
-					->where(['flow.business_id'=>$value->id])
-					->whereBetween('flow.pay_time',[$begin_end['start_time'],$begin_end['end_time']])
-					->whereNull('flow.deleted_at')
-					->whereNull('business.deleted_at')
-					->sum('actual_payment');
-			$defense = bcadd($defense,$value->defense_count,2);//总计高防销售额
-
-			/**
-			 * 每个业务员叠加包销售额
-			 * @var [type]
-			 */
-			$value->flow_count = DB::table('tz_orders_flow as flow')
-					->join('tz_orders as business','flow.business_number','=','business.business_sn')
-					->where(['flow.business_id'=>$value->id,'business.resource_type'=>12])
-					->whereBetween('flow.pay_time',[$begin_end['start_time'],$begin_end['end_time']])
-					->whereNull('flow.deleted_at')
-					->whereNull('business.deleted_at')
-					->select('flow.id','flow.actual_payment')
-					->distinct('id')
-					->get()
-					->sum('actual_payment');
-
-			$flow = bcadd($flow,$value->flow_count,2);//总计叠加包销售额
-
-			$value->cdn_count = 0;//每个业务员cdn销售额
-			$cdn = bcadd($cdn,$value->cdn_count,2);//总计cdn销售额
-
-			$value->cloud_count = 0;//每个业务员云销售额
-			$cloud = bcadd($cloud,$value->cloud_count,2);//总计云销售额
-
-			/**
-			 * 每个业务员总销售额
-			 * @var [type]
-			 */
-			$value->sum = DB::table('tz_orders_flow')
-					->where(['business_id'=>$value->id])
-					->whereBetween('pay_time',[$begin_end['start_time'],$begin_end['end_time']])
-					->whereNull('deleted_at')
-					->sum('actual_payment');
-			$total = bcadd($value->sum,$total,2);//总销售额
-
+		if($time['business_type'] == 1){
+			$admin_users = DB::table('admin_users')->get(['id','name'])->toArray();//查询全员营销人员
+			$where = 'flow.business_id';
+		} elseif($time['business_type'] == 2){
+			$admin_users = DB::table('idc_machineroom')->whereNull('deleted_at')->get(['id','machine_room_name as name']);//查机房
+			$where = 'flow.room_id';
 		}
-		//总计数据传入数组
-		$object = (object)['name'=>'总计','idc_count'=>$idc_count,'defense_count'=>$defense,'flow_count'=>$flow,'cdn_count'=>$cdn,'cloud_count'=>$cloud,'sum'=>$total];
-		array_unshift($admin_users,$object);
 		
+		$admin_users = $this->total($admin_users,$begin_end,$where);
 		//取出二维数组里面的sum字段的值
 		$sort_sum = array_column($admin_users,'sum');
 		//根据sum字段值进行降序排序,由多到少
@@ -979,6 +913,96 @@ class  PfmStatistics extends Model
 
     	$month_end = date('Y-m-d',strtotime($month_last.'+1 day'));//当前月统计的结束日期（由于数据库的存储时间原因,所以日期需往后延一天）
     
+    }
+
+    /**
+     * performance方法的统计复用
+     * @param  array $admin_users  机房集合/业务员集合
+     * @param  array $begin_end   查询的时间段
+     * @return [type]              [description]
+     */
+    protected function total($admin_users,$begin_end,$where){
+    	$idc_count = 0;//总计idc销售额
+		$defense = 0;//总计高防销售额
+		$flow = 0;//总计叠加包销售额
+		$cdn = 0;//总计cdn销售额
+		$cloud = 0;//总计云销售额
+		$total = 0;//总额
+
+		foreach($admin_users as $key=>$value){
+			/**
+			 * 每个业务员IDC销售额
+			 * @var [type]
+			 */
+			$value->idc_count = DB::table('tz_orders_flow as flow')
+					->join('tz_business as business','flow.business_number','=','business.business_number')
+					->where([$where=>$value->id])
+					->whereBetween('flow.pay_time',[$begin_end['start_time'],$begin_end['end_time']])
+					->whereNull('flow.deleted_at')
+					->whereNull('business.deleted_at')
+					->sum('actual_payment');
+			$idc_count = bcadd($idc_count,$value->idc_count,2);//总计IDC销售额
+
+			/**
+			 * 每个业务员高防销售额
+			 * @var [type]
+			 */
+			$value->defense_count = DB::table('tz_orders_flow as flow')
+					->join('tz_defenseip_business as business','flow.business_number','=','business.business_number')
+					->where([$where=>$value->id])
+					->whereBetween('flow.pay_time',[$begin_end['start_time'],$begin_end['end_time']])
+					->whereNull('flow.deleted_at')
+					->whereNull('business.deleted_at')
+					->sum('actual_payment');
+			$defense = bcadd($defense,$value->defense_count,2);//总计高防销售额
+
+			/**
+			 * 每个业务员叠加包销售额
+			 * @var [type]
+			 */
+			$value->flow_count = DB::table('tz_orders_flow as flow')
+					->join('tz_orders as business','flow.business_number','=','business.business_sn')
+					->where([$where=>$value->id,'business.resource_type'=>12])
+					->whereBetween('flow.pay_time',[$begin_end['start_time'],$begin_end['end_time']])
+					->whereNull('flow.deleted_at')
+					->whereNull('business.deleted_at')
+					->select('flow.id','flow.actual_payment')
+					->distinct('id')
+					->get()
+					->sum('actual_payment');
+
+			$flow = bcadd($flow,$value->flow_count,2);//总计叠加包销售额
+
+			$value->cdn_count = 0;//每个业务员cdn销售额
+			$cdn = bcadd($cdn,$value->cdn_count,2);//总计cdn销售额
+
+			$value->cloud_count = 0;//每个业务员云销售额
+			$cloud = bcadd($cloud,$value->cloud_count,2);//总计云销售额
+
+			/**
+			 * 每个业务员总销售额
+			 * @var [type]
+			 */
+			$value->sum = DB::table('tz_orders_flow as flow')
+					->where([$where=>$value->id])
+					->whereBetween('pay_time',[$begin_end['start_time'],$begin_end['end_time']])
+					->whereNull('deleted_at')
+					->sum('actual_payment');
+			$total = bcadd($value->sum,$total,2);//总销售额
+
+		}
+		//总计数据传入数组
+		$object = (object)[
+					'name'=>'总计',
+					'idc_count'=>$idc_count,
+					'defense_count'=>$defense,
+					'flow_count'=>$flow,
+					'cdn_count'=>$cdn,
+					'cloud_count'=>$cloud,
+					'sum'=>$total
+				];
+		array_unshift($admin_users,$object);
+		return $admin_users;
     }
 
 }

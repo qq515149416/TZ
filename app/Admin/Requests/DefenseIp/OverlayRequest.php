@@ -79,7 +79,13 @@ class OverlayRequest extends FormRequest
 					'overlay_id'			=> 'required|exists:tz_overlay,id', 
 					'buy_num'			=> 'required|integer|min:1',
 					'price'				=> 'numeric',
-					'user_id'			=> 'required|exists:tz_users,id',
+					'user_id'				=> 'required|exists:tz_users,id',
+				];
+				break;
+			case 'showBelongBySite':
+				$return = [
+					'site'				=> 'required|exists:idc_machineroom,id', 
+					'status'				=> 'in:0,1,2'
 				];
 				break;
 			default:
@@ -114,6 +120,7 @@ class OverlayRequest extends FormRequest
 			'user_id.required'			=> '请选择客户',
 			'user_id.exists'				=> '用户id不存在',
 			'status.required'				=> '请选择查询的状态',
+			'status.in'				=> '0-未使用,1-生效中,2-已使用完毕',
 			'business_number.required'		=> '请选择使用叠加包的业务',	
 			'belong_id.required'			=> '请选择使用的叠加包id',
 			'sell_status.required'			=> '请填写需要查询的上下架状态',

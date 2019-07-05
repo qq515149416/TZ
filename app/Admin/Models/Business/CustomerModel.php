@@ -38,16 +38,24 @@ class CustomerModel extends Model
             $return['msg'] = '请先完善您的个人信息';
             return $return;
         }
-        // dd($slug);
+        
         if($slug->slug != 3){//非业务员进入此区间
+            // dd(Admin::user()->role);
             if(Admin::user()->inRoles(['salesman','operations','finance','HR','product','network_dimension','net_sec'])){//不是主管的按是否自己客户查看
                 $where['salesman_id'] = $clerk_id;
-            } else {//主管人员查看客户信息
+            } else  {//主管人员查看客户信息
                 $where = [];
             }
+            // if(Admin::user()->inRoles(['CMO'])){
+            //     $where = [];
+            // }
             
         } else {//是业务人员按客户所绑定业务员查看
             $where['salesman_id'] = $clerk_id;
+            // if(Admin::user()->inRoles(['AE'])){
+            //     $where = [];
+            // }
+            
         }
         if(!empty($id)){
             $where['id'] = $id;
@@ -66,7 +74,12 @@ class CustomerModel extends Model
     		foreach($admin_customer as $key=>$value){
     			$admin_customer[$key]['status'] = $status[$value['status']];
                 $admin_customer[$key]['email'] = $value['email']?$value['email']:$value['name'];
-    			$admin_customer[$key]['clerk_name'] = $this->clerk($value['salesman_id']);
+                if($value['salesman_id'] !=0 || $value['salesman_id'] != Null){
+                    $admin_customer[$key]['clerk_name'] = $this->clerk($value['salesman_id']);
+                } else {
+                    $admin_customer[$key]['clerk_name'] = '未绑定业务员';
+                }
+    			
                 // $admin_customer[$key]['money'] = (float)$value['money'];
     		}
     		$return['data'] = $admin_customer;
@@ -105,7 +118,7 @@ class CustomerModel extends Model
     public function clerk($id){
     	$clerk = DB::table('admin_users')->where(['id'=>$id])->value('name');
         if(empty($clerk)){
-            $clerk = '未绑定业务员';
+            $clerk = '业务员不存在';
         }
     	return $clerk;
     }

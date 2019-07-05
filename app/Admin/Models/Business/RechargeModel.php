@@ -20,7 +20,7 @@ class RechargeModel extends Model
 	protected $primaryKey = 'id';
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
-	protected $fillable = ['user_id', 'recharge_amount','recharge_way','trade_no','recharge_uid','audit_status','auditor_id','audit_time','remarks','created_at','updated_at','deleted_at','pay_at','tax'];
+	protected $fillable = ['user_id', 'recharge_amount','recharge_way','trade_no','recharge_uid','audit_status','auditor_id','audit_time','remarks','created_at','updated_at','deleted_at','pay_at','tax','recharger'];
 
 	/**
 	 * 查找业务员姓名
@@ -48,21 +48,23 @@ class RechargeModel extends Model
 			'code'  => 0,
 		];
 
-		$clerk_id = Admin::user()->id;
+		$clerk = Admin::user();
 		$yewuyuan_id = DB::table('tz_users')->where('id',$data['user_id'])->value('salesman_id');
 		if($yewuyuan_id == null){
 			$return['msg'] = '获取客户所属id失败';
 			return $return;
 		}
 
-		if($clerk_id != $yewuyuan_id){
+		if($clerk->id != $yewuyuan_id){
 			$return['msg'] = '此客户不属于您';
 			return $return;
 		}
 
 		$data['trade_no']	= 'tz_'.time().'_'.$data['user_id'];
 		$data['audit_status']	= 0;
-		$data['recharge_uid']	= $clerk_id;
+		$data['recharge_uid']	= $clerk->id;
+		$data['recharger']	= $clerk->name;
+		
 		if(isset($data['time'])){
 			$data['pay_at'] = $data['time'];
 		}

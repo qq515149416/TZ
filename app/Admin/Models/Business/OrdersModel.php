@@ -999,6 +999,8 @@ class OrdersModel extends Model
 					return $return;
 				}
 			}
+			$room = DB::table('tz_business')->where(['business_number'=>$order->business_sn])->value('resource_detail');
+			$room_id = json_decode($room)->machineroom_id;
 			$pay_info = [
 				'serial_number'=>$this->serialNumber($renew_value['id']),
 				'order_id'=>$order->id,
@@ -1013,7 +1015,8 @@ class OrdersModel extends Model
 				'after_money'=>$over_money,
 				'coupon_id'=>0,
 				'created_at'=>date('Y-m-d H:i:s',time()),
-				'flow_type'=>2
+				'flow_type'=>2,
+				'room_id'=>$room_id
 			];
 			$serial = DB::table('tz_orders_flow')->insert($pay_info);
 			if($serial == 0){

@@ -181,7 +181,7 @@ class PfmStatisticsController extends Controller
      * @return [type]            [description]
      */
     public function performance(Request $request){
-        $time = $request->only(['begin','end']);
+        $time = $request->only(['begin','end','business_type']);
         $performance = new PfmStatistics();
         $result = $performance->performance($time);
         return tz_ajax_echo($result['data'],$result['msg'],$result['code']);

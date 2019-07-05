@@ -625,10 +625,11 @@ class Order extends Model
 			$return['msg']	= '无法获取该业务下的所有资源信息';
 			return $return;
 		}
+		$business['remove_status']=0;
 		//以资源编号为键的资源数组
-		$all = $this->where($business)->where('resource_type','>',3)->orderBy('end_time','desc')->get(['order_sn','resource_type','machine_sn','resource','price','end_time'])->groupBy('machine_sn');
+		$all = $this->where($business)->where('resource_type','>',3)->orderBy('end_time','desc')->get(['order_sn','resource_type','machine_sn','resource','price','end_time','business_sn'])->groupBy('machine_sn');
 		$resource = $all->map(function($item,$key){//根据资源编号获取对应资源的最新一条订单（$key为$all的键）,map参考laravel模型的集合的可用方法
-			return $this->where(['machine_sn'=>$key])->where('order_status','<',3)->orderBy('end_time','desc')->select('order_sn','resource_type','machine_sn','resource','price','end_time','order_status')->first();
+			return $this->where(['machine_sn'=>$key,'business_sn'=>$item[0]['business_sn']])->where('order_status','<',3)->orderBy('end_time','desc')->select('order_sn','resource_type','machine_sn','resource','price','end_time','order_status')->first();	
 		});
 		if(!empty($resource)){
 			$orders = [//filter和values参考laravel模型的集合的可用方法
@@ -1051,6 +1052,8 @@ class Order extends Model
 					return $return;
 				}
 			}
+			$room = DB::table('tz_business')->where(['business_number'=>$order->business_sn])->value('resource_detail');
+			$room_id = json_decode($room)->machineroom_id;
 			$pay_info = [
 				'serial_number'=>$this->serialNumber($renew_value['id']),
 				'order_id'=>$order->id,
@@ -1065,7 +1068,8 @@ class Order extends Model
 				'after_money'=>$over_money,
 				'coupon_id'=>0,
 				'created_at'=>date('Y-m-d H:i:s',time()),
-				'flow_type'=>2
+				'flow_type'=>2,
+				'room_id'=>$room_id
 			];
 			$serial = DB::table('tz_orders_flow')->insert($pay_info);
 			if($serial == 0){

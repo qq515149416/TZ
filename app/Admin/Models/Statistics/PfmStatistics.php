@@ -840,10 +840,15 @@ class  PfmStatistics extends Model
 					->whereBetween('pay_time',[$begin_end['start_time'],$begin_end['end_time']])
 					->whereNull('deleted_at')
 					->sum('payable_money');
-
-		$admin_users = DB::table('admin_users')->get(['id','name'])->toArray();//查询全员营销人员
+		if($time['business_type'] == 1){
+			$admin_users = DB::table('admin_users')->get(['id','name'])->toArray();//查询全员营销人员
+			$where = 'flow.business_id';
+		} elseif($time['business_type'] == 2){
+			$admin_users = DB::table('idc_machineroom')->whereNull('deleted_at')->get(['id','machine_room_name as name']);//查机房
+			$where = 'flow.room_id';
+		}
 		
-		$admin_users = $this->total($admin_users,$begin_end);
+		$admin_users = $this->total($admin_users,$begin_end,$where);
 		//取出二维数组里面的sum字段的值
 		$sort_sum = array_column($admin_users,'sum');
 		//根据sum字段值进行降序排序,由多到少
@@ -916,7 +921,7 @@ class  PfmStatistics extends Model
      * @param  array $begin_end   查询的时间段
      * @return [type]              [description]
      */
-    protected function total($admin_users,$begin_end){
+    protected function total($admin_users,$begin_end,$where){
     	$idc_count = 0;//总计idc销售额
 		$defense = 0;//总计高防销售额
 		$flow = 0;//总计叠加包销售额
@@ -931,7 +936,7 @@ class  PfmStatistics extends Model
 			 */
 			$value->idc_count = DB::table('tz_orders_flow as flow')
 					->join('tz_business as business','flow.business_number','=','business.business_number')
-					->where(['flow.business_id'=>$value->id])
+					->where([$where=>$value->id])
 					->whereBetween('flow.pay_time',[$begin_end['start_time'],$begin_end['end_time']])
 					->whereNull('flow.deleted_at')
 					->whereNull('business.deleted_at')
@@ -944,7 +949,7 @@ class  PfmStatistics extends Model
 			 */
 			$value->defense_count = DB::table('tz_orders_flow as flow')
 					->join('tz_defenseip_business as business','flow.business_number','=','business.business_number')
-					->where(['flow.business_id'=>$value->id])
+					->where([$where=>$value->id])
 					->whereBetween('flow.pay_time',[$begin_end['start_time'],$begin_end['end_time']])
 					->whereNull('flow.deleted_at')
 					->whereNull('business.deleted_at')
@@ -957,7 +962,7 @@ class  PfmStatistics extends Model
 			 */
 			$value->flow_count = DB::table('tz_orders_flow as flow')
 					->join('tz_orders as business','flow.business_number','=','business.business_sn')
-					->where(['flow.business_id'=>$value->id,'business.resource_type'=>12])
+					->where([$where=>$value->id,'business.resource_type'=>12])
 					->whereBetween('flow.pay_time',[$begin_end['start_time'],$begin_end['end_time']])
 					->whereNull('flow.deleted_at')
 					->whereNull('business.deleted_at')
@@ -978,8 +983,8 @@ class  PfmStatistics extends Model
 			 * 每个业务员总销售额
 			 * @var [type]
 			 */
-			$value->sum = DB::table('tz_orders_flow')
-					->where(['business_id'=>$value->id])
+			$value->sum = DB::table('tz_orders_flow as flow')
+					->where([$where=>$value->id])
 					->whereBetween('pay_time',[$begin_end['start_time'],$begin_end['end_time']])
 					->whereNull('deleted_at')
 					->sum('actual_payment');

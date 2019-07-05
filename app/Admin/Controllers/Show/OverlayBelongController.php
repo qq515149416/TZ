@@ -172,7 +172,7 @@ class OverlayBelongController extends Controller
 						$this->ip = $ip->ip;
 					}else{		//不在高防就去找找idc
 						//idc的从订单表处找,因为存的是订单号
-						$idc = DB::table('tz_orders')->where('order_sn' , $this->target_business)->first(['machine_sn' , 'business_sn']);
+						$idc = DB::table('tz_orders')->where('order_sn' , $this->target_business)->first(['machine_sn' , 'business_sn','resource_type']);
 						if ($idc != null) {
 							if($idc->resource_type == 4){		//如果找出来是副ip,直接获取
 								$this->ip = $idc->machine_sn;

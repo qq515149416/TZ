@@ -160,19 +160,20 @@ class OverlayBelongController extends Controller
 
 			});
 			$grid->column('ip','使用IP')->display(function () {
+				$business_num = $this->target_business;
 				if ($this->status == 0) {
 					$this->ip = '';
 				}else{
 					//查查看在不在高防业务里
 					$ip = DB::table('tz_defenseip_business')->leftJoin('tz_defenseip_store as b' , 'b.id' , '=' , 'tz_defenseip_business.ip_id')
-								->where('tz_defenseip_business.business_number' , $this->target_business)
+								->where('tz_defenseip_business.business_number' , $business_num)
 								->first(['b.ip']);
-
+								
 					if ($ip != null) {	//在高防的话直接获取
 						$this->ip = $ip->ip;
 					}else{		//不在高防就去找找idc
 						//idc的从订单表处找,因为存的是订单号
-						$idc = DB::table('tz_orders')->where('order_sn' , $this->target_business)->first(['machine_sn' , 'business_sn','resource_type']);
+						$idc = DB::table('tz_orders')->where('order_sn' , $business_num)->first(['machine_sn' , 'business_sn','resource_type']);
 						if ($idc != null) {
 							if($idc->resource_type == 4){		//如果找出来是副ip,直接获取
 								$this->ip = $idc->machine_sn;
@@ -181,7 +182,8 @@ class OverlayBelongController extends Controller
 								if ($business == null) {
 									$this->ip = '信息有误';
 								}else{
-									$resource_detail = json_decode($business->resource_detail);
+									$resource_detail = json_decode($business->resource_detail,true);
+
 									$this->ip = $resource_detail['ip'];
 								}
 							}else{

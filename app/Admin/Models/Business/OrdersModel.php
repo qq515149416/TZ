@@ -1578,7 +1578,6 @@ class OrdersModel extends Model
         DB::beginTransaction();
         switch ($insert_data['resource_type']) {
 			case 4:
-			dd($insert_data['resource_id']);
 				$resource = DB::table('idc_ips')->where(['id'=>$insert_data['resource_id'],'ip_status'=>0,'ip_comproom'=>$resource_detail->machineroom_id,'ip_lock'=>0])->select('id','ip','ip_company')->first();
 				if(empty($resource)){
 					DB::rollBack();

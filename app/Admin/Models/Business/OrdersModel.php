@@ -342,7 +342,7 @@ class OrdersModel extends Model
 				$result = DB::table('idc_harddisk')->where(['id'=>$insert_data['resource_id']])->update($machine);
 				break;
 			case 7:
-				$memory = DB::table('idc_memory')->where(['id'=>$insert_data['resource_id'],'memory'=>0])->whereNull('deleted_at')->select('memory_number','memory_param')->first();
+				$memory = DB::table('idc_memory')->where(['id'=>$insert_data['resource_id'],'memory_used'=>0])->whereNull('deleted_at')->select('memory_number','memory_param')->first();
 				if(empty($memory)){
 					$return['data'] = '';
 					$return['code'] = 0;
@@ -1181,6 +1181,7 @@ class OrdersModel extends Model
 		$order_id_arr = [];
 		$idc_arr = array(1,2,3,4,5,6,7,8,9);
 		$defenseip_arr = array(11);
+		$overlay_arr = array(12);
 
 		DB::beginTransaction();//开启事务处理
 
@@ -1249,6 +1250,16 @@ class OrdersModel extends Model
 			$return['code'] = 0;
 			return $return;
 		}
+		
+		$room_id = '';
+		if(in_array($unpaidOrder[0]['resource_type'],$idc_arr) ){
+			$room = DB::table('tz_business')->where(['business_number'=>$unpaidOrder[0]['business_sn']])->value('resource_detail');
+			$room_id = json_decode($room)->machineroom_id;
+		}elseif(in_array($unpaidOrder[0]['resource_type'],$defenseip_arr)) {
+			$room_id = DB::table('tz_defenseip_package')->where('id',$unpaidOrder[0]['machine_sn'])->value('site');
+		}elseif (in_array($unpaidOrder[0]['resource_type'],$overlay_arr)) {
+			$room_id = DB::table('tz_overlay')->where('id',$unpaidOrder[0]['machine_sn'])->value('site');
+		}
 
 		$flow = [
 			'serial_number'     => $serial_number,
@@ -1264,6 +1275,7 @@ class OrdersModel extends Model
 			'after_money'       => $after_money,
 			'pay_time'      => $pay_time,
 			'business_number'	=> $business_number,
+			'room_id'		=> $room_id,
 		];
 		$creatFlow = DB::table('tz_orders_flow')->insert($flow);
 
@@ -1566,12 +1578,13 @@ class OrdersModel extends Model
         DB::beginTransaction();
         switch ($insert_data['resource_type']) {
 			case 4:
+			dd($insert_data['resource_id']);
 				$resource = DB::table('idc_ips')->where(['id'=>$insert_data['resource_id'],'ip_status'=>0,'ip_comproom'=>$resource_detail->machineroom_id,'ip_lock'=>0])->select('id','ip','ip_company')->first();
 				if(empty($resource)){
 					DB::rollBack();
 					$return['data'] = $resource;
 					$return['code'] = 0;
-					$return['msg'] = '(#105)所选择的IP资源不存在/已被使用';
+					$return['msg'] = '(#105)所选择的IP资源不存在/已被使用/与要绑定的业务不在同一机房';
 					return $return;
 				}
 				$ip_company = [0=>'电信',1=>'移动',2=>'联通'];
@@ -1588,7 +1601,7 @@ class OrdersModel extends Model
 					DB::rollBack();
 					$return['data'] = $resource;
 					$return['code'] = 0;
-					$return['msg'] = '(#106)所选择的CPU资源不存在/已被使用';
+					$return['msg'] = '(#106)所选择的CPU资源不存在/已被使用/与要绑定的业务不在同一机房';
 					return $return;
 				}
 				$insert['machine_sn'] = $resource->cpu_number;
@@ -1604,7 +1617,7 @@ class OrdersModel extends Model
 			   		DB::rollBack();
 			   		$return['data'] = $resource;
 					$return['code'] = 0;
-					$return['msg'] = '(#107)所选择的硬盘资源不存在/已被使用';
+					$return['msg'] = '(#107)所选择的硬盘资源不存在/已被使用/与要绑定的业务不在同一机房';
 					return $return;
 			   	}
 			   	$insert['machine_sn'] = $resource->harddisk_number;
@@ -1620,7 +1633,7 @@ class OrdersModel extends Model
 					DB::rollBack();
 					$return['data'] = $resource;
 					$return['code'] = 0;
-					$return['msg'] = '(#108)所选择的内存资源不存在/已被使用';
+					$return['msg'] = '(#108)所选择的内存资源不存在/已被使用/与要绑定的业务不在同一机房';
 					return $return;
 				}
 				$insert['machine_sn'] = $resource->memory_number;

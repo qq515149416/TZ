@@ -184,7 +184,7 @@ class  Memory extends Model
 	public function selectMemory($machineroom){
 		$where['memory_used'] = 0;
 		$where['room_id'] = $machineroom;
-		$memory = $this->where($where)->get(['memory_number','memory_param','room_id']);
+		$memory = $this->where($where)->get(['memory_number','memory_param','room_id','id']);
 		foreach($memory as $key => $value){
 			$memory[$key]['machineroom'] = $this->machineroom($value['room_id']);
 			$memory[$key]['label'] = $value['memory_number'];

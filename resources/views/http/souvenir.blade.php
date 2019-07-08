@@ -240,7 +240,7 @@
         <div class="product-remind">
                 <ul>
                     <li class="font-medium" data-index="1">
-                        活动时间：<span>6.13-7.13</span>
+                        活动时间：<span>6.13-8.13</span>
                     </li>
                     <li class="font-medium" data-index="2">
                         活动对象：所有新老客户

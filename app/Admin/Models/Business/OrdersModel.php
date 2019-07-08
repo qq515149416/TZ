@@ -342,7 +342,7 @@ class OrdersModel extends Model
 				$result = DB::table('idc_harddisk')->where(['id'=>$insert_data['resource_id']])->update($machine);
 				break;
 			case 7:
-				$memory = DB::table('idc_memory')->where(['id'=>$insert_data['resource_id'],'memory'=>0])->whereNull('deleted_at')->select('memory_number','memory_param')->first();
+				$memory = DB::table('idc_memory')->where(['id'=>$insert_data['resource_id'],'memory_used'=>0])->whereNull('deleted_at')->select('memory_number','memory_param')->first();
 				if(empty($memory)){
 					$return['data'] = '';
 					$return['code'] = 0;

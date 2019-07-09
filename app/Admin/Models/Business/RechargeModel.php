@@ -60,7 +60,7 @@ class RechargeModel extends Model
 			return $return;
 		}
 
-		$data['trade_no']	= 'tz_'.time().'_'.$data['user_id'];
+		$data['trade_no']	= 'tz_'.time().'_'.substr(md5($data['user_id'].'tz'),0,4);
 		$data['audit_status']	= 0;
 		$data['recharge_uid']	= $clerk->id;
 		$data['recharger']	= $clerk->name;

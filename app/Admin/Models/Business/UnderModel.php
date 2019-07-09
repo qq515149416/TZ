@@ -560,7 +560,7 @@ class UnderModel extends Model
             ->first();
 
         //判断ip是否为空
-        if ($machineData->ip_id == 0) {
+        if (empty($machineData->ip_id)||$machineData->ip_id == 0) {
             //当ipID 为0时
             $resData['ip'] = '未配置IP';
         } else {
@@ -572,7 +572,7 @@ class UnderModel extends Model
         }
 
         //判断是否配置了机柜
-        if ($machineData->cabinet == 0) {
+        if (empty($machineData->cabinet) || $machineData->cabinet == 0) {
             //当未配置机柜时
             $resData['cabinet_id'] = '未配置机柜';
         } else {
@@ -582,7 +582,9 @@ class UnderModel extends Model
                 ->first();
             $resData['cabinet_id'] = $cabinetData->cabinet_id;
         }
-
+        if($businessData->business_type == 3){
+            $resData['cabinet_id'] = $businessData->machine_number;
+        }
         return $resData;
 
         //----多表联查（为启用）-------------------------------------

@@ -47,7 +47,7 @@ class RechargeController extends Controller
 
 		$model = new AliRecharge();
 		//我们的trade_no对于支付宝来说就是 out_trade_no
-		$data['trade_no'] 		= 'tz_'.time().'_'.$user_id;	//本地订单号,需保证不重复
+		$data['trade_no'] 		= 'tz_'.time().'_'.substr(md5($user_id.'tz'),0,4);	//本地订单号,需保证不重复
 		$data['recharge_amount']	= $info['total_amount'];		//订单总金额，单位为元，精确到小数点后两位
 		$data['user_id']			= $user_id;	
 		$data['recharge_way']		= 1;

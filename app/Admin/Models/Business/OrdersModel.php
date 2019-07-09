@@ -342,7 +342,7 @@ class OrdersModel extends Model
 				$result = DB::table('idc_harddisk')->where(['id'=>$insert_data['resource_id']])->update($machine);
 				break;
 			case 7:
-				$memory = DB::table('idc_memory')->where(['id'=>$insert_data['resource_id'],'memory'=>0])->whereNull('deleted_at')->select('memory_number','memory_param')->first();
+				$memory = DB::table('idc_memory')->where(['id'=>$insert_data['resource_id'],'memory_used'=>0])->whereNull('deleted_at')->select('memory_number','memory_param')->first();
 				if(empty($memory)){
 					$return['data'] = '';
 					$return['code'] = 0;
@@ -1583,7 +1583,7 @@ class OrdersModel extends Model
 					DB::rollBack();
 					$return['data'] = $resource;
 					$return['code'] = 0;
-					$return['msg'] = '(#105)所选择的IP资源不存在/已被使用';
+					$return['msg'] = '(#105)所选择的IP资源不存在/已被使用/与要绑定的业务不在同一机房';
 					return $return;
 				}
 				$ip_company = [0=>'电信',1=>'移动',2=>'联通'];
@@ -1600,7 +1600,7 @@ class OrdersModel extends Model
 					DB::rollBack();
 					$return['data'] = $resource;
 					$return['code'] = 0;
-					$return['msg'] = '(#106)所选择的CPU资源不存在/已被使用';
+					$return['msg'] = '(#106)所选择的CPU资源不存在/已被使用/与要绑定的业务不在同一机房';
 					return $return;
 				}
 				$insert['machine_sn'] = $resource->cpu_number;
@@ -1616,7 +1616,7 @@ class OrdersModel extends Model
 			   		DB::rollBack();
 			   		$return['data'] = $resource;
 					$return['code'] = 0;
-					$return['msg'] = '(#107)所选择的硬盘资源不存在/已被使用';
+					$return['msg'] = '(#107)所选择的硬盘资源不存在/已被使用/与要绑定的业务不在同一机房';
 					return $return;
 			   	}
 			   	$insert['machine_sn'] = $resource->harddisk_number;
@@ -1632,7 +1632,7 @@ class OrdersModel extends Model
 					DB::rollBack();
 					$return['data'] = $resource;
 					$return['code'] = 0;
-					$return['msg'] = '(#108)所选择的内存资源不存在/已被使用';
+					$return['msg'] = '(#108)所选择的内存资源不存在/已被使用/与要绑定的业务不在同一机房';
 					return $return;
 				}
 				$insert['machine_sn'] = $resource->memory_number;

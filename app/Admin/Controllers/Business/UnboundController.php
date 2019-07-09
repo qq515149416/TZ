@@ -13,6 +13,7 @@ use Encore\Admin\Show;
 use Encore\Admin\Auth\Database\Administrator;
 use Encore\Admin\Widgets\Table;
 use Illuminate\Http\Request;
+use Encore\Admin\Facades\Admin;
 
 class UnboundController extends Controller
 {
@@ -93,7 +94,15 @@ class UnboundController extends Controller
         $grid->nickname('昵称');
         $grid->money('余额');
         $salesman = [0=>'佚名'];
-        $admin = Administrator::get(['id','name']);
+        if(Admin::user()->inRoles(['salesman','operations','finance','HR','product','network_dimension','net_sec'])){//不是主管的按是否自己客户查看
+            $where['id'] = Admin::user()->id;
+        } else  {
+            $where = [];
+        }
+        if(Admin::user()->inRoles(['CMO'])){
+            $where = [];
+        }
+        $admin = Administrator::where($where)->get(['id','name']);
         foreach ($admin as $key => $value) {
             $salesman[$value['id']] = $value['name'];
         }

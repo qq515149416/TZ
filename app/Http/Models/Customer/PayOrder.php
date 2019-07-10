@@ -135,7 +135,7 @@ class PayOrder extends Model
 			return $return;
 		}
 
-		$serial_number = 'tz_'.time().'_'.$user_id;
+		$serial_number = 'tz_'.time().'_'.substr(md5($user_id.'tz'),0,4);
 		$payable_money = '0.00';
 		$pay_time = date("Y-m-d H:i:s");
 		$order_id_arr = [];

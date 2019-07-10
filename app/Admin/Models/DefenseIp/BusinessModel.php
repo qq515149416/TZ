@@ -73,7 +73,9 @@ class BusinessModel extends Model
 		// 	];
 		// }
 
-		$data['business_number']	= 'G_'.time().'_admin_'.$user_id;
+		//$data['business_number']	= 'G_'.time().'_admin_'.$user_id;
+		$data['business_number']	= 'G_'.time().'_admin_'.substr(md5($user_id.'tz'),0,4);
+		
 		$data['user_id']			= $customer_id;
 		$data['package_id']		= $package_id;
 		// $data['ip_id']			= $check_ip->id;
@@ -420,7 +422,7 @@ class BusinessModel extends Model
 		}else{
 			if($business->status == 4){
 				$order_type = 1;
-				$order_sn = 'GS_'.time().'_admin_'.$user_id;
+				$order_sn = 'GS_'.time().'_admin_'.substr(md5($user_id.'tz'),0,4);
 
 				$end_time = time_calculation($start_time,$buy_time,'month');
 
@@ -431,9 +433,10 @@ class BusinessModel extends Model
 						'msg'	=> '续费时长需比试用时间长',
 						'code'	=> 0,
 					];
+					
 				}
 			}else{
-				$order_sn = 'GO_'.time().'_admin_'.$user_id;
+				$order_sn = 'GO_'.time().'_admin_'.substr(md5($user_id.'tz'),0,4);
 				$order_type = 2;
 				$end_time = '';
 			}

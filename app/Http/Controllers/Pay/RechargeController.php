@@ -47,7 +47,7 @@ class RechargeController extends Controller
 
 		$model = new AliRecharge();
 		//我们的trade_no对于支付宝来说就是 out_trade_no
-		$data['trade_no'] 		= 'tz_'.time().'_'.$user_id;	//本地订单号,需保证不重复
+		$data['trade_no'] 		= 'tz_'.time().'_'.substr(md5($user_id.'tz'),0,4);	//本地订单号,需保证不重复
 		$data['recharge_amount']	= $info['total_amount'];		//订单总金额，单位为元，精确到小数点后两位
 		$data['user_id']			= $user_id;	
 		$data['recharge_way']		= 1;
@@ -66,18 +66,20 @@ class RechargeController extends Controller
 	*/
 	public function goToPay(RechargeRequest $request)
 	{	
-		
+		//检查登录状态
 		$checkLogin = Auth::check();
 		if($checkLogin == false){
 			return tz_ajax_echo([],'请先登录',0);
 		}
+		//获取用户id
 		$user_id = Auth::id();
 
+		//获取订单id和需要的支付方式
 		$info		= $request->only(['trade_id','way']);
 		
 		$trade_id 	= $info['trade_id'];
 		$way 		= $info['way'];
-		
+		//获取订单的信息
 		$model 	= new AliRecharge();
 		$res 		= $model->makePay($trade_id,$user_id);
 
@@ -86,15 +88,17 @@ class RechargeController extends Controller
     				->withErrors([$res['msg']]);
 			// return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 		}
-		
+		//根据订单信息拼出支付宝方的接口所需信息
 		$info = json_decode(json_encode($res['data']),true);
 		$created_at = strtotime($info['created_at']);
 		$end_time = $created_at+7200;
 		$timeout_express = $end_time-time();
 		$m = bcsub(bcdiv($timeout_express,'60'),1); 
 		$m = "{$m}m";
-		$Pay = new AliPayController();
 
+		//实例化阿里支付控制器
+		$Pay = new AliPayController();
+		//阿里接口的传值
 		$order = [
 			'out_trade_no' 		=> $info['trade_no'],		//本地订单号
 			'total_amount' 		=> $info['recharge_amount'],	//金额
@@ -131,7 +135,7 @@ class RechargeController extends Controller
 		//获取删除的id
 		$info 		= $request->only(['del_trade_id']);
 		$trade_id 	= $info['del_trade_id'];
-
+		//验证该订单是否可以删除
 		$model 	= new AliRecharge();
 		$order 		= $model->checkOrder($trade_id,3);
 		if($order['code'] != 1){
@@ -140,18 +144,19 @@ class RechargeController extends Controller
 
 		$order = json_decode($order['data'],true);
 		$trade_no = $order['trade_no'];
+		//查询订单的支付情况并根据回信处理数据
 		$check = $this->AliCheckAndInsert($trade_no);
 		if($check['code'] != 1 && $check['code'] != 0){
 			return tz_ajax_echo('',$check['msg'].'订单状态异常,暂时无法删除',0);
 		}
-
+		//验证
 		$check_user_id = $order['user_id'];
 		if($user_id != $check_user_id){
 			return tz_ajax_echo('','该订单不属于您,无法删除',0);
 		}
 
 		$return['data']	= '';
-		
+		//验证没问题才删掉
 		$del = $model->delOrder($trade_id);
 
 		if($del == true){
@@ -272,7 +277,7 @@ class RechargeController extends Controller
 	}
 
 
-	//支付宝用的ajax通知接收的方法
+	//支付宝用的ajax通知接收的方法,中间件处有屏蔽此接收方法的csrf
 
 	public function AliRechargeNotify()
 	{
@@ -283,7 +288,7 @@ class RechargeController extends Controller
 		if($res['code'] == 1){
 			$data = $res['data'];	
 			$info['trade_no'] 		= $data->out_trade_no;
-			
+			//调用查询接口
 			$insert = $this->AliCheckAndInsert($info['trade_no']);
 			if($insert['code'] != 1){
 				$res['msg'] = '储存失败';
@@ -291,29 +296,36 @@ class RechargeController extends Controller
 		}	
 		return $res['msg'];					
 	}
-
+	/**
+	*核心方法 , 请求支付宝接口查询订单是否支付,并根据结果进行数据处理
+	*
+	*充值后无论啥回调方法都要经过这个方法,比较稳,直接向支付宝查询
+	*return 	code 	-0 : 未付款
+	*			-1 : 已付款并且数据处理成功
+	*			-2 : 已付款但需要退款
+	*/
 	protected function AliCheckAndInsert($trade_no){
-
+		//用阿里控制器的方法,查询下订单号的支付状况
 		$PayController = new AliPayController();
 		$res = $PayController->check($trade_no);
-
-		if($res->trade_status != 'TRADE_SUCCESS'&&$res->trade_status != 'TRADE_FINISHED'){
+		//TRADE_SUCCESS表示支付成功 , TRADE_FINISHED 表示订单已交易结束
+		if($res->trade_status != 'TRADE_SUCCESS'&&$res->trade_status != 'TRADE_FINISHED'){	//如果未付款,直接返回未付款
 			return [
 				'data'	=> '',
 				'code'	=> 0,
 				'msg'	=> '用户尚未付款',
 			];
-		}else{
+		}else{		//如果已付款,做数据处理
 			$return = [
 				'data'	=> '',
 				'msg'	=> '用户已付款',
 			];
 		}	
-
-		$model 	= new AliRecharge();
+		//用返回来的数据,组成数组传值,
+		$model 			= new AliRecharge();
 
 		$info['trade_no'] 		= $trade_no;	//本地订单
-		$info['voucher']		= $res->trade_no;
+		$info['voucher']			= $res->trade_no;
 		$info['recharge_amount']	= $res->total_amount;
 		$info['timestamp']		= $res->send_pay_date;
 		$info['recharge_way']		= 1;
@@ -323,7 +335,8 @@ class RechargeController extends Controller
 	
 		$return['msg'] = $return['msg'].','.$update['msg'];
 		$return['code'] = $update['code'];
-		if($update['code'] == 2){
+
+		if($update['code'] == 2){	//如果已经由别的支付方式支付过了,退款
 			$cancel = $PayController->cancel($serial_number);
 			if($cancel->code == '10000'){
 				$return['msg'].= '如已付款,款项会原路返回';

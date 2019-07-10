@@ -63,8 +63,8 @@ class OrderModel extends Model
 			return $return;
 		}
 		$time = time();
-		$data['order_sn'] 		= 'GN_'.$time.'_'.$user_id;
-		$data['business_sn']		= 'G_'.$time.'_'.$user_id;
+		$data['order_sn'] 		= 'GN_'.$time.'_'.substr(md5($user_id.'tz'),0,4);
+		$data['business_sn']		= 'G_'.$time.'_'.substr(md5($user_id.'tz'),0,4);
 		$data['customer_id']		= $user_id;
 		$data['customer_name']		= Auth::user()->name;
 		if($data['customer_name'] == null){
@@ -182,7 +182,7 @@ class OrderModel extends Model
 		// 如果业务的状态是试用,订单的性质就是新购,结束时间也要填上,从试用开始时算起
 		if($business->status == 4){	//试用续费
 			$order_type = 1;
-			$order_sn = 'GS'.'_'.time().'_'.$user_id;
+			$order_sn = 'GS'.'_'.time().'_'.substr(md5($user_id.'tz'),0,4);
 			$end_time = Carbon::parse($business->created_at)->addMonth($buy_time)->toDateTimeString();
 			$end = strtotime($end_time);
 			if($end < time()){	
@@ -194,7 +194,7 @@ class OrderModel extends Model
 			}
 		}else{	//普通续费
 			$order_type = 2;
-			$order_sn = 'GO_'.time().'_'.$user_id;
+			$order_sn = 'GO_'.time().'_'.substr(md5($user_id.'tz'),0,4);
 			$end_time = '';
 		}
 		$data['order_sn'] 		= $order_sn;

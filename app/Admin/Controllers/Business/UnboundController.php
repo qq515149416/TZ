@@ -13,6 +13,7 @@ use Encore\Admin\Show;
 use Encore\Admin\Auth\Database\Administrator;
 use Encore\Admin\Widgets\Table;
 use Illuminate\Http\Request;
+use Encore\Admin\Facades\Admin;
 
 class UnboundController extends Controller
 {
@@ -93,16 +94,35 @@ class UnboundController extends Controller
         $grid->nickname('昵称');
         $grid->money('余额');
         $salesman = [0=>'佚名'];
-        $admin = Administrator::get(['id','name']);
+        if(Admin::user()->inRoles(['salesman','operations','finance','HR','product','network_dimension','net_sec'])){//不是主管的按是否自己客户查看
+            $where['id'] = Admin::user()->id;
+        } else  {
+            $where = [];
+        }
+        if(Admin::user()->inRoles(['CMO'])){
+            $where = [];
+        }
+        $admin = Administrator::where($where)->get(['id','name']);
         foreach ($admin as $key => $value) {
             $salesman[$value['id']] = $value['name'];
         }
         $grid->salesman_id('业务员')->select($salesman);
-        $grid->column('status','状态')->select([
-            0=>'<span class="badge bg-red">拉黑</span>',
-            1=>'<span class="badge bg-yellow">未验证</span>',
-            2=>'<span class="badge bg-green">正常</span>'
-        ]);
+        if(Admin::user()->inRoles(['administrator','TZ_admin'])){
+            $grid->column('status','状态')->select([
+                0=>'<span class="badge bg-red">拉黑</span>',
+                1=>'<span class="badge bg-yellow">未验证</span>',
+                2=>'<span class="badge bg-green">正常</span>'
+            ]);
+        } else {
+            $grid->column('status','状态')->display(function($status){
+                $statu = [
+                    0=>'<span class="badge bg-red">拉黑</span>',
+                    1=>'<span class="badge bg-yellow">未验证</span>',
+                    2=>'<span class="badge bg-green">正常</span>'
+                ];
+                return $statu[$status];
+            });
+        }
         $grid->msg_phone('联系方式');
         $grid->msg_qq('QQ');
         $grid->remarks('备注');
@@ -111,6 +131,55 @@ class UnboundController extends Controller
         $grid->actions(function ($actions) {
             $actions->disableDelete();
             $actions->disableEdit();
+            $sales_id=Admin::user()->id;
+            $script = <<<EOT
+
+$('.grid-edit-salesman_id-{$this->getKey()}').unbind('click').on('click', function(){
+
+    var id = $(this).data('id');
+    var value = {$sales_id};
+    swal({
+      title: "确定将该客户绑定你名下?",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "确认",
+      closeOnConfirm: false,
+      cancelButtonText: "取消"
+    },
+    function(){    
+        $.ajax({
+            url: "{$this->getResource()}/{$this->getKey()}",
+            type: "POST",
+            data: {
+                salesman_id: value,
+                _token: LA.token,
+                _method: 'PUT'
+            },
+            success: function (data) {
+                $.pjax.reload('#pjax-container');
+                if (typeof data === 'object') {
+                    if (data.status) {
+                        swal(data.message, '客户已绑定到你名下', 'success');
+                    } else {
+                        swal(data.message, '客户绑定失败', 'error');
+                    }
+                }
+            }
+        });
+    });
+});
+
+EOT;
+
+        Admin::script($script);
+            $actions->append(
+
+<<<EOT
+    <a title="一键绑定客户" href="javascript:void(0)",data-id="{$actions->getKey()}" class="grid-edit-salesman_id-{$this->getKey()}">
+        <i class="fa fa-lock"></i>
+    </a>
+EOT);
         });  
         $grid->disableCreateButton();
         $grid->disableRowSelector();

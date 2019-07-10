@@ -169,6 +169,12 @@ class AliRecharge extends Model
 				->where('user_id',$trade_no)
 				->orderBy('created_at','desc')
 				->get();
+				if (!$order->isEmpty() ) {
+					$recharge_way = [ 1 => '支付宝' , 2 => '微信' , 3 => '后台充值' ];
+					foreach ($order as $k => $v) {
+						$v->recharge_way = $recharge_way[$v->recharge_way];
+					}
+				}
 				break;
 		}
 	

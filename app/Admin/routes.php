@@ -134,6 +134,10 @@ Route::group([
             $router->resource('/recommend', 'Show\RecommendController');
             $router->resource('/rusteeship_server', 'Show\RusteeshipServerController');
             $router->get('/api/rusteeship_server/select/{type}', 'Show\RusteeshipServerController@select');
+            $router->resource('/help_category', 'Show\HelpCategoryController');
+            $router->get('/api/help_category/select', 'Show\HelpCategoryController@select');
+            $router->resource('/help_contents', 'Show\HelpContentsController');
+            $router->get('/api/help_content/select', 'Show\HelpContentsController@select');
         });
 
     });
@@ -374,7 +378,7 @@ Route::group([
         $router->get('excelTemplate', 'Work\WhiteListController@excelTemplate');//下载机器的批量模板
         $router->post('handleExcel', 'Work\WhiteListController@handleExcel');//上传机器的批量添加数据
         $router->post('checkWhiteListBatch', 'Work\WhiteListController@checkWhiteListBatch');//白名单申请单 批量审核接口
-        
+
     });
 
 

@@ -107,11 +107,22 @@ class UnboundController extends Controller
             $salesman[$value['id']] = $value['name'];
         }
         $grid->salesman_id('业务员')->select($salesman);
-        $grid->column('status','状态')->select([
-            0=>'<span class="badge bg-red">拉黑</span>',
-            1=>'<span class="badge bg-yellow">未验证</span>',
-            2=>'<span class="badge bg-green">正常</span>'
-        ]);
+        if(Admin::user()->inRoles(['administrator','TZ_admin'])){
+            $grid->column('status','状态')->select([
+                0=>'<span class="badge bg-red">拉黑</span>',
+                1=>'<span class="badge bg-yellow">未验证</span>',
+                2=>'<span class="badge bg-green">正常</span>'
+            ]);
+        } else {
+            $grid->column('status','状态')->display(function($status){
+                $statu = [
+                    0=>'<span class="badge bg-red">拉黑</span>',
+                    1=>'<span class="badge bg-yellow">未验证</span>',
+                    2=>'<span class="badge bg-green">正常</span>'
+                ];
+                return $statu[$status];
+            });
+        }
         $grid->msg_phone('联系方式');
         $grid->msg_qq('QQ');
         $grid->remarks('备注');

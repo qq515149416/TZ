@@ -161,11 +161,6 @@ class UnderModel extends Model
         }
         switch ($type['type']) {
             case 1:
-                // if(Admin::user()->inRoles(['salesman','operations','finance','HR','product','network_dimension','net_sec'])){
-                //     $where = ['sales_id' => Admin::user()->id];
-                // } else {
-                //     $where = [];
-                // }
                 if($slug->slug != 3){//非业务员进入此区间
                     if(Admin::user()->inRoles(['salesman','operations','finance','HR','product','network_dimension','net_sec'])){//不是主管的按是否自己客户查看
                         $where = ['sales_id' => Admin::user()->id];
@@ -175,11 +170,11 @@ class UnderModel extends Model
                 } else {//是业务人员按客户所绑定业务员查看
                     $where = ['sales_id' => Admin::user()->id];
                 }
-                    $history = DB::table('tz_business')->where($where)->whereBetween('remove_status',[1,4])->whereNull('deleted_at')->orderBy('updated_at', 'desc')->select('client_id', 'sales_id', 'business_number', 'machine_number', 'business_type', 'business_note', 'remove_reason', 'resource_detail', 'remove_status','money as price','length','updated_at')->get();
+                $history = DB::table('tz_business')->where($where)->whereBetween('remove_status',[1,4])->whereNull('deleted_at')->orderBy('updated_at', 'desc')->select('client_id', 'sales_id', 'business_number', 'machine_number', 'business_type', 'business_note', 'remove_reason', 'resource_detail', 'remove_status','money as price','length','updated_at')->get();
                 if (!empty($history)) {
-                    $business_type = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜'];
-                    $remove_status = [0 => '正常使用', 1 => '下架申请中', 2 => '机房处理中', 3 => '清空下架中', 4 => '下架完成'];
-                    foreach ($history as $history_key => $history_value) {
+                    $history->map(function($history_value,$history_key){
+                        $business_type = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜'];
+                        $remove_status = [0 => '正常使用', 1 => '下架申请中', 2 => '机房处理中', 3 => '清空下架中', 4 => '下架完成'];
                         $history_value->resourcetype  = $business_type[$history_value->business_type];
                         $history_value->remove_status = $remove_status[$history_value->remove_status];
                         $history_value->sales_name = DB::table('admin_users')->where(['id'=> $history_value->sales_id])->value('name');
@@ -187,7 +182,7 @@ class UnderModel extends Model
                         $email = $client_name->email ? $client_name->email : $client_name->name;
                         $email = $email ? $email : $client_name->nickname;
                         $history_value->client_name = $email;
-                    }
+                    });
                     $return['data'] = $history;
                     $return['code'] = 1;
                     $return['msg']  = '获取机器下架记录数据成功';
@@ -199,11 +194,6 @@ class UnderModel extends Model
                 return $return;
                 break;
             case 2:
-                // if(Admin::user()->inRoles(['salesman'])){
-                //     $where = ['business_id' => Admin::user()->id];
-                // } else {
-                //     $where = [];
-                // }
                 if($slug->slug != 3){//非业务员进入此区间
                     if(Admin::user()->inRoles(['salesman','operations','finance','HR','product','network_dimension','net_sec'])){//不是主管的按是否自己客户查看
                         $where = ['business_id' => Admin::user()->id];
@@ -215,9 +205,9 @@ class UnderModel extends Model
                 }
                 $history = DB::table('tz_orders')->where($where)->where('resource_type', '>', 3)->whereNull('deleted_at')->whereBetween('remove_status',[1,4])->orderBy('updated_at', 'desc')->select('business_sn', 'order_sn', 'customer_id', 'resource_type', 'business_id', 'machine_sn', 'resource', 'remove_status', 'remove_reason','price','duration as length','updated_at')->get();
                 if (!empty($history)) {
-                    $resource_type = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜', 4 => 'IP', 5 => 'CPU', 6 => '硬盘', 7 => '内存', 8 => '带宽', 9 => '防护', 10 => 'cdn', 11 => '高防IP'];
-                    $remove_status = [0 => '正常使用', 1 => '下架申请中', 2 => '机房处理中', 3 => '清空下架中', 4 => '下架完成'];
-                    foreach ($history as $history_key => $history_value) {
+                    $history->map(function($history_value,$history_key){
+                        $resource_type = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜', 4 => 'IP', 5 => 'CPU', 6 => '硬盘', 7 => '内存', 8 => '带宽', 9 => '防护', 10 => 'cdn', 11 => '高防IP'];
+                        $remove_status = [0 => '正常使用', 1 => '下架申请中', 2 => '机房处理中', 3 => '清空下架中', 4 => '下架完成'];
                         $history_value->resourcetype  = $resource_type[$history_value->resource_type];
                         $history_value->remove_status = $remove_status[$history_value->remove_status];
                         $history_value->business_name = DB::table('admin_users')->where(['id'=> $history_value->business_id])->value('name');
@@ -225,7 +215,7 @@ class UnderModel extends Model
                         $email = $client_name->email ? $client_name->email : $client_name->name;
                         $email = $email ? $email : $client_name->nickname;
                         $history_value->customer_name = $email;
-                    }
+                    });
                     $return['data'] = $history;
                     $return['code'] = 1;
                     $return['msg']  = '获取资源下架记录数据成功';
@@ -468,59 +458,57 @@ class UnderModel extends Model
         if ($staff->slug == 4) {
             $where['machineroom'] = $staff->department;
         }
+        /**
+         * 下架主机信息获取
+         */
         $business = DB::table('tz_business')->where($where)->whereBetween('remove_status', [1, 3])->whereNull('deleted_at')->select('client_id', 'sales_id', 'business_number', 'machine_number', 'business_type', 'business_note', 'remove_reason', 'resource_detail', 'remove_status')->get();
-        if (!empty($business)) {
+        //对下架主机的部分数据进行转换(laravel的map方法)
+        $business->map(function($value,$key){
             $business_type = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜'];
             $remove_status = [0 => '正常使用', 1 => '下架申请中', 2 => '机房处理中', 3 => '清空下架中', 4 => '下架完成'];
-            foreach ($business as $business_key => $business_value) {
-                $business_value->resource_type = $business_type[$business_value->business_type];
-                $business_value->removestatus  = $remove_status[$business_value->remove_status];
-                $business_value->sales_name = DB::table('admin_users')->where(['id'=> $business_value->sales_id])->value('name');
-                $client_name = DB::table('tz_users')->where(['id'=> $business_value->client_id])->select('name','email','nickname','msg_phone','msg_qq')->first();
-                $email = $client_name->email ? $client_name->email : $client_name->name;
-                $email = $email ? $email : $client_name->nickname;
-                $business_value->client_name = $email;
-                $resource_detail = json_decode($business_value->resource_detail);
-                $business_value->machineroom_name = $resource_detail->machineroom_name;
-                if($business_value->business_type != 3){
-                    $business_value->cabinets = $resource_detail->cabinets;
-                    $business_value->ip = isset($resource_detail->ip)?$resource_detail->ip:'';
-                } else {
-                    $business_value->cabinets = $resource_detail->cabinet_id;
-                    $business_value->ip = '';
-                }
+            $value->resource_type = $business_type[$value->business_type];
+            $value->removestatus  = $remove_status[$value->remove_status];
+            $value->sales_name = DB::table('admin_users')->where(['id'=> $value->sales_id])->value('name');
+            $client_name = DB::table('tz_users')->where(['id'=> $value->client_id])->select('name','email','nickname','msg_phone','msg_qq')->first();
+            $email = $client_name->email ? $client_name->email : $client_name->name;
+            $email = $email ? $email : $client_name->nickname;
+            $value->client_name = $email;
+            $resource_detail = json_decode($value->resource_detail);
+            $value->machineroom_name = $resource_detail->machineroom_name;
+            if($value->business_type != 3){
+                $value->cabinets = $resource_detail->cabinets;
+                $value->ip = isset($resource_detail->ip)?$resource_detail->ip:'';
+            } else {
+                $value->cabinets = $resource_detail->cabinet_id;
+                $value->ip = '';
             }
-        }
+            return $value;
+
+        });
+        /**
+         * 下架资源的信息获取
+         */
         $orders = DB::table('tz_orders')->where($where)->where('resource_type', '>', 3)->whereNull('deleted_at')->whereBetween('remove_status', [1, 3])->orderBy('updated_at', 'desc')->select('order_sn', 'business_sn', 'customer_id', 'resource_type', 'business_id', 'machine_sn', 'resource', 'remove_reason', 'remove_status')->get();
-
-
-        //遍历查询  资源所属业务的机器所在的机柜  和 IP
-        foreach ($orders as $key => $value) {
-            $rData = $this->getResourceData($value->business_sn); //根据业务号获取机柜和IP信息
-            $orders[$key]->ip =  $rData['ip'];    //ip放入到订单数据中
-            $orders[$key]->cabinets= $rData['cabinet_id'];  //机柜编号放入到订单订单数据中
-        }
-
-
-        if (!empty($orders)) {
+        //下架资源的信息转化(laravel的map方法)
+        $orders->map(function($orders_value,$orders_key){
             $resource_type = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜', 4 => 'IP', 5 => 'CPU', 6 => '硬盘', 7 => '内存', 8 => '带宽', 9 => '防护', 10 => 'cdn', 11 => '高防IP'];
             $remove_status = [0 => '正常使用', 1 => '下架申请中', 2 => '机房处理中', 3 => '清空下架中', 4 => '下架完成'];
-            foreach ($orders as $orders_key => $orders_value) {
-                $orders_value->resourcetype = $resource_type[$orders_value->resource_type];
-                $orders_value->removestatus = $remove_status[$orders_value->remove_status];
-                $orders_value->business_name = DB::table('admin_users')->where(['id'=> $orders_value->business_id])->value('name');
-                $client_name = DB::table('tz_users')->where(['id'=> $orders_value->customer_id])->select('name','email','nickname','msg_phone','msg_qq')->first();
-                $email = $client_name->email ? $client_name->email : $client_name->name;
-                $email = $email ? $email : $client_name->nickname;
-                $orders_value->customer_name = $email;
-            }
-        }
+            $orders_value->resourcetype = $resource_type[$orders_value->resource_type];
+            $orders_value->removestatus = $remove_status[$orders_value->remove_status];
+            $orders_value->business_name = DB::table('admin_users')->where(['id'=> $orders_value->business_id])->value('name');
+            $client_name = DB::table('tz_users')->where(['id'=> $orders_value->customer_id])->select('name','email','nickname','msg_phone','msg_qq')->first();
+            $email = $client_name->email ? $client_name->email : $client_name->name;
+            $email = $email ? $email : $client_name->nickname;
+            $orders_value->customer_name = $email;
+            $rData = $this->getResourceData($orders_value->business_sn); //根据业务号获取机柜和IP信息
+            $orders_value->ip =  $rData['ip'];    //ip放入到订单数据中
+            $orders_value->cabinets= $rData['cabinet_id'];  //机柜编号放入到订单订单数据中
+        });
         $result         = ['business' => $business, 'orders' => $orders];
         $return['data'] = $result;
         $return['code'] = 1;
         $return['msg']  = '获取下架申请记录成功';
         return $return;
-
     }
 
 

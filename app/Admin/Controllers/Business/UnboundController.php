@@ -134,7 +134,7 @@ class UnboundController extends Controller
             $sales_id=Admin::user()->id;
             $script = <<<EOT
 
-$('.grid-edit-salesman_id-{$this->getKey()}').on('click', function(){
+$('.grid-edit-salesman_id-{$this->getKey()}').unbind('click').on('click', function(){
 
     var id = $(this).data('id');
     var value = {$sales_id};

@@ -12,6 +12,13 @@ use App\Admin\Models\Customer\Customer;
 use \Exception;
 use App\Admin\Models\Business\RechargeFlowModel;
 
+
+
+/***
+*是个后台手动充值的模型
+*
+*
+*/
 class RechargeModel extends Model
 {
 	use SoftDeletes;
@@ -59,7 +66,7 @@ class RechargeModel extends Model
 			$return['msg'] = '此客户不属于您';
 			return $return;
 		}
-
+		//生成订单信息
 		$data['trade_no']	= 'tz_'.time().'_'.substr(md5($data['user_id'].'tz'),0,4);
 		$data['audit_status']	= 0;
 		$data['recharge_uid']	= $clerk->id;
@@ -253,6 +260,7 @@ class RechargeModel extends Model
 
 	/**
 	 * 后台手动替客户充值余额---进行审核
+	 * 如果是已审核的,则改改到账时间和充值方式,未审核的就审核
 	 * @param  Request $request [description]
 	 * @return 
 	 */
@@ -282,11 +290,11 @@ class RechargeModel extends Model
 			
 			if($trade->audit_status != 1){	//如果是驳回的
 				return [
-						'data'	=> [],
-						'msg'	=> '驳回的审核单无法编辑',
-						'code'	=> 0,
-					];
-			}else{
+					'data'	=> [],
+					'msg'	=> '驳回的审核单无法编辑',
+					'code'	=> 0,
+				];
+			}else{				//已审核并通过的,可以编辑到账时间和充值方式
 				$res = $this->doEdit($trade_id,$recharge_way,$time);
 				if($res){
 					return [

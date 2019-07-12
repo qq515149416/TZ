@@ -296,11 +296,7 @@ class BusinessModel extends Model
 			$business->user = '客户信息查找失败';
 			$business->nick_name = '客户信息查找失败';
 		}else{
-			if($user_info->name != null){
-				$business->user = $user_info->name;
-			}else{
-				$business->user = $user_info->email;
-			}
+			
 			$business->nickname = $user_info->nickname;
 
 			$admin_id = $user_info->salesman_id;
@@ -327,7 +323,7 @@ class BusinessModel extends Model
 			];
 		}
 		//获取业务所属业务员
-		$business_admin_user = DB::table('tz_users')->where('id',$business->user_id)->select(['salesman_id','email','name'])->first();
+		$business_admin_user = DB::table('tz_users')->where('id',$business->user_id)->select(['salesman_id','email','name','nickname'])->first();
 		//判断登录人员是否该业务所属业务员,或者是超级管理员
 		if($user_id != $business_admin_user->salesman_id  && !Admin::user()->isAdministrator()){
 			return [
@@ -448,7 +444,7 @@ class BusinessModel extends Model
 				'order_sn'		=> $order_sn,
 				'business_sn'		=> $business->business_number,
 				'customer_id'		=> $business->user_id,
-				'customer_name'	=> $business_admin_user->name,
+				'customer_name'	=> $business_admin_user->nickname,
 				'business_id'		=> $business_admin_user->salesman_id,
 				'business_name'	=> DB::table('admin_users')->where('id',$business_admin_user->salesman_id)->value('name'),
 				'resource_type'		=> 11,

@@ -44,7 +44,7 @@ class OrdersModel extends Model
 					->join('admin_users as admin','flow.business_id','=','admin.id')
 					->whereBetween('flow.pay_time',[$time['start_time'],$time['end_time']])
 					->whereNull('flow.deleted_at')
-					->select('flow.id as flow_id','flow.business_number','flow.serial_number','flow.payable_money','flow.actual_payment','flow.preferential_amount','flow.pay_time','flow.before_money','flow.after_money','flow.created_at','flow.flow_type','users.name as customer_name','users.email as customer_email','users.nickname as customer_nick_name','admin.name as business_name')
+					->select('flow.id as flow_id','flow.business_number','flow.serial_number','flow.payable_money','flow.actual_payment','flow.preferential_amount','flow.pay_time','flow.before_money','flow.after_money','flow.created_at','flow.flow_type','users.nickname as customer_nick_name','admin.name as business_name')
 					->orderBy('flow.pay_time','desc')
 					->get()
 					->toArray();
@@ -73,8 +73,7 @@ class OrdersModel extends Model
 			foreach($result as $key=>$value){
 				$flow_type = [1=>'新购',2=>'续费'];
 				$value->type = $flow_type[$value->flow_type];
-				$value->customer_email = $value->customer_email?$value->customer_email:$value->customer_name;
-				$value->customer_email = $value->customer_email?$value->customer_email:$value->customer_nick_name;
+				$value->customer_email = $value->customer_nick_name;
 			}
 			$return['data'] = ['info'=>$result,'payable'=>$payable,'paytrue'=>$paytrue,'discount'=>$discount,'total'=>$total];
 			$return['code'] = 1;
@@ -120,10 +119,8 @@ class OrdersModel extends Model
 				$ovalue->order_status = $order_status[$ovalue->order_status];
 				$ovalue->remove_status = $remove_status[$ovalue->remove_status];
 				$ovalue->business_name = DB::table('admin_users')->where(['id'=>$ovalue->business_id])->value('name');
-                $client_name = DB::table('tz_users')->where(['id'=>$ovalue->customer_id])->select('name','email','nickname','msg_phone','msg_qq')->first();
-                $email = $client_name->email ? $client_name->email : $client_name->name;
-                $email = $email ? $email : $client_name->nickname;
-                $ovalue->customer_name = $email;
+                $client_name = DB::table('tz_users')->where(['id'=>$ovalue->customer_id])->value('nickname');
+                $ovalue->customer_name = $client_name;
 			}
 			$return['data'] = $result;
 			$return['code'] = 1;
@@ -268,7 +265,7 @@ class OrdersModel extends Model
 		/**
 		 * 客户信息
 		 */
-		$client = DB::table('tz_users')->where(['id'=>$insert_data['customer_id'],'status'=>2])->select('id','name','email','salesman_id','nickname')->first();
+		$client = DB::table('tz_users')->where(['id'=>$insert_data['customer_id'],'status'=>2])->value('nickname');
 		if(empty($client)){//客户信息未找到/账号异常
 			$return['data'] = '';
 			$return['code'] = 0;
@@ -277,10 +274,8 @@ class OrdersModel extends Model
 		}
 		$insert['business_id'] = $client->salesman_id;
 		$insert['business_name'] = DB::table('admin_users')->where(['id'=>$client->salesman_id])->value('name');
-		$client_name = isset($client->email) ? $client->email : $client->name;
-		$client_name = $client_name ? $client_name : $client->nickname;
 		$insert['customer_id'] = $insert_data['customer_id'];
-		$insert['customer_name'] = $client_name;
+		$insert['customer_name'] = $client;
 
 		/**
 		 * 到期时间和应付价格
@@ -303,7 +298,7 @@ class OrdersModel extends Model
 					$return['msg'] = '(#111)该IP资源不存在/已被使用,请重新选择';
 					return $return;
 				}
-				$ip_company = [0=>'电信公司',1=>'移动公司',2=>'联通公司'];
+				$ip_company = [0=>'电信公司',1=>'移动公司',2=>'联通公司',3=>'BGP'];
 				$insert['machine_sn'] = $ip->ip;
 				$insert['resource'] = $ip->ip.$ip_company[$ip->ip_company];
 				//更新IP表的所属业务编号，资源状态和到期时间
@@ -1559,7 +1554,7 @@ class OrdersModel extends Model
             $return['msg']  = '(#102)该业务员不存在,请确认后再创建业务!';
             return $return;
         }
-        $client = DB::table('tz_users')->where(['id'=>$insert_data['customer_id'],'status'=>2,'salesman_id'=>$insert_data['sales_id']])->select('id','name','email')->first();//查找对应的客户信息
+        $client = DB::table('tz_users')->where(['id'=>$insert_data['customer_id'],'status'=>2,'salesman_id'=>$insert_data['sales_id']])->value('nickname');//查找对应的客户信息
         if(empty($client)){//客户信息不存在/拉黑
             $return['data'] = '';
             $return['code'] = 0;
@@ -1655,7 +1650,7 @@ class OrdersModel extends Model
 		$order_sn =$this->ordersn();
 		$insert['order_sn'] = $order_sn;
 		$insert['customer_id'] = $insert_data['customer_id'];
-		$insert['customer_name'] =  $client->name?$client->name:$client->email;
+		$insert['customer_name'] =  $client;
 		$insert['business_id'] = $insert_data['sales_id'];
 		$insert['business_name'] = $sales->name?$sales->name:$sales->username;
 		$insert['resource_type'] = $insert_data['resource_type'];
@@ -2496,7 +2491,7 @@ class OrdersModel extends Model
 						$return['msg'] = '(#113)无对应的IP资源';
 						return $return;
 					}
-					$ip_company = [0=>'电信公司',1=>'移动公司',2=>'联通公司'];
+					$ip_company = [0=>'电信公司',1=>'移动公司',2=>'联通公司',3=>'BGP'];
 					$ip_detail = $ip->ip.$ip_company[$ip->ip_company];
 					/**
 					 * 更新进对应订单
@@ -2792,13 +2787,11 @@ class OrdersModel extends Model
 			 * 客户信息的获取
 			 * @var [type]
 			 */
-			$customer = DB::table('tz_users')->where(['id'=>$value->customer_id])->select('email','name','nickname')->first();
+			$customer = DB::table('tz_users')->where(['id'=>$value->customer_id])->value('nickname');
 			if(empty($customer)){
 				$value->customer_name = '佚名';
 			} else {
-				$customer_name = $customer->email ? $customer->email : $customer->name;
-				$customer_name = $customer_name ? $customer_name : $customer->nickname;
-				$value->customer_name = $customer_name;
+				$value->customer_name = $customer;
 			}
 			/**
 			 * 对应更换前后的机房，机柜，IP信息，资源类型以及记录单的状态的转换

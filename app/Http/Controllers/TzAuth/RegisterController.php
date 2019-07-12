@@ -70,6 +70,7 @@ class RegisterController extends Controller
 //                'name'     => $par['name'], //用户名暂时不写入
                 'email'    => $par['email'],  //邮箱
                 'password' => Hash::make($par['password']),  //密码
+                'nickname' => $par['email'],
                 'status'   => 2,  //状态为已验证
                 'pwd_ver'  => 1,
             ]);
@@ -83,6 +84,7 @@ class RegisterController extends Controller
             $index        = $xunsearch->index;
             $doc['id']    = strtolower($addUserInfo['id']);
             $doc['email'] = strtolower($par['email']);
+            $doc['nickname'] = strtolower($par['email']);
             $document     = new \XSDocument($doc);
             $index->update($document);
             $index->flushIndex();

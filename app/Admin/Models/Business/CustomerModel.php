@@ -73,7 +73,8 @@ class CustomerModel extends Model
     		$status = [0=>'拉黑',1=>'未验证',2=>'正常'];
     		foreach($admin_customer as $key=>$value){
     			$admin_customer[$key]['status'] = $status[$value['status']];
-                $admin_customer[$key]['email'] = $value['email']?$value['email']:$value['name'];
+                $admin_customer[$key]['email'] = $value['email']?$value['email']:'暂未设置邮箱';
+                $admin_customer[$key]['name'] = $value['name']?$value['name']:'暂未设置用户名';
                 if($value['salesman_id'] !=0 || $value['salesman_id'] != Null){
                     $admin_customer[$key]['clerk_name'] = $this->clerk($value['salesman_id']);
                 } else {
@@ -229,7 +230,7 @@ class CustomerModel extends Model
                   $clerk_id = Admin::user()->id;
                   $flow = $this
                         ->leftjoin('tz_recharge_flow as b','tz_users.id','=','b.user_id')
-                        ->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.salesman_id'))
+                        ->select(DB::raw('tz_users.id as customer_id,tz_users.nickname as customer_name,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.salesman_id'))
                         ->where('b.trade_status',1)
                         ->where('tz_users.salesman_id',$clerk_id)
                         ->whereNull('deleted_at')
@@ -240,7 +241,7 @@ class CustomerModel extends Model
              case 'customer_id':
                   $flow = $this
                         ->leftjoin('tz_recharge_flow as b','tz_users.id','=','b.user_id')
-                        ->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.salesman_id'))
+                        ->select(DB::raw('tz_users.id as customer_id,tz_users.nickname as customer_name,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.salesman_id'))
                         ->where('b.trade_status',1)
                         ->where('tz_users.id',$key)
                         ->whereNull('deleted_at')
@@ -251,7 +252,7 @@ class CustomerModel extends Model
             case '*':
                   $flow = $this
                         ->leftjoin('tz_recharge_flow as b','tz_users.id','=','b.user_id')
-                        ->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.salesman_id'))
+                        ->select(DB::raw('tz_users.id as customer_id,tz_users.nickname as customer_name,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.salesman_id'))
                         ->where('b.trade_status',1)
                         ->whereNull('deleted_at')
                         ->orderBy('b.timestamp','desc')
@@ -261,7 +262,7 @@ class CustomerModel extends Model
             case 'byMonth':
                   $flow = $this
                         ->leftjoin('tz_recharge_flow as b','tz_users.id','=','b.user_id')
-                        ->select(DB::raw('tz_users.id as customer_id,tz_users.name as customer_name,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.salesman_id'))
+                        ->select(DB::raw('tz_users.id as customer_id,tz_users.nickname as customer_name,tz_users.email,b.id as flow_id,b.recharge_amount,b.recharge_way,b.trade_no,b.voucher,b.timestamp,b.money_before,b.money_after,b.salesman_id'))
                         ->where('b.trade_status',1)
                         ->where('b.month',$key)
                         ->whereNull('deleted_at')
@@ -289,7 +290,7 @@ class CustomerModel extends Model
                 $flow[$i]['salesman_name'] = DB::table('admin_users')->where('id',$flow[$i]['salesman_id'])->value('name');
             }
             $flow[$i]['recharge_way'] = $recharge_way[$flow[$i]['recharge_way']];
-            $flow[$i]['customer_name'] = $flow[$i]['customer_name'] ? $flow[$i]['customer_name'] : $flow[$i]['email'];
+            $flow[$i]['customer_name'] = $flow[$i]['customer_name'];
         }
         $return['data'] = $flow;
         $return['msg'] = '获取成功';

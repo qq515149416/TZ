@@ -35,7 +35,7 @@ class Ips extends Model
 		// $index = $this->paginate(15);
 		if(!$index->isEmpty()){
 			// 判断存在数据就对部分需要转换的数据进行数据转换的操作
-			$ip_company = [0=>'电信公司',1=>'移动公司',2=>'联通公司'];
+			$ip_company = [0=>'电信公司',1=>'移动公司',2=>'联通公司',3=>'BGP'];
 			$ip_status = [0=>'未使用',1=>'使用中',2=>'使用(内部机器主IP)',3=>'使用(托管主机的主IP)',4=>'使用(高防业务)'];
 			$ip_lock = [0=>'未锁定',1=>'锁定'];
 
@@ -326,7 +326,7 @@ class Ips extends Model
 		$where['ip_lock'] = 0;
 		$ips = $this->where($where)->get(['ip','id','ip_company','ip_comproom']);
 		if(!$ips->isEmpty()){
-			$ip_company = [0=>'电信公司',1=>'移动公司',2=>'联通公司'];
+			$ip_company = [0=>'电信公司',1=>'移动公司',2=>'联通公司',3=>'BGP'];
 			foreach($ips as $key=>$value){
 				$ips[$key]['label'] = $value['ip'];
 				$ips[$key]['value'] = $value['ip'].$ip_company[$value['ip_company']];

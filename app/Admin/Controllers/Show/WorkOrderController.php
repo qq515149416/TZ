@@ -11,8 +11,7 @@ use Encore\Admin\Layout\Row;
 use App\Admin\Controllers\Show\tool\script;
 use Illuminate\Support\Facades\DB;
 
-//class WorkOrderTypeController extends script
-class WorkOrderController extends script
+class WorkOrderTypeController extends script
 {
     public function getPwdDepart() {
         return tz_ajax_echo(DB::table('oa_staff')

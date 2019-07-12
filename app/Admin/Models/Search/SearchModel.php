@@ -50,7 +50,7 @@ class SearchModel extends Model
                 $business['status'] = $business_status[$business['business_status']];//业务状态
                 $resource = $this->searchResources($business['business_number']);
                 $business['sales_name'] = DB::table('admin_users')->where(['id'=>$business['sales_id']])->value('name');
-                $customer = DB::table('tz_users')->where(['id'=>$business['client_id']])->value('nickname','msg_qq','msg_phone','remarks')->first();
+                $customer = DB::table('tz_users')->where(['id'=>$business['client_id']])->select('nickname','msg_qq','msg_phone','remarks')->first();
                 if(!empty($customer)){
                     $qq = isset($customer->msg_qq)?$customer->msg_qq:'';
                     $phone = isset($customer->msg_phone)?$customer->msg_phone:'';

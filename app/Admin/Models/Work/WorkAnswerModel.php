@@ -53,11 +53,11 @@ class WorkAnswerModel extends Model
                             ->join('tz_defenseip_store','tz_defenseip_business.ip_id','=','tz_defenseip_store.id')
                             ->join('tz_users','tz_defenseip_business.user_id','=','tz_users.id')
                             ->where(['tz_work_order.work_order_number'=>$where['work_number']])
-                            ->select('tz_defenseip_business.target_ip','tz_defenseip_store.ip','tz_defenseip_store.protection_value','tz_users.name','tz_users.email','tz_work_order.work_order_type','tz_work_order.customer_id','tz_work_order.work_order_number','tz_work_order.work_order_content')
+                            ->select('tz_defenseip_business.target_ip','tz_defenseip_store.ip','tz_defenseip_store.protection_value','tz_users.nickname','tz_users.email','tz_work_order.work_order_type','tz_work_order.customer_id','tz_work_order.work_order_number','tz_work_order.work_order_content')
                             ->first();
                 if(!empty($define_business)){
                     $define_business->business_type = 4;
-                    $define_business->client_name = $define_business->name?$define_business->name:$define_business->email;
+                    $define_business->client_name = $define_business->nickname;
                     $define_business->machine_number = $define_business->ip;
                     $define_business->protect = $define_business->protection_value;
                     $business = $define_business;
@@ -230,10 +230,10 @@ class WorkAnswerModel extends Model
                             ->join('tz_users','tz_defenseip_business.user_id','=','tz_users.id')
                             ->join('admin_users','tz_users.salesman_id','=','admin_users.id')
                             ->where('tz_defenseip_business.business_number',$business_number)
-                            ->select('tz_defenseip_business.target_ip','tz_defenseip_store.ip','tz_defenseip_store.protection_value','tz_users.name','tz_users.email','admin_users.name as sales_name')
+                            ->select('tz_defenseip_business.target_ip','tz_defenseip_store.ip','tz_defenseip_store.protection_value','tz_users.nickname','tz_users.email','admin_users.name as sales_name')
                             ->first();
             $business->business_type = 4;
-            $business->client_name = $business->name?$business->name:$business->email;
+            $business->client_name = $business->nickname;
             $business->machine_number = $business->ip;
             $business->resource_detail = json_decode(json_encode($business));
         }

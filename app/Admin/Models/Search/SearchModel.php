@@ -50,13 +50,11 @@ class SearchModel extends Model
                 $business['status'] = $business_status[$business['business_status']];//业务状态
                 $resource = $this->searchResources($business['business_number']);
                 $business['sales_name'] = DB::table('admin_users')->where(['id'=>$business['sales_id']])->value('name');
-                $customer = DB::table('tz_users')->where(['id'=>$business['client_id']])->select('name','email','nickname','msg_qq','msg_phone','remarks')->first();
+                $customer = DB::table('tz_users')->where(['id'=>$business['client_id']])->select('nickname','msg_qq','msg_phone','remarks')->first();
                 if(!empty($customer)){
                     $qq = isset($customer->msg_qq)?$customer->msg_qq:'';
                     $phone = isset($customer->msg_phone)?$customer->msg_phone:'';
-                    $email = $customer->email ? $customer->email : $customer->name;
-                    $email = $email ? $email : $customer->nickname;
-                    $business['client_name'] = '用户:'.$email.
+                    $business['client_name'] = '用户:'.$customer->nickname.
                                                 'QQ:'.$qq.
                                                 '手机:'.$phone.
                                                 '备注:'.$customer->remarks;

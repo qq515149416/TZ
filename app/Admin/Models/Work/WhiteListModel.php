@@ -86,7 +86,7 @@ class WhiteListModel extends Model
 				$return['msg']	= '客户id错误';		
 				return $return;
 			}
-			$info['customer_name'] 	= $customer->nickname?$customer->nickname:$customer->name;
+			$info['customer_name'] 	= $customer->nickname;
 			$info['email']		= $customer->email;
 		}else{			//查查高防有没有
 

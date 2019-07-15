@@ -131,6 +131,55 @@ class UnboundController extends Controller
         $grid->actions(function ($actions) {
             $actions->disableDelete();
             $actions->disableEdit();
+            $sales_id=Admin::user()->id;
+            $script = <<<EOT
+
+$('.grid-edit-salesman_id-{$this->getKey()}').unbind('click').on('click', function(){
+
+    var id = $(this).data('id');
+    var value = {$sales_id};
+    swal({
+      title: "确定将该客户绑定你名下?",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "确认",
+      closeOnConfirm: false,
+      cancelButtonText: "取消"
+    },
+    function(){    
+        $.ajax({
+            url: "{$this->getResource()}/{$this->getKey()}",
+            type: "POST",
+            data: {
+                salesman_id: value,
+                _token: LA.token,
+                _method: 'PUT'
+            },
+            success: function (data) {
+                $.pjax.reload('#pjax-container');
+                if (typeof data === 'object') {
+                    if (data.status) {
+                        swal(data.message, '客户已绑定到你名下', 'success');
+                    } else {
+                        swal(data.message, '客户绑定失败', 'error');
+                    }
+                }
+            }
+        });
+    });
+});
+
+EOT;
+
+        Admin::script($script);
+            $actions->append(
+
+<<<EOT
+    <a title="一键绑定客户" href="javascript:void(0)",data-id="{$actions->getKey()}" class="grid-edit-salesman_id-{$this->getKey()}">
+        <i class="fa fa-lock"></i>
+    </a>
+EOT);
         });  
         $grid->disableCreateButton();
         $grid->disableRowSelector();

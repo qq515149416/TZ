@@ -162,7 +162,7 @@ class UnderModel extends Model
         switch ($type['type']) {
             case 1:
                 if($slug->slug != 3){//非业务员进入此区间
-                    if(Admin::user()->inRoles(['salesman','operations','finance','HR','product','network_dimension','net_sec'])){//不是主管的按是否自己客户查看
+                    if(Admin::user()->inRoles(['operations','finance','HR','product','network_dimension','net_sec'])){//不是主管的按是否自己客户查看
                         $where = ['sales_id' => Admin::user()->id];
                     } else {//主管人员查看客户信息
                         $where = [];
@@ -178,10 +178,8 @@ class UnderModel extends Model
                         $history_value->resourcetype  = $business_type[$history_value->business_type];
                         $history_value->remove_status = $remove_status[$history_value->remove_status];
                         $history_value->sales_name = DB::table('admin_users')->where(['id'=> $history_value->sales_id])->value('name');
-                        $client_name = DB::table('tz_users')->where(['id'=> $history_value->client_id])->select('name','email','nickname','msg_phone','msg_qq')->first();
-                        $email = $client_name->email ? $client_name->email : $client_name->name;
-                        $email = $email ? $email : $client_name->nickname;
-                        $history_value->client_name = $email;
+                        $client_name = DB::table('tz_users')->where(['id'=> $history_value->client_id])->value('nickname');
+                        $history_value->client_name = $client_name;
                     });
                     $return['data'] = $history;
                     $return['code'] = 1;
@@ -195,7 +193,7 @@ class UnderModel extends Model
                 break;
             case 2:
                 if($slug->slug != 3){//非业务员进入此区间
-                    if(Admin::user()->inRoles(['salesman','operations','finance','HR','product','network_dimension','net_sec'])){//不是主管的按是否自己客户查看
+                    if(Admin::user()->inRoles(['operations','finance','HR','product','network_dimension','net_sec'])){//不是主管的按是否自己客户查看
                         $where = ['business_id' => Admin::user()->id];
                     } else {//主管人员查看客户信息
                         $where = [];
@@ -211,10 +209,8 @@ class UnderModel extends Model
                         $history_value->resourcetype  = $resource_type[$history_value->resource_type];
                         $history_value->remove_status = $remove_status[$history_value->remove_status];
                         $history_value->business_name = DB::table('admin_users')->where(['id'=> $history_value->business_id])->value('name');
-                        $client_name = DB::table('tz_users')->where(['id'=> $history_value->customer_id])->select('name','email','nickname','msg_phone','msg_qq')->first();
-                        $email = $client_name->email ? $client_name->email : $client_name->name;
-                        $email = $email ? $email : $client_name->nickname;
-                        $history_value->customer_name = $email;
+                        $client_name = DB::table('tz_users')->where(['id'=> $history_value->customer_id])->value('nickname');
+                        $history_value->customer_name = $client_name;
                     });
                     $return['data'] = $history;
                     $return['code'] = 1;
@@ -469,10 +465,8 @@ class UnderModel extends Model
             $value->resource_type = $business_type[$value->business_type];
             $value->removestatus  = $remove_status[$value->remove_status];
             $value->sales_name = DB::table('admin_users')->where(['id'=> $value->sales_id])->value('name');
-            $client_name = DB::table('tz_users')->where(['id'=> $value->client_id])->select('name','email','nickname','msg_phone','msg_qq')->first();
-            $email = $client_name->email ? $client_name->email : $client_name->name;
-            $email = $email ? $email : $client_name->nickname;
-            $value->client_name = $email;
+            $client_name = DB::table('tz_users')->where(['id'=> $value->client_id])->value('nickname');
+            $value->client_name = $client_name;
             $resource_detail = json_decode($value->resource_detail);
             $value->machineroom_name = $resource_detail->machineroom_name;
             if($value->business_type != 3){
@@ -496,10 +490,8 @@ class UnderModel extends Model
             $orders_value->resourcetype = $resource_type[$orders_value->resource_type];
             $orders_value->removestatus = $remove_status[$orders_value->remove_status];
             $orders_value->business_name = DB::table('admin_users')->where(['id'=> $orders_value->business_id])->value('name');
-            $client_name = DB::table('tz_users')->where(['id'=> $orders_value->customer_id])->select('name','email','nickname','msg_phone','msg_qq')->first();
-            $email = $client_name->email ? $client_name->email : $client_name->name;
-            $email = $email ? $email : $client_name->nickname;
-            $orders_value->customer_name = $email;
+            $client_name = DB::table('tz_users')->where(['id'=> $orders_value->customer_id])->value('nickname');
+            $orders_value->customer_name = $client_name;
             $rData = $this->getResourceData($orders_value->business_sn); //根据业务号获取机柜和IP信息
             $orders_value->ip =  $rData['ip'];    //ip放入到订单数据中
             $orders_value->cabinets= $rData['cabinet_id'];  //机柜编号放入到订单订单数据中

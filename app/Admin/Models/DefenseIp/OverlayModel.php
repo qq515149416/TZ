@@ -170,7 +170,7 @@ class OverlayModel extends Model
 		}else{
 			$customer = $checkAdminUser['data'];
 			if ($customer->name == null) {
-				$customer->name = $customer->email;
+				$customer->name = $customer->nickname;
 			}
 		}
 		$pay_model = new OrdersModel();
@@ -378,8 +378,7 @@ class OverlayModel extends Model
 				}
 
 			}
-			$v->customer_name = $v->nickname?:$v->email;
-			$v->customer_name = $v->customer_name?:$v->name;
+			$v->customer_name = $v->nickname;
 			$v = $this->transBelong($v);
 		}
 

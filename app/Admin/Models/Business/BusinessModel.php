@@ -35,7 +35,7 @@ class BusinessModel extends Model
             return $return;
         }
         //业务编号的生成规则：前两位（1-3的随机数）+ 年月日（如:20180830） + 时间戳的后5位数 + 7-9随机数（业务编号产生）
-        $client = DB::table('tz_users')->where(['id'=>$insert['client_id'],'status'=>2])->select('id','name','email','salesman_id')->first();
+        $client = DB::table('tz_users')->where(['id'=>$insert['client_id'],'status'=>2])->value('nickname');
         if(!$client){
             $return['data'] = '';
             $return['code'] = 0;
@@ -47,7 +47,7 @@ class BusinessModel extends Model
         $business_sn               = $this->businesssn();
         $insert['business_number'] = $business_sn;
         $insert['business_status'] = 0;
-        $insert['client_name'] = $client->name?$client->name:$client->email;
+        $insert['client_name'] = $client;
         // 对应业务员的信息
         $insert['sales_id']   = $client->salesman_id;
         $insert['sales_name'] = DB::table('admin_users')->where(['id'=>$client->salesman_id])->value('name');
@@ -123,10 +123,8 @@ class BusinessModel extends Model
                 $result[$check]['type']   = $business_type[$check_value['business_type']];
                 $result[$check]['remove'] = $remove_status[$check_value['remove_status']];
                 $check_value->sales_name = DB::table('admin_users')->where(['id'=>$check_value->sales_id])->value('name');
-                $client_name = DB::table('tz_users')->where(['id'=>$check_value->client_id])->select('name','email','nickname','msg_phone','msg_qq')->first();
-                $email = $client_name->email ? $client_name->email : $client_name->name;
-                $email = $email ? $email : $client_name->nickname;
-                $check_value->client_name = $email;
+                $client_name = DB::table('tz_users')->where(['id'=>$check_value->client_id])->value('nickname');
+                $check_value->client_name = $client_name;
                 $resource_detail = json_decode($check_value['resource_detail']);
                 $result[$check]['machineroom_name'] = $resource_detail->machineroom_name;
                 if($check_value['business_type'] != 3){
@@ -381,11 +379,9 @@ class BusinessModel extends Model
      * @return [type] [description]
      */
     public function businesssn($business_id=100,$business_type=1){
-        // $time= bcadd(time(),$business_id);
-        // $business_sn = mt_rand(1, 3) . date("Ymd", time()) . substr($time, 6, 4) . $business_id .mt_rand(7, 9);
+        
         $business_sn = create_number();//调用创建单号的公共函数
-        //业务编号的生成规则：前两位（1-3的随机数）+ 年月日（如:20180830） + 时间戳的后5位数 + 7-9随机数（业务编号产生）
-        // $business_sn = mt_rand(1,3).date('YmdHis').$time.mt_rand(20,99).'1'.$business_type;
+    
         $business = $this->where('business_number',$business_sn)->select('business_number','machine_number')->first();
         if(!empty($business)){
             $this->businesssn();
@@ -403,8 +399,7 @@ class BusinessModel extends Model
      * @return [type] [description]
      */
     public function ordersn($resource_id=100,$resource_type=1){
-        // $time = bcadd(time(),$resource_id,0);
-        // $order_sn = mt_rand(4, 6) . date("Ymd", time()) . substr($time, 6, 4) . $resource_id .mt_rand(1, 3).'1';
+       
         $order_sn = create_number();//调用创建单号的公共函数,
         $order = DB::table('tz_orders')->where('order_sn',$order_sn)->select('order_sn','machine_sn')->first();
         $session = session()->has('O'.$order_sn);
@@ -535,12 +530,11 @@ class BusinessModel extends Model
             $return['msg']  = '(#102)该业务员不存在,请确认后再创建业务!';
             return $return;
         }
-        $client = DB::table('tz_users')->where(['id'=>$insert_data['client_id'],'status'=>2,'salesman_id'=>$insert_data['sales_id']])->select('id','name','email')->first();//查找对应的客户信息
+        $client = DB::table('tz_users')->where(['id'=>$insert_data['client_id'],'status'=>2,'salesman_id'=>$insert_data['sales_id']])->value('nickname');//查找对应的客户信息
         if(empty($client)){//客户信息不存在/拉黑
             $return['data'] = '';
             $return['code'] = 0;
-            $name = $sales->name?$sales->name:$sales->username;
-            $return['msg']  = '(#103)客户不存在/客户不属于业务员:'.$name.'/账号未验证/异常,请确认后再创建业务!';
+            $return['msg']  = '(#103)客户不存在/客户不属于业务员:'.$client.'/账号未验证/异常,请确认后再创建业务!';
             return $return;
         }
         DB::beginTransaction();//开启事务处理
@@ -592,7 +586,7 @@ class BusinessModel extends Model
         $insert['business_number'] = $business_sn;
         $insert['business_status'] = 0;
         $insert['client_id'] = $insert_data['client_id']; 
-        $insert['client_name'] = $client->name?$client->name:$client->email;
+        $insert['client_name'] = $client;
         // 对应业务员的信息
         $insert['sales_id']   = $insert_data['sales_id'];
         $insert['sales_name'] = $sales->name?$sales->name:$sales->username;
@@ -907,10 +901,8 @@ class BusinessModel extends Model
                 $info->money = $money;
                 $total = bcadd($total,$money,2);
                 $info->salesman = DB::table('admin_users')->where(['id'=>$info->business_id])->value('name');
-                $client_name = DB::table('tz_users')->where(['id'=>$info->customer_id])->select('name','email','nickname','msg_phone','msg_qq')->first();
-                $email = $client_name->email ? $client_name->email : $client_name->name;
-                $email = $email ? $email : $client_name->nickname;
-                $info->customer = $email;
+                $client_name = DB::table('tz_users')->where(['id'=>$info->customer_id])->value('nickname');
+                $info->customer = $client_name;
                 if($info->resource_type == 11){
                     $business = DB::table('tz_defenseip_business as business')
                                    ->join('tz_defenseip_store as store','business.ip_id','=','store.id')
@@ -1057,10 +1049,8 @@ class BusinessModel extends Model
                 $business_status = ['-1'=>'取消','-2'=>'审核不通过',0=>'审核中',1=>'未付款使用',2=>'付款使用中',3=>'未使用',4=>'锁定中',5=>'到期',6=>'退款'];
                 $remove_status = [0=>'正常',1=>'下架申请中',2=>'等待机房处理',3=>'清空下架中',4=>'下架完成'];
                 $business_value->sales_name = DB::table('admin_users')->where(['id'=>$business_value->sales_id])->value('name');
-                $client_name = DB::table('tz_users')->where(['id'=>$business_value->client_id])->select('name','email','nickname','msg_phone','msg_qq')->first();
-                $email = $client_name->email ? $client_name->email : $client_name->name;
-                $email = $email ? $email : $client_name->nickname;
-                $business_value->client_name = $email;
+                $client_name = DB::table('tz_users')->where(['id'=>$business_value->client_id])->value('nickname');
+                $business_value->client_name = $client_name;
                 $resource_detail =  json_decode($business_value->resource_detail);
                 $business_value->ip = isset($resource_detail->ip_detail)?$resource_detail->ip_detail:'';
                 $business_value->cabinet = isset($resource_detail->cabinets)?$resource_detail->cabinets:'';
@@ -1113,11 +1103,10 @@ class BusinessModel extends Model
                         ->join('admin_users as admin','orders.business_id','=','admin.id')
                         ->join('tz_users as users','orders.customer_id','=','users.id')
                         ->where(['orders.id'=>$id_value])
-                        ->select('orders.id','orders.order_sn','orders.resource_type','orders.machine_sn','orders.resource','orders.price','orders.duration','orders.end_time','admin.name as salesman','users.name','users.email','users.nickname')
+                        ->select('orders.id','orders.order_sn','orders.resource_type','orders.machine_sn','orders.resource','orders.price','orders.duration','orders.end_time','admin.name as salesman','users.nickname')
                         ->first();
             if(!empty($order)){
-                $customer = $order->name ? $order->name : $order->email;
-                $order->customer = $customer ? $customer : $order->nickname;
+                $order->customer = $order->nickname;
                 $resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn',11=>'高防IP',12=>'流量叠加包'];
                 $order->type = $resource_type[$order->resource_type];
                 array_push($orders,$order); 

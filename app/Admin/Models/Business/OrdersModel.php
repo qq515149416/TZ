@@ -128,8 +128,6 @@ class OrdersModel extends Model
 				}
 				$value->order_arr = $orr;		
 
-				$value->customer_email = $value->customer_nick_name;
-
 			}
 
 			$return['data'] = ['info'=>$result,'payable'=>$payable,'paytrue'=>$paytrue,'discount'=>$discount,'total'=>$total];

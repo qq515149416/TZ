@@ -193,7 +193,7 @@ class UnderModel extends Model
                 break;
             case 2:
                 if($slug->slug != 3){//非业务员进入此区间
-                    if(Admin::user()->inRoles(['salesman','operations','finance','HR','product','network_dimension','net_sec'])){//不是主管的按是否自己客户查看
+                    if(Admin::user()->inRoles(['operations','finance','HR','product','network_dimension','net_sec'])){//不是主管的按是否自己客户查看
                         $where = ['business_id' => Admin::user()->id];
                     } else {//主管人员查看客户信息
                         $where = [];

@@ -265,7 +265,7 @@ class OrdersModel extends Model
 		/**
 		 * 客户信息
 		 */
-		$client = DB::table('tz_users')->where(['id'=>$insert_data['customer_id'],'status'=>2])->value('nickname');
+		$client = DB::table('tz_users')->where(['id'=>$insert_data['customer_id'],'status'=>2])->select('nickname','salesman_id')->first();
 		if(empty($client)){//客户信息未找到/账号异常
 			$return['data'] = '';
 			$return['code'] = 0;
@@ -275,7 +275,7 @@ class OrdersModel extends Model
 		$insert['business_id'] = $client->salesman_id;
 		$insert['business_name'] = DB::table('admin_users')->where(['id'=>$client->salesman_id])->value('name');
 		$insert['customer_id'] = $insert_data['customer_id'];
-		$insert['customer_name'] = $client;
+		$insert['customer_name'] = $client->nickname;
 
 		/**
 		 * 到期时间和应付价格

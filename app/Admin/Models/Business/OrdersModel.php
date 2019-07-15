@@ -2754,6 +2754,9 @@ class OrdersModel extends Model
 		$orwhere = [];
 		if(Admin::user()->inRoles(['salesman'])){//业务员根据业务员id进行对应数据的获取
 			$where = ['sales_id'=>Admin::user()->id];
+			if(Admin::user()->inRoles(['CMO'])){
+				$where = [];
+			}
 		} elseif(Admin::user()->inRoles(['operations'])){//运维根据所在机房获取
 			$depart = DB::table('oa_staff')
 						->join('idc_machineroom','oa_staff.department','=','idc_machineroom.list_order')

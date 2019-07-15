@@ -324,6 +324,7 @@ class RechargeModel extends Model
 	
 	}
 
+	//未审核的充值申请的审核方法
 	protected function doAudit($audit_status,$trade_id,$recharge_amount,$recharge_way,$time,$remarks,$tax){
 		DB::beginTransaction();
 		try {  
@@ -331,7 +332,7 @@ class RechargeModel extends Model
 			$trade = $this->find($trade_id);
 			if($trade == null){
 				$error = '获取审核单信息失败';
-				throw new Exception($error,0);  
+				throw new Exception($error,0);  	//抛出错误
 			}
 			//检查流水是否已存在
 			$test = DB::table('tz_recharge_flow')->where('trade_no',$trade->trade_no)->whereNull('deleted_at')->value('id');
@@ -440,7 +441,7 @@ class RechargeModel extends Model
 					break;
 			}
 			$data = [
-				'user_id'		=> $trade->user_id,
+				'user_id'			=> $trade->user_id,
 				'recharge_amount'	=> $trade->recharge_amount,
 				'recharge_way'		=> 3,
 				'trade_no'		=> $trade->trade_no,
@@ -468,12 +469,12 @@ class RechargeModel extends Model
 		} catch (Exception $e) {  
 			DB::rollBack();
 			return [
-				'code'	=> $e->getCode(),
+				'code'	=> $e->getCode(),	//接收抛出的错误并返回
 				'msg'	=> $e->getMessage(),
 			];
 		} 
 	}
-
+	//审核过了又审核的编辑方法,可以改 到账时间和到账银行
 	protected function doEdit($trade_id,$recharge_way,$time){
 
 		DB::beginTransaction();
@@ -546,7 +547,7 @@ class RechargeModel extends Model
 		}
 
 	}
-
+	//获取充值流水的方法
 	public function getRechargeFlow($way,$key = ''){   
 		switch ($way) {
 			 case 'my_all':
@@ -669,6 +670,7 @@ class RechargeModel extends Model
 		return $return;
 	}
 
+	
 	public function editAuditRecharge($recharge_amount,$recharge_way,$trade_id,$pay_at){
 		$trade = $this->find($trade_id);
 		$trade->recharge_way = $recharge_way;

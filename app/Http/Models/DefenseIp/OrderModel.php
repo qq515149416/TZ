@@ -27,8 +27,8 @@ class OrderModel extends Model
 
 	public function buyNow($package_id,$buy_time){
 
-		$user_id = Auth::id();
-		$second_buy_time = bcsub( time() , 60);
+		$user_id = Auth::id();		//获取登录中用户id
+		$second_buy_time = bcsub( time() , 60);		//设置两次购买之间需要间隔时长
 		$second_buy_time = date("Y-m-d H:i:s",$second_buy_time);
 
 		$check_time = $this->where('order_type',1)->where('resource_type',11)->where('customer_id',$user_id)->where('created_at','>',$second_buy_time)->value('id');
@@ -39,6 +39,7 @@ class OrderModel extends Model
 				'code'	=> 0,
 			];
 		}
+		//找出所购买的套餐
 		$package = DB::table('tz_defenseip_package')->select(['site','protection_value'])->whereNull('deleted_at')->where('id',$package_id)->first();
 
 		if($package == null){
@@ -47,7 +48,7 @@ class OrderModel extends Model
 			$return['code']	= 0;
 			return $return;
 		}
-
+		//查询购买的套餐库存ip是否足够
 		$check_ip = DB::table('tz_defenseip_store')
 				->select(['id','ip'])
 				->where('site',$package->site)
@@ -62,6 +63,7 @@ class OrderModel extends Model
 			$return['code']	= 0;
 			return $return;
 		}
+		//生成待审核业务信息
 		$time = time();
 		$data['order_sn'] 		= 'GN_'.$time.'_'.substr(md5($user_id.'tz'),0,4);
 		$data['business_sn']		= 'G_'.$time.'_'.substr(md5($user_id.'tz'),0,4);
@@ -70,7 +72,7 @@ class OrderModel extends Model
 		if($data['customer_name'] == null){
 			$data['customer_name']	= Auth::user()->email;
 		}
-		
+		//获取用户的所属业务员
 		$admin_user = DB::table('admin_users')->where('id',Auth::user()->salesman_id)->first();
 
 		if ($admin_user == null) {
@@ -90,7 +92,7 @@ class OrderModel extends Model
 		$data['duration']		= $buy_time;
 		$data['payable_money']	= bcmul($data['price'],$data['duration'],2);
 		$data['order_status']		= 0;
-		$insert = $this->create($data);
+		$insert = $this->create($data);	//生成待审核业务
 
 		if($insert != false){
 			$return['data']	= $insert->id;
@@ -104,8 +106,12 @@ class OrderModel extends Model
 		return $return;
 	}
 
+	/**
+	 *  续费 高防IP 生成订单或修改订单接口  /  分为 试用的转正式使用的业务续费 , 正式使用的业务正常续费
+	 */
 	public function renew($business_id,$buy_time){
 		$user_id = Auth::id();
+		//获取指定高防业务的信息
 		$business = DB::table('tz_defenseip_business')->where('user_id',$user_id)->where("id",$business_id)->first();
 
 		if($business == null){
@@ -115,7 +121,8 @@ class OrderModel extends Model
 				'code'	=> 0,
 			];
 		}
-		if($business->status == 2|| $business->status == 3){
+
+		if($business->status == 2|| $business->status == 3){	//如果是已经下架或者正在申请下架的,不能续费
 			return [
 				'data'	=> '',
 				'msg'	=> '业务已下架,无法续费',
@@ -128,9 +135,9 @@ class OrderModel extends Model
 				->where('business_sn',$business->business_number)
 				->where('order_status',0)
 				->first();
-		//如果存在未付款订单,则判断业务状态
+		//如果存在未付款订单,是要改已存在的订单,还要判断业务状态
 		if($checkOrder != null){ 
-			if($business->status == 4){	//如果是试用状态, 还要更新结束时间
+			if($business->status == 4){	//如果是试用状态, 要更新结束时间
 				$end_time = Carbon::parse($business->created_at)->addMonth($buy_time)->toDateTimeString();
 				$end = strtotime($end_time);
 				if($end < time()){	
@@ -145,7 +152,7 @@ class OrderModel extends Model
 			$checkOrder->duration 	= $buy_time;					//更新购买时长
 			$checkOrder->payable_money 	= bcmul($checkOrder->price,$buy_time,2);	//更新价格
 
-			$res = $checkOrder->save();
+			$res = $checkOrder->save();	//有订单的情况下去改原有的,不生成新的
 			if($res == true){
 				return [
 					'data'	=> $checkOrder->id,
@@ -197,6 +204,7 @@ class OrderModel extends Model
 			$order_sn = 'GO_'.time().'_'.substr(md5($user_id.'tz'),0,4);
 			$end_time = '';
 		}
+		
 		$data['order_sn'] 		= $order_sn;
 		$data['business_sn']		= $business->business_number;
 		$data['customer_id']		= $user_id;

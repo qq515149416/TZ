@@ -227,6 +227,7 @@ class PayOrder extends Model
 			'pay_time'		=> $pay_time,
 			'business_number'	=> $business_sn,
 			'room_id'		=> $room_id,
+			'flow_type'		=> $unpaidOrder[0]['order_type'],
 		];
 		$creatFlow = DB::table('tz_orders_flow')->insert($flow);
 		if($creatFlow == false){

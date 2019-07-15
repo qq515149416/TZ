@@ -26,10 +26,12 @@ class BusinessModel extends Model
 //    {
 //       return $this->hasOne('App\Http\Models\DefenseIp\StoreModel','id','ip_id');
 //    }
-
+	/**
+   	 *高防ip提交下架审核
+   	 */
 	public function subExamine($business_id,$admin_user_id)
 	{
-		$business = $this->find($business_id);
+		$business = $this->find($business_id);	//获取业务模型
 		if($business == null){
 			return [
 				'data'	=> '',
@@ -37,7 +39,7 @@ class BusinessModel extends Model
 				'code'	=> 0,
 			];
 		}
-		$business_admin_user_id = DB::table('tz_users')->where('id',$business->user_id)->value('salesman_id');
+		$business_admin_user_id = DB::table('tz_users')->where('id',$business->user_id)->value('salesman_id');	//获取业务所属客户对应的业务员
 		if($business_admin_user_id != $admin_user_id){
 			return [
 				'data'	=> '',
@@ -45,16 +47,17 @@ class BusinessModel extends Model
 				'code'	=> 0,
 			];
 		}
-		if ($business->status != 1 && $business->status != 4) {
+		if ($business->status != 1 && $business->status != 4) {	//此状态 ,1代表正式使用中 , 4代表试用中,只有使用中才能下架
 			return [
 				'data'	=> '',
 				'msg'	=> '业务未上架,无需下架',
 				'code'	=> 0,
 			];
 		}
-		DB::beginTransaction();
+		DB::beginTransaction();	//开启事务
 
-		$d_ip = StoreModel::find($business->ip_id);
+		$d_ip = StoreModel::find($business->ip_id);	//获取业务所属ip的模型
+
 		if ($d_ip == null) {
 			return [
 				'data'	=> '',
@@ -62,7 +65,7 @@ class BusinessModel extends Model
 				'code'	=> 0,
 			];
 		}
-		$d_ip->status = 2;
+		$d_ip->status = 2;		//业务所属ip一起更改状态
 		if (!$d_ip->save() ) {
 			return [
 				'data'	=> '',
@@ -70,7 +73,7 @@ class BusinessModel extends Model
 				'code'	=> 0,
 			];
 		}
-		$business->status = 2;
+		$business->status = 2;		//改业务状态
 		$res = $business->save();
 		if($res != true)
 		{
@@ -109,15 +112,15 @@ class BusinessModel extends Model
 
 		
 		 //更新审核结果
-		if ($status == 3) {
+		if ($status == 3) {		//审核结果 , 3是要下架,1是继续使用
 			$business->status = $status;
 		}else{
-			if ($status ==  1) {
+			if ($status ==  1) {	//如果是继续使用,需要把ip的状态改回去
 				 $d_ip = StoreModel::find($business->ip_id);
-				if ($business->end_at != null ) {	//说明原本是正在使用
+				if ($business->end_at != null ) {	//说明原本是正常使用状态
 					$d_ip->status = $status;
 					$business->status = $status;
-				}else{
+				}else{				//说明原本是试用状态
 					$d_ip->status = 4;
 					$business->status = 4;
 				}

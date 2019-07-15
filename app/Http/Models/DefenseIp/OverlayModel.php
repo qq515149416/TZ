@@ -26,9 +26,9 @@ class OverlayModel extends Model
 	protected $fillable = ['name', 'description','site','protection_value','price','validity_period','sell_status'];
 	protected $time_limit = 60;//两次购买的时间限制
 
-
+	//获取叠加包
 	public function showOverlay($par){
-		if($par['site'] == '*'){
+		if($par['site'] == '*'){	//其实可以用闭包返回条件
 			if ($par['sell_status'] == '*') {
 				$overlay = $this->get();
 			}else{
@@ -42,7 +42,29 @@ class OverlayModel extends Model
 				$overlay = $this->where('site',$par['site'])->where('sell_status',$par['sell_status'])->get();
 			}
 		}
-
+		// $overlay = $belong_model
+		// 	->leftJoin('tz_overlay as b','b.id', '=' , 'tz_overlay_belong.overlay_id')
+		// 	->leftJoin('idc_machineroom as c' , 'c.id' , '=' , 'b.site')
+		// 	->leftJoin('tz_users as d' , 'd.id' , '=' , 'tz_overlay_belong.user_id')
+		// 	->leftJoin('admin_users as e' , 'e.id' , '=' , 'd.salesman_id')
+		// 	->when($par['status'] ,function ($query, $role) {
+		// 			if ($role != '*') {
+		// 				return $query->where('tz_overlay_belong.status',$role);
+		// 			}
+		// 		},function ($query, $role) {
+		// 			if($role==="0") {
+		// 				return $query->where('tz_overlay_belong.status',$role);
+		// 			}
+		// 			return $query;
+		// 		})
+		// 	->when($par['site'], function ($query, $role) {
+		// 				if ($role != '*') {
+		// 					return $query->where('c.id',$role);
+		// 				}
+		// 			})
+		// 	->select(['tz_overlay_belong.*','b.name as overlay_name','b.protection_value','b.validity_period','c.machine_room_name','c.id as machine_room_id' , 'd.nickname' , 'd.email' , 'd.name' , 'e.name as clerk_name'])
+		// 	->get();
+			
 		if ($overlay->isEmpty()) {
 			return [
 				'data'	=> [],
@@ -59,6 +81,7 @@ class OverlayModel extends Model
 			'code'	=> 1,
 		];
 	}
+	//
 	protected function transO($overlay){
 		$overlay->machine_room_name = DB::table('idc_machineroom')->where('id',$overlay->site)->value('machine_room_name');
 

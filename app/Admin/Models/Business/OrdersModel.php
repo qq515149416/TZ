@@ -44,10 +44,11 @@ class OrdersModel extends Model
 					->join('admin_users as admin','flow.business_id','=','admin.id')
 					->whereBetween('flow.pay_time',[$time['start_time'],$time['end_time']])
 					->whereNull('flow.deleted_at')
-					->select('flow.id as flow_id','flow.business_number','flow.serial_number','flow.payable_money','flow.actual_payment','flow.preferential_amount','flow.pay_time','flow.before_money','flow.after_money','flow.created_at','flow.flow_type','users.name as customer_name','users.email as customer_email','users.nickname as customer_nick_name','admin.name as business_name')
+					->select('flow.id as flow_id','flow.order_id','flow.business_number','flow.serial_number','flow.payable_money','flow.actual_payment','flow.preferential_amount','flow.pay_time','flow.before_money','flow.after_money','flow.created_at','flow.flow_type','users.name as customer_name','users.email as customer_email','users.nickname as customer_nick_name','admin.name as business_name')
 					->orderBy('flow.pay_time','desc')
 					->get()
 					->toArray();
+					// dd($result);
 		//应付金额
 		$payable = DB::table('tz_orders_flow')
 					->whereBetween('pay_time',[$time['start_time'],$time['end_time']])
@@ -75,10 +76,60 @@ class OrdersModel extends Model
 				$value->type = $flow_type[$value->flow_type];
 				$value->customer_email = $value->customer_email?$value->customer_email:$value->customer_name;
 				$value->customer_email = $value->customer_email?$value->customer_email:$value->customer_nick_name;
+				
+				//取出流水包含的订单id
+				$order_id = json_decode($value->order_id,true);
+				
+				$orr = [];//包含订单数组
+				//解开后 , 有两种储存方式,一种数组形式一种int
+
+				$type_arr = [1 => '租用主机' , 2 => '托管主机' , 3 => '租用机柜' , 4 => 'IP' , 5 => 'CPU' , 6 => '硬盘' , 7 => '内存' , 8 => '带宽' , 9 => '防护' , 10 => 'cdn' , 11 => '高防IP' , 12 => '流量叠加包'];
+				$order_type_arr = [ 1 => '新购' , 2 => '续费'];
+				if (is_array($order_id)) {	//数组类型的,从里面一个个找出来
+
+					foreach ($order_id as $k => $v) {
+						$order = DB::table('tz_orders')->find($v,['order_sn','business_sn','resource_type','order_type','payable_money']);
+						if($order){
+							if (isset($type_arr[$order->resource_type])) {
+								$order->resource_type = $type_arr[$order->resource_type];
+							}else{
+								$order->resource_type = '未知类型';
+							}
+							if (isset($order_type_arr[$order->order_type])) {
+								$order->order_type = $order_type_arr[$order->order_type];
+							}else{
+								$order->order_type = '未知类型';
+							}
+						}else{
+
+						}
+						$orr[] = $order;
+					}
+				}else{
+					$order = DB::table('tz_orders')->find($order_id,['order_sn','business_sn','resource_type','order_type','payable_money']);
+						if($order){
+							if (isset($type_arr[$order->resource_type])) {
+								$order->resource_type = $type_arr[$order->resource_type];
+							}else{
+								$order->resource_type = '未知类型';
+							}
+							if (isset($order_type_arr[$order->order_type])) {
+								$order->order_type = $order_type_arr[$order->order_type];
+							}else{
+								$order->order_type = '未知类型';
+							}
+						}else{
+
+						}
+						$orr[] = $order;
+				}
+				$value->order_arr = $orr;		
 			}
+
 			$return['data'] = ['info'=>$result,'payable'=>$payable,'paytrue'=>$paytrue,'discount'=>$discount,'total'=>$total];
 			$return['code'] = 1;
 			$return['msg'] = '客户流水获取成功！';
+
 		} else {
 			$return['data'] = $result;
 			$return['code'] = 0;
@@ -2907,5 +2958,6 @@ class OrdersModel extends Model
 		}
 		return $return;
 	} 
+
 
 }

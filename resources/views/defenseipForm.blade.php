@@ -6,7 +6,7 @@
 </head>
 <body>
 
-	<form method="post" action="delWhiteBatch">
+	<form method="post" action="/tz_admin/whitelist/delWhiteBatch">
 		<div id="box">
 			<input type="hidden" name="_token" value="{{csrf_token()}}">
 			<p>

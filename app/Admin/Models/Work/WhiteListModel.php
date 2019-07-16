@@ -641,5 +641,30 @@ class WhiteListModel extends Model
 		
 	}	
 
+
+	public function delWhiteBatch($par)
+	{
+		$model = new ApiController();
+		$fail_list = [];
+		foreach ($par['del_list'] as $k => $v) {
+			$res = $model->delWhiteList($v,$par['site']);
+			if($res['code'] == 0){
+				$fail_list[] = $v;
+			}
+		}
+		if (count($fail_list) != 0) {
+			return [
+				'data'	=> $fail_list,
+				'msg'	=> '这些域名删除失败',
+				'code'	=> 0,
+			];
+		}else{
+			return [
+				'data'	=> [],
+				'msg'	=> '所有域名删除成功',
+				'code'	=> 1,
+			];
+		}
+	}
 	
 }

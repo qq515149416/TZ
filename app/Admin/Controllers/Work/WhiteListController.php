@@ -149,4 +149,22 @@ class WhiteListController extends Controller
 		
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
+
+	/**
+	* 批量删除白名单接口(不经系统直接调用api,针对没经过系统直接上墙过白的)
+	* @param  
+	* @return 
+	*/
+	public function delWhiteBatch(Request $request){
+		$par = $request->only( ['del_list','site'] );
+
+		$model = new WhiteListModel();
+		$res = $model->delWhiteBatch($par);
+		
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
+
+	public function delForm(){
+		return view('defenseipForm');
+	}
 }

@@ -101,9 +101,10 @@ class ApiController extends Controller
 		$key 	= $info->white_list_key;
 		$url 	= $info->white_list_add.'/deletedomain.php?domain='.$domain.'&key='.$this->$key;
 		$url2 	= $info->white_list_add.'/deletedomain.php?domain=.'.$domain.'&key='.$this->$key;
-		//真实环境用这个过白
+		//真实环境用这个
 		$res = $this->executeCurl($url);
 		$res2 = $this->executeCurl($url2);
+		
 		// dd($url.'<br>'.$url2);
 		//测试的用这一个
 		// $res = true;

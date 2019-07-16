@@ -288,7 +288,7 @@
                         <a href="/zuyong/index">服务器租赁</a>
                     </dd>
                     <dd>
-                        <a href="/tuoguan#hengyang">服务器托管 </a>
+                        <a href="/tuoguan/hengyang">服务器托管 </a>
                     </dd>
                     <dd>
                         <a href="/zuyong/gaofang">高防服务器</a>

@@ -642,31 +642,89 @@ class WhiteListModel extends Model
 	}	
 
 
-	public function delWhiteBatch($par)
-	{
+	// public function delWhiteBatch($par)
+	// {
+	// 	$model = new ApiController();
+	// 	$fail_list = [];
+	// 	foreach ($par['del_list'] as $k => $v) {
+	// 		if ($v != null) {
+	// 			$res = $model->delWhiteList($v,$par['site']);
+	// 			if($res['code'] == 0){
+	// 				$fail_list[] = $v;
+	// 			}
+	// 		}
+	// 	}
+	// 	if (count($fail_list) != 0) {
+	// 		return [
+	// 			'data'	=> $fail_list,
+	// 			'msg'	=> '这些域名删除失败',
+	// 			'code'	=> 0,
+	// 		];
+	// 	}else{
+	// 		return [
+	// 			'data'	=> [],
+	// 			'msg'	=> '所有域名删除成功',
+	// 			'code'	=> 1,
+	// 		];
+	// 	}
+	// }
+	
+	/**
+	 * 处理上传excel批量添加白名单申请
+	 * @return 
+	 */
+	public function delWhiteBatch($site,$file){
+		//获取操作人员信息
+
+		// $admin_user 	= Admin::user();
+
+		$reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader('Xlsx');//读取excel文件
+		$spreadsheet = $reader->load($file->getRealPath());//加载文件
+		$worksheet = $spreadsheet->getActiveSheet();//获取表格的活动区域
+		// $highest_colum = $worksheet->getHighestColumn();//获取总的列数
+		$sheet = $spreadsheet->getSheet(0);   //excel中的第一张sheet
+		$highest_row = $sheet->getHighestRow();       // 取得总行数
+		// $highest_column = $sheet->getHighestColumn();   // 取得总列数
+
+		//如果没填东西就返回错误
+		// if($highest_row < 5){
+		// 	return [
+		// 		'data'	=> [],
+		// 		'msg'	=> '请填写内容',
+		// 		'code'	=> 0,
+		// 	];
+		// }
+			
 		$model = new ApiController();
+		//失败数组
 		$fail_list = [];
-		foreach ($par['del_list'] as $k => $v) {
-			if ($v != null) {
-				$res = $model->delWhiteList($v,$par['site']);
-				if($res['code'] == 0){
-					$fail_list[] = $v;
-				}
+		//开关
+		$swi = 0;
+		for($k = 1 ; $k <= $highest_row ; $k++){//转换列名
+			//获取信息
+			$domain = $worksheet->getCell('A' . $k)->getValue();
+		
+			$res = $model->delWhiteList($domain,$site);
+			if($res['code'] == 0){
+				$swi = 1;
+				$fail_list[] = $domain;
 			}
+
 		}
-		if (count($fail_list) != 0) {
-			return [
-				'data'	=> $fail_list,
-				'msg'	=> '这些域名删除失败',
-				'code'	=> 0,
-			];
-		}else{
+
+		if ($swi == 0) {	//没有失败的
 			return [
 				'data'	=> [],
-				'msg'	=> '所有域名删除成功',
+				'msg'	=> '所有申请提交成功',
 				'code'	=> 1,
 			];
-		}
-	}
+		}else{		//有失败的
+			return [
+				'data'	=> $fail_list,
+				'msg'	=> '以下申请提交失败',
+				'code'	=> 0,
+			];
+		}	
+	}	
 	
 }

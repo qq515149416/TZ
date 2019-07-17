@@ -6,7 +6,7 @@
 </head>
 <body>
 
-	<form method="post" action="/tz_admin/whitelist/delWhiteBatch">
+	<form method="post" action="/tz_admin/whitelist/delWhiteBatch" enctype="multipart/form-data">
 		<div id="box">
 			<input type="hidden" name="_token" value="{{csrf_token()}}">
 			<p>
@@ -24,11 +24,11 @@
 				<button id="button" type="button">+</button>
 			</p> -->
 
-			<p id="first">
+			<!-- <p id="first">
 				域名:<input type="text" name="del_list[]">
 				<button id="button" type="button">+</button>
-			</p>
-
+			</p> -->
+			<input type="file" name="del_excel" />
 			<p><input type="submit" name="提交" value="提交"></p>
 		</div>
 	</form>

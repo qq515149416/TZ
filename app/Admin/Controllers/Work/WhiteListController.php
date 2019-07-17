@@ -156,10 +156,16 @@ class WhiteListController extends Controller
 	* @return 
 	*/
 	public function delWhiteBatch(Request $request){
-		$par = $request->only( ['del_list','site'] );
+		$par = $request->only( ['site'] );
+		$file = $request->file('del_excel');
+		
+		if($file->getClientOriginalExtension() != 'xlsx'){//判断上传文件的后缀
+			return tz_ajax_echo([],'仅支持类型为xlsx的文件',0);
+		}
 
 		$model = new WhiteListModel();
-		$res = $model->delWhiteBatch($par);
+
+		$res = $model->delWhiteBatch($par['site'],$file);
 		
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}

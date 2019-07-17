@@ -647,9 +647,11 @@ class WhiteListModel extends Model
 		$model = new ApiController();
 		$fail_list = [];
 		foreach ($par['del_list'] as $k => $v) {
-			$res = $model->delWhiteList($v,$par['site']);
-			if($res['code'] == 0){
-				$fail_list[] = $v;
+			if ($v != null) {
+				$res = $model->delWhiteList($v,$par['site']);
+				if($res['code'] == 0){
+					$fail_list[] = $v;
+				}
 			}
 		}
 		if (count($fail_list) != 0) {

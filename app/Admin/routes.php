@@ -296,7 +296,6 @@ Route::group([
         $router->get('ips', 'Idc\MachineController@ips');//获取IP数据
         $router->get('excel_template', 'Idc\MachineController@excelTemplate');//下载机器的批量模板
         $router->post('handle_excel', 'Idc\MachineController@handleExcel');//上传机器的批量添加数据
-        // $router->get('tran_status','Idc\MachineController@tranStatus');//转换机器状态，非必要请勿打开使用
     });
 
     /**
@@ -383,7 +382,8 @@ Route::group([
         $router->get('excelTemplate', 'Work\WhiteListController@excelTemplate');//下载机器的批量模板
         $router->post('handleExcel', 'Work\WhiteListController@handleExcel');//上传机器的批量添加数据
         $router->post('checkWhiteListBatch', 'Work\WhiteListController@checkWhiteListBatch');//白名单申请单 批量审核接口
-
+        // $router->post('delWhiteBatch', 'Work\WhiteListController@delWhiteBatch');//批量删除白名单接口(不经系统直接调用api,针对没经过系统上墙过白的)
+        // $router->get('delForm', 'Work\WhiteListController@delForm');//批量下白显示页面
     });
 
 

@@ -28,6 +28,7 @@ class BusinessModel extends Model
      */
     public function insertBusiness($insert)
     {
+        // dd($insert);
         if (!$insert) {
             $return['data'] = '';
             $return['code'] = 0;
@@ -58,7 +59,8 @@ class BusinessModel extends Model
         $end_time = time_calculation($start_time,$insert['length'],'month');
         $insert['start_time']   = $start_time;
         $insert['endding_time'] = $end_time;
-        $row                  = DB::table('tz_business')->insertGetId($insert);
+        $insert_data = $this->fill($insert)->toArray();//过滤掉多余字段
+        $row                  = DB::table('tz_business')->insertGetId($insert_data);
         if ($row == 0) {
             DB::rollBack();
             $return['data'] = '';

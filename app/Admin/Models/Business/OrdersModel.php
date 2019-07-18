@@ -306,7 +306,7 @@ class OrdersModel extends Model
 		if(empty($business)){//主业务不存在
 			$return['data'] = '';
 			$return['code'] = 0;
-			$return['msg'] = '(#108)该业务可能不存在/已取消';
+			$return['msg'] = '(#108)该业务可能不存在/已取消/未审核';
 			return $return;
 		}
 		if($business<1 || $business>4){//业务状态未通过审核/其他非正常状态

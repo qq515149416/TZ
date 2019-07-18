@@ -296,7 +296,6 @@ Route::group([
         $router->get('ips', 'Idc\MachineController@ips');//获取IP数据
         $router->get('excel_template', 'Idc\MachineController@excelTemplate');//下载机器的批量模板
         $router->post('handle_excel', 'Idc\MachineController@handleExcel');//上传机器的批量添加数据
-        // $router->get('tran_status','Idc\MachineController@tranStatus');//转换机器状态，非必要请勿打开使用
     });
 
     /**

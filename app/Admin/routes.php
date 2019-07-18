@@ -411,7 +411,6 @@ Route::group([
         $router->get('finance', 'Business\OrdersController@financeOrders');//财务查看订单
         $router->post('clerk', 'Business\OrdersController@clerkOrders');//业务员查看订单
         $router->post('resource', 'Business\OrdersController@resource');//获取资源
-        $router->post('ordersReview', 'Business\OrdersReviewController@ordersReview');//财务对流水提出复核
 
         $router->post('renewresource', 'Business\OrdersController@renewResource');//续费
         $router->get('all_renew', 'Business\OrdersController@allRenew');//获取业务下续费的资源
@@ -481,6 +480,12 @@ Route::group([
          * 未绑定业务员的客户信息(laravel-admin模式编写)
          */
         $router->resource('unbound','Business\UnboundController');
+
+        /**
+         * 对流水进行复核
+         */
+         $router->post('ordersReview', 'Business\OrdersReviewController@ordersReview');//财务对流水提出复核
+         $router->get('showReview', 'Business\OrdersReviewController@showReview');//根据流水id查询该流水的所有复核情况
     });
 
 

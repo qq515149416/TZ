@@ -35,9 +35,16 @@ class OrdersReviewRequest extends FormRequest
 				$return = [
 					'flow_id'			=> 'required|exists:tz_orders_flow,id',
 					'reason'			=> 'required',
+					'status'			=> 'required|in:0,1'
 				];
 				break;
 			
+			case 'showReview':
+				$return = [
+					'flow_id'			=> 'required|exists:tz_orders_flow,id',
+				
+				];
+				break;
 			default:
 	
 				break;
@@ -50,9 +57,11 @@ class OrdersReviewRequest extends FormRequest
 	{
 		
 		return  [
-			'flow_id.required'		=> '请选择需复核的流水',	
+			'flow_id.required'		=> '请选择流水id',	
 			'flow_id.exists'			=> '流水id不存在',	
 			'reason.required'		=> '请填写复核原因',	
+			'status.required'			=> '请填写复核结果',
+			'status.in'			=> '复核结果为:0->尚未处理 , 1->已处理完毕'		
 		];
 	}
 

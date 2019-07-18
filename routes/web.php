@@ -51,7 +51,8 @@ Route::group([
     Route::get('/bandwidth-rent/{page}', 'Show\BandwidthRentController@index');
     Route::get('/activity', 'Show\LatestActivityController@index');
     Route::get('/yun/{page}', 'Show\YunController@index');
-    Route::get('/help', 'Show\HelpCenterController@index');
+    Route::get('/help/{page?}', 'Show\HelpCenterController@index');
+    Route::get('/help/category/{id}', 'Show\HelpCenterController@category');
     Route::get('/souvenir', 'Show\SouvenirController@index');
     Route::get('/overlayPackage', 'Show\OverlayPackageController@index');
 

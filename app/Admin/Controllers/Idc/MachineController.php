@@ -38,7 +38,7 @@ class MachineController extends Controller
      */
     public function insertMachine(MachineRequest $request){
     	
-		$data = $request->only(['machine_num','cpu','memory','harddisk','cabinet','ip_id','machineroom','bandwidth','protect','loginname','loginpass','machine_type','used_status','machine_status','business_type','machine_note']);
+		$data = $request->only(['machine_num','cpu','memory','harddisk','cabinet','ip_id','machineroom','bandwidth','protect','loginname','loginpass','machine_type','used_status','machine_status','business_type','machine_note','customer_id']);
 		$insertmachine = new MachineModel();
 		$return = $insertmachine->insertMachine($data);
 		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
@@ -50,7 +50,7 @@ class MachineController extends Controller
      * @return json                  相关的提示信息和状态返回
      */
     public function editMachine(MachineRequest $request){
-		$editdata = $request->only(['id','machine_num','cpu','memory','harddisk','cabinet','ip_id','machineroom','bandwidth','protect','loginname','loginpass','machine_type','used_status','machine_status','business_type','machine_note']);
+		$editdata = $request->only(['id','machine_num','cpu','memory','harddisk','cabinet','ip_id','machineroom','bandwidth','protect','loginname','loginpass','machine_type','used_status','machine_status','business_type','machine_note','customer_id']);
 		$editmachine = new MachineModel();
 		$return = $editmachine->editMachine($editdata);
 		return tz_ajax_echo($return,$return['msg'],$return['code']);
@@ -135,12 +135,6 @@ class MachineController extends Controller
         $excel = new MachineModel();
         $return = $excel->handleExcel($file);
         return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
-    }
-
-    public function tranStatus(){
-        $tran = new MachineModel();
-        $result = $tran->tranStatus();
-        return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
     }
 
 }

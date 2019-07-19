@@ -105,7 +105,7 @@ class BusinessController extends Controller
      * @return json           返回相关操作的数据和状态及提示信息
      */
     public function showBusiness(Request $request){
-		$show = $request->only(['client_id']);
+		$show = $request->only(['client_id','business_type']);
 		$show_business = new BusinessModel();
 		$return = $show_business->showBusiness($show);
 		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);

@@ -70,4 +70,39 @@ class OrdersReviewModel extends Model
 		}
 	}
 	
+
+	/**
+	*根据流水id查询该流水的所有复核情况
+	*
+	*
+	*/
+	public function showReview( $flow_id )
+	{
+		$review = $this->where('flow_id',$flow_id)->get()->toArray();
+		if (count($review) == 0) {
+			return [
+				'data'	=> [],
+				'msg'	=> '无复核单',
+				'code'	=> 1,
+			];
+		}
+
+		$status_arr = [
+			0	=> '尚未处理',
+			1	=> '处理完毕',
+		];
+		foreach ($review as $k => $v) {
+			if (isset($status_arr[$v['status']])) {
+				$review[$k]['review_status'] = $status_arr[$v['status']];
+			}else{
+				$review[$k]['review_status'] = ['状态异常'];
+			}	
+		}
+		return [
+			'data'	=> $review,
+			'msg'	=> '获取成功',
+			'code'	=> 1,
+		];
+	}
+	
 }

@@ -19,6 +19,7 @@ use XSDocument;
 use Illuminate\Support\Facades\Redis;
 use App\Admin\Models\Business\BusinessModel;
 use App\Admin\Models\DefenseIp\StoreModel;
+use App\Admin\Models\Business\OrdersReviewModel;
 
 /**
  * 后台订单模型
@@ -80,6 +81,28 @@ class OrdersModel extends Model
 				$value->customer_email = $value->customer_email?$value->customer_email:$value->customer_name;
 				$value->customer_email = $value->customer_email?$value->customer_email:$value->customer_nick_name;
 				
+				
+				$check = OrdersReviewModel::where('flow_id',$value->flow_id)->get(['status'])->toArray();
+				// if ($value->flow_id == 4926) {
+				// 			dd($check);
+				// 		}
+				if (count($check) == 0){
+					$value->review_status = '尚未复核';
+					$value->is_review = 0;
+				}else{
+					foreach ($check as $k => $v) {
+						
+						if( $v['status'] == 0){
+							$value->review_status = '已提交复核疑问,尚未处理';
+							$value->is_review = 2;
+						} 
+					}
+					if (!isset($value->review_status) ) {
+						$value->review_status = '已复核完毕';
+						$value->is_review = 1;
+					}
+				}				
+
 				//取出流水包含的订单id
 				$order_id = json_decode($value->order_id,true);
 				

@@ -50,6 +50,15 @@ class HelpCenterController extends Controller
     }
     public function detail($id)
     {
-
+        return view("http/helpCenter",[
+            "nav_main" => HelpCategoryModel::where([
+                "parent_id" => 0,
+                "status" => 1
+            ])->get(),
+            "data" => HelpContentsModel::where([
+                "id" => $id
+            ])->first(),
+            "template" => "http.help.content"
+        ]);
     }
 }

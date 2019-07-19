@@ -7,7 +7,7 @@
         <ul class="font-regular">
             @foreach ($list_data->where('category_id',$item->id)->get() as $item)
             <li>
-                <a href="javascript:;">
+                <a href="/help/detail/{{ $item->id }}">
                     {{ $item->title }}
                 </a>
             </li>

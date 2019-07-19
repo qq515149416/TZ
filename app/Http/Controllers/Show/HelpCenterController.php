@@ -48,4 +48,8 @@ class HelpCenterController extends Controller
             "template" => "http.help.list"
         ]);
     }
+    public function detail($id)
+    {
+
+    }
 }

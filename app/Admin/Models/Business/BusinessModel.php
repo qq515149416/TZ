@@ -367,8 +367,8 @@ class BusinessModel extends Model
                 $return['code'] = 1;
                 $return['msg']  = '相关业务数据获取成功';
             } else {
-                $return['data'] = '暂无业务数据';
-                $return['code'] = 0;
+                $return['data'] = $result;
+                $return['code'] = 1;
                 $return['msg']  = '暂无业务数据';
             }
 

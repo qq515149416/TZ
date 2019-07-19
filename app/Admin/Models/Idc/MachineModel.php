@@ -16,7 +16,7 @@ class MachineModel extends Model
 	protected $table = 'idc_machine';
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
-	protected $fillable = ['machine_num', 'cpu','harddisk','cabinet','memory','ip_id','machineroom','protect','bandwidth','loginname','loginpass','machine_type','used_status','machine_status','business_type','created_at','updated_at','deleted_at'];
+	protected $fillable = ['machine_num', 'machine_note','cpu','harddisk','cabinet','memory','ip_id','machineroom','protect','bandwidth','loginname','loginpass','machine_type','used_status','machine_status','business_type','created_at','updated_at','deleted_at'];
 
 	/**
 	 * 查找属于对应条件的机器
@@ -199,8 +199,12 @@ class MachineModel extends Model
 			}
 
 			if($data['business_type'] == 2 || $data['business_type'] == 4){
-				//当是托管/托管预备库的主机时将机器和绑定的客户进行关联
-				$result = DB::table('tz_machine_customer')->insertGetId(['machine_id'=>$row,'customer_id'=>$data['customer_id'],'created_at'=>$data['created_at'],'updated_at'=>$data['created_at']]);
+				if(isset($data['customer_id']) &&  $data['customer_id'] != Null){
+					//当是托管/托管预备库的主机时将机器和绑定的客户进行关联
+					$result = DB::table('tz_machine_customer')->insertGetId(['machine_id'=>$row,'customer_id'=>$data['customer_id'],'created_at'=>$data['created_at'],'updated_at'=>$data['created_at']]);
+				} else {
+					$result = 1;
+				}
 			} else {
 				$result = 1;
 			}
@@ -359,21 +363,26 @@ class MachineModel extends Model
 		}
 		// dd($edit['updated_at']);
 		if($editdata['business_type'] == 2 || $editdata['business_type'] == 4){
-			//当时托管/托管预备库时先查询机器是否已经绑定客户
-			$machine_customer = DB::table('tz_machine_customer')->where(['machine_id'=>$editdata['id']])->whereNull('deleted_at')->select('id','customer_id')->first();
-			if(empty($machine_customer)){
-				//主机未绑定客户的直接进行主机与客户绑定的数据添加
-				$edit_result = DB::table('tz_machine_customer')->insertGetId(['machine_id'=>$editdata['id'],'customer_id'=>$editdata['customer_id'],'created_at'=>$editdata['updated_at'],'updated_at'=>$editdata['updated_at']]);
-			} else {
-				//主机已绑定过客户
-				if($machine_customer ->customer_id != $editdata['customer_id']){
-					//主机绑定的客户信息与之前绑定的不一致，对原绑定信息进行修改
-					$edit_result = DB::table('tz_machine_customer')->where(['id'=>$machine_customer->id])->update(['customer_id'=>$editdata['customer_id'],'updated_at'=>$editdata['updated_at']]);
+			if(isset($data['customer_id']) &&  $data['customer_id'] != Null){
+				//当时托管/托管预备库时先查询机器是否已经绑定客户
+				$machine_customer = DB::table('tz_machine_customer')->where(['machine_id'=>$editdata['id']])->whereNull('deleted_at')->select('id','customer_id')->first();
+				if(empty($machine_customer)){
+					//主机未绑定客户的直接进行主机与客户绑定的数据添加
+					$edit_result = DB::table('tz_machine_customer')->insertGetId(['machine_id'=>$editdata['id'],'customer_id'=>$editdata['customer_id'],'created_at'=>$editdata['updated_at'],'updated_at'=>$editdata['updated_at']]);
 				} else {
-					//主机绑定的客户信息与之前的一致，直接跳过
-					$edit_result = 1;
+					//主机已绑定过客户
+					if($machine_customer ->customer_id != $editdata['customer_id']){
+						//主机绑定的客户信息与之前绑定的不一致，对原绑定信息进行修改
+						$edit_result = DB::table('tz_machine_customer')->where(['id'=>$machine_customer->id])->update(['customer_id'=>$editdata['customer_id'],'updated_at'=>$editdata['updated_at']]);
+					} else {
+						//主机绑定的客户信息与之前的一致，直接跳过
+						$edit_result = 1;
+					}
 				}
+			} else {
+				$edit_result = 1;
 			}
+			
 		} else {
 			$edit_result = 1;
 		}

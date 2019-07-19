@@ -148,7 +148,7 @@ class BusinessController extends Controller
      */
     public function selectUsers(Request $request){
         $salesman_id = $request->only(['salesman_id']);
-        $client = DB::table('tz_users')->where($salesman_id)->select('id','name','email')->get();
+        $client = DB::table('tz_users')->where($salesman_id)->select('id','name','email','nickaname')->get();
         if(empty($client)){
             return tz_ajax_echo([],'该业务员名下暂无客户',0);
         }

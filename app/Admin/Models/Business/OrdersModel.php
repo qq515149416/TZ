@@ -41,8 +41,8 @@ class OrdersModel extends Model
 		$time = $business->queryTime($data);
 		
 		$result = DB::table('tz_orders_flow as flow')
-					->join('tz_users as users','flow.customer_id','=','users.id')
-					->join('admin_users as admin','flow.business_id','=','admin.id')
+					->leftjoin('tz_users as users','flow.customer_id','=','users.id')
+					->leftjoin('admin_users as admin','flow.business_id','=','admin.id')
 					->whereBetween('flow.pay_time',[$time['start_time'],$time['end_time']])
 					->whereNull('flow.deleted_at')
 

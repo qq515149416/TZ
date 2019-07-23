@@ -51,8 +51,7 @@ class OrdersReviewModel extends Model
 			'flow_id'		=> $par['flow_id'],	
 			'reason'		=> $par['reason'],
 			'order_id'	=> $order_id,
-			'status'		=> 0,
-			
+			'status'		=> $par['status'],
 		];
 		$res = $this->create($data);
 		if ($res) {

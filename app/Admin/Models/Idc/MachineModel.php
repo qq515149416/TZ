@@ -363,7 +363,7 @@ class MachineModel extends Model
 		}
 		// dd($edit['updated_at']);
 		if($editdata['business_type'] == 2 || $editdata['business_type'] == 4){
-			if(isset($data['customer_id']) &&  $data['customer_id'] != Null){
+			if(isset($editdata['customer_id']) &&  $editdata['customer_id'] != Null){
 				//当时托管/托管预备库时先查询机器是否已经绑定客户
 				$machine_customer = DB::table('tz_machine_customer')->where(['machine_id'=>$editdata['id']])->whereNull('deleted_at')->select('id','customer_id')->first();
 				if(empty($machine_customer)){

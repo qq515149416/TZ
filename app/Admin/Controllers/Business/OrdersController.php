@@ -296,4 +296,17 @@ class OrdersController extends Controller
 		return tz_ajax_echo($result,$result['msg'],$result['code']);
 	}
 
+
+	/**
+	 * 根据订单号获取指定订单资源详情
+	 * @param  Request $request 
+	 * @return 
+	 */
+	public function showOrderDetail(OrdersRequest $request){
+		$par = $request->only(['order_sn']);
+		
+		$update = new OrdersModel();
+		$res = $update->showOrderDetail($par['order_sn']);
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
 }

@@ -16,19 +16,24 @@ class MachineModel extends Model
 	protected $table = 'idc_machine';
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
-	protected $fillable = ['machine_num', 'cpu','harddisk','cabinet','memory','ip_id','machineroom','protect','bandwidth','loginname','loginpass','machine_type','used_status','machine_status','business_type','created_at','updated_at','deleted_at'];
+	protected $fillable = ['machine_num', 'machine_note','cpu','harddisk','cabinet','memory','ip_id','machineroom','protect','bandwidth','loginname','loginpass','machine_type','used_status','machine_status','business_type','created_at','updated_at','deleted_at'];
 
 	/**
 	 * 查找属于对应条件的机器
 	 * @return [type] [description]
 	 */
 	public function showMachine($where){
-		// 进行条件查询业务类型为1的即租用的所有机器信息
-		$result = $this->where($where)->get(['id','machine_num','cpu','memory','harddisk','cabinet','ip_id','machineroom','bandwidth','protect','loginname','loginpass','machine_type','used_status','machine_status','own_business','business_end','business_type','machine_note','created_at','updated_at']);
 
-		//分页取数据
-		// $result  = $this->paginate(15);
-
+		if($where['business_type'] == 2 || $where['business_type']== 4){//托管主机/托管预备库的主机同时查询到主机绑定的客户和业务员
+			$result = $this->leftjoin('tz_machine_customer','idc_machine.id','=','tz_machine_customer.machine_id')
+					   ->leftjoin('tz_users','tz_machine_customer.customer_id','=','tz_users.id')
+					   ->leftjoin('admin_users','tz_users.salesman_id','=','admin_users.id')
+					   ->where($where)
+					   ->get(['idc_machine.id','machine_num','cpu','memory','harddisk','cabinet','ip_id','machineroom','bandwidth','protect','loginname','loginpass','machine_type','used_status','machine_status','own_business','business_end','business_type','machine_note','idc_machine.created_at','idc_machine.updated_at','tz_users.nickname','admin_users.name','tz_users.id as customer_id','admin_users.id as admin_id']);
+		} else {//租用主机/租用预备库
+			$result = $this->where($where)->get(['id','machine_num','cpu','memory','harddisk','cabinet','ip_id','machineroom','bandwidth','protect','loginname','loginpass','machine_type','used_status','machine_status','own_business','business_end','business_type','machine_note','created_at','updated_at']);
+		}
+		
 		// 判断是否查询到数据
 		if(!$result->isEmpty()){
 			// 查询到数据进行某些字段的数据转换
@@ -102,15 +107,12 @@ class MachineModel extends Model
 				$result[$key]['business'] = $business_type[$value['business_type']];//业务类型的转换
 				$result[$key]['machineroom_id'] = $value['machineroom'];
 				unset($value['business_type']);
-				// $cabinet = $value['cabinet']?$value['cabinet']:0;
-				// $ip_id = $value['ip_id']?$value['ip_id']:0;
 				$machinerooms = $this->machineroom($value['machineroom']);//机房信息的查询
 				// 进行对应的机柜等信息的转换或者显示
 				$machineroom = $this->machineroom($value['machineroom']);//机房信息的查询
 				$cabinet = $this->showCabinets($value['machineroom'],$value['cabinet']);
 				$ip = $this->showIps($value['machineroom'],$value['ip_id']);
 				// 进行对应的机柜等信息的转换或者显
-				
 				$result[$key]['cabinets'] = $cabinet->cabinet_id;//机柜信息的返回
 				//IP信息的返回
 				$result[$key]['ip'] = $ip->ip;
@@ -186,8 +188,28 @@ class MachineModel extends Model
 			}
 
 			$data['created_at'] = date('Y-m-d H:i:s',time());
-			$row = DB::table('idc_machine')->insertGetId($data);//将新增的机器信息插入数据库
-			if($row != 0){
+			//插入数据时过滤掉多余的字段
+			$machine_data = $this->fill($data)->toArray();
+			$row = DB::table('idc_machine')->insertGetId($machine_data);//将新增的机器信息插入数据库
+			if($row == 0){
+				DB::rollBack();
+				$return['data'] = '';
+				$return['code'] = 0;
+				$return['msg'] = '(#104)新增机器信息失败！！';
+			}
+
+			if($data['business_type'] == 2 || $data['business_type'] == 4){
+				if(isset($data['customer_id']) &&  $data['customer_id'] != Null){
+					//当是托管/托管预备库的主机时将机器和绑定的客户进行关联
+					$result = DB::table('tz_machine_customer')->insertGetId(['machine_id'=>$row,'customer_id'=>$data['customer_id'],'created_at'=>$data['created_at'],'updated_at'=>$data['created_at']]);
+				} else {
+					$result = 1;
+				}
+			} else {
+				$result = 1;
+			}
+
+			if($result != 0){
 				DB::commit();
 				$return['data'] = $row;
 				$return['code'] = 1;
@@ -196,8 +218,9 @@ class MachineModel extends Model
 				DB::rollBack();
 				$return['data'] = '';
 				$return['code'] = 0;
-				$return['msg'] = '(#104)新增机器信息失败！！';
+				$return['msg'] = '(#106)新增机器信息失败！！';
 			}
+
 		} else {
 			$return['data'] = '';
 			$return['code'] = 0;
@@ -329,13 +352,45 @@ class MachineModel extends Model
 			}
 		}
 		$editdata['updated_at'] = date('Y-m-d H:i:s',time());
-		$row = DB::table('idc_machine')->where('id',$editdata['id'])->update($editdata);
+		$edit = $this->fill($editdata)->toArray();
+		$row = DB::table('idc_machine')->where('id',$editdata['id'])->update($edit);
 		if($row == 0){
 			//更新机器信息失败事务回滚
 			DB::rollBack();
 			$return['code'] = 0;
 			$return['msg'] = '(#107)修改机器信息失败！！';
 			
+		}
+		// dd($edit['updated_at']);
+		if($editdata['business_type'] == 2 || $editdata['business_type'] == 4){
+			if(isset($editdata['customer_id']) &&  $editdata['customer_id'] != Null){
+				//当时托管/托管预备库时先查询机器是否已经绑定客户
+				$machine_customer = DB::table('tz_machine_customer')->where(['machine_id'=>$editdata['id']])->whereNull('deleted_at')->select('id','customer_id')->first();
+				if(empty($machine_customer)){
+					//主机未绑定客户的直接进行主机与客户绑定的数据添加
+					$edit_result = DB::table('tz_machine_customer')->insertGetId(['machine_id'=>$editdata['id'],'customer_id'=>$editdata['customer_id'],'created_at'=>$editdata['updated_at'],'updated_at'=>$editdata['updated_at']]);
+				} else {
+					//主机已绑定过客户
+					if($machine_customer ->customer_id != $editdata['customer_id']){
+						//主机绑定的客户信息与之前绑定的不一致，对原绑定信息进行修改
+						$edit_result = DB::table('tz_machine_customer')->where(['id'=>$machine_customer->id])->update(['customer_id'=>$editdata['customer_id'],'updated_at'=>$editdata['updated_at']]);
+					} else {
+						//主机绑定的客户信息与之前的一致，直接跳过
+						$edit_result = 1;
+					}
+				}
+			} else {
+				$edit_result = 1;
+			}
+			
+		} else {
+			$edit_result = 1;
+		}
+
+		if($edit_result == 0){
+			DB::rollBack();
+			$return['code'] = 0;
+			$return['msg'] = '(#108)修改机器信息失败！！';
 		} else {
 			DB::commit();
 			$return['code'] = 1;
@@ -883,38 +938,6 @@ class MachineModel extends Model
 			// }
 		}
 		return $return;
-	}
-
-	public function tranStatus(){
-		$trans = $this->where('used_status','>',0)->select('id','used_status','machine_num')->get();
-		if(!$trans->isEmpty()){
-			DB::beginTransaction();
-			foreach($trans as $key=>$value){
-				echo '机器:'.$value['machine_num'].'的使用状态为'.$value['used_status'].'<br>';
-				if($value['used_status'] == 1){
-					$update = DB::table('idc_machine')->where(['id'=>$value['id']])->update(['used_status'=>2]);
-				} else {
-					$update = 1;
-				}
-				// elseif($value['used_status'] == 2){
-				// 	$update = DB::table('idc_machine')->where(['id'=>$value['id']])->update(['used_status'=>3]);
-				// } elseif($value['used_status'] == 3){
-				// 	$update = DB::table('idc_machine')->where(['id'=>$value['id']])->update(['used_status'=>4]);
-				// }
-				if($update == 0){
-					DB::rollBack();
-					$return['data'] = '';
-					$return['code'] = 0;
-					$return['msg'] = '机器:'.$value['machine_num'].'使用状态修改失败';
-				} else {
-					DB::commit();
-				}
-			}
-			return ['data'=>'','code'=>1,'msg'=>'机器使用状态转换成功'];
-		} else {
-			return ['data'=>'','code'=>2,'msg'=>'暂无机器使用状态需要转换'];
-		}
-
 	}
 
 }

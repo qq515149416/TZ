@@ -6,6 +6,7 @@ namespace App\Admin\Requests\Idc;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 
 class IpsRequest extends FormRequest
@@ -33,8 +34,23 @@ class IpsRequest extends FormRequest
 
         if($array_path[$count_path-1] == 'insert'){
             return [    
-                'ip_start' => 'required|ip|unique:idc_ips,ip,'.Request()->id.',id,deleted_at,Null',
-                'ip_end' => 'sometimes|nullable|ip|unique:idc_ips,ip',
+                // 'ip_start' => "required|ip|unique:idc_ips,ip,'',id,deleted_at,is_null",
+                'ip_start' => [
+                    'required',
+                    'ip',
+                    Rule::unique('idc_ips','ip')->where(function($query){
+                        $query->whereNull('deleted_at');
+                    })
+                ],
+                'ip_end' => [
+                    'sometimes',
+                    'nullable',
+                    'ip',
+                    Rule::unique('idc_ips','ip')->where(function($query){
+                        $query->whereNull('deleted_at');
+                    })
+                ],
+                // 'ip_end' => "sometimes|nullable|ip|unique:idc_ips,ip,'',id,deleted_at,is_null",
                 'vlan' => 'required|integer',
                 'ip_company' => 'required|integer|min:0|max:2',
                 'ip_status' => 'required|integer|min:0|max:3',
@@ -45,7 +61,14 @@ class IpsRequest extends FormRequest
             $id = (int)Request('id');
             return [
                 'id' => 'required|integer',    
-                'ip_start' => 'sometimes|ip|unique:idc_ips,ip,'.$id.',id,deleted_at,Null',
+                // 'ip_start' => 'sometimes|ip|unique:idc_ips,ip,'.$id.',id,deleted_at,Null',
+                'ip_start' => [
+                    'sometimes',
+                    'ip',
+                    Rule::unique('idc_ips','ip')->ignore($id)->where(function($query){
+                        $query->whereNull('deleted_at');
+                    })
+                ],
                 'vlan' => 'sometimes|integer',
                 'ip_company' => 'sometimes|integer|min:0|max:2',
                 'ip_status' => 'sometimes|integer|min:0|max:3',
@@ -63,6 +86,7 @@ class IpsRequest extends FormRequest
             'ip_start.required' => 'IP地址必须填写',
             'ip_start.ip' => 'IP地址的填写必须符合IP规范(例:192.168.1.1)',
             'ip_start.unique' => 'IP地址必须唯一',
+            'ip_end.unique' => 'IP结束段地址必须唯一',
             'ip_end.ip' => 'IP地址的填写必须符合IP规范(例:192.168.1.251)',
             'vlan.required' => 'IP所属局域网必须填写',
             'vlan.integer' => 'IP所属局域网填写必须是整数',

@@ -10,7 +10,7 @@
         <li>
             <div class="media">
                 <div class="media-left">
-                    <a href="javascript:;">
+                    <a href="/help/detail/{{ $item->id }}">
                         <span class="date-day">
                             {{ date("d",strtotime($item->created_at)) }}
                         </span>
@@ -20,7 +20,7 @@
                     </a>
                 </div>
                 <div class="media-body">
-                    <a href="javascript:;">
+                    <a href="/help/detail/{{ $item->id }}">
                         <h4 class="media-heading">
                             <!-- <span class="top">置顶</span> -->
                             {{ $item->title }}

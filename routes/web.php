@@ -53,6 +53,7 @@ Route::group([
     Route::get('/yun/{page}', 'Show\YunController@index');
     Route::get('/help/{page?}', 'Show\HelpCenterController@index');
     Route::get('/help/category/{id}', 'Show\HelpCenterController@category');
+    Route::get('/help/detail/{id}', 'Show\HelpCenterController@detail');
     Route::get('/souvenir', 'Show\SouvenirController@index');
     Route::get('/overlayPackage', 'Show\OverlayPackageController@index');
 

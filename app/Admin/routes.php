@@ -485,6 +485,7 @@ Route::group([
          */
          $router->post('ordersReview', 'Business\OrdersReviewController@ordersReview');//财务对流水提出复核
          $router->get('showReview', 'Business\OrdersReviewController@showReview');//根据流水id查询该流水的所有复核情况
+         $router->get('showOrderDetail', 'Business\OrdersController@showOrderDetail');//根据订单号获取指定订单资源详情
     });
 
 

@@ -37,6 +37,12 @@ class OrdersRequest extends FormRequest
 					// 'coupon_id'		=> 'required',
 				];
 				break;
+			case 'showOrderDetail':
+				$return = [
+					'order_sn'		=> 'required|exists:tz_orders,order_sn',
+
+				];
+				break;
 			
 			default:
 	
@@ -53,6 +59,8 @@ class OrdersRequest extends FormRequest
 			'business_number.required'	=> '请选择业务',
 			'coupon_id.required'		=> '请选择优惠券',
 			'order_id.required'		=> '请选择需支付的订单',	
+			'order_sn.required'		=> '请提供订单编号',	
+			'order_sn.exists'			=> '订单编号不存在',	
 		];
 	}
 

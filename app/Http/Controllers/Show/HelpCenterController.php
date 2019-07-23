@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Show;
 use App\Http\Controllers\Controller;
 use App\Admin\Models\News\HelpCategoryModel;
 use App\Admin\Models\News\HelpContentsModel;
+use App\Admin\Models\News\HelpTagModel;
+use Illuminate\Http\Request;
 
 
 class HelpCenterController extends Controller
@@ -22,18 +24,43 @@ class HelpCenterController extends Controller
                 ["status", "=", 1]
             ];
         }
+        $helpTagModel = new HelpTagModel();
         return view("http/helpCenter",[
             "nav_main" => HelpCategoryModel::where([
                 "parent_id" => 0,
                 "status" => 1
             ])->get(),
             "template" => "http.help.collection",
-            "nav" => HelpCategoryModel::where($where)->get(),
-            "list_data" => $helpContentsModel
+            "nav" => HelpCategoryModel::where($where)->paginate(10),
+            "list_data" => $helpContentsModel,
+            "tags" => $helpTagModel->orderBy("search_count","desc")->limit(5)->get()
+        ]);
+    }
+    public function search(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        $result = HelpTagModel::where("name","like","%$keyword%")->get();
+        HelpTagModel::where("name","like","%$keyword%")->increment("search_count");
+        $data = [];
+        foreach($result as $key=>$val)
+        {
+            array_push($data,$val->content);
+        }
+        $helpTagModel = new HelpTagModel();
+        return view("http/helpCenter",[
+            "nav_main" => HelpCategoryModel::where([
+                "parent_id" => 0,
+                "status" => 1
+            ])->get(),
+            "keyword" => $keyword,
+            "data" => $data,
+            "template" => "http.help.list",
+            "tags" => $helpTagModel->orderBy("search_count","desc")->limit(5)->get()
         ]);
     }
     public function category($id)
     {
+        $helpTagModel = new HelpTagModel();
         return view("http/helpCenter",[
             "nav_main" => HelpCategoryModel::where([
                 "parent_id" => 0,
@@ -44,21 +71,32 @@ class HelpCenterController extends Controller
             ])->first(),
             "data" => HelpContentsModel::where([
                 "category_id" => $id
-            ])->get(),
-            "template" => "http.help.list"
+            ])->paginate(10),
+            "template" => "http.help.list",
+            "tags" => $helpTagModel->orderBy("search_count","desc")->limit(5)->get()
         ]);
     }
     public function detail($id)
     {
+        $data = HelpContentsModel::where([
+            "id" => $id
+        ])->first();
+        $helpTagModel = new HelpTagModel();
         return view("http/helpCenter",[
             "nav_main" => HelpCategoryModel::where([
                 "parent_id" => 0,
                 "status" => 1
             ])->get(),
-            "data" => HelpContentsModel::where([
-                "id" => $id
+            "data" => $data,
+            "recommend" => HelpContentsModel::where("category_id",$data->category_id->id)->get(),
+            "next_data" => HelpContentsModel::where([
+                "id" => $id + 1
             ])->first(),
-            "template" => "http.help.content"
+            "prev_data" => HelpContentsModel::where([
+                "id" => $id - 1
+            ])->first(),
+            "template" => "http.help.content",
+            "tags" => $helpTagModel->orderBy("search_count","desc")->limit(5)->get()
         ]);
     }
 }

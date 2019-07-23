@@ -2984,13 +2984,16 @@ class OrdersModel extends Model
 	public function showOrderDetail($order_sn)
 	{
 
-		$order = $this->where('order_sn' , $order_sn)->first( ['business_sn','resource_type' , 'machine_sn' , 'price' , 'duration' ,'end_time' ,'pay_time','resource'] )->toArray();
+		$order = $this->where('order_sn' , $order_sn)->first( ['business_sn','resource_type' , 'machine_sn' , 'price' , 'duration' ,'end_time' ,'pay_time','resource'] );
+
 		if (!$order) {
 			return [
 				'data'	=> [],
 				'msg'	=> '获取订单信息失败',
 				'code'	=> 0,
 			];
+		}else{
+			$order = $order->toArray();
 		}
 		$detail = [];
 		//资源的类型(1.租用主机，2.托管主机，3.租用机柜，4.IP，5.CPU，6.硬盘，7.内存，8.带宽，9.防护，10.cdn , 11.高防IP ; 12.流量叠加包 )

@@ -215,7 +215,7 @@ class BusinessModel extends Model
         $document = new \XSDocument($doc);
         $index->update($document);
         $index->flushIndex();
-        
+
         DB::commit();
         $return['data'] = $row;
         $return['code'] = 1;
@@ -263,9 +263,7 @@ class BusinessModel extends Model
 
         return $return;
     }
-// DB::beginTransaction();
-// DB::rollBack();
-// DB::commit();
+
     /**
      * 信安部门对业务进行审核操作
      * @param  array $where 业务的业务编号和业务的id
@@ -663,7 +661,7 @@ class BusinessModel extends Model
                 $return['msg']  = '(#104)该机器资源不存在/已被使用/已下架,请确认后再创建业务!';
                 return $return;
             }
-            // dd($machine);
+            
             $ip = $this->tranIp($machine->ip_id);
             $machine->ip = $ip['ip'];
             $machine->ip_detail = $ip['ip_detail'];
@@ -698,7 +696,7 @@ class BusinessModel extends Model
             $machine->cabinetid = $machine->id;
             $machine->id = $machine->cabinet_id;
         }
-        // $business_id = mt_rand(10000,20000);
+
         $business_sn               = $this->businesssn();
         $insert['business_number'] = $business_sn;
         $insert['business_status'] = 0;

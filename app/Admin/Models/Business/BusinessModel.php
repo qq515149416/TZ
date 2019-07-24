@@ -201,6 +201,21 @@ class BusinessModel extends Model
             return $return;
         }
 
+        $xunsearch = new XS('business');
+        $index = $xunsearch->index;
+        $resource = json_decode($insert['resource_detail']);
+        $doc['ip'] = isset($machine->ip)?strtolower($machine->ip):'';
+        $doc['cpu'] = isset($machine->cpu)?strtolower($machine->cpu):'';
+        $doc['memory'] = isset($machine->memory)?strtolower($machine->memory):'';
+        $doc['harddisk'] = isset($machine->harddisk)?strtolower($machine->harddisk):'';
+        $doc['id'] = strtolower($row);
+        $doc['business_sn'] = strtolower($business_sn);
+        $doc['machine_number'] = strtolower($data['business_number']);
+        $doc['client'] = strtolower($data['customer']);
+        $document = new \XSDocument($doc);
+        $index->update($document);
+        $index->flushIndex();
+        
         DB::commit();
         $return['data'] = $row;
         $return['code'] = 1;

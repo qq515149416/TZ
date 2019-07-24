@@ -110,6 +110,106 @@ class BusinessModel extends Model
     }
 
     /**
+     * 机柜业务下添加托管机器
+     * @param  array $data 'customer'--客户id,'parent_business'--机柜业务id,
+     * 'resource_type'--资源类型,'resource_id'--资源id,'price'--价格,'duration'--时长,'business_note'--业务备注
+     * @return [type]       [description]
+     */
+    public function cabinetMachine($data){
+
+        if(empty($data)){
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg']  = '(#101)业务无法创建！！';
+            return $return;
+        }
+
+        $sales = DB::table('tz_users')->where(['id'=>$data['customer']])->value('salesman_id');
+        $data['sales'] = $sales == Admin::user()->id ? Admin::user()->id : $sales;
+
+        $business = DB::table('tz_business')
+                      ->where(['id'=>$data['parent_business']])
+                      ->whereBetween('business_status',[0,5])
+                      ->whereBetween('remove_status',[0,1])
+                      ->value('id');
+        if(empty($business)){
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg']  = '(#102)请确认机柜业务未过期/未下架';
+            return $return;
+        }
+
+        $machine = DB::table('idc_machine as machine')->join('tz_machine_customer as mc','machine.id','=','mc.machine_id')
+                    ->where(['machine.id'=>$data['resource_id'],'mc.customer_id'=>$data['customer'],'used_status'=>0,'machine_status'=>0])
+                    ->whereNull('machine.deleted_at')
+                    ->select('machine.id','machine_num','cpu','memory','harddisk','cabinet','ip_id','machineroom as machineroom_id','bandwidth','protect','loginname','loginpass')
+                    ->first();
+        if(empty($machine)){
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg']  = '(#103)选择的机器不存在/不属于此客户/已被使用';
+            return $return;
+        }
+
+        $start_time = date('Y-m-d H:i:s',time());
+        $data['starttime'] = $start_time;
+        $data['endtime'] = time_calculation($start_time,$data['duration'],'month');
+        $data['business_number'] = $this->businesssn();
+        $data['resource_sn'] = $machine->machine_num;
+        $data['room_id'] = $machine->machineroom_id;
+        $data['cabinet_id'] = $machine->cabinet;
+        $data['ip_id'] = $machine->ip_id;
+        $data['created_at'] = $start_time;
+        $data['updated_at'] = $start_time;
+
+        DB::beginTransaction();
+        $row = DB::table('tz_cabinet_machine')->insertGetId($data);
+        if($row == 0){
+            DB::rollBack();
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg']  = '(#104)机柜添加托管机器失败';
+            return $return;
+        }
+
+        $machine->cabinets = $this->cabinets($machine->cabinet);
+        $machine->machineroom_name = $this->machineroom($machine->machineroom_id);
+        $ip = $this->tranIp($machine->ip_id);
+        $machine->ip = $ip['ip'];
+        $machine->ip_detail = $ip['ip_detail'];
+
+        $detail['detail'] = json_encode($machine);
+        $detail['business_id'] = $row;
+        $detail['parent_id'] = $data['parent_business'];
+        $detail['created_at'] = $start_time;
+        $detail['updated_at'] = $start_time;
+        $result = DB::table('tz_cabinet_machine_detail')->insertGetId($detail);
+        if($result == 0){
+            DB::rollBack();
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg']  = '(#105)机柜添加托管机器失败';
+            return $return;
+        }
+
+        $machine_row = DB::table('idc_machine')->where(['id'=>$data['resource_id']])->update(['used_status'=>1,'own_business'=>$data['business_number'],'business_end'=>$data['endtime'],'updated_at'=>date('Y-m-d H:i:s',time())]);
+        if($machine_row == 0){
+            DB::rollBack();
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg']  = '(#106)机柜添加托管机器失败';
+            return $return;
+        }
+
+        DB::commit();
+        $return['data'] = $row;
+        $return['code'] = 1;
+        $return['msg']  = '机柜添加托管机器成功,请耐心等待审核';
+        return $return;
+
+    }
+
+    /**
      * 信安部门查看业务数据获取
      * @return array 返回相关的数据和状态及提示信息
      */

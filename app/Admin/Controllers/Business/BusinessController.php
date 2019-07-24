@@ -65,6 +65,19 @@ class BusinessController extends Controller
 		$return = $business->insertBusiness($insert);
 		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
     }
+
+    /**
+     * 机柜业务下添加托管机器
+     * @param  Request $request 'customer'--客户id,'parent_business'--机柜业务id,
+     * 'resource_type'--资源类型,'resource_id'--资源id,'price'--价格,'duration'--时长,'business_note'--业务备注
+     * @return [type]           [description]
+     */
+    public function cabinetMachine(Request $request){
+        $param = $request->only(['customer','parent_business','resource_type','resource_id','price','duration','business_note']);
+        $cabinet_machine = new BusinessModel();
+        $return = $cabinet_machine->cabinetMachine($param);
+        return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
+    }
 // security安全
     /**
      * 信安部门查看业务数据获取

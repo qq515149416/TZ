@@ -36,7 +36,7 @@ class BusinessController extends Controller
      * @return json           返回对应机房的信息或者数据
      */
     public function selectMachine(Request $request){
-		$where = $request->only(['machineroom','business_type']);
+		$where = $request->only(['machineroom','business_type','customer_id']);
 		$machine = new MachineModel();
 		$return = $machine->selectMachine($where);
 		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);

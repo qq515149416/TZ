@@ -89,9 +89,16 @@ class MachineModel extends Model
 		$where['used_status'] = 0;
 		// 查找对应机房为上架的机器
 		$where['machine_status'] = 0;
-		// 进行条件查询业务类型为1的即租用的所有机器信息
-		$result = $this->where($where)->get(['id','machine_num','cpu','memory','harddisk','cabinet','ip_id','machineroom','bandwidth','protect','loginname','loginpass','machine_type','used_status','machine_status','business_type','machine_note','created_at','updated_at']);
-		//dd($result);
+		$customer_id = $where['customer_id'];
+		unset($where['customer_id']);
+		if($where['business_type'] == 2){//当是托管主机时根据客户id找出客户对应的托管机器
+			$result = $this->leftjoin('tz_machine_customer as mc','idc_machine.id','=','mc.machine_id')
+					->where($where)->where(['mc.customer_id'=>$customer_id])->get(['idc_machine.id','machine_num','cpu','memory','harddisk','cabinet','ip_id','machineroom','bandwidth','protect','loginname','loginpass','machine_type','used_status','machine_status','business_type','machine_note','idc_machine.created_at','idc_machine.updated_at']);
+		} else {
+			// 进行条件查询业务类型为1的即租用的所有机器信息
+			$result = $this->where($where)->get(['id','machine_num','cpu','memory','harddisk','cabinet','ip_id','machineroom','bandwidth','protect','loginname','loginpass','machine_type','used_status','machine_status','business_type','machine_note','created_at','updated_at']);
+		}
+		
 		// 判断是否查询到数据
 		if(!$result->isEmpty()){
 			// 查询到数据进行某些字段的数据转换
@@ -361,7 +368,7 @@ class MachineModel extends Model
 			$return['msg'] = '(#107)修改机器信息失败！！';
 			
 		}
-		// dd($edit['updated_at']);
+	
 		if($editdata['business_type'] == 2 || $editdata['business_type'] == 4){
 			if(isset($editdata['customer_id']) &&  $editdata['customer_id'] != Null){
 				//当时托管/托管预备库时先查询机器是否已经绑定客户
@@ -471,7 +478,7 @@ class MachineModel extends Model
 		
 		if($roomid != 0){
 			// 当是IP，机柜，机房等信息转换时对应参数都传入
-			$machineroom = DB::table('idc_machineroom')->where('id',$roomid)->value('machine_room_name');//机房表
+			$machineroom = DB::table('idc_machineroom')->where(['id'=>$roomid])->value('machine_room_name');//机房表
 			if(empty($machineroom)){
 				$machineroom = '机房暂未选择';
 			}
@@ -490,7 +497,7 @@ class MachineModel extends Model
 	 */
 	public function showCabinets($roomid=0,$cabinet=0){
 		if($cabinet != 0){
-			$cabinets = DB::table('idc_cabinet')->where('id',$cabinet)->select('cabinet_id','machineroom_id')->first();
+			$cabinets = DB::table('idc_cabinet')->where(['id'=>$cabinet])->select('cabinet_id','machineroom_id')->first();
 			if(empty($cabinets)){
 				$cabinets->cabinet_id = '机柜暂未选择';
 			} else {
@@ -513,7 +520,7 @@ class MachineModel extends Model
 	 */
 	public function showIps($roomid=0,$ip_id=0){
 		if($ip_id != 0){
-			$ip = DB::table('idc_ips')->where('id',$ip_id)->select('ip','ip_company','ip_comproom')->first();
+			$ip = DB::table('idc_ips')->where(['id'=>$ip_id])->select('ip','ip_company','ip_comproom')->first();
 			if(empty($ip)){
 				$ip->ip = '0.0.0.0 IP暂未选择';
 				$ip->ip_company = 0;

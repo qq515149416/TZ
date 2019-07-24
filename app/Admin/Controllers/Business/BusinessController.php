@@ -101,18 +101,6 @@ class BusinessController extends Controller
     }
 
     /**
-     * 业务员手动对客户的业务进行启用，针对后付费客户群体
-     * @param  Request $request [description]
-     * @return json 			返回相关操作的数据和状态及提示信息
-     */
-    public function enableBusiness(Request $request){
-    		$enable = $request->only(['id','business_status']);
-    		$enable_business = new BusinessModel();
-    		$return = $enable_business->enableBusiness($enable);
-    		return tz_ajax_echo($return,$return['msg'],$return['code']);
-    }
-
-    /**
      * 业务员和管理员查看对应客户的业务数据
      * @param  Request $request [description]
      * @return json           返回相关操作的数据和状态及提示信息

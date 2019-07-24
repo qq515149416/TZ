@@ -429,30 +429,6 @@ class BusinessModel extends Model
     }
 
     /**
-     * 业务员手动对客户的业务进行启用状态，针对后付费客户群体
-     * @param  [type] $enable [description]
-     * @return [type]         [description]
-     */
-    public function enableBusiness($enable)
-    {
-        if ($enable) {
-            $row = $this->where(['id'=>$enable['id']])->update($enable);
-            if ($row != false) {
-                $return['code'] = 1;
-                $return['msg']  = '业务启用成功';
-            } else {
-                $return['code'] = 1;
-                $return['msg']  = '业务启用失败';
-            }
-        } else {
-            $return['code'] = 0;
-            $return['msg']  = '无法启用该业务';
-        }
-        return $return;
-    }
-
-
-    /**
      * 业务员和管理员查看对应客户的业务数据
      * @param  array $show 客户的id即业务表的client_id字段
      * @return array        返回相关的数据和状态提示及信息

@@ -528,7 +528,7 @@ class BusinessModel extends Model
      * 创建业务号
      * @return [type] [description]
      */
-    public function businesssn($business_id=100,$business_type=1){
+    public function businesssn(){
         
         $business_sn = create_number();//调用创建单号的公共函数
     
@@ -548,7 +548,7 @@ class BusinessModel extends Model
      * 创建订单号
      * @return [type] [description]
      */
-    public function ordersn($resource_id=100,$resource_type=1){
+    public function ordersn(){
        
         $order_sn = create_number();//调用创建单号的公共函数,
         $order = DB::table('tz_orders')->where('order_sn',$order_sn)->select('order_sn','machine_sn')->first();
@@ -1003,45 +1003,33 @@ class BusinessModel extends Model
         $time = 'created_at';//默认以创建时间为查询条件
         switch ($search['str']) {
             case 1:
-                //$begin_end = $this->queryTime($search);
                 $remove = [0,4];//查找所有出现过的业务订单
                 break;
             case 2:
-                //$begin_end = $this->queryTime($search);
                 $remove = [0,3];//查找在用未下架的业务订单
                 break;
             case 3:
-                //$begin_end = $this->queryTime($search);
                 $remove = [4,4];//查找已下架的业务订单
                 $time = 'updated_at';//下架时以下架时间作为查询条件
                 break;
             default:
-                //$begin_end['start_time'] = '1970-01-01';
                 $begin_end['end_time'] = date('Y-m-d',time());
                 break;
         }
         //统计订单数量
         $orders_total = DB::table('tz_orders')
-                        //->whereBetween($time,[$begin_end['start_time'],$begin_end['end_time']])
                         ->whereBetween('order_status',$status)
                         ->whereBetween('remove_status',$remove)
                         ->whereNull('deleted_at')
                         ->count();
         //查询符合条件的数据
         $orders_info = DB::table('tz_orders')
-                        //->whereBetween($time,[$begin_end['start_time'],$begin_end['end_time']])
                         ->whereBetween('order_status',$status)
                         ->whereBetween('remove_status',$remove)
                         ->whereNull('deleted_at')
                         ->select('id','customer_id','business_id','resource_type','business_sn','machine_sn','price','duration',$time.' as created_at')
                         ->get();
-        // //统计符合条件的月营收
-        // $month_total = DB::table('tz_orders')
-        //                // ->whereBetween($time,[$begin_end['start_time'],$begin_end['end_time']])
-        //                 ->whereBetween('order_status',$status)
-        //                 ->whereBetween('remove_status',$remove)
-        //                 ->whereNull('deleted_at')
-        //                 ->sum('price'); 
+
         $total = 0;
         if(!$orders_info->isEmpty()){
             foreach($orders_info as $info_key => $info){

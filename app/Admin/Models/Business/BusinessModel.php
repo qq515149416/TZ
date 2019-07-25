@@ -103,8 +103,8 @@ class BusinessModel extends Model
             $return['data'] = '';
             $return['code'] = 0;
             $return['msg']  = '业务创建失败!!';
-        }
-
+        } 
+            
         return $return;
 
     }
@@ -244,24 +244,59 @@ class BusinessModel extends Model
                 $check_value->client_name = $client_name;
                 $resource_detail = json_decode($check_value['resource_detail']);
                 $result[$check]['machineroom_name'] = $resource_detail->machineroom_name;
+                $result[$check]['parent_business'] = 0;
                 if($check_value['business_type'] != 3){
                     $result[$check]['cabinets'] = $resource_detail->cabinets;
                     $result[$check]['ip'] = isset($resource_detail->ip)?$resource_detail->ip:'暂未配置IP';
-                } else {
+                } else {    
                     $result[$check]['cabinets'] = $resource_detail->cabinet_id;
                     $result[$check]['ip'] = '';
                 }
             }
-            $return['data'] = $result;
-            $return['code'] = 1;
-            $return['msg']  = '相关业务数据获取成功';
-        } else {
-            $return['data'] = '暂无业务数据';
-            $return['code'] = 0;
-            $return['msg']  = '暂无业务数据';
         }
-
+        
+        $security = $this->securityCabinetBusiness();
+        $cabinetmachine = array_merge($result->toArray(),$security->toArray());
+        $created_at = array_column($cabinetmachine,'created_at');
+        array_multisort($created_at,SORT_DESC,$cabinetmachine);
+        $return['data'] = $cabinetmachine;
+        $return['code'] = 1;
+        $return['msg']  = '相关业务数据获取成功';
         return $return;
+    }
+
+    /**
+     * 审核时获取机柜业务下的机器信息
+     * @return [type] [description]
+     */
+    public function securityCabinetBusiness(){
+
+        $result = DB::table('tz_cabinet_machine as mc')
+                    ->leftjoin('tz_users as user','mc.customer','=','user.id')
+                    ->leftjoin('admin_users as admin','mc.sales','=','admin.id')
+                    ->leftjoin('tz_cabinet_machine_detail as detail','mc.id','=','detail.business_id')
+                    ->whereBetween('business_status',[0,3])
+                    ->whereBetween('remove_status',[0,3])
+                    ->orderBy('created_at','desc')
+                    ->get(['mc.id','sales as sales_id','customer as client_id','business_number','parent_business','resource_type as business_type','resource_sn as machine_number','detail as resource_detail','business_status','price as money','duration as length','business_note','mc.created_at','starttime as start_time','endtime as endding_time','remove_status','check_note','user.nickname as client_name','admin.name as sales_name','room_id','cabinet_id','ip_id']);
+        if(!$result->isEmpty()){
+            $business_status = [-1 => '审核不通过',0 => '审核中', 1 => '未付款使用', 2 => '付款使用中', 3 => '未付用', 4 => '锁定中', 5 => '到期', 6 => '退款'];
+            $business_type   = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜'];
+            $remove_status = [0 => '正常使用', 1 => '下架申请中', 2 => '机房处理中', 3 => '清空下架中', 4 => '下架完成'];
+            foreach($result as $check => $check_value){
+                $check_value->status = $business_status[$check_value->business_status];
+                $check_value->type   = $business_type[$check_value->business_type];
+                $check_value->remove = $remove_status[$check_value->remove_status];
+                $check_value->machineroom_name = $this->machineroom($check_value->room_id);
+                if($check_value->business_type != 3){
+                    $check_value->cabinets = $this->cabinets($check_value->cabinet_id);
+                    $check_value->ip = $this->tranIp($check_value->ip_id)['ip'];
+                }
+            }
+
+        }
+        
+        return $result;
     }
 
     /**
@@ -326,7 +361,7 @@ class BusinessModel extends Model
                         $return['msg']  = '审核失败!!';
                         return $return;
                     }
-                }
+                }     
             }
             DB::commit();
             $return['data'] = '';
@@ -341,8 +376,8 @@ class BusinessModel extends Model
 
         // 如果审核为通过则继续进行订单表的生成
         DB::beginTransaction();//开启事务处理
-
-
+        
+       
         $order_sn                 = $this->ordersn();
         $business['order_number'] = $order_sn;
         $business['updated_at']   = date('Y-m-d H:i:s',time());
@@ -399,7 +434,7 @@ class BusinessModel extends Model
             } else {
                 $row = 1;
             }
-
+            
 
         } else {
             // 如果是租用机柜的，在订单生成成功时，将业务编号和到期时间及资源状态进行更新
@@ -448,7 +483,7 @@ class BusinessModel extends Model
                     $resource_detail = json_decode($check_value['resource_detail']);
                     if($check_value['business_type'] != 3){
                         $result[$check]['cabinets'] = isset($resource_detail->cabinets)?$resource_detail->cabinets:'';
-                    } else {
+                    } else {    
                         $result[$check]['cabinets'] = isset($resource_detail->cabinet_id)?$resource_detail->cabinet_id:'';
                     }
                 }
@@ -470,9 +505,9 @@ class BusinessModel extends Model
      * @return [type] [description]
      */
     public function businesssn($business_id=100,$business_type=1){
-
+        
         $business_sn = create_number();//调用创建单号的公共函数
-
+    
         $business = $this->where('business_number',$business_sn)->select('business_number','machine_number')->first();
         if(!empty($business)){
             $this->businesssn();
@@ -490,7 +525,7 @@ class BusinessModel extends Model
      * @return [type] [description]
      */
     public function ordersn($resource_id=100,$resource_type=1){
-
+       
         $order_sn = create_number();//调用创建单号的公共函数,
         $order = DB::table('tz_orders')->where('order_sn',$order_sn)->select('order_sn','machine_sn')->first();
         $session = session()->has('O'.$order_sn);
@@ -637,7 +672,7 @@ class BusinessModel extends Model
                 $return['msg']  = '(#104)该机器资源不存在/已被使用/已下架,请确认后再创建业务!';
                 return $return;
             }
-
+            
             $ip = $this->tranIp($machine->ip_id);
             $machine->ip = $ip['ip'];
             $machine->ip_detail = $ip['ip_detail'];
@@ -676,7 +711,7 @@ class BusinessModel extends Model
         $business_sn               = $this->businesssn();
         $insert['business_number'] = $business_sn;
         $insert['business_status'] = 0;
-        $insert['client_id'] = $insert_data['client_id'];
+        $insert['client_id'] = $insert_data['client_id']; 
         $insert['client_name'] = $client;
         // 对应业务员的信息
         $insert['sales_id']   = $insert_data['sales_id'];
@@ -727,8 +762,8 @@ class BusinessModel extends Model
             $return['data'] = '';
             $return['code'] = 0;
             $return['msg']  = '(#108)业务创建失败!!';
-        }
-
+        } 
+            
         return $return;
     }
 
@@ -888,7 +923,7 @@ class BusinessModel extends Model
             'code' => 1,
             'data' => ['business'=>isset($under_business['business'])?$under_business['business']:[],'under_total'=>$under_total,'under_money'=>$under_business['total'],'total'=>$total,'total_money'=>$business['total']],
             'msg' => '下架业务相关数据获取成功'
-        ];
+        ];  
     }
 
     /**
@@ -924,7 +959,7 @@ class BusinessModel extends Model
         //总注册客户量
         $total = DB::table('tz_users')
                    ->whereBetween('status',[1,2])
-                   ->count();
+                   ->count(); 
         $return['data'] = ['create_total'=>$create_total,'info'=>$create_info,'total'=>$total];
         return $return;
 
@@ -982,7 +1017,7 @@ class BusinessModel extends Model
         //                 ->whereBetween('order_status',$status)
         //                 ->whereBetween('remove_status',$remove)
         //                 ->whereNull('deleted_at')
-        //                 ->sum('price');
+        //                 ->sum('price'); 
         $total = 0;
         if(!$orders_info->isEmpty()){
             foreach($orders_info as $info_key => $info){
@@ -1108,7 +1143,7 @@ class BusinessModel extends Model
         if($range == 1 || $range == 2){
             $removes = '<';
         } elseif($range == 3 || $range == 4){
-            $removes = '=';
+            $removes = '='; 
         }
         foreach($business as $business_key => $business_value){
             if($range == 1 || $range == 2){
@@ -1116,7 +1151,7 @@ class BusinessModel extends Model
             } elseif($range == 3 || $range == 4){
                 $single_total = $business_value->money;//每笔业务的月营业额
             }
-
+            
             $order = DB::table('tz_orders')
                        ->where(['business_sn'=>$business_value->business_number])
                        ->where('resource_type','>',3)
@@ -1133,7 +1168,7 @@ class BusinessModel extends Model
                         $order_money = $order_value->price;//每笔资源的月营业额
                     }
                     $single_total = bcadd($single_total,$order_money,2);//每笔业务的总营业额
-                }
+                }   
             }
             if($range == 2 || $range == 4){//当统计新增业务数据时
                 $business_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜'];
@@ -1152,8 +1187,8 @@ class BusinessModel extends Model
                 $business_value->single_total = $single_total;//将每笔的业务营业额统计进去
                 $taotal_business['business'][]=$business_value;//将含对应业务营业额的数据形成新的数据
             }
-
-            $total = bcadd($total,$single_total,2);//总营业额
+             
+            $total = bcadd($total,$single_total,2);//总营业额        
         }
         $taotal_business['total'] =  $total;
         return $taotal_business;
@@ -1200,7 +1235,7 @@ class BusinessModel extends Model
                 $order->customer = $order->nickname;
                 $resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn',11=>'高防IP',12=>'流量叠加包'];
                 $order->type = $resource_type[$order->resource_type];
-                array_push($orders,$order);
+                array_push($orders,$order); 
             }
         }
 
@@ -1209,7 +1244,7 @@ class BusinessModel extends Model
         $return['msg'] = '数据获取成功';
         return $return;
 
-    }
+    } 
 
 
 }

@@ -615,6 +615,9 @@
     <script>
         var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253197097'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "w.cnzz.com/c.php%3Fid%3D1253197097' type='text/javascript'%3E%3C/script%3E"));
         var rs = @getContacts("json");
+        document.querySelector(".tz-kefu-help").onclick = function() {
+            location.href = "/help";
+        }
         function randomqq(){
             var num = Math.random();
             num = Math.ceil(num *rs.length)-1;

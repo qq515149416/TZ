@@ -192,7 +192,7 @@ class BusinessModel extends Model
             return $return;
         }
 
-        $machine_row = DB::table('idc_machine')->where(['id'=>$data['resource_id']])->update(['used_status'=>1,'own_business'=>$data['business_number'],'business_end'=>$data['endtime'],'updated_at'=>date('Y-m-d H:i:s',time())]);
+        $machine_row = DB::table('idc_machine')->where(['id'=>$data['resource_id']])->update(['used_status'=>1,'updated_at'=>date('Y-m-d H:i:s',time())]);
         if($machine_row == 0){
             DB::rollBack();
             $return['data'] = '';
@@ -315,7 +315,14 @@ class BusinessModel extends Model
         }
         // 根据业务号查询需要审核的业务数据
         $check_where = ['business_number' => $where['business_number']];
-        $check       = DB::table('tz_business')->where($check_where)->select('client_id','id','business_number', 'client_name', 'sales_id', 'sales_name', 'business_type', 'machine_number', 'money', 'length','resource_detail','endding_time')->first();
+        if($where['parent_business'] == 0){
+            //普通的IDC业务
+            $check = DB::table('tz_business')->where($check_where)->select('client_id','id','business_number', 'client_name', 'sales_id', 'sales_name', 'business_type', 'machine_number', 'money', 'length','resource_detail','endding_time')->first();
+        } else {
+            //机柜业务下的托管机器业务
+            $check = DB::table('tz_cabinet_machine as mc')->leftjoin('tz_cabinet_machine_detail as detail','mc.id','=','detail.business_id')->where($check_where)->select('mc.id','business_number','resource_sn as machine_number','resource_type as business_type','detail as resource_detail','endtime as endding_time')->first();
+        }
+        
         if (empty($check)) {
             // 不存在对应的业务数据直接返回
             $return['data'] = '该业务不存在,无法进行审核操作';
@@ -340,6 +347,10 @@ class BusinessModel extends Model
         $business['check_note']      = $where['check_note'];
         if ($where['business_status'] != 1) {
             DB::beginTransaction();
+            if($where['parent_business'] != 0){
+                //机柜业务下的托管机器业务
+                $business['business_status'] = '-1';
+            }
             // 审核为不通过时直接进行业务的状态更改
             $business['remove_status'] = 4;
             $row = DB::table('tz_business')->where($check_where)->update($business);
@@ -352,7 +363,7 @@ class BusinessModel extends Model
             }
             if($check->business_type != 3){
                 $omachine = DB::table('idc_machine')->where(['machine_num'=>$check->machine_number,'used_status'=>0])->first();//先检查是否该机器状态为未使用
-                if(empty($omachine)){//不是未使用，更新成为使用状态，是的话就不更新
+                if(empty($omachine)){//不是未使用，更新成未使用状态，是的话就不更新
                     $machine = DB::table('idc_machine')->where(['machine_num'=>$check->machine_number])->update(['used_status'=>0]);
                     if($machine == 0){
                         DB::rollBack();
@@ -376,51 +387,65 @@ class BusinessModel extends Model
 
         // 如果审核为通过则继续进行订单表的生成
         DB::beginTransaction();//开启事务处理
-        
-       
+
         $order_sn                 = $this->ordersn();
-        $business['order_number'] = $order_sn;
         $business['updated_at']   = date('Y-m-d H:i:s',time());
-        $business_row             = DB::table('tz_business')->where($check_where)->update($business);
-        if ($business_row == 0) {
-            // 业务审核失败
-            DB::rollBack();
-            $return['data'] = '审核失败';
-            $return['code'] = 0;
-            $return['msg']  = '(#101)审核失败!!';
-            return $return;
+        if($where['parent_business'] == 0){
+
+            //普通IDC业务
+            $business['order_number'] = $order_sn;
+            $business_row             = DB::table('tz_business')->where($check_where)->update($business);
+            if ($business_row == 0) {
+                // 业务审核失败
+                DB::rollBack();
+                $return['data'] = '审核失败';
+                $return['code'] = 0;
+                $return['msg']  = '(#101)审核失败!!';
+                return $return;
+            }
+            // 业务审核成功继续进行订单表的生成
+            $order['order_sn']      = $order_sn;
+            $order['business_sn']   = $check->business_number;
+            $order['customer_id']   = $check->client_id;
+            $order['customer_name'] = $check->client_name;
+            $order['business_id']   = $check->sales_id;
+            $order['business_name'] = $check->sales_name;
+            $order['resource_type'] = $check->business_type;
+            $order['order_type']    = 1;
+            $order['machine_sn']    = $check->machine_number;
+            $order['price']         = $check->money;//单价
+            $order['duration']      = $check->length;//时长
+            $order['resource']      = $check->machine_number;//机器的话为IP/机柜则为机柜编号
+            $order['end_time']      = $check->endding_time;
+            $order['payable_money'] = bcmul((string)$order['price'], (string)$order['duration'], 2);//应付金额
+            $order['created_at']    = date('Y-m-d H:i:s',time());
+            $order_row              = DB::table('tz_orders')->insert($order);//生成订单
+            if ($order_row != true) {
+                // 订单生成失败
+                DB::rollBack();
+                $return['data'] = '审核失败';
+                $return['code'] = 0;
+                $return['msg']  = '(#102)审核失败!!!';
+                return $return;
+            }
+        } else {
+            $business_row = DB::table('tz_cabinet_machine')->where($check_where)->update($business);
+            if ($business_row == 0) {
+                // 业务审核失败
+                DB::rollBack();
+                $return['data'] = '审核失败';
+                $return['code'] = 0;
+                $return['msg']  = '(#103)审核失败!!';
+                return $return;
+            }            
         }
-        // 业务审核成功继续进行订单表的生成
-        $order['order_sn']      = $order_sn;
-        $order['business_sn']   = $check->business_number;
-        $order['customer_id']   = $check->client_id;
-        $order['customer_name'] = $check->client_name;
-        $order['business_id']   = $check->sales_id;
-        $order['business_name'] = $check->sales_name;
-        $order['resource_type'] = $check->business_type;
-        $order['order_type']    = 1;
-        $order['machine_sn']    = $check->machine_number;
-        $order['price']         = $check->money;//单价
-        $order['duration']      = $check->length;//时长
-        $order['resource']      = $check->machine_number;//机器的话为IP/机柜则为机柜编号
-        $order['end_time']      = $check->endding_time;
-        $order['payable_money'] = bcmul((string)$order['price'], (string)$order['duration'], 2);//应付金额
-        $order['created_at']    = date('Y-m-d H:i:s',time());
-        $order_row              = DB::table('tz_orders')->insert($order);//生成订单
-        if ($order_row != true) {
-            // 订单生成失败
-            DB::rollBack();
-            $return['data'] = '审核失败';
-            $return['code'] = 0;
-            $return['msg']  = '审核失败!!!';
-            return $return;
-        }
-        if ($order['resource_type'] == 1 || $order['resource_type'] == 2) {
+        
+        if ($check->business_type == 1 || $check->business_type == 2) {
             // 如果是租用/托管机器的，在订单生成成功时，将业务编号和到期时间及资源状态进行更新
-            $machine['own_business'] = $order['business_sn'];
-            $machine['business_end'] = $order['end_time'];
+            $machine['own_business'] = $where['business_number'];
+            $machine['business_end'] = $check->endding_time;
             $machine['used_status']  = 2;
-            $row                     = DB::table('idc_machine')->where('machine_num', $order['machine_sn'])->update($machine);
+            $row                     = DB::table('idc_machine')->where(['machine_num'=>$check->machine_number])->update($machine);
             if ($row == 0) {
                 DB::rollBack();
                 $return['data'] = '审核失败';
@@ -430,12 +455,11 @@ class BusinessModel extends Model
             }
             $ip_id = json_decode($check->resource_detail)->ip_id;
             if($ip_id != 0){
-                $row = DB::table('idc_ips')->where('id',  $ip_id)->update(['own_business' => $order['business_sn'],'mac_num'=>$order['machine_sn']]);
+                $row = DB::table('idc_ips')->where(['id'=>$ip_id])->update(['own_business' => $where['business_number'],'mac_num'=>$check->machine_number]);
             } else {
                 $row = 1;
             }
             
-
         } else {
             // 如果是租用机柜的，在订单生成成功时，将业务编号和到期时间及资源状态进行更新
             $own_business = DB::table('idc_cabinet')->where('cabinet_id', $order['machine_sn'])->value('own_business');

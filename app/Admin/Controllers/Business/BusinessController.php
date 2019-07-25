@@ -65,6 +65,19 @@ class BusinessController extends Controller
 		$return = $business->insertBusiness($insert);
 		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
     }
+
+    /**
+     * 机柜业务下添加托管机器
+     * @param  Request $request 'customer'--客户id,'parent_business'--机柜业务id,
+     * 'resource_type'--资源类型,'resource_id'--资源id,'price'--价格,'duration'--时长,'business_note'--业务备注
+     * @return [type]           [description]
+     */
+    public function cabinetMachine(Request $request){
+        $param = $request->only(['customer','parent_business','resource_type','resource_id','price','duration','business_note']);
+        $cabinet_machine = new BusinessModel();
+        $return = $cabinet_machine->cabinetMachine($param);
+        return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
+    }
 // security安全
     /**
      * 信安部门查看业务数据获取
@@ -85,18 +98,6 @@ class BusinessController extends Controller
 		$check = new BusinessModel();
 		$return = $check->checkBusiness($data);
 		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
-    }
-
-    /**
-     * 业务员手动对客户的业务进行启用，针对后付费客户群体
-     * @param  Request $request [description]
-     * @return json 			返回相关操作的数据和状态及提示信息
-     */
-    public function enableBusiness(Request $request){
-    		$enable = $request->only(['id','business_status']);
-    		$enable_business = new BusinessModel();
-    		$return = $enable_business->enableBusiness($enable);
-    		return tz_ajax_echo($return,$return['msg'],$return['code']);
     }
 
     /**

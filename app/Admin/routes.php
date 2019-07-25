@@ -402,7 +402,6 @@ Route::group([
         $router->post('insert', 'Business\BusinessController@insertBusiness');//产生业务
         $router->get('security', 'Business\BusinessController@securityBusiness');//信安查看业务
         $router->post('check', 'Business\BusinessController@checkBusiness');//信安审核业务
-        $router->post('enable', 'Business\BusinessController@enableBusiness');//启用业务（开发预留）
         $router->get('showbusiness', 'Business\BusinessController@showBusiness');//展示业务数据
         $router->post('deletebusiness', 'Business\BusinessController@deleteBusiness');//删除业务数据（开发预留）
 
@@ -415,10 +414,8 @@ Route::group([
         $router->get('all_renew', 'Business\OrdersController@allRenew');//获取业务下续费的资源
         $router->get('show_renew_order', 'Business\OrdersController@showRenewOrder');//展示续费的订单
         $router->get('renew_pay', 'Business\OrdersController@renewPay');//支付续费的订单
-        //$router->get('tran_orders','Business\OrdersController@tranOrders');
 
         $router->post('insertresource', 'Business\OrdersController@insertResource');//新购资源
-        // $router->post('renewresource', 'Business\OrdersController@renewResource');//续费资源
 
         $router->post('deleteorders', 'Business\OrdersController@deleteOrders');//删除订单（开发预留）
         //客户信息
@@ -472,7 +469,6 @@ Route::group([
         $router->post('change','Business\OrdersController@changeResource');//提交更换信息
         $router->post('checkchange','Business\OrdersController@checkChange');//审核更换记录
         $router->get('getchange','Business\OrdersController@getChange');//获取更换记录
-        // $router->get('getorders','Business\OrdersController@getOrders');//获取相关的可更换的订单
         $router->post('updateorder','Business\OrdersController@updateOrders');//修改订单的价格/到期时间
 
         /**
@@ -486,6 +482,11 @@ Route::group([
          $router->post('ordersReview', 'Business\OrdersReviewController@ordersReview');//财务对流水提出复核
          $router->get('showReview', 'Business\OrdersReviewController@showReview');//根据流水id查询该流水的所有复核情况
          $router->get('showOrderDetail', 'Business\OrdersController@showOrderDetail');//根据订单号获取指定订单资源详情
+
+        /**
+         * 机柜下添加托管机器
+         */
+        $router->post('cabinetmachine','Business\BusinessController@cabinetMachine');
     });
 
 

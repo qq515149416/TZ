@@ -484,9 +484,11 @@ Route::group([
          $router->get('showOrderDetail', 'Business\OrdersController@showOrderDetail');//根据订单号获取指定订单资源详情
 
         /**
-         * 机柜下添加托管机器
+         * 机柜业务下的托管机器
          */
-        $router->post('cabinetmachine','Business\BusinessController@cabinetMachine');
+        $router->post('cabinetmachine','Business\BusinessController@cabinetMachine');//机柜业务下添加托管机器
+        $router->get('showcabinetmachine','Business\BusinessController@showCabinetMachine');//机柜业务下托管机器数据获取
+        $router->get('cabinetmachinedetail','Business\BusinessController@cabinetMachineDetail');//机柜业务下托管机器数据获取
     });
 
 

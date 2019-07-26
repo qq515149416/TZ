@@ -61,6 +61,17 @@ class RechargeRequest extends FormRequest
 					'del_trade_id'		=> 'required',
 				];
 				break;
+			case 'rechargeByWechat':
+				$return = [
+					'total_amount'		=> 'required',
+				];
+				break;
+			case 'getWechatUrlOut':
+				$return = [
+					'flow_id'			=> 'required|exists:tz_recharge_flow,id',
+				];
+				break;
+				
 			// case 'payIndex':
 			// 	$return = [
 			// 		'total_amount'		=> 'required|integer|min:1.00',
@@ -84,6 +95,8 @@ class RechargeRequest extends FormRequest
 			'total_amount.required'=> '请填写充值金额',
 			'total_amount.integer'	=> '充值金额必须为整数',
 			'total_amount.min'	=> '充值金额最少为1元',
+			'flow_id.required'	=> '请选择订单',
+			'flow_id.exists'		=> '订单不存在',
 		];
 	}
 

@@ -113,6 +113,30 @@ class BusinessController extends Controller
     }
 
     /**
+     * 根据机柜业务的业务id进行机柜下的机器数据获取
+     * @param  Request $request --parent_business,机柜业务id
+     * @return [type]           [description]
+     */
+    public function showCabinetMachine(Request $request){
+        $param = $request->only(['parent_business']);
+        $show = new BusinessModel();
+        $result = $show->showCabinetMachine($param);
+        return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
+    }
+
+    /**
+     * 获取机柜业务下机器的详情
+     * @param  Request $request --business_id,机器业务的id
+     * @return [type]           [description]
+     */
+    public function cabinetMachineDetail(Request $request){
+        $detail_param = $request->only(['business_id']);
+        $detail = new BusinessModel();
+        $result = $detail->cabinetMachineDetail($detail_param);
+        return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
+    }
+
+    /**
      * 业务后台删除
      * @param  Request $request [description]
      * @return json           返回相关操作的数据和状态提示及信息

@@ -313,6 +313,7 @@ class BusinessModel extends Model
             $return['msg']  = '无法进行审核';
             return $return;
         }
+
         // 根据业务号查询需要审核的业务数据
         $check_where = ['business_number' => $where['business_number']];
         if($where['parent_business'] == 0){
@@ -330,6 +331,7 @@ class BusinessModel extends Model
             $return['msg']  = '该业务不存在,无法进行审核操作';
             return $return;
         }
+
         // 当不是机柜时且当审核为通过时先对机器的使用状态进行判断
         if($check->business_type != 3 && $where['business_status'] == 1) {
             // 审核通过前验证业务机器是否未使用，如果是使用直接返回提示
@@ -342,6 +344,7 @@ class BusinessModel extends Model
             }
 
         }
+
         // 业务表审核时更新的字段
         $business['business_status'] = $where['business_status'];
         $business['check_note']      = $where['check_note'];
@@ -351,9 +354,17 @@ class BusinessModel extends Model
                 //机柜业务下的托管机器业务
                 $business['business_status'] = '-1';
             }
+
             // 审核为不通过时直接进行业务的状态更改
             $business['remove_status'] = 4;
-            $row = DB::table('tz_business')->where($check_where)->update($business);
+            if($where['parent_business'] != 0){
+                //机柜业务下的托管机器业务
+                $row = DB::table('tz_cabinet_machine')->where($check_where)->update($business);
+            } else {
+                //普通的IDC业务
+                $row = DB::table('tz_business')->where($check_where)->update($business);
+            }
+            
             if($row == 0){
                 DB::rollBack();
                 $return['data'] = '审核失败';
@@ -361,9 +372,11 @@ class BusinessModel extends Model
                 $return['msg']  = '审核失败!';
                 return $return;
             }
+
             if($check->business_type != 3){
                 $omachine = DB::table('idc_machine')->where(['machine_num'=>$check->machine_number,'used_status'=>0])->first();//先检查是否该机器状态为未使用
-                if(empty($omachine)){//不是未使用，更新成未使用状态，是的话就不更新
+                if(empty($omachine)){
+                    //不是未使用，更新成未使用状态，是的话就不更新
                     $machine = DB::table('idc_machine')->where(['machine_num'=>$check->machine_number])->update(['used_status'=>0]);
                     if($machine == 0){
                         DB::rollBack();
@@ -374,6 +387,7 @@ class BusinessModel extends Model
                     }
                 }     
             }
+
             DB::commit();
             $return['data'] = '';
             $return['code'] = 1;
@@ -522,6 +536,27 @@ class BusinessModel extends Model
 
             return $return;
         }
+    }
+
+    public function showCabinetMachine($param){
+
+        if(empty($param)){
+            $return['data'] = [];
+            $return['code'] = 1;
+            $return['msg']  = '无法获取该机柜业务下的机器';
+            return $return;
+        }  
+
+        $show = DB::table('tz_cabinet_machine as mc')
+                   ->leftjoin('tz_users as user','mc.customer','=','user.id')
+                   ->leftjoin('admin_users as admin','mc.sales','=','admin.id')
+                   ->where($param)
+                   ->whereBetween('business_status',[0,3])
+                   ->whereBetween('remove_status',[0,3])
+                   ->orderBy('created_at','desc')
+                   ->get(['mc.id','sales as sales_id','customer as client_id','business_number','parent_business','resource_type as business_type','resource_sn as machine_number','detail as resource_detail','business_status','price as money','duration as length','business_note','mc.created_at','starttime as start_time','endtime as endding_time','remove_status','check_note','user.nickname as client_name','admin.name as sales_name','room_id','cabinet_id','ip_id']);
+
+
     }
 
     /**

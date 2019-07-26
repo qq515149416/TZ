@@ -60,6 +60,14 @@ Route::group([
 
 });
 
+//移动端接口路径
+Route::group([
+    'prefix' => 'wap',
+    'middleware' => 'UserOperationLog'
+], function () {
+    Route::get('/', 'Show\wap\IndexController@index');
+});
+
 /**
  * 测试组
  */

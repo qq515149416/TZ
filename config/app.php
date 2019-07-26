@@ -167,6 +167,7 @@ return [
         Mews\Captcha\CaptchaServiceProvider::class,   //验证码
         Yansongda\LaravelPay\PayServiceProvider::class, //支付宝支付
         Maatwebsite\Excel\ExcelServiceProvider::class,  //excel用
+        Jenssegers\Agent\AgentServiceProvider::class, //判断访问设备
     ],
 
     /*
@@ -222,6 +223,7 @@ return [
         'Captcha'      => Mews\Captcha\Facades\Captcha::class, //验证码
         'Pay'          => Yansongda\LaravelPay\Facades\Pay::class,//支付宝
         'Excel'         => Maatwebsite\Excel\Facades\Excel::class,//excel
+        'Agent' => Jenssegers\Agent\Facades\Agent::class, //判断访问设备
 
     ],
 

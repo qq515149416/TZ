@@ -11,6 +11,7 @@
         "encore/laravel-admin": "1.5.*",
         "fideloper/proxy": "^4.0",
         "hightman/xunsearch": "*@beta",
+        "jenssegers/agent": "^2.6",
         "laravel/framework": "5.6.*",
         "laravel/passport": "^7.3",
         "laravel/tinker": "^1.0",

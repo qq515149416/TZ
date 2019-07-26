@@ -65,13 +65,13 @@ class WechatPayController extends Controller
  			return $get_flow;
  		}
  		$flow = $get_flow['data'];
- 
+ 		//因为单位是分,所以要乘以100
  		$total_fee = bcmul($flow['recharge_amount'],100,0);
 		$order = [
 			'out_trade_no' 		=> $flow['trade_no'],
 			'total_fee' 		=> $total_fee, // **单位：分**
 			'body' 			=> '余额充值',
-			'product_id'		=> 1,		//代表的是商品id,我们暂时没弄商品表,用1代表下充值
+			//'product_id'		=> 1,		//代表的是商品id,
 			//'openid' 		=> 'onkVf1FjWS5SBIixxxxxxx',
 		];
 	
@@ -89,13 +89,12 @@ class WechatPayController extends Controller
 				'code'	=> 0,
 			];
 		}
-
  	}
 
  	// 验证微信付款状态的方法	充值用的
  	// 主要验证  appid,商户id,金额,订单状态对不对,不对的直接退款
  	// @return  code:	0-未付款	1-付过款并且信息没问题,尚未发货 	2-付过款了并且信息没问题,已经发货了 	3-付过款,信息有问题,尚未发货,需要工作人员处理
- 	//			4-已退款
+ 	//			4-付款状态异常,需重新下单
  	//	     data: 	$check -微信返回的支付结果
 
  	// 微信查询接口返回格式:
@@ -204,13 +203,20 @@ class WechatPayController extends Controller
 					'code'	=> 4,
 				];
  			}else{
- 				return [
-					'data'	=> $check,
-					'msg'	=> '尚未付款',
-					'code'	=> 0,
-				];
- 			}
- 			
+ 				if ($check['trade_state'] == 'NOTPAY' || $check['trade_state'] == 'USERPAYING') {
+ 					return [
+						'data'	=> $check,
+						'msg'	=> '尚未付款',
+						'code'	=> 0,
+					];
+ 				}else{
+ 					return [
+						'data'	=> $check,
+						'msg'	=> '付款状态异常,请重新下单',
+						'code'	=> 4,
+					];
+ 				}	
+ 			}		
  		}	
  	}
 
@@ -222,7 +228,7 @@ class WechatPayController extends Controller
  	public function rechargePaySuccess($check)
  	{
  		$model = new WechatPay();
- 		$res = $model->rechargePaySuccess($check);
+ 		$res = $model::rechargePaySuccess($check);
  		return $res;
  	}
 
@@ -293,11 +299,14 @@ class WechatPayController extends Controller
 
 		$check_res = $this->checkOrder($data->out_trade_no);
 		if ($check_res['code'] == 1) {
-			$model = new WechatPay();
-			$insert_res = $model->rechargePaySuccess($check_res['data']);
+
+			$insert_res = $this->rechargePaySuccess($check_res['data']);
 			if ($insert_res['code'] == 1) {
 				return $pay->success();// laravel 框架中请直接 `return $pay->success()`
 			}
+		}
+		if ($check_res['code'] == 2) {	//付过款了并且信息没问题,已经发货了
+			return $pay->success();
 		}
 	}
 
@@ -306,7 +315,7 @@ class WechatPayController extends Controller
 	*@param 	$check 	就是checkOrder那个方法得来的
 	*/
 
-	public function cancel($check){
+	protected function cancel($check){
 
 		$order = [
 			'out_refund_no'	=> $check['out_trade_no'].'refund',

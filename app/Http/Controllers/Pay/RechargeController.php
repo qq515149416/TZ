@@ -64,7 +64,7 @@ class RechargeController extends Controller
 	/**
 	*微信支付充值的方法
 	*@param 	$total_amount	订单金额
-	*@return 	创建订单的id
+	*@return 	data{ url - 二维码url 	; flow_id - 生成的订单id }
  	**/
  	
 	public function rechargeByWechat(RechargeRequest $request)
@@ -93,9 +93,9 @@ class RechargeController extends Controller
 			'url'	=> $getUrl['data'],
 			'flow_id'	=> $makeOrder['data'],
 		];
-		//return tz_ajax_echo($data,$getUrl['msg'],$getUrl['code']);
+		return tz_ajax_echo($data,$getUrl['msg'],$getUrl['code']);
 
-		return view('test',[ 'url' => $data['url']]);
+		//return view('test',[ 'url' => $data['url']]);
 	}
 
 	//生成微信支付充值的订单
@@ -119,13 +119,17 @@ class RechargeController extends Controller
 		if( $get_flow_res['code'] == 0){
 			return tz_ajax_echo([],'获取订单信息失败',0);
 		}
+		if ($get_flow_res['data']['recharge_way'] != 2 ) {
+			return tz_ajax_echo([],'该订单支付方式不是微信',0);
+		}
 		//先检测一遍订单的支付状态
 		$check = $this->WechatCheckAndInsert($get_flow_res['data']['trade_no']);
-		
+		//dd($check);
 		if ($check['code'] != 0) {		//表示已付款,无需获取二维码,返回错误信息
-			return tz_ajax_echo($check['data'],$check['msg'],2);
+			return tz_ajax_echo($check['data'],$check['msg'],2);	//有问题,统一返回code2
 		}
 
+		//获取url
 		$res = $this->getWechatUrl($par['flow_id']);
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 		//return view('test',[ 'url' => $res['data']]);
@@ -408,7 +412,7 @@ class RechargeController extends Controller
 		$res = $wechat_controller->checkOrder($trade_no);	//直接向微信查询订单支付状态
 		//此方法返回code
 		//0-未付款	1-付过款并且信息没问题,尚未发货 	2-付过款了并且信息没问题,已经发货了 	3-付过款,信息有问题,尚未发货,需要工作人员处理
-		//4-已退款
+		//4-付款状态异常,需重新下单
 		//0和2不用操作,直接返回结果 , 3要工作人员处理 , 1要进行数据处理,把余额进账
 		if($res['code'] == 3){	//就是要退款了
 			return [
@@ -425,7 +429,7 @@ class RechargeController extends Controller
 			];
 		}elseif ($res['code'] != 1) {
 			return [
-				'data'	=> [],
+				'data'	=> $res['data'],
 				'code'	=> $res['code'],
 				'msg'	=> $res['msg'],
 			];

@@ -173,8 +173,18 @@ Route::group([
             Route::get('goToPay', 'Pay\RechargeController@goToPay');
 
             Route::get('delOrder', 'Pay\RechargeController@delOrder');
+
+
+            /*** 微信支付的start ***/
+            
+            Route::get('rechargeByWechat', 'Pay\RechargeController@rechargeByWechat');//直接生成订单 + 获取二维码url接口
+
+            Route::get('getWechatUrlOut', 'Pay\RechargeController@getWechatUrlOut');//根据充值单id获取二维码url接口
+    
+            /*** 微信支付的end ***/
         });
 
+        Route::post('wechatNotify', 'Pay\WechatPayController@notify');//微信异步接收通知
 
         //异步接收支付宝发出通知的接口,支付宝方用的
         Route::post('payRechargeNotify', 'Pay\RechargeController@AliRechargeNotify');
@@ -185,7 +195,6 @@ Route::group([
         Route::get('getOrder', 'Pay\RechargeController@getOrder');
         //查询指定充值单号支付情况
         Route::get('checkRechargeOrder', 'Pay\RechargeController@checkRechargeOrder');
-
         //退款页面
         //Route::get('refund', 'Pay\PayController@refund');
 

@@ -36,7 +36,7 @@ class BusinessController extends Controller
      * @return json           返回对应机房的信息或者数据
      */
     public function selectMachine(Request $request){
-		$where = $request->only(['machineroom','business_type']);
+		$where = $request->only(['machineroom','business_type','customer_id']);
 		$machine = new MachineModel();
 		$return = $machine->selectMachine($where);
 		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
@@ -65,6 +65,19 @@ class BusinessController extends Controller
 		$return = $business->insertBusiness($insert);
 		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
     }
+
+    /**
+     * 机柜业务下添加托管机器
+     * @param  Request $request 'customer'--客户id,'parent_business'--机柜业务id,
+     * 'resource_type'--资源类型,'resource_id'--资源id,'price'--价格,'duration'--时长,'business_note'--业务备注
+     * @return [type]           [description]
+     */
+    public function cabinetMachine(Request $request){
+        $param = $request->only(['customer','parent_business','resource_type','resource_id','price','duration','business_note']);
+        $cabinet_machine = new BusinessModel();
+        $return = $cabinet_machine->cabinetMachine($param);
+        return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
+    }
 // security安全
     /**
      * 信安部门查看业务数据获取
@@ -81,22 +94,10 @@ class BusinessController extends Controller
      * @return json 返回相关操作的数据和状态及提示信息
      */
     public function checkBusiness(Request $request){
-		$data = $request->only(['business_number','business_status','check_note']);
+		$data = $request->only(['business_number','business_status','check_note','parent_business']);
 		$check = new BusinessModel();
 		$return = $check->checkBusiness($data);
 		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
-    }
-
-    /**
-     * 业务员手动对客户的业务进行启用，针对后付费客户群体
-     * @param  Request $request [description]
-     * @return json 			返回相关操作的数据和状态及提示信息
-     */
-    public function enableBusiness(Request $request){
-    		$enable = $request->only(['id','business_status']);
-    		$enable_business = new BusinessModel();
-    		$return = $enable_business->enableBusiness($enable);
-    		return tz_ajax_echo($return,$return['msg'],$return['code']);
     }
 
     /**
@@ -109,6 +110,30 @@ class BusinessController extends Controller
 		$show_business = new BusinessModel();
 		$return = $show_business->showBusiness($show);
 		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
+    }
+
+    /**
+     * 根据机柜业务的业务id进行机柜下的机器数据获取
+     * @param  Request $request --parent_business,机柜业务id
+     * @return [type]           [description]
+     */
+    public function showCabinetMachine(Request $request){
+        $param = $request->only(['parent_business']);
+        $show = new BusinessModel();
+        $result = $show->showCabinetMachine($param);
+        return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
+    }
+
+    /**
+     * 获取机柜业务下机器的详情
+     * @param  Request $request --business_id,机器业务的id
+     * @return [type]           [description]
+     */
+    public function cabinetMachineDetail(Request $request){
+        $detail_param = $request->only(['business_id']);
+        $detail = new BusinessModel();
+        $result = $detail->cabinetMachineDetail($detail_param);
+        return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
     }
 
     /**

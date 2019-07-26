@@ -26,19 +26,19 @@ class OrdersReviewBigController extends Controller
 	protected $detailID;
 	protected $edit_status = 1;
 	use ModelForm;
-	public function index(Content $content)
+	public function index(Request $request,Content $content)
 	{
-		return Admin::content(function (Content $content) {
+		return Admin::content(function (Content $content) use($request) {
 
 			$content->header('消费流水复核');
 			$content->description('需复核列表');
 
-			$content->body($this->grid());
+			$content->body($this->grid($request->input('flow_id')));
 		});
 	}
 	//行操作,show按钮
 	public function show($id, Content $content)
-	{	
+	{
 		$this->detailID = $id;
 		return Admin::content(function (Content $content) use ($id) {
 
@@ -79,13 +79,13 @@ class OrdersReviewBigController extends Controller
 	//显示具体包含的订单
 	protected function detail($id)
 	{
-		
+
 		return Admin::grid(OrdersModel::class, function (Grid $show) {
 
 			$review = OrdersReviewModel::find($this->detailID)->toArray();
-			
+
 			$order_id = json_decode($review['order_id'],true);
-			
+
 			//添加数据查询条件
 			// $grid->model()->leftJoin('tz_orders as b','b.id', '=' , 'tz_orders_review.flow_id')
 			// 	->leftJoin('tz_users as c' , 'c.id' , '=' , 'b.customer_id')
@@ -93,7 +93,7 @@ class OrdersReviewBigController extends Controller
 			// 	->select(['tz_orders_review.*', 'b.serial_number','c.nickname','c.email','c.name']);
 			$show->model()->whereIn('id',$order_id)
 				->select(['tz_orders.*']);
-				
+
 
 			/*	自定义按钮start		*/
 			$show->disableCreateButton();		//禁用创建按钮
@@ -118,7 +118,7 @@ class OrdersReviewBigController extends Controller
 			// });
 
 			/*	自定义按钮end		*/
-			
+
 			$show->id('ID')->sortable();
 			$show->column('order_sn','订单编号');
 			$show->column('business_sn','业务编号');
@@ -163,15 +163,16 @@ class OrdersReviewBigController extends Controller
 			$show->column('payable_money','应付');
 			$show->column('order_note','备注');
 			// $show->column('machine_sn','资源编号(高防和叠加包为套餐id)');
-			
+
 
 		});
 	}
-	protected function grid()
+	protected function grid($flow_id = NULL)
 	{
-		return Admin::grid(OrdersReviewModel::class, function (Grid $grid) {
-
-
+		return Admin::grid(OrdersReviewModel::class, function (Grid $grid) use($flow_id) {
+            if($flow_id) {
+                $grid->model()->where('flow_id', $flow_id);
+            }
 			$grid->model()->leftJoin('tz_orders_flow as b','b.id', '=' , 'tz_orders_review.flow_id')
 				->leftJoin('tz_users as c' , 'c.id' , '=' , 'b.customer_id')
 				->orderBy('tz_orders_review.status' , 'asc')
@@ -186,7 +187,7 @@ class OrdersReviewBigController extends Controller
 			// $grid->disableActions();		//禁用行操作列
 			// $grid->actions(function ($actions) {
 			// 	$actions->disableDelete();	//行操作里屏蔽删除按钮
-			// 	// $actions->disableEdit();	
+			// 	// $actions->disableEdit();
 			// 	//按钮重构
 			// 	// $actions->append("<a href='编辑跳转链接' style='float: left'><i class='fa fa-edit'></i></a>");
 			// });
@@ -239,7 +240,7 @@ class OrdersReviewBigController extends Controller
 			$grid->column('reason','问题');
 			$grid->column('answer','回答');
 
-		
+
 		// 	$grid->column('status','使用状态')->display(function () {
 		// 		$status = [
 		// 			0 => '未使用',
@@ -254,8 +255,8 @@ class OrdersReviewBigController extends Controller
 		// 	$grid->column('validity_period','生效时长/天');
 		// 	$grid->column('machine_room_name','机房');
 		// 	$grid->column('clerk_name','所属业务员');
-			
-			
+
+
 		// 	$grid->filter(function($filter){
 		// 		// 去掉默认的id过滤器
 		// 		$filter->disableIdFilter();
@@ -279,7 +280,7 @@ class OrdersReviewBigController extends Controller
 		// 			$ip = DB::table('tz_defenseip_business')->leftJoin('tz_defenseip_store as b' , 'b.id' , '=' , 'tz_defenseip_business.ip_id')
 		// 						->where('tz_defenseip_business.business_number' , $business_num)
 		// 						->first(['b.ip']);
-								
+
 		// 			if ($ip != null) {	//在高防的话直接获取
 		// 				$this->ip = $ip->ip;
 		// 			}else{		//不在高防就去找找idc
@@ -308,7 +309,7 @@ class OrdersReviewBigController extends Controller
 		// 		return $this->ip;
 		// 	});
 
-			
+
 
 		});
 	}
@@ -317,7 +318,7 @@ class OrdersReviewBigController extends Controller
 		return Admin::form(OrdersReviewModel::class, function (Form $form) {
 
 			$form->display('id', 'ID');
-	
+
 			$form->display('reason', '问题');
 
 			$form->display('answer', '回答');

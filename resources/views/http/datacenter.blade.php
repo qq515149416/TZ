@@ -36,7 +36,7 @@
             </div>
         </header>
         <section class="main">
-            <h3>惠州数据中心</h3>
+            <h3>{{ $data['name'] }}</h3>
             <div class="data clearfix">
                 <div class="tz-thumbnail pull-left">
                     <div class="swiper-container" id="thumbnail">

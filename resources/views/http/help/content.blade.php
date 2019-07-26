@@ -17,17 +17,24 @@
         <div class="article-footer clearfix">
             <div class="pull-left">
                 <p>
-                    上一篇：<a href="javascript:;">云计算成本优化的六大支柱</a>
-                    <!-- <span>没有了</span> -->
+                    上一篇：
+                    @if ($prev_data)
+                    <a href="/help/detail/{{ $prev_data->id }}">{{ $prev_data->title }}</a>
+                    @else
+                    <span>没有了</span>
+                    @endif
                 </p>
                 <p>
-                下一篇：<a href="javascript:;">实现云计算的承诺需要一致的安全性</a>
-
-                <!-- <span>没有了</span> -->
+                    下一篇：
+                    @if ($next_data)
+                    <a href="/help/detail/{{ $next_data->id }}">{{ $next_data->title }}</a>
+                    @else
+                    <span>没有了</span>
+                    @endif
                 </p>
             </div>
             <div class="pull-right">
-                <a href="javascript:;">
+                <a href="javascript:history.go(-1);">
                     <img src="{{ asset("/images/article_break.png") }}" alt="" />
                 </a>
             </div>
@@ -38,7 +45,12 @@
             相关推荐
         </h3>
         <ul class="clearfix">
+            @foreach ($recommend as $item)
             <li class="font-regular">
+                <a href="/help/detail/{{ $item->id }}">{{ $item->title }}</a>
+            </li>
+            @endforeach
+            <!-- <li class="font-regular">
                 <a href="javascript:;">云计算技术对大企业的影响</a>
             </li>
             <li class="font-regular">
@@ -64,10 +76,7 @@
             </li>
             <li class="font-regular">
                 <a href="javascript:;">云计算技术对大企业的影响</a>
-            </li>
-            <li class="font-regular">
-                <a href="javascript:;">云计算技术对大企业的影响</a>
-            </li>
+            </li> -->
         </ul>
     </div>
 </div>

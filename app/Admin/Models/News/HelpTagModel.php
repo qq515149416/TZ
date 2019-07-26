@@ -26,4 +26,8 @@ class HelpTagModel extends Model
         }
         $this->save();
     }
+    public function content()
+    {
+        return $this->belongsTo("App\Admin\Models\News\HelpContentsModel","content_id");
+    }
 }

@@ -1,10 +1,14 @@
 <div class="list-content">
-    <h2>
-        {{ $nav->name }}
-    </h2>
-    <!-- <div class="search-result-title font-regular">
-        搜索“<span class="font-heavy">服务器</span>”的结果
-    </div> -->
+    @isset($nav)
+        <h2>
+            {{ $nav->name }}
+        </h2>
+    @endisset
+    @isset($keyword)
+        <div class="search-result-title font-regular">
+            搜索“<span class="font-heavy">{{ $keyword }}</span>”的结果
+        </div>
+    @endisset
     <ul>
         @foreach ($data as $item)
         <li>
@@ -34,4 +38,9 @@
         </li>
         @endforeach
     </ul>
+    @if(!isset($keyword))
+        <div class="paginate">
+            {{ $data->links() }}
+        </div>
+    @endif
 </div>

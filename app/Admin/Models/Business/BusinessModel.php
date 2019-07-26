@@ -19,7 +19,7 @@ class BusinessModel extends Model
     protected $table = 'tz_business';
     public $timestamps = true;
     protected $dates = ['deleted_at'];
-    protected $fillable = ['client_id', 'client_name', 'sales_id', 'sales_name', 'order_number', 'business_number', 'business_type', 'machine_number', 'resource_detail', 'money', 'length', 'endding_time', 'business_status', 'business_note', 'remove_status', 'remove_reason', 'check_note', 'created_at', 'updated_at'];
+    protected $fillable = ['client_id', 'client_name', 'sales_id', 'sales_name', 'order_number', 'business_number', 'business_type', 'machine_number', 'resource_detail', 'money', 'length','start_time','endding_time', 'business_status', 'business_note', 'remove_status', 'remove_reason', 'check_note', 'created_at', 'updated_at'];
 
     /**
      * 创建业务数据
@@ -110,6 +110,121 @@ class BusinessModel extends Model
     }
 
     /**
+     * 机柜业务下添加托管机器
+     * @param  array $data 'customer'--客户id,'parent_business'--机柜业务id,
+     * 'resource_type'--资源类型,'resource_id'--资源id,'price'--价格,'duration'--时长,'business_note'--业务备注
+     * @return [type]       [description]
+     */
+    public function cabinetMachine($data){
+
+        if(empty($data)){
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg']  = '(#101)业务无法创建！！';
+            return $return;
+        }
+
+        $sales = DB::table('tz_users')->where(['id'=>$data['customer']])->value('salesman_id');
+        $data['sales'] = $sales == Admin::user()->id ? Admin::user()->id : $sales;
+
+        $business = DB::table('tz_business')
+                      ->where(['id'=>$data['parent_business']])
+                      ->whereBetween('business_status',[0,5])
+                      ->whereBetween('remove_status',[0,1])
+                      ->value('id');
+        if(empty($business)){
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg']  = '(#102)请确认机柜业务未过期/未下架';
+            return $return;
+        }
+
+        $machine = DB::table('idc_machine as machine')->join('tz_machine_customer as mc','machine.id','=','mc.machine_id')
+                    ->where(['machine.id'=>$data['resource_id'],'mc.customer_id'=>$data['customer'],'used_status'=>0,'machine_status'=>0])
+                    ->whereNull('machine.deleted_at')
+                    ->select('machine.id','machine_num','cpu','memory','harddisk','cabinet','ip_id','machineroom as machineroom_id','bandwidth','protect','loginname','loginpass')
+                    ->first();
+        if(empty($machine)){
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg']  = '(#103)选择的机器不存在/不属于此客户/已被使用';
+            return $return;
+        }
+
+        $start_time = date('Y-m-d H:i:s',time());
+        $data['starttime'] = $start_time;
+        $data['endtime'] = time_calculation($start_time,$data['duration'],'month');
+        $data['business_number'] = $this->businesssn();
+        $data['resource_sn'] = $machine->machine_num;
+        $data['room_id'] = $machine->machineroom_id;
+        $data['cabinet_id'] = $machine->cabinet;
+        $data['ip_id'] = $machine->ip_id;
+        $data['created_at'] = $start_time;
+        $data['updated_at'] = $start_time;
+
+        DB::beginTransaction();
+        $row = DB::table('tz_cabinet_machine')->insertGetId($data);
+        if($row == 0){
+            DB::rollBack();
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg']  = '(#104)机柜添加托管机器失败';
+            return $return;
+        }
+
+        $machine->cabinets = $this->cabinets($machine->cabinet);
+        $machine->machineroom_name = $this->machineroom($machine->machineroom_id);
+        $ip = $this->tranIp($machine->ip_id);
+        $machine->ip = $ip['ip'];
+        $machine->ip_detail = $ip['ip_detail'];
+
+        $detail['detail'] = json_encode($machine);
+        $detail['business_id'] = $row;
+        $detail['parent_id'] = $data['parent_business'];
+        $detail['created_at'] = $start_time;
+        $detail['updated_at'] = $start_time;
+        $result = DB::table('tz_cabinet_machine_detail')->insertGetId($detail);
+        if($result == 0){
+            DB::rollBack();
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg']  = '(#105)机柜添加托管机器失败';
+            return $return;
+        }
+
+        $machine_row = DB::table('idc_machine')->where(['id'=>$data['resource_id']])->update(['used_status'=>1,'updated_at'=>date('Y-m-d H:i:s',time())]);
+        if($machine_row == 0){
+            DB::rollBack();
+            $return['data'] = '';
+            $return['code'] = 0;
+            $return['msg']  = '(#106)机柜添加托管机器失败';
+            return $return;
+        }
+
+        $xunsearch = new XS('business');
+        $index = $xunsearch->index;
+        $resource = json_decode($insert['resource_detail']);
+        $doc['ip'] = isset($machine->ip)?strtolower($machine->ip):'';
+        $doc['cpu'] = isset($machine->cpu)?strtolower($machine->cpu):'';
+        $doc['memory'] = isset($machine->memory)?strtolower($machine->memory):'';
+        $doc['harddisk'] = isset($machine->harddisk)?strtolower($machine->harddisk):'';
+        $doc['id'] = strtolower($row);
+        $doc['business_sn'] = strtolower($business_sn);
+        $doc['machine_number'] = strtolower($data['business_number']);
+        $doc['client'] = strtolower($data['customer']);
+        $document = new \XSDocument($doc);
+        $index->update($document);
+        $index->flushIndex();
+
+        DB::commit();
+        $return['data'] = $row;
+        $return['code'] = 1;
+        $return['msg']  = '机柜添加托管机器成功,请耐心等待审核';
+        return $return;
+
+    }
+
+    /**
      * 信安部门查看业务数据获取
      * @return array 返回相关的数据和状态及提示信息
      */
@@ -129,6 +244,7 @@ class BusinessModel extends Model
                 $check_value->client_name = $client_name;
                 $resource_detail = json_decode($check_value['resource_detail']);
                 $result[$check]['machineroom_name'] = $resource_detail->machineroom_name;
+                $result[$check]['parent_business'] = 0;
                 if($check_value['business_type'] != 3){
                     $result[$check]['cabinets'] = $resource_detail->cabinets;
                     $result[$check]['ip'] = isset($resource_detail->ip)?$resource_detail->ip:'暂未配置IP';
@@ -137,20 +253,52 @@ class BusinessModel extends Model
                     $result[$check]['ip'] = '';
                 }
             }
-            $return['data'] = $result;
-            $return['code'] = 1;
-            $return['msg']  = '相关业务数据获取成功';
-        } else {
-            $return['data'] = '暂无业务数据';
-            $return['code'] = 0;
-            $return['msg']  = '暂无业务数据';
         }
-
+        
+        $security = $this->securityCabinetBusiness();
+        $cabinetmachine = array_merge($result->toArray(),$security->toArray());
+        $created_at = array_column($cabinetmachine,'business_status');
+        array_multisort($created_at,SORT_ASC,$cabinetmachine);
+        $return['data'] = $cabinetmachine;
+        $return['code'] = 1;
+        $return['msg']  = '相关业务数据获取成功';
         return $return;
     }
-// DB::beginTransaction();
-// DB::rollBack();
-// DB::commit();
+
+    /**
+     * 审核时获取机柜业务下的机器信息
+     * @return [type] [description]
+     */
+    public function securityCabinetBusiness(){
+
+        $result = DB::table('tz_cabinet_machine as mc')
+                    ->leftjoin('tz_users as user','mc.customer','=','user.id')
+                    ->leftjoin('admin_users as admin','mc.sales','=','admin.id')
+                    ->leftjoin('tz_cabinet_machine_detail as detail','mc.id','=','detail.business_id')
+                    ->whereBetween('business_status',[0,3])
+                    ->whereBetween('remove_status',[0,3])
+                    ->orderBy('created_at','desc')
+                    ->get(['mc.id','sales as sales_id','customer as client_id','business_number','parent_business','resource_type as business_type','resource_sn as machine_number','detail as resource_detail','business_status','price as money','duration as length','business_note','mc.created_at','starttime as start_time','endtime as endding_time','remove_status','check_note','user.nickname as client_name','admin.name as sales_name','room_id','cabinet_id','ip_id']);
+        if(!$result->isEmpty()){
+            $business_status = [-1 => '审核不通过',0 => '审核中', 1 => '未付款使用', 2 => '付款使用中', 3 => '未付用', 4 => '锁定中', 5 => '到期', 6 => '退款'];
+            $business_type   = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜'];
+            $remove_status = [0 => '正常使用', 1 => '下架申请中', 2 => '机房处理中', 3 => '清空下架中', 4 => '下架完成'];
+            foreach($result as $check => $check_value){
+                $check_value->status = $business_status[$check_value->business_status];
+                $check_value->type   = $business_type[$check_value->business_type];
+                $check_value->remove = $remove_status[$check_value->remove_status];
+                $check_value->machineroom_name = $this->machineroom($check_value->room_id);
+                if($check_value->business_type != 3){
+                    $check_value->cabinets = $this->cabinets($check_value->cabinet_id);
+                    $check_value->ip = $this->tranIp($check_value->ip_id)['ip'];
+                }
+            }
+
+        }
+        
+        return $result;
+    }
+
     /**
      * 信安部门对业务进行审核操作
      * @param  array $where 业务的业务编号和业务的id
@@ -165,9 +313,17 @@ class BusinessModel extends Model
             $return['msg']  = '无法进行审核';
             return $return;
         }
+
         // 根据业务号查询需要审核的业务数据
         $check_where = ['business_number' => $where['business_number']];
-        $check       = DB::table('tz_business')->where($check_where)->select('client_id','id','business_number', 'client_name', 'sales_id', 'sales_name', 'business_type', 'machine_number', 'money', 'length','resource_detail','endding_time')->first();
+        if($where['parent_business'] == 0){
+            //普通的IDC业务
+            $check = DB::table('tz_business')->where($check_where)->select('client_id','id','business_number', 'client_name', 'sales_id', 'sales_name', 'business_type', 'machine_number', 'money', 'length','resource_detail','endding_time')->first();
+        } else {
+            //机柜业务下的托管机器业务
+            $check = DB::table('tz_cabinet_machine as mc')->leftjoin('tz_cabinet_machine_detail as detail','mc.id','=','detail.business_id')->where($check_where)->select('mc.id','business_number','resource_sn as machine_number','resource_type as business_type','detail as resource_detail','endtime as endding_time')->first();
+        }
+        
         if (empty($check)) {
             // 不存在对应的业务数据直接返回
             $return['data'] = '该业务不存在,无法进行审核操作';
@@ -175,6 +331,7 @@ class BusinessModel extends Model
             $return['msg']  = '该业务不存在,无法进行审核操作';
             return $return;
         }
+
         // 当不是机柜时且当审核为通过时先对机器的使用状态进行判断
         if($check->business_type != 3 && $where['business_status'] == 1) {
             // 审核通过前验证业务机器是否未使用，如果是使用直接返回提示
@@ -187,14 +344,27 @@ class BusinessModel extends Model
             }
 
         }
+
         // 业务表审核时更新的字段
         $business['business_status'] = $where['business_status'];
         $business['check_note']      = $where['check_note'];
         if ($where['business_status'] != 1) {
             DB::beginTransaction();
+            if($where['parent_business'] != 0){
+                //机柜业务下的托管机器业务
+                $business['business_status'] = '-1';
+            }
+
             // 审核为不通过时直接进行业务的状态更改
             $business['remove_status'] = 4;
-            $row = DB::table('tz_business')->where($check_where)->update($business);
+            if($where['parent_business'] != 0){
+                //机柜业务下的托管机器业务
+                $row = DB::table('tz_cabinet_machine')->where($check_where)->update($business);
+            } else {
+                //普通的IDC业务
+                $row = DB::table('tz_business')->where($check_where)->update($business);
+            }
+            
             if($row == 0){
                 DB::rollBack();
                 $return['data'] = '审核失败';
@@ -202,9 +372,11 @@ class BusinessModel extends Model
                 $return['msg']  = '审核失败!';
                 return $return;
             }
+
             if($check->business_type != 3){
                 $omachine = DB::table('idc_machine')->where(['machine_num'=>$check->machine_number,'used_status'=>0])->first();//先检查是否该机器状态为未使用
-                if(empty($omachine)){//不是未使用，更新成为使用状态，是的话就不更新
+                if(empty($omachine)){
+                    //不是未使用，更新成未使用状态，是的话就不更新
                     $machine = DB::table('idc_machine')->where(['machine_num'=>$check->machine_number])->update(['used_status'=>0]);
                     if($machine == 0){
                         DB::rollBack();
@@ -215,6 +387,7 @@ class BusinessModel extends Model
                     }
                 }     
             }
+
             DB::commit();
             $return['data'] = '';
             $return['code'] = 1;
@@ -228,51 +401,65 @@ class BusinessModel extends Model
 
         // 如果审核为通过则继续进行订单表的生成
         DB::beginTransaction();//开启事务处理
-        
-       
+
         $order_sn                 = $this->ordersn();
-        $business['order_number'] = $order_sn;
         $business['updated_at']   = date('Y-m-d H:i:s',time());
-        $business_row             = DB::table('tz_business')->where($check_where)->update($business);
-        if ($business_row == 0) {
-            // 业务审核失败
-            DB::rollBack();
-            $return['data'] = '审核失败';
-            $return['code'] = 0;
-            $return['msg']  = '(#101)审核失败!!';
-            return $return;
+        if($where['parent_business'] == 0){
+
+            //普通IDC业务
+            $business['order_number'] = $order_sn;
+            $business_row             = DB::table('tz_business')->where($check_where)->update($business);
+            if ($business_row == 0) {
+                // 业务审核失败
+                DB::rollBack();
+                $return['data'] = '审核失败';
+                $return['code'] = 0;
+                $return['msg']  = '(#101)审核失败!!';
+                return $return;
+            }
+            // 业务审核成功继续进行订单表的生成
+            $order['order_sn']      = $order_sn;
+            $order['business_sn']   = $check->business_number;
+            $order['customer_id']   = $check->client_id;
+            $order['customer_name'] = $check->client_name;
+            $order['business_id']   = $check->sales_id;
+            $order['business_name'] = $check->sales_name;
+            $order['resource_type'] = $check->business_type;
+            $order['order_type']    = 1;
+            $order['machine_sn']    = $check->machine_number;
+            $order['price']         = $check->money;//单价
+            $order['duration']      = $check->length;//时长
+            $order['resource']      = $check->machine_number;//机器的话为IP/机柜则为机柜编号
+            $order['end_time']      = $check->endding_time;
+            $order['payable_money'] = bcmul((string)$order['price'], (string)$order['duration'], 2);//应付金额
+            $order['created_at']    = date('Y-m-d H:i:s',time());
+            $order_row              = DB::table('tz_orders')->insert($order);//生成订单
+            if ($order_row != true) {
+                // 订单生成失败
+                DB::rollBack();
+                $return['data'] = '审核失败';
+                $return['code'] = 0;
+                $return['msg']  = '(#102)审核失败!!!';
+                return $return;
+            }
+        } else {
+            $business_row = DB::table('tz_cabinet_machine')->where($check_where)->update($business);
+            if ($business_row == 0) {
+                // 业务审核失败
+                DB::rollBack();
+                $return['data'] = '审核失败';
+                $return['code'] = 0;
+                $return['msg']  = '(#103)审核失败!!';
+                return $return;
+            }            
         }
-        // 业务审核成功继续进行订单表的生成
-        $order['order_sn']      = $order_sn;
-        $order['business_sn']   = $check->business_number;
-        $order['customer_id']   = $check->client_id;
-        $order['customer_name'] = $check->client_name;
-        $order['business_id']   = $check->sales_id;
-        $order['business_name'] = $check->sales_name;
-        $order['resource_type'] = $check->business_type;
-        $order['order_type']    = 1;
-        $order['machine_sn']    = $check->machine_number;
-        $order['price']         = $check->money;//单价
-        $order['duration']      = $check->length;//时长
-        $order['resource']      = $check->machine_number;//机器的话为IP/机柜则为机柜编号
-        $order['end_time']      = $check->endding_time;
-        $order['payable_money'] = bcmul((string)$order['price'], (string)$order['duration'], 2);//应付金额
-        $order['created_at']    = date('Y-m-d H:i:s',time());
-        $order_row              = DB::table('tz_orders')->insert($order);//生成订单
-        if ($order_row != true) {
-            // 订单生成失败
-            DB::rollBack();
-            $return['data'] = '审核失败';
-            $return['code'] = 0;
-            $return['msg']  = '审核失败!!!';
-            return $return;
-        }
-        if ($order['resource_type'] == 1 || $order['resource_type'] == 2) {
+        
+        if ($check->business_type == 1 || $check->business_type == 2) {
             // 如果是租用/托管机器的，在订单生成成功时，将业务编号和到期时间及资源状态进行更新
-            $machine['own_business'] = $order['business_sn'];
-            $machine['business_end'] = $order['end_time'];
+            $machine['own_business'] = $where['business_number'];
+            $machine['business_end'] = $check->endding_time;
             $machine['used_status']  = 2;
-            $row                     = DB::table('idc_machine')->where('machine_num', $order['machine_sn'])->update($machine);
+            $row                     = DB::table('idc_machine')->where(['machine_num'=>$check->machine_number])->update($machine);
             if ($row == 0) {
                 DB::rollBack();
                 $return['data'] = '审核失败';
@@ -282,12 +469,11 @@ class BusinessModel extends Model
             }
             $ip_id = json_decode($check->resource_detail)->ip_id;
             if($ip_id != 0){
-                $row = DB::table('idc_ips')->where('id',  $ip_id)->update(['own_business' => $order['business_sn'],'mac_num'=>$order['machine_sn']]);
+                $row = DB::table('idc_ips')->where(['id'=>$ip_id])->update(['own_business' => $where['business_number'],'mac_num'=>$check->machine_number]);
             } else {
                 $row = 1;
             }
             
-
         } else {
             // 如果是租用机柜的，在订单生成成功时，将业务编号和到期时间及资源状态进行更新
             $own_business = DB::table('idc_cabinet')->where('cabinet_id', $order['machine_sn'])->value('own_business');
@@ -314,30 +500,6 @@ class BusinessModel extends Model
         }
         return $return;
     }
-
-    /**
-     * 业务员手动对客户的业务进行启用状态，针对后付费客户群体
-     * @param  [type] $enable [description]
-     * @return [type]         [description]
-     */
-    public function enableBusiness($enable)
-    {
-        if ($enable) {
-            $row = $this->where(['id'=>$enable['id']])->update($enable);
-            if ($row != false) {
-                $return['code'] = 1;
-                $return['msg']  = '业务启用成功';
-            } else {
-                $return['code'] = 1;
-                $return['msg']  = '业务启用失败';
-            }
-        } else {
-            $return['code'] = 0;
-            $return['msg']  = '无法启用该业务';
-        }
-        return $return;
-    }
-
 
     /**
      * 业务员和管理员查看对应客户的业务数据
@@ -377,10 +539,81 @@ class BusinessModel extends Model
     }
 
     /**
+     * 根据机柜业务的业务id进行机柜下的机器数据获取
+     * @param  array $param --parent_business,机柜业务id
+     * @return [type]        [description]
+     */
+    public function showCabinetMachine($param){
+
+        if(empty($param)){
+            $return['data'] = [];
+            $return['code'] = 1;
+            $return['msg']  = '无法获取该机柜业务下的机器';
+            return $return;
+        }  
+
+        $show = DB::table('tz_cabinet_machine as mc')
+                   ->leftjoin('tz_users as user','mc.customer','=','user.id')
+                   ->leftjoin('admin_users as admin','mc.sales','=','admin.id')
+                   ->where($param)
+                   ->whereBetween('business_status',[0,3])
+                   ->whereBetween('remove_status',[0,3])
+                   ->whereNull('mc.deleted_at')
+                   ->orderBy('created_at','desc')
+                   ->get(['mc.id','sales as sales_id','customer as client_id','business_number','parent_business','resource_type as business_type','resource_sn as machine_number','business_status','price as money','duration as length','business_note','mc.created_at','starttime as start_time','endtime as endding_time','remove_status','check_note','user.nickname as client_name','admin.name as sales_name','room_id','cabinet_id','ip_id']);
+
+        if(!$show->isEmpty()){
+            $business_status = [-1 => '审核不通过',0 => '审核中', 1 => '未付款使用', 2 => '付款使用中', 3 => '未付用', 4 => '锁定中', 5 => '到期', 6 => '退款'];
+            $business_type   = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜'];
+            $remove_status = [0 => '正常使用', 1 => '下架申请中', 2 => '机房处理中', 3 => '清空下架中', 4 => '下架完成'];
+            foreach($show as $check => $check_value){
+                $check_value->status = $business_status[$check_value->business_status];
+                $check_value->type   = $business_type[$check_value->business_type];
+                $check_value->remove = $remove_status[$check_value->remove_status];
+                $check_value->machineroom_name = $this->machineroom($check_value->room_id);
+                if($check_value->business_type != 3){
+                    $check_value->cabinets = $this->cabinets($check_value->cabinet_id);
+                    $check_value->ip = $this->tranIp($check_value->ip_id)['ip'];
+                }
+            }
+                $return['data'] = $show;
+                $return['code'] = 1;
+                $return['msg']  = '相关业务数据获取成功';
+        } else {
+            $return['data'] = $show;
+            $return['code'] = 1;
+            $return['msg']  = '暂无业务数据';
+        }
+        return $return;
+ 
+    }
+
+    /**
+     * 获取机柜业务下机器的详情
+     * @param  array $detail_param --business_id,机器业务的id
+     * @return [type]               [description]
+     */
+    public function cabinetMachineDetail($detail_param){
+
+        if(empty($detail_param)){
+            $return['data'] = [];
+            $return['code'] = 1;
+            $return['msg']  = '无法获取该机器的详情';
+            return $return;
+        }
+
+        $detail = DB::table('tz_cabinet_machine_detail')->whereNull('deleted_at')->value('detail');
+        $return['data'] = $detail;
+        $return['code'] = 1;
+        $return['msg']  = '获取该机器的详情成功';
+        return $return;
+    }
+
+    /**
      * 创建业务号
      * @return [type] [description]
      */
-    public function businesssn($business_id=100,$business_type=1){
+    public function businesssn(){
         
         $business_sn = create_number();//调用创建单号的公共函数
     
@@ -400,7 +633,7 @@ class BusinessModel extends Model
      * 创建订单号
      * @return [type] [description]
      */
-    public function ordersn($resource_id=100,$resource_type=1){
+    public function ordersn(){
        
         $order_sn = create_number();//调用创建单号的公共函数,
         $order = DB::table('tz_orders')->where('order_sn',$order_sn)->select('order_sn','machine_sn')->first();
@@ -548,7 +781,7 @@ class BusinessModel extends Model
                 $return['msg']  = '(#104)该机器资源不存在/已被使用/已下架,请确认后再创建业务!';
                 return $return;
             }
-            // dd($machine);
+            
             $ip = $this->tranIp($machine->ip_id);
             $machine->ip = $ip['ip'];
             $machine->ip_detail = $ip['ip_detail'];
@@ -583,7 +816,7 @@ class BusinessModel extends Model
             $machine->cabinetid = $machine->id;
             $machine->id = $machine->cabinet_id;
         }
-        // $business_id = mt_rand(10000,20000);
+
         $business_sn               = $this->businesssn();
         $insert['business_number'] = $business_sn;
         $insert['business_status'] = 0;
@@ -855,45 +1088,33 @@ class BusinessModel extends Model
         $time = 'created_at';//默认以创建时间为查询条件
         switch ($search['str']) {
             case 1:
-                //$begin_end = $this->queryTime($search);
                 $remove = [0,4];//查找所有出现过的业务订单
                 break;
             case 2:
-                //$begin_end = $this->queryTime($search);
                 $remove = [0,3];//查找在用未下架的业务订单
                 break;
             case 3:
-                //$begin_end = $this->queryTime($search);
                 $remove = [4,4];//查找已下架的业务订单
                 $time = 'updated_at';//下架时以下架时间作为查询条件
                 break;
             default:
-                //$begin_end['start_time'] = '1970-01-01';
                 $begin_end['end_time'] = date('Y-m-d',time());
                 break;
         }
         //统计订单数量
         $orders_total = DB::table('tz_orders')
-                        //->whereBetween($time,[$begin_end['start_time'],$begin_end['end_time']])
                         ->whereBetween('order_status',$status)
                         ->whereBetween('remove_status',$remove)
                         ->whereNull('deleted_at')
                         ->count();
         //查询符合条件的数据
         $orders_info = DB::table('tz_orders')
-                        //->whereBetween($time,[$begin_end['start_time'],$begin_end['end_time']])
                         ->whereBetween('order_status',$status)
                         ->whereBetween('remove_status',$remove)
                         ->whereNull('deleted_at')
                         ->select('id','customer_id','business_id','resource_type','business_sn','machine_sn','price','duration',$time.' as created_at')
                         ->get();
-        // //统计符合条件的月营收
-        // $month_total = DB::table('tz_orders')
-        //                // ->whereBetween($time,[$begin_end['start_time'],$begin_end['end_time']])
-        //                 ->whereBetween('order_status',$status)
-        //                 ->whereBetween('remove_status',$remove)
-        //                 ->whereNull('deleted_at')
-        //                 ->sum('price'); 
+
         $total = 0;
         if(!$orders_info->isEmpty()){
             foreach($orders_info as $info_key => $info){

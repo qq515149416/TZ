@@ -1,4 +1,4 @@
-<div class="collection">
+<div class="collection clearfix">
     @foreach ($nav as $item)
     <div class="paper">
         <h3 class="font-medium">
@@ -41,4 +41,8 @@
         <a class="font-regular" href="/help/category/{{ $item->id }}">查看更多</a>
     </div>
     @endforeach
+
+</div>
+<div class="paginate">
+    {{ $nav->links() }}
 </div>

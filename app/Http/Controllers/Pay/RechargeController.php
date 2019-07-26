@@ -14,6 +14,9 @@ namespace App\Http\Controllers\Pay;
 
 use App\Http\Controllers\Pay\AliPayController;
 use App\Http\Models\Pay\AliRecharge;
+use App\Http\Controllers\Pay\WechatPayController;
+use App\Http\Models\Pay\WechatPay;
+
 use App\Http\Requests\Pay\RechargeRequest;
 
 use Illuminate\Http\Request;
@@ -57,6 +60,85 @@ class RechargeController extends Controller
 							
 		return tz_ajax_echo($makeOrder['data'],$makeOrder['msg'],$makeOrder['code']);		
 	}
+
+	/**
+	*微信支付充值的方法
+	*@param 	$total_amount	订单金额
+	*@return 	创建订单的id
+ 	**/
+ 	
+	public function rechargeByWechat(RechargeRequest $request)
+	{
+		//获取充值金额
+		$info = $request->only(['total_amount']);   
+
+		//获取登录中用户id
+		$checkLogin = Auth::check();
+		if($checkLogin == false){
+			return tz_ajax_echo([],'请先登录',0);
+		}
+		$user_id = Auth::id();
+
+		//生成订单
+		$makeOrder = $this->makeRechargeOrder($info['total_amount'],$user_id);
+
+		if ($makeOrder['code'] != 1) {	//生成订单失败的话,就返回错误信息
+			return tz_ajax_echo($makeOrder['data'],$makeOrder['msg'],$makeOrder['code']);
+		}		
+
+		//生成完订单,就去获取二维码链接
+		$getUrl = $this->getWechatUrl($makeOrder['data']);
+
+		$data = [
+			'url'	=> $getUrl['data'],
+			'flow_id'	=> $makeOrder['data'],
+		];
+		//return tz_ajax_echo($data,$getUrl['msg'],$getUrl['code']);
+
+		return view('test',[ 'url' => $data['url']]);
+	}
+
+	//生成微信支付充值的订单
+	protected function makeRechargeOrder($total_amount , $user_id)
+	{
+		$model = new WechatPay();
+		$makeOrder = $model->makeRechargeOrder($total_amount,$user_id);
+		return $makeOrder;
+	}
+
+	/**
+	* 接口,用充值单的id获取支付二维码url的接口
+	*@param 	$flow_id 	充值订单号的id		
+	*@return 	code 	0-获取失败 	1-获取成功 	2-已付款,无需获取二维码	
+	*/
+	public function getWechatUrlOut(RechargeRequest $request){
+		$par = $request->only(['flow_id']);
+		//获取订单信息
+		$model 	= new WechatPay();
+		$get_flow_res 	= $model->getFlow($par['flow_id']);			
+		if( $get_flow_res['code'] == 0){
+			return tz_ajax_echo([],'获取订单信息失败',0);
+		}
+		//先检测一遍订单的支付状态
+		$check = $this->WechatCheckAndInsert($get_flow_res['data']['trade_no']);
+		
+		if ($check['code'] != 0) {		//表示已付款,无需获取二维码,返回错误信息
+			return tz_ajax_echo($check['data'],$check['msg'],2);
+		}
+
+		$res = $this->getWechatUrl($par['flow_id']);
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+		//return view('test',[ 'url' => $res['data']]);
+	}
+
+	//获取微信支付充值的二维码地址
+	protected function getWechatUrl($flow_id)
+	{
+		$wechat = new WechatPayController();
+		$res = $wechat->getWechatUrl($flow_id);
+		return $res;
+	}
+
 
 	/**
 	* 跳转支付页面方法
@@ -246,13 +328,28 @@ class RechargeController extends Controller
 
 		$info 		= $request->only(['trade_no']);
 		$trade_no 	= $info['trade_no'];
+		//获取订单信息
+		$get_flow_res 	= WechatPay::where('trade_no',$trade_no)->first();
+						
+		if( $get_flow_res == null){
+			return tz_ajax_echo([],'获取订单信息失败',0);
+		}
+		$get_flow_res = $get_flow_res->toArray();
 		
-		$return = $this->AliCheckAndInsert($trade_no);
+		// if ($get_flow_res['trade_status'] != 0) {
+		// 	return tz_ajax_echo([],'订单已交易完毕',1);
+		// }
+
+		if ($get_flow_res['recharge_way'] == 1) {	//如果是支付宝支付
+			$return = $this->AliCheckAndInsert($trade_no);
+		}elseif ($get_flow_res['recharge_way'] == 2) {	//如果是微信
+			$return = $this->WechatCheckAndInsert($trade_no);
+		}
 		
 		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
 	}
 
-
+	
 
 
 	//用户支付完成后的跳转处理页面
@@ -296,6 +393,48 @@ class RechargeController extends Controller
 		}	
 		return $res['msg'];					
 	}
+
+	
+	/**
+	*核心方法 , 请求微信接口查询订单是否支付,并根据结果进行数据处理
+	*@param $trade_no -订单号
+	*充值后无论啥回调方法都要经过这个方法,比较稳,直接向支付宝查询
+	*return 	code 	-0 : 未付款
+	*			-1 : 已付款并且数据处理成功
+	*			-2 : 已付款但付款信息有问题
+	*/
+	protected function WechatCheckAndInsert($trade_no){
+		$wechat_controller = new WechatPayController();
+		$res = $wechat_controller->checkOrder($trade_no);	//直接向微信查询订单支付状态
+		//此方法返回code
+		//0-未付款	1-付过款并且信息没问题,尚未发货 	2-付过款了并且信息没问题,已经发货了 	3-付过款,信息有问题,尚未发货,需要工作人员处理
+		//4-已退款
+		//0和2不用操作,直接返回结果 , 3要工作人员处理 , 1要进行数据处理,把余额进账
+		if($res['code'] == 3){	//就是要退款了
+			return [
+				'data'	=> [],
+				'code'	=> 2,
+				'msg'	=> $res['msg'].'请联系工作人员',
+			];
+
+		}elseif ($res['code'] == 2) {
+			return [
+				'data'	=> [],
+				'code'	=> 1,
+				'msg'	=> '此订单已交易成功',
+			];
+		}elseif ($res['code'] != 1) {
+			return [
+				'data'	=> [],
+				'code'	=> $res['code'],
+				'msg'	=> $res['msg'],
+			];
+		}
+
+		$recharge_res = $wechat_controller->rechargePaySuccess($res['data']);
+		return $recharge_res;
+	}
+
 	/**
 	*核心方法 , 请求支付宝接口查询订单是否支付,并根据结果进行数据处理
 	*
@@ -340,6 +479,8 @@ class RechargeController extends Controller
 			$cancel = $PayController->cancel($serial_number);
 			if($cancel->code == '10000'){
 				$return['msg'].= '如已付款,款项会原路返回';
+			}else{
+				$return['msg'].= '如已付款,请联系工作人员';
 			}
 		}		
 		

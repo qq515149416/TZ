@@ -538,6 +538,11 @@ class BusinessModel extends Model
         }
     }
 
+    /**
+     * 根据机柜业务的业务id进行机柜下的机器数据获取
+     * @param  array $param --parent_business,机柜业务id
+     * @return [type]        [description]
+     */
     public function showCabinetMachine($param){
 
         if(empty($param)){
@@ -553,10 +558,55 @@ class BusinessModel extends Model
                    ->where($param)
                    ->whereBetween('business_status',[0,3])
                    ->whereBetween('remove_status',[0,3])
+                   ->whereNull('mc.deleted_at')
                    ->orderBy('created_at','desc')
-                   ->get(['mc.id','sales as sales_id','customer as client_id','business_number','parent_business','resource_type as business_type','resource_sn as machine_number','detail as resource_detail','business_status','price as money','duration as length','business_note','mc.created_at','starttime as start_time','endtime as endding_time','remove_status','check_note','user.nickname as client_name','admin.name as sales_name','room_id','cabinet_id','ip_id']);
+                   ->get(['mc.id','sales as sales_id','customer as client_id','business_number','parent_business','resource_type as business_type','resource_sn as machine_number','business_status','price as money','duration as length','business_note','mc.created_at','starttime as start_time','endtime as endding_time','remove_status','check_note','user.nickname as client_name','admin.name as sales_name','room_id','cabinet_id','ip_id']);
 
+        if(!$show->isEmpty()){
+            $business_status = [-1 => '审核不通过',0 => '审核中', 1 => '未付款使用', 2 => '付款使用中', 3 => '未付用', 4 => '锁定中', 5 => '到期', 6 => '退款'];
+            $business_type   = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜'];
+            $remove_status = [0 => '正常使用', 1 => '下架申请中', 2 => '机房处理中', 3 => '清空下架中', 4 => '下架完成'];
+            foreach($show as $check => $check_value){
+                $check_value->status = $business_status[$check_value->business_status];
+                $check_value->type   = $business_type[$check_value->business_type];
+                $check_value->remove = $remove_status[$check_value->remove_status];
+                $check_value->machineroom_name = $this->machineroom($check_value->room_id);
+                if($check_value->business_type != 3){
+                    $check_value->cabinets = $this->cabinets($check_value->cabinet_id);
+                    $check_value->ip = $this->tranIp($check_value->ip_id)['ip'];
+                }
+            }
+                $return['data'] = $show;
+                $return['code'] = 1;
+                $return['msg']  = '相关业务数据获取成功';
+        } else {
+            $return['data'] = $show;
+            $return['code'] = 1;
+            $return['msg']  = '暂无业务数据';
+        }
+        return $return;
+ 
+    }
 
+    /**
+     * 获取机柜业务下机器的详情
+     * @param  array $detail_param --business_id,机器业务的id
+     * @return [type]               [description]
+     */
+    public function cabinetMachineDetail($detail_param){
+
+        if(empty($detail_param)){
+            $return['data'] = [];
+            $return['code'] = 1;
+            $return['msg']  = '无法获取该机器的详情';
+            return $return;
+        }
+
+        $detail = DB::table('tz_cabinet_machine_detail')->whereNull('deleted_at')->value('detail');
+        $return['data'] = $detail;
+        $return['code'] = 1;
+        $return['msg']  = '获取该机器的详情成功';
+        return $return;
     }
 
     /**

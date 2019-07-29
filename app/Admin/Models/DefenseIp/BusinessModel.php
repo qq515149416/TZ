@@ -415,6 +415,7 @@ class BusinessModel extends Model
 					'code'	=> 0,
 				];
 			}
+			$order_id = $checkOrder->id;
 		}else{
 			if($business->status == 4){
 				$order_type = 1;
@@ -469,10 +470,11 @@ class BusinessModel extends Model
 					'code'	=> 0,
 				];
 			}
+			$order_id = $create_order->id;
 		}
 		
 		$pay_model = new OrdersModel();
-		$pay_res = $pay_model->payOrderByBalance([ $create_order->id ],0);
+		$pay_res = $pay_model->payOrderByBalance([ $order_id ],0);
 		
 		if($pay_res['code'] != 1){
 			DB::rollBack();

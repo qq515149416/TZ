@@ -176,6 +176,7 @@ class BusinessModel extends Model
 		}
 		$d_ip->status = 0;
 		$idc_ip->ip_status = 0;
+		$idc_ip->ip_note = null;
 		if (!$d_ip->save()) {
 			DB::rollBack();
 			return [

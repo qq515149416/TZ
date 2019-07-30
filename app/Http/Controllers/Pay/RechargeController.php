@@ -62,9 +62,9 @@ class RechargeController extends Controller
 	}
 
 	/**
-	*微信支付充值的方法
+	*微信支付充值的方接口,集合两个过程的接口,请求之后会先去生成一个充值单,失败的话会返回失败信息,成功则会去请求微信接口,将刚生成的订单发送过去,然后返回生成二维码的url
 	*@param 	$total_amount	订单金额
-	*@return 	创建订单的id
+	*@return 	data{ url - 二维码url 	; flow_id - 生成的订单id }
  	**/
 
 	public function rechargeByWechat(RechargeRequest $request)
@@ -108,6 +108,7 @@ class RechargeController extends Controller
 
 	/**
 	* 接口,用充值单的id获取支付二维码url的接口
+	*这个接口会先去请求一遍微信接口,查询订单的支付状态,如果已经支付了,他会自动做数据处理,如果处理有什么问题也会返回错误信息,如果没支付,就会去请求微信接口,获取二维码url,code是1时就返回二维码url,注意,订单的充值方式不是微信的获取不了
 	*@param 	$flow_id 	充值订单号的id
 	*@return 	code 	0-获取失败 	1-获取成功 	2-已付款,无需获取二维码
 	*/
@@ -119,13 +120,17 @@ class RechargeController extends Controller
 		if( $get_flow_res['code'] == 0){
 			return tz_ajax_echo([],'获取订单信息失败',0);
 		}
-		//先检测一遍订单的支付状态
+		if ($get_flow_res['data']['recharge_way'] != 2 ) {
+			return tz_ajax_echo([],'该订单支付方式不是微信',0);
+		}
+		//先检测一遍订单的支付状态,已支付的话会处理数据
 		$check = $this->WechatCheckAndInsert($get_flow_res['data']['trade_no']);
-
-		if ($check['code'] != 0) {		//表示已付款,无需获取二维码,返回错误信息
-			return tz_ajax_echo($check['data'],$check['msg'],2);
+		//dd($check);
+		if ($check['code'] != 0) {		//表示已付款,无需获取二维码,返回错误信息,除了0,都是付过款了的
+			return tz_ajax_echo($check['data'],$check['msg'],2);	//有问题,统一返回code2
 		}
 
+		//获取url
 		$res = $this->getWechatUrl($par['flow_id']);
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 		//return view('test',[ 'url' => $res['data']]);
@@ -408,7 +413,7 @@ class RechargeController extends Controller
 		$res = $wechat_controller->checkOrder($trade_no);	//直接向微信查询订单支付状态
 		//此方法返回code
 		//0-未付款	1-付过款并且信息没问题,尚未发货 	2-付过款了并且信息没问题,已经发货了 	3-付过款,信息有问题,尚未发货,需要工作人员处理
-		//4-已退款
+		//4-付款状态异常,需重新下单
 		//0和2不用操作,直接返回结果 , 3要工作人员处理 , 1要进行数据处理,把余额进账
 		if($res['code'] == 3){	//就是要退款了
 			return [
@@ -425,7 +430,7 @@ class RechargeController extends Controller
 			];
 		}elseif ($res['code'] != 1) {
 			return [
-				'data'	=> [],
+				'data'	=> $res['data'],
 				'code'	=> $res['code'],
 				'msg'	=> $res['msg'],
 			];

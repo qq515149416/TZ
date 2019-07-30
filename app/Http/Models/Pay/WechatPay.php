@@ -34,16 +34,16 @@ class WechatPay extends Model
 	{
 		$test = $this->where("user_id",$user_id)->where('trade_status',0)->max('created_at');
 		$test = json_decode(json_encode($test),true);
-		// if($test!=NULL){
-		// 	$created_at = strtotime($test);
-		// 	$time = time();
-		// 	if($time - $created_at <= 120){
-		// 		$return['data'] = '';
-		// 		$return['code'] = 0;
-		// 		$return['msg'] = '2分钟内只能创建一张订单!!!!!';
-		// 		return $return;
-		// 	}
-		// }
+		if($test!=NULL){
+			$created_at = strtotime($test);
+			$time = time();
+			if($time - $created_at <= 120){
+				$return['data'] = '';
+				$return['code'] = 0;
+				$return['msg'] = '2分钟内只能创建一张订单!!!!!';
+				return $return;
+			}
+		}
 
 		$data = [
 			'trade_no'		=> 'tz_'.time().'_'.substr(md5($user_id.'tz'),0,4),
@@ -96,8 +96,9 @@ class WechatPay extends Model
 	* 微信的支付成功后数据处理方法,支付成功才能进这里
 	* @param $check -就是微信返回的查询结果
 	* @return 将数据及相关的信息返回到控制器
+	*	code 	-1 处理成功 	-2 失败
 	*/
-	public function rechargePaySuccess($check)
+	protected function rechargePaySuccess($check)
 	{
 		//获取订单
 		$order = $this->where('trade_no',$check['out_trade_no'])->first();
@@ -106,7 +107,7 @@ class WechatPay extends Model
 			return [
 				'data'	=> $flow,
 				'msg'	=> '无此单号!!请联系客服!!',
-				'code'	=> 0,
+				'code'	=> 2,
 			];
 		}
 
@@ -137,7 +138,7 @@ class WechatPay extends Model
 				//失败就回滚
 				DB::rollBack();
 				$return['data'] = '';
-				$return['code'] = 0;
+				$return['code'] = 2;
 				$return['msg'] = '订单录入成功!!充值失败!!';
 			}else{
 				DB::commit();
@@ -148,7 +149,7 @@ class WechatPay extends Model
 		} else {
 		// 插入数据失败
 			$return['data'] = '';
-			$return['code'] = 0;
+			$return['code'] = 2;
 			$return['msg'] = '订单录入失败!!';
 		}
 

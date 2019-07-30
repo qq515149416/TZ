@@ -34,16 +34,16 @@ class WechatPay extends Model
 	{
 		$test = $this->where("user_id",$user_id)->where('trade_status',0)->max('created_at');
 		$test = json_decode(json_encode($test),true);
-		if($test!=NULL){				
-			$created_at = strtotime($test);
-			$time = time();	
-			if($time - $created_at <= 120){
-				$return['data'] = '';
-				$return['code'] = 0;
-				$return['msg'] = '2分钟内只能创建一张订单!!!!!';
-				return $return;
-			}			
-		}
+		// if($test!=NULL){
+		// 	$created_at = strtotime($test);
+		// 	$time = time();
+		// 	if($time - $created_at <= 120){
+		// 		$return['data'] = '';
+		// 		$return['code'] = 0;
+		// 		$return['msg'] = '2分钟内只能创建一张订单!!!!!';
+		// 		return $return;
+		// 	}
+		// }
 
 		$data = [
 			'trade_no'		=> 'tz_'.time().'_'.substr(md5($user_id.'tz'),0,4),
@@ -101,7 +101,7 @@ class WechatPay extends Model
 	{
 		//获取订单
 		$order = $this->where('trade_no',$check['out_trade_no'])->first();
-		
+
 		if($order == NULL){
 			return [
 				'data'	=> $flow,
@@ -132,7 +132,7 @@ class WechatPay extends Model
 		$row = $order->update($data);
 		if($row){
 			// 插入订单成功 , 更新用户余额
-			$res = DB::table('tz_users')->where('id',$user_id)->update(['money' => $data['money_after']]); 
+			$res = DB::table('tz_users')->where('id',$user_id)->update(['money' => $data['money_after']]);
 			if($res == false){
 				//失败就回滚
 				DB::rollBack();
@@ -144,16 +144,16 @@ class WechatPay extends Model
 				$return['data'] = [];
 				$return['code'] = 1;
 				$return['msg'] = '订单录入成功!!充值成功';
-			}		
+			}
 		} else {
 		// 插入数据失败
 			$return['data'] = '';
 			$return['code'] = 0;
 			$return['msg'] = '订单录入失败!!';
 		}
-	
+
 		return $return;
 	}
 
-	
+
 }

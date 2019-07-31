@@ -257,8 +257,10 @@ class BusinessModel extends Model
         
         $security = $this->securityCabinetBusiness();
         $cabinetmachine = array_merge($result->toArray(),$security->toArray());
-        $created_at = array_column($cabinetmachine,'business_status');
-        array_multisort($created_at,SORT_ASC,$cabinetmachine);
+        // $business_status = array_column($cabinetmachine,'business_status');
+        $created_at = array_column($cabinetmachine,'created_at');
+// $business_status,SORT_ASC,
+        array_multisort($created_at,SORT_DESC,$cabinetmachine);
         $return['data'] = $cabinetmachine;
         $return['code'] = 1;
         $return['msg']  = '相关业务数据获取成功';
@@ -518,6 +520,7 @@ class BusinessModel extends Model
                     $result[$check]['status'] = $business_status[$check_value['business_status']];
                     $result[$check]['type']   = $business_type[$check_value['business_type']];
                     $result[$check]['remove'] = $remove_status[$check_value['remove_status']];
+                    $result[$check]['parent_business'] = 0;
                     $resource_detail = json_decode($check_value['resource_detail']);
                     if($check_value['business_type'] != 3){
                         $result[$check]['cabinets'] = isset($resource_detail->cabinets)?$resource_detail->cabinets:'';

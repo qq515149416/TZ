@@ -747,22 +747,27 @@ class OrdersModel extends Model
 			$return['msg']  = '无法获取该业务下的所有资源信息';
 			return $return;
 		}
+		$orders = [];
 		$business['remove_status']=0;
+		$machine = DB::table('tz_business')->where(['business_number'=>$business['business_sn']])->whereNull('deleted_at')->select('id','business_type')->first();
+		if(!empty($machine) && $machine->business_type == 3){
+			$orders['machine'] = DB::table('tz_cabinet_machine')->where(['parent_business'=>$machine->id,'remove_status'=>0])->whereBetween('business_status',[1,2])->whereNull('deleted_at')->get();
+		}
+
 		//以资源编号为键的资源数组
 		$all = $this->where($business)->where('resource_type','>',3)->orderBy('end_time','desc')->get(['order_sn','resource_type','machine_sn','resource','price','end_time','business_sn'])->groupBy('machine_sn');
 		$resource = $all->map(function($item,$key){//根据资源编号获取对应资源的最新一条订单（$key为$all的键）,map参考laravel模型的集合的可用方法
 			return $this->where(['machine_sn'=>$key,'business_sn'=>$item[0]['business_sn']])->where('order_status','<',3)->orderBy('end_time','desc')->select('order_sn','resource_type','machine_sn','resource','price','end_time','order_status')->first();	
 		});
 		if(!empty($resource)){
-			$orders = [//filter和values参考laravel模型的集合的可用方法
-				'IP'=>$resource->filter(function($value,$key){return $value->resource_type == 4;})->values(),
-				'cpu'=>$resource->filter(function($value,$key){return $value->resource_type == 5;})->values(),
-				'harddisk'=>$resource->filter(function($value,$key){return $value->resource_type == 6;})->values(),
-				'memory'=>$resource->filter(function($value,$key){return $value->resource_type == 7;})->values(),
-				'bandwidth'=>$resource->filter(function($value,$key){return $value->resource_type == 8;})->values(),
-				'protected'=>$resource->filter(function($value,$key){return $value->resource_type == 9;})->values(),
-				'cdn'=>$resource->filter(function($value,$key){return $value->resource_type == 10;})->values()
-			];
+			$orders['IP'] = $resource->filter(function($value,$key){return $value->resource_type == 4;})->values();
+			$orders['cpu'] = $resource->filter(function($value,$key){return $value->resource_type == 5;})->values();
+			$orders['harddisk'] = $resource->filter(function($value,$key){return $value->resource_type == 6;})->values();
+			$orders['memory'] = $resource->filter(function($value,$key){return $value->resource_type == 7;})->values();
+			$orders['bandwidth'] = $resource->filter(function($value,$key){return $value->resource_type == 8;})->values();
+			$orders['protected'] = $resource->filter(function($value,$key){return $value->resource_type == 9;})->values();
+			$orders['cdn'] = $resource->filter(function($value,$key){return $value->resource_type == 10;})->values();
+			
 			$return['data'] = $orders;
 			$return['code'] = 1;
 			$return['msg']  = '该业务下的其他资源信息获取成功';
@@ -1114,7 +1119,7 @@ class OrdersModel extends Model
 	public function totalPay($pay){
 		$total = 0;
 		if(!$pay){
-		    $total = FLASE; 
+		    $total = FALSE; 
 		}
 		foreach($pay as $pay_key =>$pay_value){
 			$total = bcadd($total,$pay_value['payable_money'],2);

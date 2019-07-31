@@ -57,6 +57,7 @@ Route::group([
     Route::get('/help/detail/{id}', 'Show\HelpCenterController@detail');
     Route::get('/souvenir', 'Show\SouvenirController@index');
     Route::get('/overlayPackage', 'Show\OverlayPackageController@index');
+    Route::get('/army_day', 'Show\ArmyDayController@index');
 
 });
 
@@ -184,11 +185,11 @@ Route::group([
 
 
             /*** 微信支付的start ***/
-            
+
             Route::get('rechargeByWechat', 'Pay\RechargeController@rechargeByWechat');//直接生成订单 + 获取二维码url接口
 
             Route::get('getWechatUrlOut', 'Pay\RechargeController@getWechatUrlOut');//根据充值单id获取二维码url接口
-    
+
             /*** 微信支付的end ***/
         });
 

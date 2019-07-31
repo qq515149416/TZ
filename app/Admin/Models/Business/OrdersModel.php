@@ -1119,7 +1119,7 @@ class OrdersModel extends Model
 	public function totalPay($pay){
 		$total = 0;
 		if(!$pay){
-		    $total = FLASE; 
+		    $total = FALSE; 
 		}
 		foreach($pay as $pay_key =>$pay_value){
 			$total = bcadd($total,$pay_value['payable_money'],2);

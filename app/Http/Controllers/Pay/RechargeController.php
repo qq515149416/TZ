@@ -185,23 +185,20 @@ class RechargeController extends Controller
 
 		//实例化阿里支付控制器
 		$Pay = new AliPayController();
-		// $check_order = [
-		// 	'out_trade_no' 		=> $info['trade_no'],
-		// 	'refund_amount'	=> $info['recharge_amount'],	
-		// ];
 		
-		$check = $Pay->check2($info['trade_no']);
+		
+		//$check = $Pay->check2($info['trade_no']);
 		//交易不存在 ,40004
 		
 		
-		// // $refund = $Pay->cancel($check_order);
-		if($check['code'] != '40004'){
-			$check_res = $this->AliCheckAndInsert($info['trade_no']);
-			if ($check_res['code'] != 0) {
-				return redirect('/tz/?uphash=0#/rechargeRecord')
-    				->withErrors([$check_res['msg']]);
-			}
-		}
+	
+		// if($check['code'] != '40004'){
+		// 	$check_res = $this->AliCheckAndInsert($info['trade_no']);
+		// 	if ($check_res['code'] != 0) {
+		// 		return redirect('/tz/?uphash=0#/rechargeRecord')
+  //   				->withErrors([$check_res['msg']]);
+		// 	}
+		// }
 
 		//阿里接口的传值
 		$order = [

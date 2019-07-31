@@ -47,6 +47,7 @@
                     <h5 class="title font-heavy">同行五载，感恩钜惠，谢谢一路有您</h5>
                     <p class="desc">腾正科技6.20成立5周年感恩钜惠，感恩一路有您的支持！本次活动一年仅有一次，错过再等一年，点击查看活动详情。</p>
                 </div>
+                <div class="mask"></div>
             </a>
             <a class="card disable" href="javascript: void(0);">
                 <div class="card-image">

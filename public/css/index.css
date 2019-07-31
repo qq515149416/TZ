@@ -9573,7 +9573,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   width: 1200px;
 }
 #armyDay .product-superimposed {
-  margin-top: 92px;
+  margin-top: 98px;
 }
 #armyDay .product-superimposed h3 {
   margin: 0 auto;
@@ -9590,7 +9590,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   position: absolute;
   width: 119px;
   height: 26px;
-  background: url(/images/armyDay_bt_zuo.png?870b9708ae5ec167387e79ba939881d4) no-repeat;
+  background: url(/images/armyDay_bt_zuo.png?d92e96d42b918e94e3408b72d2638f86) no-repeat;
   left: -129px;
   top: 4px;
 }
@@ -9599,7 +9599,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   position: absolute;
   width: 119px;
   height: 26px;
-  background: url(/images/armyDay_bt_you.png?29b09115a746469df4e5db0fa4ad5a9e) no-repeat;
+  background: url(/images/armyDay_bt_you.png?c48e2f89d2d5265c15b246c6561a78a0) no-repeat;
   right: -129px;
   top: 4px;
 }
@@ -9625,13 +9625,11 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #armyDay .product-superimposed > .product-content > .content {
   border-radius: 0 0 2px 2px;
-  padding-top: 40px;
-  padding-bottom: 23px;
   text-align: center;
 }
 #armyDay .product-superimposed > .product-content > .content > .row > .col-md-4 .content-item {
   background-color: #fff;
-  padding-bottom: 32px;
+  padding-bottom: 30px;
 }
 #armyDay .product-superimposed > .product-content > .content > .row > .col-md-4 .content-item > header {
   height: 62px;
@@ -9658,6 +9656,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #armyDay .product-superimposed > .product-content > .content .buy {
   display: inline-block;
+  margin-top: 6px;
   width: 112px;
   height: 30px;
   line-height: 30px;
@@ -9669,7 +9668,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #armyDay .product-superimposed > .product-content > .content p {
   margin: 0;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
   font-size: 12px;
   color: #4e4a4a;
 }
@@ -9690,7 +9689,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #armyDay .product-remind {
   margin: 0 auto;
-  margin-top: 92px;
+  margin-top: 98px;
   margin-bottom: 198px;
   width: 920px;
   padding-top: 72px;
@@ -9761,7 +9760,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   position: absolute;
   width: 119px;
   height: 26px;
-  background: url(/images/armyDay_bt_zuo.png?870b9708ae5ec167387e79ba939881d4) no-repeat;
+  background: url(/images/armyDay_bt_zuo.png?d92e96d42b918e94e3408b72d2638f86) no-repeat;
   left: -129px;
   top: 4px;
 }
@@ -9770,7 +9769,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   position: absolute;
   width: 119px;
   height: 26px;
-  background: url(/images/armyDay_bt_you.png?29b09115a746469df4e5db0fa4ad5a9e) no-repeat;
+  background: url(/images/armyDay_bt_you.png?c48e2f89d2d5265c15b246c6561a78a0) no-repeat;
   right: -129px;
   top: 4px;
 }
@@ -9828,7 +9827,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #armyDay .product-idc > ul > li > .content .key {
   font-size: 16px;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
   color: #a0a3a8;
 }
 #armyDay .product-idc > ul > li > .content .value {

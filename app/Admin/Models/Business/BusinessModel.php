@@ -520,6 +520,7 @@ class BusinessModel extends Model
                     $result[$check]['status'] = $business_status[$check_value['business_status']];
                     $result[$check]['type']   = $business_type[$check_value['business_type']];
                     $result[$check]['remove'] = $remove_status[$check_value['remove_status']];
+                    $result[$check]['parent_business'] = 0;
                     $resource_detail = json_decode($check_value['resource_detail']);
                     if($check_value['business_type'] != 3){
                         $result[$check]['cabinets'] = isset($resource_detail->cabinets)?$resource_detail->cabinets:'';

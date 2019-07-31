@@ -28,16 +28,6 @@
                     <p class="desc">没有网络安全 就没有国家安全，热烈庆祝中国人名解放军建军92周年，网络安全企业首选腾正科技高防服务器，防御流量包三重大礼，军民同庆，共筑强国！</p>
                 </div>
             </a>
-            <a class="card" href="/souvenir" target="_blank">
-                <div class="card-image">
-                    <img src="{{ asset("/images/lastestActivity/activity-5.png") }}" />
-                    <span class="ongoing">活动中</span>
-                </div>
-                <div class="card-body">
-                    <h5 class="title font-heavy">同行五载，感恩钜惠，谢谢一路有您</h5>
-                    <p class="desc">腾正科技6.20成立5周年感恩钜惠，感恩一路有您的支持！本次活动一年仅有一次，错过再等一年，点击查看活动详情。</p>
-                </div>
-            </a>
             <a class="card" href="/dist/highDefense.html" target="_blank">
                 <div class="card-image">
                     <img src="{{ asset("/images/lastestActivity/activity-3.png") }}" />
@@ -46,6 +36,16 @@
                 <div class="card-body">
                     <h5 class="title font-heavy">腾正高防IP专业DDOS防御首选</h5>
                     <p class="desc">腾正高防IP专业DDOS防御首选，T+级防护系统，毫秒级过滤引擎，精准识别秒级响应，支持不同业务模式</p>
+                </div>
+            </a>
+            <a class="card disable" href="/souvenir" target="_blank">
+                <div class="card-image">
+                    <img src="{{ asset("/images/lastestActivity/activity-7.png") }}" />
+                    <span class="end">活动中</span>
+                </div>
+                <div class="card-body">
+                    <h5 class="title font-heavy">同行五载，感恩钜惠，谢谢一路有您</h5>
+                    <p class="desc">腾正科技6.20成立5周年感恩钜惠，感恩一路有您的支持！本次活动一年仅有一次，错过再等一年，点击查看活动详情。</p>
                 </div>
             </a>
             <a class="card disable" href="javascript: void(0);">

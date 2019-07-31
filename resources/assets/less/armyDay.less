@@ -66,6 +66,29 @@
                     > .col-md-4 {
                         .content-item {
                             background-color: #fff;
+                            padding-bottom: 32px;
+                            > header {
+                                height: 62px;
+                                text-align: center;
+                                margin-bottom: 28px;
+                                background: linear-gradient(to right,#f3cf83,#f9c169);
+                                position: relative;
+                                &::after {
+                                    content: "";
+                                    position: absolute;
+                                    right: -4px;
+                                    top: 10px;
+                                    width: 65px;
+                                    height: 36px;
+                                    background: url(../images/armyDay/armyDay_biaoqian_2.png) no-repeat;
+                                }
+                                h4 {
+                                    line-height: 62px;
+                                    margin: 0;
+                                    font-size: 24px;
+                                    color: #181e2d;
+                                }
+                            }
                         }
                         // position: relative;
                         // &:last-of-type {
@@ -95,12 +118,6 @@
                     color: #fff;
                     background-color: #e01616;
                     text-decoration: none;
-                }
-                h4 {
-                    margin: 0;
-                    margin-bottom: 28px;
-                    font-size: 24px;
-                    color: #181e2d;
                 }
                 p {
                     margin: 0;
@@ -137,14 +154,20 @@
         position: relative;
         border-radius: 2px;
         &::before {
-            content: "";
+            content: "活动说明";
+            text-align: center;
+            line-height: 46px;
+            color: #fff;
             position: absolute;
-            width: 170px;
-            height: 44px;
+            width: 100%;
+            height: 46px;
+            font-size: 18px;
             top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            background: url(../images/souvenir/souvenir_bq_huodong.png) no-repeat;
+            left: 0;
+            background: linear-gradient(to right,#f76346,#d90c16);
+            font-family: "pingFangMedium", "微软雅黑", Arial, Helvetica, sans-serif;
+            // background: url(../images/souvenir/souvenir_bq_huodong.png) no-repeat;
+
         }
         ul {
             list-style: none;
@@ -188,7 +211,7 @@
             font-size: 30px;
             font-weight: bold;
             color: #870202;
-            width: 356px;
+            width: 244px;
             text-align: center;
             position: relative;
             &::before {

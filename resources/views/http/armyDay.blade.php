@@ -10,7 +10,7 @@
 <div id="armyDay" class="row">
     <div class="container">
         <div class="product-idc">
-            <h3 class="font-bold">腾正5周年庆特惠三重大礼</h3>
+            <h3 class="font-bold">热卖服务器产品</h3>
             <ul class="clearfix">
                 <li class="pull-left">
                     <header>
@@ -37,7 +37,7 @@
                                         内存
                                     </div>
                                     <div class="value font-bold">
-                                        8G
+                                        32G
                                     </div>
                                 </div>
                             </div>
@@ -47,7 +47,7 @@
                                         硬盘
                                     </div>
                                     <div class="value font-bold">
-                                        300GSAS/1TSATA
+                                        300G SAS
                                     </div>
                                 </div>
                             </div>
@@ -74,7 +74,7 @@
                         </div>
                         <footer class="clearfix">
                             <div class="price-info pull-left">
-                                <span class="price">￥<b>888</b></span>
+                                <span class="price">￥<b>810</b></span>
                                 <span class="unit">元/月</span>
                             </div>
                             <a class="buy pull-right" href="javascript:randomqq();">立刻购买</a>
@@ -96,7 +96,7 @@
                                         CPU
                                     </div>
                                     <div class="value font-bold">
-                                        E5530
+                                        8核
                                     </div>
                                 </div>
                             </div>
@@ -106,7 +106,7 @@
                                         内存
                                     </div>
                                     <div class="value font-bold">
-                                        8G
+                                        16G
                                     </div>
                                 </div>
                             </div>
@@ -116,7 +116,7 @@
                                         硬盘
                                     </div>
                                     <div class="value font-bold">
-                                        240GSSD
+                                        1T SATA
                                     </div>
                                 </div>
                             </div>
@@ -162,7 +162,9 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="content-item">
-                                <h4>50G防御流量</h4>
+                                <header class="font-medium">
+                                    <h4>50G防御流量</h4>
+                                </header>
                                 <p class="font-medium">
                                     <span class="original"><del>原价：100元/天</del></span>
                                     <span class="indulgence">特惠价：<b>70</b></span>
@@ -187,7 +189,9 @@
                         </div>
                         <div class="col-md-4">
                             <div class="content-item">
-                                <h4>100G防御流量</h4>
+                                <header class="font-medium">
+                                    <h4>100G防御流量</h4>
+                                </header>
                                 <p class="font-medium">
                                     <span class="original">
                                         <del>原价：180元/天</del>
@@ -214,7 +218,9 @@
                         </div>
                         <div class="col-md-4">
                             <div class="content-item">
-                                <h4>200G防御流量</h4>
+                                <header class="font-medium">
+                                    <h4>200G防御流量</h4>
+                                </header>
                                 <p class="font-medium">
                                     <span class="original">
                                         <del>原价：300元/天</del>
@@ -246,7 +252,7 @@
         <div class="product-remind">
                 <ul>
                     <li class="font-medium" data-index="1">
-                        活动时间：<span>6.13-8.13</span>
+                        活动时间：<span>8.01-9.30</span>
                     </li>
                     <li class="font-medium" data-index="2">
                         活动对象：所有新老客户

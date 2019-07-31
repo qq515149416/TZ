@@ -9631,6 +9631,30 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #armyDay .product-superimposed > .product-content > .content > .row > .col-md-4 .content-item {
   background-color: #fff;
+  padding-bottom: 32px;
+}
+#armyDay .product-superimposed > .product-content > .content > .row > .col-md-4 .content-item > header {
+  height: 62px;
+  text-align: center;
+  margin-bottom: 28px;
+  background: -webkit-gradient(linear, left top, right top, from(#f3cf83), to(#f9c169));
+  background: linear-gradient(to right, #f3cf83, #f9c169);
+  position: relative;
+}
+#armyDay .product-superimposed > .product-content > .content > .row > .col-md-4 .content-item > header::after {
+  content: "";
+  position: absolute;
+  right: -4px;
+  top: 10px;
+  width: 65px;
+  height: 36px;
+  background: url(/images/armyDay_biaoqian_2.png?35e66a28999abdee049195ea885f55b5) no-repeat;
+}
+#armyDay .product-superimposed > .product-content > .content > .row > .col-md-4 .content-item > header h4 {
+  line-height: 62px;
+  margin: 0;
+  font-size: 24px;
+  color: #181e2d;
 }
 #armyDay .product-superimposed > .product-content > .content .buy {
   display: inline-block;
@@ -9642,12 +9666,6 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   color: #fff;
   background-color: #e01616;
   text-decoration: none;
-}
-#armyDay .product-superimposed > .product-content > .content h4 {
-  margin: 0;
-  margin-bottom: 28px;
-  font-size: 24px;
-  color: #181e2d;
 }
 #armyDay .product-superimposed > .product-content > .content p {
   margin: 0;
@@ -9682,15 +9700,19 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   border-radius: 2px;
 }
 #armyDay .product-remind::before {
-  content: "";
+  content: "\6D3B\52A8\8BF4\660E";
+  text-align: center;
+  line-height: 46px;
+  color: #fff;
   position: absolute;
-  width: 170px;
-  height: 44px;
+  width: 100%;
+  height: 46px;
+  font-size: 18px;
   top: 0;
-  left: 50%;
-  -webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
-  background: url(/images/souvenir_bq_huodong.png?7b87db2232abad5cc322f5d40fe1a3a2) no-repeat;
+  left: 0;
+  background: -webkit-gradient(linear, left top, right top, from(#f76346), to(#d90c16));
+  background: linear-gradient(to right, #f76346, #d90c16);
+  font-family: "pingFangMedium", "\5FAE\8F6F\96C5\9ED1", Arial, Helvetica, sans-serif;
 }
 #armyDay .product-remind ul {
   list-style: none;
@@ -9730,7 +9752,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   font-size: 30px;
   font-weight: bold;
   color: #870202;
-  width: 356px;
+  width: 244px;
   text-align: center;
   position: relative;
 }

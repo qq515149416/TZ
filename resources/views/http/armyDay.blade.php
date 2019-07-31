@@ -7,10 +7,10 @@
 @section('description', $tdk['description'])
 
 @section('content')
-<div id="souvenir" class="row">
+<div id="armyDay" class="row">
     <div class="container">
         <div class="product-idc">
-            <h3>腾正5周年庆特惠三重大礼</h3>
+            <h3 class="font-bold">腾正5周年庆特惠三重大礼</h3>
             <ul class="clearfix">
                 <li class="pull-left">
                     <header>
@@ -153,85 +153,91 @@
             </ul>
         </div>
         <div class="product-superimposed">
-            <h3>防御流量叠加包一律七折</h3>
+            <h3 class="font-bold">防御流量叠加包一律七折</h3>
             <div class="product-content">
-                <header class="font-medium">
+                <!-- <header class="font-medium">
                     防御流量叠加包套餐
-                </header>
+                </header> -->
                 <div class="content">
                     <div class="row">
                         <div class="col-md-4">
-                            <h4>50G防御流量</h4>
-                            <p class="font-medium">
-                                <span class="original"><del>原价：100元/天</del></span>
-                                <span class="indulgence">特惠价：<b>70</b></span>
-                                元/天
-                            </p>
-                            <p class="font-medium">
-                                <span class="original">
-                                    <del>原价：300元/周</del>
-                                </span>
-                                <span class="indulgence">特惠价：<b>210</b></span>
-                                元/周
-                            </p>
-                            <p class="font-medium">
-                                <span class="original">
-                                    <del>原价：800元/月</del>
-                                </span>
-                                <span class="indulgence">特惠价：<b>560</b></span>
-                                元/月
-                            </p>
-                            <a href="javascript:randomqq();" class="buy">立即购买</a>
+                            <div class="content-item">
+                                <h4>50G防御流量</h4>
+                                <p class="font-medium">
+                                    <span class="original"><del>原价：100元/天</del></span>
+                                    <span class="indulgence">特惠价：<b>70</b></span>
+                                    元/天
+                                </p>
+                                <p class="font-medium">
+                                    <span class="original">
+                                        <del>原价：300元/周</del>
+                                    </span>
+                                    <span class="indulgence">特惠价：<b>210</b></span>
+                                    元/周
+                                </p>
+                                <p class="font-medium">
+                                    <span class="original">
+                                        <del>原价：800元/月</del>
+                                    </span>
+                                    <span class="indulgence">特惠价：<b>560</b></span>
+                                    元/月
+                                </p>
+                                <a href="javascript:randomqq();" class="buy">立即购买</a>
+                            </div>
                         </div>
                         <div class="col-md-4">
-                            <h4>100G防御流量</h4>
-                            <p class="font-medium">
-                                <span class="original">
-                                    <del>原价：180元/天</del>
-                                </span>
-                                <span class="indulgence">特惠价：<b>126</b></span>
-                                元/天
-                            </p>
-                            <p class="font-medium">
-                                <span class="original">
-                                    <del>原价：500元/周</del>
-                                </span>
-                                <span class="indulgence">特惠价：<b>350</b></span>
-                                元/周
-                            </p>
-                            <p class="font-medium">
-                                <span class="original">
-                                    <del>原价：1500元/月</del>
-                                </span>
-                                <span class="indulgence">特惠价：<b>1050</b></span>
-                                元/月
-                            </p>
-                            <a href="javascript:randomqq();" class="buy">立即购买</a>
+                            <div class="content-item">
+                                <h4>100G防御流量</h4>
+                                <p class="font-medium">
+                                    <span class="original">
+                                        <del>原价：180元/天</del>
+                                    </span>
+                                    <span class="indulgence">特惠价：<b>126</b></span>
+                                    元/天
+                                </p>
+                                <p class="font-medium">
+                                    <span class="original">
+                                        <del>原价：500元/周</del>
+                                    </span>
+                                    <span class="indulgence">特惠价：<b>350</b></span>
+                                    元/周
+                                </p>
+                                <p class="font-medium">
+                                    <span class="original">
+                                        <del>原价：1500元/月</del>
+                                    </span>
+                                    <span class="indulgence">特惠价：<b>1050</b></span>
+                                    元/月
+                                </p>
+                                <a href="javascript:randomqq();" class="buy">立即购买</a>
+                            </div>
                         </div>
                         <div class="col-md-4">
-                            <h4>200G防御流量</h4>
-                            <p class="font-medium">
-                                <span class="original">
-                                    <del>原价：300元/天</del>
-                                </span>
-                                <span class="indulgence">特惠价：<b>210</b></span>
-                                元/天
-                            </p>
-                            <p class="font-medium">
-                                <span class="original">
-                                    <del>原价：800元/周</del>
-                                </span>
-                                <span class="indulgence">特惠价：<b>560</b></span>
-                                元/周
-                            </p>
-                            <p class="font-medium">
-                                <span class="original">
-                                    <del>原价：2800元/月</del>
-                                </span>
-                                <span class="indulgence">特惠价：<b>1960</b></span>
-                                元/月
-                            </p>
-                            <a href="javascript:randomqq();" class="buy">立即购买</a>
+                            <div class="content-item">
+                                <h4>200G防御流量</h4>
+                                <p class="font-medium">
+                                    <span class="original">
+                                        <del>原价：300元/天</del>
+                                    </span>
+                                    <span class="indulgence">特惠价：<b>210</b></span>
+                                    元/天
+                                </p>
+                                <p class="font-medium">
+                                    <span class="original">
+                                        <del>原价：800元/周</del>
+                                    </span>
+                                    <span class="indulgence">特惠价：<b>560</b></span>
+                                    元/周
+                                </p>
+                                <p class="font-medium">
+                                    <span class="original">
+                                        <del>原价：2800元/月</del>
+                                    </span>
+                                    <span class="indulgence">特惠价：<b>1960</b></span>
+                                    元/月
+                                </p>
+                                <a href="javascript:randomqq();" class="buy">立即购买</a>
+                            </div>
                         </div>
                     </div>
                 </div>

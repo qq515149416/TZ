@@ -9564,3 +9564,281 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background-color: #fff;
   color: #043fc4;
 }
+#armyDay {
+  background: url(/images/armyDay_banner.png?c73137cd00da75266b8403018079f118) no-repeat #fff3e0;
+  background-size: 100%;
+  padding-top: 794px;
+}
+#armyDay .container {
+  width: 1200px;
+}
+#armyDay .product-superimposed {
+  margin-top: 92px;
+}
+#armyDay .product-superimposed h3 {
+  margin: 0 auto;
+  margin-bottom: 60px;
+  font-size: 30px;
+  font-weight: bold;
+  color: #870202;
+  width: 348px;
+  text-align: center;
+  position: relative;
+}
+#armyDay .product-superimposed h3::before {
+  content: "";
+  position: absolute;
+  width: 119px;
+  height: 26px;
+  background: url(/images/armyDay_bt_zuo.png?870b9708ae5ec167387e79ba939881d4) no-repeat;
+  left: -129px;
+  top: 4px;
+}
+#armyDay .product-superimposed h3::after {
+  content: "";
+  position: absolute;
+  width: 119px;
+  height: 26px;
+  background: url(/images/armyDay_bt_you.png?29b09115a746469df4e5db0fa4ad5a9e) no-repeat;
+  right: -129px;
+  top: 4px;
+}
+#armyDay .product-superimposed > .product-content > header {
+  border-radius: 2px 2px 0 0;
+  height: 62px;
+  padding-left: 20px;
+  background: -webkit-gradient(linear, left top, right top, from(#f3cf83), to(#f9c169));
+  background: linear-gradient(to right, #f3cf83, #f9c169);
+  font-size: 24px;
+  color: #181e2d;
+  line-height: 62px;
+  position: relative;
+}
+#armyDay .product-superimposed > .product-content > header::after {
+  content: "";
+  position: absolute;
+  right: -4px;
+  top: 10px;
+  width: 158px;
+  height: 37px;
+  background: url(/images/armyDay_biaoqian_1.png?aae607520782d508816f14ff89e440c3) no-repeat;
+}
+#armyDay .product-superimposed > .product-content > .content {
+  border-radius: 0 0 2px 2px;
+  padding-top: 40px;
+  padding-bottom: 23px;
+  text-align: center;
+}
+#armyDay .product-superimposed > .product-content > .content > .row > .col-md-4 .content-item {
+  background-color: #fff;
+}
+#armyDay .product-superimposed > .product-content > .content .buy {
+  display: inline-block;
+  width: 112px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  font-size: 12px;
+  color: #fff;
+  background-color: #e01616;
+  text-decoration: none;
+}
+#armyDay .product-superimposed > .product-content > .content h4 {
+  margin: 0;
+  margin-bottom: 28px;
+  font-size: 24px;
+  color: #181e2d;
+}
+#armyDay .product-superimposed > .product-content > .content p {
+  margin: 0;
+  margin-bottom: 16px;
+  font-size: 12px;
+  color: #4e4a4a;
+}
+#armyDay .product-superimposed > .product-content > .content p .original {
+  font-size: 12px;
+  color: #a0a3a8;
+  margin-right: 13px;
+}
+#armyDay .product-superimposed > .product-content > .content p .indulgence {
+  font-size: 16px;
+  font-weight: bold;
+  color: #e01616;
+}
+#armyDay .product-superimposed > .product-content > .content p .indulgence b {
+  font-size: 24px;
+  font-weight: bold;
+  font-family: 'pingFangHeavy';
+}
+#armyDay .product-remind {
+  margin: 0 auto;
+  margin-top: 92px;
+  margin-bottom: 198px;
+  width: 920px;
+  padding-top: 72px;
+  padding-bottom: 50px;
+  background-color: #fff;
+  position: relative;
+  border-radius: 2px;
+}
+#armyDay .product-remind::before {
+  content: "";
+  position: absolute;
+  width: 170px;
+  height: 44px;
+  top: 0;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  background: url(/images/souvenir_bq_huodong.png?7b87db2232abad5cc322f5d40fe1a3a2) no-repeat;
+}
+#armyDay .product-remind ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-left: 72px;
+}
+#armyDay .product-remind ul li {
+  margin-bottom: 20px;
+  color: #4e4a4a;
+  font-size: 14px;
+  padding-left: 23px;
+  position: relative;
+}
+#armyDay .product-remind ul li span {
+  color: #e01616;
+}
+#armyDay .product-remind ul li::before {
+  content: attr(data-index);
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  left: 0;
+  top: 0;
+  background-color: #e01616;
+  text-align: center;
+  line-height: 16px;
+  border-radius: 100%;
+  color: #fff;
+}
+#armyDay .product-remind ul li:last-of-type {
+  margin: 0;
+}
+#armyDay .product-idc h3 {
+  margin: 0 auto;
+  margin-bottom: 60px;
+  font-size: 30px;
+  font-weight: bold;
+  color: #870202;
+  width: 356px;
+  text-align: center;
+  position: relative;
+}
+#armyDay .product-idc h3::before {
+  content: "";
+  position: absolute;
+  width: 119px;
+  height: 26px;
+  background: url(/images/armyDay_bt_zuo.png?870b9708ae5ec167387e79ba939881d4) no-repeat;
+  left: -129px;
+  top: 4px;
+}
+#armyDay .product-idc h3::after {
+  content: "";
+  position: absolute;
+  width: 119px;
+  height: 26px;
+  background: url(/images/armyDay_bt_you.png?29b09115a746469df4e5db0fa4ad5a9e) no-repeat;
+  right: -129px;
+  top: 4px;
+}
+#armyDay .product-idc > ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#armyDay .product-idc > ul > li {
+  width: 564px;
+  height: 368px;
+}
+#armyDay .product-idc > ul > li > header {
+  height: 140px;
+  padding-top: 40px;
+  background: -webkit-gradient(linear, left top, right top, from(#f3cf83), to(#f9c169));
+  background: linear-gradient(to right, #f3cf83, #f9c169);
+  position: relative;
+}
+#armyDay .product-idc > ul > li > header::after {
+  content: "";
+  position: absolute;
+  right: -8px;
+  top: 10px;
+  width: 158px;
+  height: 37px;
+  background: url(/images/armyDay_biaoqian_1.png?aae607520782d508816f14ff89e440c3) no-repeat;
+}
+#armyDay .product-idc > ul > li > header > h4 {
+  margin: 0;
+  margin-bottom: 24px;
+  padding-left: 20px;
+  font-size: 24px;
+  font-weight: normal;
+  color: #181e2d;
+}
+#armyDay .product-idc > ul > li > header > ul {
+  margin: 0;
+  list-style-type: disc;
+}
+#armyDay .product-idc > ul > li > header > ul > li {
+  color: rgba(24, 30, 45, 0.8);
+  font-size: 18px;
+  line-height: 18px;
+}
+#armyDay .product-idc > ul > li > .content {
+  padding: 36px 0;
+  background-color: #fff;
+}
+#armyDay .product-idc > ul > li > .content .row .col-md-2 {
+  width: 14.666667%;
+}
+#armyDay .product-idc > ul > li > .content .row .col-md-2:first-of-type {
+  margin-left: 51px;
+}
+#armyDay .product-idc > ul > li > .content .key {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #a0a3a8;
+}
+#armyDay .product-idc > ul > li > .content .value {
+  font-size: 16px;
+}
+#armyDay .product-idc > ul > li > .content > footer {
+  width: 422px;
+  margin: 0 auto;
+  position: relative;
+  margin-top: 44px;
+}
+#armyDay .product-idc > ul > li > .content > footer > .price-info {
+  font-size: 18px;
+  color: #4e4a4a;
+}
+#armyDay .product-idc > ul > li > .content > footer > .price-info > .price {
+  color: #e01616;
+}
+#armyDay .product-idc > ul > li > .content > footer > .price-info > .price > b {
+  font-size: 70px;
+  line-height: 70px;
+}
+#armyDay .product-idc > ul > li > .content > footer > .buy {
+  position: absolute;
+  bottom: 4px;
+  right: 0;
+  width: 140px;
+  height: 39px;
+  text-align: center;
+  line-height: 39px;
+  font-size: 16px;
+  color: #ffffff;
+  background-color: #e01616;
+  text-decoration: none;
+}

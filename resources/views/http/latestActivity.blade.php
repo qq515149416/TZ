@@ -38,6 +38,16 @@
                     <p class="desc">腾正高防IP专业DDOS防御首选，T+级防护系统，毫秒级过滤引擎，精准识别秒级响应，支持不同业务模式</p>
                 </div>
             </a>
+            <a class="card" href="/army_day" target="_blank">
+                <div class="card-image">
+                    <img src="{{ asset("/images/lastestActivity/activity-6.png") }}" />
+                    <span class="ongoing">活动中</span>
+                </div>
+                <div class="card-body">
+                    <h5 class="title font-heavy">92周年八一建军节：军民同庆，共筑强国</h5>
+                    <p class="desc">没有网络安全 就没有国家安全，热烈庆祝中国人名解放军建军92周年，网络安全企业首选腾正科技高防服务器，防御流量包三重大礼，军民同庆，共筑强国！</p>
+                </div>
+            </a>
             <a class="card disable" href="javascript: void(0);">
                 <div class="card-image">
                     <img src="{{ asset("/images/lastestActivity/activity-1.png") }}" />

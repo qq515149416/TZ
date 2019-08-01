@@ -606,7 +606,7 @@ class BusinessModel extends Model
             return $return;
         }
 
-        $detail = json_decode(DB::table('tz_cabinet_machine_detail')->whereNull('deleted_at')->value('detail'));
+        $detail = json_decode(DB::table('tz_cabinet_machine_detail')->where($detail_param)->whereNull('deleted_at')->value('detail'));
         $return['data'] = $detail;
         $return['code'] = 1;
         $return['msg']  = '获取该机器的详情成功';

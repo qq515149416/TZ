@@ -1868,37 +1868,51 @@ class OrdersModel extends Model
 			$return['msg'] = '(#101)条件不足,无法进行相关操作';
 			return $return;
 		}
+
 		if(!isset($get['resource_type'])){
 			$return['data'] = [];
 			$return['code'] = 0;
 			$return['msg'] = '(#102)请确认数据无误';
 			return $return;
 		}
+
 		if(!isset($get['order_id'])){
 			$return['data'] = [];
 			$return['code'] = 0;
 			$return['msg'] = '(#103)请选择需要更换的资源';
 			return $return;
 		}
+
 		/**
 		 * 获取对应订单的数据
 		 * @var [type]
 		 */
-		$order = DB::table('tz_orders')
+		if(isset($get['parent_business'])){
+			$order = DB::table('tz_cabinet_machine as machine')
+						->join('tz_cabinet_machine_detail as detail','machine.id','=','detail.business_id')
+						->where(['machine.id'=>$get['order_id']])
+						->whereNull('machine.deleted_at')
+						->whereBetween('machine.remove_status',[0,3])
+						->select('detail as resource_detail','machine.id','resource_sn as machine_sn','resource_sn as resource','price','duration','endtime as end_time','resource_type','customer as customer_id')
+						->first();
+
+		} else {
+			$order = DB::table('tz_orders')
 		           ->join('tz_business','tz_orders.business_sn','=','tz_business.business_number')
 		           ->where(['tz_orders.id'=>$get['order_id']])
 		           ->whereNull('tz_orders.deleted_at')
 		           ->whereBetween('tz_orders.remove_status',[0,3])
-		           ->select('tz_business.resource_detail','tz_orders.id','tz_orders.order_sn','tz_orders.machine_sn','tz_orders.resource','tz_orders.price','tz_orders.duration','tz_orders.end_time','tz_orders.resource_type')
+		           ->select('tz_business.resource_detail','tz_orders.id','tz_orders.order_sn','tz_orders.machine_sn','tz_orders.resource','tz_orders.price','tz_orders.duration','tz_orders.end_time','tz_orders.resource_type','tz_orders.customer_id')
 		           ->first();
-
+		}
+		
 		if(empty($order)){
 			$return['data'] = [];
 			$return['code'] = 0;
 			$return['msg'] = '(#104)请确认需要更换的资源无误';
 			return $return;
-
 		}
+
 		/**
 		 * 获取业务所在机房
 		 * @var [type]
@@ -1915,25 +1929,40 @@ class OrdersModel extends Model
 			}
 			
 		}
-		$machineroom = isset($get['machineroom'])?$get['machineroom']:$machineroom;
+		if(!isset($get['parent_business'])){
+			$machineroom = isset($get['machineroom'])?$get['machineroom']:$machineroom;
+		}
 		switch ($get['resource_type']) {//根据资源类型获取对应的可更换的资源数据
 			case 1://租用机器
-			case 2://托管机器
 				$resource = DB::table('idc_machine')
-							   ->join('idc_ips','idc_machine.ip_id','=','idc_ips.id')
-							   ->join('idc_machineroom','idc_machine.machineroom','=','idc_machineroom.id')
-							   ->join('idc_cabinet','idc_machine.cabinet','=','idc_cabinet.id')
+							   ->leftjoin('idc_ips','idc_machine.ip_id','=','idc_ips.id')
+							   ->leftjoin('idc_machineroom','idc_machine.machineroom','=','idc_machineroom.id')
+							   ->leftjoin('idc_cabinet','idc_machine.cabinet','=','idc_cabinet.id')
 							   ->where(['business_type'=>$get['resource_type'],'used_status'=>0,'machine_status'=>0,'machineroom'=>$machineroom])
 							   ->whereNull('idc_machine.deleted_at')
 							   ->get(['idc_machine.id','idc_machine.machine_num','idc_machine.cpu','idc_machine.memory','idc_machine.harddisk','idc_machine.cabinet','idc_machine.ip_id','idc_machine.machineroom','idc_machine.bandwidth','idc_machine.protect','idc_machine.loginname','idc_machine.loginpass','idc_machine.machine_type','idc_machineroom.id as machineroom_id','idc_machineroom.machine_room_name as machineroom_name','idc_cabinet.cabinet_id as cabinets','idc_ips.ip','idc_ips.ip_company']);
+				break;
+			case 2://托管机器
+				$resource = DB::table('idc_machine')
+							   ->join('tz_machine_customer','idc_machine.id','=','tz_machine_customer.machine_id')
+							   ->leftjoin('idc_ips','idc_machine.ip_id','=','idc_ips.id')
+							   ->leftjoin('idc_machineroom','idc_machine.machineroom','=','idc_machineroom.id')
+							   ->leftjoin('idc_cabinet','idc_machine.cabinet','=','idc_cabinet.id')
+							   ->where(['business_type'=>$get['resource_type'],'used_status'=>0,'machine_status'=>0,'machineroom'=>$machineroom,'customer_id'=>$order->customer_id])
+							   ->whereNull('idc_machine.deleted_at')
+							   ->whereNull('tz_machine_customer.deleted_at')
+							   ->get(['idc_machine.id','idc_machine.machine_num','idc_machine.cpu','idc_machine.memory','idc_machine.harddisk','idc_machine.cabinet','idc_machine.ip_id','idc_machine.machineroom','idc_machine.bandwidth','idc_machine.protect','idc_machine.loginname','idc_machine.loginpass','idc_machine.machine_type','idc_machineroom.id as machineroom_id','idc_machineroom.machine_room_name as machineroom_name','idc_cabinet.cabinet_id as cabinets','idc_ips.ip','idc_ips.ip_company']);
+				
 				if(!$resource->isEmpty()){
-					$ip_company = [0=>'电信',1=>'移动',2=>'联通'];
+					$ip_company = [0=>'电信',1=>'移动',2=>'联通',3=>'BGP',Null=>'未选择'];
 					foreach($resource as $resource_key => $resource_value){
+						$resource_value->ip = $resource_value->ip?$resource_value->ip:'0.0.0.0';
 						$resource_value->ip_detail = $resource_value->ip.'('.$ip_company[$resource_value->ip_company].')';
 						unset($resource_value->ip_company);
 					}
 				}
 				break;
+				
 			case 3://租用机柜
 				$resource = DB::table('idc_cabinet')
 							   ->join('idc_machineroom','idc_cabinet.machineroom_id','=','idc_machineroom.id')
@@ -2031,17 +2060,29 @@ class OrdersModel extends Model
 			$return['msg'] = '(#112)该订单资源存在更换未完成,不能重复提交,请等待完成后再申请';
 			return $return;
 		}
+
 		/**
 		 * 获取对应订单的数据
 		 * @var [type]
 		 */
-		$order = DB::table('tz_orders')
+		if(isset($change['parent_business'])){
+			$order = DB::table('tz_cabinet_machine as machine')
+						->join('tz_cabinet_machine_detail as detail','machine.id','=','detail.business_id')
+						->where(['machine.id'=>$change['order_id']])
+						->whereNull('machine.deleted_at')
+						->whereBetween('machine.remove_status',[0,3])
+						->select('detail as resource_detail','machine.id','business_number','resource_sn as machine_sn','resource_sn as resource','resource_type','customer as customer_id','sales as business_id')
+						->first();
+		} else {
+			$order = DB::table('tz_orders')
 		           ->join('tz_business','tz_orders.business_sn','=','tz_business.business_number')
 		           ->where(['tz_orders.id'=>$change['order_id']])
 		           ->whereNull('tz_orders.deleted_at')
 		           ->whereBetween('tz_orders.remove_status',[0,3])
-		           ->select('tz_business.resource_detail','tz_business.business_type','tz_orders.resource_type','tz_orders.customer_id','tz_orders.business_id','tz_orders.resource','tz_orders.machine_sn','tz_orders.business_sn')
+		           ->select('tz_business.resource_detail','tz_business.business_type','tz_business.business_number','tz_orders.resource_type','tz_orders.customer_id','tz_orders.business_id','tz_orders.resource','tz_orders.machine_sn','tz_orders.business_sn')
 		           ->first();
+		}
+		
 		if(empty($order)){
 			$return['data'] = [];
 			$return['code'] = 0;
@@ -2053,7 +2094,7 @@ class OrdersModel extends Model
 		 * @var [type]
 		 */
 		$resource_detail = json_decode($order->resource_detail);
-		if($order->business_type == 3){
+		if($order->resource_type == 3){
 			$cabinet = isset($resource_detail->cabinetid)?$resource_detail->cabinetid:0;
 			$ip = 0;
 		} else {
@@ -2102,7 +2143,7 @@ class OrdersModel extends Model
 				$change_data['after_ip'] = $resource->ip_id;
 				$update = DB::table('idc_machine')
 				            ->where(['id'=>$change['resource_id'],'business_type'=>$change['resource_type'],'used_status'=>0,'machine_status'=>0])
-				            ->update(['used_status'=>1,'own_business'=>$order->business_sn]);
+				            ->update(['used_status'=>1,'own_business'=>$order->business_number]);
 
 				break;
 			case 3:
@@ -2222,6 +2263,9 @@ class OrdersModel extends Model
 		$change_data['created_at'] = date('Y-m-d H:i:s',time());
 		$change_data['change_reason'] = $change['change_reason'];
 		$change_data['business'] = $change['order_id'];
+		if(isset($change['parent_business'])){
+			$change_data['parent_business'] = $change['parent_business'];
+		}
 		$result = DB::table('tz_resource_change')->insert($change_data);
 		if($result == 0){
 			DB::rollBack();
@@ -2266,7 +2310,7 @@ class OrdersModel extends Model
 		$change = DB::table('tz_resource_change')
 		            ->where(['id'=>$check['change_id']])
 		            ->whereNull('deleted_at')
-		            ->select('id','business','change_number','change_status','before_resource_type','before_resource_number','after_resource_type','after_resource_number','customer_id')
+		            ->select('id','business','change_number','change_status','before_resource_type','before_resource_number','after_resource_type','after_resource_number','customer_id','parent_business')
 		            ->first();
 		if(empty($change)){
 			$return['data'] = [];
@@ -2274,15 +2318,25 @@ class OrdersModel extends Model
 			$return['msg'] = '(#103)无对应的更换记录';
 			return $return;
 		}
+
 		/**
 		 * 获取原订单的数据
 		 * @var [type]
 		 */
-		$order = DB::table('tz_orders')
+		if($change->parent_business != 0){
+			$order = DB::table('tz_cabinet_machine')
+						->where(['id'=>$change->business])
+						->whereBetween('remove_status',[0,3])
+						->select('id','business_number as business_sn','resource_sn as machine_sn','endtime as end_time')
+						->first();
+		} else {
+			$order = DB::table('tz_orders')
 					->where(['id'=>$change->business])
 					->whereBetween('remove_status',[0,3])
 					->select('id','business_sn','order_sn','machine_sn','end_time')
 					->first();
+		}
+		
 		if(empty($order)){
 			
 			$return['data'] = [];
@@ -2290,6 +2344,7 @@ class OrdersModel extends Model
 			$return['msg'] = '(#104)无对应的资源订单';
 			return $return;
 		}
+
 		/**
 		 * 根据不同的情况进行审核操作
 		 */
@@ -2425,9 +2480,9 @@ class OrdersModel extends Model
 					 * @var [type]
 					 */
 					$resource = get_object_vars(DB::table('idc_machine')
-							   ->join('idc_ips','idc_machine.ip_id','=','idc_ips.id')
-							   ->join('idc_machineroom','idc_machine.machineroom','=','idc_machineroom.id')
-							   ->join('idc_cabinet','idc_machine.cabinet','=','idc_cabinet.id')
+							   ->leftjoin('idc_ips','idc_machine.ip_id','=','idc_ips.id')
+							   ->leftjoin('idc_machineroom','idc_machine.machineroom','=','idc_machineroom.id')
+							   ->leftjoin('idc_cabinet','idc_machine.cabinet','=','idc_cabinet.id')
 							   ->where(['machine_num'=>$change->after_resource_number,'idc_machine.own_business'=>$order->business_sn])
 							   ->select('idc_machine.id','idc_machine.machine_num','idc_machine.cpu','idc_machine.memory','idc_machine.harddisk','idc_machine.cabinet','idc_machine.ip_id','idc_machine.machineroom','idc_machine.bandwidth','idc_machine.protect','idc_machine.loginname','idc_machine.loginpass','idc_machine.machine_type','idc_machineroom.id as machineroom_id','idc_machineroom.machine_room_name as machineroom_name','idc_cabinet.cabinet_id as cabinets','idc_ips.ip','idc_ips.ip_company')
 							   ->first());	
@@ -2438,16 +2493,24 @@ class OrdersModel extends Model
 						$return['msg'] = '(#107)无对应的资源可更换';
 						return $return;
 					}
-					$ip_company = [0=>'电信',1=>'移动',2=>'联通'];
+					$ip_company = [0=>'电信',1=>'移动',2=>'联通',3=>'BGP',Null=>'未选择'];
+					$resource['ip'] = $resource['ip']?$resource['ip']:'0.0.0.0';
 					$resource['ip_detail'] = $resource['ip'].'('.$ip_company[$resource['ip_company']].')';
 					unset($resource['ip_company']);
 					/**
 					 * 进行业务绑定的机器数据进行相对应的更新
 					 * @var [type]
 					 */
-					$business_update = DB::table('tz_business')
+					if($change->parent_business != 0){
+						$business_update = DB::table('tz_cabinet_machine')
+												->where(['id'=>$order->id])
+												->update(['resource_sn'=>$resource['machine_num'],'resource_id'=>$resource['id'],'resource_type'=>$change->after_resource_type]);
+					} else {
+						$business_update = DB::table('tz_business')
 										->where(['business_number'=>$order->business_sn])
 										->update(['machine_number'=>$resource['machine_num'],'resource_detail'=>json_encode($resource),'business_type'=>$change->after_resource_type]);
+					}
+					
 					if($business_update == 0){
 						DB::rollBack();
 						$return['data'] = [];
@@ -2459,9 +2522,14 @@ class OrdersModel extends Model
 					 * 对应的订单数据进行更新
 					 * @var [type]
 					 */
-					$order_update = DB::table('tz_orders')
+					if($change->parent_business != 0){
+						$order_update = DB::table('tz_cabinet_machine_detail')->where(['business_id'=>$order->id])->update(['detail'=>json_encode($resource)]);
+					} else {
+						$order_update = DB::table('tz_orders')
 									  ->where(['id'=>$change->business])
 									  ->update(['machine_sn'=>$resource['machine_num'],'resource'=>$resource['machine_num'],'resource_type'=>$change->after_resource_type]);
+					}
+					
 					if($order_update == 0){
 						DB::rollBack();
 						$return['data'] = [];
@@ -2850,50 +2918,41 @@ class OrdersModel extends Model
 		if(isset($data['order_id'])){//根据订单id获取
 			$where['business'] = $data['order_id'];
 		}
+
 		/**
 		 * 获取对应的更换记录单
 		 * @var [type]
 		 */
 		$change = DB::table('tz_resource_change as change')
-					->join('tz_orders as orders','change.business','=','orders.id')
-					->join('admin_users as admin','change.sales_id','=','admin.id')
+					->leftjoin('tz_users as user','change.customer_id','=','user.id')
+					->leftjoin('admin_users as admin','change.sales_id','=','admin.id')
 					->where($where)
 					->orWhere($orwhere)
 					->whereNull('change.deleted_at')
-					->get(['change.id','change.change_number','change.before_resource_type','change.before_resource_number','change.before_machineroom','change.before_cabinet','change.before_ip','change.after_resource_type','change.after_resource_number','change.after_machineroom','change.after_cabinet','change.after_ip','change.sales_id','change.customer_id','change.change_time','change.change_status','change.change_reason','change.check_note','change.created_at','orders.order_sn','orders.business_sn','admin.name as sales_name']);
-		if($change->isEmpty()){
-			$return['data'] = [];
-			$return['code'] = 0;
-			$return['msg'] = '暂无数据';
-			return $return;
-		}
-		foreach($change as $key => $value){
-			/**
-			 * 客户信息的获取
-			 * @var [type]
-			 */
-			$customer = DB::table('tz_users')->where(['id'=>$value->customer_id])->value('nickname');
-			if(empty($customer)){
-				$value->customer_name = '佚名';
+					->get(['change.id','change.change_number','change.before_resource_type','change.parent_business','change.business','change.before_resource_number','change.before_machineroom','change.before_cabinet','change.before_ip','change.after_resource_type','change.after_resource_number','change.after_machineroom','change.after_cabinet','change.after_ip','change.sales_id','change.customer_id','change.change_time','change.change_status','change.change_reason','change.check_note','change.created_at','change.parent_business','admin.name as sales_name','user.nickname as customer_name']);
+		
+		$change = $change->map(function($item,$key){
+			if($item->parent_business != 0){
+				$item->business_sn = DB::table('tz_cabinet_machine')->where(['id'=>$item->business])->value('business_number');
 			} else {
-				$value->customer_name = $customer;
+				$order = DB::table('tz_orders')->where(['id'=>$item->business])->select('business_sn','order_sn')->first();
+				$item->business_sn = $order->business_sn;
+				$item->order_sn = $order->order_sn;
 			}
-			/**
-			 * 对应更换前后的机房，机柜，IP信息，资源类型以及记录单的状态的转换
-			 * @var [type]
-			 */
-			$value->before_machineroom_name = DB::table('idc_machineroom')->where(['id'=>$value->before_machineroom])->value('machine_room_name');
-			$value->after_machineroom_name = DB::table('idc_machineroom')->where(['id'=>$value->after_machineroom])->value('machine_room_name');
-			$value->before_cabinet_name = DB::table('idc_cabinet')->where(['id'=>$value->before_cabinet])->value('cabinet_id');
-			$value->after_cabinet_name = DB::table('idc_cabinet')->where(['id'=>$value->after_cabinet])->value('cabinet_id');
-			$value->before_ip_detail = DB::table('idc_ips')->where(['id'=>$value->before_ip])->value('ip');
-			$value->after_ip_detail = DB::table('idc_ips')->where(['id'=>$value->after_ip])->value('ip');
+			$item->before_machineroom_name = DB::table('idc_machineroom')->where(['id'=>$item->before_machineroom])->value('machine_room_name');
+			$item->after_machineroom_name = DB::table('idc_machineroom')->where(['id'=>$item->after_machineroom])->value('machine_room_name');
+			$item->before_cabinet_name = DB::table('idc_cabinet')->where(['id'=>$item->before_cabinet])->value('cabinet_id');
+			$item->after_cabinet_name = DB::table('idc_cabinet')->where(['id'=>$item->after_cabinet])->value('cabinet_id');
+			$item->before_ip_detail = DB::table('idc_ips')->where(['id'=>$item->before_ip])->value('ip');
+			$item->after_ip_detail = DB::table('idc_ips')->where(['id'=>$item->after_ip])->value('ip');
 			$resource_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜',4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护',10=>'cdn',11=>'高防IP',12=>'流量叠加包'];
-			$value->before_type = $resource_type[$value->before_resource_type];
-			$value->after_type = $resource_type[$value->after_resource_type];
+			$item->before_type = $resource_type[$item->before_resource_type];
+			$item->after_type = $resource_type[$item->after_resource_type];
 			$status = ['-1'=>'审核不通过',0=>'待审核',1=>'待更换',2=>'机房处理中',3=>'完成'];
-			$value->status = $status[$value->change_status]; 
-		}
+			$item->status = $status[$item->change_status];
+			return $item; 
+		});
+		
 		$return['data'] = $change;
 		$return['code'] = 1;
 		$return['msg'] = '数据获取成功';

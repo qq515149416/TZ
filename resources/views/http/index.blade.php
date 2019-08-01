@@ -170,11 +170,11 @@
                         <li>
                             <div class="config">
                                 <div>
-                                    <span>I7</span>
+                                    <span>8核</span>
                                     <span class="key">CPU</span>
                                 </div>
                                 <div>
-                                    <span>8G</span>
+                                    <span>32G</span>
                                     <span class="key">内存</span>
                                 </div>
                                 <div>
@@ -188,7 +188,7 @@
                             </div>
                             <div class="descripts">
                                 <div>
-                                    <span>Intel Core i7 CPU</span>
+                                    <span>16线程</span>
                                 </div>
                                 <div>
                                     <span>高速服务器内存</span>
@@ -201,13 +201,13 @@
                                 </div>
                             </div>
                             <div class="text-right price">
-                                <a href="/zuyong/gaofang" class="buy">888元</a>
+                                <a href="/army_day" class="buy">810元</a>
                             </div>
                         </li>
                         <li>
                             <div class="config">
                                 <div>
-                                    <span>E5530</span>
+                                    <span>8核</span>
                                     <span class="key">CPU</span>
                                 </div>
                                 <div>
@@ -215,17 +215,17 @@
                                     <span class="key">内存</span>
                                 </div>
                                 <div>
-                                    <span>100M</span>
+                                    <span>10M</span>
                                     <span class="key">带宽</span>
                                 </div>
                                <div>
-                                    <span>320G</span>
+                                    <span>40G</span>
                                     <span class="key">防御</span>
                                </div>
                             </div>
                             <div class="descripts">
                                 <div>
-                                    <span>Intel Xeon CPU</span>
+                                    <span>16线程</span>
                                 </div>
                                 <div>
                                     <span>高速服务器内存</span>
@@ -238,7 +238,7 @@
                                 </div>
                             </div>
                             <div class="text-right price">
-                                <a href="/zuyong/gaofang" class="buy">3500元</a>
+                                <a href="/army_day" class="buy">450元</a>
                             </div>
                         </li>
                     </ul>

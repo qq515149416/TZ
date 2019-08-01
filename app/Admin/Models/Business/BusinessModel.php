@@ -572,6 +572,7 @@ class BusinessModel extends Model
             foreach($show as $check => $check_value){
                 $check_value->status = $business_status[$check_value->business_status];
                 $check_value->type   = $business_type[$check_value->business_type];
+                $check_value->resource_type   = $check_value->business_type;
                 $check_value->remove = $remove_status[$check_value->remove_status];
                 $check_value->machineroom_name = $this->machineroom($check_value->room_id);
                 if($check_value->business_type != 3){

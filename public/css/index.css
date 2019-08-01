@@ -9607,8 +9607,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   border-radius: 2px 2px 0 0;
   height: 62px;
   padding-left: 20px;
-  background: -webkit-gradient(linear, left top, right top, from(#f3cf83), to(#f9c169));
-  background: linear-gradient(to right, #f3cf83, #f9c169);
+  background-color: #f6ad17;
   font-size: 24px;
   color: #181e2d;
   line-height: 62px;
@@ -9635,8 +9634,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   height: 62px;
   text-align: center;
   margin-bottom: 28px;
-  background: -webkit-gradient(linear, left top, right top, from(#f3cf83), to(#f9c169));
-  background: linear-gradient(to right, #f3cf83, #f9c169);
+  background-color: #f6ad17;
   position: relative;
 }
 #armyDay .product-superimposed > .product-content > .content > .row > .col-md-4 .content-item > header::after {
@@ -9785,8 +9783,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #armyDay .product-idc > ul > li > header {
   height: 140px;
   padding-top: 40px;
-  background: -webkit-gradient(linear, left top, right top, from(#f3cf83), to(#f9c169));
-  background: linear-gradient(to right, #f3cf83, #f9c169);
+  background-color: #f6ad17;
   position: relative;
 }
 #armyDay .product-idc > ul > li > header::after {

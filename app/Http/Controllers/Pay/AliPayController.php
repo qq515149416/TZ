@@ -253,7 +253,11 @@ class AliPayController extends Controller
 		try{
 			$check =  Pay::alipay($this->config)->find($trade_no);
 		} catch (\Exception $e) {
-		            return($e->raw['alipay_trade_query_response']);
+			if ( isset($e->raw) ) {
+				return($e->raw['alipay_trade_query_response']);
+			}else{
+				return([ 'code' => '40004']);
+			}        
 		 }
 		
 		return $check;

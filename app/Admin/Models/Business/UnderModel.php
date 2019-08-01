@@ -211,29 +211,40 @@ class UnderModel extends Model
                         $where = ['sales_id' => Admin::user()->id];
                     } else {//主管人员查看客户信息
                         $where = [];
+                        $machine = [];
                     }
                 } else {//是业务人员按客户所绑定业务员查看
                     $where = ['sales_id' => Admin::user()->id];
+                    $machine = ['sales' => Admin::user()->id];
                 }
                 $history = DB::table('tz_business')->where($where)->whereBetween('remove_status',[1,4])->whereNull('deleted_at')->orderBy('updated_at', 'desc')->select('client_id', 'sales_id', 'business_number', 'machine_number', 'business_type', 'business_note', 'remove_reason', 'resource_detail', 'remove_status','money as price','length','updated_at')->get();
-                if (!empty($history)) {
-                    $history->map(function($history_value,$history_key){
-                        $business_type = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜'];
-                        $remove_status = [0 => '正常使用', 1 => '下架申请中', 2 => '机房处理中', 3 => '清空下架中', 4 => '下架完成'];
-                        $history_value->resourcetype  = $business_type[$history_value->business_type];
-                        $history_value->remove_status = $remove_status[$history_value->remove_status];
-                        $history_value->sales_name = DB::table('admin_users')->where(['id'=> $history_value->sales_id])->value('name');
-                        $client_name = DB::table('tz_users')->where(['id'=> $history_value->client_id])->value('nickname');
-                        $history_value->client_name = $client_name;
-                    });
-                    $return['data'] = $history;
-                    $return['code'] = 1;
-                    $return['msg']  = '获取机器下架记录数据成功';
-                } else {
-                    $return['data'] = [];
-                    $return['code'] = 0;
-                    $return['msg']  = '暂无机器下架记录数据';
-                }
+                $history->map(function($history_value,$history_key){
+                    $business_type = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜'];
+                    $remove_status = [0 => '正常使用', 1 => '下架申请中', 2 => '机房处理中', 3 => '清空下架中', 4 => '下架完成'];
+                    $history_value->resourcetype  = $business_type[$history_value->business_type];
+                    $history_value->remove_status = $remove_status[$history_value->remove_status];
+                    $history_value->sales_name = DB::table('admin_users')->where(['id'=> $history_value->sales_id])->value('name');
+                    $history_value->client_name = DB::table('tz_users')->where(['id'=> $history_value->client_id])->value('nickname');
+                });
+
+                $cabinet_machine = DB::table('tz_cabinet_machine')->where($machine)->whereBetween('remove_status',[1,4])->whereNull('deleted_at')->orderBy('updated_at', 'desc')->select('id','customer as client_id','sales as sales_id','business_number','resource_sn as machine_number','resource_type as business_type','business_note','remove_note as remove_reason','remove_status','price','duration as length','updated_at')->get();
+                $cabinet_machine->map(function($item,$key){
+                    $business_type = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜'];
+                    $remove_status = [0 => '正常使用', 1 => '下架申请中', 2 => '机房处理中', 3 => '清空下架中', 4 => '下架完成'];
+                    $item->resourcetype  = $business_type[$item->business_type];
+                    $item->remove_status = $remove_status[$item->remove_status];
+                    $item->sales_name = DB::table('admin_users')->where(['id'=> $item->sales_id])->value('name');
+                    $item->client_name = DB::table('tz_users')->where(['id'=> $item->client_id])->value('nickname');
+                    $item->resource_detail = DB::table('tz_cabinet_machine_detail')->where(['business_id'=>$item->id])->value('detail');
+                });
+                $history = array_merge($history->toArray(),$cabinet_machine->toArray());
+                $updated_at = array_column($history,'updated_at');
+                array_multisort($updated_at,SORT_DESC,$history);
+                $return['data'] = $history;
+                $return['code'] = 1;
+                $return['msg']  = '获取机器下架记录数据成功';
+                
+
                 return $return;
                 break;
             case 2:
@@ -292,7 +303,7 @@ class UnderModel extends Model
         switch ($edit['type']) {
             case 1:
                 if(isset($edit['parent_business']) && $edit['parent_business'] != 0){//是机柜业务下的机器下架
-                    $business = DB::table('tz_cabinet_machine')->where(['business_number' => $edit['business_number']])->select('remove_status', 'remove_note as remove_reason', 'resource_type as business_type', 'resource_sn as machine_number', 'business_number')->first();
+                    $business = DB::table('tz_cabinet_machine as machine')->join('tz_cabinet_machine_detail as detail','machine.id','=','detail.business_id')->where(['business_number' => $edit['business_number']])->select('remove_status', 'remove_note as remove_reason', 'resource_type as business_type', 'resource_sn as machine_number', 'business_number','detail as resource_detail')->first();
                 } else {
                     $business = DB::table('tz_business')->where(['business_number' => $edit['business_number']])->select('remove_status', 'remove_reason', 'business_type', 'machine_number', 'business_number', 'resource_detail','order_number')->first();
                 }
@@ -384,14 +395,13 @@ class UnderModel extends Model
                     $remove = DB::table('tz_business')->where(['business_number' => $edit['business_number']])->update($update);
                 } else {
                     
-                    $cabibet_update['remove_status'] = $update['remove_status'];
+                    $cabinet_update['remove_status'] = $update['remove_status'];
                     if(isset($update['updated_at'])){
                         $cabinet_update['updated_at'] = $update['updated_at'];
                     }
                     if(isset($update['remove_reason'])){
                         $cabinet_update['remove_note'] = $update['remove_reason'];
                     }
-                     
                     $remove = DB::table('tz_cabinet_machine')->where(['business_number' => $edit['business_number']])->update($cabinet_update);
                 }
                 
@@ -515,15 +525,19 @@ class UnderModel extends Model
          * @var [type]
          */
         $where   = [];
+        $machine = [];
         $user_id = Admin::user()->id;
         $staff   = $this->staff($user_id);
+        $status = [1,3];
         if ($staff->slug == 4) {
             $where['machineroom'] = $staff->department;
+            $status = [2,3];
+            $machine['room_id'] = DB::table('idc_machineroom')->where(['list_order'=>$staff->department])->whereNull('deleted_at')->value('id');
         }
         /**
          * 下架主机信息获取
          */
-        $business = DB::table('tz_business')->where($where)->whereBetween('remove_status', [1, 3])->whereNull('deleted_at')->select('client_id', 'sales_id', 'business_number', 'machine_number', 'business_type', 'business_note', 'remove_reason', 'resource_detail', 'remove_status')->get();
+        $business = DB::table('tz_business')->where($where)->whereBetween('remove_status', $status)->whereNull('deleted_at')->select('client_id', 'sales_id', 'business_number', 'machine_number', 'business_type', 'business_note', 'remove_reason', 'resource_detail', 'remove_status')->get();
         //对下架主机的部分数据进行转换(laravel的map方法)
         $business->map(function($value,$key){
             $business_type = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜'];
@@ -531,8 +545,7 @@ class UnderModel extends Model
             $value->resource_type = $business_type[$value->business_type];
             $value->removestatus  = $remove_status[$value->remove_status];
             $value->sales_name = DB::table('admin_users')->where(['id'=> $value->sales_id])->value('name');
-            $client_name = DB::table('tz_users')->where(['id'=> $value->client_id])->value('nickname');
-            $value->client_name = $client_name;
+            $value->client_name = DB::table('tz_users')->where(['id'=> $value->client_id])->value('nickname');
             $resource_detail = json_decode($value->resource_detail);
             $value->machineroom_name = $resource_detail->machineroom_name;
             $value->parent_business = 0;
@@ -546,6 +559,23 @@ class UnderModel extends Model
             return $value;
 
         });
+
+        $cabinet_machine = DB::table('tz_cabinet_machine')->where($machine)->whereBetween('remove_status',$status)->whereNull('deleted_at')->select('id','customer as client_id','sales as sales_id','business_number','resource_sn as machine_number','resource_type as business_type','business_note','remove_note as remove_reason','remove_status','room_id','cabinet_id','ip_id','parent_business')->get();
+        $cabinet_machine->map(function($item,$key){
+            $business_type = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜'];
+            $remove_status = [0 => '正常使用', 1 => '下架申请中', 2 => '机房处理中', 3 => '清空下架中', 4 => '下架完成'];
+            $item->resource_type = $business_type[$item->business_type];
+            $item->removestatus  = $remove_status[$item->remove_status];
+            $item->sales_name = DB::table('admin_users')->where(['id'=> $item->sales_id])->value('name');
+            $item->client_name = DB::table('tz_users')->where(['id'=> $item->client_id])->value('nickname');
+            $item->machineroom_name = DB::table('idc_machineroom')->where(['id'=>$item->room_id])->value('machine_room_name');
+            $item->cabinets = DB::table('idc_cabinet')->where(['id'=>$item->cabinet_id])->value('cabinet_id');
+            $item->ip = DB::table('idc_ips')->where(['id'=>$item->ip_id])->value('ip');
+            $item->resource_detail = DB::table('tz_cabinet_machine_detail')->where(['business_id'=>$item->id])->value('detail');
+            return $item;
+        });
+        $business = array_merge($business->toArray(),$cabinet_machine->toArray());
+        
         /**
          * 下架资源的信息获取
          */

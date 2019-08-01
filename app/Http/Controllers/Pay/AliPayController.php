@@ -238,10 +238,24 @@ class AliPayController extends Controller
 	*/
 
 	public function check($trade_no){
-		
+		// dd($trade_no);
 		$check =  Pay::alipay($this->config)->find($trade_no);
 
 		return $check;
 	}
+	/**
+	*查询订单接口ver2.0
+	*@param 	$trade_no 	订单号,就是属于支付宝的out_trade_no
+	*/
 
+	public function check2($trade_no){
+		// dd($trade_no);
+		try{
+			$check =  Pay::alipay($this->config)->find($trade_no);
+		} catch (\Exception $e) {
+		            return($e->raw['alipay_trade_query_response']);
+		 }
+		
+		return $check;
+	}
 }

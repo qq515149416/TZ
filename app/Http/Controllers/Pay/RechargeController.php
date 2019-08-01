@@ -185,6 +185,21 @@ class RechargeController extends Controller
 
 		//实例化阿里支付控制器
 		$Pay = new AliPayController();
+		
+		
+		//$check = $Pay->check2($info['trade_no']);
+		//交易不存在 ,40004
+		
+		
+	
+		// if($check['code'] != '40004'){
+		// 	$check_res = $this->AliCheckAndInsert($info['trade_no']);
+		// 	if ($check_res['code'] != 0) {
+		// 		return redirect('/tz/?uphash=0#/rechargeRecord')
+  //   				->withErrors([$check_res['msg']]);
+		// 	}
+		// }
+
 		//阿里接口的传值
 		$order = [
 			'out_trade_no' 		=> $info['trade_no'],		//本地订单号
@@ -204,7 +219,7 @@ class RechargeController extends Controller
 
 		//生成支付宝链接
 		$alipay = $Pay->goToPay($order,$way,$returnUrl,$notifyUrl);
-
+		
 		//跳转到支付宝链接或返回结果
 		return $alipay;// laravel 框架中请直接 `return $alipay`
 	}
@@ -451,7 +466,9 @@ class RechargeController extends Controller
 	protected function AliCheckAndInsert($trade_no){
 		//用阿里控制器的方法,查询下订单号的支付状况
 		$PayController = new AliPayController();
+		//dd($trade_no);
 		$res = $PayController->check($trade_no);
+		
 		//TRADE_SUCCESS表示支付成功 , TRADE_FINISHED 表示订单已交易结束
 		if($res->trade_status != 'TRADE_SUCCESS'&&$res->trade_status != 'TRADE_FINISHED'){	//如果未付款,直接返回未付款
 			return [

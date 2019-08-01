@@ -2928,7 +2928,7 @@ class OrdersModel extends Model
 		 */
 		$order = $this->whereBetween('order_status',[0,3])
 					->whereBetween('remove_status',[0,3])
-				    ->select('id','price','end_time','resource_type','business_sn')
+				    ->select('id','price','end_time','resource_type','business_sn','order_status','duration','payable_money')
 				    ->find($update['id']);
 		if(empty($order)){
 			$return['code'] = 0;
@@ -2970,9 +2970,15 @@ class OrdersModel extends Model
 			}
 		}
 
+		if($order->order_status == 0){
+			$update['payable_money'] = bcmul($update['price'],$order->duration,2);
+		} else {
+			$update['payable_money'] = $order->payable_money;
+		}
+		$update['end_time'] = $end_time;
 		$update = DB::table('tz_orders')
 					->where(['id'=>$update['id']])
-					->update(['price'=>$update['price'],'end_time'=>$end_time]);
+					->update($update);
 		if($update == 0){//更新对应的订单信息失败
 			DB::rollBack();
 			$return['code'] = 0;

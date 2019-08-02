@@ -219,7 +219,7 @@ class OrdersController extends Controller
 	 * @return [type] [description]
 	 */
 	public function getResource(Request $request){
-		$get = $request->only(['order_id','resource_type','machineroom','ip_company']);
+		$get = $request->only(['order_id','resource_type','machineroom','ip_company','parent_business']);
 		$get_resource = new OrdersModel();
 		$get_result = $get_resource->getResource($get);
 		return tz_ajax_echo($get_result['data'],$get_result['msg'],$get_result['code']);
@@ -231,7 +231,7 @@ class OrdersController extends Controller
 	 * @return [type]           [description]
 	 */
 	public function changeResource(Request $request){
-		$change = $request->only(['order_id','resource_type','resource_id','change_reason']);
+		$change = $request->only(['order_id','resource_type','resource_id','change_reason','parent_business']);
 		$change_resource = new OrdersModel();
 		$change_result = $change_resource->changeResource($change);
 		return tz_ajax_echo($change_result['data'],$change_result['msg'],$change_result['code']);
@@ -243,7 +243,7 @@ class OrdersController extends Controller
 	 * @return [type]           [description]
 	 */
 	public function checkChange(Request $request){
-		$check = $request->only(['change_id','change_status','check_note']);
+		$check = $request->only(['change_id','change_status','check_note','parent_business']);
 		$chenck_resource = new OrdersModel();
 		$check_result = $chenck_resource->checkChange($check);
 		return tz_ajax_echo($check_result['data'],$check_result['msg'],$check_result['code']);
@@ -254,7 +254,7 @@ class OrdersController extends Controller
 	 * @return [type] [description]
 	 */
 	public function getChange(Request $request){
-		$data = $request->only(['order_id']);
+		$data = $request->only(['order_id','parent_business']);
 		$get_change = new OrdersModel();
 		$get_result = $get_change->getChange($data);
 		return tz_ajax_echo($get_result['data'],$get_result['msg'],$get_result['code']);

@@ -445,6 +445,7 @@ class BusinessModel extends Model
                 return $return;
             }
         } else {
+            $business['business_status'] = 2;
             $business_row = DB::table('tz_cabinet_machine')->where($check_where)->update($business);
             if ($business_row == 0) {
                 // 业务审核失败

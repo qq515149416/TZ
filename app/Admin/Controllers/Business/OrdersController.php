@@ -158,40 +158,6 @@ class OrdersController extends Controller
 	}
 
 	/**
-	 * 对某个资源进行申请下架接口
-	 * @param  Request $request [description]
-	 * @return [type]           [description]
-	 */
-	public function applyRemoveResource(Request $request){
-		$remove_resource = $request->only(['order_sn','remove_reason']);
-		$remove = new OrdersModel();
-		$remove_result = $remove->applyRemoveResource($remove_resource);
-		return tz_ajax_echo($remove_result,$remove_result['msg'],$remove_result['code']);
-	}
-
-	/**
-	 * 获取资源下架历史记录
-	 * @return [type] [description]
-	 */
-	public function resourceRemoveHistory(){
-		$history = new OrdersModel();
-		$history_result = $history->resourceRemoveHistory();
-		return tz_ajax_echo($history_result['data'],$history_result['msg'],$history_result['code']);
-	}
-
-	/**
-	 * 修改资源下架的状态
-	 * @param  Request $request [description]
-	 * @return [type]           [description]
-	 */
-	public function editRemoveResource(Request $request){
-		$edit = $request->only(['remove_reason','order_sn','remove_status','machineroom']);
-		$do_edit = new OrdersModel();
-		$edit_result = $do_edit->editRemoveResource($edit);
-		return tz_ajax_echo($edit_result,$edit_result['msg'],$edit_result['code']);
-	}
-
-	/**
 	 * 信安代为录入相关的资源
 	 * @param  Request $request [description]
 	 * @return [type]           [description]

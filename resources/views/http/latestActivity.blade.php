@@ -38,10 +38,10 @@
                     <p class="desc">腾正高防IP专业DDOS防御首选，T+级防护系统，毫秒级过滤引擎，精准识别秒级响应，支持不同业务模式</p>
                 </div>
             </a>
-            <a class="card disable" href="/souvenir" target="_blank">
+            <a class="card disable" href="javascript: void(0);" target="_blank">
                 <div class="card-image">
                     <img src="{{ asset("/images/lastestActivity/activity-7.png") }}" />
-                    <span class="end">活动中</span>
+                    <span class="end">活动结束</span>
                 </div>
                 <div class="card-body">
                     <h5 class="title font-heavy">同行五载，感恩钜惠，谢谢一路有您</h5>

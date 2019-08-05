@@ -7,6 +7,7 @@ use Encore\Admin\Controllers\ModelForm;
 use App\Admin\Models\Business\UnderModel;
 use App\Admin\Models\Hr\DepartmentModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * 下架控制器
@@ -22,6 +23,18 @@ class UnderController extends Controller
      */
     public function applyUnder(Request $request){
         $apply = $request->only(['type','business_number','remove_reason','order_sn','parent_business']);
+        
+        /**
+         * 检验下架理由是否填写
+         * @var [type]
+         */
+        $rules = ['remove_reason'=>'required'];
+        $messages = ['remove_reason.required'=>'下架理由必须填写'];
+        $validator = Validator::make($apply,$rules,$messages);
+        if($validator->messages()->first()){
+            return tz_ajax_echo('',$validator->messages()->first(),0);
+        }
+
         $apply_for = new UnderModel();
         $apply_result = $apply_for->applyUnder($apply);
         return tz_ajax_echo($apply_result,$apply_result['msg'],$apply_result['code']);

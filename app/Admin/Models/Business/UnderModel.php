@@ -341,17 +341,30 @@ class UnderModel extends Model
                     switch ($business->business_type) {
                         case 1:
                             $rent['used_status']  = 0;
-                            $rent['own_business'] = 0;
+                            $rent['own_business'] = Null;
                             $rent['business_end'] = Null;
                             $rent['loginname']    = isset($edit['loginname']) ? $edit['loginname'] : 'administrator';
                             $rent['loginpass']    = isset($edit['loginpass']) ? $edit['loginpass'] : 'esJ04&' . substr(time(), 8, 2);
                             $row                  = DB::table('idc_machine')->where(['machine_num' => $business->machine_number, 'own_business' => $edit['business_number'], 'business_type' => 1])->update($rent);
                             break;
                         case 2:
+                            $ip_id = DB::table('idc_machine')->where(['machine_num'=>$business->machine_number])->value('ip_id');
+                            if(!empty($ip_id) && $ip_id !=0){
+                                $ip_update = DB::table('idc_ips')->where(['id'=>$ip_id])->update(['ip_status'=>0,'own_business'=>Null,'mac_num'=>Null]);
+                                if($ip_update == 0){
+                                    DB::rollBack();
+                                    $return['code'] = 0;
+                                    $return['msg']  = '(#106)业务相关机器下架状态修改失败';
+                                    return $return;
+                                }
+                            }
                             $host['used_status']    = 0;
-                            $host['own_business']   = 0;
+                            $host['own_business']   = Null;
                             $host['business_end']   = Null;
                             $host['machine_status'] = 1;
+                            $host['business_type'] = 4;
+                            $host['ip_id'] = 0;
+                            $host['cabinet'] = 0;
                             $row                    = DB::table('idc_machine')->where(['machine_num' => $business->machine_number, 'own_business' => $edit['business_number'], 'business_type' => 2])->update($host);
                             break;
                         case 3:
@@ -430,12 +443,12 @@ class UnderModel extends Model
                 $order = DB::table('tz_orders')->where(['order_sn' => $edit['order_sn']])->select('remove_status', 'remove_reason', 'business_sn', 'resource_type', 'machine_sn')->first();
                 if (empty($order)) {
                     $return['code'] = 0;
-                    $return['msg']  = '无对应资源信息';
+                    $return['msg']  = '(#107)无对应资源信息';
                     return $return;
                 }
                 if ($order->remove_status < 1 || $order->remove_status == 4) {
                     $return['code'] = 0;
-                    $return['msg']  = '资源已完成下架/暂未提交下架申请';
+                    $return['msg']  = '(#108)资源已完成下架/暂未提交下架申请';
                     return $return;
                 }
                 if (isset($edit['remove_status'])) {
@@ -460,25 +473,25 @@ class UnderModel extends Model
                     switch ($order->resource_type) {
                         case 4://ip
                             $ip['ip_status']    = 0;
-                            $ip['own_business'] = 0;
+                            $ip['own_business'] = Null;
                             $ip['business_end'] = Null;
                             $row                = DB::table('idc_ips')->where(['ip' => $order->machine_sn, 'own_business' => $order->business_sn])->update($ip);
                             break;
                         case 5://cpu
                             $cpu['cpu_used']     = 0;
-                            $cpu['service_num']  = 0;
+                            $cpu['service_num']  = Null;
                             $cpu['business_end'] = Null;
                             $row                 = DB::table('idc_cpu')->where(['cpu_number' => $order->machine_sn, 'service_num' => $order->business_sn])->update($cpu);
                             break;
                         case 6://硬盘
                             $harddisk['harddisk_used'] = 0;
-                            $harddisk['service_num']   = 0;
+                            $harddisk['service_num']   = Null;
                             $harddisk['business_end']  = Null;
                             $row                       = DB::table('idc_harddisk')->where(['harddisk_number' => $order->machine_sn, 'service_num' => $order->business_sn])->update($harddisk);
                             break;
                         case 7://内存
                             $memory['memory_used']  = 0;
-                            $memory['service_num']  = 0;
+                            $memory['service_num']  = Null;
                             $memory['business_end'] = Null;
                             $row                    = DB::table('idc_memory')->where(['memory_number' => $order->machine_sn, 'service_num' => $order->business_sn])->update($memory);
                             break;
@@ -489,7 +502,7 @@ class UnderModel extends Model
                     if ($row == 0) {
                         DB::rollBack();
                         $return['code'] = 0;
-                        $return['msg']  = '资源下架修改失败!';
+                        $return['msg']  = '(#109)资源下架修改失败!';
                         return $return;
                     }
                     $update_status['remove_status'] = 4;
@@ -499,7 +512,7 @@ class UnderModel extends Model
                 if ($status == 0) {
                     DB::rollBack();
                     $return['code'] = 0;
-                    $return['msg']  = '资源下架修改失败';
+                    $return['msg']  = '(#110)资源下架修改失败';
                 } else {
                     DB::commit();     
                     $return['code'] = 1;

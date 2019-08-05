@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
+use XS;
+use XSDocument;
 
 class TzUsers extends Model
 {
@@ -53,7 +55,16 @@ class TzUsers extends Model
                 'name'  => $updateData['name'],
                 'nickname' => $updateData['nickname'],
             ]);
-
+        if($res != 0){
+            $xunsearch    = new XS('customer');
+            $index        = $xunsearch->index;
+            $doc['id']    = strtolower($updateData['uid']);
+            $doc['name'] = strtolower($updateData['name']);
+            $doc['nickname'] = strtolower($updateData['nickname']);
+            $document     = new \XSDocument($doc);
+            $index->update($document);
+            $index->flushIndex();
+        }
         return $res;
 
     }

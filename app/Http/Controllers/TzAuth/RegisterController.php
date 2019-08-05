@@ -64,7 +64,11 @@ class RegisterController extends Controller
             if ($userExists) {
                 return tz_ajax_echo([], '注册失败,帐号已存在', 0);//注册失败,邮箱帐号已存在
             }
-
+            if (isset($par['nickname'])) {
+                $nickname = $par['nickname'];
+            }else{
+                $nickname = null;
+            }
             //添加帐号
             $addUserInfo = $TzUserModel->create([
 //                'name'     => $par['name'], //用户名暂时不写入
@@ -73,6 +77,9 @@ class RegisterController extends Controller
                 'nickname' => $par['email'],
                 'status'   => 2,  //状态为已验证
                 'pwd_ver'  => 1,
+                'msg_phone' => $par['msg_phone'],
+                'msg_qq' => $par['msg_qq'],
+                'nickname'  => $nickname,
             ]);
             $this->bindSalesman($addUserInfo['id'], $par['salesman']); //绑定业务员
             Auth::loginUsingId($addUserInfo['id']);  //注册后自动登录

@@ -173,6 +173,12 @@ return [
             'database' => 3,
         ],
 
+        'FW_XA' => [
+            'host'     => env('XAFW_REDIS_HOST', '127.0.0.1'),
+            'password' => env('XAFW_REDIS_PASSWORD', null),
+            'port'     => env('XAFW_REDIS_PORT', 6379),
+            'database' => 0,
+        ],
 
     ],
 

@@ -25,46 +25,7 @@ class ContactsController extends Controller
             return $var->resource_type == $this->state;
         });
     }
-    /**
-     * 测试
-     */
-    public function test() {
-    	// $model = new contactsmodel();
-    	// $result = $model->test();
-    	// echo $result;
-        $business = DB::table('tz_business')->whereNull('deleted_at')->whereBetween('remove_status',[0,3])
-                      ->get(['id','client_name','machine_number','business_number']);
-        foreach($business as $key => $value){
-            $order = DB::table('tz_orders')->where(['business_sn'=>$value->business_number,'resource_type'=>4])->whereNull('deleted_at')->whereBetween('remove_status',[0,3])->first();
-            if(empty($order)){
-                unset($business[$key]);
-            }
-        }
-        return tz_ajax_echo($business,1,1);
-    }
-
-    /**
-     * 测试
-     */
-    public function rulestest(Test $request){
-  			// return $request->all();
-  			print_r($request->get('title'));
-  		if($request->isMethod('post')){
-
-	        // $test = $request->get('title');
-
-	        // echo('<pre>');var_dump($test);die('</pre>');
-	        echo 123;
-
-	    }else{
-
-	        echo 'this request method is GET';
-
-	    }
-	   // echo 123;
-  			// dump($request);
-    }
-
+    
     /**
      * 测试
      */
@@ -416,23 +377,21 @@ class ContactsController extends Controller
         // foreach ($http_response_header as $key => $value) {
         //     dd(strpos($value,'Content-Length'));
         // }
-        $data = DB::table('tz_business')->where(['business_number'=>11111])->value('resource_detail');
-        dd($data);
-        return $data;
+        // $data = DB::table('tz_business')->where(['business_number'=>11111])->value('resource_detail');
+        // dd($data);
+        // return $data;
+        // $xunsearch = new XS('orders');
+        // $index = $xunsearch->index;
+        // $doc['id'] = 1111111111;
+        // $doc['machine_sn'] = 11111111111;
+        // $doc['business_sn'] = 11111111111;
+        // $doc['order_sn'] = 11111111;
+        // $document = new \XSDocument($doc);
+        // $result = $index->update($document);
+        // dd($result);
+        // $index->flushIndex();
     }
-    public function vtest(Request $request) {
-        $search = $request->only('search');
-        $xs = new XS('ip');
-        $index = $xs->index;
-        $doc = DB::table('idc_ips')->select('id','ip')->get();
-        $document = new \XSDocument($doc);
-        //修改成功时更新文档主键值一样时会替换数据
-        $index->update($document);
-        $index->flushIndex();
-        dd($xs);
-        dd($search);
-    }
-
+    
     /**
      * 用于查询系统联系人（业务员）的信息
      * @return json 返回相关的信息

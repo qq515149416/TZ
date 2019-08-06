@@ -18,12 +18,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // TODO 
+        // TODO
         $webState = getenv('APP_KEY');//获取ENV文件中Key值
         if ($webState) {
             $oContacts = new Contacts();
             $contacts = $oContacts->index();
-            View::share('contacts', $contacts["data"]);
+            // dd($contacts["data"]->random()->all());
+            View::share('contacts', $contacts["data"]->sortBy(function ($product, $key) use($contacts) {
+                return $contacts["data"]->random();
+            }));
             // View::share('contacts', $contacts["data"]);
             View::share('links', LinksModel::where('type', 1)->orderBy('links_order', 'desc')->get());
             View::share('search_links', LinksModel::where('type', 2)->orderBy('links_order', 'desc')->get());

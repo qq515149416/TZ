@@ -52,15 +52,21 @@ class XADefenseDataModel extends Model
 //                ->get(['time', 'bandwidth_down', 'upstream_bandwidth_up'])
 //                ->toArray();
 
-            $fTime=$endDate-$endDate%300;
+            $fTime=$endDate-$endDate%300+300;
             $dbRedis = Redis::connection('FW_XA');
 
             for ($x=0; $x<=288; $x++) {
                 if($fData= $dbRedis->hgetall('FW-'.$ip.'-'.$fTime)){
-                    $data[$x]['time']=$fTime;
-                    $data[$x]['bandwidth_down']=(float)$fData['MAX(fyip.bandwidth_down)'];
-                    $data[$x]['upstream_bandwidth_up']=(float)$fData['MAX(fyip.upstream_bandwidth_up)'];
-//                    $data[$x]['id']=$x;
+                    $data[]=array(
+                        'time'=>$fTime,
+                        'bandwidth_down'=>(float)$fData['MAX(fyip.bandwidth_down)'],
+                        'upstream_bandwidth_up'=>(float)$fData['MAX(fyip.upstream_bandwidth_up)'],
+
+                    );
+//                    $data[]['time']=$fTime;
+//                    $data[]['bandwidth_down']=(float)$fData['MAX(fyip.bandwidth_down)'];
+//                    $data[]['upstream_bandwidth_up']=(float)$fData['MAX(fyip.upstream_bandwidth_up)'];
+//                    $data[]['id']=$x;
                 }
 
 

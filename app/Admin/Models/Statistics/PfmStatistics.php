@@ -988,6 +988,9 @@ class  PfmStatistics extends Model
 					->whereBetween('pay_time',[$begin_end['start_time'],$begin_end['end_time']])
 					->whereNull('deleted_at')
 					->sum('actual_payment');
+			if($value->sum == 0){
+				unset($admin_users[$key]);
+			}
 			$total = bcadd($value->sum,$total,2);//总销售额
 
 		}

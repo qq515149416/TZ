@@ -67,8 +67,8 @@ class BusinessController extends Controller
          * 检验添加业务时时长是否填写
          * @var [type]
          */
-        $rules = ['length' => 'required|integer'];
-        $messages = ['length.required'=> '租用时长必须填写','length.integer'=>'时长填写必须是整数数字'];
+        $rules = ['length' => 'required|integer','money'=>'required|numeric'];
+        $messages = ['length.required'=> '租用时长必须填写','length.integer'=>'时长填写必须是整数数字','money.required'=>'资源单价必须填写','money.numeric'=>'资源单价必须是数字'];
         $validator = Validator::make($insert,$rules,$messages);
         if($validator->messages()->first()){
             return tz_ajax_echo('',$validator->messages()->first(),0);

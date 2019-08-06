@@ -68,8 +68,8 @@ class OrdersController extends Controller
          * 检验添加资源时时长是否填写
          * @var [type]
          */
-        $rules = ['duration' => 'required|integer'];
-        $messages = ['duration.required'=> '租用时长必须填写','duration.integer'=>'时长填写必须是整数数字'];
+        $rules = ['duration' => 'required|integer','price'=>'required|numeric'];
+        $messages = ['duration.required'=> '租用时长必须填写','duration.integer'=>'时长填写必须是整数数字','price.required'=>'资源单价必须填写','price.numeric'=>'资源单价必须是数字'];
         $validator = Validator::make($insert_data,$rules,$messages);
         if($validator->messages()->first()){
             return tz_ajax_echo('',$validator->messages()->first(),0);

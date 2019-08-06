@@ -61,6 +61,7 @@ class WechatPay extends Model
 				'data'	=> $row->id,
 				'code'	=> 1,
 				'msg'	=> '订单录入成功!!',
+				'trade_no'	=> $row->trade_no,
 			];
 		} else {
 			// 插入数据失败

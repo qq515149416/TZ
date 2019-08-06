@@ -7,6 +7,7 @@ use Encore\Admin\Controllers\ModelForm;
 use App\Admin\Models\Business\OrdersModel;
 use Illuminate\Http\Request;
 use App\Admin\Requests\Business\OrdersRequest;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * 后台订单控制器
@@ -157,52 +158,6 @@ class OrdersController extends Controller
 	}
 
 	/**
-	 * 对某个资源进行申请下架接口
-	 * @param  Request $request [description]
-	 * @return [type]           [description]
-	 */
-	public function applyRemoveResource(Request $request){
-		$remove_resource = $request->only(['order_sn','remove_reason']);
-		$remove = new OrdersModel();
-		$remove_result = $remove->applyRemoveResource($remove_resource);
-		return tz_ajax_echo($remove_result,$remove_result['msg'],$remove_result['code']);
-	}
-
-	/**
-	 * 获取资源下架历史记录
-	 * @return [type] [description]
-	 */
-	public function resourceRemoveHistory(){
-		$history = new OrdersModel();
-		$history_result = $history->resourceRemoveHistory();
-		return tz_ajax_echo($history_result['data'],$history_result['msg'],$history_result['code']);
-	}
-
-	/**
-	 * 修改资源下架的状态
-	 * @param  Request $request [description]
-	 * @return [type]           [description]
-	 */
-	public function editRemoveResource(Request $request){
-		$edit = $request->only(['remove_reason','order_sn','remove_status','machineroom']);
-		$do_edit = new OrdersModel();
-		$edit_result = $do_edit->editRemoveResource($edit);
-		return tz_ajax_echo($edit_result,$edit_result['msg'],$edit_result['code']);
-	}
-
-	/**
-	 * 旧数据的转换
-	 * @param  Request $request [description]
-	 * @return [type]           [description]
-	 */
-	// public function tranOrders(Request $request){
-	// 	$tran = $request->only(['business_sn']);
-	// 	$do_tran = new OrdersModel();
-	// 	$do_result = $do_tran->tranOrders($tran);
-	// 	return tz_ajax_echo($do_result['data'],$do_result['msg'],$do_result['code']);
-	// }
-
-	/**
 	 * 信安代为录入相关的资源
 	 * @param  Request $request [description]
 	 * @return [type]           [description]
@@ -232,6 +187,18 @@ class OrdersController extends Controller
 	 */
 	public function changeResource(Request $request){
 		$change = $request->only(['order_id','resource_type','resource_id','change_reason','parent_business']);
+
+		/**
+         * 检验更换理由是否填写
+         * @var [type]
+         */
+        $rules = ['change_reason'=>'required'];
+        $messages = ['change_reason.required'=>'更换理由必须填写'];
+        $validator = Validator::make($change,$rules,$messages);
+        if($validator->messages()->first()){
+            return tz_ajax_echo('',$validator->messages()->first(),0);
+        }
+
 		$change_resource = new OrdersModel();
 		$change_result = $change_resource->changeResource($change);
 		return tz_ajax_echo($change_result['data'],$change_result['msg'],$change_result['code']);
@@ -259,18 +226,6 @@ class OrdersController extends Controller
 		$get_result = $get_change->getChange($data);
 		return tz_ajax_echo($get_result['data'],$get_result['msg'],$get_result['code']);
 	}
-
-	// /**
-	//  * 获取相关的可更换的订单
-	//  * @param  Request $request --business_sn业务号,--resource_type资源类型
-	//  * @return [type]           [description]
-	//  */
-	// public function getOrders(Request $request){
-	// 	$get_orders = $request->only(['business_sn','resource_type']);
-	// 	$get = new OrdersModel();
-	// 	$get_result = $get->getOrders($get_orders);
-	// 	return tz_ajax_echo($get_result['data'],$get_result['msg'],$get_result['code']);
-	// } 
 	
 	/**
 	 * 修改订单的价格/到期时间

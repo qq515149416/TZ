@@ -90,9 +90,11 @@ class RechargeController extends Controller
 		$getUrl = $this->getWechatUrl($makeOrder['data']);
 
 		$data = [
-			'url'	=> $getUrl['data'],
-			'flow_id'	=> $makeOrder['data'],
+			'url'		=> $getUrl['data'],
+			'flow_id'		=> $makeOrder['data'],
+			'trade_no'	=> $makeOrder['trade_no'],
 		];
+		
 		return tz_ajax_echo($data,$getUrl['msg'],$getUrl['code']);
 
 		// return view('test',[ 'url' => $data['url']]);

@@ -63,6 +63,18 @@ class OrdersController extends Controller
 	 */
 	public function insertResource(Request $request){
 		$insert_data = $request->only(['business_sn','customer_id','resource_type','price','duration','resource_id']);
+
+		/**
+         * 检验添加资源时时长是否填写
+         * @var [type]
+         */
+        $rules = ['duration' => 'required|integer'];
+        $messages = ['duration.required'=> '租用时长必须填写','duration.integer'=>'时长填写必须是整数数字'];
+        $validator = Validator::make($insert_data,$rules,$messages);
+        if($validator->messages()->first()){
+            return tz_ajax_echo('',$validator->messages()->first(),0);
+        }
+
 		$insert = new OrdersModel();
 		$return = $insert->insertResource($insert_data);
 		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
@@ -99,6 +111,18 @@ class OrdersController extends Controller
 	 */
 	public function renewResource(Request $request){
 		$renew_data = $request->only(['orders','length','order_note','business_number','cabinet_machine']);
+
+		/**
+         * 检验续费时时时长是否填写
+         * @var [type]
+         */
+        $rules = ['length' => 'required|integer'];
+        $messages = ['length.required'=> '租用时长必须填写','length.integer'=>'时长填写必须是整数数字'];
+        $validator = Validator::make($renew_data,$rules,$messages);
+        if($validator->messages()->first()){
+            return tz_ajax_echo('',$validator->messages()->first(),0);
+        }
+
 		$renew = new OrdersModel();
 		$renew_resource = $renew->renewResource($renew_data);
 		return tz_ajax_echo($renew_resource['data'],$renew_resource['msg'],$renew_resource['code']);

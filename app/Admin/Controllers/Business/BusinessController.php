@@ -11,6 +11,7 @@ use App\Admin\Models\Idc\Cabinet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Admin\Requests\Business\BusinessRequest;
+use Illuminate\Support\Facades\Validator;
 
 
 /**
@@ -59,8 +60,20 @@ class BusinessController extends Controller
      * @param  Request $request [description]
      * @return json           返回订单创建的提示信息
      */
-    public function insertBusiness(BusinessRequest $request){
+    public function insertBusiness(Request $request){
 		$insert = $request->only(['client_id','machine_number','resource_detail','money','length','business_note','business_type']);
+        
+        /**
+         * 检验添加业务时时长是否填写
+         * @var [type]
+         */
+        $rules = ['length' => 'required|integer'];
+        $messages = ['length.required'=> '租用时长必须填写','length.integer'=>'时长填写必须是整数数字'];
+        $validator = Validator::make($insert,$rules,$messages);
+        if($validator->messages()->first()){
+            return tz_ajax_echo('',$validator->messages()->first(),0);
+        }
+
 		$business = new BusinessModel();
 		$return = $business->insertBusiness($insert);
 		return tz_ajax_echo($return['data'],$return['msg'],$return['code']);

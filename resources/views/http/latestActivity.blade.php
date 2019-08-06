@@ -11,6 +11,7 @@
     <!--banner-->
     <div class="banner">
         <h2 class="title font-bold">活动专题</h2>
+
         <h5 class="sub-title font-regular">
             最新上线、专享特惠、精选秒杀、免费体验， 助力创未来
         </h5>

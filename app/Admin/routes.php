@@ -144,6 +144,9 @@ Route::group([
             $router->resource('/ordersReview', 'Show\OrdersReviewController');
             $router->resource('/ordersReviewBig', 'Show\OrdersReviewBigController');
 
+            //下架原因统计
+            $router->resource('/removeReason', 'Show\RemoveReasonController');
+
         });
 
     });

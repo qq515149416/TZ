@@ -850,7 +850,7 @@ class OrdersModel extends Model
 			$order['parent_business'] = 0;
 			$renew_order['O'.$order['order_sn']] = json_encode($order);
 			if(empty($primary_key)){
-				$primary_key = $this->redisPrimaryKey($business->id,$business->business_type);
+				$primary_key = $this->redisPrimaryKey();
 			}
 			$this->setRenewRedis($primary_key,$renew_order);
 		}
@@ -892,7 +892,7 @@ class OrdersModel extends Model
                 	$order['parent_business'] = 0;
                 	$renew_order['O'.$order['order_sn']] = json_encode($order);
                     if(empty($primary_key)){
-						$primary_key = $this->redisPrimaryKey($order_result->id,$order_result->resource_type);
+						$primary_key = $this->redisPrimaryKey();
 					}
 					$this->setRenewRedis($primary_key,$renew_order);   
                 }	
@@ -1202,7 +1202,7 @@ class OrdersModel extends Model
      * 创建订单号
      * @return [type] [description]
      */
-    public function ordersn($resource_id=100,$resource_type=1){
+    public function ordersn(){
     	$order_sn = create_number();//调用创建单号的公共函数
         $order = DB::table('tz_orders')->where('order_sn',$order_sn)->select('order_sn','machine_sn')->first();
         $redis = Redis::connection('orders');
@@ -1239,17 +1239,11 @@ class OrdersModel extends Model
 	 * 生成队列的主键
 	 * @return [type] [description]
 	 */
-	public function redisPrimaryKey($id,$type){
-		if(!isset($id)){
-			$id = mt_rand(10000,20000);
-		}
-		if(!isset($type)){
-			$type = mt_rand(11,20);
-		}
+	public function redisPrimaryKey(){
 		$order_sn = 'R'.$this->ordersn();
 		$redis = Redis::connection('orders');
 		if($redis->exists($order_sn) != 0  || $redis->exists('M'.$order_sn) != 0 || $redis->exists('C'.$order_sn) != 0){
-			$this->redisPrimaryKey($id,$type);
+			$this->redisPrimaryKey();
 		}
 		return $order_sn;
 	}

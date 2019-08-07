@@ -5,6 +5,7 @@ namespace App\Http\Models\DefenseIp;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 
 class XADefenseDataModel extends Model
 {
@@ -28,12 +29,31 @@ class XADefenseDataModel extends Model
      */
     public function getByIp($ip, $startDate, $endDate)
     {
-        //============测试数据=================
-//        $ip = '113.141.160.136';
+        $dbRedis = Redis::connection('FW_XA');
+        $startDate=$startDate - $startDate % 300 ;
+        $redisRes = $dbRedis->hgetall('FW-' . $ip . '-' . $startDate);
+        if ($redisRes) {
+            $fTime = $endDate - $endDate % 300 + 300;
+            $dbRedis = Redis::connection('FW_XA');
 
-        //==============END===============
-        $today0 = strtotime(date("Y-m-d", time()));
-        if ($endDate < $today0) {
+            for ($x = 0; $x <= 288; $x++) {
+                if ($fData = $dbRedis->hgetall('FW-' . $ip . '-' . $fTime)) {
+                    $data[] = array(
+                        'time' => $fTime,
+                        'bandwidth_down' => (float)$fData['MAX(fyip.bandwidth_down)'],
+                        'upstream_bandwidth_up' => (float)$fData['MAX(fyip.upstream_bandwidth_up)'],
+
+                    );
+//                    $data[]['time']=$fTime;
+//                    $data[]['bandwidth_down']=(float)$fData['MAX(fyip.bandwidth_down)'];
+//                    $data[]['upstream_bandwidth_up']=(float)$fData['MAX(fyip.upstream_bandwidth_up)'];
+//                    $data[]['id']=$x;
+                }
+
+
+                $fTime = $fTime - 300;
+            }
+        } else {
             $data = DB::connection('mysql_xagf')
                 ->table("fyip_5max")
                 ->select('id', 'time', 'bandwidth_down', 'upstream_bandwidth_up')
@@ -42,36 +62,15 @@ class XADefenseDataModel extends Model
                 ->orderBy('time', 'desc')
                 ->get(['time', 'bandwidth_down', 'upstream_bandwidth_up'])
                 ->toArray();
-        } else {
-            $data = $this
-                ->select('id', 'time', 'bandwidth_down', 'upstream_bandwidth_up')
-                ->where('ipaddress', '=', $ip)
-                ->whereBetween('time', [$startDate, $endDate])
-                ->orderBy('time', 'desc')
-                ->get(['time', 'bandwidth_down', 'upstream_bandwidth_up'])
-                ->toArray();
         }
 
-//        $data = DB::connection('mysql_xagf')
-//            ->table("fyip_5max")
-//            ->select('id', 'time', 'bandwidth_down', 'upstream_bandwidth_up')
-//            ->where('ipaddress', '=', $ip)
-//            ->whereBetween('time', [$startDate, $endDate])
-//            ->get(['time', 'bandwidth_down', 'upstream_bandwidth_up'])
-//            ->toArray();
-//
-//        if (!$data) {
-//            $data = $this
-//                ->select('id', 'time', 'bandwidth_down', 'upstream_bandwidth_up')
-//                ->where('ipaddress', '=', $ip)
-//                ->whereBetween('time', [$startDate, $endDate])
-//                ->orderBy('time', 'desc')
-//                ->get(['time', 'bandwidth_down', 'upstream_bandwidth_up'])
-//                ->toArray();
-//        }
-
-
         return $data;
+    }
+
+    public function getByIp5MinByRedis($ip, $startDate, $endDate)
+    {
+
+
     }
 
     public function getByIp5Min($ip, $startDate, $endDate)

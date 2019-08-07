@@ -16,13 +16,7 @@ Route::group([
      * 测试路由
      */
     $router->get('jun/test', 'Idc\MachineRoomController@test');
-    $router->post('rules', 'Others\ContactsController@rulestest');
-    $router->get('rules', 'Others\ContactsController@rulestest');
     $router->get('vi', 'Others\ContactsController@vi');
-    $router->get('vtest', 'Others\ContactsController@vtest');
-    $router->get('ctest', 'Others\ContactsController@test');
-    $router->get('test', 'Others\StaffController@test');
-    $router->get('contacts/maillist', 'Others\ContactsController@test');
     $router->get('ip/test', 'Idc\IpsController@test');
     $router->get('account/test', 'Hr\AccountController@test');
     $router->post('test/search', 'Search\DbSearchController@doSearch');//测试数据库搜索路由

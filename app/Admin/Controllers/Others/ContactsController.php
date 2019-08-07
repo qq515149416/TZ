@@ -25,46 +25,7 @@ class ContactsController extends Controller
             return $var->resource_type == $this->state;
         });
     }
-    /**
-     * 测试
-     */
-    public function test() {
-    	// $model = new contactsmodel();
-    	// $result = $model->test();
-    	// echo $result;
-        $business = DB::table('tz_business')->whereNull('deleted_at')->whereBetween('remove_status',[0,3])
-                      ->get(['id','client_name','machine_number','business_number']);
-        foreach($business as $key => $value){
-            $order = DB::table('tz_orders')->where(['business_sn'=>$value->business_number,'resource_type'=>4])->whereNull('deleted_at')->whereBetween('remove_status',[0,3])->first();
-            if(empty($order)){
-                unset($business[$key]);
-            }
-        }
-        return tz_ajax_echo($business,1,1);
-    }
-
-    /**
-     * 测试
-     */
-    public function rulestest(Test $request){
-  			// return $request->all();
-  			print_r($request->get('title'));
-  		if($request->isMethod('post')){
-
-	        // $test = $request->get('title');
-
-	        // echo('<pre>');var_dump($test);die('</pre>');
-	        echo 123;
-
-	    }else{
-
-	        echo 'this request method is GET';
-
-	    }
-	   // echo 123;
-  			// dump($request);
-    }
-
+    
     /**
      * 测试
      */
@@ -386,26 +347,51 @@ class ContactsController extends Controller
         // $str = ' '.','.'123456789,4567890123,4562130212,'.' ';
         // echo $str.'</br>';
         // dd(trim($str,' '.','));
-        $depart = DB::table('oa_staff')
-                        ->join('idc_machineroom','oa_staff.department','=','idc_machineroom.list_order')
-                        ->where(['admin_users_id'=>Admin::user()->id])
-                        ->value('idc_machineroom.id');
-        dd($depart);
+        // $depart = DB::table('oa_staff')
+        //                 ->join('idc_machineroom','oa_staff.department','=','idc_machineroom.list_order')
+        //                 ->where(['admin_users_id'=>Admin::user()->id])
+        //                 ->value('idc_machineroom.id');
+        // dd($depart);
+        // echo date('Y-m-d',strtotime('2019-01-30'.'+1 day'));
+       // echo date('Y-m-d H:i:s',strtotime(date('Y-m-d H:i:s',time())."-1 day"));
+        // echo date('Y-m-d',strtotime('2019-01-30 10:10:03'."-7 day")).'</br>';
+        // echo date('Y-m-d',strtotime(date('Y-m-01',time()).'-1 month')).'</br>';
+        // echo date('Y-m-01',time()).'</br>';
+        //echo date('Y-m-d',strtotime('2019-01-30')."+1 day");
         // echo date('Ymd',time()).substr(microtime(),2,6);
+        // $flow = DB::table('tz_orders_flow')
+        //             ->whereNull('deleted_at')
+        //             ->whereBetween('pay_time',['2019-06-01','2019-06-06'])
+        //             ->get(['order_id']);
+        // $str = '';
+        // foreach ($flow as $key => $value) {
+        //    $str = trim($str.','.trim($value->order_id,'[]'),','); 
+        // }
+        // echo $str;
+        // $a = array_unique(explode(',',$str));
+        // // dd($flow);
+        // dd($a);
+        // $cc = get_headers('http://wpa.qq.com/pa?p=2:2773495294'.':41&r=' . time (),1);
+        // // dd($cc);
+        // dd($http_response_header);
+        // foreach ($http_response_header as $key => $value) {
+        //     dd(strpos($value,'Content-Length'));
+        // }
+        // $data = DB::table('tz_business')->where(['business_number'=>11111])->value('resource_detail');
+        // dd($data);
+        // return $data;
+        // $xunsearch = new XS('orders');
+        // $index = $xunsearch->index;
+        // $doc['id'] = 1111111111;
+        // $doc['machine_sn'] = 11111111111;
+        // $doc['business_sn'] = 11111111111;
+        // $doc['order_sn'] = 11111111;
+        // $document = new \XSDocument($doc);
+        // $result = $index->update($document);
+        // dd($result);
+        // $index->flushIndex();
     }
-    public function vtest(Request $request) {
-        $search = $request->only('search');
-        $xs = new XS('ip');
-        $index = $xs->index;
-        $doc = DB::table('idc_ips')->select('id','ip')->get();
-        $document = new \XSDocument($doc);
-        //修改成功时更新文档主键值一样时会替换数据
-        $index->update($document);
-        $index->flushIndex();
-        dd($xs);
-        dd($search);
-    }
-
+    
     /**
      * 用于查询系统联系人（业务员）的信息
      * @return json 返回相关的信息

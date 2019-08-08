@@ -225,4 +225,22 @@ class OverdueController extends Controller
 	
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
+
+	//获取近5天过期的高防业务
+	public function showOverdueDIP(Request $request)
+	{
+		$model = new Overdue();
+		$res = $model->showOverdueDIP();
+	
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
+
+	//获取近5天过期的高防业务
+	public function showOverdueDIPX(Request $request)
+	{
+		$model = new Overdue();
+		$res = $model->showOverdueDIP('*');
+	
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
 }

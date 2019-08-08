@@ -689,4 +689,70 @@ class  Overdue extends Model
 		return $arr;
 	}
 
+
+	//获取近5天过期的高防业务
+	public function showOverdueDIP($need = 1)
+	{
+		$now = time();
+		$end = date("Y-m-d H:i:s",bcadd($now,5*24*60*60,0));
+		$sales_id	= Admin::user()->id;
+		//dd($sales_id);
+		if(Admin::user()->isAdministrator() == 1 || $need == '*'){
+			$list = DB::table('tz_defenseip_business')->where('end_at' , '<' , $end)->where('status', 1)->whereNull('deleted_at')->get()->toArray();
+		}else{
+			$list = DB::table('tz_defenseip_business as a')
+			->leftjoin('tz_users as b','b.id','=','a.user_id')
+			->where('a.end_at' , '<' , $end)
+			->where('a.status', 1)
+			->where('b.salesman_id' , $sales_id)
+			->whereNull('a.deleted_at')
+			->get()
+			->toArray();
+		}
+		if(count($list) == 0){
+			return [
+				'data'	=> '',
+				'msg'	=> '无临过期高防IP业务',
+				'code'	=> 1,
+			];
+		}
+		$status = [ 0 => '预留状态' , 1 => '正在使用' , 2 => '申请下架' , 3 => '已下架' , 4 => '试用' ,5 => '待审核'];
+		for ($i=0; $i < count($list); $i++) { 
+
+			$user = DB::table('tz_users')->where('id',$list[$i]->user_id)->first();
+
+			if($user == null){
+				$list[$i]->nickname = '客户信息获取失败';
+				$list[$i]->sales_name = '信息获取失败';
+			}else{
+				if ($user->nickname != null) {
+					$list[$i]->nickname = $user->nickname;
+				}else{
+					if ($user->email != null) {
+						$list[$i]->nickname = $user->email;
+					}else{
+						if ($user->name != null) {
+							$list[$i]->nickname = $user->name;
+						}else{
+							$list[$i]->nickname = '客户信息获取失败';
+						}
+					}
+				}
+				$list[$i]->sales_name = DB::table('admin_users')->where('id',$user->salesman_id)->value('name');
+				if ($list[$i]->sales_name == null) {
+					$list[$i]->sales_name = '信息获取失败';
+				}
+
+			}
+
+			$list[$i]->status =  $status[$list[$i]->status];
+		}
+		return [
+			'data'	=> $list,
+			'msg'	=> '获取成功',
+			'code'	=> 1,
+		];
+	
+	}
+
 }

@@ -108,7 +108,7 @@
                 </a>
             </div>
             <div class="hot-products-item">
-                <a href="/tuoguan">
+                <a href="/tuoguan/hengyang">
                     <h3>服务器托管</h3>
                     <p>多线路组合，多城布点， 7×24的专人维护以及监控服务</p>
                     <span class="more"></span>

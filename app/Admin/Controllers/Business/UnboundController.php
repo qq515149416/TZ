@@ -86,7 +86,7 @@ class UnboundController extends Controller
     protected function grid()
     {
         $grid = new Grid(new CustomerModel);
-        $grid->disableFilter();
+        // $grid->disableFilter();
         $grid->model()->where('salesman_id','=',Null)->orwhere('salesman_id','=',0)->orderBy('created_at','desc');
         $grid->id('序号');
         $grid->name('用户名');
@@ -191,6 +191,7 @@ EOT);
             $filter->like('email', '邮箱');
             $filter->like('nickname', '昵称');
         });
+        
         return $grid;
     }
 

@@ -272,17 +272,17 @@ class WechatPayController extends Controller
 	}
 
 	//样板,新的
-	public function test()
-	{
-		$order = [
-			'out_trade_no' => time(),
-			'total_fee' => '1', // **单位：分**
-			'body' => 'test body - 测试',
-			'openid' => 'onkVf1FjWS5SBIixxxxxxx',
-		];
+	// public function test()
+	// {
+	// 	$order = [
+	// 		'out_trade_no' => time(),
+	// 		'total_fee' => '1', // **单位：分**
+	// 		'body' => 'test body - 测试',
+	// 		'openid' => 'onkVf1FjWS5SBIixxxxxxx',
+	// 	];
 
-		$pay = Pay::wechat($this->config)->mp($order);
-	}
+	// 	$pay = Pay::wechat($this->config)->mp($order);
+	// }
 
 	
 
@@ -317,18 +317,18 @@ class WechatPayController extends Controller
 	*@param 	$check 	就是checkOrder那个方法得来的
 	*/
 
-	protected function cancel($check){
+	// protected function cancel($check){
 
-		$order = [
-			'out_refund_no'	=> $check['out_trade_no'].'refund',
-			'total_fee'	=> $check['total_fee'],
-			'refund_fee'	=> $check['total_fee'],
-			'transaction_id'	=> $check['transaction_id'],
-			'out_trade_no'	=> $check['out_trade_no'],
-		];
-		$cancel =  Pay::wechat($this->config)->refund($order);
+	// 	$order = [
+	// 		'out_refund_no'	=> $check['out_trade_no'].'refund',
+	// 		'total_fee'	=> $check['total_fee'],
+	// 		'refund_fee'	=> $check['total_fee'],
+	// 		'transaction_id'	=> $check['transaction_id'],
+	// 		'out_trade_no'	=> $check['out_trade_no'],
+	// 	];
+	// 	$cancel =  Pay::wechat($this->config)->refund($order);
 
-		return $cancel;
-	}
+	// 	return $cancel;
+	// }
 	
 }

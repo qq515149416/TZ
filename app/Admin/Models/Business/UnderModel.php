@@ -225,6 +225,9 @@ class UnderModel extends Model
                     $history_value->remove_status = $remove_status[$history_value->remove_status];
                     $history_value->sales_name = DB::table('admin_users')->where(['id'=> $history_value->sales_id])->value('name');
                     $history_value->client_name = DB::table('tz_users')->where(['id'=> $history_value->client_id])->value('nickname');
+                    $resource_detail = json_decode($history_value->resource_detail);
+                    $ip = isset($resource_detail->ip) ? $resource_detail->ip : '0.0.0.0';
+                    $history_value->ip = $ip;
                 });
 
                 $cabinet_machine = DB::table('tz_cabinet_machine')->where($machine)->whereBetween('remove_status',[1,4])->whereNull('deleted_at')->orderBy('updated_at', 'desc')->select('id','customer as client_id','sales as sales_id','business_number','resource_sn as machine_number','resource_type as business_type','business_note','remove_note as remove_reason','remove_status','price','duration as length','updated_at')->get();
@@ -235,7 +238,9 @@ class UnderModel extends Model
                     $item->remove_status = $remove_status[$item->remove_status];
                     $item->sales_name = DB::table('admin_users')->where(['id'=> $item->sales_id])->value('name');
                     $item->client_name = DB::table('tz_users')->where(['id'=> $item->client_id])->value('nickname');
-                    $item->resource_detail = DB::table('tz_cabinet_machine_detail')->where(['business_id'=>$item->id])->value('detail');
+                    $resource_detail = DB::table('tz_cabinet_machine_detail')->where(['business_id'=>$item->id])->value('detail');
+                    $item->resource_detail = $resource_detail;
+                    $item->ip = isset($resource_detail->ip) ? $resource_detail->ip : '0.0.0.0';
                 });
                 $history = array_merge($history->toArray(),$cabinet_machine->toArray());
                 $updated_at = array_column($history,'updated_at');
@@ -243,8 +248,6 @@ class UnderModel extends Model
                 $return['data'] = $history;
                 $return['code'] = 1;
                 $return['msg']  = '获取机器下架记录数据成功';
-                
-
                 return $return;
                 break;
             case 2:

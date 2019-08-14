@@ -24,17 +24,12 @@ class TzUserRequest extends FormRequest
 	 */
 	public function rules()
 	{	
-		$return = [];
-		if(Request()->name != null){
-			$return = [
-				'name' => 'sometimes|unique:tz_users,name,'.Request()->uid.',id',	
-			];
+		$return = ['nickname' => 'required|unique:tz_users,nickname,'.Request()->uid.',id'];
+		
+		if(Request()->name != '暂未设置用户名' && Request()->name != null){
+			$return['name'] = 'sometimes|unique:tz_users,name,'.Request()->uid.',id';
 		}
-		if(Request()->nickname != null){
-			$return = [
-				'nickname' => 'sometimes|unique:tz_users,nickname,'.Request()->uid.',id',	
-			];
-		}
+		
 		return $return;
 		
 	}
@@ -45,6 +40,7 @@ class TzUserRequest extends FormRequest
 		return  [
 			'name.unique'		=> '用户名已存在',
 			'nickname.unique'   => '昵称已存在',
+			'nickname.required' => '昵称不能为空',
 		];
 	}
 

@@ -52,7 +52,7 @@ class TzUsers extends Model
                 'msg_phone' => $updateData['msg_phone'],
                 'msg_qq'=>$updateData['msg_qq'],
                 'remarks'=>$updateData['remarks'],
-                'name'  => $updateData['name'],
+                'name'  => $updateData['name'] == '暂未设置用户名' ? '' : $updateData['name'],
                 'nickname' => $updateData['nickname'],
             ]);
         if($res != 0){

@@ -58,7 +58,7 @@
                     <tbody>
                     <tr>
                         <td style="width: 190px;">数据中心级别</td>
-                        <td>准<span style="font-family: 'pingFangHeavy'; color: #f00101;"> T4 </span>级机房</td>
+                        <td>准<span style="font-family: 'pingFangHeavy'; color: #f00101;"> T3+ </span>级机房</td>
                     </tr>
                     <tr>
                         <td>机房面积</td>

@@ -148,16 +148,40 @@ $(function () {
   $('.solution-next').click(function () {
     solutionSwiper.slideNext();
   });
-
   $('.nav-tabs a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
     if ($(e.target).attr("href") === "#rongyu") {
       var certificateSwiper = new Swiper('.certificate-swiper.swiper-container', {
         direction: 'horizontal', // 垂直切换选项
         loop: true // 循环模式选项
       });
+      $('.normal.swiper-certificate-page .glyphicon-chevron-left').off("click").click(function () {
+        certificateSwiper.slidePrev();
+      });
+      $('.normal.swiper-certificate-page .glyphicon-chevron-right').off("click").click(function () {
+        certificateSwiper.slideNext();
+      });
+      var longCertificateSwiper = new Swiper('.long-certificate-swiper.swiper-container', {
+        direction: 'horizontal', // 垂直切换选项
+        loop: true // 循环模式选项
+      });
+      $('.long.swiper-certificate-page .glyphicon-chevron-left').off("click").click(function () {
+        longCertificateSwiper.slidePrev();
+      });
+      $('.long.swiper-certificate-page .glyphicon-chevron-right').off("click").click(function () {
+        longCertificateSwiper.slideNext();
+      });
+    }
+  });
+  if(location.href.indexOf("aboutus/rongyu") > -1) {
+      var certificateSwiper = new Swiper('.certificate-swiper.swiper-container', {
+        direction: 'horizontal', // 垂直切换选项
+        loop: true // 循环模式选项
+      });
+      $('.normal.swiper-certificate-page .glyphicon-chevron-left').off("click");
       $('.normal.swiper-certificate-page .glyphicon-chevron-left').click(function () {
         certificateSwiper.slidePrev();
       });
+      $('.normal.swiper-certificate-page .glyphicon-chevron-right').off("click");
       $('.normal.swiper-certificate-page .glyphicon-chevron-right').click(function () {
         certificateSwiper.slideNext();
       });
@@ -165,14 +189,15 @@ $(function () {
         direction: 'horizontal', // 垂直切换选项
         loop: true // 循环模式选项
       });
+      $('.long.swiper-certificate-page .glyphicon-chevron-left').off("click");
       $('.long.swiper-certificate-page .glyphicon-chevron-left').click(function () {
         longCertificateSwiper.slidePrev();
       });
+      $('.long.swiper-certificate-page .glyphicon-chevron-right').off("click");
       $('.long.swiper-certificate-page .glyphicon-chevron-right').click(function () {
         longCertificateSwiper.slideNext();
       });
-    }
-  });
+  }
 //   叠加包购买
 $("#buyOverlayPackage").on("shown.bs.modal",function(e) {
     var showInfo = '';

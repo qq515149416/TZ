@@ -66,9 +66,9 @@ class ArticleController extends Controller
             ]
         ];
         $tdk = [
-            "title" => $type_contents_code[$type]."[腾正科技]",
-            "description" => "专业IDC服务提供商，主营服务器租用、服务器托管、机柜租用、大带宽租用、云主机、高防服务器、高防IP、CDN加速等数据存储、计算及安全综合应用解决方案服务。",
-            "keywords" => "云主机,高防服务器,高防IP,服务器租用,服务器托管,带宽租用,CDN加速,高防CDN,云服务器,机柜租用,云计算,IDC 服务器商,网络安全服务商"
+            "title" => $type_contents_code[$type]."-IDC最新动态-公司动态[腾正科技]",
+            "description" => $type_contents_code[$type]."栏目为您提供最新的服务器租用，服务器托管，机柜大带宽，云计算,高防IP，CDN,高防云主机,数据中心等产业资讯，为广大用户朋友提供及时的IDC资讯。",
+            "keywords" => $type_contents_code[$type].",腾正科技,腾正活动,产业资讯,公司动态"
         ];
         return view($template,[
             "tdk" => $tdk,

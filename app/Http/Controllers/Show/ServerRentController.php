@@ -16,9 +16,9 @@ class ServerRentController extends Controller
     public function index($page,$room = "",Request $request)
     {
         $tdk = [
-            "title" => "服务器租用-主机租用-服务器租用价格-高防服务器租用[腾正科技]",
-            "keywords" => "服务器租用,主机租用，高防服务器租用,服务器租用价格,服务器常见问题,独立服务器租用",
-            "description" => "腾正科技标准5A机房，为您提供全国BGP三线(电信、联通、移动)独立服务器、高防服务器、主机租用相关服务，价格优惠多种高性能组合套餐，满足不同应用场景的需求，Tel:0769-22226555"
+            "title" => "高防服务器-高防云服务器-游戏高防服务器-东莞高防服务器[腾正科技]",
+            "keywords" => "高防服务器，高防云服务器，游戏高防服务器，高防服务器价格,东莞高防服务器，百G清洗高防服务器,西安高防服务器，BGP高防服务器",
+            "description" => "腾正高防服务器，为您提供优质独享大宽带防御高防物理服务器，高防云服务器，游戏高防服务器租用，网站高防服务器托管、租用、配置及价格等信息服务咨询热线0769-22226555"
         ];
         if($page!=='gaofang') {
             $tdk = NavModel::where('url','like','%'.$request->path().'%')->select("seo_title as title","seo_keywords as keywords","seo_description as description")->first();

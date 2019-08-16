@@ -1,5 +1,7 @@
 <?php
-
+/**
+ *  流程 : 生成申请 -> 审核申请 -> 试用 -> 续费 ->正式使用
+ */
 
 namespace App\Admin\Models\DefenseIp;
 
@@ -40,10 +42,9 @@ class BusinessModel extends Model
 				'code'	=> 0,
 			];
 		}
-		//计算二次购买允许时间
-		$second_buy_time = bcsub( time() , $this->time_limit);		//60秒只允许一次
-		$second_buy_time = date("Y-m-d H:i:s",$second_buy_time); 
-		//查找试用业务申请
+		//计算二次购买允许时间,就是建单隔多久可以建一次
+		$second_buy_time = date("Y-m-d H:i:s",bcsub( time() , $this->time_limit)); 
+		//查找待审核试用业务申请
 		$check_time = $this->where('status',5)->where('user_id',$customer_id)->where('created_at','>',$second_buy_time)->value('id');
 		if($check_time != null){
 			return[
@@ -52,7 +53,7 @@ class BusinessModel extends Model
 				'code'	=> 0,
 			];
 		}
-
+		//查询库存
 		$check_ip_res = $this->checkStock($package_id);
 		
 		if($check_ip_res['code'] == 0){
@@ -60,7 +61,7 @@ class BusinessModel extends Model
 		}
 
 		DB::beginTransaction();
-
+		//查询库存时获取到的ip
 		$check_ip = $check_ip_res['ip'];
 
 		//如果要分配IP的话,就改下IP状态,和关联,下面审核通过那里记得也要改
@@ -103,6 +104,7 @@ class BusinessModel extends Model
 	}
 	/**
 	*	进行审核的方法	
+	*	@param $business_id 	-待审核业务的id		$res 	-审核结果 : 0 - 不通过 ; 1 - 通过
 	**/
 	public function upExamineDefenseIp($business_id,$res){
 		//建立业务模型
@@ -114,14 +116,14 @@ class BusinessModel extends Model
 				'code'	=> 0,
 			];
 		}
-		if($business->status != 5){
+		if($business->status != 5){	//5是待审核,别的已经审核过了就不用再审核了
 			return [
 				'data'	=> '',
 				'msg'	=> '该业务无需上架审核',
 				'code'	=> 0,
 			];
 		}
-		if($res == 0){
+		if($res == 0){	//如果审核结果是不通过
 			$business->status = 3;
 			$res = $business->save();
 			if($res != true){
@@ -137,7 +139,8 @@ class BusinessModel extends Model
 					'code'	=> 1,
 				];
 			}
-		}elseif($res == 1){
+		}elseif($res == 1){	//如果审核结果是通过
+			//获取符合套餐的未使用的ip
 			$check_ip_res = $this->checkStock($business->package_id);
 			if($check_ip_res['code'] == 0){
 				return $check_ip_res;
@@ -228,9 +231,11 @@ class BusinessModel extends Model
 	}
 
 	/**
-	*查询库存
+	*查询库存,获取套餐内的ip
+	* @param $package_id 	-套餐的id
 	*/
 	public function checkStock($package_id){
+		//获取套餐信息
 		$package = DB::table('tz_defenseip_package')->select(['site','protection_value','price'])->whereNull('deleted_at')->where('id',$package_id)->first();
 		if ($package == null) {
 			return [
@@ -239,6 +244,7 @@ class BusinessModel extends Model
 				'code'	=> 0,
 			];
 		}
+		//查找符合条件的ip一条
 		$check_ip = StoreModel::select(['id','ip'])
 				->whereNull('deleted_at')
 				->where('site',$package->site)
@@ -251,7 +257,7 @@ class BusinessModel extends Model
 				'msg'	=> '套餐IP库存不足',
 				'code'	=> 0,
 			];
-		}else{
+		}else{	//成功,有的话就返回该ip信息
 			return [
 				'ip'	=> $check_ip,
 				'price'	=> $package->price,
@@ -260,7 +266,7 @@ class BusinessModel extends Model
 		}
 
 	}
-
+	//获取待审核业务
 	public function showUpExamineDefenseIp(){
 		$res = $this->where('status',5)->get();
 		if($res->isEmpty()){
@@ -280,7 +286,7 @@ class BusinessModel extends Model
 				'code'	=> 1,
 			];
 	}
-
+	//渲染方法
 	private function transUp($business){
 		switch ($business->status) {
 			case '5':
@@ -333,14 +339,14 @@ class BusinessModel extends Model
 			];
 		}
 		//判断业务使用状态
-		if($business->status == 2|| $business->status == 3){
+		if($business->status == 2|| $business->status == 3){	//如果业务是下架或下架中状态
 			return [
 				'data'	=> '',
 				'msg'	=> '业务已下架,无法续费',
 				'code'	=> 0,
 			];
 		}
-		if($business->status == 5){
+		if($business->status == 5){ //如果业务还没审核
 			return [
 				'data'	=> '',
 				'msg'	=> '业务审核中,无法续费',

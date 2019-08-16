@@ -273,13 +273,15 @@ class RechargeModel extends Model
 
 	/**
 	 * 后台手动替客户充值余额---进行审核
-	 * 如果是已审核的,则改改到账时间和充值方式,未审核的就审核
+	 * 如果是已审核的,则改改到账时间和充值方式,未审核的就审核,未审核时可以更改充值金额.
 	 * @param  Request $request [description]
+	 * $audit_status	- 审核结果 ; 	$trade_id	- 充值单的id ; $recharge_amount		- 充值金额 ; $recharge_way	- 充值方式,	$time 	- 到账时间 , 
+	 * $remarks 	- 备注 	;	$tax	-税额;
 	 * @return 
 	 */
 	public function auditRecharge($audit_status,$trade_id,$recharge_amount,$recharge_way,$time,$remarks,$tax){
 	
-		
+		//获取信息
 		$trade = $this->find($trade_id);
 		if($trade == null){
 			return [
@@ -289,7 +291,7 @@ class RechargeModel extends Model
 			];
 		}
 
-		
+		//判断:如果审核结果是通过的,而订单的支付时间和到账时间都是空的话,就返回错误,必须要有个时间
 		if($audit_status == 1 && $trade->pay_at == null && $time == ''){
 			return [
 				'data'	=> [],
@@ -299,9 +301,9 @@ class RechargeModel extends Model
 		}
 		
 
-		if($trade->audit_status != 0){		//如果是已经审核的状态
+		if($trade->audit_status != 0){		//如果是已经审核的状态,可以改到账时间和到账的充值方式
 			
-			if($trade->audit_status != 1){	//如果是驳回的
+			if($trade->audit_status != 1){	//如果是驳回的,直接返回错误
 				return [
 					'data'	=> [],
 					'msg'	=> '驳回的审核单无法编辑',
@@ -324,7 +326,7 @@ class RechargeModel extends Model
 				}
 			}
 		
-		}else{					//如果是未审核状态
+		}else{					//如果是未审核状态,就去审核
 			$res = $this->doAudit($audit_status,$trade_id,$recharge_amount,$recharge_way,$time,$remarks,$tax);
 			return [
 				'data'	=> [],
@@ -338,10 +340,12 @@ class RechargeModel extends Model
 	}
 
 	//未审核的充值申请的审核方法
+	//参数跟 auditRecharge 一样
 	protected function doAudit($audit_status,$trade_id,$recharge_amount,$recharge_way,$time,$remarks,$tax){
 		DB::beginTransaction();
-		try {  
-			
+		try {  	//尝试,出错就抛出错误
+
+			//获取信息
 			$trade = $this->find($trade_id);
 			if($trade == null){
 				$error = '获取审核单信息失败';
@@ -377,7 +381,7 @@ class RechargeModel extends Model
 			}
 			//以下是审核通过
 
-			//如果是通过的话,把信息补齐
+			//如果是通过的话,把通过需要的信息补齐
 			$trade->recharge_way 		= $recharge_way;
 			$trade->recharge_amount 	= $recharge_amount;
 			if($time != ''){
@@ -404,11 +408,11 @@ class RechargeModel extends Model
 			}
 
 			//计算余额
-			$money_before = $update_user->money;
+			$money_before = $update_user->money;//原有余额,客户信息处获取的
 
-			$money_after = bcadd($money_before,$recharge_amount,2);
+			$money_after = bcadd($money_before,$recharge_amount,2);//原有的加上充值金额
 
-			$update_user->money = $money_after;
+			$update_user->money = $money_after;//再更新回客户处
 
 			//更新用户余额
 			if(!$update_user->save()){
@@ -479,7 +483,7 @@ class RechargeModel extends Model
 					'code'	=> 1,
 					'msg'	=> '审核成功,已充值到账',
 				];	
-		} catch (Exception $e) {  
+		} catch (Exception $e) {  //如果出现错误的话,回退
 			DB::rollBack();
 			return [
 				'code'	=> $e->getCode(),	//接收抛出的错误并返回
@@ -488,6 +492,7 @@ class RechargeModel extends Model
 		} 
 	}
 	//审核过了又审核的编辑方法,可以改 到账时间和到账银行
+	//就是找出来然后改掉就好了
 	protected function doEdit($trade_id,$recharge_way,$time){
 
 		DB::beginTransaction();

@@ -3166,6 +3166,9 @@ class OrdersModel extends Model
 					'cpu'			=> $business['cpu'],
 					'memory'		=> $business['memory'],
 					'harddisk'		=> $business['harddisk'],
+					'bandwidth'		=> $business['bandwidth'],
+					'protect'		=> $business['protect'],
+					'machine_type'		=> $business['machine_type'],
 				];	
 				break;
 			case '3':

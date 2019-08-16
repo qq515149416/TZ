@@ -1,10 +1,10 @@
 @extends('layouts.layout')
 
-@section('title', '专业IDC服务商,云主机，高防服务器，高防IP，服务器租用,服务器托管，带宽租用,CDN加速')
+@section('title', '腾正最新活动-服务器限时优惠-云主机打折促销-服务器特惠[腾正科技]')
 
-@section('keywords', '云主机,高防服务器,高防IP,服务器租用,服务器托管,带宽租用,CDN加速,高防CDN,云服务器,机柜租用,云计算,IDC 服务器商,网络安全服务商')
+@section('keywords', '腾正最新活动,服务器特惠,打折促销,限时优惠,云主机打折促销，服务器提供商')
 
-@section('description', '专业IDC服务提供商，主营服务器租用、服务器托管、机柜租用、大带宽租用、云主机、高防服务器、高防IP、CDN加速等数据存储、计算及安全综合应用解决方案服务。')
+@section('description', '腾正最新活动汇聚了腾正科技最新的服务器租用托管，机柜大带宽，高防服务器，高防IP，CDN，云主机促销打折、限时优惠等特惠活动信息，还有各种新品的免费试用服务。')
 
 @section('content')
 <div class="tz-latest-activity">

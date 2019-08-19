@@ -3208,12 +3208,21 @@ class OrdersModel extends Model
 				$package = DB::table('tz_defenseip_package as a')
 						->leftJoin('idc_machineroom as b' , 'b.id' , '=' , 'a.site')
 						->where('a.id',$order['machine_sn'])
-						->first(['a.name' , 'a.description' , 'b.machine_room_name']);
+						->first(['a.name' , 'a.description' , 'a.protection_value' , 'b.machine_room_name']);
 				if ($package == null) {
-					$detail['resource'] 	= '获取高防信息失败';
+					$detail['resource'] 	= [
+						'name'			=> '获取高防信息失败',
+						'description'		=> '获取高防信息失败',
+						'protection_value'	=> '获取高防信息失败',
+					];
 					$detail['machineroom'] 	= '';
 				}else{
-					$detail['resource'] 		= $package->name . " ($package->description) ";
+					$detail['resource'] 	= [
+						'name'			=> $package->name,
+						'description'		=> $package->description,
+						'protection_value'	=> $package->protection_value.'G',
+					];
+				
 					$detail['machineroom'] 		= $package->machine_room_name;
 				}
 				break;
@@ -3224,10 +3233,18 @@ class OrdersModel extends Model
 					->where('a.id',$order['machine_sn'])
 					->first(['a.name' , 'a.description' , 'b.machine_room_name']);
 				if ($package == null) {
-					$detail['resource'] 	= '获取叠加包信息失败';
+					$detail['resource'] 	= [
+						'name'			=> '获取叠加包信息失败',
+						'description'		=> '获取叠加包信息失败',
+						'protection_value'	=> '获取叠加包信息失败',
+					];
 					$detail['machineroom'] 	= '';
 				}else{
-					$detail['resource'] 		= $package->name . " ($package->description) ";
+					$detail['resource'] 	= [
+						'name'			=> $package->name,
+						'description'		=> $package->description,
+						'protection_value'	=> $package->protection_value.'G',
+					];
 					$detail['machineroom'] 		= $package->machine_room_name;
 
 				}

@@ -27,7 +27,7 @@ Route::get('/verification_code', function () {
 });
 
 Route::group([
-    'middleware' => 'UserOperationLog'
+    'middleware' => 'JudgeAgent'
 ], function () {
     Route::get('/', 'Show\IndexController@index'); //网站首页
     Route::get('/page/{directory}/{p}', 'Show\PageController@index');
@@ -64,7 +64,7 @@ Route::group([
 //移动端接口路径
 Route::group([
     'prefix' => 'wap',
-    'middleware' => 'UserOperationLog'
+    'middleware' => 'JudgeAgent'
 ], function () {
     Route::get('/', 'Show\wap\IndexController@index');
 });

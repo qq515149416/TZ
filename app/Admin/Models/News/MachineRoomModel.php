@@ -16,7 +16,15 @@ class MachineRoomModel extends Model
 	protected $table = 'tz_machine_room';
 	protected $primaryKey = 'id';
 	public $timestamps = true;
-	protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at'];
+    /**
+     * 这个属性应该被转换为原生类型.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'more' => 'json',
+    ];
 	// protected $fillable = ['name', 'nav_id', 'overview','grade','detail_url','customer_representative','status'];
     /**
      *模型的「启动」方法.
@@ -31,6 +39,25 @@ class MachineRoomModel extends Model
     //         $builder->where('status', 1);
     //     });
     // }
+    public function setThumbnailsAttribute($thumbnails)
+    {
+        if (is_array($thumbnails)) {
+            $this->attributes['thumbnails'] = json_encode($thumbnails);
+        }
+    }
+
+    public function getThumbnailsAttribute($thumbnails)
+    {
+        return json_decode($thumbnails, true);
+    }
+
+    public function getMoreAttribute($more)
+    {
+        if (is_array($more)) {
+            return json_encode($more);
+        }
+        return $more;
+    }
     /**
      * 导航关联.
      */

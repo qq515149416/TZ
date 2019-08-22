@@ -71,6 +71,26 @@ class MachineRoomInfoController extends Controller
                     1 => '正常',
                     0 => '隐藏'
                 ]);
+                $show->thumbnails("缩略图")->unescape()->as(function($thumbnails) {
+                    $thumbnail = "";
+                    foreach($thumbnails as $key=>$val) {
+                        $thumbnail .= '<div class="col-xs-6 col-md-3">
+                        <a href="#" style="margin-bottom: 0;" class="thumbnail">
+                          <img style="width: 171px;height: 180px;" src="/upload/'.$val.'" />
+                        </a>
+                      </div>';
+                    }
+                    return '<div class="row">'.$thumbnail.'</div>';
+                });
+                $show->more("详细信息")->unescape()->as(function ($content) use ($show) {
+                    $content = json_decode($content, true);
+                    $show->wrapped = false;
+                    return '<pre><code>'.preg_replace_callback('/\\\\u([0-9a-f]{4})/i',
+                    function($matches) {
+                        return mb_convert_encoding(pack("H*", $matches[1]), "UTF-8", "UCS-2BE");
+                    },
+                    json_encode($content, JSON_PRETTY_PRINT)).'</code></pre>';
+                });
                 // $show->nav_id("所属导航")->json();
                 // $show->navs("所属导航")->as(function ($navs) {
                 //     return $navs->pluck('name');
@@ -123,7 +143,6 @@ class MachineRoomInfoController extends Controller
     protected function form()
     {
         return Admin::form(MachineRoomModel::class, function (Form $form) {
-
             $form->display('id', 'ID');
             $form->text('name', '名称');
             $form->text('alias', '别名');
@@ -132,6 +151,15 @@ class MachineRoomInfoController extends Controller
             $form->switch('status', '状态')->default(1)->rules('required');
             $form->text('detail_url', '查看详细');
             $form->text('customer_representative', '典型客户');
+            $form->multipleImage("thumbnails","展示图片");
+            $form->embeds('more', '附加信息', function ($form) {
+                $form->text("area","面积");
+                $form->text("total","机柜总数");
+                $form->text("bandwidth","带宽");
+                $form->text("firewall","防火墙");
+                $form->text("power","电力设备");
+                $form->text("address","地址");
+            });
             // $form->multipleSelect('navs',"所属导航")->options(NavModel::all()->pluck('name', 'id'));
         });
     }

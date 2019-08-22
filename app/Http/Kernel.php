@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'UserOperationLog'=>\App\Http\Middleware\UserOperationLog::class,//用户操作日志中间件
         'CheckLogin' =>\App\Http\Middleware\CheckLogin::class,  //检测用户是否登录
         'CheckStaff' => \App\Admin\Middleware\CheckStaff::class,//检测后台管理账户的相关人员信息是否填写完整
+        'JudgeAgent' => \App\Http\Middleware\JudgeAgent::class //检测访问设备
     ];
 }

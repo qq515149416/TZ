@@ -327,7 +327,7 @@
                         <a href="/aboutus/pay">支付中心</a>
                     </dd>
                     <dd>
-                        <a href="javascript:;">帮助中心</a>
+                        <a href="/help">帮助中心</a>
                     </dd>
                 </dl>
                 <dl>

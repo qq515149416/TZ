@@ -1,0 +1,372 @@
+
+#tz-menu{
+    width: 100%;
+    position: absolute;
+    .tz-container{
+        width: 100%;
+
+
+            // 未登录
+            .main-content{
+                background-color: #e9ecff;
+                width: 100%;
+                .posters{
+                    width: 100%;
+                    img{
+                        width: 100%;
+                    }
+                }
+                // 产品服务
+                .title{
+                    width: 100%;
+                    height: 98px;
+                    line-height: 78px;
+                    text-align: center;
+                    // position: relative;
+                    p{
+                        display: block;
+                        height: 50px;
+                        color: #252b3a;
+                        font-size: 18px;
+                        font-family: "pingFang", "\5FAE\8F6F\96C5\9ED1", Arial, Helvetica, sans-serif;
+                    }
+                }
+                .tz-fuwu{
+                    width: 100%;
+                    padding-bottom: 30px;
+                    .tz-fuwu-box{
+                        width: 100%;
+
+                        .fuwu-li{
+                            margin-bottom: 5px;
+                            // height: 45px;
+                            background-color: #fff;
+                            // background-color: #e9ecff;
+                            line-height: 45px;
+                            img{
+                                width: 14px;
+                            }
+                            p{
+                                display: inline-block;
+                                font-size: 14px;
+                                color: #252b3a;
+                            }
+                            .div-arrow{
+                                margin-top: -3px;
+                                float: right;
+                            }
+                            .items-li{
+                                display: none;
+                                background-color: #e9ecff;
+                                padding: 10px 20px;
+                                animation: gary 0.3s;
+
+
+                                .fuwu-item-title{
+                                    margin: 0 15px;
+                                    display: block;
+                                    font-size: 12px;
+                                    font-family: "PingFang";
+                                    color: rgb( 37, 43, 58 );
+                                    line-height: 1.664;
+                                    text-align: center;
+                                    padding: 15px 0;
+                                }
+                                ul{
+                                    width: 100%;
+                                    li{
+                                        padding-top: 20px;
+                                        padding-bottom: 20px;
+                                        box-sizing: content-box;
+                                        width: 100%;
+                                        border-bottom: 1px dashed #a5b3d5;
+                                        .fuwu-title{
+                                            padding-left: 15px;
+                                            font-size: 14px;
+                                            font-family: "PingFang";
+                                            color: rgb( 37, 43, 58 );
+                                            font-weight: bold;
+                                            line-height: 20px;
+                                            margin-bottom: 10px;
+                                        }
+                                        .fuwu-txt{
+                                            padding-left: 15px;
+                                            padding-right: 10px;
+                                            line-height: 20px;
+                                            font-size: 12px;
+                                            text-align: left;
+                                            font-family: "PingFang";
+                                            color: rgb( 102, 106, 117 );
+                                        }
+                                    }
+                                    .solution{
+                                        width: 155px;
+                                        height: 250px;
+                                        background-color: #fff;
+                                        border: none;
+                                        float: left;
+                                        border-radius: 10px;
+                                        margin-bottom: 10px;
+                                        text-align: center;
+                                        img{
+                                            width: 40px;
+                                            height: 30px;
+                                            margin: 5px 0px;
+                                        }
+                                        .fuwu-title{
+                                            padding: 0 !important;
+                                        }
+                                        a{
+                                            // margin-left: 20px;
+                                            margin: 15px auto;
+                                            border-radius: 20px;
+                                            line-height: 30px;
+                                            text-align: center;
+                                            color: #fff;
+                                            display: block;
+                                            width: 100px;
+                                            height: 30px;
+                                            background: linear-gradient(to right,#4582fe,#1f40dc);
+                                        }
+                                    }
+                                    .m{
+                                        margin-right: 5px;
+
+                                    }
+                                    .fangyu-li{
+                                        width: 100%;
+                                        background-color: #fff;
+                                        border-radius: 10px;
+                                        border: none;
+                                        margin-bottom: 15px;
+                                        a{
+                                            margin-left: 20px;
+                                            margin-top: 10px;
+                                            border-radius: 20px;
+                                            line-height: 30px;
+                                            text-align: center;
+                                            color: #fff;
+                                            display: block;
+                                            width: 100px;
+                                            height: 30px;
+                                            background: linear-gradient(to right,#4582fe,#1f40dc);
+                                        }
+                                    }
+                                }
+                            }
+                            .items-gaofang{
+                                background-color: #fff;
+                                border-radius: 10px;
+                            }
+                        }
+                    }
+
+                }
+                // 地图
+                .map{
+                    img{
+                        width: 100%;
+                    }
+                }
+                // 新闻
+                .news{
+                    background-color: #fff;
+                    .title{
+                        width: 100%;
+                        height: 98px;
+                        line-height: 78px;
+                        text-align: center;
+                        p{
+                            display: block;
+                            height: 50px;
+                            font-family: "PingFang";
+                            color: rgb( 37, 43, 58 );
+                            font-size: 18px;
+                        }
+                    }
+                    .tz-main{
+                        .news-item{
+                            width: 100%;
+                            border-radius: 10px;
+                            overflow: hidden;
+                            background-color: rgb( 255, 255, 255 );
+                            box-shadow: 0px 5px 10px 0px #a0b4c7d5;
+                            margin-bottom: 10px;
+                            img{
+                                width: 100%;
+                            }
+                            .news-text{
+                                position: relative;
+                                .news-text-title{
+                                    font-size: 14px;
+                                    font-family: "PingFang";
+                                    color: #252b3a;
+                                    font-weight: bold;
+                                    line-height: 1.427;
+                                    text-align: left;
+                                    margin: 10px ;
+                                }
+                                .news-text-content{
+                                    font-size: 12px;
+                                    margin-left: 10px;
+                                    margin-right: 60px;
+                                    font-family: "PingFang";
+                                    color: rgb( 102, 106, 117 );
+                                    line-height: 1.5;
+                                    text-overflow: ellipsis;
+                                    display: -webkit-box;
+                                    -webkit-box-orient: vertical;
+                                    -webkit-line-clamp: 2;
+                                    overflow: hidden;
+                                }
+                                .news-text-btn{
+                                    width: 25px;
+                                    position: absolute;
+                                    right: 17px;
+                                    bottom: 35px;
+                                    img{
+                                        z-index: 100;
+                                    }
+                                }
+                                .news-text-time{
+                                    font-size: 11px;
+                                    font-family: "PingFang";
+                                    color: rgb( 140, 145, 156 );
+                                    line-height: 1.816;
+                                    text-align: left;
+                                    margin-top: 10px;
+                                    margin-bottom: 20px;
+                                    padding-left: 10px;
+                                }
+                            }
+                        }
+                        .news-items{
+                            width: 100%;
+                            .news-text{
+                                margin-top: 25px;
+                                position: relative;
+                                border-bottom: 1px solid #c0c9dd;
+                                .news-text-title{
+                                    font-size: 14px;
+                                    font-family: "PingFang";
+                                    color: #252b3a;
+                                    font-weight: bold;
+                                    line-height: 1.427;
+                                    text-align: left;
+                                    margin: 10px ;
+                                }
+                                .news-text-content{
+                                    font-size: 12px;
+                                    margin-left: 10px;
+                                    margin-right: 60px;
+                                    font-family: "PingFang";
+                                    color: rgb( 102, 106, 117 );
+                                    line-height: 1.5;
+                                    text-align: justifyLeft;
+                                }
+                                .news-text-btn{
+                                    width: 25px;
+                                    position: absolute;
+                                    right: 17px;
+                                    bottom: 50px;
+                                    img{
+                                        width: 25px;
+                                    }
+                                }
+                                .news-text-time{
+                                    font-size: 11px;
+                                    font-family: "PingFang";
+                                    color: rgb( 140, 145, 156 );
+                                    line-height: 1.816;
+                                    text-align: left;
+                                    margin-top: 10px;
+                                    padding-bottom: 20px;
+                                    padding-left: 10px;
+                                }
+                            }
+                        }
+
+                    }
+                }
+                // 底栏
+                .footer{
+                    width: 100%;
+                    background: linear-gradient(#1a2235,#05091c);;
+                    .tz-main{
+                        .system-technology-service{
+                            width: 100%;
+                            ul{
+                                padding: 35px 0px 15px 0px;
+                                width: 100%;
+                                height: 110px;
+                                box-sizing: content-box;
+                                li.footer-items{
+                                    width: calc(100%/3);
+                                    box-sizing: border-box;
+                                    height: 110px;
+                                    float: left;
+                                    text-align: center;
+                                    color: rgb( 255, 255, 255 );
+                                    padding: 0 3px;
+                                    img{
+                                        width: 43px;
+                                    }
+                                    .f-title{
+                                        font-size: 14px;
+                                        font-family: "PingFang";
+                                        font-weight: bold;
+                                        padding: 5px 0px;
+                                    }
+                                    .f-text{
+                                        font-size: 10px;
+                                        font-family: "PingFang";
+                                    }
+                                }
+                            }
+                        }
+                        .phone-call{
+                            background: linear-gradient(to right,#3b69e9,#1d39b6);
+                            border-radius: 5px;
+                            height: 42px;
+                            line-height: 42px;
+                            width: 100%;
+                            .p-text{
+                                padding: 0 30px;
+                                img{
+                                    width: 28px;
+                                    margin: 8px 0px;
+                                }
+                                p{
+                                    font-size: 13px;
+                                    font-family: "PingFang";
+                                    color: rgb( 255, 255, 255 );
+                                    float: right;
+                                }
+                            }
+                        }
+                        .record{
+                            margin-top: 20px;
+                            border-top: 1px solid #394b76;
+                            padding-top: 15px;
+                            padding-bottom: 35px;
+                            width: 100%;
+                            text-align: center;
+                            div{
+                                font-size: 10px;
+                                font-family: "PingFang";
+                                color: rgb( 146, 155, 184 );
+                                img{
+                                    width: 10px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+    }
+}
+
+
+
+

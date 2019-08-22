@@ -114,7 +114,7 @@ class HelpCategoryController extends Controller
     public function select()
     {
         $helpCategoryModel = new HelpCategoryModel();
-        $data = $helpCategoryModel->select("id","name as text")->get()->toArray();
+        $data = $helpCategoryModel->where('parent_id', 0)->select("id","name as text")->get()->toArray();
         array_push($data,[
             "text" => "一级导航",
             "id" => 0

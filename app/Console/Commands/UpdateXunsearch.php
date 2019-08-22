@@ -117,7 +117,7 @@ class UpdateXunsearch extends Command
                 $doc['id'] = strtolower($customer_value->id);
                 $doc['name'] = strtolower($customer_value->name);
                 $doc['email'] = strtolower($customer_value->email);
-                $doc['nickname'] = strtolower($customer_value->email);
+                $doc['nickname'] = strtolower($customer_value->nickname);
                 $doc['msg_qq'] = strtolower($customer_value->msg_qq);
                 $doc['msg_phone'] = strtolower($customer_value->msg_phone);
                 $document = new \XSDocument($doc);

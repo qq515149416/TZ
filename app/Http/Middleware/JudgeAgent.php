@@ -17,9 +17,9 @@ class JudgeAgent
      */
     public function handle($request, Closure $next)
     {
-        if(Agent::isMobile() && !strpos("/wap",$request->path())) {
-            return redirect("/wap/".$request->path());
-        }
+        // if(Agent::isMobile() && !strpos("/wap",$request->path())) {
+        //     return redirect("/wap/".$request->path());
+        // }
         return $next($request);
     }
 }

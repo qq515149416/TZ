@@ -126,8 +126,10 @@ class RechargeController extends Controller
 			return tz_ajax_echo([],'该订单支付方式不是微信',0);
 		}
 		//先检测一遍订单的支付状态,已支付的话会处理数据
+
 		$check = $this->WechatCheckAndInsert($get_flow_res['data']['trade_no']);
-		//dd($check);
+		// dd($check);
+
 		if ($check['code'] != 0) {		//表示已付款,无需获取二维码,返回错误信息,除了0,都是付过款了的
 			return tz_ajax_echo($check['data'],$check['msg'],2);	//有问题,统一返回code2
 		}
@@ -156,6 +158,7 @@ class RechargeController extends Controller
 	public function goToPay(RechargeRequest $request)
 	{
 		//检查登录状态
+
 		$checkLogin = Auth::check();
 		if($checkLogin == false){
 			return tz_ajax_echo([],'请先登录',0);
@@ -169,13 +172,13 @@ class RechargeController extends Controller
 		$trade_id 	= $info['trade_id'];
 		$way 		= $info['way'];
 		//获取订单的信息
+
 		$model 	= new AliRecharge();
 		$res 		= $model->makePay($trade_id,$user_id);
-
+		
 		if($res['code'] != 1){
-			return redirect('/tz/?uphash=0#/rechargeRecord')
-    				->withErrors([$res['msg']]);
-			// return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+			echo ("<script>alert('".$res['msg']." ');location='/tz/member92019.html?uphash=0#/rechargeRecord'</script>");
+			
 		}
 		//根据订单信息拼出支付宝方的接口所需信息
 		$info = json_decode(json_encode($res['data']),true);
@@ -192,13 +195,10 @@ class RechargeController extends Controller
 		$check = $Pay->check2($info['trade_no']);
 		//交易不存在 ,40004
 		
-		
-	
 		if($check['code'] != '40004'){
 			$check_res = $this->AliCheckAndInsert($info['trade_no']);
 			if ($check_res['code'] != 0) {
-				return redirect('/tz/?uphash=0#/rechargeRecord')
-    				->withErrors([$check_res['msg']]);
+				echo ("<script>alert('".$check_res['msg']." ');location='/tz/member92019.html?uphash=0#/rechargeRecord'</script>");
 			}
 		}
 
@@ -428,6 +428,7 @@ class RechargeController extends Controller
 	protected function WechatCheckAndInsert($trade_no){
 		$wechat_controller = new WechatPayController();
 		$res = $wechat_controller->checkOrder($trade_no);	//直接向微信查询订单支付状态
+		
 		//此方法返回code
 		//0-未付款	1-付过款并且信息没问题,尚未发货 	2-付过款了并且信息没问题,已经发货了 	3-付过款,信息有问题,尚未发货,需要工作人员处理
 		//4-付款状态异常,需重新下单

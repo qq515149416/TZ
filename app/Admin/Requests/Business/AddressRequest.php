@@ -50,11 +50,10 @@ class AddressRequest extends FormRequest
 	{
 		
 		return  [
-			'business_number.required'	=> '请选择业务',
-			'coupon_id.required'		=> '请选择优惠券',
-			'order_id.required'		=> '请选择需支付的订单',	
-			'order_sn.required'		=> '请提供订单编号',	
-			'order_sn.exists'			=> '订单编号不存在',	
+			'user_id.required'		=> '请选择客户',
+			'user_id.exists'			=> '客户不存在',
+			'address.required'		=> '请填写邮寄地址',	
+			
 		];
 	}
 

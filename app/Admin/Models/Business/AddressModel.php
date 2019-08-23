@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 use Carbon\Carbon;
-
+use Encore\Admin\Facades\Admin;
+use App\Admin\Models\Customer\Customer;
 
 class AddressModel extends Model
 {
@@ -16,92 +17,69 @@ class AddressModel extends Model
 	use SoftDeletes;
 	
 
-	protected $table = 'tz_orders_review'; //表
+	protected $table = 'tz_address'; //表
 	protected $primaryKey = 'id'; //主键
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
-	protected $fillable = ['flow_id', 'order_id','reason','answer','status'];
+	protected $fillable = ['user_id', 'address'];
 
 	/**
-	*流水复核提交的接口
-	*
-	*
+	* 查询权限,是不是自己的客户或者是不是管理员
 	*/
-	public function ordersReview($par)
+	public function checkAdmin($user_id)
 	{
-		$flow = DB::table('tz_orders_flow')
-			->where( [ 'id' => $par['flow_id'] ] )
-			->whereNull( 'deleted_at' )
-			->first();
-		if($flow == null){
-			return [ 
-				'data'	=> [],
-				'msg'	=> '流水不存在',
-				'code'	=> 0,
-			];
-		}
-		//因为之前代码有问题,所以有的存的不是json数组而是字符串,不统一,所以这个入库把它统一为json数组
-		$order_id = json_decode($flow->order_id,true);
-		if ( !is_array($order_id) ) {
-			$order_id = [ $order_id ];
-		}
-		$order_id = json_encode($order_id);
-
-		$data = [
-			'flow_id'		=> $par['flow_id'],	
-			'reason'		=> $par['reason'],
-			'order_id'	=> $order_id,
-			'status'		=> $par['status'],
-		];
-		$res = $this->create($data);
-		if ($res) {
-			return [ 
-				'data'	=> [],
-				'msg'	=> '添加复核成功',
-				'code'	=> 1,
-			];
+		if(Admin::user()->isAdministrator()){
+			return true;
 		}else{
-			return [ 
-				'data'	=> [],
-				'msg'	=> '添加复核失败',
-				'code'	=> 0,
-			];
+			$admin_user = Admin::user();
+			$customer_model = new Customer();
+			$customer = $customer_model->find($user_id);
+			if ($customer == null || $customer->salesman_id != $admin_user->id) {
+				return false;
+			}else{
+				return true;
+			}
 		}
+		
+
 	}
 	
 
 	/**
-	*根据流水id查询该流水的所有复核情况
+	*为客户添加邮寄地址
 	*
 	*
 	*/
-	public function showReview( $flow_id )
+	public function insert($user_id , $address )
 	{
-		$review = $this->where('flow_id',$flow_id)->get()->toArray();
-		if (count($review) == 0) {
+		$check_admin = $this->checkAdmin($user_id);
+		if(!$check_admin){
 			return [
 				'data'	=> [],
-				'msg'	=> '无复核单',
-				'code'	=> 1,
+				'msg'	=> '客户不存在或不属于您',
+				'code'	=> 0,
 			];
 		}
 
-		$status_arr = [
-			0	=> '尚未处理',
-			1	=> '处理完毕',
-		];
-		foreach ($review as $k => $v) {
-			if (isset($status_arr[$v['status']])) {
-				$review[$k]['review_status'] = $status_arr[$v['status']];
-			}else{
-				$review[$k]['review_status'] = ['状态异常'];
-			}	
+		$insert = $this->create([
+				'user_id'		=> $user_id,
+				'address'	=> $address,
+			]);
+		if($insert){
+			return [
+				'data'	=> [],
+				'msg'	=> '添加地址成功',
+				'code'	=> 1,
+			];
+		}else{
+			return [
+				'data'	=> [],
+				'msg'	=> '添加地址失败',
+				'code'	=> 0,
+			];
 		}
-		return [
-			'data'	=> $review,
-			'msg'	=> '获取成功',
-			'code'	=> 1,
-		];
 	}
+
+	
 	
 }

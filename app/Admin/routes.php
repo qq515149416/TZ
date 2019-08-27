@@ -705,7 +705,9 @@ Route::group([
         ], function (Router $router) {
 
             $router->get('insert', 'Business\AddressController@insert');//为客户添加邮寄地址
-
+            $router->get('del', 'Business\AddressController@del');//为客户删除邮寄地址
+            $router->get('edit', 'Business\AddressController@edit');//为客户编辑邮寄地址
+            $router->get('show', 'Business\AddressController@show');//展示客户邮寄地址
         });
 
         
@@ -752,6 +754,29 @@ Route::group([
         $router->post('useOverlayToDIP', 'DefenseIp\OverlayController@useOverlayToDIP');//将叠加包使用到高防ip接口
         $router->post('useOverlayToIDC', 'DefenseIp\OverlayController@useOverlayToIDC');//将叠加包使用到IDC业务接口
         $router->get('showBelongBySite', 'DefenseIp\OverlayController@showBelongBySite');//展示指定机房叠加包接口
+
+    });
+
+    /**
+     * 发票
+     */
+    Route::group([
+        'prefix' => 'invoice',
+    ], function (Router $router) {
+
+        $router->post('getUserInfo', 'TzUsers\InfoController@getUserInfo');//修改用户QQ、手机、备注等信息
+        $router->post('updateUserInfo', 'TzUsers\InfoController@updateUserInfo');//更新客户信息
+        Route::group([
+            'prefix' => 'payable', //这发票的抬头
+        ], function (Router $router) {
+
+            $router->get('insert', 'Business\InvoiceController@insertPayable');//为客户添加抬头
+            $router->get('del', 'Business\InvoiceController@delPayable');//为客户删除抬头
+            $router->get('edit', 'Business\InvoiceController@editPayable');//为客户编辑抬头
+            $router->get('show', 'Business\InvoiceController@showPayable');//展示客户抬头
+        });
+
+        
 
     });
 

@@ -11,17 +11,17 @@ use Carbon\Carbon;
 use Encore\Admin\Facades\Admin;
 use App\Admin\Models\Customer\Customer;
 
-class AddressModel extends Model
+class InvoiceModel extends Model
 {
 
 	use SoftDeletes;
 	
 
-	protected $table = 'tz_address'; //表
+	protected $table = 'tz_payable'; //表
 	protected $primaryKey = 'id'; //主键
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
-	protected $fillable = ['user_id', 'address'];
+	protected $fillable = ['user_id', 'name' , 'num'  ,'address' ,'tel' , 'bank' , 'bank_ACC' ]  ;
 
 	/**
 	* 查询权限,是不是自己的客户或者是不是管理员
@@ -50,7 +50,7 @@ class AddressModel extends Model
 	*
 	*
 	*/
-	public function insert($user_id , $address )
+	public function insertPayable($par )
 	{
 		// $check_admin = $this->checkAdmin($user_id);
 		// if(!$check_admin){
@@ -60,21 +60,21 @@ class AddressModel extends Model
 		// 		'code'	=> 0,
 		// 	];
 		// }
+		foreach ($par as $k => $v) {
+			$data[$k] = $v;
+		}
 
-		$insert = $this->create([
-				'user_id'		=> $user_id,
-				'address'	=> $address,
-			]);
+		$insert = $this->create($data);
 		if($insert){
 			return [
 				'data'	=> [],
-				'msg'	=> '添加地址成功',
+				'msg'	=> '添加发票抬头成功',
 				'code'	=> 1,
 			];
 		}else{
 			return [
 				'data'	=> [],
-				'msg'	=> '添加地址失败',
+				'msg'	=> '添加发票抬头失败',
 				'code'	=> 0,
 			];
 		}
@@ -83,13 +83,13 @@ class AddressModel extends Model
 	/**
 	*为客户删除邮寄地址
 	*/
-	public function del( $address_id )
+	public function delPayable( $payable_id )
 	{
-		$address = $this->find($address_id);
-		if (!$address) {
+		$payable = $this->find($payable_id);
+		if (!$payable) {
 			return [
 				'data'	=> [],
-				'msg'	=> '无此地址',
+				'msg'	=> '无此发票抬头',
 				'code'	=> 0,
 			];
 		}
@@ -104,17 +104,17 @@ class AddressModel extends Model
 		// 	];
 		// }
 
-		$del = $address->delete();
+		$del = $payable->delete();
 		if($del){
 			return [
 				'data'	=> [],
-				'msg'	=> '地址删除成功',
+				'msg'	=> '发票抬头删除成功',
 				'code'	=> 1,
 			];
 		}else{
 			return [
 				'data'	=> [],
-				'msg'	=> '地址删除失败',
+				'msg'	=> '发票抬头删除失败',
 				'code'	=> 0,
 			];
 		}
@@ -123,18 +123,24 @@ class AddressModel extends Model
 	/**
 	*为客户编辑邮寄地址
 	*/
-	public function edit( $address_id , $address_after )
+	public function editPayable( $par )
 	{
 		
-		$address = $this->find($address_id);
-		if (!$address) {
+		$payable = $this->find($par['payable_id']);
+
+		if (!$payable) {
 			return [
 				'data'	=> [],
-				'msg'	=> '无此地址',
+				'msg'	=> '无此发票抬头',
 				'code'	=> 0,
 			];
 		}
-
+		$data = [];
+		foreach ($par as $k => $v) {
+			if ($k != 'payable_id') {
+				$payable->$k = $v;
+			}	
+		}
 		// $check_admin = $this->checkAdmin($address->user_id);
 
 		// if(!$check_admin){
@@ -144,18 +150,17 @@ class AddressModel extends Model
 		// 		'code'	=> 0,
 		// 	];
 		// }
-		$address->address = $address_after;
-		$edit = $address->save();
+		$edit = $payable->save();
 		if($edit){
 			return [
 				'data'	=> [],
-				'msg'	=> '地址编辑成功',
+				'msg'	=> '发票抬头编辑成功',
 				'code'	=> 1,
 			];
 		}else{
 			return [
 				'data'	=> [],
-				'msg'	=> '地址编辑失败',
+				'msg'	=> '发票抬头编辑失败',
 				'code'	=> 0,
 			];
 		}
@@ -164,7 +169,7 @@ class AddressModel extends Model
 	/**
 	*为客户编辑邮寄地址
 	*/
-	public function show( $user_id  )
+	public function showPayable( $user_id  )
 	{
 		// $check_admin = $this->checkAdmin($user_id);
 
@@ -176,18 +181,18 @@ class AddressModel extends Model
 		// 	];
 		// }
 
-		$address = $this->where('user_id' , $user_id)->get(['address']);
-		if($address->isEmpty()){
+		$payable = $this->where('user_id' , $user_id)->get();
+		if($payable->isEmpty()){
 			return [
 				'data'	=> [],
-				'msg'	=> '无已存地址',
+				'msg'	=> '无已存发票抬头',
 				'code'	=> 1,
 			];
 		}
 
 		return [
-			'data'	=> $address,
-			'msg'	=> '地址获取成功',
+			'data'	=> $payable,
+			'msg'	=> '发票抬头获取成功',
 			'code'	=> 1,
 		];
 	

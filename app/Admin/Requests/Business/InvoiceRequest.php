@@ -6,7 +6,7 @@ namespace App\Admin\Requests\Business;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
-class AddressRequest extends FormRequest
+class InvoiceRequest extends FormRequest
 {
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -34,18 +34,18 @@ class AddressRequest extends FormRequest
 			case 'insert':
 				$return = [
 					'user_id'			=> 'required|exists:tz_users,id',
-					'address'		=> 'required',
+					'name'			=> 'required',
+					'num'			=> 'required',
 				];
 				break;
 			case 'del':
 				$return = [
-					'address_id'		=> 'required|exists:tz_address,id',
+					'payable_id'		=> 'required|exists:tz_payable,id',
 				];
 				break;
 			case 'edit':
 				$return = [
-					'address_id'		=> 'required|exists:tz_address,id',
-					'address'		=> 'required',
+					'payable_id'		=> 'required|exists:tz_payable,id',
 				];
 				break;
 			case 'show':
@@ -68,9 +68,10 @@ class AddressRequest extends FormRequest
 		return  [
 			'user_id.required'		=> '请选择客户',
 			'user_id.exists'			=> '客户不存在',
-			'address.required'		=> '请填写邮寄地址',	
-			'address_id.exists'		=> '地址不存在',
-
+			'name.required'			=> '请填写名称',
+			'num.required'			=> '请填写纳税人识别号',
+			'payable_id.required'		=> '请选择抬头',
+			'payable_id.exists'		=> '抬头不存在',
 		];
 	}
 

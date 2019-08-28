@@ -125,7 +125,12 @@ class WechatPayController extends Controller
  	public function checkOrder($trade_no)
  	{
  		//微信 查询接口
- 		$check = Pay::wechat($this->config)->find($trade_no);
+ 		try {
+ 			$check = Pay::wechat($this->config)->find($trade_no);
+ 		} catch (\Exception $e) {
+			$check = json_decode($e,true);      
+		 }
+ 		
  		//-	交易标识 	-//
  		//-	trade_state 	-//
 		// SUCCESS—支付成功

@@ -11,6 +11,6 @@ class IndexController extends Controller
 {
     public function index()
     {
-        return "这是手机版";
+        return view("wap/index");
     }
 }

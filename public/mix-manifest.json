@@ -3,6 +3,8 @@
     "/css/index.css": "/css/index.css",
     "/css/common.css": "/css/common.css",
     "/css/layout/index.css": "/css/layout/index.css",
+    "/css/wap/main.css": "/css/wap/main.css",
     "/css/app.css": "/css/app.css",
+    "/js/wap/main.js": "/js/wap/main.js",
     "/js/script.js": "/js/script.js"
 }

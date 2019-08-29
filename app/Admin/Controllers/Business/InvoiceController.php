@@ -4,6 +4,8 @@ namespace App\Admin\Controllers\Business;
 
 use App\Http\Controllers\Controller;
 use App\Admin\Models\Business\InvoiceModel;
+use App\Admin\Models\Business\PayableModel;
+
 use Illuminate\Http\Request;
 use App\Admin\Requests\Business\InvoiceRequest;
 
@@ -22,7 +24,7 @@ class InvoiceController extends Controller
 	{
 		$par = $request->only(['user_id' ,'name' ,'num'  , 'address','tel' ,'bank' , 'bank_acc']);
 		
-		$model = new InvoiceModel();
+		$model = new PayableModel();
 
 		$res = $model->insertPayable($par);
 
@@ -38,7 +40,7 @@ class InvoiceController extends Controller
 	{
 		$par = $request->only(['payable_id']);
 		
-		$model = new InvoiceModel();
+		$model = new PayableModel();
 
 		$res = $model->delPayable($par['payable_id']);
 
@@ -54,7 +56,7 @@ class InvoiceController extends Controller
 	{
 		$par = $request->only(['payable_id','user_id' ,'name' ,'num'  , 'address','tel' ,'bank' , 'bank_acc']);
 		
-		$model = new InvoiceModel();
+		$model = new PayableModel();
 
 		$res = $model->editPayable($par);
 
@@ -70,10 +72,27 @@ class InvoiceController extends Controller
 	{
 		$par = $request->only(['user_id']);
 		
-		$model = new InvoiceModel();
+		$model = new PayableModel();
 
 		$res = $model->showPayable($par['user_id']);
 
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
+
+	/**
+	 * 生成发票单
+	 * @param 
+	 * @return json 返回编辑结果
+	 */
+	public function makeInvoice(InvoiceRequest $request)
+	{
+		$par = $request->only(['flow_id','type' , 'address_id' , 'payable_id']);
+		
+		$model = new InvoiceModel();
+
+		$res = $model->makeInvoice($par['flow_id'] , $par['type'] , $par['address_id'] , $par['payable_id']  );
+
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
+
 }

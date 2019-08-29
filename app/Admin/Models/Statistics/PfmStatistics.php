@@ -23,7 +23,7 @@ class  PfmStatistics extends Model
 	protected $table = 'tz_orders_flow';
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
-
+	protected $fillable = ['invoice_state']  ;
 	// protected $fillable = ['user_id', 'achievement','total_money','this_arrears','all_arrears','month','updated_at'];
 
 	/**

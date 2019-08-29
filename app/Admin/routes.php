@@ -764,8 +764,8 @@ Route::group([
         'prefix' => 'invoice',
     ], function (Router $router) {
 
-        $router->post('getUserInfo', 'TzUsers\InfoController@getUserInfo');//修改用户QQ、手机、备注等信息
-        $router->post('updateUserInfo', 'TzUsers\InfoController@updateUserInfo');//更新客户信息
+        $router->post('makeInvoice', 'Business\InvoiceController@makeInvoice');//为客户开发票
+
         Route::group([
             'prefix' => 'payable', //这发票的抬头
         ], function (Router $router) {

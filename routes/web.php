@@ -67,6 +67,8 @@ Route::group([
     'middleware' => 'JudgeAgent'
 ], function () {
     Route::get('/', 'Show\wap\IndexController@index');
+    Route::get('/menu', 'Show\wap\MenuController@index');
+    Route::get('/server_hire', 'Show\wap\ServerHireController@index');
 });
 
 /**

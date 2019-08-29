@@ -10,7 +10,7 @@
 <!-- 菜单 -->
 <div id="menu">
     <div class="main-body">
-        <div class="tz-container">
+        <div class="tz-container clear">
             <!-- 腾正二维码 -->
             <div class="qrCode">
                 <img class="closeCode" src="{{ asset("/images/wap/菜单开.png") }}" alt="">

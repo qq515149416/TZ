@@ -83,6 +83,12 @@ __webpack_require__(53);
 
 __webpack_require__(54);
 
+__webpack_require__(55);
+
+__webpack_require__(56);
+
+__webpack_require__(57);
+
 var fuwulis = document.getElementsByClassName("fuwu-li-i");
 var itemslis = document.getElementsByClassName("items-li");
 var fuwuTitleImg = document.querySelectorAll(".fuwu-li .tz-main img");
@@ -289,144 +295,560 @@ function machineroom() {
 
 
 //----------------解决方案轮播图
-var slideshow = document.querySelector(".slideshow");
-var slideshowUl = document.querySelector(".slideshow-ul");
-var slideshowLl = document.querySelectorAll(".slideshow-li");
-var slideshowOl = document.querySelector(".slideshow-ol");
-var screenWidth = document.documentElement.offsetWidth;
-slideshowUl.style.height = slideshowLl[0].offsetHeight + 'px';
-// slideshowUl.style.height="141px";
+slideshow_main();
+function slideshow_main() {
+    var slideshow = document.querySelector(".slideshow");
+    var slideshowUl = document.querySelector(".slideshow-ul");
+    var slideshowLl = document.querySelectorAll(".slideshow-li");
+    var slideshowOl = document.querySelector(".slideshow-ol");
+    var screenWidth = document.documentElement.offsetWidth;
+    if (!slideshowUl) {
+        return;
+    }
+    slideshowUl.style.height = slideshowLl[0].offsetHeight + 'px';
+    // slideshowUl.style.height="141px";
+    // 生成小圆点
+    for (var i = 0; i < slideshowLl.length; i++) {
+        var li = document.createElement('li');
+        if (i == 0) {
+            li.classList.add('point-active');
+        } //
+        slideshowOl.appendChild(li);
+    }
+    var left = slideshowLl.length - 1;
+    var center = 0;
+    var right = 1;
+    setTransform();
+    var timer = null;
+    // 调用定时器
+    timer = setInterval(showNext, 3000);
+    // 分别绑定touch事件
+    var startX = 0; // 手指落点
+    var startTime = null; // 开始触摸时间
+    slideshowUl.addEventListener('touchstart', touchstartHandler); // 滑动开始绑定的函数 touchstartHandler
+    slideshowUl.addEventListener('touchmove', touchmoveHandler); // 持续滑动绑定的函数 touchmoveHandler
+    slideshowUl.addEventListener('touchend', touchendHandeler);
+
+    // 轮播图片切换
+    function showNext() {
+        // 轮转下标
+        left = center;
+        center = right;
+        right++;
+        // 极值判断
+        if (right > slideshowLl.length - 1) {
+            right = 0;
+        }
+        //添加过渡（多次使用，封装成函数）
+        setTransition(1, 1, 0);
+        setTransform();
+        setPoint();
+    }
+    // 轮播图片切换上一张
+    function showPrev() {
+        // 轮转下标
+        right = center;
+        center = left;
+        left--;
+        //　极值判断
+        if (left < 0) {
+            left = slideshowLl.length - 1;
+        }
+        //添加过渡
+        setTransition(0, 1, 1);
+        setTransform();
+        setPoint();
+    }
+    // 滑动开始
+    function touchstartHandler(e) {
+        clearInterval(timer);
+        // 记录滑动开始的时间
+        startTime = Date.now();
+        // 记录手指最开始的落点
+        startX = e.changedTouches[0].clientX;
+    }
+    // 滑动持续中
+    function touchmoveHandler(e) {
+        // 获取差值 自带正负
+        var dx = e.changedTouches[0].clientX - startX;
+        // 干掉过渡
+        setTransition(0, 0, 0);
+        // 归位
+        setTransform(dx);
+    }
+    //　滑动结束
+    function touchendHandeler(e) {
+        // 在手指松开的时候，要判断当前是否滑动成功
+        var dx = e.changedTouches[0].clientX - startX;
+        // 获取时间差
+        var dTime = Date.now() - startTime;
+        // 滑动成功的依据是滑动的距离（绝对值）超过屏幕的三分之一 或者滑动的时间小于300毫秒同时滑动的距离大于30
+        if (Math.abs(dx) > screenWidth / 3 || dTime < 300 && Math.abs(dx) > 30) {
+            // 滑动成功了
+            // 判断用户是往哪个方向滑
+            if (dx > 0) {
+                showPrev();
+            } else {
+                showNext();
+            }
+        } else {
+            // 添加上过渡
+            setTransition(1, 1, 1);
+            // 滑动失败了
+            setTransform();
+        }
+
+        // 重新启动定时器
+        clearInterval(timer);
+        // 调用定时器
+        timer = setInterval(showNext, 3000);
+    }
+    // 设置过渡
+    function setTransition(a, b, c) {
+        if (a) {
+            slideshowLl[left].style.transition = 'transform 1s';
+        } else {
+            slideshowLl[left].style.transition = 'none';
+        }
+        if (b) {
+            slideshowLl[center].style.transition = 'transform 1s';
+        } else {
+            slideshowLl[center].style.transition = 'none';
+        }
+        if (c) {
+            slideshowLl[right].style.transition = 'transform 1s';
+        } else {
+            slideshowLl[right].style.transition = 'none';
+        }
+    }
+    //　封装归位
+    function setTransform(dx) {
+        dx = dx || 0;
+        slideshowLl[left].style.transform = 'translateX(' + (-screenWidth + dx) + 'px)';
+        slideshowLl[center].style.transform = 'translateX(' + dx + 'px)';
+        slideshowLl[right].style.transform = 'translateX(' + (screenWidth + dx) + 'px)';
+    }
+    // 动态设置小圆点的active类
+    var pointsLis = slideshowOl.querySelectorAll('li');
+    var tempStr = "<span class=\"progress\"></span>";
+    pointsLis[center].innerHTML = tempStr;
+    function setPoint() {
+        for (var i = 0; i < pointsLis.length; i++) {
+            pointsLis[i].classList.remove('point-active');
+            pointsLis[center].innerHTML = tempStr;
+        }
+        pointsLis[center].classList.add('point-active');
+    }
+}
+
+/***/ }),
+
+/***/ 55:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// 机房介绍
+var computer_Room = document.getElementsByClassName("region")[0];
+var computerRoom = computer_Room.getElementsByTagName("p");
+var computer_Content = document.getElementsByClassName("computer-content")[0];
+var computerContent = computer_Content.getElementsByTagName("table");
+for (var i = 0; i < computerRoom.length; i++) {
+  computerRoom[i].index = i;
+  computerRoom[i].onclick = function () {
+    for (var k = 0; k < computerRoom.length; k++) {
+      computerRoom[k].className = " ";
+      computerContent[k].className = " ";
+    }
+    this.className = "active-room";
+    computerContent[this.index].className = "active-tab";
+  };
+}
+
+/***/ }),
+
+/***/ 56:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function server_room() {
+    var rooma = document.querySelector(".server-rooma");
+    var selecta = document.getElementById("selecta");
+    var selectb = document.getElementById("selectb");
+    if (selecta.value == "湖南衡阳机房") {
+        document.querySelector(".slideshow-a").style.display = "none";
+        document.querySelector(".one-t").style.display = "none";
+        document.querySelector(".slideshow").style.display = "block";
+        document.querySelector(".nc-a").innerHTML = "16G";
+        document.querySelector(".nc-b").innerHTML = "16G";
+        document.querySelector(".nc-c").innerHTML = "16G";
+        document.querySelector(".nc-d").innerHTML = "16G";
+        document.querySelector(".dk-a").innerHTML = "G口 20M";
+        document.querySelector(".dk-b").innerHTML = "G口 20M";
+        document.querySelector(".dk-c").innerHTML = "G口 20M";
+        document.querySelector(".dk-d").innerHTML = "G口 20M";
+        document.querySelector(".fy-b").innerHTML = "40G";
+        document.querySelector(".fy-c").innerHTML = "80G";
+        document.querySelector(".fy-d").innerHTML = "120G";
+        if (selectb.value == "联通服务器租用") {
+            document.querySelector(".slideshow").style.display = "block";
+            document.querySelector(".nothing").style.display = "none";
+            document.querySelector(".s-t-a").innerHTML = "衡阳联通A型";
+            document.querySelector(".s-t-b").innerHTML = "衡阳联通B型";
+            document.querySelector(".s-t-c").innerHTML = "衡阳联通C型";
+            document.querySelector(".s-t-d").innerHTML = "衡阳联通D型";
+            document.querySelector(".n-ip-a").innerHTML = "1个";
+            document.querySelector(".n-ip-b").innerHTML = "1个";
+            document.querySelector(".n-ip-c").innerHTML = "1个";
+            document.querySelector(".n-ip-d").innerHTML = "1个";
+            document.querySelector(".span-a-a").innerHTML = "900";
+            document.querySelector(".span-a-b").innerHTML = "8400";
+            document.querySelector(".span-b-a").innerHTML = "900";
+            document.querySelector(".span-b-b").innerHTML = "8400";
+            document.querySelector(".span-c-a").innerHTML = "1400";
+            document.querySelector(".span-c-b").innerHTML = "13200";
+            document.querySelector(".span-d-a").innerHTML = "2100";
+            document.querySelector(".span-d-b").innerHTML = "21600";
+        }
+        if (selectb.value == "电信服务器租用") {
+            document.querySelector(".slideshow").style.display = "block";
+            document.querySelector(".nothing").style.display = "none";
+            document.querySelector(".s-t-a").innerHTML = "衡阳电信A型";
+            document.querySelector(".s-t-b").innerHTML = "衡阳电信B型";
+            document.querySelector(".s-t-c").innerHTML = "衡阳电信C型";
+            document.querySelector(".s-t-d").innerHTML = "衡阳电信D型";
+            document.querySelector(".n-ip-a").innerHTML = "1个";
+            document.querySelector(".n-ip-b").innerHTML = "1个";
+            document.querySelector(".n-ip-c").innerHTML = "1个";
+            document.querySelector(".n-ip-d").innerHTML = "1个";
+            document.querySelector(".span-a-a").innerHTML = "900";
+            document.querySelector(".span-a-b").innerHTML = "8400";
+            document.querySelector(".span-b-a").innerHTML = "900";
+            document.querySelector(".span-b-b").innerHTML = "8400";
+            document.querySelector(".span-c-a").innerHTML = "1400";
+            document.querySelector(".span-c-b").innerHTML = "13200";
+            document.querySelector(".span-d-a").innerHTML = "2100";
+            document.querySelector(".span-d-b").innerHTML = "21600";
+        }
+        if (selectb.value == "双线服务器租用") {
+            document.querySelector(".slideshow").style.display = "block";
+            document.querySelector(".nothing").style.display = "none";
+            document.querySelector(".s-t-a").innerHTML = "衡阳双线A型";
+            document.querySelector(".s-t-b").innerHTML = "衡阳双线B型";
+            document.querySelector(".s-t-c").innerHTML = "衡阳双线C型";
+            document.querySelector(".s-t-d").innerHTML = "衡阳双线D型";
+            document.querySelector(".n-ip-a").innerHTML = "2个";
+            document.querySelector(".n-ip-b").innerHTML = "2个";
+            document.querySelector(".n-ip-c").innerHTML = "2个";
+            document.querySelector(".n-ip-d").innerHTML = "2个";
+            document.querySelector(".span-a-a").innerHTML = "1100";
+            document.querySelector(".span-a-b").innerHTML = "10800";
+            document.querySelector(".span-b-a").innerHTML = "1100";
+            document.querySelector(".span-b-b").innerHTML = "10800";
+            document.querySelector(".span-c-a").innerHTML = "1600";
+            document.querySelector(".span-c-b").innerHTML = "15600";
+            document.querySelector(".span-d-a").innerHTML = "2300";
+            document.querySelector(".span-d-b").innerHTML = "24000";
+        }
+        if (selectb.value == "三线服务器租用") {
+            document.querySelector(".s-t-a").innerHTML = "衡阳三线";
+            document.querySelector(".slideshow").style.display = "none";
+            document.querySelector(".nothing").style.display = "block";
+        }
+    }
+    if (selecta.value == "广东惠州机房") {
+        document.querySelector(".slideshow-a").style.display = "none";
+        document.querySelector(".slideshow").style.display = "none";
+        document.querySelector(".one-t").style.display = "block";
+        var one_li = document.querySelectorAll(".one-t .slide-li");
+        if (selectb.value == "联通服务器租用") {
+            document.querySelector(".nothing").style.display = "none";
+            for (var i = 0; i < one_li.length; i++) {
+                one_li[i].className = "slide-li";
+            }
+            document.querySelector("#one-b").className = "slide-li active";
+        }
+        if (selectb.value == "电信服务器租用") {
+            document.querySelector(".nothing").style.display = "none";
+            for (var i = 0; i < one_li.length; i++) {
+                one_li[i].className = "slide-li";
+            }
+            document.querySelector("#one-a").className = "slide-li active";
+        }
+        if (selectb.value == "双线服务器租用") {
+            document.querySelector(".nothing").style.display = "none";
+            for (var i = 0; i < one_li.length; i++) {
+                one_li[i].className = "slide-li";
+            }
+            document.querySelector("#one-c").className = "slide-li active";
+        }
+        if (selectb.value == "三线服务器租用") {
+            document.querySelector(".one-t").style.display = "none";
+            document.querySelector(".one-t").style.display = "none";
+            document.querySelector(".nothing").style.display = "block";
+        }
+    }
+    if (selecta.value == "陕西西安机房") {
+        document.querySelector(".slideshow-a").style.display = "block";
+        document.querySelector(".slideshow").style.display = "none";
+        document.querySelector(".nothing").style.display = "none";
+        document.querySelector(".one-t").style.display = "none";
+        document.querySelector(".nc-a-a").innerHTML = "16G";
+        document.querySelector(".fy-b-a").innerHTML = "80G";
+        document.querySelector(".fy-c-a").innerHTML = "160G";
+        document.querySelector(".fy-d-a").innerHTML = "300G";
+        document.querySelector(".nc-b-a").innerHTML = "16G";
+        document.querySelector(".nc-c-a").innerHTML = "32G";
+        document.querySelector(".nc-d-a").innerHTML = "32G";
+        document.querySelector(".dk-a-a").innerHTML = "G口 20M";
+        document.querySelector(".dk-b-a").innerHTML = "G口 20M";
+        document.querySelector(".dk-c-a").innerHTML = "G口 20M";
+        document.querySelector(".dk-d-a").innerHTML = "G口 20M";
+        if (selectb.value == "联通服务器租用") {
+            document.querySelector(".s-t-a-a").innerHTML = "西安联通A型";
+            document.querySelector(".s-t-b-a").innerHTML = "西安联通B型";
+            document.querySelector(".s-t-c-a").innerHTML = "西安联通C型";
+            document.querySelector(".s-t-d-a").innerHTML = "西安联通D型";
+            document.querySelector(".s-t-e").innerHTML = "西安联通";
+            document.querySelector(".n-ip-a-a").innerHTML = "1个";
+            document.querySelector(".n-ip-b-a").innerHTML = "1个";
+            document.querySelector(".n-ip-c-a").innerHTML = "1个";
+            document.querySelector(".n-ip-d-a").innerHTML = "1个";
+            document.querySelector(".dk-a-a").innerHTML = "G口 20M";
+            document.querySelector(".dk-b-a").innerHTML = "G口 20M";
+            document.querySelector(".dk-c-a").innerHTML = "G口 100M";
+            document.querySelector(".dk-d-a").innerHTML = "G口 200M";
+            document.querySelector(".span-a-a-a").innerHTML = "1000";
+            document.querySelector(".span-a-b-a").innerHTML = "9600";
+            document.querySelector(".span-b-a-a").innerHTML = "1000";
+            document.querySelector(".span-b-b-a").innerHTML = "9600";
+            document.querySelector(".span-c-a-a").innerHTML = "1800";
+            document.querySelector(".span-c-b-a").innerHTML = "18000";
+            document.querySelector(".span-d-a-a").innerHTML = "3500";
+            document.querySelector(".span-d-b-a").innerHTML = "36000";
+        }
+        if (selectb.value == "电信服务器租用") {
+            document.querySelector(".s-t-a-a").innerHTML = "西安电信A型";
+            document.querySelector(".s-t-b-a").innerHTML = "西安电信B型";
+            document.querySelector(".s-t-c-a").innerHTML = "西安电信C型";
+            document.querySelector(".s-t-d-a").innerHTML = "西安电信D型";
+            document.querySelector(".s-t-e").innerHTML = "西安电信";
+            document.querySelector(".n-ip-a-a").innerHTML = "1个";
+            document.querySelector(".n-ip-b-a").innerHTML = "1个";
+            document.querySelector(".n-ip-c-a").innerHTML = "1个";
+            document.querySelector(".n-ip-d-a").innerHTML = "1个";
+            document.querySelector(".dk-a-a").innerHTML = "G口 20M";
+            document.querySelector(".dk-b-a").innerHTML = "G口 50M";
+            document.querySelector(".dk-c-a").innerHTML = "G口 100M";
+            document.querySelector(".dk-d-a").innerHTML = "G口 200M";
+            document.querySelector(".span-a-a-a").innerHTML = "1000";
+            document.querySelector(".span-a-b-a").innerHTML = "9600";
+            document.querySelector(".span-b-a-a").innerHTML = "1000";
+            document.querySelector(".span-b-b-a").innerHTML = "9600";
+            document.querySelector(".span-c-a-a").innerHTML = "1800";
+            document.querySelector(".span-c-b-a").innerHTML = "18000";
+            document.querySelector(".span-d-a-a").innerHTML = "3500";
+            document.querySelector(".span-d-b-a").innerHTML = "36000";
+        }
+        if (selectb.value == "双线服务器租用") {
+            document.querySelector(".s-t-a-a").innerHTML = "西安双线A型";
+            document.querySelector(".s-t-b-a").innerHTML = "西安双线B型";
+            document.querySelector(".s-t-c-a").innerHTML = "西安双线C型";
+            document.querySelector(".s-t-d-a").innerHTML = "西安双线D型";
+            document.querySelector(".s-t-e").innerHTML = "西安双线";
+            document.querySelector(".n-ip-a-a").innerHTML = "2个";
+            document.querySelector(".n-ip-b-a").innerHTML = "2个";
+            document.querySelector(".n-ip-c-a").innerHTML = "2个";
+            document.querySelector(".n-ip-d-a").innerHTML = "2个";
+            document.querySelector(".dk-a-a").innerHTML = "G口 20M";
+            document.querySelector(".dk-b-a").innerHTML = "G口 20M";
+            document.querySelector(".dk-c-a").innerHTML = "G口 100M";
+            document.querySelector(".dk-d-a").innerHTML = "G口 200M";
+            document.querySelector(".span-a-a-a").innerHTML = "1200";
+            document.querySelector(".span-a-b-a").innerHTML = "14400";
+            document.querySelector(".span-b-a-a").innerHTML = "1200";
+            document.querySelector(".span-b-b-a").innerHTML = "14400";
+            document.querySelector(".span-c-a-a").innerHTML = "2000";
+            document.querySelector(".span-c-b-a").innerHTML = "24000";
+            document.querySelector(".span-d-a-a").innerHTML = "3700";
+            document.querySelector(".span-d-b-a").innerHTML = "44400";
+        }
+        if (selectb.value == "三线服务器租用") {
+            document.querySelector(".s-t-a-a").innerHTML = "西安三线A型";
+            document.querySelector(".s-t-b-a").innerHTML = "西安三线B型";
+            document.querySelector(".s-t-c-a").innerHTML = "西安三线C型";
+            document.querySelector(".s-t-d-a").innerHTML = "西安三线D型";
+            document.querySelector(".s-t-e").innerHTML = "西安三线";
+            document.querySelector(".n-ip-a-a").innerHTML = "3个";
+            document.querySelector(".n-ip-b-a").innerHTML = "3个";
+            document.querySelector(".n-ip-c-a").innerHTML = "3个";
+            document.querySelector(".n-ip-d-a").innerHTML = "3个";
+            document.querySelector(".dk-a-a").innerHTML = "G口 20M";
+            document.querySelector(".dk-b-a").innerHTML = "G口 20M";
+            document.querySelector(".dk-c-a").innerHTML = "G口 100M";
+            document.querySelector(".dk-d-a").innerHTML = "G口 200M";
+            document.querySelector(".span-a-a-a").innerHTML = "1500";
+            document.querySelector(".span-a-b-a").innerHTML = "18000";
+            document.querySelector(".span-b-a-a").innerHTML = "1500";
+            document.querySelector(".span-b-b-a").innerHTML = "18000";
+            document.querySelector(".span-c-a-a").innerHTML = "2300";
+            document.querySelector(".span-c-b-a").innerHTML = "27600";
+            document.querySelector(".span-d-a-a").innerHTML = "4000";
+            document.querySelector(".span-d-b-a").innerHTML = "48000";
+        }
+    }
+}
+
+/***/ }),
+
+/***/ 57:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+//----------------解决方案轮播图
+var slideshow_a = document.querySelector(".slideshow-a");
+var slideshowUl_a = document.querySelector(".slideshow-ul-a");
+var slideshowLl_a = document.querySelectorAll(".slideshow-li-a");
+var slideshowOl_a = document.querySelector(".slideshow-ol-a");
+var screenWidth_a = document.documentElement.offsetWidth;
+// slideshowUl_a.style.height = slideshowLl_a[0].offsetHeight + 'px';
+slideshowUl_a.style.height = "202px";
 // 生成小圆点
-for (var i = 0; i < slideshowLl.length; i++) {
+for (var i = 0; i < slideshowLl_a.length; i++) {
   var li = document.createElement('li');
   if (i == 0) {
     li.classList.add('point-active');
   } //
-  slideshowOl.appendChild(li);
+  slideshowOl_a.appendChild(li);
 }
-var left = slideshowLl.length - 1;
-var center = 0;
-var right = 1;
-setTransform();
-var timer = null;
+var left_a = slideshowLl_a.length - 1;
+var center_a = 0;
+var right_a = 1;
+setTransform_a();
+var timer_a = null;
 // 调用定时器
-timer = setInterval(showNext, 3000);
+timer_a = setInterval(showNext_a, 3000);
 // 分别绑定touch事件
 var startX = 0; // 手指落点
 var startTime = null; // 开始触摸时间
-slideshowUl.addEventListener('touchstart', touchstartHandler); // 滑动开始绑定的函数 touchstartHandler
-slideshowUl.addEventListener('touchmove', touchmoveHandler); // 持续滑动绑定的函数 touchmoveHandler
-slideshowUl.addEventListener('touchend', touchendHandeler);
+slideshowUl_a.addEventListener('touchstart', touchstartHandler_a); // 滑动开始绑定的函数 touchstartHandler_a
+slideshowUl_a.addEventListener('touchmove', touchmoveHandler_a); // 持续滑动绑定的函数 touchmoveHandler_a
+slideshowUl_a.addEventListener('touchend', touchendHandeler_a);
 
 // 轮播图片切换
-function showNext() {
+function showNext_a() {
   // 轮转下标
-  left = center;
-  center = right;
-  right++;
+  left_a = center_a;
+  center_a = right_a;
+  right_a++;
   // 极值判断
-  if (right > slideshowLl.length - 1) {
-    right = 0;
+  if (right_a > slideshowLl_a.length - 1) {
+    right_a = 0;
   }
   //添加过渡（多次使用，封装成函数）
-  setTransition(1, 1, 0);
-  setTransform();
-  setPoint();
+  setTransition_a(1, 1, 0);
+  setTransform_a();
+  setPoint_a();
 }
 // 轮播图片切换上一张
-function showPrev() {
+function showPrev_a() {
   // 轮转下标
-  right = center;
-  center = left;
-  left--;
+  right_a = center_a;
+  center_a = left_a;
+  left_a--;
   //　极值判断
-  if (left < 0) {
-    left = slideshowLl.length - 1;
+  if (left_a < 0) {
+    left_a = slideshowLl_a.length - 1;
   }
   //添加过渡
-  setTransition(0, 1, 1);
-  setTransform();
-  setPoint();
+  setTransition_a(0, 1, 1);
+  setTransform_a();
+  setPoint_a();
 }
 // 滑动开始
-function touchstartHandler(e) {
-  clearInterval(timer);
+function touchstartHandler_a(e) {
+  clearInterval(timer_a);
   // 记录滑动开始的时间
   startTime = Date.now();
   // 记录手指最开始的落点
   startX = e.changedTouches[0].clientX;
 }
 // 滑动持续中
-function touchmoveHandler(e) {
+function touchmoveHandler_a(e) {
   // 获取差值 自带正负
   var dx = e.changedTouches[0].clientX - startX;
   // 干掉过渡
-  setTransition(0, 0, 0);
+  setTransition_a(0, 0, 0);
   // 归位
-  setTransform(dx);
+  setTransform_a(dx);
 }
 //　滑动结束
-function touchendHandeler(e) {
+function touchendHandeler_a(e) {
   // 在手指松开的时候，要判断当前是否滑动成功
   var dx = e.changedTouches[0].clientX - startX;
   // 获取时间差
   var dTime = Date.now() - startTime;
   // 滑动成功的依据是滑动的距离（绝对值）超过屏幕的三分之一 或者滑动的时间小于300毫秒同时滑动的距离大于30
-  if (Math.abs(dx) > screenWidth / 3 || dTime < 300 && Math.abs(dx) > 30) {
+  if (Math.abs(dx) > screenWidth_a / 3 || dTime < 300 && Math.abs(dx) > 30) {
     // 滑动成功了
     // 判断用户是往哪个方向滑
     if (dx > 0) {
-      showPrev();
+      showPrev_a();
     } else {
-      showNext();
+      showNext_a();
     }
   } else {
     // 添加上过渡
-    setTransition(1, 1, 1);
+    setTransition_a(1, 1, 1);
     // 滑动失败了
-    setTransform();
+    setTransform_a();
   }
 
   // 重新启动定时器
-  clearInterval(timer);
+  clearInterval(timer_a);
   // 调用定时器
-  timer = setInterval(showNext, 3000);
+  timer_a = setInterval(showNext_a, 3000);
 }
 // 设置过渡
-function setTransition(a, b, c) {
+function setTransition_a(a, b, c) {
   if (a) {
-    slideshowLl[left].style.transition = 'transform 1s';
+    slideshowLl_a[left_a].style.transition = 'transform 1s';
   } else {
-    slideshowLl[left].style.transition = 'none';
+    slideshowLl_a[left_a].style.transition = 'none';
   }
   if (b) {
-    slideshowLl[center].style.transition = 'transform 1s';
+    slideshowLl_a[center_a].style.transition = 'transform 1s';
   } else {
-    slideshowLl[center].style.transition = 'none';
+    slideshowLl_a[center_a].style.transition = 'none';
   }
   if (c) {
-    slideshowLl[right].style.transition = 'transform 1s';
+    slideshowLl_a[right_a].style.transition = 'transform 1s';
   } else {
-    slideshowLl[right].style.transition = 'none';
+    slideshowLl_a[right_a].style.transition = 'none';
   }
 }
 //　封装归位
-function setTransform(dx) {
+function setTransform_a(dx) {
   dx = dx || 0;
-  slideshowLl[left].style.transform = 'translateX(' + (-screenWidth + dx) + 'px)';
-  slideshowLl[center].style.transform = 'translateX(' + dx + 'px)';
-  slideshowLl[right].style.transform = 'translateX(' + (screenWidth + dx) + 'px)';
+  slideshowLl_a[left_a].style.transform = 'translateX(' + (-screenWidth + dx) + 'px)';
+  slideshowLl_a[center_a].style.transform = 'translateX(' + dx + 'px)';
+  slideshowLl_a[right_a].style.transform = 'translateX(' + (screenWidth + dx) + 'px)';
 }
 // 动态设置小圆点的active类
-var pointsLis = slideshowOl.querySelectorAll('li');
-var tempStr = "<span class=\"progress\"></span>";
-pointsLis[center].innerHTML = tempStr;
-function setPoint() {
-  for (var i = 0; i < pointsLis.length; i++) {
-    pointsLis[i].classList.remove('point-active');
-    pointsLis[center].innerHTML = tempStr;
+var pointsLis_a = slideshowOl_a.querySelectorAll('li');
+var tempStr_a = "<span class=\"progress\"></span>";
+pointsLis_a[center_a].innerHTML = tempStr_a;
+function setPoint_a() {
+  for (var i = 0; i < pointsLis_a.length; i++) {
+    pointsLis_a[i].classList.remove('point-active');
+    pointsLis_a[center_a].innerHTML = tempStr_a;
   }
-  pointsLis[center].classList.add('point-active');
+  pointsLis_a[center_a].classList.add('point-active');
 }
 
 /***/ })

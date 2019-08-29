@@ -47,8 +47,10 @@
                 <div class="tz-main items-li">
                     <ul>
                         <li>
-                            <div class="fuwu-title">服务器租用</div>
-                            <div class="fuwu-txt">提供服务器设备,环境到维护的一站式服务</div>
+                            <a href="/wap/server_hire">
+                                <div class="fuwu-title">服务器租用</div>
+                                <div class="fuwu-txt">提供服务器设备,环境到维护的一站式服务</div>
+                            </a>
                         </li>
                         <li>
                             <div class="fuwu-title">服务器托管</div>

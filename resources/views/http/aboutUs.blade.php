@@ -543,6 +543,16 @@
                             </li>
                             <li>
                                 <div class="thumb">
+                                    <img src="{{ asset("/images/pay/08.png") }}" alt="" />
+                                </div>
+                                <div class="dec">
+                                    <p>开户名称：广东腾正计算机科技有限公司</p>
+                                    <p>银行账号：5600 0230 1226 555</p>
+                                    <p>开户支行：东莞银行寮步支行</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="thumb">
                                     <img src="{{ asset("/images/pay/05.png") }}" alt="" />
                                 </div>
                                 <div class="dec">

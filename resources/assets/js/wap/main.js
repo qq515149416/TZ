@@ -56,4 +56,7 @@ moreBtn.onclick = function(){
 }
 import "./index.js";
 import "./slideshow.js";
+import "./computer_introduce.js";
+import "./server_hire.js";
+import "./slideshow_a.js";
 

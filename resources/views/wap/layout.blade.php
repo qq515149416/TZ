@@ -60,9 +60,15 @@
                         </div>
                         <div class="nabar-right right">
                             <div class="close right">
+                                @if ($page === 'menu')
+                                <a href="javascript: history.back();">
+                                    <img src="{{ asset("/images/wap/菜单开.png") }}" alt="">
+                                </a>
+                                @else
                                 <a href="/wap/menu">
                                     <img src="{{ asset("/images/wap/菜单.png") }}" alt="">
                                 </a>
+                                @endif
                             </div>
                             <div class="user right">
                                 <a href="/">

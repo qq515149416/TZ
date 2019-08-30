@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <div id="tz-menu">
+    <div id="tz-menu" class="page-{{ $page }}">
         <div class="main-body">
             <div class="tz-container clear">
                 <!-- 腾正二维码 -->

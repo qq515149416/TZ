@@ -11,6 +11,8 @@ class MenuController extends Controller
 {
     public function index()
     {
-        return view("wap/menu");
+        return view("wap/menu",[
+            "page" => "menu"
+        ]);
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-use Jenssegers\Agent\Facades\Agent;
+// use Jenssegers\Agent\Facades\Agent;
 
 class JudgeAgent
 {
@@ -17,9 +17,9 @@ class JudgeAgent
      */
     public function handle($request, Closure $next)
     {
-        if(Agent::isMobile() && strpos($request->path(),"wap")===false) {
-            return redirect("/wap/".str_replace("wap/","",$request->path()));
-        }
+        // if(Agent::isMobile() && strpos($request->path(),"wap")===false) {
+        //     return redirect("/wap/".str_replace("wap/","",$request->path()));
+        // }
         return $next($request);
     }
 }

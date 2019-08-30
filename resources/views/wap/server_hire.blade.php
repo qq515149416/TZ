@@ -12,59 +12,6 @@
 <div id="server_hire">
         <div class="main-body">
             <div class="tz-container clear">
-                <!-- 腾正二维码 -->
-                <div class="qrCode">
-                    <img class="closeCode" src="{{ asset("/images/wap/菜单开.png") }}" alt="">
-                    <img src="{{ asset("/images/wap/腾正二维码.png") }}" alt="">
-                    <div>长按/截图保存，微信识别二维码 或者关注公众号“广东腾正”</div>
-                </div>
-
-                <!-- 更多 -->
-                <div class="sidebar">
-                    <!-- <img src="{{ asset("/images/wap/侧栏.png") }}" alt=""> -->
-                    <img class="more-btn" src="{{ asset("/images/wap/更多.png") }}" alt="">
-                    <div class="more-content">
-                        <ul>
-                            <li style="margin-bottom: 10px;">
-                                <img src="{{ asset("/images/wap/一键电话.png") }}" alt="">
-                                <div>
-                                    <div>一键电话</div>
-                                    <div style="position: absolute; left: 35px;top: 20px;">0769-22226555</div>
-                                </div>
-                            </li>
-                            <li class="wxCode">
-                                <img src="{{ asset("/images/wap/腾正微信.png") }}" alt="">
-                                <div>腾正微信</div>
-                            </li>
-                            <li>
-                                <img src="{{ asset("/images/wap/意见反馈.png") }}" alt="">
-                                <div>意见反馈</div>
-                            </li>
-                        </ul>
-                    </div>
-                    <img class="top-btn" src="{{ asset("/images/wap/置顶.png") }}" alt="">
-                </div>
-
-                <!-- 顶部 -->
-                <div class="main-header">
-                    <div class="tz-main">
-                        <div class="nabar-header">
-                            <img src="{{ asset("/images/wap/logo.png") }}" alt="">
-                        </div>
-                        <div class="nabar-right right">
-                            <div class="close right">
-                                <a href="/">
-                                    <img src="{{ asset("/images/wap/菜单.png") }}" alt="">
-                                </a>
-                            </div>
-                            <div class="user right">
-                                <a href="/">
-                                    <img src="{{ asset("/images/wap/登录与注册.png") }}" alt="">
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <!-- 内容 -->
                 <div class="main-content">
                     <div class="posters">

@@ -54,7 +54,7 @@ class InvoiceController extends Controller
 	 */
 	public function editPayable(InvoiceRequest $request)
 	{
-		$par = $request->only(['payable_id','user_id' ,'name' ,'num'  , 'address','tel' ,'bank' , 'bank_acc']);
+		$par = $request->only(['payable_id' ,'name' ,'num'  , 'address','tel' ,'bank' , 'bank_acc']);
 		
 		$model = new PayableModel();
 

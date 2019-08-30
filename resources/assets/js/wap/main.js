@@ -59,4 +59,5 @@ import "./slideshow.js";
 import "./computer_introduce.js";
 import "./server_hire.js";
 import "./slideshow_a.js";
+import "./server_hosting.js";
 

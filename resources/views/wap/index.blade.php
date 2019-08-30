@@ -53,8 +53,10 @@
                             </a>
                         </li>
                         <li>
-                            <div class="fuwu-title">服务器托管</div>
-                            <div class="fuwu-txt">有效降低企业维护费用和机房投入</div>
+                           <a href="/wap/server_hosting">
+                                <div class="fuwu-title">服务器托管</div>
+                                <div class="fuwu-txt">有效降低企业维护费用和机房投入</div>
+                           </a>
                         </li>
                         <li>
                             <div class="fuwu-title">机柜租用</div>

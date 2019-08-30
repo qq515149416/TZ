@@ -7,12 +7,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
 
-class IndexController extends Controller
+class ServerHostingController extends Controller
 {
     public function index()
     {
-        return view("wap/index",[
-            "page" => "index"
+        return view("wap/server_hosting",[
+            "page" => "server_hosting"
         ]);
     }
 }

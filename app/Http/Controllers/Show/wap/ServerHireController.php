@@ -11,6 +11,8 @@ class ServerHireController extends Controller
 {
     public function index()
     {
-        return view("wap/server_hire");
+        return view("wap/server_hire",[
+            "page" => "server_hire"
+        ]);
     }
 }

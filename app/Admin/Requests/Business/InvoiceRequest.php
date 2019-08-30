@@ -53,6 +53,14 @@ class InvoiceRequest extends FormRequest
 					'user_id'			=> 'required|exists:tz_users,id',
 				];
 				break;
+			case 'makeInvoice':
+				$return = [
+					'flow_id'			=> 'required|array',
+					'type'			=> 'required|in:1,2',
+					'address_id'		=> 'required|exists:tz_address,id',
+					'payable_id'		=> 'required|exists:tz_payable,id',
+				];
+				break;
 			
 			default:
 	
@@ -72,6 +80,12 @@ class InvoiceRequest extends FormRequest
 			'num.required'			=> '请填写纳税人识别号',
 			'payable_id.required'		=> '请选择抬头',
 			'payable_id.exists'		=> '抬头不存在',
+			'flow_id.required'		=> '请选择需开票订单',
+			'flow_id.array'			=> '订单请以数组形式传',
+			'address_id.required'		=> '请选择邮寄地址',
+			'address_id.exists'		=> '邮寄地址不存在',
+			'type.required'			=> '请选择发票种类',
+			'type.in'				=> '发票种类:1 - 增值税普通发票 ; 2 - 增值税专用发票',
 		];
 	}
 

@@ -2501,3 +2501,281 @@ span.arrow {
   font-size: 16px;
   display: inline-block;
 }
+#cabinet_to_rent .main-body {
+  padding-top: 0;
+}
+#cabinet_to_rent .main-body .tz-container .certificate {
+  background-color: #06091f;
+}
+#cabinet_to_rent .main-body .tz-container .certificate .title p {
+  color: #fff;
+}
+#cabinet_to_rent .main-body .tz-container .certificate .title .title-hr {
+  background-color: #fff;
+}
+#cabinet_to_rent .main-body .tz-container .certificate .certificate-box ul {
+  width: 100%;
+}
+#cabinet_to_rent .main-body .tz-container .certificate .certificate-box ul li:nth-child(1) div img {
+  width: 135px;
+}
+#cabinet_to_rent .main-body .tz-container .certificate .certificate-box ul li {
+  color: #fff;
+  font-size: 10px;
+  text-align: center;
+  width: 48%;
+  float: left;
+  padding: 8px 0px;
+}
+#cabinet_to_rent .main-body .tz-container .certificate .certificate-box ul li p {
+  margin-top: 5px;
+}
+#cabinet_to_rent .main-body .tz-container .certificate .certificate-box ul li div {
+  height: 110px;
+  background-color: #fff;
+  border-radius: 10px;
+  text-align: center;
+}
+#cabinet_to_rent .main-body .tz-container .certificate .certificate-box ul li div img {
+  margin-top: 7px ;
+  width: 65px;
+}
+#cabinet_to_rent .main-body .tz-container .certificate .certificate-box ul li:nth-of-type(odd) {
+  margin-right: 10px;
+}
+#cabinet_to_rent .main-body .tz-container .drop-options:hover {
+  border: 1px solid #162fac;
+  -webkit-box-shadow: 0px 0px 5px 0px #445cd4;
+          box-shadow: 0px 0px 5px 0px #445cd4;
+}
+#cabinet_to_rent .main-body .tz-container .drop-options:hover p {
+  border-right: 1px solid #162fac;
+}
+#cabinet_to_rent .main-body .tz-container .drop-options:hover span {
+  border-color: #162fac;
+}
+#cabinet_to_rent .main-body .tz-container .drop-options {
+  width: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border: 1px solid #c5cbdc;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 5px;
+  position: relative;
+}
+#cabinet_to_rent .main-body .tz-container .drop-options p {
+  display: inline-block;
+  font-size: 14px;
+  height: 25px;
+  line-height: 25px;
+  border-right: 1px solid #c5cbdc;
+  color: #162fac;
+  font-weight: bold;
+  margin: 5px 10px;
+  padding-right: 10px;
+}
+#cabinet_to_rent .main-body .tz-container .drop-options select {
+  width: 220px;
+  border: none;
+  height: 30px;
+  -webkit-tap-highlight-color: #fff;
+  outline: none;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background-color: transparent;
+}
+#cabinet_to_rent .main-body .tz-container .drop-options span {
+  display: inline-block;
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  top: 15px;
+  right: 15px;
+  border-left: 2px solid #8690a9;
+  border-bottom: 2px solid #8690a9;
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+}
+#cabinet_to_rent .main-body .tz-container .option-text-a {
+  display: none;
+}
+#cabinet_to_rent .main-body .tz-container .option-text-a .computer-content {
+  width: 100%;
+  padding: 10px 0px;
+}
+#cabinet_to_rent .main-body .tz-container .option-text-a .computer-content table.active-tab {
+  display: block;
+}
+#cabinet_to_rent .main-body .tz-container .option-text-a .computer-content table {
+  width: 100%;
+  border-radius: 5px;
+  border-color: #e1e5f1;
+}
+#cabinet_to_rent .main-body .tz-container .option-text-a .computer-content table tr {
+  color: #5a5e67;
+  width: 100%;
+}
+#cabinet_to_rent .main-body .tz-container .option-text-a .computer-content table tr td {
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+  padding: 10px 0px;
+  text-align: center;
+  font-size: 12px;
+}
+#cabinet_to_rent .main-body .tz-container .option-text-a .computer-content table tr td:first-child {
+  width: 30%;
+}
+#cabinet_to_rent .main-body .tz-container .option-text-a .computer-content table tr td:last-child {
+  text-align: left;
+  padding: 10px;
+}
+#cabinet_to_rent .main-body .tz-container .option-text-a a:nth-child(2) {
+  width: 47%;
+  height: 40px;
+  display: inline-block;
+  text-align: center;
+  line-height: 40px;
+  border: 1px solid #162fac;
+  border-radius: 20px;
+  margin-right: 10px;
+  font-size: 14px;
+}
+#cabinet_to_rent .main-body .tz-container .option-text-a a:nth-child(3) {
+  font-size: 14px;
+  width: 47%;
+  height: 40px;
+  border-radius: 20px;
+  color: #fff;
+  text-align: center;
+  line-height: 40px;
+  display: inline-block;
+  background: -webkit-gradient(linear, left top, right top, from(#456dfa), to(#1f3ddb));
+  background: linear-gradient(to right, #456dfa, #1f3ddb);
+}
+#cabinet_to_rent .main-body .tz-container .option-e-active {
+  display: block !important;
+}
+#cabinet_to_rent .main-body .tz-container .option-text-a {
+  padding-bottom: 20px;
+}
+#cabinet_to_rent .main-body .tz-container .option-text-a .telecom .cabinet-text {
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid #c5cbdc;
+  border-radius: 10px;
+}
+#cabinet_to_rent .main-body .tz-container .option-text-a .telecom .cabinet-text p {
+  display: block;
+  font-size: 14px;
+  color: #252b3a;
+  text-align: left;
+  height: 30px;
+  line-height: 30px;
+}
+#cabinet_to_rent .main-body .tz-container .option-text-a .telecom .cabinet-text ul {
+  float: left;
+  width: 60%;
+}
+#cabinet_to_rent .main-body .tz-container .option-text-a .telecom .cabinet-text ul li {
+  border: none;
+  font-size: 12px;
+  padding: 0;
+  margin: 0;
+  line-height: 2;
+  color: #666a75;
+}
+#cabinet_to_rent .main-body .tz-container .option-text-a .telecom .cabinet-text ul li img {
+  width: 10px;
+}
+#cabinet_to_rent .main-body .tz-container .option-text-a .telecom .cabinet-text div {
+  float: left;
+  width: 40%;
+  position: relative;
+  font-size: 12px;
+  color: #888a93;
+  text-align: center;
+  margin-top: 20px;
+}
+#cabinet_to_rent .main-body .tz-container .option-text-a .telecom .cabinet-text div span {
+  font-size: 10px;
+  color: #fd7919;
+  position: absolute;
+  left: 13px;
+}
+#cabinet_to_rent .main-body .tz-container .option-text-a .telecom .cabinet-text div p {
+  display: inline-block;
+  font-size: 22px;
+  background: -webkit-gradient(linear, left top, right top, from(#fd7919), to(#fd4b19));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+#cabinet_to_rent .main-body .tz-container .option-text-a .telecom .cabinet-text div a {
+  margin-top: 5px;
+  width: 110px;
+  height: 35px;
+  line-height: 35px;
+}
+#cabinet_to_rent .main-body .tz-container .option-text:nth-child(4) a:nth-child(2),
+#cabinet_to_rent .main-body .tz-container .option-text:nth-child(3) a:nth-child(2) {
+  background-color: #bfc6d7;
+  color: #3d414b;
+  border: none;
+}
+#bandwidth_to_ent .main-body {
+  padding-top: 0;
+}
+#bandwidth_to_ent .main-body .tz-container .option-text-a .telecom ul {
+  padding: 10px 0px;
+}
+#bandwidth_to_ent .main-body .tz-container .option-text-a .telecom ul li:nth-of-type(odd) {
+  margin-right: 10px;
+}
+#bandwidth_to_ent .main-body .tz-container .option-text-a .telecom ul li {
+  padding: 10px 0px;
+  margin-bottom: 10px;
+  float: left;
+  width: 48%;
+  border-radius: 10px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border: 1px solid #c5cbdc;
+  text-align: center;
+}
+#bandwidth_to_ent .main-body .tz-container .option-text-a .telecom ul li p:nth-child(1) {
+  font-size: 14px;
+  color: #252b3a;
+  font-weight: bold;
+  line-height: 1.8;
+}
+#bandwidth_to_ent .main-body .tz-container .option-text-a .telecom ul li p:nth-child(2) {
+  font-size: 12px;
+  color: #6a6d78;
+  line-height: 1.6;
+}
+#bandwidth_to_ent .main-body .tz-container .option-text-a .telecom ul li p:nth-child(3) {
+  font-size: 22px;
+  line-height: 1.35;
+  background: -webkit-gradient(linear, left top, right top, from(#fd7919), to(#fd4b19));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+#bandwidth_to_ent .main-body .tz-container .option-text-a .telecom ul li p:nth-child(4) {
+  line-height: 1.8;
+  font-size: 10px;
+  font-family: "PingFang";
+  color: #6a6d78;
+}
+#bandwidth_to_ent .main-body .tz-container .option-text-a .telecom ul li a {
+  display: inline-block;
+  color: #fff;
+  width: 120px;
+  height: 35px;
+  line-height: 35px;
+  margin-top: 5px;
+  border-radius: 20px;
+  font-size: 14px;
+  background: -webkit-gradient(linear, left top, right top, from(#456dfa), to(#1f3ddb));
+  background: linear-gradient(to right, #456dfa, #1f3ddb);
+}

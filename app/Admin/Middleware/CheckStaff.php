@@ -21,7 +21,7 @@ class CheckStaff
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {   
+    {
 
         $admin_id = Admin::user()->id;
         $staff = DB::table('oa_staff')

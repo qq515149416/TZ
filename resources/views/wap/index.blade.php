@@ -59,12 +59,16 @@
                            </a>
                         </li>
                         <li>
-                            <div class="fuwu-title">机柜租用</div>
-                            <div class="fuwu-txt">自主T3+机房，安全可靠的机柜租用服务</div>
+                            <a href="/wap/cabinet">
+                                <div class="fuwu-title">机柜租用</div>
+                                <div class="fuwu-txt">自主T3+机房，安全可靠的机柜租用服务</div>
+                            </a>
                         </li>
                         <li style="border: none;">
-                            <div class="fuwu-title">带宽租用</div>
-                            <div class="fuwu-txt">自主T3+机房，高质量G口、万兆大带宽资源接入</div>
+                            <a href="/wap/bandwidth">
+                                <div class="fuwu-title">带宽租用</div>
+                                <div class="fuwu-txt">自主T3+机房，高质量G口、万兆大带宽资源接入</div>
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -81,9 +85,11 @@
                     <div class="items-gaofang">
                         <ul>
                             <li>
-                                <div class="fuwu-title">高防服务器</div>
-                                <div class="fuwu-txt">G口接入,T级流量真实防御,针对高级威胁精准识别、及时响应,抵御DDoS/CC等各种攻击。
-                                </div>
+                                <a href="/wap/high_security">
+                                    <div class="fuwu-title">高防服务器</div>
+                                    <div class="fuwu-txt">G口接入,T级流量真实防御,针对高级威胁精准识别、及时响应,抵御DDoS/CC等各种攻击。
+                                    </div>
+                                </a>
                             </li>
                             <li>
                                 <div class="fuwu-title">高防云主机</div>

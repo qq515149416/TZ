@@ -70,6 +70,9 @@ Route::group([
     Route::get('/menu', 'Show\wap\MenuController@index');
     Route::get('/server_hire', 'Show\wap\ServerHireController@index');
     Route::get('/server_hosting', 'Show\wap\ServerHostingController@index');
+    Route::get('/cabinet', 'Show\wap\CabinetController@index');
+    Route::get('/bandwidth', 'Show\wap\BandwidthController@index');
+    Route::get('/high_security', 'Show\wap\HighSecurityController@index');
 });
 
 /**

@@ -173,14 +173,14 @@ $('.grid-edit-salesman_id-{$this->getKey()}').unbind('click').on('click', functi
 EOT;
 
         Admin::script($script);
-            $actions->append(
+        $tag = <<<EOT
+            <a title="一键绑定客户" href="javascript:void(0)",data-id="{$actions->getKey()}" class="grid-edit-salesman_id-{$this->getKey()}">
+                <i class="fa fa-lock"></i>
+            </a>
+EOT;
 
-<<<EOT
-    <a title="一键绑定客户" href="javascript:void(0)",data-id="{$actions->getKey()}" class="grid-edit-salesman_id-{$this->getKey()}">
-        <i class="fa fa-lock"></i>
-    </a>
-EOT);
-        });  
+            $actions->append($tag);
+        });
         $grid->disableCreateButton();
         $grid->disableRowSelector();
         $grid->filter(function($filter){

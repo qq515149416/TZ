@@ -101,7 +101,7 @@ Route::group([
             $router->get('/checkrecharge', 'Show\RechargeController@index');
             $router->get('/reviewRecharge', 'Show\ReviewRechargeController@index');
             $router->get('/pwdDepartment', 'Show\WorkOrderController@getPwdDepart');
-            
+
             $router->get('/defenseip', 'Show\DefenseipController@index');
             $router->get('/defensePackage', 'Show\DefensePackageController@index');
             $router->get('/defenseBusines', 'Show\DefenseBusinessController@index');
@@ -133,6 +133,7 @@ Route::group([
             $router->get('/api/help_category/select', 'Show\HelpCategoryController@select');
             $router->resource('/help_contents', 'Show\HelpContentsController');
             $router->get('/api/help_content/select', 'Show\HelpContentsController@select');
+            $router->get('/invoice', 'Show\InvoiceController@index');
 
             //流水单复核
             $router->resource('/ordersReview', 'Show\OrdersReviewController');
@@ -710,7 +711,7 @@ Route::group([
             $router->get('show', 'Business\AddressController@show');//展示客户邮寄地址
         });
 
-        
+
 
     });
 
@@ -776,12 +777,15 @@ Route::group([
             $router->get('show', 'Business\InvoiceController@showPayable');//展示客户抬头
         });
 
+
         Route::group([
             'middleware' => 'CheckStaff',
         ], function (Router $router) {
             $router->resource('/view', 'Business\InvoiceViewController');
             $router->get('/delete', 'Business\InvoiceViewController@deleteInvoice');
         });
+
+
     });
 
 

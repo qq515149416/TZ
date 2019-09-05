@@ -173,7 +173,7 @@ class RemoveReasonController extends Controller
 			
 			$grid->model()->leftJoin('tz_users as b' , 'b.id' , '=' , 'tz_business.client_id')
 				->whereIn( 'tz_business.remove_status' , [3,4] )
-				->orderBy('tz_business.updated_at' , 'asc')
+				->orderBy('tz_business.updated_at' , 'desc')
 				->select(['tz_business.id' , 'tz_business.client_name' , 'tz_business.sales_name','tz_business.resource_detail','tz_business.money','tz_business.start_time','tz_business.endding_time','tz_business.remove_reason','tz_business.check_note','tz_business.remove_status','b.nickname' , 'b.email' , 'b.name']);
 
 			/*	自定义按钮start		*/

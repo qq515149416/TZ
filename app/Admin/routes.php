@@ -776,9 +776,15 @@ Route::group([
             $router->get('show', 'Business\InvoiceController@showPayable');//展示客户抬头
         });
 
-        
-
+        Route::group([
+            'middleware' => 'CheckStaff',
+        ], function (Router $router) {
+            $router->resource('/view', 'Business\InvoiceViewController');
+            $router->get('/delete', 'Business\InvoiceViewController@deleteInvoice');
+        });
     });
+
+
 
 
 });

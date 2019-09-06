@@ -19,10 +19,10 @@ class DelInvoice
         return <<<SCRIPT
 
 $('.grid-check-row').on('click', function () {
-
+    if(confirm( '是否删除？ '))  location.href='delete?invoice_id='+$(this).data('id');
     // Your code.
     //console.log($(this).data('id'));
-    alert('666');
+    //alert('666');
     //  $.ajax({
     //     type : "POST",
     //     url : "../api/drawMoney/check",
@@ -43,8 +43,8 @@ SCRIPT;
     protected function render()
     {
         Admin::script($this->script());
-
-        return "<a class='fa fa-trash grid-check-row' data-id='{$this->id}'></a>";
+      
+        return "<a  class='fa fa-trash grid-check-row' data-id='{$this->id}'></a>";
     }
 
     public function __toString()

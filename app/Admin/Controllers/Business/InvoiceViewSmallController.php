@@ -18,7 +18,7 @@ use Illuminate\Http\File;
 use Illuminate\Support\Facades\DB;
 use Encore\Admin\Widgets\Table;
 use App\Admin\Models\Statistics\PfmStatistics as FlowModel;
-
+use App\Admin\Models\Customer\Customer;
 //行操作
 use App\Admin\Controllers\Business\DelInvoice;
 
@@ -26,7 +26,7 @@ use App\Admin\Controllers\Business\DelInvoice;
 *	这个是业务员用的,只能看到自己的
 *
 */
-class InvoiceViewController extends Controller
+class InvoiceViewSmallController extends Controller
 {
 	protected $detailID;
 	protected $mail_state;
@@ -57,16 +57,16 @@ class InvoiceViewController extends Controller
 
 
 
-	// public function create(Content $content)
-	// {
-	// 	return Admin::content(function (Content $content) {
+	public function create(Content $content)
+	{
+		return Admin::content(function (Content $content) {
 
-	// 		$content->header('轮播图管理');
-	// 		$content->description('轮播图添加');
+			$content->header('发票申请');
+			$content->description('提交申请');
 
-	// 		$content->body($this->form());
-	// 	});
-	// }
+			$content->body($this->form());
+		});
+	}
 
 	//编辑方法,由于是业务员用,只能编辑回答
 	public function edit($id)
@@ -197,13 +197,16 @@ class InvoiceViewController extends Controller
 		            if($invoice_id) {
 		                $grid->model()->where('id', $invoice_id);
 		            }
+		            
 			// $grid->model()->leftJoin('tz_orders_flow as b','b.id', '=' , 'tz_orders_review.flow_id')
 			// 	->leftJoin('tz_users as c' , 'c.id' , '=' , 'b.customer_id')
 			// 	->orderBy('tz_orders_review.status' , 'asc')
 			// 	->select(['tz_orders_review.*', 'b.serial_number','b.actual_payment','b.pay_time','b.before_money','b.after_money','c.nickname','c.email','c.name']);
-	            		$grid->model()->orderBy('mail_state','asc');
+	            		$grid->model()
+	            		->where('salesman_id',Admin::user()->id)
+	            		->orderBy('mail_state','asc');
 			/*	自定义按钮start		*/
-			$grid->disableCreateButton();	//禁用创建按钮
+			//$grid->disableCreateButton();	//禁用创建按钮
 			$grid->disableExport();		//禁用导出数据按钮
 			//$grid->disableFilter();			//禁用查询过滤器
 
@@ -226,12 +229,10 @@ class InvoiceViewController extends Controller
 				if($actions->row->mail_state != 1){
 					$actions->append(new DelInvoice($actions->getKey()));
 					//$actions->append('<a href="delete?invoice_id='.$actions->getKey().'"><i class="fa fa-trash"></i></a>');
-				}
-					
-				
+				}	
 			});
 
-			// $grid->disableCreateButton();		//添加按钮重构
+			//$grid->disableCreateButton();		//添加按钮重构
 			// $grid->tools(function ($tools) {
 			// 	$tools->append("<a href='添加跳转地址' class='btn btn-sm btn-success' style='float: right;'>
 			// 	<i class='fa fa-save'></i>&nbsp;&nbsp;新增
@@ -326,8 +327,10 @@ class InvoiceViewController extends Controller
 	protected function form()
 	{
 		return Admin::form(InvoiceModel::class, function (Form $form) {
+			//$form->select($column[, $label])->options('/api/users');
+			$form->select('customer','选择客户')->options('/tz_admin/invoice/getUsers')->load('flow_id', '/tz_admin/invoice/getFlow');
 
-			$form->hidden('flow_id');
+			$form->listbox('flow_id','流水选择');
 
 			$form->display('id', 'ID');
 

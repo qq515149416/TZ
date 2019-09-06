@@ -61,6 +61,10 @@ class InvoiceRequest extends FormRequest
 					'payable_id'		=> 'required|exists:tz_payable,id',
 				];
 				break;
+			case 'deleteInvoice':
+				$return = [
+					'invoice_id'		=> 'required|exists:tz_invoice,id',
+				];
 			
 			default:
 	
@@ -86,6 +90,8 @@ class InvoiceRequest extends FormRequest
 			'address_id.exists'		=> '邮寄地址不存在',
 			'type.required'			=> '请选择发票种类',
 			'type.in'				=> '发票种类:1 - 增值税普通发票 ; 2 - 增值税专用发票',
+			'invoice_id.required'		=> '请选择发票申请',
+			'invoice_id.exists'		=> '发票申请不存在',
 		];
 	}
 

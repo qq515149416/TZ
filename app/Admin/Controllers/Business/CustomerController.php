@@ -8,6 +8,8 @@ use App\Admin\Models\Business\CustomerModel;
 use App\Admin\Models\Hr\DepartmentModel;
 use Illuminate\Http\Request;
 use App\Admin\Requests\Business\CustomerRequest;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 /**
  * 客户信息
@@ -108,6 +110,92 @@ class CustomerController extends Controller
         $register = new CustomerModel();
         $result = $register->registerClerk($register_info);
         return tz_ajax_echo($result,$result['msg'],$result['code']);
+    }
+
+    /**
+     * 手动消费
+     * @param  Request $request 'business_number'--手动消费的业务,'flow_type'--手动消费的类型,'note'--类型备注,'money'--金额,'pay_time'--支付时间
+     * @return [type]           [description]
+     */
+    public function manualPay(Request $request){
+        $manual = $request->only('business_number','note','money','pay_time');
+
+        /**
+         * 检验手动消费的相关字段是否填写
+         * @var [type]
+         */
+        $rules = ['business_number'=>'required','note'=>'required','money'=>'required'];
+        $messages = ['business_number.required'=>'手动消费的业务必须选择','note.required'=>'手动消费备注必须填写','money.required'=>'手动消费金额必须填写'];
+        $validator = Validator::make($manual,$rules,$messages);
+        if($validator->messages()->first()){
+            return tz_ajax_echo('',$validator->messages()->first(),0);
+        }
+
+        if(isset($manual['pay_time'])){
+            $pay_time = $manual['pay_time'];
+        } else {
+            $pay_time = date('Y-m-d H:i:s',time());
+        }
+
+        $serial_number = 'tz_'.time().'_admin_'.Admin::user()->id;
+
+        $order = DB::table('tz_orders')->where(['business_sn'=>$manual['business_number']])
+                      ->whereBetween('resource_type',[1,3]);
+                      ->whereNull('deleted_at')
+                      ->select('id','customer_id')
+                      ->first();
+
+        $order_id = $order->id;
+        $customer_id = $order->customer_id;
+
+        $before_money = DB::table('tz_users')->where(['id'=>$customer_id])->value('money');
+
+        if($before_money < $manual['money']){
+            return tz_ajax_echo('','余额不足,无法支付',0);
+        }
+
+        $after_money = bcsub($before_money,$manual['money'],2);
+
+        $detail = DB::table('tz_business')->where(['business_number'=>$manual['business_number']])->select('resource_detail')->first();
+        $room_id = json_encode($detail)->machineroom_id;
+
+        DB::beginTransaction();
+        $user = DB::table('tz_users')->where(['id'=>$customer_id])->update(['money'=>$after_money,'updated_at'=>$pay_time]);
+
+        if($user == 0){
+            DB::rollBack();
+            return tz_ajax_echo('','手动消费失败',0);
+        }
+        
+        $flow = [
+                    'business_number'=>$manual['business_number'],
+                    'serial_number'=>$serial_number,
+                    'order_id' => $order_id,
+                    'customer_id' => $customer_id,
+                    'business_id' => Admin::user()->id;
+                    'payable_money' => $manual['money'];
+                    'actual_payment' => $manual['money'];
+                    'preferential_amount' => 0;
+                    'pay_time' => $pay_time;
+                    'before_money' =>$before_money;
+                    'after_money' => $after_money;
+                    'flow_type' => 3,
+                    'room_id' => $room_id,
+                    'note' => $manual['note'];
+                    'created_at' => date('Y-m-d H:i:s',time());
+                    'updated_at' => date('Y-m-d H:i:s',time());
+                ];
+
+        $row = DB::table('tz_orders_flow')->insertGetId($flow);
+
+        if($row != 0){
+            DB::commit();
+            return tz_ajax_echo('','业务:'.$manual['business_number'].'的增值消费成功',1);
+        } else {
+            DB::rollBack();
+            return tz_ajax_echo('','业务:'.$manual['business_number'].'的增值消费失败',0);
+        }
+
     }
 
 

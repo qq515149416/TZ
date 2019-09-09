@@ -492,7 +492,7 @@ Route::group([
         /**
          * 手动消费
          */
-        $router->psot('manualpay','Business\CustomerController@manualPay');
+        $router->post('manualpay','Business\CustomerController@manualPay');
     });
 
 

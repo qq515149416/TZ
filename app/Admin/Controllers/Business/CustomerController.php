@@ -140,7 +140,7 @@ class CustomerController extends Controller
         $serial_number = 'tz_'.time().'_admin_'.Admin::user()->id;
 
         $order = DB::table('tz_orders')->where(['business_sn'=>$manual['business_number']])
-                      ->whereBetween('resource_type',[1,3]);
+                      ->whereBetween('resource_type',[1,3])
                       ->whereNull('deleted_at')
                       ->select('id','customer_id')
                       ->first();
@@ -172,18 +172,18 @@ class CustomerController extends Controller
                     'serial_number'=>$serial_number,
                     'order_id' => $order_id,
                     'customer_id' => $customer_id,
-                    'business_id' => Admin::user()->id;
-                    'payable_money' => $manual['money'];
-                    'actual_payment' => $manual['money'];
-                    'preferential_amount' => 0;
-                    'pay_time' => $pay_time;
-                    'before_money' =>$before_money;
-                    'after_money' => $after_money;
+                    'business_id' => Admin::user()->id,
+                    'payable_money' => $manual['money'],
+                    'actual_payment' => $manual['money'],
+                    'preferential_amount' => 0,
+                    'pay_time' => $pay_time,
+                    'before_money' =>$before_money,
+                    'after_money' => $after_money,
                     'flow_type' => 3,
                     'room_id' => $room_id,
-                    'note' => $manual['note'];
-                    'created_at' => date('Y-m-d H:i:s',time());
-                    'updated_at' => date('Y-m-d H:i:s',time());
+                    'note' => $manual['note'],
+                    'created_at' => date('Y-m-d H:i:s',time()),
+                    'updated_at' => date('Y-m-d H:i:s',time()),
                 ];
 
         $row = DB::table('tz_orders_flow')->insertGetId($flow);

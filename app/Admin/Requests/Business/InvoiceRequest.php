@@ -65,7 +65,11 @@ class InvoiceRequest extends FormRequest
 				$return = [
 					'invoice_id'		=> 'required|exists:tz_invoice,id',
 				];
-			
+			case 'getFlow':
+				$return = [
+					'customer_id'		=> 'required|exists:tz_users,id',
+				];
+
 			default:
 	
 				break;
@@ -92,6 +96,8 @@ class InvoiceRequest extends FormRequest
 			'type.in'				=> '发票种类:1 - 增值税普通发票 ; 2 - 增值税专用发票',
 			'invoice_id.required'		=> '请选择发票申请',
 			'invoice_id.exists'		=> '发票申请不存在',
+			'customer_id.required'		=> '请选择客户',
+			'customer_id.exists'		=> '客户不存在',
 		];
 	}
 

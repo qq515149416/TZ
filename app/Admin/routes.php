@@ -772,7 +772,7 @@ Route::group([
 
         $router->post('makeInvoice', 'Business\InvoiceController@makeInvoice');//为客户开发票
         $router->get('getUsers', 'Business\InvoiceController@getUsers');//获取所属客户
-        $router->get('getFlow', 'Business\InvoiceController@getFlow');//获取客户所属流水
+        
 
         Route::group([
             'prefix' => 'payable', //这发票的抬头
@@ -788,6 +788,7 @@ Route::group([
         Route::group([
             'middleware' => 'CheckStaff',
         ], function (Router $router) {
+            $router->get('getFlow', 'Business\InvoiceController@getFlow');//获取客户所属流水
             $router->resource('/view', 'Business\InvoiceViewController');
             $router->resource('/viewSmall', 'Business\InvoiceViewSmallController');
             $router->get('/delete', 'Business\InvoiceController@deleteInvoice');

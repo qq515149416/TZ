@@ -123,30 +123,30 @@ class InvoiceController extends Controller
 	 */
 	public function getUsers(Request $request)
 	{
-		$q = $request->get('q');
-;
-		
+		//$q = $request->get('q');
+
 		$model = new Customer();
 
 		$admin_id = Admin::user()->id;
 
-		return $model->where('salesman_id' , $admin_id)
-				->get( ['id', 'nickname as text']);
+		$users = $model->where('salesman_id' , $admin_id)
+				->get( ['id', 'nickname as name']);
 				// ->paginate(null, ['id', 'nickname as text']);
 
+		return tz_ajax_echo($users,'获取成功',1);
 		// return Customer::where(['salesman_id' => $admin_id])
 		// 	->paginate(null, ['id', 'admin_id as text']);
 		
 	}
 
 	/**
-	 * 获取所属客户
+	 * 获取所属客户的流水
 	 * @param 
 	 * @return json 返回编辑结果
 	 */
-	public function getFlow(Request $request)
+	public function getFlow(InvoiceRequest $request)
 	{
-		$provinceId = $request->get('q');
+		$provinceId = $request->get('customer_id');
 		
 		$model = new FlowModel();
 
@@ -157,61 +157,65 @@ class InvoiceController extends Controller
 		foreach ($res as $k => $v) {
 			$order_id = json_decode($v['order_id'],true);
 			if (is_array($order_id)) {
-				$order = DB::table('tz_orders')->where('id',$order_id[0])->first(['resource_type','business_sn']);
+				$order = DB::table('tz_orders')->whereIn('id',$order_id)->get(['id','resource_type','business_sn','resource','order_type']);
 			}else{
-				$order = DB::table('tz_orders')->where('id',$order_id)->first(['resource_type','business_sn']);
-
+				$order = DB::table('tz_orders')->where('id',$order_id)->get(['id','resource_type','business_sn','resource','order_type']);
 			}
 			//资源的类型(1.租用主机，2.托管主机，3.租用机柜，4.IP，5.CPU，6.硬盘，7.内存，8.带宽，9.防护，10.cdn , 11.高防IP ; 12.流量叠加包 )
-			if($order){
+			if(!$order->isEmpty()){
 				$order = json_decode(json_encode($order) ,true);
 			}
-			switch ($order['resource_type']) {
-				case '1':
-					$type = '租用主机';
-					break;
-				case '2':
-					$type = '托管主机';
-					break;
-				case '3':
-					$type = '租用机柜';
-					break;
-				case '4':
-					$type = 'IP';
-					break;
-				case '5':
-					$type = 'CPU';
-					break;
-				case '6':
-					$type = '硬盘';
-					break;
-				case '7':
-					$type = '内存';
-					break;
-				case '8':
-					$type = '带宽';
-					break;
-				case '9':
-					$type = '防护';
-					break;
-				case '10':
-					$type = 'cdn';
-					break;
-				case '11':
-					$type = '高防IP';
-					break;
-				case '12':
-					$type = '流量叠加包';
-					break;		
-				default:
-					$type = '未知';
-					break;
+			$order_type = [ 1 => '新购' , 2 => '续费'];
+			foreach ($order as $ke => $va) {
+				switch ($va['resource_type']) {
+					case '1':
+						$order[$ke]['resource_type'] = '租用主机';
+						break;
+					case '2':
+						$order[$ke]['resource_type'] = '托管主机';
+						break;
+					case '3':
+						$order[$ke]['resource_type'] = '租用机柜';
+						break;
+					case '4':
+						$order[$ke]['resource_type'] = 'IP';
+						break;
+					case '5':
+						$order[$ke]['resource_type'] = 'CPU';
+						break;
+					case '6':
+						$order[$ke]['resource_type'] = '硬盘';
+						break;
+					case '7':
+						$order[$ke]['resource_type'] = '内存';
+						break;
+					case '8':
+						$order[$ke]['resource_type'] = '带宽';
+						break;
+					case '9':
+						$order[$ke]['resource_type'] = '防护';
+						break;
+					case '10':
+						$order[$ke]['resource_type'] = 'cdn';
+						break;
+					case '11':
+						$order[$ke]['resource_type'] = '高防IP';
+						break;
+					case '12':
+						$order[$ke]['resource_type'] = '流量叠加包';
+						break;		
+					default:
+						$order[$ke]['resource_type'] = '未知';
+						break;
+				}
+				$order[$ke]['order_type'] = $order_type[$order[$ke]['order_type']];
+				//$v['text'] = '流水号 : '. $v['serial_number'].' : 业务号 : ' .$order['business_sn']."({$type}) / " . '￥'.$v['actual_payment'];
+				
+				//unset($v['serial_number']);
+				//unset($v['actual_payment']);
+				//unset($v['order_id']);
 			}
-			$v['text'] = '流水号 : '. $v['serial_number'].' : 业务号 : ' .$order['business_sn']."({$type}) / " . '￥'.$v['actual_payment'];
-		
-			unset($v['serial_number']);
-			unset($v['actual_payment']);
-			//unset($v['order_id']);
+			$v['order'] = $order;
 		}
 		return $res;
 		// return Customer::where(['salesman_id' => $admin_id])

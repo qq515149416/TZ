@@ -5,10 +5,10 @@
             {{ $item->name }}
         </h3>
         <ul class="font-regular">
-            @foreach ($list_data->where('category_id',$item->id)->get() as $item)
+            @foreach ($list_data->where('category_id',$item->id)->limit(5)->get() as $a_item)
             <li>
-                <a href="/help/detail/{{ $item->id }}">
-                    {{ $item->title }}
+                <a href="/help/detail/{{ $a_item->id }}">
+                    {{ $a_item->title }}
                 </a>
             </li>
             @endforeach

@@ -1117,7 +1117,7 @@ class Order extends Model
 					->get();
 		if(!empty($result)){
 			foreach($result as $key=>$value){
-				$flow_type = [1=>'新购',2=>'续费'];
+				$flow_type = [1=>'新购',2=>'续费',3=>'增值'];
 				$value->type = $flow_type[$value->flow_type];
 			}
 			$return['data'] = $result;

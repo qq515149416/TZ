@@ -75,7 +75,7 @@ class OrdersModel extends Model
 		// dd($result);
 		if(!empty($result)){
 			foreach($result as $key=>$value){
-				$flow_type = [1=>'新购',2=>'续费'];
+				$flow_type = [1=>'新购',2=>'续费',3=>'增值'];
 				$value->type = $flow_type[$value->flow_type];
 
 				$value->customer_email = $value->customer_email?$value->customer_email:$value->customer_name;

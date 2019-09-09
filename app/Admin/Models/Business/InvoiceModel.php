@@ -22,7 +22,7 @@ class InvoiceModel extends Model
 	protected $primaryKey = 'id'; //主键
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
-	protected $fillable = ['flow_id', 'total_amount' , 'tax'  ,'date' ,'type' , 'mail_state' , 'invoice_num' ,'address' ,'payable']  ;
+	protected $fillable = ['flow_id', 'total_amount' , 'tax'  ,'date' ,'type' , 'mail_state' , 'invoice_num' ,'address' ,'payable','salesman_id']  ;
 
 	/**
 	* 查询权限,是不是自己的客户或者是不是管理员
@@ -125,10 +125,11 @@ class InvoiceModel extends Model
 				];
 			}
 		}
-		
+	
 		//生成发票申请
 		$data = [
 			'flow_id'		=> json_encode($flow_id),		//将几个开票的流水单号转成json数组存起
+			'salesman_id'	=> $flow[0]->business_id,		//业务员的id
 			'total_amount'	=> $total_amount,			//总的价格
 			'tax'		=> bcmul($total_amount, 0.06,2),	//计算税额
 			'date'		=> date("Y-m-d H:i:s"),			//日期
@@ -287,6 +288,60 @@ class InvoiceModel extends Model
 			'code'	=> 1,
 		];
 	
+
+	}
+	/**
+	*删除开票申请
+	*/
+	public function deleteInvoice($invoice_id)
+	{
+		$invoice = $this->find($invoice_id);
+		if (!$invoice) {
+			return [
+				'data'	=> [],
+				'msg'	=> '发票申请不存在',
+				'code'	=> 0,
+			];
+		}
+		$flow_id = json_decode($invoice->flow_id,true);
+
+		DB::beginTransaction();
+		$flow_model = new PfmStatistics();
+		foreach ($flow_id as $k => $v) {
+			$flow = $flow_model->find($v);
+			if (!$flow) {
+				DB::rollBack();
+				return [
+					'data'	=> [],
+					'msg'	=> '流水不存在,请找技术人员核实',
+					'code'	=> 0,
+				];
+			}
+			$flow->invoice_state = 0;
+			if (!$flow->save()) {
+				DB::rollBack();
+				return [
+					'data'	=> [],
+					'msg'	=> '流水的发票状态更新失败',
+					'code'	=> 0,
+				];
+			}
+		}
+		if ($invoice->delete()) {
+			DB::commit();
+			return [
+				'data'	=> [],
+				'msg'	=> '发票申请删除成功',
+				'code'	=> 1,
+			];
+		}else{
+			DB::rollBack();
+			return [
+				'data'	=> [],
+				'msg'	=> '发票申请删除失败',
+				'code'	=> 0,
+			];
+		}
 	}
 	
 }

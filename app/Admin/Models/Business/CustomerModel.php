@@ -350,11 +350,60 @@ class CustomerModel extends Model
             $return['msg'] = '该业务员不存在或已离职';
             return $return;
         }
-        $row = $this->where(['id'=>$edit_param['customer_id']])->update(['salesman_id'=>$edit_param['clerk_id']]);
-        if($row != false){
+        DB::beginTransaction();
+        //统计该客户下的所有有效业务
+        $business = DB::table('tz_business')
+                        ->where(['client_id'=>$edit_param['customer_id']])
+                        ->where('sales_id','!=',$edit_param['clerk_id'])
+                        ->whereBetween('business_status',[0,4])
+                        ->whereBetween('remove_status',[0,3])
+                        ->whereNull('deleted_at')
+                        ->count();
+        if($business > 0){//有效业务存在，进行业务绑定客户的转移到目标业务员
+            $business_row = DB::table('tz_business')
+                                ->where(['client_id'=>$edit_param['customer_id']])
+                                ->where('sales_id','!=',$edit_param['clerk_id'])
+                                ->whereBetween('business_status',[0,4])
+                                ->whereBetween('remove_status',[0,3])
+                                ->whereNull('deleted_at')
+                                ->update(['sales_id'=>$edit_param['clerk_id'],'sales_name'=>$clerk->name]);
+            if($business_row != $business){
+                DB::rollBack();
+                $return['code'] = 0;
+                $return['msg'] = '(#101)该客户转移失败';
+            }
+        }
+        //统计客户存在的所有有效资源订单
+        $orders = DB::table('tz_orders')
+                    ->where(['customer_id'=>$edit_param['customer_id']])
+                    ->where('resource_type','<',10)
+                    ->where('business_id','!=',$edit_param['clerk_id'])
+                    ->whereBetween('order_status',[0,3])
+                    ->whereBetween('remove_status',[0,3])
+                    ->whereNull('deleted_at')
+                    ->count();
+        if($orders > 0){//转移有效资源订单到目标业务员名下
+            $order_row = DB::table('tz_orders')
+                        ->where(['customer_id'=>$edit_param['customer_id']])
+                        ->where('resource_type','<',10)
+                        ->where('business_id','!=',$edit_param['clerk_id'])
+                        ->whereBetween('order_status',[0,3])
+                        ->whereBetween('remove_status',[0,3])
+                        ->whereNull('deleted_at')
+                        ->update(['business_id'=>$edit_param['clerk_id'],'business_name'=>$clerk->name]);
+            if($order_row != $orders){//转移有效成功数目与客户有效数目不一致
+                DB::rollBack();
+                $return['code'] = 0;
+                $return['msg'] = '(#102)该客户转移失败';
+            }
+        }
+        $row = DB::table('tz_users')->where(['id'=>$edit_param['customer_id']])->update(['salesman_id'=>$edit_param['clerk_id']]);
+        if($row != 0){
+            DB::commit();
             $return['code'] = 1;
             $return['msg'] = '客户已转到'.$clerk->name.'名下';
         } else {
+            DB::rollBack();
             $return['code'] = 0;
             $return['msg'] = '该客户转移失败';
         }

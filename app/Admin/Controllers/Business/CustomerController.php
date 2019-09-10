@@ -157,8 +157,8 @@ class CustomerController extends Controller
 
         $after_money = bcsub($before_money,$manual['money'],2);
 
-        $detail = DB::table('tz_business')->where(['business_number'=>$manual['business_number']])->select('resource_detail')->first();
-        $room_id = json_encode($detail)->machineroom_id;
+        $detail = DB::table('tz_business')->where(['business_number'=>$manual['business_number']])->value('resource_detail');
+        $room_id = json_decode($detail)->machineroom_id;
 
         DB::beginTransaction();
         $user = DB::table('tz_users')->where(['id'=>$customer_id])->update(['money'=>$after_money,'updated_at'=>$pay_time]);

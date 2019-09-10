@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Admin\Requests\Business\CustomerRequest;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Encore\Admin\Facades\Admin;
 
 /**
  * 客户信息
@@ -114,7 +115,7 @@ class CustomerController extends Controller
 
     /**
      * 手动消费
-     * @param  Request $request 'business_number'--手动消费的业务,'flow_type'--手动消费的类型,'note'--类型备注,'money'--金额,'pay_time'--支付时间
+     * @param  Request $request 'business_number'--手动消费的业务,'note'--类型备注,'money'--金额,'pay_time'--支付时间
      * @return [type]           [description]
      */
     public function manualPay(Request $request){

@@ -488,6 +488,11 @@ Route::group([
         $router->post('cabinetmachine','Business\BusinessController@cabinetMachine');//机柜业务下添加托管机器
         $router->get('showcabinetmachine','Business\BusinessController@showCabinetMachine');//机柜业务下托管机器数据获取
         $router->get('cabinetmachinedetail','Business\BusinessController@cabinetMachineDetail');//机柜业务下托管机器数据获取
+
+        /**
+         * 手动消费
+         */
+        $router->post('manualpay','Business\CustomerController@manualPay');
     });
 
 

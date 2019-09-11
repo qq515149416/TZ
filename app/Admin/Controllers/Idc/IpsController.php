@@ -26,10 +26,10 @@ class IpsController extends Controller
     
     /**
      * 新增IP地址的信息
-     * @param  IpsRequest $request 进行字段验证Ips
+     * @param  IpsRequest $request 进行字段验证
      * @return json             将相关的信息进行返回前台
      */
-    public function insert(Request $request){
+    public function insert(IpsRequest $request){
     	// 符合提交方式的进行数据的提取
 		$param = $request->only(['ip_start','ip_end','vlan','ip_company','ip_status','ip_lock','ip_note','ip_comproom']);
         $create = new Ips();
@@ -61,10 +61,10 @@ class IpsController extends Controller
 
     /**
      * 修改IP地址的相关信息
-     * @param  IpsRequest $request 进行字段验证Ips
+     * @param  IpsRequest $request 进行字段验证
      * @return json             返回相关的信息
      */
-    public function doEdit(Request $request) {
+    public function doEdit(IpsRequest $request) {
 		// 符合判断的进行数据提取
 		$data = $request->only(['id','vlan', 'ip','ip_company','ip_status','ip_lock','ip_note','ip_comproom']);
 		$doedit = new Ips();

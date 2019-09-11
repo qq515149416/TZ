@@ -37,11 +37,11 @@ class CpuController extends Controller
 
 	/**
 	 * 新增文章消息
-	 * @param  CpuRequest $request 进行字段验证Cpu
+	 * @param  CpuRequest $request 进行字段验证
 	 * @return json             将相关的信息进行返回前台
 	 */
 
-	public function insert( Request $request){
+	public function insert( CpuRequest $request){
 		//验证提交方式
 		if($request->isMethod('post')) {
 		// 符合提交方式的进行数据的提取
@@ -62,10 +62,10 @@ class CpuController extends Controller
 
 	/**
 	 * 修改cpu信息的相关信息
-	 * @param  NewsRequest $request 进行字段验证Cpu
+	 * @param  NewsRequest $request 进行字段验证
 	 * @return json             返回相关的信息
 	 */
-	public function edit(Request $request) {
+	public function edit(CpuRequest $request) {
 		//判断提交的方式
 		if($request->isMethod('post')){
 			// 符合判断的进行数据提取

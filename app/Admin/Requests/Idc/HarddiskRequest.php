@@ -61,6 +61,7 @@ class HarddiskRequest extends FormRequest
      * 重新定义数据字段返回的提示信息
      */
     public function failedValidation(Validator $validator) {
+        dd(1);
         $msg = $validator->errors()->first();
         header('Content-type:application/json');
         header('Cache-control:no-cache');

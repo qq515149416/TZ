@@ -40,8 +40,8 @@ class HarddiskController extends Controller
 	 * @param  HarddiskRequest $request 进行字段验证
 	 * @return json             将相关的信息进行返回前台
 	 */
-
-	public function insert( HarddiskRequest $request){
+// Harddisk
+	public function insert( Request $request){
 		//验证提交方式
 		if($request->isMethod('post')) {
 		// 符合提交方式的进行数据的提取
@@ -62,10 +62,10 @@ class HarddiskController extends Controller
 
 	/**
 	 * 修改harddisk信息的相关信息
-	 * @param  HarddiskRequest $request 进行字段验证
+	 * @param  HarddiskRequest $request 进行字段验证Harddisk
 	 * @return json             返回相关的信息
 	 */
-	public function edit(HarddiskRequest $request) {
+	public function edit(Request $request) {
 		//判断提交的方式
 		if($request->isMethod('post')){
 			// 符合判断的进行数据提取

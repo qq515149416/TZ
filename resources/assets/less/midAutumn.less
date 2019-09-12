@@ -1,0 +1,347 @@
+#midAutumn {
+    background: url(../images/midAutumn/midAutumn_bg.png) no-repeat;
+    background-size: 100% 100%;
+    padding-top: 726px;
+    > section {
+        width: 1180px;
+        margin: 0 auto;
+        margin-bottom: 92px;
+        &:nth-of-type(1) {
+            > .container-title {
+                background: url(../images/midAutumn/midAutumn_biaoti_1.png) no-repeat;
+            }
+            > .container-content {
+                > .dialog {
+                    float: left;
+                    @dialogWidth: 570px;
+                    &:last-of-type {
+                        margin-left: 40px;
+                    }
+                    .dialog(570px);
+                    &::after {
+                        background: url(../images/midAutumn/midAutumn_biaoqian_maiyisongyi.png) no-repeat;
+                    }
+                    > .product-content {
+                        > ul {
+                            height: 38px;
+                            margin: 0;
+                            margin-bottom: 32px;
+                            > li {
+                                color: #657399;
+                                line-height: 38px;
+                                > span {
+                                    font-family: 'pingFangHeavy';
+                                    font-size: 20px;
+                                }
+                                > span:first-of-type{
+                                    color: #181818;
+                                    margin-right: 32px;
+                                }
+                                > span:last-of-type{
+                                    color: #cf2f06;
+                                }
+                            }
+                        }
+                        > .chips {
+                            .tag(#181818);
+                        }
+                        > p {
+                            font-family: 'pingFang';
+                            font-size: 16px;
+                            color: #a7aaaf;
+                            margin: 0;
+                            margin-bottom: 12px;
+                            &:first-of-type {
+                                margin-top: 18px;
+                            }
+                            &:last-of-type {
+                                padding-bottom: 22px;
+                                margin-bottom: 0;
+                            }
+                        }
+                    }
+                    > .product-operats {
+                        > .buy {
+                            .buy(@dialogWidth,52px);
+                        }
+                    }
+                }
+            }
+        }
+        &:nth-of-type(2) {
+            > .container-title {
+                background: url(../images/midAutumn/midAutumn_biaoti_2.png) no-repeat;
+            }
+            > .container-content {
+                > .dialog {
+                    .dialog();
+                    &::after {
+                        background: url(../images/midAutumn/midAutumn_biaoqian_5zhe.png) no-repeat;
+                    }
+                    > .product-content {
+                        display: flex;
+                        justify-content: space-between;
+                        > section {
+                            &:first-of-type {
+                                width: 550px;
+                                > .title {
+                                    margin-bottom: 16px;
+                                    > .chips {
+                                        .tag();
+                                    }
+                                }
+                                > .config {
+                                    display: flex;
+                                    justify-content: space-between;
+                                    > .config-item {
+                                        .config();
+                                    }
+                                }
+                                > p {
+                                    padding: 5px 0;
+                                    color: #a0a3a8;
+                                    font-family: 'pingFangBold';
+                                    font-size: 20px;
+                                }
+                                > .h1 {
+                                    font-family: 'pingFangBold';
+                                    font-size: 18px;
+                                    color: #4e4a4a;
+                                    margin-bottom: 26px;
+                                }
+                                > .h2 {
+                                    font-family: 'pingFangBold';
+                                    font-size: 14px;
+                                    color: #aeb1b5;
+                                    padding-bottom: 26px;
+                                }
+                            }
+                            &:nth-of-type(2) {
+                                .condition-config {
+                                    margin-top: 40px;
+                                    // margin-left: 70px;
+                                    .condition-config-item {
+                                        @position: left;
+                                        .config(@position);
+                                        &:last-of-type {
+                                            margin-top: 40px;
+                                        }
+                                    }
+                                }
+                            }
+                            &:last-of-type {
+                                text-align: center;
+                                > .price {
+                                    margin-top: 62px;
+                                    font-family: 'pingFang';
+                                    font-size: 16px;
+                                    color: #4e4a4a;
+                                    .currency {
+                                        font-family: '微软雅黑';
+                                        font-size: 20px;
+                                        color: #cf2f06;
+                                    }
+                                    .amount {
+                                        font-family: 'pingFangBold';
+                                        font-size: 42px;
+                                        color: #cf2f06;
+                                    }
+                                }
+                                > .buy {
+                                    .buy();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &:nth-of-type(3) {
+            > .container-title {
+                background: url(../images/midAutumn/midAutumn_biaoti_3.png) no-repeat;
+            }
+            > .container-content {
+                > .dialog {
+                    .dialog();
+                    &::after {
+                        background: url(../images/midAutumn/midAutumn_biaoqian_5zhe.png) no-repeat;
+                    }
+                    > .product-content {
+                        display: flex;
+                        justify-content: space-between;
+                        position: relative;
+                        .chips.tip {
+                            .tag();
+                            position: absolute;
+                            top: 28px;
+                            right: 12px;
+                            border: 1px solid #cf2f06;
+                            color: #d2283b;
+                        }
+                        > section {
+                            &:first-of-type {
+                                width: 550px;
+                                > .title {
+                                    margin-bottom: 16px;
+                                    > .chips {
+                                        .tag();
+                                    }
+                                }
+                                > .config {
+                                    display: flex;
+                                    justify-content: space-between;
+                                    &.simple {
+                                        width: 280px;
+                                        margin-top: 22px;
+                                        > .config-item:nth-of-type(1) {
+                                            .attr {
+                                                text-align: left;
+                                            }
+                                        }
+                                        > .config-item:nth-of-type(2) {
+                                            transform: translateX(-30px);
+                                        }
+                                    }
+                                    > .config-item {
+                                        .config();
+                                    }
+                                }
+                                > p {
+                                    padding: 5px 0;
+                                    color: #a0a3a8;
+                                    font-family: 'pingFangBold';
+                                    font-size: 20px;
+                                }
+                                > .h1 {
+                                    font-family: 'pingFangBold';
+                                    font-size: 18px;
+                                    color: #4e4a4a;
+                                    margin-bottom: 26px;
+                                }
+                                > .h2 {
+                                    font-family: 'pingFangBold';
+                                    font-size: 14px;
+                                    color: #aeb1b5;
+                                    padding-bottom: 26px;
+                                    > span {
+                                        float: left;
+                                        line-height: 25px;
+                                        &:last-of-type {
+                                            width: 405px;
+                                        }
+                                    }
+                                }
+                            }
+                            &:nth-of-type(2) {
+                                .condition-config {
+                                    margin-top: 40px;
+                                    // margin-left: 70px;
+                                    .condition-config-item {
+                                        @position: left;
+                                        .config(@position);
+                                        &:last-of-type {
+                                            margin-top: 40px;
+                                        }
+                                    }
+                                }
+                            }
+                            &:last-of-type {
+                                text-align: center;
+                                > .price {
+                                    margin-top: 62px;
+                                    font-family: 'pingFang';
+                                    font-size: 16px;
+                                    color: #4e4a4a;
+                                    .currency {
+                                        font-family: '微软雅黑';
+                                        font-size: 20px;
+                                        color: #cf2f06;
+                                    }
+                                    .amount {
+                                        font-family: 'pingFangBold';
+                                        font-size: 42px;
+                                        color: #cf2f06;
+                                    }
+                                }
+                                > .buy {
+                                    .buy();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        > .container-title {
+            width: 734px;
+            height: 51px;
+            margin: 0 auto;
+            margin-bottom: 40px;
+        }
+
+    }
+}
+.config(@position: center) {
+    .attr {
+        display: block;
+        font-size: 16px;
+        font-family: 'pingFang';
+        color: #a0a3a8;
+        margin-bottom: 14px;
+        text-align: @position;
+    }
+    .val {
+        display: block;
+        font-family: 'pingFangBold';
+        font-size: 18px;
+        color: #4e4a4a;
+        text-align: @position;
+    }
+}
+.buy(@width: 140px,@height: 38px) {
+    display: inline-block;
+    width: @width;
+    height: @height;
+    line-height: @height;
+    background-color: #fece81;
+    text-decoration: none;
+    font-family: 'pingFangBold';
+    font-size: 18px;
+    color: #103478;
+    text-align: center;
+}
+.tag(@color: #aeb1b5) {
+    padding: 4px 5px;
+    border: 1px solid #d8d8d8;
+    border-radius: 2px;
+    color: @color;
+    font-family: 'pingFangBold';
+    font-size: 14px;
+}
+.dialog(@width: 1180px) {
+    width: @width;
+    position: relative;
+    &::after {
+        content: "";
+        position: absolute;
+        width: 154px;
+        height: 37px;
+        right: -5px;
+        top: 10px;
+    }
+    > .product-title {
+        height: 100px;
+        border-radius: 2px 2px 0 0;
+        line-height: 100px;
+        background-color: #162a64;
+        padding-left: 30px;
+        font-family: 'pingFangHeavy';
+        font-size: 24px;
+        color: #fed083;
+    }
+    > .product-content {
+        padding: 0 32px;
+        padding-top: 28px;
+        background-color: #fff;
+    }
+}

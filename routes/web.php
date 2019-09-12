@@ -58,6 +58,7 @@ Route::group([
     Route::get('/souvenir', 'Show\SouvenirController@index');
     Route::get('/overlayPackage', 'Show\OverlayPackageController@index');
     Route::get('/army_day', 'Show\ArmyDayController@index');
+    Route::get('/mid_autumn', 'Show\MidAutumnController@index');
 
 });
 

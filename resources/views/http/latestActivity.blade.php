@@ -19,14 +19,16 @@
     <!--活动-->
     <div class="activity">
         <div class="card-container">
-            <a class="card" href="/army_day" target="_blank">
+            <a class="card" href="/mid_autumn" target="_blank">
                 <div class="card-image">
-                    <img src="{{ asset("/images/lastestActivity/activity-6.png") }}" />
+                    <img src="{{ asset("/images/lastestActivity/activity-8.png") }}" />
                     <span class="ongoing">活动中</span>
                 </div>
                 <div class="card-body">
-                    <h5 class="title font-heavy">92周年八一建军节：军民同庆，共筑强国</h5>
-                    <p class="desc">没有网络安全 就没有国家安全，热烈庆祝中国人名解放军建军92周年，网络安全企业首选腾正科技高防服务器，防御流量包三重大礼，军民同庆，共筑强国！</p>
+                    <h5 class="title font-heavy">迎中秋庆国庆:腾正高防服务器高防IP买一送一，新品5折疯抢</h5>
+                    <p class="desc">
+                        中秋国庆双节同庆，腾正科技四重大礼钜惠全网。优惠一：买高防IP，送WAF 1个月；优惠二：买高防服务器，送100G防御流量叠加包；优惠三：一键商城系统5折特惠，助力搭建属于你的电商平台；优惠四：新注册用户云主机99元包月，送20M带宽，续费价格不变。
+                    </p>
                 </div>
             </a>
             <a class="card" href="/dist/highDefense.html" target="_blank">
@@ -38,6 +40,17 @@
                     <h5 class="title font-heavy">腾正高防IP专业DDOS防御首选</h5>
                     <p class="desc">腾正高防IP专业DDOS防御首选，T+级防护系统，毫秒级过滤引擎，精准识别秒级响应，支持不同业务模式</p>
                 </div>
+            </a>
+            <a class="card disable" href="javascript: void(0);" target="_blank">
+                <div class="card-image">
+                    <img src="{{ asset("/images/lastestActivity/activity-9.png") }}" />
+                    <span class="end">活动结束</span>
+                </div>
+                <div class="card-body">
+                    <h5 class="title font-heavy">92周年八一建军节：军民同庆，共筑强国</h5>
+                    <p class="desc">没有网络安全 就没有国家安全，热烈庆祝中国人名解放军建军92周年，网络安全企业首选腾正科技高防服务器，防御流量包三重大礼，军民同庆，共筑强国！</p>
+                </div>
+                <div class="mask"></div>
             </a>
             <a class="card disable" href="javascript: void(0);" target="_blank">
                 <div class="card-image">

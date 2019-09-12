@@ -6,6 +6,8 @@ namespace App\Admin\Requests\Idc;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\Rule;
+
 class CpuRequest extends FormRequest
 {
     /**
@@ -26,16 +28,14 @@ class CpuRequest extends FormRequest
     public function rules()
     {
         $return = [
-            'cpu_number'   => "required|unique:idc_cpu,".Request()->id.',id,deleted_at,Null',
+            'cpu_number'   =>  ['required',
+                                    Rule::unique('idc_cpu','cpu_number')->ignore(Request()->id)->where(function($query){
+                                        $query->whereNull('deleted_at');
+                                    })
+                                ],
             'cpu_param'    => 'required',
         ];
-        //检测表单中是否存在id,并靠此决定验证规则
-        $info = $this->all();
-
-        if(isset($info['id'])){
-            $return['cpu_number'].=",cpu_number,{$info['id']}";
-        }
-
+       
         return $return;
     }
 

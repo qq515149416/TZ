@@ -14,6 +14,8 @@ namespace App\Admin\Requests\Idc;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\Rule;
+
 class HarddiskRequest extends FormRequest
 {
     /**
@@ -35,14 +37,13 @@ class HarddiskRequest extends FormRequest
     {
         //检测表单中是否存在id,并靠此决定验证规则
         $return = [
-            'harddisk_number'   => "required|unique:idc_harddisk,".Request()->id.',id,deleted_at,Null',
+            'harddisk_number'   => ['required',
+                                    Rule::unique('idc_harddisk','harddisk_number')->ignore(Request()->id)->where(function($query){
+                                        $query->whereNull('deleted_at');
+                                    })
+                                   ],
             'harddisk_param'    => 'required',
         ];
-        $info = $this->all();
-
-        if(isset($info['id'])){
-            $return['harddisk_number'].=",harddisk_number,{$info['id']}";
-        }
 
         return $return;
     }

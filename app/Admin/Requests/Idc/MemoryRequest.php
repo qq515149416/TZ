@@ -14,6 +14,8 @@ namespace App\Admin\Requests\Idc;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\Rule;
+
 class MemoryRequest extends FormRequest
 {
 	/**
@@ -35,15 +37,14 @@ class MemoryRequest extends FormRequest
 	{
 		//检测表单中是否存在id,并靠此决定验证规则
 		$return = [
-			'memory_number'	=> "required|unique:idc_memory,".Request()->id.',id,deleted_at,Null',
+			'memory_number'	=> ['required',
+                                    Rule::unique('idc_memory','memory_number')->ignore(Request()->id)->where(function($query){
+                                        $query->whereNull('deleted_at');
+                                    })
+                                ],
 			'memory_param'	=> 'required',
 			'room_id'                 	=> 'required',
 		];
-		$info = $this->all();
-
-		if(isset($info['id'])){
-			$return['memory_number'].=",memory_number,{$info['id']}";
-		}
 
 		return $return;
 	}
@@ -52,9 +53,9 @@ class MemoryRequest extends FormRequest
 	{
 		
 		return  [
-			'memory_number.required'    	=> '硬盘编号必须填写',
-			'memory_number.unique'	=> '该编号硬盘已录入',
-			'memory_param.required'	=> '硬盘参数必须填写',
+			'memory_number.required'    	=> '内存编号必须填写',
+			'memory_number.unique'	=> '该编号内存已录入',
+			'memory_param.required'	=> '内存参数必须填写',
 			'room_id.required'		=> '请选择所属机房',
 		];
 	}

@@ -8,7 +8,7 @@
         margin-bottom: 92px;
         &:nth-of-type(1) {
             > .container-title {
-                background: url(../images/midAutumn/midAutumn_biaoti_1.png) no-repeat;
+                background: url(../images/midAutumn/midAutumn_biaoti_1.png) no-repeat center top;
             }
             > .container-content {
                 > .dialog {
@@ -17,18 +17,21 @@
                     &:last-of-type {
                         margin-left: 40px;
                     }
-                    .dialog(570px);
+                    .dialog(570px,100px);
                     &::after {
                         background: url(../images/midAutumn/midAutumn_biaoqian_maiyisongyi.png) no-repeat;
                     }
                     > .product-content {
+                        border-radius: 0;
                         > ul {
                             height: 38px;
                             margin: 0;
                             margin-bottom: 32px;
+                            padding-left: 22px;
                             > li {
                                 color: #657399;
                                 line-height: 38px;
+                                font-size: 22px;
                                 > span {
                                     font-family: 'pingFangHeavy';
                                     font-size: 20px;
@@ -50,7 +53,7 @@
                             font-size: 16px;
                             color: #a7aaaf;
                             margin: 0;
-                            margin-bottom: 12px;
+                            margin-bottom: 10px;
                             &:first-of-type {
                                 margin-top: 18px;
                             }
@@ -63,6 +66,7 @@
                     > .product-operats {
                         > .buy {
                             .buy(@dialogWidth,52px);
+                            border-radius: 0 0 4px 4px;
                         }
                     }
                 }
@@ -70,7 +74,7 @@
         }
         &:nth-of-type(2) {
             > .container-title {
-                background: url(../images/midAutumn/midAutumn_biaoti_2.png) no-repeat;
+                background: url(../images/midAutumn/midAutumn_biaoti_2.png) no-repeat center top;
             }
             > .container-content {
                 > .dialog {
@@ -158,7 +162,7 @@
         }
         &:nth-of-type(3) {
             > .container-title {
-                background: url(../images/midAutumn/midAutumn_biaoti_3.png) no-repeat;
+                background: url(../images/midAutumn/midAutumn_biaoti_3.png) no-repeat center top;
             }
             > .container-content {
                 > .dialog {
@@ -247,6 +251,7 @@
                             }
                             &:last-of-type {
                                 text-align: center;
+                                margin-right: 7px;
                                 > .price {
                                     margin-top: 62px;
                                     font-family: 'pingFang';
@@ -273,9 +278,9 @@
             }
         }
         > .container-title {
-            width: 734px;
+            // width: 734px;
             height: 51px;
-            margin: 0 auto;
+            // margin: 0 auto;
             margin-bottom: 40px;
         }
 
@@ -299,6 +304,7 @@
     }
 }
 .buy(@width: 140px,@height: 38px) {
+    border-radius: 2px;
     display: inline-block;
     width: @width;
     height: @height;
@@ -318,9 +324,10 @@
     font-family: 'pingFangBold';
     font-size: 14px;
 }
-.dialog(@width: 1180px) {
+.dialog(@width: 1180px,@titleHeight: 91px) {
     width: @width;
     position: relative;
+    @borderRadius: 4px;
     &::after {
         content: "";
         position: absolute;
@@ -330,9 +337,9 @@
         top: 10px;
     }
     > .product-title {
-        height: 100px;
-        border-radius: 2px 2px 0 0;
-        line-height: 100px;
+        height: @titleHeight;
+        border-radius: @borderRadius @borderRadius 0 0;
+        line-height: @titleHeight;
         background-color: #162a64;
         padding-left: 30px;
         font-family: 'pingFangHeavy';
@@ -343,5 +350,6 @@
         padding: 0 32px;
         padding-top: 28px;
         background-color: #fff;
+        border-radius: 0 0 @borderRadius @borderRadius;
     }
 }

@@ -9871,7 +9871,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin-bottom: 92px;
 }
 #midAutumn > section:nth-of-type(1) > .container-title {
-  background: url(/images/midAutumn_biaoti_1.png?6084f7ef729f6839b648f77c8bf0287c) no-repeat;
+  background: url(/images/midAutumn_biaoti_1.png?6084f7ef729f6839b648f77c8bf0287c) no-repeat center top;
 }
 #midAutumn > section:nth-of-type(1) > .container-content > .dialog {
   float: left;
@@ -9891,7 +9891,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #midAutumn > section:nth-of-type(1) > .container-content > .dialog > .product-title {
   height: 100px;
-  border-radius: 2px 2px 0 0;
+  border-radius: 4px 4px 0 0;
   line-height: 100px;
   background-color: #162a64;
   padding-left: 30px;
@@ -9903,18 +9903,24 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   padding: 0 32px;
   padding-top: 28px;
   background-color: #fff;
+  border-radius: 0 0 4px 4px;
 }
 #midAutumn > section:nth-of-type(1) > .container-content > .dialog::after {
   background: url(/images/midAutumn_biaoqian_maiyisongyi.png?9213a0ed8a3089db93cca51990c86c90) no-repeat;
+}
+#midAutumn > section:nth-of-type(1) > .container-content > .dialog > .product-content {
+  border-radius: 0;
 }
 #midAutumn > section:nth-of-type(1) > .container-content > .dialog > .product-content > ul {
   height: 38px;
   margin: 0;
   margin-bottom: 32px;
+  padding-left: 22px;
 }
 #midAutumn > section:nth-of-type(1) > .container-content > .dialog > .product-content > ul > li {
   color: #657399;
   line-height: 38px;
+  font-size: 22px;
 }
 #midAutumn > section:nth-of-type(1) > .container-content > .dialog > .product-content > ul > li > span {
   font-family: 'pingFangHeavy';
@@ -9940,7 +9946,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   font-size: 16px;
   color: #a7aaaf;
   margin: 0;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 #midAutumn > section:nth-of-type(1) > .container-content > .dialog > .product-content > p:first-of-type {
   margin-top: 18px;
@@ -9950,6 +9956,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   margin-bottom: 0;
 }
 #midAutumn > section:nth-of-type(1) > .container-content > .dialog > .product-operats > .buy {
+  border-radius: 2px;
   display: inline-block;
   width: 570px;
   height: 52px;
@@ -9960,9 +9967,10 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   font-size: 18px;
   color: #103478;
   text-align: center;
+  border-radius: 0 0 4px 4px;
 }
 #midAutumn > section:nth-of-type(2) > .container-title {
-  background: url(/images/midAutumn_biaoti_2.png?2f018de43cf28c9171902080a6f4249b) no-repeat;
+  background: url(/images/midAutumn_biaoti_2.png?2f018de43cf28c9171902080a6f4249b) no-repeat center top;
 }
 #midAutumn > section:nth-of-type(2) > .container-content > .dialog {
   width: 1180px;
@@ -9977,9 +9985,9 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   top: 10px;
 }
 #midAutumn > section:nth-of-type(2) > .container-content > .dialog > .product-title {
-  height: 100px;
-  border-radius: 2px 2px 0 0;
-  line-height: 100px;
+  height: 91px;
+  border-radius: 4px 4px 0 0;
+  line-height: 91px;
   background-color: #162a64;
   padding-left: 30px;
   font-family: 'pingFangHeavy';
@@ -9990,6 +9998,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   padding: 0 32px;
   padding-top: 28px;
   background-color: #fff;
+  border-radius: 0 0 4px 4px;
 }
 #midAutumn > section:nth-of-type(2) > .container-content > .dialog::after {
   background: url(/images/midAutumn_biaoqian_5zhe.png?135dd0e093297a43422cb097063de91c) no-repeat;
@@ -10098,6 +10107,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   color: #cf2f06;
 }
 #midAutumn > section:nth-of-type(2) > .container-content > .dialog > .product-content > section:last-of-type > .buy {
+  border-radius: 2px;
   display: inline-block;
   width: 140px;
   height: 38px;
@@ -10110,7 +10120,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   text-align: center;
 }
 #midAutumn > section:nth-of-type(3) > .container-title {
-  background: url(/images/midAutumn_biaoti_3.png?6deeaab43e61a31155f1b5150f985726) no-repeat;
+  background: url(/images/midAutumn_biaoti_3.png?6deeaab43e61a31155f1b5150f985726) no-repeat center top;
 }
 #midAutumn > section:nth-of-type(3) > .container-content > .dialog {
   width: 1180px;
@@ -10125,9 +10135,9 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   top: 10px;
 }
 #midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-title {
-  height: 100px;
-  border-radius: 2px 2px 0 0;
-  line-height: 100px;
+  height: 91px;
+  border-radius: 4px 4px 0 0;
+  line-height: 91px;
   background-color: #162a64;
   padding-left: 30px;
   font-family: 'pingFangHeavy';
@@ -10138,6 +10148,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   padding: 0 32px;
   padding-top: 28px;
   background-color: #fff;
+  border-radius: 0 0 4px 4px;
 }
 #midAutumn > section:nth-of-type(3) > .container-content > .dialog::after {
   background: url(/images/midAutumn_biaoqian_5zhe.png?135dd0e093297a43422cb097063de91c) no-repeat;
@@ -10260,6 +10271,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-content > section:last-of-type {
   text-align: center;
+  margin-right: 7px;
 }
 #midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-content > section:last-of-type > .price {
   margin-top: 62px;
@@ -10278,6 +10290,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   color: #cf2f06;
 }
 #midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-content > section:last-of-type > .buy {
+  border-radius: 2px;
   display: inline-block;
   width: 140px;
   height: 38px;
@@ -10290,8 +10303,6 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   text-align: center;
 }
 #midAutumn > section > .container-title {
-  width: 734px;
   height: 51px;
-  margin: 0 auto;
   margin-bottom: 40px;
 }

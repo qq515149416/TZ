@@ -128,7 +128,7 @@
                             <span class="amount">3456</span>
                             元/年
                         </div>
-                        <a class="buy" target="_blank" href="https://www.tzcloud.com/cloudbuy.html">立即购买</a>
+                        <a class="buy" target="_blank" href="https://www.tzcloud.com/cloudbuy.html?pg=23">立即购买</a>
                     </section>
                 </article>
             </div>

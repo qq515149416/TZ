@@ -1,10 +1,16 @@
+@keyframes animations{
+    0%{
+        width: 0%
+    }
+    100%{
+        width: 100%
+    }
+}
 #tz-menu.page-index{
     width: 100%;
     position: absolute;
     .tz-container{
         width: 100%;
-
-
             // 未登录
             .main-content{
                 background-color: #e9ecff;
@@ -23,7 +29,7 @@
                         background-color: transparent;
                         margin: 0px;
                         position: absolute;
-                        bottom: 15px;
+                        bottom: 30px;
                         ol{
                             li{
                                 width: 6px;
@@ -80,10 +86,8 @@
                 }
                 .tz-fuwu{
                     width: 100%;
-                    padding-bottom: 30px;
                     .tz-fuwu-box{
                         width: 100%;
-
                         .fuwu-li{
                             margin-bottom: 5px;
                             // height: 45px;
@@ -122,8 +126,8 @@
                                 ul{
                                     width: 100%;
                                     li{
-                                        padding-top: 20px;
-                                        padding-bottom: 20px;
+                                        padding-top: 18px;
+                                        padding-bottom: 15px;
                                         box-sizing: content-box;
                                         width: 100%;
                                         border-bottom: 1px dashed #a5b3d5;
@@ -137,8 +141,9 @@
                                             margin-bottom: 10px;
                                         }
                                         .fuwu-txt{
-                                            padding-left: 15px;
-                                            padding-right: 10px;
+                                            // padding-left: 10px;
+                                            // padding-right: 10px;
+                                            padding: 0 15px;
                                             line-height: 20px;
                                             font-size: 12px;
                                             text-align: left;
@@ -146,18 +151,23 @@
                                             color: rgb( 102, 106, 117 );
                                         }
                                     }
+                                    .solution:nth-child(7),
+                                    .solution:nth-child(8){
+                                        margin-bottom: 0px;
+                                    }
                                     .solution{
-                                        width: 155px;
-                                        height: 250px;
+                                        // width: 155px;
+                                        width: calc(95.3%/2);
+                                        // height: 301px;
                                         background-color: #fff;
                                         border: none;
                                         float: left;
                                         border-radius: 10px;
-                                        margin-bottom: 10px;
+                                        margin-bottom: 15px;
                                         text-align: center;
                                         img{
                                             width: 40px;
-                                            height: 30px;
+                                            // height: 30px;
                                             margin: 5px 0px;
                                         }
                                         .fuwu-title{
@@ -165,7 +175,8 @@
                                         }
                                         a{
                                             // margin-left: 20px;
-                                            margin: 15px auto;
+                                            font-size: 12px;
+                                            margin: 15px auto 0px;
                                             border-radius: 20px;
                                             line-height: 30px;
                                             text-align: center;
@@ -177,7 +188,7 @@
                                         }
                                     }
                                     .m{
-                                        margin-right: 5px;
+                                        margin-right: 15px;
 
                                     }
                                     .fangyu-li{
@@ -187,6 +198,7 @@
                                         border: none;
                                         margin-bottom: 15px;
                                         a{
+                                            font-size: 12px;
                                             margin-left: 20px;
                                             margin-top: 10px;
                                             border-radius: 20px;
@@ -218,6 +230,7 @@
                 // 新闻
                 .news{
                     background-color: #fff;
+                    margin-top: -4px;
                     .title{
                         width: 100%;
                         height: 98px;
@@ -237,7 +250,7 @@
                             border-radius: 10px;
                             overflow: hidden;
                             background-color: rgb( 255, 255, 255 );
-                            box-shadow: 0px 5px 10px 0px #a0b4c7d5;
+                            box-shadow: 0px 5px 10px 0px rgba(22, 45, 155, 0.2);
                             margin-bottom: 10px;
                             img{
                                 width: 100%;

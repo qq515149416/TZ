@@ -15,7 +15,7 @@ class AddressModel extends Model
 {
 
 	use SoftDeletes;
-	
+
 
 	protected $table = 'tz_address'; //表
 	protected $primaryKey = 'id'; //主键
@@ -40,10 +40,10 @@ class AddressModel extends Model
 				return true;
 			}
 		}
-		
+
 
 	}
-	
+
 
 	/**
 	*为客户添加邮寄地址
@@ -125,7 +125,7 @@ class AddressModel extends Model
 	*/
 	public function edit( $address_id , $address_after )
 	{
-		
+
 		$address = $this->find($address_id);
 		if (!$address) {
 			return [
@@ -176,7 +176,7 @@ class AddressModel extends Model
 		// 	];
 		// }
 
-		$address = $this->where('user_id' , $user_id)->get(['address']);
+		$address = $this->where('user_id' , $user_id)->get(['id','address']);
 		if($address->isEmpty()){
 			return [
 				'data'	=> [],
@@ -190,7 +190,7 @@ class AddressModel extends Model
 			'msg'	=> '地址获取成功',
 			'code'	=> 1,
 		];
-	
+
 	}
-	
+
 }

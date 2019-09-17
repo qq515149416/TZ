@@ -20,13 +20,13 @@ class InvoiceController extends Controller
 
 	/**
 	 * 为客户添加发票抬头
-	 * @param 
+	 * @param
 	 * @return json 返回添加结果
 	 */
 	public function insertPayable(InvoiceRequest $request)
 	{
 		$par = $request->only(['user_id' ,'name' ,'num'  , 'address','tel' ,'bank' , 'bank_acc']);
-		
+
 		$model = new PayableModel();
 
 		$res = $model->insertPayable($par);
@@ -36,13 +36,13 @@ class InvoiceController extends Controller
 
 	/**
 	 * 为客户删除邮寄地址
-	 * @param 
+	 * @param
 	 * @return json 返回删除结果
 	 */
 	public function delPayable(InvoiceRequest $request)
 	{
 		$par = $request->only(['payable_id']);
-		
+
 		$model = new PayableModel();
 
 		$res = $model->delPayable($par['payable_id']);
@@ -52,13 +52,13 @@ class InvoiceController extends Controller
 
 	/**
 	 * 为客户编辑邮寄地址
-	 * @param 
+	 * @param
 	 * @return json 返回编辑结果
 	 */
 	public function editPayable(InvoiceRequest $request)
 	{
 		$par = $request->only(['payable_id' ,'name' ,'num'  , 'address','tel' ,'bank' , 'bank_acc']);
-		
+
 		$model = new PayableModel();
 
 		$res = $model->editPayable($par);
@@ -68,13 +68,13 @@ class InvoiceController extends Controller
 
 	/**
 	 * 展示指定客户的邮寄地址
-	 * @param 
+	 * @param
 	 * @return json 返回编辑结果
 	 */
 	public function showPayable(InvoiceRequest $request)
 	{
 		$par = $request->only(['user_id']);
-		
+
 		$model = new PayableModel();
 
 		$res = $model->showPayable($par['user_id']);
@@ -84,13 +84,13 @@ class InvoiceController extends Controller
 
 	/**
 	 * 生成发票单
-	 * @param 
+	 * @param
 	 * @return json 返回编辑结果
 	 */
 	public function makeInvoice(InvoiceRequest $request)
 	{
 		$par = $request->only(['flow_id','type' , 'address_id' , 'payable_id']);
-		
+
 		$model = new InvoiceModel();
 
 		$res = $model->makeInvoice($par['flow_id'] , $par['type'] , $par['address_id'] , $par['payable_id']  );
@@ -101,24 +101,24 @@ class InvoiceController extends Controller
 
 	/**
 	 * 删除开票申请
-	 * @param 
+	 * @param
 	 * @return json 返回编辑结果
 	 */
 	public function deleteInvoice(InvoiceRequest $request)
 	{
 		$par = $request->only(['invoice_id']);
-		
+
 		$model = new InvoiceModel();
 
 		$res = $model->deleteInvoice($par['invoice_id'] );
-		
+
 		echo ("<script>alert('".$res['msg']." ');location='/tz_admin/invoice/view'</script>");
-		
+
 	}
 
 	/**
 	 * 获取所属客户
-	 * @param 
+	 * @param
 	 * @return json 返回编辑结果
 	 */
 	public function getUsers(Request $request)
@@ -136,18 +136,18 @@ class InvoiceController extends Controller
 		return tz_ajax_echo($users,'获取成功',1);
 		// return Customer::where(['salesman_id' => $admin_id])
 		// 	->paginate(null, ['id', 'admin_id as text']);
-		
+
 	}
 
 	/**
 	 * 获取所属客户的流水
-	 * @param 
+	 * @param
 	 * @return json 返回编辑结果
 	 */
 	public function getFlow(InvoiceRequest $request)
 	{
 		$provinceId = $request->get('customer_id');
-		
+
 		$model = new FlowModel();
 
 		$res = $model->where(['customer_id' => $provinceId , 'invoice_state' => 0])
@@ -203,24 +203,24 @@ class InvoiceController extends Controller
 						break;
 					case '12':
 						$order[$ke]['resource_type'] = '流量叠加包';
-						break;		
+						break;
 					default:
 						$order[$ke]['resource_type'] = '未知';
 						break;
 				}
 				$order[$ke]['order_type'] = $order_type[$order[$ke]['order_type']];
 				//$v['text'] = '流水号 : '. $v['serial_number'].' : 业务号 : ' .$order['business_sn']."({$type}) / " . '￥'.$v['actual_payment'];
-				
+
 				//unset($v['serial_number']);
 				//unset($v['actual_payment']);
 				//unset($v['order_id']);
 			}
 			$v['order'] = $order;
 		}
-		return $res;
+		return tz_ajax_echo($res,"获取成功",1);
 		// return Customer::where(['salesman_id' => $admin_id])
 		// 	->paginate(null, ['id', 'admin_id as text']);
-		
+
 	}
 
 }

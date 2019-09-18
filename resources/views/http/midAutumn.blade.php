@@ -208,7 +208,7 @@
                     <section>
                         <div class="price">
                             <span class="currency">￥</span>
-                            <span class="amount">99</span>
+                            <span class="amount">66</span>
                             元/月
                         </div>
                         <a class="buy" target="_blank" href="https://www.tzcloud.com/cloudbuy.html">立即购买</a>

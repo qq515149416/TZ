@@ -139,7 +139,7 @@
         <article class="container-content">
             <div class="dialog">
                 <header class="product-title">
-                    腾正云&nbsp;——&nbsp;国庆促销(&nbsp;新开企业云主机送20M带宽&nbsp;)
+                    腾正云&nbsp;——&nbsp;国庆促销(&nbsp;新开企业低防秒解云主机送20M带宽&nbsp;)
                 </header>
                 <article class="product-content">
                     <section>
@@ -163,7 +163,7 @@
                             </div>
                             <div class="config-item">
                                 <span class="attr">带宽</span>
-                                <span class="val">20M</span>
+                                <span class="val">20M独享</span>
                             </div>
                             <div class="config-item">
                                 <span class="attr">线路</span>
@@ -173,7 +173,7 @@
                         <div class="config simple">
                             <div class="config-item">
                                 <span class="attr">防御</span>
-                                <span class="val">无防御</span>
+                                <span class="val">10G</span>
                             </div>
                             <div class="config-item">
                                 <span class="attr">备份集</span>

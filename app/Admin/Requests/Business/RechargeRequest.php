@@ -46,7 +46,7 @@ class RechargeRequest extends FormRequest
 					'recharge_amount'	=> 'required|numeric|min:1.00',
 					'recharge_way'		=> 'required',	
 					'tax'			=> 'required',
-					'time'			=> 'required|date',	
+					'time'			=> 'required|date|after:1971-01-01 00:00:00|before:2037-12-31 23:59:59',	
 				];
 				break;
 			case 'showAuditRechargeBig':
@@ -65,7 +65,7 @@ class RechargeRequest extends FormRequest
 					'recharge_amount'	=> 'required|min:1.00',
 					'recharge_way'		=> 'required',	
 					'trade_id'		=> 'required|integer|exists:tz_recharge_admin,id',	
-					'time'			=> 'date',	
+					'time'			=> 'date|after:1971-01-01 00:00:00|before:2037-12-31 23:59:59',	
 				];
 				break;
 			case 'editAuditRecharge':
@@ -103,6 +103,8 @@ class RechargeRequest extends FormRequest
 			'trade_id.exists'			=> '充值审核单不存在',
 			'time.required'			=> '请填写到账时间',
 			'time.date'			=> '到账日期格式错误',
+			'time.after'   =>'日期不在1971-01-01到2037-12-31范围内',
+			'time.before'   =>'日期不在1971-01-01到2037-12-31范围内',
 			'tax.required'			=> '请填写税额',
 
 		];

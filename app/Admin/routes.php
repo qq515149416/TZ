@@ -134,6 +134,7 @@ Route::group([
             $router->resource('/help_contents', 'Show\HelpContentsController');
             $router->get('/api/help_content/select', 'Show\HelpContentsController@select');
             $router->get('/invoice', 'Show\InvoiceController@index');
+            $router->get('/data_analysis', 'Show\DataAnalysisController@index');
 
             //流水单复核
             $router->resource('/ordersReview', 'Show\OrdersReviewController');
@@ -772,7 +773,7 @@ Route::group([
 
         $router->post('makeInvoice', 'Business\InvoiceController@makeInvoice');//为客户开发票
         $router->get('getUsers', 'Business\InvoiceController@getUsers');//获取所属客户
-        
+
 
         Route::group([
             'prefix' => 'payable', //这发票的抬头

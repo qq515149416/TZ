@@ -59,7 +59,7 @@
             </div>
         </article>
     </section>
-    <section>
+    <!-- <section>
         <header class="container-title"></header>
         <article class="container-content">
             <div class="dialog">
@@ -133,7 +133,7 @@
                 </article>
             </div>
         </article>
-    </section>
+    </section> -->
     <section>
         <header class="container-title"></header>
         <article class="container-content">

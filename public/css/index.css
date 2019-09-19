@@ -10010,6 +10010,20 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  position: relative;
+}
+#midAutumn > section:nth-of-type(2) > .container-content > .dialog > .product-content .chips.tip {
+  padding: 4px 5px;
+  border: 1px solid #d8d8d8;
+  border-radius: 2px;
+  color: #aeb1b5;
+  font-family: 'pingFangBold';
+  font-size: 14px;
+  position: absolute;
+  top: 28px;
+  right: 12px;
+  border: 1px solid #cf2f06;
+  color: #d2283b;
 }
 #midAutumn > section:nth-of-type(2) > .container-content > .dialog > .product-content > section:first-of-type {
   width: 550px;
@@ -10032,6 +10046,17 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+}
+#midAutumn > section:nth-of-type(2) > .container-content > .dialog > .product-content > section:first-of-type > .config.simple {
+  width: 280px;
+  margin-top: 22px;
+}
+#midAutumn > section:nth-of-type(2) > .container-content > .dialog > .product-content > section:first-of-type > .config.simple > .config-item:nth-of-type(1) .attr {
+  text-align: left;
+}
+#midAutumn > section:nth-of-type(2) > .container-content > .dialog > .product-content > section:first-of-type > .config.simple > .config-item:nth-of-type(2) {
+  -webkit-transform: translateX(-30px);
+          transform: translateX(-30px);
 }
 #midAutumn > section:nth-of-type(2) > .container-content > .dialog > .product-content > section:first-of-type > .config > .config-item .attr {
   display: block;
@@ -10066,6 +10091,13 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   color: #aeb1b5;
   padding-bottom: 26px;
 }
+#midAutumn > section:nth-of-type(2) > .container-content > .dialog > .product-content > section:first-of-type > .h2 > span {
+  float: left;
+  line-height: 25px;
+}
+#midAutumn > section:nth-of-type(2) > .container-content > .dialog > .product-content > section:first-of-type > .h2 > span:last-of-type {
+  width: 405px;
+}
 #midAutumn > section:nth-of-type(2) > .container-content > .dialog > .product-content > section:nth-of-type(2) .condition-config {
   margin-top: 40px;
 }
@@ -10089,6 +10121,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #midAutumn > section:nth-of-type(2) > .container-content > .dialog > .product-content > section:last-of-type {
   text-align: center;
+  margin-right: 7px;
 }
 #midAutumn > section:nth-of-type(2) > .container-content > .dialog > .product-content > section:last-of-type > .price {
   margin-top: 62px;
@@ -10107,189 +10140,6 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   color: #cf2f06;
 }
 #midAutumn > section:nth-of-type(2) > .container-content > .dialog > .product-content > section:last-of-type > .buy {
-  border-radius: 2px;
-  display: inline-block;
-  width: 140px;
-  height: 38px;
-  line-height: 38px;
-  background-color: #fece81;
-  text-decoration: none;
-  font-family: 'pingFangBold';
-  font-size: 18px;
-  color: #103478;
-  text-align: center;
-}
-#midAutumn > section:nth-of-type(3) > .container-title {
-  background: url(/images/midAutumn_biaoti_3.png?6deeaab43e61a31155f1b5150f985726) no-repeat center top;
-}
-#midAutumn > section:nth-of-type(3) > .container-content > .dialog {
-  width: 1180px;
-  position: relative;
-}
-#midAutumn > section:nth-of-type(3) > .container-content > .dialog::after {
-  content: "";
-  position: absolute;
-  width: 154px;
-  height: 37px;
-  right: -5px;
-  top: 10px;
-}
-#midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-title {
-  height: 91px;
-  border-radius: 4px 4px 0 0;
-  line-height: 91px;
-  background-color: #162a64;
-  padding-left: 30px;
-  font-family: 'pingFangHeavy';
-  font-size: 24px;
-  color: #fed083;
-}
-#midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-content {
-  padding: 0 32px;
-  padding-top: 28px;
-  background-color: #fff;
-  border-radius: 0 0 4px 4px;
-}
-#midAutumn > section:nth-of-type(3) > .container-content > .dialog::after {
-  background: url(/images/midAutumn_biaoqian_5zhe.png?135dd0e093297a43422cb097063de91c) no-repeat;
-}
-#midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-content {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  position: relative;
-}
-#midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-content .chips.tip {
-  padding: 4px 5px;
-  border: 1px solid #d8d8d8;
-  border-radius: 2px;
-  color: #aeb1b5;
-  font-family: 'pingFangBold';
-  font-size: 14px;
-  position: absolute;
-  top: 28px;
-  right: 12px;
-  border: 1px solid #cf2f06;
-  color: #d2283b;
-}
-#midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-content > section:first-of-type {
-  width: 550px;
-}
-#midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-content > section:first-of-type > .title {
-  margin-bottom: 16px;
-}
-#midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-content > section:first-of-type > .title > .chips {
-  padding: 4px 5px;
-  border: 1px solid #d8d8d8;
-  border-radius: 2px;
-  color: #aeb1b5;
-  font-family: 'pingFangBold';
-  font-size: 14px;
-}
-#midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-content > section:first-of-type > .config {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-}
-#midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-content > section:first-of-type > .config.simple {
-  width: 280px;
-  margin-top: 22px;
-}
-#midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-content > section:first-of-type > .config.simple > .config-item:nth-of-type(1) .attr {
-  text-align: left;
-}
-#midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-content > section:first-of-type > .config.simple > .config-item:nth-of-type(2) {
-  -webkit-transform: translateX(-30px);
-          transform: translateX(-30px);
-}
-#midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-content > section:first-of-type > .config > .config-item .attr {
-  display: block;
-  font-size: 16px;
-  font-family: 'pingFang';
-  color: #a0a3a8;
-  margin-bottom: 14px;
-  text-align: center;
-}
-#midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-content > section:first-of-type > .config > .config-item .val {
-  display: block;
-  font-family: 'pingFangBold';
-  font-size: 18px;
-  color: #4e4a4a;
-  text-align: center;
-}
-#midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-content > section:first-of-type > p {
-  padding: 5px 0;
-  color: #a0a3a8;
-  font-family: 'pingFangBold';
-  font-size: 20px;
-}
-#midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-content > section:first-of-type > .h1 {
-  font-family: 'pingFangBold';
-  font-size: 18px;
-  color: #4e4a4a;
-  margin-bottom: 26px;
-}
-#midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-content > section:first-of-type > .h2 {
-  font-family: 'pingFangBold';
-  font-size: 14px;
-  color: #aeb1b5;
-  padding-bottom: 26px;
-}
-#midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-content > section:first-of-type > .h2 > span {
-  float: left;
-  line-height: 25px;
-}
-#midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-content > section:first-of-type > .h2 > span:last-of-type {
-  width: 405px;
-}
-#midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-content > section:nth-of-type(2) .condition-config {
-  margin-top: 40px;
-}
-#midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-content > section:nth-of-type(2) .condition-config .condition-config-item .attr {
-  display: block;
-  font-size: 16px;
-  font-family: 'pingFang';
-  color: #a0a3a8;
-  margin-bottom: 14px;
-  text-align: left;
-}
-#midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-content > section:nth-of-type(2) .condition-config .condition-config-item .val {
-  display: block;
-  font-family: 'pingFangBold';
-  font-size: 18px;
-  color: #4e4a4a;
-  text-align: left;
-}
-#midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-content > section:nth-of-type(2) .condition-config .condition-config-item:last-of-type {
-  margin-top: 40px;
-}
-#midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-content > section:last-of-type {
-  text-align: center;
-  margin-right: 7px;
-}
-#midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-content > section:last-of-type > .price {
-  margin-top: 62px;
-  font-family: 'pingFang';
-  font-size: 16px;
-  color: #4e4a4a;
-}
-#midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-content > section:last-of-type > .price .currency {
-  font-family: '\5FAE\8F6F\96C5\9ED1';
-  font-size: 20px;
-  color: #cf2f06;
-}
-#midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-content > section:last-of-type > .price .amount {
-  font-family: 'pingFangBold';
-  font-size: 42px;
-  color: #cf2f06;
-}
-#midAutumn > section:nth-of-type(3) > .container-content > .dialog > .product-content > section:last-of-type > .buy {
   border-radius: 2px;
   display: inline-block;
   width: 140px;

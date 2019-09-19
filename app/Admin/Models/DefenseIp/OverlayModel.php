@@ -657,12 +657,10 @@ class OverlayModel extends Model
 						->join('tz_overlay as overlay','belong.overlay_id','=','overlay.id')
 						->where(['belong.target_business'=>$idc_orders->order_sn,'belong.status'=>1])
 						->where('belong.end_time','>',date('Y-m-d H:i:s',time()))
-						->get(['overlay.protection_value']);
-		if(!$use_overlay->isEmpty()){
-			foreach ($use_overlay as $key => $value) {
-				$protected_value = bcadd($protected_value,$value->protection_value);
-			}
-		}
+						->sum('overlay.protection_value');
+		
+		$protected_value = bcadd($protected_value,$use_overlay);
+		
 
 		if($protected_value > 300){
 			$return['data'] = [];

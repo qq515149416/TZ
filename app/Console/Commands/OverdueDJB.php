@@ -67,171 +67,135 @@ class OverdueDJB extends Command
 	{
 
 		$model = new OverlayBelongModel();
-		//当前date
 		$now = date("Y-m-d H:i:s");
-		//获取正在生效且已过期叠加包
-		$pastOverlay = $model->where('status',1)
-				->where('end_time','<',$now)
-				->get();
-		if ($pastOverlay->isEmpty()) {
-			return 0;
+
+		/**
+		 * 获取所有生效的且到期的叠加包根据绑定的业务进行分组
+		 * @var [type]
+		 */
+		$belong = $model->where(['status'=>1])->where('end_time','<',$now)->get(['target_business'])->groupBy('target_business');
+
+		if($belong->isEmpty()){
+			return '暂无生效且过期的叠加包';
 		}
-		$num = 0;
 
-		//循环每个此类叠加包
-		foreach ($pastOverlay as $k => $v) {
+		$target_business = array_keys($belong->toArray());//获取绑定叠加包的所有业务(剔除了重复的)
 
-			//检测是否存在于高防业务表
-			$checkDIP = BusinessModel::where('business_number',$v->target_business)->first();
-  			if ($checkDIP) {
-  				$res = $this->delPastDIP($v);	//调用高防下架方法
-				if($res){		//成功的话,num+1
-					$num++;
+		if(empty($target_business)){
+			return '暂无绑定的业务';
+		}
+
+		$messages = '更新完成';
+		foreach ($target_business as $key => $value) {
+			$ip = '1.1.1.1';
+			$protected = 0;
+			$type = 0;
+			$gfbusiness = BusinessModel::where(['business_number'=>$value])->value('ip_id');//获取高防业务所绑定的高防IP库的id值
+			if(empty($gfbusiness)){//叠加包绑定IDC
+
+				$data = $this->getIDC($value);
+				$ip = $data['ip'];
+				$protected = $data['protected'];
+
+			} else {//叠加包绑定高防IP
+
+				$ip_store = DB::table('tz_defenseip_store')->where(['id'=>$gfbusiness->ip_id])
+								->whereNull('deleted_at')
+								->select('ip','protection_value')
+								->first();
+				if(!empty($ip_store)){
+					$ip = $ip_store->ip;
+					$protected = $ip_store->protection_value;
+					$type = 1;
 				}
-  			}else{	//查查看idc
-  				$checkIDC = DB::table('tz_orders')->where('order_sn' , $v->target_business)->first(['machine_sn' , 'business_sn','resource_type']);
-				if ($checkIDC != null) {
-					$res = $this->delPastIDC($v);	//调用idc里下架的方法
-					if ($res) {
-						$num++;
-					}
-					
-				}
-  			}
 
-  			//别管这段
-			// $type = DB::table('tz_business_relevance')->where('business_id',$v->target_business)->value('type');
-			// if ($type == 2) {	//如果是高防业务
-			// 	$res = $this->delPastDIP($v);	//调用高防下架方法
-			// 	if($res){
-			// 		$num++;
-			// 	}
-			// }	
-		}   
-		return $num;    
+			}
+			//正在生效的某个业务绑定的叠加包的总防护值 
+			$all_protected_value = $model->join('tz_overlay','tz_overlay_belong.overlay_id','=','tz_overlay.id')
+									->where(['status'=>1,'target_business'=>$value])
+									->sum('protection_value');
+
+			//某个业务正在绑定的叠加包过期的总防护值
+			$end_protected_value = $model->join('tz_overlay','tz_overlay_belong.overlay_id','=','tz_overlay.id')
+									->where(['status'=>1,'target_business'=>$value])
+									->where('end_time','<',$now)
+									->sum('protection_value');
+			//有效的叠加包防护值
+			$protection_value = bcsub($all_protected_value,$end_protected_value,0);
+			//最后包含原本的总防御值
+			$protected = bcadd($protection_value, $protected,0);
+			
+			DB::beginTransaction();
+
+			//对高防业务的额外防护值字段进行更新
+			if($type == 1){
+				$row = DB::table('tz_defenseip_business')->where(['business_number'=>$value])->update(['export_extra_protection'=>$protection_value]);
+				if($row == 0){
+					DB::rollBack();
+					$messages = $value.'绑定的叠加包防御值未更新';
+					break;
+				}
+			}
+
+			//叠加包业务状态进行改变
+			$update_status = $model->where(['status'=>1,'target_business'=>$value])
+									->where('end_time','<',$now)
+									->update(['status'=>2]);
+			if($update_status ==0){
+				DB::rollBack();
+				$messages = $value.'绑定的叠加包防御值未更新';
+				break;
+			}
+
+			/**
+			 * 进行防护值的更新
+			 * @var ApiController
+			 */
+			$api = new ApiController();
+			$result = $api->setProtectionValue($ip,$protected);
+			if ($result != 'editok' && $result !='ok') {
+				DB::rollBack();
+				break;
+			} else {
+				DB::commit();
+			}
+			
+		}
+		return $messages;
+			
 	}
 
 	/**
-	 * 
-	 *
-	 *
-	 *
+	 * 获取IDC业务的IP和原本防护值
+	 * @param  string $order_sn 订单号
+	 * @return [type]           [description]
 	 */
-	protected function delPastDIP($v){
-		DB::beginTransaction();
-		$v->status = 2;
-		//更改状态
-		if ( $v->save() ) {     //更改状态成功
-			//获取叠加包的防御值
-			$protection_value = DB::table('tz_overlay')->where('id',$v->overlay_id)->value('protection_value');
-			//获取业务信息tz_defenseip_business
-			$business = BusinessModel::where('business_number',$v->target_business)->first();
-			//获取业务原本防御值
-			$d_ip = DB::table('tz_defenseip_store')->where('id',$business->ip_id)->whereNull('deleted_at')->first();
-			
-			if($protection_value == null || $business == null || $d_ip == null){    //如果获取失败
-				DB::rollBack();
-				return false;
-			}else{              //获取成功的话就减掉
+	public function getIDC($order_sn){
 
-				//原有防御值
-				$ori_protection_value = $d_ip->protection_value;    
-				//去除掉过期叠加包防御值后的额外防御值
-				$extra_protection = bcsub($business->extra_protection, $protection_value,0);
-				if ($extra_protection < 0 ) {
-					$extra_protection = 0;
-				}
-
-				//更新业务里的额外防御值
-				$business->extra_protection = $extra_protection;
-				if ( !$business->save() ) {
-					DB::rollBack();
-					return false;
-				}else{
-					//更新现在的牵引值
-					$after_protection = bcadd($ori_protection_value, $extra_protection,0);
-					$api_controller = new ApiController();
-					//$res = $api_controller->setProtectionValue($d_ip->ip,$after_protection);
-					$res = $api_controller->setProtectionValue('1.1.1.1',0);
-					if ($res != 'editok' && $res !='ok') {
-						DB::rollBack();
-						return false;
-					}else{
-						DB::commit();   
-						return true;	
-					}
-				}
-			}
-
-		}else{
-			DB::rollBack();
-			return false;
+		$idcbusiness = DB::table('tz_orders')->where(['order_sn'=>$order_sn])
+								 ->whereNull('deleted_at')
+								 ->select('business_sn','resource_type','machine_sn')
+								 ->first();
+		if(empty($idcbusiness)){
+			$return['ip'] = '1.1.1.1';
+			$return['protected'] = 0;
+			return $return;
 		}
-	}
 
-
-	public function delPastIDC($v)
-	{
-		DB::beginTransaction();
+		if($idcbusiness->resource_type == 1 || $idcbusiness->resource_type == 2){//主机的查询主IP和防护值
+			$resource_detail = json_decode(DB::table('tz_business')->where(['business_number'=>$idcbusiness->business_sn])->value('resource_detail'));
+			$return['ip'] = $resource_detail->ip;
+			$return['protected'] = $resource_detail->protect;
+		} elseif($idcbusiness->resource_type == 4) {//副IP直接绑定IP
+			$return['ip'] = $idcbusiness->machine_sn;
+			$return['protected'] = 0;
+		} else {
+			$return['ip'] = '1.1.1.1';
+			$return['protected'] = 0;
+		}
 		
-		//获取叠加包的防御值
-		$all_protection_value = DB::table('tz_overlay_belong as a')
-					->leftjoin('tz_overlay as b','a.overlay_id','=','b.id')
-					->where(['a.target_business'=>$v->target_business,'a.status'=>1])
-					->sum('b.protection_value');
-
-		$protection_value = DB::table('tz_overlay')->where('id',$v->overlay_id)->value('protection_value');
-	
-		if($protection_value == null || $all_protection_value == null){    //如果获取失败
-			DB::rollBack();
-			return false;
-		}else{              //获取成功的话就减掉
-
-			//去除掉过期叠加包防御值后的额外防御值
-			$after_protection = bcsub($all_protection_value, $protection_value,0);
-			if ($after_protection < 0 ) {
-				$after_protection = 0;
-			}
-
-			$idc = DB::table('tz_orders')->where('order_sn' , $v->target_business)->first(['machine_sn' , 'business_sn','resource_type']);
-
-			if ($idc != null) {
-				if($idc->resource_type == 4){		//如果找出来是副ip,直接获取
-					$ip = $idc->machine_sn;
-				}elseif ($idc->resource_type == 1||$idc->resource_type == 2) {	//如果找出来是主机,去业务表的详情处找
-					$business = DB::table('tz_business')->where('business_number',$idc->business_sn)->first(['resource_detail']);
-					if ($business == null) {
-						$ip = false;
-					}else{
-						$resource_detail = json_decode($business->resource_detail,true);
-						$ip = $resource_detail['ip'];
-					}
-				}else{
-					$ip = false;
-				}
-			}else{
-				$ip = false;
-			}
-			if ($ip == false) {
-				DB::rollBack();
-				return false;
-			}
-
-			$api_controller = new ApiController();
-			$v->status = 2;
-			if (!$v->save()) {
-				DB::rollBack();
-				return false;
-			}
-			//$res = $api_controller->setProtectionValue($ip,$after_protection);
-			$res = $api_controller->setProtectionValue('1.1.1.1',0);
-			if ($res != 'editok' && $res !='ok') {
-				DB::rollBack();
-				return false;
-			}else{
-				DB::commit();   
-				return true;	
-			}
-		}
+		return $return;
 	}
+
 }
+	

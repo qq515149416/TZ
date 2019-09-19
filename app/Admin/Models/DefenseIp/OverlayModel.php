@@ -606,6 +606,8 @@ class OverlayModel extends Model
 			return $return;
 		}
 
+		$protected_value = $overlay->protection_value;//叠加包的固定防御值
+
 		$idc_orders = DB::table('tz_orders')
 						->join('tz_business','tz_orders.business_sn','=','tz_business.business_number')
 						->where(['tz_orders.id'=>$param['order_id']])
@@ -634,36 +636,38 @@ class OverlayModel extends Model
 			$return['msg'] = '(#108)叠加包与需要绑定叠加包的所属机房不一致';
 			return $return;
 		}
-		/**
-		 * 进行叠加包的一定时间内的累计统计
-		 * @var [type]
-		 */
-		$protected = DB::table('tz_overlay_belong as belong')
-						->join('tz_overlay as overlay','belong.overlay_id','=','overlay.id')
-						->where(['target_business'=>$idc_orders->order_sn,'belong.status'=>1])
-						->select('overlay.protection_value')
-						->get();
-		if(!$protected->isEmpty()){
-			$protection_value = $overlay->protection_value;
-			foreach ($protected as $pkey => $pvalue) {
-				$protection_value = bcadd($protection_value, $pvalue->protection_value);
-			}
-			if($protection_value >= 300){
-				$return['data'] = [];
-				$return['code'] = 0;
-				$return['msg'] = '(#112)叠加包的累计流量不能超过300,如需更大流量请联系管理员进行咨询调整';
-				return $return;
-			}
-		}
 
 		if($idc_orders->resource_type == 1 || $idc_orders->resource_type == 2){//租用/托管机器默认使用主IP
 			$ip = $resource_detail->ip;
+			$protected_value = bcadd($protected_value,$resource_detail->protect);//主机默认使用主IP,并加上主机原本的防御值
 		} elseif ($idc_orders->resource_type == 4 ){//对应的IP资源
 			$ip = $idc_orders->machine_sn;
 		} else {//其他无IP的不给予绑定
 			$return['data'] = [];
 			$return['code'] = 0;
 			$return['msg'] = '(#109)请确定IP';
+			return $return;
+		}
+
+		/**
+		 * 查找对应订单在使用且未到期的叠加包防御，并进行相加
+		 * @var [type]
+		 */
+		$use_overlay = DB::table('tz_overlay_belong as belong')
+						->join('tz_overlay as overlay','belong.overlay_id','=','overlay.id')
+						->where(['belong.target_business'=>$idc_orders->order_sn,'belong.status'=>1])
+						->where('belong.end_time','>',date('Y-m-d H:i:s',time()))
+						->get(['overlay.protection_value']);
+		if(!$use_overlay->isEmpty()){
+			foreach ($use_overlay as $key => $value) {
+				$protected_value = bcadd($protected_value,$value->protection_value);
+			}
+		}
+
+		if($protected_value > 300){
+			$return['data'] = [];
+			$return['code'] = 0;
+			$return['msg'] = '(#112)叠加包的累计流量不能超过300,如需更大流量请联系管理员进行咨询调整';
 			return $return;
 		}
 
@@ -689,7 +693,7 @@ class OverlayModel extends Model
 		 */
 		$api = new ApiController();
 
-		$api_result = $api->setProtectionValue($ip, $overlay->protection_value);
+		$api_result = $api->setProtectionValue($ip, $protected_value);
 
 		if($api_result != 'editok' && $api_result != 'ok') {//存入失败
 			DB::rollBack();

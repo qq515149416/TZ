@@ -59,7 +59,7 @@
             </div>
         </article>
     </section>
-    <section>
+    <!-- <section>
         <header class="container-title"></header>
         <article class="container-content">
             <div class="dialog">
@@ -133,7 +133,7 @@
                 </article>
             </div>
         </article>
-    </section>
+    </section> -->
     <section>
         <header class="container-title"></header>
         <article class="container-content">
@@ -159,7 +159,7 @@
                             </div>
                             <div class="config-item">
                                 <span class="attr">硬盘</span>
-                                <span class="val">40G+50GSSD</span>
+                                <span class="val">40G+20GSSD</span>
                             </div>
                             <div class="config-item">
                                 <span class="attr">带宽</span>

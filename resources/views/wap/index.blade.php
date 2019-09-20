@@ -92,8 +92,10 @@
                                 </a>
                             </li>
                             <li>
-                                <div class="fuwu-title">高防云主机</div>
-                                <div class="fuwu-txt">优质、高效、弹性伸缩、灵活击飞的云计算服务，有效降低IT运营成本,提高资源有效利用率。</div>
+                                <a href="/wap/high_proof_host">
+                                    <div class="fuwu-title">高防云主机</div>
+                                    <div class="fuwu-txt">优质、高效、弹性伸缩、灵活击飞的云计算服务，有效降低IT运营成本,提高资源有效利用率。</div>
+                                </a>
                             </li>
                             <li>
                                 <div class="fuwu-title">高防IP</div>

@@ -30,3 +30,5 @@ public/.well-known/
 /config/admin.php
 1546530481_20190723_cert/*
 /certificate/wechat/*
+app/Admin/Controllers/Show/DataAnalysisController.php
+resources/views/show/dataAnalysis.blade.php

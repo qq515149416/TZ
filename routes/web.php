@@ -74,6 +74,7 @@ Route::group([
     Route::get('/cabinet', 'Show\wap\CabinetController@index');
     Route::get('/bandwidth', 'Show\wap\BandwidthController@index');
     Route::get('/high_security', 'Show\wap\HighSecurityController@index');
+    Route::get('/high_proof_host', 'Show\wap\HighProofHostController@index');
 });
 
 /**

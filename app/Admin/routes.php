@@ -772,7 +772,7 @@ Route::group([
 
         $router->post('makeInvoice', 'Business\InvoiceController@makeInvoice');//为客户开发票
         $router->get('getUsers', 'Business\InvoiceController@getUsers');//获取所属客户
-        
+
 
         Route::group([
             'prefix' => 'payable', //这发票的抬头

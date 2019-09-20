@@ -238,7 +238,7 @@
                                 </div>
                             </div>
                             <div class="text-right price">
-                                <a href="/army_day" class="buy">450元</a>
+                                <a href="javascript:;" onclick="randomqq()" class="buy">450元</a>
                             </div>
                         </li>
                     </ul>

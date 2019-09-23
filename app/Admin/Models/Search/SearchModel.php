@@ -41,6 +41,11 @@ class SearchModel extends Model
                                                 '手机:'.$phone.
                                                 '备注:'.$customer->remarks;
                 }
+                $note = DB::table('idc_machine')->where(['machine_num'=>$business['machine_number']])->value('machine_note');
+                if($note){
+                    $business['machine_number'] = $business['machine_number'].'(机器备注:'.$note.')';
+                }
+                
                 $ip = [];
                 $total_bandwidth = 0;
                 $total_protected = 0;

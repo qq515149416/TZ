@@ -113,7 +113,8 @@ class OverlayBelongController extends Controller
 								return $query->where('c.id',$role);
 							}
 						})
-				->select(['tz_overlay_belong.*','b.name as overlay_name','b.protection_value','b.validity_period','c.machine_room_name','c.id as machine_room_id' , 'd.nickname' , 'd.email' , 'd.name' , 'e.name as clerk_name']);
+				->select(['tz_overlay_belong.*','b.name as overlay_name','b.protection_value','b.validity_period','c.machine_room_name','c.id as machine_room_id' , 'd.nickname' , 'd.email' , 'd.name' , 'e.name as clerk_name'])
+				->orderBy('use_time','desc');
 
 			$grid->disableCreateButton();	//禁用创建按钮
 			$grid->disableExport();		//禁用导出数据按钮
@@ -133,7 +134,7 @@ class OverlayBelongController extends Controller
 				$status = [
 					0 => '未使用',
 					1 => '生效中',
-					2 => '已使用完毕',
+					2 => '使用完毕',
 				];
 				return $status[$this->status];
 			});

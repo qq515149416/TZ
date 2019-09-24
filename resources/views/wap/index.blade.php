@@ -98,14 +98,18 @@
                                 </a>
                             </li>
                             <li>
-                                <div class="fuwu-title">高防IP</div>
-                                <div class="fuwu-txt">10T+防御带宽,T级超强清晰平台,对不同攻击流量自动启用对应的防护策略,有效抵御各种DDoS攻击。
-                                </div>
+                                <a href="/wap/high_security_ip">
+                                    <div class="fuwu-title">高防IP</div>
+                                    <div class="fuwu-txt">10T+防御带宽,T级超强清晰平台,对不同攻击流量自动启用对应的防护策略,有效抵御各种DDoS攻击。
+                                    </div>
+                                </a>
                             </li>
                             <li>
-                                <div class="fuwu-title">高防CDN加速</div>
-                                <div class="fuwu-txt">自建高质节点覆盖全国30多个省份,智能DNS调度算法,加速本地缓存,为网站提供快速、稳定的访问体验。
-                                </div>
+                                <a href="/wap/cdn_speed_up">
+                                    <div class="fuwu-title">高防CDN加速</div>
+                                    <div class="fuwu-txt">自建高质节点覆盖全国30多个省份,智能DNS调度算法,加速本地缓存,为网站提供快速、稳定的访问体验。
+                                    </div>
+                                </a>
                             </li>
                             <li style="border: none;">
                                 <div class="fuwu-title">防C盾</div>

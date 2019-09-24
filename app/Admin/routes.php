@@ -797,6 +797,15 @@ Route::group([
 
     });
 
+    /**
+     *api后台控制
+     */
+    Route::group([
+        'prefix' => 'api',
+    ], function (Router $router) {
+        $router->get('show', 'Customer\ApiController@show');  //微信端测试接口
+        $router->get('examine', 'Customer\ApiController@examine');  //微信端测试接口
+    });
 
 
 

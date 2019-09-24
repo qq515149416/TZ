@@ -342,3 +342,19 @@ Route::group([
 
 
 });
+
+/**
+ * api相关
+ */
+Route::group([
+    'prefix' => 'api',
+], function () {
+    Route::group([
+        'middleware' => 'CheckLogin',
+    ], function () {
+        Route::get('apiApply', 'Customer\ApiController@apiApply');      //申请api
+        Route::get('show', 'Customer\ApiController@show');              //查看api申请状态
+        Route::get('showKey', 'Customer\ApiController@showKey');   //查看api申请状态
+    });
+
+});

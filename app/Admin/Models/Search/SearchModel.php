@@ -23,13 +23,14 @@ class SearchModel extends Model
         }
         $search_result = [];
         foreach($xs_result as $xs_key => $xs_value){
-            $business = $this->where(['business_number'=>$xs_value])->whereBetween('remove_status',[0,1])->select('id','client_id','sales_id','business_number','business_type','machine_number','resource_detail','money','client_id','length','start_time','endding_time','business_status')->first();
+            $business = $this->where(['business_number'=>$xs_value])->whereBetween('remove_status',[0,3])->select('id','client_id','sales_id','business_number','business_type','machine_number','resource_detail','money','client_id','length','start_time','endding_time','business_status','remove_status')->first();
             if(!empty($business)){
                 $business = $business->toArray();
                 $business_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜'];
                 $business_status = ['-1'=>'取消','-2'=>'审核不通过',0=>'审核中',1=>'未付款使用',2=>'付款使用中',3=>'到期未付款',4=>'锁定中',5=>'到期',6=>'退款'];
+                $remove_status = [0 => '正常使用', 1 => '下架申请中', 2 => '机房处理中', 3 => '清空下架中', 4 => '下架完成'];
                 $business['type'] = $business_type[$business['business_type']];//业务类型
-                $business['status'] = $business_status[$business['business_status']];//业务状态
+                $business['status'] = $business_status[$business['business_status']].'(下架状态:'.$remove_status[$business['remove_status']].')';//业务状态
                 $resource = $this->searchResources($business['business_number']);
                 $business['sales_name'] = DB::table('admin_users')->where(['id'=>$business['sales_id']])->value('name');
                 $customer = DB::table('tz_users')->where(['id'=>$business['client_id']])->select('nickname','msg_qq','msg_phone','remarks')->first();
@@ -41,6 +42,11 @@ class SearchModel extends Model
                                                 '手机:'.$phone.
                                                 '备注:'.$customer->remarks;
                 }
+                $note = DB::table('idc_machine')->where(['machine_num'=>$business['machine_number']])->value('machine_note');
+                if($note){
+                    $business['machine_number'] = $business['machine_number'].'(机器备注:'.$note.')';
+                }
+                
                 $ip = [];
                 $total_bandwidth = 0;
                 $total_protected = 0;
@@ -90,7 +96,7 @@ class SearchModel extends Model
      * @return array              返回业务绑定的所有资源
      */
     public function searchResources($business_sn){
-        $all_resource = DB::table('tz_orders')->where(['business_sn'=>$business_sn,'remove_status'=>0])->where('resource_type','>','3')->whereNull('deleted_at')->orderBy('end_time','desc')->get(['machine_sn','resource'])->groupBy('machine_sn');
+        $all_resource = DB::table('tz_orders')->where(['business_sn'=>$business_sn])->whereBetween('remove_status',[0,3])->where('resource_type','>','3')->whereNull('deleted_at')->orderBy('end_time','desc')->get(['machine_sn','resource'])->groupBy('machine_sn');
         $resource = $all_resource->map(function($item,$key){
             return DB::table('tz_orders')->where(['machine_sn'=>$key])->where('order_status','<',4)->whereNull('deleted_at')->orderBy('end_time','desc')->select('resource_type','machine_sn','resource')->first();
         });

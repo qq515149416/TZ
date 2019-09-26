@@ -75,6 +75,8 @@ Route::group([
     Route::get('/bandwidth', 'Show\wap\BandwidthController@index');
     Route::get('/high_security', 'Show\wap\HighSecurityController@index');
     Route::get('/high_proof_host', 'Show\wap\HighProofHostController@index');
+    Route::get('/high_security_ip', 'Show\wap\HighSecurityIPController@index');
+    Route::get('/cdn_speed_up', 'Show\wap\CdnSpeedUpController@index');
 });
 
 /**

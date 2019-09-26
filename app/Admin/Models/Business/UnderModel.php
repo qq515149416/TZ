@@ -569,6 +569,11 @@ class UnderModel extends Model
             if($value->business_type != 3){
                 $value->cabinets = $resource_detail->cabinets;
                 $value->ip = isset($resource_detail->ip)?$resource_detail->ip:'';
+                $note = DB::table('idc_machine')->where(['machine_num'=>$value->machine_number])->value('machine_note');
+                if($note){
+                    $value->machine_number = $value->machine_number.'(机器备注:'.$note.')';
+                }
+                
             } else {
                 $value->cabinets = $resource_detail->cabinet_id;
                 $value->ip = '';

@@ -24,7 +24,7 @@ class Api extends Model
 	public function show($state){ 
 		$res = $this->leftJoin('tz_users as b' , 'b.id' , '=' ,'tz_api.user_id')
 			->where('tz_api.state',$state)
-			->select(['tz_api.state' , 'tz_api.api_key' , 'tz_api.api_secret' , 'b.name' , 'b.email' , 'b.nickname'])
+			->select(['tz_api.id' , 'tz_api.state' , 'tz_api.api_key' , 'tz_api.api_secret' , 'b.name' , 'b.email' , 'b.nickname'])
 			->get();
 		if ($res->isEmpty()) {
 			return [

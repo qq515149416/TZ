@@ -803,8 +803,8 @@ Route::group([
     Route::group([
         'prefix' => 'api',
     ], function (Router $router) {
-        $router->get('show', 'Customer\ApiController@show');  //微信端测试接口
-        $router->get('examine', 'Customer\ApiController@examine');  //微信端测试接口
+        $router->get('show', 'Customer\ApiController@show');  //展示api权限申请
+        $router->get('examine', 'Customer\ApiController@examine');  //审核api权限申请
     });
 
 

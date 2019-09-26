@@ -17,7 +17,7 @@ class PackageModel extends Model
 	protected $primaryKey = 'id';
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
-	protected $fillable = ['name','description','site','protection_value','price','sell_status'];
+	protected $fillable = ['name','description','site','protection_value','price','channel_price','sell_status'];
 
 	public function insert($par){
 		// DB::beginTransaction();
@@ -81,12 +81,13 @@ class PackageModel extends Model
 
 		$package_model->name 		= $par['name'];
 		if(isset($par['description'])){
-			$package_model->description 		= $par['description'];
+			$package_model->description 	= $par['description'];
 		}
 		//这俩不能改
 		// $package_model->site 			= $par['site'];
 		// $package_model->protection_value 	= $par['protection_value'];
-		$package_model->price 		= $par['price'];
+		$package_model->price 			= $par['price'];
+		$package_model->channel_price 		= $par['channel_price'];
 		$package_model->sell_status 		= $par['sell_status'];
 		$res = $package_model->save();
 	

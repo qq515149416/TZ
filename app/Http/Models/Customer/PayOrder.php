@@ -72,19 +72,27 @@ class PayOrder extends Model
 
 	/**
 	 * 客户自主对业务内未付款订单进行支付
-	 * @param  int $business_sn 	业务编号
-	 * @param  int $coupon_id      	优惠券的id
-	 * @return array          返回相关的状态提示及信息
+	 * @param  array 	$order_id 	业务编号
+	 * @param  int 		$coupon_id      	优惠券的id
+	 * @param  int 		$is_api      	不是api的不要传参或者传个0,是api的把支付的用户的id传过来用以扣费
+	 * @return array          	返回相关的状态提示及信息
 	 */
 	
 	//以下这个是新版的方法,子梁测试请打开注释,注释掉下面同名那个
-	public function payOrderByBalance($order_id,$coupon_id){
-		$return['data'] = '';
-		$user_id = Auth::id();
 
+	public function payOrderByBalance($order_id,$coupon_id,$is_api = 0){
+		$return['data'] = '';
+
+		//这里是为了区分来龙去脉,如果是通过api过来的,is_api就是传过来的用户id,如果不是,就取登录中用户的id
+		if ($is_api != 0) {
+			$user_id = $is_api;
+		}else{
+			$user_id = Auth::id();
+		}
 		//查看有没有这些订单
-	
+		
 		foreach ($order_id as $k => $v) {
+			
 			$c_order = $this->find($v);
 
 			if($c_order == null){		//如果没有
@@ -95,7 +103,7 @@ class PayOrder extends Model
 				];
 			}
 
-			if ($c_order->customer_id != $user_id) {
+			if ($c_order->customer_id != $user_id && $is_api != 1) {
 	
 				return [
 					'data'	=> [],
@@ -129,6 +137,7 @@ class PayOrder extends Model
 				->whereIn('id',$order_id)
 				->get()
 				->toArray();
+
 		if(count($unpaidOrder) == 0){
 			$return['msg'] 	= '订单不存在';
 			$return['code']	= 0;

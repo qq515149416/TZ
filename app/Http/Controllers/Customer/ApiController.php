@@ -52,4 +52,18 @@ class ApiController extends Controller
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 
 	}
+
+	/**
+	* 已开通api用户查看可购买的高防ip套餐
+	* @return 
+	*/
+	public function showDIPPackage(ApiRequest $request)
+	{
+		
+		$model = new Api();
+		$res = $model->showDIPPackage();
+
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+
+	}
 }

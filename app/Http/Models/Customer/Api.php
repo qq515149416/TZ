@@ -105,8 +105,8 @@ class Api extends Model
  		if (!$apply) {
  			return [
  				'data'	=> [],
- 				'msg'	=> '暂无已通过的申请',
- 				'code'	=> 0,
+ 				'msg'	=> '您的账户未开启API权限',
+ 				'code'	=> 1007,
  			];
  		}
  		return [
@@ -114,5 +114,52 @@ class Api extends Model
 			'msg'	=> '获取成功',
 			'code'	=> 1,
 		];
+	}
+
+	/** 
+	 *  展示高防套餐id
+	 */ 
+	public function showDIPPackage(){ 
+
+ 		$apply = $this->checkApi();
+
+ 		if (!$apply) {
+ 			return [
+ 				'data'	=> [],
+ 				'msg'	=> '您的账户未开启API Key, API接口无法使用',
+ 				'code'	=> 1007,
+ 			];
+ 		}
+
+ 		$pack = DB::table('tz_defenseip_package as a')->leftJoin('idc_machineroom as b' , 'b.id' , '=' , 'a.site')
+ 							->where('a.sell_status' , 1)
+ 							->whereNull('a.deleted_at')
+ 							->select(['a.id' , 'a.name' , 'a.site' ,'a.description' ,'a.protection_value' ,'a.channel_price','b.machine_room_name'])
+ 							->get();
+ 		foreach ($pack as $k => $v) {
+ 			$pack[$k]->stock = DB::table('tz_defenseip_store')->where('site' , $v->site)
+ 								->where('protection_value' , $v->protection_value)
+ 								->where('status' , 0)
+ 								->whereNull('deleted_at')
+ 								->count('id');
+ 		}
+ 		return [
+			'data'	=> $pack,
+			'msg'	=> '获取成功',
+			'code'	=> 1,
+		];
+	}
+
+	/** 
+	 *  检查api权限
+	 */ 
+	public function checkApi(){
+		$user = Auth::user();
+ 		$user_id = $user->id;		//获取用户id
+
+ 		$apply = $this->where('user_id' , $user_id)
+ 				->where('state' , 1)
+ 				->exists();
+ 		return $apply;
 	}
 }

@@ -31,5 +31,9 @@ class VerifyCsrfToken extends Middleware
         'tz_admin/message/*',   //TODO  记得删除
         'home/defenseIp/*',     //TODO   记得删除
         'tz_admin/users/*',    //后台用户管理   //TODO   记得删除
+
+        /* ---  以下为供客户调用的渠道购买api --- */
+        'api/ver1/*',   //渠道购买api版本1
+        /* ---  以上为供客户调用的渠道购买api --- */
     ];
 }

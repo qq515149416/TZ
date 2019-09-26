@@ -347,12 +347,32 @@ Route::group([
 Route::group([
     'prefix' => 'api',
 ], function () {
+
     Route::group([
         'middleware' => 'CheckLogin',
     ], function () {
+        /** 客户端api资格及秘钥展示 start **/
         Route::get('apiApply', 'Customer\ApiController@apiApply');      //申请api
         Route::get('show', 'Customer\ApiController@show');              //查看api申请状态
-        Route::get('showKey', 'Customer\ApiController@showKey');   //查看api申请状态
+        Route::get('showKey', 'Customer\ApiController@showKey');   //查看api秘钥
+        /** 客户端api资格及秘钥展示 end **/
+        /** 客户端api用可购买套餐展示 start **/
+        Route::get('showDIPPackage', 'Customer\ApiController@showDIPPackage');      //申请api
+        /** 客户端api用可购买套餐展示 end **/
     });
+    /** 外部api start **/
+    Route::group([
+        'prefix' => 'ver1', //版本
+    ], function () {
+        /** 高防类api start **/
+        Route::group([
+                'prefix' => 'dip', //高防类
+        ], function () {
+                Route::post('buyDIP', 'Customer\ApiOutController@buyDIP');      //购买高防套餐的接口
+        });
+        /** 高防类api end **/
+    });
+    /** 外部api end **/
+    
 
 });

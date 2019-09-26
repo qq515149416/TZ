@@ -26,7 +26,7 @@ class ApiController extends Controller
 	}
 
 	/**
-	 * 审核
+	 * 审核api权限
 	 * @param  $examine_res	-审核结果 , $apply_id	-需审核的id
 	 * @return 
 	 */

@@ -309,6 +309,7 @@ function slideshow_main() {
     if (!slideshowUl) {
         return;
     }
+    console.log(slideshowLl[0].offsetHeight);
     slideshowUl.style.height = slideshowLl[0].offsetHeight + 'px';
     // slideshowUl.style.height="141px";
     // 生成小圆点

@@ -32,40 +32,64 @@
                                     <div class="Yun-items-li tz-main">
                                         <ul>
                                             <li>
-                                                <p>高防服务器</p>
+                                                <a href="/wap/high_security">
+                                                    <p>高防服务器</p>
+                                                </a>
                                             </li>
                                             <li>
-                                                <p>DDOS高防ip</p>
+                                                <a href="/wap/high_security_ip">
+                                                    <p>DDOS高防ip</p>
+                                                </a>
                                             </li>
                                             <li>
-                                                <p>高防云主机</p>
+                                                <a href="/wap/high_proof_host">
+                                                    <p>高防云主机</p>
+                                                </a>
                                             </li>
                                             <li>
-                                                <p>高防CDN</p>
+                                                <a href="/wap/high_anti_cdn">
+                                                    <p>高防CDN</p>
+                                                </a>
                                             </li>
                                             <li>
-                                                <p>DDOS防御流量叠加包</p>
+                                                <a href="/wap/flow_stack_packet">
+                                                    <p>DDOS防御流量叠加包</p>
+                                                </a>
                                             </li>
                                             <li>
-                                                <p>云计算</p>
+                                                <a href="/wap/cloud_hosting">
+                                                    <p>云计算</p>
+                                                </a>
                                             </li>
                                             <li>
-                                                <p>防C盾</p>
+                                                <a href="/wap/c_shield">
+                                                    <p>防C盾</p>
+                                                </a>
                                             </li>
                                             <li>
-                                                <p>服务器租用</p>
+                                                <a href="/wap/server_hire">
+                                                    <p>服务器租用</p>
+                                                </a>
                                             </li>
                                             <li>
-                                                <p>服务器托管</p>
+                                                <a href="/wap/server_hosting">
+                                                    <p>服务器托管</p>
+                                                </a>
                                             </li>
                                             <li>
-                                                <p>机柜租用</p>
+                                                <a href="/wap/cabinet">
+                                                    <p>机柜租用</p>
+                                                </a>
                                             </li>
                                             <li>
-                                                <p>带宽租用</p>
+                                                <a href="/wap/bandwidth">
+                                                    <p>带宽租用</p>
+                                                </a>
                                             </li>
                                             <li>
-                                                <p>CDN加速</p>
+                                                <a href="/wap/cdn_speed_up">
+                                                    <p>CDN加速</p>
+                                                </a>
                                             </li>
                                         </ul>
                                     </div>
@@ -80,7 +104,9 @@
                                     <div class="Yun-items-li tz-main">
                                         <ul>
                                             <li>
-                                                <p>棋牌云解决方案</p>
+                                                <a href="/wap/chess_solution">
+                                                    <p>棋牌云解决方案</p>
+                                                </a>
                                             </li>
                                             <li>
                                                 <p>金融云解决方案</p>
@@ -89,10 +115,14 @@
                                                 <p>流媒体解决方案</p>
                                             </li>
                                             <li>
-                                                <p>棋牌云解决方案</p>
+                                                <a href="/wap/education_solution">
+                                                    <p>教育云解决方案</p>
+                                                </a>
                                             </li>
                                             <li>
-                                                <p>网站及部署解决方案</p>
+                                                <a href="/wap/deployment_solution">
+                                                    <p>网站及部署解决方案</p>
+                                                </a>
                                             </li>
                                             <li>
                                                 <p>移动APP云化解决方案</p>

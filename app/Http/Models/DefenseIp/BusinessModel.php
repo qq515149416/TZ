@@ -338,7 +338,7 @@ class BusinessModel extends Model
 		
 			$list[$i]['protection_value'] = bcadd($list[$i]['ori_protection_value'], $list[$i]['extra_protection'] , 0); 
 
-			$list[$i]['user_name'] = DB::table('tz_users')->where('id',$list[$i]['user_id'])->value('name');
+			$list[$i]['user_name'] = DB::table('tz_users')->where('id',$list[$i]['user_id'])->value('nickname');
 			if($list[$i]['user_name'] == null){
 				$list[$i]['user_name'] = DB::table('tz_users')->where('id',$list[$i]['user_id'])->value('email');
 			}

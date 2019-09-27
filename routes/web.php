@@ -77,6 +77,13 @@ Route::group([
     Route::get('/high_proof_host', 'Show\wap\HighProofHostController@index');
     Route::get('/high_security_ip', 'Show\wap\HighSecurityIPController@index');
     Route::get('/cdn_speed_up', 'Show\wap\CdnSpeedUpController@index');
+    Route::get('/c_shield', 'Show\wap\CshieldController@index');
+    Route::get('/high_anti_cdn', 'Show\wap\HighAntiCDNController@index');
+    Route::get('/flow_stack_packet', 'Show\wap\FlowStackPacketController@index');
+    Route::get('/cloud_hosting', 'Show\wap\CloudHostingController@index');
+    Route::get('/chess_solution', 'Show\wap\ChessSolutionController@index');
+    Route::get('/deployment_solution', 'Show\wap\DeploymentSolutionController@index');
+    Route::get('/education_solution', 'Show\wap\EducationSolutionController@index');
 });
 
 /**

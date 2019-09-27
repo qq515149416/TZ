@@ -105,16 +105,18 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="/wap/cdn_speed_up">
+                                <a href="/wap/high_anti_cdn">
                                     <div class="fuwu-title">高防CDN加速</div>
                                     <div class="fuwu-txt">自建高质节点覆盖全国30多个省份,智能DNS调度算法,加速本地缓存,为网站提供快速、稳定的访问体验。
                                     </div>
                                 </a>
                             </li>
                             <li style="border: none;">
-                                <div class="fuwu-title">防C盾</div>
-                                <div class="fuwu-txt">腾正自主研发针对CC攻击接入C盾进行防御的攻击防护体系,一键开启DDOSheCC防御,零维护规则。
-                                </div>
+                                <a href="/wap/c_shield">
+                                    <div class="fuwu-title">防C盾</div>
+                                    <div class="fuwu-txt">腾正自主研发针对CC攻击接入C盾进行防御的攻击防护体系,一键开启DDOSheCC防御,零维护规则。
+                                    </div>
+                                </a>
                             </li>
                         </ul>
                     </div>

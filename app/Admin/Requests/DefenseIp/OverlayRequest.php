@@ -40,6 +40,7 @@ class OverlayRequest extends FormRequest
 					'site'				=> 'required|exists:idc_machineroom,id', 
 					'protection_value'		=> 'required', 
 					'price'				=> 'required|numeric', 
+					'channel_price'			=> 'required|numeric', 
 					'validity_period'			=> 'required', 
 				
 				];
@@ -107,6 +108,8 @@ class OverlayRequest extends FormRequest
 			'protection_value.required'		=> '请填写叠加包防御值',
 			'price.required'				=> '请填写叠加包单价',
 			'price.numeric'				=> '价格格式错误',
+			'channel_price.required'			=> '请填写叠加包渠道单价',
+			'channel_price.numeric'			=> '渠道价格格式错误',
 			'validity_period.required'			=> '请填写叠加包有效期',
 			'del_id.required'				=> '请填写需要删除的id',
 			'del_id.exists'				=> 'ID不存在',

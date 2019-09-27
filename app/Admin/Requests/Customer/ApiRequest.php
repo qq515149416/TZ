@@ -42,7 +42,7 @@ class ApiRequest extends FormRequest
 					'apply_id'	=> 'required|exists:tz_api,id'
 				];
 				break;
-		
+
 			default:
 	
 				break;
@@ -61,6 +61,7 @@ class ApiRequest extends FormRequest
 			'examine_res.in'		=> '审核结果只有: 0-不通过 ; 1-通过',
 			'apply_id.required'	=> '请选择申请单',
 			'apply_id.exists'		=> '申请单不存在',
+
 		];
 	}
 

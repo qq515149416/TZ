@@ -17,17 +17,13 @@ class OverlayController extends Controller
 	 *  创建叠加包
 	 */
 	public function insert(OverlayRequest $request){
-		$par = $request->only(['name', 'description','site','protection_value','price','validity_period']);
+		$par = $request->only(['name', 'description','site','protection_value','price','channel_price','validity_period']);
 
 		$model = new OverlayModel();
 
 		$res = $model->insert($par);
 
-		if($res){
-			return tz_ajax_echo([],'创建成功',1);	
-		}else{
-			return tz_ajax_echo([],'创建失败',0);
-		}
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);	
 	}
 	
 	/**

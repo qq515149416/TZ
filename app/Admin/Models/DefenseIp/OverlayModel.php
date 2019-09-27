@@ -26,14 +26,36 @@ class OverlayModel extends Model
 	protected $primaryKey = 'id'; //主键
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
-	protected $fillable = ['name', 'description','site','protection_value','price','validity_period','sell_status'];
+	protected $fillable = ['name', 'description','site','protection_value','price','validity_period','sell_status','channel_price'];
 	protected $time_limit = 60;//两次购买的时间限制
 
 	/**
 	 *
 	 */
 	public function insert($par){
-		return $this->create($par);
+		$check = $this->where('name',$par['name'])->exists();
+
+		if($check){
+			return [
+				'data'	=> [],
+				'msg'	=> '已存在同名叠加包',
+				'code'	=> 0,
+			];
+		}
+
+		if($this->create($par)){
+			return [
+				'data'	=> [],
+				'msg'	=> '创建成功',
+				'code'	=> 1,
+			];
+		}else{
+			return [
+				'data'	=> [],
+				'msg'	=> '创建失败',
+				'code'	=> 0,
+			];
+		}
 	}
 	
 	public function del($del_id){
@@ -62,6 +84,19 @@ class OverlayModel extends Model
 	}
 
 	public function edit($par){
+		if (isset($par['name'])) {
+			$check = $this->where('name',$par['name'])->value('id');
+			if($check){
+				if ($check != $par['edit_id']) {
+					return [
+						'data'	=> [],
+						'msg'	=> '已存在同名叠加包',
+						'code'	=> 0,
+					];
+				}	
+			}
+		}
+
 		$overlay = $this->find($par['edit_id']);
 		if($overlay == null){
 			return [

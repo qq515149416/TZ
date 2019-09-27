@@ -160,8 +160,11 @@ class PayOrder extends Model
 			// 	$return['code']	= 0;
 			// 	return $return;
 			// }
-					
-			$processing = $this->paySuccess($unpaidOrder[$i]['id'],$pay_time);
+			if ($is_api != 0) {	//如果是api传来的话
+				$processing = $this->paySuccess($unpaidOrder[$i]['id'],$pay_time,$is_api);
+			}else{	//如果不是api传来的话
+				$processing = $this->paySuccess($unpaidOrder[$i]['id'],$pay_time);
+			}
 			if($processing['code'] != 1){
 				DB::rollBack();
 				return $processing;
@@ -413,7 +416,7 @@ class PayOrder extends Model
 	/**
 	*支付订单改状态方法
 	**/
-	protected function paySuccess($order_id,$pay_time){
+	protected function paySuccess($order_id,$pay_time,$is_api=0){
 		$return['data'] = '';
 		$row = $this->find($order_id)->toArray();
 
@@ -442,8 +445,11 @@ class PayOrder extends Model
 				if($checkBusiness != null){
 					//如果该业务是试用
 					if ($checkBusiness->status == 4 ) {
+						$start_time = Carbon::now();
+						$start = $start_time->toDateTimeString();
 						$business = [
 							'status'            => 1,
+							'start_time'	=> $start,
 							'end_at'            => $row['end_time'],
 						];
 						$update_business = DB::table('tz_defenseip_business')
@@ -463,10 +469,11 @@ class PayOrder extends Model
 					}
 				}else{
 					$package = DB::table('tz_defenseip_package')
-					->select(['site','protection_value','price'])
+					->select(['site','protection_value','price','channel_price'])
 					->where('id',$row['machine_sn'])
 					->whereNull('deleted_at')
 					->first();
+					
 					if($package == null){
 						$return['msg']  = '该套餐已下架!';
 						$return['code'] = 2;
@@ -520,7 +527,9 @@ class PayOrder extends Model
 						'start_time'	=> $start,
 						'end_at'		=> $end,
 					];
-					
+					if ($is_api != 0) {	//如果是api传来的按渠道价给
+						$business['price'] = $package->channel_price;
+					}
 					/****/
 
 

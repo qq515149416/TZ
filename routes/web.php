@@ -362,19 +362,7 @@ Route::group([
         Route::get('showDIPPackage', 'Customer\ApiController@showDIPPackage');      //申请api
         /** 客户端api用可购买套餐展示 end **/
     });
-    /** 外部api start **/
-    Route::group([
-        'prefix' => 'ver1', //版本
-    ], function () {
-        /** 高防类api start **/
-        Route::group([
-                'prefix' => 'dip', //高防类
-        ], function () {
-                Route::post('buyDIP', 'Customer\ApiOutController@buyDIP');      //购买高防套餐的接口
-        });
-        /** 高防类api end **/
-    });
-    /** 外部api end **/
+
     
 
 });

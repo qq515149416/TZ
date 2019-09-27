@@ -21,15 +21,18 @@ Route::get('/test', function (Request $request) {
 	return '6666';
 });
 
-
-/** 高防类api start **/
 Route::group([
-	'prefix' => 'dip', //高防类
+	'prefix' => 'v1', //高防类
 ], function () {
+	/** 高防类api start **/
+	Route::group([
+		'prefix' => 'dip', //高防类
+	], function () {
 
-	Route::post('buyDIP', 'Customer\ApiOutController@buyDIP');          //购买高防套餐的接口
-	Route::post('renewDIP', 'Customer\ApiOutController@renewDIP');          //购买高防套餐的接口
-	Route::post('showDIP', 'Customer\ApiOutController@showDIP');      //展示已购高防套餐的接口
-	Route::post('searchDIP', 'Customer\ApiOutController@searchDIP');      //展示已购高防套餐的接口
+		Route::post('buyDIP', 'Customer\ApiOutController@buyDIP');          //购买高防套餐的接口
+		Route::post('renewDIP', 'Customer\ApiOutController@renewDIP');          //购买高防套餐的接口
+		Route::post('showDIP', 'Customer\ApiOutController@showDIP');      //展示已购高防套餐的接口
+		Route::post('searchDIP', 'Customer\ApiOutController@searchDIP');      //展示已购高防套餐的接口
+	});
+	/** 高防类api end **/
 });
-/** 高防类api end **/

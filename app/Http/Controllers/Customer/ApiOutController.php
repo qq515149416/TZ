@@ -64,6 +64,24 @@ class ApiOutController extends Controller
 	}
 
 	/**
+	* 客户展示自己已购买的高防套餐 api 详情
+	* @return 
+	*/
+	public function showDIPDetail(Request $request)
+	{
+		$par = $request->only(['apiKey' , 'timestamp' , 'hash' , 'businessNumber' ]);
+
+		if (!isset($par['apiKey']) || !isset($par['timestamp']) || !isset($par['hash']) || !isset($par['businessNumber']) ) {
+			return tz_ajax_echo([],'非法参数',3);
+		}
+
+		$model = new ApiOut();
+		$res = $model->showDIPDetail( $par['apiKey'] , $par['timestamp'] , $par['hash'] ,$par['businessNumber']);
+
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
+
+	/**
 	* 客户搜索自己已购买的高防套餐 api
 	* @return 
 	*/
@@ -81,4 +99,115 @@ class ApiOutController extends Controller
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
 
+	
+
+	/**
+	* 查看可购买的高防ip套餐
+	* @return 
+	*/
+	public function showDIPPackage(Request $request)
+	{
+		$par = $request->only(['apiKey' , 'timestamp' , 'hash']);
+
+		if (!isset($par['apiKey']) || !isset($par['timestamp']) || !isset($par['hash']) ) {
+			return tz_ajax_echo([],'非法参数',3);
+		}
+
+		$model = new ApiOut();
+		$res = $model->showDIPPackage( $par['apiKey'] , $par['timestamp'] , $par['hash'] );
+
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
+
+	/**
+	* 绑定目标ip
+	* @return 
+	*/
+	public function setDIPTarget(Request $request)
+	{
+		$par = $request->only(['apiKey' , 'timestamp' , 'hash' , 'businessNumber' , 'targetIp' ]);
+
+		if (!isset($par['apiKey']) || !isset($par['timestamp']) || !isset($par['hash']) || !isset($par['businessNumber']) || !isset($par['targetIp']) ) {
+			return tz_ajax_echo([],'非法参数',3);
+		}
+
+		$model = new ApiOut();
+		$res = $model->setDIPTarget( $par['apiKey'] , $par['timestamp'] , $par['hash'] ,$par['businessNumber'] ,$par['targetIp'] );
+
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
+
+	/**
+	* 获取高防流量图
+	* @return 
+	*/
+	public function showDIPFlow(Request $request)
+	{
+		$par = $request->only(['apiKey' , 'timestamp' , 'hash' , 'startTime' , 'endTime' , 'ip']);
+
+		if (!isset($par['apiKey']) || !isset($par['timestamp']) || !isset($par['hash']) || !isset($par['startTime']) || !isset($par['endTime']) || !isset($par['ip']) ) {
+			return tz_ajax_echo([],'非法参数',3);
+		}
+
+		$model = new ApiOut();
+		$res = $model->showDIPFlow( $par['apiKey'] , $par['timestamp'] , $par['hash'] ,$par['startTime'] ,$par['endTime'] ,$par['ip'] );
+
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
+
+	/**
+	* 提交白名单申请
+	* @return 
+	*/
+	public function setWhiteList(Request $request)
+	{
+		$par = $request->only(['apiKey' , 'timestamp' , 'hash' , 'ip' , 'domainName' , 'recordNumber' , 'submitNote']);
+
+		if (!isset($par['apiKey']) || !isset($par['timestamp']) || !isset($par['hash']) || !isset($par['ip']) || !isset($par['domainName']) || !isset($par['recordNumber']) || !isset($par['submitNote'])) {
+			return tz_ajax_echo([],'非法参数',3);
+		}
+
+		$model = new ApiOut();
+
+		$res = $model->setWhiteList( $par['apiKey'] , $par['timestamp'] , $par['hash'] ,$par['ip'] ,$par['domainName'] , $par['recordNumber'] , $par['submitNote'] );
+		
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
+
+	/**
+	* 获取所有业务的使用中ip
+	* @return 
+	*/
+	public function showAllIp(Request $request)
+	{
+		$par = $request->only(['apiKey' , 'timestamp' , 'hash']);
+
+		if (!isset($par['apiKey']) || !isset($par['timestamp']) || !isset($par['hash']) ) {
+			return tz_ajax_echo([],'非法参数',3);
+		}
+
+		$model = new ApiOut();
+		$res = $model->showAllIp( $par['apiKey'] , $par['timestamp'] , $par['hash'] );
+
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
+
+	/**
+	* 获取所有白名单申请
+	* @return 
+	*/
+	public function showWhiteList(Request $request)
+	{
+		$par = $request->only(['apiKey' , 'timestamp' , 'hash']);
+
+		if (!isset($par['apiKey']) || !isset($par['timestamp']) || !isset($par['hash']) ) {
+			return tz_ajax_echo([],'非法参数',3);
+		}
+
+		$model = new ApiOut();
+		$res = $model->showWhiteList( $par['apiKey'] , $par['timestamp'] , $par['hash'] );
+
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
+	
 }

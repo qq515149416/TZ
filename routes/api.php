@@ -32,7 +32,22 @@ Route::group([
 		Route::post('buyDIP', 'Customer\ApiOutController@buyDIP');          //购买高防套餐的接口
 		Route::post('renewDIP', 'Customer\ApiOutController@renewDIP');          //购买高防套餐的接口
 		Route::post('showDIP', 'Customer\ApiOutController@showDIP');      //展示已购高防套餐的接口
+		Route::post('showDIPDetail', 'Customer\ApiOutController@showDIPDetail');      //展示已购高防套餐的接口
 		Route::post('searchDIP', 'Customer\ApiOutController@searchDIP');      //展示已购高防套餐的接口
+		Route::post('showDIPPackage', 'Customer\ApiOutController@showDIPPackage');      //可购买套餐展示
+		Route::post('setDIPTarget', 'Customer\ApiOutController@setDIPTarget');      //绑定目标ip
+		Route::post('showDIPFlow', 'Customer\ApiOutController@showDIPFlow');      //展示高防流量		
 	});
+
 	/** 高防类api end **/
+
+	/** 通用api start **/
+	Route::group([
+		'prefix' => 'common', //高防类
+	], function () {
+		Route::post('showAllIp', 'Customer\ApiOutController@showAllIp');      //展示所有所属IP
+		Route::post('setWhiteList', 'Customer\ApiOutController@setWhiteList');      //添加白名单申请
+		Route::post('showWhiteList', 'Customer\ApiOutController@showWhiteList');      //查看白名单申请
+	});
+	/** 通用api end **/
 });

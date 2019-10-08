@@ -9,6 +9,8 @@ Route::group([
     'namespace'  => config('admin.route.namespace'),
     'middleware' => config('admin.route.middleware'),
 ], function (Router $router) {
+    $router->get('auth/login', 'User\AuthController@getLogin');
+    $router->post('auth/login', 'User\AuthController@postLogin');
     $router->get('/', 'HomeController@index');
 
 

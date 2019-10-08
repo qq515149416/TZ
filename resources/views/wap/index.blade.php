@@ -177,55 +177,55 @@
                             <div class="fuwu-title">棋牌云解决方案</div>
                             <div class="fuwu-txt">高防御系统、负载均衡功能、弹性扩展云服务器、数据库I/O分离，轻松应对海量玩家同时在线和平台信息安全
                             </div>
-                            <a href="/">查看详情</a>
+                            <a href="/wap/chess_solution">查看详情</a>
                         </li>
                         <li class="solution">
                             <img src="{{ asset("/images/wap/游戏云.png") }}" alt="">
                             <div class="fuwu-title">游戏云解决方案</div>
                             <div class="fuwu-txt">自主机房专属服务器集群、负载均衡功能等，解决卡顿、掉线、攻击停服、玩家分析、直播接入困难等常见问题
                             </div>
-                            <a href="/">查看详情</a>
+                            <a href="/wap/game_solution">查看详情</a>
                         </li>
                         <li class="solution m">
                             <img src="{{ asset("/images/wap/金融云.png") }}" alt="">
                             <div class="fuwu-title">金融云解决方案</div>
                             <div class="fuwu-txt">银行、P2P、小贷、典当等金融业的防护产品，解决金融行业互联互通、海量访问、数据安全、降低成本等问题
                             </div>
-                            <a href="/">查看详情</a>
+                            <a href="/wap/financial_solution">查看详情</a>
                         </li>
                         <li class="solution ">
                             <img src="{{ asset("/images/wap/流媒体.png") }}" alt="">
                             <div class="fuwu-title">流媒体云解决方案</div>
                             <div class="fuwu-txt">冗余架构,分布式抗D、高效分发.打造"清晰流畅.低时延.高并发"流媒体服务.应用于游戏.娱乐等流媒体场景
                             </div>
-                            <a href="/">查看详情</a>
+                            <a href="/wap/media_solution">查看详情</a>
                         </li>
                         <li class="solution m">
                             <img src="{{ asset("/images/wap/移动云.png") }}" alt="">
                             <div class="fuwu-title">移动APP解决方案</div>
                             <div class="fuwu-txt">腾正移动APP解决方案，旨为开发者提供移动APP基础服务，解决营销困难、高并发、数据安全调度部精准等难题
                             </div>
-                            <a href="/">查看详情</a>
+                            <a href="/wap/mobileapp_solution">查看详情</a>
                         </li>
                         <li class="solution ">
                             <img src="{{ asset("/images/wap/教育云.png") }}" alt="">
                             <div class="fuwu-title">教育云解决方案</div>
                             <div class="fuwu-txt">以"统一基础架构、统一应用支撑、统一数据标准、统一技术架构"为原则，构建面向多用户的地方教育核心体系
                             </div>
-                            <a href="/">查看详情</a>
+                            <a href="/wap/education_solution">查看详情</a>
                         </li>
                         <li class="solution m">
                             <img src="{{ asset("/images/wap/政务云.png") }}" alt="">
                             <div class="fuwu-title">政务云解决方案</div>
                             <div class="fuwu-txt">基于政务系统需求，一站式解决系统利用率低、能源消耗高、各电子政务系统相互隔离、安全性能差等核心问题
                             </div>
-                            <a href="/">查看详情</a>
+                            <a href="/wap/government_solution">查看详情</a>
                         </li>
                         <li class="solution ">
                             <img src="{{ asset("/images/wap/网站部署.png") }}" alt="">
                             <div class="fuwu-title">网站部署解决方案</div>
                             <div class="fuwu-txt">提供从主机选型、环境部署、数据迁移、测试、监控、防御、加速、售后运维等一条龙服务，助用户无忧上云</div>
-                            <a href="/">查看详情</a>
+                            <a href="/wap/deployment_solution">查看详情</a>
                         </li>
                     </ul>
                 </div>

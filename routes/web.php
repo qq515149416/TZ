@@ -84,6 +84,11 @@ Route::group([
     Route::get('/chess_solution', 'Show\wap\ChessSolutionController@index');
     Route::get('/deployment_solution', 'Show\wap\DeploymentSolutionController@index');
     Route::get('/education_solution', 'Show\wap\EducationSolutionController@index');
+    Route::get('/financial_solution', 'Show\wap\FinancialSolutionController@index');
+    Route::get('/game_solution', 'Show\wap\GameSolutionController@index');
+    Route::get('/government_solution', 'Show\wap\GovernmentSolutionController@index');
+    Route::get('/media_solution', 'Show\wap\MediaSolutionController@index');
+    Route::get('/mobileapp_solution', 'Show\wap\MobileappSolutionController@index');
 });
 
 /**
@@ -382,6 +387,6 @@ Route::group([
         /** 高防类api end **/
     });
     /** 外部api end **/
-    
+
 
 });

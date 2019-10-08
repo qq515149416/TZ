@@ -109,10 +109,14 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <p>金融云解决方案</p>
+                                                <a href="/wap/financial_solution">
+                                                    <p>金融云解决方案</p>
+                                                </a>
                                             </li>
                                             <li>
-                                                <p>流媒体解决方案</p>
+                                                <a href="/wap/media_solution">
+                                                    <p>流媒体解决方案</p>
+                                                </a>
                                             </li>
                                             <li>
                                                 <a href="/wap/education_solution">
@@ -125,10 +129,19 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <p>移动APP云化解决方案</p>
+                                                <a href="/wap/mobileapp_solution">
+                                                    <p>移动APP云化解决方案</p>
+                                                </a>
                                             </li>
                                             <li>
-                                                <p>游戏云解决方案</p>
+                                                <a href="/wap/game_solution">
+                                                    <p>游戏云解决方案</p>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="/wap/government_solution">
+                                                    <p>政务云解决方案</p>
+                                                </a>
                                             </li>
                                         </ul>
                                     </div>

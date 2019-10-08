@@ -4783,22 +4783,42 @@ input:hover {
 }
 #chess_solution .main-body,
 #deployment_solution .main-body,
-#education_solution .main-body {
+#education_solution .main-body,
+#financial_solution .main-body,
+#game_solution .main-body,
+#government_solution .main-body,
+#media_solution .main-body,
+#mobileapp_solution .main-body {
   padding-top: 0;
 }
 #chess_solution .tz-container,
 #deployment_solution .tz-container,
-#education_solution .tz-container {
+#education_solution .tz-container,
+#financial_solution .tz-container,
+#game_solution .tz-container,
+#government_solution .tz-container,
+#media_solution .tz-container,
+#mobileapp_solution .tz-container {
   width: 100%;
 }
 #chess_solution .tz-container .main-content,
 #deployment_solution .tz-container .main-content,
-#education_solution .tz-container .main-content {
+#education_solution .tz-container .main-content,
+#financial_solution .tz-container .main-content,
+#game_solution .tz-container .main-content,
+#government_solution .tz-container .main-content,
+#media_solution .tz-container .main-content,
+#mobileapp_solution .tz-container .main-content {
   background-color: #e9ecff;
 }
 #chess_solution .tz-container .main-content .title,
 #deployment_solution .tz-container .main-content .title,
-#education_solution .tz-container .main-content .title {
+#education_solution .tz-container .main-content .title,
+#financial_solution .tz-container .main-content .title,
+#game_solution .tz-container .main-content .title,
+#government_solution .tz-container .main-content .title,
+#media_solution .tz-container .main-content .title,
+#mobileapp_solution .tz-container .main-content .title {
   width: 100%;
   height: 95px;
   line-height: 78px;
@@ -4806,7 +4826,12 @@ input:hover {
 }
 #chess_solution .tz-container .main-content .title p,
 #deployment_solution .tz-container .main-content .title p,
-#education_solution .tz-container .main-content .title p {
+#education_solution .tz-container .main-content .title p,
+#financial_solution .tz-container .main-content .title p,
+#game_solution .tz-container .main-content .title p,
+#government_solution .tz-container .main-content .title p,
+#media_solution .tz-container .main-content .title p,
+#mobileapp_solution .tz-container .main-content .title p {
   display: block;
   height: 50px;
   color: #252b3a;
@@ -4815,13 +4840,23 @@ input:hover {
 }
 #chess_solution .tz-container .main-content .industry-problems ul,
 #deployment_solution .tz-container .main-content .industry-problems ul,
-#education_solution .tz-container .main-content .industry-problems ul {
+#education_solution .tz-container .main-content .industry-problems ul,
+#financial_solution .tz-container .main-content .industry-problems ul,
+#game_solution .tz-container .main-content .industry-problems ul,
+#government_solution .tz-container .main-content .industry-problems ul,
+#media_solution .tz-container .main-content .industry-problems ul,
+#mobileapp_solution .tz-container .main-content .industry-problems ul {
   width: 100%;
   padding-bottom: 20px;
 }
 #chess_solution .tz-container .main-content .industry-problems ul li,
 #deployment_solution .tz-container .main-content .industry-problems ul li,
-#education_solution .tz-container .main-content .industry-problems ul li {
+#education_solution .tz-container .main-content .industry-problems ul li,
+#financial_solution .tz-container .main-content .industry-problems ul li,
+#game_solution .tz-container .main-content .industry-problems ul li,
+#government_solution .tz-container .main-content .industry-problems ul li,
+#media_solution .tz-container .main-content .industry-problems ul li,
+#mobileapp_solution .tz-container .main-content .industry-problems ul li {
   float: left;
   width: 47.6%;
   background-color: #fff;
@@ -4831,20 +4866,35 @@ input:hover {
 }
 #chess_solution .tz-container .main-content .industry-problems ul li .industry-title,
 #deployment_solution .tz-container .main-content .industry-problems ul li .industry-title,
-#education_solution .tz-container .main-content .industry-problems ul li .industry-title {
+#education_solution .tz-container .main-content .industry-problems ul li .industry-title,
+#financial_solution .tz-container .main-content .industry-problems ul li .industry-title,
+#game_solution .tz-container .main-content .industry-problems ul li .industry-title,
+#government_solution .tz-container .main-content .industry-problems ul li .industry-title,
+#media_solution .tz-container .main-content .industry-problems ul li .industry-title,
+#mobileapp_solution .tz-container .main-content .industry-problems ul li .industry-title {
   margin-bottom: 10px;
   height: 22px;
   position: relative;
 }
 #chess_solution .tz-container .main-content .industry-problems ul li .industry-title img,
 #deployment_solution .tz-container .main-content .industry-problems ul li .industry-title img,
-#education_solution .tz-container .main-content .industry-problems ul li .industry-title img {
+#education_solution .tz-container .main-content .industry-problems ul li .industry-title img,
+#financial_solution .tz-container .main-content .industry-problems ul li .industry-title img,
+#game_solution .tz-container .main-content .industry-problems ul li .industry-title img,
+#government_solution .tz-container .main-content .industry-problems ul li .industry-title img,
+#media_solution .tz-container .main-content .industry-problems ul li .industry-title img,
+#mobileapp_solution .tz-container .main-content .industry-problems ul li .industry-title img {
   width: 20px;
   margin-right: 6px;
 }
 #chess_solution .tz-container .main-content .industry-problems ul li .industry-title p,
 #deployment_solution .tz-container .main-content .industry-problems ul li .industry-title p,
-#education_solution .tz-container .main-content .industry-problems ul li .industry-title p {
+#education_solution .tz-container .main-content .industry-problems ul li .industry-title p,
+#financial_solution .tz-container .main-content .industry-problems ul li .industry-title p,
+#game_solution .tz-container .main-content .industry-problems ul li .industry-title p,
+#government_solution .tz-container .main-content .industry-problems ul li .industry-title p,
+#media_solution .tz-container .main-content .industry-problems ul li .industry-title p,
+#mobileapp_solution .tz-container .main-content .industry-problems ul li .industry-title p {
   position: absolute;
   top: 2px;
   display: inline;
@@ -4855,12 +4905,22 @@ input:hover {
 }
 #chess_solution .tz-container .main-content .industry-problems ul li .m-b,
 #deployment_solution .tz-container .main-content .industry-problems ul li .m-b,
-#education_solution .tz-container .main-content .industry-problems ul li .m-b {
+#education_solution .tz-container .main-content .industry-problems ul li .m-b,
+#financial_solution .tz-container .main-content .industry-problems ul li .m-b,
+#game_solution .tz-container .main-content .industry-problems ul li .m-b,
+#government_solution .tz-container .main-content .industry-problems ul li .m-b,
+#media_solution .tz-container .main-content .industry-problems ul li .m-b,
+#mobileapp_solution .tz-container .main-content .industry-problems ul li .m-b {
   margin-bottom: 25px;
 }
 #chess_solution .tz-container .main-content .industry-problems ul li .industry-text,
 #deployment_solution .tz-container .main-content .industry-problems ul li .industry-text,
-#education_solution .tz-container .main-content .industry-problems ul li .industry-text {
+#education_solution .tz-container .main-content .industry-problems ul li .industry-text,
+#financial_solution .tz-container .main-content .industry-problems ul li .industry-text,
+#game_solution .tz-container .main-content .industry-problems ul li .industry-text,
+#government_solution .tz-container .main-content .industry-problems ul li .industry-text,
+#media_solution .tz-container .main-content .industry-problems ul li .industry-text,
+#mobileapp_solution .tz-container .main-content .industry-problems ul li .industry-text {
   font-size: 12px;
   font-family: "PingFang";
   color: #6a6d78;
@@ -4871,7 +4931,12 @@ input:hover {
 }
 #chess_solution .tz-container .main-content .industry-problems ul li .industry-text span,
 #deployment_solution .tz-container .main-content .industry-problems ul li .industry-text span,
-#education_solution .tz-container .main-content .industry-problems ul li .industry-text span {
+#education_solution .tz-container .main-content .industry-problems ul li .industry-text span,
+#financial_solution .tz-container .main-content .industry-problems ul li .industry-text span,
+#game_solution .tz-container .main-content .industry-problems ul li .industry-text span,
+#government_solution .tz-container .main-content .industry-problems ul li .industry-text span,
+#media_solution .tz-container .main-content .industry-problems ul li .industry-text span,
+#mobileapp_solution .tz-container .main-content .industry-problems ul li .industry-text span {
   display: inline-block;
   width: 3px;
   height: 3px;
@@ -4881,25 +4946,45 @@ input:hover {
 }
 #chess_solution .tz-container .main-content .industry-problems ul .p,
 #deployment_solution .tz-container .main-content .industry-problems ul .p,
-#education_solution .tz-container .main-content .industry-problems ul .p {
+#education_solution .tz-container .main-content .industry-problems ul .p,
+#financial_solution .tz-container .main-content .industry-problems ul .p,
+#game_solution .tz-container .main-content .industry-problems ul .p,
+#government_solution .tz-container .main-content .industry-problems ul .p,
+#media_solution .tz-container .main-content .industry-problems ul .p,
+#mobileapp_solution .tz-container .main-content .industry-problems ul .p {
   padding: 12px 11px !important;
   height: 143px;
 }
 #chess_solution .tz-container .main-content .industry-problems ul .m,
 #deployment_solution .tz-container .main-content .industry-problems ul .m,
-#education_solution .tz-container .main-content .industry-problems ul .m {
+#education_solution .tz-container .main-content .industry-problems ul .m,
+#financial_solution .tz-container .main-content .industry-problems ul .m,
+#game_solution .tz-container .main-content .industry-problems ul .m,
+#government_solution .tz-container .main-content .industry-problems ul .m,
+#media_solution .tz-container .main-content .industry-problems ul .m,
+#mobileapp_solution .tz-container .main-content .industry-problems ul .m {
   margin-right: 15px;
 }
 #chess_solution .tz-container .main-content .industry-problems .slideshow,
 #deployment_solution .tz-container .main-content .industry-problems .slideshow,
-#education_solution .tz-container .main-content .industry-problems .slideshow {
+#education_solution .tz-container .main-content .industry-problems .slideshow,
+#financial_solution .tz-container .main-content .industry-problems .slideshow,
+#game_solution .tz-container .main-content .industry-problems .slideshow,
+#government_solution .tz-container .main-content .industry-problems .slideshow,
+#media_solution .tz-container .main-content .industry-problems .slideshow,
+#mobileapp_solution .tz-container .main-content .industry-problems .slideshow {
   position: relative;
   overflow: hidden;
   margin-bottom: 10px;
 }
 #chess_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li,
 #deployment_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li,
-#education_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li {
+#education_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li,
+#financial_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li,
+#game_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li,
+#government_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li,
+#media_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li,
+#mobileapp_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li {
   position: absolute;
   background-color: #e9eeff;
   width: 100%;
@@ -4912,12 +4997,22 @@ input:hover {
 }
 #chess_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li img,
 #deployment_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li img,
-#education_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li img {
+#education_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li img,
+#financial_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li img,
+#game_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li img,
+#government_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li img,
+#media_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li img,
+#mobileapp_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li img {
   width: 40px;
 }
 #chess_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li div,
 #deployment_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li div,
-#education_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li div {
+#education_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li div,
+#financial_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li div,
+#game_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li div,
+#government_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li div,
+#media_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li div,
+#mobileapp_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li div {
   font-size: 14px;
   color: #252b3a;
   font-weight: bold;
@@ -4925,13 +5020,23 @@ input:hover {
 }
 #chess_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li p,
 #deployment_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li p,
-#education_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li p {
+#education_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li p,
+#financial_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li p,
+#game_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li p,
+#government_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li p,
+#media_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li p,
+#mobileapp_solution .tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li p {
   font-size: 12px;
   color: #444;
 }
 #chess_solution .tz-container .main-content .industry-problems .slideshow .point,
 #deployment_solution .tz-container .main-content .industry-problems .slideshow .point,
-#education_solution .tz-container .main-content .industry-problems .slideshow .point {
+#education_solution .tz-container .main-content .industry-problems .slideshow .point,
+#financial_solution .tz-container .main-content .industry-problems .slideshow .point,
+#game_solution .tz-container .main-content .industry-problems .slideshow .point,
+#government_solution .tz-container .main-content .industry-problems .slideshow .point,
+#media_solution .tz-container .main-content .industry-problems .slideshow .point,
+#mobileapp_solution .tz-container .main-content .industry-problems .slideshow .point {
   margin-top: 20px;
   width: 360px;
   height: 20px;
@@ -4939,14 +5044,24 @@ input:hover {
 }
 #chess_solution .tz-container .main-content .industry-problems .slideshow .point ol,
 #deployment_solution .tz-container .main-content .industry-problems .slideshow .point ol,
-#education_solution .tz-container .main-content .industry-problems .slideshow .point ol {
+#education_solution .tz-container .main-content .industry-problems .slideshow .point ol,
+#financial_solution .tz-container .main-content .industry-problems .slideshow .point ol,
+#game_solution .tz-container .main-content .industry-problems .slideshow .point ol,
+#government_solution .tz-container .main-content .industry-problems .slideshow .point ol,
+#media_solution .tz-container .main-content .industry-problems .slideshow .point ol,
+#mobileapp_solution .tz-container .main-content .industry-problems .slideshow .point ol {
   width: 100% ;
   text-align: center;
   font-size: 0;
 }
 #chess_solution .tz-container .main-content .industry-problems .slideshow .point ol li,
 #deployment_solution .tz-container .main-content .industry-problems .slideshow .point ol li,
-#education_solution .tz-container .main-content .industry-problems .slideshow .point ol li {
+#education_solution .tz-container .main-content .industry-problems .slideshow .point ol li,
+#financial_solution .tz-container .main-content .industry-problems .slideshow .point ol li,
+#game_solution .tz-container .main-content .industry-problems .slideshow .point ol li,
+#government_solution .tz-container .main-content .industry-problems .slideshow .point ol li,
+#media_solution .tz-container .main-content .industry-problems .slideshow .point ol li,
+#mobileapp_solution .tz-container .main-content .industry-problems .slideshow .point ol li {
   width: 10px ;
   height: 10px ;
   border-radius: 50%;
@@ -4956,27 +5071,52 @@ input:hover {
 }
 #chess_solution .tz-container .main-content .industry-problems .slideshow .point ol li.point-active,
 #deployment_solution .tz-container .main-content .industry-problems .slideshow .point ol li.point-active,
-#education_solution .tz-container .main-content .industry-problems .slideshow .point ol li.point-active {
+#education_solution .tz-container .main-content .industry-problems .slideshow .point ol li.point-active,
+#financial_solution .tz-container .main-content .industry-problems .slideshow .point ol li.point-active,
+#game_solution .tz-container .main-content .industry-problems .slideshow .point ol li.point-active,
+#government_solution .tz-container .main-content .industry-problems .slideshow .point ol li.point-active,
+#media_solution .tz-container .main-content .industry-problems .slideshow .point ol li.point-active,
+#mobileapp_solution .tz-container .main-content .industry-problems .slideshow .point ol li.point-active {
   background-color: #162fab;
 }
 #chess_solution .tz-container .main-content .architecture-deployment,
 #deployment_solution .tz-container .main-content .architecture-deployment,
-#education_solution .tz-container .main-content .architecture-deployment {
+#education_solution .tz-container .main-content .architecture-deployment,
+#financial_solution .tz-container .main-content .architecture-deployment,
+#game_solution .tz-container .main-content .architecture-deployment,
+#government_solution .tz-container .main-content .architecture-deployment,
+#media_solution .tz-container .main-content .architecture-deployment,
+#mobileapp_solution .tz-container .main-content .architecture-deployment {
   background-color: #fff;
 }
 #chess_solution .tz-container .main-content .architecture-deployment img,
 #deployment_solution .tz-container .main-content .architecture-deployment img,
-#education_solution .tz-container .main-content .architecture-deployment img {
+#education_solution .tz-container .main-content .architecture-deployment img,
+#financial_solution .tz-container .main-content .architecture-deployment img,
+#game_solution .tz-container .main-content .architecture-deployment img,
+#government_solution .tz-container .main-content .architecture-deployment img,
+#media_solution .tz-container .main-content .architecture-deployment img,
+#mobileapp_solution .tz-container .main-content .architecture-deployment img {
   width: 100%;
 }
 #chess_solution .tz-container .main-content .architecture-deployment .description,
 #deployment_solution .tz-container .main-content .architecture-deployment .description,
-#education_solution .tz-container .main-content .architecture-deployment .description {
+#education_solution .tz-container .main-content .architecture-deployment .description,
+#financial_solution .tz-container .main-content .architecture-deployment .description,
+#game_solution .tz-container .main-content .architecture-deployment .description,
+#government_solution .tz-container .main-content .architecture-deployment .description,
+#media_solution .tz-container .main-content .architecture-deployment .description,
+#mobileapp_solution .tz-container .main-content .architecture-deployment .description {
   padding: 15px 0 30px 0;
 }
 #chess_solution .tz-container .main-content .architecture-deployment .description .description-title,
 #deployment_solution .tz-container .main-content .architecture-deployment .description .description-title,
-#education_solution .tz-container .main-content .architecture-deployment .description .description-title {
+#education_solution .tz-container .main-content .architecture-deployment .description .description-title,
+#financial_solution .tz-container .main-content .architecture-deployment .description .description-title,
+#game_solution .tz-container .main-content .architecture-deployment .description .description-title,
+#government_solution .tz-container .main-content .architecture-deployment .description .description-title,
+#media_solution .tz-container .main-content .architecture-deployment .description .description-title,
+#mobileapp_solution .tz-container .main-content .architecture-deployment .description .description-title {
   font-size: 14px;
   font-family: "PingFang";
   color: #252b3a;
@@ -4986,7 +5126,12 @@ input:hover {
 }
 #chess_solution .tz-container .main-content .architecture-deployment .description div,
 #deployment_solution .tz-container .main-content .architecture-deployment .description div,
-#education_solution .tz-container .main-content .architecture-deployment .description div {
+#education_solution .tz-container .main-content .architecture-deployment .description div,
+#financial_solution .tz-container .main-content .architecture-deployment .description div,
+#game_solution .tz-container .main-content .architecture-deployment .description div,
+#government_solution .tz-container .main-content .architecture-deployment .description div,
+#media_solution .tz-container .main-content .architecture-deployment .description div,
+#mobileapp_solution .tz-container .main-content .architecture-deployment .description div {
   color: #434a5b;
   font-size: 12px;
   font-weight: bold;
@@ -4995,7 +5140,12 @@ input:hover {
 }
 #chess_solution .tz-container .main-content .architecture-deployment .description p,
 #deployment_solution .tz-container .main-content .architecture-deployment .description p,
-#education_solution .tz-container .main-content .architecture-deployment .description p {
+#education_solution .tz-container .main-content .architecture-deployment .description p,
+#financial_solution .tz-container .main-content .architecture-deployment .description p,
+#game_solution .tz-container .main-content .architecture-deployment .description p,
+#government_solution .tz-container .main-content .architecture-deployment .description p,
+#media_solution .tz-container .main-content .architecture-deployment .description p,
+#mobileapp_solution .tz-container .main-content .architecture-deployment .description p {
   font-size: 12px;
   font-family: "PingFang";
   color: #6a6d78;
@@ -5004,21 +5154,36 @@ input:hover {
 }
 #chess_solution .tz-container .main-content .service-advantages,
 #deployment_solution .tz-container .main-content .service-advantages,
-#education_solution .tz-container .main-content .service-advantages {
+#education_solution .tz-container .main-content .service-advantages,
+#financial_solution .tz-container .main-content .service-advantages,
+#game_solution .tz-container .main-content .service-advantages,
+#government_solution .tz-container .main-content .service-advantages,
+#media_solution .tz-container .main-content .service-advantages,
+#mobileapp_solution .tz-container .main-content .service-advantages {
   background: -webkit-gradient(linear, left top, left bottom, from(#edf0ff), to(#fff));
   background: linear-gradient(#edf0ff, #fff);
   position: relative;
 }
 #chess_solution .tz-container .main-content .service-advantages img,
 #deployment_solution .tz-container .main-content .service-advantages img,
-#education_solution .tz-container .main-content .service-advantages img {
+#education_solution .tz-container .main-content .service-advantages img,
+#financial_solution .tz-container .main-content .service-advantages img,
+#game_solution .tz-container .main-content .service-advantages img,
+#government_solution .tz-container .main-content .service-advantages img,
+#media_solution .tz-container .main-content .service-advantages img,
+#mobileapp_solution .tz-container .main-content .service-advantages img {
   width: 100%;
   padding: 0px 60px;
   margin-bottom: 10px;
 }
 #chess_solution .tz-container .main-content .service-advantages .backgroundimg,
 #deployment_solution .tz-container .main-content .service-advantages .backgroundimg,
-#education_solution .tz-container .main-content .service-advantages .backgroundimg {
+#education_solution .tz-container .main-content .service-advantages .backgroundimg,
+#financial_solution .tz-container .main-content .service-advantages .backgroundimg,
+#game_solution .tz-container .main-content .service-advantages .backgroundimg,
+#government_solution .tz-container .main-content .service-advantages .backgroundimg,
+#media_solution .tz-container .main-content .service-advantages .backgroundimg,
+#mobileapp_solution .tz-container .main-content .service-advantages .backgroundimg {
   width: 100%;
   position: absolute;
   top: 300px;
@@ -5028,13 +5193,23 @@ input:hover {
 }
 #chess_solution .tz-container .main-content .service-advantages ul,
 #deployment_solution .tz-container .main-content .service-advantages ul,
-#education_solution .tz-container .main-content .service-advantages ul {
+#education_solution .tz-container .main-content .service-advantages ul,
+#financial_solution .tz-container .main-content .service-advantages ul,
+#game_solution .tz-container .main-content .service-advantages ul,
+#government_solution .tz-container .main-content .service-advantages ul,
+#media_solution .tz-container .main-content .service-advantages ul,
+#mobileapp_solution .tz-container .main-content .service-advantages ul {
   z-index: 100;
   padding: 15px 0px;
 }
 #chess_solution .tz-container .main-content .service-advantages ul li,
 #deployment_solution .tz-container .main-content .service-advantages ul li,
-#education_solution .tz-container .main-content .service-advantages ul li {
+#education_solution .tz-container .main-content .service-advantages ul li,
+#financial_solution .tz-container .main-content .service-advantages ul li,
+#game_solution .tz-container .main-content .service-advantages ul li,
+#government_solution .tz-container .main-content .service-advantages ul li,
+#media_solution .tz-container .main-content .service-advantages ul li,
+#mobileapp_solution .tz-container .main-content .service-advantages ul li {
   padding: 15px 0px;
   width: 100%;
   background-color: #fff;
@@ -5045,12 +5220,22 @@ input:hover {
 }
 #chess_solution .tz-container .main-content .service-advantages ul li .fuwu-txt,
 #deployment_solution .tz-container .main-content .service-advantages ul li .fuwu-txt,
-#education_solution .tz-container .main-content .service-advantages ul li .fuwu-txt {
+#education_solution .tz-container .main-content .service-advantages ul li .fuwu-txt,
+#financial_solution .tz-container .main-content .service-advantages ul li .fuwu-txt,
+#game_solution .tz-container .main-content .service-advantages ul li .fuwu-txt,
+#government_solution .tz-container .main-content .service-advantages ul li .fuwu-txt,
+#media_solution .tz-container .main-content .service-advantages ul li .fuwu-txt,
+#mobileapp_solution .tz-container .main-content .service-advantages ul li .fuwu-txt {
   padding-right: 15px !important;
 }
 #chess_solution .tz-container .main-content .service-advantages ul li .fuwu-title,
 #deployment_solution .tz-container .main-content .service-advantages ul li .fuwu-title,
-#education_solution .tz-container .main-content .service-advantages ul li .fuwu-title {
+#education_solution .tz-container .main-content .service-advantages ul li .fuwu-title,
+#financial_solution .tz-container .main-content .service-advantages ul li .fuwu-title,
+#game_solution .tz-container .main-content .service-advantages ul li .fuwu-title,
+#government_solution .tz-container .main-content .service-advantages ul li .fuwu-title,
+#media_solution .tz-container .main-content .service-advantages ul li .fuwu-title,
+#mobileapp_solution .tz-container .main-content .service-advantages ul li .fuwu-title {
   padding-left: 15px;
   font-size: 14px;
   font-family: "PingFang";
@@ -5061,7 +5246,12 @@ input:hover {
 }
 #chess_solution .tz-container .main-content .service-advantages ul li .fuwu-txt,
 #deployment_solution .tz-container .main-content .service-advantages ul li .fuwu-txt,
-#education_solution .tz-container .main-content .service-advantages ul li .fuwu-txt {
+#education_solution .tz-container .main-content .service-advantages ul li .fuwu-txt,
+#financial_solution .tz-container .main-content .service-advantages ul li .fuwu-txt,
+#game_solution .tz-container .main-content .service-advantages ul li .fuwu-txt,
+#government_solution .tz-container .main-content .service-advantages ul li .fuwu-txt,
+#media_solution .tz-container .main-content .service-advantages ul li .fuwu-txt,
+#mobileapp_solution .tz-container .main-content .service-advantages ul li .fuwu-txt {
   padding-left: 15px;
   padding-right: 10px;
   line-height: 20px;
@@ -5072,19 +5262,34 @@ input:hover {
 }
 #chess_solution .tz-container .main-content .service-advantages .solutions-consulting,
 #deployment_solution .tz-container .main-content .service-advantages .solutions-consulting,
-#education_solution .tz-container .main-content .service-advantages .solutions-consulting {
+#education_solution .tz-container .main-content .service-advantages .solutions-consulting,
+#financial_solution .tz-container .main-content .service-advantages .solutions-consulting,
+#game_solution .tz-container .main-content .service-advantages .solutions-consulting,
+#government_solution .tz-container .main-content .service-advantages .solutions-consulting,
+#media_solution .tz-container .main-content .service-advantages .solutions-consulting,
+#mobileapp_solution .tz-container .main-content .service-advantages .solutions-consulting {
   height: 123.2px;
   position: relative;
 }
 #chess_solution .tz-container .main-content .service-advantages .solutions-consulting img,
 #deployment_solution .tz-container .main-content .service-advantages .solutions-consulting img,
-#education_solution .tz-container .main-content .service-advantages .solutions-consulting img {
+#education_solution .tz-container .main-content .service-advantages .solutions-consulting img,
+#financial_solution .tz-container .main-content .service-advantages .solutions-consulting img,
+#game_solution .tz-container .main-content .service-advantages .solutions-consulting img,
+#government_solution .tz-container .main-content .service-advantages .solutions-consulting img,
+#media_solution .tz-container .main-content .service-advantages .solutions-consulting img,
+#mobileapp_solution .tz-container .main-content .service-advantages .solutions-consulting img {
   width: 100%;
   padding: 0px !important;
 }
 #chess_solution .tz-container .main-content .service-advantages .solutions-consulting a,
 #deployment_solution .tz-container .main-content .service-advantages .solutions-consulting a,
-#education_solution .tz-container .main-content .service-advantages .solutions-consulting a {
+#education_solution .tz-container .main-content .service-advantages .solutions-consulting a,
+#financial_solution .tz-container .main-content .service-advantages .solutions-consulting a,
+#game_solution .tz-container .main-content .service-advantages .solutions-consulting a,
+#government_solution .tz-container .main-content .service-advantages .solutions-consulting a,
+#media_solution .tz-container .main-content .service-advantages .solutions-consulting a,
+#mobileapp_solution .tz-container .main-content .service-advantages .solutions-consulting a {
   display: block;
   color: #fff;
   text-align: center;
@@ -5100,18 +5305,43 @@ input:hover {
 #chess_solution #education_solution .industry-problems ul li,
 #deployment_solution #education_solution .industry-problems ul li,
 #education_solution #education_solution .industry-problems ul li,
+#financial_solution #education_solution .industry-problems ul li,
+#game_solution #education_solution .industry-problems ul li,
+#government_solution #education_solution .industry-problems ul li,
+#media_solution #education_solution .industry-problems ul li,
+#mobileapp_solution #education_solution .industry-problems ul li,
 #chess_solution #media_solution .industry-problems ul li,
 #deployment_solution #media_solution .industry-problems ul li,
 #education_solution #media_solution .industry-problems ul li,
+#financial_solution #media_solution .industry-problems ul li,
+#game_solution #media_solution .industry-problems ul li,
+#government_solution #media_solution .industry-problems ul li,
+#media_solution #media_solution .industry-problems ul li,
+#mobileapp_solution #media_solution .industry-problems ul li,
 #chess_solution #deployment_solution .industry-problems ul li,
 #deployment_solution #deployment_solution .industry-problems ul li,
 #education_solution #deployment_solution .industry-problems ul li,
+#financial_solution #deployment_solution .industry-problems ul li,
+#game_solution #deployment_solution .industry-problems ul li,
+#government_solution #deployment_solution .industry-problems ul li,
+#media_solution #deployment_solution .industry-problems ul li,
+#mobileapp_solution #deployment_solution .industry-problems ul li,
 #chess_solution #game_solution .industry-problems ul li,
 #deployment_solution #game_solution .industry-problems ul li,
 #education_solution #game_solution .industry-problems ul li,
+#financial_solution #game_solution .industry-problems ul li,
+#game_solution #game_solution .industry-problems ul li,
+#government_solution #game_solution .industry-problems ul li,
+#media_solution #game_solution .industry-problems ul li,
+#mobileapp_solution #game_solution .industry-problems ul li,
 #chess_solution #financial_solution .industry-problems ul li,
 #deployment_solution #financial_solution .industry-problems ul li,
-#education_solution #financial_solution .industry-problems ul li {
+#education_solution #financial_solution .industry-problems ul li,
+#financial_solution #financial_solution .industry-problems ul li,
+#game_solution #financial_solution .industry-problems ul li,
+#government_solution #financial_solution .industry-problems ul li,
+#media_solution #financial_solution .industry-problems ul li,
+#mobileapp_solution #financial_solution .industry-problems ul li {
   -webkit-box-shadow: 2.5px 4px 15px 0px rgba(29, 29, 29, 0.1);
           box-shadow: 2.5px 4px 15px 0px rgba(29, 29, 29, 0.1);
 }

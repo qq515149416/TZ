@@ -14,5 +14,40 @@ use Illuminate\Http\Request;
 */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+	return $request->user();
+});
+
+Route::get('/test', function (Request $request) {
+	return '6666';
+});
+
+Route::group([
+	'prefix' => 'v1', //高防类
+], function () {
+	/** 高防类api start **/
+	Route::group([
+		'prefix' => 'dip', //高防类
+	], function () {
+
+		Route::post('buyDIP', 'Customer\ApiOutController@buyDIP');          //购买高防套餐的接口
+		Route::post('renewDIP', 'Customer\ApiOutController@renewDIP');          //购买高防套餐的接口
+		Route::post('showDIP', 'Customer\ApiOutController@showDIP');      //展示已购高防套餐的接口
+		Route::post('showDIPDetail', 'Customer\ApiOutController@showDIPDetail');      //展示已购高防套餐的接口
+		Route::post('searchDIP', 'Customer\ApiOutController@searchDIP');      //展示已购高防套餐的接口
+		Route::post('showDIPPackage', 'Customer\ApiOutController@showDIPPackage');      //可购买套餐展示
+		Route::post('setDIPTarget', 'Customer\ApiOutController@setDIPTarget');      //绑定目标ip
+		Route::post('showDIPFlow', 'Customer\ApiOutController@showDIPFlow');      //展示高防流量		
+	});
+
+	/** 高防类api end **/
+
+	/** 通用api start **/
+	Route::group([
+		'prefix' => 'common', //高防类
+	], function () {
+		Route::post('showAllIp', 'Customer\ApiOutController@showAllIp');      //展示所有所属IP
+		Route::post('setWhiteList', 'Customer\ApiOutController@setWhiteList');      //添加白名单申请
+		Route::post('showWhiteList', 'Customer\ApiOutController@showWhiteList');      //查看白名单申请
+	});
+	/** 通用api end **/
 });

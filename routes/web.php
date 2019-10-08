@@ -371,7 +371,7 @@ Route::group([
         Route::get('showKey', 'Customer\ApiController@showKey');   //查看api秘钥
         /** 客户端api资格及秘钥展示 end **/
         /** 客户端api用可购买套餐展示 start **/
-        Route::get('showDIPPackage', 'Customer\ApiController@showDIPPackage');      //申请api
+        Route::get('showDIPPackage', 'Customer\ApiController@showDIPPackage');      //可购买套餐展示
         /** 客户端api用可购买套餐展示 end **/
     });
     /** 外部api start **/
@@ -387,6 +387,8 @@ Route::group([
         /** 高防类api end **/
     });
     /** 外部api end **/
+
+
 
 
 });

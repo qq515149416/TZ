@@ -89,6 +89,7 @@ Route::group([
     Route::get('/government_solution', 'Show\wap\GovernmentSolutionController@index');
     Route::get('/media_solution', 'Show\wap\MediaSolutionController@index');
     Route::get('/mobileapp_solution', 'Show\wap\MobileappSolutionController@index');
+    Route::get('/company/{page}', 'Show\wap\CompanyIntroductionController@index');
 });
 
 /**

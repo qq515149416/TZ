@@ -159,7 +159,9 @@
                                 </div>
                                 <div class="menu-li ">
                                     <div class="menu-i">
-                                        <p>联系我们</p>
+                                        <a href="/wap/company/contact">
+                                            <p>联系我们</p>
+                                        </a>
                                     </div>
                                 </div>
                             </div>

@@ -60,4 +60,5 @@ import "./computer_introduce.js";
 import "./server_hire.js";
 import "./slideshow_a.js";
 import "./server_hosting.js";
-import "./cdn_speed_up.js"
+import "./cdn_speed_up.js";
+import "./page.js";

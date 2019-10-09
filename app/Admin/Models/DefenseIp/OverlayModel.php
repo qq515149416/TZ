@@ -532,7 +532,7 @@ class OverlayModel extends Model
 			if (!isset($par['is_ignore']) || $par['is_ignore'] != 1) {
 				return [
 					'data'	=> [],
-					'msg'	=> '叠加包时长超过业务到期时间',
+					'msg'	=> '叠加包时长超过业务到期时间,是否继续使用?不使用请按取消',
 					'code'	=> -1,
 				];
 			}	
@@ -731,7 +731,7 @@ class OverlayModel extends Model
 			if (!isset($param['is_ignore']) || $param['is_ignore'] != 1) {
 				return [
 					'data'	=> [],
-					'msg'	=> '叠加包时长超过业务到期时间',
+					'msg'	=> '叠加包时长超过业务到期时间,是否继续使用?不使用请按取消',
 					'code'	=> -1,
 				];
 			}	

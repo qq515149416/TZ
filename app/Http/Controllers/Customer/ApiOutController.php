@@ -209,5 +209,23 @@ class ApiOutController extends Controller
 
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
+
+	/**
+	* 展示可购买叠加包
+	* @return 
+	*/
+	public function showOverlay(Request $request)
+	{
+		$par = $request->only(['apiKey' , 'timestamp' , 'hash']);
+
+		if (!isset($par['apiKey']) || !isset($par['timestamp']) || !isset($par['hash']) ) {
+			return tz_ajax_echo([],'非法参数',3);
+		}
+
+		$model = new ApiOut();
+		$res = $model->showOverlay( $par['apiKey'] , $par['timestamp'] , $par['hash'] );
+
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
 	
 }

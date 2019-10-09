@@ -905,7 +905,7 @@ class ApiOut extends Model
 		$white_model = new WhiteListModel();
 
 		$white_list_list = $white_model->where('customer_id' , $check_sign)
-						->select(['white_ip as ip' , 'domain_name as domainName' , 'record_number as recordNumber' , 'binding_machine as belong' , 'submit' ,'submit_note as submitNote' , 'check_number as checkNumber' , 'check_time as checkTime' , 'check_note as checkNote' , 'white_status as whiteStatus'])
+						->select(['white_number as whiteNumber' , 'white_ip as ip' , 'domain_name as domainName' , 'record_number as recordNumber' , 'binding_machine as belong' , 'submit' ,'submit_note as submitNote' , 'check_number as checkNumber' , 'check_time as checkTime' , 'check_note as checkNote' , 'white_status as whiteStatus'])
 						->get();
 		if ($white_list_list->isEmpty()) {
 			return [
@@ -928,4 +928,49 @@ class ApiOut extends Model
 		];
 	}
 	
+
+	/** 
+	 *  展示可购买叠加包
+	 */ 
+	public function showOverlay($apiKey , $timestamp , $hash )
+	{
+		$par = [
+			'timestamp'		=> $timestamp,
+		];
+	
+		$check_sign = $this->checkSign($apiKey,$par,$hash);
+
+		if (!$check_sign) {
+			return [
+				'data'	=> [],
+				'msg'	=> '非法的API Key!',
+				'code'	=> 0,
+			];
+		}
+
+		$on_sale = DB::table('tz_overlay as a')->leftJoin('idc_machineroom as b', 'b.id' , '=' , 'a.site')
+				->whereNull('a.deleted_at')
+				->where('a.sell_status' , 1)
+				->get(['a.name' , 'a.description' , 'a.protection_value as protectionValue' , 'a.channel_price as channelPrice' , 'a.validity_period as validityPeriod']);
+		dd($on_sale);
+		
+		//查看ip是否属于客户
+		
+		if (!$res) {
+			return [
+				'data'	=> [],
+				'msg'	=> '无流量数据 !',
+				'code'	=> 0,
+			];
+		}else{
+			return [
+				'data'	=> $res,
+				'msg'	=> '获取流量数据成功 !',
+				'code'	=> 1,
+			];
+		}
+	}
+	
+
+
 }

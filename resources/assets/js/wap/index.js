@@ -97,7 +97,9 @@ function machineroomtext(){
 }
 
 // 公司简介
-
+if(document.querySelector(".drop-options p")) {
+    document.querySelector(".drop-options p").addEventListener("click",machineroom);
+}
 function machineroom(){
   var arrows = document.querySelector(".drop-options .arrow");
   if(document.querySelector(".select-text").style.display=="none"){

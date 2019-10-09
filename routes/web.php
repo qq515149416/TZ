@@ -84,6 +84,12 @@ Route::group([
     Route::get('/chess_solution', 'Show\wap\ChessSolutionController@index');
     Route::get('/deployment_solution', 'Show\wap\DeploymentSolutionController@index');
     Route::get('/education_solution', 'Show\wap\EducationSolutionController@index');
+    Route::get('/financial_solution', 'Show\wap\FinancialSolutionController@index');
+    Route::get('/game_solution', 'Show\wap\GameSolutionController@index');
+    Route::get('/government_solution', 'Show\wap\GovernmentSolutionController@index');
+    Route::get('/media_solution', 'Show\wap\MediaSolutionController@index');
+    Route::get('/mobileapp_solution', 'Show\wap\MobileappSolutionController@index');
+    Route::get('/company/{page}', 'Show\wap\CompanyIntroductionController@index');
 });
 
 /**
@@ -369,7 +375,21 @@ Route::group([
         Route::get('showDIPPackage', 'Customer\ApiController@showDIPPackage');      //可购买套餐展示
         /** 客户端api用可购买套餐展示 end **/
     });
+    /** 外部api start **/
+    Route::group([
+        'prefix' => 'ver1', //版本
+    ], function () {
+        /** 高防类api start **/
+        Route::group([
+                'prefix' => 'dip', //高防类
+        ], function () {
+                Route::post('buyDIP', 'Customer\ApiOutController@buyDIP');      //购买高防套餐的接口
+        });
+        /** 高防类api end **/
+    });
+    /** 外部api end **/
 
-    
+
+
 
 });

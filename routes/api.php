@@ -45,12 +45,9 @@ Route::group([
 
 		Route::post('showOverlay', 'Customer\ApiOutController@showOverlay');          //展示可购买叠加包
 		Route::post('buyOverlay', 'Customer\ApiOutController@buyOverlay');         	 //购买高防套餐的接口	
-
-		// Route::get('showOverlay', 'DefenseIp\OverlayController@showOverlay');
-		// Route::post('buyNowByCustomer', 'DefenseIp\OverlayController@buyNowByCustomer');
-		// Route::get('showBelong', 'DefenseIp\OverlayController@showBelong');
-		// Route::post('useOverlayToDIP', 'DefenseIp\OverlayController@useOverlayToDIP');
-		// Route::post('useOverlayToIDC', 'DefenseIp\OverlayController@useOverlayToIDC');
+		Route::post('showBelong', 'Customer\ApiOutController@showBelong');	//展示已购叠加包
+		Route::post('useOverlay', 'Customer\ApiOutController@useOverlay');	//使用叠加包
+		
 	});
 
 	/** 高防类api end **/

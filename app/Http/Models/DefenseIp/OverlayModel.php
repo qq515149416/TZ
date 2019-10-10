@@ -251,7 +251,12 @@ class OverlayModel extends Model
 				'code'	=> 0,
 			];
 		}
-		$user_id = Auth::user()->id;
+		if (isset($par['is_api'])) {
+			$user_id = $par['is_api'];
+		}else{
+			$user_id = Auth::user()->id;
+		}
+		
 		if ($belong->user_id != $user_id) {
 			return [
 				'data'	=> [],
@@ -420,7 +425,13 @@ class OverlayModel extends Model
 			return $return;
 		}
 
-		if(Auth::user()->id != $belong->user_id){//订单与流量包所属客户不一致
+		if (isset($param['is_api'])) {
+			$user_id = $par['is_api'];
+		}else{
+			$user_id = Auth::user()->id;
+		}
+
+		if($user_id != $belong->user_id){//订单与流量包所属客户不一致
 			$return['data'] = [];
 			$return['code'] = 0;
 			$return['msg'] = '(#107)叠加包绑定的客户与你不一致';
@@ -443,7 +454,7 @@ class OverlayModel extends Model
 
 		$idc_orders = DB::table('tz_orders')
 						->join('tz_business','tz_orders.business_sn','=','tz_business.business_number')
-						->where(['tz_orders.id'=>$param['order_id'],'customer_id'=>Auth::user()->id])
+						->where(['tz_orders.id'=>$param['order_id'],'customer_id'=>$user_id])
 						->select('tz_orders.machine_sn','tz_orders.order_sn','tz_orders.resource_type','tz_business.resource_detail','tz_business.endding_time','tz_orders.end_time')
 						->first();//查找对应要绑定的订单
 

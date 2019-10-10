@@ -1070,6 +1070,102 @@ class ApiOut extends Model
 			];
 		}
 	}
+
+	/** 
+	 *  展示已购买叠加包
+	 */ 
+	public function showBelong($apiKey , $timestamp , $hash )
+	{
+		$par = [
+			'timestamp'		=> $timestamp,
+		];
 	
+		$check_sign = $this->checkSign($apiKey,$par,$hash);
+
+		if (!$check_sign) {
+			return [
+				'data'	=> [],
+				'msg'	=> '非法的API Key!',
+				'code'	=> 0,
+			];
+		}
+		$belong = DB::table('tz_overlay_belong as a')->leftJoin('tz_overlay as b' , 'b.id' , '=' , 'a.overlay_id')
+					->leftJoin('idc_machineroom as c' , 'c.id' , '=' , 'b.site')
+					->where('a.user_id' , $check_sign)
+					->whereNull('a.deleted_at')
+					->get(['a.id as belongId' , 'a.buy_time as buyAt' , 'a.price' , 'a.status' , 'a.use_time as useAt' , 'a.target_business as targetBusiness' , 'a.end_time as endAt' , 'b.name as overlayName' , 'b.protection_value as protectionValue' , 'b.validity_period as validityPeriod' , 'c.machine_room_name as machineRoomName']);
+
+		if ($belong->isEmpty()) {
+			return [
+				'data'	=> [],
+				'msg'	=> '无已购叠加包 !',
+				'code'	=> 0,
+			];
+		}else{
+			$state = [ 0 => '未使用' , 1 => '生效中' , 2 => '使用完毕'];
+			foreach ($belong as $k => $v) {
+				$v->useState = $state[ $v->status];
+			}
+			return [
+				'data'	=> $belong,
+				'msg'	=> '获取成功 !',
+				'code'	=> 1,
+			];
+		}
+	}
+	
+	/** 
+	 *  展示已购买叠加包
+	 */ 
+	public function useOverlay($apiKey , $timestamp , $hash , $belongId , $target , $isIgnore , $type)
+	{
+		$par = [
+			'timestamp'		=> $timestamp,
+			'belongId'		=> $belongId,
+			'target'			=> $target,
+			'isIgnore'		=> $isIgnore,
+			'type'			=> $type,
+		];
+	
+		$check_sign = $this->checkSign($apiKey,$par,$hash);
+
+		if (!$check_sign) {
+			return [
+				'data'	=> [],
+				'msg'	=> '非法的API Key!',
+				'code'	=> 0,
+			];
+		}
+
+		$overlay_model = new OverlayModel();
+		
+		if ($type == 1) {		//是高防的时候
+			$param = [
+				'belong_id'		=> $belongId,
+				'business_number'	=> $target,
+				'is_ignore'		=> $isIgnore,
+				'is_api'			=> $check_sign, 
+			];
+
+			$res = $overlay_model->useOverlayToDIP($param);
+		}elseif ($type == 2) {
+			$param = [
+				'belong_id'		=> $belongId,
+				'order_id'		=> $target,
+				'is_ignore'		=> $isIgnore,
+				'is_api'			=> $check_sign, 
+			];
+
+			$res = $overlay_model->useOverlayToIDC($param);
+		}else{
+			return [
+				'data'	=> [],
+				'msg'	=> '叠加包暂不支持其余业务!',
+				'code'	=> 0,
+			];
+		}
+
+		return $res;
+	}
 
 }

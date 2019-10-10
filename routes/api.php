@@ -44,7 +44,7 @@ Route::group([
 	], function () {
 
 		Route::post('showOverlay', 'Customer\ApiOutController@showOverlay');          //展示可购买叠加包
-		Route::post('renewDIP', 'Customer\ApiOutController@renewDIP');          //购买高防套餐的接口	
+		Route::post('buyOverlay', 'Customer\ApiOutController@buyOverlay');         	 //购买高防套餐的接口	
 
 		// Route::get('showOverlay', 'DefenseIp\OverlayController@showOverlay');
 		// Route::post('buyNowByCustomer', 'DefenseIp\OverlayController@buyNowByCustomer');

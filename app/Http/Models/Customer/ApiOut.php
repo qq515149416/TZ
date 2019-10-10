@@ -11,6 +11,8 @@ use App\Http\Models\DefenseIp\OrderModel as DipModel;
 use App\Http\Models\Customer\PayOrder;
 use App\Http\Models\DefenseIp\BusinessModel as DipBusinessModel;
 use App\Http\Controllers\DefenseIp\ApiController as DipSetApi;
+use App\Http\Models\DefenseIp\OverlayModel;
+
 use App\Http\Models\DefenseIp\XADefenseDataModel;
 use App\Http\Models\Customer\Order;
 use App\Http\Models\Customer\WhiteListModel;
@@ -951,26 +953,123 @@ class ApiOut extends Model
 		$on_sale = DB::table('tz_overlay as a')->leftJoin('idc_machineroom as b', 'b.id' , '=' , 'a.site')
 				->whereNull('a.deleted_at')
 				->where('a.sell_status' , 1)
-				->get(['a.name' , 'a.description' , 'a.protection_value as protectionValue' , 'a.channel_price as channelPrice' , 'a.validity_period as validityPeriod']);
-		dd($on_sale);
-		
-		//查看ip是否属于客户
-		
-		if (!$res) {
+				->get(['a.id' , 'a.name' , 'a.description' , 'a.protection_value as protectionValue' , 'a.channel_price as channelPrice' , 'a.validity_period as validityPeriod' , 'b.machine_room_name as machineRoomName']);
+
+		if ($on_sale->isEmpty()) {
 			return [
 				'data'	=> [],
-				'msg'	=> '无流量数据 !',
+				'msg'	=> '无在售叠加包 !',
 				'code'	=> 0,
 			];
 		}else{
 			return [
-				'data'	=> $res,
-				'msg'	=> '获取流量数据成功 !',
+				'data'	=> $on_sale,
+				'msg'	=> '获取成功 !',
 				'code'	=> 1,
 			];
 		}
 	}
 	
 
+	/** 
+	 *  展示可购买叠加包
+	 */ 
+	public function buyOverlay($apiKey , $timestamp , $hash , $overlayId ,$num)
+	{
+		$par = [
+			'timestamp'		=> $timestamp,
+			'overlayId'		=> $overlayId,
+			'num'			=> $num,
+		];
+	
+		$check_sign = $this->checkSign($apiKey,$par,$hash);
+
+		if (!$check_sign) {
+			return [
+				'data'	=> [],
+				'msg'	=> '非法的API Key!',
+				'code'	=> 0,
+			];
+		}
+
+		DB::beginTransaction();
+
+		$overlay = OverlayModel::find($overlayId);
+
+		if($overlay == null){
+			return [
+				'data'	=> [],
+				'msg'	=> '叠加包不存在',
+				'code'	=> 0,
+			];
+		}
+
+		if ($overlay->sell_status != 1) {
+			return [
+				'data'	=> [],
+				'msg'	=> '该叠加包未上架',
+				'code'	=> 0,
+			];
+		}
+		$customer = DB::table('tz_users')->where('id',$check_sign)->select(['name' , 'email' ,'nickname','salesman_id','money'])->first();
+		if(!$customer){
+			return [
+				'data'	=> [],
+				'msg'	=> '客户信息获取失败!',
+				'code'	=> 0,
+			];
+		}
+
+		//获取用户的所属业务员
+		$admin_user = DB::table('admin_users')->select('name')->where('id',$customer->salesman_id)->first();
+
+		$order = [
+			'order_sn'		=> 'DJB_api_'.time().$check_sign,
+			'business_sn'		=> '叠加包',
+			'customer_id'		=> $check_sign,
+			'customer_name'	=> $customer->nickname?:$customer->name?:$customer->email,
+			'business_id'		=> $customer->salesman_id,
+			'business_name'		=> $admin_user->name,
+			'resource_type'		=> 12,
+			'order_type'		=> 1,
+			'machine_sn'		=> $overlayId,
+			'resource'		=> $overlay->name,
+			'price'			=> $overlay->channel_price,
+			'duration'		=> $num,
+			'payable_money'		=> bcmul($overlay->channel_price, $num,2),
+			'order_status'		=> 0,
+		];
+
+		$pay_model = new PayOrder();
+		$make_order = $pay_model->create($order);
+
+		if(!$make_order){
+			DB::rollBack();
+			return [
+				'data'	=> [],
+				'msg'	=> '订单创建失败',
+				'code'	=> 0,
+			];
+		}
+
+		$pay_res = $pay_model->payOrderByBalance([$make_order->id],0,$check_sign);
+
+		if($pay_res['code'] != 1){
+			DB::rollBack();
+			return [
+				'data'	=> [],
+				'msg'	=> '支付失败!',
+				'code'	=> 0,
+			];
+		}else{
+			DB::commit();
+			return [
+				'data'	=> [],
+				'msg'	=> '购买成功!',
+				'code'	=> 1,
+			];
+		}
+	}
+	
 
 }

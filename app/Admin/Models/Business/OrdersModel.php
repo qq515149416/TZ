@@ -1658,7 +1658,8 @@ class OrdersModel extends Model
 
 			$belong = [
 				'overlay_id'	=> $row['machine_sn'],
-				'user_id'	=> $row['customer_id'],
+				'user_id'		=> $row['customer_id'],
+				'price'		=> $row['price'],
 				'buy_time'	=> $pay_time,
 				'order_sn'	=> $row['order_sn'],
 				'status'		=> 0

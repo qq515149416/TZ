@@ -306,7 +306,7 @@
                 <dl>
                     <dt>增值服务</dt>
                     <dd>
-                        <a href="https://yun.zeisp.com/cloudbuy.html">腾正云</a>
+                        <a href="/yun/huizhou">腾正云</a>
                     </dd>
                     <dd>
                         <a href="/protection/c-shield">防C盾</a>

@@ -51,172 +51,21 @@
                         </div>
                     </div>
                     <!-- 新闻公告 -->
-                    <div class="option-text {{ $page=='news'?'option-e-active':'' }}">
+                    <div id="company_news" class="option-text {{ $page=='news'?'option-e-active':'' }}">
+
+                        @foreach ($page_info['news']['data'] as $data)
                         <div class="news">
                             <div class="news-text-title">
-                                腾正科技关于2019年端午节放假通知
+                                {{$data->title}}
                             </div>
                             <div class="news-text-content">
-                                您好!端午节将至，根据《国务院办公厅关于 2019 年部分节假日安排通知》，我司定于2019年6月7日至...
+                                {{$data->digest}}
                             </div>
                             <div class="news-text-time">
-                                2019-06-06
+                                {{$data->created_at}}
                             </div>
                         </div>
-                        <div class="news">
-                            <div class="news-text-title">
-                                腾正科技关于2019年端午节放假通知
-                            </div>
-                            <div class="news-text-content">
-                                您好!端午节将至，根据《国务院办公厅关于 2019 年部分节假日安排通知》，我司定于2019年6月7日至...
-                            </div>
-                            <div class="news-text-time">
-                                2019-06-06
-                            </div>
-                        </div>
-                        <div class="news">
-                            <div class="news-text-title">
-                                腾正科技关于2019年端午节放假通知
-                            </div>
-                            <div class="news-text-content">
-                                您好!端午节将至，根据《国务院办公厅关于 2019 年部分节假日安排通知》，我司定于2019年6月7日至...
-                            </div>
-                            <div class="news-text-time">
-                                2019-06-06
-                            </div>
-                        </div>
-                        <div class="news">
-                            <div class="news-text-title">
-                                腾正科技关于2019年端午节放假通知
-                            </div>
-                            <div class="news-text-content">
-                                您好!端午节将至，根据《国务院办公厅关于 2019 年部分节假日安排通知》，我司定于2019年6月7日至...
-                            </div>
-                            <div class="news-text-time">
-                                2019-06-06
-                            </div>
-                        </div>
-                        <div class="news">
-                            <div class="news-text-title">
-                                腾正科技关于2019年端午节放假通知
-                            </div>
-                            <div class="news-text-content">
-                                您好!端午节将至，根据《国务院办公厅关于 2019 年部分节假日安排通知》，我司定于2019年6月7日至...
-                            </div>
-                            <div class="news-text-time">
-                                2019-06-06
-                            </div>
-                        </div>
-                        <div class="news">
-                            <div class="news-text-title">
-                                腾正科技关于2019年端午节放假通知
-                            </div>
-                            <div class="news-text-content">
-                                您好!端午节将至，根据《国务院办公厅关于 2019 年部分节假日安排通知》，我司定于2019年6月7日至...
-                            </div>
-                            <div class="news-text-time">
-                                2019-06-06
-                            </div>
-                        </div>
-                        <div class="news">
-                            <div class="news-text-title">
-                                腾正科技关于2019年端午节放假通知
-                            </div>
-                            <div class="news-text-content">
-                                您好!端午节将至，根据《国务院办公厅关于 2019 年部分节假日安排通知》，我司定于2019年6月7日至...
-                            </div>
-                            <div class="news-text-time">
-                                2019-06-06
-                            </div>
-                        </div>
-                        <div class="news">
-                            <div class="news-text-title">
-                                腾正科技关于2019年端午节放假通知
-                            </div>
-                            <div class="news-text-content">
-                                您好!端午节将至，根据《国务院办公厅关于 2019 年部分节假日安排通知》，我司定于2019年6月7日至...
-                            </div>
-                            <div class="news-text-time">
-                                2019-06-06
-                            </div>
-                        </div>
-                        <div class="news">
-                            <div class="news-text-title">
-                                腾正科技关于2019年端午节放假通知
-                            </div>
-                            <div class="news-text-content">
-                                您好!端午节将至，根据《国务院办公厅关于 2019 年部分节假日安排通知》，我司定于2019年6月7日至...
-                            </div>
-                            <div class="news-text-time">
-                                2019-06-06
-                            </div>
-                        </div>
-                        <div class="news">
-                            <div class="news-text-title">
-                                腾正科技关于2019年端午节放假通知
-                            </div>
-                            <div class="news-text-content">
-                                您好!端午节将至，根据《国务院办公厅关于 2019 年部分节假日安排通知》，我司定于2019年6月7日至...
-                            </div>
-                            <div class="news-text-time">
-                                2019-06-06
-                            </div>
-                        </div>
-                        <div class="news">
-                            <div class="news-text-title">
-                                腾正科技关于2019年端午节放假通知
-                            </div>
-                            <div class="news-text-content">
-                                您好!端午节将至，根据《国务院办公厅关于 2019 年部分节假日安排通知》，我司定于2019年6月7日至...
-                            </div>
-                            <div class="news-text-time">
-                                2019-06-06
-                            </div>
-                        </div>
-                        <div class="news">
-                            <div class="news-text-title">
-                                腾正科技关于2019年端午节放假通知
-                            </div>
-                            <div class="news-text-content">
-                                您好!端午节将至，根据《国务院办公厅关于 2019 年部分节假日安排通知》，我司定于2019年6月7日至...
-                            </div>
-                            <div class="news-text-time">
-                                2019-06-06
-                            </div>
-                        </div>
-                        <div class="news">
-                            <div class="news-text-title">
-                                腾正科技关于2019年端午节放假通知
-                            </div>
-                            <div class="news-text-content">
-                                您好!端午节将至，根据《国务院办公厅关于 2019 年部分节假日安排通知》，我司定于2019年6月7日至...
-                            </div>
-                            <div class="news-text-time">
-                                2019-06-06
-                            </div>
-                        </div>
-                        <div class="news">
-                            <div class="news-text-title">
-                                腾正科技关于2019年端午节放假通知
-                            </div>
-                            <div class="news-text-content">
-                                您好!端午节将至，根据《国务院办公厅关于 2019 年部分节假日安排通知》，我司定于2019年6月7日至...
-                            </div>
-                            <div class="news-text-time">
-                                2019-06-06
-                            </div>
-                        </div>
-                        <div class="news">
-                            <div class="news-text-title">
-                                腾正科技关于2019年端午节放假通知
-                            </div>
-                            <div class="news-text-content">
-                                您好!端午节将至，根据《国务院办公厅关于 2019 年部分节假日安排通知》，我司定于2019年6月7日至...
-                            </div>
-                            <div class="news-text-time">
-                                2019-06-06
-                            </div>
-                        </div>
+                        @endforeach
                         <div class="bottom" id="bottom">
                             <!-- <div style="width: 85px;">
                                 <img src="{{ asset("/images/wap/第一页.png") }}" alt="">
@@ -1358,5 +1207,73 @@
             </div>
         </div>
     </div>
+<script>
+    // 新闻公告分页
+function goPage(pno, psize) {
+    var news = document.querySelectorAll(".option-text .news");
+    var num = news.length;
+    var totalPage = 0;//总页数
+    var pageSize = psize;//每页显示行数
+    //总共分几页
+    if (num / pageSize > parseInt(num / pageSize)) {
+        totalPage = parseInt(num / pageSize) + 1;
+    } else {
+        totalPage = parseInt(num / pageSize);
+    }
+    var currentPage = pno;//当前页数
+    var startRow = (currentPage - 1) * pageSize + 1;//开始显示的行  31
+    var endRow = currentPage * pageSize;//结束显示的行   40
+    endRow = (endRow > num) ? num : endRow;
+    //遍历显示数据实现分页
+    for (var i = 1; i < (num + 1); i++) {
+        var irow = news[i - 1];
+        if (i >= startRow && i <= endRow) {
+            irow.style.display = "block";
+        } else {
+            irow.style.display = "none";
+        }
+    }
 
+    var tempStr = "";
+    if (currentPage > 1) {
+        tempStr += "<div style=\"width: 90px;\">";
+        tempStr += "<img src=\"/images/wap/第一页.png\" onClick=\"goPage(" + (1) + "," + psize + ")\">";
+        tempStr += "<img src=\"/images/wap/上一页.png\" onClick=\"goPage(" + (currentPage - 1) + "," + psize + ")\">";
+        tempStr += "</div>";
+
+    } else {
+        tempStr += "<div style=\"width: 90px;\">";
+        tempStr += "<img src=\"/images/wap/第一页.png\" >";
+        tempStr += "<img src=\"/images/wap/上一页.png\" >";
+        tempStr += "</div>";
+    }
+    if (currentPage >=10 ) {
+        tempStr += "<div class=\"page\" id=\"page\">";
+        tempStr += "<span>"  + currentPage + "</span>"
+    } else {
+        tempStr += "<div class=\"page\" id=\"page\">";
+        tempStr += "<span>" + "0" + currentPage + "</span>"
+    }
+    if(totalPage>=10){
+        tempStr += "/" + totalPage;
+        tempStr += "</div>";
+    }else{
+        tempStr += "/0" + totalPage;
+        tempStr += "</div>";
+    }
+    if (currentPage < totalPage) {
+        tempStr += "<div style=\"width: 90px;\">";
+        tempStr += "<img src=\"/images/wap/下一页.png\" onClick=\"goPage(" + (currentPage + 1) + "," + psize + ")\">";
+        tempStr += "<img src=\"/images/wap/最后一页.png\" onClick=\"goPage(" + (totalPage) + "," + psize + ")\">";
+        tempStr += "</div>";
+    } else {
+        tempStr += "<div style=\"width: 90px;\">";
+        tempStr += "<img src=\"/images/wap/下一页.png\" >";
+        tempStr += "<img src=\"/images/wap/最后一页.png\">";
+        tempStr += "</div>";
+    }
+
+    document.getElementById("bottom").innerHTML = tempStr;
+}
+</script>
 @endsection

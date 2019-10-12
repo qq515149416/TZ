@@ -95,7 +95,7 @@ class OverlayController extends Controller
 	 *  将叠加包使用在高防业务上
 	 */
 	public function useOverlayToDIP(OverlayRequest $request){
-		$par = $request->only(['belong_id','business_number']);
+		$par = $request->only(['belong_id','business_number','is_ignore']);
 
 		$model = new OverlayModel();
 
@@ -125,7 +125,7 @@ class OverlayController extends Controller
 	 * @return [type]           [description]
 	 */
 	public function useOverlayToIDC(Request $request){
-		$param = $request->only(['belong_id','order_id']);
+		$param = $request->only(['belong_id','order_id','is_ignore']);
 		$model = new OverlayModel();
 		$result = $model->useOverlayToIDC($param);
 		return tz_ajax_echo($result['data'],$result['msg'],$result['code']);

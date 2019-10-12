@@ -216,6 +216,7 @@ class OverlayModel extends Model
 		];
 	}
 
+
 	public function useOverlayToDIP($par){
 		//获取业务信息
 		$business_model = new BusinessModel();
@@ -250,7 +251,12 @@ class OverlayModel extends Model
 				'code'	=> 0,
 			];
 		}
-		$user_id = Auth::user()->id;
+		if (isset($par['is_api'])) {
+			$user_id = $par['is_api'];
+		}else{
+			$user_id = Auth::user()->id;
+		}
+		
 		if ($belong->user_id != $user_id) {
 			return [
 				'data'	=> [],
@@ -305,6 +311,16 @@ class OverlayModel extends Model
 			'target_business'	=> $par['business_number'],
 			'end_time'		=> date("Y-m-d H:i:s",$end_time),
 		];
+		if ($business->end_at < $belong_update_info['end_time']) {
+			if (!isset($par['is_ignore']) || $par['is_ignore'] != 1) {
+				return [
+					'data'	=> [],
+					'msg'	=> '叠加包时长超过业务到期时间,是否继续使用?不使用请按取消',
+					'code'	=> -1,
+				];
+			}	
+		}
+
 		DB::beginTransaction();
 
 		$belong_update_res = $belong->update($belong_update_info);
@@ -409,7 +425,13 @@ class OverlayModel extends Model
 			return $return;
 		}
 
-		if(Auth::user()->id != $belong->user_id){//订单与流量包所属客户不一致
+		if (isset($param['is_api'])) {
+			$user_id = $par['is_api'];
+		}else{
+			$user_id = Auth::user()->id;
+		}
+
+		if($user_id != $belong->user_id){//订单与流量包所属客户不一致
 			$return['data'] = [];
 			$return['code'] = 0;
 			$return['msg'] = '(#107)叠加包绑定的客户与你不一致';
@@ -432,8 +454,8 @@ class OverlayModel extends Model
 
 		$idc_orders = DB::table('tz_orders')
 						->join('tz_business','tz_orders.business_sn','=','tz_business.business_number')
-						->where(['tz_orders.id'=>$param['order_id'],'customer_id'=>Auth::user()->id])
-						->select('tz_orders.machine_sn','tz_orders.order_sn','tz_orders.resource_type','tz_business.resource_detail')
+						->where(['tz_orders.id'=>$param['order_id'],'customer_id'=>$user_id])
+						->select('tz_orders.machine_sn','tz_orders.order_sn','tz_orders.resource_type','tz_business.resource_detail','tz_business.endding_time','tz_orders.end_time')
 						->first();//查找对应要绑定的订单
 
 		if(empty($idc_orders)){//不存在对应的要绑定的订单
@@ -456,8 +478,12 @@ class OverlayModel extends Model
 		if($idc_orders->resource_type == 1 || $idc_orders->resource_type == 2){//租用/托管机器默认使用主IP
 			$ip = $resource_detail->ip;
 			$protected_value = bcadd($protected_value,$resource_detail->protect);//主机默认使用主IP,并加上主机原本的防御值
+			$the_end = $idc_orders->endding_time;
+
 		} elseif ($idc_orders->resource_type == 4 ){//对应的IP资源
 			$ip = $idc_orders->machine_sn;
+			$the_end = $idc_orders->end_time;
+			
 		} else {//其他无IP的不给予绑定
 			$return['data'] = [];
 			$return['code'] = 0;
@@ -491,6 +517,17 @@ class OverlayModel extends Model
 		$use_time = $overlay->validity_period*24*3600;
 		//结束的时间
 		$update['end_time'] = date('Y-m-d H:i:s',bcadd(time(),$use_time,0));
+
+		if ($the_end < $update['end_time'] ) {
+			if (!isset($param['is_ignore']) || $param['is_ignore'] != 1) {
+				return [
+					'data'	=> [],
+					'msg'	=> '叠加包时长超过业务到期时间,是否继续使用?不使用请按取消',
+					'code'	=> -1,
+				];
+			}	
+		}
+
 		$belong_update = DB::table('tz_overlay_belong')->where(['id'=>$param['belong_id']])->update($update);//对应的订单号更新进流量包所属
 		if($belong_update == 0){
 			DB::rollBack();

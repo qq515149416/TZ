@@ -18,7 +18,7 @@ class OverlayBelongModel extends Model
 	protected $primaryKey = 'id'; //主键
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
-	protected $fillable = ['overlay_id', 'user_id','buy_time','status','use_time','end_time','order_sn','target_business'];
+	protected $fillable = ['overlay_id', 'user_id','buy_time','status','use_time','end_time','order_sn','target_business','price'];
 
     /**
      * 修改状态名称.

@@ -209,5 +209,77 @@ class ApiOutController extends Controller
 
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
+
+	/**
+	* 展示可购买叠加包
+	* @return 
+	*/
+	public function showOverlay(Request $request)
+	{
+		$par = $request->only(['apiKey' , 'timestamp' , 'hash']);
+
+		if (!isset($par['apiKey']) || !isset($par['timestamp']) || !isset($par['hash']) ) {
+			return tz_ajax_echo([],'非法参数',3);
+		}
+
+		$model = new ApiOut();
+		$res = $model->showOverlay( $par['apiKey'] , $par['timestamp'] , $par['hash'] );
+
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
 	
+
+	/**
+	* 购买叠加包
+	* @return 
+	*/
+	public function buyOverlay(Request $request)
+	{
+		$par = $request->only(['apiKey' , 'timestamp' , 'hash' , 'overlayId' , 'num']);
+
+		if (!isset($par['apiKey']) || !isset($par['timestamp']) || !isset($par['hash']) || !isset($par['overlayId']) || !isset($par['num']) ) {
+			return tz_ajax_echo([],'非法参数',3);
+		}
+	
+		$model = new ApiOut();
+		$res = $model->buyOverlay( $par['apiKey'] , $par['timestamp'] , $par['hash'] , $par['overlayId'] , $par['num']);
+
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
+
+	/**
+	* 展示已购叠加包
+	* @return 
+	*/
+	public function showBelong(Request $request)
+	{
+		$par = $request->only(['apiKey' , 'timestamp' , 'hash']);
+
+		if (!isset($par['apiKey']) || !isset($par['timestamp']) || !isset($par['hash']) ) {
+			return tz_ajax_echo([],'非法参数',3);
+		}
+	
+		$model = new ApiOut();
+		$res = $model->showBelong( $par['apiKey'] , $par['timestamp'] , $par['hash'] );
+
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
+	
+	/**
+	* 使用叠加包
+	* @return 
+	*/
+	public function useOverlay(Request $request)
+	{
+		$par = $request->only(['apiKey' , 'timestamp' , 'hash' , 'belongId' , 'target' , 'isIgnore' , 'type']);
+
+		if (!isset($par['apiKey']) || !isset($par['timestamp']) || !isset($par['hash']) || !isset($par['belongId']) || !isset($par['target']) || !isset($par['isIgnore']) || !isset($par['type']) ) {
+			return tz_ajax_echo([],'非法参数',3);
+		}
+	
+		$model = new ApiOut();
+		$res = $model->useOverlay( $par['apiKey'] , $par['timestamp'] , $par['hash'] , $par['belongId'] , $par['target'] , $par['isIgnore'] , $par['type'] );
+
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+	}
 }

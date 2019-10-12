@@ -151,6 +151,40 @@ class Api extends Model
 	}
 
 	/** 
+	 *  展示叠加包套餐id
+	 */ 
+	public function showOverlayPackage(){ 
+
+ 		$apply = $this->checkApi();
+
+ 		if (!$apply) {
+ 			return [
+ 				'data'	=> [],
+ 				'msg'	=> '您的账户未开启API Key, API接口无法使用',
+ 				'code'	=> 1007,
+ 			];
+ 		}
+
+ 		$overlay = DB::table('tz_overlay as a')->leftJoin('idc_machineroom as b', 'b.id' , '=' , 'a.site')
+				->whereNull('a.deleted_at')
+				->where('a.sell_status' , 1)
+				->get(['a.id' , 'a.name' , 'a.description' , 'a.protection_value' , 'a.channel_price' , 'a.validity_period' , 'b.machine_room_name']);
+
+ 		// foreach ($pack as $k => $v) {
+ 		// 	$pack[$k]->stock = DB::table('tz_defenseip_store')->where('site' , $v->site)
+ 		// 						->where('protection_value' , $v->protection_value)
+ 		// 						->where('status' , 0)
+ 		// 						->whereNull('deleted_at')
+ 		// 						->count('id');
+ 		// }
+ 		return [
+			'data'	=> $overlay,
+			'msg'	=> '获取成功',
+			'code'	=> 1,
+		];
+	}
+
+	/** 
 	 *  检查api权限
 	 */ 
 	public function checkApi(){
@@ -162,4 +196,5 @@ class Api extends Model
  				->exists();
  		return $apply;
 	}
+
 }

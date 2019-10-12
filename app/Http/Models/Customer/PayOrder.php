@@ -593,10 +593,10 @@ class PayOrder extends Model
 			}	
 		}elseif ($row['resource_type'] == 12) { //如果订单是叠加包的话
 			//生成归属信息
-
 			$belong = [
 				'overlay_id'	=> $row['machine_sn'],
-				'user_id'	=> $row['customer_id'],
+				'user_id'		=> $row['customer_id'],
+				'price'		=> $row['price'],
 				'buy_time'	=> $pay_time,
 				'order_sn'	=> $row['order_sn'],
 				'status'		=> 0

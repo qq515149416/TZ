@@ -16,7 +16,8 @@ class CompanyIntroductionController extends Controller
                 "name" => "公司简介"
             ],
             "news" => [
-                "name" => "新闻公告"
+                "name" => "新闻公告",
+                "data" => DB::table('tz_news')->where('tid', 1)->get()
             ],
             "honor" => [
                 "name" => "荣誉资质"

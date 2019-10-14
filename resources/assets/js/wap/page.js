@@ -53,7 +53,7 @@ var honor_a = document.querySelector(".honor-a");
 var honor_i_a =honor_a.querySelectorAll(".honor-i");
 var pagea = 0;
 document.querySelector(".p-nexta").onclick = function(){
-    
+
     for (var j = 0; j < honor_i_a.length; j++) {
         honor_i_a[j].className = "honor-i clear";
     }
@@ -96,7 +96,7 @@ var honor_b = document.querySelector(".honor-b");
 var honor_i_b =honor_b.querySelectorAll(".honor-i");
 var pageb = 0;
 document.querySelector(".p-nextb").onclick = function(){
-    
+
     for (var j = 0; j < honor_i_b.length; j++) {
         honor_i_b[j].className = "honor-i clear";
     }
@@ -139,7 +139,7 @@ var honor_c = document.querySelector(".honor-c");
 var honor_i_c =honor_c.querySelectorAll(".honor-i");
 var pagec = 0;
 document.querySelector(".p-nextc").onclick = function(){
-    
+
     for (var j = 0; j < honor_i_c.length; j++) {
         honor_i_c[j].className = "honor-i clear";
     }
@@ -178,21 +178,23 @@ document.querySelector(".p-lastc").onclick = function () {
     honor_i_c[honor_i_c.length - 1].className = "honor-i clear active";
     document.getElementById("pageNumberc").innerHTML = "0" + honor_i_c.length;
 }
-
+if(document.querySelector("#company_news")) {
+    goPage(1,10);
+}
 // 新闻公告分页
 function goPage(pno, psize) {
     var news = document.querySelectorAll(".option-text .news");
     var num = news.length;
     var totalPage = 0;//总页数
     var pageSize = psize;//每页显示行数
-    //总共分几页 
+    //总共分几页
     if (num / pageSize > parseInt(num / pageSize)) {
         totalPage = parseInt(num / pageSize) + 1;
     } else {
         totalPage = parseInt(num / pageSize);
     }
     var currentPage = pno;//当前页数
-    var startRow = (currentPage - 1) * pageSize + 1;//开始显示的行  31 
+    var startRow = (currentPage - 1) * pageSize + 1;//开始显示的行  31
     var endRow = currentPage * pageSize;//结束显示的行   40
     endRow = (endRow > num) ? num : endRow;
     //遍历显示数据实现分页
@@ -208,22 +210,22 @@ function goPage(pno, psize) {
     var tempStr = "";
     if (currentPage > 1) {
         tempStr += "<div style=\"width: 90px;\">";
-        tempStr += "<img src=\"../image/android/drawable-xhdpi/第一页.png\" onClick=\"goPage(" + (1) + "," + psize + ")\">";
-        tempStr += "<img src=\"../image/android/drawable-xhdpi/上一页.png\" onClick=\"goPage(" + (currentPage - 1) + "," + psize + ")\">";
+        tempStr += "<img src=\"/images/wap/第一页.png\" onClick=\"goPage(" + (1) + "," + psize + ")\">";
+        tempStr += "<img src=\"/images/wap/上一页.png\" onClick=\"goPage(" + (currentPage - 1) + "," + psize + ")\">";
         tempStr += "</div>";
 
     } else {
         tempStr += "<div style=\"width: 90px;\">";
-        tempStr += "<img src=\"../image/android/drawable-xhdpi/第一页.png\" >";
-        tempStr += "<img src=\"../image/android/drawable-xhdpi/上一页.png\" >";
+        tempStr += "<img src=\"/images/wap/第一页.png\" >";
+        tempStr += "<img src=\"/images/wap/上一页.png\" >";
         tempStr += "</div>";
     }
     if (currentPage >=10 ) {
         tempStr += "<div class=\"page\" id=\"page\">";
-        tempStr += "<span>"  + currentPage + "</span>" 
+        tempStr += "<span>"  + currentPage + "</span>"
     } else {
         tempStr += "<div class=\"page\" id=\"page\">";
-        tempStr += "<span>" + "0" + currentPage + "</span>" 
+        tempStr += "<span>" + "0" + currentPage + "</span>"
     }
     if(totalPage>=10){
         tempStr += "/" + totalPage;
@@ -234,13 +236,13 @@ function goPage(pno, psize) {
     }
     if (currentPage < totalPage) {
         tempStr += "<div style=\"width: 90px;\">";
-        tempStr += "<img src=\"../image/android/drawable-xhdpi/下一页.png\" onClick=\"goPage(" + (currentPage + 1) + "," + psize + ")\">";
-        tempStr += "<img src=\"../image/android/drawable-xhdpi/最后一页.png\" onClick=\"goPage(" + (totalPage) + "," + psize + ")\">";
+        tempStr += "<img src=\"/images/wap/下一页.png\" onClick=\"goPage(" + (currentPage + 1) + "," + psize + ")\">";
+        tempStr += "<img src=\"/images/wap/最后一页.png\" onClick=\"goPage(" + (totalPage) + "," + psize + ")\">";
         tempStr += "</div>";
     } else {
         tempStr += "<div style=\"width: 90px;\">";
-        tempStr += "<img src=\"../image/android/drawable-xhdpi/下一页.png\" >";
-        tempStr += "<img src=\"../image/android/drawable-xhdpi/最后一页.png\">";
+        tempStr += "<img src=\"/images/wap/下一页.png\" >";
+        tempStr += "<img src=\"/images/wap/最后一页.png\">";
         tempStr += "</div>";
     }
 

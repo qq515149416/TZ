@@ -66,4 +66,18 @@ class ApiController extends Controller
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 
 	}
+
+	/**
+	* 已开通api用户查看可购买的叠加包ip套餐
+	* @return 
+	*/
+	public function showOverlayPackage(ApiRequest $request)
+	{
+		
+		$model = new Api();
+		$res = $model->showOverlayPackage();
+
+		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
+
+	}
 }

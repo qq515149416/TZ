@@ -74,6 +74,9 @@ class ApiOut extends Model
 
 	/** 
 	 *  外部调用购买高防ip
+	 * @param $apiKey -> 就是key, $par -> 要组成签名的元素,传过来的参数, $hash ->客户端传来的签名字符串
+	 * 		$packageId -> 套餐id ,  $buyTime -> 购买时长/月
+	 * @return 
 	 */ 
 	public function buyDIP($apiKey , $timestamp , $hash, $packageId , $buyTime ){ 
 		//取出要做成签名的元素
@@ -94,19 +97,19 @@ class ApiOut extends Model
 		}
 		
 		//找出所购买的套餐
-		$package = DB::table('tz_defenseip_package')->select(['site','protection_value','sell_status','channel_price'])->whereNull('deleted_at')->where('id',$package_id)->first();
+		$package = DB::table('tz_defenseip_package')->select(['site','protection_value','sell_status','channel_price'])->whereNull('deleted_at')->where('id',$packageId)->first();
 
 		if($package == null){
 			return [
 				'data'	=> [],
-				'msg'	=> '套餐不存在!',
+				'msg'	=> '套餐不存在',
 				'code'	=> 0,
 			];
 		}
 		if ($package->sell_status != 1) {
 			return [
 				'data'	=> [],
-				'msg'	=> '套餐已下架!',
+				'msg'	=> '套餐已下架',
 				'code'	=> 0,
 			];
 		}
@@ -122,7 +125,7 @@ class ApiOut extends Model
 		if($check_ip == null){
 			return [
 				'data'	=> [],
-				'msg'	=> '该套餐IP库存不足!',
+				'msg'	=> '该套餐IP库存不足',
 				'code'	=> 0,
 			];
 		}
@@ -130,7 +133,7 @@ class ApiOut extends Model
 		if(!$customer){
 			return [
 				'data'	=> [],
-				'msg'	=> '客户信息获取失败!',
+				'msg'	=> '客户信息有误',
 				'code'	=> 0,
 			];
 		}
@@ -146,7 +149,7 @@ class ApiOut extends Model
 		if ($customer->salesman_id == null || $admin_user == null) {
 			return [
 				'data'	=> [],
-				'msg'	=> '请绑定业务员后购买!',
+				'msg'	=> '请绑定业务员后购买',
 				'code'	=> 0,
 			];
 		}else{
@@ -156,8 +159,8 @@ class ApiOut extends Model
 		$data['resource_type']		= 11;
 		$data['order_type']		= 1;
 		$data['price']			= $package->channel_price;
-		$data['machine_sn']		= $package_id;
-		$data['duration']		= $buy_time;
+		$data['machine_sn']		= $packageId;
+		$data['duration']		= $buyTime;
 		$data['payable_money']		= bcmul($data['price'],$data['duration'],2);
 		$data['order_status']		= 0;
 		$data['order_note']		= '渠道api购买';
@@ -165,7 +168,7 @@ class ApiOut extends Model
 		if ($customer->money < $data['payable_money']) {
 			return [
 				'data'	=> [],
-				'msg'	=> '余额不足!',
+				'msg'	=> '余额不足',
 				'code'	=> 0,
 			];
 		}
@@ -178,7 +181,7 @@ class ApiOut extends Model
 		if(!$insert){
 			return [
 				'data'	=> [],
-				'msg'	=> '创建订单失败!',
+				'msg'	=> '创建订单失败',
 				'code'	=> 0,
 			];
 		}
@@ -188,14 +191,14 @@ class ApiOut extends Model
 			DB::rollBack();
 			return [
 				'data'	=> [],
-				'msg'	=> '支付失败!',
+				'msg'	=> '支付失败',
 				'code'	=> 0,
 			];
 		}else{
 			DB::commit();
 			return [
-				'data'	=> [],
-				'msg'	=> '购买成功!',
+				'data'	=> $data['business_sn'],
+				'msg'	=> '购买成功',
 				'code'	=> 1,
 			];
 		}
@@ -204,6 +207,9 @@ class ApiOut extends Model
 
 	/** 
 	 *  外部调用购买高防ip
+	 * @param $apiKey -> 就是key, $par -> 要组成签名的元素,传过来的参数, $hash ->客户端传来的签名字符串
+	 * 		$businessNumber -> 高防业务号 ,  $renewTime -> 续费时长/月
+	 * @return 
 	 */ 
 	public function renewDIP($apiKey , $timestamp , $hash, $businessNumber , $renewTime ){ 
 		//取出要做成签名的元素
@@ -232,14 +238,14 @@ class ApiOut extends Model
 		if($business == null){
 			return [
 				'data'	=> [],
-				'msg'	=> '业务不存在!',
+				'msg'	=> '业务不存在',
 				'code'	=> 0,
 			];
 		}
 		if ($business->status != 1) {
 			return [
 				'data'	=> [],
-				'msg'	=> '业务非使用中状态!',
+				'msg'	=> '业务非使用中状态',
 				'code'	=> 0,
 			];
 		}
@@ -248,7 +254,7 @@ class ApiOut extends Model
 		if(!$customer){
 			return [
 				'data'	=> [],
-				'msg'	=> '客户信息获取失败!',
+				'msg'	=> '客户信息获取失败',
 				'code'	=> 0,
 			];
 		}
@@ -264,7 +270,7 @@ class ApiOut extends Model
 		if ($customer->salesman_id == null || $admin_user == null) {
 			return [
 				'data'	=> [],
-				'msg'	=> '请绑定业务员后购买!',
+				'msg'	=> '请绑定业务员后购买',
 				'code'	=> 0,
 			];
 		}else{
@@ -285,7 +291,7 @@ class ApiOut extends Model
 		if ($customer->money < $data['payable_money']) {
 			return [
 				'data'	=> [],
-				'msg'	=> '余额不足!',
+				'msg'	=> '余额不足',
 				'code'	=> 0,
 			];
 		}
@@ -299,7 +305,7 @@ class ApiOut extends Model
 		if(!$insert){
 			return [
 				'data'	=> [],
-				'msg'	=> '创建订单失败!',
+				'msg'	=> '创建订单失败',
 				'code'	=> 0,
 			];
 		}
@@ -309,14 +315,14 @@ class ApiOut extends Model
 			DB::rollBack();
 			return [
 				'data'	=> [],
-				'msg'	=> '支付失败!',
+				'msg'	=> '支付失败',
 				'code'	=> 0,
 			];
 		}else{
 			DB::commit();
 			return [
 				'data'	=> [],
-				'msg'	=> '续费成功!',
+				'msg'	=> '续费成功',
 				'code'	=> 1,
 			];
 		}
@@ -336,7 +342,7 @@ class ApiOut extends Model
 		if (!$check_sign) {
 			return [
 				'data'	=> [],
-				'msg'	=> '非法的API Key!',
+				'msg'	=> '非法的API Key',
 				'code'	=> 0,
 			];
 		}
@@ -352,17 +358,18 @@ class ApiOut extends Model
 		if(!$dip_business->isEmpty()){
 			$status = [ 0 => '预留状态' ,  1 => '正在使用' , 2 => '申请下架' , 3 => '已下架' , 4 => '试用' , 5 => '待审核' ,];
 			foreach ($dip_business as $k => $v) {
-				$v->useStatus = $status[$v->status];
+				$v->useState = $status[$v->status];
+				unset($v->status);
 			}
 			return [
 				'data'	=> $dip_business,
-				'msg'	=> '查询成功!',
+				'msg'	=> '查询成功',
 				'code'	=> 1,
 			];
 		}else{
 			return [
 				'data'	=> [],
-				'msg'	=> '无已购套餐!',
+				'msg'	=> '无已购套餐',
 				'code'	=> 1,
 			];
 		}
@@ -384,7 +391,7 @@ class ApiOut extends Model
 		if (!$check_sign) {
 			return [
 				'data'	=> [],
-				'msg'	=> '非法的API Key!',
+				'msg'	=> '非法的API Key',
 				'code'	=> 0,
 			];
 		}
@@ -402,17 +409,17 @@ class ApiOut extends Model
 		if($dip_business){
 			$status = [ 0 => '预留状态' ,  1 => '正在使用' , 2 => '申请下架' , 3 => '已下架' , 4 => '试用' , 5 => '待审核' ,];
 
-			$dip_business->useStatus = $status[$dip_business->status];
-
+			$dip_business->useState = $status[$dip_business->status];
+			unset($dip_business->status);
 			return [
 				'data'	=> $dip_business,
-				'msg'	=> '查询成功!',
+				'msg'	=> '查询成功',
 				'code'	=> 1,
 			];
 		}else{
 			return [
 				'data'	=> [],
-				'msg'	=> '查询失败!',
+				'msg'	=> '查询失败',
 				'code'	=> 1,
 			];
 		}
@@ -435,7 +442,7 @@ class ApiOut extends Model
 		if (!$check_sign) {
 			return [
 				'data'	=> [],
-				'msg'	=> '非法的API Key!',
+				'msg'	=> '非法的API Key',
 				'code'	=> 0,
 			];
 		}
@@ -444,25 +451,29 @@ class ApiOut extends Model
 							->leftJoin('tz_defenseip_package as c' , 'c.id' , '=' , 'a.package_id')
 							->leftJoin('idc_machineroom as b' , 'b.id' , '=' , 'c.site')
 							->leftJoin('tz_defenseip_store as d' , 'd.id' , '=' , 'a.ip_id')
-							->where('a.user_id' , $check_sign)
-							->where('d.ip' , 'like' ,'%'.$ip.'%')
-							->whereNull('a.deleted_at')
+							->where(function($query) use ($check_sign,$ip){
+								$query->where('a.user_id' , $check_sign)->whereNull('a.deleted_at')->where('d.ip' , 'like' ,'%'.$ip.'%');
+							})
+							->orWhere(function($query) use ($check_sign,$ip){
+								$query->where('a.user_id' , $check_sign)->whereNull('a.deleted_at')->where('a.target_ip' , 'like' ,'%'.$ip.'%');
+							})
 							->select(['a.business_number as businessNumber' , 'a.target_ip as targetIp' , 'a.price' , 'a.status' , 'a.end_at as endAt' , 'a.start_time as startTime' , 'a.extra_protection as extraProtection' , 'b.machine_room_name as machineRoomName' , 'c.name as packageName' , 'c.protection_value as protectionValue' , 'd.ip' ])
 							->get();
 		if(!$dip_business->isEmpty()){
 			$status = [ 0 => '预留状态' ,  1 => '正在使用' , 2 => '申请下架' , 3 => '已下架' , 4 => '试用' , 5 => '待审核' ,];
 			foreach ($dip_business as $k => $v) {
 				$v->useStatus = $status[$v->status];
+				unset($v->status);
 			}
 			return [
 				'data'	=> $dip_business,
-				'msg'	=> '查询成功!',
+				'msg'	=> '查询成功',
 				'code'	=> 1,
 			];
 		}else{
 			return [
 				'data'	=> [],
-				'msg'	=> '无数据!',
+				'msg'	=> '无数据',
 				'code'	=> 1,
 			];
 		}	
@@ -480,7 +491,7 @@ class ApiOut extends Model
 		if (!$check_sign) {
 			return [
 				'data'	=> [],
-				'msg'	=> '非法的API Key!',
+				'msg'	=> '非法的API Key',
 				'code'	=> 0,
 			];
 		}
@@ -497,6 +508,7 @@ class ApiOut extends Model
  								->where('status' , 0)
  								->whereNull('deleted_at')
  								->count('id');
+ 			unset($pack[$k]->site);
  		}
  		return [
 			'data'	=> $pack,
@@ -522,7 +534,7 @@ class ApiOut extends Model
 		if (!$check_sign) {
 			return [
 				'data'	=> [],
-				'msg'	=> '非法的API Key!',
+				'msg'	=> '非法的API Key',
 				'code'	=> 0,
 			];
 		}
@@ -534,14 +546,14 @@ class ApiOut extends Model
  		if (!$business) {
  			return [
 				'data'	=> [],
-				'msg'	=> '业务不存在!',
+				'msg'	=> '业务不存在',
 				'code'	=> 0,
 			];
  		}
  		if ($business->status != 1) {
  			return [
 				'data'	=> [],
-				'msg'	=> '业务并非使用中状态!',
+				'msg'	=> '业务并非使用中状态',
 				'code'	=> 0,
 			];
  		}
@@ -550,7 +562,7 @@ class ApiOut extends Model
 		if(!$d_ip){
 			return [
 				'data'	=> [],
-				'msg'	=> '高防ip查询失败!',
+				'msg'	=> '高防ip查询失败',
 				'code'	=> 0,
 			];
 		}
@@ -608,7 +620,7 @@ class ApiOut extends Model
 		if (!$check_sign) {
 			return [
 				'data'	=> [],
-				'msg'	=> '非法的API Key!',
+				'msg'	=> '非法的API Key',
 				'code'	=> 0,
 			];
 		}
@@ -629,7 +641,7 @@ class ApiOut extends Model
 		if (!$check1 && !$check2) {
 			return [
 				'data'	=> [],
-				'msg'	=> 'ip不属于您,无法查看!',
+				'msg'	=> 'ip不属于您,无法查看',
 				'code'	=> 0,
 			];
 		}
@@ -640,13 +652,13 @@ class ApiOut extends Model
 		if (!$res) {
 			return [
 				'data'	=> [],
-				'msg'	=> '无流量数据 !',
+				'msg'	=> '无流量数据 ',
 				'code'	=> 0,
 			];
 		}else{
 			return [
 				'data'	=> $res,
-				'msg'	=> '获取流量数据成功 !',
+				'msg'	=> '获取流量数据成功 ',
 				'code'	=> 1,
 			];
 		}
@@ -667,7 +679,7 @@ class ApiOut extends Model
 		if (!$check_sign) {
 			return [
 				'data'	=> [],
-				'msg'	=> '非法的API Key!',
+				'msg'	=> '非法的API Key',
 				'code'	=> 0,
 			];
 		}
@@ -758,7 +770,7 @@ class ApiOut extends Model
 		if (!$check_sign) {
 			return [
 				'data'	=> [],
-				'msg'	=> '非法的API Key!',
+				'msg'	=> '非法的API Key',
 				'code'	=> 0,
 			];
 		}
@@ -770,7 +782,7 @@ class ApiOut extends Model
 		if ($check_black) {
 			return [
 				'data'	=> [],
-				'msg'	=> '该域名已被拉黑!',
+				'msg'	=> '该域名已被拉黑',
 				'code'	=> 0,
 			];
 		}
@@ -781,7 +793,7 @@ class ApiOut extends Model
 		if ($check_already) {
 			return [
 				'data'	=> [],
-				'msg'	=> '审核中或已通过审核,请勿重复提交!',
+				'msg'	=> '审核中或已通过审核,请勿重复提交',
 				'code'	=> 0,
 			];
 		}
@@ -899,7 +911,7 @@ class ApiOut extends Model
 		if (!$check_sign) {
 			return [
 				'data'	=> [],
-				'msg'	=> '非法的API Key!',
+				'msg'	=> '非法的API Key',
 				'code'	=> 0,
 			];
 		}
@@ -912,7 +924,7 @@ class ApiOut extends Model
 		if ($white_list_list->isEmpty()) {
 			return [
 				'data'	=> [],
-				'msg'	=> '无申请!',
+				'msg'	=> '无申请',
 				'code'	=> 0,
 			];
 		}
@@ -925,7 +937,7 @@ class ApiOut extends Model
 
 		return [
 			'data'	=> $white_list_list,
-			'msg'	=> '获取成功!',
+			'msg'	=> '获取成功',
 			'code'	=> 1,
 		];
 	}
@@ -945,7 +957,7 @@ class ApiOut extends Model
 		if (!$check_sign) {
 			return [
 				'data'	=> [],
-				'msg'	=> '非法的API Key!',
+				'msg'	=> '非法的API Key',
 				'code'	=> 0,
 			];
 		}
@@ -953,18 +965,18 @@ class ApiOut extends Model
 		$on_sale = DB::table('tz_overlay as a')->leftJoin('idc_machineroom as b', 'b.id' , '=' , 'a.site')
 				->whereNull('a.deleted_at')
 				->where('a.sell_status' , 1)
-				->get(['a.id' , 'a.name' , 'a.description' , 'a.protection_value as protectionValue' , 'a.channel_price as channelPrice' , 'a.validity_period as validityPeriod' , 'b.machine_room_name as machineRoomName']);
+				->get(['a.id as overlayId' , 'a.name' , 'a.description' , 'a.protection_value as protectionValue' , 'a.channel_price as channelPrice' , 'a.validity_period as validityPeriod' , 'b.machine_room_name as machineRoomName']);
 
 		if ($on_sale->isEmpty()) {
 			return [
 				'data'	=> [],
-				'msg'	=> '无在售叠加包 !',
+				'msg'	=> '无在售叠加包',
 				'code'	=> 0,
 			];
 		}else{
 			return [
 				'data'	=> $on_sale,
-				'msg'	=> '获取成功 !',
+				'msg'	=> '获取成功',
 				'code'	=> 1,
 			];
 		}
@@ -987,7 +999,7 @@ class ApiOut extends Model
 		if (!$check_sign) {
 			return [
 				'data'	=> [],
-				'msg'	=> '非法的API Key!',
+				'msg'	=> '非法的API Key',
 				'code'	=> 0,
 			];
 		}
@@ -1015,7 +1027,7 @@ class ApiOut extends Model
 		if(!$customer){
 			return [
 				'data'	=> [],
-				'msg'	=> '客户信息获取失败!',
+				'msg'	=> '客户信息获取失败',
 				'code'	=> 0,
 			];
 		}
@@ -1058,14 +1070,14 @@ class ApiOut extends Model
 			DB::rollBack();
 			return [
 				'data'	=> [],
-				'msg'	=> '支付失败!',
+				'msg'	=> '支付失败',
 				'code'	=> 0,
 			];
 		}else{
 			DB::commit();
 			return [
 				'data'	=> [],
-				'msg'	=> '购买成功!',
+				'msg'	=> '购买成功',
 				'code'	=> 1,
 			];
 		}
@@ -1085,7 +1097,7 @@ class ApiOut extends Model
 		if (!$check_sign) {
 			return [
 				'data'	=> [],
-				'msg'	=> '非法的API Key!',
+				'msg'	=> '非法的API Key',
 				'code'	=> 0,
 			];
 		}
@@ -1098,17 +1110,18 @@ class ApiOut extends Model
 		if ($belong->isEmpty()) {
 			return [
 				'data'	=> [],
-				'msg'	=> '无已购叠加包 !',
+				'msg'	=> '无已购叠加包',
 				'code'	=> 0,
 			];
 		}else{
 			$state = [ 0 => '未使用' , 1 => '生效中' , 2 => '使用完毕'];
 			foreach ($belong as $k => $v) {
 				$v->useState = $state[ $v->status];
+				unset($v->status);
 			}
 			return [
 				'data'	=> $belong,
-				'msg'	=> '获取成功 !',
+				'msg'	=> '获取成功',
 				'code'	=> 1,
 			];
 		}
@@ -1132,7 +1145,7 @@ class ApiOut extends Model
 		if (!$check_sign) {
 			return [
 				'data'	=> [],
-				'msg'	=> '非法的API Key!',
+				'msg'	=> '非法的API Key',
 				'code'	=> 0,
 			];
 		}
@@ -1149,18 +1162,23 @@ class ApiOut extends Model
 
 			$res = $overlay_model->useOverlayToDIP($param);
 		}elseif ($type == 2) {
-			$param = [
-				'belong_id'		=> $belongId,
-				'order_id'		=> $target,
-				'is_ignore'		=> $isIgnore,
-				'is_api'			=> $check_sign, 
+			return [
+				'data'	=> [],
+				'msg'	=> '叠加包API渠道暂时只支持高防业务',
+				'code'	=> 0,
 			];
+			// $param = [
+			// 	'belong_id'		=> $belongId,
+			// 	'order_id'		=> $target,
+			// 	'is_ignore'		=> $isIgnore,
+			// 	'is_api'			=> $check_sign, 
+			// ];
 
-			$res = $overlay_model->useOverlayToIDC($param);
+			// $res = $overlay_model->useOverlayToIDC($param);
 		}else{
 			return [
 				'data'	=> [],
-				'msg'	=> '叠加包暂不支持其余业务!',
+				'msg'	=> '叠加包暂不支持其余业务',
 				'code'	=> 0,
 			];
 		}

@@ -57,29 +57,29 @@ class InvoiceViewSmallController extends Controller
 
 
 
-	public function create(Content $content)
-	{
-		return Admin::content(function (Content $content) {
+	// public function create(Content $content)
+	// {
+	// 	return Admin::content(function (Content $content) {
 
-			$content->header('发票申请');
-			$content->description('提交申请');
+	// 		$content->header('发票申请');
+	// 		$content->description('提交申请');
 
-			$content->body($this->form());
-		});
-	}
+	// 		$content->body($this->form());
+	// 	});
+	// }
 
 	//编辑方法,由于是业务员用,只能编辑回答
-	public function edit($id)
-	{
-		$status = DB::table('tz_invoice')->where('id' ,$id)->value('mail_state');
-		$this->mail_state = $status;
-		return Admin::content(function (Content $content) use ($id) {
+	// public function edit($id)
+	// {
+	// 	$status = DB::table('tz_invoice')->where('id' ,$id)->value('mail_state');
+	// 	$this->mail_state = $status;
+	// 	return Admin::content(function (Content $content) use ($id) {
 
-			$content->header('发票管理');
-			$content->description('');
-			$content->body($this->form()->edit($id));
-		});
-	}
+	// 		$content->header('发票管理');
+	// 		$content->description('');
+	// 		$content->body($this->form()->edit($id));
+	// 	});
+	// }
 
 	//显示具体包含的订单
 	protected function detail($id)
@@ -206,7 +206,7 @@ class InvoiceViewSmallController extends Controller
 	            		->where('salesman_id',Admin::user()->id)
 	            		->orderBy('mail_state','asc');
 			/*	自定义按钮start		*/
-			//$grid->disableCreateButton();	//禁用创建按钮
+			$grid->disableCreateButton();	//禁用创建按钮
 			$grid->disableExport();		//禁用导出数据按钮
 			//$grid->disableFilter();			//禁用查询过滤器
 
@@ -214,7 +214,7 @@ class InvoiceViewSmallController extends Controller
 			// $grid->disableActions();		//禁用行操作列
 			// $grid->actions(function ($actions) {
 			// 	$actions->disableDelete();	//行操作里屏蔽删除按钮
-			// 	// $actions->disableEdit();
+			// 	$actions->disableEdit();
 			// 	//按钮重构
 			// 	// $actions->append("<a href='编辑跳转链接' style='float: left'><i class='fa fa-edit'></i></a>");
 			// });
@@ -225,7 +225,7 @@ class InvoiceViewSmallController extends Controller
 			// });
 			$grid->actions(function (Grid\Displayers\Actions $actions) {
 				$actions->disableDelete();
-
+				$actions->disableEdit();
 				if($actions->row->mail_state != 1){
 					$actions->append(new DelInvoice($actions->getKey()));
 					//$actions->append('<a href="delete?invoice_id='.$actions->getKey().'"><i class="fa fa-trash"></i></a>');
@@ -324,103 +324,103 @@ class InvoiceViewSmallController extends Controller
 	}
 
 
-	protected function form()
-	{
-		return Admin::form(InvoiceModel::class, function (Form $form) {
-			//$form->select($column[, $label])->options('/api/users');
-			$form->select('customer','选择客户')->options('/tz_admin/invoice/getUsers')->load('flow_id', '/tz_admin/invoice/getFlow');
+	// protected function form()
+	// {
+	// 	return Admin::form(InvoiceModel::class, function (Form $form) {
+	// 		//$form->select($column[, $label])->options('/api/users');
+	// 		$form->select('customer','选择客户')->options('/tz_admin/invoice/getUsers')->load('flow_id', '/tz_admin/invoice/getFlow');
 
-			$form->listbox('flow_id','流水选择');
+	// 		$form->listbox('flow_id','流水选择');
 
-			$form->display('id', 'ID');
+	// 		$form->display('id', 'ID');
 
-			$form->display('total_amount', '总金额');
+	// 		$form->display('total_amount', '总金额');
 
-			$form->display('tax', '税额');
+	// 		$form->display('tax', '税额');
 		
-			$form->tools(function (Form\Tools $tools) {
+	// 		$form->tools(function (Form\Tools $tools) {
 
-				$tools->disableDelete();
-				$tools->disableView();
-				$tools->disableList();
-			});
+	// 			$tools->disableDelete();
+	// 			$tools->disableView();
+	// 			$tools->disableList();
+	// 		});
 			
 
 			
 
 			
-			$form->footer(function ($footer) {
-				// // 去掉`重置`按钮
-				// $footer->disableReset();
-				// 去掉`提交`按钮
+	// 		$form->footer(function ($footer) {
+	// 			// // 去掉`重置`按钮
+	// 			// $footer->disableReset();
+	// 			// 去掉`提交`按钮
 
-				if ($this->mail_state == 1) {
-					$footer->disableSubmit();
-					$footer->disableReset();
-				}
-				// // 去掉`查看`checkbox
-				//$footer->disableViewCheck();
-				// // 去掉`继续编辑`checkbox
-				//$footer->disableEditingCheck();
-				// // 去掉`继续创建`checkbox
-				// $footer->disableCreatingCheck();
-			});
+	// 			if ($this->mail_state == 1) {
+	// 				$footer->disableSubmit();
+	// 				$footer->disableReset();
+	// 			}
+	// 			// // 去掉`查看`checkbox
+	// 			//$footer->disableViewCheck();
+	// 			// // 去掉`继续编辑`checkbox
+	// 			//$footer->disableEditingCheck();
+	// 			// // 去掉`继续创建`checkbox
+	// 			// $footer->disableCreatingCheck();
+	// 		});
 
-			$form->display('payable' , '发票抬头')->with(function ($value) {
-				$payable = json_decode($value,true);
-				//dd($payable);
+	// 		$form->display('payable' , '发票抬头')->with(function ($value) {
+	// 			$payable = json_decode($value,true);
+	// 			//dd($payable);
 
-				return '名称 : '.$payable['name'].' </br> 纳税人识别号 : '.$payable['num'].' </br> 地址 : '.$payable['address'].' </br> 电话 : '.$payable['tel'].' </br> 开户行 : '.$payable['bank'].' </br> 开户行账号 : '.$payable['bank_acc'];
-			});
-			$form->display('address', '邮寄地址');
+	// 			return '名称 : '.$payable['name'].' </br> 纳税人识别号 : '.$payable['num'].' </br> 地址 : '.$payable['address'].' </br> 电话 : '.$payable['tel'].' </br> 开户行 : '.$payable['bank'].' </br> 开户行账号 : '.$payable['bank_acc'];
+	// 		});
+	// 		$form->display('address', '邮寄地址');
 			
-			if ($this->mail_state == 1) {
-				$form->display('invoice_num','发票号');
-				$form->display('date', '选择开票日期');
-				$form->display('mail_state' , '开票状态')->with(function ($value) {
-					$state = [ 1 => '已寄出' , 0 => '未寄出'];
-					return $state[$value];
-				});
-			}else{
-				$form->text('invoice_num','发票号')->placeholder('请输入...')->rules('required');
-				$form->time('date', '选择开票日期')->format('YYYY-MM-DD HH:mm:ss')->rules('required');
-				$form->radio('mail_state' , '开票状态')->options([0 => '未寄出', 1=> '已寄出'])->default(0);
-			}
-			$form->saving(function (Form $form) {
-				if($form->mail_state == 1)
-				{
-					DB::beginTransaction();
-					$flow_id = json_decode($form->flow_id,true);
-					$model = new FlowModel();
-					foreach ($flow_id as $k => $v) {	
-						$flow = $model->find($v);
-						if(!$flow){
-							DB::rollBack();
-							throw new \Exception('流水信息错误,请找技术人员查看！');
-						}
-						$flow->invoice_state = 1;
-						if (!$flow->save()) {
-							DB::rollBack();
-							throw new \Exception('更新流水的发票状态失败');
-						}
-					}
-				}
-			});
-			$form->saved(function (Form $form) {
-				 if($form->model()->mail_state == 1){
-				 	DB::commit();
-				 }
-			});
-			// $types = [
-			// 	1 => '首页'
-			// ];
-			// $form->select('type', '类型')->options($types);
-			// $form->image("image_url","图片")->move('public/images/');
-			// $form->textarea('description', '描述');
-			// $form->switch('top', '是否默认显示')->rules('required');
-			// $form->number('order', '排序');
-		});
-	}
+	// 		if ($this->mail_state == 1) {
+	// 			$form->display('invoice_num','发票号');
+	// 			$form->display('date', '选择开票日期');
+	// 			$form->display('mail_state' , '开票状态')->with(function ($value) {
+	// 				$state = [ 1 => '已寄出' , 0 => '未寄出'];
+	// 				return $state[$value];
+	// 			});
+	// 		}else{
+	// 			$form->text('invoice_num','发票号')->placeholder('请输入...')->rules('required');
+	// 			$form->time('date', '选择开票日期')->format('YYYY-MM-DD HH:mm:ss')->rules('required');
+	// 			$form->radio('mail_state' , '开票状态')->options([0 => '未寄出', 1=> '已寄出'])->default(0);
+	// 		}
+	// 		$form->saving(function (Form $form) {
+	// 			if($form->mail_state == 1)
+	// 			{
+	// 				DB::beginTransaction();
+	// 				$flow_id = json_decode($form->flow_id,true);
+	// 				$model = new FlowModel();
+	// 				foreach ($flow_id as $k => $v) {	
+	// 					$flow = $model->find($v);
+	// 					if(!$flow){
+	// 						DB::rollBack();
+	// 						throw new \Exception('流水信息错误,请找技术人员查看！');
+	// 					}
+	// 					$flow->invoice_state = 1;
+	// 					if (!$flow->save()) {
+	// 						DB::rollBack();
+	// 						throw new \Exception('更新流水的发票状态失败');
+	// 					}
+	// 				}
+	// 			}
+	// 		});
+	// 		$form->saved(function (Form $form) {
+	// 			 if($form->model()->mail_state == 1){
+	// 			 	DB::commit();
+	// 			 }
+	// 		});
+	// 		// $types = [
+	// 		// 	1 => '首页'
+	// 		// ];
+	// 		// $form->select('type', '类型')->options($types);
+	// 		// $form->image("image_url","图片")->move('public/images/');
+	// 		// $form->textarea('description', '描述');
+	// 		// $form->switch('top', '是否默认显示')->rules('required');
+	// 		// $form->number('order', '排序');
+	// 	});
+	// }
 
 		
 }

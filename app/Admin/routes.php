@@ -136,6 +136,7 @@ Route::group([
             $router->resource('/help_contents', 'Show\HelpContentsController');
             $router->get('/api/help_content/select', 'Show\HelpContentsController@select');
             $router->get('/invoice', 'Show\InvoiceController@index');
+            $router->get('/api', 'Show\ApiController@index');
 
             //流水单复核
             $router->resource('/ordersReview', 'Show\OrdersReviewController');
@@ -806,7 +807,7 @@ Route::group([
         'prefix' => 'api',
     ], function (Router $router) {
         $router->get('show', 'Customer\ApiController@show');  //展示api权限申请
-        $router->get('examine', 'Customer\ApiController@examine');  //审核api权限申请
+        $router->post('examine', 'Customer\ApiController@examine');  //审核api权限申请
     });
 
 

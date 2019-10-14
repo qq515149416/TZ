@@ -47,6 +47,15 @@
                 </a>
             </div> -->
             @foreach ($carousels as $item)
+            @if (strpos($item->url,'javascript') !== false)
+            <div class="item {{ $item->top ? 'active' : '' }}">
+                <a href="javascript:;" onclick="{{explode('javascript:',$item->url)[1]}}">
+                    <img src="{{ url('upload/'.$item->image_url) }}" alt="{{$item->name}}">
+                    <div class="carousel-caption">
+                    </div>
+                </a>
+            </div>
+            @else
             <div class="item {{ $item->top ? 'active' : '' }}">
                 <a href="{{$item->url}}" target="_blank">
                     <img src="{{ url('upload/'.$item->image_url) }}" alt="{{$item->name}}">
@@ -54,6 +63,7 @@
                     </div>
                 </a>
             </div>
+            @endif
             @endforeach
             <!-- <div class="item">
                 <a href="javascript:;" onclick="randomqq()" target="_blank">

@@ -23,7 +23,7 @@ class TzUser extends Authenticatable
 	 * @var array
 	 */
 	protected $fillable = [
-		'name', 'email', 'password','status','pwd_ver','nickname'
+		'name', 'email', 'password','status','pwd_ver','nickname','msg_phone','msg_qq'
 	];
 
 	/**

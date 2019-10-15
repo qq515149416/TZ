@@ -10156,3 +10156,8 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   height: 51px;
   margin-bottom: 40px;
 }
+#double11 {
+  background: url(/images/double11_bg.png?865e36c20749cf51053a07f597a45768) no-repeat;
+  background-size: 100% 100%;
+  padding-top: 724px;
+}

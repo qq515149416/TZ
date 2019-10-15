@@ -59,6 +59,7 @@ Route::group([
     Route::get('/overlayPackage', 'Show\OverlayPackageController@index');
     Route::get('/army_day', 'Show\ArmyDayController@index');
     Route::get('/mid_autumn', 'Show\MidAutumnController@index');
+    Route::get('/double11', 'Show\Double11Controller@index');
 
 });
 
@@ -90,6 +91,7 @@ Route::group([
     Route::get('/media_solution', 'Show\wap\MediaSolutionController@index');
     Route::get('/mobileapp_solution', 'Show\wap\MobileappSolutionController@index');
     Route::get('/company/{page}', 'Show\wap\CompanyIntroductionController@index');
+    Route::get('/help_center_home', 'Show\wap\HelpCenterHomeController@index');
 });
 
 /**

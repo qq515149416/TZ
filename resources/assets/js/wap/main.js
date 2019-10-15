@@ -63,3 +63,5 @@ import "./server_hosting.js";
 import "./cdn_speed_up.js";
 import "./page.js";
 import "./company_introduction.js";
+import "./goPage.js";
+import "./help_center_home.js";

@@ -9,7 +9,12 @@
 @section('content')
 
 <div id="double11" class="row">
+    <div class="product">
+        <h2>游戏·平台网站专配高防服务器 | 限量抢</h2>
+        <div class="paper">
 
+        </div>
+    </div>
 </div>
 
 @endsection

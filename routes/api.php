@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group([
 	'prefix' => 'v1', //高防类
+	'middleware' => 'CheckApi'
 ], function () {
 	/** 高防类api start **/
 	Route::group([

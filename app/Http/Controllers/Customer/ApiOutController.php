@@ -8,6 +8,13 @@ use Illuminate\Http\Request;
 
 class ApiOutController extends Controller
 {
+	//三个必传的: 1.$apiKey ; 2.$hash ; 3.timestamp ; 在中间件那里,这个控制器里只需要判断本方法需要的参数和参数个数
+	protected $par;
+
+	public function __construct(Request $request)
+	{
+		$this->par = $request->all();
+	}
 
 	/**
 	* 客户渠道购买套餐 api
@@ -15,14 +22,12 @@ class ApiOutController extends Controller
 	*/
 	public function buyDIP(Request $request)
 	{
-		$par = $request->only(['apiKey' , 'timestamp' , 'hash' , 'packageId' , 'buyTime']);
-
-		if (!isset($par['apiKey']) || !isset($par['timestamp']) || !isset($par['hash']) || !isset($par['packageId']) || !isset($par['buyTime']) ) {
+		if (!isset($this->par['packageId']) || !isset($this->par['buyTime']) || count($this->par) != 5 ) {
 			return tz_ajax_echo([],'非法参数',3);
 		}
-
+		$check_sign = $request->get('check_sign');
 		$model = new ApiOut();
-		$res = $model->buyDIP($par['apiKey'] , $par['timestamp'] , $par['hash'] , $par['packageId'] , $par['buyTime'] );
+		$res = $model->buyDIP($check_sign , $this->par['packageId'] , $this->par['buyTime'] );
 
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
@@ -33,14 +38,12 @@ class ApiOutController extends Controller
 	*/
 	public function renewDIP(Request $request)
 	{
-		$par = $request->only(['apiKey' , 'timestamp' , 'hash' , 'businessNumber' , 'renewTime']);
-
-		if (!isset($par['apiKey']) || !isset($par['timestamp']) || !isset($par['hash']) || !isset($par['businessNumber']) || !isset($par['renewTime']) ) {
+		if (!isset($this->par['businessNumber']) || !isset($this->par['renewTime']) || count($this->par) != 5 ) {
 			return tz_ajax_echo([],'非法参数',3);
 		}
-
+		$check_sign = $request->get('check_sign');
 		$model = new ApiOut();
-		$res = $model->renewDIP($par['apiKey'] , $par['timestamp'] , $par['hash'] , $par['businessNumber'] , $par['renewTime'] );
+		$res = $model->renewDIP($check_sign , $this->par['businessNumber'] , $this->par['renewTime'] );
 
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
@@ -51,14 +54,12 @@ class ApiOutController extends Controller
 	*/
 	public function showDIP(Request $request)
 	{
-		$par = $request->only(['apiKey' , 'timestamp' , 'hash' ]);
-
-		if (!isset($par['apiKey']) || !isset($par['timestamp']) || !isset($par['hash']) ) {
+		if (count($this->par) != 3 ) {
 			return tz_ajax_echo([],'非法参数',3);
 		}
-
+		$check_sign = $request->get('check_sign');
 		$model = new ApiOut();
-		$res = $model->showDIP($par['apiKey'] , $par['timestamp'] , $par['hash']);
+		$res = $model->showDIP($check_sign);
 
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
@@ -69,14 +70,13 @@ class ApiOutController extends Controller
 	*/
 	public function showDIPDetail(Request $request)
 	{
-		$par = $request->only(['apiKey' , 'timestamp' , 'hash' , 'businessNumber' ]);
-
-		if (!isset($par['apiKey']) || !isset($par['timestamp']) || !isset($par['hash']) || !isset($par['businessNumber']) ) {
+		if (!isset($this->par['businessNumber']) || count($this->par) != 4) {
 			return tz_ajax_echo([],'非法参数',3);
 		}
 
+		$check_sign = $request->get('check_sign');//中间件产生的参数
 		$model = new ApiOut();
-		$res = $model->showDIPDetail( $par['apiKey'] , $par['timestamp'] , $par['hash'] ,$par['businessNumber']);
+		$res = $model->showDIPDetail( $check_sign ,$this->par['businessNumber']);
 
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
@@ -87,14 +87,12 @@ class ApiOutController extends Controller
 	*/
 	public function searchDIP(Request $request)
 	{
-		$par = $request->only(['apiKey' , 'timestamp' , 'hash' , 'ip']);
-
-		if (!isset($par['apiKey']) || !isset($par['timestamp']) || !isset($par['hash']) || !isset($par['ip']) ) {
+		if ( !isset($this->par['ip']) || count($this->par) != 4 ) {
 			return tz_ajax_echo([],'非法参数',3);
 		}
-
+		$check_sign = $request->get('check_sign');//中间件产生的参数
 		$model = new ApiOut();
-		$res = $model->searchDIP($par['apiKey'] , $par['timestamp'] , $par['hash'] , $par['ip']);
+		$res = $model->searchDIP($check_sign , $this->par['ip']);
 
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
@@ -107,14 +105,12 @@ class ApiOutController extends Controller
 	*/
 	public function showDIPPackage(Request $request)
 	{
-		$par = $request->only(['apiKey' , 'timestamp' , 'hash']);
-
-		if (!isset($par['apiKey']) || !isset($par['timestamp']) || !isset($par['hash']) ) {
+		if ( count($this->par) != 3 ) {
 			return tz_ajax_echo([],'非法参数',3);
 		}
-
+		$check_sign = $request->get('check_sign');//中间件产生的参数
 		$model = new ApiOut();
-		$res = $model->showDIPPackage( $par['apiKey'] , $par['timestamp'] , $par['hash'] );
+		$res = $model->showDIPPackage( $check_sign);
 
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
@@ -125,14 +121,12 @@ class ApiOutController extends Controller
 	*/
 	public function setDIPTarget(Request $request)
 	{
-		$par = $request->only(['apiKey' , 'timestamp' , 'hash' , 'businessNumber' , 'targetIp' ]);
-
-		if (!isset($par['apiKey']) || !isset($par['timestamp']) || !isset($par['hash']) || !isset($par['businessNumber']) || !isset($par['targetIp']) ) {
+		if (!isset($this->par['businessNumber']) || !isset($this->par['targetIp']) || count($this->par) != 5 ) {
 			return tz_ajax_echo([],'非法参数',3);
 		}
-
+		$check_sign = $request->get('check_sign');//中间件产生的参数
 		$model = new ApiOut();
-		$res = $model->setDIPTarget( $par['apiKey'] , $par['timestamp'] , $par['hash'] ,$par['businessNumber'] ,$par['targetIp'] );
+		$res = $model->setDIPTarget( $check_sign ,$this->par['businessNumber'] ,$this->par['targetIp'] );
 
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
@@ -143,14 +137,13 @@ class ApiOutController extends Controller
 	*/
 	public function showDIPFlow(Request $request)
 	{
-		$par = $request->only(['apiKey' , 'timestamp' , 'hash' , 'startTime' , 'endTime' , 'ip']);
 
-		if (!isset($par['apiKey']) || !isset($par['timestamp']) || !isset($par['hash']) || !isset($par['startTime']) || !isset($par['endTime']) || !isset($par['ip']) ) {
+		if (!isset($this->par['startTime']) || !isset($this->par['endTime']) || !isset($this->par['ip']) || count($this->par) != 6 ) {
 			return tz_ajax_echo([],'非法参数',3);
 		}
-
+		$check_sign = $request->get('check_sign');//中间件产生的参数
 		$model = new ApiOut();
-		$res = $model->showDIPFlow( $par['apiKey'] , $par['timestamp'] , $par['hash'] ,$par['startTime'] ,$par['endTime'] ,$par['ip'] );
+		$res = $model->showDIPFlow( $check_sign ,$this->par['startTime'] ,$this->par['endTime'] ,$this->par['ip'] );
 
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
@@ -161,15 +154,12 @@ class ApiOutController extends Controller
 	*/
 	public function setWhiteList(Request $request)
 	{
-		$par = $request->only(['apiKey' , 'timestamp' , 'hash' , 'ip' , 'domainName' , 'recordNumber' , 'submitNote']);
-
-		if (!isset($par['apiKey']) || !isset($par['timestamp']) || !isset($par['hash']) || !isset($par['ip']) || !isset($par['domainName']) || !isset($par['recordNumber']) || !isset($par['submitNote'])) {
+		if (!isset($this->par['ip']) || !isset($this->par['domainName']) || !isset($this->par['recordNumber']) || !isset($this->par['submitNote'])  || count($this->par) != 7  ) {
 			return tz_ajax_echo([],'非法参数',3);
 		}
-
+		$check_sign = $request->get('check_sign');//中间件产生的参数
 		$model = new ApiOut();
-
-		$res = $model->setWhiteList( $par['apiKey'] , $par['timestamp'] , $par['hash'] ,$par['ip'] ,$par['domainName'] , $par['recordNumber'] , $par['submitNote'] );
+		$res = $model->setWhiteList( $check_sign,$this->par['ip'] ,$this->par['domainName'] , $this->par['recordNumber'] , $this->par['submitNote'] );
 		
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
@@ -180,14 +170,12 @@ class ApiOutController extends Controller
 	*/
 	public function showAllIp(Request $request)
 	{
-		$par = $request->only(['apiKey' , 'timestamp' , 'hash']);
-
-		if (!isset($par['apiKey']) || !isset($par['timestamp']) || !isset($par['hash']) ) {
+		if ( count($this->par) != 3 ) {
 			return tz_ajax_echo([],'非法参数',3);
 		}
-
+		$check_sign = $request->get('check_sign');//中间件产生的参数
 		$model = new ApiOut();
-		$res = $model->showAllIp( $par['apiKey'] , $par['timestamp'] , $par['hash'] );
+		$res = $model->showAllIp( $check_sign);
 
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
@@ -198,14 +186,12 @@ class ApiOutController extends Controller
 	*/
 	public function showWhiteList(Request $request)
 	{
-		$par = $request->only(['apiKey' , 'timestamp' , 'hash']);
-
-		if (!isset($par['apiKey']) || !isset($par['timestamp']) || !isset($par['hash']) ) {
+		if ( count($this->par) != 3 ) {
 			return tz_ajax_echo([],'非法参数',3);
 		}
-
+		$check_sign = $request->get('check_sign');//中间件产生的参数
 		$model = new ApiOut();
-		$res = $model->showWhiteList( $par['apiKey'] , $par['timestamp'] , $par['hash'] );
+		$res = $model->showWhiteList( $check_sign );
 
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
@@ -216,14 +202,12 @@ class ApiOutController extends Controller
 	*/
 	public function showOverlay(Request $request)
 	{
-		$par = $request->only(['apiKey' , 'timestamp' , 'hash']);
-
-		if (!isset($par['apiKey']) || !isset($par['timestamp']) || !isset($par['hash']) ) {
+		if ( count($this->par) != 3 ) {
 			return tz_ajax_echo([],'非法参数',3);
 		}
-
+		$check_sign = $request->get('check_sign');//中间件产生的参数
 		$model = new ApiOut();
-		$res = $model->showOverlay( $par['apiKey'] , $par['timestamp'] , $par['hash'] );
+		$res = $model->showOverlay( $check_sign );
 
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
@@ -235,14 +219,13 @@ class ApiOutController extends Controller
 	*/
 	public function buyOverlay(Request $request)
 	{
-		$par = $request->only(['apiKey' , 'timestamp' , 'hash' , 'overlayId' , 'num']);
 
-		if (!isset($par['apiKey']) || !isset($par['timestamp']) || !isset($par['hash']) || !isset($par['overlayId']) || !isset($par['num']) ) {
+		if (!isset($this->par['overlayId']) || !isset($this->par['num']) || count($this->par) != 5 ) {
 			return tz_ajax_echo([],'非法参数',3);
 		}
-	
+		$check_sign = $request->get('check_sign');//中间件产生的参数
 		$model = new ApiOut();
-		$res = $model->buyOverlay( $par['apiKey'] , $par['timestamp'] , $par['hash'] , $par['overlayId'] , $par['num']);
+		$res = $model->buyOverlay( $check_sign , $this->par['overlayId'] , $this->par['num']);
 
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
@@ -253,14 +236,12 @@ class ApiOutController extends Controller
 	*/
 	public function showBelong(Request $request)
 	{
-		$par = $request->only(['apiKey' , 'timestamp' , 'hash']);
-
-		if (!isset($par['apiKey']) || !isset($par['timestamp']) || !isset($par['hash']) ) {
+		if (count($this->par) != 3) {
 			return tz_ajax_echo([],'非法参数',3);
 		}
-	
+		$check_sign = $request->get('check_sign');//中间件产生的参数
 		$model = new ApiOut();
-		$res = $model->showBelong( $par['apiKey'] , $par['timestamp'] , $par['hash'] );
+		$res = $model->showBelong( $check_sign );
 
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}
@@ -271,14 +252,12 @@ class ApiOutController extends Controller
 	*/
 	public function useOverlay(Request $request)
 	{
-		$par = $request->only(['apiKey' , 'timestamp' , 'hash' , 'belongId' , 'target' , 'isIgnore' , 'type']);
-
-		if (!isset($par['apiKey']) || !isset($par['timestamp']) || !isset($par['hash']) || !isset($par['belongId']) || !isset($par['target']) || !isset($par['isIgnore']) || !isset($par['type']) ) {
+		if (!isset($this->par['belongId']) || !isset($this->par['target']) || !isset($this->par['isIgnore']) || !isset($this->par['type']) || count($this->par) != 7 ) {
 			return tz_ajax_echo([],'非法参数',3);
 		}
-	
+		$check_sign = $request->get('check_sign');//中间件产生的参数
 		$model = new ApiOut();
-		$res = $model->useOverlay( $par['apiKey'] , $par['timestamp'] , $par['hash'] , $par['belongId'] , $par['target'] , $par['isIgnore'] , $par['type'] );
+		$res = $model->useOverlay( $check_sign, $this->par['belongId'] , $this->par['target'] , $this->par['isIgnore'] , $this->par['type'] );
 
 		return tz_ajax_echo($res['data'],$res['msg'],$res['code']);
 	}

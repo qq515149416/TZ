@@ -247,7 +247,7 @@ class PayOrder extends Model
 			'flow_type'		=> $unpaidOrder[0]['order_type'],
 		];
 		if (isset($check_note) && $check_note == 1) {
-			$flow['note'] = '资源到期时间跟主业务到期时间一致，不足月按实际使用天数收费';
+			$flow['note'] = '有资源到期时间跟主业务到期时间保持一致，不足月按实际使用天数收费';
 		}
 		
 		$creatFlow = DB::table('tz_orders_flow')->insert($flow);

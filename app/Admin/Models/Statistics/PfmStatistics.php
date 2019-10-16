@@ -1042,8 +1042,8 @@ class  PfmStatistics extends Model
 		foreach ($all_flow as $k => $v) {
 
 			$time = date('Y-m',strtotime($v['pay_time']));
-			$res[$time] = bcadd($res[$time], $v['actual_payment'],2);
-			
+			// $res[$time] = bcadd($res[$time], $v['actual_payment'],0);
+			$res[$time] = $res[$time] + $v['actual_payment'];
 		}
 		return [
 			'data'	=> $res,

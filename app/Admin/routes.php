@@ -320,6 +320,7 @@ Route::group([
         $router->get('test', 'Statistics\PfmStatisticsController@test');//计算时间区间内消费额度
         $router->get('performance','Statistics\PfmStatisticsController@performance');//产品类型业务业绩统计
         $router->get('statistics','Statistics\PfmStatisticsController@statistics');//各类统计数据汇总
+        $router->get('consumptionTwelve','Statistics\PfmStatisticsController@consumptionTwelve');//各类统计数据汇总
     });
 
     /**

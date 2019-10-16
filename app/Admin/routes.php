@@ -709,6 +709,7 @@ Route::group([
 
         $router->post('getUserInfo', 'TzUsers\InfoController@getUserInfo');//修改用户QQ、手机、备注等信息
         $router->post('updateUserInfo', 'TzUsers\InfoController@updateUserInfo');//更新客户信息
+        $router->get('noBuyUsers', 'TzUsers\InfoController@noBuyUsers');//获取没买过的用户信息
         Route::group([
             'prefix' => 'address',
         ], function (Router $router) {

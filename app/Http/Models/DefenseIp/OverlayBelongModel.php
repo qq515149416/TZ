@@ -25,15 +25,15 @@ class OverlayBelongModel extends Model
      *
      * @return string
      */
-    public function getStatusAttribute($value)
+    public function getStatusTextAttribute($value)
     {
         $status_text = [
             "0" => "未使用",
             "1" => "生效中",
             "2" => "已使用完毕"
         ];
-        if(array_key_exists($value,$status_text)) {
-            return $status_text[$value];
+        if(array_key_exists($this->status,$status_text)) {
+            return $status_text[$this->status];
         } else {
             return "未知状态";
         }

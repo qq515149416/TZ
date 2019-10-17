@@ -18,10 +18,11 @@ class ExcelController extends Controller
 	*		3 => ['CCC','女','ccc'],
 	*		4 => ['=DDD','男','ddd'],
 	*	];
-	 * Excel导出
-	 */
+	*	$cellName = 导出文件名
+	* Excel导出
+	*/
 
-	public function export($cellData)
+	public function export($cellData,$cellName)
 	{
 		ini_set('memory_limit','500M');
 		set_time_limit(0);//设置超时限制为0分钟
@@ -32,7 +33,7 @@ class ExcelController extends Controller
 			$cellData[$i][0] = str_replace('=',' '.'=',$cellData[$i][0]);
 		}
 		//dd($cellData);
-		Excel::create('用户信息',function($excel) use ($cellData){
+		Excel::create($cellName,function($excel) use ($cellData){
 			$excel->sheet('score', function($sheet) use ($cellData){
 				$sheet->rows($cellData);
 			});

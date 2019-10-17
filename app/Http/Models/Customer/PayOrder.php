@@ -181,10 +181,15 @@ class PayOrder extends Model
 			/*
 			*如需添加单一商品优惠券,在此添加计算
 			*/
-			$updateInfo['payable_money'] = bcmul($unpaidOrder[$i]['price'],$unpaidOrder[$i]['duration'],2);
+
+			//判断订单的时长和单价乘起来跟应付对不对得上,对不上的话是按天算的
+			$price_and_duration = bcmul($unpaidOrder[$i]['price'],$unpaidOrder[$i]['duration'],2);
+			if ( $price_and_duration != $unpaidOrder[$i]['payable_money'] ) {
+				$check_note = 1;
+			}
 			
 			//计算支付流水应付金额
-			$payable_money = bcadd($payable_money,$updateInfo['payable_money'],2);
+			$payable_money = bcadd($payable_money,$unpaidOrder[$i]['payable_money'],2);
 
 			$business_id = $unpaidOrder[$i]['business_id'];
 			$update = DB::table('tz_orders')->where('id',$unpaidOrder[$i]['id'])->whereNull('deleted_at')->update($updateInfo);
@@ -241,6 +246,10 @@ class PayOrder extends Model
 			'room_id'		=> $room_id,
 			'flow_type'		=> $unpaidOrder[0]['order_type'],
 		];
+		if (isset($check_note) && $check_note == 1) {
+			$flow['note'] = '有资源到期时间跟主业务到期时间保持一致，不足月按实际使用天数收费';
+		}
+		
 		$creatFlow = DB::table('tz_orders_flow')->insert($flow);
 		if($creatFlow == false){
 			DB::rollBack();

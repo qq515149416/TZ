@@ -9,6 +9,7 @@ use Encore\Admin\Controllers\ModelForm;
 use App\Admin\Models\Idc\Ips;
 use App\Admin\Requests\Business\TzUserRequest;
 use Illuminate\Http\Request;
+use App\Admin\Controllers\Excel\ExcelController;
 
 class InfoController extends Controller
 {
@@ -72,6 +73,16 @@ class InfoController extends Controller
         return tz_ajax_echo(null, '修改成功', 1);
 
 
+    }
+
+    public function noBuyUsers()
+    {
+        $TzUsersM = new TzUsers();//实例化客户用户模型
+        $users_arr = $TzUsersM->noBuyUsers();    
+        
+        $excel_model = new ExcelController();
+        $excel_model->export($users_arr,'无业务客户信息');
+ 
     }
 
 }

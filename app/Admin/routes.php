@@ -320,6 +320,7 @@ Route::group([
         $router->get('test', 'Statistics\PfmStatisticsController@test');//计算时间区间内消费额度
         $router->get('performance','Statistics\PfmStatisticsController@performance');//产品类型业务业绩统计
         $router->get('statistics','Statistics\PfmStatisticsController@statistics');//各类统计数据汇总
+        $router->get('consumptionTwelve','Statistics\PfmStatisticsController@consumptionTwelve');//各类统计数据汇总
     });
 
     /**
@@ -709,6 +710,7 @@ Route::group([
 
         $router->post('getUserInfo', 'TzUsers\InfoController@getUserInfo');//修改用户QQ、手机、备注等信息
         $router->post('updateUserInfo', 'TzUsers\InfoController@updateUserInfo');//更新客户信息
+        $router->get('noBuyUsers', 'TzUsers\InfoController@noBuyUsers');//获取没买过的用户信息
         Route::group([
             'prefix' => 'address',
         ], function (Router $router) {

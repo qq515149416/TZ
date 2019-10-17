@@ -72,7 +72,7 @@ class TzUsers extends Model
 	public function noBuyUsers()
 	{
 		$users = $this->leftJoin('admin_users as b' , 'b.id' , '=' , 'tz_users.salesman_id')
-				->get(['tz_users.id' , 'tz_users.status' , 'tz_users.name' , 'tz_users.email' , 'tz_users.money' , 'tz_users.nickname' , 'tz_users.msg_phone' ,'b.name as salesman_name'])
+				->get(['tz_users.id' , 'tz_users.status' , 'tz_users.name' , 'tz_users.email' , 'tz_users.money' , 'tz_users.nickname' , 'tz_users.msg_phone' , 'tz_users.msg_qq' ,'b.name as salesman_name'])
 				->toArray();
 		
 		$no_buy_arr = [ 	
@@ -84,6 +84,7 @@ class TzUsers extends Model
 						'余额',
 						'昵称',
 						'手机号',
+						'QQ',
 						'业务员',
 					]
 		];
@@ -110,10 +111,12 @@ class TzUsers extends Model
 					$v['money'],
 					$v['nickname'],
 					$v['msg_phone'],
+					$v['msg_qq'],
 					$v['salesman_name'],
 				];
 			}
 		}
+		$no_buy_arr[] = [ '统计时间' , date('Y-m-d H:i:s')];
 		return $no_buy_arr;
 	}
 

@@ -752,7 +752,7 @@ class Order extends Model
                     	}
 						$day_money = bcdiv($order_result->price,30,2);//一天的价格
 						$day = date_diff(date_create($order_result->end_time),date_create($business_end))->format('%a');//到期时间跟现在时间相隔的天数
-						$order['payable_money'] = bcmul($day_money,$day);//应付金额
+						$order['payable_money'] = bcmul($day_money,$day,2);//应付金额
 						$order['duration'] = $day;//订单时长
 						$order['note'] = '资源到期时间跟主业务到期时间一致，不足月按实际使用天数收费';
 						$order['length'] = $renew['length'];//接收续费的时长

@@ -739,12 +739,7 @@ class Order extends Model
 					if(!isset($business_end)){
                     	$business_end = DB::table('tz_business')->where('business_number',$order_result->business_sn)->value('endding_time');
                     } 
-                    if(date('Y-m-d',time()) >= date('Y-m-d',strtotime($business_end))){
-                    	$return['data'] = '';
-                        $return['code'] = 0;
-                        $return['msg'] = '资源编号:'.$order_result->machine_sn.'的资源'.$order_result->resource.','.'无法续费,原因:续费后到期时间超过主业务到期时间';
-                        return $return;
-                    }
+                    
 					//到期时间
 					$end_time = time_calculation($order_result->end_time,$renew['length'],'month');
 					if(date('Y-m-d',strtotime($end_time)) > date('Y-m-d',strtotime($business_end))){

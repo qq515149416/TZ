@@ -18,7 +18,7 @@ use App\Admin\Models\Statistics\MachineStatistics;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Admin\Requests\Statistics\StatisticsRequest;
-
+use App\Admin\Models\Business\BusinessModel;
 
 
 
@@ -67,5 +67,53 @@ class StatisticsController extends Controller
 		
 		return $result['code'];
 
+	}
+
+	/**
+	* 按条件获取机器数量
+	* @param  
+	* @return [type]           [description]
+	*/
+	public function getMachineNum(){
+		$model = new BusinessModel();
+
+		// $this_month_begin   = date('Y-m-01 00:00:00');
+		// $this_month_end     = date('Y-m-t 23:59:59');
+		$this_month_begin = '2019-05-01 00:00:00';
+		$this_month_end = '2019-05-31 23:59:59';
+
+		$this_month_on = $model->where(function($query) use ($this_month_begin,$this_month_end){
+						$query->whereIn('business_type',[1,2])
+							->where('start_time','>',$this_month_begin)
+							->where('start_time','<',$this_month_end)
+							->where('business_status' , 1)
+							->where('remove_status',0);
+					})
+					->orWhere(function($query) use ($this_month_begin,$this_month_end){
+						$query->whereIn('business_type',[1,2])
+						->where('start_time','>',$this_month_begin)
+						->where('start_time','<',$this_month_end)
+						->where('business_status' , 2);
+					})
+					->count();
+
+		$this_month_down = $model->whereIn('business_type',[1,2])
+					->where('updated_at','>',$this_month_begin)
+					->where('updated_at','<',$this_month_end)
+					->whereIn('remove_status',[3,4])
+					->whereIn('business_status',[2,5,6])
+					->count();
+		
+		$using = $model->whereIn('business_type',[1,2])
+				->where('remove_status',0)
+				->whereIn('business_status',[1,2])
+				->count();
+		$arr = [
+			'this_month_on'		=> $this_month_on,
+			'this_month_down'	=> $this_month_down,
+			'using'			=> $using,
+		];
+
+		return tz_ajax_echo($arr,'统计成功',1);
 	}
 }

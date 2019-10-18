@@ -21,7 +21,7 @@ use App\Admin\Requests\Statistics\PfmStatisticsRequest;
 use Encore\Admin\Facades\Admin;
 use App\Admin\Controllers\Excel;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
-
+use Carbon\Carbon;
 
 class PfmStatisticsController extends Controller
 {
@@ -206,4 +206,28 @@ class PfmStatisticsController extends Controller
 		$result = $statistics->consumptionTwelve();
 		return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
 	}
+
+	/**
+	 * 获取消费
+	 * @param  $need 	1 - 获取当日 ; 2 - 获取当月 ; 3 - 获取上月
+	 * @return
+	 */
+	public function getConsumption(PfmStatisticsRequest $request){
+		$par = $request->only(['need']);
+		$this_month = date('Y-m');
+		$statistics = new PfmStatistics();
+
+		if ($par['need'] == 1) { // 取当日
+			$result = $statistics->consumptionToday();
+		}elseif ($par['need'] == 2) {// 取当月
+			$result = $statistics->getConsumptionByMonth($this_month);
+		}elseif ($par['need'] == 3) {// 取上月
+			$last_month =date('Y-m',Carbon::parse($this_month.'-01 00:00:00')->subMonths(1)->timestamp);
+			$result = $statistics->getConsumptionByMonth($last_month);
+		}
+		
+
+		return tz_ajax_echo($result,'获取成功',1);
+	}
+
 }

@@ -307,6 +307,7 @@ Route::group([
         'prefix' => 'statistics',
     ], function (Router $router) {
         $router->get('statisticsList', 'Statistics\StatisticsController@index');//机器统计
+        $router->get('getMachineNum', 'Statistics\StatisticsController@getMachineNum');//机器统计
     });
 
     /**
@@ -320,7 +321,8 @@ Route::group([
         $router->get('test', 'Statistics\PfmStatisticsController@test');//计算时间区间内消费额度
         $router->get('performance','Statistics\PfmStatisticsController@performance');//产品类型业务业绩统计
         $router->get('statistics','Statistics\PfmStatisticsController@statistics');//各类统计数据汇总
-        $router->get('consumptionTwelve','Statistics\PfmStatisticsController@consumptionTwelve');//各类统计数据汇总
+        $router->get('consumptionTwelve','Statistics\PfmStatisticsController@consumptionTwelve');//获取消费总额折线图所需数据接口
+        $router->get('getConsumption','Statistics\PfmStatisticsController@getConsumption');//获取消费额的接口
     });
 
     /**
@@ -331,6 +333,8 @@ Route::group([
     ], function (Router $router) {
         $router->get('list', 'Statistics\RechargeStatisticsController@index');//充值统计
         $router->get('getFlow', 'Statistics\RechargeStatisticsController@getFlow');//充值统计
+        $router->get('rechargeTwelve', 'Statistics\RechargeStatisticsController@rechargeTwelve');//获取充值总额折线图所需数据接口
+        $router->get('getRecharge', 'Statistics\RechargeStatisticsController@getRecharge');//获取充值额
     });
 
 
@@ -705,12 +709,13 @@ Route::group([
      * 客户用户管理
      */
     Route::group([
-        'prefix' => 'users',
+        'prefix' => 'users', 
     ], function (Router $router) {
 
         $router->post('getUserInfo', 'TzUsers\InfoController@getUserInfo');//修改用户QQ、手机、备注等信息
         $router->post('updateUserInfo', 'TzUsers\InfoController@updateUserInfo');//更新客户信息
         $router->get('noBuyUsers', 'TzUsers\InfoController@noBuyUsers');//获取没买过的用户信息
+        $router->get('getUsers', 'TzUsers\InfoController@getUsers');//获取客户数量
         Route::group([
             'prefix' => 'address',
         ], function (Router $router) {

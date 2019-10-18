@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Encore\Admin\Facades\Admin;
+use Carbon\Carbon;
 
 class  RechargeStatistics extends Model
 {
@@ -196,4 +197,54 @@ class  RechargeStatistics extends Model
 		$flow['customer_name'] = $flow['customer_name'] ? $flow['customer_name'] : $flow['email'];
 		return $flow;
 	}
+
+	//获取充值折线图所需数据接口
+	public function rechargeTwelve()
+	{
+		$this_month_carbon = Carbon::parse(date('Y-m').'-01 00:00:00');
+
+		$res = [];
+		for ($i=1; $i <= 12; $i++) { 
+			$month_timestamp = $this_month_carbon->copy()->subMonths($i)->timestamp;
+			$res[] = [
+				'time'		=> date('Y-m',$month_timestamp),
+				'amount'	=> $this->getRechargeByMonth(date('Ym',$month_timestamp))+0,
+			];
+		}
+
+		return [
+			'data'	=> $res,
+			'msg'	=> '获取成功',
+			'code'	=> 1,
+		];
+	}
+
+	/**
+	 * 统计充值额,按月
+	 * @param  $month -	格式:Ym ; 例: 201909
+	 * @param  
+	 * @return [type]              [description]
+	 */
+	public function getRechargeByMonth($month)
+	{
+		$all_recharge = $this->where('trade_status',1)
+				->where('month',$month)
+				->sum('recharge_amount');
+
+		return $all_recharge;
+	}
+
+	public function rechargeToday()
+	{
+		$begin = date('Y-m-d').' 00:00:00';
+		$end = date('Y-m-d').' 23:59:59';
+
+		$all_recharge = $this->where('trade_status',1)
+				->where('timestamp','>',$begin)
+				->where('timestamp','<',$end)
+				->sum('recharge_amount');
+
+		return $all_recharge;
+	}
+	
 }

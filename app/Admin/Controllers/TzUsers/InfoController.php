@@ -85,6 +85,31 @@ class InfoController extends Controller
  
     }
 
+    /**
+     * 获取客户数量
+     * @param  $need    1 - 获取当日 ; 2 - 获取当月 ; 3 - 获取所有
+     * @return
+     */
+    public function getUsers(Request $request){
+        $par = $request->only(['need']);
+        $this_month = date('Y-m');
+        $statistics = new TzUsers();
+
+        if (!isset($par['need'])) {
+            return tz_ajax_echo(null,'请明确需求 : 1 - 当日 ; 2 - 当月 ; 3 - 所有',0);
+        }
+        if ($par['need'] == 1) { // 取当日
+            $result = $statistics->usersToday();
+        }elseif ($par['need'] == 2) {// 取当月
+            $result = $statistics->getUsersThisMonth();
+        }elseif ($par['need'] == 3) {// 取上月
+            // $last_month =date('Y-m',Carbon::parse($this_month.'-01 00:00:00')->subMonths(1)->timestamp);
+            $result = $statistics->getAllUsers();
+        }
+        
+
+        return tz_ajax_echo($result,'获取成功',1);
+    }
 }
 
 

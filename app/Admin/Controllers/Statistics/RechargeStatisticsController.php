@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Admin\Requests\Statistics\RechargeStatisticsRequest;
 use Encore\Admin\Facades\Admin;
-
+use Carbon\Carbon;
 
 
 
@@ -55,4 +55,35 @@ class RechargeStatisticsController extends Controller
 		return tz_ajax_echo($res,'获取成功',1);
 	}
 
+	/**
+	 * 获取充值折线图所需数据接口
+	 * @return [type] [description]
+	 */
+	public function rechargeTwelve(){
+		$statistics = new RechargeStatistics();
+		$result = $statistics->rechargeTwelve();
+		return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
+	}
+
+	/**
+	 * 获取充值
+	 * @param  $need 	1 - 获取当日 ; 2 - 获取当月 ; 3 - 获取上月
+	 * @return
+	 */
+	public function getRecharge(RechargeStatisticsRequest $request){
+		$par = $request->only(['need']);
+		$this_month = date('Ym');
+		$statistics = new RechargeStatistics();
+
+		if ($par['need'] == 1) { // 取当日
+			$result = $statistics->rechargeToday();
+		}elseif ($par['need'] == 2) {// 取当月
+			$result = $statistics->getRechargeByMonth($this_month);
+		}elseif ($par['need'] == 3) {// 取上月
+			$last_month =date('Ym',Carbon::parse( date('Y-m-01 00:00:00') )->subMonths(1)->timestamp);
+			$result = $statistics->getRechargeByMonth($last_month);
+		}		
+
+		return tz_ajax_echo($result,'获取成功',1);
+	}
 }

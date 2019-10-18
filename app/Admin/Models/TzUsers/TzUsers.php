@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 use XS;
 use XSDocument;
+use Carbon\Carbon;
 
 class TzUsers extends Model
 {
@@ -120,4 +121,41 @@ class TzUsers extends Model
 		return $no_buy_arr;
 	}
 
+	//获取当日注册的
+	public function usersToday()
+	{
+		$begin = date('Y-m-d 00:00:00');
+		$end = date('Y-m-d 23:59:59');
+
+		$num = $this->getUsersNum($begin,$end);
+		return $num;
+	}
+
+	//获取当月注册的
+	public function getUsersThisMonth()
+	{
+		$begin = date('Y-m-01 00:00:00');
+		$end = date('Y-m-t 23:59:59');
+
+		$num = $this->getUsersNum($begin,$end);
+		return $num;
+	}
+	//获取所有
+	public function getAllUsers()
+	{
+		$users_num = $this->where('status' , 2)
+				->count();
+		return $users_num;
+	}
+	
+	//获取时间区间内的
+	public function getUsersNum($begin,$end)
+	{
+		$users_num = $this->where('created_at','>',$begin)
+				->where('created_at','<',$end)
+				->where('status' , 2)
+				->count();
+
+		return $users_num;
+	}
 }

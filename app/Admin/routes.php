@@ -137,6 +137,7 @@ Route::group([
             $router->get('/api/help_content/select', 'Show\HelpContentsController@select');
             $router->get('/invoice', 'Show\InvoiceController@index');
             $router->get('/api', 'Show\ApiController@index');
+            $router->get('/statisticalOverview', 'Show\StatisticalOverviewController@index');
 
             //流水单复核
             $router->resource('/ordersReview', 'Show\OrdersReviewController');

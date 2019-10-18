@@ -891,16 +891,10 @@ class OrdersModel extends Model
                     if(!isset($business_end)){
                     	$business_end = DB::table('tz_business')->where('business_number',$order_result->business_sn)->value('endding_time');
                     } 
-                    if(date('Y-m-d',time()) >= date('Y-m-d',strtotime($business_end))){
-                    	$return['data'] = '';
-                        $return['code'] = 0;
-                        $return['msg'] = '资源编号:'.$order_result->machine_sn.'的资源'.$order_result->resource.','.'无法续费,原因:续费后到期时间超过主业务到期时间';
-                        return $return;
-                    }
                     
                     //到期时间
                     $end_time = time_calculation($order_result->end_time,$renew['length'],'month');
-                    
+
                     if(date('Y-m-d',strtotime($end_time)) > date('Y-m-d',strtotime($business_end))){
                     	
                     	$order['end_time'] = $business_end;
@@ -912,7 +906,7 @@ class OrdersModel extends Model
                     	}
 						$day_money = bcdiv($order_result->price,30,2);//一天的价格
 						$day = date_diff(date_create($order_result->end_time),date_create($business_end))->format('%a');//到期时间跟现在时间相隔的天数
-						$order['payable_money'] = bcmul($day_money,$day);//应付金额
+						$order['payable_money'] = bcmul($day_money,$day,2);//应付金额
 						$order['duration'] = $day;//订单时长
 						$order['note'] = '资源到期时间跟主业务到期时间一致，不足月按实际使用天数收费';
 						$order['price'] = $day_money;//订单单价

@@ -19,6 +19,18 @@
     <!--活动-->
     <div class="activity">
         <div class="card-container">
+            <a class="card" href="/double11" target="_blank">
+                <div class="card-image">
+                    <img src="{{ asset("/images/lastestActivity/activity-10.png") }}" />
+                    <span class="ongoing">活动中</span>
+                </div>
+                <div class="card-body">
+                    <h5 class="title font-heavy">200G高防服务器·多线服务器助力双11，实现创富梦！</h5>
+                    <p class="desc">
+                    双11狂欢购！腾正科技100M独享 200G硬防游戏·平台网站专配高防服务器，11元加购单线变多线服务器双助力！速度快防御硬助力别人剁手您创富！点击查看活动详情。
+                    </p>
+                </div>
+            </a>
             <a class="card" href="/mid_autumn" target="_blank">
                 <div class="card-image">
                     <img src="{{ asset("/images/lastestActivity/activity-8.png") }}" />

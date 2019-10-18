@@ -62,6 +62,7 @@ Route::group([
     Route::get('/double11', 'Show\Double11Controller@index');
 
 });
+Route::get('/double11', 'Show\Double11Controller@index'); //双11活动页  *黄晓敏需求:不要跳转移动端
 
 //移动端接口路径
 Route::group([

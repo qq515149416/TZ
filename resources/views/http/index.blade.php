@@ -184,7 +184,7 @@
                                     <span class="key">CPU</span>
                                 </div>
                                 <div>
-                                    <span>32G</span>
+                                    <span>16G</span>
                                     <span class="key">内存</span>
                                 </div>
                                 <div>
@@ -211,7 +211,7 @@
                                 </div>
                             </div>
                             <div class="text-right price">
-                                <a href="javascript:;" onclick="randomqq()" class="buy">888元</a>
+                                <a href="javascript:;" onclick="randomqq()" class="buy">促销888元</a>
                             </div>
                         </li>
                         <li>
@@ -221,11 +221,11 @@
                                     <span class="key">CPU</span>
                                 </div>
                                 <div>
-                                    <span>16G</span>
+                                    <span>8G</span>
                                     <span class="key">内存</span>
                                 </div>
                                 <div>
-                                    <span>10M</span>
+                                    <span>20M</span>
                                     <span class="key">带宽</span>
                                 </div>
                                <div>
@@ -248,7 +248,7 @@
                                 </div>
                             </div>
                             <div class="text-right price">
-                                <a href="javascript:;" onclick="randomqq()" class="buy">450元</a>
+                                <a href="javascript:;" onclick="randomqq()" class="buy">促销450元</a>
                             </div>
                         </li>
                     </ul>

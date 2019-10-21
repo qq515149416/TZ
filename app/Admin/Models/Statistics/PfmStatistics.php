@@ -1011,44 +1011,52 @@ class  PfmStatistics extends Model
 	
 	public function consumptionTwelve()
 	{
-		$year_now = date('Y',time());
-		$month_now = date('m',time());
-		$this_month = $year_now.'-'.$month_now.'-1 00:00:00';
-
+		$this_month = date('Y-m').'-01 00:00:00';
 		$dt = Carbon::parse($this_month);
-		$twelve_begin = $dt->copy()->subMonths(12)->toDateTimeString(); 
-		$twelve_end = $dt->copy()->subMonths(1)->lastOfMonth()->toDateString().' 23:59:59';
-		// dd($twelve_begin.'---'.$twelve_end);
-		$all_flow = $this->where('pay_time','>',$twelve_begin)
-				->where('pay_time','<',$twelve_end)
-				->get(['id' , 'pay_time','actual_payment'])
-				->toArray();
 
-		$res = [
-			date('Y-m',$dt->copy()->subMonths(12)->timestamp) => 0,
-			date('Y-m',$dt->copy()->subMonths(11)->timestamp) => 0,
-			date('Y-m',$dt->copy()->subMonths(10)->timestamp) => 0,
-			date('Y-m',$dt->copy()->subMonths(9)->timestamp) => 0,
-			date('Y-m',$dt->copy()->subMonths(8)->timestamp) => 0,
-			date('Y-m',$dt->copy()->subMonths(7)->timestamp) => 0,
-			date('Y-m',$dt->copy()->subMonths(6)->timestamp) => 0,
-			date('Y-m',$dt->copy()->subMonths(5)->timestamp) => 0,
-			date('Y-m',$dt->copy()->subMonths(4)->timestamp) => 0,
-			date('Y-m',$dt->copy()->subMonths(3)->timestamp) => 0,
-			date('Y-m',$dt->copy()->subMonths(2)->timestamp) => 0,
-			date('Y-m',$dt->copy()->subMonths(1)->timestamp) => 0,
-		];
-		
-		foreach ($all_flow as $k => $v) {
-
-			$time = date('Y-m',strtotime($v['pay_time']));
-			// $res[$time] = bcadd($res[$time], $v['actual_payment'],0);
-			$res[$time] = $res[$time] + $v['actual_payment'];
+		$res = [];
+		for ($i=1; $i <= 12; $i++) { 
+			$month = date('Y-m',$dt->copy()->subMonths($i)->timestamp);
+			$res[] = [
+				'time'		=> $month,
+				'amount'	=> $this->getConsumptionByMonth($month)+0,
+			];
 		}
+
 		return [
 			'data'	=> $res,
 			'msg'	=> '获取成功',
 			'code'	=> 1,
 		];
+	}
+
+	/**
+	 * 统计消费,按月
+	 * @param  $month -	格式:Y-m ; 例: 2019-09
+	 * @param  
+	 * @return [type]              [description]
+	 */
+	public function getConsumptionByMonth($month)
+	{
+		$begin = $month.'-01 00:00:00';
+		$end = date('Y-m-t 23:59:59',strtotime($begin));
+		
+		$all_actual_payment = $this->where('pay_time','>',$begin)
+				->where('pay_time','<',$end)
+				->sum('actual_payment');
+
+		return $all_actual_payment;
+	}
+
+	public function consumptionToday()
+	{
+		$begin = date('Y-m-d').' 00:00:00';
+		$end = date('Y-m-d').' 23:59:59';
+
+		$all_actual_payment = $this->where('pay_time','>',$begin)
+				->where('pay_time','<',$end)
+				->sum('actual_payment');
+
+		return $all_actual_payment;
 	}
 }

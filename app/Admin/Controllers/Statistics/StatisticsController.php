@@ -19,8 +19,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Admin\Requests\Statistics\StatisticsRequest;
 use App\Admin\Models\Business\BusinessModel;
-
-
+use App\Admin\Models\DefenseIp\BusinessModel as DipModel;
+use App\Admin\Models\DefenseIp\OverlayBelongModel;
 
 class StatisticsController extends Controller
 {
@@ -77,10 +77,12 @@ class StatisticsController extends Controller
 	public function getMachineNum(){
 		$model = new BusinessModel();
 
-		// $this_month_begin   = date('Y-m-01 00:00:00');
-		// $this_month_end     = date('Y-m-t 23:59:59');
-		$this_month_begin = '2019-05-01 00:00:00';
-		$this_month_end = '2019-05-31 23:59:59';
+		$this_month_begin   = date('Y-m-01 00:00:00');
+		$this_month_end     = date('Y-m-t 23:59:59');
+		// $this_month_begin = '2019-05-01 00:00:00';
+		// $this_month_end = '2019-05-31 23:59:59';
+		$today_begin = date('Y-m-d 00:00:00');
+		$today_end = date('Y-m-d 23:59:59');
 
 		$this_month_on = $model->where(function($query) use ($this_month_begin,$this_month_end){
 						$query->whereIn('business_type',[1,2])
@@ -104,14 +106,48 @@ class StatisticsController extends Controller
 					->whereIn('business_status',[2,5,6])
 					->count();
 		
-		$using = $model->whereIn('business_type',[1,2])
-				->where('remove_status',0)
-				->whereIn('business_status',[1,2])
-				->count();
+		$today_on_idc = $model->where(function($query) use ($today_begin,$today_end){
+						$query->whereIn('business_type',[1,2])
+							->where('start_time','>',$today_begin)
+							->where('start_time','<',$today_end)
+							->where('business_status' , 1)
+							->where('remove_status',0);
+					})
+					->orWhere(function($query) use ($today_begin,$today_end){
+						$query->whereIn('business_type',[1,2])
+						->where('start_time','>',$today_begin)
+						->where('start_time','<',$today_end)
+						->where('business_status' , 2);
+					})
+					->count();
+
+		$dip_model = new DipModel();
+		$today_on_dip = $dip_model->where(function($query) use ($today_begin,$today_end){
+						$query->where('created_at' , '>' , $today_begin)
+						->where('created_at' , '<' , $today_end)
+						->where('status',4);
+					})
+					->orWhere(function($query) use ($today_begin,$today_end){
+						$query->whereIn('status',[1,2,3])
+						->where('start_time' , '>' , $today_begin)
+						->where('start_time' , '<' , $today_end);		
+					})
+					->count();
+
+		$overlay_model = new OverlayBelongModel();
+		$today_on_overlay = $overlay_model->where('buy_time' , '>' , $today_begin)
+						->where('buy_time' , '<' , $today_end)
+						->count();
+
+
+		// $using = $model->whereIn('business_type',[1,2])
+		// 		->where('remove_status',0)
+		// 		->whereIn('business_status',[1,2])
+		// 		->count();
 		$arr = [
 			'this_month_on'		=> $this_month_on,
 			'this_month_down'	=> $this_month_down,
-			'using'			=> $using,
+			'today_on'		=> $today_on_idc+$today_on_dip+$today_on_overlay,
 		];
 
 		return tz_ajax_echo($arr,'统计成功',1);

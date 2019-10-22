@@ -1008,14 +1008,14 @@ class  PfmStatistics extends Model
 		array_unshift($admin_users,$object);
 		return $admin_users;
 	}
-	
+
 	public function consumptionTwelve()
 	{
 		$this_month = date('Y-m').'-01 00:00:00';
 		$dt = Carbon::parse($this_month);
 
 		$res = [];
-		for ($i=1; $i <= 12; $i++) { 
+		for ($i=1; $i <= 12; $i++) {
 			$month = date('Y-m',$dt->copy()->subMonths($i)->timestamp);
 			$res[] = [
 				'time'		=> $month,
@@ -1033,14 +1033,14 @@ class  PfmStatistics extends Model
 	/**
 	 * 统计消费,按月
 	 * @param  $month -	格式:Y-m ; 例: 2019-09
-	 * @param  
+	 * @param
 	 * @return [type]              [description]
 	 */
 	public function getConsumptionByMonth($month)
 	{
 		$begin = $month.'-01 00:00:00';
 		$end = date('Y-m-t 23:59:59',strtotime($begin));
-		
+
 		$all_actual_payment = $this->where('pay_time','>',$begin)
 				->where('pay_time','<',$end)
 				->sum('actual_payment');

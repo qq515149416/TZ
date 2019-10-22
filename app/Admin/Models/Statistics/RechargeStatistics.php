@@ -20,11 +20,11 @@ use Carbon\Carbon;
 class  RechargeStatistics extends Model
 {
    use SoftDeletes;
-   
+
 	protected $table = 'tz_recharge_flow';
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
-	
+
 	protected $fillable = [];
 
 	/**
@@ -33,7 +33,7 @@ class  RechargeStatistics extends Model
 	*/
 
 	public function statistics($begin,$end)
-	{	
+	{
 		//获取查询时间内的订单
 		$flow = DB::table('tz_recharge_flow')
 				->select(
@@ -56,9 +56,9 @@ class  RechargeStatistics extends Model
 				'msg'	=> '无数据',
 			];
 		}
-		
+
 		$flow = json_decode(json_encode($flow),true);
-	
+
 		//生成每个有充值的用户的空数组
 		$order_arr = [];
 		//总计
@@ -115,26 +115,26 @@ class  RechargeStatistics extends Model
 
 		$flow = json_decode($flow,true);
 		$mr = [];
-		for ($i=0; $i < count($flow); $i++) { 
+		for ($i=0; $i < count($flow); $i++) {
 			$flow[$i] = $this->trans($flow[$i]);
 			if(!isset($mr[ $flow[$i]['customer_id'] ])){
-				$mr[ $flow[$i]['customer_id'] ]['customer_id'] = $flow[$i]['customer_id']	;	
+				$mr[ $flow[$i]['customer_id'] ]['customer_id'] = $flow[$i]['customer_id']	;
 
 				$business = DB::table('tz_business')
 				->where('client_id',$flow[$i]['customer_id'])
 				->whereIn('business_status',[1,2,4])
 				->where('remove_status',0)
-				->get();	
+				->get();
 				if(!$business->isEmpty()){
-					for ($j=0; $j < count($business); $j++) { 
+					for ($j=0; $j < count($business); $j++) {
 						$room = json_decode($business[$j]->resource_detail);
 						$mr[ $flow[$i]['customer_id'] ]['machineroom'][] = $room->machineroom_name;
 					}
 					$mr[ $flow[$i]['customer_id'] ]['machineroom'] = array_unique($mr[ $flow[$i]['customer_id'] ]['machineroom']);
 				}else{
 					$mr[ $flow[$i]['customer_id'] ]['machineroom'] = '暂无业务';
-				}	
-			} 
+				}
+			}
 			if(is_array($mr[ $flow[$i]['customer_id'] ]['machineroom'])){
 				$flow[$i]['machineroom'] = implode(',',$mr[ $flow[$i]['customer_id'] ]['machineroom']);
 			}else{
@@ -143,16 +143,16 @@ class  RechargeStatistics extends Model
 		}
 		return $flow;
  	}
-	
+
 	private function trans($flow){
 		$recharge_way = [ 1 => '支付宝' , 2 => '微信' , 3 => '工作人员手动充值' ];
-		
+
 		if($flow['recharge_way'] != 3){
-			$salesman_id = DB::table('tz_users')->where('id',$flow['customer_id'])->value('salesman_id');		
+			$salesman_id = DB::table('tz_users')->where('id',$flow['customer_id'])->value('salesman_id');
 			$flow['recharge_way'] = $recharge_way[$flow['recharge_way']].' / 自助充值';
 			$flow['bank'] = $flow['recharge_way'];
 		}else{
-			$salesman_id = DB::table('tz_recharge_admin')->where('trade_no',$flow['trade_no'])->value('recharge_uid');	
+			$salesman_id = DB::table('tz_recharge_admin')->where('trade_no',$flow['trade_no'])->value('recharge_uid');
 			$auditor_id = DB::table('tz_recharge_admin')->where('trade_no',$flow['trade_no'])->value('auditor_id');
 			$bank_num = DB::table('tz_recharge_admin')->where('trade_no',$flow['trade_no'])->value('recharge_way');
 			switch ($bank_num) {
@@ -193,7 +193,7 @@ class  RechargeStatistics extends Model
 			$flow['recharge_way'] = DB::table('admin_users')->where('id',$auditor_id)->value('name').' / 审核';
 			$flow['bank'] = $bank;
 		}
-		$flow['salesman_name'] = DB::table('admin_users')->where('id',$salesman_id)->value('name');	
+		$flow['salesman_name'] = DB::table('admin_users')->where('id',$salesman_id)->value('name');
 		$flow['customer_name'] = $flow['customer_name'] ? $flow['customer_name'] : $flow['email'];
 		return $flow;
 	}
@@ -204,7 +204,9 @@ class  RechargeStatistics extends Model
 		$this_month_carbon = Carbon::parse(date('Y-m').'-01 00:00:00');
 
 		$res = [];
+
 		for ($i=6; $i >= 1; $i--) { 
+
 			$month_timestamp = $this_month_carbon->copy()->subMonths($i)->timestamp;
 			$res[] = [
 				'time'		=> date('Y-m',$month_timestamp),
@@ -222,7 +224,7 @@ class  RechargeStatistics extends Model
 	/**
 	 * 统计充值额,按月
 	 * @param  $month -	格式:Ym ; 例: 201909
-	 * @param  
+	 * @param
 	 * @return [type]              [description]
 	 */
 	public function getRechargeByMonth($month)
@@ -246,5 +248,5 @@ class  RechargeStatistics extends Model
 
 		return $all_recharge;
 	}
-	
+
 }

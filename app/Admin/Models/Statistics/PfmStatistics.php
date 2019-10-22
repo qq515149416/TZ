@@ -1015,7 +1015,7 @@ class  PfmStatistics extends Model
 		$dt = Carbon::parse($this_month);
 
 		$res = [];
-		for ($i=1; $i <= 12; $i++) { 
+		for ($i=6; $i >= 1; $i--) { 
 			$month = date('Y-m',$dt->copy()->subMonths($i)->timestamp);
 			$res[] = [
 				'time'		=> $month,

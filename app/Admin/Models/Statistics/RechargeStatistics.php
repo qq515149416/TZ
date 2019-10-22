@@ -204,7 +204,7 @@ class  RechargeStatistics extends Model
 		$this_month_carbon = Carbon::parse(date('Y-m').'-01 00:00:00');
 
 		$res = [];
-		for ($i=1; $i <= 12; $i++) { 
+		for ($i=6; $i >= 1; $i--) { 
 			$month_timestamp = $this_month_carbon->copy()->subMonths($i)->timestamp;
 			$res[] = [
 				'time'		=> date('Y-m',$month_timestamp),

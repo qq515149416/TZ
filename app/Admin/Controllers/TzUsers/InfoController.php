@@ -102,8 +102,8 @@ class InfoController extends Controller
             $result = $statistics->usersToday();
         }elseif ($par['need'] == 2) {// 取当月
             $result = $statistics->getUsersThisMonth();
-        }elseif ($par['need'] == 3) {// 取上月
-            // $last_month =date('Y-m',Carbon::parse($this_month.'-01 00:00:00')->subMonths(1)->timestamp);
+        }elseif ($par['need'] == 3) {// 取所有
+      
             $result = $statistics->getAllUsers();
         }
         

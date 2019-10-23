@@ -84,14 +84,14 @@ class StatisticsController extends Controller
 		$today_begin = date('Y-m-d 00:00:00');
 		$today_end = date('Y-m-d 23:59:59');
 
-		$this_month_on = $model->where(function($query) use ($today_begin,$today_end){
+		$this_month_on = $model->where(function($query) use ($this_month_begin,$this_month_end){
 						$query->whereIn('business_type',[1,2])
 						->where('start_time','>',$this_month_begin)
 						->where('start_time','<',$this_month_end)
 						->whereIn('business_status',[0,1,3,4])
 						->where('remove_status',0);
 					})
-					->orWhere(function($query) use ($today_begin,$today_end){
+					->orWhere(function($query) use ($this_month_begin,$this_month_end){
 						$query->whereIn('business_type',[1,2])
 						->where('start_time','>',$this_month_begin)
 						->where('start_time','<',$this_month_end)

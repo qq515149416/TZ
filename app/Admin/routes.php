@@ -717,6 +717,7 @@ Route::group([
         $router->post('updateUserInfo', 'TzUsers\InfoController@updateUserInfo');//更新客户信息
         $router->get('noBuyUsers', 'TzUsers\InfoController@noBuyUsers');//获取没买过的用户信息
         $router->get('getUsers', 'TzUsers\InfoController@getUsers');//获取客户数量
+        $router->get('getUsersDetailed', 'TzUsers\InfoController@getUsersDetailed');//按月获取客户数量
         Route::group([
             'prefix' => 'address',
         ], function (Router $router) {

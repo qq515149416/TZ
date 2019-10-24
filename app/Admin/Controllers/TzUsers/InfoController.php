@@ -110,6 +110,24 @@ class InfoController extends Controller
 
         return tz_ajax_echo($result,'获取成功',1);
     }
+
+    /**
+     * 获取客户数量
+     * @param  $month - 月份
+     * @return
+     */
+    public function getUsersDetailed(Request $request){
+        $par = $request->only(['month']);
+
+        if (!isset($par['month'])) {
+            return tz_ajax_echo(null,'请提供查询月份',0);
+        }
+        $statistics = new TzUsers();
+
+        $result = $statistics->getUsersDetailed($par['month']);
+
+        return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
+    }
 }
 
 

@@ -166,20 +166,22 @@ class TzUsers extends Model
 		$month_begin = $month.'-1 00:00:00';
 		$month_end = date('Y-m-t 23:59:59' , strtotime($month_begin));
 		$month_day = date('t',strtotime($month_begin));
+		$month_small = date('m',strtotime($month_begin));
 
 		$users = $this->leftJoin('admin_users as b' , 'b.id' , '=' , 'tz_users.salesman_id')
 				->where('tz_users.created_at','>',$month_begin)
 				->where('tz_users.created_at','<',$month_end)
 				->where('tz_users.status' , 2)
+				->OrderBy('created_at','desc')
 				->get(['tz_users.name' , 'tz_users.email' , 'tz_users.nickname' , 'tz_users.msg_phone' , 'tz_users.msg_qq', 'tz_users.created_at' , 'b.name as salesman_name']);
 		$line = [];
 		$line2 = [];
 		for ($i=1; $i <= $month_day; $i++) { 
 			$line[] = [
-				'time'	=> $month.'-'.$i,
+				'time'	=> $i,
 				'num'	=> 0,
 			];
-			$line2[$month.'-'.$i] = 0;
+			$line2[$i] = 0;
 		}
 		
 		if($users->isEmpty()){
@@ -194,11 +196,12 @@ class TzUsers extends Model
 		}
 		$users = $users->toArray();
 		foreach ($users as $k => $v) {
-			$time = date('Y-m-j',strtotime($v['created_at']));
+			$time = date('j',strtotime($v['created_at']));
 			$line2[$time]++;
 		}
 		foreach ($line as $k => $v) {
 			$line[$k]['num'] = $line2[$line[$k]['time']];
+			$line[$k]['time'] = $month_small.'-'.$line[$k]['time'];
 		}
 
 		return [

@@ -25,8 +25,8 @@ class WorkOrderController extends script
         return Admin::content(function (Content $content) {
             $content->header('工单列表');
             $content->description('工单操作');
-            $content->body(view('show/workOrder'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

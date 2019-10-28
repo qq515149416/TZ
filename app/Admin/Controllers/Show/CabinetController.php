@@ -17,8 +17,8 @@ class CabinetController extends script
         return Admin::content(function (Content $content) {
             $content->header('机柜管理');
             $content->description('机柜的操作');
-            $content->body(view('show/cabinet'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

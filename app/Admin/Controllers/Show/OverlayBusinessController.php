@@ -17,8 +17,8 @@ class OverlayBusinessController extends script
         return Admin::content(function (Content $content) {
             $content->header('叠加包业务管理');
             // $content->description('业务操作');
-            $content->body(view('show/overlayBusiness'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

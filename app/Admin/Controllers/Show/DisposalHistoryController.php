@@ -16,8 +16,8 @@ class DisposalHistoryController extends script
         return Admin::content(function (Content $content) {
             $content->header('下架记录');
             // $content->description('部门管理');
-            $content->body(view('show/disposalHistory'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

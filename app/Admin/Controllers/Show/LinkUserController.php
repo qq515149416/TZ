@@ -17,8 +17,8 @@ class LinkUserController extends script
         return Admin::content(function (Content $content) {
             $content->header('联系人信息');
             $content->description('员工的联系信息');
-            $content->body(view('show/LinkUser'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

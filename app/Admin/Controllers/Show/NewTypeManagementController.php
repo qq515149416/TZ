@@ -17,8 +17,8 @@ class NewTypeManagementController extends script
         return Admin::content(function (Content $content) {
             $content->header('文章分类管理');
             $content->description('文章分类操作');
-            $content->body(view('show/newTypeManagement'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

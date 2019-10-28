@@ -17,8 +17,8 @@ class NewController extends script
         return Admin::content(function (Content $content) {
             $content->header('文章列表');
             $content->description('文章管理');
-            $content->body(view('show/new'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

@@ -17,8 +17,8 @@ class EmployeeManagementController extends script
         return Admin::content(function (Content $content) {
             $content->header('员工管理');
             $content->description('工作人员信息管理');
-            $content->body(view('show/employeeManagement'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

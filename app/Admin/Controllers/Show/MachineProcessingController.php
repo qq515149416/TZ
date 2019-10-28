@@ -17,8 +17,8 @@ class MachineProcessingController extends script
         return Admin::content(function (Content $content) {
             $content->header('机器处理');
             // $content->description('机器资源管理');
-            $content->body(view('show/machineProcessing'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

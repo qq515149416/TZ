@@ -17,8 +17,8 @@ class MachineRoomController extends script
         return Admin::content(function (Content $content) {
             $content->header('机房管理');
             $content->description('机房的操作');
-            $content->body(view('show/machineRoom'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

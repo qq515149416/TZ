@@ -17,8 +17,8 @@ class BusinessStatisticsController extends script
         return Admin::content(function (Content $content) {
             $content->header('业务出售情况');
             $content->description('业务出售情况统计管理');
-            $content->body(view('show/businessStatistics'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

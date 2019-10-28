@@ -17,8 +17,8 @@ class CpuController extends script
         return Admin::content(function (Content $content) {
             $content->header('cpu资源');
             $content->description('cpu资源管理');
-            $content->body(view('show/cpu'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

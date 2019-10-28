@@ -17,8 +17,8 @@ class StatisticalOverviewController extends script
         return Admin::content(function (Content $content) {
             $content->header('统计概览');
             $content->description('统计展示');
-            $content->body(view('show/statisticalOverview'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

@@ -17,8 +17,8 @@ class DefenseipController extends script
         return Admin::content(function (Content $content) {
             $content->header('高防IP管理');
             // $content->description('部门管理');
-            $content->body(view('show/defenseip'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

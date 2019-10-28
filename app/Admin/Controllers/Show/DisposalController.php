@@ -16,8 +16,8 @@ class DisposalController extends script
         return Admin::content(function (Content $content) {
             $content->header('下架处理');
             // $content->description('部门管理');
-            $content->body(view('show/disposal'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

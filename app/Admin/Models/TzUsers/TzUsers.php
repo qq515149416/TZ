@@ -171,6 +171,7 @@ class TzUsers extends Model
 				->where('tz_users.created_at','>',$month_begin)
 				->where('tz_users.created_at','<',$month_end)
 				->where('tz_users.status' , 2)
+				->OrderBy('created_at','desc')
 				->get(['tz_users.name' , 'tz_users.email' , 'tz_users.nickname' , 'tz_users.msg_phone' , 'tz_users.msg_qq', 'tz_users.created_at' , 'b.name as salesman_name']);
 		$line = [];
 		$line2 = [];

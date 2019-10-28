@@ -177,10 +177,10 @@ class TzUsers extends Model
 		$line2 = [];
 		for ($i=1; $i <= $month_day; $i++) { 
 			$line[] = [
-				'time'	=> $month.'-'.$i,
+				'time'	=> $i,
 				'num'	=> 0,
 			];
-			$line2[$month.'-'.$i] = 0;
+			$line2[$i] = 0;
 		}
 		
 		if($users->isEmpty()){
@@ -195,7 +195,7 @@ class TzUsers extends Model
 		}
 		$users = $users->toArray();
 		foreach ($users as $k => $v) {
-			$time = date('Y-m-j',strtotime($v['created_at']));
+			$time = date('j',strtotime($v['created_at']));
 			$line2[$time]++;
 		}
 		foreach ($line as $k => $v) {

@@ -166,6 +166,7 @@ class TzUsers extends Model
 		$month_begin = $month.'-1 00:00:00';
 		$month_end = date('Y-m-t 23:59:59' , strtotime($month_begin));
 		$month_day = date('t',strtotime($month_begin));
+		$month_small = date('m',strtotime($month_begin));
 
 		$users = $this->leftJoin('admin_users as b' , 'b.id' , '=' , 'tz_users.salesman_id')
 				->where('tz_users.created_at','>',$month_begin)
@@ -200,6 +201,7 @@ class TzUsers extends Model
 		}
 		foreach ($line as $k => $v) {
 			$line[$k]['num'] = $line2[$line[$k]['time']];
+			$line[$k]['time'] = $month_small.'-'.$line[$k]['time'];
 		}
 
 		return [

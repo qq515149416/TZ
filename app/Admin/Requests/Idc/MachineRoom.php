@@ -4,6 +4,7 @@ namespace App\Admin\Requests\Idc;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\Rule;
 
 class MachineRoom extends FormRequest
 {
@@ -27,8 +28,16 @@ class MachineRoom extends FormRequest
     {
         return [
 //            'title'=>'required|min:10|email',
-            'machine_room_id'   => 'required|unique:idc_machineroom,machine_room_id',
-            'machine_room_name' => 'required|unique:idc_machineroom,machine_room_name',
+            'machine_room_id'   => ['required',
+                                    Rule::unique('idc_machineroom','machine_room_id')->ignore(Request()->id)->where(function($query){
+                                        $query->whereNull('deleted_at');
+                                    })
+                                ],
+            'machine_room_name' => ['required',
+                                    Rule::unique('idc_machineroom','machine_room_name')->ignore(Request()->id)->where(function($query){
+                                        $query->whereNull('deleted_at');
+                                    })
+                                ],
 
         ];
     }

@@ -57,6 +57,11 @@ class RechargeStatisticsRequest extends FormRequest
 					'need'       	=> 'required|in:1,2,3',
 				];
 				break;
+			case 'getRechargeDetailed':
+				$return = [
+					'month'       	=> 'required',
+				];
+				break;
 
 			default:
 				
@@ -77,7 +82,7 @@ class RechargeStatisticsRequest extends FormRequest
 			'end.date'				=> '结束时间格式错误',
 			'need.required'			=> '请明确需求',
 			'need.in'			=> '1 - 今日 ; 2 - 本月 ; 3 - 上月',
-		
+			'month.required'			=> '请选择查看时间',
 		];
 	}
 

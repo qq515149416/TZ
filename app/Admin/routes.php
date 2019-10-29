@@ -336,6 +336,7 @@ Route::group([
         $router->get('getFlow', 'Statistics\RechargeStatisticsController@getFlow');//充值统计
         $router->get('rechargeTwelve', 'Statistics\RechargeStatisticsController@rechargeTwelve');//获取充值总额折线图所需数据接口
         $router->get('getRecharge', 'Statistics\RechargeStatisticsController@getRecharge');//获取充值额
+        $router->get('getRechargeDetailed', 'Statistics\RechargeStatisticsController@getRechargeDetailed');//获取充值额
     });
 
 

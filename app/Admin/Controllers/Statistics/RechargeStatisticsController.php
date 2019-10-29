@@ -86,4 +86,18 @@ class RechargeStatisticsController extends Controller
 
 		return tz_ajax_echo($result,'获取成功',1);
 	}
+
+	/**
+	 * 获取充值
+	 * @param  $month 	-月份,格式:2019-08
+	 * @return
+	 */
+	public function getRechargeDetailed(RechargeStatisticsRequest $request){
+		$par = $request->only(['month']);
+		$statistics = new RechargeStatistics();
+
+		$result = $statistics->getRechargeDetailed($par['month']);
+		
+		return tz_ajax_echo($result,'获取成功',1);
+	}
 }

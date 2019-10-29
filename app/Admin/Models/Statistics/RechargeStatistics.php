@@ -102,11 +102,12 @@ class  RechargeStatistics extends Model
 			];
 	}
 
- 	public function getFLow($begin,$end){
+ 	public function getFLow ($begin,$end){
 
 		$flow = DB::table('tz_recharge_flow as a')
 		->leftjoin('tz_users as b','a.user_id','=','b.id')
 		->select(DB::raw('b.id as customer_id,b.name as customer_name,b.nickname,b.email,a.id as flow_id,a.recharge_amount,a.recharge_way,a.trade_no,a.voucher,a.timestamp,a.money_before,a.money_after,a.tax'))
+		->whereNull('a.deleted_at')
 		->where('a.trade_status',1)
 		->where('a.timestamp','>',$begin)
 		->where('a.timestamp','<',$end)
@@ -247,6 +248,123 @@ class  RechargeStatistics extends Model
 				->sum('recharge_amount');
 
 		return $all_recharge;
+	}
+
+	public function getRechargeDetailed($month)
+	{
+		$month_begin = $month.'-01 00:00:00';
+		$month_end = date('Y-m-t 23:59:59' , strtotime($month_begin));
+		$month_day = date('t',strtotime($month_begin));
+		$month_small = date('m',strtotime($month_begin));
+
+		$arr 	= [];
+		for ($j=1; $j <= $month_day; $j++) { 
+			$arr[] = [
+				'time'			=> $month_small .'-'.$j,
+				'recharge_amount'	=> 0,
+			];
+		}
+		$salesman_sta = $this->leftjoin('tz_users as b' , 'b.id' , '=' , 'tz_recharge_flow.user_id')
+				->leftjoin('admin_users as c' , 'c.id' , '=' , 'b.salesman_id')
+				->where('tz_recharge_flow.trade_status',1)
+				->where('tz_recharge_flow.timestamp','>',$month_begin)
+				->where('tz_recharge_flow.timestamp','<',$month_end)
+				->select(DB::raw('sum(tz_recharge_flow.recharge_amount) as recharge_amount') , 'c.name')
+				->groupBy('b.salesman_id')
+				->get()
+				->toArray();
+
+		$flow = $this->leftjoin('tz_users as b' , 'b.id' , '=' , 'tz_recharge_flow.user_id')
+				->leftjoin('admin_users as c' , 'c.id' , '=' , 'b.salesman_id')
+				->where('tz_recharge_flow.trade_status',1)
+				->where('tz_recharge_flow.timestamp','>',$month_begin)
+				->where('tz_recharge_flow.timestamp','<',$month_end)
+				//->get(['tz_recharge_flow.recharge_amount' , 'b.id' , 'b.salesman_id' , 'c.name'])
+				->get(['tz_recharge_flow.id as flow_id' ,'tz_recharge_flow.recharge_amount', 'tz_recharge_flow.user_id as customer_id' , 'tz_recharge_flow.recharge_way'  ,'tz_recharge_flow.tax' ,'tz_recharge_flow.trade_no' , 'tz_recharge_flow.timestamp' ,'b.name as customer_name','b.email as customer_email','b.nickname as customer_nickname', 'b.salesman_id' , 'c.name as salesman_name' ])
+				->toArray();
+
+		$recharge_way = [ 1 => '支付宝' , 2 => '微信' , 3 => '工作人员手动充值' ];
+
+		for ($i=0; $i < count($flow); $i++) { 
+			if($flow[$i]['recharge_way'] != 3){	
+				$flow[$i]['recharge_way'] = $recharge_way[$flow[$i]['recharge_way']].' / 自助充值';
+				$flow[$i]['recharge_man'] = '用户自助';
+				$flow[$i]['bank'] = $flow[$i]['recharge_way'];
+			}else{
+				$admin_flow = DB::table('tz_recharge_admin')
+					->whereNull('deleted_at')
+					->where('trade_no',$flow[$i]['trade_no'])
+					->first(['auditor_id' , 'recharge_way' ,'recharge_uid']);
+				
+				if(!$admin_flow){
+					$flow[$i]['recharge_way'] = '后台手动充值数据有误';
+					$flow[$i]['bank'] = '后台手动充值数据有误';
+				}else{
+
+					switch ($admin_flow->recharge_way) {
+						case '1':
+							$bank = '腾正公帐(建设银行)';
+							break;
+						case '2':
+							$bank = '腾正公帐(工商银行)';
+							break;
+						case '3':
+							$bank = '腾正公帐(招商银行)';
+							break;
+						case '4':
+							$bank = '腾正公帐(农业银行)';
+							break;
+						case '5':
+							$bank = '正易公帐(中国银行)';
+							break;
+						case '6':
+							$bank = '支付宝';
+							break;
+						case '7':
+							$bank = '公帐支付宝';
+							break;
+						case '8':
+							$bank = '财付通';
+							break;
+						case '9':
+							$bank = '微信支付';
+							break;
+						case '10':
+							$bank = '新支付宝';
+							break;
+						default:
+							$bank = '无此支付模式';
+							break;
+					}
+					$flow[$i]['recharge_man'] = DB::table('admin_users')->where('id',$admin_flow->recharge_uid)->value('name');
+					$flow[$i]['recharge_way'] = DB::table('admin_users')->where('id',$admin_flow->auditor_id)->value('name').' / 审核';
+					$flow[$i]['bank'] = $bank;
+				}
+			}
+			$flow[$i]['customer_name'] = $flow[$i]['customer_nickname']?:$flow[$i]['customer_email']?:	$flow[$i]['customer_name']?:'客户信息有误';
+			if ($flow[$i]['salesman_name'] == null) {
+				$flow[$i]['salesman_name'] = '业务员信息或已删除';
+			}
+			$day = date('j',strtotime($flow[$i]['timestamp']));
+			$arr[$day-1]['recharge_amount'] = $arr[$day-1]['recharge_amount']+$flow[$i]['recharge_amount'];
+		}
+
+		foreach ($salesman_sta as $k => $v) {
+			if ($v['name'] == null) {
+				$salesman_sta[$k]['name'] = '业务员信息或已删除';
+			}
+		}
+
+		$brr = [
+			'line'		=> $arr,
+			'salesman_sta'	=> $salesman_sta,
+			'flow'		=> $flow,
+		];
+		return [
+			'data'	=> $brr,
+			'code'	=> 1,
+			'msg'	=> '统计成功',
+		];
 	}
 
 }

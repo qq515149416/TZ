@@ -360,11 +360,7 @@ class  RechargeStatistics extends Model
 			'salesman_sta'	=> $salesman_sta,
 			'flow'		=> $flow,
 		];
-		return [
-			'data'	=> $brr,
-			'code'	=> 1,
-			'msg'	=> '统计成功',
-		];
+		return $brr;
 	}
 
 }

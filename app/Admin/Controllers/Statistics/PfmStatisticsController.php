@@ -230,4 +230,20 @@ class PfmStatisticsController extends Controller
 		return tz_ajax_echo($result,'获取成功',1);
 	}
 
+	/**
+	 * 获取消费详情
+	 * @param  $month 	-月份 Y-m
+	 * @return
+	 */
+	public function getConsumptionDetailed(PfmStatisticsRequest $request){
+		$par = $request->only(['month']);
+
+		$statistics = new PfmStatistics();
+
+		$result = $statistics->consumptionToday();
+		
+		
+
+		return tz_ajax_echo($result,'获取成功',1);
+	}
 }

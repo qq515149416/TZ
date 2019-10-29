@@ -324,6 +324,8 @@ Route::group([
         $router->get('statistics','Statistics\PfmStatisticsController@statistics');//各类统计数据汇总
         $router->get('consumptionTwelve','Statistics\PfmStatisticsController@consumptionTwelve');//获取消费总额折线图所需数据接口
         $router->get('getConsumption','Statistics\PfmStatisticsController@getConsumption');//获取消费额的接口
+        $router->get('getConsumptionDetailed','Statistics\PfmStatisticsController@getConsumptionDetailed');//获取消费额的接口
+        
     });
 
     /**

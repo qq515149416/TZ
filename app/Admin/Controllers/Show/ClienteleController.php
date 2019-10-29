@@ -20,8 +20,8 @@ class ClienteleController extends script
             $content->breadcrumb(
                 ['text' => '客户管理', 'url' => '/crm/clientele']
             );
-            $content->body(view('show/clientele'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

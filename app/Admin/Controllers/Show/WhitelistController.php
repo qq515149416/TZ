@@ -17,8 +17,8 @@ class WhitelistController extends script
         return Admin::content(function (Content $content) {
             $content->header('白名单');
             $content->description('白名单操作');
-            $content->body(view('show/whitelist'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

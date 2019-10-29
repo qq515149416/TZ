@@ -17,8 +17,8 @@ class CheckBusinessController extends script
         return Admin::content(function (Content $content) {
             $content->header('信安审核管理');
             $content->description('信安审核操作');
-            $content->body(view('show/checkBusiness'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

@@ -17,8 +17,8 @@ class InvoiceController extends script
         return Admin::content(function (Content $content) {
             $content->header('发票库');
             $content->description('发票管理');
-            $content->body(view('show/invoice'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

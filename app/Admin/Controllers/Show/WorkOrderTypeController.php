@@ -17,8 +17,8 @@ class WorkOrderTypeController extends script
         return Admin::content(function (Content $content) {
             $content->header('工单类型');
             $content->description('工单类型操作');
-            $content->body(view('show/workOrderType'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

@@ -17,8 +17,8 @@ class HarddiskController extends script
         return Admin::content(function (Content $content) {
             $content->header('硬盘资源');
             $content->description('硬盘资源管理');
-            $content->body(view('show/harddisk'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

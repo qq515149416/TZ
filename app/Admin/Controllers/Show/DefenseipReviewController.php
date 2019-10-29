@@ -17,8 +17,8 @@ class DefenseipReviewController extends script
         return Admin::content(function (Content $content) {
             $content->header('高防IP审核管理');
             // $content->description('部门管理');
-            $content->body(view('show/defenseipReview'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

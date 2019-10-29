@@ -17,8 +17,8 @@ class IpController extends script
         return Admin::content(function (Content $content) {
             $content->header('ip库');
             $content->description('ip资源管理');
-            $content->body(view('show/ip'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

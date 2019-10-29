@@ -17,8 +17,8 @@ class DefensePackageController extends script
         return Admin::content(function (Content $content) {
             $content->header('高防套餐管理');
             // $content->description('部门管理');
-            $content->body(view('show/defensePackage'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

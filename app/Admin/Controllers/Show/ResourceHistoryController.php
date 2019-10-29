@@ -17,8 +17,8 @@ class ResourceHistoryController extends script
         return Admin::content(function (Content $content) {
             $content->header('更换资源记录');
             // $content->description('业务订单操作');
-            $content->body(view('show/resourceHistory'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

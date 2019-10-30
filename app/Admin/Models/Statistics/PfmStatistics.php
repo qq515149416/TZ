@@ -1065,6 +1065,8 @@ class  PfmStatistics extends Model
 	{
 		$begin = $month.'-01 00:00:00';
 		$end = date('Y-m-t 23:59:59',strtotime($begin));
+		$month_day = date('t',strtotime($begin));
+		$month_small = date('m',strtotime($begin));
 
 		$all_actual_payment = $this->leftJoin('admin_users as b' , 'b.id' , '=' , 'tz_orders_flow.business_id')
 				->where('tz_orders_flow.pay_time','>',$begin)
@@ -1072,7 +1074,7 @@ class  PfmStatistics extends Model
 				// ->select(DB::raw('sum(tz_orders_flow.actual_payment) as actual_payment') , 'b.name')
 				// ->groupBy('tz_orders_flow.business_id')
 				// ->get()->toArray();
-				->get(['tz_orders_flow.actual_payment' , 'tz_orders_flow.id as flow_id' , 'tz_orders_flow.order_id' , 'b.name' , 'tz_orders_flow.serial_number']);
+				->get(['tz_orders_flow.actual_payment' , 'tz_orders_flow.id as flow_id' , 'tz_orders_flow.order_id' , 'b.name' , 'tz_orders_flow.serial_number' , 'tz_orders_flow.pay_time']);
 		//dd($all_actual_payment);
 		if ($all_actual_payment->isEmpty()) {
 			return [
@@ -1082,6 +1084,13 @@ class  PfmStatistics extends Model
 			];
 		}
 		$all_actual_payment = $all_actual_payment->toArray();
+
+		for ($j=1; $j <= $month_day; $j++) { 
+			$arr[] = [
+				'time'			=> $month_small .'-'.$j,
+				'actual_payment'	=> 0,
+			];
+		}
 
 		$user_arr = [];
 		$type_arr = [
@@ -1117,6 +1126,7 @@ class  PfmStatistics extends Model
 				$all_actual_payment[$k]['order_id'] = $v['order_id'];
 			}
 
+			//计算种类的
 			$type = DB::table('tz_orders')->where('id',$all_actual_payment[$k]['order_id'][0])->value('resource_type');
 			switch ($type) {
 				case '1':
@@ -1150,6 +1160,10 @@ class  PfmStatistics extends Model
 			}else{
 				$user_arr[$v['name']]+= $v['actual_payment'];
 			}
+
+			//计算日期的
+			$day = date('j',strtotime($v['pay_time']));
+			$arr[$day-1]['actual_payment']+= $v['actual_payment'];
 		}
 		$user_sta = [];
 		foreach ($user_arr as $k => $v) {
@@ -1164,6 +1178,7 @@ class  PfmStatistics extends Model
 				'user_sta'	=> $user_sta,
 				'type_sta'	=> $type_arr,
 				'list'		=> $all_actual_payment,
+				'line'		=> $arr,
 			],
 			'msg'	=> '获取成功',
 			'code'	=> 1,

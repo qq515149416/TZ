@@ -1060,4 +1060,318 @@ class  PfmStatistics extends Model
 
 		return $all_actual_payment;
 	}
+
+	public function getConsumptionDetailed($month)
+	{
+		$begin = $month.'-01 00:00:00';
+		$end = date('Y-m-t 23:59:59',strtotime($begin));
+
+		$all_actual_payment = $this->leftJoin('admin_users as b' , 'b.id' , '=' , 'tz_orders_flow.business_id')
+				->where('tz_orders_flow.pay_time','>',$begin)
+				->where('tz_orders_flow.pay_time','<',$end)
+				// ->select(DB::raw('sum(tz_orders_flow.actual_payment) as actual_payment') , 'b.name')
+				// ->groupBy('tz_orders_flow.business_id')
+				// ->get()->toArray();
+				->get(['tz_orders_flow.actual_payment' , 'tz_orders_flow.id as flow_id' , 'tz_orders_flow.order_id' , 'b.name' , 'tz_orders_flow.serial_number']);
+		//dd($all_actual_payment);
+		if ($all_actual_payment->isEmpty()) {
+			return [
+				'data'	=> [],
+				'msg'	=> '当月无业绩',
+				'code'	=> 1,
+			];
+		}
+		$all_actual_payment = $all_actual_payment->toArray();
+
+		$user_arr = [];
+		$type_arr = [
+			0	=> [
+				'type'			=> 'idc',
+				'actual_payment'	=> 0,
+			],
+			1	=> [
+				'type'			=> 'cdn',
+				'actual_payment'	=> 0,
+			],
+			2	=> [
+				'type'			=> '高防',
+				'actual_payment'	=> 0,
+			],
+			3	=> [
+				'type'			=> '流量叠加包',
+				'actual_payment'	=> 0,
+			],
+			4	=> [
+				'type'			=> '未知业务种类',
+				'actual_payment'	=> 0,
+			],
+		];
+		foreach ($all_actual_payment as $k => $v) {
+			if ($v['name'] == null) {
+				$v['name'] = '已删业务员';
+			}
+			$v['order_id'] = json_decode($v['order_id'] , true);
+			if (!is_array($v['order_id'] ) ) {
+				$all_actual_payment[$k]['order_id'] = array( 0 => $v['order_id'] );
+			}else{
+				$all_actual_payment[$k]['order_id'] = $v['order_id'];
+			}
+
+			$type = DB::table('tz_orders')->where('id',$all_actual_payment[$k]['order_id'][0])->value('resource_type');
+			switch ($type) {
+				case '1':
+				case '2':
+				case '3':
+				case '4':
+				case '5':
+				case '6':
+				case '7':
+				case '8':
+				case '9':
+					$type_arr[0]['actual_payment']+= $v['actual_payment'];
+					break;
+				case '10':
+					$type_arr[1]['actual_payment']+= $v['actual_payment'];
+					break;
+				case '11':
+					$type_arr[2]['actual_payment']+= $v['actual_payment'];
+					break;
+				case '12':
+					$type_arr[3]['actual_payment']+= $v['actual_payment'];
+					break;
+				default:
+					$type_arr[4]['actual_payment']+= $v['actual_payment'];
+					break;
+			}
+			
+			//计算业务员的
+			if (!isset($user_arr[$v['name']])) {
+				$user_arr[$v['name']] = $v['actual_payment']+0;
+			}else{
+				$user_arr[$v['name']]+= $v['actual_payment'];
+			}
+		}
+		$user_sta = [];
+		foreach ($user_arr as $k => $v) {
+			$user_sta[] = [
+				'name'	=> $k,
+				'pfm'	=> $v,
+			];
+		}
+		//dd($type_arr);
+		return [
+			'data'	=> [
+				'user_sta'	=> $user_sta,
+				'type_sta'	=> $type_arr,
+				'list'		=> $all_actual_payment,
+			],
+			'msg'	=> '获取成功',
+			'code'	=> 1,
+		];
+
+	}
+
+	public function getOrderByFlowId($flow_id)
+	{
+		$order_id = $this->where('id',$flow_id)->value('order_id');	
+		if(!$order_id){
+			return [
+				'data'	=> [],
+				'msg'	=> '流水不存在',
+				'code'	=> 0,
+			];
+		}
+		$order_id = json_decode($order_id,true);
+
+		$orr = [];
+		//dd($order_id);
+		$check = 0;
+		$fail = '';
+		if (is_array($order_id)) {	//数组类型的,从里面一个个找出来
+
+			foreach ($order_id as $k => $v) {
+				$order = $this->showOrderDetail($v);
+				if ($order['code'] == 1) {
+					$orr[] = $order['data'];
+				}else{
+					$check = 1;
+					$fail.= $v.' , ';
+				}
+			}
+		}else{
+			$order = $this->showOrderDetail($order_id);
+			if ($order['code'] == 1) {
+				$orr[] = $order['data'];
+			}else{
+				$check = 1;
+				$fail.= $v;
+			}	
+		}
+		if ($check == 0) {
+			return [
+				'data'	=> $orr,
+				'msg'	=> '获取成功',
+				'code'	=> 1
+			];
+		}else{
+			return [
+				'data'	=> $orr,
+				'msg'	=> '以下id获取失败 : ' .  $fail,
+				'code'	=> 0
+			];
+		}
+	}
+
+	public function showOrderDetail($order_id)
+	{
+		$model = new OrdersModel();
+		$order = $model->where('id' , $order_id)->first( ['business_sn','resource_type' , 'machine_sn' , 'price' , 'duration' ,'end_time' ,'pay_time','resource' ,'order_type' , 'order_sn'] );
+		if (!$order) {
+			return [
+				'data'	=> [],
+				'msg'	=> '获取订单信息失败',
+				'code'	=> 0,
+			];
+		}else{
+			$order = $order->toArray();
+		}
+
+		$detail = [];
+		$order_type_arr = [ 1 => '新购' , 2 => '续费'];
+		$detail['order_type'] = $order_type_arr[$order['order_type']];
+		$detail['order_sn'] = $order['order_sn'];
+		$detail['business_sn'] = $order['business_sn'];
+		//资源的类型(1.租用主机，2.托管主机，3.租用机柜，4.IP，5.CPU，6.硬盘，7.内存，8.带宽，9.防护，10.cdn , 11.高防IP ; 12.流量叠加包 )
+		$detail['type'] = $order['resource_type'];
+		if (in_array($order['resource_type'], [ 1,2,3,4,5,6,7,8,9]) ) {
+			$business = DB::table('tz_business')
+						->where('business_number' , $order['business_sn'])
+						->first(['resource_detail']);
+			if ($business == null) {
+				return [
+					'data'	=> [],
+					'msg'	=> '获取详细信息失败',
+					'code'	=> 0,
+				];
+			}
+			$business = json_decode($business->resource_detail , true);
+			if ($order['resource_type'] != 3) {
+				$detail['machine_num'] 		= $business['machine_num'];
+				$detail['machine_type'] 		= $business['machine_type'];
+			}
+			
+			$detail['machineroom'] 		= $business['machineroom_name'];
+		}
+
+		switch ($order['resource_type']) {
+			case '1':
+			case '2':
+				if ($order['resource_type'] == 1) {
+					$detail['resource_type'] = '租用主机';
+				}elseif ($order['resource_type'] == 2) {
+					$detail['resource_type'] = '托管主机';
+				}
+				$detail['resource'] 		= [
+					'cpu'			=> $business['cpu'],
+					'memory'		=> $business['memory'],
+					'harddisk'		=> $business['harddisk'],
+					'bandwidth'		=> $business['bandwidth'],
+					'protect'		=> $business['protect'],
+					'machine_type'		=> $business['machine_type'],
+				];	
+				break;
+			case '3':
+				$detail['resource_type'] 		= '租用机柜';
+				$detail['resource'] 		= $business['cabinet_id'];
+				break;
+			case '4':
+				$detail['resource_type'] 		= 'IP';
+				$detail['resource'] 		= $order['resource'];
+				break;
+			case '5':
+				$detail['resource_type'] 		= 'CPU';
+				$detail['resource'] 		= $order['resource'];
+				break;
+			case '6':
+				$detail['resource_type'] 		= '硬盘';
+				$detail['resource'] 		= $order['resource'];
+				break;
+			case '7':
+				$detail['resource_type'] 		= '内存';
+				$detail['resource'] 		= $order['resource'];
+				break;
+			case '8':
+				$detail['resource_type'] 		= '带宽';
+				$detail['resource'] 		= $order['resource'];
+				break;
+			case '9':
+				$detail['resource_type'] 		= '防护';
+				$detail['resource'] 		= $order['resource'];
+				break;
+			case '10':
+				$detail['resource_type'] 		= 'CDN';
+				$detail['resource'] 		= $order['resource'];
+				break;
+			case '11':
+				$detail['resource_type'] 		= '高防IP';
+				$package = DB::table('tz_defenseip_package as a')
+						->leftJoin('idc_machineroom as b' , 'b.id' , '=' , 'a.site')
+						->where('a.id',$order['machine_sn'])
+						->first(['a.name' , 'a.description' , 'a.protection_value' , 'b.machine_room_name']);
+				if ($package == null) {
+					$detail['resource'] 	= [
+						'name'			=> '获取高防信息失败',
+						'description'		=> '获取高防信息失败',
+						'protection_value'	=> '获取高防信息失败',
+					];
+					$detail['machineroom'] 	= '';
+				}else{
+					$detail['resource'] 	= [
+						'name'			=> $package->name,
+						'description'		=> $package->description,
+						'protection_value'	=> $package->protection_value.'G',
+					];
+				
+					$detail['machineroom'] 		= $package->machine_room_name;
+				}
+				break;
+			case '12':
+				$detail['resource_type'] 		= '流量叠加包';
+				$package = DB::table('tz_overlay as a')
+					->leftJoin('idc_machineroom as b' , 'b.id' , '=' , 'a.site')
+					->where('a.id',$order['machine_sn'])
+					->first(['a.name' , 'a.description' , 'b.machine_room_name' , 'a.protection_value']);
+				if ($package == null) {
+					$detail['resource'] 	= [
+						'name'			=> '获取叠加包信息失败',
+						'description'		=> '获取叠加包信息失败',
+						'protection_value'	=> '获取叠加包信息失败',
+					];
+					$detail['machineroom'] 	= '';
+				}else{
+					$detail['resource'] 	= [
+						'name'			=> $package->name,
+						'description'		=> $package->description,
+						'protection_value'	=> $package->protection_value.'G',
+					];
+					$detail['machineroom'] 		= $package->machine_room_name;
+
+				}
+				break;
+
+			default:
+				# code...
+				break;
+		}
+		$detail['price'] 			= $order['price'];
+		$detail['duration'] 		= $order['duration'];
+		$detail['end_time'] 		= $order['end_time'];
+		$detail['pay_time'] 		= $order['pay_time'];
+
+		return [
+			'data'	=> $detail,
+			'msg'	=> '获取订单信息成功',
+			'code'	=> 1,
+		];
+	}
 }

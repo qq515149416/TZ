@@ -60,6 +60,7 @@ Route::group([
     Route::get('/army_day', 'Show\ArmyDayController@index');
     Route::get('/mid_autumn', 'Show\MidAutumnController@index');
     Route::get('/double11', 'Show\Double11Controller@index');
+    Route::get('/overseas', 'Show\OverseasController@index');
 
 });
 Route::get('/double11', 'Show\Double11Controller@index'); //双11活动页  *黄晓敏需求:不要跳转移动端

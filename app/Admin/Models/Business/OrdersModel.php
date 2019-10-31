@@ -3306,7 +3306,7 @@ class OrdersModel extends Model
 				$package = DB::table('tz_overlay as a')
 					->leftJoin('idc_machineroom as b' , 'b.id' , '=' , 'a.site')
 					->where('a.id',$order['machine_sn'])
-					->first(['a.name' , 'a.description' , 'b.machine_room_name']);
+					->first(['a.name' , 'a.description' , 'b.machine_room_name', 'a.protection_value']);
 				if ($package == null) {
 					$detail['resource'] 	= [
 						'name'			=> '获取叠加包信息失败',
@@ -3340,4 +3340,6 @@ class OrdersModel extends Model
 			'code'	=> 1,
 		];
 	}
+
+	
 }

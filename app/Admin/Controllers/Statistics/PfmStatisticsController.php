@@ -240,10 +240,23 @@ class PfmStatisticsController extends Controller
 
 		$statistics = new PfmStatistics();
 
-		$result = $statistics->consumptionToday();
+		$result = $statistics->getConsumptionDetailed($par['month']);
 		
-		
+		return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
+	}
 
-		return tz_ajax_echo($result,'获取成功',1);
+	/**
+	 * 根据flow_id获取流水所包含订单
+	 * @param  $month 	-月份 Y-m
+	 * @return
+	 */
+	public function getOrderByFlowId(PfmStatisticsRequest $request){
+		$par = $request->only(['flow_id']);
+
+		$statistics = new PfmStatistics();
+
+		$result = $statistics->getOrderByFlowId($par['flow_id']);
+		
+		return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
 	}
 }

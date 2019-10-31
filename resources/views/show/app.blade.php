@@ -1,3 +1,14 @@
 <div id="root_element">
 </div>
-<script src="{{ admin_asset ("/tz_assets/bundle.js") }}?r={{ mt_rand(1,1000) }}"></script>
+<script>
+    let myScript = document.querySelector('script[src*="tz_assets/bundle.js"]');
+    let script = document.createElement("script");
+    script.type="text/javascript";
+    script.src="/tz_assets/bundle.js?version="+Math.ceil(Math.random()*1000);
+    document.body.replaceChild(script,myScript);
+    if(document.querySelectorAll('style').length) {
+        document.querySelectorAll('style').forEach(function(item) {
+            document.head.removeChild(item);
+        });
+    }
+</script>

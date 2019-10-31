@@ -1074,6 +1074,7 @@ class  PfmStatistics extends Model
 				// ->select(DB::raw('sum(tz_orders_flow.actual_payment) as actual_payment') , 'b.name')
 				// ->groupBy('tz_orders_flow.business_id')
 				// ->get()->toArray();
+				->orderBy('tz_orders_flow.pay_time','desc')
 				->get(['tz_orders_flow.actual_payment' , 'tz_orders_flow.id as flow_id' , 'tz_orders_flow.order_id' , 'b.name' , 'tz_orders_flow.serial_number' , 'tz_orders_flow.pay_time']);
 		//dd($all_actual_payment);
 		if ($all_actual_payment->isEmpty()) {

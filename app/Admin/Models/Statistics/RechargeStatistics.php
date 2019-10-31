@@ -279,6 +279,7 @@ class  RechargeStatistics extends Model
 				->where('tz_recharge_flow.trade_status',1)
 				->where('tz_recharge_flow.timestamp','>',$month_begin)
 				->where('tz_recharge_flow.timestamp','<',$month_end)
+				->orderBy('tz_recharge_flow.timestamp','desc')
 				//->get(['tz_recharge_flow.recharge_amount' , 'b.id' , 'b.salesman_id' , 'c.name'])
 				->get(['tz_recharge_flow.id as flow_id' ,'tz_recharge_flow.recharge_amount', 'tz_recharge_flow.user_id as customer_id' , 'tz_recharge_flow.recharge_way'  ,'tz_recharge_flow.tax' ,'tz_recharge_flow.trade_no' , 'tz_recharge_flow.timestamp' ,'b.name as customer_name','b.email as customer_email','b.nickname as customer_nickname', 'b.salesman_id' , 'c.name as salesman_name' ])
 				->toArray();

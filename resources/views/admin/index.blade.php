@@ -71,7 +71,7 @@
 <script src="{{ admin_asset ("/vendor/laravel-admin/sweetalert/dist/sweetalert.min.js") }}"></script>
 {!! Admin::js() !!}
 <script src="{{ admin_asset ("/vendor/laravel-admin/laravel-admin/laravel-admin.js") }}"></script>
-<script src="{{ admin_asset ("/tz_assets/bundle.js") }}?version={{ mt_rand(1,1000) }}"></script>
+<script src="{{ admin_asset ("/tz_assets/bundle.js") }}"></script>
 
 </body>
 </html>

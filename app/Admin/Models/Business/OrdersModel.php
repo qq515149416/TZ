@@ -1791,7 +1791,7 @@ class OrdersModel extends Model
 					$return['msg'] = '(#105)所选择的IP资源不存在/已被使用/与要绑定的业务不在同一机房';
 					return $return;
 				}
-				$ip_company = [0=>'电信',1=>'移动',2=>'联通'];
+				$ip_company = [0=>'电信',1=>'移动',2=>'联通',3=>'BGP'];
 				$insert['machine_sn'] = $resource->ip;
 				$insert['resource'] = $resource->ip.$ip_company[$resource->ip_company];
 				//更新IP表的所属业务编号，资源状态和到期时间
@@ -3306,7 +3306,7 @@ class OrdersModel extends Model
 				$package = DB::table('tz_overlay as a')
 					->leftJoin('idc_machineroom as b' , 'b.id' , '=' , 'a.site')
 					->where('a.id',$order['machine_sn'])
-					->first(['a.name' , 'a.description' , 'b.machine_room_name', 'a.protection_value']);
+					->first(['a.name' , 'a.description' , 'b.machine_room_name']);
 				if ($package == null) {
 					$detail['resource'] 	= [
 						'name'			=> '获取叠加包信息失败',
@@ -3340,6 +3340,4 @@ class OrdersModel extends Model
 			'code'	=> 1,
 		];
 	}
-
-	
 }

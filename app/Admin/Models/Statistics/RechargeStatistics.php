@@ -211,7 +211,7 @@ class  RechargeStatistics extends Model
 			$month_timestamp = $this_month_carbon->copy()->subMonths($i)->timestamp;
 			$res[] = [
 				'time'		=> date('Y-m',$month_timestamp),
-				'amount'	=> $this->getRechargeByMonth(date('Ym',$month_timestamp))+0,
+				'amount'	=> $this->getRechargeByMonth(date('Y-m',$month_timestamp))+0,
 			];
 		}
 

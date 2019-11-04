@@ -198,6 +198,7 @@ class OrdersModel extends Model
 				$ovalue->business_name = DB::table('admin_users')->where(['id'=>$ovalue->business_id])->value('name');
                 $client_name = DB::table('tz_users')->where(['id'=>$ovalue->customer_id])->value('nickname');
                 $ovalue->customer_name = $client_name;
+                $ovalue->monthly = DB::table('tz_business')->where(['business_number'=>$ovalue->business_sn])->value('monthly');
 			}
 			$return['data'] = $result;
 			$return['code'] = 1;
@@ -323,7 +324,7 @@ class OrdersModel extends Model
 		 * 根据传递的业务号进行主业务的查询
 		 * @var [type]
 		 */
-		$business = DB::table('tz_business')->where('business_number',$insert_data['business_sn'])->select('business_status','endding_time')->first();
+		$business = DB::table('tz_business')->where('business_number',$insert_data['business_sn'])->select('business_status','endding_time','monthly')->first();
 		if(empty($business)){//主业务不存在
 			$return['data'] = '';
 			$return['code'] = 0;
@@ -338,7 +339,7 @@ class OrdersModel extends Model
 			return $return;
 		}
 		$date = date('Y-m-d H:i:s',time());
-		if($business->endding_time < $date){//判断当天要绑定的主业务是否已经过期
+		if($business->endding_time < $date && $business->monthly == 0){//判断当天要绑定的主业务是否已经过期,并且月结日为0
 			$return['data'] = '';
 			$return['code'] = 0;
 			$return['msg'] = '(#117)该资源无法添加资源,原因:关联的主业务已经过期,请主业务续费后再添加';
@@ -365,13 +366,13 @@ class OrdersModel extends Model
 		 * 到期时间和应付价格
 		 * @var [type]
 		 */
-		$end_time = time_calculation(date('Y-m-d H:i:s',time()),$insert_data['duration'],'month');
+		$end_time = time_calculation(date('Y-m-d H:i:s',time()),$insert_data['duration'],'month',$business->monthly);
 		
-		if(date('Y-m-d',strtotime($business->endding_time)) < date('Y-m-d',strtotime($end_time))){//当主业务到期时间小于资源到期时间时，以主业务时间为到期时间
-			$insert['end_time'] = $business->endding_time;
+		if(date('Y-m-d',strtotime($business->endding_time)) < date('Y-m-d',strtotime($end_time)) || $business->monthly != 0){//当主业务到期时间小于资源到期时间时，以主业务时间为到期时间
+			$insert['end_time'] = $business->monthly ? $end_time : $business->endding_time;//存在月结日则用月结日计算后的日期，没有则跟主业务的到期时间保持一致
 			$day_money = bcdiv($insert_data['price'],30,2);//一天的价格
-			$day = date_diff(date_create($date),date_create($business->endding_time))->format('%a');//到期时间跟现在时间相隔的天数
-			$insert['payable_money'] = bcmul($day_money,$day);//应付金额
+			$day = date_diff(date_create($date),date_create($insert['end_time']))->format('%a');//到期时间跟现在时间相隔的天数
+			$insert['payable_money'] = bcmul($day_money,$day,2);//应付金额
 		} else {
 			$insert['end_time'] = $end_time;
 			$insert['payable_money'] = bcmul((string)$insert_data['price'],(string)$insert_data['duration'],2);//计算价格
@@ -820,7 +821,7 @@ class OrdersModel extends Model
 			$business_where = [
 				'business_number'=>$renew['business_number'],
 			];
-			$business = DB::table('tz_business')->where($business_where)->select('id','business_number','business_type','client_id','client_name','business_type','machine_number','endding_time','length','money','business_status','remove_status','order_number','resource_detail')->first();
+			$business = DB::table('tz_business')->where($business_where)->select('id','business_number','business_type','client_id','client_name','business_type','machine_number','endding_time','length','money','business_status','remove_status','order_number','resource_detail','monthly')->first();
 			if(!$business){
 				$return['data'] = '';
 				$return['code'] = 0;
@@ -841,12 +842,24 @@ class OrdersModel extends Model
                 $return['msg']  = '该业务'.$remove_status[$business->remove_status].'无法进行续费,业务可能已到期未续费下架';
                 return $return;
             }
-			//对业务进行到期时间的更新
-			$endding_time = time_calculation($business->endding_time,$renew['length'],'month');
+            $price = $business->money;//订单单价
+            $duration = $renew['length'];//订单计算金额时的时长
+
+			$end_day = date('d',strtotime($business->endding_time));//到期的号数
+			if($end_day != $business->monthly && $business->monthly != 0){//当到期的日子跟月结日不一样时
+				//对业务进行到期时间的更新
+				$endding_time = time_calculation($business->endding_time,$renew['length'],'month',$business->monthly);
+				$price = bcdiv($price,30,2);//一天的价格
+				$duration = date_diff(date_create($business->endding_time),date_create($endding_time))->format('%a');
+			} else {//当到期日子跟月结日一样时
+				$endding_time = time_calculation($business->endding_time,$renew['length'],'month');
+			}
+			
+			
 			// 对业务的累计时长进行更新
 			$length = bcadd($business->length,$renew['length'],0);
 			$order['end_time'] = $endding_time;//订单到期时间
-			$order['duration'] = $renew['length'];//订单时长
+			$order['duration'] = $duration;//订单计算时长
 			$order['length'] = $renew['length'];//订单时长
 			$order['order_sn'] = $this->ordersn();//订单关联业务
 			$order['order_number'] = $business->order_number;
@@ -858,18 +871,20 @@ class OrdersModel extends Model
 			$resource_detail = json_decode($business->resource_detail);
 			$order['id']=$business->id;
 			$order['resource'] = isset($resource_detail->ip)?$resource_detail->ip:$business->machine_number;//订单机器详情
-			$order['price'] = $business->money;//订单单价
-			$order['payable_money'] = bcmul($business->money,$renew['length'],2);//订单应付金额
 			$order['order_status'] = 0;//订单状态为未支付
 			$order['created_at'] = date('Y-m-d H:i:s',time());//订单创建时间
 			$order['client_id'] = $business->client_id;//记录客户的id
 			$order['parent_business'] = 0;
+			$order['price'] = $price;
+			$payable = bcmul($price,$duration,2);//订单应付金额
+			$order['payable_money'] = $payable;
 			$renew_order['O'.$order['order_sn']] = json_encode($order);
 			if(empty($primary_key)){
 				$primary_key = $this->redisPrimaryKey();
 			}
 			$this->setRenewRedis($primary_key,$renew_order);
 			$business_end = $endding_time;
+			$monthly = $business->monthly;
 		}
 		
 		/**
@@ -890,10 +905,20 @@ class OrdersModel extends Model
                     }
                     if(!isset($business_end)){
                     	$business_end = DB::table('tz_business')->where('business_number',$order_result->business_sn)->value('endding_time');
+                    }
+                    if(!isset($monthly)){
+                    	$monthly = DB::table('tz_business')->where('business_number',$order_result->business_sn)->value('monthly');
                     } 
                     
-                    //到期时间
-                    $end_time = time_calculation($order_result->end_time,$renew['length'],'month');
+                    $end_day = date('d',strtotime($business_end));
+
+                    if($monthly != $end_day){
+						//到期时间
+                    	$end_time = time_calculation($order_result->end_time,$renew['length'],'month',$monthly);
+                    } else {
+                    	$end_time = time_calculation($order_result->end_time,$renew['length'],'month');
+                    }
+                    
 
                     if(date('Y-m-d',strtotime($end_time)) > date('Y-m-d',strtotime($business_end))){
                     	
@@ -1765,7 +1790,7 @@ class OrdersModel extends Model
             $return['msg']  = '(#103)客户不存在/客户不属于业务员:'.$name.'/账号未验证/异常,请确认后再创建业务!';
             return $return;
         }
-        $business = DB::table('tz_business')->where(['id'=>$insert_data['business_id'],'client_id'=>$insert_data['customer_id'],'sales_id'=>$insert_data['sales_id'],'remove_status'=>0])->whereBetween('business_status',[0,3])->select('business_number','id','resource_detail','endding_time')->first();
+        $business = DB::table('tz_business')->where(['id'=>$insert_data['business_id'],'client_id'=>$insert_data['customer_id'],'sales_id'=>$insert_data['sales_id'],'remove_status'=>0])->whereBetween('business_status',[0,3])->select('business_number','id','resource_detail','endding_time','monthly')->first();
         if(empty($business)){
         	$return['data'] = '';
         	$return['code'] = 0;
@@ -1773,7 +1798,7 @@ class OrdersModel extends Model
         	return $return;
         }
         $date = date('Y-m-d H:i:s',time());
-		if($business->endding_time < $date){//判断当天要绑定的主业务是否已经过期
+		if($business->endding_time < $date && $business->monthly == 0){//判断当天要绑定的主业务是否已经过期
 			$return['data'] = '';
 			$return['code'] = 0;
 			$return['msg'] = '(#117)该资源无法添加资源,原因:关联的主业务已经过期,请主业务续费后再添加';
@@ -1866,12 +1891,12 @@ class OrdersModel extends Model
 		$insert['resource_type'] = $insert_data['resource_type'];
 		$insert['price'] = $insert_data['price'];
 		$insert['duration'] = $insert_data['duration'];
-		$end_time = time_calculation(date('Y-m-d H:i:s',time()),$insert_data['duration'],'month');
-		if(date('Y-m-d',strtotime($business->endding_time)) < date('Y-m-d',strtotime($end_time))){//当主业务到期时间小于资源到期时间时，以主业务时间为到期时间
-			$insert['end_time'] = $business->endding_time;
+		$end_time = time_calculation(date('Y-m-d H:i:s',time()),$insert_data['duration'],'month',$business->monthly);
+		if(date('Y-m-d',strtotime($business->endding_time)) < date('Y-m-d',strtotime($end_time)) || $business->monthly != 0){//当主业务到期时间小于资源到期时间时，以主业务时间为到期时间
+			$insert['end_time'] = $business->monthly ? $end_time : $business->endding_time;//存在月结日则用月结日计算后的日期，没有则跟主业务的到期时间保持一致
 			$day_money = bcdiv($insert_data['price'],30,2);//一天的价格
-			$day = date_diff(date_create($date),date_create($business->endding_time))->format('%a');//到期时间跟现在时间相隔的天数
-			$insert['payable_money'] = bcmul($day_money,$day);//应付金额
+			$day = date_diff(date_create($date),date_create($insert['end_time']))->format('%a');//到期时间跟现在时间相隔的天数
+			$insert['payable_money'] = bcmul($day_money,$day,2);//应付金额
 		} else {
 			$insert['end_time'] = $end_time;
 			$insert['payable_money'] = bcmul((string)$insert_data['price'],(string)$insert_data['duration'],2);//计算价格
@@ -3136,14 +3161,18 @@ class OrdersModel extends Model
 			return $return;
 		}
 
-		/**
-		 * 当价格和到期时间跟原数据相同时，直接不修改
-		 * @var [type]
-		 */
-		if(isset($update['price']) && isset($end_time) && $update['price'] == $order->price && $end_time == $order->end_time){
-			$return['code'] = 0;
-			$return['msg'] = '(#104)无需更改订单信息';
-			return $return;
+		
+		if(isset($update['price'])  && $update['price'] == $order->price ){
+			unset($update['price']);
+		} else {
+			$update_data['money'] = $update['price'];
+		}
+
+		if(isset($end_time) && $end_time == $order->end_time){
+			unset($update['end_time']);
+		} else {
+			$update_data['endding_time'] = $end_time;
+			$update['end_time'] = $end_time;
 		}
 
 		DB::beginTransaction();
@@ -3152,16 +3181,23 @@ class OrdersModel extends Model
 							->where(['business_number'=>$order->business_sn])
 							->whereBetween('remove_status',[0,3])
 							->whereNull('deleted_at')
-							->select('id','business_number')
+							->select('id','business_number','monthly')
 							->first();
 			if(empty($business)){//不存在对应的业务
 				$return['code'] = 0;
 				$return['msg'] = '(#105)查无此订单信息,请确认';
 				return $return;
 			}
+			
+			if(isset($update['monthly']) && $update['monthly'] == $business->monthly){
+				unset($update['monthly']);
+			} else {
+				$update_data['monthly'] = $update['monthly'];
+			}
+			$update_data['updated_at'] = date('Y-m-d H:i:s',time());
 			$row = DB::table('tz_business')
 					->where(['business_number'=>$order->business_sn])
-					->update(['money'=>$update['price'],'endding_time'=>$end_time]);
+					->update($update_data);
 			if($row == 0){//更新相关业务信息失败
 				DB::rollBack();
 				$return['code'] = 0;
@@ -3175,7 +3211,8 @@ class OrdersModel extends Model
 		} else {
 			$update['payable_money'] = $order->payable_money;
 		}
-		$update['end_time'] = $end_time;
+		$update['updated_at'] = date('Y-m-d H:i:s',time());
+		unset($update['monthly']);
 		$update = DB::table('tz_orders')
 					->where(['id'=>$update['id']])
 					->update($update);
@@ -3306,7 +3343,7 @@ class OrdersModel extends Model
 				$package = DB::table('tz_overlay as a')
 					->leftJoin('idc_machineroom as b' , 'b.id' , '=' , 'a.site')
 					->where('a.id',$order['machine_sn'])
-					->first(['a.name' , 'a.description' , 'b.machine_room_name']);
+					->first(['a.name' , 'a.description' , 'b.machine_room_name', 'a.protection_value']);
 				if ($package == null) {
 					$detail['resource'] 	= [
 						'name'			=> '获取叠加包信息失败',
@@ -3340,4 +3377,6 @@ class OrdersModel extends Model
 			'code'	=> 1,
 		];
 	}
+
+	
 }

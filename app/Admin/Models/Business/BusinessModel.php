@@ -19,7 +19,7 @@ class BusinessModel extends Model
     protected $table = 'tz_business';
     public $timestamps = true;
     protected $dates = ['deleted_at'];
-    protected $fillable = ['client_id', 'client_name', 'sales_id', 'sales_name', 'order_number', 'business_number', 'business_type', 'machine_number', 'resource_detail', 'money', 'length','start_time','endding_time', 'business_status', 'business_note', 'remove_status', 'remove_reason', 'check_note', 'created_at', 'updated_at'];
+    protected $fillable = ['client_id', 'client_name', 'sales_id', 'sales_name', 'order_number', 'business_number', 'business_type', 'machine_number', 'resource_detail', 'money', 'length','start_time','endding_time', 'business_status', 'business_note', 'remove_status', 'remove_reason', 'check_note', 'created_at', 'updated_at','monthly'];
 
     /**
      * 创建业务数据
@@ -55,8 +55,9 @@ class BusinessModel extends Model
         $insert['created_at'] = date('Y-m-d H:i:s',time());
         //业务开始时间
         $start_time = date('Y-m-d H:i:s',time());
+        $monthly = isset($insert['monthly'])?$insert['monthly']:0;
         //到期时间的计算
-        $end_time = time_calculation($start_time,$insert['length'],'month');
+        $end_time = time_calculation($start_time,$insert['length'],'month',$monthly);
         $insert['start_time']   = $start_time;
         $insert['endding_time'] = $end_time;
         $insert_data = $this->fill($insert)->toArray();//过滤掉多余字段
@@ -104,7 +105,7 @@ class BusinessModel extends Model
             $return['code'] = 0;
             $return['msg']  = '业务创建失败!!';
         } 
-            
+          
         return $return;
 
     }
@@ -230,7 +231,7 @@ class BusinessModel extends Model
      */
     public function securityBusiness()
     {
-        $result = $this->whereBetween('business_status',[0,5])->where('remove_status','<',4)->orderBy('created_at','desc')->get(['id', 'client_id', 'sales_id', 'order_number', 'business_number', 'business_type', 'machine_number', 'resource_detail', 'business_status', 'money', 'length', 'business_note','created_at','start_time','endding_time','remove_status','check_note']);
+        $result = $this->whereBetween('business_status',[0,5])->where('remove_status','<',4)->orderBy('created_at','desc')->get(['id', 'client_id', 'sales_id', 'order_number', 'business_number', 'business_type', 'machine_number', 'resource_detail', 'business_status', 'money', 'length', 'business_note','created_at','start_time','endding_time','remove_status','check_note','monthly']);
         if (!$result->isEmpty()) {
             $business_status = [-1 => '取消', -2 => '审核不通过', 0 => '审核中', 1 => '未付款使用', 2 => '付款使用中', 3 => '未付用', 4 => '锁定中', 5 => '到期', 6 => '退款'];
             $business_type   = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜'];
@@ -320,7 +321,7 @@ class BusinessModel extends Model
         $check_where = ['business_number' => $where['business_number']];
         if($where['parent_business'] == 0){
             //普通的IDC业务
-            $check = DB::table('tz_business')->where($check_where)->select('client_id','id','business_number', 'client_name', 'sales_id', 'sales_name', 'business_type', 'machine_number', 'money', 'length','resource_detail','endding_time')->first();
+            $check = DB::table('tz_business')->where($check_where)->select('client_id','id','business_number', 'client_name', 'sales_id', 'sales_name', 'business_type', 'machine_number', 'money', 'length','resource_detail','endding_time','monthly','start_time')->first();
         } else {
             //机柜业务下的托管机器业务
             $check = DB::table('tz_cabinet_machine as mc')->leftjoin('tz_cabinet_machine_detail as detail','mc.id','=','detail.business_id')->where($check_where)->select('mc.id','business_number','resource_sn as machine_number','resource_type as business_type','detail as resource_detail','endtime as endding_time')->first();
@@ -433,7 +434,13 @@ class BusinessModel extends Model
             $order['duration']      = $check->length;//时长
             $order['resource']      = $check->machine_number;//机器的话为IP/机柜则为机柜编号
             $order['end_time']      = $check->endding_time;
-            $order['payable_money'] = bcmul((string)$order['price'], (string)$order['duration'], 2);//应付金额
+            $price = $order['price'];
+            $duration = $order['duration'];
+            if($check->monthly != 0){
+                $price = bcdiv($price,30,2);//一天的价格
+                $duration = date_diff(date_create(date('Y-m-d',strtotime($check->start_time))),date_create(date('Y-m-d',strtotime($check->endding_time))))->format('%a');
+            }
+            $order['payable_money'] = bcmul($price, $duration, 2);//应付金额
             $order['created_at']    = date('Y-m-d H:i:s',time());
             $order_row              = DB::table('tz_orders')->insert($order);//生成订单
             if ($order_row != true) {
@@ -512,7 +519,7 @@ class BusinessModel extends Model
     public function showBusiness($show)
     {
         if ($show) {
-            $result = $this->where($show)->whereBetween('business_status',[0,5])->where('remove_status','<',4)->orderBy('created_at','desc')->get(['id', 'client_id', 'client_name', 'sales_id', 'sales_name', 'order_number', 'business_number', 'business_type', 'machine_number', 'resource_detail', 'business_status', 'money', 'length', 'start_time', 'endding_time', 'business_note','remove_status']);
+            $result = $this->where($show)->whereBetween('business_status',[0,5])->where('remove_status','<',4)->orderBy('created_at','desc')->get(['id', 'client_id', 'client_name', 'sales_id', 'sales_name', 'order_number', 'business_number', 'business_type', 'machine_number', 'resource_detail', 'business_status', 'money', 'length', 'start_time', 'endding_time', 'business_note','remove_status','monthly']);
             if (!$result->isEmpty()) {
                 $business_status = [-1 => '取消', -2 => '审核不通过', 0 => '审核中', 1 => '未付款使用', 2 => '付款使用中', 3 => '未付用', 4 => '锁定中', 5 => '到期', 6 => '退款'];
                 $business_type   = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜'];
@@ -839,8 +846,10 @@ class BusinessModel extends Model
         $insert['created_at'] = date('Y-m-d H:i:s',time());
         //业务开始时间
         $start_time = date('Y-m-d H:i:s',time());
+        $monthly = isset($insert_data['monthly'])?$insert_data['monthly']:0;
         //到期时间的计算
-        $end_time = time_calculation($start_time,$insert_data['length'],'month');
+        $end_time = time_calculation($start_time,$insert_data['length'],'month',$monthly);
+        $insert['monthly'] = $monthly;
         $insert['start_time']   = $start_time;
         $insert['endding_time'] = $end_time;
         $row                  = DB::table('tz_business')->insertGetId($insert);

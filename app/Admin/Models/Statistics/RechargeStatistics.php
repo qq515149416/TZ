@@ -230,8 +230,12 @@ class  RechargeStatistics extends Model
 	 */
 	public function getRechargeByMonth($month)
 	{
+		$month_begin = $month.'-01 00:00:00';
+		$month_end = date('Y-m-t 23:59:59' , strtotime($month_begin));
+		
 		$all_recharge = $this->where('trade_status',1)
-				->where('month',$month)
+				->where('timestamp','>',$month_begin)
+				->where('timestamp','<',$month_end)
 				->sum('recharge_amount');
 
 		return $all_recharge;

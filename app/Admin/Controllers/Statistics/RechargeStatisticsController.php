@@ -72,7 +72,7 @@ class RechargeStatisticsController extends Controller
 	 */
 	public function getRecharge(RechargeStatisticsRequest $request){
 		$par = $request->only(['need']);
-		$this_month = date('Ym');
+		$this_month = date('Y-m');
 		$statistics = new RechargeStatistics();
 
 		if ($par['need'] == 1) { // 取当日

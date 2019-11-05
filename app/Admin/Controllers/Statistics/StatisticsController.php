@@ -152,4 +152,129 @@ class StatisticsController extends Controller
 
 		return tz_ajax_echo($arr,'统计成功',1);
 	}
+
+	public function getBusinessDetailed(Request $request)
+	{
+		$par = $request->only(['month']);
+		if (!isset($par['month'])) {
+			return tz_ajax_echo([],'请提供查询月份',0);
+		}
+
+		$month_begin = $par['month'].'-01 00:00:00';
+		$month_end = date('Y-m-t 23:59:59',strtotime($month_begin));
+		$month_day = date('t',strtotime($month_begin));
+		$month_small = date('m',strtotime($month_begin));
+
+		$type_arr = [
+			0	=> [
+				'type'			=> 'idc',
+				'num'			=> 0,
+			],
+			1	=> [
+				'type'			=> 'cdn',
+				'num'			=> 0,
+			],
+			2	=> [
+				'type'			=> '高防',
+				'num'			=> 0,
+			],
+			3	=> [
+				'type'			=> '流量叠加包',
+				'num'			=> 0,
+			],
+			
+		];
+
+		$arr 	= [];
+		for ($j=1; $j <= $month_day; $j++) { 
+			$arr[] = [
+				'time'		=> $month_small .'-'.$j,
+				'num'		=> 0,
+			];
+		}
+		
+		$model = new BusinessModel();
+		$idc_on = $model->where(function($query) use ($month_begin,$month_end){
+						$query->where('start_time','>',$month_begin)
+						->where('start_time','<',$month_end)
+						->whereIn('business_status',[0,1,3,4])
+						->where('remove_status',0);
+					})
+					->orWhere(function($query) use ($month_begin,$month_end){
+						$query->where('start_time','>',$month_begin)
+						->where('start_time','<',$month_end)
+						->where('business_status' , 2);
+					})
+					->orderBy('start_time','desc')
+					->get(['sales_name' , 'business_number' , 'business_type' , 'machine_number', 'money as price' , 'start_time' , 'endding_time']);
+
+		$business_type = [ 1 => '租用主机' , 2 => '托管主机' , 3 => '租用机柜' ];
+		if (!$idc_on->isEmpty()) {
+			$idc_on = $idc_on->toArray();
+			foreach ($idc_on as $k => $v) {
+				$idc_on[$k]['business_type'] = $business_type[$idc_on[$k]['business_type']];
+				$type_arr[0]['num']++;
+				$day = date('j' , strtotime($idc_on[$k]['start_time']));
+				$arr[$day-1]['num']++;
+			}
+			
+		}
+
+		$dip_model = new DipModel();
+		$dip_on = $dip_model->leftJoin('tz_users as b' , 'b.id' , '=' , 'tz_defenseip_business.user_id')
+					->leftJoin('admin_users as c' , 'c.id' , '=' , 'b.salesman_id')
+					->leftJoin('tz_defenseip_package as d' , 'd.id' , '=' , 'tz_defenseip_business.package_id')
+					->where(function($query) use ($month_begin,$month_end){
+						$query->where('tz_defenseip_business.created_at' , '>' , $month_begin)
+						->where('tz_defenseip_business.created_at' , '<' , $month_end)
+						->where('tz_defenseip_business.status',4);
+					})
+					->orWhere(function($query) use ($month_begin,$month_end){
+						$query->whereIn('tz_defenseip_business.status',[1,2,3])
+						->where('tz_defenseip_business.start_time' , '>' , $month_begin)
+						->where('tz_defenseip_business.start_time' , '<' , $month_end);		
+					})
+					->orderBy('tz_defenseip_business.start_time', 'desc')
+					->get(['c.name as sales_name' ,'tz_defenseip_business.business_number' , 'd.name as machine_number' , 'd.price' ,'tz_defenseip_business.start_time' , 'tz_defenseip_business.end_at as endding_time' , 'tz_defenseip_business.created_at']);
+		if (!$dip_on->isEmpty()) {
+			$dip_on = $dip_on->toArray();
+			for ($i=0; $i < count($dip_on); $i++) { 
+				$dip_on[$i]['business_type'] = '高防ip';	
+				$type_arr[2]['num']++;
+				$day = date('j' , strtotime($dip_on[$i]['created_at']));
+				$arr[$day-1]['num']++;
+			}
+		}
+		$overlay_model = new OverlayBelongModel();
+		$overlay_on = $overlay_model->leftJoin('tz_users as b' , 'b.id' , '=' , 'tz_overlay_belong.user_id')
+						->leftJoin('admin_users as c' , 'c.id' , '=' , 'b.salesman_id')
+						->leftJoin('tz_overlay as d' , 'd.id' , '=' , 'tz_overlay_belong.overlay_id')
+						->where('tz_overlay_belong.buy_time' , '>' , $month_begin)
+						->where('tz_overlay_belong.buy_time' , '<' , $month_end)
+						->orderBy('tz_overlay_belong.buy_time','desc')
+						->get(['c.name as sales_name' , 'd.name as machine_number' , 'd.price' , 'tz_overlay_belong.buy_time']);
+		if (!$overlay_on->isEmpty()) {
+			$overlay_on = $overlay_on->toArray();
+			for ($i=0; $i < count($overlay_on); $i++) { 
+				$overlay_on[$i]['business_type'] = '叠加包';
+				$type_arr[3]['num']++;	
+				$day = date('j' , strtotime($overlay_on[$i]['buy_time']));
+				$arr[$day-1]['num']++;
+			}
+		}
+
+		return [
+			'data'	=> [
+				'line'		=> $arr,
+				'type_arr'	=> $type_arr,
+				'idc_on'		=> $idc_on,
+				'dip_on'		=> $dip_on,
+				'overlay_on'	=> $overlay_on,
+			],
+			'msg'	=> '统计成功',
+			'code'	=> 1,
+		];
+	}
+
+
 }

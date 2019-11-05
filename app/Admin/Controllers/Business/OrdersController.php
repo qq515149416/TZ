@@ -257,7 +257,7 @@ class OrdersController extends Controller
 	 * @return [type]           [description]
 	 */
 	public function updateOrders(Request $request){
-		$data = $request->only(['id','price','end_time']);
+		$data = $request->only(['id','price','end_time','monthly']);
 		$update = new OrdersModel();
 		$result = $update->updateOrders($data);
 		return tz_ajax_echo($result,$result['msg'],$result['code']);

@@ -61,14 +61,21 @@ class BusinessController extends Controller
      * @return json           返回订单创建的提示信息
      */
     public function insertBusiness(Request $request){
-		$insert = $request->only(['client_id','machine_number','resource_detail','money','length','business_note','business_type']);
+		$insert = $request->only(['client_id','machine_number','resource_detail','money','length','business_note','business_type','monthly']);
         
         /**
          * 检验添加业务时时长是否填写
          * @var [type]
          */
-        $rules = ['length' => 'required|integer','money'=>'required|numeric'];
-        $messages = ['length.required'=> '租用时长必须填写','length.integer'=>'时长填写必须是整数数字','money.required'=>'资源单价必须填写','money.numeric'=>'资源单价必须是数字'];
+        $rules = ['length' => 'required|integer','money'=>'required|numeric','monthly'=>'integer|between:0,31'];
+        $messages = [
+                        'length.required'=> '租用时长必须填写',
+                        'length.integer'=>'时长填写必须是整数数字',
+                        'money.required'=>'资源单价必须填写',
+                        'money.numeric'=>'资源单价必须是数字',
+                        'monthly.integer'=>'月结日必须是整数数字',
+                        'monthly.between'=>'月结日的数字必须是在0~31之间'
+                    ];
         $validator = Validator::make($insert,$rules,$messages);
         if($validator->messages()->first()){
             return tz_ajax_echo('',$validator->messages()->first(),0);
@@ -199,7 +206,7 @@ class BusinessController extends Controller
      * @return [type]           [description]
      */
     public function securityInsertBusiness(BusinessRequest $request){
-        $insert = $request->only(['client_id','sales_id','resource_id','money','length','business_note','business_type']);
+        $insert = $request->only(['client_id','sales_id','resource_id','money','length','business_note','business_type','monthly']);
         $business = new BusinessModel();
         $result = $business->securityInsertBusiness($insert);
         return tz_ajax_echo($result['data'],$result['msg'],$result['code']);

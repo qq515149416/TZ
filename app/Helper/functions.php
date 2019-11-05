@@ -130,11 +130,12 @@ function curl($url, $params ='', $return = 1, $header = array(), $cookie = array
  * @param  string  $date      起始时间(2019-04-02 13:16:30)
  * @param  integer $duration  时长
  * @param  string  $time_unit 计算的时间单位(按月计算-'month',按天计算-'day',按年计算-'year')
+ * @param  int  $monthly 月结日(0~31)
  * @return string             返回计算好的结束时间
  * @note   当起始时间的天数为自然月的最后一天时，到期时间的天数会是到期当月的最后一天
  * (如:起始时间为02-28,一个月后就是03-31;起始时间为03-31,一个月后就是04-30,诸如此)
  */
-function time_calculation($date,$duration = 1,$time_unit = 'month'){
+function time_calculation($date,$duration = 1,$time_unit = 'month',$monthly = 0){
 	if($time_unit == 'month'){//按自然月计算
 		//起始时间所属的自然月
 	 	$current_month = date('m',strtotime($date));
@@ -150,6 +151,16 @@ function time_calculation($date,$duration = 1,$time_unit = 'month'){
 
 	    //到期时间所属自然月的总天数
 	    $next_month_days = date('t',strtotime(date('Y-m',strtotime($date)).'+'.$duration.' '.$time_unit));
+
+	    if($monthly != 0){//月结客户
+	    	if($monthly > $current_days){//当月结日大于传递的开始日期天数时，代表该周期内还未到月结日，到期时间则以该月月结日为基准。
+	    		return $end_date = date('Y-m-'.$monthly.' H:i:s',strtotime($date));
+	    	}
+	    	if($monthly > 27 && $monthly > $next_month_days){//月结日是28-31号的且月结日超过到期月最大天数的，以最大天数为到期时间
+	    		return $end_date = date('Y-m-'.$next_month_days.' H:i:s',strtotime(date('Y-m H:i:s',strtotime($date)).'+'.$duration.' '.$time_unit));
+	    	}
+    		return $end_date = date('Y-m-'.$monthly.' H:i:s',strtotime(date('Y-m H:i:s',strtotime($date)).'+'.$duration.' '.$time_unit));
+	    }
 
 	    //起始时间所属自然月的总天数与到期时间所属自然月的总天数的差值
 	    $days = $current_month_days - $next_month_days;

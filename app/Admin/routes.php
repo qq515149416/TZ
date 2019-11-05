@@ -308,7 +308,9 @@ Route::group([
         'prefix' => 'statistics',
     ], function (Router $router) {
         $router->get('statisticsList', 'Statistics\StatisticsController@index');//机器统计
-        $router->get('getMachineNum', 'Statistics\StatisticsController@getMachineNum');//机器统计
+        $router->get('getMachineNum', 'Statistics\StatisticsController@getMachineNum');//业务上架统计概览
+        $router->get('getBusinessDetailed', 'Statistics\StatisticsController@getBusinessDetailed');//业务上架统计概览详情
+        
     });
 
     /**

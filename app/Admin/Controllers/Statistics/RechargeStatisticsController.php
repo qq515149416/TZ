@@ -80,7 +80,7 @@ class RechargeStatisticsController extends Controller
 		}elseif ($par['need'] == 2) {// 取当月
 			$result = $statistics->getRechargeByMonth($this_month);
 		}elseif ($par['need'] == 3) {// 取上月
-			$last_month =date('Ym',Carbon::parse( date('Y-m-01 00:00:00') )->subMonths(1)->timestamp);
+			$last_month =date('Y-m',Carbon::parse( date('Y-m-01 00:00:00') )->subMonths(1)->timestamp);
 			$result = $statistics->getRechargeByMonth($last_month);
 		}		
 

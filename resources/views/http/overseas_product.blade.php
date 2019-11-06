@@ -199,10 +199,13 @@
 								<div class="data-table-col">
 									<div class="data-table-content">
 										<p>
-											<span class="attr">
-												30M
-											</span>
-											优化回国带宽
+                                            <span class="attr">
+                                                30M
+                                            </span>
+                                            优化回国带宽
+                                            <span class="wrap">
+                                                (包含<span class="attr">5M</span> CN2优化回国)
+                                            </span>
 										</p>
 										<p>
 											<span class="attr">
@@ -416,77 +419,90 @@
 									</div>
 								</div>
 							</div>
-
-                            <div class="explanation">
-                                <p>
-                                    <span>
-                                    1、
-                                    <strong>
-                                        定义
-                                    </strong>
-                                    ：
-                                    </span>
-                                    <span>
-                                    增强型服务器产品是一款为解决原有节点服务器扩展性能和稳定性不足、带宽不支持增加多种带宽的需求等问题。采用Dell品牌服务器，标配2G硬件raid卡，服务器可根据客户需
-                                    求增加各种类型的带宽，设备硬件扩展性能强而设计的一款产品，该产品支持多种类型的带宽。
-                                    </span>
-                                </p>
-                                <p>
-                                    <span>
-                                    2、
-                                    <strong>
-                                        适用范围
-                                    </strong>
-                                    ：
-                                    </span>
-                                    <span>
-                                    适用于客户对计算处理速度快、数据冗余性高、大容量存储、IOPS读写速度快，特别推出基础型、计算型、存储型和高I/0型。
-                                    </span>
-                                </p>
-                                <p>
-                                    <span>
-                                    3、
-                                    <strong>
-                                        产品架构
-                                    </strong>
-                                    ：
-                                    </span>
-                                    <span>
-                                    增强型产品主要由物理服务器+多种带宽类型+单国际IP组成，IP种类为普通回国、优化回国、国际带宽类型。
-                                    </span>
-                                </p>
-                                <p>
-                                    <span>
-                                    4、
-                                    <strong>
-                                        服务器系统支持
-                                    </strong>
-                                    ：
-                                    </span>
-                                    <span>
-                                    Windows、Linux、WM ware（Esxi）、Xenserver 。
-                                    </span>
-                                </p>
-                                <p>
-                                    <span>
-                                    5、
-                                    <strong>
-                                        计费方式
-                                    </strong>
-                                    ：
-                                    </span>
-                                    <span>
-                                    硬件增值和IP租用按“服务器租用增值服务”计算；带宽增值计算方式，按此表后端附的“增值带宽计算方法”。
-                                    </span>
-                                </p>
-                            </div>
-
+							<div class="explanation">
+								<p>
+									<span>
+										1、
+										<strong>
+											定义
+										</strong>
+										：
+									</span>
+									<span>
+										增强型服务器产品是一款为解决原有节点服务器扩展性能和稳定性不足、带宽不支持增加多种带宽的需求等问题。采用Dell品牌服务器，标配2G硬件raid卡，服务器可根据客户需
+										求增加各种类型的带宽，设备硬件扩展性能强而设计的一款产品，该产品支持多种类型的带宽。
+									</span>
+								</p>
+								<p>
+									<span>
+										2、
+										<strong>
+											适用范围
+										</strong>
+										：
+									</span>
+									<span>
+										适用于客户对计算处理速度快、数据冗余性高、大容量存储、IOPS读写速度快，特别推出基础型、计算型、存储型和高I/0型。
+									</span>
+								</p>
+								<p>
+									<span>
+										3、
+										<strong>
+											产品架构
+										</strong>
+										：
+									</span>
+									<span>
+										增强型产品主要由物理服务器+多种带宽类型+单国际IP组成，IP种类为普通回国、优化回国、国际带宽类型。
+									</span>
+								</p>
+								<p>
+									<span>
+										4、
+										<strong>
+											服务器系统支持
+										</strong>
+										：
+									</span>
+									<span>
+										Windows、Linux、WM ware（Esxi）、Xenserver 。
+									</span>
+								</p>
+								<p>
+									<span>
+										5、
+										<strong>
+											计费方式
+										</strong>
+										：
+									</span>
+									<span>
+										硬件增值和IP租用按“服务器租用增值服务”计算；带宽增值计算方式，按此表后端附的“增值带宽计算方法”。
+									</span>
+								</p>
+							</div>
 						</div>
-
 					</div>
 				</div>
 			</div>
 		</div>
-	</section>
+    </section>
+    <section class="feature">
+        <div class="version-heart">
+            <ul>
+                <li>全球一线机房</li>
+                <li>多配置支持</li>
+                <li>多IP可选</li>
+                <li>高性价比</li>
+                <li>稳定高可用达99.99%</li>
+                <li>24小时售后服务支持</li>
+            </ul>
+        </div>
+    </section>
+    <section class="jumbotron footer">
+        <h4>腾正海外服务器租用-帮您实现全球快速安全的资源部署</h4>
+        <a href="javascript:;">立即咨询</a>
+    </section>
 </div>
 @endsection

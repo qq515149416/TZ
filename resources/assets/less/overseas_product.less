@@ -82,6 +82,43 @@
           }
     }
 
+    .feature {
+        height: 306px;
+        background: #eceef4;
+        display: flex;
+        align-items: center;
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .listicon(@index) {
+                content: "";
+                display: block;
+                height: 118px;
+                background: url("../images/overseas/overseas_feature_0@{index}.png") no-repeat center top;
+            }
+            li {
+                text-align: center;
+                height: 170px;
+                width: 108px;
+                color: #2139b7;
+                font-family: 'pingFangHeavy';
+                font-size: 18px;
+                @i: 1;
+                .loop(@i) when (@i < 7) {
+                    &:nth-of-type(@{i})::before {
+                        .listicon(@i);
+                    }
+                    .loop(@i+1);
+                }
+                .loop(1);
+            }
+        }
+    }
+
     .jumbotron.data-center {
         padding: 70px 0 37px 0;
         margin: 0;
@@ -231,7 +268,9 @@
                         }
                     }
                     > .data-table-content {
-                        height: 74px;
+                        // min-height: 74px;
+                        // height: 74px;
+                        height: 100px;
                         display: flex;
                         text-align: center;
                         align-items: stretch;
@@ -245,11 +284,17 @@
                             align-items: center;
                             justify-content: center;
                             border-top: 1px solid #d6d7e1;
+                            line-height: 18px;
+                            flex-wrap: wrap;
                             &:first-of-type {
                                 border-top: none;
                             }
-                            > .attr {
+                            .attr {
                                 color: #043fc4;
+                            }
+                            > .wrap {
+                                width: 100%;
+                                display: block;
                             }
                         }
                         > .amount {
@@ -318,6 +363,42 @@
             }
           }
         }
+      }
+      .jumbotron.footer {
+        height: 196px;
+        padding: 0;
+        box-sizing: border-box;
+        margin: 0;
+        background: url(../images/product/productBg3.png) no-repeat;
+        background-size: 100% 100%;
+        text-align: center;
+
+        h4 {
+          margin: 0;
+          //   margin-top: 60px;
+          padding-top: 60px;
+          margin-bottom: 24px;
+          font-size: 26px;
+          color: #fff;
+          font-family: 'pingFangMedium';
+        }
+
+        a {
+          display: inline-block;
+          text-decoration: none;
+          width: 150px;
+          height: 32px;
+          line-height: 32px - 2px;
+          border: 1px solid #fff;
+          color: #fff;
+          text-align: center;
+          font-size: 14px;
+          border-radius: 17px;
+        }
+      }
+
+      .jumbotron {
+        border-radius: 0;
       }
 
 }

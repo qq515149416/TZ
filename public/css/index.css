@@ -10979,6 +10979,74 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   color: #043fc4;
   font-family: 'pingFangHeavy';
 }
+#overseas_product .feature {
+  height: 306px;
+  background: #eceef4;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+#overseas_product .feature ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+#overseas_product .feature ul li {
+  text-align: center;
+  height: 170px;
+  width: 108px;
+  color: #2139b7;
+  font-family: 'pingFangHeavy';
+  font-size: 18px;
+}
+#overseas_product .feature ul li:nth-of-type(1)::before {
+  content: "";
+  display: block;
+  height: 118px;
+  background: url(/images/overseas_feature_01.png?197c71718252c5e32384db41d6cea59f) no-repeat center top;
+}
+#overseas_product .feature ul li:nth-of-type(2)::before {
+  content: "";
+  display: block;
+  height: 118px;
+  background: url(/images/overseas_feature_02.png?6d6362db43ca03ec45cfe4e89a7758d3) no-repeat center top;
+}
+#overseas_product .feature ul li:nth-of-type(3)::before {
+  content: "";
+  display: block;
+  height: 118px;
+  background: url(/images/overseas_feature_03.png?f65c8b694b76acf4ff1d598897b33d7a) no-repeat center top;
+}
+#overseas_product .feature ul li:nth-of-type(4)::before {
+  content: "";
+  display: block;
+  height: 118px;
+  background: url(/images/overseas_feature_04.png?6507ab239fa5d9d1411adb3de1c227e1) no-repeat center top;
+}
+#overseas_product .feature ul li:nth-of-type(5)::before {
+  content: "";
+  display: block;
+  height: 118px;
+  background: url(/images/overseas_feature_05.png?19ff52db82f3f63b8c81878058270fe4) no-repeat center top;
+}
+#overseas_product .feature ul li:nth-of-type(6)::before {
+  content: "";
+  display: block;
+  height: 118px;
+  background: url(/images/overseas_feature_06.png?23e9fe1717c334cacad49b5b6ada546f) no-repeat center top;
+}
 #overseas_product .jumbotron.data-center {
   padding: 70px 0 37px 0;
   margin: 0;
@@ -11120,7 +11188,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   border-radius: 2px;
 }
 #overseas_product .jumbotron.data-center .main-content .tab-content .tab-pane .data-table .data-table-row .data-table-col > .data-table-content {
-  height: 74px;
+  height: 100px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -11152,12 +11220,19 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
       -ms-flex-pack: center;
           justify-content: center;
   border-top: 1px solid #d6d7e1;
+  line-height: 18px;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 #overseas_product .jumbotron.data-center .main-content .tab-content .tab-pane .data-table .data-table-row .data-table-col > .data-table-content > p:first-of-type {
   border-top: none;
 }
-#overseas_product .jumbotron.data-center .main-content .tab-content .tab-pane .data-table .data-table-row .data-table-col > .data-table-content > p > .attr {
+#overseas_product .jumbotron.data-center .main-content .tab-content .tab-pane .data-table .data-table-row .data-table-col > .data-table-content > p .attr {
   color: #043fc4;
+}
+#overseas_product .jumbotron.data-center .main-content .tab-content .tab-pane .data-table .data-table-row .data-table-col > .data-table-content > p > .wrap {
+  width: 100%;
+  display: block;
 }
 #overseas_product .jumbotron.data-center .main-content .tab-content .tab-pane .data-table .data-table-row .data-table-col > .data-table-content > .amount {
   color: #ff0000;
@@ -11212,4 +11287,37 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   border: none;
   background-color: transparent;
   font-size: 18px;
+}
+#overseas_product .jumbotron.footer {
+  height: 196px;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0;
+  background: url(/images/productBg3.png?873be73ca8b181a461885d23307b2c61) no-repeat;
+  background-size: 100% 100%;
+  text-align: center;
+}
+#overseas_product .jumbotron.footer h4 {
+  margin: 0;
+  padding-top: 60px;
+  margin-bottom: 24px;
+  font-size: 26px;
+  color: #fff;
+  font-family: 'pingFangMedium';
+}
+#overseas_product .jumbotron.footer a {
+  display: inline-block;
+  text-decoration: none;
+  width: 150px;
+  height: 32px;
+  line-height: 30px;
+  border: 1px solid #fff;
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+  border-radius: 17px;
+}
+#overseas_product .jumbotron {
+  border-radius: 0;
 }

@@ -17,9 +17,9 @@ class ForeignModel extends Model
 	protected $primaryKey = 'id';
 	public $timestamps = true;
     protected $dates = ['deleted_at'];
-    // protected $casts = [
-    //     'bandwidth' => 'json',
-    // ];
+    protected $casts = [
+        'more' => 'json',
+    ];
     /**
      * 获取机房信息.
      *

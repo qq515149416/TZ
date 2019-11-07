@@ -19,9 +19,11 @@
                 </ul>
             </div>
             <div class="bottom">
-                <a class="btn-link" href="javascript:;">亚洲服务器</a>
+                @foreach ($son_nav as $nav)
+                <a class="btn-link" href="{{ $nav->url }}">{{ $nav->name }}</a>
+                @endforeach
                 <!-- <a class="btn-link" href="javascript:;">欧洲服务器</a> -->
-                <a class="btn-link" href="javascript:;">美洲服务器</a>
+                <!-- <a class="btn-link" href="javascript:;">美洲服务器</a> -->
                 <!-- <a class="btn-link" href="javascript:;">非洲服务器</a> -->
 
             </div>

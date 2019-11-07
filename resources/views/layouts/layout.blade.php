@@ -176,6 +176,17 @@
                                 <a href="/bandwidth-rent/xian" style="margin-right: 4px;">西安带宽租用</a>
                             </dd>
                         </dl>
+                        <dl style="text-align: left;text-indent: 31px;">
+                            <dt>
+                                <a href="/overseas" style="margin-left: 0;">海外服务器</a>
+                            </dt>
+                            <dd>
+                                <a href="/overseas/asia">亚洲服务器</a>
+                            </dd>
+                            <dd>
+                                <a href="/overseas/america">美洲服务器</a>
+                            </dd>
+                        </dl>
                     </div>
                 </li>
                 <li>

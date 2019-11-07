@@ -30,13 +30,15 @@
 				</ul>
 			</div>
 			<div class="bottom">
-				<a class="btn-link" href="javascript:;">
-					亚洲服务器
+                @foreach ($son_nav as $nav)
+				<a class="btn-link {{ $nav->alias == $page ? 'active':'' }}" href="{{ $nav->url }}">
+					{{ $nav->name }}
 				</a>
+                @endforeach
 				<!-- <a class="btn-link" href="javascript:;">欧洲服务器</a> -->
-				<a class="btn-link active" href="javascript:;">
+				<!-- <a class="btn-link active" href="javascript:;">
 					美洲服务器
-				</a>
+				</a> -->
 				<!-- <a class="btn-link" href="javascript:;">非洲服务器</a> -->
 			</div>
 		</div>
@@ -49,25 +51,27 @@
 			<div class="main-content">
 				<!-- Nav tabs -->
 				<ul class="nav nav-tabs" role="tablist">
-					<li role="presentation" class="active">
-						<a href="/overseas/usa">
-							美国-圣何塞
+                    @foreach ($machine_rooms as $machine_room)
+					<li role="presentation" class="{{ $machine_room->alias == $room ? 'active':'' }}">
+						<a href="/overseas/{{ $page }}/{{ $machine_room->alias }}">
+                            {{ $machine_room->name }}
 						</a>
 					</li>
-					<li role="presentation">
+                    @endforeach
+					<!-- <li role="presentation">
 						<a href="/overseas/usa">
 							美国-洛杉矶
 						</a>
-					</li>
+					</li> -->
 				</ul>
 				<!-- Tab panes -->
 				<div class="tab-content">
 					<div role="tabpanel" class="tab-pane active" id="usa">
 						<h3>
-							美国 - 圣何塞机房
+							{{ $current_room->name }}
 						</h3>
 						<p>
-							机房概况：腾正科技与美洲一线T级机房联手推出了高性价比的亚洲多系列独立服务器租用。可选配置多样且全面，满足各行业客户的需求，而且价格亲民！我们的产品拥有优质的出口带宽资源，以及多ip支持，每台机器配备10M-1G端口，保证了在全球高速通畅的网络速度。
+							机房概况：{{ $current_room->overview }}
 						</p>
 						<div class="data-table">
 							<div class="data-table-row">
@@ -137,7 +141,172 @@
 									</div>
 								</div>
 							</div>
-							<div class="data-table-row">
+
+                            @foreach ($data->filter(function ($value, $key) {
+                                return $value->is_enhance == 0;
+                            }) as $item)
+                                <div class="data-table-row">
+
+                                    <div class="data-table-col thead">
+                                        <div class="data-table-content">
+                                            @if (count(explode('-',$current_room->name)) > 1)
+                                            <span>
+                                                {{ explode('-',$current_room->name)[0] }}
+                                            </span>
+                                            {{ explode('-',$current_room->name)[1] }}
+                                            @else
+                                            {{ $current_room->name }}
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="data-table-col">
+                                        <div class="data-table-content">
+                                            @if (count(explode('\\',$item->cpu)) > 1)
+                                                <span>
+                                                    {{ explode('\\',$item->cpu)[0] }}
+                                                </span>
+                                                {{ explode('\\',$item->cpu)[1] }}
+                                            @else
+                                                {{ $item->cpu }}
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="data-table-col">
+                                        <div class="data-table-content">
+                                            @if (count(explode('\\',$item->type)) > 1)
+                                                <span>
+                                                    {{ explode('\\',$item->type)[0] }}
+                                                </span>
+                                                {{ explode('\\',$item->type)[1] }}
+                                            @else
+                                                {{ $item->type }}
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="data-table-col">
+                                        <div class="data-table-content">
+                                            @if (count(explode('\\',$item->thread)) > 1)
+                                                <span>
+                                                    {{ explode('\\',$item->thread)[0] }}
+                                                </span>
+                                                {{ explode('\\',$item->thread)[1] }}
+                                            @else
+                                                {{ $item->thread }}
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="data-table-col">
+                                        <div class="data-table-content">
+                                            @if (count(explode('\\',$item->ram)) > 1)
+                                                <span>
+                                                    {{ explode('\\',$item->ram)[0] }}
+                                                </span>
+                                                {{ explode('\\',$item->ram)[1] }}
+                                            @else
+                                                {{ $item->ram }}
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="data-table-col">
+                                        <div class="data-table-content">
+                                            @if (count(explode('\\',$item->hard_disk_type)) > 1)
+                                                <span>
+                                                    {{ explode('\\',$item->hard_disk_type)[0] }}
+                                                </span>
+                                                {{ explode('\\',$item->hard_disk_type)[1] }}
+                                            @else
+                                                {{ $item->hard_disk_type }}
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="data-table-col">
+                                        <div class="data-table-content">
+                                            @if (count(explode('\\',$item->hard_disk_size)) > 1)
+                                                <span>
+                                                    {{ explode('\\',$item->hard_disk_size)[0] }}
+                                                </span>
+                                                {{ explode('\\',$item->hard_disk_size)[1] }}
+                                            @else
+                                                {{ $item->hard_disk_size }}
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="data-table-col">
+                                        <div class="data-table-content">
+                                            {{ $item->upgrade  ? '支持':'不支持' }}
+                                        </div>
+                                    </div>
+                                    <div class="data-table-col">
+                                        <div class="data-table-content">
+                                            @if (count(explode('\\',$item->raid_card)) > 1)
+                                                <span>
+                                                    {{ explode('\\',$item->raid_card)[0] }}
+                                                </span>
+                                                {{ explode('\\',$item->raid_card)[1] }}
+                                            @else
+                                                {{ $item->raid_card }}
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="data-table-col">
+                                        <div class="data-table-content">
+                                            {{ $item->ips }}
+                                        </div>
+                                    </div>
+                                    <div class="data-table-col">
+                                        <div class="data-table-content">
+                                            @if (count(explode('\\',$item->ddos)) > 1)
+                                                <span>
+                                                    {{ explode('\\',$item->ddos)[0] }}
+                                                </span>
+                                                {{ explode('\\',$item->ddos)[1] }}
+                                            @else
+                                                {{ $item->ddos }}
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="data-table-col">
+                                        <div class="data-table-content">
+                                            @foreach (explode(',',$item->bandwidth) as $item_bandwidth)
+                                            <p>
+                                                @if (count(explode('\\',$item_bandwidth)) > 1)
+                                                    {!! preg_replace('/(\d+[A-Z]{1})/','<span class="attr">$1&nbsp;</span>',explode('\\',$item_bandwidth)[0]) !!}
+                                                    <span class="wrap">
+                                                        {!! preg_replace('/(\d+[A-Z]{1})/','<span class="attr">$1&nbsp;</span>',explode('\\',$item_bandwidth)[1]) !!}
+                                                    </span>
+                                                @else
+                                                    {!! preg_replace('/(\d+[A-Z]{1})/','<span class="attr">$1&nbsp;</span>',$item_bandwidth) !!}
+                                                @endif
+                                                <!-- <span class="attr">
+                                                    30M
+                                                </span>
+                                                优化回国带宽 -->
+                                                <!-- <span class="wrap">
+                                                    (包含<span class="attr">5M</span> CN2优化回国)
+                                                </span> -->
+                                            </p>
+                                            @endforeach
+                                            <!-- <p>
+                                                <span class="attr">
+                                                    100M
+                                                </span>
+                                                普通带宽
+                                            </p> -->
+                                        </div>
+                                    </div>
+                                    <div class="data-table-col">
+                                        <div class="data-table-content">
+                                            <span class="amount">
+                                                {{ $item->price }}
+                                            </span>
+                                            {{ $item->unit }}
+                                        </div>
+                                    </div>
+
+                                </div>
+                            @endforeach
+
+							<!-- <div class="data-table-row">
 								<div class="data-table-col thead">
 									<div class="data-table-content">
 										<span>
@@ -224,8 +393,11 @@
 									</div>
 								</div>
 							</div>
+                             -->
 						</div>
-						<div class="expand">
+						<div class="expand" style="{{ count($data->filter(function ($value, $key) {
+                                return $value->is_enhance == 1;
+                            })) > 0 ? 'display: block' : 'display: none;'  }}">
 							<h3>
 								增强服务器
 							</h3>
@@ -308,7 +480,188 @@
 										</div>
 									</div>
 								</div>
-								<div class="data-table-row">
+
+                                @foreach ($data->filter(function ($value, $key) {
+                                    return $value->is_enhance == 1;
+                                }) as $item)
+
+                                <div class="data-table-row">
+									<div class="data-table-col thead">
+										<div class="data-table-content">
+                                            @if (count(explode('\\',$item->more['platform'])) > 1)
+                                                <span>
+                                                    {{ explode('\\',$item->more['platform'])[0] }}
+                                                </span>
+                                                {{ explode('\\',$item->more['platform'])[1] }}
+                                            @else
+                                                {{ $item->more['platform'] }}
+                                            @endif
+										</div>
+									</div>
+									<div class="data-table-col">
+										<div class="data-table-content">
+                                            @if (count(explode('\\',$item->cpu)) > 1)
+                                                <span>
+                                                    {{ explode('\\',$item->cpu)[0] }}
+                                                </span>
+                                                {{ explode('\\',$item->cpu)[1] }}
+                                            @else
+                                                {{ $item->cpu }}
+                                            @endif
+										</div>
+									</div>
+									<div class="data-table-col">
+										<div class="data-table-content">
+                                            @if (count(explode('\\',$item->type)) > 1)
+                                                <span>
+                                                    {{ explode('\\',$item->type)[0] }}
+                                                </span>
+                                                {{ explode('\\',$item->type)[1] }}
+                                            @else
+                                                {{ $item->type }}
+                                            @endif
+										</div>
+									</div>
+									<div class="data-table-col">
+										<div class="data-table-content">
+                                            @if (count(explode('\\',$item->thread)) > 1)
+                                                <span>
+                                                    {{ explode('\\',$item->thread)[0] }}
+                                                </span>
+                                                {{ explode('\\',$item->thread)[1] }}
+                                            @else
+                                                {{ $item->thread }}
+                                            @endif
+										</div>
+									</div>
+									<div class="data-table-col">
+										<div class="data-table-content">
+                                            @if (count(explode('\\',$item->ram)) > 1)
+                                                <span>
+                                                    {{ explode('\\',$item->ram)[0] }}
+                                                </span>
+                                                {{ explode('\\',$item->ram)[1] }}
+                                            @else
+                                                {{ $item->ram }}
+                                            @endif
+										</div>
+									</div>
+									<div class="data-table-col">
+										<div class="data-table-content">
+                                            @if (count(explode('\\',$item->hard_disk_type)) > 1)
+                                                <span>
+                                                    {{ explode('\\',$item->hard_disk_type)[0] }}
+                                                </span>
+                                                {{ explode('\\',$item->hard_disk_type)[1] }}
+                                            @else
+                                                {{ $item->hard_disk_type }}
+                                            @endif
+										</div>
+									</div>
+									<div class="data-table-col">
+										<div class="data-table-content">
+                                            @if (count(explode('\\',$item->hard_disk_size)) > 1)
+                                                <span>
+                                                    {{ explode('\\',$item->hard_disk_size)[0] }}
+                                                </span>
+                                                {{ explode('\\',$item->hard_disk_size)[1] }}
+                                            @else
+                                                {{ $item->hard_disk_size }}
+                                            @endif
+										</div>
+									</div>
+									<div class="data-table-col">
+										<div class="data-table-content">
+                                            {{ $item->upgrade  ? '支持':'不支持' }}
+										</div>
+									</div>
+									<div class="data-table-col">
+										<div class="data-table-content">
+                                            @if (count(explode('\\',$item->raid_card)) > 1)
+                                                <span>
+                                                    {{ explode('\\',$item->raid_card)[0] }}
+                                                </span>
+                                                {{ explode('\\',$item->raid_card)[1] }}
+                                            @else
+                                                {{ $item->raid_card }}
+                                            @endif
+										</div>
+									</div>
+									<div class="data-table-col">
+										<div class="data-table-content">
+                                            @if (count(explode('\\',$item->more['network_card'])) > 1)
+                                                <span>
+                                                    {{ explode('\\',$item->more['network_card'])[0] }}
+                                                </span>
+                                                {{ explode('\\',$item->more['network_card'])[1] }}
+                                            @else
+                                                {{ $item->more['network_card'] }}
+                                            @endif
+										</div>
+									</div>
+									<div class="data-table-col">
+										<div class="data-table-content">
+                                            {{ $item->ips }}
+										</div>
+									</div>
+									<div class="data-table-col">
+										<div class="data-table-content">
+                                            {{ $item->ddos }}
+										</div>
+									</div>
+									<div class="data-table-col">
+										<div class="data-table-content">
+                                            @foreach (explode(',',$item->bandwidth) as $item_bandwidth)
+                                            <p>
+                                                @if (count(explode('\\',$item_bandwidth)) > 1)
+                                                    {!! preg_replace('/(\d+[A-Z]{1})/','<span class="attr">$1&nbsp;</span>',explode('\\',$item_bandwidth)[0]) !!}
+                                                    <span class="wrap">
+                                                        {!! preg_replace('/(\d+[A-Z]{1})/','<span class="attr">$1&nbsp;</span>',explode('\\',$item_bandwidth)[1]) !!}
+                                                    </span>
+                                                @else
+                                                    {!! preg_replace('/(\d+[A-Z]{1})/','<span class="attr">$1&nbsp;</span>',$item_bandwidth) !!}
+                                                @endif
+                                                <!-- <span class="attr">
+                                                    30M
+                                                </span>
+                                                优化回国带宽 -->
+                                                <!-- <span class="wrap">
+                                                    (包含<span class="attr">5M</span> CN2优化回国)
+                                                </span> -->
+                                            </p>
+                                            @endforeach
+											<!-- <p>
+												<span class="attr">
+													30M
+												</span>
+												优化回国
+											</p>
+											<p>
+												<span class="attr">
+													100M
+												</span>
+												普通回国
+											</p>
+											<p>
+												<span class="attr">
+													100M
+												</span>
+												国际带宽
+											</p> -->
+										</div>
+									</div>
+									<div class="data-table-col">
+										<div class="data-table-content">
+											<span class="amount">
+                                                {{ $item->price }}
+											</span>
+											{{ $item->unit }}
+										</div>
+									</div>
+								</div>
+
+                                @endforeach
+								<!-- <div class="data-table-row">
 									<div class="data-table-col thead">
 										<div class="data-table-content">
 											<span>
@@ -417,7 +770,9 @@
 											元/月
 										</div>
 									</div>
-								</div>
+								</div> -->
+
+
 							</div>
 							<div class="explanation">
 								<p>
@@ -482,6 +837,8 @@
 									</span>
 								</p>
 							</div>
+
+
 						</div>
 					</div>
 				</div>

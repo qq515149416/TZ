@@ -58,6 +58,7 @@ class RechargeStatisticsRequest extends FormRequest
 				];
 				break;
 			case 'getRechargeDetailed':
+			case 'getRechargeExcel':
 				$return = [
 					'month'       	=> 'required',
 				];

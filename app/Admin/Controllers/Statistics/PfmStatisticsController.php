@@ -22,6 +22,7 @@ use Encore\Admin\Facades\Admin;
 use App\Admin\Controllers\Excel;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Carbon\Carbon;
+use App\Admin\Controllers\Excel\ExcelController;
 
 class PfmStatisticsController extends Controller
 {
@@ -243,6 +244,93 @@ class PfmStatisticsController extends Controller
 		$result = $statistics->getConsumptionDetailed($par['month']);
 		
 		return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
+	}
+
+	/**
+	 * 获取消费详情excel
+	 * @param  $month 	-月份 Y-m
+	 * @return
+	 */
+	public function getConsumptionExcel(PfmStatisticsRequest $request){
+		$par = $request->only(['month']);
+
+		$statistics = new PfmStatistics();
+
+		$res = $statistics->getConsumptionDetailed($par['month']);
+		$res = $res['data'];
+
+		$data1 = [ 
+			[
+				'日期',
+				'消费金额'
+			], 
+		];
+		foreach ($res['line'] as $k => $v) {
+			$data1[] = [ $res['line'][$k]['time'] , $res['line'][$k]['actual_payment'] ];
+		}
+		
+		$data2 = [ 
+			[
+				'业务员',
+				'消费金额'
+			], 
+		];
+		foreach ($res['user_sta'] as $k => $v) {
+			$data2[] = [ $res['user_sta'][$k]['name'] , $res['user_sta'][$k]['pfm'] ];
+		}
+
+		$data3 = [ 
+			[
+				'业务类型',
+				'消费金额'
+			], 
+		];
+		foreach ($res['type_sta'] as $k => $v) {
+			$data3[] = [ $res['type_sta'][$k]['type'] , $res['type_sta'][$k]['actual_payment'] ];
+		}
+		
+		$data4 = [ 
+			[
+				'id',
+				'客户',
+				'流水单号',
+				'金额',
+				'付款时间',
+				'所属业务员',
+			], 
+		];
+		foreach ($res['list'] as $k => $v) {
+			$data4[] = [ 
+				$res['list'][$k]['flow_id'] , 
+				$res['list'][$k]['customer_name'] , 
+				$res['list'][$k]['serial_number'] , 
+				$res['list'][$k]['actual_payment'] , 
+				$res['list'][$k]['pay_time'] , 
+				$res['list'][$k]['name'] ,
+			];
+		}
+
+		$arr = [
+			0 => [
+				'cellData'	=> $data1,
+				'cellName'	=> '每日消费',
+			],
+			1 => [
+				'cellData'	=> $data2,
+				'cellName'	=> '业务员统计',
+			],
+			2 => [
+				'cellData'	=> $data3,
+				'cellName'	=> '业务类型统计',
+			],
+			3 => [
+				'cellData'	=> $data4,
+				'cellName'	=> '消费流水列表',
+			],
+
+		];
+		$excel = new ExcelController();
+		$excel->kiriExcel($arr,$par['month'].'消费详情');
 	}
 
 	/**

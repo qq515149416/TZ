@@ -1069,13 +1069,14 @@ class  PfmStatistics extends Model
 		$month_small = date('m',strtotime($begin));
 
 		$all_actual_payment = $this->leftJoin('admin_users as b' , 'b.id' , '=' , 'tz_orders_flow.business_id')
+				->leftjoin('tz_users as c' , 'c.id' , '=' , 'tz_orders_flow.customer_id')
 				->where('tz_orders_flow.pay_time','>',$begin)
 				->where('tz_orders_flow.pay_time','<',$end)
 				// ->select(DB::raw('sum(tz_orders_flow.actual_payment) as actual_payment') , 'b.name')
 				// ->groupBy('tz_orders_flow.business_id')
 				// ->get()->toArray();
 				->orderBy('tz_orders_flow.pay_time','desc')
-				->get(['tz_orders_flow.actual_payment' , 'tz_orders_flow.id as flow_id' , 'tz_orders_flow.order_id' , 'b.name' , 'tz_orders_flow.serial_number' , 'tz_orders_flow.pay_time']);
+				->get(['tz_orders_flow.actual_payment' , 'tz_orders_flow.id as flow_id' , 'tz_orders_flow.order_id' , 'b.name' , 'tz_orders_flow.serial_number' , 'tz_orders_flow.pay_time' , 'c.name as cusname' , 'c.nickname' , 'c.email']);
 		//dd($all_actual_payment);
 		if ($all_actual_payment->isEmpty()) {
 			return [
@@ -1117,6 +1118,7 @@ class  PfmStatistics extends Model
 			],
 		];
 		foreach ($all_actual_payment as $k => $v) {
+			$all_actual_payment[$k]['customer_name'] = $all_actual_payment[$k]['nickname']?:$all_actual_payment[$k]['email']?:$all_actual_payment[$k]['cusname'];
 			if ($v['name'] == null) {
 				$v['name'] = '已删业务员';
 			}

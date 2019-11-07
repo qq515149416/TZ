@@ -128,6 +128,70 @@ class InfoController extends Controller
 
         return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
     }
+
+     /**
+     * 获取客户数量excel
+     * @param  $month - 月份
+     * @return
+     */
+    public function getUsersExcel(Request $request){
+        $par = $request->only(['month']);
+
+        if (!isset($par['month'])) {
+            return tz_ajax_echo(null,'请提供查询月份',0);
+        }
+        $statistics = new TzUsers();
+
+        $res = $statistics->getUsersDetailed($par['month']);
+        $res = $res['data'];
+        
+        $data1 = [ 
+            [
+                '日期',
+                '新增客户数量'
+            ], 
+        ];
+        foreach ($res['line'] as $k => $v) {
+            $data1[] = [ $res['line'][$k]['time'] , $res['line'][$k]['num'] ];
+        }
+
+        $data2 = [ 
+            [
+                '用户名',
+                '邮箱',
+                '昵称',
+                '联系电话',
+                'qq',
+                '注册时间',
+                '所属业务员',
+            ], 
+        ];
+        foreach ($res['info'] as $k => $v) {
+            $data2[] = [ 
+                $res['info'][$k]['name'] , 
+                $res['info'][$k]['email'] ,
+                $res['info'][$k]['nickname'] ,
+                $res['info'][$k]['msg_phone'] ,
+                $res['info'][$k]['msg_qq'] ,
+                $res['info'][$k]['created_at'] ,
+                $res['info'][$k]['salesman_name'] ,
+            ];
+        }
+
+        $arr = [
+            0   => [
+                'cellData' => $data1,
+                'cellName' => '每日新增',
+            ],
+            1   => [
+                'cellData' => $data2,
+                'cellName' => '新增客户列表',
+            ],
+        ];
+        $excel = new ExcelController();
+
+        $excel->kiriExcel($arr,$par['month'].'新增客户详情');
+    }
 }
 
 

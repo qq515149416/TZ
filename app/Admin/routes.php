@@ -310,7 +310,7 @@ Route::group([
         $router->get('statisticsList', 'Statistics\StatisticsController@index');//机器统计
         $router->get('getMachineNum', 'Statistics\StatisticsController@getMachineNum');//业务上架统计概览
         $router->get('getBusinessDetailed', 'Statistics\StatisticsController@getBusinessDetailed');//业务上架统计概览详情
-        
+        $router->get('getBusinessExcel', 'Statistics\StatisticsController@getBusinessExcel');//业务上架统计概览详情excel
     });
 
     /**
@@ -327,6 +327,7 @@ Route::group([
         $router->get('consumptionTwelve','Statistics\PfmStatisticsController@consumptionTwelve');//获取消费总额折线图所需数据接口
         $router->get('getConsumption','Statistics\PfmStatisticsController@getConsumption');//获取消费额的接口
         $router->get('getConsumptionDetailed','Statistics\PfmStatisticsController@getConsumptionDetailed');//获取消费详情
+        $router->get('getConsumptionExcel','Statistics\PfmStatisticsController@getConsumptionExcel');//获取消费详情
         $router->get('getOrderByFlowId','Statistics\PfmStatisticsController@getOrderByFlowId');//根据流水id获取流水包含的订单
         
     });
@@ -342,6 +343,7 @@ Route::group([
         $router->get('rechargeTwelve', 'Statistics\RechargeStatisticsController@rechargeTwelve');//获取充值总额折线图所需数据接口
         $router->get('getRecharge', 'Statistics\RechargeStatisticsController@getRecharge');//获取充值额
         $router->get('getRechargeDetailed', 'Statistics\RechargeStatisticsController@getRechargeDetailed');//获取充值额
+        $router->get('getRechargeExcel', 'Statistics\RechargeStatisticsController@getRechargeExcel');//获取充值额
     });
 
 
@@ -658,6 +660,7 @@ Route::group([
     ], function (Router $route) {
         Route::get('export', 'Excel\ExcelController@export');    //Excel导出
         Route::get('import', 'Excel\ExcelController@import');    //Excel导入
+
     });
 
     /**
@@ -724,6 +727,7 @@ Route::group([
         $router->get('noBuyUsers', 'TzUsers\InfoController@noBuyUsers');//获取没买过的用户信息
         $router->get('getUsers', 'TzUsers\InfoController@getUsers');//获取客户数量
         $router->get('getUsersDetailed', 'TzUsers\InfoController@getUsersDetailed');//按月获取客户数量
+        $router->get('getUsersExcel', 'TzUsers\InfoController@getUsersExcel');//按月获取客户数量excel
         Route::group([
             'prefix' => 'address',
         ], function (Router $router) {

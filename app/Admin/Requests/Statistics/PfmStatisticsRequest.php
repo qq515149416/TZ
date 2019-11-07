@@ -53,6 +53,7 @@ class PfmStatisticsRequest extends FormRequest
 				];
 				break;
 			case 'getConsumptionDetailed':
+			case 'getConsumptionExcel':
 				$return = [
 					'month'       	=> 'required',
 				];

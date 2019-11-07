@@ -138,6 +138,7 @@ Route::group([
             $router->get('/invoice', 'Show\InvoiceController@index');
             $router->get('/api', 'Show\ApiController@index');
             $router->get('/statisticalOverview', 'Show\StatisticalOverviewController@index');
+            $router->resource('/foreign', 'Show\ForeignController');
 
             //流水单复核
             $router->resource('/ordersReview', 'Show\OrdersReviewController');
@@ -311,6 +312,7 @@ Route::group([
         $router->get('getMachineNum', 'Statistics\StatisticsController@getMachineNum');//业务上架统计概览
         $router->get('getBusinessDetailed', 'Statistics\StatisticsController@getBusinessDetailed');//业务上架统计概览详情
         $router->get('getBusinessExcel', 'Statistics\StatisticsController@getBusinessExcel');//业务上架统计概览详情excel
+        
     });
 
     /**
@@ -329,7 +331,7 @@ Route::group([
         $router->get('getConsumptionDetailed','Statistics\PfmStatisticsController@getConsumptionDetailed');//获取消费详情
         $router->get('getConsumptionExcel','Statistics\PfmStatisticsController@getConsumptionExcel');//获取消费详情
         $router->get('getOrderByFlowId','Statistics\PfmStatisticsController@getOrderByFlowId');//根据流水id获取流水包含的订单
-        
+
     });
 
     /**
@@ -719,7 +721,7 @@ Route::group([
      * 客户用户管理
      */
     Route::group([
-        'prefix' => 'users', 
+        'prefix' => 'users',
     ], function (Router $router) {
 
         $router->post('getUserInfo', 'TzUsers\InfoController@getUserInfo');//修改用户QQ、手机、备注等信息

@@ -6,8 +6,14 @@ use App\Http\Controllers\Controller;
 
 class OverseasController extends Controller
 {
-    public function index()
+    public function index($page="")
     {
-        return view("http/overseas");
+        if(!$page || $page=="index") {
+            return view("http/overseas");
+        } else {
+            return view("http/overseas_product",[
+                "page" => $page
+            ]);
+        }
     }
 }

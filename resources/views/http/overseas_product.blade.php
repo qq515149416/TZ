@@ -876,7 +876,7 @@
         </div>
     </section>
     <section class="jumbotron footer">
-        <h4>腾正海外服务器租用-帮您实现全球快速安全的资源部署</h4>
+        <h4>腾正{{ $page=='HKT' ? '' : '海外' }}服务器租用-帮您实现全球快速安全的资源部署</h4>
         <a href="javascript:;">立即咨询</a>
     </section>
 </div>

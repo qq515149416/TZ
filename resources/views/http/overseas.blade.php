@@ -368,7 +368,7 @@
     </div>
     <div class="consult">
         <div class="title" style="margin-bottom: 20px;">
-            <h2 class="text" style="color: #fff;">服务器租用-腾正科技IDC运营专家</h2>
+            <h2 class="text" style="color: #fff;">腾正海外服务器租用-帮您实现全球快速安全的资源部署</h2>
         </div>
         <a class="consult-btn" href="javascript: void(0);">立即咨询</a>
     </div>

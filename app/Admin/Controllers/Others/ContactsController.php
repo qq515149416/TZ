@@ -31,8 +31,8 @@ class ContactsController extends Controller
      */
     public function vi(Request $request) {
         
-        // $time = strtotime('2019-04-03');
-        // echo $time;
+        $time = strtotime('2019-04-03');
+        echo $time;
         // $date = date('Y-m-d H:i:s',$time);
         // echo $date;
         // $query_time = $this->queryTime($time);

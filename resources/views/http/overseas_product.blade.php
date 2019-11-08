@@ -8,41 +8,59 @@
 
 @section('content')
 <div id="overseas_product" class="row">
-	<div class="banner">
-		<div class="version-heart">
-			<h3>
-				海外服务器
-				<span>
-					| 全球服务器租用
-				</span>
-			</h3>
-			<div class="description">
-				<ul>
-					<li>
-						高品质标准：T级机房，接入国际骨干
-					</li>
-					<li>
-						多配置可选：配置丰富，多配置扩展
-					</li>
-					<li>
-						高性价比：性能＞价格，谁用谁知道
-					</li>
-				</ul>
-			</div>
-			<div class="bottom">
-                @foreach ($son_nav as $nav)
-				<a class="btn-link {{ $nav->alias == $page ? 'active':'' }}" href="{{ $nav->url }}">
-					{{ $nav->name }}
-				</a>
-                @endforeach
-				<!-- <a class="btn-link" href="javascript:;">欧洲服务器</a> -->
-				<!-- <a class="btn-link active" href="javascript:;">
-					美洲服务器
-				</a> -->
-				<!-- <a class="btn-link" href="javascript:;">非洲服务器</a> -->
-			</div>
-		</div>
-	</div>
+    @if ($page == 'HKT')
+        <div class="banner domestic">
+            <div class="title">
+                <h2 class="text">服务器租用</h2>
+                <h4 class="sub-text">
+                    自主准T4、T3机房，从服务器设备、环境到维护的一站式服务，为您提供定制化硬件采购解决方案<br/>
+                    以租用的方式独享专用高性能服务器及全完自主管理权限，满足您不同时期业务发展需求！
+                </h4>
+            </div>
+            <div class="bottom">
+            @foreach ($son_nav as $nav)
+                <a class="btn-link {{ $page == $nav->alias ? 'active' : '' }}" href="/zuyong/{{ $nav->alias }}/{{ $nav->alias=='HKT' ? $room : 'hunan' }}">{{ $nav->name }}</a>
+            @endforeach
+            </div>
+        </div>
+    @else
+        <div class="banner default">
+            <div class="version-heart">
+                <h3>
+                    海外服务器
+                    <span>
+                        | 全球服务器租用
+                    </span>
+                </h3>
+                <div class="description">
+                    <ul>
+                        <li>
+                            高品质标准：T级机房，接入国际骨干
+                        </li>
+                        <li>
+                            多配置可选：配置丰富，多配置扩展
+                        </li>
+                        <li>
+                            高性价比：性能＞价格，谁用谁知道
+                        </li>
+                    </ul>
+                </div>
+                <div class="bottom">
+                    @foreach ($son_nav as $nav)
+                    <a class="btn-link {{ $nav->alias == $page ? 'active':'' }}" href="{{ $nav->url }}">
+                        {{ $nav->name }}
+                    </a>
+                    @endforeach
+                    <!-- <a class="btn-link" href="javascript:;">欧洲服务器</a> -->
+                    <!-- <a class="btn-link active" href="javascript:;">
+                        美洲服务器
+                    </a> -->
+                    <!-- <a class="btn-link" href="javascript:;">非洲服务器</a> -->
+                </div>
+            </div>
+        </div>
+    @endif
+
 	<section class="jumbotron data-center">
 		<div class="version-heart">
 			<h2>
@@ -53,7 +71,7 @@
 				<ul class="nav nav-tabs" role="tablist">
                     @foreach ($machine_rooms as $machine_room)
 					<li role="presentation" class="{{ $machine_room->alias == $room ? 'active':'' }}">
-						<a href="/overseas/{{ $page }}/{{ $machine_room->alias }}">
+						<a href="/{{ $page=='HKT' ? 'zuyong' : 'overseas' }}/{{ $page }}/{{ $machine_room->alias }}">
                             {{ $machine_room->name }}
 						</a>
 					</li>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Show;
 use App\Http\Controllers\Controller;
 use App\Admin\Models\News\NavModel;
 use App\Admin\Models\News\ForeignModel;
+use App\Admin\Models\News\MachineRoomModel;
 
 use Illuminate\Http\Request;
 
@@ -16,7 +17,8 @@ class OverseasController extends Controller
             $nav_id = NavModel::where('alias','like','%turtle%')->first()->id;
             $nav_data = NavModel::find($nav_id);
             return view("http/overseas",[
-                "son_nav" => NavModel::where('parent_id',$nav_data->id)->get()
+                "son_nav" => NavModel::where('parent_id',$nav_data->id)->get(),
+                "data" => ForeignModel::all()
             ]);
         } else {
             $nav_id = NavModel::where('alias','like','%'.$page.'%')->first()->id;

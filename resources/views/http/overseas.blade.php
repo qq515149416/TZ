@@ -37,20 +37,32 @@
         </div>
         <div class="content">
             <div class="d-block-container version-heart">
-                <!-- 新加波 -->
+                @foreach ($data->filter(function ($value, $key) {
+                    return $value->more && array_key_exists('discount',$value->more) && $value->more['discount'];
+                }) as $item)
+                @if ($loop->index < 4)
+                <!-- {{ $item->machine_room_id->name }} -->
                 <div class="item">
                     <div class="card">
                         <div class="card-head">
                             <h4 class="card-title">
-                                新加波
-                                <span>下单即享<em>9</em>折</span>
+                                @if (count(explode('-',$item->machine_room_id->name)) > 1)
+                                    {{ explode('-',$item->machine_room_id->name)[0] }}
+                                @else
+                                    {{ $item->machine_room_id->name }}
+                                @endif
+                                <span>下单即享<em>{{ $item->more['discount'] }}</em>折</span>
                             </h4>
                             <div class="price">
-                                <span class="amount">990</span>
-                                <span class="unit">元/月</span>
-                                <span class="original-price">
-                                    &nbsp;&nbsp;(原价：<del>1100元/月</del>)
-                                </span>
+                                <div>
+                                    <span class="amount">{{ (int)$item->price }}</span>
+                                    <span class="unit">{{ $item->unit }}</span>
+                                </div>
+                                <div>
+                                    <span class="original-price">
+                                        (原价：<del>{{ (int)$item->more['original_price'] }}{{ $item->unit }}</del>)
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <div class="card-body">
@@ -58,36 +70,36 @@
                                 <ul class="desc">
                                     <li>
                                         <span>
-                                            CPU：E3
+                                            CPU：{{ $item->cpu }}
                                         </span>
                                         <span>
-                                            型号：1230V3
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span>
-                                            内存：8G
-                                        </span>
-                                        <span>
-                                            硬盘类型：HDD
+                                            型号：{{ $item->type }}
                                         </span>
                                     </li>
                                     <li>
                                         <span>
-                                            I P 数量：1
+                                            内存：{{ $item->ram }}
                                         </span>
                                         <span>
-                                            硬盘大小：1T
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span>
-                                            线程：4核8线程
+                                            硬盘类型：{{ $item->hard_disk_type }}
                                         </span>
                                     </li>
                                     <li>
                                         <span>
-                                            支持硬件升级：是
+                                            I P 数量：{{ $item->ips }}
+                                        </span>
+                                        <span>
+                                            硬盘大小：{{ $item->hard_disk_size }}
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span>
+                                            线程：{{ $item->thread }}
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span>
+                                            支持硬件升级：{{ $item->upgrade  ? '支持':'不支持' }}
                                         </span>
                                     </li>
                                     <li class="clearfix">
@@ -96,9 +108,14 @@
 
                                         </p>
                                         <p>
-                                            · 20M独享接入<br />
-                                            （包含5M回国优质）<br />
-                                            · 20M纯国际带宽
+                                            @foreach (explode(',',$item->bandwidth) as $item_bandwidth)
+                                                @if (count(explode('\\',$item_bandwidth)) > 1)
+                                                · {{ explode('\\',$item_bandwidth)[0] }}<br />
+                                                    {{ explode('\\',$item_bandwidth)[1] }}<br />
+                                                @else
+                                                · {{ $item_bandwidth }}<br />
+                                                @endif
+                                            @endforeach
                                         </p>
                                     </li>
                                 </ul>
@@ -107,215 +124,9 @@
                         </div>
                     </div>
                 </div>
-                <!-- 日本 -->
-                <div class="item">
-                    <div class="card">
-                        <div class="card-head">
-                            <h4 class="card-title">
-                                日本
-                                <span>下单即享<em>9</em>折</span>
-                            </h4>
-                            <div class="price">
-                                <span class="amount">1080</span>
-                                <span class="unit">元/月</span>
-                                <span class="original-price">
-                                    (原价：<del>1200元/月</del>)
-                                </span>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="card-text">
-                                <ul class="desc">
-                                    <li>
-                                        <span>
-                                            CPU：E3
-                                        </span>
-                                        <span>
-                                            型号：1230V3
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span>
-                                            内存：8G
-                                        </span>
-                                        <span>
-                                            硬盘类型：SSD
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span>
-                                            I P 数量：1
-                                        </span>
-                                        <span>
-                                            硬盘大小：240G
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span>
-                                            线程：4核8线程
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span>
-                                            支持硬件升级：是
-                                        </span>
-                                    </li>
-                                    <li class="clearfix">
-                                        <p>
-                                            带宽：
+                @endif
+                @endforeach
 
-                                        </p>
-                                        <p>
-                                            · 20M独享接入<br />
-                                            （包含5MCN2优化回国）<br />
-                                            · 20M国际独享
-                                        </p>
-                                    </li>
-                                </ul>
-                                <a class="detail-link" href="javascript: void(0);">了解详情</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 美国 -->
-                <div class="item">
-                    <div class="card">
-                        <div class="card-head">
-                            <h4 class="card-title">
-                                美国
-                                <span>下单即享<em>9</em>折</span>
-                            </h4>
-                            <div class="price">
-                                <span class="amount">1350</span>
-                                <span class="unit">元/月</span>
-                                <span class="original-price">
-                                    (原价：<del>1500元/月</del>)
-                                </span>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="card-text">
-                                <ul class="desc">
-                                    <li>
-                                        <span>
-                                            CPU：E5
-                                        </span>
-                                        <span>
-                                            型号：2660
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span>
-                                            内存：16G
-                                        </span>
-                                        <span>
-                                            硬盘类型：SSD
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span>
-                                            I P 数量：1
-                                        </span>
-                                        <span>
-                                            硬盘大小：240G
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span>
-                                            线程：8核16线程
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span>
-                                            支持硬件升级：是
-                                        </span>
-                                    </li>
-                                    <li class="clearfix">
-                                        <p>
-                                            带宽：
-
-                                        </p>
-                                        <p>
-                                            · 30m优化回国带宽 <br />
-                                            · 100M普通带宽
-                                        </p>
-                                    </li>
-                                </ul>
-                                <a class="detail-link" href="javascript: void(0);">了解详情</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="item">
-                    <div class="card">
-                        <div class="card-head">
-                            <h4 class="card-title">
-                                韩国
-                                <span>下单即享<em>9</em>折</span>
-                            </h4>
-                            <div class="price">
-                                <span class="amount">882</span>
-                                <span class="unit">元/月</span>
-                                <span class="original-price">
-                                    &nbsp;&nbsp;(原价：<del>980元/月</del>)
-                                </span>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="card-text">
-                                <ul class="desc">
-                                    <li>
-                                        <span>
-                                            CPU：E3
-                                        </span>
-                                        <span>
-                                            型号：1230V3
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span>
-                                            内存：8G
-                                        </span>
-                                        <span>
-                                            硬盘类型：SSD
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span>
-                                            I P 数量：1
-                                        </span>
-                                        <span>
-                                            硬盘大小：240G
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span>
-                                            线程：4核8线程
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span>
-                                            支持硬件升级：是
-                                        </span>
-                                    </li>
-                                    <li class="clearfix">
-                                        <p>
-                                            带宽：
-
-                                        </p>
-                                        <p>
-                                            · 10M独享接入<br />
-                                            （包含5M回国优质带宽）<br />
-                                            · 20M纯国际带宽
-                                        </p>
-                                    </li>
-                                </ul>
-                                <a class="detail-link" href="javascript: void(0);">了解详情</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
             </div>
         </div>

@@ -10681,19 +10681,37 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #overseas .hot-product .content .d-block-container > .item > .card .card-head > .price {
   margin-top: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
 }
-#overseas .hot-product .content .d-block-container > .item > .card .card-head > .price > .amount {
+#overseas .hot-product .content .d-block-container > .item > .card .card-head > .price > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+#overseas .hot-product .content .d-block-container > .item > .card .card-head > .price > div > .amount {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 36px;
+  line-height: 36px;
   font-weight: bold;
   color: #fedf33;
 }
-#overseas .hot-product .content .d-block-container > .item > .card .card-head > .price > .unit {
+#overseas .hot-product .content .d-block-container > .item > .card .card-head > .price > div > .unit {
   font-family: "\5FAE\8F6F\96C5\9ED1";
   font-size: 12px;
   color: #fedf33;
 }
-#overseas .hot-product .content .d-block-container > .item > .card .card-head > .price > .original-price {
+#overseas .hot-product .content .d-block-container > .item > .card .card-head > .price > div > .original-price {
   font-family: 'pingFangRegular';
   font-size: 12px;
   color: #d1daf8;
@@ -10903,7 +10921,67 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   width: 1180px;
   margin: 0 auto;
 }
-#overseas_product .banner {
+#overseas_product .banner.domestic {
+  position: relative;
+  height: 563px;
+  padding-top: 83px;
+  color: #fff;
+  text-align: center;
+  background: url(/images/server-rent-banner-bg.png?b2cea809383abd135a8da87148aba511) no-repeat center;
+  background-size: cover;
+}
+#overseas_product .banner.domestic .title {
+  margin-top: 140px;
+}
+#overseas_product .banner.domestic .title .text {
+  font-size: 60px;
+  line-height: 72px;
+  margin-bottom: 16px;
+  letter-spacing: 4.5px;
+  font-family: 'pingFangBold';
+}
+#overseas_product .banner.domestic .title .sub-text {
+  font-size: 16px;
+  line-height: 28px;
+  letter-spacing: 0.8px;
+  font-family: 'pingFangRegular';
+}
+#overseas_product .banner.domestic .bottom {
+  position: absolute;
+  bottom: 18px;
+  width: 1180px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+#overseas_product .banner.domestic .bottom .btn-link {
+  display: inline-block;
+  width: 220px;
+  height: 63px;
+  line-height: 63px;
+  border-radius: 8px;
+  margin-right: 20px;
+  color: #fff;
+  font-size: 18px;
+  letter-spacing: 3.2px;
+  text-decoration: none;
+  -webkit-transition: background 0.4s ease-in-out;
+  transition: background 0.4s ease-in-out;
+  background: -webkit-gradient(linear, left top, right top, from(#b9ccfc), color-stop(50%, #6d8fff));
+  background: linear-gradient(to right, #b9ccfc 0%, #6d8fff 50%);
+  background: -webkit-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
+}
+#overseas_product .banner.domestic .bottom .btn-link:hover,
+#overseas_product .banner.domestic .bottom .btn-link.active {
+  background: #fff;
+  color: #043fc4;
+  font-family: 'pingFangHeavy';
+}
+#overseas_product .banner.default {
   position: relative;
   height: 560px;
   padding-top: 83px;
@@ -10911,30 +10989,30 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background: url(/images/overseas_banner_bg.png?2c23ea4c1283e58877b2d88a3fa21e8f) no-repeat center;
   background-size: cover;
 }
-#overseas_product .banner h3 {
+#overseas_product .banner.default h3 {
   font-size: 50px;
   font-family: 'pingFangBold';
   margin-top: 100px;
   margin-bottom: 54px;
 }
-#overseas_product .banner h3 span {
+#overseas_product .banner.default h3 span {
   font-size: 30px;
   font-family: 'pingFang';
   margin-left: 16px;
 }
-#overseas_product .banner .description ul {
+#overseas_product .banner.default .description ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-#overseas_product .banner .description ul li {
+#overseas_product .banner.default .description ul li {
   font-size: 16px;
   font-family: 'pingFangRegular';
   margin-bottom: 12px;
   padding-left: 22px;
   position: relative;
 }
-#overseas_product .banner .description ul li::before {
+#overseas_product .banner.default .description ul li::before {
   content: "";
   position: absolute;
   width: 15px;
@@ -10943,7 +11021,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   left: 0;
   background: url(/images/overseas_banner_icon.png?f99a2c7f0bfcb580530c37eb448f840b) no-repeat;
 }
-#overseas_product .banner .bottom {
+#overseas_product .banner.default .bottom {
   position: absolute;
   width: 1180px;
   left: 50%;
@@ -10955,7 +11033,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   display: -ms-flexbox;
   display: flex;
 }
-#overseas_product .banner .bottom .btn-link {
+#overseas_product .banner.default .bottom .btn-link {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
@@ -10973,8 +11051,8 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background: linear-gradient(to right, #b9ccfc 0%, #6d8fff 50%);
   background: -webkit-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
 }
-#overseas_product .banner .bottom .btn-link:hover,
-#overseas_product .banner .bottom .btn-link.active {
+#overseas_product .banner.default .bottom .btn-link:hover,
+#overseas_product .banner.default .bottom .btn-link.active {
   background: #fff;
   color: #043fc4;
   font-family: 'pingFangHeavy';

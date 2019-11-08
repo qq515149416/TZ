@@ -183,23 +183,32 @@
                             }
                             > .price {
                                 margin-top: 20px;
-                                > .amount {
-                                    font-family: Arial, Helvetica, sans-serif;
-                                    font-size: 36px;
-                                    font-weight: bold;
-                                    color: #fedf33;
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: stretch;
+                                > div {
+                                    display: flex;
+                                    align-items: flex-end;
+                                    > .amount {
+                                        font-family: Arial, Helvetica, sans-serif;
+                                        font-size: 36px;
+                                        line-height: 36px;
+                                        font-weight: bold;
+                                        color: #fedf33;
+                                    }
+                                    > .unit {
+                                        font-family: "微软雅黑";
+                                        font-size: 12px;
+                                        color: #fedf33;
+                                    }
+                                    > .original-price {
+                                        font-family: 'pingFangRegular';
+                                        font-size: 12px;
+                                        color: #d1daf8;
+                                        margin-left: 2px;
+                                    }
                                 }
-                                > .unit {
-                                    font-family: "微软雅黑";
-                                    font-size: 12px;
-                                    color: #fedf33;
-                                }
-                                > .original-price {
-                                    font-family: 'pingFangRegular';
-                                    font-size: 12px;
-                                    color: #d1daf8;
-                                    margin-left: 2px;
-                                }
+
                             }
                         }
                         > .card-body {

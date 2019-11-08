@@ -3,7 +3,80 @@
         width: 1180px;
         margin: 0 auto;
     }
-    .banner {
+    .banner.domestic {
+        position: relative;
+        height: 563px;
+        padding-top: 83px;
+        color: #fff;
+        text-align: center;
+        background: url("../images/serverRent/server-rent-banner-bg.png") no-repeat center;
+        background-size: cover;
+
+        .title {
+        margin-top: 140px;
+
+        .text {
+            font-size: 60px;
+            line-height: 72px;
+            margin-bottom: 16px;
+            letter-spacing: 4.5px;
+            font-family: 'pingFangBold';
+        }
+
+        .sub-text {
+            font-size: 16px;
+            line-height: 28px;
+            letter-spacing: 0.8px;
+            font-family: 'pingFangRegular';
+        }
+        }
+
+        .bottom {
+            position: absolute;
+            // left: 0;
+            // right: 0;
+            bottom: 18px;
+            width: 1180px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            display: flex;
+            // justify-content: center;
+            .btn-link {
+                display: inline-block;
+                width: 220px;
+                // flex: 1;
+                height: 63px;
+                line-height: 63px;
+                border-radius: 8px;
+                // margin-left: 10px;
+                // margin-right: 10px;
+                margin-right: 20px;
+                // margin-bottom: 18px;
+                color: #fff;
+                font-size: 18px;
+                letter-spacing: 3.2px;
+                text-decoration: none;
+                -webkit-transition: background .4s ease-in-out;
+                -moz-transition: background .4s ease-in-out;
+                -ms-transition: background .4s ease-in-out;
+                -o-transition: background .4s ease-in-out;
+                transition: background .4s ease-in-out;
+                background: linear-gradient(to right, #b9ccfc 0%, #6d8fff 50%);
+                background: -o-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
+                background: -ms-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
+                background: -moz-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
+                background: -webkit-linear-gradient(left, #b9ccfc 0%, #6d8fff 50%);
+
+                &:hover, &.active {
+                background: #fff;
+                color: #043fc4;
+                font-family: 'pingFangHeavy';
+                }
+            }
+        }
+    }
+    .banner.default {
         position: relative;
         height: 560px;
         padding-top: 83px;

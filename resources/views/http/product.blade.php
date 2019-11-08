@@ -19,7 +19,7 @@
             </div>
             <div class="bottom">
             @foreach ($nav as $item)
-                <a class="btn-link {{ $page == $item->alias ? 'active' : '' }}" href="/zuyong/{{ $item->alias }}/{{ $room }}">{{ $item->name }}</a>
+                <a class="btn-link {{ $page == $item->alias ? 'active' : '' }}" href="/zuyong/{{ $item->alias }}/{{ $item->alias=='HKT' ? '' : $room }}">{{ $item->name }}</a>
             @endforeach
             <!-- <a class="btn-link {{ $page == 'dianxin' ? 'active' : '' }}" href="/zuyong/dianxin/hunan">电信服务器租用</a>
             <a class="btn-link {{ $page == 'liantong' ? 'active' : '' }}" href="/zuyong/liantong/hunan">联通服务器租用</a>

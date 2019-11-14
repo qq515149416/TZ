@@ -140,6 +140,9 @@ Route::group([
             $router->get('/statisticalOverview', 'Show\StatisticalOverviewController@index');
             $router->resource('/foreign', 'Show\ForeignController');
 
+            $router->get('/new_app', 'Show\NewAppController@index');
+
+
             //流水单复核
             $router->resource('/ordersReview', 'Show\OrdersReviewController');
             $router->resource('/ordersReviewBig', 'Show\OrdersReviewBigController');
@@ -312,7 +315,7 @@ Route::group([
         $router->get('getMachineNum', 'Statistics\StatisticsController@getMachineNum');//业务上架统计概览
         $router->get('getBusinessDetailed', 'Statistics\StatisticsController@getBusinessDetailed');//业务上架统计概览详情
         $router->get('getBusinessExcel', 'Statistics\StatisticsController@getBusinessExcel');//业务上架统计概览详情excel
-        
+
     });
 
     /**

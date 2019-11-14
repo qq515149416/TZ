@@ -3163,6 +3163,7 @@ class OrdersModel extends Model
 
 		
 		if(isset($update['price'])  && $update['price'] == $order->price ){
+			$price = $update['price'];
 			unset($update['price']);
 		} else {
 			$update_data['money'] = $update['price'];
@@ -3207,7 +3208,7 @@ class OrdersModel extends Model
 		}
 
 		if($order->order_status == 0){
-			$update['payable_money'] = bcmul($update['price'],$order->duration,2);
+			$update['payable_money'] = bcmul($price,$order->duration,2);
 		} else {
 			$update['payable_money'] = $order->payable_money;
 		}

@@ -412,4 +412,136 @@ class StatisticsController extends Controller
 		$excel = new ExcelController();
 		$excel->kiriExcel($arr,$par['month'].'新增业务详情');
 	}
+
+	
+	public function getMachineExcelByMonth(Request $request)
+	{
+		$par = $request->only(['month']);
+		if (!isset($par['month'])) {
+			return tz_ajax_echo([],'请提供查询月份',0);
+		}
+		$month = $par['month'];
+
+		$month_begin = $month.'-01 00:00:00';
+		$month_begin_timestamp = strtotime($month_begin);
+		$month_end = date('Y-m-t 23:59:59',$month_begin_timestamp);
+		$month_end_timestamp = strtotime($month_end);
+
+		$model = new BusinessModel();
+		
+		$time = [
+			'begin'	=> $month_begin_timestamp,
+			'end'	=> $month_end_timestamp,
+		];
+		$new = $model->newBusiness($time);
+		$under = $model->underBusiness($time);
+
+		dd($new);
+		$business_type = [ 1 => '租用主机' , 2 => '托管主机' , 3 => '租用机柜' ];
+
+
+		$data1 = [ 
+			[
+				'日期',
+				'新增业务数量'
+			], 
+		];
+		foreach ($res['line'] as $k => $v) {
+			$data1[] = [ $res['line'][$k]['time'] , $res['line'][$k]['num'] ];
+		}
+
+		$data2 = [ 
+			[
+				'业务类型',
+				'新增业务数量'
+			], 
+		];
+		foreach ($res['type_arr'] as $k => $v) {
+			$data2[] = [ $res['type_arr'][$k]['type'] , $res['type_arr'][$k]['num'] ];
+		}
+	
+		$data3 = [ 
+			[
+				'业务号',
+				'客户',
+				'业务类型',
+				'机器编号',
+				'单价',
+				'开始时间',
+				'结束时间',
+				'所属业务员',
+			], 
+		];
+		foreach ($res['idc_on'] as $k => $v) {
+			$data3[] = [ 
+				$res['idc_on'][$k]['business_number'] , 
+				$res['idc_on'][$k]['customer_name'] , 
+				$res['idc_on'][$k]['business_type'] ,
+				$res['idc_on'][$k]['machine_number'] ,
+				$res['idc_on'][$k]['price'] ,
+				$res['idc_on'][$k]['start_time'] ,
+				$res['idc_on'][$k]['endding_time'] ,
+				$res['idc_on'][$k]['sales_name'] ,
+			];
+		}
+		
+		$data4 = [ 
+			[
+				'业务号',
+				'客户',
+				'业务类型',
+				'套餐',
+				'单价',
+				'开始时间',
+				'结束时间',
+				'所属业务员',
+			], 
+		];
+		foreach ($res['dip_on'] as $k => $v) {
+			$data4[] = [ 
+				$res['dip_on'][$k]['business_number'] , 
+				$res['dip_on'][$k]['customer_name'] , 
+				$res['dip_on'][$k]['business_type'] ,
+				$res['dip_on'][$k]['machine_number'] ,
+				$res['dip_on'][$k]['price'] ,
+				$res['dip_on'][$k]['start_time'] ,
+				$res['dip_on'][$k]['endding_time'] ,
+				$res['dip_on'][$k]['sales_name'] ,
+			];
+		}
+		
+		$data5 = [ 
+			[
+				'客户',
+				'业务类型',
+				'套餐',
+				'单价',
+				'购买时间',
+				'所属业务员',
+			], 
+		];
+		foreach ($res['overlay_on'] as $k => $v) {
+			$data5[] = [ 
+				$res['overlay_on'][$k]['customer_name'] , 
+				$res['overlay_on'][$k]['business_type'] ,
+				$res['overlay_on'][$k]['machine_number'] ,
+				$res['overlay_on'][$k]['price'] ,
+				$res['overlay_on'][$k]['buy_time'] ,
+				$res['overlay_on'][$k]['sales_name'] ,
+			];
+		}
+		$arr = [
+			0 => [
+				'cellData'	=> $data1,
+				'cellName'	=> '本月上架',
+			],
+			1 => [
+				'cellData'	=> $data2,
+				'cellName'	=> '本月下架',
+			],
+		
+		];
+		$excel = new ExcelController();
+		$excel->kiriExcel($arr,$par['month'].'新增业务详情');
+	}
 }

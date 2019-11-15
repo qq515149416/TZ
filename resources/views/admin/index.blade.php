@@ -60,7 +60,7 @@
 
 <!-- REQUIRED JS SCRIPTS -->
 {!! Admin::js() !!}
-<script src="{{ admin_asset ("/ddl/lib.js") }}"></script>
-<script src="{{ admin_asset ("/tz_assets/bundle.js") }}"></script>
+<!-- <script src="{{ admin_asset ("/ddl/lib.js") }}"></script>
+<script src="{{ admin_asset ("/tz_assets/bundle.js") }}"></script> -->
 </body>
 </html>

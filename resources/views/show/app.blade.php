@@ -1,4 +1,13 @@
-<div id="root_element">
+
+@if (strpos(request()->path(),'tz_admin/show') !== false)
+<iframe id="admin_iframe" style="width: 100%;" frameborder="0" src="/admin{{ explode('tz_admin/show',request()->path())[1] }}"></iframe>
+@elseif (strpos(request()->path(),'tz_admin') !== false)
+<iframe id="admin_iframe" style="width: 100%;" frameborder="0" src="/admin"></iframe>
+@endif
+<script type="text/javascript">
+    $("#admin_iframe").height($(window).height()-130);
+</script>
+<!-- <div id="root_element">
 </div>
 <script>
     try {
@@ -22,4 +31,4 @@
     } catch(e) {
         console.warn(e);
     }
-</script>
+</script> -->

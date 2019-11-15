@@ -27,7 +27,7 @@ class NavModel extends Model
     public function getParentIdAttribute($value)
     {
         if($value) {
-            return $this->where("id",$value)->first();
+            return collect($this->where("id",$value)->first())->except(["parent_id"]);
         }
     }
     /**

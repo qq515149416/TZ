@@ -5,7 +5,7 @@
 <iframe id="admin_iframe" style="width: 100%;" frameborder="0" src="/admin"></iframe>
 @endif
 <script type="text/javascript">
-    $("#admin_iframe").height($(window).height()-130);
+    $("#admin_iframe").height($(window).height()-120);
 </script>
 <!-- <div id="root_element">
 </div>

@@ -433,115 +433,92 @@ class StatisticsController extends Controller
 			'begin'	=> $month_begin_timestamp,
 			'end'	=> $month_end_timestamp,
 		];
-		$new = $model->newBusiness($time);
-		$under = $model->underBusiness($time);
+		$new_res = $model->newBusiness($time);
+		$under_res = $model->underBusiness($time);
 
-		dd($new);
-		$business_type = [ 1 => '租用主机' , 2 => '托管主机' , 3 => '租用机柜' ];
-
-
-		$data1 = [ 
-			[
-				'日期',
-				'新增业务数量'
-			], 
-		];
-		foreach ($res['line'] as $k => $v) {
-			$data1[] = [ $res['line'][$k]['time'] , $res['line'][$k]['num'] ];
-		}
-
-		$data2 = [ 
-			[
-				'业务类型',
-				'新增业务数量'
-			], 
-		];
-		foreach ($res['type_arr'] as $k => $v) {
-			$data2[] = [ $res['type_arr'][$k]['type'] , $res['type_arr'][$k]['num'] ];
-		}
+		$new = $new_res['data'];
+		$under = $under_res['data'];
 	
-		$data3 = [ 
-			[
+		$new_arr = [
+			0 => [
 				'业务号',
-				'客户',
-				'业务类型',
-				'机器编号',
+				'累计时长',
 				'单价',
+				'预计营收',
+				'客户名称',
+				'业务员',
+				'IP',
+				'所在机柜',
+				'所属机房',
+				'业务类型',
 				'开始时间',
 				'结束时间',
-				'所属业务员',
-			], 
+				'业务状态',	
+			],
 		];
-		foreach ($res['idc_on'] as $k => $v) {
-			$data3[] = [ 
-				$res['idc_on'][$k]['business_number'] , 
-				$res['idc_on'][$k]['customer_name'] , 
-				$res['idc_on'][$k]['business_type'] ,
-				$res['idc_on'][$k]['machine_number'] ,
-				$res['idc_on'][$k]['price'] ,
-				$res['idc_on'][$k]['start_time'] ,
-				$res['idc_on'][$k]['endding_time'] ,
-				$res['idc_on'][$k]['sales_name'] ,
-			];
-		}
-		
-		$data4 = [ 
-			[
+		$under_arr = [
+			0 => [
 				'业务号',
-				'客户',
+				'月营收',
+				'客户名称',
+				'业务员',
+				'IP',
+				'所在机柜',
+				'所属机房',
 				'业务类型',
-				'套餐',
-				'单价',
 				'开始时间',
 				'结束时间',
-				'所属业务员',
-			], 
+				'业务状态',	
+				'下架状态'
+			],
 		];
-		foreach ($res['dip_on'] as $k => $v) {
-			$data4[] = [ 
-				$res['dip_on'][$k]['business_number'] , 
-				$res['dip_on'][$k]['customer_name'] , 
-				$res['dip_on'][$k]['business_type'] ,
-				$res['dip_on'][$k]['machine_number'] ,
-				$res['dip_on'][$k]['price'] ,
-				$res['dip_on'][$k]['start_time'] ,
-				$res['dip_on'][$k]['endding_time'] ,
-				$res['dip_on'][$k]['sales_name'] ,
+		foreach ($new['business'] as $k => $v) {
+			$new_arr[] = [
+				$v->business_number,
+				$v->length,
+				$v->money,
+				$v->single_total,
+				$v->client_name,
+				$v->sales_name,
+				$v->ip,
+				$v->cabinet,
+				$v->machineroom,
+				$v->type,
+				$v->start_time,
+				$v->endding_time,
+				$v->status,
 			];
 		}
-		
-		$data5 = [ 
-			[
-				'客户',
-				'业务类型',
-				'套餐',
-				'单价',
-				'购买时间',
-				'所属业务员',
-			], 
-		];
-		foreach ($res['overlay_on'] as $k => $v) {
-			$data5[] = [ 
-				$res['overlay_on'][$k]['customer_name'] , 
-				$res['overlay_on'][$k]['business_type'] ,
-				$res['overlay_on'][$k]['machine_number'] ,
-				$res['overlay_on'][$k]['price'] ,
-				$res['overlay_on'][$k]['buy_time'] ,
-				$res['overlay_on'][$k]['sales_name'] ,
+		foreach ($under['business'] as $k => $v) {
+			$under_arr[] = [
+				$v->business_number,
+				$v->money,
+				$v->client_name,
+				$v->sales_name,
+				$v->ip,
+				$v->cabinet,
+				$v->machineroom,
+				$v->type,
+				$v->start_time,
+				$v->endding_time,
+				$v->status,
+				$v->remove,
 			];
 		}
+
+
 		$arr = [
 			0 => [
-				'cellData'	=> $data1,
+				'cellData'	=> $new_arr,
 				'cellName'	=> '本月上架',
 			],
 			1 => [
-				'cellData'	=> $data2,
+				'cellData'	=> $under_arr,
 				'cellName'	=> '本月下架',
 			],
 		
 		];
 		$excel = new ExcelController();
-		$excel->kiriExcel($arr,$par['month'].'新增业务详情');
+		$excel->kiriExcel($arr,$month.'上下架机器详情');
 	}
 }

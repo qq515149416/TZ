@@ -188,8 +188,9 @@ class ForeignController extends Controller
                 $form->number('discount',"几折");
             });
             $form->switch('status', '状态')->value(1)->rules('required');
-            $form->select('machine_room_id',"所属机房")->options('/tz_admin/show/api/machine_info/select/machine_room');
             $form->select("nav_id","所属导航")->options('/tz_admin/show/api/machine_info/select/nav');
+            $form->select('machine_room_id',"所属机房")->options('/tz_admin/show/api/machine_info/select/machine_room');
+
         });
     }
     public function select($type)

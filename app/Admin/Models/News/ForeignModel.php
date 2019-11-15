@@ -28,6 +28,7 @@ class ForeignModel extends Model
      */
     public function getMachineRoomIdAttribute($value)
     {
+        // dd(MachineRoomModel::where("id",$value)->first()->toArray());
         return MachineRoomModel::where("id",$value)->first();
     }
     /**
@@ -38,6 +39,7 @@ class ForeignModel extends Model
      */
     public function getNavIdAttribute($value)
     {
-        return NavModel::where("id",$value)->first();
+        // dd(NavModel::where("id",$value)->first()->toArray());
+        return collect(NavModel::where("id",$value)->first()->toArray())->except(["parent_id"]);
     }
 }

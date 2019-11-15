@@ -1,6 +1,6 @@
 
 @if (strpos(request()->path(),'tz_admin/show') !== false)
-<iframe id="admin_iframe" style="width: 100%;" frameborder="0" src="/admin{{ explode('tz_admin/show',request()->path())[1] }}"></iframe>
+<iframe id="admin_iframe" style="width: 100%;" frameborder="0" src="/admin{{ explode('tz_admin/show',request()->path())[1] }}?{{ count(explode('?',request()->fullUrl())) > 1 ? explode('?',request()->fullUrl())[1]:'version=1' }}"></iframe>
 @elseif (strpos(request()->path(),'tz_admin') !== false)
 <iframe id="admin_iframe" style="width: 100%;" frameborder="0" src="/admin"></iframe>
 @endif

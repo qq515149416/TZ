@@ -87,6 +87,22 @@ class TzUsers extends Model
 						'手机号',
 						'QQ',
 						'业务员',
+						'业务数量',
+					]
+		];
+
+		$already_buy_arr = [ 	
+					0 =>[
+						'ID',
+						'状态',
+						'用户名',
+						'邮箱',
+						'余额',
+						'昵称',
+						'手机号',
+						'QQ',
+						'业务员',
+						'业务数量',
 					]
 		];
 
@@ -96,14 +112,14 @@ class TzUsers extends Model
 							->whereIn('business_status' , [1,2,3,4])
 							->whereIn('remove_status' , [0,1])
 							->whereNull('deleted_at')
-							->exists();
+							->count();
 
 			$check2 = DB::table('tz_defenseip_business')->where('user_id' , $v['id'])
 								->whereIn('status' , [1,2,4])
 								->whereNull('deleted_at')
-								->exists();
-
-			if (!$check && !$check2) {
+								->count();
+			
+			if ($check == 0 && $check2 == 0) {
 				$no_buy_arr[] = [
 					$v['id'],
 					$status[$v['status']],
@@ -114,11 +130,30 @@ class TzUsers extends Model
 					$v['msg_phone'],
 					$v['msg_qq'],
 					$v['salesman_name'],
+					0,
+				];
+			}else{
+				$already_buy_arr[] = [
+					$v['id'],
+					$status[$v['status']],
+					$v['name'],
+					$v['email'],
+					$v['money'],
+					$v['nickname'],
+					$v['msg_phone'],
+					$v['msg_qq'],
+					$v['salesman_name'],
+					$check+$check2,
 				];
 			}
 		}
 		$no_buy_arr[] = [ '统计时间' , date('Y-m-d H:i:s')];
-		return $no_buy_arr;
+		$already_buy_arr[] = [ '统计时间' , date('Y-m-d H:i:s')];
+
+		return [
+			'already'	=> $already_buy_arr,
+			'no'		=> $no_buy_arr,
+		];
 	}
 
 	//获取当日注册的

@@ -81,7 +81,7 @@ class InfoController extends Controller
         $users_arr = $TzUsersM->noBuyUsers();    
         
         $excel_model = new ExcelController();
-        $excel_model->export($users_arr,'无业务客户信息');
+        $excel_model->export($users_arr['no'],'无业务客户信息');
  
     }
 
@@ -192,6 +192,33 @@ class InfoController extends Controller
 
         $excel->kiriExcel($arr,$par['month'].'新增客户详情');
     }
+
+    /**
+     * 按有无业务获取客户excel
+     * @param  $month - 月份
+     * @return
+     */
+    public function getUsersExcelByBusiness(){
+  
+        $statistics = new TzUsers();
+
+        $users_arr = $statistics->noBuyUsers();
+
+        $excel = new ExcelController();
+
+        $arr = [
+            0 => [
+                'cellData'  => $users_arr['already'],
+                'cellName'  => '有业务客户',
+            ],
+            1 => [
+                'cellData'  => $users_arr['no'],
+                'cellName'  => '无业务客户',
+            ],
+        ];
+        $excel->kiriExcel($arr,'客户详情');
+    }
+
 }
 
 

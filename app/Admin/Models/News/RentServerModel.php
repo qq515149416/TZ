@@ -25,7 +25,8 @@ class RentServerModel extends Model
      */
     public function getMachineRoomIdAttribute($value)
     {
-        return MachineRoomModel::where("id",$value)->first();
+        // dd(MachineRoomModel::where("id",$value)->first()->toArray());
+        return collect(MachineRoomModel::where("id",$value)->first())->except(["thumbnails"]);
     }
     /**
      * 获取导航信息.
@@ -35,6 +36,6 @@ class RentServerModel extends Model
      */
     public function getNavIdAttribute($value)
     {
-        return NavModel::where("id",$value)->first();
+        return collect(NavModel::where("id",$value)->first())->except(["parent_id"]);
     }
 }

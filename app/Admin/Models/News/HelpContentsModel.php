@@ -27,7 +27,8 @@ class HelpContentsModel extends Model
     {
         if($value) {
             $helpCategoryModel = new HelpCategoryModel();
-            return $helpCategoryModel->where("id",$value)->first();
+            // dd($helpCategoryModel->where("id",$value)->first()->toArray());
+            return collect($helpCategoryModel->where("id",$value)->first())->except(["parent_id"]);
         }
     }
 }

@@ -126,7 +126,7 @@ class ServerRentController extends Controller
             $current_room = $nav_data->machineRooms()->where("alias",$room)->first();
             return view("http/overseas_product",[
                 "page" => $page,
-                "son_nav" => NavModel::where('parent_id',$nav_data->parent_id->id)->get(),
+                "son_nav" => NavModel::where('parent_id',$nav_data->parent_id['id'])->get(),
                 "machine_rooms" => $nav_data->machineRooms()->get(),
                 "room" => $room,
                 "current_room" => $current_room,

@@ -207,7 +207,7 @@ class UnderModel extends Model
         switch ($type['type']) {
             case 1:
                 if($slug->slug != 3){//非业务员进入此区间
-                    if(Admin::user()->inRoles(['operations','finance','HR','product','network_dimension','net_sec'])){//不是主管的按是否自己客户查看
+                    if(Admin::user()->inRoles(['operations','finance','HR','product','net_sec'])){//不是主管的按是否自己客户查看
                         $where = ['sales_id' => Admin::user()->id];
                         $machine = ['sales' => Admin::user()->id];
                     } else {//主管人员查看客户信息
@@ -253,7 +253,7 @@ class UnderModel extends Model
                 break;
             case 2:
                 if($slug->slug != 3){//非业务员进入此区间
-                    if(Admin::user()->inRoles(['operations','finance','HR','product','network_dimension','net_sec'])){//不是主管的按是否自己客户查看
+                    if(Admin::user()->inRoles(['operations','finance','HR','product','net_sec'])){//不是主管的按是否自己客户查看
                         $where = ['business_id' => Admin::user()->id];
                     } else {//主管人员查看客户信息
                         $where = [];
@@ -546,7 +546,7 @@ class UnderModel extends Model
         $user_id = Admin::user()->id;
         $staff   = $this->staff($user_id);
         $status = [1,3];
-        if ($staff->slug == 4) {
+        if ($staff->slug == 4 && !Admin::user()->inRoles(['network_dimension'])) {
             $where['machineroom'] = $staff->department;
             $status = [2,3];
             $machine['room_id'] = DB::table('idc_machineroom')->where(['list_order'=>$staff->department])->whereNull('deleted_at')->value('id');

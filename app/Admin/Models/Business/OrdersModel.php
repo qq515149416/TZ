@@ -3161,9 +3161,8 @@ class OrdersModel extends Model
 			return $return;
 		}
 
-		
+		$price = $update['price'];
 		if(isset($update['price'])  && $update['price'] == $order->price ){
-			$price = $update['price'];
 			unset($update['price']);
 		} else {
 			$update_data['money'] = $update['price'];

@@ -88,7 +88,7 @@ class HelpCenterController extends Controller
                 "status" => 1
             ])->get(),
             "data" => $data,
-            "recommend" => HelpContentsModel::where("category_id",$data->category_id->id)->get(),
+            "recommend" => HelpContentsModel::where("category_id",$data->category_id['id'])->get(),
             "next_data" => HelpContentsModel::where([
                 "id" => $id + 1
             ])->first(),

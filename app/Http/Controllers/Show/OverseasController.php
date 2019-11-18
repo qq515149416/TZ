@@ -22,6 +22,7 @@ class OverseasController extends Controller
             ]);
         } else {
             $nav_id = NavModel::where('alias','like','%'.$page.'%')->first()->id;
+            // dd($nav_id);
             $nav_data = NavModel::find($nav_id);
             if(!$room) {
                 $room = $nav_data->machineRooms()->first()->alias;
@@ -29,7 +30,7 @@ class OverseasController extends Controller
             $current_room = $nav_data->machineRooms()->where("alias",$room)->first();
             return view("http/overseas_product",[
                 "page" => $page,
-                "son_nav" => NavModel::where('parent_id',$nav_data->parent_id->id)->get(),
+                "son_nav" => NavModel::where('parent_id',$nav_data->parent_id['id'])->get(),
                 "machine_rooms" => $nav_data->machineRooms()->get(),
                 "room" => $room,
                 "current_room" => $current_room,

@@ -8,6 +8,8 @@ class AdminController extends Controller
 {
     public function index()
     {
-        return response()->file(public_path("tz_assets/template.html"));
+        return response()->file(public_path("tz_assets/template.html"),[
+            "Cache-Control" => "no-cache"
+        ]);
     }
 }

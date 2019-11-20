@@ -5,7 +5,6 @@
 <iframe id="admin_iframe" style="width: 100%;" frameborder="0" src="/admin?{{ http_build_query(request()->except(['_pjax'])) }}"></iframe>
 @endif
 <script type="text/javascript">
-    console.log($("#admin_iframe"));
     $("#admin_iframe").height($(window).height()-120);
 </script>
 <!-- <div id="root_element">

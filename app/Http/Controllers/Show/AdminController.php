@@ -10,7 +10,6 @@ class AdminController extends Controller
     {
         return response()->file(public_path("tz_assets/template.html"),[
             "Cache-Control" => "no-cache"
-
         ]);
     }
 }

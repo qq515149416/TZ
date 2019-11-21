@@ -1,4 +1,3 @@
-
 @if (strpos(request()->path(),'tz_admin/show') !== false)
 <iframe id="admin_iframe" style="width: 100%;" frameborder="0" src="/admin{{ explode('tz_admin/show',request()->path())[1] }}?{{ http_build_query(request()->except(['_pjax'])) }}"></iframe>
 @elseif (strpos(request()->path(),'tz_admin') !== false)

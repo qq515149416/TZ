@@ -17,8 +17,8 @@ class ApiController extends script
         return Admin::content(function (Content $content) {
             $content->header('api管理');
             $content->description('api申请管理');
-            $content->body(view('show/api'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

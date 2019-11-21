@@ -34,8 +34,8 @@ class OrderController extends script
                 ['text' => '业务管理','url' => '/show/business'.session("url_param")],
                 ['text' => '业务订单管理']
             );
-            $content->body(view('show/order'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

@@ -15,3 +15,6 @@
 input.tz-search-input {
     border-color: #2196f3;
 }
+body::-webkit-scrollbar,html::-webkit-scrollbar {
+    display: none;
+}

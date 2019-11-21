@@ -137,6 +137,11 @@ Route::group([
             $router->get('/api/help_content/select', 'Show\HelpContentsController@select');
             $router->get('/invoice', 'Show\InvoiceController@index');
             $router->get('/api', 'Show\ApiController@index');
+            $router->get('/statisticalOverview', 'Show\StatisticalOverviewController@index');
+            $router->resource('/foreign', 'Show\ForeignController');
+
+            $router->get('/new_app', 'Show\NewAppController@index');
+
 
             //流水单复核
             $router->resource('/ordersReview', 'Show\OrdersReviewController');
@@ -307,6 +312,11 @@ Route::group([
         'prefix' => 'statistics',
     ], function (Router $router) {
         $router->get('statisticsList', 'Statistics\StatisticsController@index');//机器统计
+        $router->get('getMachineNum', 'Statistics\StatisticsController@getMachineNum');//业务上架统计概览
+        $router->get('getBusinessDetailed', 'Statistics\StatisticsController@getBusinessDetailed');//业务上架统计概览详情
+        $router->get('getBusinessExcel', 'Statistics\StatisticsController@getBusinessExcel');//业务上架统计概览详情excel
+        $router->get('getMachineExcelByMonth', 'Statistics\StatisticsController@getMachineExcelByMonth');//机器上下架统计概览详情excel
+
     });
 
     /**
@@ -320,6 +330,12 @@ Route::group([
         $router->get('test', 'Statistics\PfmStatisticsController@test');//计算时间区间内消费额度
         $router->get('performance','Statistics\PfmStatisticsController@performance');//产品类型业务业绩统计
         $router->get('statistics','Statistics\PfmStatisticsController@statistics');//各类统计数据汇总
+        $router->get('consumptionTwelve','Statistics\PfmStatisticsController@consumptionTwelve');//获取消费总额折线图所需数据接口
+        $router->get('getConsumption','Statistics\PfmStatisticsController@getConsumption');//获取消费额的接口
+        $router->get('getConsumptionDetailed','Statistics\PfmStatisticsController@getConsumptionDetailed');//获取消费详情
+        $router->get('getConsumptionExcel','Statistics\PfmStatisticsController@getConsumptionExcel');//获取消费详情
+        $router->get('getOrderByFlowId','Statistics\PfmStatisticsController@getOrderByFlowId');//根据流水id获取流水包含的订单
+
     });
 
     /**
@@ -330,6 +346,11 @@ Route::group([
     ], function (Router $router) {
         $router->get('list', 'Statistics\RechargeStatisticsController@index');//充值统计
         $router->get('getFlow', 'Statistics\RechargeStatisticsController@getFlow');//充值统计
+        $router->get('rechargeTwelve', 'Statistics\RechargeStatisticsController@rechargeTwelve');//获取充值总额折线图所需数据接口
+        $router->get('getRecharge', 'Statistics\RechargeStatisticsController@getRecharge');//获取充值额
+        $router->get('getRechargeDetailed', 'Statistics\RechargeStatisticsController@getRechargeDetailed');//获取充值额
+        $router->get('getRechargeExcel', 'Statistics\RechargeStatisticsController@getRechargeExcel');//指定月获取充值额excel
+        $router->get('getRechargeExcelByDay', 'Statistics\RechargeStatisticsController@getRechargeExcelByDay');//指定日获取充值额excel
     });
 
 
@@ -646,6 +667,7 @@ Route::group([
     ], function (Router $route) {
         Route::get('export', 'Excel\ExcelController@export');    //Excel导出
         Route::get('import', 'Excel\ExcelController@import');    //Excel导入
+
     });
 
     /**
@@ -709,6 +731,12 @@ Route::group([
 
         $router->post('getUserInfo', 'TzUsers\InfoController@getUserInfo');//修改用户QQ、手机、备注等信息
         $router->post('updateUserInfo', 'TzUsers\InfoController@updateUserInfo');//更新客户信息
+        $router->get('noBuyUsers', 'TzUsers\InfoController@noBuyUsers');//获取没买过的用户信息
+        $router->get('getUsers', 'TzUsers\InfoController@getUsers');//获取客户数量
+        $router->get('getUsersDetailed', 'TzUsers\InfoController@getUsersDetailed');//按月获取客户数量
+        $router->get('getUsersExcel', 'TzUsers\InfoController@getUsersExcel');//按月获取客户数量excel
+        $router->get('getUsersExcelByBusiness', 'TzUsers\InfoController@getUsersExcelByBusiness');//按有无业务获取客户数量excel
+
         Route::group([
             'prefix' => 'address',
         ], function (Router $router) {

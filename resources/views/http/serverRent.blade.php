@@ -22,7 +22,7 @@
         @if ($page!=='gaofang')
         <div class="bottom">
             @foreach ($nav as $item)
-                <a class="btn-link {{ $page == $item->alias ? 'active' : '' }}" href="/zuyong/{{ $item->alias }}/{{ $machine_rooms->first()['alias'] }}">{{ $item->name }}</a>
+                <a class="btn-link {{ $page == $item->alias ? 'active' : '' }}" href="/zuyong/{{ $item->alias }}/{{ $item->alias=='HKT' ? '' : $machine_rooms->first()['alias'] }}">{{ $item->name }}</a>
             @endforeach
             <!-- <a class="btn-link {{ $page == 'liantong' ? 'active' : '' }}" href="/zuyong/liantong/hunan">联通服务器租用</a>
             <a class="btn-link {{ $page == 'shuangxian' ? 'active' : '' }}" href="/zuyong/shuangxian/hunan">双线服务器租用</a>

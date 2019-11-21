@@ -17,8 +17,8 @@ class CustomerStatisticsController extends script
         return Admin::content(function (Content $content) {
             $content->header('机器购买情况');
             $content->description('机器购买情况统计管理');
-            $content->body(view('show/customerStatistics'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

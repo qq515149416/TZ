@@ -35,8 +35,8 @@ class BusinessController extends script
             session(["url_param"=>$this->queryUrlParam($request->all())]);
             session(["url_param_json"=>$request->all()]);
             // dump(session("url_param"));
-            $content->body(view('show/business'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use App\Admin\Models\Business\OrdersModel;
+use Carbon\Carbon;
 
 class  PfmStatistics extends Model
 {
@@ -865,64 +866,64 @@ class  PfmStatistics extends Model
 	}
 
 	/**
-     * 计算查询的起始时间和结束时间
-     * @param  array $query_time begin--查询时间段的开始时间 end--查询时间段的结束时间
-     * @return array             返回查询的起始时间和结束时间
-     */
-    public function queryTime($query_time){
-        if(!isset($query_time['begin']) && !isset($query_time['end'])){//当查询开始间和结束时间都未设置时
+	 * 计算查询的起始时间和结束时间
+	 * @param  array $query_time begin--查询时间段的开始时间 end--查询时间段的结束时间
+	 * @return array             返回查询的起始时间和结束时间
+	 */
+	public function queryTime($query_time){
+		if(!isset($query_time['begin']) && !isset($query_time['end'])){//当查询开始间和结束时间都未设置时
 
-            $end_time = date('Y-m-d',strtotime("+1 day"));//结束时间等于当前时间往后推一天，即当前天的23:59:59
-            $month = date('Y-m',time());//获取结束时间所属自然月
-            $start_time = $month.'-01';//获取结束时间所属自然月的第一天的零点为查询的开始时间
+			$end_time = date('Y-m-d',strtotime("+1 day"));//结束时间等于当前时间往后推一天，即当前天的23:59:59
+			$month = date('Y-m',time());//获取结束时间所属自然月
+			$start_time = $month.'-01';//获取结束时间所属自然月的第一天的零点为查询的开始时间
 
-        } elseif(isset($query_time['begin']) && !isset($query_time['end'])){//当设置查询开始时间，未设置结束时间时
+		} elseif(isset($query_time['begin']) && !isset($query_time['end'])){//当设置查询开始时间，未设置结束时间时
 
-            $start_time = date('Y-m-d',$query_time['begin']);//起始时间等于设置的起始时间
-            $month = date('Y-m',$query_time['begin']);//获取开始时间所属自然月
-            $last_day = date('t',$month);//获取开始时间所属自然月的总天数
-            $end_time = date('Y-m-d',strtotime($month.'-'.$last_day."+1 day"));//结束时间设置为开始时间所属自然月的最后一天的23:59:59
+			$start_time = date('Y-m-d',$query_time['begin']);//起始时间等于设置的起始时间
+			$month = date('Y-m',$query_time['begin']);//获取开始时间所属自然月
+			$last_day = date('t',$month);//获取开始时间所属自然月的总天数
+			$end_time = date('Y-m-d',strtotime($month.'-'.$last_day."+1 day"));//结束时间设置为开始时间所属自然月的最后一天的23:59:59
 
-        } elseif(!isset($query_time['begin']) && isset($query_time['end'])){//当起始时间未设置，结束时间设置时
+		} elseif(!isset($query_time['begin']) && isset($query_time['end'])){//当起始时间未设置，结束时间设置时
 
-            $end_time = date('Y-m-d',strtotime(date('Y-m-d',$query_time['end'])."+1 day"));//结束时间等于设置的结束时间
-            $month = date('Y-m',$query_time['end']);//获取结束时间所属的自然月
-            $start_time = $month.'-01';//获取结束时间所属自然月的第一天的零点为查询的开始时间
+			$end_time = date('Y-m-d',strtotime(date('Y-m-d',$query_time['end'])."+1 day"));//结束时间等于设置的结束时间
+			$month = date('Y-m',$query_time['end']);//获取结束时间所属的自然月
+			$start_time = $month.'-01';//获取结束时间所属自然月的第一天的零点为查询的开始时间
 
-        } elseif(isset($query_time['begin']) && isset($query_time['end'])){//当查询的起始时间和结束时间都设置时
+		} elseif(isset($query_time['begin']) && isset($query_time['end'])){//当查询的起始时间和结束时间都设置时
 
-            $start_time = date('Y-m-d',$query_time['begin']);//起始时间等于设置的起始时间
-            $end_time = date('Y-m-d',strtotime(date('Y-m-d',$query_time['end'])."+1 day"));//结束时间等于设置的结束时间
-        }
-        return ['start_time'=>$start_time,'end_time'=>$end_time];
-    }
+			$start_time = date('Y-m-d',$query_time['begin']);//起始时间等于设置的起始时间
+			$end_time = date('Y-m-d',strtotime(date('Y-m-d',$query_time['end'])."+1 day"));//结束时间等于设置的结束时间
+		}
+		return ['start_time'=>$start_time,'end_time'=>$end_time];
+	}
 
-    public function statistics(){
+	public function statistics(){
 
-    	$now = date('Y-m-d',time());//现在的日期
+		$now = date('Y-m-d',time());//现在的日期
 
-    	$last_start = date('Y-m-01',strtotime($now.'-1 month'));//上个月的第一天
+		$last_start = date('Y-m-01',strtotime($now.'-1 month'));//上个月的第一天
 
-    	$seven_end = date('Y-m-d',strtotime($now.'+1 day'));//7天/今天统计的结束日期（由于数据库的存储时间原因,所以日期需往后延一天）
+		$seven_end = date('Y-m-d',strtotime($now.'+1 day'));//7天/今天统计的结束日期（由于数据库的存储时间原因,所以日期需往后延一天）
 
-    	$seven_start = date('Y-m-d',strtotime($seven_end.'-7 day'));//7天统计的开始日期
+		$seven_start = date('Y-m-d',strtotime($seven_end.'-7 day'));//7天统计的开始日期
 
-    	$month_start = date('Y-m-01',time());//当前月所在的第一天
+		$month_start = date('Y-m-01',time());//当前月所在的第一天
 
-    	$month_last = date('Y-m-t',time());//当前月所在的最后一天
+		$month_last = date('Y-m-t',time());//当前月所在的最后一天
 
-    	$month_end = date('Y-m-d',strtotime($month_last.'+1 day'));//当前月统计的结束日期（由于数据库的存储时间原因,所以日期需往后延一天）
+		$month_end = date('Y-m-d',strtotime($month_last.'+1 day'));//当前月统计的结束日期（由于数据库的存储时间原因,所以日期需往后延一天）
 
-    }
+	}
 
-    /**
-     * performance方法的统计复用
-     * @param  array $admin_users  机房集合/业务员集合
-     * @param  array $begin_end   查询的时间段
-     * @return [type]              [description]
-     */
-    protected function total($admin_users,$begin_end,$where){
-    	$idc_count = 0;//总计idc销售额
+	/**
+	 * performance方法的统计复用
+	 * @param  array $admin_users  机房集合/业务员集合
+	 * @param  array $begin_end   查询的时间段
+	 * @return [type]              [description]
+	 */
+	protected function total($admin_users,$begin_end,$where){
+		$idc_count = 0;//总计idc销售额
 		$defense = 0;//总计高防销售额
 		$flow = 0;//总计叠加包销售额
 		$cdn = 0;//总计cdn销售额
@@ -1006,6 +1007,389 @@ class  PfmStatistics extends Model
 				];
 		array_unshift($admin_users,$object);
 		return $admin_users;
-    }
+	}
 
+	public function consumptionTwelve()
+	{
+		$this_month = date('Y-m').'-01 00:00:00';
+		$dt = Carbon::parse($this_month);
+
+		$res = [];
+		for ($i=6; $i >= 1; $i--) { 
+
+			$month = date('Y-m',$dt->copy()->subMonths($i)->timestamp);
+			$res[] = [
+				'time'		=> $month,
+				'amount'	=> $this->getConsumptionByMonth($month)+0,
+			];
+		}
+
+		return [
+			'data'	=> $res,
+			'msg'	=> '获取成功',
+			'code'	=> 1,
+		];
+	}
+
+	/**
+	 * 统计消费,按月
+	 * @param  $month -	格式:Y-m ; 例: 2019-09
+	 * @param
+	 * @return [type]              [description]
+	 */
+	public function getConsumptionByMonth($month)
+	{
+		$begin = $month.'-01 00:00:00';
+		$end = date('Y-m-t 23:59:59',strtotime($begin));
+
+		$all_actual_payment = $this->where('pay_time','>',$begin)
+				->where('pay_time','<',$end)
+				->sum('actual_payment');
+
+		return $all_actual_payment;
+	}
+
+	public function consumptionToday()
+	{
+		$begin = date('Y-m-d').' 00:00:00';
+		$end = date('Y-m-d').' 23:59:59';
+
+		$all_actual_payment = $this->where('pay_time','>',$begin)
+				->where('pay_time','<',$end)
+				->sum('actual_payment');
+
+		return $all_actual_payment;
+	}
+
+	public function getConsumptionDetailed($month)
+	{
+		$begin = $month.'-01 00:00:00';
+		$end = date('Y-m-t 23:59:59',strtotime($begin));
+		$month_day = date('t',strtotime($begin));
+		$month_small = date('m',strtotime($begin));
+
+		$all_actual_payment = $this->leftJoin('admin_users as b' , 'b.id' , '=' , 'tz_orders_flow.business_id')
+				->leftjoin('tz_users as c' , 'c.id' , '=' , 'tz_orders_flow.customer_id')
+				->where('tz_orders_flow.pay_time','>',$begin)
+				->where('tz_orders_flow.pay_time','<',$end)
+				// ->select(DB::raw('sum(tz_orders_flow.actual_payment) as actual_payment') , 'b.name')
+				// ->groupBy('tz_orders_flow.business_id')
+				// ->get()->toArray();
+				->orderBy('tz_orders_flow.pay_time','desc')
+				->get(['tz_orders_flow.actual_payment' , 'tz_orders_flow.id as flow_id' , 'tz_orders_flow.order_id' , 'b.name' , 'tz_orders_flow.serial_number' , 'tz_orders_flow.pay_time' , 'c.name as cusname' , 'c.nickname' , 'c.email']);
+		//dd($all_actual_payment);
+		if ($all_actual_payment->isEmpty()) {
+			return [
+				'data'	=> [],
+				'msg'	=> '当月无业绩',
+				'code'	=> 1,
+			];
+		}
+		$all_actual_payment = $all_actual_payment->toArray();
+
+		for ($j=1; $j <= $month_day; $j++) { 
+			$arr[] = [
+				'time'			=> $month_small .'-'.$j,
+				'actual_payment'	=> 0,
+			];
+		}
+
+		$user_arr = [];
+		$type_arr = [
+			0	=> [
+				'type'			=> 'idc',
+				'actual_payment'	=> 0,
+			],
+			1	=> [
+				'type'			=> 'cdn',
+				'actual_payment'	=> 0,
+			],
+			2	=> [
+				'type'			=> '高防',
+				'actual_payment'	=> 0,
+			],
+			3	=> [
+				'type'			=> '流量叠加包',
+				'actual_payment'	=> 0,
+			],
+			4	=> [
+				'type'			=> '未知业务种类',
+				'actual_payment'	=> 0,
+			],
+		];
+		foreach ($all_actual_payment as $k => $v) {
+			$all_actual_payment[$k]['customer_name'] = $all_actual_payment[$k]['nickname']?:$all_actual_payment[$k]['email']?:$all_actual_payment[$k]['cusname'];
+			if ($v['name'] == null) {
+				$v['name'] = '已删业务员';
+			}
+			$v['order_id'] = json_decode($v['order_id'] , true);
+			if (!is_array($v['order_id'] ) ) {
+				$all_actual_payment[$k]['order_id'] = array( 0 => $v['order_id'] );
+			}else{
+				$all_actual_payment[$k]['order_id'] = $v['order_id'];
+			}
+
+			//计算种类的
+			$type = DB::table('tz_orders')->where('id',$all_actual_payment[$k]['order_id'][0])->value('resource_type');
+			switch ($type) {
+				case '1':
+				case '2':
+				case '3':
+				case '4':
+				case '5':
+				case '6':
+				case '7':
+				case '8':
+				case '9':
+					$type_arr[0]['actual_payment']+= $v['actual_payment'];
+					break;
+				case '10':
+					$type_arr[1]['actual_payment']+= $v['actual_payment'];
+					break;
+				case '11':
+					$type_arr[2]['actual_payment']+= $v['actual_payment'];
+					break;
+				case '12':
+					$type_arr[3]['actual_payment']+= $v['actual_payment'];
+					break;
+				default:
+					$type_arr[4]['actual_payment']+= $v['actual_payment'];
+					break;
+			}
+			
+			//计算业务员的
+			if (!isset($user_arr[$v['name']])) {
+				$user_arr[$v['name']] = $v['actual_payment']+0;
+			}else{
+				$user_arr[$v['name']]+= $v['actual_payment'];
+			}
+
+			//计算日期的
+			$day = date('j',strtotime($v['pay_time']));
+			$arr[$day-1]['actual_payment']+= $v['actual_payment'];
+		}
+		$user_sta = [];
+		foreach ($user_arr as $k => $v) {
+			$user_sta[] = [
+				'name'	=> $k,
+				'pfm'	=> $v,
+			];
+		}
+		//dd($type_arr);
+		return [
+			'data'	=> [
+				'user_sta'	=> $user_sta,
+				'type_sta'	=> $type_arr,
+				'list'		=> $all_actual_payment,
+				'line'		=> $arr,
+			],
+			'msg'	=> '获取成功',
+			'code'	=> 1,
+		];
+
+	}
+
+	public function getOrderByFlowId($flow_id)
+	{
+		$order_id = $this->where('id',$flow_id)->value('order_id');	
+		if(!$order_id){
+			return [
+				'data'	=> [],
+				'msg'	=> '流水不存在',
+				'code'	=> 0,
+			];
+		}
+		$order_id = json_decode($order_id,true);
+
+		$orr = [];
+		//dd($order_id);
+		$check = 0;
+		$fail = '';
+		if (is_array($order_id)) {	//数组类型的,从里面一个个找出来
+
+			foreach ($order_id as $k => $v) {
+				$order = $this->showOrderDetail($v);
+				if ($order['code'] == 1) {
+					$orr[] = $order['data'];
+				}else{
+					$check = 1;
+					$fail.= $v.' , ';
+				}
+			}
+		}else{
+			$order = $this->showOrderDetail($order_id);
+			if ($order['code'] == 1) {
+				$orr[] = $order['data'];
+			}else{
+				$check = 1;
+				$fail.= $v;
+			}	
+		}
+		if ($check == 0) {
+			return [
+				'data'	=> $orr,
+				'msg'	=> '获取成功',
+				'code'	=> 1
+			];
+		}else{
+			return [
+				'data'	=> $orr,
+				'msg'	=> '以下id获取失败 : ' .  $fail,
+				'code'	=> 0
+			];
+		}
+	}
+
+	public function showOrderDetail($order_id)
+	{
+		$model = new OrdersModel();
+		$order = $model->where('id' , $order_id)->first( ['business_sn','resource_type' , 'machine_sn' , 'price' , 'duration' ,'end_time' ,'pay_time','resource' ,'order_type' , 'order_sn'] );
+		if (!$order) {
+			return [
+				'data'	=> [],
+				'msg'	=> '获取订单信息失败',
+				'code'	=> 0,
+			];
+		}else{
+			$order = $order->toArray();
+		}
+
+		$detail = [];
+		$order_type_arr = [ 1 => '新购' , 2 => '续费'];
+		$detail['order_type'] = $order_type_arr[$order['order_type']];
+		$detail['order_sn'] = $order['order_sn'];
+		$detail['business_sn'] = $order['business_sn'];
+		//资源的类型(1.租用主机，2.托管主机，3.租用机柜，4.IP，5.CPU，6.硬盘，7.内存，8.带宽，9.防护，10.cdn , 11.高防IP ; 12.流量叠加包 )
+		$detail['type'] = $order['resource_type'];
+		if (in_array($order['resource_type'], [ 1,2,3,4,5,6,7,8,9]) ) {
+			$business = DB::table('tz_business')
+						->where('business_number' , $order['business_sn'])
+						->first(['resource_detail']);
+			if ($business == null) {
+				return [
+					'data'	=> [],
+					'msg'	=> '获取详细信息失败',
+					'code'	=> 0,
+				];
+			}
+			$business = json_decode($business->resource_detail , true);
+			if ($order['resource_type'] != 3) {
+				$detail['machine_num'] 		= $business['machine_num'];
+				$detail['machine_type'] 		= $business['machine_type'];
+			}
+			
+			$detail['machineroom'] 		= $business['machineroom_name'];
+		}
+
+		switch ($order['resource_type']) {
+			case '1':
+			case '2':
+				if ($order['resource_type'] == 1) {
+					$detail['resource_type'] = '租用主机';
+				}elseif ($order['resource_type'] == 2) {
+					$detail['resource_type'] = '托管主机';
+				}
+				$detail['resource'] 		= [
+					'cpu'			=> $business['cpu'],
+					'memory'		=> $business['memory'],
+					'harddisk'		=> $business['harddisk'],
+					'bandwidth'		=> $business['bandwidth'],
+					'protect'		=> $business['protect'],
+					'machine_type'		=> $business['machine_type'],
+				];	
+				break;
+			case '3':
+				$detail['resource_type'] 		= '租用机柜';
+				$detail['resource'] 		= $business['cabinet_id'];
+				break;
+			case '4':
+				$detail['resource_type'] 		= 'IP';
+				$detail['resource'] 		= $order['resource'];
+				break;
+			case '5':
+				$detail['resource_type'] 		= 'CPU';
+				$detail['resource'] 		= $order['resource'];
+				break;
+			case '6':
+				$detail['resource_type'] 		= '硬盘';
+				$detail['resource'] 		= $order['resource'];
+				break;
+			case '7':
+				$detail['resource_type'] 		= '内存';
+				$detail['resource'] 		= $order['resource'];
+				break;
+			case '8':
+				$detail['resource_type'] 		= '带宽';
+				$detail['resource'] 		= $order['resource'];
+				break;
+			case '9':
+				$detail['resource_type'] 		= '防护';
+				$detail['resource'] 		= $order['resource'];
+				break;
+			case '10':
+				$detail['resource_type'] 		= 'CDN';
+				$detail['resource'] 		= $order['resource'];
+				break;
+			case '11':
+				$detail['resource_type'] 		= '高防IP';
+				$package = DB::table('tz_defenseip_package as a')
+						->leftJoin('idc_machineroom as b' , 'b.id' , '=' , 'a.site')
+						->where('a.id',$order['machine_sn'])
+						->first(['a.name' , 'a.description' , 'a.protection_value' , 'b.machine_room_name']);
+				if ($package == null) {
+					$detail['resource'] 	= [
+						'name'			=> '获取高防信息失败',
+						'description'		=> '获取高防信息失败',
+						'protection_value'	=> '获取高防信息失败',
+					];
+					$detail['machineroom'] 	= '';
+				}else{
+					$detail['resource'] 	= [
+						'name'			=> $package->name,
+						'description'		=> $package->description,
+						'protection_value'	=> $package->protection_value.'G',
+					];
+				
+					$detail['machineroom'] 		= $package->machine_room_name;
+				}
+				break;
+			case '12':
+				$detail['resource_type'] 		= '流量叠加包';
+				$package = DB::table('tz_overlay as a')
+					->leftJoin('idc_machineroom as b' , 'b.id' , '=' , 'a.site')
+					->where('a.id',$order['machine_sn'])
+					->first(['a.name' , 'a.description' , 'b.machine_room_name' , 'a.protection_value']);
+				if ($package == null) {
+					$detail['resource'] 	= [
+						'name'			=> '获取叠加包信息失败',
+						'description'		=> '获取叠加包信息失败',
+						'protection_value'	=> '获取叠加包信息失败',
+					];
+					$detail['machineroom'] 	= '';
+				}else{
+					$detail['resource'] 	= [
+						'name'			=> $package->name,
+						'description'		=> $package->description,
+						'protection_value'	=> $package->protection_value.'G',
+					];
+					$detail['machineroom'] 		= $package->machine_room_name;
+
+				}
+				break;
+
+			default:
+				# code...
+				break;
+		}
+		$detail['price'] 			= $order['price'];
+		$detail['duration'] 		= $order['duration'];
+		$detail['end_time'] 		= $order['end_time'];
+		$detail['pay_time'] 		= $order['pay_time'];
+
+		return [
+			'data'	=> $detail,
+			'msg'	=> '获取订单信息成功',
+			'code'	=> 1,
+		];
+	}
 }

@@ -14,7 +14,7 @@ use App\Admin\Controllers\Show\tool\script;
 class HomeController extends script
 {
     public function index()
-    {   
+    {
         return Admin::content(function (Content $content) {
 
             $content->header('首页');
@@ -22,8 +22,8 @@ class HomeController extends script
 
 //            $content->row(Dashboard::title());
 
-            $content->body(view('show/home'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
 
 //            $content->body(view('welcome'));
 

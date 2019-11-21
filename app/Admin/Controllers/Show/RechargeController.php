@@ -17,8 +17,8 @@ class RechargeController extends script
         return Admin::content(function (Content $content) {
             $content->header('充值记录');
             // $content->description('业务订单操作');
-            $content->body(view('show/recharge'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

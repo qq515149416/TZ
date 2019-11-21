@@ -19,18 +19,19 @@
     <!--活动-->
     <div class="activity">
         <div class="card-container">
-            <a class="card" href="/mid_autumn" target="_blank">
+            <a class="card" href="/double11" target="_blank">
                 <div class="card-image">
-                    <img src="{{ asset("/images/lastestActivity/activity-8.png") }}" />
+                    <img src="{{ asset("/images/lastestActivity/activity-10.png") }}" />
                     <span class="ongoing">活动中</span>
                 </div>
                 <div class="card-body">
-                    <h5 class="title font-heavy">迎中秋庆国庆:腾正高防服务器高防IP买一送一，新品5折疯抢</h5>
+                    <h5 class="title font-heavy">200G高防服务器·多线服务器助力双11，实现创富梦！</h5>
                     <p class="desc">
-                        中秋国庆双节同庆，腾正科技四重大礼钜惠全网。优惠一：买高防IP，送WAF 1个月；优惠二：买高防服务器，送100G防御流量叠加包；优惠三：新注册用户10G防御云主机66元包月，送20M带宽，续费价格不变。
+                    双11狂欢购！腾正科技100M独享 200G硬防游戏·平台网站专配高防服务器，11元加购单线变多线服务器双助力！速度快防御硬助力别人剁手您创富！点击查看活动详情。
                     </p>
                 </div>
             </a>
+
             <a class="card" href="/dist/highDefense.html" target="_blank">
                 <div class="card-image">
                     <img src="{{ asset("/images/lastestActivity/activity-3.png") }}" />
@@ -40,6 +41,19 @@
                     <h5 class="title font-heavy">腾正高防IP专业DDOS防御首选</h5>
                     <p class="desc">腾正高防IP专业DDOS防御首选，T+级防护系统，毫秒级过滤引擎，精准识别秒级响应，支持不同业务模式</p>
                 </div>
+            </a>
+            <a class="card disable" href="javascript: void(0);" target="_blank">
+                <div class="card-image">
+                    <img src="{{ asset("/images/lastestActivity/activity-11.png") }}" />
+                    <span class="end">活动结束</span>
+                </div>
+                <div class="card-body">
+                    <h5 class="title font-heavy">迎中秋庆国庆:腾正高防服务器高防IP买一送一，新品5折疯抢</h5>
+                    <p class="desc">
+                        中秋国庆双节同庆，腾正科技四重大礼钜惠全网。优惠一：买高防IP，送WAF 1个月；优惠二：买高防服务器，送100G防御流量叠加包；优惠三：新注册用户10G防御云主机66元包月，送20M带宽，续费价格不变。
+                    </p>
+                </div>
+                <div class="mask"></div>
             </a>
             <a class="card disable" href="javascript: void(0);" target="_blank">
                 <div class="card-image">

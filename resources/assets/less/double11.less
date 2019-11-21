@@ -2,9 +2,329 @@
     background: url(../images/double11/double11_bg.png) no-repeat;
     background-size: 100% 100%;
     padding-top: 724px;
-    .product {
+    .double11-product {
+        margin-bottom: 98px;
+        &:last-of-type {
+            h2 {
+                width: 448px;
+            }
+            .paper {
+                > .info {
+                    > .config {
+                        width: 640px;
+                        .config-item {
+                            &.double {
+                                width: 340px;
+                                span {
+                                    &.attr {
+                                        text-align: center;
+                                    }
+                                    &.val {
+                                        text-indent: 30px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    > .buy-buttom {
+                        margin-top: 55px;
+                        display: flex;
+                        align-items: flex-end;
+                        > .many {
+                            cursor: pointer;
+                            flex: 1;
+                            // height: 130px;
+                            background-color: #ff6d00;
+                            padding-top: 26px;
+                            padding-left: 40px;
+                            > h6 {
+                                font-size: 18px;
+                                font-family: "pingFangHeavy";
+                                margin: 0;
+                                margin-bottom: 12px;
+                                color: #fff;
+                            }
+                            > .tag {
+                                display: inline-block;
+                                padding: 5px 10px;
+                                border-radius: 23px;
+                                background-color: #ffffff;
+                                font-size: 14px;
+                                font-family: "pingFangHeavy";
+                                color: #ff6d00;
+                            }
+                            > .purchas {
+                                width: 290px;
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: flex-end;
+                                padding-bottom: 16px;
+                                > .price {
+                                    font-family: "pingFang";
+                                    font-size: 12px;
+                                    color: #fff;
+                                    margin-top: 18px;
+                                    > .tag {
+                                        display: inline-block;
+                                        height: 22px;
+                                        width: 82px;
+                                        box-sizing: border-box;
+                                        border: 1px solid #fff;
+                                        background-color: #ff9f19;
+                                        text-align: center;
+                                        line-height: 22px;
+                                        border-radius: 22px;
+                                    }
+                                    > .amount {
+                                        font-family: "pingFangHeavy";
+                                        font-size: 40px;
+                                        color: #fff;
+                                        line-height: 40px;
+                                    }
+                                }
+                                > .advisory {
+                                    font-family: "pingFangHeavy";
+                                    font-size: 16px;
+                                    color: #fff;
+                                }
+                            }
+                        }
+                        > .single {
+                            cursor: pointer;
+                            // height: 130px;
+                            background-color: #ff9f19;
+                            padding-top: 18px;
+                            padding-left: 40px;
+                            padding-right: 22px;
+                            > h6 {
+                                font-size: 18px;
+                                font-family: "pingFangHeavy";
+                                margin: 0;
+                                margin-bottom: 12px;
+                                color: #fff;
+                            }
+                            > .tag {
+                                display: inline-block;
+                                padding: 5px 10px;
+                                border-radius: 23px;
+                                background-color: #ffffff;
+                                font-size: 14px;
+                                font-family: "pingFangHeavy";
+                                color: #ffae50;
+                            }
+                            > .purchas {
+                                width: 290px;
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: flex-end;
+                                padding-bottom: 16px;
+                                > .price {
+                                    font-family: "pingFang";
+                                    font-size: 12px;
+                                    color: #fff;
+                                    // vertical-align: bottom;
+                                    margin-top: 14px;
+                                    > .original-price {
+                                        text-decoration: line-through;
+                                        margin-left: 12px;
+                                    }
+                                    > .amount {
+                                        font-family: "pingFangHeavy";
+                                        font-size: 40px;
+                                        color: #fff;
+                                        line-height: 40px;
+                                    }
+                                }
+                                > .advisory {
+                                    font-family: "pingFangHeavy";
+                                    font-size: 16px;
+                                    color: #fff;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         h2 {
-
+            width: 579px;
+            text-align: center;
+            margin: 0 auto;
+            font-size: 30px;
+            font-family: 'pingFangBold';
+            color: #fff;
+            position: relative;
+            &::before {
+                content: "";
+                position: absolute;
+                width: 205px;
+                height: 32px;
+                background: url(../images/double11/double11_bt_L.png) no-repeat;
+                left: -205px;
+                top: 0;
+            }
+            &::after {
+                content: "";
+                position: absolute;
+                width: 205px;
+                height: 32px;
+                background: url(../images/double11/double11_bt_L.png) no-repeat;
+                right: -205px;
+                top: 0;
+            }
+        }
+        .paper {
+            width: 1196px;
+            margin: 0 auto;
+            margin-top: 64px;
+            display: flex;
+            align-items: stretch;
+            > .description {
+                width: 466px;
+                background-color: #252446;
+                box-sizing: border-box;
+                padding: 0 32px;
+                padding-top: 72px;
+                position: relative;
+                &::before {
+                    content: "";
+                    position: absolute;
+                    width: 155px;
+                    height: 37px;
+                    background: url(../images/double11/double11_biaoqian.png) no-repeat;
+                    top: 10px;
+                    right: -4px;
+                }
+                h5 {
+                    margin: 0;
+                    margin-bottom: 30px;
+                    font-family: "pingFangHeavy";
+                    font-size: 16px;
+                    color: #ffffff;
+                }
+                p {
+                    margin: 0;
+                    line-height: 24px;
+                    font-family: "pingFang";
+                    font-size: 16px;
+                    color: rgba(255, 255, 255, .8);
+                }
+            }
+            > .info {
+                background: #fff;
+                width: 728px;
+                padding-top: 42px;
+                > h3 {
+                    padding-left: 40px;
+                    color: #4e4a4a;
+                    font-size: 22px;
+                    font-family: 'pingFangBold';
+                    margin-bottom: 36px;
+                    > .tag {
+                        padding: 3px 12px;
+                        background-color: #17c467;
+                        border-radius: 18px;
+                        font-family: 'pingFang';
+                        font-size: 12px;
+                        color: #fff;
+                        margin-left: 8px;
+                    }
+                }
+                > p {
+                    margin-left: 40px;
+                    width: 80px;
+                    height: 20px;
+                    text-align: center;
+                    line-height: 20px;
+                    border: 1px solid #e2e2e2;
+                    font-size: 14px;
+                    color: #aeb1b5;
+                    font-family: 'pingFang';
+                    border-radius: 2px;
+                }
+                > .bottom {
+                    padding-top: 56px;
+                    padding-left: 40px;
+                    padding-bottom: 20px;
+                    position: relative;
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        width: 593px;
+                        height: 1px;
+                        background-color: #f0f0f0;
+                        left: 48px;
+                        top: 28px;
+                    }
+                    > .price {
+                        float: left;
+                        margin-right: 180px;
+                        font-size: 16px;
+                        font-family: 'pingFang';
+                        color: #4e4a4a;
+                        padding-bottom: 10px;
+                        .currency {
+                            font-size: 22px;
+                            font-family: "微软雅黑";
+                            color: #ff3300;
+                        }
+                        .amount {
+                            font-size: 36px;
+                            font-family: 'pingFangHeavy';
+                            color: #ff3300;
+                        }
+                        .original-price {
+                            color: #c6c8ca;
+                            text-decoration: line-through;
+                        }
+                    }
+                    > a {
+                        text-decoration: none;
+                        margin-top: 10px;
+                        float: left;
+                        width: 142px;
+                        height: 40px;
+                        border-radius: 2px;
+                        color: #fff;
+                        background: linear-gradient(to right,#ff7100,#ff3000);
+                        text-align: center;
+                        line-height: 40px;
+                        font-size: 16px;
+                        font-family: 'pingFangHeavy';
+                    }
+                }
+                > .config {
+                    width: 600px;
+                    display: flex;
+                    flex-wrap: wrap;
+                    margin-left: 40px;
+                    .config-item {
+                        margin-bottom: 20px;
+                        &.double {
+                            width: 200px;
+                            span {
+                                &.attr {
+                                    text-align: center;
+                                }
+                            }
+                        }
+                        width: 100px;
+                        span {
+                            display: block;
+                            &.attr {
+                                font-size: 16px;
+                                font-family: 'pingFang';
+                                color: #a7aaaf;
+                            }
+                            &.val {
+                                font-size: 18px;
+                                font-family: 'pingFangHeavy';
+                                color: #4e4a4a;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

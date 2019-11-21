@@ -558,11 +558,11 @@ class OverlayModel extends Model
 		$after_protection = bcadd($d_ip->protection_value, $after_extra_protection,0);
 		
 		//如果流量峰值超过300,不予通过
-		if ($after_protection > 300) {
+		if ($after_protection > 800) {
 			DB::rollBack();
 			return [
 				'data'	=> [],
-				'msg'	=> '叠加包最高防御峰值不能超过300,请联系管理员调整',
+				'msg'	=> '叠加包最高防御峰值不能超过800,请联系管理员调整',
 				'code'	=> 0,
 			];
 		}
@@ -712,10 +712,10 @@ class OverlayModel extends Model
 		$protected_value = bcadd($protected_value,$use_overlay);
 		
 
-		if($protected_value > 300){
+		if($protected_value > 800){
 			$return['data'] = [];
 			$return['code'] = 0;
-			$return['msg'] = '(#112)叠加包的累计流量不能超过300,如需更大流量请联系管理员进行咨询调整';
+			$return['msg'] = '(#112)叠加包的累计流量不能超过800,如需更大流量请联系管理员进行咨询调整';
 			return $return;
 		}
 

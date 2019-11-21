@@ -35,6 +35,6 @@ class RusteeshipServerModel extends Model
      */
     public function getNavIdAttribute($value)
     {
-        return NavModel::where("id",$value)->first();
+        return collect(NavModel::where("id",$value)->first())->except(["parent_id"]);
     }
 }

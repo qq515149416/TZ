@@ -17,8 +17,8 @@ class MemoryController extends script
         return Admin::content(function (Content $content) {
             $content->header('内存资源');
             $content->description('内存资源管理');
-            $content->body(view('show/memory'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

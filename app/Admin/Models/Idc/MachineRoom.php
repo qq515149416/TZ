@@ -46,12 +46,12 @@ class MachineRoom extends Model
 		}
 
 		//判断管理机房的部门是否已绑定其他机房
-		if ($this->where('list_order', '=', $departId)->exists()) {
-			$res['content'] = '3';
-			$res['message'] = '此部门已管理其他机房';
-			$res['state']   = 0;
-			return $res;
-		}
+		// if ($this->where('list_order', '=', $departId)->exists()) {
+		// 	$res['content'] = '3';
+		// 	$res['message'] = '此部门已管理其他机房';
+		// 	$res['state']   = 0;
+		// 	return $res;
+		// }
 
 		$this->machine_room_id   = $roomId;
 		$this->machine_room_name = $roomName;

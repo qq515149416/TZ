@@ -17,8 +17,8 @@ class DismissalReviewController extends script
         return Admin::content(function (Content $content) {
             $content->header('下架审核');
             // $content->description('部门管理');
-            $content->body(view('show/dismissalReview'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

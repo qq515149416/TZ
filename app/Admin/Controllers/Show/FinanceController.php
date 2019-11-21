@@ -17,8 +17,8 @@ class FinanceController extends script
         return Admin::content(function (Content $content) {
             $content->header('财务管理');
             $content->description('财务统计');
-            $content->body(view('show/finance'));
-            Admin::script($this->script());
+            $content->body(view('show/app'));
+            // Admin::script($this->script());
         });
     }
 }

@@ -23,5 +23,7 @@ Form::forget(['map', 'editor']);
 Form::extend('editor', WangEditor::class);
 
 app('view')->prependNamespace('admin', resource_path('views/admin'));
+Admin::css('/css/b.tabs.css');
 Admin::css('/css/header.css');
-Admin::js('/tz_assets/bundle.js');
+Admin::js('/js/b.tabs.min.js');
+Admin::js('/js/admin_tab.js');

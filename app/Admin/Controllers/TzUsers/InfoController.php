@@ -9,6 +9,7 @@ use Encore\Admin\Controllers\ModelForm;
 use App\Admin\Models\Idc\Ips;
 use App\Admin\Requests\Business\TzUserRequest;
 use Illuminate\Http\Request;
+use App\Admin\Controllers\Excel\ExcelController;
 
 class InfoController extends Controller
 {
@@ -72,6 +73,150 @@ class InfoController extends Controller
         return tz_ajax_echo(null, '修改成功', 1);
 
 
+    }
+
+    public function noBuyUsers()
+    {
+        $TzUsersM = new TzUsers();//实例化客户用户模型
+        $users_arr = $TzUsersM->noBuyUsers();    
+        
+        $excel_model = new ExcelController();
+        $excel_model->export($users_arr['no'],'无业务客户信息');
+ 
+    }
+
+    /**
+     * 获取客户数量
+     * @param  $need    1 - 获取当日 ; 2 - 获取当月 ; 3 - 获取所有
+     * @return
+     */
+    public function getUsers(Request $request){
+        $par = $request->only(['need']);
+        $this_month = date('Y-m');
+        $statistics = new TzUsers();
+
+        if (!isset($par['need'])) {
+            return tz_ajax_echo(null,'请明确需求 : 1 - 当日 ; 2 - 当月 ; 3 - 所有',0);
+        }
+        if ($par['need'] == 1) { // 取当日
+            $result = $statistics->usersToday();
+        }elseif ($par['need'] == 2) {// 取当月
+            $result = $statistics->getUsersThisMonth();
+        }elseif ($par['need'] == 3) {// 取所有
+      
+            $result = $statistics->getAllUsers();
+        }
+        
+
+        return tz_ajax_echo($result,'获取成功',1);
+    }
+
+    /**
+     * 获取客户数量
+     * @param  $month - 月份
+     * @return
+     */
+    public function getUsersDetailed(Request $request){
+        $par = $request->only(['month']);
+
+        if (!isset($par['month'])) {
+            return tz_ajax_echo(null,'请提供查询月份',0);
+        }
+        $statistics = new TzUsers();
+
+        $result = $statistics->getUsersDetailed($par['month']);
+
+        return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
+    }
+
+     /**
+     * 获取客户数量excel
+     * @param  $month - 月份
+     * @return
+     */
+    public function getUsersExcel(Request $request){
+        $par = $request->only(['month']);
+
+        if (!isset($par['month'])) {
+            return tz_ajax_echo(null,'请提供查询月份',0);
+        }
+        $statistics = new TzUsers();
+
+        $res = $statistics->getUsersDetailed($par['month']);
+        $res = $res['data'];
+        
+        $data1 = [ 
+            [
+                '日期',
+                '新增客户数量'
+            ], 
+        ];
+        foreach ($res['line'] as $k => $v) {
+            $data1[] = [ $res['line'][$k]['time'] , $res['line'][$k]['num'] ];
+        }
+
+        $data2 = [ 
+            [
+                '用户名',
+                '邮箱',
+                '昵称',
+                '联系电话',
+                'qq',
+                '注册时间',
+                '所属业务员',
+            ], 
+        ];
+        foreach ($res['info'] as $k => $v) {
+            $data2[] = [ 
+                $res['info'][$k]['name'] , 
+                $res['info'][$k]['email'] ,
+                $res['info'][$k]['nickname'] ,
+                $res['info'][$k]['msg_phone'] ,
+                $res['info'][$k]['msg_qq'] ,
+                $res['info'][$k]['created_at'] ,
+                $res['info'][$k]['salesman_name'] ,
+            ];
+        }
+
+        $arr = [
+            0   => [
+                'cellData' => $data1,
+                'cellName' => '每日新增',
+            ],
+            1   => [
+                'cellData' => $data2,
+                'cellName' => '新增客户列表',
+            ],
+        ];
+        $excel = new ExcelController();
+
+        $excel->kiriExcel($arr,$par['month'].'新增客户详情');
+    }
+
+    /**
+     * 按有无业务获取客户excel
+     * @param  $month - 月份
+     * @return
+     */
+    public function getUsersExcelByBusiness(){
+  
+        $statistics = new TzUsers();
+
+        $users_arr = $statistics->noBuyUsers();
+
+        $excel = new ExcelController();
+
+        $arr = [
+            0 => [
+                'cellData'  => $users_arr['already'],
+                'cellName'  => '有业务客户',
+            ],
+            1 => [
+                'cellData'  => $users_arr['no'],
+                'cellName'  => '无业务客户',
+            ],
+        ];
+        $excel->kiriExcel($arr,'客户详情');
     }
 
 }

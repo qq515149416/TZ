@@ -5,19 +5,20 @@
     }
     .main-body{
         .tz-container{
-
+            
             .main-content{
-
+                
                 .active{
                     display: block !important;
                 }
                 .posters{
-                    height: 216px;
+                    // height: 216px;
                 }
                 .drop-options{
                         width: 100%;
                         background-color: #e5ebf8;
                         position: relative;
+                        margin-top: -4px;
                         p{
                             border-bottom: 1px solid #dadadd;
                             height: 45px;
@@ -108,9 +109,11 @@
                             }
                         }
                         div:nth-child(1){
-                            left: 25px;
+                            // left: 25px;
+                            left: 50%;
+                            margin-left: -50%;
                             img:nth-child(1){
-                                margin-right: 8px;
+                                margin-right: 5px;
                             }
                         }
                         .page{
@@ -119,7 +122,9 @@
                             border-radius: 20px;
                             width: 70px;
                             height: 30px;
-                            left: 125px;
+                            // left: 125px;
+                            left: 50%;
+                            margin-left: -35px;
                             color: #989ca9;
                             top: 5px;
                             line-height: 30px;
@@ -132,20 +137,13 @@
                             }
                         }
                         div:nth-child(3){
-                            right: 25px;
+                            // right: 25px;
+                            right: 50%;
+                            // margin-right: -46%;
+                            margin-right: -133px;
                             img:nth-child(1){
-                                margin-right: 8px;
+                                margin-right: 5px;
                             }
-                        }
-                    }
-                    .honor:nth-child(2){
-                        .honor-t{
-                            height: 149px;
-                        }
-                    }
-                    .honor:nth-child(3){
-                        .honor-t{
-                            height: 231px;
                         }
                     }
                     .honor{
@@ -165,7 +163,8 @@
                                 float: left;
                                 text-align: center;
                                 img{
-                                    width: 130px;
+                                    // width: 130px;
+                                    width: 100%;
                                 }
                                 p{
                                     padding: 0px 15px;
@@ -176,27 +175,11 @@
                                 }
                             }
                         }
-                        .bottom{
-                            .page{
-                                left: 115px;
-                                span{
-                                    color: #252b3a;
-                                }
-                            }
-                            div:nth-child(3){
-                                img:nth-child(1) {
-                                margin-right: 5px;
-                                }
-                            }
-                            div:nth-child(1){
-                                img:nth-child(1) {
-                                margin-right: 5px;
-                                }
-                            }
+                            
                         }
-                    }
-                    .company-content{
-                        padding: 15px;
+                }
+                .company-content{
+                        padding: 15px 20px;
                         box-shadow: 1px 1px 25px 0px rgba( 24, 30, 60, 0.2 );
                         border-radius: 10px;
                         width: 100%;
@@ -225,8 +208,8 @@
                             width: 100%;
                             margin: 0px 0px 15px 0px;
                         }
-                    }
-                    .corporate-account{
+                }
+                .corporate-account{
                         width: 100%;
                         margin-top: 15px;
                         box-shadow: 1px 1px 17px 0px rgba( 24, 30, 60, 0.2 );
@@ -238,7 +221,7 @@
                             border-bottom: 1px dashed rgb(233, 229, 229);
                             img{
                                 width: 230px;
-                                box-shadow: 0px 0px 4px 0px #dbdbdf;
+                                box-shadow: 0px 0px 10px 0px rgba( 24, 30, 60, 0.15 );
                                 margin: 15px 0px;
                             }
                             p{
@@ -251,18 +234,20 @@
                             }
                         }
                         .online-payment{
-                            padding-bottom: 15px;
+                            padding-bottom: 15px;  
                             img:nth-child(1){
-                                width: 165px;
+                                // width: 165px;
+                                width: 58%;
                                 margin-right: 15px;
                                 float: left;
-                                box-shadow: 0px 0px 4px 0px #dbdbdf;
+                                box-shadow: 0px 0px 10px 0px rgba( 24, 30, 60, 0.15 );
                             }
                             img:nth-child(2){
-                                width: 100px;
+                                // width: 100px;
+                                width: 35%;
                                 padding: 5px;
                                 margin-bottom: 10px;
-                                box-shadow: 0px 0px 4px 0px #dbdbdf;
+                                box-shadow: 0px 0px 10px 0px rgba( 24, 30, 60, 0.15 );
                             }
                             p{
                                 letter-spacing: 1px;
@@ -284,8 +269,8 @@
                                 margin-bottom: 5px;
                             }
                         }
-                    }
-                    .contact-us{
+                }
+                .contact-us{
                         width: 100%;
                         margin-top: 15px;
                         box-shadow: 1px 1px 17px 0px rgba( 24, 30, 60, 0.2 );
@@ -383,11 +368,13 @@
                                         }
                                         table{
                                             tr:first-child{
+                                                
                                                 td{
                                                     font-size: 10px;
                                                     color: #9497a1;
                                                     width: calc(100%/3);
                                                     text-align: left;
+                                                    padding-bottom: 3px;
                                                 }
                                             }
                                             tr:last-child{
@@ -418,14 +405,21 @@
                                 }
                             }
                             div:nth-child(1){
-                                left: 10px;
+                                // left: 10px;
+                                left: 50%;
+                            margin-left: -45%;
+                            img:nth-child(1){
+                                margin-right: 5px;
+                            }
                             }
                             .page{
                                 border: 1px solid #cbcedd;
                                 border-radius: 20px;
                                 width: 70px;
                                 height: 30px;
-                                left: 115px;
+                                // left: 115px;
+                                left: 50%;
+                                margin-left: -35px;
                                 color: #989ca9;
                                 top: 5px;
                                 line-height: 30px;
@@ -438,7 +432,12 @@
                                 }
                             }
                             div:nth-child(3){
-                                right: 10px;
+                                // right: 10px;
+                                right: 50%;
+                            margin-right: -45%;
+                            img:nth-child(1){
+                                margin-right: 5px;
+                            }
                             }
                         }
                         .address{
@@ -446,26 +445,31 @@
                             font-size: 14px;
                             font-family: "PingFang";
                             color: rgb( 37, 43, 58 );
+                            font-weight: bold;
                             line-height: 1.471;
                             text-align: left;
-                            margin-bottom: 15px;
+                            margin-bottom: 25px;
+                            padding: 0px 10px;
                             p{
                                 font-size: 12px;
                                 font-family: "PingFang";
                                 color: rgb( 102, 106, 117 );
                                 line-height: 1.5;
                                 text-align: left;
+                                font-weight: 300;
+                                margin-top: 5px;
                             }
                         }
-                    }
-                    .hr{
+                }
+                .hr{
                         width: 1px;
-                        height: 2020px;
+                        // height: 2100px;
+                        height: 78.5%;
                         position: absolute;
                         top: 0px;
                         background: linear-gradient(#e5ebf8, #7193ff, #6d8fff);
-                    }
-                    .development-course{
+                }
+                .development-course{
                         margin-bottom: 20px;
                         .year{
                             height: 60px;
@@ -495,7 +499,7 @@
                             margin-left: 20px;
                             box-shadow: 1px 1px 17px 0px rgba( 24, 30, 60, 0.2 );
                             border-radius: 10px;
-                            padding: 10px 10px 10px 10px;
+                            padding: 20px 15px 15px 15px;
                             ul{
                                 li{
                                     text-align: left;
@@ -517,9 +521,9 @@
                                         span{
                                             position: absolute;
                                             left: -10px;
-                                            width: 4px;
-                                            height: 4px;
-                                            top: 5px;
+                                            width: 3px;
+                                            height: 3px;
+                                            top: 6px;
                                             border-radius: 50%;
                                             background-color: #666a75;
                                         }
@@ -527,19 +531,19 @@
                                 }
                             }
                         }
-                    }
-                    .culture{
+                }
+                .culture{
                         width: 100%;
                         img{
                             width: 100%;
                         }
-                    }
-                    .culture-a{
+                }
+                .culture-a{
                         width: 100%;
                         margin-top: 15px;
                         box-shadow: 1px 1px 17px 0px rgba( 24, 30, 60, 0.2 );
                         border-radius: 10px;
-                        padding: 0px 20px 20px 20px;
+                        padding: 0px 0px 20px 0px;
                         span{
                             display: inline-block;
                             font-size: 12px;
@@ -549,10 +553,20 @@
                             margin-bottom: 20px;
                             letter-spacing: 0.5px;
                         }
-                        img{
-                            width: 62px;
-                            height: 62px;
-                            margin-right: 5px;
+                        .s-text{
+                            padding: 0px 20px;
+                        }
+                        .c-img{
+                            padding: 0px 20px;
+                            font-size: 0px;
+                            text-align: center;
+                            img{
+                                width: 20.3%;
+                                margin-right:15px;
+                            }
+                            img:last-child{
+                                margin-right: 0px;
+                            }
                         }
                         img:nth-child(5){
                             margin-right: 0px;
@@ -567,8 +581,11 @@
                                 color: #162fac;
                             }
                         }
-                    }
                 }
+                .culture-a:nth-child(2){
+                    padding: 0px ;
+                }
+            }
                 // 新闻公告 内容页
                 .news-content{
                     width: 100%;
@@ -615,19 +632,19 @@
                                     font-family: "PingFang";
                                     color: rgb( 102, 106, 117 );
                                     line-height: 1.5;
-                                    margin-bottom: 10px;
+                                    margin-bottom: 15px;
                                 }
                             }
                             div:nth-child(2){
-                                margin-bottom: 10px;
+                                margin-bottom: 15px;
                                 p{
-                                    margin-left: 20px;
+                                    margin-left: 20px; 
                                     margin-bottom: 2px;
                                     font-size: 12px;
                                     font-family: "PingFang";
                                     color: rgb( 102, 106, 117 );
                                     line-height: 1.5;
-
+                                    
                                 }
                             }
                             div:nth-child(3){
@@ -671,7 +688,6 @@
                         }
                     }
                 }
-            }
         }
     }
 }

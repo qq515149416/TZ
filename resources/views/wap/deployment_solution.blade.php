@@ -36,7 +36,7 @@
                                 </li>
                                 <li>
                                     <div class="industry-title">
-                                        <img src="{{ asset("/images/wap/安全隐患.png") }}" alt="">
+                                        <img style="width: 22.6px;" src="{{ asset("/images/wap/安全隐患.png") }}" alt="">
                                         <p>安全隐患</p>
                                     </div>
                                     <p class="industry-text">如何规避攻击、篡改，数据库泄漏，黑客勒索等风险？无疑是用户更大的成本及时间压力。</p>
@@ -50,7 +50,7 @@
                                 </li>
                                 <li>
                                     <div class="industry-title">
-                                        <img src="{{ asset("/images/wap/IO读写速度-w.png") }}" alt="">
+                                        <img style="width: 24.5px;" src="{{ asset("/images/wap/IO读写速度-w.png") }}" alt="">
                                         <p>I/O读写</p>
                                     </div>
                                     <p class="industry-text">大部分站属交互型网站,故速度要快，而当前技术I/O是系统性能提高瓶颈，优化"读"性能。</p>
@@ -115,7 +115,6 @@
                             立即咨询
                         </a>
                     </div> -->
-
 
                 </div>
             </div>

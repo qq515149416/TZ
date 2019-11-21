@@ -91,7 +91,9 @@ Route::group([
     Route::get('/media_solution', 'Show\wap\MediaSolutionController@index');
     Route::get('/mobileapp_solution', 'Show\wap\MobileappSolutionController@index');
     Route::get('/company/{page}', 'Show\wap\CompanyIntroductionController@index');
-    Route::get('/help_center_home', 'Show\wap\HelpCenterHomeController@index');
+    Route::get('/help_center_home/{page}', 'Show\wap\HelpCenterHomeController@index');
+    Route::get('/help_center', 'Show\wap\HelpCenterController@index');
+    Route::get('/search_results', 'Show\wap\SearchResultsController@index');
 });
 
 /**

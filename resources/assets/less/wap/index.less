@@ -6,17 +6,20 @@
         width: 100%
     }
 }
-#tz-menu.page-index{
+#tz-menu{
     width: 100%;
     position: absolute;
-    .tz-container{
-        width: 100%;
+    #home{
+        // .tz-container{
+        // width: 100%;
             // 未登录
-            .main-content{
+            // .main-content{
                 background-color: #e9ecff;
                 width: 100%;
                 .slideshow{
                     position: relative;
+                    padding-bottom: 0px;
+                    height: 100%;
                     .slideshow-ul{
                         .slideshow-li{
                             padding: 0px;
@@ -28,6 +31,8 @@
                     .point{
                         background-color: transparent;
                         margin: 0px;
+                        height: 6px;
+                        width: 100%;
                         position: absolute;
                         bottom: 30px;
                         ol{
@@ -40,7 +45,6 @@
                                 margin-right: 10px;
                                 transition: all .5s;
                                 .progress{
-                                    // width: 6px;
                                     height: 13px;
                                     overflow: hidden;
                                     margin-bottom: 13px;
@@ -62,8 +66,7 @@
                                     background-color: #ffd543;
                                     border-radius: 5px;
                                     animation: animations 3s ease-out;
-
-                                    // animation-name: animations;
+                                   
                                 }
                             }
                         }
@@ -72,13 +75,10 @@
                 // 产品服务
                 .title{
                     width: 100%;
-                    height: 98px;
-                    line-height: 78px;
                     text-align: center;
                     // position: relative;
                     p{
                         display: block;
-                        height: 50px;
                         color: #252b3a;
                         font-size: 18px;
                         font-family: "pingFang", "\5FAE\8F6F\96C5\9ED1", Arial, Helvetica, sans-serif;
@@ -86,6 +86,7 @@
                 }
                 .tz-fuwu{
                     width: 100%;
+                    padding-top: 10px;
                     .tz-fuwu-box{
                         width: 100%;
                         .fuwu-li{
@@ -109,9 +110,35 @@
                             .items-li{
                                 display: none;
                                 background-color: #e9ecff;
-                                padding: 10px 20px;
+                                padding: 15px 20px;
                                 animation: gary 0.3s;
-
+                                .yzj{
+                                    background-color: #fff;
+                                    border-radius: 5px;
+                                    padding: 20px 20px 15px 20px;
+                                    .fuwu-title{
+                                        font-size: 14px;
+                                        color: #252b3a;
+                                        font-weight: bold;line-height: 20px;
+                                        margin-bottom: 10px;
+                                    }
+                                    p{
+                                        font-size: 12px;
+                                        color: #666a75;
+                                        line-height: 1.5;
+                                    }
+                                    a{
+                                        width: 100px;
+                                        display: inline-block;
+                                        line-height: 30px;
+                                        text-align: center;
+                                        border-radius: 20px;
+                                        height: 30px;
+                                        font-size: 12px;
+                                        color: #fff;
+                                        background: linear-gradient(to left, #1f40dc, #4582fe);
+                                    }
+                                }
 
                                 .fuwu-item-title{
                                     margin: 0 15px;
@@ -126,8 +153,8 @@
                                 ul{
                                     width: 100%;
                                     li{
-                                        padding-top: 18px;
-                                        padding-bottom: 15px;
+                                        padding-top: 15px;
+                                        padding-bottom: 20px;
                                         box-sizing: content-box;
                                         width: 100%;
                                         border-bottom: 1px dashed #a5b3d5;
@@ -157,7 +184,7 @@
                                     }
                                     .solution{
                                         // width: 155px;
-                                        width: calc(95.3%/2);
+                                        width: 47.32%;
                                         // height: 301px;
                                         background-color: #fff;
                                         border: none;
@@ -189,7 +216,7 @@
                                     }
                                     .m{
                                         margin-right: 15px;
-
+                                        
                                     }
                                     .fangyu-li{
                                         width: 100%;
@@ -219,10 +246,11 @@
                             }
                         }
                     }
-
+                    
                 }
                 // 地图
                 .map{
+                    font-size: 0px;
                     img{
                         width: 100%;
                     }
@@ -230,15 +258,11 @@
                 // 新闻
                 .news{
                     background-color: #fff;
-                    margin-top: -4px;
                     .title{
                         width: 100%;
-                        height: 98px;
-                        line-height: 78px;
                         text-align: center;
                         p{
                             display: block;
-                            height: 50px;
                             font-family: "PingFang";
                             color: rgb( 37, 43, 58 );
                             font-size: 18px;
@@ -252,11 +276,13 @@
                             background-color: rgb( 255, 255, 255 );
                             box-shadow: 0px 5px 10px 0px rgba(22, 45, 155, 0.2);
                             margin-bottom: 10px;
+                            margin-top: 10px;
                             img{
                                 width: 100%;
                             }
                             .news-text{
                                 position: relative;
+                                padding: 0px 15px;
                                 .news-text-title{
                                     font-size: 14px;
                                     font-family: "PingFang";
@@ -264,12 +290,11 @@
                                     font-weight: bold;
                                     line-height: 1.427;
                                     text-align: left;
-                                    margin: 10px ;
+                                    margin: 10px 0px;
                                 }
                                 .news-text-content{
                                     font-size: 12px;
-                                    margin-left: 10px;
-                                    margin-right: 60px;
+                                    margin-right: 15%;
                                     font-family: "PingFang";
                                     color: rgb( 102, 106, 117 );
                                     line-height: 1.5;
@@ -283,7 +308,7 @@
                                     width: 25px;
                                     position: absolute;
                                     right: 17px;
-                                    bottom: 35px;
+                                    top: 35%;
                                     img{
                                         z-index: 100;
                                     }
@@ -295,14 +320,14 @@
                                     line-height: 1.816;
                                     text-align: left;
                                     margin-top: 10px;
-                                    margin-bottom: 20px;
-                                    padding-left: 10px;
+                                    margin-bottom: 25px;
                                 }
                             }
                         }
                         .news-items{
                             width: 100%;
                             .news-text{
+                                padding: 0px 15px;
                                 margin-top: 25px;
                                 position: relative;
                                 border-bottom: 1px solid #c0c9dd;
@@ -313,12 +338,11 @@
                                     font-weight: bold;
                                     line-height: 1.427;
                                     text-align: left;
-                                    margin: 10px ;
+                                    margin: 10px 0px;
                                 }
                                 .news-text-content{
                                     font-size: 12px;
-                                    margin-left: 10px;
-                                    margin-right: 60px;
+                                    margin-right: 15%;
                                     font-family: "PingFang";
                                     color: rgb( 102, 106, 117 );
                                     line-height: 1.5;
@@ -328,7 +352,7 @@
                                     width: 25px;
                                     position: absolute;
                                     right: 17px;
-                                    bottom: 50px;
+                                    top: 30%;
                                     img{
                                         width: 25px;
                                     }
@@ -341,89 +365,104 @@
                                     text-align: left;
                                     margin-top: 10px;
                                     padding-bottom: 20px;
-                                    padding-left: 10px;
                                 }
                             }
                         }
-
+                        
                     }
                 }
                 // 底栏
-                .footer{
-                    width: 100%;
-                    background: linear-gradient(#1a2235,#05091c);;
-                    .tz-main{
-                        .system-technology-service{
-                            width: 100%;
-                            ul{
-                                padding: 35px 0px 15px 0px;
-                                width: 100%;
-                                height: 110px;
-                                box-sizing: content-box;
-                                li.footer-items{
-                                    width: calc(100%/3);
-                                    box-sizing: border-box;
-                                    height: 110px;
-                                    float: left;
-                                    text-align: center;
-                                    color: rgb( 255, 255, 255 );
-                                    padding: 0 3px;
-                                    img{
-                                        width: 43px;
-                                    }
-                                    .f-title{
-                                        font-size: 14px;
-                                        font-family: "PingFang";
-                                        font-weight: bold;
-                                        padding: 5px 0px;
-                                    }
-                                    .f-text{
-                                        font-size: 10px;
-                                        font-family: "PingFang";
-                                    }
-                                }
-                            }
-                        }
-                        .phone-call{
-                            background: linear-gradient(to right,#3b69e9,#1d39b6);
-                            border-radius: 5px;
-                            height: 42px;
-                            line-height: 42px;
-                            width: 100%;
-                            .p-text{
-                                padding: 0 30px;
-                                img{
-                                    width: 28px;
-                                    margin: 8px 0px;
-                                }
-                                p{
-                                    font-size: 13px;
-                                    font-family: "PingFang";
-                                    color: rgb( 255, 255, 255 );
-                                    float: right;
-                                }
-                            }
-                        }
-                        .record{
-                            margin-top: 20px;
-                            border-top: 1px solid #394b76;
-                            padding-top: 15px;
-                            padding-bottom: 35px;
-                            width: 100%;
-                            text-align: center;
-                            div{
-                                font-size: 10px;
-                                font-family: "PingFang";
-                                color: rgb( 146, 155, 184 );
-                                img{
-                                    width: 10px;
-                                }
+                // .footer{
+                //     width: 100%;
+                //     background: linear-gradient(#1a2235,#05091c);;
+                //     .tz-main{
+                //         .system-technology-service{
+                //             width: 100%;
+                //             ul{
+                //                 padding: 35px 0px 15px 0px;
+                //                 width: 100%;
+                //                 box-sizing: content-box;
+                //                 li.footer-items{
+                //                     width: calc(100%/3);
+                //                     box-sizing: border-box;
+                //                     float: left;
+                //                     text-align: center;
+                //                     color: rgb( 255, 255, 255 );
+                //                     padding: 0 3px;
+                //                     img{
+                //                         width: 43px;
+                //                     }
+                //                     .f-title{
+                //                         font-size: 14px;
+                //                         font-family: "PingFang";
+                //                         font-weight: bold;
+                //                         padding: 5px 0px;
+                //                     }
+                //                     .f-text{
+                //                         font-size: 10px;
+                //                         font-family: "PingFang";
+                //                     }
+                //                 }
+                //             }
+                //         }
+                //         .phone-call{
+                //             background: linear-gradient(to right,#3b69e9,#1d39b6);
+                //             border-radius: 5px;
+                //             height: 42px;
+                //             line-height: 42px;
+                //             width: 100%;
+                //             .p-text{
+                //                 padding: 0 30px;
+                //                 img{
+                //                     width: 28px;
+                //                     margin: 8px 0px;
+                //                 }
+                //                 p{
+                //                     font-size: 13px;
+                //                     font-family: "PingFang";
+                //                     color: rgb( 255, 255, 255 );
+                //                     float: right;
+                //                 }
+                //             }
+                //         }
+                //         .record{
+                //             margin-top: 20px;
+                //             border-top: 1px solid #394b76;
+                //             padding-top: 15px;
+                //             padding-bottom: 35px;
+                //             width: 100%;
+                //             text-align: center;
+                //             div{
+                //                 font-size: 10px;
+                //                 font-family: "PingFang";
+                //                 color: rgb( 146, 155, 184 );
+                //                 img{
+                //                     width: 10px;
+                //                 }
+                //             }
+                //         }
+                //     }
+                // }
+            
+        
+        
+    }
+}
+#high_security_server{
+    .tz-container{
+        .main-content{
+            .compouter-advantage{
+                .advantage-li{
+                    ul{
+                        li{
+                            img{
+                                margin-top: 5px;
                             }
                         }
                     }
                 }
             }
-
+        }
     }
 }
 

@@ -22,27 +22,30 @@
                         <p>高防云主机产品</p>
                         <div class="title-hr"></div>
                     </div>
-                    <div class="slideshow">
+                    <div class="slideshow" id="slideshow">
                             <ul class="slideshow-ul clear">
                                 <li class="slideshow-li">
-                                    <div>高防促销型</div>
-                                    <div>
-                                        <p>139</p>
-                                        <p>元/月</p>
+                                    <div class="slideshow-li-i">
+                                            <div>高防促销型</div>
+                                            <div>
+                                                <p>139</p>
+                                                <p>元/月</p>
+                                            </div>
+                                            <div>
+                                                <div>
+                                                    <img src="{{ asset("/images/wap/星星.png") }}" alt="">
+                                                    防御：40G
+                                                </div>
+                                                <div>
+                                                    <img src="{{ asset("/images/wap/星星.png") }}" alt="">
+                                                    机房：陕西西安
+                                                </div>
+                                            </div>
+                                            <!-- <a href="/">立即购买</a> -->
                                     </div>
-                                    <div>
-                                        <div>
-                                            <img src="{{ asset("/images/wap/星星.png") }}" alt="">
-                                            防御：40G
-                                        </div>
-                                        <div>
-                                            <img src="{{ asset("/images/wap/星星.png") }}" alt="">
-                                            机房：陕西西安
-                                        </div>
-                                    </div>
-                                    <!-- <a href="/">立即购买</a> -->
                                 </li>
                                 <li class="slideshow-li">
+                                        <div class="slideshow-li-i">
                                         <div>高防普防型</div>
                                         <div>
                                             <p>69</p>
@@ -59,8 +62,10 @@
                                             </div>
                                         </div>
                                     <!-- <a href="/">立即购买</a> -->
+                                    </div>
                                 </li>
                                 <li class="slideshow-li">
+                                        <div class="slideshow-li-i">
                                         <div>高防百G型</div>
                                         <div>
                                             <p>599</p>
@@ -77,8 +82,10 @@
                                             </div>
                                         </div>
                                     <!-- <a href="/">立即购买</a> -->
+                                    </div>
                                 </li>
                                 <li class="slideshow-li">
+                                        <div class="slideshow-li-i">
                                         <div>高防定制型</div>
                                         <div>
                                             <p>价格待定</p>
@@ -95,6 +102,7 @@
                                             </div>
                                         </div>
                                     <!-- <a href="/">立即购买</a> -->
+                                    </div>
                                 </li>
                             </ul>
                             <!-- 点 -->
@@ -356,12 +364,11 @@
 
                     <!-- 蓝条 -->
                     <!-- <div class="solutions-consulting">
-                        <img src="{{ asset("/images/wap/服务器租用蓝条.png") }}" alt="">
+                        <img src="../image/android/drawable-xhdpi/服务器租用蓝条.png" alt="">
                         <a>
                             立即咨询
                         </a>
                     </div> -->
-
                 </div>
             </div>
         </div>

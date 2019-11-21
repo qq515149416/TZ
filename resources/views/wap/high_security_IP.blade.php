@@ -22,18 +22,40 @@
                         <div class="title-hr"></div>
                     </div>
                     <!-- 轮播 -->
-                    <div class="slideshow">
+                    <div class="slideshow" id="slideshow">
                         <ul class="slideshow-ul clear">
                             <li class="slideshow-li">
-                                <div>高防IP业务-100G</div>
+                                <div class="slideshow-li-i">
+                                        <div>高防IP业务-100G</div>
+                                        <div>
+                                            <p>1300</p>
+                                            <p>元/月</p>
+                                        </div>
+                                        <div>
+                                            <div>
+                                                <img src="{{ asset("/images/wap/星星.png") }}" alt="">
+                                                防护：100
+                                            </div>
+                                            <div>
+                                                <img src="{{ asset("/images/wap/星星.png") }}" alt="">
+                                                机房：陕西西安
+                                            </div>
+                                        </div>
+                                        <a href="/">了解详情</a>
+                                </div>
+                                
+                            </li>
+                            <li class="slideshow-li" >
+                                <div class="slideshow-li-i">
+                                <div>高防IP业务-200G</div>
                                 <div>
-                                    <p>1300</p>
+                                    <p>1888</p>
                                     <p>元/月</p>
                                 </div>
                                 <div>
                                     <div>
                                         <img src="{{ asset("/images/wap/星星.png") }}" alt="">
-                                        防护：100
+                                        防护：200
                                     </div>
                                     <div>
                                         <img src="{{ asset("/images/wap/星星.png") }}" alt="">
@@ -41,60 +63,47 @@
                                     </div>
                                 </div>
                                 <a href="/">了解详情</a>
+                            </div>
                             </li>
                             <li class="slideshow-li">
-                                    <div>高防IP业务-200G</div>
-                                    <div>
-                                        <p>1888</p>
-                                        <p>元/月</p>
-                                    </div>
-                                    <div>
+                                <div class="slideshow-li-i">
+                                        <div>高防IP业务-300G</div>
                                         <div>
-                                            <img src="{{ asset("/images/wap/星星.png") }}" alt="">
-                                            防护：200
+                                            <p>3888</p>
+                                            <p>元/月</p>
                                         </div>
                                         <div>
-                                            <img src="{{ asset("/images/wap/星星.png") }}" alt="">
-                                            机房：陕西西安
+                                            <div>
+                                                <img src="{{ asset("/images/wap/星星.png") }}" alt="">
+                                                防护：300
+                                            </div>
+                                            <div>
+                                                <img src="{{ asset("/images/wap/星星.png") }}" alt="">
+                                                机房：陕西西安
+                                            </div>
                                         </div>
-                                    </div>
-                                <a href="/">了解详情</a>
+                                        <a href="/">了解详情</a>
+                                </div>
                             </li>
                             <li class="slideshow-li">
-                                    <div>高防IP业务-300G</div>
+                                <div class="slideshow-li-i">
+                                <div>高防IP业务-500G</div>
+                                <div>
+                                    <p>30000</p>
+                                    <p>元/月</p>
+                                </div>
+                                <div>
                                     <div>
-                                        <p>3888</p>
-                                        <p>元/月</p>
+                                        <img src="{{ asset("/images/wap/星星.png") }}" alt="">
+                                        防护：500
                                     </div>
                                     <div>
-                                        <div>
-                                            <img src="{{ asset("/images/wap/星星.png") }}" alt="">
-                                            防护：300
-                                        </div>
-                                        <div>
-                                            <img src="{{ asset("/images/wap/星星.png") }}" alt="">
-                                            机房：陕西西安
-                                        </div>
+                                        <img src="{{ asset("/images/wap/星星.png") }}" alt="">
+                                        机房：陕西西安
                                     </div>
+                                </div>
                                 <a href="/">了解详情</a>
-                            </li>
-                            <li class="slideshow-li">
-                                    <div>高防IP业务-500G</div>
-                                    <div>
-                                        <p>30000</p>
-                                        <p>元/月</p>
-                                    </div>
-                                    <div>
-                                        <div>
-                                            <img src="{{ asset("/images/wap/星星.png") }}" alt="">
-                                            防护：500
-                                        </div>
-                                        <div>
-                                            <img src="{{ asset("/images/wap/星星.png") }}" alt="">
-                                            机房：陕西西安
-                                        </div>
-                                    </div>
-                                <a href="/">了解详情</a>
+                            </div>
                             </li>
                         </ul>
                         <!-- 点 -->
@@ -138,11 +147,10 @@
                         </div>
 
                     </div>
-
                     <!-- DDoS高防IP功能 -->
                     <div class="compouter-advantage-gn">
                         <div class="title">
-                            <p style="color: #fff !important;">DDoS高防IP功能</p>
+                            <p style="color: #fff !important;">DDOS高防IP功能</p>
                             <div style="background-color: #fff !important;" class="title-hr"></div>
                         </div>
                         <div class="advantage-li clear">
@@ -197,7 +205,7 @@
                                     <p>网站类业务最易受攻击，因黑客可通过DNS解析轻松获取网站服务器真实IP，然后对服务器IP进行大流量ddos/cc攻击，导致网站访问缓慢或直接瘫痪。</p>
                                 </div>
                                 <div class="application-items">
-                                    <div class="clear">游戏类业务 <img src="{{ asset("/images/wap/游戏类业务.png") }}"
+                                    <div class="clear">游戏类业务 <img style="width: 22px;" src="{{ asset("/images/wap/游戏类业务.png") }}"
                                             alt=""> </div>
                                     <p class="font-b">适用行业：各类端游,手游等网络游戏,各类应用程序产品</p>
                                     <p>游戏类是攻击最严重的行业，同行恶意竞争者通过各种攻击手段，让大批量游戏玩家频繁掉线，玩游戏卡顿，攻击停服，甚至无法登陆接入游戏，最终让大批玩家流失。</p>
@@ -253,7 +261,6 @@
                             立即申请
                         </a>
                     </div> -->
-
                 </div>
             </div>
         </div>

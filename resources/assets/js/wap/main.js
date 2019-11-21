@@ -1,7 +1,7 @@
-var fuwulis = document.getElementsByClassName("fuwu-li-i");
-var itemslis = document.getElementsByClassName("items-li");
-var fuwuTitleImg = document.querySelectorAll(".fuwu-li .tz-main img");
-var arrows = document.querySelectorAll(".fuwu-li .div-arrow .arrow");
+var fuwulis = document.querySelectorAll("#home .fuwu-li-i");
+var itemslis = document.querySelectorAll("#home .items-li");
+var fuwuTitleImg = document.querySelectorAll("#home .fuwu-li .tz-main img");
+var arrows = document.querySelectorAll("#home .fuwu-li .div-arrow .arrow");
 var moreBtn = document.querySelector(".sidebar .more-btn");
 var moreContent = document.querySelector(".sidebar .more-content");
 var topBtn = document.querySelector(".sidebar .top-btn");
@@ -26,7 +26,7 @@ for(var i=0; i<count; i++){
             if(this.index==3){
                 fuwuTitleImg[this.index].setAttribute("src","/images/wap/解决方案（关）.png");
             }
-
+            
         }else{
             itemslis[this.index].style.display = "block";
             arrows[this.index].style.transform = "rotate(135deg)";
@@ -46,6 +46,7 @@ for(var i=0; i<count; i++){
         }
     }
 }
+
 // 点击更多
 moreBtn.onclick = function(){
     if(moreContent.style.display=="block"){
@@ -54,6 +55,28 @@ moreBtn.onclick = function(){
         moreContent.style.display="block"
     }
 }
+if(document.querySelector("#C_shield")){
+    if(document.body.clientWidth<330){
+            var pi =document.querySelectorAll(".package-item-i");
+        for(var i=0;i<pi.length;i++){
+            pi[i].style.height="240px";
+        }
+      }
+}
+if(document.querySelector("#server_hosting") || document.querySelector("#high_security_server") || document.querySelector("#high_proof_host") || document.querySelector("#flow_stack_packet") || document.querySelector("#cloud_hosting") || document.querySelector("#server_hire")) {
+    if (document.body.clientWidth < 330) {
+        var p_li = document.querySelector(".problems-li").querySelectorAll("li");
+        for (var i = 0; i < p_li.length; i++) {
+            p_li[i].querySelector("p").style.maxWidth = "190px";
+        }
+    }
+}
+if(document.querySelector("#search_results")){
+    goPage(1,8);
+}
+
+  
+
 import "./index.js";
 import "./slideshow.js";
 import "./computer_introduce.js";
@@ -61,7 +84,7 @@ import "./server_hire.js";
 import "./slideshow_a.js";
 import "./server_hosting.js";
 import "./cdn_speed_up.js";
-import "./page.js";
 import "./company_introduction.js";
 import "./goPage.js";
 import "./help_center_home.js";
+import "./page.js";

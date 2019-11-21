@@ -1,0 +1,239 @@
+.tz-container {
+  width: 100%;
+}
+.tz-container .main-body {
+  padding-top: 0px;
+}
+.tz-container .main-content {
+  background-color: #e9ecff;
+}
+.tz-container .main-content .title {
+  width: 100%;
+  text-align: center;
+}
+.tz-container .main-content .title p {
+  display: block;
+  color: #252b3a;
+  font-size: 18px;
+  font-family: "pingFang", "\5FAE\8F6F\96C5\9ED1", Arial, Helvetica, sans-serif;
+}
+.tz-container .main-content .industry-problems {
+  margin-top: 10px;
+}
+.tz-container .main-content .industry-problems ul {
+  width: 100%;
+  padding-bottom: 20px;
+}
+.tz-container .main-content .industry-problems ul li {
+  float: left;
+  width: 47.327%;
+  background-color: #fff;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  padding: 15px 13px;
+}
+.tz-container .main-content .industry-problems ul li .industry-title {
+  margin-bottom: 10px;
+}
+.tz-container .main-content .industry-problems ul li .industry-title img {
+  width: 20px;
+  margin-right: 5px;
+}
+.tz-container .main-content .industry-problems ul li .industry-title p {
+  top: 2px;
+  width: 80%;
+  margin-left: 30px;
+  margin-top: -25px;
+  font-size: 14px;
+  font-family: "PingFang";
+  color: #252b3a;
+  font-weight: bold;
+}
+.tz-container .main-content .industry-problems ul li .industry-text {
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #6a6d78;
+  position: relative;
+  line-height: 1.5;
+  margin: 0px 0px;
+  text-shadow: 2.5px 5px 15px rgba(29, 29, 29, 0.2);
+}
+.tz-container .main-content .industry-problems ul li .industry-text span {
+  position: absolute;
+  display: inline-block;
+  top: 6px;
+  left: 0px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background-color: #162fab;
+}
+.tz-container .main-content .industry-problems ul .p {
+  padding: 15px 10px !important;
+  height: 130px;
+}
+.tz-container .main-content .industry-problems ul .m {
+  margin-right: 15px;
+}
+.tz-container .main-content .industry-problems .slideshow {
+  position: relative;
+  overflow: hidden;
+}
+.tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li {
+  position: absolute;
+  background-color: #e9eeff;
+  width: 100%;
+  top: 0;
+  left: 0;
+  -webkit-transform: translateX(300%);
+  transform: translateX(300%);
+  padding: 0px 40px;
+  text-align: center;
+}
+.tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li img {
+  width: 40px;
+}
+.tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li div {
+  font-size: 14px;
+  color: #252b3a;
+  font-weight: bold;
+  margin: 5px 0px;
+}
+.tz-container .main-content .industry-problems .slideshow ul.slideshow-ul li.slideshow-li p {
+  font-size: 12px;
+  color: #444;
+}
+.tz-container .main-content .industry-problems .slideshow .point {
+  height: 10px;
+  text-align: center;
+}
+.tz-container .main-content .industry-problems .slideshow .point ol {
+  width: 100% ;
+  text-align: center;
+  font-size: 0;
+}
+.tz-container .main-content .industry-problems .slideshow .point ol li {
+  width: 10px ;
+  height: 10px ;
+  border-radius: 50%;
+  margin: 0px 5px;
+  background-color: #c0c4d3;
+  display: inline-block;
+}
+.tz-container .main-content .industry-problems .slideshow .point ol li.point-active {
+  background-color: #162fab;
+}
+.tz-container .main-content .architecture-deployment {
+  background-color: #fff;
+}
+.tz-container .main-content .architecture-deployment img {
+  width: 100%;
+  margin-top: 10px;
+}
+.tz-container .main-content .architecture-deployment .description {
+  padding: 15px 0 30px 0;
+}
+.tz-container .main-content .architecture-deployment .description .description-title {
+  font-size: 14px;
+  font-family: "PingFang";
+  color: #252b3a;
+  font-weight: bold;
+  text-align: left;
+  margin: 5px 0;
+}
+.tz-container .main-content .architecture-deployment .description div {
+  color: #434a5b;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1.667;
+  margin: 5px 0px 2px 0px;
+}
+.tz-container .main-content .architecture-deployment .description p {
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #6a6d78;
+  line-height: 1.667;
+  text-align: justifyLeft;
+}
+.tz-container .main-content .service-advantages {
+  background: linear-gradient(#edf0ff, #fff);
+  position: relative;
+}
+.tz-container .main-content .service-advantages img {
+  width: 100%;
+  padding: 0px 60px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+.tz-container .main-content .service-advantages .backgroundimg {
+  width: 100%;
+  position: absolute;
+  top: 300px;
+  left: 0;
+  z-index: -1 !important;
+  padding: 0 !important;
+}
+.tz-container .main-content .service-advantages ul {
+  z-index: 100;
+  padding: 15px 0px;
+}
+.tz-container .main-content .service-advantages ul li {
+  padding: 15px 0px;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  box-shadow: 1.5px 2.5px 15px 0px rgba(4, 38, 107, 0.2);
+}
+.tz-container .main-content .service-advantages ul li .fuwu-txt {
+  padding-right: 15px !important;
+}
+.tz-container .main-content .service-advantages ul li .fuwu-title {
+  padding-left: 15px;
+  font-size: 14px;
+  font-family: "PingFang";
+  color: #252b3a;
+  font-weight: bold;
+  line-height: 20px;
+  margin-bottom: 5px;
+}
+.tz-container .main-content .service-advantages ul li .fuwu-txt {
+  padding-left: 15px;
+  padding-right: 10px;
+  line-height: 20px;
+  font-size: 12px;
+  text-align: left;
+  font-family: "PingFang";
+  color: #666a75;
+}
+.tz-container .main-content .service-advantages .solutions-consulting {
+  height: 123.2px;
+  position: relative;
+}
+.tz-container .main-content .service-advantages .solutions-consulting img {
+  width: 100%;
+  padding: 0px !important;
+}
+.tz-container .main-content .service-advantages .solutions-consulting a {
+  display: block;
+  color: #fff;
+  text-align: center;
+  line-height: 40px;
+  position: absolute;
+  bottom: 25px;
+  left: calc(28%);
+  width: 160px;
+  height: 40px;
+  border: 1px solid #fff;
+  border-radius: 20px;
+}
+#education_solution .industry-problems ul li,
+#media_solution .industry-problems ul li,
+#deployment_solution .industry-problems ul li,
+#game_solution .industry-problems ul li,
+#financial_solution .industry-problems ul li {
+  box-shadow: 2.5px 4px 15px 0px rgba(29, 29, 29, 0.1);
+}
+#game_solution .industry-problems ul li .industry-text {
+  padding-left: 7px;
+}

@@ -137,7 +137,7 @@
                                     <p>采用替身防御模式隐藏源站IP，阻断黑客针对源站的DDoS、CC攻击及恶意SQL注入，保障网站正常服务。</p>
                                 </div>
                                 <div class="application-items">
-                                    <div class="clear">存储分发 <img src="{{ asset("/images/wap/存储分发.png") }}" alt="">
+                                    <div class="clear">存储分发 <img style="width: 22px;" src="{{ asset("/images/wap/存储分发.png") }}" alt="">
                                     </div>
                                     <p class="font-b">适用行业：各类型端游,手游,下载站,应用程序等网络产品 </p>
                                     <p>不同粒度文件全国分发加速，解决在线游戏、音乐、视频、软件等大型文件传输</p>
@@ -209,12 +209,11 @@
                     </div>
                     <!-- 蓝条 -->
                     <!-- <div class="solutions-consulting">
-                        <img src="{{ asset("/images/wap/防御流量叠加包蓝条.png") }}" alt="">
+                        <img src="{{ asset("/images/wap/防御流量叠加包蓝条.png" alt="">
                         <a>
                             立即咨询
                         </a>
                     </div> -->
-
                 </div>
             </div>
         </div>

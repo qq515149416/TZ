@@ -25,7 +25,7 @@
                     </div>
                     <div class="industry-problems">
                         <!-- 轮播 -->
-                        <div class="slideshow">
+                        <div class="slideshow" id="slideshow">
                             <ul class="slideshow-ul clear">
                                 <li class="slideshow-li">
                                     <img src="{{ asset("/images/wap/营销推广困难.png") }}" alt="">
@@ -121,7 +121,6 @@
                             立即咨询
                         </a>
                     </div> -->
-
 
                 </div>
             </div>

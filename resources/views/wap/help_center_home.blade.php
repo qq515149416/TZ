@@ -9,30 +9,31 @@
 @section('content')
 <!-- 帮助中心 -->
 <div id="help_center_home">
-        <div class="main-body">
-            <div class="tz-container clear">
-
-                <!-- 内容 -->
-                <div class="main-content">
-                    <div class="posters">
+    <div class="main-body">
+        <div class="tz-container clear">
+            <!-- 内容 -->
+            <div class="main-content">
+                <div class="posters">
                         <img src="{{ asset("/images/wap/帮助中心海报.png") }}" alt="">
                         <div class="search">
                             <p class="search-t">帮助中心</p>
                             <div class="search-c">
                                 <input type="text" name="search" id="" placeholder="请输入关键词题的答案">
-                                <input type="botton"><img src="{{ asset("/images/wap/搜索.png") }}" alt=""
-                                    class="img-search">
+                                <a href="/wap/search_results">
+                                <input type="botton" style="background-image: url({{ asset("/images/wap/搜索.png") }});">
+                            </a>
                             </div>
                             <div class="search-f">
                                 <p>热门：怎么选择服务器租用商 | 服务器托管好吗</p>
                                 <p>云主机安全吗 | 大带宽价格 | 网络安全</p>
                             </div>
-
+                            
                         </div>
-                    </div>
-                    <div class="drop-options">
+                </div>
+            
+                <div class="drop-options">
                         <div class="drop-options">
-                            <p onclick="helpcenter(this)">Linux服务器FAQ</p>
+                            <p class="helpcenter">{{$page_info[$page]['name']}}</p>
                             <span class="arrow"></span>
                             <ul class="select-text clear">
                                 <li class="option-i" value="0" selected>Linux服务器FAQ</li>
@@ -56,8 +57,8 @@
                                 <li class="option-i" value="18">常见问题</li>
                             </ul>
                         </div>
-                    </div>
-                    <div class="option-text ">
+                </div>
+                <div class="option-text {{ $page=='help_center_home'?'option-e-active':'' }}" id="help-p">
                         <div class="help-home-s news">
                             <p class="help-title">为什么我们要用Linux服务器系统？</p>
                             <p class="help-text">
@@ -133,8 +134,8 @@
                                     <img src="{{ asset("/images/wap/最后一页.png") }}" alt="">
                                 </div> -->
                         </div>
-                    </div>
-                    <div class="help-home-content">
+                </div>
+                <div class="help-home-content">
                         <div class="problem-conetnt">
                             <p class="p-title">万人游戏服务器该如何配置</p>
                             <p class="time">2019-07-01 14:43</p>
@@ -149,7 +150,8 @@
                         </div>
                         <div class="more">
                             <div class="label">
-                                标 &nbsp; 签：<span>游戏服务器</span> <span>游戏服务器租用</span> <span>游戏服务器配置</span>
+                                <div>标 &nbsp; 签：</div>
+                                <div><span>游戏服务器</span> <span>游戏服务器租用</span> <span>游戏服务器配置</span></div>
                             </div>
                             <div class="pre">
                                 上一篇：<p>实现共赢彼此成就 | 腾正科技...</p>
@@ -159,11 +161,78 @@
                             </div>
                             <img src="{{ asset("/images/wap/上一篇.png") }}" alt="">
                         </div>
-                    </div>
-
                 </div>
             </div>
         </div>
     </div>
-
+</div>
+ <script>
+    
+    function goPage(pno, psize) {
+            var news = document.querySelectorAll(".option-text .news");
+            var num = news.length;
+            var totalPage = 0;//总页数
+            var pageSize = psize;//每页显示行数
+            //总共分几页
+            if (num / pageSize > parseInt(num / pageSize)) {
+                totalPage = parseInt(num / pageSize) + 1;
+            } else {
+                totalPage = parseInt(num / pageSize);
+            }
+            var currentPage = pno;//当前页数
+            var startRow = (currentPage - 1) * pageSize + 1;//开始显示的行  31
+            var endRow = currentPage * pageSize;//结束显示的行   40
+            endRow = (endRow > num) ? num : endRow;
+            //遍历显示数据实现分页
+            for (var i = 1; i < (num + 1); i++) {
+                var irow = news[i - 1];
+                if (i >= startRow && i <= endRow) {
+                    irow.style.display = "block";
+                } else {
+                    irow.style.display = "none";
+                }
+            }
+        
+            var tempStr = "";
+            if (currentPage > 1) {
+                tempStr += "<div style=\"width: 90px;\">";
+                tempStr += "<img src=\"/images/wap/第一页.png\" onClick=\"goPage(" + (1) + "," + psize + ")\">";
+                tempStr += "<img src=\"/images/wap/上一页.png\" onClick=\"goPage(" + (currentPage - 1) + "," + psize + ")\">";
+                tempStr += "</div>";
+            
+            } else {
+                tempStr += "<div style=\"width: 90px;\">";
+                tempStr += "<img src=\"/images/wap/第一页.png\" >";
+                tempStr += "<img src=\"/images/wap/上一页.png\" >";
+                tempStr += "</div>";
+            }
+            if (currentPage >=10 ) {
+                tempStr += "<div class=\"page\" id=\"page\">";
+                tempStr += "<span>"  + currentPage + "</span>"
+            } else {
+                tempStr += "<div class=\"page\" id=\"page\">";
+                tempStr += "<span>" + "0" + currentPage + "</span>"
+            }
+            if(totalPage>=10){
+                tempStr += "/" + totalPage;
+                tempStr += "</div>";
+            }else{
+                tempStr += "/0" + totalPage;
+                tempStr += "</div>";
+            }
+            if (currentPage < totalPage) {
+                tempStr += "<div style=\"width: 90px;\">";
+                tempStr += "<img src=\"/images/wap/下一页.png\" onClick=\"goPage(" + (currentPage + 1) + "," + psize + ")\">";
+                tempStr += "<img src=\"/images/wap/最后一页.png\" onClick=\"goPage(" + (totalPage) + "," + psize + ")\">";
+                tempStr += "</div>";
+            } else {
+                tempStr += "<div style=\"width: 90px;\">";
+                tempStr += "<img src=\"/images/wap/下一页.png\" >";
+                tempStr += "<img src=\"/images/wap/最后一页.png\">";
+                tempStr += "</div>";
+            }
+        
+            document.getElementById("bottom").innerHTML = tempStr;
+    }
+    </script>
 @endsection

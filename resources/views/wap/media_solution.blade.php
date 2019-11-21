@@ -35,7 +35,7 @@
                                 </li>
                                 <li>
                                     <div class="industry-title">
-                                        <img src="{{ asset("/images/wap/单点故障处理.png") }}" alt="">
+                                        <img style="width: 17.15px;" src="{{ asset("/images/wap/单点故障处理.png") }}" alt="">
                                         <p>单点故障处理</p>
                                     </div>
                                     <p class="industry-text">业务特性，访问量存在不确定性，既要保证业务可用性，又要避免资源浪费，最大化效益。</p>
@@ -45,11 +45,11 @@
                                         <img src="{{ asset("/images/wap/IO读写速度.png") }}" alt="">
                                         <p>I/O读写速度</p>
                                     </div>
-                                    <p class="industry-text">流媒体最重要的因素是速度要快，而当前技术I/O是系统性能提高瓶颈，优化磁盘"读"性能。</p>
+                                    <p class="industry-text">流媒体最重要的因素是速度要快，而当前技术I/O是系统性能提高瓶颈，优化磁盘"读"性能。&nbsp; &nbsp; &nbsp;</p>
                                 </li>
                                 <li>
                                     <div class="industry-title">
-                                        <img src="{{ asset("/images/wap/数据安全风险.png") }}" alt="">
+                                        <img style="width: 18.46px;" src="{{ asset("/images/wap/数据安全风险.png") }}" alt="">
                                         <p>数据安全风险</p>
                                     </div>
                                     <p class="industry-text">客户隐私、企业数据安全、产品安全尤其重要，一旦被攻击、病毒、木马等，将受严重威胁。</p>
@@ -112,7 +112,6 @@
                             立即咨询
                         </a>
                     </div> -->
-
 
                 </div>
             </div>

@@ -1,146 +1,146 @@
 //----------------解决方案轮播图
 slideshow_a();
 function slideshow_a() {
-    var slideshow_a = document.querySelector(".slideshow-a");
-    var slideshowUl_a = document.querySelector(".slideshow-ul-a");
-    var slideshowLl_a = document.querySelectorAll(".slideshow-li-a");
-    var slideshowOl_a = document.querySelector(".slideshow-ol-a");
-    var screenWidth_a = document.documentElement.offsetWidth;
-    if(!slideshowUl_a) {
+    var slideshowa = document.querySelector(".slideshow-a");
+    var slideshowUla = document.querySelector(".slideshow-ul-a");
+    var slideshowLla = document.querySelectorAll(".slideshow-li-a");
+    var slideshowOla = document.querySelector(".slideshow-ol-a");
+    var screenWidtha = document.documentElement.offsetWidth;
+    if(!slideshowUla) {
         return ;
     }
-    // slideshowUl_a.style.height = slideshowLl_a[0].offsetHeight + 'px';
-    slideshowUl_a.style.height="202px";
+    // slideshowUla.style.height = slideshowLla[0].offsetHeight + 'px';
+    slideshowUla.style.height="202px";
     // 生成小圆点
-    for (var i = 0; i < slideshowLl_a.length; i++) {
+    for (var i = 0; i < slideshowLla.length; i++) {
         var li = document.createElement('li');
         if (i == 0) {
             li.classList.add('point-active');
         }//
-        slideshowOl_a.appendChild(li);
+        slideshowOla.appendChild(li);
     }
-    var left_a = slideshowLl_a.length - 1;
-    var center_a = 0;
-    var right_a = 1;
-    setTransform_a();
-    var timer_a = null;
+    var left = slideshowLla.length - 1;
+    var center = 0;
+    var right = 1;
+    setTransform();
+    var timer = null;
     // 调用定时器
-    timer_a = setInterval(showNext_a, 3000);
+    timer = setInterval(showNext, 3000);
     // 分别绑定touch事件
     var startX = 0; // 手指落点
     var startTime = null; // 开始触摸时间
-    slideshowUl_a.addEventListener('touchstart', touchstartHandler_a); // 滑动开始绑定的函数 touchstartHandler_a
-    slideshowUl_a.addEventListener('touchmove', touchmoveHandler_a);  // 持续滑动绑定的函数 touchmoveHandler_a
-    slideshowUl_a.addEventListener('touchend', touchendHandeler_a);
+    slideshowUla.addEventListener('touchstart', touchstartHandler); // 滑动开始绑定的函数 touchstartHandler
+    slideshowUla.addEventListener('touchmove', touchmoveHandler);  // 持续滑动绑定的函数 touchmoveHandler
+    slideshowUla.addEventListener('touchend', touchendHandeler);
 
     // 轮播图片切换
-    function showNext_a() {
+    function showNext() {
         // 轮转下标
-        left_a = center_a;
-        center_a = right_a;
-        right_a++;
+        left = center;
+        center = right;
+        right++;
         // 极值判断
-        if (right_a > slideshowLl_a.length - 1) {
-            right_a = 0;
+        if (right > slideshowLla.length - 1) {
+            right = 0;
         }
         //添加过渡（多次使用，封装成函数）
-    setTransition_a(1, 1, 0);
-    setTransform_a();
-    setPoint_a();
+    setTransition(1, 1, 0);
+    setTransform();
+    setPoint();
     }
     // 轮播图片切换上一张
-    function showPrev_a() {
+    function showPrev() {
         // 轮转下标
-        right_a = center_a;
-        center_a = left_a;
-        left_a--;
+        right = center;
+        center = left;
+        left--;
         //　极值判断
-        if (left_a < 0) {
-        left_a = slideshowLl_a.length - 1;
+        if (left < 0) {
+        left = slideshowLla.length - 1;
         }
         //添加过渡
-        setTransition_a(0, 1, 1);
-        setTransform_a();
-        setPoint_a();
+        setTransition(0, 1, 1);
+        setTransform();
+        setPoint();
     }
     // 滑动开始
-    function touchstartHandler_a(e) {
-        clearInterval(timer_a);
+    function touchstartHandler(e) {
+        clearInterval(timer);
         // 记录滑动开始的时间
         startTime = Date.now();
         // 记录手指最开始的落点
         startX = e.changedTouches[0].clientX;
     }
     // 滑动持续中
-    function touchmoveHandler_a(e) {
+    function touchmoveHandler(e) {
         // 获取差值 自带正负
         var dx = e.changedTouches[0].clientX - startX;
         // 干掉过渡
-        setTransition_a(0, 0, 0);
+        setTransition(0, 0, 0);
         // 归位
-        setTransform_a(dx);
+        setTransform(dx);
     }
     //　滑动结束
-    function touchendHandeler_a(e) {
+    function touchendHandeler(e) {
         // 在手指松开的时候，要判断当前是否滑动成功
         var dx = e.changedTouches[0].clientX - startX;
         // 获取时间差
         var dTime = Date.now() - startTime;
         // 滑动成功的依据是滑动的距离（绝对值）超过屏幕的三分之一 或者滑动的时间小于300毫秒同时滑动的距离大于30
-        if (Math.abs(dx) > screenWidth_a / 3 || (dTime < 300 && Math.abs(dx) > 30)) {
+        if (Math.abs(dx) > screenWidtha / 3 || (dTime < 300 && Math.abs(dx) > 30)) {
         // 滑动成功了
         // 判断用户是往哪个方向滑
         if (dx > 0) {
-            showPrev_a();
+            showPrev();
         } else {
-            showNext_a();
+            showNext();
         }
         } else {
         // 添加上过渡
-        setTransition_a(1, 1, 1);
+        setTransition(1, 1, 1);
         // 滑动失败了
-        setTransform_a();
+        setTransform();
         }
 
         // 重新启动定时器
-        clearInterval(timer_a);
+        clearInterval(timer);
         // 调用定时器
-        timer_a = setInterval(showNext_a, 3000);
+        timer = setInterval(showNext, 3000);
     }
     // 设置过渡
-    function setTransition_a(a, b, c) {
+    function setTransition(a, b, c) {
         if (a) {
-        slideshowLl_a[left_a].style.transition = 'transform 1s';
+        slideshowLla[left].style.transition = 'transform 1s';
         } else {
-        slideshowLl_a[left_a].style.transition = 'none';
+        slideshowLla[left].style.transition = 'none';
         }
         if (b) {
-        slideshowLl_a[center_a].style.transition = 'transform 1s';
+        slideshowLla[center].style.transition = 'transform 1s';
         } else {
-        slideshowLl_a[center_a].style.transition = 'none';
+        slideshowLla[center].style.transition = 'none';
         }
         if (c) {
-        slideshowLl_a[right_a].style.transition = 'transform 1s';
+        slideshowLla[right].style.transition = 'transform 1s';
         } else {
-        slideshowLl_a[right_a].style.transition = 'none';
+        slideshowLla[right].style.transition = 'none';
         }
     }
     //　封装归位
-    function setTransform_a(dx) {
+    function setTransform(dx) {
         dx = dx || 0;
-        slideshowLl_a[left_a].style.transform = 'translateX(' + (-screenWidth + dx) + 'px)';
-        slideshowLl_a[center_a].style.transform = 'translateX(' + dx + 'px)';
-        slideshowLl_a[right_a].style.transform = 'translateX(' + (screenWidth + dx) + 'px)';
+        slideshowLla[left].style.transform = 'translateX(' + (-screenWidtha + dx) + 'px)';
+        slideshowLla[center].style.transform = 'translateX(' + dx + 'px)';
+        slideshowLla[right].style.transform = 'translateX(' + (screenWidtha + dx) + 'px)';
     }
     // 动态设置小圆点的active类
-    var pointsLis_a = slideshowOl_a.querySelectorAll('li');
-    var tempStr_a = "<span class=\"progress\"></span>";
-    pointsLis_a[center_a].innerHTML= tempStr_a;
-    function setPoint_a() {
-        for (var i = 0; i < pointsLis_a.length; i++) {
-            pointsLis_a[i].classList.remove('point-active');
-            pointsLis_a[center_a].innerHTML= tempStr_a;
+    var pointsLis = slideshowOla.querySelectorAll('li');
+    var tempStr = "<span class=\"progress\"></span>";
+    pointsLis[center].innerHTML= tempStr;
+    function setPoint() {
+        for (var i = 0; i < pointsLis.length; i++) {
+            pointsLis[i].classList.remove('point-active');
+            pointsLis[center].innerHTML= tempStr;
         }
-        pointsLis_a[center_a].classList.add('point-active');
+        pointsLis[center].classList.add('point-active');
     }
 }

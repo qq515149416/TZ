@@ -7,8 +7,8 @@
 @section('description', '腾正科技专业IDC服务提供商，主营服务器租用、服务器托管、机柜大带宽租用、云主机、高防服务器、高防IP、CDN加速等数据存储、计算及安全综合应用解决方案服务。')
 
 @section('content')
-<div class="main-content">
-    <div class="slideshow">
+<div class="main-content" id="home">
+    <div class="slideshow" id="slideshow">
         <ul class="slideshow-ul clear">
             <li class="slideshow-li">
                 <img src="{{ asset("/images/wap/海报.png") }}" alt="">
@@ -196,7 +196,7 @@
                         <li class="solution ">
                             <img src="{{ asset("/images/wap/流媒体.png") }}" alt="">
                             <div class="fuwu-title">流媒体云解决方案</div>
-                            <div class="fuwu-txt">冗余架构,分布式抗D、高效分发.打造"清晰流畅.低时延.高并发"流媒体服务.应用于游戏.娱乐等流媒体场景
+                            <div class="fuwu-txt">冗余架构,分布式抗D、高效分发.打造"清晰流畅.低时延.高并发"流媒体服务.应用于游戏.娱乐等流媒体场景&nbsp; &nbsp; &nbsp; &nbsp;
                             </div>
                             <a href="/wap/media_solution">查看详情</a>
                         </li>
@@ -210,7 +210,7 @@
                         <li class="solution ">
                             <img src="{{ asset("/images/wap/教育云.png") }}" alt="">
                             <div class="fuwu-title">教育云解决方案</div>
-                            <div class="fuwu-txt">以"统一基础架构、统一应用支撑、统一数据标准、统一技术架构"为原则，构建面向多用户的地方教育核心体系
+                            <div class="fuwu-txt">以"统一基础架构、统一应用支撑、统一数据标准、统一技术架构"为原则，构建面向多用户的地方教育核心体系&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                             </div>
                             <a href="/wap/education_solution">查看详情</a>
                         </li>

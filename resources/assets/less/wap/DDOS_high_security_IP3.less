@@ -1,22 +1,25 @@
 #DDOS_high_security_IP3{
-    .main-body {
-        padding-top: 0;
+    .main-body{
+        padding-top: 0px;
     }
     .tz-container{
         .main-content{
+            .posters{
+                font-size: 0px;
+            }
             .service-advantages{
                 background: #fff;
                 position: relative;
                 img{
                     width: 100%;
                     padding: 0px 60px;
-                    margin-bottom: 10px;
+                    margin-bottom: 10px; 
                 }
                 ul{
                     z-index: 100;
                     padding: 10px 0px;
                     li:nth-of-type(odd){
-                        background: linear-gradient(to right,#fff, #e3e8fa);
+                        background: linear-gradient(to right,#fff, #e3e8fa); 
                         box-shadow: 1.5px 2.5px 15px 0px rgba( 4, 38, 107,0.1 );
                     }
                     li:nth-of-type(even){
@@ -29,9 +32,9 @@
                         border-radius: 5px;
                         margin-bottom: 15px;
                         box-shadow: 0px 1px 10px 0px #dfdddd;
-
+                        
                         .fuwu-txt{
-                            padding-right: 4px !important;
+                            padding-right: 4px !important; 
                         }
                         .fuwu-title{
                             padding-left: 10px;
@@ -56,18 +59,29 @@
             }
             .slideshow{
                 padding-top: 10px;
+                background-color: transparent !important;
                 .slideshow-ul{
+                    background-color: transparent !important;
+                    padding-top: 0px !important;
                     .slideshow-li{
-                        width: 320px;
-                        margin: 10px 20px;
+                        padding: 0px 20px;
+                        background-color: transparent !important;
+                        div{
+                            margin: 0;
+                        }
+                        .slideshow-li-i{
+                        width: 100%;
                         box-shadow: 2.5px 4px 15px 0px rgba( 29, 29, 29, 0.1);
                         border-radius: 5px;
                         background-color: #fff;
-                        padding: 0px 10px 10px 10px;
+                        padding: 20px 10px 10px 10px;
+                        margin: 0px !important;
                         div:nth-child(1){
-                            height: 40px;
-                            line-height: 40px;
                             text-align: center;
+                            margin: 0px 0px 20px 0px;
+                            font-weight: bold;
+                            font-size: 14px;
+                            color: rgb( 37, 43, 58 );
                         }
                         div:nth-child(2){
                             p:nth-child(1){
@@ -77,12 +91,14 @@
                                 -webkit-background-clip: text;
                                 -webkit-text-fill-color: transparent;
                                 text-align: center;
+                                
                             }
                             p:nth-child(2){
                                 font-size: 10px;
                                 font-family: "PingFang";
                                 color: rgb( 106, 109, 120 );
                                 text-align: center;
+                                margin-bottom: 20px;
                             }
                         }
                         div:nth-child(3){
@@ -92,7 +108,8 @@
                                 font-family: "PingFang";
                                 color: rgb( 106, 109, 120 );
                                 text-align: center;
-                                margin-right: 10px;
+                                margin: 0px 10px 5px 0px;
+                                font-weight: inherit;
                                 img{
                                     width: 10px;
                                 }
@@ -111,12 +128,60 @@
                             margin: 10px auto;
                         }
                     }
+                    }
                 }
                 .point{
-                    margin-top: 8px;
-                    height: 40px;
-                    line-height: 40px;
-                    padding-top: 5px;
+                    background-color: transparent !important;
+                }
+            }
+            .application-scenarios{
+                .title{
+                    p{
+                        color: #fff;
+                    }
+                    .title-hr{
+                        background-color: #fff;
+                    }
+                }
+            }
+            .compouter-advantage-gn{
+                background-color: #1c2545;
+                .advantage-li{
+                    ul{
+                        padding-bottom: 20px;
+                        li:nth-of-type(odd){
+                            background: #1f2848;
+                        }
+                        li:nth-of-type(even){
+                            background-color: #2a3354;
+                            box-shadow: 2.5px 4px 20px 0px rgba( 7, 22, 53, 0.2 );
+                        }
+                        li{
+                            width: 100%;
+                            border-radius: 6px;
+                            padding: 15px;
+                            margin-bottom: 15px;
+                            img{
+                                width: 16.7%;;
+                                float: left;
+                                margin: 2px 8px 0px 0px;
+                            }
+                            div{
+                                font-size: 14px;
+                                font-family: "PingFang";
+                                color: rgb( 255, 255, 255 );
+                                text-align: left;
+                            }
+                            p{
+                                display: inline-block;
+                                width: 79.5%;
+                                font-size: 12px;
+                                font-family: "PingFang";
+                                color: #b9bfe9;
+                                text-overflow: ellipsis;
+                            }
+                        }
+                    }
                 }
             }
         }

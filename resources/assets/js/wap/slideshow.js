@@ -1,15 +1,24 @@
 //----------------解决方案轮播图
-slideshow_main();
-function slideshow_main() {
-    var slideshow = document.querySelector(".slideshow");
-    var slideshowUl = document.querySelector(".slideshow-ul");
-    var slideshowLl = document.querySelectorAll(".slideshow-li");
-    var slideshowOl = document.querySelector(".slideshow-ol");
+if(document.querySelector("#mobileapp_solution") || document.querySelector("#chess_solution") || document.querySelector("#cabinet_to_rent") || document.querySelector("#home") || document.querySelector("#bandwidth_to_ent") || document.querySelector("#server_hosting") || document.querySelector("#DDOS_high_security_IP3") || document.querySelector("#high_proof_host") || document.querySelector("#cloud_hosting") || document.querySelector("#C_shield") || document.querySelector("#server_hire")) {
+  slideshow_main("slideshow");
+}
+if(document.querySelector("#CDN_speed_up")) {
+  slideshow_main("slideshow");
+slideshow_main("slideshow-a");
+slideshow_main("slideshow-b");
+slideshow_main("slideshow-c");
+slideshow_main("slideshow-d");
+}
+function slideshow_main(id) {
+    var slideshow = document.getElementById(id).querySelector(".slideshow");
+    var slideshowUl = document.getElementById(id).querySelector(".slideshow-ul");
+    var slideshowLl = document.getElementById(id).querySelectorAll(".slideshow-li");
+    var slideshowOl = document.getElementById(id).querySelector(".slideshow-ol");
     var screenWidth = document.documentElement.offsetWidth;
     if(!slideshowUl) {
         return ;
     }
-    console.log(slideshowLl[0].offsetHeight);
+    // console.log(slideshowLl[0].offsetHeight);
     slideshowUl.style.height = slideshowLl[0].offsetHeight + 'px';
     // slideshowUl.style.height="141px";
     // 生成小圆点

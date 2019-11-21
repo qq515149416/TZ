@@ -28,28 +28,28 @@
                             <ul class="clear">
                                 <li class="m">
                                     <div class="industry-title">
-                                        <img src="{{ asset("/images/wap/ISV开发力不足.png") }}" alt="">
+                                        <img style="width: 22px;" src="{{ asset("/images/wap/ISV开发力不足.png") }}" alt="">
                                         <p>ISV开发力不足</p>
                                     </div>
-                                    <p class="industry-text">对于应用软件源代码安全风险意识不足；容易导致Web应用系统存在安全漏洞。</p>
+                                    <p class="industry-text">对于应用软件源代码安全风险意识不足；容易导致Web应用系统存在安全漏洞。&nbsp; &nbsp; &nbsp; &nbsp;</p>
                                 </li>
                                 <li>
                                     <div class="industry-title">
-                                        <img src="{{ asset("/images/wap/缺纵深防御体系.png") }}" alt="">
+                                        <img style="width: 17.6px;" src="{{ asset("/images/wap/缺纵深防御体系.png") }}" alt="">
                                         <p>缺纵深防御体系</p>
                                     </div>
                                     <p class="industry-text">黑客攻击手法也非常多样化；而传统安全防护手段强调单点防护，缺乏纵深防御体系支撑。</p>
                                 </li>
                                 <li class="m">
                                     <div class="industry-title">
-                                        <img src="{{ asset("/images/wap/威胁检测能力弱 .png") }}" alt="">
+                                        <img style="width: 22px;" src="{{ asset("/images/wap/威胁检测能力弱 .png") }}" alt="">
                                         <p>威胁检测能力弱 </p>
                                     </div>
                                     <p class="industry-text">传统安防设备基于静态策略及已知特征进行“黑白名单”规则匹配，无法应对复杂Web攻击。</p>
                                 </li>
                                 <li>
                                     <div class="industry-title">
-                                        <img src="{{ asset("/images/wap/持续监控能力差 .png") }}" alt="">
+                                        <img style="width: 15.6px;" src="{{ asset("/images/wap/持续监控能力差 .png") }}" alt="">
                                         <p>持续监控能力差 </p>
                                     </div>
                                     <p class="industry-text">部分政务单位具一定的安全能力，但缺乏整体持续监控能力；而在攻击时代，显然力不从心。</p>
@@ -116,7 +116,6 @@
                             立即咨询
                         </a>
                     </div> -->
-
 
                 </div>
             </div>

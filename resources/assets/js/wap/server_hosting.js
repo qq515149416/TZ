@@ -1,4 +1,17 @@
-function server_h_room(){
+
+if(document.querySelector("#server_hosting")){
+    var s1 = document.querySelector("#select1");
+    var s2 = document.querySelector("#select2");
+    if(document.body.clientWidth<330){
+        document.querySelector(".compouter-advantage").style.backgroundSize="320px 345px";
+    }
+    document.querySelector("#select1").onchange = function(){
+        server_h_room();
+    };
+    document.querySelector("#select2").onchange = function(){
+        server_h_room();
+    };
+    function server_h_room(){
     var rooma = document.querySelector(".server-rooma");
     var select1 = document.getElementById("select1");
     var select2 = document.getElementById("select2");
@@ -384,5 +397,6 @@ function server_h_room(){
             document.querySelector(".nfb-b").innerHTML="4100";
             document.querySelector(".nfb-a").innerHTML="40800";
         }
+    }
     }
 }

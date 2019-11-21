@@ -127,7 +127,7 @@
                             </div>
 
                             <div class="bottom" id="bottom">
-                                <div style="width: 93px;left: 12px;">
+                                <div style="width: 93px;">
                                     <img src="{{ asset("/images/wap/第一页.png") }}" alt=""class="p-firsta ">
                                     <img src="{{ asset("/images/wap/上一页.png") }}" alt="" class="p-prea ">
                                 </div>
@@ -135,7 +135,7 @@
                                 <div class="page">
                                     <span id="pageNumber">01</span>/04
                                 </div>
-                                <div style="width: 93px; right: 12px;">
+                                <div style="width: 93px;">
                                     <img src="{{ asset("/images/wap/下一页.png") }}" alt="" class="p-nexta">
                                     <img src="{{ asset("/images/wap/最后一页.png") }}" alt="" class="p-lasta">
                                 </div>
@@ -198,7 +198,7 @@
                                 </div>
                             </div>
                             <div class="bottom">
-                                <div style="width: 93px; left: 12px;">
+                                <div style="width: 93px;">
                                     <img src="{{ asset("/images/wap/第一页.png") }}" alt=""class="p-firstb">
                                     <img src="{{ asset("/images/wap/上一页.png") }}" alt="" class="p-preb">
                                 </div>
@@ -206,7 +206,7 @@
                                 <div class="page">
                                     <span id="pageNumberb">01</span>/05
                                 </div>
-                                <div style="width: 93px; right: 12px;">
+                                <div style="width: 93px;">
                                     <img src="{{ asset("/images/wap/下一页.png") }}" alt="" class="p-nextb">
                                     <img src="{{ asset("/images/wap/最后一页.png") }}" alt="" class="p-lastb">
                                 </div>
@@ -250,7 +250,7 @@
                             </div>
 
                             <div class="bottom">
-                                <div style="width: 93px; left: 12px;">
+                                <div style="width: 93px;">
                                     <img src="{{ asset("/images/wap/第一页.png") }}" alt="" class="p-firstc">
                                     <img src="{{ asset("/images/wap/上一页.png") }}" alt="" class="p-prec">
                                 </div>
@@ -258,7 +258,7 @@
                                 <div class="page">
                                     <span id="pageNumberc">01</span>/03
                                 </div>
-                                <div style="width: 93px; right: 12px;">
+                                <div style="width: 93px;">
                                     <img src="{{ asset("/images/wap/下一页.png") }}" alt="" class="p-nextc">
                                     <img src="{{ asset("/images/wap/最后一页.png") }}" alt="" class="p-lastc">
                                 </div>
@@ -278,10 +278,12 @@
                                 <p>核心价值观</p>
                                 <div class="title-hr"></div>
                             </div>
-                            <img src="{{ asset("/images/wap/分享.png") }}" alt="">
-                            <img src="{{ asset("/images/wap/共赢.png") }}" alt="">
-                            <img src="{{ asset("/images/wap/创新.png") }}" alt="">
-                            <img src="{{ asset("/images/wap/诚信.png") }}" alt="">
+                            <div class="c-img">
+                                <img src="{{ asset("/images/wap/分享.png") }}" alt="">
+                                <img src="{{ asset("/images/wap/共赢.png") }}" alt="">
+                                <img src="{{ asset("/images/wap/创新.png") }}" alt="">
+                                <img src="{{ asset("/images/wap/诚信.png") }}" alt="">
+                            </div>
                             <div class="title back-w">
                                 <p>经营理念</p>
                                 <div class="title-hr"></div>
@@ -1027,16 +1029,16 @@
                             </div>
                             <div class="bottom">
                                 <div style="width: 93px;">
-                                    <img src="{{ asset("/images/wap/第一页.png") }}" alt="" class="pagefirst">
-                                    <img src="{{ asset("/images/wap/上一页.png") }}" alt="" class="pagepre">
+                                    <img src="{{ asset("/images/wap/第一页.png") }}" alt="" onclick="pagefirst()" class="pagefirst">
+                                    <img src="{{ asset("/images/wap/上一页.png") }}" alt="" onclick="pagepre()" class="pagepre">
                                 </div>
 
                                 <div class="page">
-                                    <span id="pageNumber">01</span>/03
+                                    <span id="pageNumbers">01</span>/03
                                 </div>
                                 <div style="width: 93px;">
-                                    <img src="{{ asset("/images/wap/下一页.png") }}" alt="" class="pagenext">
-                                    <img src="{{ asset("/images/wap/最后一页.png") }}" alt="" class="pagelast">
+                                    <img src="{{ asset("/images/wap/下一页.png") }}" alt="" onclick="pagenext()" class="pagenext">
+                                    <img src="{{ asset("/images/wap/最后一页.png") }}" alt="" onclick="pagelast()" class="pagelast">
                                 </div>
 
                             </div>
@@ -1208,7 +1210,6 @@
         </div>
     </div>
 <script>
-    // 新闻公告分页
 function goPage(pno, psize) {
     var news = document.querySelectorAll(".option-text .news");
     var num = news.length;

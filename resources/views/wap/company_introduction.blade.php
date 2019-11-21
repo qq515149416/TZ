@@ -127,17 +127,15 @@
                             </div>
 
                             <div class="bottom" id="bottom">
-                                <div style="width: 93px;">
-                                    <img src="{{ asset("/images/wap/第一页.png") }}" alt=""class="p-firsta ">
-                                    <img src="{{ asset("/images/wap/上一页.png") }}" alt="" class="p-prea ">
+                                <div style="width: 70px;">
+                                    <img src="{{ asset("/images/wap/第一页.png") }}" alt=""class="p-firsta"><img src="{{ asset("/images/wap/上一页.png") }}" alt="" class="p-prea ">
                                 </div>
 
                                 <div class="page">
                                     <span id="pageNumber">01</span>/04
                                 </div>
-                                <div style="width: 93px;">
-                                    <img src="{{ asset("/images/wap/下一页.png") }}" alt="" class="p-nexta">
-                                    <img src="{{ asset("/images/wap/最后一页.png") }}" alt="" class="p-lasta">
+                                <div style="width: 70px;">
+                                    <img src="{{ asset("/images/wap/下一页.png") }}" alt="" class="p-nexta"><img src="{{ asset("/images/wap/最后一页.png") }}" alt="" class="p-lasta">
                                 </div>
 
                             </div>
@@ -198,17 +196,15 @@
                                 </div>
                             </div>
                             <div class="bottom">
-                                <div style="width: 93px;">
-                                    <img src="{{ asset("/images/wap/第一页.png") }}" alt=""class="p-firstb">
-                                    <img src="{{ asset("/images/wap/上一页.png") }}" alt="" class="p-preb">
+                                <div style="width: 70px;">
+                                    <img src="{{ asset("/images/wap/第一页.png") }}" alt=""class="p-firstb"><img src="{{ asset("/images/wap/上一页.png") }}" alt="" class="p-preb">
                                 </div>
 
                                 <div class="page">
                                     <span id="pageNumberb">01</span>/05
                                 </div>
-                                <div style="width: 93px;">
-                                    <img src="{{ asset("/images/wap/下一页.png") }}" alt="" class="p-nextb">
-                                    <img src="{{ asset("/images/wap/最后一页.png") }}" alt="" class="p-lastb">
+                                <div style="width: 70px;">
+                                    <img src="{{ asset("/images/wap/下一页.png") }}" alt="" class="p-nextb"><img src="{{ asset("/images/wap/最后一页.png") }}" alt="" class="p-lastb">
                                 </div>
 
                             </div>
@@ -250,17 +246,15 @@
                             </div>
 
                             <div class="bottom">
-                                <div style="width: 93px;">
-                                    <img src="{{ asset("/images/wap/第一页.png") }}" alt="" class="p-firstc">
-                                    <img src="{{ asset("/images/wap/上一页.png") }}" alt="" class="p-prec">
+                                <div style="width: 70px;">
+                                    <img src="{{ asset("/images/wap/第一页.png") }}" alt="" class="p-firstc"><img src="{{ asset("/images/wap/上一页.png") }}" alt="" class="p-prec">
                                 </div>
 
                                 <div class="page">
                                     <span id="pageNumberc">01</span>/03
                                 </div>
-                                <div style="width: 93px;">
-                                    <img src="{{ asset("/images/wap/下一页.png") }}" alt="" class="p-nextc">
-                                    <img src="{{ asset("/images/wap/最后一页.png") }}" alt="" class="p-lastc">
+                                <div style="width: 70px;">
+                                    <img src="{{ asset("/images/wap/下一页.png") }}" alt="" class="p-nextc"><img src="{{ asset("/images/wap/最后一页.png") }}" alt="" class="p-lastc">
                                 </div>
 
                             </div>
@@ -1028,7 +1022,7 @@
                                 </div>
                             </div>
                             <div class="bottom">
-                                <div style="width: 93px;">
+                                <div style="width: 70px;">
                                     <img src="{{ asset("/images/wap/第一页.png") }}" alt="" onclick="pagefirst()" class="pagefirst">
                                     <img src="{{ asset("/images/wap/上一页.png") }}" alt="" onclick="pagepre()" class="pagepre">
                                 </div>
@@ -1036,7 +1030,7 @@
                                 <div class="page">
                                     <span id="pageNumbers">01</span>/03
                                 </div>
-                                <div style="width: 93px;">
+                                <div style="width: 70px;">
                                     <img src="{{ asset("/images/wap/下一页.png") }}" alt="" onclick="pagenext()" class="pagenext">
                                     <img src="{{ asset("/images/wap/最后一页.png") }}" alt="" onclick="pagelast()" class="pagelast">
                                 </div>
@@ -1237,13 +1231,13 @@ function goPage(pno, psize) {
 
     var tempStr = "";
     if (currentPage > 1) {
-        tempStr += "<div style=\"width: 90px;\">";
+        tempStr += "<div style=\"width: 70px;\">";
         tempStr += "<img src=\"/images/wap/第一页.png\" onClick=\"goPage(" + (1) + "," + psize + ")\">";
         tempStr += "<img src=\"/images/wap/上一页.png\" onClick=\"goPage(" + (currentPage - 1) + "," + psize + ")\">";
         tempStr += "</div>";
 
     } else {
-        tempStr += "<div style=\"width: 90px;\">";
+        tempStr += "<div style=\"width: 70px;\">";
         tempStr += "<img src=\"/images/wap/第一页.png\" >";
         tempStr += "<img src=\"/images/wap/上一页.png\" >";
         tempStr += "</div>";
@@ -1263,12 +1257,12 @@ function goPage(pno, psize) {
         tempStr += "</div>";
     }
     if (currentPage < totalPage) {
-        tempStr += "<div style=\"width: 90px;\">";
+        tempStr += "<div style=\"width: 70px;\">";
         tempStr += "<img src=\"/images/wap/下一页.png\" onClick=\"goPage(" + (currentPage + 1) + "," + psize + ")\">";
         tempStr += "<img src=\"/images/wap/最后一页.png\" onClick=\"goPage(" + (totalPage) + "," + psize + ")\">";
         tempStr += "</div>";
     } else {
-        tempStr += "<div style=\"width: 90px;\">";
+        tempStr += "<div style=\"width: 70px;\">";
         tempStr += "<img src=\"/images/wap/下一页.png\" >";
         tempStr += "<img src=\"/images/wap/最后一页.png\">";
         tempStr += "</div>";

@@ -1,38 +1,38 @@
 @font-face {
   font-family: 'pingFangExtraLight';
-  src: url(/fonts/PingFang_ExtraLight.eot?b2b760a47cfd600726bad361d6ff0831);
-  src: url(/fonts/PingFang_ExtraLight.woff?ec44809a10b3078107ef50ee3356e3c9) format('woff'), url(/fonts/PingFang_ExtraLight.ttf?e5e1a97169fc1e01b19ea7a14919ebe0) format('truetype'), url(/fonts/PingFang_ExtraLight.svg?2c96f57969aa0751c9b6c295b28b04e4) format('svg');
+  src: url('../font/PingFang_ExtraLight.eot');
+  src: url('../font/PingFang_ExtraLight.woff') format('woff'), url('../font/PingFang_ExtraLight.ttf') format('truetype'), url('../font/PingFang_ExtraLight.svg') format('svg');
 }
 @font-face {
   font-family: 'pingFangLight';
-  src: url(/fonts/PingFang_Light_0.eot?87f1481e54a642c23d7e7218bdb2436f);
-  src: url(/fonts/PingFang_Light_0.woff?83117de04e4575ca626d821b4ee28cc9) format('woff'), url(/fonts/PingFang_Light_0.ttf?ca3ad0e3097cdf7515dfa75aff6b3cc3) format('truetype'), url(/fonts/PingFang_Light_0.svg?c5f6f2174cabafd81a0b6b4cb6ec0b3e) format('svg');
+  src: url('../font/PingFang_Light_0.eot');
+  src: url('../font/PingFang_Light_0.woff') format('woff'), url('../font/PingFang_Light_0.ttf') format('truetype'), url('../font/PingFang_Light_0.svg') format('svg');
 }
 @font-face {
   font-family: 'pingFangRegular';
-  src: url(/fonts/PingFang_Regular_0.eot?ae526a45e86910b264bdad0e8b2ebf31);
-  src: url(/fonts/PingFang_Regular_0.woff?808ea89d856e8b0dd0e26e021cd74dc1) format('woff'), url(/fonts/PingFang_Regular_0.ttf?75225b297e757308c3bfeca013396be6) format('truetype'), url(/fonts/PingFang_Regular_0.svg?ed6c367a2535d9efc87f60a14f497125) format('svg');
+  src: url('../font/PingFang_Regular_0.eot');
+  src: url('../font/PingFang_Regular_0.woff') format('woff'), url('../font/PingFang_Regular_0.ttf') format('truetype'), url('../font/PingFang_Regular_0.svg') format('svg');
 }
 @font-face {
   font-family: 'pingFang';
-  src: url(/fonts/PingFang_Medium_0.eot?bdbf7e000dc0b71d2b6f445e70a1e23c);
-  src: url(/fonts/PingFang_Medium_0.woff?7ddf61add84d338280ed1059641da293) format('woff'), url(/fonts/PingFang_Medium_0.ttf?15974853bc3294ef68e7e6d58fe74fd7) format('truetype'), url(/fonts/PingFang_Medium_0.svg?bbf9d5f064f98eb324ce47ba4e560116) format('svg');
+  src: url('../font/PingFang_Medium_0.eot');
+  src: url('../font/PingFang_Medium_0.woff') format('woff'), url('../font/PingFang_Medium_0.ttf') format('truetype'), url('../font/PingFang_Medium_0.svg') format('svg');
 }
 @font-face {
   font-family: 'pingFangBold';
-  src: url(/fonts/PingFang_Bold.eot?3750644e22c584075747601c47df00f3);
-  src: url(/fonts/PingFang_Bold.woff?087cbef9ca2b6bd612f4712e23045298) format('woff'), url(/fonts/PingFang_Bold.ttf?dd25b35dcb7ba4476cbaa9a9592e39e2) format('truetype'), url(/fonts/PingFang_Bold.svg?daa902cc691583edaa741a08f9913145) format('svg');
+  src: url('../font/PingFang_Bold.eot');
+  src: url('../font/PingFang_Bold.woff') format('woff'), url('../font/PingFang_Bold.ttf') format('truetype'), url('../font/PingFang_Bold.svg') format('svg');
 }
 @font-face {
   font-family: 'pingFangHeavy';
-  src: url(/fonts/PingFang_Heavy_0.eot?184418136760b26babf02e01ecfafacd);
-  src: url(/fonts/PingFang_Heavy_0.woff?1af360b62fc177b27111c4dc454ddcd4) format('woff'), url(/fonts/PingFang_Heavy_0.ttf?1c97d8de88f3e2936c2595978a781990) format('truetype'), url(/fonts/PingFang_Heavy_0.svg?410c50cb48948210bf9822ae2a194fc0) format('svg');
+  src: url('../font/PingFang_Heavy_0.eot');
+  src: url('../font/PingFang_Heavy_0.woff') format('woff'), url('../font/PingFang_Heavy_0.ttf') format('truetype'), url('../font/PingFang_Heavy_0.svg') format('svg');
 }
 body,
 html {
   margin: 0;
   padding: 0;
-  font-family: "pingFang", "\5FAE\8F6F\96C5\9ED1", Arial, Helvetica, sans-serif;
+  font-family: "pingFang", "微软雅黑", Arial, Helvetica, sans-serif;
   overflow-x: hidden;
 }
 body h1,
@@ -51,27 +51,27 @@ html h6 {
 }
 body .font-extra-light,
 html .font-extra-light {
-  font-family: "pingFangExtraLight", "\5FAE\8F6F\96C5\9ED1", Arial, Helvetica, sans-serif !important;
+  font-family: "pingFangExtraLight", "微软雅黑", Arial, Helvetica, sans-serif !important;
 }
 body .font-light,
 html .font-light {
-  font-family: "pingFangLight", "\5FAE\8F6F\96C5\9ED1", Arial, Helvetica, sans-serif !important;
+  font-family: "pingFangLight", "微软雅黑", Arial, Helvetica, sans-serif !important;
 }
 body .font-regular,
 html .font-regular {
-  font-family: "pingFangRegular", "\5FAE\8F6F\96C5\9ED1", Arial, Helvetica, sans-serif !important;
+  font-family: "pingFangRegular", "微软雅黑", Arial, Helvetica, sans-serif !important;
 }
 body .font-medium,
 html .font-medium {
-  font-family: 'pingFangMedium', "\5FAE\8F6F\96C5\9ED1", Arial, Helvetica, sans-serif !important;
+  font-family: 'pingFangMedium', "微软雅黑", Arial, Helvetica, sans-serif !important;
 }
 body .font-bold,
 html .font-bold {
-  font-family: 'pingFangBold', "\5FAE\8F6F\96C5\9ED1", Arial, Helvetica, sans-serif !important;
+  font-family: 'pingFangBold', "微软雅黑", Arial, Helvetica, sans-serif !important;
 }
 body .font-heavy,
 html .font-heavy {
-  font-family: "pingFangHeavy", "\5FAE\8F6F\96C5\9ED1", Arial, Helvetica, sans-serif !important;
+  font-family: "pingFangHeavy", "微软雅黑", Arial, Helvetica, sans-serif !important;
 }
 body .main,
 html .main {
@@ -83,8 +83,7 @@ html .tz-kefu {
   position: fixed;
   right: 15px;
   top: 50%;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
+  transform: translateY(-50%);
   z-index: 99;
 }
 body .tz-kefu .tz-kefu-item,
@@ -92,7 +91,6 @@ html .tz-kefu .tz-kefu-item {
   width: 70px;
   height: 50px;
   margin-bottom: 10px;
-  -webkit-transition: all 0.5s;
   transition: all 0.5s;
   cursor: pointer;
   position: relative;
@@ -102,8 +100,7 @@ html .tz-kefu .tz-kefu-item .tz-kefu-item-btn {
   display: block;
   width: 50px;
   height: 50px;
-  -webkit-box-shadow: 0 0 24px rgba(4, 24, 113, 0.2);
-          box-shadow: 0 0 24px rgba(4, 24, 113, 0.2);
+  box-shadow: 0 0 24px rgba(4, 24, 113, 0.2);
   margin-left: 20px;
   border-radius: 10px;
 }
@@ -120,11 +117,9 @@ html .tz-kefu .tz-kefu-item .tz-kefu-item-info {
   width: 192px;
   padding: 24px;
   background-color: #fff;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   border-radius: 4px;
-  -webkit-box-shadow: 0 0 24px rgba(2, 17, 91, 0.16);
-          box-shadow: 0 0 24px rgba(2, 17, 91, 0.16);
+  box-shadow: 0 0 24px rgba(2, 17, 91, 0.16);
 }
 body .tz-kefu .tz-kefu-item .tz-kefu-item-info .tz-kefu-dropdown,
 html .tz-kefu .tz-kefu-item .tz-kefu-item-info .tz-kefu-dropdown {
@@ -188,64 +183,61 @@ html .tz-kefu .tz-kefu-item .tz-kefu-item-info .item .content ul li:nth-of-type(
 }
 body .tz-kefu .tz-kefu-item.tz-kefu-qq .tz-kefu-item-btn,
 html .tz-kefu .tz-kefu-item.tz-kefu-qq .tz-kefu-item-btn {
-  background: url(/images/kefu11.png?2b94ac608739d15ae8d422c2c4177c71) no-repeat right top;
+  background: url(../images/kefu/kefu11.png) no-repeat right top;
 }
 body .tz-kefu .tz-kefu-item.tz-kefu-qq .tz-kefu-item-btn:hover,
 html .tz-kefu .tz-kefu-item.tz-kefu-qq .tz-kefu-item-btn:hover {
-  background: url(/images/kefu01.png?5485a5154a3ec7c2006f6eb2ccb0f320) no-repeat right top;
+  background: url(../images/kefu/kefu01.png) no-repeat right top;
 }
 body .tz-kefu .tz-kefu-item.tz-kefu-wx .tz-kefu-item-btn,
 html .tz-kefu .tz-kefu-item.tz-kefu-wx .tz-kefu-item-btn {
-  background: url(/images/kefu22.png?9cae528a65a7ad7dd1fbca7bef47531d) no-repeat right top;
+  background: url(../images/kefu/kefu22.png) no-repeat right top;
 }
 body .tz-kefu .tz-kefu-item.tz-kefu-wx .tz-kefu-item-btn:hover,
 html .tz-kefu .tz-kefu-item.tz-kefu-wx .tz-kefu-item-btn:hover {
-  background: url(/images/kefu02.png?ddbb56f0fe89d8dc51d2e88e9dd81174) no-repeat right top;
+  background: url(../images/kefu/kefu02.png) no-repeat right top;
 }
 body .tz-kefu .tz-kefu-item.tz-kefu-wx .tz-kefu-item-info img,
 html .tz-kefu .tz-kefu-item.tz-kefu-wx .tz-kefu-item-info img {
-  -webkit-transform: translateX(-2px);
-          transform: translateX(-2px);
+  transform: translateX(-2px);
 }
 body .tz-kefu .tz-kefu-item.tz-kefu-help .tz-kefu-item-btn,
 html .tz-kefu .tz-kefu-item.tz-kefu-help .tz-kefu-item-btn {
-  background: url(/images/kefu66.png?24fd21cf3341ecdab165c7e21c46a1aa) no-repeat right top;
+  background: url(../images/kefu/kefu66.png) no-repeat right top;
 }
 body .tz-kefu .tz-kefu-item.tz-kefu-help .tz-kefu-item-btn:hover,
 html .tz-kefu .tz-kefu-item.tz-kefu-help .tz-kefu-item-btn:hover {
-  background: url(/images/kefu06.png?e5bd504280a0b5438da70743bb83a3cc) no-repeat right top;
+  background: url(../images/kefu/kefu06.png) no-repeat right top;
 }
 body .tz-kefu .tz-kefu-item.tz-kefu-beian .tz-kefu-item-btn,
 html .tz-kefu .tz-kefu-item.tz-kefu-beian .tz-kefu-item-btn {
-  background: url(/images/kefu33.png?fcb22f34c62d5ccb4d71be02bbf7b83f) no-repeat right top;
+  background: url(../images/kefu/kefu33.png) no-repeat right top;
 }
 body .tz-kefu .tz-kefu-item.tz-kefu-beian .tz-kefu-item-btn:hover,
 html .tz-kefu .tz-kefu-item.tz-kefu-beian .tz-kefu-item-btn:hover {
-  background: url(/images/kefu03.png?c925b0e5b6a7f9544f8e3761a30bc83a) no-repeat right top;
+  background: url(../images/kefu/kefu03.png) no-repeat right top;
 }
 body .tz-kefu .tz-kefu-item.tz-kefu-mobile .tz-kefu-item-btn,
 html .tz-kefu .tz-kefu-item.tz-kefu-mobile .tz-kefu-item-btn {
-  background: url(/images/kefu44.png?8fb9e93cbc7ff229b7d179fda105ada2) no-repeat right top;
+  background: url(../images/kefu/kefu44.png) no-repeat right top;
 }
 body .tz-kefu .tz-kefu-item.tz-kefu-mobile .tz-kefu-item-btn:hover,
 html .tz-kefu .tz-kefu-item.tz-kefu-mobile .tz-kefu-item-btn:hover {
-  background: url(/images/kefu04.png?1d4b6e21466dd0b2a51a1895403d7b99) no-repeat right top;
+  background: url(../images/kefu/kefu04.png) no-repeat right top;
 }
 body .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn,
 html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn {
-  background: url(/images/kefu55.png?55d0451e2dbe07e31265be3a92aaef6f) no-repeat right top;
+  background: url(../images/kefu/kefu55.png) no-repeat right top;
 }
 body .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover,
 html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
-  background: url(/images/kefu05.png?365d2c3690fcc1fbbea23bc3f30c8c3c) no-repeat right top;
+  background: url(../images/kefu/kefu05.png) no-repeat right top;
 }
 .tz-main-head {
-  -webkit-transition: all 0.5s;
   transition: all 0.5s;
   border-bottom: 1px solid rgba(255, 255, 255, 0.4);
   left: 50%;
-  -webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
+  transform: translateX(-50%);
   top: 0;
   z-index: 999;
   width: 100%;
@@ -264,21 +256,17 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-navbar-style .container-fluid {
   padding: 0;
   width: 1180px;
-  -webkit-transform: translateX(-4px);
-          transform: translateX(-4px);
+  transform: translateX(-4px);
 }
 .tz-navbar-style .navbar-brand {
   padding-top: 0;
   padding-bottom: 0;
   height: 82px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
+  display: -webkit-flex;
   display: -ms-flex;
   display: -moz-flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
 }
 .tz-navbar-style ul.navbar-nav:first-of-type {
   margin-left: 20px;
@@ -302,20 +290,17 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   position: absolute;
   top: 82px;
   left: 50%;
-  -webkit-transform: translateX(-50%) translateY(1px);
-          transform: translateX(-50%) translateY(1px);
+  transform: translateX(-50%) translateY(1px);
   width: 598px;
   background-color: #fff;
   border-radius: 4px;
   padding: 40px 40px 0;
-  -webkit-box-shadow: 0 0 54px rgba(2, 17, 91, 0.26);
-          box-shadow: 0 0 54px rgba(2, 17, 91, 0.26);
+  box-shadow: 0 0 54px rgba(2, 17, 91, 0.26);
 }
 .tz-navbar-style ul.navbar-nav li .dropdown-mark .dropdown-icon {
   position: absolute;
   left: 50%;
-  -webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
+  transform: translateX(-50%);
   top: -10px;
   width: 5px;
   height: 5px;
@@ -326,8 +311,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   list-style: none;
   padding: 0;
   margin: 0;
-  -webkit-transform: translateY(-2px);
-          transform: translateY(-2px);
+  transform: translateY(-2px);
 }
 .tz-navbar-style ul.navbar-nav li .dropdown-mark ul li {
   height: auto;
@@ -370,7 +354,6 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-navbar-style ul.navbar-nav li .dropdown-mark dl dd a {
   font-size: 14px;
   color: #666666;
-  -webkit-transition: all 0.5s;
   transition: all 0.5s;
 }
 .tz-navbar-style ul.navbar-nav li .dropdown-mark dl dd a:hover {
@@ -384,7 +367,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   line-height: 82px;
   background-color: transparent;
   color: #fff;
-  font-family: "\5FAE\8F6F\96C5\9ED1";
+  font-family: "微软雅黑";
 }
 .tz-navbar-style ul.navbar-nav li a:hover {
   background-color: transparent;
@@ -555,7 +538,6 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .footer dl dd a {
   color: #bbbbbb;
   text-decoration: none;
-  -webkit-transition: all 0.5s;
   transition: all 0.5s;
 }
 .footer dl dd a:hover {

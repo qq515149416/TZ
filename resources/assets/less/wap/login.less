@@ -1,0 +1,175 @@
+#login{
+    .main-body{
+        .tz-container{
+            .main-content{
+                .login-content{
+                    width: 100%;
+                    // height: 595px;
+                    padding: 0px 20px;
+                    background-color: #eaecf5;
+                    .login-t{
+                        font-size: 18px;
+                        font-family: "PingFang";
+                        color: rgb( 40, 46, 80 );
+                        text-align: center;
+                        height: 70px;
+                        line-height: 70px;
+                    }
+                    .login-text{
+                        input:hover{
+                            border: 1px solid rgba( 110, 120, 161, 0.5 );
+                            box-shadow: 0px 0px 3px 0px rgba( 2, 17, 91, 0.3 );
+                        }
+                        input{
+                            width: 100%;
+                            height: 40px;
+                            padding: 0 10px;
+                            letter-spacing: 2px;
+                            margin-bottom: 10px;
+                            border: 1px solid #bdc3e0;
+                            box-shadow: none;
+                            border-radius: 5px;
+                            background-color: transparent;
+                        }
+                    }
+                    .login-more{
+                        margin-bottom: 10px;
+                        font-size: 13px;
+                        width: 100%;
+                        color: rgb( 89, 102, 161 );
+                        div{
+                            font-size: 14px;
+                            color: rgb( 89, 102, 161 );
+                            display: inline-block;
+                            width: 90px;
+                            position: relative;
+                            input{
+                                opacity: 0;
+                                width: 1px;
+                                background-color: #fff;
+                                
+                            }
+                            label {
+                                position: absolute;
+                                top: 3px;
+                                margin-right: 3px;
+                                width: 15px;
+                                display: inline-block;
+                                height: 15px;
+                                border: 1px solid #999;
+                                border-radius: 3px;
+                            }
+                            p{
+                                position: absolute;
+                                left: 19px;
+                                top: 0px;
+                            }
+                            input:checked+label {
+                                background-color: #eaecf5;
+                                border: 1px solid #3051f6;
+                                border-radius: 3px;
+                            }
+                    
+                            input:checked+label::after {
+                                position: absolute;
+                                content: "";
+                                width: 3px;
+                                height: 10px;
+                                top: 0px;
+                                left: 5px;
+                                border: 2px solid #3051f6;
+                                border-top: none;
+                                border-left: none;
+                                transform: rotate(45deg)
+                            }
+                        }
+                        a{
+                            display: inline-block;
+                            float: right;
+                            font-size: 13px;
+                            color: rgb( 89, 102, 161 );
+                        }
+                    }
+                    .validation{
+                        width: 100%;
+                        height: 40px;
+                        margin-top: 20px;
+                        position: relative;
+                        input:first-child:hover{
+                            border: 1px solid rgba( 110, 120, 161, 0.4 );
+                            box-shadow: 0px 0px 3px 0px rgba( 2, 17, 91, 0.3 );
+                        }
+                        input:first-child{
+                            // width: 125px;
+                            width: 39.06%;
+                            height: 40px;
+                            padding-left: 10px;
+                            border-radius: 5px;
+                            box-shadow: none;
+                            margin-right: 7px;
+                            background-color: transparent;
+                            border: 1px solid #bdc3e0;
+                        }
+                        div{ 
+                            position: absolute;
+                            display: inline-block;
+                            // width: 95px;
+                            height: 40px;
+                            width: 29.68%;
+                            border-radius: 5px;
+                            overflow: hidden;
+                            img{
+                                width: 100%;
+                            }
+                        }
+                        input:last-child{
+                            position: absolute;
+                            right: 0px;
+                            // width: 85px;
+                            width: 26.56%;
+                            height: 40px;
+                            border-radius: 5px;
+                            background-color: transparent;
+                            box-shadow: none;
+                            font-size: 14px;
+                            color: #1d3ab8;
+                            border: 1px solid #1d3ab8;
+                        }
+                    }
+                    .botton{
+                        text-align: center;
+                        margin-top: 31.2%;
+                        .login{
+                            border-radius: 5px;
+                            color: #fff;
+                            font-size: 14px;
+                            letter-spacing: 5px;
+                            text-align: center;
+                            height: 40px;
+                            line-height: 40px;
+                            width: 100%;
+                            display: inline-block;
+                            margin-bottom: 20px;
+                            box-shadow: none;
+                            border: none;
+                            background: linear-gradient(to right, #3c6bea, #1c39b6);
+                        }
+                        .register{
+                            background-color: transparent;
+                            color: #5966a1;
+                            font-size: 14px;
+                            letter-spacing: 2px;
+                            text-align: center;
+                            height: 40px;
+                            line-height: 40px;
+                            border: 1px solid #a1a9cb;
+                            width: 100%;
+                            display: inline-block;
+                            border-radius: 5px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

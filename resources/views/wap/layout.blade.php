@@ -73,8 +73,8 @@
                                 @endif
                             </div>
                             <div class="user right">
-                                <a href="/">
-                                    <img src="{{ asset("/images/wap/登录与注册.png") }}" alt="">
+                                <a >
+                                    <img  alt="">
                                 </a>
                             </div>
                         </div>
@@ -136,3 +136,4 @@
 
 </html>
 <script src="{{ asset("/js/wap/main.js") }}"></script>
+

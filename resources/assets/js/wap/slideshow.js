@@ -10,7 +10,7 @@ slideshow_main("slideshow-c");
 slideshow_main("slideshow-d");
 }
 function slideshow_main(id) {
-    var slideshow = document.getElementById(id).querySelector(".slideshow");
+    // var slideshow = document.getElementById(id).querySelector(".slideshow");
     var slideshowUl = document.getElementById(id).querySelector(".slideshow-ul");
     var slideshowLl = document.getElementById(id).querySelectorAll(".slideshow-li");
     var slideshowOl = document.getElementById(id).querySelector(".slideshow-ol");

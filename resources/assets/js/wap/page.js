@@ -31,13 +31,13 @@ function goPage(pno, psize) {
 
     var tempStr = "";
     if (currentPage > 1) {
-        tempStr += "<div style=\"width: 90px;\">";
+        tempStr += "<div style=\"width: 70px;\">";
         tempStr += "<img src=\"/images/wap/第一页.png\" onClick=\"goPage(" + (1) + "," + psize + ")\">";
         tempStr += "<img src=\"/images/wap/上一页.png\" onClick=\"goPage(" + (currentPage - 1) + "," + psize + ")\">";
         tempStr += "</div>";
 
     } else {
-        tempStr += "<div style=\"width: 90px;\">";
+        tempStr += "<div style=\"width: 70px;\">";
         tempStr += "<img src=\"/images/wap/第一页.png\" >";
         tempStr += "<img src=\"/images/wap/上一页.png\" >";
         tempStr += "</div>";
@@ -57,12 +57,12 @@ function goPage(pno, psize) {
         tempStr += "</div>";
     }
     if (currentPage < totalPage) {
-        tempStr += "<div style=\"width: 90px;\">";
+        tempStr += "<div style=\"width: 70px;\">";
         tempStr += "<img src=\"/images/wap/下一页.png\" onClick=\"goPage(" + (currentPage + 1) + "," + psize + ")\">";
         tempStr += "<img src=\"/images/wap/最后一页.png\" onClick=\"goPage(" + (totalPage) + "," + psize + ")\">";
         tempStr += "</div>";
     } else {
-        tempStr += "<div style=\"width: 90px;\">";
+        tempStr += "<div style=\"width: 70px;\">";
         tempStr += "<img src=\"/images/wap/下一页.png\" >";
         tempStr += "<img src=\"/images/wap/最后一页.png\">";
         tempStr += "</div>";

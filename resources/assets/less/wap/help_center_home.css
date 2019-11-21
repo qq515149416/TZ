@@ -20,7 +20,7 @@
 }
 #help_center_home .main-body .tz-container .main-content .posters .search .search-c {
   position: relative;
-  padding: 0 20px;
+  padding: 0px 20px;
 }
 #help_center_home .main-body .tz-container .main-content .posters .search .search-c input {
   -webkit-appearance: none;
@@ -36,19 +36,23 @@
   color: #fff;
   font-size: 14px;
 }
-#help_center_home .main-body .tz-container .main-content .posters .search .search-c input:nth-child(1) {
+#help_center_home .main-body .tz-container .main-content .posters .search .search-c input {
   width: 100%;
   padding: 0px 70px 0px 15px;
   background-color: rgba(255, 255, 255, 0.2);
   color: #fff;
 }
-#help_center_home .main-body .tz-container .main-content .posters .search .search-c input:nth-child(2) {
+#help_center_home .main-body .tz-container .main-content .posters .search .search-c a {
   width: 60px;
   position: absolute;
   right: 0px;
   margin-right: 20px;
+}
+#help_center_home .main-body .tz-container .main-content .posters .search .search-c a input {
+  width: 100%;
+  margin-right: 20px;
+  padding: 0px;
   background-color: #fff;
-  background-image: url(../image/android/drawable-xhdpi/搜索.png);
   background-size: 25px 25px;
   background-position: 17px 6px;
   background-repeat: no-repeat;
@@ -98,7 +102,7 @@
   float: left;
   line-height: 30px;
   text-align: left;
-  width: calc(50%);
+  width: calc(100%/2);
   height: 30px;
   color: #252b3a;
 }

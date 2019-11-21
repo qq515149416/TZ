@@ -344,6 +344,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 .tz-navbar-style ul.navbar-nav li .dropdown-mark dl:nth-of-type(n+5) {
   height: 146px;
+  margin-top: 28px;
 }
 .tz-navbar-style ul.navbar-nav li .dropdown-mark dl {
   margin: 0;
@@ -363,7 +364,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   text-decoration: none;
 }
 .tz-navbar-style ul.navbar-nav li .dropdown-mark dl dd {
-  padding-bottom: 14px;
+  padding-bottom: 12px;
   line-height: 14px;
 }
 .tz-navbar-style ul.navbar-nav li .dropdown-mark dl dd a {

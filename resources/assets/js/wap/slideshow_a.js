@@ -1,7 +1,7 @@
 //----------------解决方案轮播图
 slideshow_a();
 function slideshow_a() {
-    var slideshowa = document.querySelector(".slideshow-a");
+    // var slideshowa = document.querySelector(".slideshow-a");
     var slideshowUla = document.querySelector(".slideshow-ul-a");
     var slideshowLla = document.querySelectorAll(".slideshow-li-a");
     var slideshowOla = document.querySelector(".slideshow-ol-a");

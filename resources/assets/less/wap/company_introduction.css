@@ -38,7 +38,7 @@
   float: left;
   line-height: 30px;
   text-align: center;
-  width: calc(25%);
+  width: calc(100%/4);
   height: 30px;
   color: #252b3a;
 }
@@ -57,7 +57,7 @@
   margin-top: 15px;
   box-shadow: 1px 1px 17px 0px rgba(24, 30, 60, 0.2);
   border-radius: 10px;
-  padding: 15px;
+  padding: 18px;
 }
 #company_introduction .main-body .tz-container .main-content .option-text .news .news-text-title {
   font-size: 14px;
@@ -90,7 +90,8 @@
   margin-top: 20px;
 }
 #company_introduction .main-body .tz-container .main-content .option-text .bottom img {
-  width: 40px;
+  width: 30px;
+  font-size: 0px;
 }
 #company_introduction .main-body .tz-container .main-content .option-text .bottom div {
   position: absolute;
@@ -101,10 +102,11 @@
 }
 #company_introduction .main-body .tz-container .main-content .option-text .bottom div:nth-child(1) {
   left: 50%;
-  margin-left: -50%;
+  margin-left: -115px;
+  margin-top: 5px;
 }
 #company_introduction .main-body .tz-container .main-content .option-text .bottom div:nth-child(1) img:nth-child(1) {
-  margin-right: 5px;
+  margin-right: 10px;
 }
 #company_introduction .main-body .tz-container .main-content .option-text .bottom .page {
   border: 1px solid #cbcedd;
@@ -126,14 +128,15 @@
 }
 #company_introduction .main-body .tz-container .main-content .option-text .bottom div:nth-child(3) {
   right: 50%;
-  margin-right: -133px;
+  margin-right: -115px;
+  margin-top: 5px;
 }
 #company_introduction .main-body .tz-container .main-content .option-text .bottom div:nth-child(3) img:nth-child(1) {
-  margin-right: 5px;
+  margin-right: 10px;
 }
 #company_introduction .main-body .tz-container .main-content .option-text .honor {
   width: 100%;
-  padding: 10px;
+  padding: 10px 20px 30px 20px;
   margin-top: 15px;
   box-shadow: 1px 1px 17px 0px rgba(24, 30, 60, 0.2);
   border-radius: 10px;
@@ -146,11 +149,16 @@
   margin-right: 15px;
 }
 #company_introduction .main-body .tz-container .main-content .option-text .honor .honor-i .honor-t {
-  width: 47%;
+  width: 46.88%;
   float: left;
   text-align: center;
 }
 #company_introduction .main-body .tz-container .main-content .option-text .honor .honor-i .honor-t img {
+  border-width: 5px;
+  border-color: #ffffff;
+  box-shadow: 0px 0px 10px 0px rgba(24, 30, 60, 0.15);
+  border-style: solid;
+  border-radius: 5px;
   width: 100%;
 }
 #company_introduction .main-body .tz-container .main-content .option-text .honor .honor-i .honor-t p {
@@ -253,7 +261,7 @@
   margin-top: 15px;
   box-shadow: 1px 1px 17px 0px rgba(24, 30, 60, 0.2);
   border-radius: 10px;
-  padding: 0px 10px 15px 10px;
+  padding: 0px 10px 30px 10px;
 }
 #company_introduction .main-body .tz-container .main-content .contact-us .table-box {
   border: 1px solid #cbcedd;
@@ -344,12 +352,12 @@
 #company_introduction .main-body .tz-container .main-content .contact-us .personnel div ol li table tr:first-child td {
   font-size: 10px;
   color: #9497a1;
-  width: calc(33.33333333%);
+  width: calc(100%/3);
   text-align: left;
   padding-bottom: 3px;
 }
 #company_introduction .main-body .tz-container .main-content .contact-us .personnel div ol li table tr:last-child td {
-  width: calc(33.33333333%);
+  width: calc(100%/3);
   text-align: left;
   font-size: 10px;
   color: #666a75;
@@ -360,7 +368,7 @@
   padding: 20px;
 }
 #company_introduction .main-body .tz-container .main-content .contact-us .bottom img {
-  width: 40px;
+  width: 30px;
 }
 #company_introduction .main-body .tz-container .main-content .contact-us .bottom div {
   position: absolute;
@@ -371,7 +379,7 @@
 }
 #company_introduction .main-body .tz-container .main-content .contact-us .bottom div:nth-child(1) {
   left: 50%;
-  margin-left: -45%;
+  margin-left: -115px;
 }
 #company_introduction .main-body .tz-container .main-content .contact-us .bottom div:nth-child(1) img:nth-child(1) {
   margin-right: 5px;
@@ -396,7 +404,7 @@
 }
 #company_introduction .main-body .tz-container .main-content .contact-us .bottom div:nth-child(3) {
   right: 50%;
-  margin-right: -45%;
+  margin-right: -115px;
 }
 #company_introduction .main-body .tz-container .main-content .contact-us .bottom div:nth-child(3) img:nth-child(1) {
   margin-right: 5px;
@@ -410,7 +418,8 @@
   line-height: 1.471;
   text-align: left;
   margin-bottom: 25px;
-  padding: 0px 10px;
+  margin: 0px 20px 15px;
+  border-bottom: 1px dashed #cbcedd;
 }
 #company_introduction .main-body .tz-container .main-content .contact-us .address p {
   font-size: 12px;
@@ -420,6 +429,10 @@
   text-align: left;
   font-weight: 300;
   margin-top: 5px;
+  margin-bottom: 15px;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .address:last-child {
+  border-bottom: none;
 }
 #company_introduction .main-body .tz-container .main-content .hr {
   width: 1px;
@@ -539,8 +552,8 @@
 #company_introduction .main-body .tz-container .main-content .culture-a .culture-b span {
   color: #162fac;
 }
-#company_introduction .main-body .tz-container .main-content .culture-a:nth-child(2) {
-  padding: 0px ;
+#company_introduction .main-body .tz-container .main-content .culture-a:last-child {
+  padding: 0px 20px;
 }
 #company_introduction .main-body .tz-container .news-content {
   width: 100%;

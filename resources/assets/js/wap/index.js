@@ -27,53 +27,13 @@ document.addEventListener("touchmove", function(e){
 // 腾正微信
 document.querySelector(".sidebar .more-content .wxCode").onclick = function () {
     document.querySelector(".tz-container .qrCode").style.display = "block";
+    document.body.style.overflow = "hidden";
 }
 document.querySelector(".tz-container .qrCode .closeCode").onclick = function () {
     document.querySelector(".tz-container .qrCode").style.display = "none";
+    document.body.style.overflow = "auto";
 }
 
-
-
-// 菜单
-var YunFuwuLiI = document.querySelectorAll("#menu .Yun-fuwu-li-i");
-var YunItemsLi = document.querySelectorAll("#menu .Yun-items-li");
-var arrow = document.querySelectorAll("#menu .div-arrow .arrow");
-for(i=0; i<YunFuwuLiI.length;i++){
-  YunFuwuLiI[i].index = i;
-  YunFuwuLiI[i].onclick = function(){
-    if(YunItemsLi[this.index].style.display == "block"){
-      YunItemsLi[this.index].style.display = "none";
-      arrow[this.index].style.transform = "rotate(-45deg)";
-      arrow[this.index].style.transition = "transform 0.4s"  
-    }
-    
-    else{
-      YunItemsLi[this.index].style.display = "block";
-      arrow[this.index].style.transform = "rotate(135deg)";
-      arrow[this.index].style.transition = "transform 0.4s";
-    }
-  }
-}
-
-// 云主机
-// var YunFuwuLiI = document.getElementsByClassName(" Yun-fuwu-li-i");
-// var YunItemsLi = document.getElementsByClassName(" Yun-items-li");
-//  var arrow = document.querySelectorAll(".div-arrow .arrow");
-// for(var i=0; i<YunFuwuLiI.length;i++){
-//   YunFuwuLiI[i].index = i;
-//   YunFuwuLiI[i].onclick = function(){
-//     if(YunItemsLi[this.index].style.display == "block"){
-//       YunItemsLi[this.index].style.display = "none";
-//       arrow[this.index].style.transform = "rotate(-45deg)";
-//       arrow[this.index].style.transition = "transform 0.4s"
-//     }
-//     else{
-//       YunItemsLi[this.index].style.display = "block";
-//       arrow[this.index].style.transform = "rotate(135deg)";
-//       arrow[this.index].style.transition = "transform 0.4s";
-//     }
-//   }
-// }
 
 // 云主机
 var YunFuwuLiIc = document.querySelectorAll("#cloud_hosting .Yun-fuwu-li-i");

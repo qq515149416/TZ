@@ -41,14 +41,16 @@
                                 </li>
                                 <li class="m">
                                     <div class="industry-title">
-                                        <img src="{{ asset("/images/wap/数据安全性.png") }}" alt="">
+                                        <img style="width: 18.5px;" src="{{ asset("/images/wap/数据安全性.png") }}"
+                                            alt="">
                                         <p>数据的安全性</p>
                                     </div>
                                     <p class="industry-text">金融领域对数据安全及用户隐私保护需求比其他任何行业要求都高，安全是重点选择要素。 </p>
                                 </li>
                                 <li>
                                     <div class="industry-title">
-                                        <img src="{{ asset("/images/wap/成本过高.png") }}" alt="">
+                                        <img style="width: 21.2px;" src="{{ asset("/images/wap/成本过高.png") }}"
+                                            alt="">
                                         <p>成本过高</p>
                                     </div>
                                     <p class="industry-text">金融体系、机构整合云端面临技术投入大，不灵活，运维难度大，交付周期长等成本问题。 </p>
@@ -112,7 +114,6 @@
                             </a>
                         </div> -->
                     </div>
-
 
                 </div>
             </div>

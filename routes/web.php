@@ -93,7 +93,13 @@ Route::group([
     Route::get('/media_solution', 'Show\wap\MediaSolutionController@index');
     Route::get('/mobileapp_solution', 'Show\wap\MobileappSolutionController@index');
     Route::get('/company/{page}', 'Show\wap\CompanyIntroductionController@index');
-    Route::get('/help_center_home', 'Show\wap\HelpCenterHomeController@index');
+    Route::get('/help_center_home/{page}', 'Show\wap\HelpCenterHomeController@index');
+    Route::get('/help_center', 'Show\wap\HelpCenterController@index');
+    Route::get('/search_results', 'Show\wap\SearchResultsController@index');
+    Route::get('/login', 'Show\wap\LoginController@index');
+    Route::get('/registered', 'Show\wap\RegisteredController@index');
+    Route::get('/logging', 'Show\wap\LoggingController@index');
+    Route::get('/login_register_menu', 'Show\wap\LoginRegisteredMenuController@index');
 });
 
 /**

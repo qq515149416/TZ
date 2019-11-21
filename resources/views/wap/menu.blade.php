@@ -149,12 +149,14 @@
                                 </div>
                                 <div class="menu-li">
                                     <div class="menu-i">
-                                        <p>帮助中心</p>
+                                        <a href="/wap/help_center">
+                                            <p>帮助中心</p>
+                                        </a>
                                     </div>
                                 </div>
                                 <div class="menu-li ">
                                     <div class="menu-i">
-                                        <p>管理控制台</p>
+                                        <p @click="console">管理控制台</p>
                                     </div>
                                 </div>
                                 <div class="menu-li ">

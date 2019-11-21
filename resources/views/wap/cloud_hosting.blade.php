@@ -31,7 +31,7 @@
                                         <span class="arrow"></span>
                                     </div>
                                 </div>
-                                <div class="Yun-items-li items-li tz-main clear">
+                                <div class="Yun-items-li items-li tz-main clear" style="padding: 15px 20px 5px;">
                                     <div class="fuwu-title">游戏弹性云</div>
                                     <div class="fuwu-txt">腾正云应用领先的云技术，高性能物理设施打造高可用产品</div>
                                     <ul>
@@ -65,7 +65,7 @@
                                     </div>
                                 </div>
 
-                                <div class="Yun-items-li items-li tz-main clear">
+                                <div class="Yun-items-li items-li tz-main clear" style="padding: 15px 20px 5px;">
                                     <div class="fuwu-title">基础配置</div>
                                     <div class="fuwu-txt">系统安装配置、快照备份与恢复、系统端口开启与关闭、系统参数调整与优化、磁盘扩展、分区、挂载</div>
                                     <ul>
@@ -100,7 +100,7 @@
                                     </div>
                                 </div>
 
-                                <div class="Yun-items-li items-li tz-main clear">
+                                <div class="Yun-items-li items-li tz-main clear" style="padding: 15px 20px 5px;">
                                     <div class="fuwu-title">全国机房任你挑</div>
                                     <div class="fuwu-txt">全国机房看中哪个，托去哪里</div>
                                     <ul>
@@ -135,7 +135,7 @@
                                     </div>
                                 </div>
 
-                                <div class="Yun-items-li items-li tz-main clear">
+                                <div class="Yun-items-li items-li tz-main clear" style="padding: 15px 20px 5px;">
                                     <div class="fuwu-title">企业类型</div>
                                     <div class="fuwu-txt">价格最低，性能最稳定</div>
                                     <ul>
@@ -169,7 +169,7 @@
                                     </div>
                                 </div>
 
-                                <div class="Yun-items-li items-li tz-main clear">
+                                <div class="Yun-items-li items-li tz-main clear" style="padding: 15px 20px 5px;">
                                     <div class="fuwu-title">游戏类型</div>
                                     <div class="fuwu-txt">无视DDOS，无视恶意扫描，无视CC等一系列攻击，T级防御</div>
                                     <ul>
@@ -180,6 +180,10 @@
                                         <li>
                                             <img src="{{ asset("/images/wap/星星.png") }}" alt="">
                                             <p>中端游戏</p>
+                                        </li>
+                                        <li>
+                                            <img src="{{ asset("/images/wap/星星.png") }}" alt="">
+                                            <p>高端游戏</p>
                                         </li>
                                     </ul>
                                     <div class="price">
@@ -198,7 +202,7 @@
                         <div class="title-hr"></div>
                     </div>
                     <!-- 轮播 -->
-                    <div class="slideshow">
+                    <div class="slideshow" id="slideshow">
                         <ul class="slideshow-ul clear">
                             <li class="slideshow-li">
                                 <img src="{{ asset("/images/wap/跨机房热迁移服务.png") }}" alt="">
@@ -248,8 +252,9 @@
                         </div>
                     </div>
                     <!-- 产品功能 -->
-                    <div class="Yun-product">
-                        <img src="{{ asset("/images/wap/云主机功能背景.png") }}" alt="">
+                    <div class="Yun-product" style="background-image: url( {{ asset("/images/wap/云主机功能背景.png") }} );">
+                        <!-- <img src="{{ asset("/images/wap/云主机功能背景.png") }}" alt=""> -->
+                        
                         <div class="title">
                             <p>产品功能</p>
                             <div class="title-hr"></div>
@@ -257,41 +262,41 @@
                         <div class="tz-fuwu">
                             <div class="tz-fuwu-box">
                                 <div class="fuwu-li ">
-                                    <div class="Yun-fuwu-li-i fuwu-li-i">
+                                    <div class="Yun-fuwu-li-i fuwu-li-i y-f-l-i">
                                         <p>计算</p>
                                         <div class="div-arrow">
                                             <span class="arrow"></span>
                                         </div>
                                     </div>
-                                    <div class="Yun-items-li items-li tz-main clear">
+                                    <div class="Yun-items-li items-li clear">
                                         <div class="fuwu-txt">
                                             云服务器提供丰富的实例规格(CPU、内存）和带宽、云盘选择，支持随时升级，满足各种业务需求。99.99%的高可用性，为业务的稳定运行提供保障。
                                         </div>
                                     </div>
                                 </div>
                                 <div class="fuwu-li">
-                                    <div class="Yun-fuwu-li-i fuwu-li-i">
+                                    <div class="Yun-fuwu-li-i fuwu-li-i y-f-l-i">
                                         <p>存储</p>
                                         <div class="div-arrow">
                                             <span class="arrow"></span>
                                         </div>
                                     </div>
 
-                                    <div class="Yun-items-li items-li tz-main clear">
+                                    <div class="Yun-items-li items-li clear">
                                         <div class="fuwu-txt">
                                             采用腾正云三层存储的革新技术，自动分层缓存、沉淀、备份数据，保障用户数据的完整性、可用性，数据安全性高达99.999%。</div>
                                     </div>
 
                                 </div>
                                 <div class="fuwu-li">
-                                    <div class="Yun-fuwu-li-i fuwu-li-i">
+                                    <div class="Yun-fuwu-li-i fuwu-li-i y-f-l-i">
                                         <p>安全</p>
                                         <div class="div-arrow">
                                             <span class="arrow"></span>
                                         </div>
                                     </div>
 
-                                    <div class="Yun-items-li items-li tz-main clear">
+                                    <div class="Yun-items-li items-li clear">
                                         <div class="fuwu-txt">
                                             提供DDoS防护、DNS劫持检测、入侵检测、漏洞扫描、网页木马检测、登录防护等安全服务对服务器的监控报警服务，提供实时监控，性能高低一目了然。
                                         </div>
@@ -299,26 +304,26 @@
 
                                 </div>
                                 <div class="fuwu-li">
-                                    <div class="Yun-fuwu-li-i fuwu-li-i">
+                                    <div class="Yun-fuwu-li-i fuwu-li-i y-f-l-i">
                                         <p>网络</p>
                                         <div class="div-arrow">
                                             <span class="arrow"></span>
                                         </div>
                                     </div>
 
-                                    <div class="Yun-items-li items-li tz-main clear">
+                                    <div class="Yun-items-li items-li clear">
                                         <div class="fuwu-txt">全网骨干网接入，承诺独享，多运营商覆盖，覆盖多个地区的极速公网体验，提供灵活的网络规划选择。</div>
                                     </div>
                                 </div>
                                 <div class="fuwu-li">
-                                    <div class="Yun-fuwu-li-i fuwu-li-i">
+                                    <div class="Yun-fuwu-li-i fuwu-li-i y-f-l-i">
                                         <p>管理</p>
                                         <div class="div-arrow">
                                             <span class="arrow"></span>
                                         </div>
                                     </div>
 
-                                    <div class="Yun-items-li items-li tz-main clear">
+                                    <div class="Yun-items-li items-li clear">
                                         <div class="fuwu-txt">
                                             提供web控制台、API两种方式，能够轻松的开通、关闭、重启、升级云服务器；提供CPU、内存、硬盘IO的实时监控和报表，随时了解云服务器运行情况。
                                         </div>
@@ -356,9 +361,7 @@
                                         <p>2019.06.01</p>
                                     </li>
                                 </ul>
-                                <div class="view-more">
-                                    查看更多
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -369,7 +372,6 @@
                             立即申请
                         </a>
                     </div> -->
-
                 </div>
             </div>
         </div>

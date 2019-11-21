@@ -1,0 +1,84 @@
+#high_proof_host .main-body {
+  padding-top: 0;
+}
+#high_proof_host .main-content .cabinet-application-scenarios {
+  background-color: #fff !important;
+  padding-bottom: 10px;
+}
+#high_proof_host .main-content .cabinet-application-scenarios .application-box {
+  width: 100%;
+  padding-top: 10px;
+}
+#high_proof_host .main-content .cabinet-application-scenarios .application-box ul li {
+  margin-bottom: 10px;
+  width: 47.32%;
+  float: left;
+}
+#high_proof_host .main-content .cabinet-application-scenarios .application-box ul li img {
+  width: 100%;
+}
+#high_proof_host .main-content .slideshow {
+  padding-top: 10px;
+}
+#high_proof_host .main-content .slideshow .slideshow-ul .slideshow-li {
+  padding: 0px 20px;
+}
+#high_proof_host .main-content .slideshow .slideshow-ul .slideshow-li div {
+  margin: 0px 0px 0px 0px;
+}
+#high_proof_host .main-content .slideshow .slideshow-ul .slideshow-li .slideshow-li-i {
+  width: 100%;
+  box-shadow: 2.5px 4px 15px 0px rgba(29, 29, 29, 0.1);
+  border-radius: 5px;
+  background-color: #fff;
+  padding: 10px 10px 10px 10px;
+}
+#high_proof_host .main-content .slideshow .slideshow-ul .slideshow-li .slideshow-li-i div:nth-child(1) {
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  color: #252b3a;
+  font-weight: bold;
+  font-size: 14px;
+}
+#high_proof_host .main-content .slideshow .slideshow-ul .slideshow-li .slideshow-li-i div:nth-child(2) p:nth-child(1) {
+  font-size: 22px;
+  font-family: "PingFang";
+  background: -webkit-gradient(linear, left top, right top, from(#fd7919), to(#fd4b19));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+}
+#high_proof_host .main-content .slideshow .slideshow-ul .slideshow-li .slideshow-li-i div:nth-child(2) p:nth-child(2) {
+  font-size: 10px;
+  font-family: "PingFang";
+  color: #6a6d78;
+  text-align: center;
+}
+#high_proof_host .main-content .slideshow .slideshow-ul .slideshow-li .slideshow-li-i div:nth-child(3) div {
+  display: inline-block;
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #6a6d78;
+  text-align: center;
+  margin-right: 10px;
+  font-weight: inherit;
+}
+#high_proof_host .main-content .slideshow .slideshow-ul .slideshow-li .slideshow-li-i div:nth-child(3) div img {
+  width: 10px;
+}
+#high_proof_host .main-content .slideshow .slideshow-ul .slideshow-li .slideshow-li-i a {
+  display: block;
+  background-color: #3051f6;
+  font-size: 14px;
+  border-radius: 20px;
+  width: 120px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  color: #fff;
+  margin: 10px auto;
+}
+#high_proof_host .main-content .compouter-advantage .advantage-li ul li img {
+  margin-top: 5px;
+}

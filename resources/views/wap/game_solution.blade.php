@@ -38,7 +38,7 @@
 
                                 </li>
                                 <li class="p">
-                                    <div class="industry-title m-b">
+                                    <div class="industry-title">
                                         <img src="{{ asset("/images/wap/网络不稳定.png") }}" alt="">
                                         <p>网络不稳定，玩家掉线？</p>
                                     </div>
@@ -48,8 +48,8 @@
 
                                 </li>
                                 <li class="m p">
-                                    <div class="industry-title m-b">
-                                        <img src="{{ asset("/images/wap/数据量大.png") }}" alt="">
+                                    <div class="industry-title">
+                                        <img  src="{{ asset("/images/wap/数据量大.png") }}" alt="">
                                         <p>游戏大推，大量玩家访问？</p>
                                     </div>
                                     <p class="industry-text"><span></span>20+万IOPS高性能磁盘</p>
@@ -58,7 +58,7 @@
 
                                 </li>
                                 <li class="p">
-                                    <div class="industry-title m-b">
+                                    <div class="industry-title">
                                         <img src="{{ asset("/images/wap/数据安全性.png") }}" alt="">
                                         <p>游戏安全，如何保障？</p>
                                     </div>
@@ -67,7 +67,7 @@
                                     <p class="industry-text"><span></span>VPN/专线数据传输</p>
                                 </li>
                                 <li class="m p">
-                                    <div class="industry-title m-b">
+                                    <div class="industry-title">
                                         <img src="{{ asset("/images/wap/单点故障处理.png") }}" alt="">
                                         <p>游戏服，监控及故障恢复？</p>
                                     </div>
@@ -158,10 +158,16 @@
                         </a>
                     </div> -->
 
-
                 </div>
             </div>
         </div>
     </div>
-
+    <script>
+    if(document.body.clientWidth<330){
+        for(var i=0;i<document.querySelectorAll(".p").length;i++){
+            document.querySelectorAll(".p")[i].style.height="183px";
+        }
+        
+    }
+</script>
 @endsection

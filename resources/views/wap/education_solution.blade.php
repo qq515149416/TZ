@@ -34,18 +34,18 @@
                                     <p class="industry-text">教育信息化产品品类庞杂，不能将数据统一、规整，不能实时掌握所辖地区的教育数据。</p>
                                 </li>
                                 <li>
-                                    <div class="industry-title">
-                                        <img src="{{ asset("/images/wap/高校.png") }}" alt="">
+                                    <div  class="industry-title">
+                                        <img style="width: 22.4px;" src="{{ asset("/images/wap/高校.png") }}" alt="">
                                         <p>高校</p>
                                     </div>
                                     <p class="industry-text">应用系统较多，缺统一认证机制，学生、教师身份信息管理复杂；网络、安全配套落后。</p>
                                 </li>
                                 <li class="m">
                                     <div class="industry-title">
-                                        <img src="{{ asset("/images/wap/中小学.png") }}" alt="">
+                                        <img style="width: 21px;" src="{{ asset("/images/wap/中小学.png") }}" alt="">
                                         <p>中小学</p>
                                     </div>
-                                    <p class="industry-text">学校管理工作未智慧化，整体效率偏低；教师事务繁琐不能全心投入教学；家校沟通不畅。</p>
+                                    <p class="industry-text">学校管理工作未智慧化,整体效率偏低；教师事务繁琐不能全心投入教学;家校沟通不畅。</p>
                                 </li>
                                 <li>
                                     <div class="industry-title">
@@ -107,7 +107,6 @@
                             立即咨询
                         </a>
                     </div> -->
-
 
                 </div>
             </div>

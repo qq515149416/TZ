@@ -1,0 +1,262 @@
+#flow_stack_packet .main-body {
+  padding-top: 0;
+}
+#flow_stack_packet .tz-container .main-content {
+  position: relative;
+}
+#flow_stack_packet .tz-container .main-content .methodofuse {
+  background: linear-gradient(#fff, #dfe4f9);
+}
+#flow_stack_packet .tz-container .main-content .methodofuse img {
+  width: 100%;
+  margin: 10px 0px 25px 0px;
+}
+#flow_stack_packet .tz-container .main-content .service-advantages {
+  position: relative;
+  padding-bottom: 20px;
+  background-color: #fff;
+}
+#flow_stack_packet .tz-container .main-content .service-advantages .title p {
+  color: #fff;
+}
+#flow_stack_packet .tz-container .main-content .service-advantages .title .title-hr {
+  background-color: #fff;
+}
+#flow_stack_packet .tz-container .main-content .service-advantages img {
+  width: 100%;
+  padding: 0px 60px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+#flow_stack_packet .tz-container .main-content .service-advantages .backgroundimg {
+  width: 100%;
+  position: absolute;
+  top: -10px;
+  left: 0;
+  z-index: -1 !important;
+  padding: 0 !important;
+}
+#flow_stack_packet .tz-container .main-content .service-advantages ul {
+  z-index: 100;
+  margin: 10px 0px;
+}
+#flow_stack_packet .tz-container .main-content .service-advantages ul li {
+  padding: 10px 0px;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  box-shadow: 1px 2px 5px #cbcdd8;
+  box-shadow: 1.5px 2.6px 10px 0px rgba(4, 38, 107, 0.1);
+}
+#flow_stack_packet .tz-container .main-content .service-advantages ul li .fuwu-txt {
+  padding-right: 4px !important;
+}
+#flow_stack_packet .tz-container .main-content .service-advantages ul li .fuwu-title {
+  padding-left: 10px;
+  font-size: 14px;
+  font-family: "PingFang";
+  color: #252b3a;
+  font-weight: bold;
+  line-height: 20px;
+  margin-bottom: 5px;
+}
+#flow_stack_packet .tz-container .main-content .service-advantages ul li .fuwu-txt {
+  padding-left: 10px;
+  padding-right: 10px;
+  line-height: 20px;
+  font-size: 12px;
+  text-align: left;
+  font-family: "PingFang";
+  color: #666a75;
+}
+#flow_stack_packet .tz-container .main-content .compouter-advantage-gn .advantage-li {
+  margin-top: 10px;
+}
+#flow_stack_packet .tz-container .main-content .compouter-advantage-gn .advantage-li ul li div {
+  margin-bottom: 10px;
+}
+#flow_stack_packet .tz-container .main-content .tz-fuwu {
+  margin-top: 10px;
+}
+#flow_stack_packet .tz-container .main-content .tz-fuwu .tz-fuwu-box .fuwu-li {
+  padding: 10px 20px 25px 20px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  box-shadow: 2.5px 4px 15px 0px rgba(29, 29, 29, 0.1);
+}
+#flow_stack_packet .tz-container .main-content .tz-fuwu .tz-fuwu-box .fuwu-li .flow_stack-fuwu-li p {
+  display: block;
+  line-height: 40px;
+  text-align: center;
+  font-size: 14px;
+  color: #252b3a;
+  font-weight: bold;
+  height: 40px;
+  width: 100%;
+}
+#flow_stack_packet .tz-container .main-content .tz-fuwu .tz-fuwu-box .fuwu-li .flow_stack-fuwu-li .flow-fuwu-li-i {
+  width: 100%;
+}
+#flow_stack_packet .tz-container .main-content .tz-fuwu .tz-fuwu-box .fuwu-li .flow_stack-fuwu-li .flow-fuwu-li-i ul li:first-child {
+  background-color: #eff2f8;
+  color: #252b3a;
+  font-weight: bold;
+}
+#flow_stack_packet .tz-container .main-content .tz-fuwu .tz-fuwu-box .fuwu-li .flow_stack-fuwu-li .flow-fuwu-li-i ul li:first-child div:nth-child(2) {
+  border-right: 1px solid #c5cbdc;
+}
+#flow_stack_packet .tz-container .main-content .tz-fuwu .tz-fuwu-box .fuwu-li .flow_stack-fuwu-li .flow-fuwu-li-i ul li:nth-child(2) div:last-child {
+  background-color: #8195f9;
+  color: #fff;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+#flow_stack_packet .tz-container .main-content .tz-fuwu .tz-fuwu-box .fuwu-li .flow_stack-fuwu-li .flow-fuwu-li-i ul li:nth-child(3) div:last-child {
+  background-color: #627af6;
+  color: #fff;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+#flow_stack_packet .tz-container .main-content .tz-fuwu .tz-fuwu-box .fuwu-li .flow_stack-fuwu-li .flow-fuwu-li-i ul li:nth-child(4) div:last-child {
+  background-color: #465fde;
+  color: #fff;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+#flow_stack_packet .tz-container .main-content .tz-fuwu .tz-fuwu-box .fuwu-li .flow_stack-fuwu-li .flow-fuwu-li-i ul li {
+  border-top: 1px solid #c5cbdc;
+  border-bottom: 1px solid #c5cbdc;
+  margin-bottom: 3px;
+}
+#flow_stack_packet .tz-container .main-content .tz-fuwu .tz-fuwu-box .fuwu-li .flow_stack-fuwu-li .flow-fuwu-li-i ul li div:first-child {
+  border-right: 1px solid #c5cbdc;
+}
+#flow_stack_packet .tz-container .main-content .tz-fuwu .tz-fuwu-box .fuwu-li .flow_stack-fuwu-li .flow-fuwu-li-i ul li div {
+  float: left;
+  width: calc(33.33333333%);
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  font-size: 12px;
+  color: #5a5e67;
+}
+#flow_stack_packet .tz-container .main-content .pop-buy {
+  display: none;
+  background-color: rgba(29, 29, 31, 0.7);
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  padding: 100px 20px;
+}
+#flow_stack_packet .tz-container .main-content .pop-buy .p-buy {
+  background-color: #fff;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 5px;
+  padding: 0px 25px 25px 25px;
+  z-index: 1000;
+  position: relative;
+}
+#flow_stack_packet .tz-container .main-content .pop-buy .p-buy .buy-ttitle {
+  width: 100%;
+  height: 75px;
+  line-height: 75px;
+  border-bottom: 1px solid #bfbfbf;
+  font-size: 20px;
+  font-family: "PingFang";
+  color: #252b3a;
+  text-align: center;
+  margin-bottom: 20px;
+}
+#flow_stack_packet .tz-container .main-content .pop-buy .p-buy .buy-m {
+  font-size: 14px;
+  font-family: "PingFang";
+  color: #555962;
+  line-height: 1.471;
+  text-align: left;
+  margin-top: 10px;
+  padding: 0px 15px;
+}
+#flow_stack_packet .tz-container .main-content .pop-buy .p-buy .buy-m p {
+  display: inline-block;
+}
+#flow_stack_packet .tz-container .main-content .pop-buy .p-buy .price {
+  font-size: 14px;
+  font-family: "PingFang";
+  color: #555962;
+  text-align: left;
+  margin-top: 15px;
+  line-height: 40px;
+  height: 40px;
+  position: relative;
+}
+#flow_stack_packet .tz-container .main-content .pop-buy .p-buy .price span {
+  color: #fd9447;
+  font-size: 10px;
+  position: absolute;
+  top: -5px;
+  left: 40px;
+}
+#flow_stack_packet .tz-container .main-content .pop-buy .p-buy .price p {
+  position: absolute;
+  display: inline-block;
+  background: -webkit-gradient(linear, left top, right top, from(#fd7919), to(#fd4b19));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 22px;
+  margin-left: 10px;
+}
+#flow_stack_packet .tz-container .main-content .pop-buy .p-buy .price a {
+  display: inline-block;
+  width: 115px;
+  height: 40px;
+  background-color: #162fac;
+  font-size: 14px;
+  font-family: "PingFang";
+  color: #ffffff;
+  text-align: center;
+  line-height: 40px;
+  border-radius: 20px;
+  float: right;
+}
+#flow_stack_packet .tz-container .main-content .pop-buy .p-buy input {
+  outline: none;
+  width: 100%;
+  height: 40px;
+  border-radius: 20px;
+  padding: 0px 15px;
+  box-shadow: none;
+  border: 1px solid #bfbfbf;
+  margin-top: 20px;
+}
+#flow_stack_packet .tz-container .main-content .pop-buy .p-buy input:hover {
+  border: 1px solid #162fac;
+  box-shadow: 0px 0px 5px 0px #445cd4;
+}
+#flow_stack_packet .tz-container .main-content .pop-buy .p-buy .close {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background-color: #bfbfbf;
+  width: 50px;
+  line-height: 50px;
+  height: 50px;
+  border-bottom-left-radius: 100%;
+}
+#flow_stack_packet .tz-container .main-content .pop-buy .p-buy .close img {
+  margin-left: 20px;
+  width: 20px;
+}
+#flow_stack_packet .tz-container .main-content .application-scenarios .title p {
+  color: #fff;
+}
+#flow_stack_packet .tz-container .main-content .application-scenarios .title .title-hr {
+  background-color: #fff;
+}
+#flow_stack_packet .tz-container .main-content .common-problems .title {
+  margin-bottom: 0px;
+}

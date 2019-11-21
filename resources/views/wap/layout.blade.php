@@ -73,8 +73,8 @@
                                 @endif
                             </div>
                             <div class="user right">
-                                <a href="/">
-                                    <img src="{{ asset("/images/wap/登录与注册.png") }}" alt="">
+                                <a >
+                                    <img  alt="">
                                 </a>
                             </div>
                         </div>
@@ -82,13 +82,12 @@
                 </div>
 
 
-                <!-- 未登录 -->
                 @yield('content')
                     <!-- 底栏 -->
                     <div class="footer">
                         <div class="tz-main">
                             <div class="system-technology-service">
-                                <ul>
+                                <ul class="clear">
                                     <li class="footer-items">
                                         <img src="{{ asset("/images/wap/体系.png") }}" alt="">
                                         <p class="f-title">体系</p>
@@ -107,9 +106,9 @@
                                 </ul>
                             </div>
                             <div class="phone-call">
-                                <div class="p-text">
+                                <div class="p-text clear">
                                     <img src="{{ asset("/images/wap/7X24小时服务热线.png") }}" alt="">
-                                    <p>7x24小时服务热线: 0769- 22226555</p>
+                                    <p>7x24小时服务热线: <span style="font-weight=350;">0769- 22226555</span></p>
                                 </div>
                             </div>
                             <div class="record">
@@ -137,3 +136,4 @@
 
 </html>
 <script src="{{ asset("/js/wap/main.js") }}"></script>
+

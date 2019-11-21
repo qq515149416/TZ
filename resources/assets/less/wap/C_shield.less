@@ -8,35 +8,24 @@
             background-color: #e7edff;
             // 轮播图
             .posters{
-                height: 216px !important;
             }
             .slideshow-one{
                 padding-top: 10px;
-                padding-bottom: 20px;
+                padding-bottom: 35px;
                 .slideshow-ul-one{
+                    padding: 0px 20px;
                     .slideshow-li-one{
-                        width: 320px;
-                        margin: 10px 20px;
+                        width: 100%;
                         box-shadow: 2.5px 4.33px 15px 0px rgba( 29, 29, 29, 0.1 );
-                        .圆角矩形_595 {
-                            border-radius: 10px;
-                            background-color: rgb( 255, 255, 255 );
-                            box-shadow: 5px 8.66px 30px 0px rgb( 29, 29, 29 );
-                            position: absolute;
-                            left: 618px;
-                            top: 1184px;
-                            width: 671px;
-                            height: 490px;
-                            z-index: 365;
-                          }
-
                         border-radius: 10px;
                         background-color: #fff;
-                        padding: 0px 15px 15px 15px;
+                        padding: 5px 20px 20px 20px;
                         div:nth-child(1){
                             height: 50px;
                             line-height: 50px;
                             text-align: center;
+                            font-weight: bold;
+                            font-size: 14px;
                             border-bottom: 1px solid #c5cbdc;
                         }
                         div:nth-child(3){
@@ -57,7 +46,8 @@
                         }
                         div:nth-child(2){
                             text-align: left;
-                            margin: 10px 0px;
+                            margin: 15px 0px 0px 0px;
+                            font-weight: 300;
                             div{
                                 height: 20px;
                                 line-height: 20px;
@@ -67,6 +57,8 @@
                                 color: rgb( 106, 109, 120 );
                                 text-align: left;
                                 border: none;
+                                margin: 0px 0px 10px 0px;
+                                font-weight: 350;
                                 p{
                                     font-size: 10px;
                                     display: inline-block;
@@ -96,9 +88,12 @@
                 }
             }
             .package{
-
-                padding-bottom: 20px;
+                
+                padding-bottom: 1px; 
                 background-color: #fff;
+                .package-item:last-child{
+                    margin-bottom: 0px;
+                }
                 .package-item{
                     margin-bottom: 15px;
                     width: 100%;
@@ -107,10 +102,8 @@
                     border-radius: 10px;
                     border: 1px dashed #b5bccf;
                     box-sizing: border-box;
-                    padding: 10px 9px 15px 9px;
+                    padding: 15px 10px 17px 10px;
                     .package-n{
-                        height: 30px;
-                        line-height: 30px;
                         font-size: 14px;
                         color: rgb( 37, 43, 58 );
                         font-weight: bold;
@@ -123,14 +116,14 @@
                     .package-item-i{
                         float: left;
                         background-color: #fff;
-                        height: 210px;
-                        width: 145px;
-                        padding: 5px 0px;
+                        height: 228px;
+                        width: 47%;
+                        padding: 5px 0px 15px 0px;
                         border-radius: 10px;
-                        box-shadow: 1px 1px 5px 0px rgb(191, 193, 199);
+                        box-shadow: 1.5px 2.5px 10px 0px rgba( 137, 140, 151, 0.15 );
                         div{
-                            margin: 0px 10px 10px;
-                            font-size: 14px;
+                            margin: 0px 10px 15px;
+                            font-size: 12px;
                             text-align: center;
                             color: #393f4f;
                             height: 30px;
@@ -140,14 +133,14 @@
                         }
                         ul{
                             li{
-                                margin-bottom: 5px;
+                                margin-bottom: 8px;
                                 font-size: 12px;
                                 color: rgb( 90, 94, 103 );
                                 text-align: left;
                                 padding-left: 10px;
+                                padding-right: 10px;
                                 p{
-                                    margin-right: 5px;
-                                    display: inline-block;
+                                    margin-right: 3px;
                                     background-color: #9da2b0;
                                     color: #fff;
                                     font-size: 12px;
@@ -155,14 +148,24 @@
                                     line-height: 16px;
                                     padding: 0 5px;
                                     border-radius: 10px;
+                                    float: left;
                                 }
                                 span{
-                                    margin-left: 45px;
+                                    margin-left: 38px;
+                                    margin-top: -16px;
+                                    display: inline-block;
+                                }
+                                .Gkou{
+                                    margin-left: 0px;
+                                    padding-left: 38px;
+                                    display: inline-block;
+                                    float: left;
                                 }
                             }
                             li:last-child{
                                 span{
-                                    margin: 0px 5px 0px 0px;
+                                    // width: 30%;
+                                    margin: 0px 3px 0px 0px;
                                     font-size: 14px;
                                     color: rgb( 253, 84, 25 );
                                 }
@@ -177,18 +180,21 @@
                         }
                     }
                     .package-item-i:nth-child(1){
-                        margin-right: 10px;
+                        margin-right: 15px;
+                    }
+                    .package-item-i:nth-child(2){
+                        float: right;
                     }
                     a{
                         display: block;
-                        width: 280px;
+                        width: 90%;
                         height: 40px;
                         font-size: 14px;
                         color: #fff;
                         line-height: 40px;
                         background-color: #3051f6;
                         border-radius: 20px;
-                        margin: 10px auto;
+                        margin: 15px auto 10px; 
                     }
                 }
             }
@@ -198,6 +204,7 @@
                 overflow: hidden;
                 margin-bottom: 0px;
                 padding-bottom: 20px;
+                margin-top: 10px;
                 ul.slideshow-ul{
                     li.slideshow-li{
                         position: absolute;
@@ -211,12 +218,13 @@
                         text-align: center;
                         img{
                             width: 40px;
+                            height: 40px;
                         }
                         div{
                             font-size: 14px;
                             color: #252b3a;
                             font-weight: bold;
-                            margin: 5px 0px;
+                            margin: 10px 0px 10px;
                         }
                         p{
                             font-size: 12px;
@@ -225,8 +233,8 @@
                     }
                 }
                 .point{
-                    margin-top: 20px;
-                    width: 360px;
+                    margin-top: 25px;
+                    width: 100%;
                     height: 20px;
                     text-align: center;
                     background-color: #fff;
@@ -244,6 +252,27 @@
                         }
                         li.point-active{
                             background-color: #162fab;
+                        }
+                    }
+                }
+            }
+            .application-scenarios{
+                .title{
+                    p{
+                        color: #fff;
+                    }
+                    .title-hr{
+                        background-color: #fff;
+                    }
+                }
+            }
+            .compouter-advantage-gn {
+                .advantage-li{
+                    ul{
+                        li{
+                            div{
+                                margin-bottom: 3px;
+                            }
                         }
                     }
                 }

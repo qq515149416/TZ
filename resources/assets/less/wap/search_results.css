@@ -1,0 +1,270 @@
+#search_results .main-body .tz-container .main-content .posters {
+  position: relative;
+  text-align: center;
+}
+#search_results .main-body .tz-container .main-content .posters .search {
+  padding: 15px 20px;
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  top: 20px;
+}
+#search_results .main-body .tz-container .main-content .posters .search .search-t {
+  font-size: 24px;
+  font-family: "PingFang";
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+#search_results .main-body .tz-container .main-content .posters .search .search-c {
+  position: relative;
+  padding: 0 20px;
+}
+#search_results .main-body .tz-container .main-content .posters .search .search-c input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  outline: none;
+  border: 1px solid #fff;
+  height: 40px;
+  border-radius: 20px;
+}
+#search_results .main-body .tz-container .main-content .posters .search .search-c input::-webkit-input-placeholder {
+  color: #fff;
+  font-size: 14px;
+}
+#search_results .main-body .tz-container .main-content .posters .search .search-c input:nth-child(1) {
+  width: 100%;
+  padding: 0px 70px 0px 15px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+#search_results .main-body .tz-container .main-content .posters .search .search-c input:nth-child(2) {
+  width: 60px;
+  position: absolute;
+  right: 0px;
+  margin-right: 20px;
+  background-color: #fff;
+  background-size: 25px 25px;
+  background-position: 17px 6px;
+  background-repeat: no-repeat;
+}
+#search_results .main-body .tz-container .main-content .posters .search .search-c .img-search {
+  position: absolute;
+  left: 258px;
+  top: 7px;
+  width: 25px !important;
+}
+#search_results .main-body .tz-container .main-content .posters .search .search-f {
+  margin-top: 15px;
+}
+#search_results .main-body .tz-container .main-content .posters .search .search-f p {
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #ced2f7;
+}
+#search_results .main-body .tz-container .main-content .posters .search .search-f p:last-child {
+  padding-left: 20px;
+  margin-top: 5px;
+}
+#search_results .main-body .tz-container .main-content .feedback {
+  width: 100%;
+  text-align: center;
+  height: 45px;
+  line-height: 45px;
+  background-color: #e9ecff;
+  font-size: 14px;
+  font-family: "PingFang";
+  color: #252b3a;
+  font-weight: bold;
+}
+#search_results .main-body .tz-container .main-content .feedback p {
+  display: inline-block;
+  color: #162fac;
+}
+#search_results .main-body .tz-container .main-content .option-text {
+  padding: 20px 20px;
+  background-color: #fff;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-s {
+  width: 100%;
+  box-shadow: 0.5px 1px 16px 0px rgba(24, 30, 60, 0.2);
+  margin-bottom: 15px;
+  padding: 15px 20px;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-s .圆角矩形_771_拷贝 {
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 1px 1.732px 35px 0px #181e3c;
+  position: absolute;
+  left: 1614px;
+  top: 1420px;
+  width: 671px;
+  height: 261px;
+  z-index: 482;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-s .blue {
+  color: #162fac;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-s .help-title {
+  font-size: 14px;
+  font-family: "PingFang";
+  color: #252b3a;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-s .help-text {
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #666a75;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-s .help-time {
+  margin-top: 8px;
+  font-size: 10px;
+  font-family: "PingFang";
+  color: #989ca9;
+}
+#search_results .main-body .tz-container .main-content .option-text .bottom {
+  height: 40px;
+  position: relative;
+  padding: 20px;
+  margin-top: 20px;
+}
+#search_results .main-body .tz-container .main-content .option-text .bottom img {
+  width: 40px;
+}
+#search_results .main-body .tz-container .main-content .option-text .bottom div {
+  position: absolute;
+  top: 0px;
+}
+#search_results .main-body .tz-container .main-content .option-text .bottom div img:first-child {
+  margin-right: 10px;
+}
+#search_results .main-body .tz-container .main-content .option-text .bottom div p {
+  display: inline-block;
+}
+#search_results .main-body .tz-container .main-content .option-text .bottom div:nth-child(1) {
+  left: 50%;
+  margin-left: -133px;
+}
+#search_results .main-body .tz-container .main-content .option-text .bottom .page {
+  border: 1px solid #cbcedd;
+  border-radius: 20px;
+  width: 70px;
+  height: 30px;
+  left: 50%;
+  margin-left: -35px;
+  color: #989ca9;
+  top: 5px;
+  line-height: 30px;
+  text-align: center;
+}
+#search_results .main-body .tz-container .main-content .option-text .bottom .page #pageNumber {
+  color: #252b3a;
+}
+#search_results .main-body .tz-container .main-content .option-text .bottom div:nth-child(3) {
+  right: 50%;
+  margin-right: -133px;
+}
+#search_results .main-body .tz-container .main-content .help-home-content {
+  background-color: #fff;
+  padding: 20px;
+  display: none;
+}
+#search_results .main-body .tz-container .main-content .help-home-content .problem-conetnt {
+  width: 100%;
+  text-align: center;
+  box-shadow: 1px 1px 25px 0px rgba(24, 30, 60, 0.2);
+  padding: 20px 18px;
+  border-radius: 5px;
+}
+#search_results .main-body .tz-container .main-content .help-home-content .problem-conetnt .p-title {
+  font-size: 17px;
+  font-family: "PingFang";
+  color: #252b3a;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+#search_results .main-body .tz-container .main-content .help-home-content .problem-conetnt .time {
+  font-size: 10px;
+  font-family: "PingFang";
+  color: #989ca9;
+}
+#search_results .main-body .tz-container .main-content .help-home-content .problem-conetnt .c-main {
+  margin: 15px 0px;
+  padding: 12px 12px;
+  border-radius: 10px;
+  text-align: left;
+  border: 1px solid #cbd0df;
+  background-color: #ebebf1;
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #666a75;
+}
+#search_results .main-body .tz-container .main-content .help-home-content .problem-conetnt .p-text {
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #666a75;
+  margin-bottom: 20px;
+  text-align: left;
+}
+#search_results .main-body .tz-container .main-content .help-home-content .more {
+  position: relative;
+  padding: 30px 0px 10px;
+}
+#search_results .main-body .tz-container .main-content .help-home-content .more .label {
+  position: relative;
+}
+#search_results .main-body .tz-container .main-content .help-home-content .more .label div {
+  display: inline-block;
+  margin-left: -4px;
+}
+#search_results .main-body .tz-container .main-content .help-home-content .more .label div:nth-child(1) {
+  margin-left: 0px;
+  position: absolute;
+  top: 0px;
+}
+#search_results .main-body .tz-container .main-content .help-home-content .more .label div:nth-child(2) {
+  width: 85%;
+  margin-left: 50px;
+  margin-bottom: 0px;
+}
+#search_results .main-body .tz-container .main-content .help-home-content .more div {
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #666a75;
+  margin-bottom: 10px;
+  position: relative;
+}
+#search_results .main-body .tz-container .main-content .help-home-content .more div span {
+  display: inline-block;
+  padding: 0px 5px;
+  margin-bottom: 3px;
+  border: 1px solid #162fac;
+  font-size: 10px;
+  font-family: "PingFang";
+  color: #162fac;
+  border-radius: 10px;
+}
+#search_results .main-body .tz-container .main-content .help-home-content .more div p {
+  position: absolute;
+  left: 50px;
+  top: 0px;
+  overflow: hidden;
+  max-width: 165px;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+#search_results .main-body .tz-container .main-content .help-home-content .more img {
+  position: absolute;
+  width: 40px;
+  right: 0px;
+  top: 50%;
+}

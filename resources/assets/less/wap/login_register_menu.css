@@ -1,0 +1,63 @@
+#logging .main-body .tz-container .main-content .user-content,
+#login_register_menu .main-body .tz-container .main-content .user-content {
+  width: 100%;
+  height: 595px;
+  background-color: #0b1029;
+}
+#logging .main-body .tz-container .main-content .user-content .content-i,
+#login_register_menu .main-body .tz-container .main-content .user-content .content-i {
+  border-bottom: 1px solid #232957;
+  height: 45px;
+  line-height: 45px;
+  padding: 0px 30px;
+}
+#logging .main-body .tz-container .main-content .user-content .content-i p,
+#login_register_menu .main-body .tz-container .main-content .user-content .content-i p {
+  display: inline-block;
+  color: #fff;
+  font-size: 14px;
+}
+#logging .main-body .tz-container .main-content .user-content .content-phone,
+#login_register_menu .main-body .tz-container .main-content .user-content .content-phone {
+  height: 45px;
+  line-height: 45px;
+  padding: 0px 30px;
+}
+#logging .main-body .tz-container .main-content .user-content .content-phone p,
+#login_register_menu .main-body .tz-container .main-content .user-content .content-phone p {
+  display: inline-block;
+  color: #464e72;
+  font-size: 12px;
+}
+#logging .main-body .tz-container .main-content .user-content .botton,
+#login_register_menu .main-body .tz-container .main-content .user-content .botton {
+  text-align: center;
+  padding: 20px 20px;
+}
+#logging .main-body .tz-container .main-content .user-content .botton .login,
+#login_register_menu .main-body .tz-container .main-content .user-content .botton .login {
+  color: #fff;
+  font-size: 14px;
+  letter-spacing: 5px;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  border: 1px solid #fff;
+  width: 46.42%;
+  display: inline-block;
+  border-radius: 5px;
+}
+#logging .main-body .tz-container .main-content .user-content .botton .register,
+#login_register_menu .main-body .tz-container .main-content .user-content .botton .register {
+  border-radius: 5px;
+  margin-right: 15px;
+  color: #fff;
+  font-size: 14px;
+  letter-spacing: 5px;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  width: 46.42%;
+  display: inline-block;
+  background: linear-gradient(to right, #3c6bea, #1c39b6);
+}

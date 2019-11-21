@@ -59,9 +59,7 @@
                                         <div>衡阳电信80G防御</div>
                                         <ul>
                                             <li>
-                                                <p>CPU</p>
-                                                XeomE5530*2
-                                                <span>L5630*2</span>
+                                                <p>CPU</p>XeomE5530*2 <span>L5630*2</span> 
                                             </li>
                                             <li>
                                                 <p>内存</p>8G
@@ -69,8 +67,8 @@
                                             <li>
                                                 <p>硬盘</p>1T SATA
                                             </li>
-                                            <li>
-                                                <p>带宽</p>G口（20M独享）
+                                            <li class="clear">
+                                                <p>带宽</p><span class="Gkou">G口（20M独享）</span> 
                                             </li>
                                             <li>
                                                 <p>价格</p><span>1200</span>元/月
@@ -91,7 +89,7 @@
                                             </li>
                                         </ul>
                                         <p>产品说明：网页静态资源优化加速,全站HTTPS保证网站访问安全，适用于文学类站点、小型图片站等</p>
-
+                                        
                                     </div>
                                 </div>
                                 <a href="/">了解详情</a>
@@ -105,7 +103,7 @@
                                             <ul>
                                                 <li>
                                                     <p>CPU</p>
-                                                    XeonX5672
+                                                    XeonX5672  
                                                 </li>
                                                 <li>
                                                     <p>内存</p>8G
@@ -115,8 +113,8 @@
                                                     240GSSD
                                                     <span>（固态）</span>
                                                 </li>
-                                                <li>
-                                                    <p>带宽</p>G口（20M独享）
+                                                <li class="clear">
+                                                    <p>带宽</p><span class="Gkou">G口（20M独享）</span>  
                                                 </li>
                                                 <li>
                                                     <p>价格</p><span>1600</span>元/月
@@ -137,7 +135,7 @@
                                                 </li>
                                             </ul>
                                             <p>产品说明：网页静态资源优化加速,全站HTTPS保证网站访问安全，适用于文学类站点、小型图片站等</p>
-
+                                            
                                         </div>
                                     </div>
                                     <!-- <a href="/">立即购买</a> -->
@@ -151,7 +149,7 @@
                             <div class="title-hr"></div>
                         </div>
                         <!-- 轮播 -->
-                        <div class="slideshow">
+                        <div class="slideshow" id="slideshow">
                             <ul class="slideshow-ul clear">
                                 <li class="slideshow-li">
                                     <img src="{{ asset("/images/wap/独立流量清洗系统.png") }}" alt="">
@@ -320,7 +318,6 @@
                             立即咨询
                         </a>
                     </div> -->
-
                 </div>
             </div>
         </div>

@@ -15,6 +15,7 @@
             <div class="tz-container clear">
 
                 <!-- 内容 -->
+                <!-- 内容 -->
                 <div class="main-content">
                     <div class="posters">
                         <img src="{{ asset("/images/wap/棋牌云海报.png") }}" alt="">
@@ -26,7 +27,7 @@
                     </div>
                     <div class="industry-problems">
                         <!-- 轮播 -->
-                        <div class="slideshow">
+                        <div class="slideshow" id="slideshow">
                             <ul class="slideshow-ul clear">
                                 <li class="slideshow-li">
                                     <img src="{{ asset("/images/wap/营销推广困难.png") }}" alt="">
@@ -49,12 +50,12 @@
                                     <p>业务受影响因素较多，访问量存在极大不确定性，既要保证业务可用性及高峰期的扩展性，又要避免资源浪费。</p>
                                 </li>
                                 <li class="slideshow-li">
-                                    <img src="{{ asset("/images/wap/体验难以保障.png") }}" alt="">
+                                    <img style="width:35px;" src="{{ asset("/images/wap/体验难以保障.png") }}" alt="">
                                     <div>体验难以保障</div>
                                     <p>用户地域分布范围不确定，业务迅猛发展使流量分发存在瓶颈，需要覆盖全国的优质网络，来支撑良好的接入体验。</p>
                                 </li>
                                 <li class="slideshow-li">
-                                    <img src="{{ asset("/images/wap/数据安全风险moild.png") }}" alt="">
+                                    <img style="width: 32px;" src="{{ asset("/images/wap/数据安全风险moild.png") }}" alt="">
                                     <div>数据安全风险</div>
                                     <p>APP的运营过程会受到来自各方面的安全挑战，如DDoS攻击、病毒、木马等，严重威胁业务运营和数据信息安全。</p>
                                 </li>
@@ -92,7 +93,7 @@
                             <ul>
                                 <li>
                                     <div class="fuwu-title">轻松应对DDoS攻击</div>
-                                    <div class="fuwu-txt">有效解决黑客控制僵尸网络对服务器发起的流量攻击，提供300Gbps以上防御服务,支持HTTP/HTTPS/TCP/UDP。
+                                    <div class="fuwu-txt">有效解决黑客控制僵尸网络对服务器发起的流量攻击，提供300Gbps以上防御服务，支持HTTP/HTTPS/TCP/UDP。
                                     </div>
                                 </li>
                                 <li>
@@ -117,7 +118,6 @@
                             立即咨询
                         </a>
                     </div> -->
-
 
                 </div>
             </div>

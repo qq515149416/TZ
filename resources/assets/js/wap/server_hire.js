@@ -1,4 +1,13 @@
-function server_room(){
+if(document.querySelector("#server_hire")){
+var s1 = document.querySelector("#selecta");
+var s2 = document.querySelector("#selectb");
+document.querySelector("#selectb").onchange = function(){
+    server_room();
+};
+document.querySelector("#selecta").onchange = function(){
+    server_room();
+};
+function server_room() {
     var rooma = document.querySelector(".server-rooma");
     var selecta = document.getElementById("selecta");
     var selectb = document.getElementById("selectb");
@@ -225,4 +234,5 @@ function server_room(){
             document.querySelector(".span-d-b-a").innerHTML="48000";
         }
     }
+}
 }

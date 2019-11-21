@@ -22,7 +22,7 @@
                         <div class="tz-main">
                             <div class="drop-options server-rooma">
                                 <p>数据中心</p>
-                                <select id="selecta" onchange="server_room()">
+                                <select id="selecta">
                                     <option value="湖南衡阳机房" selected>湖南衡阳机房</option>
                                     <option value="广东惠州机房">广东惠州机房</option>
                                     <option value="陕西西安机房">陕西西安机房</option>
@@ -31,7 +31,7 @@
                             </div>
                             <div class="drop-options server-roomb">
                                 <p>线路选择</p>
-                                <select id="selectb" onchange="server_room()">
+                                <select id="selectb" >
                                     <option value="电信服务器租用" selected>电信服务器租用</option>
                                     <option value="联通服务器租用">联通服务器租用</option>
                                     <option value="双线服务器租用">双线服务器租用</option>
@@ -48,13 +48,14 @@
                     <div class="one-t">
                         <ul class="slide-ul clear">
                             <li class="slide-li active" id="one-a">
+                                <div class="slide-li-i">
                                 <div>惠州电信型</div>
                                 <ol>
                                     <li>
                                         <p>规格</p>8核16线程 （E5530*2）
                                     </li>
                                     <li>
-                                        <p>硬盘</p>240G SSD |500G SATA | 1T SATA
+                                        <p>硬盘</p>240G SSD | 500G SATA | 1T SATA
                                     </li>
                                     <li>
                                         <p>带宽</p>G口 20M <p class="p1">内存</p> <span class="p">16G</span>
@@ -64,15 +65,17 @@
                                         <p class="p2">单机防御</p><span class="pw">无</span>
                                     </li>
                                     <li>
-                                        <p>月付</p> <span class="span1-1">￥</span> <span class="span2-1">
-                                            1100&nbsp;&nbsp;</span>
-                                        <p class="p3">年付</p> <span class="span1-2">￥</span> <span
-                                            class="span2-2">9600</span>
+                                        <p>月付</p> 
+                                        <span class="span1-1">￥</span>
+                                         <span class="span2-1">1100</span>
+                                        <p class="p3">年付</p> <span class="span1-2">￥</span> <span class="span2-2">9600</span>
                                     </li>
                                 </ol>
                                 <!-- <a href="/">立即购买</a> -->
+                                </div>
                             </li>
                             <li class="slide-li" id="one-b">
+                                    <div class="slide-li-i">
                                 <div>惠州联通型</div>
                                 <ol>
                                     <li>
@@ -90,21 +93,23 @@
                                     </li>
                                     <li>
                                         <p>月付</p> <span class="span1-1 ">￥</span> <span class="span2-1">
-                                            1100&nbsp;&nbsp;</span>
+                                            1100</span>
                                         <p class="p3">年付</p> <span class="span1-2">￥</span> <span
                                             class="span2-2">9600</span>
                                     </li>
                                 </ol>
                                 <!-- <a href="/">立即购买</a> -->
+                                </div>
                             </li>
                             <li class="slide-li" id="one-c">
+                                    <div class="slide-li-i">
                                 <div>惠州双线型</div>
                                 <ol>
                                     <li>
                                         <p>规格</p>8核16线程 （E5530*2）
                                     </li>
                                     <li>
-                                        <p>硬盘</p>240G SSD |500G SATA | 1T SATA
+                                        <p>硬盘</p>240G SSD | 500G SATA | 1T SATA
                                     </li>
                                     <li>
                                         <p>带宽</p>G口 20M <p class="p1">内存</p><span class="p">16G</span>
@@ -115,18 +120,20 @@
                                     </li>
                                     <li>
                                         <p>月付</p> <span class="span1-1 ">￥</span> <span class="span2-1">
-                                            1300&nbsp;&nbsp;</span>
+                                            1300</span>
                                         <p class="p3">年付</p> <span class="span1-2">￥</span> <span
                                             class="span2-2">1200</span>
                                     </li>
                                 </ol>
                                 <!-- <a href="/">立即购买</a> -->
+                                </div>
                             </li>
                         </ul>
                     </div>
-                    <div class="slideshow">
+                    <div class="slideshow" id="slideshow">
                         <ul class="slideshow-ul clear">
                             <li class="slideshow-li slideshow-lia">
+                                    <div class="slide-li-i">
                                 <div class="s-t-a">衡阳电信A型</div>
                                 <ol>
                                     <li>
@@ -145,21 +152,23 @@
                                     </li>
                                     <li>
                                         <p>月付</p> <span class="span1-1 ">￥</span> <span class="span2-1 span-a-a">
-                                            900&nbsp;&nbsp;</span>
+                                            900</span>
                                         <p class="p3">年付</p> <span class="span1-2">￥</span> <span
                                             class="span2-2 span-a-b">8400</span>
                                     </li>
                                 </ol>
                                 <!-- <a href="/">立即购买</a> -->
+                                </div>
                             </li>
                             <li class="slideshow-li slideshow-lib">
+                                    <div class="slide-li-i">
                                 <div class="s-t-b">衡阳电信B型</div>
                                 <ol>
                                     <li>
                                         <p>规格</p>8核16线程 （E5530*2）
                                     </li>
                                     <li>
-                                        <p>硬盘</p>240G SSD |500G SATA | 1T SATA
+                                        <p>硬盘</p>240G SSD | 500G SATA | 1T SATA
                                     </li>
                                     <li>
                                         <p>带宽</p><span class="dk-b">G口 20M</span>
@@ -172,21 +181,23 @@
                                     <li>
                                         <p>月付</p> <span class="span1-1">￥</span> <span class="span2-1 span-b-a"
                                             id="span-a">
-                                            900&nbsp;&nbsp;</span>
+                                            900</span>
                                         <p class="p3">年付</p> <span class="span1-2">￥</span> <span
                                             class="span2-2 span-b-b" id="span-b">8400</span>
                                     </li>
                                 </ol>
                                 <!-- <a href="/">立即购买</a> -->
+                                </div>
                             </li>
                             <li class="slideshow-li slideshow-lic">
+                                    <div class="slide-li-i">
                                 <div class="s-t-c">衡阳电信C型</div>
                                 <ol>
                                     <li>
                                         <p>规格</p>8核16线程 （E5530*2）
                                     </li>
                                     <li>
-                                        <p>硬盘</p>240G SSD |500G SATA | 1T SATA
+                                        <p>硬盘</p>240G SSD | 500G SATA | 1T SATA
                                     </li>
                                     <li>
                                         <p>带宽</p><span class="dk-c">G口 20M</span>
@@ -204,8 +215,10 @@
                                     </li>
                                 </ol>
                                 <!-- <a href="/">立即购买</a> -->
+                                </div>
                             </li>
                             <li class="slideshow-li slideshow-lid">
+                                    <div class="slide-li-i">
                                 <div class="s-t-d">衡阳电信D型</div>
                                 <ol>
                                     <li>
@@ -230,31 +243,8 @@
                                     </li>
                                 </ol>
                                 <!-- <a href="/">立即购买</a> -->
+                                </div>
                             </li>
-                            <!-- <li style="display: none;" class="slideshow-li slideshow-li-s">
-                                    <div class="s-t-e">西安</div>
-                                    <ol>
-                                        <li>
-                                            <p>规格</p>定制
-                                        </li>
-                                        <li>
-                                            <p>硬盘</p>定制
-                                        </li>
-                                        <li>
-                                            <p>带宽</p>G口无限带宽 <p class="p1">内存</p><span class="nc-d">定制</span>
-                                        </li>
-                                        <li>
-                                            <p>IP数</p><span class="n-ip-d">1个</span>
-                                            <p class="p2">单机防御</p><span class="fy-d">500G+云提</span>
-                                        </li>
-                                        <li>
-                                            <p>月付</p> <span class="span1-1">￥</span> <span class="span2-1 span-d-a">定制</span>
-                                            <p class="p3">年付</p> <span class="span1-2">￥</span> <span
-                                                class="span2-2 span-d-b">定制</span>
-                                        </li>
-                                    </ol>
-                                    <a href="/">立即购买</a>
-                                </li> -->
                         </ul>
                         <!-- 点 -->
                         <div class="point">
@@ -265,6 +255,7 @@
                     <div class="slideshow-a">
                         <ul class="slideshow-ul-a clear">
                             <li class="slideshow-li-a slideshow-lia ">
+                                <div class="slideshow-li-a-i">
                                 <div class="s-t-a-a">衡阳电信A型</div>
                                 <ol>
                                     <li>
@@ -283,21 +274,23 @@
                                     </li>
                                     <li>
                                         <p>月付</p> <span class="span1-1 ">￥</span> <span class="span2-1 span-a-a-a">
-                                            900&nbsp;&nbsp;</span>
+                                            900</span>
                                         <p class="p3">年付</p> <span class="span1-2">￥</span> <span
                                             class="span2-2 span-a-b-a">8400</span>
                                     </li>
                                 </ol>
                                 <!-- <a href="/">立即购买</a> -->
+                                </div>
                             </li>
                             <li class="slideshow-li-a slideshow-lib ">
+                                    <div class="slideshow-li-a-i">
                                 <div class="s-t-b-a">衡阳电信B型</div>
                                 <ol>
                                     <li>
                                         <p>规格</p>8核16线程 （E5530*2）
                                     </li>
                                     <li>
-                                        <p>硬盘</p>240G SSD |500G SATA | 1T SATA
+                                        <p>硬盘</p>240G SSD | 500G SATA | 1T SATA
                                     </li>
                                     <li>
                                         <p>带宽</p><span class="dk-b-a">G口 20M</span>
@@ -310,21 +303,23 @@
                                     <li>
                                         <p>月付</p> <span class="span1-1">￥</span> <span class="span2-1 span-b-a-a"
                                             id="span-a">
-                                            900&nbsp;&nbsp;</span>
+                                            900</span>
                                         <p class="p3">年付</p> <span class="span1-2">￥</span> <span
                                             class="span2-2 span-b-b-a" id="span-b">8400</span>
                                     </li>
                                 </ol>
                                 <!-- <a href="/">立即购买</a> -->
+                                </div>
                             </li>
                             <li class="slideshow-li-a slideshow-lic ">
+                                    <div class="slideshow-li-a-i">
                                 <div class="s-t-c-a">衡阳电信C型</div>
                                 <ol>
                                     <li>
                                         <p>规格</p>8核16线程 （E5530*2）
                                     </li>
                                     <li>
-                                        <p>硬盘</p>240G SSD |500G SATA | 1T SATA
+                                        <p>硬盘</p>240G SSD | 500G SATA | 1T SATA
                                     </li>
                                     <li>
                                         <p>带宽</p><span class="dk-c-a">G口 20M</span>
@@ -342,8 +337,10 @@
                                     </li>
                                 </ol>
                                 <!-- <a href="/">立即购买</a> -->
+                                </div>
                             </li>
                             <li class="slideshow-li-a slideshow-lid ">
+                                    <div class="slideshow-li-a-i">
                                 <div class="s-t-d-a">衡阳电信D型</div>
                                 <ol>
                                     <li>
@@ -368,8 +365,10 @@
                                     </li>
                                 </ol>
                                 <!-- <a href="/">立即购买</a> -->
+                                </div>
                             </li>
                             <li class="slideshow-li-a slideshow-li-s">
+                                    <div class="slideshow-li-a-i">
                                 <div class="s-t-e">西安</div>
                                 <ol>
                                     <li>
@@ -379,19 +378,20 @@
                                         <p>硬盘</p>定制
                                     </li>
                                     <li>
-                                        <p>带宽</p>G口无限带宽 <p class="p1">内存</p><span>定制</span>
+                                        <p>带宽</p>G口无限带宽 <p class="p1" style="margin-left: -1px;">内存</p><span style="position: absolute;left: 50%;margin-left: 38px;">定制</span>
                                     </li>
                                     <li>
                                         <p>IP数</p><span>1个</span>
-                                        <p class="p2">单机防御</p><span>500G+云提</span>
+                                        <p class="p2" style="margin-left: -1px;">单机防御</p><span style="position: absolute;left: 50%;margin-left: 60px;width: 65px;">500G+云提</span>
                                     </li>
                                     <li>
                                         <p>月付</p> <span class="span1-1">￥</span> <span class="span2-1">定制</span>
-                                        <p class="p3">年付</p> <span class="span1-2">￥</span> <span
-                                            class="span2-2">定制</span>
+                                        <p class="p3" style="margin-left: -1px;">年付</p> <span class="span1-2" style="left: 50%;margin-left: 36px;">￥</span> <span
+                                            class="span2-2" style="left: 50%;margin-left: 46px;">定制</span>
                                     </li>
                                 </ol>
                                 <!-- <a href="/">立即购买</a> -->
+                                </div>
                             </li>
                         </ul>
                         <!-- 点 -->
@@ -591,7 +591,7 @@
                             </div>
                             <div class="computer-content">
                                 <div class="tz-main">
-                                    <table class="active-tab" border="1" cellspacing="0">
+                                    <table class="active-tab" border="0" cellspacing="1">
                                         <tr>
                                             <td>数据中心级别</td>
                                             <td>标准T3机房</td>
@@ -625,7 +625,7 @@
                                             <td>湖南省衡阳市石鼓区蒸水桥北互联网数据中心</td>
                                         </tr>
                                     </table>
-                                    <table border="1" cellspacing="0">
+                                    <table border="0" cellspacing="1">
                                         <tr>
                                             <td>数据中心级别</td>
                                             <td>标准T3机房</td>
@@ -659,7 +659,7 @@
                                             <td>广东省惠州市惠城区东湖二街东平互联网数据中心</td>
                                         </tr>
                                     </table>
-                                    <table border="1" cellspacing="0">
+                                    <table border="0" cellspacing="1">
                                         <tr>
                                             <td>数据中心级别</td>
                                             <td>标准T3机房</td>
@@ -797,11 +797,15 @@
                         </div>
                     </div>
 
-
-
+                    <!-- 蓝条 -->
+                    <!-- <div class="solutions-consulting">
+                        <img src="{{ asset("/images/wap/服务器租用蓝条.png") }}" alt="">
+                        <a>
+                            立即咨询
+                        </a>
+                    </div> -->
                 </div>
             </div>
         </div>
     </div>
-
 @endsection

@@ -15,7 +15,7 @@
                 <!-- 内容 -->
                 <div class="main-content">
                     <div class="posters">
-                        <img src="{{ asset("/images/wap/高防服务器海报.png") }}" alt="">
+                        <img src="{{ asset("/images/wap/防御流量叠加包海报.png") }}" alt="">
                         <a class="posters-btn posters-left">了解更多</a>
                     </div>
                     <div class="title">
@@ -158,8 +158,8 @@
                             <div class="title-hr"></div>
                         </div>
                         <img src="{{ asset("/images/wap/DDoS 防御流量叠加包特点.png") }}" alt="">
-                        <img class="backgroundimg"
-
+                        <img class="backgroundimg" 
+                        
                             src="{{ asset("/images/wap/叠加包背景.png") }}" alt="">
                         <div class="tz-main">
                             <ul>
@@ -300,7 +300,6 @@
                             立即申请
                         </a>
                     </div> -->
-
                 </div>
             </div>
         </div>

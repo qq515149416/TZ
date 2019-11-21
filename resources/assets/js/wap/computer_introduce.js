@@ -20,3 +20,22 @@ function computer_introduce() {
     }
     }
 }
+//机房选择
+// machineroomtext();
+// function machineroomtext(){
+    if(document.querySelector("#cabinet_to_rent") || document.querySelector("#bandwidth_to_ent")){
+    document.querySelector("#select-room-a").onchange = function(){
+  var option_text_a = document.querySelectorAll(".option-text-a");
+  var select_room_a = document.querySelector("#select-room-a");
+  for(var i=0;i<option_text_a.length;i++){
+    option_text_a[i].index=i;
+    if(select_room_a.value==i){
+      console.log(i);
+      for(var j=0;j<option_text_a.length;j++){
+      option_text_a[j].className="option-text-a";
+    }
+    option_text_a[i].className="option-text-a option-e-active";
+  }
+  }
+}
+}

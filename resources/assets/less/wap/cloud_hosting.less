@@ -6,21 +6,25 @@
     .main-content{
         .title{
             background-color: #fff;
-            margin-top: -5px;
         }
         .tz-fuwu{
             margin-bottom: 0;
-            padding-bottom: 20px;
+            padding-bottom: 30px;
+            padding-top: 10px;
             background-color: #fff;
             .tz-fuwu-box{
                 .fuwu-li{
+                    margin-bottom: 5px;
+                    .y-f-l-i{
+                        padding: 0px 20px 0px 30px !important;
+                    }
                     .fuwu-li-i{
-                        padding: 0px 20px;
+                        padding: 0px 20px 0px 30px;
                         border-top: 1px solid #bac2e4;
                         border-bottom: 1px solid #bac2e4;
                     }
                     .items-li{
-                        padding-bottom: 5px;
+                        padding: 15px 30px 5px 30px;
                         display: none;
                         .fuwu-title{
                             font-size: 14px;
@@ -55,7 +59,6 @@
                             }
                         }
                         .price{
-                            width: 30%;
                             float: right;
                             position: relative;
                             margin-top: 20px;
@@ -63,7 +66,7 @@
                                 font-size: 8px;
                                 display: block;
                                 position: absolute;
-                                left: 5px;
+                                left: -18%;
                                 top: -5px;
                                 background: -webkit-gradient(linear,left top,right top,from(#fd7919),to(#fd4b19));
                                       -webkit-background-clip: text;
@@ -77,9 +80,6 @@
                                     display: inline-block;
                                     font-size: 22px;
                                     color: #fd7919;
-                                    // background-image:-webkit-linear-gradient(right,#fd7919,#fd4b19);
-                                    // -webkit-background-clip:text;
-                                    // -webkit-text-fill-color:transparent;
                                 }
                                 @media  screen and (-webkit-min-device-pixel-ratio:0) {
                                     p {
@@ -106,17 +106,31 @@
                 }
             }
         }
+        .slideshow{
+            padding-top: 10px;
+            .slideshow-ul{
+                .slideshow-li{
+                    div{
+                        margin-bottom: 10px;
+                        font-weight: bold;
+                    }
+                }
+            }
+            .point{
+                margin-top: 25px;
+            }
+        }
         .Yun-product{
             background: linear-gradient( #0b153b, #091027);
             position: relative;
-            img{
-                width: 100%;
-                position: absolute;
-                top: 0px;
-                left: 0px;
-            }
+            background-color: #0b153b;
+            background-size: 100%;
+            background-position: 0px 2px;
+            background-repeat: no-repeat;
             .title{
                 background-color: transparent;
+                z-index: 100;
+               
                 p{
                     color: #fff;
                 }
@@ -125,10 +139,13 @@
                 }
             }
             .tz-fuwu{
+               
                 background-color: transparent;
                 .tz-fuwu-box{
                     .fuwu-li{
                         background-color: transparent;
+                        margin-bottom: 0px;
+                        
                         .fuwu-li-i{
                         border-top: none;
                         border-bottom: 1px solid #585e7e;
@@ -138,8 +155,13 @@
                             }
                         }
                     }
+                    .fuwu-li:last-child{
+                        .fuwu-li-i{
+                            border-bottom: none;
+                        }
+                    }
                     .items-li{
-                        padding-top: 10px;
+                        padding-top: 15px;
                         .fuwu-txt{
                             font-size: 12px;
                             font-family: "PingFang";
@@ -148,9 +170,19 @@
                     }
                 }
             }
+            
         }
         .common-problems{
             margin-top: -4px;
+            padding-bottom: 25px;
+            .problems-li{
+                ul{
+                    li:last-child{
+                        border: none;
+                    }
+                }
+            }
         }
+        
     }
 }

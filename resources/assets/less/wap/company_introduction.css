@@ -1,0 +1,653 @@
+#company_introduction .main-body {
+  padding-top: 0;
+}
+#company_introduction .main-body .tz-container .main-content .active {
+  display: block !important;
+}
+#company_introduction .main-body .tz-container .main-content .drop-options {
+  width: 100%;
+  background-color: #e5ebf8;
+  position: relative;
+  margin-top: -4px;
+}
+#company_introduction .main-body .tz-container .main-content .drop-options p {
+  border-bottom: 1px solid #dadadd;
+  height: 45px;
+  line-height: 45px;
+  color: #162fac;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 0px 20px;
+}
+#company_introduction .main-body .tz-container .main-content .drop-options .arrow {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+}
+#company_introduction .main-body .tz-container .main-content .drop-options ul {
+  display: none;
+  background-color: #e5ebf8;
+  padding: 10px 0px;
+  width: 100%;
+  position: absolute;
+  z-index: 500;
+  box-shadow: 0px 5px 10px 0px #d7d9e7;
+}
+#company_introduction .main-body .tz-container .main-content .drop-options ul li {
+  font-size: 14px;
+  float: left;
+  line-height: 30px;
+  text-align: center;
+  width: calc(100%/4);
+  height: 30px;
+  color: #252b3a;
+}
+#company_introduction .main-body .tz-container .main-content .option-e-active {
+  display: block !important;
+}
+#company_introduction .main-body .tz-container .main-content .option-text {
+  width: 100%;
+  display: none;
+  padding: 30px 20px;
+  background-color: #fff;
+  position: relative;
+}
+#company_introduction .main-body .tz-container .main-content .option-text .news {
+  width: 100%;
+  margin-top: 15px;
+  box-shadow: 1px 1px 17px 0px rgba(24, 30, 60, 0.2);
+  border-radius: 10px;
+  padding: 18px;
+}
+#company_introduction .main-body .tz-container .main-content .option-text .news .news-text-title {
+  font-size: 14px;
+  font-family: "PingFang";
+  color: #252b3a;
+  font-weight: bold;
+  line-height: 1.427;
+  margin-bottom: 5px;
+  text-align: left;
+}
+#company_introduction .main-body .tz-container .main-content .option-text .news .news-text-content {
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #666a75;
+  line-height: 1.5;
+  text-align: justifyLeft;
+  margin-bottom: 5px;
+}
+#company_introduction .main-body .tz-container .main-content .option-text .news .news-text-time {
+  font-size: 11px;
+  font-family: "PingFang";
+  color: #8c919c;
+  line-height: 1.816;
+  text-align: left;
+}
+#company_introduction .main-body .tz-container .main-content .option-text .bottom {
+  height: 40px;
+  position: relative;
+  padding: 20px;
+  margin-top: 20px;
+}
+#company_introduction .main-body .tz-container .main-content .option-text .bottom img {
+  width: 30px;
+  font-size: 0px;
+}
+#company_introduction .main-body .tz-container .main-content .option-text .bottom div {
+  position: absolute;
+  top: 0px;
+}
+#company_introduction .main-body .tz-container .main-content .option-text .bottom div p {
+  display: inline-block;
+}
+#company_introduction .main-body .tz-container .main-content .option-text .bottom div:nth-child(1) {
+  left: 50%;
+  margin-left: -115px;
+  margin-top: 5px;
+}
+#company_introduction .main-body .tz-container .main-content .option-text .bottom div:nth-child(1) img:nth-child(1) {
+  margin-right: 10px;
+}
+#company_introduction .main-body .tz-container .main-content .option-text .bottom .page {
+  border: 1px solid #cbcedd;
+  border-radius: 20px;
+  width: 70px;
+  height: 30px;
+  left: 50%;
+  margin-left: -35px;
+  color: #989ca9;
+  top: 5px;
+  line-height: 30px;
+  text-align: center;
+}
+#company_introduction .main-body .tz-container .main-content .option-text .bottom .page #pageNumber {
+  color: #252b3a;
+}
+#company_introduction .main-body .tz-container .main-content .option-text .bottom .page span {
+  color: #252b3a;
+}
+#company_introduction .main-body .tz-container .main-content .option-text .bottom div:nth-child(3) {
+  right: 50%;
+  margin-right: -115px;
+  margin-top: 5px;
+}
+#company_introduction .main-body .tz-container .main-content .option-text .bottom div:nth-child(3) img:nth-child(1) {
+  margin-right: 10px;
+}
+#company_introduction .main-body .tz-container .main-content .option-text .honor {
+  width: 100%;
+  padding: 10px 20px 30px 20px;
+  margin-top: 15px;
+  box-shadow: 1px 1px 17px 0px rgba(24, 30, 60, 0.2);
+  border-radius: 10px;
+}
+#company_introduction .main-body .tz-container .main-content .option-text .honor .honor-i {
+  width: 100%;
+  display: none;
+}
+#company_introduction .main-body .tz-container .main-content .option-text .honor .honor-i .honor-t:first-child {
+  margin-right: 15px;
+}
+#company_introduction .main-body .tz-container .main-content .option-text .honor .honor-i .honor-t {
+  width: 46.88%;
+  float: left;
+  text-align: center;
+}
+#company_introduction .main-body .tz-container .main-content .option-text .honor .honor-i .honor-t img {
+  border-width: 5px;
+  border-color: #ffffff;
+  box-shadow: 0px 0px 10px 0px rgba(24, 30, 60, 0.15);
+  border-style: solid;
+  border-radius: 5px;
+  width: 100%;
+}
+#company_introduction .main-body .tz-container .main-content .option-text .honor .honor-i .honor-t p {
+  padding: 0px 15px;
+  font-size: 11px;
+  font-family: "PingFang";
+  color: #666a75;
+  line-height: 1.545;
+}
+#company_introduction .main-body .tz-container .main-content .company-content {
+  padding: 15px 20px;
+  box-shadow: 1px 1px 25px 0px rgba(24, 30, 60, 0.2);
+  border-radius: 10px;
+  width: 100%;
+}
+#company_introduction .main-body .tz-container .main-content .company-content .a-title {
+  font-size: 20px;
+  font-family: "PingFang";
+  color: #252b3a;
+  line-height: 1.03;
+  text-align: center;
+  font-weight: bold;
+}
+#company_introduction .main-body .tz-container .main-content .company-content .a-title p {
+  display: inline-block;
+  font-size: 20px;
+  color: red;
+}
+#company_introduction .main-body .tz-container .main-content .company-content p {
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #666a75;
+  line-height: 1.716;
+  text-align: justifyLeft;
+  margin-bottom: 15px;
+}
+#company_introduction .main-body .tz-container .main-content .company-content img {
+  width: 100%;
+  margin: 0px 0px 15px 0px;
+}
+#company_introduction .main-body .tz-container .main-content .corporate-account {
+  width: 100%;
+  margin-top: 15px;
+  box-shadow: 1px 1px 17px 0px rgba(24, 30, 60, 0.2);
+  border-radius: 10px;
+  padding: 0px 20px 15px 20px;
+}
+#company_introduction .main-body .tz-container .main-content .corporate-account .bank {
+  text-align: center;
+  padding: 10px 0px;
+  border-bottom: 1px dashed #e9e5e5;
+}
+#company_introduction .main-body .tz-container .main-content .corporate-account .bank img {
+  width: 230px;
+  box-shadow: 0px 0px 10px 0px rgba(24, 30, 60, 0.15);
+  margin: 15px 0px;
+}
+#company_introduction .main-body .tz-container .main-content .corporate-account .bank p {
+  letter-spacing: 1px;
+  text-align: left;
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #666a75;
+  line-height: 1.5;
+}
+#company_introduction .main-body .tz-container .main-content .corporate-account .online-payment {
+  padding-bottom: 15px;
+}
+#company_introduction .main-body .tz-container .main-content .corporate-account .online-payment img:nth-child(1) {
+  width: 58%;
+  margin-right: 15px;
+  float: left;
+  box-shadow: 0px 0px 10px 0px rgba(24, 30, 60, 0.15);
+}
+#company_introduction .main-body .tz-container .main-content .corporate-account .online-payment img:nth-child(2) {
+  width: 35%;
+  padding: 5px;
+  margin-bottom: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(24, 30, 60, 0.15);
+}
+#company_introduction .main-body .tz-container .main-content .corporate-account .online-payment p {
+  letter-spacing: 1px;
+  text-align: left;
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #666a75;
+  line-height: 1.5;
+}
+#company_introduction .main-body .tz-container .main-content .corporate-account .matters-needing p {
+  letter-spacing: 1px;
+  text-align: left;
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #666a75;
+  line-height: 1.5;
+  margin-bottom: 5px;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us {
+  width: 100%;
+  margin-top: 15px;
+  box-shadow: 1px 1px 17px 0px rgba(24, 30, 60, 0.2);
+  border-radius: 10px;
+  padding: 0px 10px 30px 10px;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .table-box {
+  border: 1px solid #cbcedd;
+  border-radius: 5px;
+  overflow: hidden;
+  width: 100%;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .table-box tr {
+  width: 100%;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .table-box tr td {
+  width: 50%;
+  height: 30px;
+  text-align: center;
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #666a75;
+  line-height: 30px;
+  border-top: none;
+  border-left: none;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .table-box tr td:first-child {
+  border-left: none;
+  border-top: none;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .table-box tr td:last-child {
+  border-right: none;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .table-box tr:last-child td {
+  border-bottom: none;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .table-box:last-child {
+  margin-top: 15px;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .table-box:last-child td:nth-child(1) {
+  text-align: center;
+  border-right: 1px solid #cbcedd;
+  width: 43%;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .table-box:last-child td:nth-child(2) {
+  text-align: center;
+  width: 42%;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .table-box3 {
+  border: 1px solid #cbcedd;
+  border-radius: 5px;
+  overflow: hidden;
+  width: 100%;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .table-box3 tr {
+  width: 100%;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .table-box3 tr td {
+  height: 30px;
+  text-align: center;
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #666a75;
+  line-height: 30px;
+  border-top: none;
+  border-left: none;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .table-box3 tr td:first-child {
+  border-left: none;
+  border-top: none;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .table-box3 tr td:last-child {
+  border-right: none;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .table-box3 tr:last-child td {
+  border-bottom: none;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .personnel div {
+  display: none;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .personnel div ol li {
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #cbcedd;
+  padding: 10px 5px;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .personnel div ol li p {
+  font-weight: bold;
+  font-size: 14px;
+  color: #252b3a;
+  padding-bottom: 5px;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .personnel div ol li table tr:first-child td {
+  font-size: 10px;
+  color: #9497a1;
+  width: calc(100%/3);
+  text-align: left;
+  padding-bottom: 3px;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .personnel div ol li table tr:last-child td {
+  width: calc(100%/3);
+  text-align: left;
+  font-size: 10px;
+  color: #666a75;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .bottom {
+  height: 40px;
+  position: relative;
+  padding: 20px;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .bottom img {
+  width: 30px;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .bottom div {
+  position: absolute;
+  top: 0px;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .bottom div p {
+  display: inline-block;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .bottom div:nth-child(1) {
+  left: 50%;
+  margin-left: -115px;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .bottom div:nth-child(1) img:nth-child(1) {
+  margin-right: 5px;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .bottom .page {
+  border: 1px solid #cbcedd;
+  border-radius: 20px;
+  width: 70px;
+  height: 30px;
+  left: 50%;
+  margin-left: -35px;
+  color: #989ca9;
+  top: 5px;
+  line-height: 30px;
+  text-align: center;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .bottom .page #pageNumber {
+  color: #252b3a;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .bottom .page span {
+  color: #252b3a;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .bottom div:nth-child(3) {
+  right: 50%;
+  margin-right: -115px;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .bottom div:nth-child(3) img:nth-child(1) {
+  margin-right: 5px;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .address {
+  letter-spacing: 1px;
+  font-size: 14px;
+  font-family: "PingFang";
+  color: #252b3a;
+  font-weight: bold;
+  line-height: 1.471;
+  text-align: left;
+  margin-bottom: 25px;
+  margin: 0px 20px 15px;
+  border-bottom: 1px dashed #cbcedd;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .address p {
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #666a75;
+  line-height: 1.5;
+  text-align: left;
+  font-weight: 300;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+#company_introduction .main-body .tz-container .main-content .contact-us .address:last-child {
+  border-bottom: none;
+}
+#company_introduction .main-body .tz-container .main-content .hr {
+  width: 1px;
+  height: 78.5%;
+  position: absolute;
+  top: 0px;
+  background: linear-gradient(#e5ebf8, #7193ff, #6d8fff);
+}
+#company_introduction .main-body .tz-container .main-content .development-course {
+  margin-bottom: 20px;
+}
+#company_introduction .main-body .tz-container .main-content .development-course .year {
+  height: 60px;
+  position: relative;
+}
+#company_introduction .main-body .tz-container .main-content .development-course .year p {
+  color: #ffffff;
+  top: 10px;
+  left: 35px;
+  font-size: 18px;
+  position: absolute;
+  z-index: 450;
+}
+#company_introduction .main-body .tz-container .main-content .development-course .year img:nth-child(2) {
+  width: 10px;
+  left: -5px;
+  top: 20px;
+  position: absolute;
+}
+#company_introduction .main-body .tz-container .main-content .development-course .year img:last-child {
+  left: 15px;
+  top: 5px;
+  width: 80px;
+  position: absolute;
+}
+#company_introduction .main-body .tz-container .main-content .development-course .development {
+  margin-left: 20px;
+  box-shadow: 1px 1px 17px 0px rgba(24, 30, 60, 0.2);
+  border-radius: 10px;
+  padding: 20px 15px 15px 15px;
+}
+#company_introduction .main-body .tz-container .main-content .development-course .development ul li {
+  text-align: left;
+  padding: 0px 15px;
+  margin-bottom: 10px;
+}
+#company_introduction .main-body .tz-container .main-content .development-course .development ul li p:first-child {
+  font-weight: bold;
+  line-height: 1.373;
+  font-size: 15px;
+  margin-bottom: 3px;
+  color: #252b3a;
+}
+#company_introduction .main-body .tz-container .main-content .development-course .development ul li p {
+  position: relative;
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #666a75;
+  line-height: 1.5;
+}
+#company_introduction .main-body .tz-container .main-content .development-course .development ul li p span {
+  position: absolute;
+  left: -10px;
+  width: 3px;
+  height: 3px;
+  top: 6px;
+  border-radius: 50%;
+  background-color: #666a75;
+}
+#company_introduction .main-body .tz-container .main-content .culture {
+  width: 100%;
+}
+#company_introduction .main-body .tz-container .main-content .culture img {
+  width: 100%;
+}
+#company_introduction .main-body .tz-container .main-content .culture-a {
+  width: 100%;
+  margin-top: 15px;
+  box-shadow: 1px 1px 17px 0px rgba(24, 30, 60, 0.2);
+  border-radius: 10px;
+  padding: 0px 0px 20px 0px;
+}
+#company_introduction .main-body .tz-container .main-content .culture-a span {
+  display: inline-block;
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #666a75;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
+}
+#company_introduction .main-body .tz-container .main-content .culture-a .s-text {
+  padding: 0px 20px;
+}
+#company_introduction .main-body .tz-container .main-content .culture-a .c-img {
+  padding: 0px 20px;
+  font-size: 0px;
+  text-align: center;
+}
+#company_introduction .main-body .tz-container .main-content .culture-a .c-img img {
+  width: 20.3%;
+  margin-right: 15px;
+}
+#company_introduction .main-body .tz-container .main-content .culture-a .c-img img:last-child {
+  margin-right: 0px;
+}
+#company_introduction .main-body .tz-container .main-content .culture-a img:nth-child(5) {
+  margin-right: 0px;
+}
+#company_introduction .main-body .tz-container .main-content .culture-a .culture-b {
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #666a75;
+  line-height: 1.716;
+  text-align: center;
+}
+#company_introduction .main-body .tz-container .main-content .culture-a .culture-b span {
+  color: #162fac;
+}
+#company_introduction .main-body .tz-container .main-content .culture-a:last-child {
+  padding: 0px 20px;
+}
+#company_introduction .main-body .tz-container .news-content {
+  width: 100%;
+  display: none;
+  padding: 20px 20px;
+  background-color: #fff;
+}
+#company_introduction .main-body .tz-container .news-content .content {
+  width: 100%;
+  margin-top: 15px;
+  box-shadow: 1px 1px 17px 0px rgba(24, 30, 60, 0.2);
+  border-radius: 10px;
+  padding: 20px 15px ;
+}
+#company_introduction .main-body .tz-container .news-content .content .content-title {
+  font-size: 17px;
+  font-family: "PingFang";
+  color: #252b3a;
+  font-weight: bold;
+  line-height: 2;
+  text-align: center;
+}
+#company_introduction .main-body .tz-container .news-content .content .content-time {
+  font-size: 10px;
+  font-family: "PingFang";
+  color: #989ca9;
+  line-height: 1;
+  text-align: center;
+}
+#company_introduction .main-body .tz-container .news-content .content .content-main {
+  margin-top: 20px;
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #666a75;
+  line-height: 1.5;
+  border-radius: 10px;
+  border: 1px solid #cbd0df;
+  background-color: #ebebf1;
+  padding: 10px;
+}
+#company_introduction .main-body .tz-container .news-content .content .content-text {
+  margin: 15px 0px;
+}
+#company_introduction .main-body .tz-container .news-content .content .content-text div:nth-child(1) p {
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #666a75;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+#company_introduction .main-body .tz-container .news-content .content .content-text div:nth-child(2) {
+  margin-bottom: 15px;
+}
+#company_introduction .main-body .tz-container .news-content .content .content-text div:nth-child(2) p {
+  margin-left: 20px;
+  margin-bottom: 2px;
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #666a75;
+  line-height: 1.5;
+}
+#company_introduction .main-body .tz-container .news-content .content .content-text div:nth-child(3) p {
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #666a75;
+  line-height: 1.5;
+  margin-bottom: 2px;
+}
+#company_introduction .main-body .tz-container .news-content .content .content-text div:nth-child(4) {
+  margin-top: 25px;
+  float: right;
+  width: 100px;
+  text-align: center;
+}
+#company_introduction .main-body .tz-container .news-content .content .content-text div:nth-child(4) p {
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #666a75;
+  line-height: 1.5;
+}
+#company_introduction .main-body .tz-container .news-content .news-more {
+  padding: 20px 0px 15px 0px;
+  position: relative;
+}
+#company_introduction .main-body .tz-container .news-content .news-more p {
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #666a75;
+  margin-bottom: 10px;
+}
+#company_introduction .main-body .tz-container .news-content .news-more img {
+  position: absolute;
+  right: 0px;
+  top: 20px;
+  margin-top: 0px;
+  width: 35px;
+}

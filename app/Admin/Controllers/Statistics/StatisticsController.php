@@ -249,10 +249,14 @@ class StatisticsController extends Controller
 						->where('tz_defenseip_business.start_time' , '<' , $month_end);		
 					})
 					->orderBy('tz_defenseip_business.start_time', 'desc')
-					->get(['c.name as sales_name' ,'tz_defenseip_business.business_number' , 'd.name as machine_number' , 'd.price' ,'tz_defenseip_business.start_time' , 'tz_defenseip_business.end_at as endding_time' , 'tz_defenseip_business.created_at' , 'b.name' , 'b.nickname' , 'b.email']);
+					->get(['c.name as sales_name' ,'tz_defenseip_business.business_number','tz_defenseip_business.status' , 'd.name as machine_number' , 'd.price' ,'tz_defenseip_business.start_time' , 'tz_defenseip_business.end_at as endding_time' , 'tz_defenseip_business.created_at' , 'b.name' , 'b.nickname' , 'b.email']);
 		if (!$dip_on->isEmpty()) {
 			$dip_on = $dip_on->toArray();
 			for ($i=0; $i < count($dip_on); $i++) { 
+				if ($dip_on[$i]['status'] == 4) {
+					$dip_on[$i]['start_time'] = $dip_on[$i]['created_at'];
+				}
+				
 				$dip_on[$i]['business_type'] = '高防ip';	
 				$type_arr[2]['num']++;
 				$day = date('j' , strtotime($dip_on[$i]['created_at']));
@@ -278,13 +282,47 @@ class StatisticsController extends Controller
 				$overlay_on[$i]['customer_name'] = $overlay_on[$i]['nickname']?:$overlay_on[$i]['email']?:$overlay_on[$i]['name'];
 			}
 		}
-
+		$all_on = [];
+		foreach ($idc_on as $k => $v) {
+			$all_on[] = [
+				'business_number'	=> $idc_on[$k]['business_number'],
+				'customer_name'	=> $idc_on[$k]['customer_name'],
+				'sales_name'		=> $idc_on[$k]['sales_name'],
+				'business_type'		=> $idc_on[$k]['business_type'],
+				'machine_number'	=> $idc_on[$k]['machine_number'],
+				'price'			=> $idc_on[$k]['price'],
+				'start_time'		=> $idc_on[$k]['start_time'],
+			];
+		}
+		foreach ($dip_on as $k => $v) {
+			$all_on[] = [
+				'business_number'	=> $dip_on[$k]['business_number'],
+				'customer_name'	=> $dip_on[$k]['customer_name'],
+				'sales_name'		=> $dip_on[$k]['sales_name'],
+				'business_type'		=> $dip_on[$k]['business_type'],
+				'machine_number'	=> $dip_on[$k]['machine_number'],
+				'price'			=> $dip_on[$k]['price'],
+				'start_time'		=> $dip_on[$k]['start_time'],
+			];
+		}
+		foreach ($overlay_on as $k => $v) {
+			$all_on[] = [
+				'business_number'	=> '叠加包',
+				'customer_name'	=> $overlay_on[$k]['customer_name'],
+				'sales_name'		=> $overlay_on[$k]['sales_name'],
+				'business_type'		=> $overlay_on[$k]['business_type'],
+				'machine_number'	=> $overlay_on[$k]['machine_number'],
+				'price'			=> $overlay_on[$k]['price'],
+				'start_time'		=> '购买时间 : '.$overlay_on[$k]['buy_time'],
+			];
+		}
 		return [
 			'line'		=> $arr,
 			'type_arr'	=> $type_arr,
 			'idc_on'		=> $idc_on,
 			'dip_on'		=> $dip_on,
 			'overlay_on'	=> $overlay_on,
+			'all_on'		=> $all_on,
 		];
 	}
 

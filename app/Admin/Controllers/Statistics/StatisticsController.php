@@ -313,7 +313,7 @@ class StatisticsController extends Controller
 				'business_type'		=> $overlay_on[$k]['business_type'],
 				'machine_number'	=> $overlay_on[$k]['machine_number'],
 				'price'			=> $overlay_on[$k]['price'],
-				'start_time'		=> '购买时间 : '.$overlay_on[$k]['buy_time'],
+				'start_time'		=> $overlay_on[$k]['buy_time'],
 			];
 		}
 		return [

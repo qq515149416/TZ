@@ -1161,18 +1161,19 @@ class  PfmStatistics extends Model
 			if (!isset($user_arr[$v['name']])) {
 				$user_arr[$v['name']] = $v['actual_payment']+0;
 			}else{
-				$user_arr[$v['name']]+= $v['actual_payment'];
+				$user_arr[$v['name']] = $user_arr[$v['name']] + $v['actual_payment'];
 			}
 
 			//计算日期的
 			$day = date('j',strtotime($v['pay_time']));
 			$arr[$day-1]['actual_payment']+= $v['actual_payment'];
 		}
+
 		$user_sta = [];
 		foreach ($user_arr as $k => $v) {
 			$user_sta[] = [
 				'name'	=> $k,
-				'pfm'	=> $v,
+				'pfm'	=> round($v,2),
 			];
 		}
 		//dd($type_arr);

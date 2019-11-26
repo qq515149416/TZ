@@ -204,7 +204,7 @@ class StatisticsController extends Controller
 				'num'		=> 0,
 			];
 		}
-		
+
 		$model = new BusinessModel();
 		$idc_on = $model->leftJoin('tz_users as b' , 'b.id' , '=' , 'tz_business.client_id')
 					->where(function($query) use ($month_begin,$month_end){
@@ -259,7 +259,7 @@ class StatisticsController extends Controller
 				
 				$dip_on[$i]['business_type'] = '高防ip';	
 				$type_arr[2]['num']++;
-				$day = date('j' , strtotime($dip_on[$i]['created_at']));
+				$day = date('j' , strtotime($dip_on[$i]['start_time']));
 				$arr[$day-1]['num']++;
 				$dip_on[$i]['customer_name'] = $dip_on[$i]['nickname']?:$dip_on[$i]['email']?:$dip_on[$i]['name'];
 			}
@@ -313,7 +313,7 @@ class StatisticsController extends Controller
 				'business_type'		=> $overlay_on[$k]['business_type'],
 				'machine_number'	=> $overlay_on[$k]['machine_number'],
 				'price'			=> $overlay_on[$k]['price'],
-				'start_time'		=> '购买时间 : '.$overlay_on[$k]['buy_time'],
+				'start_time'		=> $overlay_on[$k]['buy_time'],
 			];
 		}
 		return [

@@ -271,7 +271,7 @@ class StatisticsController extends Controller
 						->where('tz_overlay_belong.buy_time' , '>' , $month_begin)
 						->where('tz_overlay_belong.buy_time' , '<' , $month_end)
 						->orderBy('tz_overlay_belong.buy_time','desc')
-						->get(['c.name as sales_name' , 'd.name as machine_number' , 'd.price' , 'tz_overlay_belong.buy_time','b.name' , 'b.nickname' , 'b.email']);
+						->get(['c.name as sales_name' , 'd.name as machine_number' , 'd.price' , 'tz_overlay_belong.buy_time','b.name' , 'b.nickname' , 'b.email','tz_overlay_belong.order_sn as business_number']);
 		if (!$overlay_on->isEmpty()) {
 			$overlay_on = $overlay_on->toArray();
 			for ($i=0; $i < count($overlay_on); $i++) {
@@ -280,7 +280,6 @@ class StatisticsController extends Controller
 				$day = date('j' , strtotime($overlay_on[$i]['buy_time']));
 				$arr[$day-1]['num']++;
 				$overlay_on[$i]['customer_name'] = $overlay_on[$i]['nickname']?:$overlay_on[$i]['email']?:$overlay_on[$i]['name'];
-                $overlay_on[$i]['business_number'] = create_number();
             }
 		}
 		$all_on = [];

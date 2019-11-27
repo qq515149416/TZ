@@ -238,6 +238,7 @@ class StatisticsController extends Controller
 		$dip_on = $dip_model->leftJoin('tz_users as b' , 'b.id' , '=' , 'tz_defenseip_business.user_id')
 					->leftJoin('admin_users as c' , 'c.id' , '=' , 'b.salesman_id')
 					->leftJoin('tz_defenseip_package as d' , 'd.id' , '=' , 'tz_defenseip_business.package_id')
+					->leftJoin('tz_defenseip_store as e' , 'e.id' , '=' , 'tz_defenseip_business.ip_id')
 					->where(function($query) use ($month_begin,$month_end){
 						$query->where('tz_defenseip_business.created_at' , '>' , $month_begin)
 						->where('tz_defenseip_business.created_at' , '<' , $month_end)
@@ -249,15 +250,14 @@ class StatisticsController extends Controller
 						->where('tz_defenseip_business.start_time' , '<' , $month_end);
 					})
 					->orderBy('tz_defenseip_business.start_time', 'desc')
-					->get(['c.name as sales_name' ,'tz_defenseip_business.business_number','tz_defenseip_business.status' , 'd.name as machine_number' , 'd.price' ,'tz_defenseip_business.start_time' , 'tz_defenseip_business.end_at as endding_time' , 'tz_defenseip_business.created_at' , 'b.name' , 'b.nickname' , 'b.email']);
+					->get(['c.name as sales_name' ,'tz_defenseip_business.business_number','tz_defenseip_business.status' , 'd.name as package_name' , 'd.price' ,'tz_defenseip_business.start_time' , 'tz_defenseip_business.end_at as endding_time' , 'tz_defenseip_business.created_at' , 'b.name' , 'b.nickname' , 'b.email','e.ip as machine_number']);
 		if (!$dip_on->isEmpty()) {
 			$dip_on = $dip_on->toArray();
 			for ($i=0; $i < count($dip_on); $i++) {
 				if ($dip_on[$i]['status'] == 4) {
 					$dip_on[$i]['start_time'] = $dip_on[$i]['created_at'];
 				}
-
-				$dip_on[$i]['business_type'] = '高防ip';
+				$dip_on[$i]['business_type'] = '高防ip';	
 				$type_arr[2]['num']++;
 				$day = date('j' , strtotime($dip_on[$i]['start_time']));
 				$arr[$day-1]['num']++;

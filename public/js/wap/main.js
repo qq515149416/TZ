@@ -23776,17 +23776,6 @@ $.get("/home/user/getInfo", function (data) {
         $(".main-header .user img").attr("src", "/images/wap/登录与注册.png");
     }
 });
-// validate();
-// function validate(next){
-//     console.log(window.location.href)
-//     if(window.location.href == "/menu"){
-//         $.get("/home/user/getInfo",(data) => {
-//             if(data.code!=1 && data.data.status!=2) {
-//                 location.href = "/wap/login";
-//             }
-//         })
-//     }
-// }
 
 /***/ }),
 /* 53 */
@@ -28338,6 +28327,8 @@ if (document.querySelector("#logging")) {
                 if (data.code == 1 && data.data.status == 2) {
                     _this.email = data.data.email;
                     $("#useremails").html(_this.email);
+                } else {
+                    location.href = "/wap/login";
                 }
             });
         }

@@ -104,17 +104,7 @@ $.get("/home/user/getInfo",(data) => {
         $(".main-header .user img").attr("src","/images/wap/登录与注册.png")
     }
 });
-// validate();
-// function validate(next){
-//     console.log(window.location.href)
-//     if(window.location.href == "/menu"){
-//         $.get("/home/user/getInfo",(data) => {
-//             if(data.code!=1 && data.data.status!=2) {
-//                 location.href = "/wap/login";
-//             }
-//         })
-//     }
-// }
+
   
 import "./jquery.min.js";
 import "./index.js";

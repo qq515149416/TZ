@@ -100,6 +100,7 @@ Route::group([
     Route::get('/registered', 'Show\wap\RegisteredController@index');
     Route::get('/logging', 'Show\wap\LoggingController@index');
     Route::get('/login_register_menu', 'Show\wap\LoginRegisteredMenuController@index');
+    Route::get('/new/detail', 'Show\wap\NewDetailController@index');
 });
 
 /**

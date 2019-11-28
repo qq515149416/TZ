@@ -1132,7 +1132,7 @@ class  PfmStatistics extends Model
 			//计算种类的
 			$type = DB::table('tz_orders')->where('id',$all_actual_payment[$k]['order_id'][0])->value('resource_type');
 			switch ($type) {
-				case '1':
+				case '1':				
 				case '2':
 				case '3':
 				case '4':
@@ -1141,19 +1141,24 @@ class  PfmStatistics extends Model
 				case '7':
 				case '8':
 				case '9':
-					$type_arr[0]['actual_payment']+= $v['actual_payment'];
+					$all_actual_payment[$k]['type'] = 'IDC';
+					$type_arr[0]['actual_payment'] = round($type_arr[0]['actual_payment']+$v['actual_payment'] ,2);
 					break;
 				case '10':
-					$type_arr[1]['actual_payment']+= $v['actual_payment'];
+					$all_actual_payment[$k]['type'] = 'CDN';
+					$type_arr[1]['actual_payment'] = round($type_arr[1]['actual_payment']+$v['actual_payment'] ,2);
 					break;
 				case '11':
-					$type_arr[2]['actual_payment']+= $v['actual_payment'];
+					$all_actual_payment[$k]['type'] = '高防IP';
+					$type_arr[2]['actual_payment'] = round($type_arr[2]['actual_payment']+$v['actual_payment'] ,2);
 					break;
 				case '12':
-					$type_arr[3]['actual_payment']+= $v['actual_payment'];
+					$all_actual_payment[$k]['type'] = '流量叠加包';
+					$type_arr[3]['actual_payment'] = round($type_arr[3]['actual_payment']+$v['actual_payment'] ,2);
 					break;
 				default:
-					$type_arr[4]['actual_payment']+= $v['actual_payment'];
+					$all_actual_payment[$k]['type'] = '未知类型';
+					$type_arr[4]['actual_payment'] = round($type_arr[4]['actual_payment']+$v['actual_payment'] ,2);
 					break;
 			}
 			
@@ -1161,18 +1166,19 @@ class  PfmStatistics extends Model
 			if (!isset($user_arr[$v['name']])) {
 				$user_arr[$v['name']] = $v['actual_payment']+0;
 			}else{
-				$user_arr[$v['name']]+= $v['actual_payment'];
+				$user_arr[$v['name']] = $user_arr[$v['name']] + $v['actual_payment'];
 			}
 
 			//计算日期的
 			$day = date('j',strtotime($v['pay_time']));
-			$arr[$day-1]['actual_payment']+= $v['actual_payment'];
+			$arr[$day-1]['actual_payment'] = round($arr[$day-1]['actual_payment']+$v['actual_payment'] ,2);
 		}
+
 		$user_sta = [];
 		foreach ($user_arr as $k => $v) {
 			$user_sta[] = [
 				'name'	=> $k,
-				'pfm'	=> $v,
+				'pfm'	=> round($v,2),
 			];
 		}
 		//dd($type_arr);

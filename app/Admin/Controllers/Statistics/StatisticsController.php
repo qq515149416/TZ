@@ -38,7 +38,7 @@ class StatisticsController extends Controller
 		}else{
 			$msg = '数据更新失败 , ';
 		}
-		
+
 		$machineModel = new MachineStatistics();
 
 		$month = $request->only(['month']);
@@ -46,16 +46,16 @@ class StatisticsController extends Controller
 			$month = $month['month'];
 		}else{
 			$month = date("y-m");
-		}	
+		}
 
-		$info = $machineModel->getStatistics($month);	
+		$info = $machineModel->getStatistics($month);
 
-		return tz_ajax_echo($info['data'],$msg.$info['msg'],$info['code']);		
+		return tz_ajax_echo($info['data'],$msg.$info['msg'],$info['code']);
 	}
 
 	/**
 	 * 按机房统计machine各地区使用状况并存入或更新数据库,按月份区分
-	 * @param 
+	 * @param
 	 * @return code,1为更新成功,0为失败
 	 */
 
@@ -65,14 +65,14 @@ class StatisticsController extends Controller
 		$machineModel = new MachineStatistics();
 
 		$result = $machineModel->statistics();
-		
+
 		return $result['code'];
 
 	}
 
 	/**
 	* 按条件获取机器数量
-	* @param  
+	* @param
 	* @return [type]           [description]
 	*/
 	public function getMachineNum(){
@@ -106,7 +106,7 @@ class StatisticsController extends Controller
 					->where('remove_status','=',4)
 					->whereIn('business_status',[2,5,6])
 					->count();
-		
+
 		$today_on_idc = $model->where(function($query) use ($today_begin,$today_end){
 						$query->whereIn('business_type',[1,2])
 						->where('start_time','>',$today_begin)
@@ -131,7 +131,7 @@ class StatisticsController extends Controller
 					->orWhere(function($query) use ($today_begin,$today_end){
 						$query->whereIn('status',[1,2,3])
 						->where('start_time' , '>' , $today_begin)
-						->where('start_time' , '<' , $today_end);		
+						->where('start_time' , '<' , $today_end);
 					})
 					->count();
 
@@ -194,17 +194,17 @@ class StatisticsController extends Controller
 				'type'			=> '流量叠加包',
 				'num'			=> 0,
 			],
-			
+
 		];
 
 		$arr 	= [];
-		for ($j=1; $j <= $month_day; $j++) { 
+		for ($j=1; $j <= $month_day; $j++) {
 			$arr[] = [
 				'time'		=> $month_small .'-'.$j,
 				'num'		=> 0,
 			];
 		}
-		
+
 		$model = new BusinessModel();
 		$idc_on = $model->leftJoin('tz_users as b' , 'b.id' , '=' , 'tz_business.client_id')
 					->where(function($query) use ($month_begin,$month_end){
@@ -231,13 +231,14 @@ class StatisticsController extends Controller
 				$arr[$day-1]['num']++;
 				$idc_on[$k]['customer_name'] = $idc_on[$k]['nickname']?:$idc_on[$k]['email']?:$idc_on[$k]['name'];
 			}
-			
+
 		}
 
 		$dip_model = new DipModel();
 		$dip_on = $dip_model->leftJoin('tz_users as b' , 'b.id' , '=' , 'tz_defenseip_business.user_id')
 					->leftJoin('admin_users as c' , 'c.id' , '=' , 'b.salesman_id')
 					->leftJoin('tz_defenseip_package as d' , 'd.id' , '=' , 'tz_defenseip_business.package_id')
+					->leftJoin('tz_defenseip_store as e' , 'e.id' , '=' , 'tz_defenseip_business.ip_id')
 					->where(function($query) use ($month_begin,$month_end){
 						$query->where('tz_defenseip_business.created_at' , '>' , $month_begin)
 						->where('tz_defenseip_business.created_at' , '<' , $month_end)
@@ -246,16 +247,19 @@ class StatisticsController extends Controller
 					->orWhere(function($query) use ($month_begin,$month_end){
 						$query->whereIn('tz_defenseip_business.status',[1,2,3])
 						->where('tz_defenseip_business.start_time' , '>' , $month_begin)
-						->where('tz_defenseip_business.start_time' , '<' , $month_end);		
+						->where('tz_defenseip_business.start_time' , '<' , $month_end);
 					})
 					->orderBy('tz_defenseip_business.start_time', 'desc')
-					->get(['c.name as sales_name' ,'tz_defenseip_business.business_number' , 'd.name as machine_number' , 'd.price' ,'tz_defenseip_business.start_time' , 'tz_defenseip_business.end_at as endding_time' , 'tz_defenseip_business.created_at' , 'b.name' , 'b.nickname' , 'b.email']);
+					->get(['c.name as sales_name' ,'tz_defenseip_business.business_number','tz_defenseip_business.status' , 'd.name as package_name' , 'd.price' ,'tz_defenseip_business.start_time' , 'tz_defenseip_business.end_at as endding_time' , 'tz_defenseip_business.created_at' , 'b.name' , 'b.nickname' , 'b.email','e.ip as machine_number']);
 		if (!$dip_on->isEmpty()) {
 			$dip_on = $dip_on->toArray();
-			for ($i=0; $i < count($dip_on); $i++) { 
+			for ($i=0; $i < count($dip_on); $i++) {
+				if ($dip_on[$i]['status'] == 4) {
+					$dip_on[$i]['start_time'] = $dip_on[$i]['created_at'];
+				}
 				$dip_on[$i]['business_type'] = '高防ip';	
 				$type_arr[2]['num']++;
-				$day = date('j' , strtotime($dip_on[$i]['created_at']));
+				$day = date('j' , strtotime($dip_on[$i]['start_time']));
 				$arr[$day-1]['num']++;
 				$dip_on[$i]['customer_name'] = $dip_on[$i]['nickname']?:$dip_on[$i]['email']?:$dip_on[$i]['name'];
 			}
@@ -267,24 +271,58 @@ class StatisticsController extends Controller
 						->where('tz_overlay_belong.buy_time' , '>' , $month_begin)
 						->where('tz_overlay_belong.buy_time' , '<' , $month_end)
 						->orderBy('tz_overlay_belong.buy_time','desc')
-						->get(['c.name as sales_name' , 'd.name as machine_number' , 'd.price' , 'tz_overlay_belong.buy_time','b.name' , 'b.nickname' , 'b.email']);
+						->get(['c.name as sales_name' , 'd.name as machine_number' , 'd.price' , 'tz_overlay_belong.buy_time','b.name' , 'b.nickname' , 'b.email','tz_overlay_belong.order_sn as business_number']);
 		if (!$overlay_on->isEmpty()) {
 			$overlay_on = $overlay_on->toArray();
-			for ($i=0; $i < count($overlay_on); $i++) { 
+			for ($i=0; $i < count($overlay_on); $i++) {
 				$overlay_on[$i]['business_type'] = '叠加包';
-				$type_arr[3]['num']++;	
+				$type_arr[3]['num']++;
 				$day = date('j' , strtotime($overlay_on[$i]['buy_time']));
 				$arr[$day-1]['num']++;
 				$overlay_on[$i]['customer_name'] = $overlay_on[$i]['nickname']?:$overlay_on[$i]['email']?:$overlay_on[$i]['name'];
-			}
+            }
 		}
-
+		$all_on = [];
+		foreach ($idc_on as $k => $v) {
+			$all_on[] = [
+				'business_number'	=> $idc_on[$k]['business_number'],
+				'customer_name'	=> $idc_on[$k]['customer_name'],
+				'sales_name'		=> $idc_on[$k]['sales_name'],
+				'business_type'		=> $idc_on[$k]['business_type'],
+				'machine_number'	=> $idc_on[$k]['machine_number'],
+				'price'			=> $idc_on[$k]['price'],
+				'start_time'		=> $idc_on[$k]['start_time'],
+			];
+		}
+		foreach ($dip_on as $k => $v) {
+			$all_on[] = [
+				'business_number'	=> $dip_on[$k]['business_number'],
+				'customer_name'	=> $dip_on[$k]['customer_name'],
+				'sales_name'		=> $dip_on[$k]['sales_name'],
+				'business_type'		=> $dip_on[$k]['business_type'],
+				'machine_number'	=> $dip_on[$k]['machine_number'],
+				'price'			=> $dip_on[$k]['price'],
+				'start_time'		=> $dip_on[$k]['start_time'],
+			];
+		}
+		foreach ($overlay_on as $k => $v) {
+			$all_on[] = [
+				'business_number'	=> '叠加包',
+				'customer_name'	=> $overlay_on[$k]['customer_name'],
+				'sales_name'		=> $overlay_on[$k]['sales_name'],
+				'business_type'		=> $overlay_on[$k]['business_type'],
+				'machine_number'	=> $overlay_on[$k]['machine_number'],
+				'price'			=> $overlay_on[$k]['price'],
+				'start_time'		=> $overlay_on[$k]['buy_time'],
+			];
+		}
 		return [
 			'line'		=> $arr,
 			'type_arr'	=> $type_arr,
 			'idc_on'		=> $idc_on,
 			'dip_on'		=> $dip_on,
 			'overlay_on'	=> $overlay_on,
+			'all_on'		=> $all_on,
 		];
 	}
 
@@ -297,27 +335,27 @@ class StatisticsController extends Controller
 
 		$res = $this->getBusinessSta($par['month']);
 
-		$data1 = [ 
+		$data1 = [
 			[
 				'日期',
 				'新增业务数量'
-			], 
+			],
 		];
 		foreach ($res['line'] as $k => $v) {
 			$data1[] = [ $res['line'][$k]['time'] , $res['line'][$k]['num'] ];
 		}
 
-		$data2 = [ 
+		$data2 = [
 			[
 				'业务类型',
 				'新增业务数量'
-			], 
+			],
 		];
 		foreach ($res['type_arr'] as $k => $v) {
 			$data2[] = [ $res['type_arr'][$k]['type'] , $res['type_arr'][$k]['num'] ];
 		}
-	
-		$data3 = [ 
+
+		$data3 = [
 			[
 				'业务号',
 				'客户',
@@ -327,12 +365,12 @@ class StatisticsController extends Controller
 				'开始时间',
 				'结束时间',
 				'所属业务员',
-			], 
+			],
 		];
 		foreach ($res['idc_on'] as $k => $v) {
-			$data3[] = [ 
-				$res['idc_on'][$k]['business_number'] , 
-				$res['idc_on'][$k]['customer_name'] , 
+			$data3[] = [
+				$res['idc_on'][$k]['business_number'] ,
+				$res['idc_on'][$k]['customer_name'] ,
 				$res['idc_on'][$k]['business_type'] ,
 				$res['idc_on'][$k]['machine_number'] ,
 				$res['idc_on'][$k]['price'] ,
@@ -341,8 +379,8 @@ class StatisticsController extends Controller
 				$res['idc_on'][$k]['sales_name'] ,
 			];
 		}
-		
-		$data4 = [ 
+
+		$data4 = [
 			[
 				'业务号',
 				'客户',
@@ -352,12 +390,12 @@ class StatisticsController extends Controller
 				'开始时间',
 				'结束时间',
 				'所属业务员',
-			], 
+			],
 		];
 		foreach ($res['dip_on'] as $k => $v) {
-			$data4[] = [ 
-				$res['dip_on'][$k]['business_number'] , 
-				$res['dip_on'][$k]['customer_name'] , 
+			$data4[] = [
+				$res['dip_on'][$k]['business_number'] ,
+				$res['dip_on'][$k]['customer_name'] ,
 				$res['dip_on'][$k]['business_type'] ,
 				$res['dip_on'][$k]['machine_number'] ,
 				$res['dip_on'][$k]['price'] ,
@@ -366,8 +404,8 @@ class StatisticsController extends Controller
 				$res['dip_on'][$k]['sales_name'] ,
 			];
 		}
-		
-		$data5 = [ 
+
+		$data5 = [
 			[
 				'客户',
 				'业务类型',
@@ -375,11 +413,11 @@ class StatisticsController extends Controller
 				'单价',
 				'购买时间',
 				'所属业务员',
-			], 
+			],
 		];
 		foreach ($res['overlay_on'] as $k => $v) {
-			$data5[] = [ 
-				$res['overlay_on'][$k]['customer_name'] , 
+			$data5[] = [
+				$res['overlay_on'][$k]['customer_name'] ,
 				$res['overlay_on'][$k]['business_type'] ,
 				$res['overlay_on'][$k]['machine_number'] ,
 				$res['overlay_on'][$k]['price'] ,
@@ -413,7 +451,7 @@ class StatisticsController extends Controller
 		$excel->kiriExcel($arr,$par['month'].'新增业务详情');
 	}
 
-	
+
 	public function getMachineExcelByMonth(Request $request)
 	{
 		$par = $request->only(['month']);
@@ -428,7 +466,7 @@ class StatisticsController extends Controller
 		$month_end_timestamp = strtotime($month_end);
 
 		$model = new BusinessModel();
-		
+
 		$time = [
 			'begin'	=> $month_begin_timestamp,
 			'end'	=> $month_end_timestamp,
@@ -438,7 +476,7 @@ class StatisticsController extends Controller
 
 		$new = $new_res['data'];
 		$under = $under_res['data'];
-	
+
 		$new_arr = [
 			0 => [
 				'业务号',
@@ -453,7 +491,7 @@ class StatisticsController extends Controller
 				'业务类型',
 				'开始时间',
 				'结束时间',
-				'业务状态',	
+				'业务状态',
 			],
 		];
 		$under_arr = [
@@ -468,7 +506,7 @@ class StatisticsController extends Controller
 				'业务类型',
 				'开始时间',
 				'结束时间',
-				'业务状态',	
+				'业务状态',
 				'下架状态'
 			],
 		];
@@ -516,7 +554,7 @@ class StatisticsController extends Controller
 				'cellData'	=> $under_arr,
 				'cellName'	=> '本月下架',
 			],
-		
+
 		];
 		$excel = new ExcelController();
 		$excel->kiriExcel($arr,$month.'上下架机器详情');

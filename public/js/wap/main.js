@@ -23776,17 +23776,6 @@ $.get("/home/user/getInfo", function (data) {
         $(".main-header .user img").attr("src", "/images/wap/登录与注册.png");
     }
 });
-// validate();
-// function validate(next){
-//     console.log(window.location.href)
-//     if(window.location.href == "/menu"){
-//         $.get("/home/user/getInfo",(data) => {
-//             if(data.code!=1 && data.data.status!=2) {
-//                 location.href = "/wap/login";
-//             }
-//         })
-//     }
-// }
 
 /***/ }),
 /* 53 */
@@ -27407,45 +27396,6 @@ if (document.querySelector("#CDN_speed_up")) {
 
 
 if (document.querySelector("#company_introduction")) {
-    var machineroom = function machineroom() {
-        var arrows = document.querySelector(".drop-options .arrow");
-        if (document.querySelector(".select-text").style.display == "none") {
-            document.querySelector(".select-text").style.display = "block";
-            arrows.style.transform = "rotate(135deg)";
-            arrows.style.transition = "transform 0.4s";
-        } else {
-            document.querySelector(".select-text").style.display = "none";
-            arrows.style.transform = "rotate(-45deg)";
-            arrows.style.transition = "transform 0.4s";
-        }
-        var option_text = document.querySelectorAll(".option-text");
-        var option_i = document.querySelectorAll(".option-i");
-        var p_value = document.querySelector(".drop-options p");
-        for (var i = 0; i < option_i.length; i++) {
-            option_i[i].index = i;
-            option_i[i].addEventListener("click", function () {
-                for (var j = 0; j < option_text.length; j++) {
-                    option_text[j].className = "option-text";
-                }
-                option_text[this.index].className = "option-text option-e-active";
-                p_value.innerHTML = option_i[this.index].innerHTML;
-            });
-        }
-
-        document.addEventListener("touchmove", function (e) {
-            if (e.target == document.querySelector(".drop-options p") || e.target == document.querySelector(".select-text")) {
-                document.querySelector(".select-text").style.display = "block";
-                document.querySelector(".drop-options .arrow").style.transform = "rotate(135deg)";
-                document.querySelector(".drop-options .arrow").style.transition = "transform 0.4s";
-            } else {
-                // moreContent.style.display = "none"
-                document.querySelector(".select-text").style.display = "none";
-                document.querySelector(".drop-options .arrow").style.transform = "rotate(-45deg)";
-                document.querySelector(".drop-options .arrow").style.transition = "transform 0.4s";
-            }
-        });
-    };
-
     // 新闻公告分页
     var goPage = function goPage(pno, psize) {
         var news = document.querySelectorAll(".option-text .news");
@@ -27515,20 +27465,46 @@ if (document.querySelector("#company_introduction")) {
 
     var news = document.querySelectorAll(".news");
     var optiontext = document.querySelectorAll(".option-text");
-    for (var i = 0; i < news.length; i++) {
-        news[i].index = i;
-        news[i].onclick = function () {
-            for (var j = 0; j < optiontext.length; j++) {
-                optiontext[j].className = "option-text";
-            }
-            document.querySelector(".news-content").style.display = "block";
-        };
-    }
-    // 公司简介
-    if (document.querySelector(".drop-options p")) {
-        document.querySelector(".drop-options p").addEventListener("click", machineroom);
-    }
 
+    //   function machineroom()
+    document.querySelector(".drop-options p").onclick = function () {
+        var arrows = document.querySelector(".drop-options .arrow");
+        if (document.querySelector(".select-text").style.display == "none") {
+            document.querySelector(".select-text").style.display = "block";
+            arrows.style.transform = "rotate(135deg)";
+            arrows.style.transition = "transform 0.4s";
+        } else {
+            document.querySelector(".select-text").style.display = "none";
+            arrows.style.transform = "rotate(-45deg)";
+            arrows.style.transition = "transform 0.4s";
+        }
+        var option_text = document.querySelectorAll(".option-text");
+        var option_i = document.querySelectorAll(".option-i");
+        var p_value = document.querySelector(".drop-options p");
+        for (var i = 0; i < option_i.length; i++) {
+            option_i[i].index = i;
+            option_i[i].addEventListener("click", function () {
+                for (var j = 0; j < option_text.length; j++) {
+                    option_text[j].className = "option-text";
+                }
+                option_text[this.index].className = "option-text option-e-active";
+                p_value.innerHTML = option_i[this.index].innerHTML;
+            });
+        }
+
+        document.addEventListener("touchmove", function (e) {
+            if (e.target == document.querySelector(".drop-options p") || e.target == document.querySelector(".select-text")) {
+                document.querySelector(".select-text").style.display = "block";
+                document.querySelector(".drop-options .arrow").style.transform = "rotate(135deg)";
+                document.querySelector(".drop-options .arrow").style.transition = "transform 0.4s";
+            } else {
+                // moreContent.style.display = "none"
+                document.querySelector(".select-text").style.display = "none";
+                document.querySelector(".drop-options .arrow").style.transform = "rotate(-45deg)";
+                document.querySelector(".drop-options .arrow").style.transition = "transform 0.4s";
+            }
+        });
+    };
     if (document.body.clientWidth < 330) {
         document.querySelectorAll(".option-text")[2].querySelectorAll(".bottom")[0].querySelectorAll("div")[0].style.marginLeft = "-50%";
         document.querySelectorAll(".option-text")[2].querySelectorAll(".bottom")[0].querySelectorAll("div")[2].style.marginRight = "-50%";
@@ -27944,15 +27920,6 @@ function goPage(pno, psize) {
 
 
 if (document.querySelector("#registered")) {
-    //   document.querySelector(".close-salesman").onclick = function(){
-    //       document.querySelector(".select").style.display="none";
-    //       document.body.style.overflow = "auto";
-    //     }
-    //   document.querySelector(".select-salesman").onclick= function(){
-    //       document.querySelector(".select").style.display="block";
-    //       document.body.style.overflow = "hidden";
-    //   }
-
     var waitSendVerificationCode = function waitSendVerificationCode(frequency, callbrak) {
         if (frequency > 0) {
             callbrak && callbrak();
@@ -28338,6 +28305,8 @@ if (document.querySelector("#logging")) {
                 if (data.code == 1 && data.data.status == 2) {
                     _this.email = data.data.email;
                     $("#useremails").html(_this.email);
+                } else {
+                    location.href = "/wap/login";
                 }
             });
         }

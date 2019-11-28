@@ -35,7 +35,7 @@
                         <div class="drop-options">
                             <p class="helpcenter">{{$page_info[$page]['name']}}</p>
                             <span class="arrow"></span>
-                            <ul class="select-text clear">
+                            <ul class="select-text clear" style="display: none;">
                                 <li class="option-i" value="0" selected>Linux服务器FAQ</li>
                                 <li class="option-i" value="1">Windows服务器FAQ</li>
                                 <li class="option-i" value="2">服务器租用</li>

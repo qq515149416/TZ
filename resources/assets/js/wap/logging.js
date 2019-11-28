@@ -38,6 +38,8 @@ if(document.querySelector("#logging")){
                 if(data.code==1 && data.data.status==2) {
                     this.email = data.data.email;
                     $("#useremails").html(this.email);
+                }else{
+                    location.href = "/wap/login"
                 }
             });
         }

@@ -1,21 +1,11 @@
 if(document.querySelector("#company_introduction")){
   var news = document.querySelectorAll(".news");
   var optiontext = document.querySelectorAll(".option-text");
-  for(var i=0;i<news.length;i++){
-      news[i].index=i;
-      news[i].onclick = function(){
-          for(var j=0 ;j<optiontext.length;j++){
-              optiontext[j].className="option-text";
-          }
-          document.querySelector(".news-content").style.display="block";
-  
-      }
-  }
-  // 公司简介
-  if(document.querySelector(".drop-options p")) {
-    document.querySelector(".drop-options p").addEventListener("click",machineroom);
-  }
-  function machineroom(){
+
+
+
+//   function machineroom()
+document.querySelector(".drop-options p").onclick = function(){
   var arrows = document.querySelector(".drop-options .arrow");
   if(document.querySelector(".select-text").style.display=="none"){
     document.querySelector(".select-text").style.display="block";

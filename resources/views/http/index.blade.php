@@ -422,7 +422,7 @@
                                             <span class="option-btn small" data-url="/zuyong/dianxin/huizhou">华南</span>
                                         </div>
                                         <div class="col-md-3">
-                                            <span class="option-btn small">华东</span>
+                                            <span class="option-btn small" data-url="/zuyong/index">华东</span>
                                         </div>
                                         <div class="col-md-3">
                                             <span class="option-btn small" data-url="/zuyong/dianxin/xian">西北</span>
@@ -441,16 +441,16 @@
                                 <div class="product-item-option">
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <span class="option-btn small" data-url="/tuoguan/hengyang">BGP</span>
+                                            <span class="option-btn small" data-url="/zuyong/index">BGP</span>
                                         </div>
                                         <div class="col-md-3">
-                                            <span class="option-btn small" data-url="/tuoguan/hengyang">单 线</span>
+                                            <span class="option-btn small" data-url="/zuyong/dianxin/hunan">单 线</span>
                                         </div>
                                         <div class="col-md-3">
-                                            <span class="option-btn small" data-url="/tuoguan/hengyang">双 线</span>
+                                            <span class="option-btn small" data-url="/zuyong/shuangxian/hunan">双 线</span>
                                         </div>
                                         <div class="col-md-3">
-                                            <span class="option-btn small" data-url="/tuoguan/hengyang">三 线</span>
+                                            <span class="option-btn small" data-url="/zuyong/sanxian/hunan">三 线</span>
                                         </div>
                                     </div>
                                 </div>

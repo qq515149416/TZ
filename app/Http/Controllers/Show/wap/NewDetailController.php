@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class NewDetailController extends Controller
 {
-    public function index()
+    public function index($id)
     {
         return view("wap/new_detail",[
             "page" => "new_detail"

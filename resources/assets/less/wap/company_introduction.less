@@ -596,10 +596,60 @@
                     padding: 0px 20px;
                 }
             }
-                // 新闻公告 内容页
-                .news-content{
+            
+        }
+    }
+}
+
+#company_introduction_news{
+    .main-body{
+        .tz-container{
+            .main-content{
+                .drop-options{
                     width: 100%;
-                    display: none;
+                    background-color: #e5ebf8;
+                    position: relative;
+                    margin-top: -4px;
+                    p{
+                        border-bottom: 1px solid #dadadd;
+                        height: 45px;
+                        line-height: 45px;
+                        color: rgb( 22, 47, 172 );
+                        font-weight: bold;
+                        font-size: 14px;
+                        padding: 0px 20px;
+                    }
+                    .arrow{
+                        position: absolute;
+                        top: 18px;
+                        right: 20px;
+                    }
+                    ul{
+                        // display: none;
+                        background-color: #e5ebf8;
+                        padding: 10px 0px;
+                        width: 100%;
+                        position: absolute;
+                        z-index: 500;
+                        box-shadow: 0px 5px 10px 0px #d7d9e7;
+                        li{
+                            font-size: 14px;
+                            float: left;
+                            line-height: 30px;
+                            text-align: center;
+                            width: calc(100%/4);
+                            height: 30px;
+                            a{
+                                color: #252b3a;
+                            }
+                        }
+                    }
+                // }
+            }
+            }
+            // 新闻公告 内容页
+            .news-content{
+                    width: 100%;
                     padding: 20px 20px;
                     background-color: #fff;
                     .content{
@@ -697,7 +747,7 @@
                             width: 35px;
                         }
                     }
-                }
+            }
         }
     }
 }

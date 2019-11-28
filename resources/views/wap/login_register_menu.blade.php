@@ -39,6 +39,8 @@
             </div>
         </div>
     </div>
-
+<script>
+document.querySelector(".user-content").style.height = document.documentElement.clientHeight + "px";
+</script>
 
 @endsection

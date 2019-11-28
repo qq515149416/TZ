@@ -3,14 +3,7 @@ if(document.querySelector("#registered")){
   window.axios = require('axios');
   window.$ = window.jQuery = require('jquery');
   window.Vue = require('vue');
-//   document.querySelector(".close-salesman").onclick = function(){
-//       document.querySelector(".select").style.display="none";
-//       document.body.style.overflow = "auto";
-//     }
-//   document.querySelector(".select-salesman").onclick= function(){
-//       document.querySelector(".select").style.display="block";
-//       document.body.style.overflow = "hidden";
-//   }
+
  
   function waitSendVerificationCode(frequency,callbrak) {
     if(frequency > 0) {

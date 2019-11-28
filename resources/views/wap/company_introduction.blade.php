@@ -24,7 +24,7 @@
                         <div class="drop-options">
                             <p>{{$page_info[$page]['name']}}</p>
                             <span class="arrow"></span>
-                            <ul class="select-text clear">
+                            <ul class="select-text clear" style="display: none;">
                                 <li class="option-i" value="0" selected>公司简介</li>
                                 <li class="option-i" value="1">新闻公告</li>
                                 <li class="option-i" value="2">荣誉资质</li>
@@ -55,15 +55,17 @@
 
                         @foreach ($page_info['news']['data'] as $data)
                         <div class="news">
-                            <div class="news-text-title">
-                                {{$data->title}}
-                            </div>
-                            <div class="news-text-content">
-                                {{$data->digest}}
-                            </div>
-                            <div class="news-text-time">
-                                {{$data->created_at}}
-                            </div>
+                            <a href="/wap/new/detail">
+                                <div class="news-text-title">
+                                    {{$data->title}}
+                                </div>
+                                <div class="news-text-content">
+                                    {{$data->digest}}
+                                </div>
+                                <div class="news-text-time">
+                                    {{$data->created_at}}
+                                </div>
+                            </a>
                         </div>
                         @endforeach
                         <div class="bottom" id="bottom">
@@ -1148,49 +1150,7 @@
                         </div>
                     </div>
 
-                    <!-- 新闻公告 内容页 -->
-                    <div class="news-content ">
-                        <div class="content">
-                            <div class="content-title">
-                                腾正科技关于2019年端午节放假通知
-                            </div>
-                            <div class="content-time">2019-06-06 12:03:39</div>
-                            <div class="content-main">
-                                您好!端午节将至，根据《国务院办公厅关于 2019 年部分节假日安排通知》，我司定于2019年6月7日至6月9日放假，共3天。
-                            </div>
-                            <div class="content-text clear">
-                                <div>
-                                    <p>尊敬的腾正用户：</p>
-                                    <p> 　　您好!端午节将至，根据《国务院办公厅关于 2019
-                                        年部分节假日安排通知》，我司定于2019年6月7日至6月9日放假，共3天。放假期间，我司安排工作人员24小时值班，为您提供不间断的业务咨询，技术方案，售后处理等服务。感谢您一直以来对腾正科技的支持和信任！在此提前祝您国庆节快乐！
-                                    </p>
-
-                                </div>
-                                <div>
-                                    <p>24小时技术专线：0769-22385558 15399941777</p>
-                                    <p>售后服务企业QQ：800093515</p>
-                                    <p>业务咨询电话：18922986777、18028237786</p>
-                                    <p>企业QQ：2851506990、2853978334</p>
-                                </div>
-                                <div>
-                                    <p>温馨提示：</p>
-                                    <p>1.放假期间避免进行重大业务变更</p>
-                                    <p>2.提前安排运维监控和合理备份</p>
-                                    <p>3.请关注余额和资源到期时间，如有需要及时续费</p>
-                                    <p>4.备案咨询业务正常，审核业务因通信管理局假期原因暂停，6月10日恢复正常</p>
-                                </div>
-                                <div>
-                                    <p>腾正科技</p>
-                                    <p>2019年6月6日</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="news-more">
-                            <p>上一篇：实现腾正科技共赢|腾正科技...</p>
-                            <p>下一篇：没有了</p>
-                            <img src="{{ asset("/images/wap/内容页按钮.png") }}" alt="">
-                        </div>
-                    </div>
+                    
 
                     <!-- 蓝条 -->
                     <!-- <div class="solutions-consulting">

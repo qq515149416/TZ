@@ -28,12 +28,15 @@ class UnderController extends Controller
          * 检验下架理由是否填写
          * @var [type]
          */
-        $rules = ['remove_reason'=>'required'];
-        $messages = ['remove_reason.required'=>'下架理由必须填写'];
-        $validator = Validator::make($apply,$rules,$messages);
-        if($validator->messages()->first()){
-            return tz_ajax_echo('',$validator->messages()->first(),0);
+        if($apply['type'] == 1){//主机/机柜下架时需要填写下架理由
+            $rules = ['remove_reason'=>'required'];
+            $messages = ['remove_reason.required'=>'下架理由必须填写'];
+            $validator = Validator::make($apply,$rules,$messages);
+            if($validator->messages()->first()){
+                return tz_ajax_echo('',$validator->messages()->first(),0);
+            }
         }
+        
 
         $apply_for = new UnderModel();
         $apply_result = $apply_for->applyUnder($apply);

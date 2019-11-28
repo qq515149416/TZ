@@ -20,9 +20,15 @@ class CheckApi
 	public function handle($request, Closure $next)
 	{
 		$par = $request->all();
+
 		if ( !isset($par['apiKey']) || !isset($par['hash']) || !isset($par['timestamp']) ) {
 			return tz_ajax_echo(null,'非法参数',3);
 		}
+		$now = time();
+		if ($par['timestamp'] - $now > 3600 || $now - $par['timestamp'] > 3600) {
+			return tz_ajax_echo(null,'签名过期',3);
+		}
+
 		$apiKey = $par['apiKey'];
 		$hash = $par['hash'];
 		unset($par['apiKey']);

@@ -160,7 +160,7 @@ class UnderModel extends Model
                     }
                 }
                 $remove['remove_status'] = 1;
-                $remove['remove_reason'] = $apply['remove_reason'];
+                $remove['remove_reason'] = isset($apply['remove_reason'])?$apply['remove_reason']:'下架';
                 $update                  = DB::table('tz_orders')->where(['order_sn' => $apply['order_sn']])->whereNull('deleted_at')->update($remove);
                 if ($update == 0) {
                     $return['code'] = 0;

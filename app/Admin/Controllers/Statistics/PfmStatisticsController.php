@@ -294,16 +294,19 @@ class PfmStatisticsController extends Controller
 				'id',
 				'客户',
 				'流水单号',
+				'业务类型',
 				'金额',
 				'付款时间',
 				'所属业务员',
 			], 
 		];
+		
 		foreach ($res['list'] as $k => $v) {
 			$data4[] = [ 
 				$res['list'][$k]['flow_id'] , 
 				$res['list'][$k]['customer_name'] , 
 				$res['list'][$k]['serial_number'] , 
+				$res['list'][$k]['type'] , 
 				$res['list'][$k]['actual_payment'] , 
 				$res['list'][$k]['pay_time'] , 
 				$res['list'][$k]['name'] ,

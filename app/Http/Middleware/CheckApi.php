@@ -34,10 +34,10 @@ class CheckApi
 		unset($par['apiKey']);
 		unset($par['hash']);
 		$check = $this->checkSign($apiKey,$par,$hash);
-		if ($check == false) {
-			return tz_ajax_echo(null,'非法的API Key',0);
+		if ($check['code'] !== 1) {
+			return tz_ajax_echo(null,$check['msg'],$check['code']);
 		}
-		$mid_params = [ 'check_sign' => $check];
+		$mid_params = [ 'check_sign' => $check['msg']];
 
 		$request->attributes->add($mid_params);
 		return $next($request);
@@ -57,7 +57,10 @@ class CheckApi
  				->first();
  		//如果没有
  		if (!$apply) {
- 			return false;
+ 			return [
+ 				'code' 	=> 1007,
+ 				'msg'	=> '您的账户未开启API Key, API接口无法使用',
+ 			];
  		}
 
  		$apply = $apply->toArray();	//转数组
@@ -79,9 +82,15 @@ class CheckApi
  		$sign_str = md5($sign_str);
  		//dd($sign_str);
  		if($sign_str != $hash){
- 			return false;
+ 			return [
+ 				'code' 	=> 2,
+ 				'msg'	=> '非法的API Key',
+ 			];
  		}else{
- 			return $apply['user_id'];
+ 			return [
+ 				'code' 	=> 1,
+ 				'msg'	=> $apply['user_id'],
+ 			];
  		}
 	}
 }

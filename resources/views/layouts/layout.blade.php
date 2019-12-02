@@ -340,6 +340,9 @@
                     <dd>
                         <a href="/help">帮助中心</a>
                     </dd>
+                    <dd>
+                        <a target="_blank" href="http://doc.tzidc.com">API文档</a>
+                    </dd>
                 </dl>
                 <dl>
                     <dt>新闻资讯</dt>

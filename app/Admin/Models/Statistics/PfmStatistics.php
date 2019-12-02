@@ -1207,7 +1207,10 @@ class  PfmStatistics extends Model
 		];
 
 	}
-
+	/**
+	* @param
+	*
+	*/
 	public function getOrderByFlowId($flow_id)
 	{
 		$order_id = $this->where('id',$flow_id)->value('order_id');	
@@ -1259,6 +1262,13 @@ class  PfmStatistics extends Model
 		}
 	}
 
+	/**
+	*
+	* @param 
+	* 
+	*
+	*
+	**/
 	public function showOrderDetail($order_id)
 	{
 		$model = new OrdersModel();

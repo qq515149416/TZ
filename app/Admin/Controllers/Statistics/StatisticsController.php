@@ -220,9 +220,9 @@ class StatisticsController extends Controller
 		$model = new BusinessModel();
 		$idc_on = $model->leftJoin('tz_users as b' , 'b.id' , '=' , 'tz_business.client_id')
 					->where(function($query) use ($month_begin,$month_end){
-						$query->where('tz_business.start_time','>',$month_begin)
-						->where('tz_business.start_time','<',$month_end)
-						->whereIn('tz_business.business_status',[0,1,3,4])
+						$query->where('tz_business.start_time','>',$month_begin) 	//开始时间大于月开始的
+						->where('tz_business.start_time','<',$month_end) 		//开始时间小于月结束的
+						->whereIn('tz_business.business_status',[0,1,3,4])			//业务状态为
 						->where('tz_business.remove_status',0);
 					})
 					->orWhere(function($query) use ($month_begin,$month_end){
@@ -524,6 +524,7 @@ class StatisticsController extends Controller
 			0 => [
 				'业务号',
 				'月营收',
+				'下架原因',
 				'客户名称',
 				'业务员',
 				'机器编号',
@@ -559,6 +560,7 @@ class StatisticsController extends Controller
 			$under_arr[] = [
 				$v->business_number,
 				$v->money,
+				$v->remove_reason,
 				$v->client_name,
 				$v->sales_name,
 				$v->machine_number,

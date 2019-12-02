@@ -70,10 +70,15 @@ class ExcelController extends Controller
 		
 
 		for($i=0;$i<count($cellArr);$i++){
-			for ($j=0; $j < count($cellArr[$i]); $j++) { 
-				$cellArr[$i]['cellData'][$j] = array_values($cellArr[$i]['cellData'][$j]);
-				$cellArr[$i]['cellData'][$j][0] = str_replace('=',' '.'=',$cellArr[$i]['cellData'][$j][0]);
+			foreach ($cellArr[$i]['cellData'] as $k => $v) {
+				$cellArr[$i]['cellData'][$k] = array_values($cellArr[$i]['cellData'][$k]);
+				$cellArr[$i]['cellData'][$k][0] = str_replace('=',' '.'=',$cellArr[$i]['cellData'][$k][0]);
 			}
+			// for ($j=0; $j < count($cellArr[$i]); $j++) { 
+
+			// 	$cellArr[$i]['cellData'][$j] = array_values($cellArr[$i]['cellData'][$j]);
+			// 	$cellArr[$i]['cellData'][$j][0] = str_replace('=',' '.'=',$cellArr[$i]['cellData'][$j][0]);
+			// }
 		}
 		//dd($cellData);
 		Excel::create($cellName,function($excel) use ($cellArr){

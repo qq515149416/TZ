@@ -169,18 +169,29 @@ class StatisticsController extends Controller
 			'code'	=> 1,
 		];
 	}
-
+	/**
+	* 按月份获取业务上下架统计数据
+	*
+	* @param $month 	-月份( 格式: Y-m ; 例子: 2019-10 )
+	* @return 
+	*
+	**/
 	public function getBusinessSta($month)
 	{
+		//拼接出月份开始的date (头一天的0点)
 		$month_begin = $month.'-01 00:00:00';
+		//获取月份的结束date (最后一天的最后一秒)
 		$month_end = date('Y-m-t 23:59:59',strtotime($month_begin));
+		//月份的最后一天的 日
 		$month_day = date('t',strtotime($month_begin));
+		//获取月份
 		$month_small = date('m',strtotime($month_begin));
 
+		//业务类型的数组
 		$type_arr = [
 			0	=> [
-				'type'			=> 'idc',
-				'num'			=> 0,
+				'type'			=> 'idc',		//类型
+				'num'			=> 0,		//上架数量
 			],
 			1	=> [
 				'type'			=> 'cdn',
@@ -197,14 +208,15 @@ class StatisticsController extends Controller
 
 		];
 
+		//生成该月份的数组
 		$arr 	= [];
 		for ($j=1; $j <= $month_day; $j++) {
 			$arr[] = [
-				'time'		=> $month_small .'-'.$j,
-				'num'		=> 0,
+				'time'		=> $month_small .'-'.$j,		//日期
+				'num'		=> 0,				//上架数量
 			];
 		}
-
+		//获取该月份idc的上架业务
 		$model = new BusinessModel();
 		$idc_on = $model->leftJoin('tz_users as b' , 'b.id' , '=' , 'tz_business.client_id')
 					->where(function($query) use ($month_begin,$month_end){
@@ -220,20 +232,26 @@ class StatisticsController extends Controller
 					})
 					->orderBy('tz_business.start_time','desc')
 					->get(['tz_business.sales_name' , 'tz_business.business_number' , 'tz_business.business_type' , 'tz_business.machine_number', 'tz_business.money as price' , 'tz_business.start_time' , 'tz_business.endding_time' , 'b.name as cusname' , 'b.nickname' , 'b.email']);
-
+		//idc业务主机类型
 		$business_type = [ 1 => '租用主机' , 2 => '托管主机' , 3 => '租用机柜' ];
+		//如果不是空就塞进统计数组里
 		if (!$idc_on->isEmpty()) {
 			$idc_on = $idc_on->toArray();
 			foreach ($idc_on as $k => $v) {
+				//主机类型转成中文
 				$idc_on[$k]['business_type'] = $business_type[$idc_on[$k]['business_type']];
+				//idc类型统计数量加一个
 				$type_arr[0]['num']++;
+				//获取业务上架 date 里的 日
 				$day = date('j' , strtotime($idc_on[$k]['start_time']));
+				//在该日的统计数量加一
 				$arr[$day-1]['num']++;
+				//获取客户名称,昵称>邮箱>登录名
 				$idc_on[$k]['customer_name'] = $idc_on[$k]['nickname']?:$idc_on[$k]['email']?:$idc_on[$k]['name'];
 			}
 
 		}
-
+		//获取该月份上架的高防业务
 		$dip_model = new DipModel();
 		$dip_on = $dip_model->leftJoin('tz_users as b' , 'b.id' , '=' , 'tz_defenseip_business.user_id')
 					->leftJoin('admin_users as c' , 'c.id' , '=' , 'b.salesman_id')
@@ -251,9 +269,11 @@ class StatisticsController extends Controller
 					})
 					->orderBy('tz_defenseip_business.start_time', 'desc')
 					->get(['c.name as sales_name' ,'tz_defenseip_business.business_number','tz_defenseip_business.status' , 'd.name as package_name' , 'd.price' ,'tz_defenseip_business.start_time' , 'tz_defenseip_business.end_at as endding_time' , 'tz_defenseip_business.created_at' , 'b.name' , 'b.nickname' , 'b.email','e.ip as machine_number']);
+
 		if (!$dip_on->isEmpty()) {
 			$dip_on = $dip_on->toArray();
 			for ($i=0; $i < count($dip_on); $i++) {
+				//如果业务状态是试用,业务的开始时间是生成的时间
 				if ($dip_on[$i]['status'] == 4) {
 					$dip_on[$i]['start_time'] = $dip_on[$i]['created_at'];
 				}
@@ -264,6 +284,7 @@ class StatisticsController extends Controller
 				$dip_on[$i]['customer_name'] = $dip_on[$i]['nickname']?:$dip_on[$i]['email']?:$dip_on[$i]['name'];
 			}
 		}
+		//获取月份内购买的叠加包
 		$overlay_model = new OverlayBelongModel();
 		$overlay_on = $overlay_model->leftJoin('tz_users as b' , 'b.id' , '=' , 'tz_overlay_belong.user_id')
 						->leftJoin('admin_users as c' , 'c.id' , '=' , 'b.salesman_id')
@@ -280,8 +301,10 @@ class StatisticsController extends Controller
 				$day = date('j' , strtotime($overlay_on[$i]['buy_time']));
 				$arr[$day-1]['num']++;
 				$overlay_on[$i]['customer_name'] = $overlay_on[$i]['nickname']?:$overlay_on[$i]['email']?:$overlay_on[$i]['name'];
-            }
+           			}
 		}
+		//所有上架业务的数组
+		//把几种业务类型的业务都按照一定规律塞到所有上架数组中
 		$all_on = [];
 		foreach ($idc_on as $k => $v) {
 			$all_on[] = [
@@ -386,6 +409,7 @@ class StatisticsController extends Controller
 				'客户',
 				'业务类型',
 				'套餐',
+				'ip',
 				'单价',
 				'开始时间',
 				'结束时间',
@@ -397,6 +421,7 @@ class StatisticsController extends Controller
 				$res['dip_on'][$k]['business_number'] ,
 				$res['dip_on'][$k]['customer_name'] ,
 				$res['dip_on'][$k]['business_type'] ,
+				$res['dip_on'][$k]['package_name'] ,
 				$res['dip_on'][$k]['machine_number'] ,
 				$res['dip_on'][$k]['price'] ,
 				$res['dip_on'][$k]['start_time'] ,
@@ -485,6 +510,7 @@ class StatisticsController extends Controller
 				'预计营收',
 				'客户名称',
 				'业务员',
+				'机器编号',
 				'IP',
 				'所在机柜',
 				'所属机房',
@@ -500,6 +526,7 @@ class StatisticsController extends Controller
 				'月营收',
 				'客户名称',
 				'业务员',
+				'机器编号',
 				'IP',
 				'所在机柜',
 				'所属机房',
@@ -518,6 +545,7 @@ class StatisticsController extends Controller
 				$v->single_total,
 				$v->client_name,
 				$v->sales_name,
+				$v->machine_number,
 				$v->ip,
 				$v->cabinet,
 				$v->machineroom,
@@ -533,6 +561,7 @@ class StatisticsController extends Controller
 				$v->money,
 				$v->client_name,
 				$v->sales_name,
+				$v->machine_number,
 				$v->ip,
 				$v->cabinet,
 				$v->machineroom,

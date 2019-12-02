@@ -1060,14 +1060,23 @@ class  PfmStatistics extends Model
 
 		return $all_actual_payment;
 	}
-
+	/***
+	* 按月获取消费统计
+	*
+	*
+	**/
 	public function getConsumptionDetailed($month)
 	{
+		//拼接出月份开始的date (头一天的0点)
 		$begin = $month.'-01 00:00:00';
+		//获取月份的结束date (最后一天的最后一秒)
 		$end = date('Y-m-t 23:59:59',strtotime($begin));
+		//月份的最后一天的 日
 		$month_day = date('t',strtotime($begin));
+		//获取月份
 		$month_small = date('m',strtotime($begin));
 
+		//获取所有消费流水
 		$all_actual_payment = $this->leftJoin('admin_users as b' , 'b.id' , '=' , 'tz_orders_flow.business_id')
 				->leftjoin('tz_users as c' , 'c.id' , '=' , 'tz_orders_flow.customer_id')
 				->where('tz_orders_flow.pay_time','>',$begin)
@@ -1087,14 +1096,16 @@ class  PfmStatistics extends Model
 		}
 		$all_actual_payment = $all_actual_payment->toArray();
 
+		//生成该月每天的数组
 		for ($j=1; $j <= $month_day; $j++) { 
 			$arr[] = [
 				'time'			=> $month_small .'-'.$j,
 				'actual_payment'	=> 0,
 			];
 		}
-
+		//业务员数组
 		$user_arr = [];
+		//业务类型数组
 		$type_arr = [
 			0	=> [
 				'type'			=> 'idc',
@@ -1118,10 +1129,12 @@ class  PfmStatistics extends Model
 			],
 		];
 		foreach ($all_actual_payment as $k => $v) {
+			//获取客户名称,昵称>邮箱>登录名
 			$all_actual_payment[$k]['customer_name'] = $all_actual_payment[$k]['nickname']?:$all_actual_payment[$k]['email']?:$all_actual_payment[$k]['cusname'];
 			if ($v['name'] == null) {
 				$v['name'] = '已删业务员';
 			}
+			//这订单id存的不统一,有点存的json数组,有的就存的一个数字
 			$v['order_id'] = json_decode($v['order_id'] , true);
 			if (!is_array($v['order_id'] ) ) {
 				$all_actual_payment[$k]['order_id'] = array( 0 => $v['order_id'] );

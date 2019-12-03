@@ -17,6 +17,16 @@
     <link rel="stylesheet" href="{{ asset("/css/layout/index.css") }}?random_num={{ time() + random_int(100,1000) }}" />
     <meta name="keywords" content="@yield('keywords')"/>
     <meta name="description" content="@yield('description')">
+
+    <script>
+        !function(g,d,t,e,v,n,s){if(g.gdt)return;v=g.gdt=function(){v.tk?v.tk.apply(v,arguments):v.queue.push(arguments)};v.sv='1.0';v.bt=0;v.queue=[];n=d.createElement(t);n.async=!0;n.src=e;s=d.getElementsByTagName(t)[0];s.parentNode.insertBefore(n,s);}(window,document,'script','//qzonestyle.gtimg.cn/qzone/biz/gdt/dmp/user-action/gdtevent.min.js');
+        gdt('init','1109261076');
+        gdt('track','PAGE_VIEW');
+    </script>
+    <noscript>
+        < img height="1" width="1" style="display:none" src="https://a.gdt.qq.com/pixel?user_action_set_id=1109261076&action_type=PAGE_VIEW&noscript=1"/>
+    </noscript>
+
 </head>
 <body>
     <div class="container-fluid main">

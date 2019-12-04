@@ -41,7 +41,7 @@
                 <thead>
                 <tr>
                     <th scope="col" style="width: 20%;"></th>
-                    <th scope="col">加速-特惠体验</th>
+                    <th scope="col">加速-免费体验</th>
                     <th scope="col">加速-企业版</th>
                     <th scope="col">加速-特惠体验</th>
                 </tr>
@@ -71,7 +71,7 @@
                 <!--******-->
                 <tr>
                     <th>原价域名数量</th>
-                    <td>1个</td>
+                    <td>3个</td>
                     <td>2个</td>
                     <td>3个</td>
                 </tr>
@@ -100,8 +100,9 @@
                 <tr>
                     <th>活动价格</th>
                     <td style="padding-top: 20px; padding-bottom: 20px;">
-                        <p class="price">100元/月</p>
-                        <a href="http://www.15cdn.com/" class="purchase-btn">立即购买</a>
+                        <p class="price">原价 <s>100元/月</s></p>
+                        <p class="price">首月体验 0元/月</p>
+                        <a href="http://www.15cdn.com/" class="purchase-btn">立即体验</a>
                     </td>
                     <td>
                         <p class="price">500元/月</p>

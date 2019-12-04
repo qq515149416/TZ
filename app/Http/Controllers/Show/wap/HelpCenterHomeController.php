@@ -3,76 +3,73 @@
 namespace App\Http\Controllers\Show\wap;
 
 use App\Http\Controllers\Controller;
-
-use Illuminate\Support\Facades\DB;
+use App\Admin\Models\News\HelpCategoryModel;
+use App\Admin\Models\News\HelpContentsModel;
+use App\Admin\Models\News\HelpTagModel;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 
 class HelpCenterHomeController extends Controller
 {
-    public function index($page)
-    {
-        $page_info = [
-            "Linux_server" => [
-                "name" => "Linux服务器"
-            ],
-            "Windows_server" => [
-                "name" => "Windows服务器",
-            ],
-            "server_rent" => [
-                "name" => "服务器租用"
-            ],
-            "server_hosting" => [
-                "name" => "服务器托管"
-            ],
-            "high_server" => [
-                "name" => "高防服务器"
-            ],
-            "DDOS_height_ip" => [
-                "name" => "DDOS高防IP"
-            ],
-            "cabinet_rent" => [
-                "name" => "机柜租用"
-            ],
-            "broadband_rent" => [
-                "name" => "大带宽租用"
-            ],
-            "network_security" => [
-                "name" => "网络安全"
-            ],
-            "CDN_speed" => [
-                "name" => "CDN加速"
-            ],
-            "height_CDN" => [
-                "name" => "高防CDN"
-            ],
-            "cloud_hosting" => [
-                "name" => "云主机"
-            ],
-            "C_shield" => [
-                "name" => "防C盾"
-            ],
-            "solution" => [
-                "name" => "解决方案"
-            ],
-            "operations" => [
-                "name" => "运维咨询"
-            ],
-            "online_game" => [
-                "name" => "网游咨询"
-            ],
-            "web_site" => [
-                "name" => "网站备案"
-            ],
-            "newbie_guide" => [
-                "name" => "新手指南"
-            ],
-            "problem" => [
-                "name" => "常见问题"
-            ],
-        ];
-        return view("wap/help_center_home",[
-            "page" => $page,
-            "page_info" => $page_info
-        ]);
-    }
+	public function index($category_id,Request $request)
+	{
+		$par = $request->only(['page']);
+		if (isset($par['page'])) {
+			$page = $par['page'];
+		}else{
+			$page = 1;
+		}
+		
+		
+
+		$helpContentsModel = new HelpContentsModel();
+		$where = [
+			["parent_id", "<>" , 0],
+			["status", "=", 1]
+		];
+		if($category_id) {
+			$where = [
+				["parent_id", "=" , $category_id],
+				["status", "=", 1]
+			];
+		}
+		$content_where = [
+			['category_id' , "=" , $category_id],
+			["state" , "=" , 1]
+		];
+
+		$per_page = 8;
+		$current_page = $page;
+		$offset = ($current_page - 1) * $per_page;
+		$total = HelpContentsModel::where($content_where)->count();
+		$result = HelpContentsModel::where($content_where)->orderBy('created_at','desc')->offset($offset)->limit($per_page)->get();
+		$last_page = ceil($total/$per_page);
+
+		$page_members = [
+			'category_id'	=> $category_id,
+			'current_page'	=> $current_page,
+			'max_page'	=> $last_page,
+		];
+		//dd($members);
+		// $son_nav = HelpCategoryModel::where($where)->get();
+		// dd($son_nav->toArray());
+		$helpTagModel = new HelpTagModel();
+		return view("wap/help_center_home",[
+			"nav_now"		=> HelpCategoryModel::where([
+							"id" => $category_id,
+						])->value('name'),
+			"nav_main" 		=> HelpCategoryModel::where([
+							"parent_id" => 0,
+							"status" => 1,
+						])->get(),
+			"son_nav"   		=> HelpCategoryModel::where($where)->get(),
+			"page"  			=> 'help_center',
+			"content"		=> $result,
+			"page_members"	=> $page_members,
+		]);
+	}
+
+
 }

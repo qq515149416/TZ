@@ -6105,6 +6105,9 @@ input:hover {
   height: 30px;
   color: #252b3a;
 }
+#help_center_home .main-body .tz-container .main-content .drop-options ul li a:visited {
+  color: #252b3a;
+}
 #help_center_home .main-body .tz-container .main-content .option-text {
   padding: 20px 20px;
   background-color: #fff;
@@ -6121,9 +6124,12 @@ input:hover {
   font-family: "PingFang";
   color: #252b3a;
   font-weight: bold;
-  margin-bottom: 8px;
+}
+#help_center_home .main-body .tz-container .main-content .option-text .help-home-s .help-title a:visited {
+  color: #0000EE;
 }
 #help_center_home .main-body .tz-container .main-content .option-text .help-home-s .help-text {
+  margin-top: 8px;
   font-size: 12px;
   font-family: "PingFang";
   color: #666a75;
@@ -6153,7 +6159,7 @@ input:hover {
   top: 0px;
 }
 #help_center_home .main-body .tz-container .main-content .option-text .bottom div img:first-child {
-  margin-right: 8px;
+  margin-right: 5px;
 }
 #help_center_home .main-body .tz-container .main-content .option-text .bottom div p {
   display: inline-block;
@@ -6169,7 +6175,6 @@ input:hover {
   height: 30px;
   left: 50%;
   margin-left: -35px;
-  color: #989ca9;
   top: 5px;
   line-height: 30px;
   text-align: center;
@@ -6177,16 +6182,25 @@ input:hover {
 #help_center_home .main-body .tz-container .main-content .option-text .bottom .page span {
   color: #252b3a;
 }
+#help_center_home .main-body .tz-container .main-content .option-text .bottom .page .max-page {
+  color: #989ca9;
+}
 #help_center_home .main-body .tz-container .main-content .option-text .bottom div:nth-child(3) {
   right: 50%;
   margin-right: -133px;
+}
+#help_center_home .main-body .tz-container .main-content .option-text .bottom div:nth-child(3) a:nth-child(1) img {
+  margin-left: 5px;
+}
+#help_center_home .main-body .tz-container .main-content .option-text .bottom div:nth-child(3) a:nth-child(2) img {
+  margin-right: 0px;
 }
 #help_center_home .main-body .tz-container .main-content .help-home-content {
   background-color: #fff;
   padding: 20px;
   display: none;
 }
-#help_center_home .main-body .tz-container .main-content .help-home-content .problem-conetnt {
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content {
   width: 100%;
   text-align: center;
   -webkit-box-shadow: 1px 1px 25px 0px rgba(24, 30, 60, 0.2);
@@ -6194,34 +6208,86 @@ input:hover {
   padding: 20px 18px;
   border-radius: 5px;
 }
-#help_center_home .main-body .tz-container .main-content .help-home-content .problem-conetnt .p-title {
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .p-title {
   font-size: 17px;
   font-family: "PingFang";
   color: #252b3a;
   font-weight: bold;
   margin-bottom: 10px;
 }
-#help_center_home .main-body .tz-container .main-content .help-home-content .problem-conetnt s .time {
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .time {
   font-size: 10px;
   font-family: "PingFang";
   color: #989ca9;
 }
-#help_center_home .main-body .tz-container .main-content .help-home-content .problem-conetnt .c-main {
-  margin: 15px 0px;
-  padding: 12px 12px;
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s p {
+  width: 100% ;
+  height: auto;
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow: hidden;
+}
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s p a img {
+  width: 100%;
+}
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s ul li {
+  font-size: 12px;
+  color: #666a75;
+  width: 100% ;
+  height: auto;
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow: hidden;
+}
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s div {
+  font-size: 12px;
+  color: #666a75;
+}
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s div pre {
+  font-size: 12px;
+  color: #666a75;
+}
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s h1 {
+  font-size: 16px !important;
+}
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s h3 {
+  font-size: 14px !important;
+}
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s h2 {
+  font-size: 14px !important;
+  margin-top: 10px;
+}
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s h2 b {
+  size: 17px !important;
+  color: #252b3a;
+}
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s p:nth-child(2) {
+  margin: 15px 0px 0px 0px;
   border-radius: 10px;
   text-align: left;
-  border: 1px solid #cbd0df;
-  background-color: #ebebf1;
   font-size: 12px;
   font-family: "PingFang";
   color: #666a75;
 }
-#help_center_home .main-body .tz-container .main-content .help-home-content .problem-conetnt .p-text {
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s p:nth-child(3) {
   font-size: 12px;
-  font-family: "PingFang";
   color: #666a75;
   margin-bottom: 20px;
+  text-align: left;
+}
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s p:nth-child(n) {
+  font-size: 12px;
+  color: #666a75;
+  margin-bottom: 20px;
+  text-align: left;
+}
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s p:nth-child(n) b {
+  color: #252b3a;
+}
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s p:last-child {
+  font-size: 12px;
+  color: #666a75;
+  margin-bottom: 5px;
   text-align: left;
 }
 #help_center_home .main-body .tz-container .main-content .help-home-content .more {

@@ -52,6 +52,9 @@ class HelpCenterHomeController extends Controller
 			'current_page'	=> $current_page,
 			'max_page'	=> $last_page,
 		];
+		foreach ($result as $k => $v) {
+			$result[$k]->keywords = explode(',', $result[$k]->keywords);
+		}
 		//dd($members);
 		// $son_nav = HelpCategoryModel::where($where)->get();
 		// dd($son_nav->toArray());

@@ -1,12 +1,21 @@
 
 var help_home_s = document.querySelectorAll(".option-text .help-home-s");
+var testabc = document.querySelectorAll(".testabc")
 for(var i=0;i<help_home_s.length;i++){
     help_home_s[i].addEventListener("click",function(){
-        document.querySelector(".option-text").style.display="none";
+        for(var i=0;i<testabc.length;i++){
+            testabc[i].style.display="none";
+        }
+        if(document.querySelector(".helpcenter").innerHTML=="高防服务器"){
+            console.log("高防服务器");
+        document.querySelector(".title2").style.display="none";
+        }
        document.querySelector(".help-home-content").style.display="block";
-  
+       document.querySelector("#help_center_home #bottom").style.display="none";
       })
 }
+
+
 function goPage(pno, psize) {
     var news = document.querySelectorAll(".option-text .news");
     var num = news.length;

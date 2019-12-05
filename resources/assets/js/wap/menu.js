@@ -4,7 +4,8 @@ if(document.querySelector("#menu")){
     window.$ = window.jQuery = require('jquery');
     window.axios = require('axios');
     window.Vue = require('vue');
-    console.log("menu");
+    // console.log("menu");
+    document.querySelector(".collapses-img").style.height = (window.screen.height - 45 - 336)+"px"; 
     new Vue({
         el: '#menu',
         data: {

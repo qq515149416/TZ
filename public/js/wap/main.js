@@ -23777,6 +23777,25 @@ $.get("/home/user/getInfo", function (data) {
     }
 });
 
+if (document.querySelector("#search_results")) {
+    var keywords = document.getElementById("keywords");
+    var optiontext = document.querySelector(".option-text");
+    var btn = document.getElementById("btn");
+    var searchwords = document.getElementById("searchwords");
+    btn.onclick = function () {
+        var span = document.querySelectorAll(".help-home-s span");
+        if (span != null) {
+            for (var i = 0; i < span.length; i++) {
+                span[i].className = "";
+            }
+            console.log(optiontext);
+            var findText = optiontext.innerHTML.split(searchwords.value);
+            keywords.innerText = searchwords.value;
+            optiontext.innerHTML = findText.join('<span class=\"blue\" >' + searchwords.value + '</span>');
+        }
+    };
+}
+
 /***/ }),
 /* 53 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -27715,12 +27734,21 @@ if (document.querySelector("#company_introduction")) {
 
 
 var help_home_s = document.querySelectorAll(".option-text .help-home-s");
+var testabc = document.querySelectorAll(".testabc");
 for (var i = 0; i < help_home_s.length; i++) {
     help_home_s[i].addEventListener("click", function () {
-        document.querySelector(".option-text").style.display = "none";
+        for (var i = 0; i < testabc.length; i++) {
+            testabc[i].style.display = "none";
+        }
+        if (document.querySelector(".helpcenter").innerHTML == "高防服务器") {
+            console.log("高防服务器");
+            document.querySelector(".title2").style.display = "none";
+        }
         document.querySelector(".help-home-content").style.display = "block";
+        document.querySelector("#help_center_home #bottom").style.display = "none";
     });
 }
+
 function goPage(pno, psize) {
     var news = document.querySelectorAll(".option-text .news");
     var num = news.length;
@@ -27807,16 +27835,7 @@ if (document.querySelector("#help_center_home")) {
       arrows.style.transform = "rotate(-45deg)";
       arrows.style.transition = "transform 0.4s";
     }
-    var option_i = document.querySelectorAll(".option-i");
-    var p_value = document.querySelector(".drop-options p");
-    for (var i = 0; i < option_i.length; i++) {
-      option_i[i].index = i;
-      option_i[i].addEventListener("click", function () {
-        p_value.innerHTML = option_i[this.index].innerHTML;
-        document.querySelector(".option-text").style.display = "block";
-        document.querySelector(".help-home-content").style.display = "none";
-      });
-    }
+
     document.addEventListener("touchmove", function (e) {
       if (e.target == document.querySelector(".drop-options p") || e.target == document.querySelector(".select-text")) {
         document.querySelector(".select-text").style.display = "block";
@@ -27830,7 +27849,7 @@ if (document.querySelector("#help_center_home")) {
     });
   };
   if (document.querySelector("#help-p")) {
-    goPage(1, 8);
+    // goPage(1,8)
   }
 }
 
@@ -28325,7 +28344,8 @@ if (document.querySelector("#menu")) {
     window.$ = window.jQuery = __webpack_require__(2);
     window.axios = __webpack_require__(5);
     window.Vue = __webpack_require__(4);
-    console.log("menu");
+    // console.log("menu");
+    document.querySelector(".collapses-img").style.height = window.screen.height - 45 - 336 + "px";
     new Vue({
         el: '#menu',
         data: {},

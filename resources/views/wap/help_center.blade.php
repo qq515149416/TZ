@@ -19,10 +19,11 @@
 						<div class="search">
 							<p class="search-t">帮助中心</p>
 							<div class="search-c">
-								<input type="text" name="search" id="" placeholder="请输入关键词题的答案">
-								<a href="/wap/search_results">
-								<input type="botton" style="background-image: url({{ asset("/images/wap/搜索.png") }});">
-							</a>
+								
+								<form action='/wap/search_results' method='get'>
+									<input type="text" name="keyword" id="" placeholder="请输入关键词题的答案" required="required">
+									<input type="submit" style="background-image: url({{ asset("/images/wap/搜索.png") }});">
+								</form>
 							</div>
 							<div class="search-f">
 								<p>热门：怎么选择服务器租用商 | 服务器托管好吗</p>

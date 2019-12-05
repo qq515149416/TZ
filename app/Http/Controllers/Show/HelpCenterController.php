@@ -89,12 +89,8 @@ class HelpCenterController extends Controller
             ])->get(),
             "data" => $data,
             "recommend" => HelpContentsModel::where("category_id",$data->category_id['id'])->get(),
-            "next_data" => HelpContentsModel::where([
-                "id" => $id + 1
-            ])->first(),
-            "prev_data" => HelpContentsModel::where([
-                "id" => $id - 1
-            ])->first(),
+            "next_data" => HelpContentsModel::where("id",">",$id)->first(),
+            "prev_data" => HelpContentsModel::where("id","<",$id)->orderBy('id', 'desc')->first(),
             "template" => "http.help.content",
             "tags" => $helpTagModel->orderBy("search_count","desc")->limit(5)->get()
         ]);

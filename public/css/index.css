@@ -10500,6 +10500,349 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   font-family: 'pingFangHeavy';
   color: #4e4a4a;
 }
+#double12 {
+  background: url(/images/double12_beijing.png?36c9943398e4715b812acef504641662) no-repeat;
+  background-size: 100% 100%;
+  padding-top: 724px;
+}
+#double12 .double11-product {
+  margin-bottom: 98px;
+}
+#double12 .double11-product:last-of-type h2 {
+  width: 448px;
+}
+#double12 .double11-product:last-of-type .paper > .info > .config {
+  width: 640px;
+}
+#double12 .double11-product:last-of-type .paper > .info > .config .config-item.double {
+  width: 340px;
+}
+#double12 .double11-product:last-of-type .paper > .info > .config .config-item.double span.attr {
+  text-align: center;
+}
+#double12 .double11-product:last-of-type .paper > .info > .config .config-item.double span.val {
+  text-indent: 30px;
+}
+#double12 .double11-product:last-of-type .paper > .info > .buy-buttom {
+  margin-top: 55px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+#double12 .double11-product:last-of-type .paper > .info > .buy-buttom > .many {
+  cursor: pointer;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  background-color: #ff6d00;
+  padding-top: 26px;
+  padding-left: 40px;
+}
+#double12 .double11-product:last-of-type .paper > .info > .buy-buttom > .many > h6 {
+  font-size: 18px;
+  font-family: "pingFangHeavy";
+  margin: 0;
+  margin-bottom: 12px;
+  color: #fff;
+}
+#double12 .double11-product:last-of-type .paper > .info > .buy-buttom > .many > .tag {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 23px;
+  background-color: #ffffff;
+  font-size: 14px;
+  font-family: "pingFangHeavy";
+  color: #ff6d00;
+}
+#double12 .double11-product:last-of-type .paper > .info > .buy-buttom > .many > .purchas {
+  width: 290px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  padding-bottom: 16px;
+}
+#double12 .double11-product:last-of-type .paper > .info > .buy-buttom > .many > .purchas > .price {
+  font-family: "pingFang";
+  font-size: 12px;
+  color: #fff;
+  margin-top: 18px;
+}
+#double12 .double11-product:last-of-type .paper > .info > .buy-buttom > .many > .purchas > .price > .tag {
+  display: inline-block;
+  height: 22px;
+  width: 82px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border: 1px solid #fff;
+  background-color: #ff9f19;
+  text-align: center;
+  line-height: 22px;
+  border-radius: 22px;
+}
+#double12 .double11-product:last-of-type .paper > .info > .buy-buttom > .many > .purchas > .price > .amount {
+  font-family: "pingFangHeavy";
+  font-size: 40px;
+  color: #fff;
+  line-height: 40px;
+}
+#double12 .double11-product:last-of-type .paper > .info > .buy-buttom > .many > .purchas > .advisory {
+  font-family: "pingFangHeavy";
+  font-size: 16px;
+  color: #fff;
+}
+#double12 .double11-product:last-of-type .paper > .info > .buy-buttom > .single {
+  cursor: pointer;
+  background-color: #ff9f19;
+  padding-top: 18px;
+  padding-left: 40px;
+  padding-right: 22px;
+}
+#double12 .double11-product:last-of-type .paper > .info > .buy-buttom > .single > h6 {
+  font-size: 18px;
+  font-family: "pingFangHeavy";
+  margin: 0;
+  margin-bottom: 12px;
+  color: #fff;
+}
+#double12 .double11-product:last-of-type .paper > .info > .buy-buttom > .single > .tag {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 23px;
+  background-color: #ffffff;
+  font-size: 14px;
+  font-family: "pingFangHeavy";
+  color: #ffae50;
+}
+#double12 .double11-product:last-of-type .paper > .info > .buy-buttom > .single > .purchas {
+  width: 290px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  padding-bottom: 16px;
+}
+#double12 .double11-product:last-of-type .paper > .info > .buy-buttom > .single > .purchas > .price {
+  font-family: "pingFang";
+  font-size: 12px;
+  color: #fff;
+  margin-top: 14px;
+}
+#double12 .double11-product:last-of-type .paper > .info > .buy-buttom > .single > .purchas > .price > .original-price {
+  text-decoration: line-through;
+  margin-left: 12px;
+}
+#double12 .double11-product:last-of-type .paper > .info > .buy-buttom > .single > .purchas > .price > .amount {
+  font-family: "pingFangHeavy";
+  font-size: 40px;
+  color: #fff;
+  line-height: 40px;
+}
+#double12 .double11-product:last-of-type .paper > .info > .buy-buttom > .single > .purchas > .advisory {
+  font-family: "pingFangHeavy";
+  font-size: 16px;
+  color: #fff;
+}
+#double12 .double11-product h2 {
+  width: 579px;
+  text-align: center;
+  margin: 0 auto;
+  font-size: 30px;
+  font-family: 'pingFangBold';
+  color: #fff;
+  position: relative;
+}
+#double12 .double11-product h2::before {
+  content: "";
+  position: absolute;
+  width: 205px;
+  height: 32px;
+  background: url(/images/double12_bt_zuo.png?0b3012086932e121171bc330fbdd04c5) no-repeat;
+  left: -205px;
+  top: 0;
+}
+#double12 .double11-product h2::after {
+  content: "";
+  position: absolute;
+  width: 205px;
+  height: 32px;
+  background: url(/images/double12_bt_you.png?bdf00f4ef37d1b43f7e9ba84e20e3be0) no-repeat;
+  right: -205px;
+  top: 0;
+}
+#double12 .double11-product .paper {
+  width: 1196px;
+  margin: 0 auto;
+  margin-top: 64px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+}
+#double12 .double11-product .paper > .description {
+  width: 466px;
+  background-color: #252446;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 0 32px;
+  padding-top: 72px;
+  position: relative;
+}
+#double12 .double11-product .paper > .description::before {
+  content: "";
+  position: absolute;
+  width: 155px;
+  height: 37px;
+  background: url(/images/double12_biaoqian.png?3c653379d58a8f73980ef067b465b857) no-repeat;
+  top: 10px;
+  right: -4px;
+}
+#double12 .double11-product .paper > .description h5 {
+  margin: 0;
+  margin-bottom: 30px;
+  font-family: "pingFangHeavy";
+  font-size: 16px;
+  color: #ffffff;
+}
+#double12 .double11-product .paper > .description p {
+  margin: 0;
+  line-height: 24px;
+  font-family: "pingFang";
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.8);
+}
+#double12 .double11-product .paper > .info {
+  background: #fff;
+  width: 728px;
+  padding-top: 42px;
+}
+#double12 .double11-product .paper > .info > h3 {
+  padding-left: 40px;
+  color: #4e4a4a;
+  font-size: 22px;
+  font-family: 'pingFangBold';
+  margin-bottom: 36px;
+}
+#double12 .double11-product .paper > .info > h3 > .tag {
+  padding: 3px 12px;
+  background-color: #17c467;
+  border-radius: 18px;
+  font-family: 'pingFang';
+  font-size: 12px;
+  color: #fff;
+  margin-left: 8px;
+}
+#double12 .double11-product .paper > .info > p {
+  margin-left: 40px;
+  width: 80px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  border: 1px solid #e2e2e2;
+  font-size: 14px;
+  color: #aeb1b5;
+  font-family: 'pingFang';
+  border-radius: 2px;
+}
+#double12 .double11-product .paper > .info > .bottom {
+  padding-top: 56px;
+  padding-left: 40px;
+  padding-bottom: 20px;
+  position: relative;
+}
+#double12 .double11-product .paper > .info > .bottom::before {
+  content: "";
+  position: absolute;
+  width: 593px;
+  height: 1px;
+  background-color: #f0f0f0;
+  left: 48px;
+  top: 28px;
+}
+#double12 .double11-product .paper > .info > .bottom > .price {
+  float: left;
+  margin-right: 180px;
+  font-size: 16px;
+  font-family: 'pingFang';
+  color: #4e4a4a;
+  padding-bottom: 10px;
+}
+#double12 .double11-product .paper > .info > .bottom > .price .currency {
+  font-size: 22px;
+  font-family: "\5FAE\8F6F\96C5\9ED1";
+  color: #ff3300;
+}
+#double12 .double11-product .paper > .info > .bottom > .price .amount {
+  font-size: 36px;
+  font-family: 'pingFangHeavy';
+  color: #ff3300;
+}
+#double12 .double11-product .paper > .info > .bottom > .price .original-price {
+  color: #c6c8ca;
+  text-decoration: line-through;
+}
+#double12 .double11-product .paper > .info > .bottom > a {
+  text-decoration: none;
+  margin-top: 10px;
+  float: left;
+  width: 142px;
+  height: 40px;
+  border-radius: 2px;
+  color: #fff;
+  background: -webkit-gradient(linear, left top, right top, from(#ff7100), to(#ff3000));
+  background: linear-gradient(to right, #ff7100, #ff3000);
+  text-align: center;
+  line-height: 40px;
+  font-size: 16px;
+  font-family: 'pingFangHeavy';
+}
+#double12 .double11-product .paper > .info > .config {
+  width: 600px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin-left: 40px;
+}
+#double12 .double11-product .paper > .info > .config .config-item {
+  margin-bottom: 20px;
+  width: 100px;
+}
+#double12 .double11-product .paper > .info > .config .config-item.double {
+  width: 200px;
+}
+#double12 .double11-product .paper > .info > .config .config-item.double span.attr {
+  text-align: center;
+}
+#double12 .double11-product .paper > .info > .config .config-item span {
+  display: block;
+}
+#double12 .double11-product .paper > .info > .config .config-item span.attr {
+  font-size: 16px;
+  font-family: 'pingFang';
+  color: #a7aaaf;
+}
+#double12 .double11-product .paper > .info > .config .config-item span.val {
+  font-size: 18px;
+  font-family: 'pingFangHeavy';
+  color: #4e4a4a;
+}
 #overseas .version-heart {
   width: 1180px;
   margin: 0 auto;

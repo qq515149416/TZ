@@ -337,6 +337,7 @@ Route::group([
             'middleware' => 'CheckLogin',
         ], function () {
             Route::get('getInfo', 'User\InfoController@getInfo');  //获取用户信息
+            Route::get('userSituation','Customer\UserCentorController@userSituation');
         });
 
     });

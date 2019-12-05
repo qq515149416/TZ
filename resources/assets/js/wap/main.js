@@ -92,7 +92,7 @@ if(document.querySelector("#server_hosting") || document.querySelector("#high_se
     }
 }
 if(document.querySelector("#search_results")){
-    goPage(1,8);
+    
 }
 
 $.get("/home/user/getInfo",(data) => {

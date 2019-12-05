@@ -107,7 +107,7 @@
 									<a class="a-pap" href="/wap/help_center_home/{{$page_members['category_id']}}?page={{$page_members['current_page']-1}}"><img src="{{ asset("/images/wap/上一页.png") }}" alt=""></a>
 								</div>
 								<div class="page" id="page">
-									<span>0{{$page_members['current_page']}}</span>/<span class="max-page">0{{$page_members['max_page']}}</span>      <!-- {{$page_members['current_page']+1}} -->
+									<span class="current-page">{{$page_members['current_page']}}</span>/<span class="max-page">{{$page_members['max_page']}}</span>      <!-- {{$page_members['current_page']+1}} -->
 								</div>
 								<div style="width: 95px;">
 									<a class="a-next" href="/wap/help_center_home/{{$page_members['category_id']}}?page={{$page_members['current_page']+1}}"><img src="{{ asset("/images/wap/下一页.png") }}" alt=""></a>
@@ -124,14 +124,16 @@
  <script>
 
 	if("{{$page_members['max_page']}}"==0){
-		document.querySelector(".max-page").innerHTML="01";
+		document.querySelector(".max-page").innerHTML="1";
 	}
 	if("{{$page_members['current_page']}}"==1){
 		document.querySelector(".a-pap").onclick = function () {
 			return false;
 		}
 	}
-	if("{{$page_members['current_page']}}"=="{{$page_members['max_page']}}"){
+	console.log(document.querySelector(".current-page").innerHTML);
+	console.log("{{$page_members['max_page']}}");
+	if(document.querySelector(".current-page").innerHTML==document.querySelector(".max-page").innerHTML){
 		document.querySelector(".a-next").onclick = function () {
 			return false;
 		}

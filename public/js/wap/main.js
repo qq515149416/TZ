@@ -23763,9 +23763,7 @@ if (document.querySelector("#server_hosting") || document.querySelector("#high_s
         }
     }
 }
-if (document.querySelector("#search_results")) {
-    goPage(1, 8);
-}
+if (document.querySelector("#search_results")) {}
 
 $.get("/home/user/getInfo", function (data) {
     if (data.code == 1 && data.data.status == 2) {

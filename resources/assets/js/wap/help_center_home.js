@@ -15,12 +15,12 @@ if(document.querySelector("#help_center_home")){
         document.addEventListener("touchmove", function(e){
             if(e.target == document.querySelector(".drop-options p")||e.target ==document.querySelector(".select-text") ){
               document.querySelector(".select-text").style.display="block";
-             document.querySelector(".drop-options .arrow").style.transform = "rotate(135deg)";
-             document.querySelector(".drop-options .arrow").style.transition = "transform 0.4s";
+              document.querySelector(".drop-options .arrow").style.transform = "rotate(135deg)";
+              document.querySelector(".drop-options .arrow").style.transition = "transform 0.4s";
             }else{
               document.querySelector(".select-text").style.display="none";
-             document.querySelector(".drop-options .arrow").style.transform = "rotate(-45deg)";
-             document.querySelector(".drop-options .arrow").style.transition = "transform 0.4s";
+              document.querySelector(".drop-options .arrow").style.transform = "rotate(-45deg)";
+              document.querySelector(".drop-options .arrow").style.transition = "transform 0.4s";
             }
           })
     }

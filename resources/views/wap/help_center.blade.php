@@ -66,7 +66,7 @@
 										<a href="/wap/help_center_home/{{ $item->id }}?page=1">
 											<span class="dian"></span>
 											<p>{{ $item->name }}</p>
-											<p>共 <span>06</span> 文档</p>
+											<p>共 <span>{{$item->num}}</span> 文档</p>
 										</a>
 									</li>
 									@endforeach

@@ -94,7 +94,9 @@
 										<div class="next">
 											下一篇：<p>下一篇</p>
 										</div>
-										<img src="{{ asset("/images/wap/上一篇.png") }}" alt="">
+										<a href="/wap/help_center_home/{{$page_members['category_id']}}?page={{$page_members['current_page']}}">
+											<img src="{{ asset("/images/wap/上一篇.png") }}" alt="">
+										</a>
 									</div>
 							</div>
 						@endforeach

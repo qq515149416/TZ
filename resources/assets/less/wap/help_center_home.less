@@ -73,7 +73,10 @@
                         }
                     }
                 }
-                .drop-options{
+                .big-con{
+                    background-color: #fff;
+                    padding-bottom: 20px;
+                    .drop-options{
                     width: 100%;
                     background-color: #e5ebf8;
                     position: relative;
@@ -112,9 +115,9 @@
                             }
                         }
                     }
-                }
-                .option-text{
-                    padding: 20px 20px;
+                    }
+                    .option-text{
+                    padding: 20px 20px 0px 20px;
                     background-color: #fff;
                     // display: none;
                     .help-home-s{
@@ -150,59 +153,62 @@
                         }
 
                     }
+                    
+                    }
                     .bottom{
-                        height: 40px;
-                        position: relative;
-                        padding: 20px;
-                        margin-top: 20px;
-                        img{
-                            width: 40px;
+                    background-color: #fff;
+                    height: 40px;
+                    position: relative;
+                    padding: 20px;
+                    margin-top: 20px;
+                    img{
+                        width: 40px;
+                    }
+                    div{
+                        position: absolute;
+                        top: 0px;
+                        img:first-child{
+                            margin-right: 5px;
                         }
-                        div{
-                            position: absolute;
-                            top: 0px;
-                            img:first-child{
-                                margin-right: 5px;
-                            }
-                            p{
-                                display: inline-block;
-                            }
+                        p{
+                            display: inline-block;
                         }
-                        div:nth-child(1){
-                            left: 50%;
-                            margin-left: -133px;
+                    }
+                    div:nth-child(1){
+                        left: 50%;
+                        margin-left: -133px;
+                    }
+                    .page{
+                        border: 1px solid #cbcedd;
+                        border-radius: 20px;
+                        width: 70px;
+                        height: 30px;
+                        left: 50%;
+                        margin-left: -35px;
+                        top: 5px;
+                        line-height: 30px;
+                        text-align: center;
+                        span{
+                            color: #252b3a;
                         }
-                        .page{
-                            border: 1px solid #cbcedd;
-                            border-radius: 20px;
-                            width: 70px;
-                            height: 30px;
-                            left: 50%;
-                            margin-left: -35px;
-                            top: 5px;
-                            line-height: 30px;
-                            text-align: center;
-                            span{
-                                color: #252b3a;
-                            }
-                            .max-page{
-                                color: #989ca9;
-                            }
+                        .max-page{
+                            color: #989ca9;
                         }
-                        div:nth-child(3){
-                            right: 50%;
-                            margin-right: -133px;
-                            a:nth-child(1){
-                                img{
-                                    margin-left: 5px;
-                                }
-                            }
-                            a:nth-child(2){
-                                img{
-                                    margin-right: 0px;
-                                }
+                    }
+                    div:nth-child(3){
+                        right: 50%;
+                        margin-right: -133px;
+                        a:nth-child(1){
+                            img{
+                                margin-left: 5px;
                             }
                         }
+                        a:nth-child(2){
+                            img{
+                                margin-right: 0px;
+                            }
+                        }
+                    }
                     }
                 }
                 .help-home-content{
@@ -228,6 +234,13 @@
                             color: rgb( 152, 156, 169 );
                         }
                         .content-text-s{
+                            pre{
+                                width: 100% ;  
+                                height: auto;  
+                                word-wrap:break-word; 
+                                word-break:break-all;   
+                                overflow: hidden;
+                            }
                             p{ //自动换行
                                 width: 100% ;  
                                 height: auto;  

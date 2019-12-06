@@ -69,12 +69,16 @@
   padding-left: 20px;
   margin-top: 5px;
 }
-#help_center_home .main-body .tz-container .main-content .drop-options {
+#help_center_home .main-body .tz-container .main-content .big-con {
+  background-color: #fff;
+  padding-bottom: 20px;
+}
+#help_center_home .main-body .tz-container .main-content .big-con .drop-options {
   width: 100%;
   background-color: #e5ebf8;
   position: relative;
 }
-#help_center_home .main-body .tz-container .main-content .drop-options p {
+#help_center_home .main-body .tz-container .main-content .big-con .drop-options p {
   border-bottom: 1px solid #dadadd;
   height: 45px;
   line-height: 45px;
@@ -83,12 +87,12 @@
   font-size: 14px;
   padding: 0px 20px;
 }
-#help_center_home .main-body .tz-container .main-content .drop-options .arrow {
+#help_center_home .main-body .tz-container .main-content .big-con .drop-options .arrow {
   position: absolute;
   top: 18px;
   right: 20px;
 }
-#help_center_home .main-body .tz-container .main-content .drop-options ul {
+#help_center_home .main-body .tz-container .main-content .big-con .drop-options ul {
   background-color: #e5ebf8;
   padding: 10px 20px;
   width: 100%;
@@ -96,7 +100,7 @@
   z-index: 500;
   box-shadow: 0px 5px 10px 0px #d7d9e7;
 }
-#help_center_home .main-body .tz-container .main-content .drop-options ul li {
+#help_center_home .main-body .tz-container .main-content .big-con .drop-options ul li {
   font-size: 14px;
   float: left;
   line-height: 30px;
@@ -105,29 +109,29 @@
   height: 30px;
   color: #252b3a;
 }
-#help_center_home .main-body .tz-container .main-content .drop-options ul li a:visited {
+#help_center_home .main-body .tz-container .main-content .big-con .drop-options ul li a:visited {
   color: #252b3a;
 }
-#help_center_home .main-body .tz-container .main-content .option-text {
-  padding: 20px 20px;
+#help_center_home .main-body .tz-container .main-content .big-con .option-text {
+  padding: 20px 20px 0px 20px;
   background-color: #fff;
 }
-#help_center_home .main-body .tz-container .main-content .option-text .help-home-s {
+#help_center_home .main-body .tz-container .main-content .big-con .option-text .help-home-s {
   width: 100%;
   box-shadow: 1px 1px 15px 0px rgba(24, 30, 60, 0.2);
   margin-bottom: 15px;
   padding: 15px 20px;
 }
-#help_center_home .main-body .tz-container .main-content .option-text .help-home-s .help-title {
+#help_center_home .main-body .tz-container .main-content .big-con .option-text .help-home-s .help-title {
   font-size: 14px;
   font-family: "PingFang";
   color: #252b3a;
   font-weight: bold;
 }
-#help_center_home .main-body .tz-container .main-content .option-text .help-home-s .help-title a:visited {
+#help_center_home .main-body .tz-container .main-content .big-con .option-text .help-home-s .help-title a:visited {
   color: #0000EE;
 }
-#help_center_home .main-body .tz-container .main-content .option-text .help-home-s .help-text {
+#help_center_home .main-body .tz-container .main-content .big-con .option-text .help-home-s .help-text {
   margin-top: 8px;
   font-size: 12px;
   font-family: "PingFang";
@@ -138,36 +142,37 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
 }
-#help_center_home .main-body .tz-container .main-content .option-text .help-home-s .help-time {
+#help_center_home .main-body .tz-container .main-content .big-con .option-text .help-home-s .help-time {
   margin-top: 8px;
   font-size: 10px;
   font-family: "PingFang";
   color: #989ca9;
 }
-#help_center_home .main-body .tz-container .main-content .option-text .bottom {
+#help_center_home .main-body .tz-container .main-content .big-con .bottom {
+  background-color: #fff;
   height: 40px;
   position: relative;
   padding: 20px;
   margin-top: 20px;
 }
-#help_center_home .main-body .tz-container .main-content .option-text .bottom img {
+#help_center_home .main-body .tz-container .main-content .big-con .bottom img {
   width: 40px;
 }
-#help_center_home .main-body .tz-container .main-content .option-text .bottom div {
+#help_center_home .main-body .tz-container .main-content .big-con .bottom div {
   position: absolute;
   top: 0px;
 }
-#help_center_home .main-body .tz-container .main-content .option-text .bottom div img:first-child {
+#help_center_home .main-body .tz-container .main-content .big-con .bottom div img:first-child {
   margin-right: 5px;
 }
-#help_center_home .main-body .tz-container .main-content .option-text .bottom div p {
+#help_center_home .main-body .tz-container .main-content .big-con .bottom div p {
   display: inline-block;
 }
-#help_center_home .main-body .tz-container .main-content .option-text .bottom div:nth-child(1) {
+#help_center_home .main-body .tz-container .main-content .big-con .bottom div:nth-child(1) {
   left: 50%;
   margin-left: -133px;
 }
-#help_center_home .main-body .tz-container .main-content .option-text .bottom .page {
+#help_center_home .main-body .tz-container .main-content .big-con .bottom .page {
   border: 1px solid #cbcedd;
   border-radius: 20px;
   width: 70px;
@@ -178,20 +183,20 @@
   line-height: 30px;
   text-align: center;
 }
-#help_center_home .main-body .tz-container .main-content .option-text .bottom .page span {
+#help_center_home .main-body .tz-container .main-content .big-con .bottom .page span {
   color: #252b3a;
 }
-#help_center_home .main-body .tz-container .main-content .option-text .bottom .page .max-page {
+#help_center_home .main-body .tz-container .main-content .big-con .bottom .page .max-page {
   color: #989ca9;
 }
-#help_center_home .main-body .tz-container .main-content .option-text .bottom div:nth-child(3) {
+#help_center_home .main-body .tz-container .main-content .big-con .bottom div:nth-child(3) {
   right: 50%;
   margin-right: -133px;
 }
-#help_center_home .main-body .tz-container .main-content .option-text .bottom div:nth-child(3) a:nth-child(1) img {
+#help_center_home .main-body .tz-container .main-content .big-con .bottom div:nth-child(3) a:nth-child(1) img {
   margin-left: 5px;
 }
-#help_center_home .main-body .tz-container .main-content .option-text .bottom div:nth-child(3) a:nth-child(2) img {
+#help_center_home .main-body .tz-container .main-content .big-con .bottom div:nth-child(3) a:nth-child(2) img {
   margin-right: 0px;
 }
 #help_center_home .main-body .tz-container .main-content .help-home-content {
@@ -217,6 +222,13 @@
   font-size: 10px;
   font-family: "PingFang";
   color: #989ca9;
+}
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s pre {
+  width: 100% ;
+  height: auto;
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow: hidden;
 }
 #help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s p {
   width: 100% ;

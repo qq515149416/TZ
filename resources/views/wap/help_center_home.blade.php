@@ -30,8 +30,8 @@
 							
 						</div>
 				</div>
-			
-				<div class="drop-options">
+				<div class="big-con">
+					<div class="drop-options">
 						<div class="drop-options">
 							<p class="helpcenter">{{$nav_now}}</p>
 							<span class="arrow"></span>
@@ -45,9 +45,9 @@
 								@endforeach
 							</ul>
 						</div>
-				</div>
+					</div>
 
-				<div class="option-text {{ $page=='help_center_home'?'option-e-active':'' }}" id="help-p">
+					<div class="option-text {{ $page=='help_center_home'?'option-e-active':'' }}" id="help-p">
 						@foreach ($son_nav as $son_item)
 
 							<div class="help-home-s news title2">
@@ -73,57 +73,74 @@
 								<div class="problem-content">
 									<p class="p-title">{{$con->title}}</p>
 									<p class="time">{{$con->created_at}}</p>
-									<div class="content-text-s">{!! $con->content !!}</div>
+									<div class="content-text-s" id="con-ts">
+
+									</div>
 								</div>
 								<div class="more">
-										<div class="label">
-											<div>标 &nbsp; 签：</div>
-											<div>
-											@if (count($con->keywords) != 0)
-												@if ($con->keywords[0] != '')
-													@for ($i = 0; $i < count($con->keywords); $i++)
-														<span>{{ $con->keywords[$i] }}</span >
-													@endfor
-												@endif
+									<div class="label">
+										<div>标 &nbsp; 签：</div>
+										<div>
+										@if (count($con->keywords) != 0)
+											@if ($con->keywords[0] != '')
+												@for ($i = 0; $i < count($con->keywords); $i++)
+													<span>{{ $con->keywords[$i] }}</span >
+												@endfor
 											@endif
-											</div>
+										@endif
 										</div>
-										<div class="pre">
-											上一篇：<p>上一篇</p>
-										</div>
-										<div class="next">
-											下一篇：<p>下一篇</p>
-										</div>
-										<a href="/wap/help_center_home/{{$page_members['category_id']}}?page={{$page_members['current_page']}}">
-											<img src="{{ asset("/images/wap/上一篇.png") }}" alt="">
-										</a>
 									</div>
+									<div class="pre">
+										上一篇：<p>上一篇</p>
+									</div>
+									<div class="next">
+										下一篇：<p>下一篇</p>
+									</div>
+									<a href="/wap/help_center_home/{{$page_members['category_id']}}?page={{$page_members['current_page']}}">
+										<img src="{{ asset("/images/wap/上一篇.png") }}" alt="">
+									</a>
+								</div>
 							</div>
+							
 						@endforeach
-						
-						
-						<div class="bottom" id="bottom">
-						
-							<div style="width: 95px;">
-								<a href="/wap/help_center_home/{{$page_members['category_id']}}?page=1"><img src="{{ asset("/images/wap/第一页.png") }}" alt=""></a>
-									<a class="a-pap" href="/wap/help_center_home/{{$page_members['category_id']}}?page={{$page_members['current_page']-1}}"><img src="{{ asset("/images/wap/上一页.png") }}" alt=""></a>
-								</div>
-								<div class="page" id="page">
-									<span class="current-page">{{$page_members['current_page']}}</span>/<span class="max-page">{{$page_members['max_page']}}</span>      <!-- {{$page_members['current_page']+1}} -->
-								</div>
-								<div style="width: 95px;">
-									<a class="a-next" href="/wap/help_center_home/{{$page_members['category_id']}}?page={{$page_members['current_page']+1}}"><img src="{{ asset("/images/wap/下一页.png") }}" alt=""></a>
-									<a href="/wap/help_center_home/{{$page_members['category_id']}}?page={{$page_members['max_page']}}"><img src="{{ asset("/images/wap/最后一页.png") }}" alt=""></a>
-								</div>
+					</div>
+
+
+
+					<div class="bottom" id="bottom">
+						<div style="width: 95px;">
+							<a href="/wap/help_center_home/{{$page_members['category_id']}}?page=1"><img src="{{ asset("/images/wap/第一页.png") }}" alt=""></a>
+							<a class="a-pap" href="/wap/help_center_home/{{$page_members['category_id']}}?page={{$page_members['current_page']-1}}"><img src="{{ asset("/images/wap/上一页.png") }}" alt=""></a>
 						</div>
+						<div class="page" id="page">
+							<span class="current-page">{{$page_members['current_page']}}</span>/<span class="max-page">{{$page_members['max_page']}}</span>      
+						</div>
+						<div style="width: 95px;">
+							<a class="a-next" href="/wap/help_center_home/{{$page_members['category_id']}}?page={{$page_members['current_page']+1}}"><img src="{{ asset("/images/wap/下一页.png") }}" alt=""></a>
+							<a href="/wap/help_center_home/{{$page_members['category_id']}}?page={{$page_members['max_page']}}"><img src="{{ asset("/images/wap/最后一页.png") }}" alt=""></a>
+						</div>
+					</div>
+
 				</div>
-				
 			</div>
 		</div>
 	</div>
 </div>
- 
+
+<div style="display:none;" id="con-t">
+	<div> </div>
+	@foreach ($content as $con)
+	<div>
+	{!! $con->content !!}
+	</div>
+	@endforeach
+</div>
+
  <script>
+ 	if(document.querySelector(".help-home-content")){
+		 var text = document.querySelector("#con-t").innerHTML;
+		 document.querySelector("#con-ts").innerHTML=text;
+ 	}
 
 	if("{{$page_members['max_page']}}"==0){
 		document.querySelector(".max-page").innerHTML="1";
@@ -133,8 +150,6 @@
 			return false;
 		}
 	}
-	console.log(document.querySelector(".current-page").innerHTML);
-	console.log("{{$page_members['max_page']}}");
 	if(document.querySelector(".current-page").innerHTML==document.querySelector(".max-page").innerHTML){
 		document.querySelector(".a-next").onclick = function () {
 			return false;
@@ -145,6 +160,8 @@
         if(s_p[i].innerHTML==""){
 		  s_p[i].style.display="none";
         }else if(s_p[i].innerHTML=="<br>"){
+			s_p[i].style.display="none";
+		}else if(s_p[i].innerHTML=="&nbsp;"){
 			s_p[i].style.display="none";
 		}
       }

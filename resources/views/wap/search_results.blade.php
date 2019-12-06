@@ -39,121 +39,94 @@
 								<p class="help-title">{{$con->title}}</p>
 								<p class="help-text">{{$con->description}}</p>
 								<p class="help-time">{{$con->created_at}}</p>
-								<p>{{$con->content}}</p>
 							</div>
-
-						@endforeach
-						
-						<div class="bottom">
-							<div style="width: 95px;">
-							<a href="/"><img src="{{ asset("/images/wap/第一页.png") }}" alt=""></a>
-								<a href="/wap/search_results?keywords={{$keyword}}&&page={{$page_members['current_page']-1}}"><img src="{{ asset("/images/wap/上一页.png") }}" alt=""></a>
-							</div>
-
-							<div class="page" id="page">
-								<span>{{$page_members['current_page']-1}}</span>/{{$page_members['current_page']+1}}
-							</div>
-							<div style="width: 95px;">
-								<a href="/wap/search_results?keywords={{$keyword}}&&page={{$page_members['current_page']+1}}"><img src="{{ asset("/images/wap/下一页.png") }}" alt=""></a>
-								<a href="/wap/search_results?keywords={{$keyword}}&&page={{$page_members['max_page']+1}}"><img src="{{ asset("/images/wap/最后一页.png") }}" alt=""></a>
-								
-							</div>
-						</div>
-					</div>
-					<div class="help-home-content" style="display: none;">
+							<div class="help-home-content" style="display: none;">
 								<div class="problem-content">
 									<p class="p-title">{{$con->title}}</p>
 									<p class="time">{{$con->created_at}}</p>
 									<div class="content-text-s">{!! $con->content !!}</div>
 								</div>
 								<div class="more">
-										<div class="label">
-											<div>标 &nbsp; 签：</div>
-											<div>
-											
-											</div>
+									<div class="label">
+										<div>标 &nbsp; 签：</div>
+										<div>
+										@if (count($con->keywords) != 0)
+											@if ($con->keywords[0] != '')
+												@for ($i = 0; $i < count($con->keywords); $i++)
+													<span>{{ $con->keywords[$i] }}</span >
+												@endfor
+											@endif
+										@endif
 										</div>
-										<div class="pre">
-											上一篇：<p>上一篇</p>
-										</div>
-										<div class="next">
-											下一篇：<p>下一篇</p>
-										</div>
-										<img src="{{ asset("/images/wap/上一篇.png") }}" alt="">
 									</div>
+									<div class="pre">
+										上一篇：<p>上一篇</p>
+									</div>
+									<div class="next">
+										下一篇：<p>下一篇</p>
+									</div>
+										<img src="{{ asset("/images/wap/上一篇.png") }}" alt="">
+								</div>
 							</div> 
+						@endforeach
+						
+						<div class="bottom" id="bottom">
+							<div style="width: 95px;">
+							<a href="/wap/search_results?keyword={{$keyword}}&&page=1"><img src="{{ asset("/images/wap/第一页.png") }}" alt=""></a>
+								<a class="a-pap" href="/wap/search_results?keyword={{$keyword}}&&page={{$page_members['current_page']-1}}"><img src="{{ asset("/images/wap/上一页.png") }}" alt=""></a>
+							</div>
+
+							<div class="page" id="page">
+								<span class="current-page">{{$page_members['current_page']}}</span>/<span class="max-page">{{$page_members['max_page']}}</span>
+							</div>
+							<div style="width: 95px;">
+								<a class="a-next" href="/wap/search_results?keyword={{$keyword}}&&page={{$page_members['current_page']+1}}"><img src="{{ asset("/images/wap/下一页.png") }}" alt=""></a>
+								<a href="/wap/search_results?keyword={{$keyword}}&&page={{$page_members['max_page']}}"><img src="{{ asset("/images/wap/最后一页.png") }}" alt=""></a>
+								
+							</div>
+						</div>
+					</div>
+					
 				</div>
 			</div>
 		</div>
 	</div>
 <!-- </body> -->
 <script>
-// function goPage(pno, psize) {
-// 	var news = document.querySelectorAll(".option-text .news");
-// 	var num = news.length;
-// 	var totalPage = 0;//总页数
-// 	var pageSize = psize;//每页显示行数
-// 	//总共分几页
-// 	if (num / pageSize > parseInt(num / pageSize)) {
-// 		totalPage = parseInt(num / pageSize) + 1;
-// 	} else {
-// 		totalPage = parseInt(num / pageSize);
-// 	}
-// 	var currentPage = pno;//当前页数
-// 	var startRow = (currentPage - 1) * pageSize + 1;//开始显示的行  31
-// 	var endRow = currentPage * pageSize;//结束显示的行   40
-// 	endRow = (endRow > num) ? num : endRow;
-// 	//遍历显示数据实现分页
-// 	for (var i = 1; i < (num + 1); i++) {
-// 		var irow = news[i - 1];
-// 		if (i >= startRow && i <= endRow) {
-// 			irow.style.display = "block";
-// 		} else {
-// 			irow.style.display = "none";
-// 		}
-// 	}
-
-// 	var tempStr = "";
-// 	if (currentPage > 1) {
-// 		tempStr += "<div style=\"width: 90px;\">";
-// 		tempStr += "<img src=\"/images/wap/第一页.png\" onClick=\"goPage(" + (1) + "," + psize + ")\">";
-// 		tempStr += "<img src=\"/images/wap/上一页.png\" onClick=\"goPage(" + (currentPage - 1) + "," + psize + ")\">";
-// 		tempStr += "</div>";
-
-// 	} else {
-// 		tempStr += "<div style=\"width: 90px;\">";
-// 		tempStr += "<img src=\"/images/wap/第一页.png\" >";
-// 		tempStr += "<img src=\"/images/wap/上一页.png\" >";
-// 		tempStr += "</div>";
-// 	}
-// 	if (currentPage >=10 ) {
-// 		tempStr += "<div class=\"page\" id=\"page\">";
-// 		tempStr += "<span>"  + currentPage + "</span>"
-// 	} else {
-// 		tempStr += "<div class=\"page\" id=\"page\">";
-// 		tempStr += "<span>" + "0" + currentPage + "</span>"
-// 	}
-// 	if(totalPage>=10){
-// 		tempStr += "/" + totalPage;
-// 		tempStr += "</div>";
-// 	}else{
-// 		tempStr += "/0" + totalPage;
-// 		tempStr += "</div>";
-// 	}
-// 	if (currentPage < totalPage) {
-// 		tempStr += "<div style=\"width: 90px;\">";
-// 		tempStr += "<img src=\"/images/wap/下一页.png\" onClick=\"goPage(" + (currentPage + 1) + "," + psize + ")\">";
-// 		tempStr += "<img src=\"/images/wap/最后一页.png\" onClick=\"goPage(" + (totalPage) + "," + psize + ")\">";
-// 		tempStr += "</div>";
-// 	} else {
-// 		tempStr += "<div style=\"width: 90px;\">";
-// 		tempStr += "<img src=\"/images/wap/下一页.png\" >";
-// 		tempStr += "<img src=\"/images/wap/最后一页.png\">";
-// 		tempStr += "</div>";
-// 	}
-
-// 	document.getElementById("bottom").innerHTML = tempStr;
-// }
+var help_home_s = document.querySelectorAll(".option-text .help-home-s");
+var testabc = document.querySelectorAll(".testabc")
+for(var i=0;i<help_home_s.length;i++){
+    help_home_s[i].addEventListener("click",function(){
+        for(var i=0;i<testabc.length;i++){
+            testabc[i].style.display="none";
+        }
+       document.querySelector(".help-home-content").style.display="block";
+       document.querySelector( "#bottom").style.display="none";
+      })
+}
+if("{{$page_members['max_page']}}"==0){
+		document.querySelector(".max-page").innerHTML="1";
+	}
+	if("{{$page_members['current_page']}}"==1){
+		document.querySelector(".a-pap").onclick = function () {
+			return false;
+		}
+	}
+	if(document.querySelector(".current-page").innerHTML==document.querySelector(".max-page").innerHTML){
+		document.querySelector(".a-next").onclick = function () {
+			return false;
+		}
+	}
+	var s_p = document.querySelectorAll(".content-text-s p");
+      for(var i=0;i<s_p.length;i++){
+        if(s_p[i].innerHTML==""){
+		  s_p[i].style.display="none";
+        }else if(s_p[i].innerHTML=="<br>"){
+			s_p[i].style.display="none";
+		}else if(s_p[i].innerHTML=="&nbsp;"){
+			s_p[i].style.display="none";
+		}
+      }
 </script>
 
 @endsection

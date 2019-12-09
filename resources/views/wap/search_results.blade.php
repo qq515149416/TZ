@@ -65,7 +65,9 @@
 									<div class="next">
 										下一篇：<p>下一篇</p>
 									</div>
+									<a href="/wap/search_results?keyword={{$keyword}}&&page={{$page}}">
 										<img src="{{ asset("/images/wap/上一篇.png") }}" alt="">
+									</a>
 								</div>
 							</div> 
 						@endforeach

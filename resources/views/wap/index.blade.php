@@ -237,7 +237,8 @@
         <img src="{{ asset("/images/wap/地图.png") }}" alt="">
     </div>
     <!-- 新闻动态 -->
-    <div class="news">
+    @include($news_template)
+    <!-- <div class="news">
         <div class="title">
             <p>新闻动态</p>
             <div class="title-hr"></div>
@@ -294,5 +295,5 @@
                 查看更多
             </div>
         </div>
-</div>
+</div> -->
 @endsection

@@ -1,0 +1,130 @@
+@base_img_url: "/user_assets/images";
+#user_admin {
+    .main-content {
+        .content {
+            background-color: #f4f6f9;
+            .paper {
+
+            }
+        }
+        .menu {
+            width: 170px;
+            max-width: 170px;
+            height: calc(100vh - 58px);
+            background-color: #191c2b;
+            ul {
+                list-style: none;
+                > li {
+                    > a {
+                        display: block;
+                        text-decoration: none;
+                        font-size: 14px;
+                        color: #fff;
+                        &.active {
+                            color: #4274f4;
+                            > .icon {
+                                &.overview {
+                                    background-image: url("@{base_img_url}/main_menu/overview_on.png");
+                                }
+                                &.server {
+                                    background-image: url("@{base_img_url}/main_menu/server_on.png");
+                                }
+                                &.gaofang {
+                                    background-image: url("@{base_img_url}/main_menu/gaofang_on.png");
+                                }
+                                &.finance {
+                                    background-image: url("@{base_img_url}/main_menu/finance_on.png");
+                                }
+                                &.beian {
+                                    background-image: url("@{base_img_url}/main_menu/beian_on.png");
+                                }
+                                &.user {
+                                    background-image: url("@{base_img_url}/main_menu/user_on.png");
+                                }
+                            }
+                        }
+                        > .font-regular {
+                            vertical-align: middle;
+                        }
+                        > .icon {
+                            display: inline-block;
+                            width: 20px;
+                            height: 20px;
+                            background-repeat: no-repeat;
+                            background-position: center center;
+                            vertical-align: middle;
+                            &.overview {
+                                background-image: url("@{base_img_url}/main_menu/overview_off.png");
+                            }
+                            &.server {
+                                background-image: url("@{base_img_url}/main_menu/server_off.png");
+                            }
+                            &.gaofang {
+                                background-image: url("@{base_img_url}/main_menu/gaofang_off.png");
+                            }
+                            &.finance {
+                                background-image: url("@{base_img_url}/main_menu/finance_off.png");
+                            }
+                            &.beian {
+                                background-image: url("@{base_img_url}/main_menu/beian_off.png");
+                            }
+                            &.user {
+                                background-image: url("@{base_img_url}/main_menu/user_off.png");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .navbar-bg {
+        background-color: #4274f4;
+        box-shadow: 0 0 24px 2px rgba(24, 30, 60, .2);
+        position: relative;
+        z-index: 99;
+        // padding-right: 40px;
+        .nav-item {
+            > .nav-link {
+                // padding-left: 10px;
+                padding-right: 10px;
+                color: #fff;
+                vertical-align: middle;
+                &:hover {
+                    color: #fff;
+                }
+                &.text {
+                    line-height: 18px;
+                }
+                span.text {
+                    color: #d2ddfb;
+                    font-size: 12px;
+                    display: inline-block;
+                    height: 20px;
+                    line-height: 18px;
+                    padding: 0 6px;
+                    border: 1px solid #a6befa;
+                    border-radius: 4px;
+                }
+                span.icon {
+                    display: block;
+                    width: 18px;
+                    height: 18px;
+                    background-repeat: no-repeat;
+                    background-position: center center;
+                    &.customer-service {
+                        background-image: url("@{base_img_url}/navbar/customer_service_off.png");
+                    }
+                    &.erweima {
+                        background-image: url("@{base_img_url}/navbar/erweima_off.png");
+                    }
+                    &.wallet {
+                        background-image: url("@{base_img_url}/navbar/wallet_off.png");
+                    }
+                    &.user {
+                        background-image: url("@{base_img_url}/navbar/user_off.png");
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,115 @@
+#user_admin .main-content .content {
+  background-color: #f4f6f9;
+}
+#user_admin .main-content .menu {
+  width: 170px;
+  max-width: 170px;
+  height: calc(100vh - 58px);
+  background-color: #191c2b;
+}
+#user_admin .main-content .menu ul {
+  list-style: none;
+}
+#user_admin .main-content .menu ul > li > a {
+  display: block;
+  text-decoration: none;
+  font-size: 14px;
+  color: #fff;
+}
+#user_admin .main-content .menu ul > li > a.active {
+  color: #4274f4;
+}
+#user_admin .main-content .menu ul > li > a.active > .icon.overview {
+  background-image: url("/user_assets/images/main_menu/overview_on.png");
+}
+#user_admin .main-content .menu ul > li > a.active > .icon.server {
+  background-image: url("/user_assets/images/main_menu/server_on.png");
+}
+#user_admin .main-content .menu ul > li > a.active > .icon.gaofang {
+  background-image: url("/user_assets/images/main_menu/gaofang_on.png");
+}
+#user_admin .main-content .menu ul > li > a.active > .icon.finance {
+  background-image: url("/user_assets/images/main_menu/finance_on.png");
+}
+#user_admin .main-content .menu ul > li > a.active > .icon.beian {
+  background-image: url("/user_assets/images/main_menu/beian_on.png");
+}
+#user_admin .main-content .menu ul > li > a.active > .icon.user {
+  background-image: url("/user_assets/images/main_menu/user_on.png");
+}
+#user_admin .main-content .menu ul > li > a > .font-regular {
+  vertical-align: middle;
+}
+#user_admin .main-content .menu ul > li > a > .icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  vertical-align: middle;
+}
+#user_admin .main-content .menu ul > li > a > .icon.overview {
+  background-image: url("/user_assets/images/main_menu/overview_off.png");
+}
+#user_admin .main-content .menu ul > li > a > .icon.server {
+  background-image: url("/user_assets/images/main_menu/server_off.png");
+}
+#user_admin .main-content .menu ul > li > a > .icon.gaofang {
+  background-image: url("/user_assets/images/main_menu/gaofang_off.png");
+}
+#user_admin .main-content .menu ul > li > a > .icon.finance {
+  background-image: url("/user_assets/images/main_menu/finance_off.png");
+}
+#user_admin .main-content .menu ul > li > a > .icon.beian {
+  background-image: url("/user_assets/images/main_menu/beian_off.png");
+}
+#user_admin .main-content .menu ul > li > a > .icon.user {
+  background-image: url("/user_assets/images/main_menu/user_off.png");
+}
+#user_admin .navbar-bg {
+  background-color: #4274f4;
+  -webkit-box-shadow: 0 0 24px 2px rgba(24, 30, 60, 0.2);
+          box-shadow: 0 0 24px 2px rgba(24, 30, 60, 0.2);
+  position: relative;
+  z-index: 99;
+}
+#user_admin .navbar-bg .nav-item > .nav-link {
+  padding-right: 10px;
+  color: #fff;
+  vertical-align: middle;
+}
+#user_admin .navbar-bg .nav-item > .nav-link:hover {
+  color: #fff;
+}
+#user_admin .navbar-bg .nav-item > .nav-link.text {
+  line-height: 18px;
+}
+#user_admin .navbar-bg .nav-item > .nav-link span.text {
+  color: #d2ddfb;
+  font-size: 12px;
+  display: inline-block;
+  height: 20px;
+  line-height: 18px;
+  padding: 0 6px;
+  border: 1px solid #a6befa;
+  border-radius: 4px;
+}
+#user_admin .navbar-bg .nav-item > .nav-link span.icon {
+  display: block;
+  width: 18px;
+  height: 18px;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+#user_admin .navbar-bg .nav-item > .nav-link span.icon.customer-service {
+  background-image: url("/user_assets/images/navbar/customer_service_off.png");
+}
+#user_admin .navbar-bg .nav-item > .nav-link span.icon.erweima {
+  background-image: url("/user_assets/images/navbar/erweima_off.png");
+}
+#user_admin .navbar-bg .nav-item > .nav-link span.icon.wallet {
+  background-image: url("/user_assets/images/navbar/wallet_off.png");
+}
+#user_admin .navbar-bg .nav-item > .nav-link span.icon.user {
+  background-image: url("/user_assets/images/navbar/user_off.png");
+}

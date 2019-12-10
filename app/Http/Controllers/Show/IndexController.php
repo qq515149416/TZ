@@ -12,8 +12,23 @@ class IndexController extends Controller
 {
     public function new_list($sid)
     {
-        $new_connection = DB::connection('mysql_oldoa');
-        $new = $new_connection->table('news')->where('sid', $sid)->orderBy('createdate', 'desc')->get();
+        // $new_connection = DB::connection('mysql_oldoa');
+        $new = DB::table('tz_news')->where('tid', $sid)->orderBy('created_at', 'desc')->select(
+            'id as newsid',
+            'tid as sid',
+            'title as titles',
+            'content',
+            'top_status as status',
+            'home_status as newsstatus',
+            'created_at as createdate',
+            'seoKeywords',
+            'seoTitle',
+            'seoDescription',
+            'digest',
+            'updated_at',
+            'list_order',
+            'deleted_at'
+        )->get();
         return $new;
     }
     public function index()

@@ -55,7 +55,9 @@
 							<a href="/wap/new/detail/{{$pre_next['next']['id']}}">
 								<p>下一篇：{{str_limit($pre_next['next']['title'],30,'....')}}</p>
 							</a>
-							<img src="{{ asset("/images/wap/内容页按钮.png") }}" alt="">
+							<a href="/wap/company/news">
+								<img src="{{ asset("/images/wap/内容页按钮.png") }}" alt="">
+							</a>
 						</div>
 					</div>
 

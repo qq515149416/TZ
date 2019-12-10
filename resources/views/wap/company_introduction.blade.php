@@ -67,7 +67,7 @@
 
 						@foreach ($page_info['news']['data'] as $data)
 						<div class="news">
-							<a href="/wap/new/detail">
+							<a href="/wap/new/detail/{{$data->id}}">
 								<div class="news-text-title">
 									{{$data->title}}
 								</div>

@@ -59,7 +59,7 @@
 										@endif
 										</div>
 									</div>
-									<div class="pre">
+									<!-- <div class="pre">
 										上一篇：<p>上一篇</p>
 									</div>
 									<div class="next">
@@ -67,7 +67,7 @@
 									</div>
 									<a href="/wap/search_results?keyword={{$keyword}}&&page={{$page}}">
 										<img src="{{ asset("/images/wap/上一篇.png") }}" alt="">
-									</a>
+									</a> -->
 								</div>
 							</div> 
 						@endforeach

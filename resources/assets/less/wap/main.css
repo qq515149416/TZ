@@ -73,6 +73,12 @@ input:hover {
   font-family: "PingFang";
   color: #666a75;
 }
+.view-more a {
+  color: #666a75;
+}
+.view-more a:active {
+  color: #666a75;
+}
 @keyframes gary {
   0% {
     transform: scale(1, 0);
@@ -298,6 +304,10 @@ input:hover {
 .footer .tz-main .record div {
   font-size: 10px;
   font-family: "PingFang";
+  color: #929bb8;
+}
+.footer .tz-main .record div a,
+.footer .tz-main .record div a:active {
   color: #929bb8;
 }
 .footer .tz-main .record div img {
@@ -5733,20 +5743,58 @@ input:hover {
 #company_introduction .main-body .tz-container .main-content .culture-a:last-child {
   padding: 0px 20px;
 }
-#company_introduction .main-body .tz-container .news-content {
+#company_introduction_news .main-body .tz-container .main-content .drop-options {
   width: 100%;
-  display: none;
+  background-color: #e5ebf8;
+  position: relative;
+  margin-top: -4px;
+}
+#company_introduction_news .main-body .tz-container .main-content .drop-options p {
+  border-bottom: 1px solid #dadadd;
+  height: 45px;
+  line-height: 45px;
+  color: #162fac;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 0px 20px;
+}
+#company_introduction_news .main-body .tz-container .main-content .drop-options .arrow {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+}
+#company_introduction_news .main-body .tz-container .main-content .drop-options ul {
+  background-color: #e5ebf8;
+  padding: 10px 0px;
+  width: 100%;
+  position: absolute;
+  z-index: 500;
+  box-shadow: 0px 5px 10px 0px #d7d9e7;
+}
+#company_introduction_news .main-body .tz-container .main-content .drop-options ul li {
+  font-size: 14px;
+  float: left;
+  line-height: 30px;
+  text-align: center;
+  width: calc(100%/4);
+  height: 30px;
+}
+#company_introduction_news .main-body .tz-container .main-content .drop-options ul li a {
+  color: #252b3a;
+}
+#company_introduction_news .main-body .tz-container .news-content {
+  width: 100%;
   padding: 20px 20px;
   background-color: #fff;
 }
-#company_introduction .main-body .tz-container .news-content .content {
+#company_introduction_news .main-body .tz-container .news-content .content {
   width: 100%;
   margin-top: 15px;
   box-shadow: 1px 1px 17px 0px rgba(24, 30, 60, 0.2);
   border-radius: 10px;
   padding: 20px 15px ;
 }
-#company_introduction .main-body .tz-container .news-content .content .content-title {
+#company_introduction_news .main-body .tz-container .news-content .content .content-title {
   font-size: 17px;
   font-family: "PingFang";
   color: #252b3a;
@@ -5754,14 +5802,14 @@ input:hover {
   line-height: 2;
   text-align: center;
 }
-#company_introduction .main-body .tz-container .news-content .content .content-time {
+#company_introduction_news .main-body .tz-container .news-content .content .content-time {
   font-size: 10px;
   font-family: "PingFang";
   color: #989ca9;
   line-height: 1;
   text-align: center;
 }
-#company_introduction .main-body .tz-container .news-content .content .content-main {
+#company_introduction_news .main-body .tz-container .news-content .content .content-main {
   margin-top: 20px;
   font-size: 12px;
   font-family: "PingFang";
@@ -5772,20 +5820,45 @@ input:hover {
   background-color: #ebebf1;
   padding: 10px;
 }
-#company_introduction .main-body .tz-container .news-content .content .content-text {
+#company_introduction_news .main-body .tz-container .news-content .content .content-text {
+  width: 100%;
   margin: 15px 0px;
 }
-#company_introduction .main-body .tz-container .news-content .content .content-text div:nth-child(1) p {
-  font-size: 12px;
+#company_introduction_news .main-body .tz-container .news-content .content .content-text p:first-child {
+  display: none;
+}
+#company_introduction_news .main-body .tz-container .news-content .content .content-text .introductiontext {
+  margin-left: 0px !important;
+  width: 100% !important;
+}
+#company_introduction_news .main-body .tz-container .news-content .content .content-text .introductiontext div {
+  width: 100% !important;
+}
+#company_introduction_news .main-body .tz-container .news-content .content .content-text center {
+  width: 100%;
+}
+#company_introduction_news .main-body .tz-container .news-content .content .content-text center img {
+  width: 100% !important;
+  height: auto !important;
+}
+#company_introduction_news .main-body .tz-container .news-content .content .content-text p {
+  font-size: 12px !important;
+  font-family: "PingFang";
+  color: #666a75;
+  line-height: 1.5 !important;
+  margin-bottom: 15px;
+}
+#company_introduction_news .main-body .tz-container .news-content .content .content-text p span {
+  font-size: 12px !important;
   font-family: "PingFang";
   color: #666a75;
   line-height: 1.5;
   margin-bottom: 15px;
 }
-#company_introduction .main-body .tz-container .news-content .content .content-text div:nth-child(2) {
+#company_introduction_news .main-body .tz-container .news-content .content .content-text div:nth-child(2) {
   margin-bottom: 15px;
 }
-#company_introduction .main-body .tz-container .news-content .content .content-text div:nth-child(2) p {
+#company_introduction_news .main-body .tz-container .news-content .content .content-text div:nth-child(2) p {
   margin-left: 20px;
   margin-bottom: 2px;
   font-size: 12px;
@@ -5793,36 +5866,36 @@ input:hover {
   color: #666a75;
   line-height: 1.5;
 }
-#company_introduction .main-body .tz-container .news-content .content .content-text div:nth-child(3) p {
+#company_introduction_news .main-body .tz-container .news-content .content .content-text div:nth-child(3) p {
   font-size: 12px;
   font-family: "PingFang";
   color: #666a75;
   line-height: 1.5;
   margin-bottom: 2px;
 }
-#company_introduction .main-body .tz-container .news-content .content .content-text div:nth-child(4) {
+#company_introduction_news .main-body .tz-container .news-content .content .content-text div:nth-child(4) {
   margin-top: 25px;
   float: right;
   width: 100px;
   text-align: center;
 }
-#company_introduction .main-body .tz-container .news-content .content .content-text div:nth-child(4) p {
+#company_introduction_news .main-body .tz-container .news-content .content .content-text div:nth-child(4) p {
   font-size: 12px;
   font-family: "PingFang";
   color: #666a75;
   line-height: 1.5;
 }
-#company_introduction .main-body .tz-container .news-content .news-more {
+#company_introduction_news .main-body .tz-container .news-content .news-more {
   padding: 20px 0px 15px 0px;
   position: relative;
 }
-#company_introduction .main-body .tz-container .news-content .news-more p {
+#company_introduction_news .main-body .tz-container .news-content .news-more p {
   font-size: 12px;
   font-family: "PingFang";
   color: #666a75;
   margin-bottom: 10px;
 }
-#company_introduction .main-body .tz-container .news-content .news-more img {
+#company_introduction_news .main-body .tz-container .news-content .news-more img {
   position: absolute;
   right: 0px;
   top: 20px;
@@ -5900,12 +5973,16 @@ input:hover {
   padding-left: 20px;
   margin-top: 5px;
 }
-#help_center_home .main-body .tz-container .main-content .drop-options {
+#help_center_home .main-body .tz-container .main-content .big-con {
+  background-color: #fff;
+  padding-bottom: 20px;
+}
+#help_center_home .main-body .tz-container .main-content .big-con .drop-options {
   width: 100%;
   background-color: #e5ebf8;
   position: relative;
 }
-#help_center_home .main-body .tz-container .main-content .drop-options p {
+#help_center_home .main-body .tz-container .main-content .big-con .drop-options p {
   border-bottom: 1px solid #dadadd;
   height: 45px;
   line-height: 45px;
@@ -5914,13 +5991,12 @@ input:hover {
   font-size: 14px;
   padding: 0px 20px;
 }
-#help_center_home .main-body .tz-container .main-content .drop-options .arrow {
+#help_center_home .main-body .tz-container .main-content .big-con .drop-options .arrow {
   position: absolute;
   top: 18px;
   right: 20px;
 }
-#help_center_home .main-body .tz-container .main-content .drop-options ul {
-  display: none;
+#help_center_home .main-body .tz-container .main-content .big-con .drop-options ul {
   background-color: #e5ebf8;
   padding: 10px 20px;
   width: 100%;
@@ -5928,7 +6004,7 @@ input:hover {
   z-index: 500;
   box-shadow: 0px 5px 10px 0px #d7d9e7;
 }
-#help_center_home .main-body .tz-container .main-content .drop-options ul li {
+#help_center_home .main-body .tz-container .main-content .big-con .drop-options ul li {
   font-size: 14px;
   float: left;
   line-height: 30px;
@@ -5937,24 +6013,30 @@ input:hover {
   height: 30px;
   color: #252b3a;
 }
-#help_center_home .main-body .tz-container .main-content .option-text {
-  padding: 20px 20px;
+#help_center_home .main-body .tz-container .main-content .big-con .drop-options ul li a:visited {
+  color: #252b3a;
+}
+#help_center_home .main-body .tz-container .main-content .big-con .option-text {
+  padding: 20px 20px 0px 20px;
   background-color: #fff;
 }
-#help_center_home .main-body .tz-container .main-content .option-text .help-home-s {
+#help_center_home .main-body .tz-container .main-content .big-con .option-text .help-home-s {
   width: 100%;
   box-shadow: 1px 1px 15px 0px rgba(24, 30, 60, 0.2);
   margin-bottom: 15px;
   padding: 15px 20px;
 }
-#help_center_home .main-body .tz-container .main-content .option-text .help-home-s .help-title {
+#help_center_home .main-body .tz-container .main-content .big-con .option-text .help-home-s .help-title {
   font-size: 14px;
   font-family: "PingFang";
   color: #252b3a;
   font-weight: bold;
-  margin-bottom: 8px;
 }
-#help_center_home .main-body .tz-container .main-content .option-text .help-home-s .help-text {
+#help_center_home .main-body .tz-container .main-content .big-con .option-text .help-home-s .help-title a:visited {
+  color: #0000EE;
+}
+#help_center_home .main-body .tz-container .main-content .big-con .option-text .help-home-s .help-text {
+  margin-top: 8px;
   font-size: 12px;
   font-family: "PingFang";
   color: #666a75;
@@ -5964,94 +6046,162 @@ input:hover {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
 }
-#help_center_home .main-body .tz-container .main-content .option-text .help-home-s .help-time {
+#help_center_home .main-body .tz-container .main-content .big-con .option-text .help-home-s .help-time {
   margin-top: 8px;
   font-size: 10px;
   font-family: "PingFang";
   color: #989ca9;
 }
-#help_center_home .main-body .tz-container .main-content .option-text .bottom {
+#help_center_home .main-body .tz-container .main-content .big-con .bottom {
+  background-color: #fff;
   height: 40px;
   position: relative;
   padding: 20px;
   margin-top: 20px;
 }
-#help_center_home .main-body .tz-container .main-content .option-text .bottom img {
+#help_center_home .main-body .tz-container .main-content .big-con .bottom img {
   width: 40px;
 }
-#help_center_home .main-body .tz-container .main-content .option-text .bottom div {
+#help_center_home .main-body .tz-container .main-content .big-con .bottom div {
   position: absolute;
   top: 0px;
 }
-#help_center_home .main-body .tz-container .main-content .option-text .bottom div img:first-child {
-  margin-right: 8px;
+#help_center_home .main-body .tz-container .main-content .big-con .bottom div img:first-child {
+  margin-right: 5px;
 }
-#help_center_home .main-body .tz-container .main-content .option-text .bottom div p {
+#help_center_home .main-body .tz-container .main-content .big-con .bottom div p {
   display: inline-block;
 }
-#help_center_home .main-body .tz-container .main-content .option-text .bottom div:nth-child(1) {
+#help_center_home .main-body .tz-container .main-content .big-con .bottom div:nth-child(1) {
   left: 50%;
   margin-left: -133px;
 }
-#help_center_home .main-body .tz-container .main-content .option-text .bottom .page {
+#help_center_home .main-body .tz-container .main-content .big-con .bottom .page {
   border: 1px solid #cbcedd;
   border-radius: 20px;
   width: 70px;
   height: 30px;
   left: 50%;
   margin-left: -35px;
-  color: #989ca9;
   top: 5px;
   line-height: 30px;
   text-align: center;
 }
-#help_center_home .main-body .tz-container .main-content .option-text .bottom .page span {
+#help_center_home .main-body .tz-container .main-content .big-con .bottom .page span {
   color: #252b3a;
 }
-#help_center_home .main-body .tz-container .main-content .option-text .bottom div:nth-child(3) {
+#help_center_home .main-body .tz-container .main-content .big-con .bottom .page .max-page {
+  color: #989ca9;
+}
+#help_center_home .main-body .tz-container .main-content .big-con .bottom div:nth-child(3) {
   right: 50%;
   margin-right: -133px;
+}
+#help_center_home .main-body .tz-container .main-content .big-con .bottom div:nth-child(3) a:nth-child(1) img {
+  margin-left: 5px;
+}
+#help_center_home .main-body .tz-container .main-content .big-con .bottom div:nth-child(3) a:nth-child(2) img {
+  margin-right: 0px;
 }
 #help_center_home .main-body .tz-container .main-content .help-home-content {
   background-color: #fff;
   padding: 20px;
   display: none;
 }
-#help_center_home .main-body .tz-container .main-content .help-home-content .problem-conetnt {
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content {
   width: 100%;
   text-align: center;
   box-shadow: 1px 1px 25px 0px rgba(24, 30, 60, 0.2);
   padding: 20px 18px;
   border-radius: 5px;
 }
-#help_center_home .main-body .tz-container .main-content .help-home-content .problem-conetnt .p-title {
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .p-title {
   font-size: 17px;
   font-family: "PingFang";
   color: #252b3a;
   font-weight: bold;
   margin-bottom: 10px;
 }
-#help_center_home .main-body .tz-container .main-content .help-home-content .problem-conetnt s .time {
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .time {
   font-size: 10px;
   font-family: "PingFang";
   color: #989ca9;
 }
-#help_center_home .main-body .tz-container .main-content .help-home-content .problem-conetnt .c-main {
-  margin: 15px 0px;
-  padding: 12px 12px;
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s pre {
+  width: 100% ;
+  height: auto;
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow: hidden;
+}
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s p {
+  width: 100% ;
+  height: auto;
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow: hidden;
+}
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s p a img {
+  width: 100%;
+}
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s ul li {
+  font-size: 12px;
+  color: #666a75;
+  width: 100% ;
+  height: auto;
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow: hidden;
+}
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s div {
+  font-size: 12px;
+  color: #666a75;
+}
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s div pre {
+  font-size: 12px;
+  color: #666a75;
+}
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s h1 {
+  font-size: 16px !important;
+}
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s h3 {
+  font-size: 14px !important;
+}
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s h2 {
+  font-size: 14px !important;
+  margin-top: 10px;
+}
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s h2 b {
+  size: 17px !important;
+  color: #252b3a;
+}
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s p:nth-child(2) {
+  margin: 15px 0px 0px 0px;
   border-radius: 10px;
   text-align: left;
-  border: 1px solid #cbd0df;
-  background-color: #ebebf1;
   font-size: 12px;
   font-family: "PingFang";
   color: #666a75;
 }
-#help_center_home .main-body .tz-container .main-content .help-home-content .problem-conetnt .p-text {
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s p:nth-child(3) {
   font-size: 12px;
-  font-family: "PingFang";
   color: #666a75;
   margin-bottom: 20px;
+  text-align: left;
+}
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s p:nth-child(n) {
+  font-size: 12px;
+  color: #666a75;
+  margin-bottom: 20px;
+  text-align: left;
+}
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s p:nth-child(n) b {
+  color: #252b3a;
+}
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s p:last-child {
+  font-size: 12px;
+  color: #666a75;
+  margin-bottom: 5px;
   text-align: left;
 }
 #help_center_home .main-body .tz-container .main-content .help-home-content .more {
@@ -6133,7 +6283,7 @@ input:hover {
   position: relative;
   padding: 0px 20px;
 }
-#help_center .main-body .tz-container .main-content .posters .search .search-c input {
+#help_center .main-body .tz-container .main-content .posters .search .search-c form input {
   -webkit-appearance: none;
   -moz-appearance: none;
   -o-appearance: none;
@@ -6143,23 +6293,34 @@ input:hover {
   height: 40px;
   border-radius: 20px;
 }
-#help_center .main-body .tz-container .main-content .posters .search .search-c input::-webkit-input-placeholder {
+#help_center .main-body .tz-container .main-content .posters .search .search-c form input::-webkit-input-placeholder {
   color: #fff;
   font-size: 14px;
 }
-#help_center .main-body .tz-container .main-content .posters .search .search-c input {
+#help_center .main-body .tz-container .main-content .posters .search .search-c form input {
   width: 100%;
   padding: 0px 70px 0px 15px;
   background-color: rgba(255, 255, 255, 0.2);
   color: #fff;
 }
-#help_center .main-body .tz-container .main-content .posters .search .search-c a {
+#help_center .main-body .tz-container .main-content .posters .search .search-c form input:nth-child(2) {
+  width: 60px;
+  position: absolute;
+  right: 0px;
+  margin-right: 20px;
+  padding: 0px;
+  background-color: #fff;
+  background-size: 25px 25px;
+  background-position: 17px 6px;
+  background-repeat: no-repeat;
+}
+#help_center .main-body .tz-container .main-content .posters .search .search-c form a {
   width: 60px;
   position: absolute;
   right: 0px;
   margin-right: 20px;
 }
-#help_center .main-body .tz-container .main-content .posters .search .search-c a input {
+#help_center .main-body .tz-container .main-content .posters .search .search-c form a input {
   width: 100%;
   margin-right: 20px;
   padding: 0px;
@@ -6391,7 +6552,164 @@ input:hover {
   font-family: "PingFang";
   color: #989ca9;
 }
+#search_results .main-body .tz-container .main-content .option-text .help-home-content {
+  background-color: #fff;
+  padding: 20px;
+  display: none;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-content .problem-content {
+  width: 100%;
+  text-align: center;
+  box-shadow: 1px 1px 25px 0px rgba(24, 30, 60, 0.2);
+  padding: 20px 18px;
+  border-radius: 5px;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-content .problem-content .p-title {
+  font-size: 17px;
+  font-family: "PingFang";
+  color: #252b3a;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-content .problem-content .time {
+  font-size: 10px;
+  font-family: "PingFang";
+  color: #989ca9;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-content .problem-content .content-text-s pre {
+  width: 100% ;
+  height: auto;
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow: hidden;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-content .problem-content .content-text-s p {
+  width: 100% ;
+  height: auto;
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow: hidden;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-content .problem-content .content-text-s p a img {
+  width: 100%;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-content .problem-content .content-text-s ul li {
+  font-size: 12px;
+  color: #666a75;
+  width: 100% ;
+  height: auto;
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow: hidden;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-content .problem-content .content-text-s div {
+  font-size: 12px;
+  color: #666a75;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-content .problem-content .content-text-s div pre {
+  font-size: 12px;
+  color: #666a75;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-content .problem-content .content-text-s h1 {
+  font-size: 16px !important;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-content .problem-content .content-text-s h3 {
+  font-size: 14px !important;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-content .problem-content .content-text-s h2 {
+  font-size: 14px !important;
+  margin-top: 10px;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-content .problem-content .content-text-s h2 b {
+  size: 17px !important;
+  color: #252b3a;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-content .problem-content .content-text-s p:nth-child(2) {
+  margin: 15px 0px 0px 0px;
+  border-radius: 10px;
+  text-align: left;
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #666a75;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-content .problem-content .content-text-s p:nth-child(3) {
+  font-size: 12px;
+  color: #666a75;
+  margin-bottom: 20px;
+  text-align: left;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-content .problem-content .content-text-s p:nth-child(n) {
+  font-size: 12px;
+  color: #666a75;
+  margin-bottom: 20px;
+  text-align: left;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-content .problem-content .content-text-s p:nth-child(n) b {
+  color: #252b3a;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-content .problem-content .content-text-s p:last-child {
+  font-size: 12px;
+  color: #666a75;
+  margin-bottom: 5px;
+  text-align: left;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-content .more {
+  position: relative;
+  padding: 30px 0px 10px;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-content .more .label {
+  position: relative;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-content .more .label div {
+  display: inline-block;
+  margin-left: -4px;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-content .more .label div:nth-child(1) {
+  margin-left: 0px;
+  position: absolute;
+  top: 0px;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-content .more .label div:nth-child(2) {
+  width: 85%;
+  margin-left: 50px;
+  margin-bottom: 0px;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-content .more div {
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #666a75;
+  margin-bottom: 10px;
+  position: relative;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-content .more div span {
+  display: inline-block;
+  padding: 0px 5px;
+  margin-bottom: 3px;
+  border: 1px solid #162fac;
+  font-size: 10px;
+  font-family: "PingFang";
+  color: #162fac;
+  border-radius: 10px;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-content .more div p {
+  position: absolute;
+  left: 50px;
+  top: 0px;
+  overflow: hidden;
+  max-width: 165px;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+#search_results .main-body .tz-container .main-content .option-text .help-home-content .more img {
+  position: absolute;
+  width: 40px;
+  right: 0px;
+  top: 50%;
+}
 #search_results .main-body .tz-container .main-content .option-text .bottom {
+  background-color: #fff;
   height: 40px;
   position: relative;
   padding: 20px;
@@ -6405,7 +6723,7 @@ input:hover {
   top: 0px;
 }
 #search_results .main-body .tz-container .main-content .option-text .bottom div img:first-child {
-  margin-right: 10px;
+  margin-right: 5px;
 }
 #search_results .main-body .tz-container .main-content .option-text .bottom div p {
   display: inline-block;
@@ -6421,118 +6739,28 @@ input:hover {
   height: 30px;
   left: 50%;
   margin-left: -35px;
-  color: #989ca9;
   top: 5px;
   line-height: 30px;
   text-align: center;
 }
-#search_results .main-body .tz-container .main-content .option-text .bottom .page #pageNumber {
+#search_results .main-body .tz-container .main-content .option-text .bottom .page span {
   color: #252b3a;
+}
+#search_results .main-body .tz-container .main-content .option-text .bottom .page .max-page {
+  color: #989ca9;
 }
 #search_results .main-body .tz-container .main-content .option-text .bottom div:nth-child(3) {
   right: 50%;
   margin-right: -133px;
 }
-#search_results .main-body .tz-container .main-content .help-home-content {
-  background-color: #fff;
-  padding: 20px;
-  display: none;
+#search_results .main-body .tz-container .main-content .option-text .bottom div:nth-child(3) a:nth-child(1) img {
+  margin-left: 5px;
 }
-#search_results .main-body .tz-container .main-content .help-home-content .problem-conetnt {
-  width: 100%;
-  text-align: center;
-  box-shadow: 1px 1px 25px 0px rgba(24, 30, 60, 0.2);
-  padding: 20px 18px;
-  border-radius: 5px;
-}
-#search_results .main-body .tz-container .main-content .help-home-content .problem-conetnt .p-title {
-  font-size: 17px;
-  font-family: "PingFang";
-  color: #252b3a;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-#search_results .main-body .tz-container .main-content .help-home-content .problem-conetnt .time {
-  font-size: 10px;
-  font-family: "PingFang";
-  color: #989ca9;
-}
-#search_results .main-body .tz-container .main-content .help-home-content .problem-conetnt .c-main {
-  margin: 15px 0px;
-  padding: 12px 12px;
-  border-radius: 10px;
-  text-align: left;
-  border: 1px solid #cbd0df;
-  background-color: #ebebf1;
-  font-size: 12px;
-  font-family: "PingFang";
-  color: #666a75;
-}
-#search_results .main-body .tz-container .main-content .help-home-content .problem-conetnt .p-text {
-  font-size: 12px;
-  font-family: "PingFang";
-  color: #666a75;
-  margin-bottom: 20px;
-  text-align: left;
-}
-#search_results .main-body .tz-container .main-content .help-home-content .more {
-  position: relative;
-  padding: 30px 0px 10px;
-}
-#search_results .main-body .tz-container .main-content .help-home-content .more .label {
-  position: relative;
-}
-#search_results .main-body .tz-container .main-content .help-home-content .more .label div {
-  display: inline-block;
-  margin-left: -4px;
-}
-#search_results .main-body .tz-container .main-content .help-home-content .more .label div:nth-child(1) {
-  margin-left: 0px;
-  position: absolute;
-  top: 0px;
-}
-#search_results .main-body .tz-container .main-content .help-home-content .more .label div:nth-child(2) {
-  width: 85%;
-  margin-left: 50px;
-  margin-bottom: 0px;
-}
-#search_results .main-body .tz-container .main-content .help-home-content .more div {
-  font-size: 12px;
-  font-family: "PingFang";
-  color: #666a75;
-  margin-bottom: 10px;
-  position: relative;
-}
-#search_results .main-body .tz-container .main-content .help-home-content .more div span {
-  display: inline-block;
-  padding: 0px 5px;
-  margin-bottom: 3px;
-  border: 1px solid #162fac;
-  font-size: 10px;
-  font-family: "PingFang";
-  color: #162fac;
-  border-radius: 10px;
-}
-#search_results .main-body .tz-container .main-content .help-home-content .more div p {
-  position: absolute;
-  left: 50px;
-  top: 0px;
-  overflow: hidden;
-  max-width: 165px;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-}
-#search_results .main-body .tz-container .main-content .help-home-content .more img {
-  position: absolute;
-  width: 40px;
-  right: 0px;
-  top: 50%;
+#search_results .main-body .tz-container .main-content .option-text .bottom div:nth-child(3) a:nth-child(2) img {
+  margin-right: 0px;
 }
 #login .main-body .tz-container .main-content .login-content {
   width: 100%;
-  height: 595px;
   padding: 0px 20px;
   background-color: #eaecf5;
 }
@@ -7075,7 +7303,6 @@ input:hover {
 #logging .main-body .tz-container .main-content .user-content,
 #login_register_menu .main-body .tz-container .main-content .user-content {
   width: 100%;
-  height: 595px;
   background-color: #0b1029;
 }
 #logging .main-body .tz-container .main-content .user-content .content-i,

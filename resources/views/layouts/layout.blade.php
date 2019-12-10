@@ -497,7 +497,7 @@
             </p>
             <p class="filing">
                 <span>
-                    <a href="http://www.beian.miit.gov.cn" target="_blank">粤ICP备15081286号-2</a>
+                    <a href="http://www.beian.miit.gov.cn" target="_blank">粤ICP备15081286号</a>
                 </span>
                 <span>全国IDC证：A2.B1.B2-20150233</span>
             </p>

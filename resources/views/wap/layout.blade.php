@@ -122,7 +122,7 @@
                                     全国IDC证：A2.B1.B2-20150233
                                 </div>
                                 <div>
-                                    备案号：粤 15081286-2
+                                    备案号：<a href="http://beian.miit.gov.cn">粤ICP备15081286号</a>
                                 </div>
                             </div>
                         </div>

@@ -5,7 +5,7 @@ namespace App\Http\Models\News;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class  News extends Model
 {
@@ -13,8 +13,12 @@ class  News extends Model
 	protected $table = 'tz_news'; //表
 
 	protected $primaryKey = 'id'; //主键
-
+	public $timestamps = true; 
+	protected $dates = ['deleted_at'];
+	
 	protected $fillable = ['tid', 'title','content','created_at','updated_at','top_status','home_status','seoKeywords','seoTitle','seoDescription','digest','list_order'];
+
+	
 
 	/**
 	* 按类型获取文章消息列表

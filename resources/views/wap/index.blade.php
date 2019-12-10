@@ -13,15 +13,16 @@
             <li class="slideshow-li">
                 <img src="{{ asset("/images/wap/海报.png") }}" alt="">
             </li>
-            <li class="slideshow-li">
-                <img src="{{ asset("/images/wap/海报2.png") }}" alt="">
-            </li>
-            <li class="slideshow-li">
-                <img src="{{ asset("/images/wap/海报3.png") }}" alt="">
-            </li>
-            <li class="slideshow-li">
-                <img src="{{ asset("/images/wap/海报4.png") }}" alt="">
-            </li>
+{{--            暂时只显示一张海报--}}
+{{--            <li class="slideshow-li">--}}
+{{--                <img src="{{ asset("/images/wap/海报2.png") }}" alt="">--}}
+{{--            </li>--}}
+{{--            <li class="slideshow-li">--}}
+{{--                <img src="{{ asset("/images/wap/海报3.png") }}" alt="">--}}
+{{--            </li>--}}
+{{--            <li class="slideshow-li">--}}
+{{--                <img src="{{ asset("/images/wap/海报4.png") }}" alt="">--}}
+{{--            </li>--}}
         </ul>
         <!-- 点 -->
         <div class="point">
@@ -45,6 +46,11 @@
                     </div>
                 </div>
                 <div class="tz-main items-li">
+                <div class="yzj">
+                    <div class="fuwu-title">云主机</div>
+                        <p>腾正云国内首款安全、稳定、高效、易用的已婚平台,已获中国信息安全评测中心最高等级的安全认证。</p>
+                        <!-- <a href="/">立即体验</a> -->
+                    </div>
                     <ul>
                         <li>
                             <a href="/wap/server_hire">
@@ -237,7 +243,8 @@
         <img src="{{ asset("/images/wap/地图.png") }}" alt="">
     </div>
     <!-- 新闻动态 -->
-    <div class="news">
+    @include($news_template)
+    <!-- <div class="news">
         <div class="title">
             <p>新闻动态</p>
             <div class="title-hr"></div>
@@ -294,5 +301,5 @@
                 查看更多
             </div>
         </div>
-</div>
+</div> -->
 @endsection

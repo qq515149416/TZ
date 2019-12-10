@@ -39,6 +39,10 @@ class SearchResultsController extends Controller
 			array_push($data,$val->content);
 		}
 
+		foreach($data as $k=>$v)
+		{
+			$data[$k]->keywords = explode(',',$data[$k]->keywords);
+		}
 		$page_members = [
 			'current_page'	=> $current_page,
 			'max_page'	=> $last_page,

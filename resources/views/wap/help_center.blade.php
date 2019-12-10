@@ -22,7 +22,7 @@
 								
 								<form action='/wap/search_results' method='get'>
 									<input type="text" name="keyword" id="" placeholder="请输入关键词题的答案" required="required">
-									<input type="submit" style="background-image: url({{ asset("/images/wap/搜索.png") }});">
+									<input type="submit" value="" style="background-image: url({{ asset("/images/wap/搜索.png") }});">
 								</form>
 							</div>
 							<div class="search-f">
@@ -66,7 +66,7 @@
 										<a href="/wap/help_center_home/{{ $item->id }}?page=1">
 											<span class="dian"></span>
 											<p>{{ $item->name }}</p>
-											<p>共 <span>06</span> 文档</p>
+											<p>共 <span>{{$item->num}}</span> 文档</p>
 										</a>
 									</li>
 									@endforeach

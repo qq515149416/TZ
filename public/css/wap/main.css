@@ -326,6 +326,10 @@ input:hover {
   font-family: "PingFang";
   color: #929bb8;
 }
+.footer .tz-main .record div a,
+.footer .tz-main .record div a:active {
+  color: #929bb8;
+}
 .footer .tz-main .record div img {
   width: 10px;
 }

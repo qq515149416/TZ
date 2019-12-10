@@ -13,15 +13,16 @@
             <li class="slideshow-li">
                 <img src="{{ asset("/images/wap/海报.png") }}" alt="">
             </li>
-            <li class="slideshow-li">
-                <img src="{{ asset("/images/wap/海报2.png") }}" alt="">
-            </li>
-            <li class="slideshow-li">
-                <img src="{{ asset("/images/wap/海报3.png") }}" alt="">
-            </li>
-            <li class="slideshow-li">
-                <img src="{{ asset("/images/wap/海报4.png") }}" alt="">
-            </li>
+{{--            暂时只显示一张海报--}}
+{{--            <li class="slideshow-li">--}}
+{{--                <img src="{{ asset("/images/wap/海报2.png") }}" alt="">--}}
+{{--            </li>--}}
+{{--            <li class="slideshow-li">--}}
+{{--                <img src="{{ asset("/images/wap/海报3.png") }}" alt="">--}}
+{{--            </li>--}}
+{{--            <li class="slideshow-li">--}}
+{{--                <img src="{{ asset("/images/wap/海报4.png") }}" alt="">--}}
+{{--            </li>--}}
         </ul>
         <!-- 点 -->
         <div class="point">

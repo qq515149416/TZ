@@ -55,7 +55,9 @@
 							<a href="/wap/new/detail/{{$pre_next['next']['id']}}">
 								<p>下一篇：{{str_limit($pre_next['next']['title'],30,'....')}}</p>
 							</a>
+							<a href="/wap/new/detail/{{$pre_next['pre']['id']}}">
 							<img src="{{ asset("/images/wap/内容页按钮.png") }}" alt="">
+							</a>
 						</div>
 					</div>
 
@@ -73,6 +75,18 @@
 </div>
 </div>
 <script>
+var s_p = document.querySelectorAll(".content-text p");
+      for(var i=0;i<s_p.length;i++){
+        if(s_p[i].innerHTML==""){
+		  s_p[i].style.display="none";
+        }else if(s_p[i].innerHTML=="<br>"){
+			s_p[i].style.display="none";
+		}else if(s_p[i].innerHTML=="&nbsp;"){
+			s_p[i].style.display="none";
+		}else if(s_p[i].innerHTML=="　　"){
+			s_p[i].style.display="none";
+		}
+      }
 // 公司简介
 machineroom();
 function machineroom(){
@@ -86,22 +100,6 @@ function machineroom(){
 	  arrows.style.transform = "rotate(-45deg)";
 	  arrows.style.transition = "transform 0.4s";
 	}
-	// var option_text = document.querySelectorAll(".option-text");
-	// var option_i = document.querySelectorAll(".option-i");
-	// var p_value = document.querySelector(".drop-options p");
-	// for(var i=0;i<option_i.length;i++){
-	//   option_i[i].index=i;
-	//   option_i[i].addEventListener("click",function(){
-	//     for(var j=0;j<option_text.length;j++){
-	//       option_text[j].className="option-text";
-	//     }
-	//     document.querySelector(".news-content").style.display="none";
-	//     option_text[this.index].className="option-text option-e-active";
-	//     p_value.innerHTML=option_i[this.index].innerHTML;
-  
-	//   })
-	// }
-  
 	document.addEventListener("touchmove", function(e){
 	  if(e.target == document.querySelector(".drop-options p")||e.target ==document.querySelector(".select-text") ){
 		document.querySelector(".select-text").style.display="block";

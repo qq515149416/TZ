@@ -30,6 +30,134 @@
             <a class="tab-item" href="/protection/c-shield">防C盾</a> -->
         </div>
     </div>
+    <!-- 高防ip促销（临时） -->
+    <div id="highDefensePromotion">
+
+        <div class="hot-product">
+            <div class="title">
+                <h2 class="text">高防IP</h2>
+                <h5 class="sub-text">12.12年终大促下单即享8.8折，续费价格不变</h5>
+            </div>
+            <div class="content">
+                <div class="clearfix d-block-container">
+
+                    <div class="item">
+
+                        <div class="back">
+                            <div class="card">
+                                <div class="card-head">
+                                    <p class="card-title top">
+                                        <span>[促销]</span>
+                                        高防IP业务-100G
+                                    </p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-text">
+                                        <p class="desc">
+                                            防护：100
+                                            <br/>
+                                            机房：陕西西安
+                                        </p>
+                                        <hr style="margin-top: 30px; margin-bottom: 30px;"/>
+                                        <p class="price">
+                                        <span style="font-size: 28px;font-family: 'pingFangHeavy';">1144</span> 元/月
+                                        </p>
+                                        <a class="detail-link" href="javascript: void(0);" onclick="randomqq()">了解详情</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+
+                        <div class="back">
+                            <div class="card">
+                                <div class="card-head">
+                                    <p class="card-title top">
+                                        <span>[促销]</span>
+                                        高防IP业务-200G
+                                    </p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-text">
+                                        <p class="desc">
+                                            防护：200
+                                            <br/>
+                                            机房：陕西西安
+                                        </p>
+                                        <hr style="margin-top: 30px; margin-bottom: 30px;"/>
+                                        <p class="price">
+                                        <span style="font-size: 28px;font-family: 'pingFangHeavy';">1660</span> 元/月
+                                        </p>
+                                        <a class="detail-link" href="javascript: void(0);" onclick="randomqq()">了解详情</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+
+                        <div class="back">
+                            <div class="card">
+                                <div class="card-head">
+                                    <p class="card-title top">
+                                        <span>[促销]</span>
+                                        高防IP业务-300G
+                                    </p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-text">
+                                        <p class="desc">
+                                            防护：300
+                                            <br/>
+                                            机房：陕西西安
+                                        </p>
+                                        <hr style="margin-top: 30px; margin-bottom: 30px;"/>
+                                        <p class="price">
+                                        <span style="font-size: 28px;font-family: 'pingFangHeavy';">3420</span> 元/月
+                                        </p>
+                                        <a class="detail-link" href="javascript: void(0);" onclick="randomqq()">了解详情</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+
+                        <div class="back">
+                            <div class="card">
+                                <div class="card-head">
+                                    <p class="card-title top">
+                                        <span>[促销]</span>
+                                        高防IP业务-500G
+                                    </p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-text">
+                                        <p class="desc">
+                                            防护：500
+                                            <br/>
+                                            机房：陕西西安
+                                        </p>
+                                        <hr style="margin-top: 30px; margin-bottom: 30px;"/>
+                                        <p class="price">
+                                        <span style="font-size: 28px;font-family: 'pingFangHeavy';">26400</span> 元/月
+                                        </p>
+                                        <a class="detail-link" href="javascript: void(0);" onclick="randomqq()">了解详情</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
     <!-- 高防ip套餐 -->
     <div id="highDefenseProduct">
         <div class="highDefenseProduct text-center">

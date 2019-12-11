@@ -26358,7 +26358,8 @@ function machineroomtext() {
 
 
 //----------------解决方案轮播图
-if (document.querySelector("#mobileapp_solution") || document.querySelector("#chess_solution") || document.querySelector("#cabinet_to_rent") || document.querySelector("#home") || document.querySelector("#bandwidth_to_ent") || document.querySelector("#server_hosting") || document.querySelector("#DDOS_high_security_IP3") || document.querySelector("#high_proof_host") || document.querySelector("#cloud_hosting") || document.querySelector("#C_shield") || document.querySelector("#server_hire")) {
+//|| document.querySelector("#home")
+if (document.querySelector("#mobileapp_solution") || document.querySelector("#chess_solution") || document.querySelector("#cabinet_to_rent") || document.querySelector("#bandwidth_to_ent") || document.querySelector("#server_hosting") || document.querySelector("#DDOS_high_security_IP3") || document.querySelector("#high_proof_host") || document.querySelector("#cloud_hosting") || document.querySelector("#C_shield") || document.querySelector("#server_hire")) {
     slideshow_main("slideshow");
 }
 if (document.querySelector("#CDN_speed_up")) {
@@ -27530,12 +27531,12 @@ if (document.querySelector("#company_introduction")) {
         document.querySelectorAll(".option-text")[2].querySelectorAll(".bottom")[1].querySelectorAll("div")[2].style.marginRight = "-50%";
         document.querySelectorAll(".option-text")[2].querySelectorAll(".bottom")[2].querySelectorAll("div")[0].style.marginLeft = "-50%";
         document.querySelectorAll(".option-text")[2].querySelectorAll(".bottom")[2].querySelectorAll("div")[2].style.marginRight = "-50%";
-        document.querySelectorAll(".option-text")[5].querySelector(".bottom").querySelectorAll("div")[0].style.marginLeft = "-47%";
-        document.querySelectorAll(".option-text")[5].querySelector(".bottom").querySelectorAll("div")[2].style.marginRight = "-47%";
+        // document.querySelectorAll(".option-text")[5].querySelector(".bottom").querySelectorAll("div")[0].style.marginLeft="-115px";
+        // document.querySelectorAll(".option-text")[5].querySelector(".bottom").querySelectorAll("div")[2].style.marginRight="-115px";
         document.querySelectorAll(".option-text")[5].style.padding = "30px 11px";
         var lis = document.querySelectorAll(".option-text")[5].querySelectorAll(".contact-us")[2].querySelectorAll(" ol li");
         for (var i = 0; i < lis.length; i++) {
-            lis[i].style.padding = " 10px 3px";
+            lis[i].style.padding = " 10px 5px";
         }
         document.querySelectorAll(".option-text")[5].querySelectorAll(".contact-us")[2].style.padding = "0px 5px 15px 5px";
     }

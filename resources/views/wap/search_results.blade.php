@@ -20,7 +20,9 @@
 							<p class="search-t">帮助中心</p>
 							<div class="search-c">
 								<input type="text" name="search" id="searchwords" placeholder="请输入关键词题的答案">
-								<input type="button" id="btn" style="background-image: url({{ asset("/images/wap/搜索.png") }});">
+								<a>
+									<input type="button" id="btn" style="background-image: url({{ asset("/images/wap/搜索.png") }});">
+								</a>
 							</div>
 							<div class="search-f">
 								<p>热门：怎么选择服务器租用商 | 服务器托管好吗</p>
@@ -73,7 +75,7 @@
 						@endforeach
 						
 						<div class="bottom" id="bottom">
-							<div style="width: 95px;">
+							<div style="width: 90px;">
 							<a href="/wap/search_results?keyword={{$keyword}}&&page=1"><img src="{{ asset("/images/wap/第一页.png") }}" alt=""></a>
 								<a class="a-pap" href="/wap/search_results?keyword={{$keyword}}&&page={{$page_members['current_page']-1}}"><img src="{{ asset("/images/wap/上一页.png") }}" alt=""></a>
 							</div>
@@ -81,7 +83,7 @@
 							<div class="page" id="page">
 								<span class="current-page">{{$page_members['current_page']}}</span>/<span class="max-page">{{$page_members['max_page']}}</span>
 							</div>
-							<div style="width: 95px;">
+							<div style="width: 90px;">
 								<a class="a-next" href="/wap/search_results?keyword={{$keyword}}&&page={{$page_members['current_page']+1}}"><img src="{{ asset("/images/wap/下一页.png") }}" alt=""></a>
 								<a href="/wap/search_results?keyword={{$keyword}}&&page={{$page_members['max_page']}}"><img src="{{ asset("/images/wap/最后一页.png") }}" alt=""></a>
 								

@@ -5693,9 +5693,10 @@ input:hover {
 #company_introduction .main-body .tz-container .main-content .contact-us .bottom div:nth-child(1) {
   left: 50%;
   margin-left: -115px;
+  font-size: 0px;
 }
 #company_introduction .main-body .tz-container .main-content .contact-us .bottom div:nth-child(1) img:nth-child(1) {
-  margin-right: 5px;
+  margin-right: 10px;
 }
 #company_introduction .main-body .tz-container .main-content .contact-us .bottom .page {
   border: 1px solid #cbcedd;
@@ -5718,9 +5719,10 @@ input:hover {
 #company_introduction .main-body .tz-container .main-content .contact-us .bottom div:nth-child(3) {
   right: 50%;
   margin-right: -115px;
+  font-size: 0px;
 }
 #company_introduction .main-body .tz-container .main-content .contact-us .bottom div:nth-child(3) img:nth-child(1) {
-  margin-right: 5px;
+  margin-right: 10px;
 }
 #company_introduction .main-body .tz-container .main-content .contact-us .address {
   letter-spacing: 1px;

@@ -8,6 +8,7 @@
 
 @section('content')
 <div class="main-content" id="home">
+<img style="width:100%;" src="{{ asset("/images/wap/海报.png") }}" alt="">
     <div class="slideshow" id="slideshow">
         <ul class="slideshow-ul clear">
             <li class="slideshow-li">

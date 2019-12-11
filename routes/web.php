@@ -103,7 +103,15 @@ Route::group([
     Route::get('/login_register_menu', 'Show\wap\LoginRegisteredMenuController@index');
     Route::get('/new/detail/{id}', 'Show\wap\NewDetailController@index');
 });
-
+/**
+ * 新用户后台
+ */
+Route::group([
+    'prefix' => 'user',
+    'middleware' => 'UserOperationLog'
+], function () {
+    Route::get("index","User\Show\IndexController@index");
+});
 /**
  * 测试组
  */

@@ -13,6 +13,7 @@
 #tz-menu #home {
   background-color: #e9ecff;
   width: 100%;
+  font-size: 0px;
 }
 #tz-menu #home .slideshow {
   position: relative;
@@ -37,10 +38,10 @@
   width: 6px;
   height: 6px;
   border: none;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: hsla(0, 0%, 100%, 0.5);
   margin: 0;
   margin-right: 10px;
-  transition: all .5s;
+  transition: all 0.5s;
 }
 #tz-menu #home .slideshow .point ol li .progress {
   height: 13px;

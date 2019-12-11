@@ -27531,12 +27531,12 @@ if (document.querySelector("#company_introduction")) {
         document.querySelectorAll(".option-text")[2].querySelectorAll(".bottom")[1].querySelectorAll("div")[2].style.marginRight = "-50%";
         document.querySelectorAll(".option-text")[2].querySelectorAll(".bottom")[2].querySelectorAll("div")[0].style.marginLeft = "-50%";
         document.querySelectorAll(".option-text")[2].querySelectorAll(".bottom")[2].querySelectorAll("div")[2].style.marginRight = "-50%";
-        document.querySelectorAll(".option-text")[5].querySelector(".bottom").querySelectorAll("div")[0].style.marginLeft = "-47%";
-        document.querySelectorAll(".option-text")[5].querySelector(".bottom").querySelectorAll("div")[2].style.marginRight = "-47%";
+        // document.querySelectorAll(".option-text")[5].querySelector(".bottom").querySelectorAll("div")[0].style.marginLeft="-115px";
+        // document.querySelectorAll(".option-text")[5].querySelector(".bottom").querySelectorAll("div")[2].style.marginRight="-115px";
         document.querySelectorAll(".option-text")[5].style.padding = "30px 11px";
         var lis = document.querySelectorAll(".option-text")[5].querySelectorAll(".contact-us")[2].querySelectorAll(" ol li");
         for (var i = 0; i < lis.length; i++) {
-            lis[i].style.padding = " 10px 3px";
+            lis[i].style.padding = " 10px 5px";
         }
         document.querySelectorAll(".option-text")[5].querySelectorAll(".contact-us")[2].style.padding = "0px 5px 15px 5px";
     }

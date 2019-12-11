@@ -341,7 +341,7 @@
   margin-bottom: 10px;
   border-radius: 5px;
   border: 1px solid #cbcedd;
-  padding: 10px 5px;
+  padding: 10px 10px;
 }
 #company_introduction .main-body .tz-container .main-content .contact-us .personnel div ol li p {
   font-weight: bold;
@@ -637,6 +637,10 @@
 #company_introduction_news .main-body .tz-container .news-content .content .content-text {
   width: 100%;
   margin: 15px 0px;
+}
+#company_introduction_news .main-body .tz-container .news-content .content .content-text img {
+  width: 100% !important;
+  height: auto !important;
 }
 #company_introduction_news .main-body .tz-container .news-content .content .content-text p:first-child {
   display: none;

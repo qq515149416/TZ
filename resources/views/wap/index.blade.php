@@ -9,7 +9,7 @@
 @section('content')
 <div class="main-content" id="home">
 <img style="width:100%;" src="{{ asset("/images/wap/海报.png") }}" alt="">
-    <div class="slideshow" id="slideshow">
+    <!-- <div class="slideshow" id="slideshow">
         <ul class="slideshow-ul clear">
             <li class="slideshow-li">
                 <img src="{{ asset("/images/wap/海报.png") }}" alt="">
@@ -24,13 +24,13 @@
 {{--            <li class="slideshow-li">--}}
 {{--                <img src="{{ asset("/images/wap/海报4.png") }}" alt="">--}}
 {{--            </li>--}}
-        </ul>
+        </ul> -->
         <!-- 点 -->
-        <div class="point">
+        <!-- <div class="point">
             <ol class="clear slideshow-ol">
             </ol>
         </div>
-    </div>
+    </div> -->
     <!-- 产品服务 -->
     <div class="title">
         <p>为您提供一站式的产品服务</p>

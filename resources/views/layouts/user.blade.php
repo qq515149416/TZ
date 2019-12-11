@@ -95,17 +95,17 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col px-0 pt-4 align-items-stretch content">
+                <div class="col px-0 pt-4 align-items-stretch content overflow-hidden">
                     <div class="container-fluid pt-3 pl-4 ml-2">
                         <div class="row">
                             <div class="col-3">
-                                <div class="paper jumbotron-fluid bg-white">
-                                    <div class="media">
+                                <div class="paper jumbotron-fluid rounded bg-white px-4 py-4">
+                                    <div class="media mx-1">
                                         <img src="{{ asset("/user_assets/html_img/avatar.png") }}" class="mr-3 align-self-center" alt="用户头像">
                                         <div class="media-body">
-                                            <h5 class="mt-0">黄某某</h5>
-                                            <p>账号：123456@163.com</p>
-                                            <p>联系电话：12345678901</p>
+                                            <h5 class="mt-0 font-bold mb-3">黄某某<span class="font-medium status badge badge-light ml-2">已认证</span></h5>
+                                            <p class="font-medium mb-1">账号：123456@163.com</p>
+                                            <p class="font-medium my-0">联系电话：12345678901</p>
                                         </div>
                                     </div>
                                 </div>

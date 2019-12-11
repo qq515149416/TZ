@@ -1,10 +1,97 @@
+  @font-face {
+    font-family: 'pingFangExtraLight';
+    src: url('../font/PingFang_ExtraLight.eot');
+    src: url('../font/PingFang_ExtraLight.woff') format('woff'),
+    url('../font/PingFang_ExtraLight.ttf') format('truetype'),
+    url('../font/PingFang_ExtraLight.svg') format('svg');
+  }
+
+  @font-face {
+    font-family: 'pingFangLight';
+    src: url('../font/PingFang_Light_0.eot');
+    src: url('../font/PingFang_Light_0.woff') format('woff'),
+    url('../font/PingFang_Light_0.ttf') format('truetype'),
+    url('../font/PingFang_Light_0.svg') format('svg');
+  }
+
+  @font-face {
+    font-family: 'pingFangRegular';
+    src: url('../font/PingFang_Regular_0.eot');
+    src: url('../font/PingFang_Regular_0.woff') format('woff'),
+    url('../font/PingFang_Regular_0.ttf') format('truetype'),
+    url('../font/PingFang_Regular_0.svg') format('svg');
+  }
+
+  @font-face {
+    font-family: 'pingFang';
+    src: url('../font/PingFang_Medium_0.eot');
+    src: url('../font/PingFang_Medium_0.woff') format('woff'),
+    url('../font/PingFang_Medium_0.ttf') format('truetype'),
+    url('../font/PingFang_Medium_0.svg') format('svg');
+    //font-weight: normal;
+  }
+
+  @font-face {
+    font-family: 'pingFangBold';
+    src: url('../font/PingFang_Bold.eot');
+    src: url('../font/PingFang_Bold.woff') format('woff'),
+    url('../font/PingFang_Bold.ttf') format('truetype'),
+    url('../font/PingFang_Bold.svg') format('svg');
+    //font-weight: bold;
+  }
+
+  @font-face {
+    font-family: 'pingFangHeavy';
+    src: url('../font/PingFang_Heavy_0.eot');
+    src: url('../font/PingFang_Heavy_0.woff') format('woff'),
+    url('../font/PingFang_Heavy_0.ttf') format('truetype'),
+    url('../font/PingFang_Heavy_0.svg') format('svg');
+  }
+  .font-extra-light {
+    font-family: "pingFangExtraLight", "微软雅黑", Arial, Helvetica, sans-serif !important;
+  }
+
+  .font-light {
+    font-family: "pingFangLight", "微软雅黑", Arial, Helvetica, sans-serif !important;
+  }
+
+  .font-regular {
+    font-family: "pingFangRegular", "微软雅黑", Arial, Helvetica, sans-serif !important;
+  }
+
+  .font-medium {
+    font-family: 'pingFangMedium', "微软雅黑", Arial, Helvetica, sans-serif !important;
+  }
+
+  .font-bold {
+    font-family: 'pingFangBold', "微软雅黑", Arial, Helvetica, sans-serif !important;
+  }
+
+  .font-heavy {
+    font-family: "pingFangHeavy", "微软雅黑", Arial, Helvetica, sans-serif !important;
+  }
 @base_img_url: "/user_assets/images";
 #user_admin {
     .main-content {
         .content {
             background-color: #f4f6f9;
             .paper {
-
+                box-shadow: 0 0 12px 2px rgba(27, 34, 69, .06);
+                h5 {
+                    font-size: 22px;
+                    color: #191c2b;
+                    .status {
+                        font-size: 12px;
+                        color: #96a1b4;
+                        border: 1px solid #d9dee6;
+                        background-color: transparent;
+                        vertical-align: middle;
+                    }
+                }
+                p {
+                    font-size: 14px;
+                    color: #62676f;
+                }
             }
         }
         .menu {

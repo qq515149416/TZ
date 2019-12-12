@@ -8,6 +8,19 @@
 
 @section('content')
 
+
+@if(!empty(session('help_tip')))
+　　
+<div class="alert alert-success" role="alert" style="z-index: 999">
+	{{session('help_tip')}}
+</div>
+<script>
+	setInterval(function(){
+		$('.alert').remove();
+	},3000);
+</script>
+@endif
+
 <!-- 帮助中心 -->
 <div id="help_center">
 		<div class="main-body">

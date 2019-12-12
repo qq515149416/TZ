@@ -22,7 +22,7 @@
                     </div>
                     <div class="config-item text-center">
                         <span class="attr">内存</span>
-                        <span class="val">16G</span>
+                        <span class="val">8G</span>
                     </div>
                     <div class="config-item double">
                         <span class="attr">硬盘</span>

@@ -17,7 +17,7 @@ class JudgeAgent
      */
     public function handle($request, Closure $next)
     {
-        if($request->has('ignorance')){
+        if(!$request->has('ignorance')){
             if(Agent::isMobile() && strpos($request->path(),"wap")===false) {
                 return redirect("/wap/".str_replace("wap/","",$request->path()));
             }

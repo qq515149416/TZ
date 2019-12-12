@@ -715,30 +715,40 @@
                         <div class="problems-li">
                             <div class="tz-main">
                                 <ul>
-                                    <li class="clear">
+                                <li class="clear">
                                         <img src="{{ asset("/images/wap/问题.png") }}" alt="">
-                                        <p>什么是服务器托管？</p>
-                                        <p>2019.06.01</p>
+                                        <a href="/wap/help_articles">
+                                            <p>DDoS高防IP有用吗？</p>
+                                        </a>
+                                        <p class="time-p">2019.06.01</p>
                                     </li>
                                     <li class="clear">
                                         <img src="{{ asset("/images/wap/问题.png") }}" alt="">
-                                        <p>服务器托管有哪些好处？</p>
-                                        <p>2019.06.01</p>
+                                        <a href="/wap/help_articles">
+                                            <p>DDoS高防IP有用吗？</p>
+                                        </a>
+                                        <p class="time-p">2019.06.01</p>
                                     </li>
                                     <li class="clear">
                                         <img src="{{ asset("/images/wap/问题.png") }}" alt="">
-                                        <p>服务器托管的U是什么意思？</p>
-                                        <p>2019.06.01</p>
+                                        <a href="/wap/help_articles">
+                                            <p>DDoS高防IP有用吗？</p>
+                                        </a>
+                                        <p class="time-p">2019.06.01</p>
                                     </li>
                                     <li class="clear">
                                         <img src="{{ asset("/images/wap/问题.png") }}" alt="">
-                                        <p>服务器托管BGP机房是什么意思?</p>
-                                        <p>2019.06.01</p>
+                                        <a href="/wap/help_articles">
+                                            <p>DDoS高防IP有用吗？</p>
+                                        </a>
+                                        <p class="time-p">2019.06.01</p>
                                     </li>
                                     <li class="clear">
                                         <img src="{{ asset("/images/wap/问题.png") }}" alt="">
-                                        <p>腾正科技的服务器托管怎么样？ </p>
-                                        <p>2019.06.01</p>
+                                        <a href="/wap/help_articles">
+                                            <p>DDoS高防IP有用吗？</p>
+                                        </a>
+                                        <p class="time-p">2019.06.01</p>
                                     </li>
                                 </ul>
                                 <div class="view-more">

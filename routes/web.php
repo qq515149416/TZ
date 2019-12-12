@@ -102,6 +102,7 @@ Route::group([
     Route::get('/logging', 'Show\wap\LoggingController@index');
     Route::get('/login_register_menu', 'Show\wap\LoginRegisteredMenuController@index');
     Route::get('/new/detail/{id}', 'Show\wap\NewDetailController@index');
+    Route::get('/help_articles/{id}', 'Show\wap\HelpArticlesController@index');
 });
 /**
  * 新用户后台

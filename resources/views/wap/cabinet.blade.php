@@ -432,30 +432,40 @@
                         <div class="problems-li">
                             <div class="tz-main">
                                 <ul>
-                                    <li class="clear">
+                                <li class="clear">
                                         <img src="{{ asset("/images/wap/问题.png") }}" alt="">
-                                        <p>什么是机柜租用？</p>
-                                        <p>2019.06.01</p>
+                                        <a href="/wap/help_articles">
+                                            <p>DDoS高防IP有用吗？</p>
+                                        </a>
+                                        <p class="time-p">2019.06.01</p>
                                     </li>
                                     <li class="clear">
                                         <img src="{{ asset("/images/wap/问题.png") }}" alt="">
-                                        <p>机柜租用好吗？</p>
-                                        <p>2019.06.01</p>
+                                        <a href="/wap/help_articles">
+                                            <p>DDoS高防IP有用吗？</p>
+                                        </a>
+                                        <p class="time-p">2019.06.01</p>
                                     </li>
                                     <li class="clear">
                                         <img src="{{ asset("/images/wap/问题.png") }}" alt="">
-                                        <p>机柜租用怎么收费？</p>
-                                        <p>2019.06.01</p>
+                                        <a href="/wap/help_articles">
+                                            <p>DDoS高防IP有用吗？</p>
+                                        </a>
+                                        <p class="time-p">2019.06.01</p>
                                     </li>
                                     <li class="clear">
                                         <img src="{{ asset("/images/wap/问题.png") }}" alt="">
-                                        <p>机柜租用如何选择?</p>
-                                        <p>2019.06.01</p>
+                                        <a href="/wap/help_articles">
+                                            <p>DDoS高防IP有用吗？</p>
+                                        </a>
+                                        <p class="time-p">2019.06.01</p>
                                     </li>
                                     <li class="clear">
                                         <img src="{{ asset("/images/wap/问题.png") }}" alt="">
-                                        <p>机柜租用哪个公司好？ </p>
-                                        <p>2019.06.01</p>
+                                        <a href="/wap/help_articles">
+                                            <p>DDoS高防IP有用吗？</p>
+                                        </a>
+                                        <p class="time-p">2019.06.01</p>
                                     </li>
                                 </ul>
                                 <div class="view-more">

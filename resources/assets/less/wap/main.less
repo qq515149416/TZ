@@ -869,26 +869,30 @@ input:hover{
                     margin-right: 5px;
                     margin-top: 14px; 
                 }
-                p{
-                    display: inline-block;
-                    font-size: 14px;
-                    font-family: "PingFang";
-                    color: rgb( 37, 43, 58 );
-                    line-height: 1.427;
-                    text-align: left;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    max-width: 230px;
-                    -webkit-box-orient: vertical;
-                    -webkit-line-clamp: 1;
-                    overflow: hidden;
+                a{
+                    p{
+                        display: inline-block;
+                        font-size: 14px;
+                        font-family: "PingFang";
+                        color: rgb( 37, 43, 58 );
+                        line-height: 1.427;
+                        text-align: left;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        max-width: 230px;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 1;
+                        overflow: hidden;
+                    }
                 }
-                p:last-child{
+                .time-p{
                     font-size: 12px;
                     font-family: "PingFang";
                     color: rgb( 136, 136, 136 );
                     float: right;
-                    margin-top: 14px;
+                    margin-top: 0px;
+                    height: 43px;
+                    line-height: 43px;
                 }
             }
         }
@@ -1195,6 +1199,7 @@ input:hover{
 @import "./registered.less";
 @import "./logging.less";
 @import "./login_register_menu.less";
+@import "./help_articles.less";
 
 
 

@@ -260,30 +260,40 @@
                         <div class="problems-li">
                             <div class="tz-main">
                                 <ul>
-                                    <li class="clear">
+                                <li class="clear">
                                         <img src="{{ asset("/images/wap/问题.png") }}" alt="">
-                                        <p>DDoS防御流量叠加包应用场景分析 </p>
-                                        <p>2019.06.01</p>
+                                        <a href="/wap/help_articles">
+                                            <p>DDoS高防IP有用吗？</p>
+                                        </a>
+                                        <p class="time-p">2019.06.01</p>
                                     </li>
                                     <li class="clear">
                                         <img src="{{ asset("/images/wap/问题.png") }}" alt="">
-                                        <p>DDoS防御流量叠加包特点有哪些</p>
-                                        <p>2019.06.01</p>
+                                        <a href="/wap/help_articles">
+                                            <p>DDoS高防IP有用吗？</p>
+                                        </a>
+                                        <p class="time-p">2019.06.01</p>
                                     </li>
                                     <li class="clear">
                                         <img src="{{ asset("/images/wap/问题.png") }}" alt="">
-                                        <p>DDoS防御流量叠加包购买流程 </p>
-                                        <p>2019.06.01</p>
+                                        <a href="/wap/help_articles">
+                                            <p>DDoS高防IP有用吗？</p>
+                                        </a>
+                                        <p class="time-p">2019.06.01</p>
                                     </li>
                                     <li class="clear">
                                         <img src="{{ asset("/images/wap/问题.png") }}" alt="">
-                                        <p>腾正高防御流量叠加包使用说明</p>
-                                        <p>2019.06.01</p>
+                                        <a href="/wap/help_articles">
+                                            <p>DDoS高防IP有用吗？</p>
+                                        </a>
+                                        <p class="time-p">2019.06.01</p>
                                     </li>
                                     <li class="clear">
                                         <img src="{{ asset("/images/wap/问题.png") }}" alt="">
-                                        <p>什么是腾正高防御流量叠加包？ </p>
-                                        <p>2019.06.01</p>
+                                        <a href="/wap/help_articles">
+                                            <p>DDoS高防IP有用吗？</p>
+                                        </a>
+                                        <p class="time-p">2019.06.01</p>
                                     </li>
                                 </ul>
                                 <div class="view-more">

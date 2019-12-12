@@ -104,17 +104,51 @@
                                         <img src="{{ asset("/user_assets/html_img/avatar.png") }}" class="mr-3 align-self-center" alt="用户头像">
                                         <div class="media-body">
                                             <h5 class="mt-0 font-bold mb-3">黄某某<span class="font-medium status badge badge-light ml-2">已认证</span></h5>
-                                            <p class="font-medium mb-1">账号：123456@163.com</p>
-                                            <p class="font-medium my-0">联系电话：12345678901</p>
+                                            <p class="font-medium my-0 mb-1">账号：123456@163.com</p>
+                                            <p class="font-medium my-0 mb-1">联系电话：12345678901</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-3">
-                                2
+                                <div class="paper jumbotron-fluid rounded bg-white px-4 py-4">
+                                    <div class="balance-title d-flex justify-content-between align-items-center">
+                                        <span>账号余额</span>
+                                        <button type="button" class="btn btn-primary font-medium">充&nbsp;值</button>
+                                    </div>
+                                    <div class="balance mt-3">
+                                        8888.88
+                                    </div>
+                                </div>
                             </div>
                             <div class="col">
-                                3
+                                <div class="paper jumbotron-fluid rounded bg-white px-4 py-4">
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="user-detail-icon discount">
+                                            </span>
+                                            <span class="user-detail-text">
+                                                优惠票券
+                                            </span>
+                                        </div>
+                                        <div class="col">
+                                            <span class="user-detail-icon order">
+                                            </span>
+                                            <span class="user-detail-text">
+                                                我的订单
+                                            </span>
+                                        </div>
+                                        <div class="col">
+                                            <span class="user-detail-icon transaction">
+                                            </span>
+                                            <span class="user-detail-text">
+                                                交易明细
+                                            </span>
+                                        </div>
+                                        <div class="col">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

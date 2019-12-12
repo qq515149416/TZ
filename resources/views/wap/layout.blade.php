@@ -108,7 +108,7 @@
                             <div class="phone-call">
                                 <div class="p-text clear">
                                     <img src="{{ asset("/images/wap/7X24小时服务热线.png") }}" alt="">
-                                    <p>7x24小时服务热线: <span style="font-weight=350;">0769- 22226555</span></p>
+                                    <p>7x24小时服务热线: <span style="font-weight=350;">0769-22226555</span></p>
                                 </div>
                             </div>
                             <div class="record">

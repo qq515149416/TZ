@@ -345,20 +345,26 @@
                         <div class="problems-li">
                             <div class="tz-main">
                                 <ul>
-                                    <li class="clear">
+                                <li class="clear">
                                         <img src="{{ asset("/images/wap/问题.png") }}" alt="">
-                                        <p>什么事云主机？</p>
-                                        <p>2019.06.01</p>
+                                        <a href="/wap/help_articles">
+                                            <p>DDoS高防IP有用吗？</p>
+                                        </a>
+                                        <p class="time-p">2019.06.01</p>
                                     </li>
                                     <li class="clear">
                                         <img src="{{ asset("/images/wap/问题.png") }}" alt="">
-                                        <p>云服务器和云虚拟机有什么区别？</p>
-                                        <p>2019.06.01</p>
+                                        <a href="/wap/help_articles">
+                                            <p>DDoS高防IP有用吗？</p>
+                                        </a>
+                                        <p class="time-p">2019.06.01</p>
                                     </li>
                                     <li class="clear">
                                         <img src="{{ asset("/images/wap/问题.png") }}" alt="">
-                                        <p>云服务器和云虚拟主机的区别、利弊？</p>
-                                        <p>2019.06.01</p>
+                                        <a href="/wap/help_articles">
+                                            <p>DDoS高防IP有用吗？</p>
+                                        </a>
+                                        <p class="time-p">2019.06.01</p>
                                     </li>
                                 </ul>
                                 

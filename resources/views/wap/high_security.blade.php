@@ -390,29 +390,40 @@
                             <div class="tz-main">
                                 <ul>
                                     <li class="clear">
+
                                         <img src="{{ asset("/images/wap/问题.png") }}" alt="">
-                                        <p>网页游戏服务器租用如何选择？</p>
-                                        <p>2019.06.01</p>
+                                        <a href="/wap/help_articles">
+                                            <p>网页游戏服务器租用如何选择？</p>
+                                        </a>
+                                        <p class="time-p">2019.06.01</p>
                                     </li>
                                     <li class="clear">
                                         <img src="{{ asset("/images/wap/问题.png") }}" alt="">
-                                        <p>游戏服务器租用的演变</p>
-                                        <p>2019.06.01</p>
+                                        <a href="/wap/help_articles">
+                                            <p>游戏服务器租用的演变</p>
+                                        </a>
+                                        <p class="time-p">2019.06.01</p>
                                     </li>
                                     <li class="clear">
                                         <img src="{{ asset("/images/wap/问题.png") }}" alt="">
-                                        <p>游戏服务器是什么 游戏服务器租用...</p>
-                                        <p>2019.06.01</p>
+                                        <a href="/wap/help_articles">
+                                            <p>游戏服务器租用的演变</p>
+                                        </a>
+                                        <p class="time-p">2019.06.01</p>
                                     </li>
                                     <li class="clear">
                                         <img src="{{ asset("/images/wap/问题.png") }}" alt="">
-                                        <p>便宜的服务器租用怎么样 好吗?</p>
-                                        <p>2019.06.01</p>
+                                        <a href="/wap/help_articles">
+                                            <p>便宜的服务器租用怎么样好吗？</p>
+                                        </a>
+                                        <p class="time-p">2019.06.01</p>
                                     </li>
                                     <li class="clear">
                                         <img src="{{ asset("/images/wap/问题.png") }}" alt="">
-                                        <p>腾正科技的服务器怎么样？ </p>
-                                        <p>2019.06.01</p>
+                                        <a href="/wap/help_articles">
+                                            <p>腾正科技的服务器怎么样？</p>
+                                        </a>
+                                        <p class="time-p">2019.06.01</p>
                                     </li>
                                 </ul>
                                 <div class="view-more">

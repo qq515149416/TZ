@@ -13,7 +13,7 @@
         <h2>12.12爆款高防服务器 | 限量抢</h2>
         <div class="paper">
             <div class="info">
-                <h3>双12年终钜惠：高防服务器20台<span class="tag">限量抢购</span></h3>
+                <h3>双12年终钜惠：高防服务器12台<span class="tag">限量抢购</span></h3>
                 <p>服务器配置</p>
                 <div class="config">
                     <div class="config-item text-center marginr">

@@ -894,7 +894,7 @@ input:hover {
   margin-right: 5px;
   margin-top: 14px;
 }
-.common-problems .problems-li ul li p {
+.common-problems .problems-li ul li a p {
   display: inline-block;
   font-size: 14px;
   font-family: "PingFang";
@@ -908,12 +908,14 @@ input:hover {
   -webkit-line-clamp: 1;
   overflow: hidden;
 }
-.common-problems .problems-li ul li p:last-child {
+.common-problems .problems-li ul li .time-p {
   font-size: 12px;
   font-family: "PingFang";
   color: #888888;
   float: right;
-  margin-top: 14px;
+  margin-top: 0px;
+  height: 43px;
+  line-height: 43px;
 }
 .compouter-advantage-gn {
   background-color: #1c2545;
@@ -7553,4 +7555,134 @@ input:hover {
   display: inline-block;
   background: -webkit-gradient(linear, left top, right top, from(#3c6bea), to(#1c39b6));
   background: linear-gradient(to right, #3c6bea, #1c39b6);
+}
+#Help_articles .news-content {
+  width: 100%;
+  padding: 20px 20px;
+  background-color: #fff;
+}
+#Help_articles .news-content .content {
+  width: 100%;
+  margin-top: 15px;
+  -webkit-box-shadow: 1px 1px 17px 0px rgba(24, 30, 60, 0.2);
+          box-shadow: 1px 1px 17px 0px rgba(24, 30, 60, 0.2);
+  border-radius: 10px;
+  padding: 20px 15px ;
+}
+#Help_articles .news-content .content .content-title {
+  font-size: 17px;
+  font-family: "PingFang";
+  color: #252b3a;
+  font-weight: bold;
+  line-height: 2;
+  text-align: center;
+}
+#Help_articles .news-content .content .content-time {
+  font-size: 10px;
+  font-family: "PingFang";
+  color: #989ca9;
+  line-height: 1;
+  text-align: center;
+}
+#Help_articles .news-content .content .content-main {
+  margin-top: 20px;
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #666a75;
+  line-height: 1.5;
+  border-radius: 10px;
+  border: 1px solid #cbd0df;
+  background-color: #ebebf1;
+  padding: 10px;
+}
+#Help_articles .news-content .content .content-text {
+  width: 100%;
+  margin: 15px 0px;
+}
+#Help_articles .news-content .content .content-text img {
+  width: 100% !important;
+  height: auto !important;
+}
+#Help_articles .news-content .content .content-text p:first-child {
+  display: none;
+}
+#Help_articles .news-content .content .content-text .introductiontext {
+  margin-left: 0px !important;
+  width: 100% !important;
+}
+#Help_articles .news-content .content .content-text .introductiontext div {
+  width: 100% !important;
+}
+#Help_articles .news-content .content .content-text center {
+  width: 100%;
+}
+#Help_articles .news-content .content .content-text center img {
+  width: 100% !important;
+  height: auto !important;
+}
+#Help_articles .news-content .content .content-text p {
+  font-size: 12px !important;
+  font-family: "PingFang";
+  color: #666a75;
+  line-height: 1.5 !important;
+  margin-bottom: 15px;
+  width: 100%;
+}
+#Help_articles .news-content .content .content-text p span {
+  font-size: 12px !important;
+  font-family: "PingFang";
+  color: #666a75;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+#Help_articles .news-content .content .content-text p img {
+  width: 100% !important;
+  height: auto !important;
+}
+#Help_articles .news-content .content .content-text div:nth-child(2) {
+  margin-bottom: 15px;
+}
+#Help_articles .news-content .content .content-text div:nth-child(2) p {
+  margin-left: 20px;
+  margin-bottom: 2px;
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #666a75;
+  line-height: 1.5;
+}
+#Help_articles .news-content .content .content-text div:nth-child(3) p {
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #666a75;
+  line-height: 1.5;
+  margin-bottom: 2px;
+}
+#Help_articles .news-content .content .content-text div:nth-child(4) {
+  margin-top: 25px;
+  float: right;
+  width: 100px;
+  text-align: center;
+}
+#Help_articles .news-content .content .content-text div:nth-child(4) p {
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #666a75;
+  line-height: 1.5;
+}
+#Help_articles .news-content .news-more {
+  padding: 20px 0px 15px 0px;
+  position: relative;
+}
+#Help_articles .news-content .news-more p {
+  font-size: 12px;
+  font-family: "PingFang";
+  color: #666a75;
+  margin-bottom: 10px;
+}
+#Help_articles .news-content .news-more img {
+  position: absolute;
+  right: 0px;
+  top: 20px;
+  margin-top: 0px;
+  width: 35px;
 }

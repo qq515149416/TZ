@@ -252,31 +252,41 @@
                                     <div class="problems-li">
                                         <div class="tz-main">
                                             <ul>
-                                                <li class="clear">
-                                                    <img src="{{ asset("/images/wap/问题.png") }}" alt="">
-                                                    <p>什么是CDN技术？</p>
-                                                    <p>2019.06.01</p>
-                                                </li>
-                                                <li class="clear">
-                                                    <img src="{{ asset("/images/wap/问题.png") }}" alt="">
-                                                    <p>CDN使用哪些场景？</p>
-                                                    <p>2019.06.01</p>
-                                                </li>
-                                                <li class="clear">
-                                                    <img src="{{ asset("/images/wap/问题.png") }}" alt="">
-                                                    <p>什么内容分发网络CDN？</p>
-                                                    <p>2019.06.01</p>
-                                                </li>
-                                                <li class="clear">
-                                                    <img src="{{ asset("/images/wap/问题.png") }}" alt="">
-                                                    <p>CDN支持哪些业务类型?</p>
-                                                    <p>2019.06.01</p>
-                                                </li>
-                                                <li class="clear">
-                                                    <img src="{{ asset("/images/wap/问题.png") }}" alt="">
-                                                    <p>CDN支持二级域名加速么？ </p>
-                                                    <p>2019.06.01</p>
-                                                </li>
+                                            <li class="clear">
+                                        <img src="{{ asset("/images/wap/问题.png") }}" alt="">
+                                        <a href="/wap/help_articles">
+                                            <p>DDoS高防IP有用吗？</p>
+                                        </a>
+                                        <p class="time-p">2019.06.01</p>
+                                    </li>
+                                    <li class="clear">
+                                        <img src="{{ asset("/images/wap/问题.png") }}" alt="">
+                                        <a href="/wap/help_articles">
+                                            <p>DDoS高防IP有用吗？</p>
+                                        </a>
+                                        <p class="time-p">2019.06.01</p>
+                                    </li>
+                                    <li class="clear">
+                                        <img src="{{ asset("/images/wap/问题.png") }}" alt="">
+                                        <a href="/wap/help_articles">
+                                            <p>DDoS高防IP有用吗？</p>
+                                        </a>
+                                        <p class="time-p">2019.06.01</p>
+                                    </li>
+                                    <li class="clear">
+                                        <img src="{{ asset("/images/wap/问题.png") }}" alt="">
+                                        <a href="/wap/help_articles">
+                                            <p>DDoS高防IP有用吗？</p>
+                                        </a>
+                                        <p class="time-p">2019.06.01</p>
+                                    </li>
+                                    <li class="clear">
+                                        <img src="{{ asset("/images/wap/问题.png") }}" alt="">
+                                        <a href="/wap/help_articles">
+                                            <p>DDoS高防IP有用吗？</p>
+                                        </a>
+                                        <p class="time-p">2019.06.01</p>
+                                    </li>
                                             </ul>
                                             <div class="view-more">
                                                 查看更多

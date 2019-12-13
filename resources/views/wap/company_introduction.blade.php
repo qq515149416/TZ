@@ -10,7 +10,7 @@
 
 @if(!empty(session('tip')))
 　　
-<div class="alert alert-success" role="alert" style="z-index: 999">
+<div class="text-tip alert alert-success" role="alert" style="z-index: 999">
 	{{session('tip')}}
 </div>
 <script>

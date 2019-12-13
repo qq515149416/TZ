@@ -71,7 +71,7 @@
 }
 #help_center_home .main-body .tz-container .main-content .big-con {
   background-color: #fff;
-  padding-bottom: 20px;
+  padding-bottom: 25px;
 }
 #help_center_home .main-body .tz-container .main-content .big-con .drop-options {
   width: 100%;
@@ -212,7 +212,7 @@
 }
 #help_center_home .main-body .tz-container .main-content .help-home-content {
   background-color: #fff;
-  padding: 20px;
+  padding: 5px 0px;
   display: none;
 }
 #help_center_home .main-body .tz-container .main-content .help-home-content .problem-content {
@@ -227,12 +227,13 @@
   font-family: "PingFang";
   color: #252b3a;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 #help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .time {
   font-size: 10px;
   font-family: "PingFang";
   color: #989ca9;
+  margin-bottom: 20px;
 }
 #help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s pre {
   width: 100% ;
@@ -364,5 +365,5 @@
   position: absolute;
   width: 40px;
   right: 0px;
-  top: 50%;
+  bottom: -40px;
 }

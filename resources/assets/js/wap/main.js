@@ -105,24 +105,6 @@ $.get("/home/user/getInfo",(data) => {
     }
 });
 
-if(document.querySelector("#search_results")){
-var keywords = document.getElementById("keywords");
-    var optiontext = document.querySelector(".option-text");
-    var btn = document.getElementById("btn");
-    var searchwords = document.getElementById("searchwords");
-    btn.onclick = function () {
-        var span = document.querySelectorAll(".help-home-s span");
-        if (span != null) {
-            for (var i = 0; i < span.length; i++) {
-                span[i].className = "";
-            }
-            console.log(optiontext);
-            var findText = optiontext.innerHTML.split(searchwords.value);
-            keywords.innerText = searchwords.value;
-            optiontext.innerHTML = findText.join('<span class=\"blue\" >' + searchwords.value + '</span>');
-        }
-    }
-}
   
 import "./jquery.min.js";
 import "./index.js";

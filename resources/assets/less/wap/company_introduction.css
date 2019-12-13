@@ -75,6 +75,10 @@
   line-height: 1.5;
   text-align: justifyLeft;
   margin-bottom: 5px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 #company_introduction .main-body .tz-container .main-content .option-text .news .news-text-time {
   font-size: 11px;
@@ -622,6 +626,7 @@
   color: #989ca9;
   line-height: 1;
   text-align: center;
+  margin-top: 5px;
 }
 #company_introduction_news .main-body .tz-container .news-content .content .content-main {
   margin-top: 20px;
@@ -641,9 +646,7 @@
 #company_introduction_news .main-body .tz-container .news-content .content .content-text img {
   width: 100% !important;
   height: auto !important;
-}
-#company_introduction_news .main-body .tz-container .news-content .content .content-text p:first-child {
-  display: none;
+  text-align: center;
 }
 #company_introduction_news .main-body .tz-container .news-content .content .content-text .introductiontext {
   margin-left: 0px !important;
@@ -654,65 +657,50 @@
 }
 #company_introduction_news .main-body .tz-container .news-content .content .content-text center {
   width: 100%;
+  font-size: 12px !important;
+  font-family: "PingFang";
+  color: #666a75 !important;
+  line-height: 1.5 !important;
 }
 #company_introduction_news .main-body .tz-container .news-content .content .content-text center img {
   width: 100% !important;
   height: auto !important;
+  text-align: center;
 }
+#company_introduction_news .main-body .tz-container .news-content .content .content-text div,
 #company_introduction_news .main-body .tz-container .news-content .content .content-text p {
   font-size: 12px !important;
   font-family: "PingFang";
-  color: #666a75;
+  color: #666a75 !important;
   line-height: 1.5 !important;
   margin-bottom: 15px;
   width: 100%;
 }
+#company_introduction_news .main-body .tz-container .news-content .content .content-text div span,
 #company_introduction_news .main-body .tz-container .news-content .content .content-text p span {
   font-size: 12px !important;
   font-family: "PingFang";
-  color: #666a75;
+  color: #666a75 !important;
   line-height: 1.5;
   margin-bottom: 15px;
+  white-space: inherit !important;
 }
+#company_introduction_news .main-body .tz-container .news-content .content .content-text div img,
 #company_introduction_news .main-body .tz-container .news-content .content .content-text p img {
   width: 100% !important;
   height: auto !important;
-}
-#company_introduction_news .main-body .tz-container .news-content .content .content-text div:nth-child(2) {
-  margin-bottom: 15px;
-}
-#company_introduction_news .main-body .tz-container .news-content .content .content-text div:nth-child(2) p {
-  margin-left: 20px;
-  margin-bottom: 2px;
-  font-size: 12px;
-  font-family: "PingFang";
-  color: #666a75;
-  line-height: 1.5;
-}
-#company_introduction_news .main-body .tz-container .news-content .content .content-text div:nth-child(3) p {
-  font-size: 12px;
-  font-family: "PingFang";
-  color: #666a75;
-  line-height: 1.5;
-  margin-bottom: 2px;
-}
-#company_introduction_news .main-body .tz-container .news-content .content .content-text div:nth-child(4) {
-  margin-top: 25px;
-  float: right;
-  width: 100px;
   text-align: center;
-}
-#company_introduction_news .main-body .tz-container .news-content .content .content-text div:nth-child(4) p {
-  font-size: 12px;
-  font-family: "PingFang";
-  color: #666a75;
-  line-height: 1.5;
 }
 #company_introduction_news .main-body .tz-container .news-content .news-more {
   padding: 20px 0px 15px 0px;
   position: relative;
 }
 #company_introduction_news .main-body .tz-container .news-content .news-more p {
+  max-width: 230px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
   font-size: 12px;
   font-family: "PingFang";
   color: #666a75;
@@ -721,7 +709,7 @@
 #company_introduction_news .main-body .tz-container .news-content .news-more img {
   position: absolute;
   right: 0px;
-  top: 20px;
+  top: 27px;
   margin-top: 0px;
   width: 35px;
 }

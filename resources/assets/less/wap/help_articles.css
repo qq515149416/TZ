@@ -39,10 +39,15 @@
 #Help_articles .news-content .content .content-text {
   width: 100%;
   margin: 15px 0px;
+  font-size: 12px !important;
+  font-family: "PingFang";
+  color: #666a75 !important;
+  line-height: 1.5 !important;
 }
 #Help_articles .news-content .content .content-text img {
   width: 100% !important;
   height: auto !important;
+  text-align: center;
 }
 #Help_articles .news-content .content .content-text p:first-child {
   display: none;
@@ -60,11 +65,12 @@
 #Help_articles .news-content .content .content-text center img {
   width: 100% !important;
   height: auto !important;
+  text-align: center;
 }
 #Help_articles .news-content .content .content-text p {
   font-size: 12px !important;
   font-family: "PingFang";
-  color: #666a75;
+  color: #666a75 !important;
   line-height: 1.5 !important;
   margin-bottom: 15px;
   width: 100%;
@@ -79,46 +85,37 @@
 #Help_articles .news-content .content .content-text p img {
   width: 100% !important;
   height: auto !important;
-}
-#Help_articles .news-content .content .content-text div:nth-child(2) {
-  margin-bottom: 15px;
-}
-#Help_articles .news-content .content .content-text div:nth-child(2) p {
-  margin-left: 20px;
-  margin-bottom: 2px;
-  font-size: 12px;
-  font-family: "PingFang";
-  color: #666a75;
-  line-height: 1.5;
-}
-#Help_articles .news-content .content .content-text div:nth-child(3) p {
-  font-size: 12px;
-  font-family: "PingFang";
-  color: #666a75;
-  line-height: 1.5;
-  margin-bottom: 2px;
-}
-#Help_articles .news-content .content .content-text div:nth-child(4) {
-  margin-top: 25px;
-  float: right;
-  width: 100px;
   text-align: center;
 }
-#Help_articles .news-content .content .content-text div:nth-child(4) p {
-  font-size: 12px;
+#Help_articles .news-content .content .content-text div {
+  font-size: 12px !important;
   font-family: "PingFang";
-  color: #666a75;
-  line-height: 1.5;
+  color: #666a75 !important;
+  line-height: 1.5 !important;
+  width: 100%;
+}
+#Help_articles .news-content .content .content-text div p {
+  font-size: 12px !important;
+  font-family: "PingFang";
+  color: #666a75 !important;
+  line-height: 1.5 !important;
+  margin-bottom: 15px;
+  width: 100%;
 }
 #Help_articles .news-content .news-more {
   padding: 20px 0px 15px 0px;
   position: relative;
 }
 #Help_articles .news-content .news-more p {
+  max-width: 220px;
   font-size: 12px;
   font-family: "PingFang";
   color: #666a75;
   margin-bottom: 10px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
 }
 #Help_articles .news-content .news-more img {
   position: absolute;

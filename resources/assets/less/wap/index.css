@@ -328,6 +328,10 @@
   color: #666a75;
   line-height: 1.5;
   text-align: justifyLeft;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 #tz-menu #home .news .tz-main .news-items .news-text .news-text-btn {
   width: 25px;

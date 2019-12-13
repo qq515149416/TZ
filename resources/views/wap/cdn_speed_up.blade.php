@@ -793,7 +793,7 @@
                                                         <p>采用负载均衡技术，当Cache节点出现宕机时，能够自动屏蔽该Cache节点并切换到健康节点，保证用户正常访问。</p>
                                                     </li>
                                                     <li class="clear">
-                                                        <img src="{{ asset("/images/wap/全景数据统计分析 .png") }}" alt="">
+                                                        <img src="{{ asset("/images/wap/全景数据统计分析.png") }}" alt="">
                                                         <div>报表统计</div>
                                                         <p>提供带宽流量、流量缓存、节点流量比例、页面访问的统计数据及日志下载等多样式全景数据统计报表，助力业务拓展分析。</p>
                                                     </li>

@@ -107,7 +107,7 @@ function machineroom(){
 	   document.querySelector(".drop-options .arrow").style.transform = "rotate(135deg)";
 	   document.querySelector(".drop-options .arrow").style.transition = "transform 0.4s";
 	  }else{
-		moreContent.style.display = "none"
+		// moreContent.style.display = "none";
 		document.querySelector(".select-text").style.display="none";
 	   document.querySelector(".drop-options .arrow").style.transform = "rotate(-45deg)";
 	   document.querySelector(".drop-options .arrow").style.transition = "transform 0.4s";

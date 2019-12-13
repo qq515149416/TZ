@@ -7,7 +7,7 @@
 }
 #CDN_speed_up .tz-container .main-content .accelerate_class ul li {
   float: left;
-  width: calc(20%);
+  width: calc(100%/5);
   height: 45px;
   text-align: center;
   font-size: 14px;
@@ -334,7 +334,7 @@
 }
 .static_speedup .usage_scenarios .scenarios .scenarios-c ul li {
   float: left;
-  width: calc(33.33333333%);
+  width: calc(100%/3);
   text-align: center;
 }
 .static_speedup .usage_scenarios .scenarios .scenarios-c ul li img {
@@ -447,7 +447,7 @@
 }
 .download_speedup .usage_scenarios .scenarios .scenarios-c ul li {
   float: left;
-  width: calc(33.33333333%);
+  width: calc(100%/3);
   text-align: center;
 }
 .download_speedup .usage_scenarios .scenarios .scenarios-c ul li img {
@@ -548,7 +548,7 @@
   text-align: center;
 }
 .dynamic_speedup .usage_scenarios .scenarios .scenarios-c ul li {
-  width: calc(25%);
+  width: calc(100%/4);
   float: left;
   text-align: center;
 }
@@ -564,7 +564,7 @@
   padding: 0px 40px;
 }
 .dynamic_speedup .usage_scenarios .scenarios .scenarios-c ul:nth-child(2) li {
-  width: calc(33.33333333%);
+  width: calc(100%/3);
 }
 .dynamic_speedup .usage_scenarios .scenarios p {
   display: block;
@@ -668,7 +668,7 @@
 }
 .demand_speedup .usage_scenarios .scenarios .scenarios-c ul li {
   float: left;
-  width: calc(33.33333333%);
+  width: calc(100%/3);
   text-align: center;
 }
 .demand_speedup .usage_scenarios .scenarios .scenarios-c ul li img {
@@ -769,7 +769,7 @@
 }
 .live_speedup .usage_scenarios .scenarios .scenarios-c ul li {
   float: left;
-  width: calc(33.33333333%);
+  width: calc(100%/3);
   text-align: center;
 }
 .live_speedup .usage_scenarios .scenarios .scenarios-c ul li img {

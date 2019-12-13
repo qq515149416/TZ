@@ -141,15 +141,12 @@ Route::group([
             $router->resource('/foreign', 'Show\ForeignController');
 
             $router->get('/new_app', 'Show\NewAppController@index');
-
-
             //流水单复核
             $router->resource('/ordersReview', 'Show\OrdersReviewController');
             $router->resource('/ordersReviewBig', 'Show\OrdersReviewBigController');
-
             //下架原因统计
-            $router->resource('/removeReason', 'Show\RemoveReasonController');
-
+            $router->resource('/removeReason', 'Show\RemoveReasonController'); 
+            $router->resource('/promotion', 'Show\PromotionController');//促销活动管理
         });
 
     });

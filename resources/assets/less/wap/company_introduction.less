@@ -81,6 +81,10 @@
                             line-height: 1.5;
                             text-align: justifyLeft;
                             margin-bottom: 5px;
+                            display: -webkit-box;
+                            -webkit-box-orient: vertical;
+                            -webkit-line-clamp: 2;
+                            overflow: hidden;
                         }
                         .news-text-time{
                             font-size: 11px;
@@ -674,6 +678,7 @@
                             color: rgb( 152, 156, 169 );
                             line-height: 1;
                             text-align: center;
+                            margin-top: 5px;
                         }
                         .content-main{
                             margin-top: 20px;
@@ -692,9 +697,7 @@
                             img{
                                 width: 100% !important;
                                 height: auto !important;
-                            }
-                            p:first-child{
-                                display: none;
+                                text-align: center;
                             }
                             .introductiontext{
                                 margin-left: 0px !important;
@@ -705,61 +708,35 @@
                             }
                             center{
                                 width: 100%;
+                                font-size: 12px !important;
+                                font-family: "PingFang";
+                                color: rgb( 102, 106, 117 ) !important;
+                                line-height: 1.5 !important;
                                 img{
                                     width: 100% !important;
                                     height: auto !important;
+                                    text-align: center;
                                 }
                             }
-                            p{
+                            div,p{
                                 font-size: 12px !important;
                                 font-family: "PingFang";
-                                color: rgb( 102, 106, 117 );
+                                color: rgb( 102, 106, 117 ) !important;
                                 line-height: 1.5 !important;
                                 margin-bottom: 15px;
                                 width: 100%;
                                 span{
                                     font-size: 12px !important;
                                     font-family: "PingFang";
-                                    color: rgb( 102, 106, 117 );
+                                    color: rgb( 102, 106, 117 ) !important;
                                     line-height: 1.5;
                                     margin-bottom: 15px;
+                                    white-space: inherit !important;
                                 }
                                 img{
                                     width: 100% !important;
                                     height: auto !important;
-                                }
-                            }
-                            div:nth-child(2){
-                                margin-bottom: 15px;
-                                p{
-                                    margin-left: 20px; 
-                                    margin-bottom: 2px;
-                                    font-size: 12px;
-                                    font-family: "PingFang";
-                                    color: rgb( 102, 106, 117 );
-                                    line-height: 1.5;
-                                    
-                                }
-                            }
-                            div:nth-child(3){
-                                p{
-                                    font-size: 12px;
-                                    font-family: "PingFang";
-                                    color: rgb( 102, 106, 117 );
-                                    line-height: 1.5;
-                                    margin-bottom: 2px;
-                                }
-                            }
-                            div:nth-child(4){
-                                margin-top: 25px;
-                                float: right;
-                                width: 100px;
-                                text-align: center;
-                                p{
-                                    font-size: 12px;
-                                    font-family: "PingFang";
-                                    color: rgb( 102, 106, 117 );
-                                    line-height: 1.5;
+                                    text-align: center;
                                 }
                             }
                         }
@@ -768,6 +745,11 @@
                         padding: 20px 0px 15px 0px;
                         position: relative;
                         p{
+                            max-width: 230px;
+                            display: -webkit-box;
+                            -webkit-box-orient: vertical;
+                            -webkit-line-clamp: 1;
+                            overflow: hidden;
                             font-size: 12px;
                             font-family: "PingFang";
                             color: rgb( 102, 106, 117 );
@@ -776,7 +758,7 @@
                         img{
                             position: absolute;
                             right: 0px;
-                            top: 20px;
+                            top: 27px;
                             margin-top: 0px;
                             width: 35px;
                         }

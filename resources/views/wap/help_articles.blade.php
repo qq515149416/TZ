@@ -12,24 +12,24 @@
     <div class="news-content ">
 		<div class="content">
 			<div class="content-title">
-				哈哈哈哈哈标签
+				{{$content['title']}}
 			</div>
-			<div class="content-time">2019.12.11</div>
+			<div class="content-time">{{$content['created_at']}}</div>
 			<div class="content-main">
-				啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
+				{{$content['description']}}
 			</div>
 			<div class="content-text clear">
-				反反复复付付付付付付付付付付付付付付付付付付付付付付付付付付付付付付付付付付付付付付付付付付付付付付付付付付付付付付付付付
+				{!! $content['content'] !!}
 			</div>
 		</div>
 		<div class="news-more">
-			<a href="/">
-				<p>上一篇：上一篇</p>
+			<a href="/wap/help_articles/{{$pre_next['pre']['id']}}">
+				<p>上一篇：{{$pre_next['pre']['title']}}</p>
 			</a>
-			<a href="/">
-				<p>下一篇：下一篇</p>
+			<a href="/wap/help_articles/{{$pre_next['next']['id']}}">
+				<p>下一篇：{{$pre_next['next']['title']}}</p>
 			</a>
-			<a href="/">
+			<a href="/wap/help_center_home/{{$content['category_id']['id']}}?page=1">
 				<img src="{{ asset("/images/wap/内容页按钮.png") }}" alt="">
 			</a>
 		</div>

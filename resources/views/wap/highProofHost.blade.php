@@ -272,12 +272,12 @@
 							<div class="tz-main">
 								<ul>
 									<li class="clear">
-										<img src="{{ asset("/images/wap/节点覆盖全国   .png") }}" alt="">
+										<img src="{{ asset("/images/wap/节点覆盖全国.png") }}" alt="">
 										<div>节点覆盖全球</div>
 										<p>网络节点覆盖全国，开通多省N*40G直联链路</p>
 									</li>
 									<li class="clear">
-										<img src="{{ asset("/images/wap/总出口达10T   .png") }}" alt="">
+										<img src="{{ asset("/images/wap/总出口达10T.png") }}" alt="">
 										<div>总出口达10T</div>
 										<p>总出口达到10T，带宽资源充足，随时升级G口 </p>
 									</li>
@@ -302,12 +302,12 @@
 										<p>多节点网络监控, 服务器状态可视, 故障秒级上报 </p>
 									</li>
 									<li class="clear">
-										<img src="{{ asset("/images/wap/储备电力系统    .png") }}" alt="">
+										<img src="{{ asset("/images/wap/储备电力系统.png") }}" alt="">
 										<div>储备电力系统</div>
 										<p>双路供电, 10kv高压柴油发电机组, 24h燃油储备 </p>
 									</li>
 									<li class="clear">
-										<img src="{{ asset("/images/wap/星级消防系统    .png") }}" alt="">
+										<img src="{{ asset("/images/wap/星级消防系统.png") }}" alt="">
 										<div>星级消防系统</div>
 										<p>采用先进有管网式气体消防系统</p>
 									</li>

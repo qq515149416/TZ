@@ -21,7 +21,7 @@
         <div class="card-container">
 
             @foreach ($data as $item)
-            <a class="card {{ $item->sale_status == 0 ? 'disable' : '' }}" href="{{ $item->link }}" target="_blank">
+            <a class="card {{ $item->sale_status == 0 ? 'disable' : '' }}" href="{{ $item->sale_status == 0 ? 'javascript:;' : $item->link }}" target="_blank">
                 <div class="card-image">
                     <img class="{{ $item->sale_status == 0 ? 'expired':'' }}" src="{{ url('upload/'.$item->img) }}" />
                     <span class="{{ $item->sale_status == 0 ? 'end':'ongoing' }}">{{ $item->sale_status == 0 ? '活动结束':'活动中' }}</span>

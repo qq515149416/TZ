@@ -20,18 +20,22 @@
     <div class="activity">
         <div class="card-container">
 
-
-            <a class="card" href="/dist/highDefense.html" target="_blank">
+            @foreach ($data as $item)
+            <a class="card {{ $item->sale_status == 0 ? 'disable' : '' }}" href="{{ $item->link }}" target="_blank">
                 <div class="card-image">
-                    <img src="{{ asset("/images/lastestActivity/activity-3.png") }}" />
-                    <span class="ongoing">活动中</span>
+                    <img class="{{ $item->sale_status == 0 ? 'expired':'' }}" src="{{ url('upload/'.$item->img) }}" />
+                    <span class="{{ $item->sale_status == 0 ? 'end':'ongoing' }}">{{ $item->sale_status == 0 ? '活动结束':'活动中' }}</span>
                 </div>
                 <div class="card-body">
-                    <h5 class="title font-heavy">腾正高防IP专业DDOS防御首选</h5>
-                    <p class="desc">腾正高防IP专业DDOS防御首选，T+级防护系统，毫秒级过滤引擎，精准识别秒级响应，支持不同业务模式</p>
+                    <h5 class="title font-heavy">{{ $item->title }}</h5>
+                    <p class="desc">{{ $item->digest }}</p>
                 </div>
+                @if ($item->sale_status == 0)
+                <div class="mask"></div>
+                @endif
             </a>
-            <a class="card disable" href="javascript: void(0);" target="_blank">
+            @endforeach
+            <!-- <a class="card disable" href="javascript: void(0);" target="_blank">
                 <div class="card-image">
                     <img src="{{ asset("/images/lastestActivity/activity-12.png") }}" />
                     <span class="end">活动结束</span>
@@ -111,7 +115,7 @@
                     <p class="desc">过了双12，春节福利又来了，30M云服务器低至39元/月，再次来袭！</p>
                 </div>
                 <div class="mask"></div>
-            </a>
+            </a> -->
             <a class="card disable" style="visibility: hidden;" href="javascript: void(0);">
 
             </a>

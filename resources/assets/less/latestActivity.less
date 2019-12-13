@@ -71,6 +71,10 @@
 
     .card-image {
       position: relative;
+      > img.expired {
+        filter: grayscale(100%) blur(2px);
+        -webkit-filter: grayscale(100%) blur(2px); /* Chrome, Safari, Opera */
+      }
     }
 
     .card-body {

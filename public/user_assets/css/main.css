@@ -49,9 +49,47 @@
 #user_admin .main-content .content {
   background-color: #f4f6f9;
 }
+#user_admin .main-content .content.overflow-hidden-x {
+  overflow-x: hidden;
+}
 #user_admin .main-content .content .paper {
   -webkit-box-shadow: 0 0 12px 2px rgba(27, 34, 69, 0.06);
           box-shadow: 0 0 12px 2px rgba(27, 34, 69, 0.06);
+}
+#user_admin .main-content .content .paper .paper-title {
+  color: #62676f;
+  font-size: 16px;
+}
+#user_admin .main-content .content .paper .paper-content {
+  color: #62676f;
+  font-size: 14px;
+}
+#user_admin .main-content .content .paper .paper-content h5 {
+  color: #191c2b;
+  font-size: 20px;
+}
+#user_admin .main-content .content .paper .user-detail-text {
+  font-size: 14px;
+  color: #62676f;
+}
+#user_admin .main-content .content .paper .user-detail-icon {
+  width: 40px;
+  height: 40px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  display: inline-block;
+}
+#user_admin .main-content .content .paper .user-detail-icon.discount {
+  background-image: url("/user_assets/images/content/discount_off.png");
+}
+#user_admin .main-content .content .paper .user-detail-icon.order {
+  background-image: url("/user_assets/images/content/order_off.png");
+}
+#user_admin .main-content .content .paper .user-detail-icon.transaction {
+  background-image: url("/user_assets/images/content/transaction_off.png");
+}
+#user_admin .main-content .content .paper .user-detail-icon.invoice {
+  background-image: url("/user_assets/images/content/invoice_off.png");
 }
 #user_admin .main-content .content .paper .balance-title span {
   font-size: 16px;
@@ -86,7 +124,7 @@
 #user_admin .main-content .menu {
   width: 170px;
   max-width: 170px;
-  height: calc(100vh - 58px);
+  min-height: calc(100vh - 58px);
   background-color: #191c2b;
 }
 #user_admin .main-content .menu ul {

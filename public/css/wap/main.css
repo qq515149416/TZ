@@ -1425,7 +1425,7 @@ input:hover {
   background: linear-gradient(to right, #4582fe, #1f40dc);
 }
 #tz-menu #home .tz-fuwu .tz-fuwu-box .fuwu-li .items-li ul .m {
-  margin-right: 15px;
+  margin-right: 5.36%;
 }
 #tz-menu #home .tz-fuwu .tz-fuwu-box .fuwu-li .items-li ul .fangyu-li {
   width: 100%;
@@ -5060,10 +5060,6 @@ input:hover {
 }
 #cloud_hosting .main-content .common-problems {
   margin-top: -4px;
-  padding-bottom: 25px;
-}
-#cloud_hosting .main-content .common-problems .problems-li ul li:last-child {
-  border: none;
 }
 .tz-container {
   width: 100%;
@@ -5966,6 +5962,10 @@ input:hover {
 #company_introduction_news .main-body .tz-container .news-content .content .content-text {
   width: 100%;
   margin: 15px 0px;
+  font-size: 12px !important;
+  font-family: "PingFang";
+  color: #666a75 !important;
+  line-height: 1.5 !important;
 }
 #company_introduction_news .main-body .tz-container .news-content .content .content-text img {
   width: 100% !important;
@@ -7563,6 +7563,7 @@ input:hover {
   color: #989ca9;
   line-height: 1;
   text-align: center;
+  margin-top: 5px;
 }
 #Help_articles .news-content .content .content-main {
   margin-top: 20px;

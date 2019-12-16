@@ -7831,6 +7831,11 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 .tz-latest-activity .activity .card-image {
   position: relative;
 }
+.tz-latest-activity .activity .card-image > img.expired {
+  filter: grayscale(100%) blur(2px);
+  -webkit-filter: grayscale(100%) blur(2px);
+  /* Chrome, Safari, Opera */
+}
 .tz-latest-activity .activity .card-body {
   padding: 15px 30px;
   text-align: left;

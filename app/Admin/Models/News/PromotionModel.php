@@ -20,8 +20,18 @@ class PromotionModel extends Model
 	protected $primaryKey = 'id';
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
-	protected $fillable = ['img', 'link','title','top','digest','end_at','pro_order','start_at'];  
+	protected $fillable = ['img', 'link','title','top','digest','end_at','pro_order','start_at'];
 
+    public function getSaleStatusAttribute($value)
+    {
+        // dd($value);
+        if($value > 0) {
+            if(!($this->start_at < date("Y-m-d H:i:s") &&  $this->end_at > date("Y-m-d H:i:s"))) {
+                return 0;
+            }
+        }
+        return $value;
+    }
 
 	/**
 	 * 增
@@ -109,7 +119,7 @@ class PromotionModel extends Model
 				'msg'	=> '获取成功',
 				'code'	=> 1,
 			];
-		}	
+		}
 	}
 
 	/**
@@ -130,7 +140,7 @@ class PromotionModel extends Model
 				$pro->top = "未知状态";
 				break;
 		}
-		
+
 		return $pro;
 	}
 }

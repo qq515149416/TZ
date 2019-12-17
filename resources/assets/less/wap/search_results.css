@@ -19,7 +19,7 @@
   position: relative;
   padding: 0px 20px;
 }
-#search_results .main-body .tz-container .main-content .posters .search .search-c input {
+#search_results .main-body .tz-container .main-content .posters .search .search-c form input {
   -webkit-appearance: none;
   -moz-appearance: none;
   -o-appearance: none;
@@ -29,23 +29,34 @@
   height: 40px;
   border-radius: 20px;
 }
-#search_results .main-body .tz-container .main-content .posters .search .search-c input::-webkit-input-placeholder {
+#search_results .main-body .tz-container .main-content .posters .search .search-c form input::-webkit-input-placeholder {
   color: #fff;
   font-size: 14px;
 }
-#search_results .main-body .tz-container .main-content .posters .search .search-c input {
+#search_results .main-body .tz-container .main-content .posters .search .search-c form input {
   width: 100%;
   padding: 0px 70px 0px 15px;
   background-color: rgba(255, 255, 255, 0.2);
   color: #fff;
 }
-#search_results .main-body .tz-container .main-content .posters .search .search-c a {
+#search_results .main-body .tz-container .main-content .posters .search .search-c form input:nth-child(2) {
+  width: 60px;
+  position: absolute;
+  right: 0px;
+  margin-right: 20px;
+  padding: 0px;
+  background-color: #fff;
+  background-size: 25px 25px;
+  background-position: 17px 6px;
+  background-repeat: no-repeat;
+}
+#search_results .main-body .tz-container .main-content .posters .search .search-c form a {
   width: 60px;
   position: absolute;
   right: 0px;
   margin-right: 20px;
 }
-#search_results .main-body .tz-container .main-content .posters .search .search-c a input {
+#search_results .main-body .tz-container .main-content .posters .search .search-c form a input {
   width: 100%;
   margin-right: 20px;
   padding: 0px;

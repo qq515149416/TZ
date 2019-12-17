@@ -19,10 +19,10 @@
 						<div class="search">
 							<p class="search-t">帮助中心</p>
 							<div class="search-c">
-								<input type="text" name="search" id="searchwords" placeholder="请输入关键词题的答案">
-								<a>
-									<input type="button" id="btn" style="background-image: url({{ asset("/images/wap/搜索.png") }});">
-								</a>
+								<form action='/wap/search_results' method='get'>
+									<input type="text" name="keyword" id="" placeholder="请输入关键词题的答案" required="required">
+									<input type="submit" value="" style="background-image: url({{ asset("/images/wap/搜索.png") }});">
+								</form>
 							</div>
 							<div class="search-f">
 								<p>热门：怎么选择服务器租用商 | 服务器托管好吗</p>
@@ -97,17 +97,6 @@
 	</div>
 <!-- </body> -->
 <script>
-var help_home_s = document.querySelectorAll(".option-text .help-home-s");
-var testabc = document.querySelectorAll(".testabc")
-for(var i=0;i<help_home_s.length;i++){
-    help_home_s[i].addEventListener("click",function(){
-        for(var i=0;i<testabc.length;i++){
-            testabc[i].style.display="none";
-        }
-       document.querySelector(".help-home-content").style.display="block";
-       document.querySelector( "#bottom").style.display="none";
-      })
-}
 if("{{$page_members['max_page']}}"==0){
 		document.querySelector(".max-page").innerHTML="1";
 	}

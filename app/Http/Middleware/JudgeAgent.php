@@ -23,6 +23,9 @@ class JudgeAgent
                 if ($arr[0] == 'detail') {
                     $last = count($arr)-1;
                     return redirect("/wap/detail/new/".$arr[$last]);
+                }elseif ($arr[0] == 'help') {
+                    $last = count($arr)-1;
+                    return redirect("/wap/help_articles/".$arr[$last]);
                 }else{
                     return redirect("/wap/".str_replace("wap/","",$request->path()));
                 } 

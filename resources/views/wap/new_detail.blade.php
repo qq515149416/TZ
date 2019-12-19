@@ -49,14 +49,14 @@
 							</div>
 						</div>
 						<div class="news-more">
-							<a href="/wap/new/detail/{{$pre_next['pre']['id']}}">
+							<a href="/wap/detail/new/{{$pre_next['pre']['id']}}">
 								<p>上一篇：{{str_limit($pre_next['pre']['title'],30,'....')}}</p>
 							</a>
-							<a href="/wap/new/detail/{{$pre_next['next']['id']}}">
+							<a href="/wap/detail/new/{{$pre_next['next']['id']}}">
 								<p>下一篇：{{str_limit($pre_next['next']['title'],30,'....')}}</p>
 							</a>
 
-							<a href="/wap/new/detail/{{$pre_next['pre']['id']}}">
+							<a href="/wap/detail/new/{{$pre_next['pre']['id']}}">
 								<img src="{{ asset("/images/wap/内容页按钮.png") }}" alt="">
 							</a>
 						</div>

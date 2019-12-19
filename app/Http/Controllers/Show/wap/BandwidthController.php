@@ -13,7 +13,7 @@ class BandwidthController extends Controller
 {
 	public function index()
 	{
-		$product = '带宽';
+		$product = '带宽';//用来查找帮助文章
 
 		$category_model = new HelpCategoryModel();
 		$help_arr = $category_model->getIdByProduct($product);

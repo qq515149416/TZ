@@ -19,7 +19,13 @@ class JudgeAgent
     {
         if(!$request->has('ignorance')){
             if(Agent::isMobile() && strpos($request->path(),"wap")===false) {
-                return redirect("/wap/".str_replace("wap/","",$request->path()));
+                $arr = explode('/',$request->path());
+                if ($arr[0] == 'detail') {
+                    $last = count($arr)-1;
+                    return redirect("/wap/detail/new/".$arr[$last]);
+                }else{
+                    return redirect("/wap/".str_replace("wap/","",$request->path()));
+                } 
             }
         };
         return $next($request);

@@ -32,7 +32,7 @@
 						{{str_limit($item->digest,100,'....')}}
 					</div>
 					<div class="news-text-btn">
-						<a href="/wap/new/detail/{{$item->id}}">
+						<a href="/wap/detail/new/{{$item->id}}">
 							<img src="{{ asset("/images/wap/空心.png") }}" alt="">
 						</a>	
 					</div>

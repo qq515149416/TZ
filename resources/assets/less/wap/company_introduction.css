@@ -642,6 +642,10 @@
 #company_introduction_news .main-body .tz-container .news-content .content .content-text {
   width: 100%;
   margin: 15px 0px;
+  font-size: 12px !important;
+  font-family: "PingFang";
+  color: #666a75 !important;
+  line-height: 1.5 !important;
 }
 #company_introduction_news .main-body .tz-container .news-content .content .content-text img {
   width: 100% !important;

@@ -60,3 +60,9 @@ Route::group([
 	});
 	/** 通用api end **/
 });
+
+Route::group([
+	'prefix' => 'admin', //后台自用
+], function () {
+	Route::get('showWhiteListInForce', 'Customer\ApiAdminController@showWhiteListInForce');      //查看已过白未删除白名单
+});

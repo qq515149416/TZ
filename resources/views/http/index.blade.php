@@ -353,7 +353,7 @@
                             </div>
                             <div class="config" style="margin-top: 27px;">
                                 <div>
-                                    <span>100M</span>
+                                    <span>50M</span>
                                     <span class="key">回源带宽</span>
                                </div>
                             </div>
@@ -377,7 +377,7 @@
                             </div>
                             <div class="config" style="margin-top: 27px; margin-left: 14px;">
                                 <div>
-                                    <span>1G</span>
+                                    <span>150M</span>
                                     <span class="key">回源带宽</span>
                                </div>
                             </div>

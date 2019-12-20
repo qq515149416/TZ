@@ -322,6 +322,7 @@ input:hover {
   text-align: center;
 }
 .footer .tz-main .record div {
+  margin-bottom: 2px;
   font-size: 10px;
   font-family: "PingFang";
   color: #929bb8;
@@ -1425,7 +1426,7 @@ input:hover {
   background: linear-gradient(to right, #4582fe, #1f40dc);
 }
 #tz-menu #home .tz-fuwu .tz-fuwu-box .fuwu-li .items-li ul .m {
-  margin-right: 15px;
+  margin-right: 5.36%;
 }
 #tz-menu #home .tz-fuwu .tz-fuwu-box .fuwu-li .items-li ul .fangyu-li {
   width: 100%;
@@ -5060,10 +5061,6 @@ input:hover {
 }
 #cloud_hosting .main-content .common-problems {
   margin-top: -4px;
-  padding-bottom: 25px;
-}
-#cloud_hosting .main-content .common-problems .problems-li ul li:last-child {
-  border: none;
 }
 .tz-container {
   width: 100%;
@@ -5966,6 +5963,10 @@ input:hover {
 #company_introduction_news .main-body .tz-container .news-content .content .content-text {
   width: 100%;
   margin: 15px 0px;
+  font-size: 12px !important;
+  font-family: "PingFang";
+  color: #666a75 !important;
+  line-height: 1.5 !important;
 }
 #company_introduction_news .main-body .tz-container .news-content .content .content-text img {
   width: 100% !important;
@@ -6061,7 +6062,7 @@ input:hover {
   position: relative;
   padding: 0px 20px;
 }
-#help_center_home .main-body .tz-container .main-content .posters .search .search-c input {
+#help_center_home .main-body .tz-container .main-content .posters .search .search-c form input {
   -webkit-appearance: none;
   -moz-appearance: none;
   -o-appearance: none;
@@ -6071,23 +6072,34 @@ input:hover {
   height: 40px;
   border-radius: 20px;
 }
-#help_center_home .main-body .tz-container .main-content .posters .search .search-c input::-webkit-input-placeholder {
+#help_center_home .main-body .tz-container .main-content .posters .search .search-c form input::-webkit-input-placeholder {
   color: #fff;
   font-size: 14px;
 }
-#help_center_home .main-body .tz-container .main-content .posters .search .search-c input {
+#help_center_home .main-body .tz-container .main-content .posters .search .search-c form input {
   width: 100%;
   padding: 0px 70px 0px 15px;
   background-color: rgba(255, 255, 255, 0.2);
   color: #fff;
 }
-#help_center_home .main-body .tz-container .main-content .posters .search .search-c a {
+#help_center_home .main-body .tz-container .main-content .posters .search .search-c form input:nth-child(2) {
+  width: 60px;
+  position: absolute;
+  right: 0px;
+  margin-right: 20px;
+  padding: 0px;
+  background-color: #fff;
+  background-size: 25px 25px;
+  background-position: 17px 6px;
+  background-repeat: no-repeat;
+}
+#help_center_home .main-body .tz-container .main-content .posters .search .search-c form a {
   width: 60px;
   position: absolute;
   right: 0px;
   margin-right: 20px;
 }
-#help_center_home .main-body .tz-container .main-content .posters .search .search-c a input {
+#help_center_home .main-body .tz-container .main-content .posters .search .search-c form a input {
   width: 100%;
   margin-right: 20px;
   padding: 0px;
@@ -6254,11 +6266,9 @@ input:hover {
 #help_center_home .main-body .tz-container .main-content .help-home-content {
   background-color: #fff;
   padding: 5px 0px;
-  display: none;
 }
 #help_center_home .main-body .tz-container .main-content .help-home-content .problem-content {
   width: 100%;
-  text-align: center;
   -webkit-box-shadow: 1px 1px 25px 0px rgba(24, 30, 60, 0.2);
           box-shadow: 1px 1px 25px 0px rgba(24, 30, 60, 0.2);
   padding: 20px 18px;
@@ -6270,12 +6280,19 @@ input:hover {
   color: #252b3a;
   font-weight: bold;
   margin-bottom: 5px;
+  text-align: center;
 }
 #help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .time {
   font-size: 10px;
   font-family: "PingFang";
   color: #989ca9;
   margin-bottom: 20px;
+  text-align: center;
+}
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s img {
+  width: 100% !important;
+  height: auto !important;
+  text-align: center;
 }
 #help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s pre {
   width: 100% ;
@@ -6291,8 +6308,15 @@ input:hover {
   word-break: break-all;
   overflow: hidden;
 }
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s p img {
+  width: 100% !important;
+  height: auto !important;
+  text-align: center;
+}
 #help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s p a img {
-  width: 100%;
+  width: 100% !important;
+  height: auto !important;
+  text-align: center;
 }
 #help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s ul li {
   font-size: 12px;
@@ -6310,6 +6334,11 @@ input:hover {
 #help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s div pre {
   font-size: 12px;
   color: #666a75;
+}
+#help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s div img {
+  width: 100% !important;
+  height: auto !important;
+  text-align: center;
 }
 #help_center_home .main-body .tz-container .main-content .help-home-content .problem-content .content-text-s h1 {
   font-size: 16px !important;
@@ -6594,7 +6623,7 @@ input:hover {
   position: relative;
   padding: 0px 20px;
 }
-#search_results .main-body .tz-container .main-content .posters .search .search-c input {
+#search_results .main-body .tz-container .main-content .posters .search .search-c form input {
   -webkit-appearance: none;
   -moz-appearance: none;
   -o-appearance: none;
@@ -6604,23 +6633,34 @@ input:hover {
   height: 40px;
   border-radius: 20px;
 }
-#search_results .main-body .tz-container .main-content .posters .search .search-c input::-webkit-input-placeholder {
+#search_results .main-body .tz-container .main-content .posters .search .search-c form input::-webkit-input-placeholder {
   color: #fff;
   font-size: 14px;
 }
-#search_results .main-body .tz-container .main-content .posters .search .search-c input {
+#search_results .main-body .tz-container .main-content .posters .search .search-c form input {
   width: 100%;
   padding: 0px 70px 0px 15px;
   background-color: rgba(255, 255, 255, 0.2);
   color: #fff;
 }
-#search_results .main-body .tz-container .main-content .posters .search .search-c a {
+#search_results .main-body .tz-container .main-content .posters .search .search-c form input:nth-child(2) {
+  width: 60px;
+  position: absolute;
+  right: 0px;
+  margin-right: 20px;
+  padding: 0px;
+  background-color: #fff;
+  background-size: 25px 25px;
+  background-position: 17px 6px;
+  background-repeat: no-repeat;
+}
+#search_results .main-body .tz-container .main-content .posters .search .search-c form a {
   width: 60px;
   position: absolute;
   right: 0px;
   margin-right: 20px;
 }
-#search_results .main-body .tz-container .main-content .posters .search .search-c a input {
+#search_results .main-body .tz-container .main-content .posters .search .search-c form a input {
   width: 100%;
   margin-right: 20px;
   padding: 0px;
@@ -7563,6 +7603,7 @@ input:hover {
   color: #989ca9;
   line-height: 1;
   text-align: center;
+  margin-top: 5px;
 }
 #Help_articles .news-content .content .content-main {
   margin-top: 20px;

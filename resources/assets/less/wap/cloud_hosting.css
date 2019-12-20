@@ -157,8 +157,4 @@
 }
 #cloud_hosting .main-content .common-problems {
   margin-top: -4px;
-  padding-bottom: 25px;
-}
-#cloud_hosting .main-content .common-problems .problems-li ul li:last-child {
-  border: none;
 }

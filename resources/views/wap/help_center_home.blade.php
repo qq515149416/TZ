@@ -18,10 +18,10 @@
 						<div class="search">
 							<p class="search-t">帮助中心</p>
 							<div class="search-c">
-								<input type="text" name="search" id="" placeholder="请输入关键词题的答案">
-								<a href="/wap/search_results">
-								<input type="botton" style="background-image: url({{ asset("/images/wap/搜索.png") }});">
-							</a>
+								<form action='/wap/search_results' method='get'>
+									<input type="text" name="keyword" id="" placeholder="请输入关键词题的答案" required="required">
+									<input type="submit" value="" style="background-image: url({{ asset("/images/wap/搜索.png") }});">
+								</form>
 							</div>
 							<div class="search-f">
 								<p>热门：怎么选择服务器租用商 | 服务器托管好吗</p>
@@ -69,12 +69,12 @@
 								<p class="help-text">{{$con->description}}</p>
 								<p class="help-time">{{$con->created_at}}</p>
 							</div>
-							<div class="help-home-content" style="display: none;">
+							<div class="help-home-content" style="display:none;">
 								<div class="problem-content">
 									<p class="p-title">{{$con->title}}</p>
 									<p class="time">{{$con->created_at}}</p>
 									<div class="content-text-s" id="con-ts">
-
+									{!! $con->content !!}
 									</div>
 								</div>
 								<div class="more">
@@ -128,21 +128,7 @@
 	</div>
 </div>
 
-<div style="display:none;" id="con-t">
-	<div> </div>
-	@foreach ($content as $con)
-	<div>
-	{!! $con->content !!}
-	</div>
-	@endforeach
-</div>
-
  <script>
- 	if(document.querySelector(".help-home-content")){
-		 var text = document.querySelector("#con-t").innerHTML;
-		 document.querySelector("#con-ts").innerHTML=text;
- 	}
-
 	if("{{$page_members['max_page']}}"==0){
 		document.querySelector(".max-page").innerHTML="1";
 	}

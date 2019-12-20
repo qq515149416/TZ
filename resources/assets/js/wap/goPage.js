@@ -1,8 +1,11 @@
 
 var help_home_s = document.querySelectorAll(".option-text .help-home-s");
-var testabc = document.querySelectorAll(".testabc")
+var testabc = document.querySelectorAll(".testabc");
+var content = document.querySelectorAll(".option-text .help-home-content");
 for(var i=0;i<help_home_s.length;i++){
+    help_home_s[i].index = i;
     help_home_s[i].addEventListener("click",function(){
+        content[this.index].style.display="block";
         for(var i=0;i<testabc.length;i++){
             testabc[i].style.display="none";
         }
@@ -14,7 +17,7 @@ for(var i=0;i<help_home_s.length;i++){
                 }
             }
         }
-       document.querySelector(".help-home-content").style.display="block";
+       
        document.querySelector( "#bottom").style.display="none";
       })
 }

@@ -15,13 +15,13 @@ class HelpCenterHomeController extends Controller
 {
 	public function index($category_id,Request $request)
 	{
+		//活页页码,没有的就算第一页
 		$par = $request->only(['page']);
 		if (isset($par['page'])) {
 			$page = $par['page'];
 		}else{
 			$page = 1;
 		}
-		
 		
 
 		$helpContentsModel = new HelpContentsModel();
@@ -40,18 +40,19 @@ class HelpCenterHomeController extends Controller
 			["state" , "=" , 1]
 		];
 
-		$per_page = 8;
-		$current_page = $page;
-		$offset = ($current_page - 1) * $per_page;
-		$total = HelpContentsModel::where($content_where)->count();
-		$result = HelpContentsModel::where($content_where)->orderBy('created_at','desc')->offset($offset)->limit($per_page)->get();
-		$last_page = ceil($total/$per_page);
-
+		$per_page = 8;//每页显示数量
+		$current_page = $page;//当前页
+		$offset = ($current_page - 1) * $per_page;//跳过多少条
+		$total = HelpContentsModel::where($content_where)->count();//总共多少条
+		$result = HelpContentsModel::where($content_where)->orderBy('created_at','desc')->offset($offset)->limit($per_page)->get();//当前页的数据
+		$last_page = ceil($total/$per_page);//计算最后一页
+		//组个分页数组
 		$page_members = [
 			'category_id'	=> $category_id,
 			'current_page'	=> $current_page,
 			'max_page'	=> $last_page,
 		];
+		//拆关键词
 		foreach ($result as $k => $v) {
 			$result[$k]->keywords = explode(',', $result[$k]->keywords);
 		}

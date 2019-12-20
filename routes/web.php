@@ -71,20 +71,20 @@ Route::group([
     'prefix' => 'wap',
     'middleware' => 'JudgeAgent'
 ], function () {
-    Route::get('/', 'Show\wap\IndexController@index');
+    Route::get('/', 'Show\wap\IndexController@index');//首页
     Route::get('/menu', 'Show\wap\MenuController@index');
-    Route::get('/server_hire', 'Show\wap\ServerHireController@index');
-    Route::get('/server_hosting', 'Show\wap\ServerHostingController@index');
-    Route::get('/cabinet', 'Show\wap\CabinetController@index');
-    Route::get('/bandwidth', 'Show\wap\BandwidthController@index');
-    Route::get('/high_security', 'Show\wap\HighSecurityController@index');
-    Route::get('/high_proof_host', 'Show\wap\HighProofHostController@index');
-    Route::get('/high_security_ip', 'Show\wap\HighSecurityIPController@index');
-    Route::get('/cdn_speed_up', 'Show\wap\CdnSpeedUpController@index');
-    Route::get('/c_shield', 'Show\wap\CshieldController@index');
-    Route::get('/high_anti_cdn', 'Show\wap\HighAntiCDNController@index');
-    Route::get('/flow_stack_packet', 'Show\wap\FlowStackPacketController@index');
-    Route::get('/cloud_hosting', 'Show\wap\CloudHostingController@index');
+    Route::get('/server_hire', 'Show\wap\ServerHireController@index');//服务器租用产品页
+    Route::get('/server_hosting', 'Show\wap\ServerHostingController@index');//服务器托管产品页
+    Route::get('/cabinet', 'Show\wap\CabinetController@index');//机柜租用产品页
+    Route::get('/bandwidth', 'Show\wap\BandwidthController@index');//大带宽租用产品页
+    Route::get('/high_security', 'Show\wap\HighSecurityController@index');//高防服务器产品页
+    Route::get('/high_proof_host', 'Show\wap\HighProofHostController@index');//高防云主机产品页
+    Route::get('/high_security_ip', 'Show\wap\HighSecurityIPController@index');//高防ip产品页
+    Route::get('/cdn_speed_up', 'Show\wap\CdnSpeedUpController@index');//cdn加速产品页
+    Route::get('/c_shield', 'Show\wap\CshieldController@index');//防c盾产品页
+    Route::get('/high_anti_cdn', 'Show\wap\HighAntiCDNController@index');//高防cdn产品页
+    Route::get('/flow_stack_packet', 'Show\wap\FlowStackPacketController@index');//防御流量叠加包产品页
+    Route::get('/cloud_hosting', 'Show\wap\CloudHostingController@index');//云主机产品页
     Route::get('/chess_solution', 'Show\wap\ChessSolutionController@index');
     Route::get('/deployment_solution', 'Show\wap\DeploymentSolutionController@index');
     Route::get('/education_solution', 'Show\wap\EducationSolutionController@index');
@@ -93,16 +93,16 @@ Route::group([
     Route::get('/government_solution', 'Show\wap\GovernmentSolutionController@index');
     Route::get('/media_solution', 'Show\wap\MediaSolutionController@index');
     Route::get('/mobileapp_solution', 'Show\wap\MobileappSolutionController@index');
-    Route::get('/company/{page}', 'Show\wap\CompanyIntroductionController@index');
-    Route::get('/help_center_home/{page}', 'Show\wap\HelpCenterHomeController@index');
-    Route::get('/help_center', 'Show\wap\HelpCenterController@index');
-    Route::get('/search_results', 'Show\wap\SearchResultsController@index');
+    Route::get('/company/{page}', 'Show\wap\CompanyIntroductionController@index');//公司资讯页
+    Route::get('/help_center_home/{page}', 'Show\wap\HelpCenterHomeController@index');//帮助中心列表页
+    Route::get('/help_center', 'Show\wap\HelpCenterController@index');//帮助中心首页
+    Route::get('/search_results', 'Show\wap\SearchResultsController@index');//搜索结果页
     Route::get('/login', 'Show\wap\LoginController@index');
     Route::get('/registered', 'Show\wap\RegisteredController@index');
     Route::get('/logging', 'Show\wap\LoggingController@index');
     Route::get('/login_register_menu', 'Show\wap\LoginRegisteredMenuController@index');
-    Route::get('/new/detail/{id}', 'Show\wap\NewDetailController@index');
-    Route::get('/help_articles/{id}', 'Show\wap\HelpArticlesController@index');
+    Route::get('/detail/new/{id}', 'Show\wap\NewDetailController@index');//新闻详情页
+    Route::get('/help_articles/{id}', 'Show\wap\HelpArticlesController@index');//帮助详情页
 });
 /**
  * 新用户后台

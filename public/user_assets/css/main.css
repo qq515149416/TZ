@@ -49,75 +49,90 @@
 #user_admin .main-content .content {
   background-color: #f4f6f9;
 }
-#user_admin .main-content .content.overflow-hidden-x {
+#user_admin .main-content .content #index.overflow-hidden-x {
   overflow-x: hidden;
 }
-#user_admin .main-content .content .paper {
+#user_admin .main-content .content #index .paper {
   -webkit-box-shadow: 0 0 12px 2px rgba(27, 34, 69, 0.06);
           box-shadow: 0 0 12px 2px rgba(27, 34, 69, 0.06);
 }
-#user_admin .main-content .content .paper .paper-title {
+#user_admin .main-content .content #index .paper .paper-title {
   color: #62676f;
   font-size: 16px;
 }
-#user_admin .main-content .content .paper .paper-content {
+#user_admin .main-content .content #index .paper .paper-content {
   color: #62676f;
   font-size: 14px;
 }
-#user_admin .main-content .content .paper .paper-content h5 {
+#user_admin .main-content .content #index .paper .paper-content h5 {
   color: #191c2b;
   font-size: 20px;
 }
-#user_admin .main-content .content .paper .user-detail-text {
+#user_admin .main-content .content #index .paper .paper-content .product-item h5 {
+  color: #191c2b;
+  font-size: 18px;
+}
+#user_admin .main-content .content #index .paper .paper-content .product-item .media-body > p {
+  color: #62676f;
+  font-size: 14px;
+}
+#user_admin .main-content .content #index .paper .paper-content .product-item .media-body > div .status {
+  font-size: 14px;
+  color: #96a1b4;
+  font-weight: normal;
+  background-color: transparent;
+  border: 1px solid #d9dee6;
+}
+#user_admin .main-content .content #index .paper .user-detail-text {
   font-size: 14px;
   color: #62676f;
 }
-#user_admin .main-content .content .paper .user-detail-icon {
+#user_admin .main-content .content #index .paper .user-detail-icon {
   width: 40px;
   height: 40px;
   background-repeat: no-repeat;
   background-position: center center;
   display: inline-block;
 }
-#user_admin .main-content .content .paper .user-detail-icon.discount {
+#user_admin .main-content .content #index .paper .user-detail-icon.discount {
   background-image: url("/user_assets/images/content/discount_off.png");
 }
-#user_admin .main-content .content .paper .user-detail-icon.order {
+#user_admin .main-content .content #index .paper .user-detail-icon.order {
   background-image: url("/user_assets/images/content/order_off.png");
 }
-#user_admin .main-content .content .paper .user-detail-icon.transaction {
+#user_admin .main-content .content #index .paper .user-detail-icon.transaction {
   background-image: url("/user_assets/images/content/transaction_off.png");
 }
-#user_admin .main-content .content .paper .user-detail-icon.invoice {
+#user_admin .main-content .content #index .paper .user-detail-icon.invoice {
   background-image: url("/user_assets/images/content/invoice_off.png");
 }
-#user_admin .main-content .content .paper .balance-title span {
+#user_admin .main-content .content #index .paper .balance-title span {
   font-size: 16px;
   color: #62676f;
   vertical-align: middle;
 }
-#user_admin .main-content .content .paper .balance-title .btn {
+#user_admin .main-content .content #index .paper .balance-title .btn {
   font-size: 14px;
   color: #fff;
 }
-#user_admin .main-content .content .paper .balance {
+#user_admin .main-content .content #index .paper .balance {
   font-size: 40px;
   line-height: 40px;
   color: #4274f4;
   font-family: Arial, Helvetica, sans-serif;
 }
-#user_admin .main-content .content .paper h5 {
+#user_admin .main-content .content #index .paper h5 {
   font-size: 22px;
   color: #191c2b;
 }
-#user_admin .main-content .content .paper h5 .status {
+#user_admin .main-content .content #index .paper h5 .status {
   font-size: 12px;
   color: #96a1b4;
   border: 1px solid #d9dee6;
   background-color: transparent;
   vertical-align: middle;
 }
-#user_admin .main-content .content .paper p {
+#user_admin .main-content .content #index .paper p {
   font-size: 14px;
   color: #62676f;
 }
@@ -193,6 +208,171 @@
   position: relative;
   z-index: 99;
 }
+#user_admin .navbar-bg .nav-item {
+  position: relative;
+}
+#user_admin .navbar-bg .nav-item > .card {
+  display: none;
+  top: 30px;
+  width: 188px;
+  right: 0;
+  border: none;
+  -webkit-box-shadow: 0 0 24px 2px rgba(24, 30, 60, 0.2);
+          box-shadow: 0 0 24px 2px rgba(24, 30, 60, 0.2);
+}
+#user_admin .navbar-bg .nav-item > .card .kefu p:nth-of-type(1) {
+  color: #9a9ea8;
+  font-size: 14px;
+}
+#user_admin .navbar-bg .nav-item > .card .kefu h3 {
+  font-size: 16px;
+  color: #191c2b;
+}
+#user_admin .navbar-bg .nav-item > .card .kefu p:nth-of-type(2) {
+  font-size: 14px;
+  color: #62676f;
+}
+#user_admin .navbar-bg .nav-item > .card .kefu p:nth-of-type(2) > span:nth-of-type(2) {
+  font-size: 12px;
+}
+#user_admin .navbar-bg .nav-item > .card .kefu p:nth-of-type(3) {
+  font-size: 14px;
+  color: #62676f;
+}
+#user_admin .navbar-bg .nav-item > .card .kefu p:nth-of-type(3) > span:nth-of-type(2) {
+  font-size: 12px;
+}
+#user_admin .navbar-bg .nav-item > .card .erweima-show h3 {
+  font-size: 16px;
+  color: #4274f4;
+}
+#user_admin .navbar-bg .nav-item > .card .erweima-show ul {
+  list-style: disc;
+}
+#user_admin .navbar-bg .nav-item > .card .erweima-show ul li {
+  font-size: 14px;
+  color: #4274f4;
+}
+#user_admin .navbar-bg .nav-item > .card .erweima-show ul li span {
+  color: #767a81;
+}
+#user_admin .navbar-bg .nav-item > .card .account .media > .media-body h5 {
+  font-size: 16px;
+  color: #191c2b;
+}
+#user_admin .navbar-bg .nav-item > .card .account .media > .media-body h5 > .status {
+  color: #96a1b4;
+  font-size: 12px;
+  background-color: transparent;
+  border: 1px solid #d9dee6;
+}
+#user_admin .navbar-bg .nav-item > .card .account .list-group > .list-group-item {
+  font-size: 14px;
+  position: relative;
+}
+#user_admin .navbar-bg .nav-item > .card .account .list-group > .list-group-item > a {
+  color: #576478;
+  text-decoration: none;
+}
+#user_admin .navbar-bg .nav-item > .card .account .list-group > .list-group-item:hover > a {
+  color: #4274f4;
+}
+#user_admin .navbar-bg .nav-item > .card .account .list-group > .list-group-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+}
+#user_admin .navbar-bg .nav-item > .card .account .list-group > .list-group-item:nth-of-type(1)::before {
+  background-image: url("/user_assets/images/user/user_center_off.png");
+}
+#user_admin .navbar-bg .nav-item > .card .account .list-group > .list-group-item:nth-of-type(2)::before {
+  background-image: url("/user_assets/images/user/finance_off.png");
+}
+#user_admin .navbar-bg .nav-item > .card .account .list-group > .list-group-item:nth-of-type(3)::before {
+  background-image: url("/user_assets/images/user/password_off.png");
+}
+#user_admin .navbar-bg .nav-item > .card .account .list-group > .list-group-item:nth-of-type(4)::before {
+  background-image: url("/user_assets/images/user/quit_off.png");
+}
+#user_admin .navbar-bg .nav-item > .card .account .list-group > .list-group-item:nth-of-type(1):hover::before {
+  background-image: url("/user_assets/images/user/user_center_on.png");
+}
+#user_admin .navbar-bg .nav-item > .card .account .list-group > .list-group-item:nth-of-type(2):hover::before {
+  background-image: url("/user_assets/images/user/finance_on.png");
+}
+#user_admin .navbar-bg .nav-item > .card .account .list-group > .list-group-item:nth-of-type(3):hover::before {
+  background-image: url("/user_assets/images/user/password_on.png");
+}
+#user_admin .navbar-bg .nav-item > .card .account .list-group > .list-group-item:nth-of-type(4):hover::before {
+  background-image: url("/user_assets/images/user/quit_on.png");
+}
+#user_admin .navbar-bg .nav-item > .card .account-info p:nth-of-type(1) {
+  color: #999ea8;
+  font-size: 14px;
+}
+#user_admin .navbar-bg .nav-item > .card .account-info p:nth-of-type(2) {
+  color: #4274f4;
+  font-size: 24px;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 24px;
+}
+#user_admin .navbar-bg .nav-item > .card .account-info .btn-primary {
+  font-size: 14px;
+  background-color: #4274f4;
+  letter-spacing: 8px;
+}
+#user_admin .navbar-bg .nav-item > .card .account-info .list-group > .list-group-item {
+  font-size: 14px;
+  position: relative;
+}
+#user_admin .navbar-bg .nav-item > .card .account-info .list-group > .list-group-item > a {
+  color: #576478;
+  text-decoration: none;
+}
+#user_admin .navbar-bg .nav-item > .card .account-info .list-group > .list-group-item:hover > a {
+  color: #4274f4;
+}
+#user_admin .navbar-bg .nav-item > .card .account-info .list-group > .list-group-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+}
+#user_admin .navbar-bg .nav-item > .card .account-info .list-group > .list-group-item:nth-of-type(1)::before {
+  background-image: url("/user_assets/images/wallet/water_off.png");
+}
+#user_admin .navbar-bg .nav-item > .card .account-info .list-group > .list-group-item:nth-of-type(2)::before {
+  background-image: url("/user_assets/images/wallet/order_off.png");
+}
+#user_admin .navbar-bg .nav-item > .card .account-info .list-group > .list-group-item:nth-of-type(1):hover::before {
+  background-image: url("/user_assets/images/wallet/water_on.png");
+}
+#user_admin .navbar-bg .nav-item > .card .account-info .list-group > .list-group-item:nth-of-type(2):hover::before {
+  background-image: url("/user_assets/images/wallet/order_on.png");
+}
+#user_admin .navbar-bg .nav-item:hover > .nav-link span.icon.customer-service {
+  background-image: url("/user_assets/images/navbar/customer_service_on.png");
+}
+#user_admin .navbar-bg .nav-item:hover > .nav-link span.icon.erweima {
+  background-image: url("/user_assets/images/navbar/erweima_on.png");
+}
+#user_admin .navbar-bg .nav-item:hover > .nav-link span.icon.wallet {
+  background-image: url("/user_assets/images/navbar/wallet_on.png");
+}
+#user_admin .navbar-bg .nav-item:hover > .nav-link span.icon.user {
+  background-image: url("/user_assets/images/navbar/user_on.png");
+}
 #user_admin .navbar-bg .nav-item > .nav-link {
   padding-right: 10px;
   color: #fff;
@@ -232,4 +412,61 @@
 }
 #user_admin .navbar-bg .nav-item > .nav-link span.icon.user {
   background-image: url("/user_assets/images/navbar/user_off.png");
+}
+#rechargeModal .modal-title {
+  color: #4274f4;
+  font-size: 26px;
+  font-weight: normal;
+}
+#rechargeModal .modal-footer button {
+  width: 74px;
+  height: 34px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  color: #767a81;
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+#rechargeModal .modal-footer button:hover {
+  border: 1px solid transparent;
+}
+#rechargeModal .modal-footer button.btn-secondary {
+  background-color: transparent;
+  border: 1px solid #d0d2e0;
+}
+#rechargeModal .modal-footer button.btn-primary {
+  background-color: #4274f4;
+  color: #fff;
+}
+#rechargeModal .modal-body .select-type-pay .recharge-value {
+  color: #9a9ea8;
+  font-size: 12px;
+}
+#rechargeModal .modal-body .recharge-name {
+  min-width: 56px;
+}
+#rechargeModal .modal-body .recharge-value {
+  color: #70747b;
+}
+#rechargeModal .modal-body .recharge-value strong {
+  color: #4274f4;
+  font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+}
+#rechargeModal .modal-body .recharge-value input {
+  border: 1px solid #d0d2e0;
+  width: 100px;
+}
+#rechargeModal .modal-body .recharge-item {
+  color: #191c2b;
+  font-size: 14px;
+}
+#rechargeModal .modal-body .select-type-pay > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#rechargeModal .modal-body .select-type-pay > ul li img {
+  width: 100%;
 }

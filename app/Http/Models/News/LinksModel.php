@@ -16,10 +16,10 @@ class LinksModel extends Model
 	protected $primaryKey = 'id';
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
-	protected $fillable = ['name', 'url','sort','image','description','user','links_order'];  
+	protected $fillable = ['name', 'url','type','description','user','links_order'];  
 
-	public function getLinks($sort){
-		$link = $this->select(['id','name', 'url', 'description','links_order','image','sort'])->where('sort',$sort)->orderBy('links_order','desc')->get();
+	public function getLinks($type){
+		$link = $this->select(['id','name', 'url', 'description','links_order','type'])->where('type',$type)->orderBy('links_order','desc')->get();
 		
 		if ($link->isEmpty()) {
 			return [
@@ -42,13 +42,13 @@ class LinksModel extends Model
 
 	public function trans($link){
 		$link->url = json_decode($link->url);
-		$link->image = json_decode($link->image);
-		switch ($link->sort) {
+		
+		switch ($link->type) {
 			case '0':
-				$link->sort = '友情链接';
+				$link->type = '友情链接';
 				break;
 			case '1':
-				$link->sort = '轮播图';
+				$link->type = '轮播图';
 				break;
 			default:
 				# code...

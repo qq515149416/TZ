@@ -144,20 +144,20 @@ Route::group([
 Route::group([
     'prefix' => 'news',
 ], function () {
-    Route::get('getNews', 'News\NewsController@getNewsList');
-    Route::get('getNewsDetails', 'News\NewsController@getNewsDetails');
+    Route::get('getNews', 'News\NewsController@getNewsList');//获取新闻列表
+    Route::get('getNewsDetails', 'News\NewsController@getNewsDetails');//新闻详细
 });
 
 Route::group([
     'prefix' => 'links',
 ], function () {
-    Route::get('getLinks', 'News\LinksController@getLinks');
+    Route::get('getLinks', 'News\LinksController@getLinks');//旧的友情链接获取
 });
 
 Route::group([
     'prefix' => 'promotion',
 ], function () {
-    Route::get('getPro', 'News\PromotionController@getPro');
+    Route::get('getPro', 'News\PromotionController@getPro');//旧的促销活动
 });
 
 /**

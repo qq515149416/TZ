@@ -11891,6 +11891,37 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background-size: 100% 100%;
   padding-top: 732px;
 }
+#new_year .terms {
+  margin: 0 auto;
+  margin-top: 82px;
+  margin-bottom: 168px;
+  background: url(/images/huodong-gz_new_year.png?087b06d8b009ec8d1e6f60cd5ad1923d) no-repeat;
+  width: 1000px;
+  height: 363px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding-top: 66px;
+  padding-left: 98px;
+}
+#new_year .terms ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#new_year .terms ol li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 16px;
+  color: #c71913;
+}
+#new_year .terms ol li > span:last-of-type {
+  display: inline-block;
+  max-width: 540px;
+}
+#new_year .terms ol li > div > span {
+  display: block;
+}
 #new_year > .product-item:last-of-type {
   margin-top: 62px;
 }
@@ -11906,7 +11937,8 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #new_year > .product-item:last-of-type .content > ul.products > li {
   float: left;
   width: 380px;
-  padding-top: 140px;
+  padding: 0 40px;
+  padding-top: 148px;
 }
 #new_year > .product-item:last-of-type .content > ul.products > li:nth-of-type(1) {
   background: url(/images/wulijikuang_1_new_year.png?c88eab2e0b6856dc4cd4c41b87a9cf42) no-repeat;
@@ -11921,6 +11953,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   background-size: 100% 100%;
 }
 #new_year > .product-item:last-of-type .content > ul.products > li > ul.config > li:last-of-type {
+  margin-bottom: 30px;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
@@ -11942,6 +11975,25 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 }
 #new_year > .product-item:last-of-type .content > ul.products > li > ul.config > li .config-item .attr {
   text-align: center;
+}
+#new_year > .product-item:last-of-type .content > ul.products > li .description {
+  padding: 18px 0;
+  border-top: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 32px;
+}
+#new_year > .product-item:last-of-type .content > ul.products > li .description p:first-of-type {
+  color: #4e4a4a;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+#new_year > .product-item:last-of-type .content > ul.products > li .description p:last-of-type {
+  color: #caa766;
+  font-size: 18px;
+  margin: 0;
+}
+#new_year > .product-item:last-of-type .content > ul.products > li .buy {
+  padding: 0 10px;
 }
 #new_year > .product-item {
   width: 1186px;

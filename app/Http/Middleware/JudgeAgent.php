@@ -20,10 +20,10 @@ class JudgeAgent
         if(!$request->has('ignorance')){
             if(Agent::isMobile() && strpos($request->path(),"wap")===false) {
                 $arr = explode('/',$request->path());
-                if ($arr[0] == 'detail') {
+                if ($arr[0] == 'detail') {//如果是新闻详细页
                     $last = count($arr)-1;
                     return redirect("/wap/detail/new/".$arr[$last]);
-                }elseif ($arr[0] == 'help') {
+                }elseif ($arr[0] == 'help') {//如果是帮助详细页
                     $last = count($arr)-1;
                     return redirect("/wap/help_articles/".$arr[$last]);
                 }else{

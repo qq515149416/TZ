@@ -21,7 +21,7 @@
                             <li>
                                 <p class="config-item">
                                     <span class="attr font-medium">
-                                        CPU 
+                                        CPU
                                     </span>
                                     <span class="value font-heavy">
                                         2核
@@ -29,7 +29,7 @@
                                 </p>
                                 <p class="config-item">
                                     <span class="attr font-medium">
-                                        内存 
+                                        内存
                                     </span>
                                     <span class="value font-heavy">
                                         4G
@@ -37,7 +37,7 @@
                                 </p>
                                 <p class="config-item">
                                     <span class="attr font-medium">
-                                        硬盘 
+                                        硬盘
                                     </span>
                                     <span class="value font-heavy">
                                         40G+20G
@@ -45,7 +45,7 @@
                                 </p>
                                 <p class="config-item">
                                     <span class="attr font-medium">
-                                        带宽 
+                                        带宽
                                     </span>
                                     <span class="value font-heavy">
                                         10M
@@ -53,7 +53,7 @@
                                 </p>
                                 <p class="config-item">
                                     <span class="attr font-medium">
-                                        防御 
+                                        防御
                                     </span>
                                     <span class="value font-heavy">
                                         10G
@@ -63,7 +63,7 @@
                             <li>
                                 <p class="config-item">
                                     <span class="attr font-medium">
-                                        备份集 
+                                        备份集
                                     </span>
                                     <span class="value font-heavy">
                                         1份
@@ -71,7 +71,7 @@
                                 </p>
                                 <p class="config-item">
                                     <span class="attr font-medium">
-                                        IP 
+                                        IP
                                     </span>
                                     <span class="value font-heavy">
                                         1个
@@ -104,7 +104,7 @@
                             <li>
                                 <p class="config-item">
                                     <span class="attr font-medium">
-                                        CPU 
+                                        CPU
                                     </span>
                                     <span class="value font-heavy">
                                         4核
@@ -112,7 +112,7 @@
                                 </p>
                                 <p class="config-item">
                                     <span class="attr font-medium">
-                                        内存 
+                                        内存
                                     </span>
                                     <span class="value font-heavy">
                                         4G
@@ -120,7 +120,7 @@
                                 </p>
                                 <p class="config-item">
                                     <span class="attr font-medium">
-                                        硬盘 
+                                        硬盘
                                     </span>
                                     <span class="value font-heavy">
                                         40G+40G
@@ -128,7 +128,7 @@
                                 </p>
                                 <p class="config-item">
                                     <span class="attr font-medium">
-                                        带宽 
+                                        带宽
                                     </span>
                                     <span class="value font-heavy">
                                         10M
@@ -136,7 +136,7 @@
                                 </p>
                                 <p class="config-item">
                                     <span class="attr font-medium">
-                                        防御 
+                                        防御
                                     </span>
                                     <span class="value font-heavy">
                                         40G
@@ -146,7 +146,7 @@
                             <li>
                                 <p class="config-item">
                                     <span class="attr font-medium">
-                                        备份集 
+                                        备份集
                                     </span>
                                     <span class="value font-heavy">
                                         1份
@@ -154,7 +154,7 @@
                                 </p>
                                 <p class="config-item">
                                     <span class="attr font-medium">
-                                        IP 
+                                        IP
                                     </span>
                                     <span class="value font-heavy">
                                         1个
@@ -200,7 +200,7 @@
                             <li>
                                 <p class="config-item">
                                     <span class="attr font-medium">
-                                        CPU 
+                                        CPU
                                     </span>
                                     <span class="value font-heavy">
                                         8核
@@ -208,7 +208,7 @@
                                 </p>
                                 <p class="config-item">
                                     <span class="attr font-medium">
-                                        内存 
+                                        内存
                                     </span>
                                     <span class="value font-heavy">
                                         16G
@@ -216,7 +216,7 @@
                                 </p>
                                 <p class="config-item">
                                     <span class="attr font-medium">
-                                        硬盘 
+                                        硬盘
                                     </span>
                                     <span class="value font-heavy">
                                         240G
@@ -226,15 +226,15 @@
                             <li>
                                 <p class="config-item">
                                     <span class="attr font-medium">
-                                        带宽 
+                                        带宽
                                     </span>
                                     <span class="value font-heavy">
-                                        10M
+                                        100M
                                     </span>
                                 </p>
                                 <p class="config-item">
                                     <span class="attr font-medium">
-                                        防御 
+                                        防御
                                     </span>
                                     <span class="value font-heavy">
                                         200G
@@ -242,7 +242,7 @@
                                 </p>
                                 <p class="config-item">
                                     <span class="attr font-medium">
-                                        线路 
+                                        线路
                                     </span>
                                     <span class="value font-heavy">
                                         西安电信
@@ -274,7 +274,7 @@
                             <li>
                                 <p class="config-item">
                                     <span class="attr font-medium">
-                                        CPU 
+                                        CPU
                                     </span>
                                     <span class="value font-heavy">
                                         8核
@@ -282,7 +282,7 @@
                                 </p>
                                 <p class="config-item">
                                     <span class="attr font-medium">
-                                        内存 
+                                        内存
                                     </span>
                                     <span class="value font-heavy">
                                         16G
@@ -290,7 +290,7 @@
                                 </p>
                                 <p class="config-item">
                                     <span class="attr font-medium">
-                                        硬盘 
+                                        硬盘
                                     </span>
                                     <span class="value font-heavy">
                                         240G
@@ -300,7 +300,7 @@
                             <li>
                                 <p class="config-item">
                                     <span class="attr font-medium">
-                                        带宽 
+                                        带宽
                                     </span>
                                     <span class="value font-heavy">
                                         100M
@@ -308,7 +308,7 @@
                                 </p>
                                 <p class="config-item">
                                     <span class="attr font-medium">
-                                        防御 
+                                        防御
                                     </span>
                                     <span class="value font-heavy">
                                         40G
@@ -316,7 +316,7 @@
                                 </p>
                                 <p class="config-item">
                                     <span class="attr font-medium">
-                                        线路 
+                                        线路
                                     </span>
                                     <span class="value font-heavy">
                                         衡阳电信
@@ -348,7 +348,7 @@
                             <li>
                                 <p class="config-item">
                                     <span class="attr font-medium">
-                                        CPU 
+                                        CPU
                                     </span>
                                     <span class="value font-heavy">
                                         8核
@@ -356,7 +356,7 @@
                                 </p>
                                 <p class="config-item">
                                     <span class="attr font-medium">
-                                        内存 
+                                        内存
                                     </span>
                                     <span class="value font-heavy">
                                         16G
@@ -364,7 +364,7 @@
                                 </p>
                                 <p class="config-item">
                                     <span class="attr font-medium">
-                                        硬盘 
+                                        硬盘
                                     </span>
                                     <span class="value font-heavy">
                                         240G
@@ -374,7 +374,7 @@
                             <li style="justify-content: flex-start;">
                                 <p class="config-item" style="margin-right: 50px;">
                                     <span class="attr font-medium">
-                                        带宽 
+                                        带宽
                                     </span>
                                     <span class="value font-heavy">
                                         100M
@@ -382,7 +382,7 @@
                                 </p>
                                 <!-- <p class="config-item">
                                     <span class="attr font-medium">
-                                        防御 
+                                        防御
                                     </span>
                                     <span class="value font-heavy">
                                         200G
@@ -390,7 +390,7 @@
                                 </p> -->
                                 <p class="config-item">
                                     <span class="attr font-medium">
-                                        线路 
+                                        线路
                                     </span>
                                     <span class="value font-heavy">
                                         惠州电信
@@ -442,7 +442,7 @@
                         <span>4. 退款说明：</span>
                         <span>如因买方个人/公司自身原因导致的退货退款的客户，一律按月为单位退货退款，
                         且默认买家自动放弃本次优惠买赠活动，即最终退款=【买9送3（即12个月）-个人
-                        /公司已使用月数（不足1月的按1月计算）-送3（即3个月）】*促销产品单价。</span>
+                        /公司已使用月数（不足1月的按1月计算）-送3（即3个月）】*促销产品单价，以此类推。</span>
                     </li>
                     <li class="font-medium">
                         5. 所有参加活动的用户，均视为认可本活动规则且同意遵守《腾正用户协议》。

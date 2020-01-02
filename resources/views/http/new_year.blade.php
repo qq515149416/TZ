@@ -48,7 +48,7 @@
                                         带宽
                                     </span>
                                     <span class="value font-heavy">
-                                        100M
+                                        10M
                                     </span>
                                 </p>
                                 <p class="config-item">
@@ -229,7 +229,7 @@
                                         带宽
                                     </span>
                                     <span class="value font-heavy">
-                                        10M
+                                        100M
                                     </span>
                                 </p>
                                 <p class="config-item">

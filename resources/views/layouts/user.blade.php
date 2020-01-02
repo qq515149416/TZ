@@ -7,7 +7,9 @@
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{ asset("/tool/bootstrap/css/bootstrap.min.css") }}" />
     <link rel="stylesheet" href="{{ asset("/tool/bootstrap/css/bootstrap-reboot.min.css") }}" />
-    <link rel="stylesheet" href="{{ asset("/tool/bootstrap/css/bootstrap-grid.min.css") }}" />
+    <link rel="stylesheet" href="{{ asset("/tool/bootstrap/css/bootstrap-grid.min.css") }}" />    
+    <link rel="stylesheet" href="{{ asset("/css/bootstrap-table.min.css") }}" />    
+    <link rel="stylesheet" href="{{ asset("/css/UCFORM.css") }}" />
     <link rel="stylesheet" href="{{ asset("/user_assets/css/main.css") }}" />
 </head>
 <body>
@@ -21,7 +23,30 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <div class="d-md-flex justify-content-end container-fluid px-0">
-                    <ul class="navbar-nav main-nav">
+                    <ul class="navbar-nav mr-auto d-block d-md-none d-lg-none">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">
+                                概况
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">服务器</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">高防IP</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">财务信息</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">备案管理</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">用户信息</a>
+                        </li>
+                    </ul>
+                    @yield('tab')
+                    <ul class="navbar-nav main-nav d-none d-md-flex d-lg-flex align-items-center">
                         <li class="nav-item">
                             <a class="nav-link py-0" href="#">
                                 <span class="customer-service icon"></span>
@@ -70,7 +95,7 @@
                             @component('layouts.component.alert')
                                 <div class="account-info">
                                     <p class="font-regular mb-3">账户余额</p>
-                                    <p class="mb-4">8888.88</p>
+                                    <p class="mb-4 global-balance">8888.88</p>
                                     <button type="button" class="btn btn-primary d-block w-100 font-medium" data-toggle="modal" data-target="#rechargeModal">充值</button>
                                     <ul class="list-group mt-2">
                                         <li class="list-group-item font-medium border-0 pl-2 ml-2 pr-0">
@@ -131,13 +156,13 @@
                 <div class="col-2 px-0 menu d-none d-sm-flex align-items-stretch">
                     <ul class="mx-0 px-0 my-0 py-0 pt-5">
                         <li class="pl-4 ml-1 pb-4">
-                            <a class="active" href="javascript:;">
+                            <a class="{{ $page==='index' ? 'active' : '' }}" href="javascript:;">
                                 <span class="icon overview mr-2"></span>
                                 <span class="pl-1 font-regular">概况</span>
                             </a>
                         </li>
                         <li class="pl-4 ml-1 pb-4">
-                            <a href="javascript:;">
+                            <a class="{{ $page==='server' ? 'active' : '' }}" href="javascript:;">
                                 <span class="icon server mr-2"></span>
                                 <span class="pl-1 font-regular">服务器</span>
                             </a>
@@ -168,6 +193,7 @@
                         </li>
                     </ul>
                 </div>
+                @yield('mobile_tab')
                 <div class="col px-0 pt-4 align-items-stretch content overflow-hidden-x">
                     @yield('content')
 
@@ -179,6 +205,17 @@
     <script src="{{ asset("/tool/jquery/popper.min.js") }}"></script>
     <script src="{{ asset("/tool/bootstrap/js/bootstrap.min.js") }}"></script>
     <script src="{{ asset("/user_assets/js/main.js") }}"></script>
+    <script src="{{ asset("/js/bootstrap-table.min.js") }}"></script>
+    <script src="{{ asset("/js/bootstrap-table-locale-all.min.js") }}"></script>
+    <script src="{{ asset("/js/extensions/bootstrap-table-mobile.min.js") }}"></script>
+    <script>
+        $.browser = $.browser || {
+            msie: /msie/.test(navigator.userAgent.toLowerCase()),
+            version: 11
+        };
+    </script>
+    <script src="{{ asset("/js/jQuery.UCSelect.js") }}"></script>
     @include('layouts.component.recharge')
+    @include('layouts.component.renew')
 </body>
 </html>

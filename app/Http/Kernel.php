@@ -68,6 +68,7 @@ class Kernel extends HttpKernel
         'CheckLogin' =>\App\Http\Middleware\CheckLogin::class,  //检测用户是否登录
         'CheckStaff' => \App\Admin\Middleware\CheckStaff::class,//检测后台管理账户的相关人员信息是否填写完整
         'JudgeAgent' => \App\Http\Middleware\JudgeAgent::class, //检测访问设备
-        'CheckApi' => \App\Http\Middleware\CheckApi::class  //检测api签名
+        'CheckApi' => \App\Http\Middleware\CheckApi::class,  //检测api签名
+        'NewCheckLogin' =>\App\Http\Middleware\NewCheckLogin::class  //检测新用户后台是否登录
     ];
 }

@@ -1,0 +1,213 @@
+
+#server {
+    .paper {
+        box-shadow: 0 0 12px 2px rgba(27, 34, 69, .06);
+        .server-tab {
+            .nav-tabs {
+                a {
+                    font-size: 14px;
+                    color: #4274f4;
+                    // letter-spacing: 3px;
+                    text-decoration: none;
+                }
+                li.active {
+                    a {
+                        background-color: #4274f4;
+                        color: #fff;
+                        border-radius: 4px;
+                    }
+                }
+            }
+            .tab-content {
+                .tip {
+                    background-color: #f0f2f5;
+                    color: #62676f;
+                    font-size: 14px;
+                }
+                .toolbar {
+                    .float-right {
+                        > .btn {
+                            background-color: transparent;
+                            border: 1px solid #d0d2e0;
+                            color: #191c2b;
+                            font-size: 14px;
+                            line-height: 14px;
+                            height: 36px;
+                            &.active {
+                                border: 1px solid #4274f4;
+                                color: #4274f4;
+                            }
+                        }
+                        > .form-inline {
+                            #inputSearch {
+                                height: 36px;
+                                box-sizing: border-box;
+                                border-color: #d0d2e0;
+                            }
+                            > .btn {
+                                font-size: 14px;
+                                line-height: 14px;
+                                height: 36px;
+                                background-color: #4274f4;
+                                color: #fff;
+                            }
+                        }
+                    }
+                }
+                .data {
+                    font-size: 14px;
+                    color: #191c2b;
+                    border: none;
+                    th {
+                        border: none;
+                        border-bottom: 1px solid #d8dae6;
+                    }
+                    tr:last-of-type {
+                        td {
+                            border: none;
+                        }
+                    }
+                    td {
+                        border: none;
+                        border-bottom: 1px solid #d8dae6;
+                        > span {
+                            cursor: pointer;
+                        }
+                        .play {
+                            color: #4274f4;
+                        }
+                        .renew {
+                            color: #d40000;
+                        }
+                    }
+                    
+                    .bs-checkbox {
+                        label {
+                            input[type="checkbox"] {
+                                display: none;
+                                &+span {
+                                    width: 15px;
+                                    height: 15px;
+                                    display: inline-block;
+                                    border: 1px solid #d0d2e0;
+                                    border-radius: 4px;
+                                    position: relative;
+                                    &:before {
+                                        content: "";
+                                        position: absolute;
+                                        width: 15px;
+                                        height: 15px;
+                                        top: 0;
+                                        left: 0;
+                                        // background: transparent;
+                                        text-align: center;
+                                        line-height: 15px;
+                                        color: #4274f4;
+                                        font-size: 12px;
+                                        font-family: Arial, Helvetica, sans-serif !important;
+                                        font-weight: bold;
+                                    }
+                                }
+                                &:checked + span {
+                                    &:before {
+                                        content: "√";
+                                        // background: #4274f4;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .pagination-detail {
+                    margin-bottom: 0;
+                }
+                .pagination {
+                    margin-top: 16px;
+                    margin-bottom: 0;
+                    > ul.pagination {
+                        .page-pre,.page-next {
+                            .page-link {
+                                font-size: 14px;
+                            }
+                        }
+                        .page-item.active {
+                            .page-link {
+                                background-color: #4274f4;
+                                color: #fff;
+                            }
+                        }
+                        .page-item.disabled {
+                            .page-link {
+                                color: #c1c0c0;
+                            }
+                        }
+                        .page-link {
+                            border-radius: 4px;
+                            background-color: transparent;
+                            width: 20px;
+                            height: 20px;
+                            text-align: center;
+                            padding: 0;
+                            line-height: 20px;
+                            color: #666666;
+                            font-size: 12px;
+                            font-family: "微软雅黑";
+                            border: none;
+                            margin-right: .3rem;
+                        }
+                    }
+                }
+                .pagination-info {
+                    display: flex;
+                    align-items: center;
+                    > .btn {
+                        font-size: 14px;
+                        line-height: 14px;
+                        height: 34px;
+                        background-color: #4274f4;
+                        color: #fff;
+                    }
+                    > .bs-checkbox {
+                        margin-right: .8rem;
+                        padding: 12px;
+                        label {
+                            input[type="checkbox"] {
+                                display: none;
+                                &+span {
+                                    width: 15px;
+                                    height: 15px;
+                                    display: inline-block;
+                                    border: 1px solid #d0d2e0;
+                                    border-radius: 4px;
+                                    position: relative;
+                                    &:before {
+                                        content: "";
+                                        position: absolute;
+                                        width: 15px;
+                                        height: 15px;
+                                        top: 0;
+                                        left: 0;
+                                        // background: transparent;
+                                        text-align: center;
+                                        line-height: 15px;
+                                        color: #4274f4;
+                                        font-size: 12px;
+                                        font-family: Arial, Helvetica, sans-serif !important;
+                                        font-weight: bold;
+                                    }
+                                }
+                                &:checked + span {
+                                    &:before {
+                                        content: "√";
+                                        // background: #4274f4;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+}

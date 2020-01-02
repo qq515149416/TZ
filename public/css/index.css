@@ -11886,3 +11886,217 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #overseas_product .jumbotron {
   border-radius: 0;
 }
+#new_year {
+  background: url(/images/ditu_new_year.png?c7d9fe16f4b687ebe318e3e4e50d9b23) no-repeat;
+  background-size: 100% 100%;
+  padding-top: 732px;
+}
+#new_year > .product-item:last-of-type {
+  margin-top: 62px;
+}
+#new_year > .product-item:last-of-type .header {
+  width: 788px;
+  height: 122px;
+  background: url(/images/wuliji-biaoti_new_year.png?9935d9dbf6c5c188358e684efc0c33c4) no-repeat;
+}
+#new_year > .product-item:last-of-type .header span {
+  -webkit-transform: translateY(46px);
+          transform: translateY(46px);
+}
+#new_year > .product-item:last-of-type .content > ul.products > li {
+  float: left;
+  width: 380px;
+  padding-top: 140px;
+}
+#new_year > .product-item:last-of-type .content > ul.products > li:nth-of-type(1) {
+  background: url(/images/wulijikuang_1_new_year.png?c88eab2e0b6856dc4cd4c41b87a9cf42) no-repeat;
+  background-size: 100% 100%;
+}
+#new_year > .product-item:last-of-type .content > ul.products > li:nth-of-type(2) {
+  background: url(/images/wulijikuang_2_new_year.png?b32f8cb44feeaa52b271916c71dcdc5c) no-repeat;
+  background-size: 100% 100%;
+}
+#new_year > .product-item:last-of-type .content > ul.products > li:nth-of-type(3) {
+  background: url(/images/ywulijikuang_3_new_year.png?9ed726c3a87fcc10cd6ed71c09bbec18) no-repeat;
+  background-size: 100% 100%;
+}
+#new_year > .product-item:last-of-type .content > ul.products > li > ul.config > li:last-of-type {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+#new_year > .product-item:last-of-type .content > ul.products > li > ul.config > li:last-of-type .config-item {
+  margin-right: 0;
+}
+#new_year > .product-item:last-of-type .content > ul.products > li > ul.config > li:last-of-type .config-item .attr {
+  text-align: center;
+}
+#new_year > .product-item:last-of-type .content > ul.products > li > ul.config > li .config-item:nth-of-type(3) {
+  width: 72px;
+}
+#new_year > .product-item:last-of-type .content > ul.products > li > ul.config > li .config-item:nth-of-type(3) span {
+  text-align: center;
+}
+#new_year > .product-item:last-of-type .content > ul.products > li > ul.config > li .config-item:nth-of-type(3) span.attr {
+  text-align: center;
+}
+#new_year > .product-item:last-of-type .content > ul.products > li > ul.config > li .config-item .attr {
+  text-align: center;
+}
+#new_year > .product-item {
+  width: 1186px;
+  margin: 0 auto;
+}
+#new_year > .product-item .header {
+  width: 718px;
+  height: 92px;
+  text-align: center;
+  margin: 0 auto;
+  background: url(/images/yun-biaoti_new_year.png?30a3f06f2ea9ba639e5b940e20627be2) no-repeat;
+}
+#new_year > .product-item .header span {
+  display: inline-block;
+  -webkit-transform: translateY(40px);
+          transform: translateY(40px);
+  font-size: 30px;
+  line-height: 30px;
+  color: #fff;
+}
+#new_year > .product-item .content {
+  margin-top: 20px;
+}
+#new_year > .product-item .content > ul.products {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#new_year > .product-item .content > ul.products > li {
+  float: left;
+  width: 580px;
+  margin-right: 20px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 0 52px;
+  padding-top: 160px;
+}
+#new_year > .product-item .content > ul.products > li:first-of-type {
+  background: url(/images/hengyangyunkuang_1_new_year.png?25e3f82d0c77149f891166894974838f) no-repeat;
+  background-size: 100% 100%;
+}
+#new_year > .product-item .content > ul.products > li:last-of-type {
+  background: url(/images/xianyunkuang_2_new_year.png?c6c797d74936a2c2da0268ed2db687d2);
+  margin-right: 0;
+  background-size: 100% 100%;
+}
+#new_year > .product-item .content > ul.products > li > ul.config {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#new_year > .product-item .content > ul.products > li > ul.config > li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+#new_year > .product-item .content > ul.products > li > ul.config > li:first-of-type {
+  margin-bottom: 22px;
+}
+#new_year > .product-item .content > ul.products > li > ul.config > li:last-of-type {
+  margin-bottom: 15px;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+#new_year > .product-item .content > ul.products > li > ul.config > li:last-of-type .config-item {
+  margin-right: 48px;
+}
+#new_year > .product-item .content > ul.products > li > ul.config > li:last-of-type .config-item .attr {
+  text-align: center;
+}
+#new_year > .product-item .content > ul.products > li > ul.config > li .config-item {
+  margin: 0;
+}
+#new_year > .product-item .content > ul.products > li > ul.config > li .config-item:nth-of-type(3) {
+  width: 80px;
+}
+#new_year > .product-item .content > ul.products > li > ul.config > li .config-item:nth-of-type(3) span {
+  text-align: center;
+}
+#new_year > .product-item .content > ul.products > li > ul.config > li .config-item span {
+  display: block;
+}
+#new_year > .product-item .content > ul.products > li > ul.config > li .config-item .attr {
+  color: #a0a3a8;
+  font-size: 16px;
+  line-height: 16px;
+  margin-bottom: 12px;
+}
+#new_year > .product-item .content > ul.products > li > ul.config > li .config-item .value {
+  color: #4e4a4a;
+  line-height: 18px;
+  font-size: 18px;
+}
+#new_year > .product-item .content > ul.products > li .tip {
+  font-size: 14px;
+  color: #a7aaaf;
+  margin-bottom: 36px;
+}
+#new_year > .product-item .content > ul.products > li .buy {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 40px;
+}
+#new_year > .product-item .content > ul.products > li .buy .price .currency {
+  color: #ff0000;
+  font-size: 20px;
+  line-height: 20px;
+  font-family: "\5FAE\8F6F\96C5\9ED1";
+}
+#new_year > .product-item .content > ul.products > li .buy .price .amount {
+  font-size: 36px;
+  color: #ff3300;
+  line-height: 36px;
+}
+#new_year > .product-item .content > ul.products > li .buy .price .unit {
+  color: #4e4a4a;
+  font-size: 16px;
+  line-height: 16px;
+}
+#new_year > .product-item .content > ul.products > li .buy .purchas {
+  text-indent: -10000px;
+  display: block;
+  width: 126px;
+  height: 34px;
+  background: url(/images/xianshiqianggou_new_year.png?52ba0c2c25309b3f46505b77faf4c377) no-repeat;
+}
+#new_year > .product-item .content > ul.products > li .product-footer {
+  position: relative;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 22px;
+  padding-bottom: 24px;
+}
+#new_year > .product-item .content > ul.products > li .product-footer > span {
+  position: absolute;
+  top: -11px;
+  left: 0;
+  background-color: #fff;
+  color: #4e4a4a;
+  font-size: 16px;
+}
+#new_year > .product-item .content > ul.products > li .product-footer > p {
+  color: #caa766;
+  font-size: 14px;
+}
+#new_year > .product-item .content > ul.products > li .product-footer > p:last-of-type {
+  margin-bottom: 0;
+}

@@ -1,0 +1,226 @@
+#new_year {
+    background: url(../images/new_year/ditu_new_year.png) no-repeat;
+    background-size: 100% 100%;
+    padding-top: 732px;
+    @product_item_width: 1186px;
+    > .product-item:last-of-type {
+        margin-top: 62px;
+        @header_width: 788px;
+        @header_height: 122px;
+        .header {
+            width: @header_width;
+            height: @header_height;
+            background: url(../images/new_year/wuliji-biaoti_new_year.png) no-repeat;
+            span {
+                transform: translateY(46px);
+            }
+        }
+        .content {
+            > ul.products {
+                > li {
+                    float: left;
+                    width: 380px;
+                    &:nth-of-type(1) {
+                        background: url(../images/new_year/wulijikuang_1_new_year.png) no-repeat;
+                        background-size: 100% 100%;
+                    }
+                    &:nth-of-type(2) {
+                        background: url(../images/new_year/wulijikuang_2_new_year.png) no-repeat;
+                        background-size: 100% 100%;
+                    }
+                    &:nth-of-type(3) {
+                        background: url(../images/new_year/ywulijikuang_3_new_year.png) no-repeat;
+                        background-size: 100% 100%;
+                    }
+                    padding-top: 140px;
+                    > ul.config {
+                        > li {
+                            &:last-of-type {
+                                // margin-bottom: 15px;
+                                justify-content: space-between;
+                                .config-item {
+                                    margin-right: 0;
+                                    .attr {
+                                        text-align: center;
+                                    }
+                                }
+                            }
+                            .config-item {
+                                // width: 70px;
+                                &:nth-of-type(3) {
+                                    width: 72px;
+                                    // width: auto;
+                                    span {
+                                        text-align: center;
+                                        &.attr {
+                                            text-align: center;
+                                        }
+                                    }
+                                }
+                                // span {
+                                //     text-align: center;
+                                // }
+                                .attr {
+                                    text-align: center;
+                                }
+                                
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    > .product-item {
+        @header_width: 718px;
+        @header_height: 92px;
+        width: @product_item_width;
+        margin: 0 auto;
+        .header {
+            width: @header_width;
+            height: @header_height;
+            text-align: center;
+            margin: 0 auto;
+            background: url(../images/new_year/yun-biaoti_new_year.png) no-repeat;
+            span {
+                display: inline-block;
+                // margin-top: 20px;
+                transform: translateY(40px);
+                font-size: 30px;
+                line-height: 30px;
+                color: #fff;
+            }
+        }
+        .content {
+            margin-top: 20px;
+            > ul.products {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                > li {
+                    float: left;
+                    width: 580px;
+                    // height: 524px;
+                    margin-right: 20px;
+                    &:first-of-type {
+                        background: url(../images/new_year/hengyangyunkuang_1_new_year.png) no-repeat;
+                        background-size: 100% 100%;
+                    }
+                    &:last-of-type {
+                        background: url(../images/new_year/xianyunkuang_2_new_year.png);
+                        margin-right: 0;
+                        background-size: 100% 100%;
+                    }
+                    box-sizing: border-box;
+                    padding: 0 52px;
+                    padding-top: 160px;
+                    > ul.config {
+                        margin: 0;
+                        padding: 0;
+                        list-style: none;
+                        > li {
+                            display: flex;
+                            justify-content: space-between;
+                            &:first-of-type {
+                                margin-bottom: 22px;
+                            }
+                            &:last-of-type {
+                                margin-bottom: 15px;
+                                justify-content: flex-start;
+                                .config-item {
+                                    margin-right: 48px;
+                                    .attr {
+                                        text-align: center;
+                                    }
+                                }
+                            }
+                            .config-item {
+                                // flex: 1;
+                                // text-align: center;
+                                margin: 0;
+                                &:nth-of-type(3) {
+                                    // flex: 2;
+                                    width: 80px;
+                                    span {
+                                        text-align: center;
+                                    }
+                                }
+                                span {
+                                    display: block;
+                                }
+                                .attr {
+                                    color: #a0a3a8;
+                                    font-size: 16px;
+                                    line-height: 16px;
+                                    margin-bottom: 12px;
+                                }
+                                .value {
+                                    color: #4e4a4a;
+                                    line-height: 18px;
+                                    font-size: 18px;
+                                }
+                            }
+                        }
+                    }
+                    .tip {
+                        font-size: 14px;
+                        color: #a7aaaf;
+                        margin-bottom: 36px;
+                    }
+                    .buy {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin-bottom: 40px;
+                        .price {
+                            .currency {
+                                color: #ff0000;
+                                font-size: 20px;
+                                line-height: 20px;
+                                font-family: "微软雅黑";
+                            }
+                            .amount {
+                                font-size: 36px;
+                                color: #ff3300;
+                                line-height: 36px;
+                            }
+                            .unit {
+                                color: #4e4a4a;
+                                font-size: 16px;
+                                line-height: 16px;
+                            }
+                        }
+                        .purchas {
+                            text-indent: -10000px;
+                            display: block;
+                            width: 126px;
+                            height: 34px;
+                            background: url(../images/new_year/xianshiqianggou_new_year.png) no-repeat;
+                        }
+                    }
+                    .product-footer {
+                        position: relative;
+                        border-top: 1px solid #f0f0f0;
+                        padding-top: 22px;
+                        padding-bottom: 24px;
+                        > span {
+                            position: absolute;
+                            top: -11px;
+                            left: 0;
+                            background-color: #fff;
+                            color: #4e4a4a;
+                            font-size: 16px;
+                        }
+                        > p {
+                            color: #caa766;
+                            font-size: 14px;
+                            &:last-of-type {
+                                margin-bottom: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

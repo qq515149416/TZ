@@ -65,6 +65,8 @@ Route::group([
 Route::get('/admin/{path?}', 'Show\AdminController@index')->where('path', '.+');
 Route::get('/double11', 'Show\Double11Controller@index'); //双11活动页  *黄晓敏需求:不要跳转移动端
 Route::get('/double12', 'Show\Double12Controller@index'); //双12活动页  *黄晓敏需求:不要跳转移动端
+Route::get('/new_year', 'Show\NewYearController@index'); //双12活动页  *黄晓敏需求:不要跳转移动端
+
 
 //移动端接口路径
 Route::group([
@@ -109,9 +111,11 @@ Route::group([
  */
 Route::group([
     'prefix' => 'user',
-    'middleware' => 'UserOperationLog'
+    'middleware' => ['UserOperationLog','NewCheckLogin']
 ], function () {
-    Route::get("index","User\Show\IndexController@index");
+    Route::get("index","User\Show\IndexController@index");    
+    Route::get("server","User\Show\ServerController@index");    
+    Route::get("order","User\Show\OrderController@index");
 });
 /**
  * 测试组

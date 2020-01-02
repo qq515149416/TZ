@@ -46,6 +46,43 @@
 .font-heavy {
   font-family: "pingFangHeavy", "\5FAE\8F6F\96C5\9ED1", Arial, Helvetica, sans-serif !important;
 }
+#user_admin .navbar .top-nav {
+  list-style: none;
+}
+#user_admin .navbar .top-nav > li > a {
+  color: #fff;
+  font-size: 14px;
+  line-height: 14px;
+  text-decoration: none;
+}
+#user_admin .navbar .top-nav > li > a.active {
+  background-color: #fff;
+  color: #4274f4;
+}
+#user_admin .main-content .top-nav {
+  list-style: none;
+}
+#user_admin .main-content .top-nav > li > a {
+  color: #191c2b;
+  font-size: 16px;
+  line-height: 16px;
+  text-decoration: none;
+  display: block;
+  background-color: #fff;
+  text-align: center;
+}
+#user_admin .main-content .top-nav > li > a.active {
+  position: relative;
+}
+#user_admin .main-content .top-nav > li > a.active::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #4274f4;
+}
 #user_admin .main-content .content {
   background-color: #f4f6f9;
 }
@@ -135,6 +172,182 @@
 #user_admin .main-content .content #index .paper p {
   font-size: 14px;
   color: #62676f;
+}
+#user_admin .main-content .content #server .paper {
+  -webkit-box-shadow: 0 0 12px 2px rgba(27, 34, 69, 0.06);
+          box-shadow: 0 0 12px 2px rgba(27, 34, 69, 0.06);
+}
+#user_admin .main-content .content #server .paper .server-tab .nav-tabs a {
+  font-size: 14px;
+  color: #4274f4;
+  text-decoration: none;
+}
+#user_admin .main-content .content #server .paper .server-tab .nav-tabs li.active a {
+  background-color: #4274f4;
+  color: #fff;
+  border-radius: 4px;
+}
+#user_admin .main-content .content #server .paper .server-tab .tab-content .tip {
+  background-color: #f0f2f5;
+  color: #62676f;
+  font-size: 14px;
+}
+#user_admin .main-content .content #server .paper .server-tab .tab-content .toolbar .float-right > .btn {
+  background-color: transparent;
+  border: 1px solid #d0d2e0;
+  color: #191c2b;
+  font-size: 14px;
+  line-height: 14px;
+  height: 36px;
+}
+#user_admin .main-content .content #server .paper .server-tab .tab-content .toolbar .float-right > .btn.active {
+  border: 1px solid #4274f4;
+  color: #4274f4;
+}
+#user_admin .main-content .content #server .paper .server-tab .tab-content .toolbar .float-right > .form-inline #inputSearch {
+  height: 36px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border-color: #d0d2e0;
+}
+#user_admin .main-content .content #server .paper .server-tab .tab-content .toolbar .float-right > .form-inline > .btn {
+  font-size: 14px;
+  line-height: 14px;
+  height: 36px;
+  background-color: #4274f4;
+  color: #fff;
+}
+#user_admin .main-content .content #server .paper .server-tab .tab-content .data {
+  font-size: 14px;
+  color: #191c2b;
+  border: none;
+}
+#user_admin .main-content .content #server .paper .server-tab .tab-content .data th {
+  border: none;
+  border-bottom: 1px solid #d8dae6;
+}
+#user_admin .main-content .content #server .paper .server-tab .tab-content .data tr:last-of-type td {
+  border: none;
+}
+#user_admin .main-content .content #server .paper .server-tab .tab-content .data td {
+  border: none;
+  border-bottom: 1px solid #d8dae6;
+}
+#user_admin .main-content .content #server .paper .server-tab .tab-content .data td > span {
+  cursor: pointer;
+}
+#user_admin .main-content .content #server .paper .server-tab .tab-content .data td .play {
+  color: #4274f4;
+}
+#user_admin .main-content .content #server .paper .server-tab .tab-content .data td .renew {
+  color: #d40000;
+}
+#user_admin .main-content .content #server .paper .server-tab .tab-content .data .bs-checkbox label input[type="checkbox"] {
+  display: none;
+}
+#user_admin .main-content .content #server .paper .server-tab .tab-content .data .bs-checkbox label input[type="checkbox"] + span {
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  border: 1px solid #d0d2e0;
+  border-radius: 4px;
+  position: relative;
+}
+#user_admin .main-content .content #server .paper .server-tab .tab-content .data .bs-checkbox label input[type="checkbox"] + span:before {
+  content: "";
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  top: 0;
+  left: 0;
+  text-align: center;
+  line-height: 15px;
+  color: #4274f4;
+  font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-weight: bold;
+}
+#user_admin .main-content .content #server .paper .server-tab .tab-content .data .bs-checkbox label input[type="checkbox"]:checked + span:before {
+  content: "\221A";
+}
+#user_admin .main-content .content #server .paper .server-tab .tab-content .pagination-detail {
+  margin-bottom: 0;
+}
+#user_admin .main-content .content #server .paper .server-tab .tab-content .pagination {
+  margin-top: 16px;
+  margin-bottom: 0;
+}
+#user_admin .main-content .content #server .paper .server-tab .tab-content .pagination > ul.pagination .page-pre .page-link,
+#user_admin .main-content .content #server .paper .server-tab .tab-content .pagination > ul.pagination .page-next .page-link {
+  font-size: 14px;
+}
+#user_admin .main-content .content #server .paper .server-tab .tab-content .pagination > ul.pagination .page-item.active .page-link {
+  background-color: #4274f4;
+  color: #fff;
+}
+#user_admin .main-content .content #server .paper .server-tab .tab-content .pagination > ul.pagination .page-item.disabled .page-link {
+  color: #c1c0c0;
+}
+#user_admin .main-content .content #server .paper .server-tab .tab-content .pagination > ul.pagination .page-link {
+  border-radius: 4px;
+  background-color: transparent;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  padding: 0;
+  line-height: 20px;
+  color: #666666;
+  font-size: 12px;
+  font-family: "\5FAE\8F6F\96C5\9ED1";
+  border: none;
+  margin-right: 0.3rem;
+}
+#user_admin .main-content .content #server .paper .server-tab .tab-content .pagination-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+#user_admin .main-content .content #server .paper .server-tab .tab-content .pagination-info > .btn {
+  font-size: 14px;
+  line-height: 14px;
+  height: 34px;
+  background-color: #4274f4;
+  color: #fff;
+}
+#user_admin .main-content .content #server .paper .server-tab .tab-content .pagination-info > .bs-checkbox {
+  margin-right: 0.8rem;
+  padding: 12px;
+}
+#user_admin .main-content .content #server .paper .server-tab .tab-content .pagination-info > .bs-checkbox label input[type="checkbox"] {
+  display: none;
+}
+#user_admin .main-content .content #server .paper .server-tab .tab-content .pagination-info > .bs-checkbox label input[type="checkbox"] + span {
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  border: 1px solid #d0d2e0;
+  border-radius: 4px;
+  position: relative;
+}
+#user_admin .main-content .content #server .paper .server-tab .tab-content .pagination-info > .bs-checkbox label input[type="checkbox"] + span:before {
+  content: "";
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  top: 0;
+  left: 0;
+  text-align: center;
+  line-height: 15px;
+  color: #4274f4;
+  font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-weight: bold;
+}
+#user_admin .main-content .content #server .paper .server-tab .tab-content .pagination-info > .bs-checkbox label input[type="checkbox"]:checked + span:before {
+  content: "\221A";
 }
 #user_admin .main-content .menu {
   width: 170px;
@@ -412,6 +625,98 @@
 }
 #user_admin .navbar-bg .nav-item > .nav-link span.icon.user {
   background-image: url("/user_assets/images/navbar/user_off.png");
+}
+@media (min-width: 576px) {
+  #renewModal .modal-dialog {
+    max-width: 560px;
+    margin: 1.75rem auto;
+  }
+}
+#renewModal .modal-footer button {
+  width: 74px;
+  height: 34px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  color: #767a81;
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+#renewModal .modal-footer button:hover {
+  border: 1px solid transparent;
+}
+#renewModal .modal-footer button.btn-secondary {
+  background-color: transparent;
+  border: 1px solid #d0d2e0;
+}
+#renewModal .modal-footer button.btn-primary {
+  background-color: #4274f4;
+  color: #fff;
+}
+#renewModal .modal-footer button.bg-danger {
+  background-color: #f15151;
+  color: #fff;
+}
+#renewModal .modal-title {
+  color: #4274f4;
+  font-size: 26px;
+  font-weight: normal;
+}
+#renewModal .modal-title > span {
+  display: inline-block;
+  font-size: 18px;
+  color: #191c2b;
+  position: relative;
+  line-height: 18px;
+}
+#renewModal .modal-title > span::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 1px;
+  background-color: #d9dee6;
+}
+#renewModal .modal-body .duration > span {
+  font-size: 14px;
+  color: #191c2b;
+}
+#renewModal .modal-body .duration > .duration-select {
+  font-size: 14px;
+  color: #62676f;
+}
+#renewModal .modal-body .duration > .duration-select .duration-select-btn {
+  display: inline-block;
+  border: 1px solid #d0d2e0;
+  width: 4em;
+  text-align: center;
+  cursor: pointer;
+}
+#renewModal .modal-body .duration > .duration-select .duration-select-btn.active {
+  border: 1px solid #4274f4;
+  background-color: #4274f4;
+  color: #fff;
+}
+#renewModal .modal-body > .price {
+  color: #191c2b;
+  font-size: 14px;
+}
+#renewModal .modal-body > .price > .amount {
+  font-size: 20px;
+  color: #4274f4;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+}
+#renewModal .modal-body > .balance {
+  color: #191c2b;
+  font-size: 14px;
+}
+#renewModal .modal-body > .balance > .amount {
+  font-size: 14px;
+  color: #70747b;
+}
+#renewModal .modal-body > .balance > .amount > .tip {
+  color: #9a9ea8;
 }
 #rechargeModal .modal-title {
   color: #4274f4;

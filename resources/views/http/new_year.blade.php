@@ -254,7 +254,7 @@
                             <p class="font-heavy text-center">
                                 续费时长 | 赠送
                             </p>
-                            <p class="font-heavy text-center">
+                            <p class="font-heavy text-center" style="color: #f44336;">
                                 买9月送3月 | 送产权
                             </p>
                         </div>
@@ -328,7 +328,7 @@
                             <p class="font-heavy text-center">
                                 续费时长 | 赠送
                             </p>
-                            <p class="font-heavy text-center">
+                            <p class="font-heavy text-center" style="color: #f44336;">
                                 买9月送3月 | 送产权
                             </p>
                         </div>
@@ -402,7 +402,7 @@
                             <p class="font-heavy text-center">
                                 续费时长 | 赠送
                             </p>
-                            <p class="font-heavy text-center">
+                            <p class="font-heavy text-center" style="color: #f44336;">
                                 买9月送3月 | 送产权
                             </p>
                         </div>

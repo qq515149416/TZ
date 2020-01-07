@@ -216,6 +216,7 @@
     </script>
     <script src="{{ asset("/js/jQuery.UCSelect.js") }}"></script>
     @include('layouts.component.recharge')
-    @include('layouts.component.renew')
+    @include('layouts.component.renew')    
+    @include('layouts.component.order_detail')
 </body>
 </html>

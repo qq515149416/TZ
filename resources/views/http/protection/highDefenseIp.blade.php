@@ -31,7 +31,7 @@
         </div>
     </div>
     <!-- 高防ip促销（临时） -->
-    <div id="highDefensePromotion">
+    <!-- <div id="highDefensePromotion">
 
         <div class="hot-product">
             <div class="title">
@@ -157,7 +157,7 @@
             </div>
         </div>
 
-    </div>
+    </div> -->
     <!-- 高防ip套餐 -->
     <div id="highDefenseProduct">
         <div class="highDefenseProduct text-center">

@@ -128,6 +128,7 @@
             background-color: #f4f6f9;
             @import "./index.less";
             @import "./server.less";
+            @import "./order.less";
         }
         .menu {
             width: 170px;
@@ -617,6 +618,72 @@
                     //    max-height: 70px;
                    }
                }
+            }
+        }
+    }
+}
+#orderDetailModal {
+    .modal-title {
+        color: #4274f4;
+        font-size: 26px;
+        font-weight: normal;
+    }
+    .modal-footer {
+        .order-info {
+            font-size: 14px;
+            color: #191c2b;
+            .attr {
+                color: #70747b;
+            }
+        }
+        button {
+            width: 74px;
+            height: 34px;
+            box-sizing: border-box;
+            color: #767a81;
+            font-size: 14px;
+            letter-spacing: 2px;
+            &:hover {
+                border: 1px solid transparent;
+            }
+            &.btn-secondary {
+                background-color: transparent;
+                border: 1px solid #d0d2e0;
+            }
+            &.btn-primary {
+                background-color: #4274f4;
+                // border: 1px solid #d0d2e0;
+                color: #fff;
+            }
+        }
+    }
+    .modal-body {
+        .order-info {
+            font-size: 14px;
+            color: #191c2b;
+            .attr {
+                color: #70747b;
+            }
+        }
+        .order-business {
+            border: none;
+            font-size: 14px;
+            thead {
+                tr { 
+                    td {
+                        color: #191c2b;
+                    }
+                }
+            }
+            tbody {
+                tr { 
+                    td {
+                        color: #191c2b;
+                    }
+                }
+            }
+            .border-bottom {
+                border-color: #d9dee6;
             }
         }
     }

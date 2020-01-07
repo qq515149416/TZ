@@ -349,6 +349,108 @@
 #user_admin .main-content .content #server .paper .server-tab .tab-content .pagination-info > .bs-checkbox label input[type="checkbox"]:checked + span:before {
   content: "\221A";
 }
+#user_admin .main-content .content #order .paper {
+  -webkit-box-shadow: 0 0 12px 2px rgba(27, 34, 69, 0.06);
+          box-shadow: 0 0 12px 2px rgba(27, 34, 69, 0.06);
+}
+#user_admin .main-content .content #order .paper .filter input {
+  border: 1px solid #d0d2e0;
+  color: #9a9ea8;
+  font-size: 14px;
+}
+#user_admin .main-content .content #order .paper .filter button.btn {
+  font-size: 14px;
+  color: #ffffff;
+  letter-spacing: 3px;
+}
+#user_admin .main-content .content #order .paper .filter button.btn.btn-primary {
+  background-color: #4274f4;
+}
+#user_admin .main-content .content #order .paper .data {
+  font-size: 14px;
+  color: #191c2b;
+  border: none;
+}
+#user_admin .main-content .content #order .paper .data th {
+  border: none;
+  border-bottom: 1px solid #d8dae6;
+}
+#user_admin .main-content .content #order .paper .data tr:last-of-type td {
+  border: none;
+}
+#user_admin .main-content .content #order .paper .data td {
+  border: none;
+  border-bottom: 1px solid #d8dae6;
+}
+#user_admin .main-content .content #order .paper .data td > span {
+  cursor: pointer;
+}
+#user_admin .main-content .content #order .paper .data td .play {
+  color: #4274f4;
+}
+#user_admin .main-content .content #order .paper .data td .renew {
+  color: #d40000;
+}
+#user_admin .main-content .content #order .paper .data .bs-checkbox label input[type="checkbox"] {
+  display: none;
+}
+#user_admin .main-content .content #order .paper .data .bs-checkbox label input[type="checkbox"] + span {
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  border: 1px solid #d0d2e0;
+  border-radius: 4px;
+  position: relative;
+}
+#user_admin .main-content .content #order .paper .data .bs-checkbox label input[type="checkbox"] + span:before {
+  content: "";
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  top: 0;
+  left: 0;
+  text-align: center;
+  line-height: 15px;
+  color: #4274f4;
+  font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-weight: bold;
+}
+#user_admin .main-content .content #order .paper .data .bs-checkbox label input[type="checkbox"]:checked + span:before {
+  content: "\221A";
+}
+#user_admin .main-content .content #order .paper .pagination-detail {
+  margin-bottom: 0;
+}
+#user_admin .main-content .content #order .paper .pagination {
+  margin-top: 16px;
+  margin-bottom: 0;
+}
+#user_admin .main-content .content #order .paper .pagination > ul.pagination .page-pre .page-link,
+#user_admin .main-content .content #order .paper .pagination > ul.pagination .page-next .page-link {
+  font-size: 14px;
+}
+#user_admin .main-content .content #order .paper .pagination > ul.pagination .page-item.active .page-link {
+  background-color: #4274f4;
+  color: #fff;
+}
+#user_admin .main-content .content #order .paper .pagination > ul.pagination .page-item.disabled .page-link {
+  color: #c1c0c0;
+}
+#user_admin .main-content .content #order .paper .pagination > ul.pagination .page-link {
+  border-radius: 4px;
+  background-color: transparent;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  padding: 0;
+  line-height: 20px;
+  color: #666666;
+  font-size: 12px;
+  font-family: "\5FAE\8F6F\96C5\9ED1";
+  border: none;
+  margin-right: 0.3rem;
+}
 #user_admin .main-content .menu {
   width: 170px;
   max-width: 170px;
@@ -774,4 +876,56 @@
 }
 #rechargeModal .modal-body .select-type-pay > ul li img {
   width: 100%;
+}
+#orderDetailModal .modal-title {
+  color: #4274f4;
+  font-size: 26px;
+  font-weight: normal;
+}
+#orderDetailModal .modal-footer .order-info {
+  font-size: 14px;
+  color: #191c2b;
+}
+#orderDetailModal .modal-footer .order-info .attr {
+  color: #70747b;
+}
+#orderDetailModal .modal-footer button {
+  width: 74px;
+  height: 34px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  color: #767a81;
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+#orderDetailModal .modal-footer button:hover {
+  border: 1px solid transparent;
+}
+#orderDetailModal .modal-footer button.btn-secondary {
+  background-color: transparent;
+  border: 1px solid #d0d2e0;
+}
+#orderDetailModal .modal-footer button.btn-primary {
+  background-color: #4274f4;
+  color: #fff;
+}
+#orderDetailModal .modal-body .order-info {
+  font-size: 14px;
+  color: #191c2b;
+}
+#orderDetailModal .modal-body .order-info .attr {
+  color: #70747b;
+}
+#orderDetailModal .modal-body .order-business {
+  border: none;
+  font-size: 14px;
+}
+#orderDetailModal .modal-body .order-business thead tr td {
+  color: #191c2b;
+}
+#orderDetailModal .modal-body .order-business tbody tr td {
+  color: #191c2b;
+}
+#orderDetailModal .modal-body .order-business .border-bottom {
+  border-color: #d9dee6;
 }

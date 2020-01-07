@@ -29,20 +29,30 @@ $(function() {
            $("#index .dip-status span:eq(1)").html('需续费：'+data.data.dip.renew);
         }
     });
-    $.fn.bootstrapTable.locales['zh-CN']["formatShowingRows"] = function() {
-        return `
-            <div class="bs-checkbox">
-                <label class="my-0">
-                    <input type="checkbox" name="btSelectAll" />
-                    <span></span>
-                </label>
-            </div>
-            <button type="button" class="btn btn-primary">续费</button>
-        `
+    if($("#server").length) {
+        $.fn.bootstrapTable.locales['zh-CN']["formatShowingRows"] = function() {
+            return `
+                <div class="bs-checkbox">
+                    <label class="my-0">
+                        <input type="checkbox" name="btSelectAll" />
+                        <span></span>
+                    </label>
+                </div>
+                <button type="button" class="btn btn-primary">续费</button>
+            `
+        }
+        $.fn.bootstrapTable.locales['zh-CN']["formatRecordsPerPage"] = function() {
+            return ""
+        }
+    } else {
+        $.fn.bootstrapTable.locales['zh-CN']["formatShowingRows"] = function() {
+            return ""
+        }
+        $.fn.bootstrapTable.locales['zh-CN']["formatRecordsPerPage"] = function() {
+            return ""
+        }
     }
-    $.fn.bootstrapTable.locales['zh-CN']["formatRecordsPerPage"] = function() {
-        return ""
-    }
+    
     $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['zh-CN']);
     $("#renewModal select[name='business']").UCFormSelect();
     // $(".main-content .top-nav li a").click(function() {

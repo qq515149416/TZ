@@ -110,12 +110,22 @@ $(function () {
             $("#index .dip-status span:eq(1)").html('需续费：' + data.data.dip.renew);
         }
     });
-    $.fn.bootstrapTable.locales['zh-CN']["formatShowingRows"] = function () {
-        return "\n            <div class=\"bs-checkbox\">\n                <label class=\"my-0\">\n                    <input type=\"checkbox\" name=\"btSelectAll\" />\n                    <span></span>\n                </label>\n            </div>\n            <button type=\"button\" class=\"btn btn-primary\">\u7EED\u8D39</button>\n        ";
-    };
-    $.fn.bootstrapTable.locales['zh-CN']["formatRecordsPerPage"] = function () {
-        return "";
-    };
+    if ($("#server").length) {
+        $.fn.bootstrapTable.locales['zh-CN']["formatShowingRows"] = function () {
+            return "\n                <div class=\"bs-checkbox\">\n                    <label class=\"my-0\">\n                        <input type=\"checkbox\" name=\"btSelectAll\" />\n                        <span></span>\n                    </label>\n                </div>\n                <button type=\"button\" class=\"btn btn-primary\">\u7EED\u8D39</button>\n            ";
+        };
+        $.fn.bootstrapTable.locales['zh-CN']["formatRecordsPerPage"] = function () {
+            return "";
+        };
+    } else {
+        $.fn.bootstrapTable.locales['zh-CN']["formatShowingRows"] = function () {
+            return "";
+        };
+        $.fn.bootstrapTable.locales['zh-CN']["formatRecordsPerPage"] = function () {
+            return "";
+        };
+    }
+
     $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['zh-CN']);
     $("#renewModal select[name='business']").UCFormSelect();
     // $(".main-content .top-nav li a").click(function() {

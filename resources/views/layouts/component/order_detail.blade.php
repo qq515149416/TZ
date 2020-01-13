@@ -11,7 +11,7 @@
       <div class="modal-body py-0 px-4">
         <div class="container order-info mt-2">
           <div class="row font-medium">
-            <div class="col">
+            <div class="col d-flex flex-wrap">
               <span class="attr mr-4">
                 订单编号
               </span>
@@ -19,7 +19,7 @@
                 2019073098117335
               </span>
             </div>
-            <div class="col">
+            <div class="col d-flex flex-wrap">
               <span class="attr mr-4">
                 订单类型
               </span>
@@ -28,11 +28,11 @@
               </span>
             </div>
             <div class="w-100 mt-1 mb-4"></div>
-            <div class="col">
+            <div class="col d-flex flex-wrap">
               <span class="attr mr-4">创建时间</span>
               <span class="val">2019-07-30 14:31:20</span>
             </div>
-            <div class="col">
+            <div class="col d-flex flex-wrap">
               <span class="attr mr-4">支付时间</span>
               <span class="val">2019-07-30 14:31:20</span>
             </div>

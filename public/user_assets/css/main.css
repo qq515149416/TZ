@@ -242,6 +242,10 @@
 #user_admin .main-content .content #server .paper .server-tab .tab-content .data td .renew {
   color: #d40000;
 }
+#user_admin .main-content .content #server .paper .server-tab .tab-content .data td .view {
+  color: #191c2b;
+  text-decoration: none;
+}
 #user_admin .main-content .content #server .paper .server-tab .tab-content .data .bs-checkbox label input[type="checkbox"] {
   display: none;
 }
@@ -450,6 +454,89 @@
   font-family: "\5FAE\8F6F\96C5\9ED1";
   border: none;
   margin-right: 0.3rem;
+}
+#user_admin .main-content .content #detail .left-w {
+  width: 360px;
+}
+@media (max-width: 576px) {
+  #user_admin .main-content .content #detail .echarts {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  #user_admin .main-content .content #detail .echarts .row .col {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+#user_admin .main-content .content #detail .paper {
+  -webkit-box-shadow: 0 0 12px 2px rgba(27, 34, 69, 0.06);
+          box-shadow: 0 0 12px 2px rgba(27, 34, 69, 0.06);
+}
+#user_admin .main-content .content #detail .paper .paper-title {
+  color: #62676f;
+  font-size: 16px;
+}
+#user_admin .main-content .content #detail .paper .paper-title h4 {
+  color: #191c2b;
+  font-size: 16px;
+}
+#user_admin .main-content .content #detail .paper .paper-title span {
+  font-size: 14px;
+}
+#user_admin .main-content .content #detail .paper .tip-date .tip {
+  color: #999ea8;
+  font-size: 12px;
+  width: 206px;
+}
+#user_admin .main-content .content #detail .paper .tip-date .tip .upload {
+  position: relative;
+  padding-left: 42px;
+}
+#user_admin .main-content .content #detail .paper .tip-date .tip .upload::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  width: 31px;
+  height: 9px;
+  background: url("/user_assets/images/chart/upload.png") no-repeat;
+}
+#user_admin .main-content .content #detail .paper .tip-date .tip .download {
+  position: relative;
+  padding-left: 42px;
+}
+#user_admin .main-content .content #detail .paper .tip-date .tip .download::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  width: 31px;
+  height: 9px;
+  background: url("/user_assets/images/chart/download.png") no-repeat;
+}
+#user_admin .main-content .content #detail .paper .tip-date .date {
+  color: #191c2b;
+  font-size: 14px;
+}
+#user_admin .main-content .content #detail .paper .tip-date .date input {
+  border-color: #d0d2e0;
+  border-radius: 4px;
+}
+#user_admin .main-content .content #detail .paper .tip-date .date span {
+  width: 3em;
+  display: inline-block;
+}
+#user_admin .main-content .content #detail .paper .paper-content p {
+  font-size: 14px;
+  color: #191c2b;
+}
+#user_admin .main-content .content #detail .paper .paper-content p .attr {
+  width: 4em;
+  color: #62676f;
 }
 #user_admin .main-content .menu {
   width: 170px;

@@ -39,7 +39,7 @@
                 <div class="form-group mr-sm-3 mb-1 mt-3">
                     <input type="password" class="form-control font-regular" id="orderId" placeholder="请输入订单编号">
                 </div>
-                <button type="submit" class="btn btn-primary px-3 mb-1 mt-3 font-regular">搜索</button>
+                <button type="submit" class="btn btn-primary px-3 mb-1 mt-3 ml-2 ml-md-0 ml-lg-0 font-regular">搜索</button>
             </form>
         </div>
         <table 

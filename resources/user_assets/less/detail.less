@@ -1,0 +1,89 @@
+#detail {
+    .left-w {
+        width: 360px;
+    }
+    .echarts {
+        @media (max-width: 576px) {
+            padding-left: 0;
+            padding-right: 0;
+            .row {
+                .col {
+                    padding-left: 0;
+                    padding-right: 0;
+                }
+            }
+        }
+    }
+    .paper {
+        box-shadow: 0 0 12px 2px rgba(27, 34, 69, .06);
+        .paper-title {
+            color: #62676f;
+            font-size: 16px;
+            h4 {
+                color: #191c2b;
+                font-size: 16px;
+            }
+            span {
+                font-size: 14px;
+            }
+        }
+        .tip-date {
+            .tip {
+                color: #999ea8;
+                font-size: 12px;
+                width: 206px;
+                .upload {
+                    position: relative;
+                    padding-left: 31px + 11px;
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        left: 0;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        width: 31px;
+                        height: 9px;
+                        background: url("@{base_img_url}/chart/upload.png") no-repeat;
+                    }
+                }
+                .download {
+                    position: relative;
+                    padding-left: 31px + 11px;
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        left: 0;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        width: 31px;
+                        height: 9px;
+                        background: url("@{base_img_url}/chart/download.png") no-repeat;
+                    }
+                }
+            }
+            .date {
+                color: #191c2b;
+                font-size: 14px;
+                input {
+                    // width: 160px;
+                    border-color: #d0d2e0;
+                    border-radius: 4px;
+                }
+                span {
+                    width: 3em;
+                    display: inline-block;
+                }
+            }
+        }
+        .paper-content {
+            p {
+                font-size: 14px;
+                color: #191c2b;
+                .attr {
+                    width: 4em;
+                    color: #62676f;
+                }
+            }
+        }
+    }
+}

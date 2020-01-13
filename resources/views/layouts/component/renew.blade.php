@@ -20,25 +20,25 @@
         <div class="duration d-flex mt-3">
           <span class="font-medium align-self-center mr-3">续费时长</span>
           <div class="duration-select d-flex">
-            <div class="duration-select-btn font-regular py-1 px-2 rounded mr-2">
+            <div class="duration-select-btn font-regular py-1 px-2 rounded mr-2" data-month="1">
               1个月
             </div>
-            <div class="duration-select-btn font-regular py-1 px-2 rounded mr-2">
+            <div class="duration-select-btn font-regular py-1 px-2 rounded mr-2" data-month="2">
               2个月
             </div>
-            <div class="duration-select-btn font-regular py-1 px-2 rounded mr-2">
+            <div class="duration-select-btn font-regular py-1 px-2 rounded mr-2" data-month="3">
               3个月
             </div>
-            <div class="duration-select-btn font-regular py-1 px-2 rounded mr-2 active">
+            <div class="duration-select-btn font-regular py-1 px-2 rounded mr-2 active" data-month="6">
               半年
             </div>
-            <div class="duration-select-btn font-regular py-1 px-2 rounded mr-2">
+            <div class="duration-select-btn font-regular py-1 px-2 rounded mr-2" data-month="12">
               1年
             </div>
-            <div class="duration-select-btn font-regular py-1 px-2 rounded mr-2">
+            <div class="duration-select-btn font-regular py-1 px-2 rounded mr-2" data-month="24">
               2年
             </div>
-            <div class="duration-select-btn font-regular py-1 px-2 rounded">
+            <div class="duration-select-btn font-regular py-1 px-2 rounded" data-month="36">
               3年
             </div>
           </div>
@@ -58,7 +58,7 @@
       <div class="modal-footer border-0 px-4 pb-4 mt-1 pt-3 mb-2">
         <button type="button" class="btn btn-secondary font-regular rounded" data-dismiss="modal">取消</button>
         <button type="button" class="btn btn-primary font-regular rounded">充值</button>
-        <button type="button" class="btn bg-danger font-regular rounded">续费</button>
+        <button type="button" id="postRenew" class="btn bg-danger font-regular rounded">续费</button>
       </div>
     </div>
   </div>

@@ -152,6 +152,65 @@ class OrderController extends Controller
 		return tz_ajax_echo($all_result['data'],$all_result['msg'],$all_result['code']);
 	}
 
+	/** 
+	 * 新版客户端获取业务下的资源订单
+	 * @param Request $request business_id--需要获取资源订单的业务id(数组形式)
+	 * @return 
+	*/
+	public function newAllRenew(Request $request){
+		$sn_array = $request->only(['business_id']);
+		if(empty($sn_array['business_id'])){
+			$$result['data'] = '';
+			$$result['code'] = 0;
+			$$result['msg'] = '无法获取相关的资源数据';
+			return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
+		}
+		$order_return = [];//用来接收模型返回来的数据
+		$data = ['IP'=>[],'cpu'=>[],'harddisk'=>[],'memory'=>[],'bandwidth'=>[],'protected'=>[]];//用来接收最后需要的数据
+		foreach ($sn_array['business_id'] as $id) {//根据业务号进行资源的获取
+			$order = new Order();
+			$orders = $order->newAllRenew($id);
+			$order_return[] = $orders;
+		}
+		foreach($order_return as $value){
+			//...是数组的展开操作符,表示对数组进行数据的展开(变成普通的一维数组)
+			// filter参考laravel模型的集合的可用方法
+			if(!$value->isEmpty()){
+				$ip = $value->filter(function($val,$key){return $val['resource_type'] == 4;})->values();
+				$cpu = $value->filter(function($val,$key){return $val['resource_type'] == 5;})->values();
+				$harddisk = $value->filter(function($val,$key){return $val['resource_type'] == 6;})->values();
+				$memory = $value->filter(function($val,$key){return $val['resource_type'] == 7;})->values();
+				$bandwidth = $value->filter(function($val,$key){return $val['resource_type'] == 8;})->values();
+				$protected = $value->filter(function($val,$key){return $val['resource_type'] == 9;})->values();
+				if(!$ip->isEmpty()){
+					array_push($data['IP'],...$ip);//ip资源集合
+				}
+				if(!$cpu->isEmpty()){
+					array_push($data['cpu'],...$cpu);//cpu资源集合
+				}
+				if(!$harddisk->isEmpty()){
+					array_push($data['harddisk'],...$harddisk);//硬盘资源集合
+				}
+				if(!$memory->isEmpty()){
+					array_push($data['memory'],...$memory);//内存资源集合
+				}
+				if(!$bandwidth->isEmpty()){
+					array_push($data['bandwidth'],...$bandwidth);//带宽资源集合
+				}
+				if(!$protected->isEmpty()){
+					array_push($data['protected'],...$protected);//防御资源集合
+				}	
+					
+			}
+			
+		}
+		
+		$result['data'] = $data;
+		$result['code'] = 1;
+		$result['msg']  = '业务下的资源信息获取成功';
+		return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
+	}
+
 	// /**
 	//  * 展示之前续费新生成的订单
 	//  * @param  Request $request renew_order -- 续费产生的订单id组合

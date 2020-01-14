@@ -652,6 +652,40 @@ class Order extends Model
 		return $return;
 	}
 
+	/**
+	 * 新版客户端获取对应业务下的所有资源订单信息
+	 * @param  array $sn_array 相关的资源编号数组
+	 * @return [type]           [description]
+	 */
+	public function newAllRenew($id){
+		$business_where[] = ['remove_status',0];
+		$business_where[] = ['business_status','>','-1'];
+		$business_where[] = ['business_status','<','5'];
+		$business_where[] = ['id',$id];
+		$business = Business::where($business_where)->select('id','business_number','machine_number')->first();
+		$number = $business->business_number;
+		$machine = $business->machine_number;
+		
+		$where[] = ['remove_status',0];//未下架
+		$where[] = ['resource_type','>',3];//资源类型为非主机/机柜的资源(4.IP，5.CPU，6.硬盘，7.内存，8.带宽，9.防护)
+		$where[] = ['resource_type','<',10];//资源类型为非主机/机柜的资源(4.IP，5.CPU，6.硬盘，7.内存，8.带宽，9.防护)
+		
+		$where[] = ['business_sn',$number];//资源绑定的业务
+		//以资源编号为键的资源数组
+		$all = $this->where($where)->orderBy('end_time','desc')->get(['machine_sn','end_time'])->groupBy('machine_sn');
+		
+		$resource_where[] = ['order_status','<',3];//资源的订单状态小于3 
+		//根据资源编号获取对应资源的最新一条订单（$key为$all的键）,map参考laravel模型的集合的可用方法
+		$resource =  $all->map(function($item,$key) use ($number,$machine){
+			$resource_where[] = ['machine_sn',$key];//资源编号
+			$resource_where[] = ['business_sn',$number];//资源对应绑定的业务
+			$order = $this->where($resource_where)->orderBy('end_time','desc')->select('id','business_sn','order_sn','resource_type','machine_sn','resource','price','end_time','order_status')->first()->toArray();
+			$order['machine_sn'] = $machine;
+			return $order;
+		});
+		return $resource;
+		
+	}
 	
 	/**
 	 * 续费订单的创建

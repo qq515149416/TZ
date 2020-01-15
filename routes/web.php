@@ -272,6 +272,7 @@ Route::group([
             Route::get('getOrderById', 'Customer\OrderController@getOrderById');
 
             Route::post('renewresource', 'Customer\OrderController@renewResource');//续费
+            Route::post('newrenew', 'Customer\OrderController@newRenewResource');//新版客户端提交续费订单
             Route::get('all_renew', 'Customer\OrderController@allRenew');//获取业务下续费的资源
             Route::get('new_all_renew', 'Customer\OrderController@newAllRenew');//新客户端获取业务下续费的资源
             Route::get('show_renew_order', 'Customer\OrderController@showRenewOrder');//展示续费的订单

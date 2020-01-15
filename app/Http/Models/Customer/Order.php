@@ -20,6 +20,7 @@ use Illuminate\Support\Carbon;//使用该包做到期时间的计算
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Validator;
 
 class Order extends Model
 {
@@ -826,6 +827,162 @@ class Order extends Model
 
 	}
 
+	/**
+ 	* 新客户端进行续费操作 
+	* @param array 所需续费的资源相关数据
+	* 格式:['resource'=>[['id'=>1,'resource_type'=>1]],'length'=>1]
+	* resource是资源的集合(id是资源所绑定的业务id,resource_type是资源类型) 
+	* @return: 
+	*/
+	public function newRenewResource($renew_data){
+		$resource = $renew_data['resource'];//获取需要续费的资源的集合
+		$length = $renew_data['length'];//获取续费时长
+		usort($resource,function($first,$second){//对传递的资源集合进行重新排列
+			return $first["resource_type"] - $second["resource_type"];
+		});
+		
+		foreach($resource as $value){//循环取出对应需要续费资源数据
+			/**
+			 * 进行验证，需要续费的资源数据是否传递完整
+			 */
+			$rules = ['id'=>'required|integer','resource_type'=>'required|integer'];
+			$messages = [
+				'id.required'=>'需要续费的资源数据不完整',
+				'id.integer'=>'需要续费的资源数据有误',
+				'resource_type.required'=>'需要续费的资源类型不完整',
+				'resource_type.integer'=>'需要续费的资源类型有误',
+			];
+			$validator = Validator::make($value,$rules,$messages);
+			if($validator->messages()->first()){
+				$return['data'] = '';
+				$return['msg'] = $validator->messages()->first();
+				$return['code'] = 0;
+				return $return;
+			}
+
+			$id = $value['id'];//对应要续费的资源业务的id
+			$type = $value['resource_type'];//对应要续费的资源类型
+
+			/**
+			 * 主机/机柜资源的业务续费
+			 */
+			if($type < 4){
+
+				$where[] = ['business_status','>',0];//业务状态为正常
+				$where[] = ['business_status','<',4];//业务状态为正常
+				$where[] = ['remove_status',0];//下架状态为正常
+				$where[] = ['id',$id];//根据业务id
+				$resource_data = Business::where($where)->select('id','business_number','sales_name as business_name','sales_id','client_id','client_name','business_type','machine_number as machine_sn','endding_time','length','money as price','order_number as order_sn','resource_detail')->first();
+				
+				if(!$resource_data){//数据不存在
+					$return['data'] = '';
+					$return['msg'] = '您续费的'.resource_type($type).'业务可能已下架或业务状态异常,请确认无误或联系您的专属业务员解决';
+					$return['code'] = 0;
+					return $return;
+				}
+
+				/**
+				 * 获取resouce,方便后面展示
+				 */
+				$resource_detail = json_decode($resource_data->resource_detail);
+				$resource_data->resource = isset($resource_detail->ip)?$resource_detail->ip:$resource_data->machine_number;
+
+				$end_str = 'end'.$resource_data->business_number;//生成带业务号的字符串
+				$end_time = time_calculation($resource_data->endding_time,$length,'month');//计算到期时间
+				$$end_str = $end_time;//用于带业务号的变量用于接收续费后新的到期时间
+				$order['duration'] = $length;//订单时长
+				$order['payable_money'] = bcmul($resource_data->price,$length,2);//订单应付金额
+				$order['note'] = '资源到期时间跟主业务到期时间一致，不足月按实际使用天数收费';
+				$order['price'] =$resource_data->price;//订单单价
+			}
+
+			/**
+			 * //4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护'资源续费
+			 */
+			if($type > 3 && $type < 10){
+				$order_where[] = ['order_status','>',0];//资源业务状态为正常
+				$order_where[] = ['order_status','<',3];//资源业务状态为正常
+				$order_where[] = ['remove_status',0];//资源业务未下架
+				$order_where[] = ['id',$id];//资源业务的id
+				$resource_data = $this->where($order_where)->select('id','order_sn','business_sn','customer_id','customer_name','business_name','resource_type','machine_sn','resource','price','end_time')->first();
+				
+				if(!$resource_data){//资源信息是否存在
+					$return['data'] = '';
+					$return['msg'] = '您续费的'.resource_type($type).'业务可能已下架或业务状态异常,请确认无误或联系您的专属业务员解决';
+					$return['code'] = 0;
+					return $return;
+				}
+
+				/**
+				 * 接收关联主机业务的到期时间
+				 */
+				$end_str = 'end'.$resource_data->business_sn;//生成带业务号的字符串
+				$$end_str = $$end_str?$$end_str:Business::where(['business_number'=>$resource_data->business_sn])->value('endding_time');
+				
+				$end_time = time_calculation($resource_data->end_time,$length,'month');//到期时间计算
+
+				/**	
+				 * 判断续费后资源的到期时间是否超过绑定主机业务的到期时间
+				 */
+				if(date('Y-m-d',strtotime($end_time)) > date('Y-m-d',strtotime($$end_str))){//超过主机业务到期时间
+					$end_time = $$end_str;//资源到期时间与主机业务到期时间统一
+					
+					if(date('Y-m-d',strtotime($end_time)) <= date('Y-m-d',strtotime($resource_data->end_time))){//到期时间小于/等于原到期时间
+						$return['data'] = '';
+						$return['code'] = 0;
+						$return['msg'] = '资源编号:'.$resource_data->machine_sn.'的资源'.$resource_data->resource.','.'无法续费,原因:续费后到期时间与原到期时间相等或小于';
+						return $return;
+					}
+
+					$day_money = bcdiv($resource_data->price,30,2);//一天的价格
+					$day = date_diff(date_create($resource_data->end_time),date_create($$end_str))->format('%a');//到期时间跟现在时间相隔的天数
+					$order['payable_money'] = bcmul($day_money,$day,2);//应付金额
+					$order['duration'] = $day;//订单时长
+					$order['note'] = '资源到期时间跟主业务到期时间一致，不足月按实际使用天数收费';
+					$order['price'] = $day_money;//订单单价
+
+				} else {
+					$order['payable_money'] = bcmul($resource_data->price,$length,2);//订单应付金额
+					$order['duration'] = $length;//订单时长
+					$order['price'] = $resource_data->price;//订单单价
+				}
+
+			}
+
+			/**
+			 * 续费的共同数据生成
+			 */
+			$order['order_sn'] = $this->ordersn();//生成的续费订单号
+			$order['length'] = $length;//接收续费的时长
+			$order['order_number'] = $resource_data->order_sn;//原本的订单号
+			$order['customer_name'] = Auth::user()->email?Auth::user()->email:Auth::user()->name;
+			$order['business_name'] = $resource_data->business_name;
+			$order['resource_type'] = $type;//资源类型
+			$order['resourcetype'] = resource_type($type);//转换后的资源类型
+			$order['machine_sn'] = $resource_data->machine_sn;//订单机器编号
+			$order['resource'] = $resource_data->resource;//订单机器详情
+			$order['order_status'] = 0;//订单状态为未支付
+			$order['created_at'] = date('Y-m-d H:i:s',time());//订单创建时间
+			$order['id']=$resource_data->id;//原id
+			$order['client_id'] = Auth::user()->id;//客户id
+			$order['end_time'] = $end_time;//订单到期时间
+
+			/**	
+			 * 将订单丢进redis队列中
+			 */
+			$renew_order['O'.$order['order_sn']] = json_encode($order);
+			if(!isset($primary_key)){
+				$primary_key = $this->redisPrimaryKey($resource_data->id,$type);
+			}
+			$this->setRenewRedis($primary_key,$renew_order);
+		}
+
+		$return['data'] = $primary_key;
+		$return['code'] = 1;
+		$return['msg'] = '续费已经创建,支付后即代表续费成功!';
+		return $return;
+		
+	}
 
 	/**
 	 * 展示刚刚续费的订单

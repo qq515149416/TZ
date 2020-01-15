@@ -13,6 +13,7 @@ use App\Http\Requests\Customer\OrderRequest;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
@@ -108,6 +109,28 @@ class OrderController extends Controller
 		$renew = new Order();
 		$renew_resource = $renew->renewResource($renew_data);
 		return tz_ajax_echo($renew_resource['data'],$renew_resource['msg'],$renew_resource['code']);
+	}
+
+	/**
+	 * 新客户端进行续费操作
+	 * @param  Request $request [description]
+	 * @return json           续费的反馈信息和提示
+	 */
+	public function newRenewResource(Request $request){
+		$renew_data = $request->only(['resource','length']);
+		$rules = ['resource'=>'required','length'=>'required|integer'];
+		$messages = [
+			'resource.required'=>'需要续费的资源必须选择',
+			'length.required'=>'续费时长必须填写,且只能为整数',
+			'length.integer'=>'续费时长必须填写,且只能为整数',
+		];
+		$validator = Validator::make($renew_data,$rules,$messages);
+		if($validator->messages()->first()){
+			return tz_ajax_echo('',$validator->messages()->first(),0);
+		}
+		$renew = new Order();
+		$renew_result = $renew->newrenewResource($renew_data);
+		return tz_ajax_echo($renew_result['data'],$renew_result['msg'],$renew_result['code']);
 	}
 
 	/**

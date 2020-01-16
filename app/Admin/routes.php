@@ -654,6 +654,7 @@ Route::group([
         $route->get('show_apply_under', 'Business\UnderController@showApplyUnder');//展示申请记录
         $route->get('depart', 'Business\UnderController@department');//转发机房
         $route->get('random_code', 'Business\UnderController@randomCode');//转发机房
+        $route->get('batch_getip','Business\UnderController@batchGetIP');//信安批量下架主机业务下的副IP
     });
 
     /**

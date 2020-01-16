@@ -8,6 +8,7 @@ use App\Admin\Models\Business\UnderModel;
 use App\Admin\Models\Hr\DepartmentModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Admin\Models\Business\OrdersModel;
 
 /**
  * 下架控制器
@@ -127,6 +128,24 @@ class UnderController extends Controller
         $tran = new UnderModel();
         $result = $tran->tranUnder();
         return tz_ajax_echo($result['data'],'',1);
+    }
+
+    /**
+     * 全局批量下架获取副IP接口 
+     * @param {type} 
+     * @return: 
+     */
+    public function batchGetIP(Request $request){
+        $business_sn = $request->input('business_sn'); 
+        if(!$business_sn){
+            return tz_ajax_echo('','无法获取到相关副IP信息',0); 
+        }
+       
+        $where[] = ['business_sn',$business_sn];
+        $where[] = ['remove_status',0];
+        $where[] = ['resource_type',4];
+        $data = OrdersModel::where($where)->get(['id','order_sn','machine_sn','resource','end_time']);
+        return tz_ajax_echo($data,'相关信息获取成功',1);
     }
 
 }

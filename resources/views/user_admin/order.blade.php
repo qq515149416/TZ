@@ -39,36 +39,39 @@
                 <div class="form-group mr-sm-3 mb-1 mt-3">
                     <input type="password" class="form-control font-regular" id="orderId" placeholder="请输入订单编号">
                 </div>
-                <button type="submit" class="btn btn-primary px-3 mb-1 mt-3 font-regular">搜索</button>
+                <button type="submit" class="btn btn-primary px-3 mb-1 mt-3 ml-2 ml-md-0 ml-lg-0 font-regular">搜索</button>
             </form>
         </div>
         <table 
         class="data font-heavy mt-3" 
         id="table_data" 
+        data-url="/home/customer/orderList"
+        data-response-handler="process_data"
         data-pagination-loop="false" 
-        data-page-size="5" 
+        data-page-size="10" 
         data-pagination="true" 
         data-toggle="table"
         data-click-to-select="true" 
         data-mobile-responsive="true"
         data-check-on-init="true"
+        data-row-style="rowStyle"
         data-locale="zh-CN">
         <thead>
                 <tr>
-                    <th data-field="state" data-checkbox="true"></th>
-                    <th>订单编号</th>
-                    <th>所属机房</th>
-                    <th>订单类型</th>
-                    <th>产品类型</th>
-                    <th>产品名称</th>
-                    <th>订单总价</th>
-                    <th>下单时间</th>
-                    <th>支付时间</th>
-                    <th>支付状态</th>                           
-                    <th>操作</th>
+                    <th data-checkbox="true"></th>
+                    <th data-field="order_sn">订单编号</th>
+                    <th data-field="machineroom_name">所属机房</th>
+                    <th data-field="order_type">订单类型</th>
+                    <th data-field="resource_type">产品类型</th>
+                    <th data-field="resource">产品名称</th>
+                    <th data-field="payable_money">订单总价</th>
+                    <th data-field="created_at">下单时间</th>
+                    <th data-field="pay_time">支付时间</th>
+                    <th data-field="order_status">支付状态</th>                           
+                    <th data-field="operat" data-formatter="showFormatter">操作</th>
                 </tr>
         </thead>
-        <tbody class="font-regular">
+        <!-- <tbody class="font-regular">
             <tr>
                 <td></td>
                 <td>2019062738118577</td>
@@ -204,7 +207,7 @@
                     <span class="view">查看</span>
                 </td>
             </tr>
-        </tbody>
+        </tbody> -->
         </table>
     </div>
 </div>

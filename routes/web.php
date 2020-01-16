@@ -115,7 +115,8 @@ Route::group([
 ], function () {
     Route::get("index","User\Show\IndexController@index");    
     Route::get("server","User\Show\ServerController@index");    
-    Route::get("order","User\Show\OrderController@index");
+    Route::get("order","User\Show\OrderController@index");    
+    Route::get("detail","User\Show\DetailController@index");
 });
 /**
  * 测试组

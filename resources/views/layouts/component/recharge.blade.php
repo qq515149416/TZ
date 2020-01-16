@@ -23,20 +23,26 @@
             <span class="recharge-name mr-4">支付平台</span>
             <div class="select-type-pay">
                 <ul class="d-flex">
-                    <li class="align-self-center mr-3 border rounded">
+                    <li class="align-self-center mr-3 border rounded active" data-type="alipay">
                         <img src="{{ asset("/user_assets/html_img/alipay.png") }}" alt="支付宝"/>
                     </li>
-                    <li class="align-self-center border rounded">
+                    <li class="align-self-center border rounded" data-type="weixin">
                         <img src="{{ asset("/user_assets/html_img/timg.png") }}" alt="微信"/>
                     </li>
                 </ul>
                 <p class="recharge-item recharge-value my-0 mt-2">请选择支付平台</p>
             </div>
         </div>
+        <div id="weixin_pay" class="d-flex justify-content-center">
+
+        </div>
+        <div class="alert alert-primary d-none" role="alert">
+          请用微信扫码支付
+        </div>
       </div>
       <div class="modal-footer border-0 px-4 pb-4 mb-2">
         <button type="button" class="btn btn-secondary font-regular rounded" data-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-primary font-regular rounded">充值</button>
+        <button type="button" class="btn btn-primary font-regular rounded" id="rechargePost">充值</button>
       </div>
     </div>
   </div>

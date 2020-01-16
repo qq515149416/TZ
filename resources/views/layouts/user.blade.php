@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{ asset("/tool/bootstrap/css/bootstrap.min.css") }}" />
     <link rel="stylesheet" href="{{ asset("/tool/bootstrap/css/bootstrap-reboot.min.css") }}" />
@@ -207,7 +208,9 @@
     <script src="{{ asset("/user_assets/js/main.js") }}"></script>
     <script src="{{ asset("/js/bootstrap-table.min.js") }}"></script>
     <script src="{{ asset("/js/bootstrap-table-locale-all.min.js") }}"></script>
-    <script src="{{ asset("/js/extensions/bootstrap-table-mobile.min.js") }}"></script>
+    <script src="{{ asset("/js/extensions/bootstrap-table-mobile.min.js") }}"></script>    
+    <script src="{{ asset("/js/qrcode.min.js") }}"></script>
+
     <script>
         $.browser = $.browser || {
             msie: /msie/.test(navigator.userAgent.toLowerCase()),
@@ -215,8 +218,9 @@
         };
     </script>
     <script src="{{ asset("/js/jQuery.UCSelect.js") }}"></script>
-    @include('layouts.component.recharge')
     @include('layouts.component.renew')    
+    @include('layouts.component.pay')
+    @include('layouts.component.recharge')
     @include('layouts.component.order_detail')
 </body>
 </html>

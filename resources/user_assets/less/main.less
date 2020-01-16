@@ -448,6 +448,89 @@
         }
     }
 }
+#payModal {
+    @media (min-width: 576px) {
+        .modal-dialog {
+            max-width: 560px;
+            margin: 1.75rem auto;
+        }
+    }
+
+    .modal-footer {
+        button {
+            width: 74px;
+            height: 34px;
+            box-sizing: border-box;
+            color: #767a81;
+            font-size: 14px;
+            letter-spacing: 2px;
+            &:hover {
+                border: 1px solid transparent;
+            }
+            &.btn-secondary {
+                background-color: transparent;
+                border: 1px solid #d0d2e0;
+            }
+            &.btn-primary {
+                background-color: #4274f4;
+                // border: 1px solid #d0d2e0;
+                color: #fff;
+            }
+            &.bg-danger {
+                background-color: #f15151;
+                color: #fff;
+            }
+        }
+    }
+
+    .modal-title {
+        color: #4274f4;
+        font-size: 26px;
+        font-weight: normal;
+        >span {
+            display: inline-block;
+            font-size: 18px;
+            color: #191c2b;
+            position: relative;
+            line-height: 18px;
+            &::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 100%;
+                width: 1px;
+                background-color: #d9dee6;
+            }
+        }
+    }
+    .modal-body {
+        
+        > .price {
+           color: #191c2b;
+           font-size: 14px;
+           > .amount {
+                font-size: 20px;
+                color: #4274f4;
+                font-family: Arial, Helvetica, sans-serif;
+                font-weight: bold;
+           }     
+        }
+        > .balance {
+            color: #191c2b;
+            font-size: 14px;
+            > .amount {
+                 font-size: 14px;
+                 color: #70747b;
+                //  font-family: Arial, Helvetica, sans-serif;
+                //  font-weight: bold;
+                > .tip {
+                    color: #9a9ea8;
+                }
+            }     
+         }
+    }
+}
 #renewModal {
     @media (min-width: 576px) {
         .modal-dialog {
@@ -582,6 +665,25 @@
     }
     .modal-body {
         .select-type-pay {
+            > ul {
+                > li {
+                    cursor: pointer;
+                    &.active {
+                        border: none;
+                        position: relative;
+                        &::before {
+                            content: "";
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                            width: 100%;
+                            height: 100%;
+                            background: url("@{base_img_url}/pay/pay_select.png") no-repeat;
+                            background-size: 100% 100%;
+                        }
+                    }
+                }
+            }
             .recharge-value {
                 color: #9a9ea8;
                 font-size: 12px;

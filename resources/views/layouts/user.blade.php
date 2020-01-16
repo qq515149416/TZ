@@ -208,7 +208,9 @@
     <script src="{{ asset("/user_assets/js/main.js") }}"></script>
     <script src="{{ asset("/js/bootstrap-table.min.js") }}"></script>
     <script src="{{ asset("/js/bootstrap-table-locale-all.min.js") }}"></script>
-    <script src="{{ asset("/js/extensions/bootstrap-table-mobile.min.js") }}"></script>
+    <script src="{{ asset("/js/extensions/bootstrap-table-mobile.min.js") }}"></script>    
+    <script src="{{ asset("/js/qrcode.min.js") }}"></script>
+
     <script>
         $.browser = $.browser || {
             msie: /msie/.test(navigator.userAgent.toLowerCase()),
@@ -216,8 +218,9 @@
         };
     </script>
     <script src="{{ asset("/js/jQuery.UCSelect.js") }}"></script>
-    @include('layouts.component.recharge')
     @include('layouts.component.renew')    
+    @include('layouts.component.pay')
+    @include('layouts.component.recharge')
     @include('layouts.component.order_detail')
 </body>
 </html>

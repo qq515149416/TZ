@@ -77,7 +77,7 @@
         });
         Promise.all(request_all).then(function(posts) {
           alert("一共下架成功："+posts.length+"个IP");
-          $(this).find("#data").bootstrapTable("refresh");
+          $(self).find("#data").bootstrapTable("refresh");
         }).catch(function(reason) {
           console.error(reason);
         });

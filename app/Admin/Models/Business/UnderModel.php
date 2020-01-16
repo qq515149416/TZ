@@ -218,7 +218,7 @@ class UnderModel extends Model
                     $where = ['sales_id' => Admin::user()->id];
                     $machine = ['sales' => Admin::user()->id];
                 }
-                $history = DB::table('tz_business')->where($where)->whereBetween('remove_status',[1,4])->whereNull('deleted_at')->orderBy('updated_at', 'desc')->select('client_id', 'sales_id', 'business_number', 'machine_number', 'business_type', 'business_note', 'remove_reason', 'resource_detail', 'remove_status','money as price','length','updated_at')->get();
+                $history = DB::table('tz_business')->where($where)->whereBetween('remove_status',[1,4])->whereNull('deleted_at')->orderBy('updated_at', 'desc')->select('id','client_id', 'sales_id', 'business_number', 'machine_number', 'business_type', 'business_note', 'remove_reason', 'resource_detail', 'remove_status','money as price','length','updated_at')->get();
                 $history->map(function($history_value,$history_key){
                     $business_type = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜'];
                     $remove_status = [0 => '正常使用', 1 => '下架申请中', 2 => '机房处理中', 3 => '清空下架中', 4 => '下架完成'];
@@ -261,7 +261,7 @@ class UnderModel extends Model
                 } else {//是业务人员按客户所绑定业务员查看
                     $where = ['business_id' => Admin::user()->id];
                 }
-                $history = DB::table('tz_orders')->where($where)->where('resource_type', '>', 3)->whereNull('deleted_at')->whereBetween('remove_status',[1,4])->orderBy('updated_at', 'desc')->select('business_sn', 'order_sn', 'customer_id', 'resource_type', 'business_id', 'machine_sn', 'resource', 'remove_status', 'remove_reason','price','duration as length','updated_at')->get();
+                $history = DB::table('tz_orders')->where($where)->where('resource_type', '>', 3)->whereNull('deleted_at')->whereBetween('remove_status',[1,4])->orderBy('updated_at', 'desc')->select('id','business_sn', 'order_sn', 'customer_id', 'resource_type', 'business_id', 'machine_sn', 'resource', 'remove_status', 'remove_reason','price','duration as length','updated_at')->get();
                 if (!empty($history)) {
                     $history->map(function($history_value,$history_key){
                         $resource_type = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜', 4 => 'IP', 5 => 'CPU', 6 => '硬盘', 7 => '内存', 8 => '带宽', 9 => '防护', 10 => 'cdn', 11 => '高防IP'];
@@ -554,7 +554,7 @@ class UnderModel extends Model
         /**
          * 下架主机信息获取
          */
-        $business = DB::table('tz_business')->where($where)->whereBetween('remove_status', $status)->whereNull('deleted_at')->select('client_id', 'sales_id', 'business_number', 'machine_number', 'business_type', 'business_note', 'remove_reason', 'resource_detail', 'remove_status')->get();
+        $business = DB::table('tz_business')->where($where)->whereBetween('remove_status', $status)->whereNull('deleted_at')->select('id','client_id', 'sales_id', 'business_number', 'machine_number', 'business_type', 'business_note', 'remove_reason', 'resource_detail', 'remove_status')->get();
         //对下架主机的部分数据进行转换(laravel的map方法)
         $business->map(function($value,$key){
             $business_type = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜'];
@@ -601,7 +601,7 @@ class UnderModel extends Model
         /**
          * 下架资源的信息获取
          */
-        $orders = DB::table('tz_orders')->where($where)->where('resource_type', '>', 3)->whereNull('deleted_at')->whereBetween('remove_status', [1, 3])->orderBy('updated_at', 'desc')->select('order_sn', 'business_sn', 'customer_id', 'resource_type', 'business_id', 'machine_sn', 'resource', 'remove_reason', 'remove_status')->get();
+        $orders = DB::table('tz_orders')->where($where)->where('resource_type', '>', 3)->whereNull('deleted_at')->whereBetween('remove_status', [1, 3])->orderBy('updated_at', 'desc')->select('id','order_sn', 'business_sn', 'customer_id', 'resource_type', 'business_id', 'machine_sn', 'resource', 'remove_reason', 'remove_status')->get();
         //下架资源的信息转化(laravel的map方法)
         $orders->map(function($orders_value,$orders_key){
             $resource_type = [1 => '租用主机', 2 => '托管主机', 3 => '租用机柜', 4 => 'IP', 5 => 'CPU', 6 => '硬盘', 7 => '内存', 8 => '带宽', 9 => '防护', 10 => 'cdn', 11 => '高防IP'];

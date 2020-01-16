@@ -29,6 +29,6 @@ Admin::css('/css/header.css');
 Admin::js('/js/md5.js');
 // Admin::js('/js/b.tabs.min.js');
 Admin::js('/js/admin_tab.js');
-Admin::js('/js/bootstrap-table-locale-all.min.js');
 Admin::js('/js/bootstrap-table.min.js');
 
+Admin::js('/js/bootstrap-table-locale-all.min.js');

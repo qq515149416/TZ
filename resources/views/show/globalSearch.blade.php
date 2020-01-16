@@ -81,6 +81,7 @@
           console.error(reason);
         });
       });
+      $(this).find("#data").bootstrapTable("destroy");
       $(this).find("#data").bootstrapTable({
         locale: "zh-CN",
         columns: [

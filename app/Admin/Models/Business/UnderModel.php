@@ -323,9 +323,12 @@ class UnderModel extends Model
                     return $return;
                 }
                 if (isset($edit['remove_status'])) {
-                    $update['remove_reason'] = $business->remove_reason . '驳回原因:' . $edit['remove_reason'];
-                    $update['remove_status'] = $edit['remove_status'];
-                    $update['machineroom']   = 0;
+                    if($business->remove_status == 1){
+                        $update['remove_reason'] = $business->remove_reason . '驳回原因:' . $edit['remove_reason'];
+                        $update['remove_status'] = $edit['remove_status'];
+                        $update['machineroom']   = 0;
+                    }
+                    
                 } else {
                     switch ($business->remove_status) {
                         case 1:

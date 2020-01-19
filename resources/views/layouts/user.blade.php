@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="{{ asset("/tool/bootstrap/css/bootstrap-reboot.min.css") }}" />
     <link rel="stylesheet" href="{{ asset("/tool/bootstrap/css/bootstrap-grid.min.css") }}" />    
     <link rel="stylesheet" href="{{ asset("/css/bootstrap-table.min.css") }}" />    
-    <link rel="stylesheet" href="{{ asset("/css/UCFORM.css") }}" />
+    <link rel="stylesheet" href="{{ asset("/css/UCFORM.css") }}" />    
+    <link rel="stylesheet" href="{{ asset("/bootstrap_datetimepicker/css/bootstrap-datetimepicker.min.css") }}" />
     <link rel="stylesheet" href="{{ asset("/user_assets/css/main.css") }}" />
 </head>
 <body>
@@ -204,7 +205,10 @@
     </div>
     <script src="{{ asset("/tool/jquery/jquery-3.4.1.min.js") }}"></script>
     <script src="{{ asset("/tool/jquery/popper.min.js") }}"></script>
-    <script src="{{ asset("/tool/bootstrap/js/bootstrap.min.js") }}"></script>
+    <script src="{{ asset("/tool/bootstrap/js/bootstrap.min.js") }}"></script>    
+    <script src="{{ asset("/bootstrap_datetimepicker/js/bootstrap-datetimepicker.min.js") }}"></script>
+    <script src="{{ asset("/bootstrap_datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js") }}"></script>
+
     <script src="{{ asset("/user_assets/js/main.js") }}"></script>
     <script src="{{ asset("/js/bootstrap-table.min.js") }}"></script>
     <script src="{{ asset("/js/bootstrap-table-locale-all.min.js") }}"></script>

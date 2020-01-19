@@ -64,7 +64,7 @@ $(function() {
                         <span></span>
                     </label>
                 </div>
-                <button type="button" class="btn btn-primary">续费</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#renewModal">续费</button>
             `
         }
         $.fn.bootstrapTable.locales['zh-CN']["formatRecordsPerPage"] = function() {
@@ -80,6 +80,22 @@ $(function() {
     }
     
     $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['zh-CN']);
+    $('#payDate').datetimepicker({
+        format: 'yyyy-mm-dd',
+        language: "zh-CN",
+        minView: 2,
+        // autoclose: true,
+        todayBtn: "linked",
+        forceParse: false
+    });
+    $('#orderDate').datetimepicker({
+        format: 'yyyy-mm-dd',
+        language: "zh-CN",
+        minView: 2,
+        // autoclose: true,
+        todayBtn: "linked",
+        forceParse: false
+    });
     $("#server #table_data").on("check-all.bs.table",function() {
         $("#table_data").data("isCheckAll",true);
         if(!$(".pagination-detail input[name='btSelectAll']:checked").length) {
@@ -214,6 +230,19 @@ $(function() {
         showInfo.ready(function() {
             this.intoHTML("#payModal .balance .amount",this.user.money+"&nbsp;元");
         });
+        $(self).find("#postPay").click(function() {
+            $.post("/home/customer/payOrderByBalance",{
+                order_id: $(self).find("select[name='business'] option:selected").map(function() {
+                    var data = JSON.parse($(this).val());
+                    return data.id
+                }).toArray()
+            },function(data) {
+                alert(data.msg);
+                if(data.code==1) {
+                    $(self).modal('hide');
+                }
+            });
+        });
         $.get("/home/customer/orderList",{
             business_sn: $(e.relatedTarget).attr("data-business"),
             status: 0
@@ -242,35 +271,69 @@ $(function() {
         $(self).find("select[name='business']").UCFormSelect();
         $(self).find("#postRenew").off("click");
         $(self).find(".duration-select-btn").off("click");
-        $.get("/home/customer/all_renew",{
-            business_sn: $(e.relatedTarget).attr("data-bn")
+        var business = [];
+        if(!$(e.relatedTarget).attr("data-more")) {
+            business = $("#table_data").bootstrapTable("getAllSelections");
+        } else {
+            business = [JSON.parse($(e.relatedTarget).attr("data-more"))];
+        }
+        console.log(business);
+        $.get("/home/customer/new_all_renew",{
+            business_id: business.map(item => item.id)
         },function(data) {
             if(data.code==1) {
                 var price = 0;
-                console.log($(e.relatedTarget).attr("data-more"));
-                var business = JSON.parse($(e.relatedTarget).attr("data-more"));
                 var option = [
                     "<optgroup label='IP'>" + 
                         data.data.IP.map(function(item) {
-                            return "<option value='"+JSON.stringify(item)+"' >"+item.resource+"</option>"
+                            return "<option value='"+JSON.stringify(item)+"' >"+item.machine_sn+": "+item.resource+"</option>"
+                        }).join("")
+                    + "</optgroup>",
+                    "<optgroup label='CPU'>" + 
+                        data.data.cpu.map(function(item) {
+                            return "<option value='"+JSON.stringify(item)+"' >"+item.machine_sn+": "+item.resource+"</option>"
+                        }).join("")
+                    + "</optgroup>",
+                    "<optgroup label='硬盘'>" + 
+                        data.data.harddisk.map(function(item) {
+                            return "<option value='"+JSON.stringify(item)+"' >"+item.machine_sn+": "+item.resource+"</option>"
+                        }).join("")
+                    + "</optgroup>",
+                    "<optgroup label='内存'>" + 
+                        data.data.memory.map(function(item) {
+                            return "<option value='"+JSON.stringify(item)+"' >"+item.machine_sn+": "+item.resource+"</option>"
+                        }).join("")
+                    + "</optgroup>",
+                    "<optgroup label='带宽'>" + 
+                        data.data.bandwidth.map(function(item) {
+                            return "<option value='"+JSON.stringify(item)+"' >"+item.machine_sn+": "+item.resource+"</option>"
+                        }).join("")
+                    + "</optgroup>",
+                    "<optgroup label='防御'>" + 
+                        data.data.protected.map(function(item) {
+                            return "<option value='"+JSON.stringify(item)+"' >"+item.machine_sn+": "+item.resource+"</option>"
                         }).join("")
                     + "</optgroup>"
                 ];
-                $(self).find("select[name='business']").empty().html("<option value='"+JSON.stringify(business)+"' disabled selected>"+business.business_type+"-"+business.business_number+"</option>"+option.join(""));
+                $(self).find("select[name='business']").empty();
+                business.forEach(function(item) {
+                    $(self).find("select[name='business']").append("<option value='"+JSON.stringify(item)+"' disabled selected>"+item.business_type+"-"+item.business_number+"</option>");
+                });
+                $(self).find("select[name='business']").append(option.join(""));
                 $(self).find("select[name='business']").UCFormSelect("destroy");
                 $(self).find("select[name='business']").UCFormSelect();
                 showInfo.ready(function() {
                     this.intoHTML("#renewModal .balance .amount",this.user.money+"&nbsp;元");
                 });
                 price = JSON.parse($(self).find("select[name='business'] option:selected").val()).money;
-                $(self).find(".price .amount").html(price * 6);
+                $(self).find(".price .amount").html(price * $(self).find(".duration-select-btn").attr("data-month"));
                 $(self).find("select[name='business']").on("change",function() {
                     $(this).find("option:selected").each(function() {
                         var data = JSON.parse($(this).val());
                         price += Number(data.price || data.money);
                         // console.log(price);
                     });
-                    $(self).find(".price .amount").html(price * 6);
+                    $(self).find(".price .amount").html(price * $(self).find(".duration-select-btn").attr("data-month"));
                 })
                 
                 $(self).find(".duration-select-btn").click(function() {
@@ -279,31 +342,32 @@ $(function() {
                 });
                 
                 $(self).find("#postRenew").click(function() {
-                    console.log({
-                        business_number: $(e.relatedTarget).attr("data-bn"),
-                        price: business.money,
-                        length: $(self).find(".duration-select-btn.active").attr("data-month"),
-                        resource_type: business.type,
-                        orders: $(self).find("select[name='business'] option:selected").filter(function() {
-                            return JSON.parse($(this).val()).order_sn
-                        }).map(function() {
-                            return JSON.parse($(this).val()).order_sn
-                        }).toArray()
-                    })
-                    $.post("/home/customer/renewresource",{
-                        business_number: $(e.relatedTarget).attr("data-bn"),
-                        price: business.money,
-                        length: $(self).find(".duration-select-btn.active").attr("data-month"),
-                        resource_type: business.type,
-                        orders: $(self).find("select[name='business'] option:selected").filter(function() {
-                            return JSON.parse($(this).val()).order_sn
-                        }).map(function() {
-                            return JSON.parse($(this).val()).order_sn
-                        }).toArray()
+                    // console.log({
+                    //     business_number: $(e.relatedTarget).attr("data-bn"),
+                    //     price: business.money,
+                    //     length: $(self).find(".duration-select-btn.active").attr("data-month"),
+                    //     resource_type: business.type,
+                    //     orders: $(self).find("select[name='business'] option:selected").filter(function() {
+                    //         return JSON.parse($(this).val()).order_sn
+                    //     }).map(function() {
+                    //         return JSON.parse($(this).val()).order_sn
+                    //     }).toArray()
+                    // })
+                    $.post("/home/customer/newrenew",{
+                        resource: $(self).find("select[name='business'] option:selected").map(function() {
+                            var result = JSON.parse($(this).val());
+                            return {
+                                id: result.id,
+                                resource_type: result.resource_type || result.type,
+                                price: result.price || result.money
+                            }
+                        }).toArray(),
+                        length: $(self).find(".duration-select-btn.active").attr("data-month")
                     },function(data) {
                         alert(data.msg);
                         if(data.code==1) {
                             $(self).modal('hide');
+                            location.href = '/dist/highDefensePay.html?session_id=' + data.data
                         }
                     })
                 });

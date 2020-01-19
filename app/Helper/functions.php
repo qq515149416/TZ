@@ -240,3 +240,14 @@ function resource_type($type){
 	$result = $resource_type[$type];
 	return $result;
 }
+
+/**
+ * 业务状态的统一转换 
+ * @param int 业务状态的代码 
+ * @return 返回转换后对应的状态 
+ */
+function business_status($status){
+	$business_status = [0=>'审核中',1=>'未付款使用',2=>'正常使用',3=>'正常使用',4=>'锁定中'];
+	$result = $business_status[$status];
+	return $result;
+}

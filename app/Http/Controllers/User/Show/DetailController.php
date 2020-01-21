@@ -15,10 +15,11 @@ use App\Http\Models\Customer\Business;
 
 class DetailController extends Controller
 {
-    public function index()
+    public function index($id)
     {
         return view("user_admin/detail",[
-            "page" => "detail"
+            "page" => "detail",
+            "data" => $this->detail($id)
         ]);
     }
 
@@ -46,6 +47,8 @@ class DetailController extends Controller
             $business->bandwidth = $detail->bandwidth;
             $business->ip = $detail->ip;
             $business->cabinets = $detail->cabinets;
+            $business->loginname = $detail->loginname;
+            $business->loginpass = $detail->loginpass;
         }
         $business->resource_type = resource_type($business->business_type);
         $business->status = business_status($business->business_status);

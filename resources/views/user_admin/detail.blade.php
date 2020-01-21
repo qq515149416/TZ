@@ -25,7 +25,6 @@
 @endsection
 
 @section('content')
-
 <div id="detail" class="container-fluid px-4 pt-3">
     <div class="container-fluid pl-4">
         <div class="row">
@@ -37,39 +36,39 @@
                     <div class="paper-content font-medium pt-3">
                       <p class="d-flex mb-3">
                           <span class="attr mr-3">业务编号</span>
-                          <span class="val">2019073041513344</span>
+                          <span class="val">{{ $data->business_number }}</span>
                       </p>
                       <p class="d-flex mb-3">
                           <span class="attr mr-3">业务类型</span>
-                          <span class="val">租用主机</span>
+                          <span class="val">{{ $data->resource_type }}</span>
                       </p>
                       <p class="d-flex mb-3">
                           <span class="attr mr-3">机器编号</span>
-                          <span class="val">Y-HZ-000363</span>
+                          <span class="val">{{ $data->machine_number }}</span>
                       </p>
                       <p class="d-flex mb-3">
                           <span class="attr mr-3">业务状态</span>
-                          <span class="val">未付款使用</span>
+                          <span class="val">{{ $data->status }}</span>
                       </p>
                       <p class="d-flex mb-3">
                           <span class="attr mr-3">所属地区</span>
-                          <span class="val">广东惠州</span>
+                          <span class="val">{{ $data->machineroom }}</span>
                       </p>
                       <p class="d-flex mb-3">
                           <span class="attr mr-3">账号</span>
-                          <span class="val">windows系统默认为：administrator<br />linux系统默认为：root</span>
+                          <span class="val">{{ $data->loginname }}</span>
                       </p>
                       <p class="d-flex mb-3">
                           <span class="attr mr-3">密码</span>
-                          <span class="val">AB123454321</span>
+                          <span class="val">{{ $data->loginpass }}</span>
                       </p>
                       <p class="d-flex mb-3">
                           <span class="attr mr-3">单价</span>
-                          <span class="val">￥145.00</span>
+                          <span class="val">￥{{ $data->money }}</span>
                       </p>
                       <p class="d-flex mb-3">
                           <span class="attr mr-3">使用时长</span>
-                          <span class="val">1</span>
+                          <span class="val">{{ $data->length }}</span>
                       </p>
                       <p class="d-flex mb-0">
                           <span class="attr mr-3">备注</span>
@@ -84,35 +83,35 @@
                     <div class="paper-content font-medium pt-3">
                       <p class="d-flex mb-3">
                           <span class="attr mr-3">CPU</span>
-                          <span class="val">1核</span>
+                          <span class="val">{{ $data->cpu }}</span>
                       </p>
                       <p class="d-flex mb-3">
                           <span class="attr mr-3">内存</span>
-                          <span class="val">1G</span>
+                          <span class="val">{{ $data->memory }}</span>
                       </p>
                       <p class="d-flex mb-3">
                           <span class="attr mr-3">机器编号</span>
-                          <span class="val">Y-HZ-000363</span>
+                          <span class="val">{{ $data->machine_number }}</span>
                       </p>
                       <p class="d-flex mb-3">
                           <span class="attr mr-3">硬盘</span>
-                          <span class="val">20G</span>
+                          <span class="val">{{ $data->harddisk }}</span>
                       </p>
-                      <p class="d-flex mb-3">
+                      <!-- <p class="d-flex mb-3">
                           <span class="attr mr-3">操作系统</span>
                           <span class="val">CentOS 7.5 64位</span>
-                      </p>
+                      </p> -->
                       <p class="d-flex mb-3">
                           <span class="attr mr-3">公网IP</span>
-                          <span class="val">100.100.1.100</span>
+                          <span class="val">{{ $data->ip }}</span>
                       </p>
                       <p class="d-flex mb-3">
                           <span class="attr mr-3">带宽</span>
-                          <span class="val">0M</span>
+                          <span class="val">{{ $data->bandwidth }}M</span>
                       </p>
                       <p class="d-flex mb-0">
                           <span class="attr mr-3">防御</span>
-                          <span class="val">0</span>
+                          <span class="val">{{ $data->protected }}</span>
                       </p>
                     </div>
                 </div>
@@ -147,7 +146,9 @@
                                         <input type="text" class="form-control w-75" id="selectDate">
                                     </div>
                                 </div>
-                                <img src="{{ asset("/user_assets/html_img/empty.png") }}" class="w-100" />
+                                <!-- <img src="{{ asset("/user_assets/html_img/empty.png") }}" class="w-100" /> -->
+                                <div id="flow_echars" style="height: 269px;" data-business-ip="{{ $data->ip }}" data-business-id="{{ $data->id }}" class="w-100">
+                                </div>
                             </div>
                         </div>
                         <div class="col mt-4 mt-md-0 mt-lg-0">
@@ -174,7 +175,7 @@
                                         <input type="text" class="form-control w-75" id="selectDate">
                                     </div>
                                 </div>
-                                <img src="{{ asset("/user_assets/html_img/empty.png") }}" class="w-100" />
+                                <img style="height: 269px;" src="{{ asset("/user_assets/html_img/empty.png") }}" class="w-100" />
                             </div>
                         </div>
                         <div class="w-100 pb-4 pt-1"></div>
@@ -202,7 +203,7 @@
                                         <input type="text" class="form-control w-75" id="selectDate">
                                     </div>
                                 </div>
-                                <img src="{{ asset("/user_assets/html_img/empty.png") }}" class="w-100" />
+                                <img style="height: 269px;" src="{{ asset("/user_assets/html_img/empty.png") }}" class="w-100" />
                             </div>
                         </div>
                         <div class="col mt-4 mt-md-0 mt-lg-0">
@@ -229,7 +230,7 @@
                                         <input type="text" class="form-control w-75" id="selectDate">
                                     </div>
                                 </div>
-                                <img src="{{ asset("/user_assets/html_img/empty.png") }}" class="w-100" />
+                                <img style="height: 269px;" src="{{ asset("/user_assets/html_img/empty.png") }}" class="w-100" />
                             </div>
                         </div>
                     </div>

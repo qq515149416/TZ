@@ -5,10 +5,10 @@
 @section('tab')
     <ul class="px-0 py-0 mx-0 my-0 top-nav d-none d-md-flex d-lg-flex justify-content-center flex-fill">
         <li class="mr-4">
-            <a class="px-4 py-2 rounded font-medium" href="javascript:;">服务器</a>
+            <a class="px-4 py-2 rounded font-medium" href="/user/server">服务器</a>
         </li>
         <li>
-            <a class="px-4 py-2 rounded active font-medium" href="javascript:;">订单</a>
+            <a class="px-4 py-2 rounded active font-medium" href="/user/order">订单</a>
         </li>
     </ul>
 @endsection
@@ -16,10 +16,10 @@
 @section('mobile_tab')
 <ul class="px-0 py-0 mx-0 my-0 top-nav d-md-none d-lg-none d-flex flex-fill">
     <li class="flex-fill">
-        <a class="px-4 py-3 font-medium" href="javascript:;">服务器</a>
+        <a class="px-4 py-3 font-medium" href="/user/server">服务器</a>
     </li>
     <li class="flex-fill">
-        <a class="px-4 py-3 active font-medium" href="javascript:;">订单</a>
+        <a class="px-4 py-3 active font-medium" href="/user/order">订单</a>
     </li>
 </ul>
 @endsection
@@ -34,10 +34,10 @@
                     <input type="text" class="form-control font-regular" id="payDate" placeholder="支付开始时间 / 支付结束时间">
                 </div>
                 <div class="form-group mx-sm-3 mb-1 mt-3">
-                    <input type="password" class="form-control font-regular" id="orderDate" placeholder="下单开始时间 / 下单结束时间">
+                    <input type="text" class="form-control font-regular" id="orderDate" placeholder="下单开始时间 / 下单结束时间">
                 </div>
                 <div class="form-group mr-sm-3 mb-1 mt-3">
-                    <input type="password" class="form-control font-regular" id="orderId" placeholder="请输入订单编号">
+                    <input type="text" class="form-control font-regular" id="orderId" placeholder="请输入订单编号">
                 </div>
                 <button type="submit" class="btn btn-primary px-3 mb-1 mt-3 ml-2 ml-md-0 ml-lg-0 font-regular">搜索</button>
             </form>

@@ -9,7 +9,7 @@ class OrderController extends Controller
     public function index()
     {
         return view("user_admin/order",[
-            "page" => "order"
+            "page" => "server_order"
         ]);
     }
 }

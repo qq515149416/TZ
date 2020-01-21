@@ -1,19 +1,9 @@
+import createEchart from './echarts';
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
-class Search {
-    constructor() {
-
-    }
-    static createInstantiate() {
-        if(!Search.instantiate) {
-            Search.instantiate = new Search();
-        }
-        return Search.instantiate;
-    }
-}
 class ShowInfo {
     constructor(url,param={}) {
         this.getData(url,param,(data) => {
@@ -47,6 +37,14 @@ class ShowInfo {
         }
         return ShowInfo.instantiate;
     }
+}
+function dateFormat(date) {
+    var month = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
+    var day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+    var hours = date.getHours() < 10 ? "0"+date.getHours() : date.getHours();
+    var minutes = date.getMinutes() < 10 ? "0"+date.getMinutes() : date.getMinutes();
+    var seconds = date.getSeconds() < 10 ? "0"+date.getSeconds() : date.getSeconds();
+    return date.getFullYear() + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
 }
 $(function() {
     // $(".main-nav li.nav-item:eq(3) .card").hide();
@@ -84,18 +82,90 @@ $(function() {
         format: 'yyyy-mm-dd',
         language: "zh-CN",
         minView: 2,
-        // autoclose: true,
-        todayBtn: "linked",
-        forceParse: false
+        autoclose: true,
+        todayBtn: "linked"
     });
     $('#orderDate').datetimepicker({
         format: 'yyyy-mm-dd',
         language: "zh-CN",
         minView: 2,
-        // autoclose: true,
-        todayBtn: "linked",
-        forceParse: false
+        autoclose: true,
+        todayBtn: "linked"
     });
+    $('#selectDate').datetimepicker({
+        format: 'yyyy-mm-dd HH:ii',
+        language: "zh-CN",
+        // minView: 2,
+        autoclose: true,
+        todayBtn: "linked"
+    }).on('changeDate', function(ev){
+        // console.log(ev);
+        var date = ev.date;
+        $.post("/home/defenseIp/getStatistics",{
+            business_id: $("#flow_echars").attr("data-business-id"),
+            ip: $("#flow_echars").attr("data-business-ip"),
+            date: dateFormat(date) 
+        },function(data) {
+            if(data.code==1) {
+                let dateMap = new Map();
+                let dateSet = new Set();
+                data.data.forEach((item, index, arr) => {
+                    // console.log(dateFormat(new Date(item.time * 1000),"yyyy-mm-dd HH:MM:ss"));
+                    let date = new Date(item.time * 1000)
+                    let dateString = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay() + ' ' + date.getHours() + ':' + date.getMinutes()
+                    if (dateMap.has(dateString)) {
+                        // item["upstream_bandwidth_up"] += dateMap.get(date.getHours() + ":" + date.getMinutes())["upstream_bandwidth_up"];
+                        // item["bandwidth_down"] += dateMap.get(date.getHours() + ":" + date.getMinutes())["bandwidth_down"];
+                        let maxUpstreamBandwidthUp = Math.max(item['upstream_bandwidth_up'], dateMap.get(dateString)['upstream_bandwidth_up'])
+                        let maxBandwidthDown = Math.max(item['bandwidth_down'], dateMap.get(dateString)['bandwidth_down'])
+                        item['upstream_bandwidth_up'] = maxUpstreamBandwidthUp
+                        item['bandwidth_down'] = maxBandwidthDown
+                    }
+                    dateMap.set(dateString, item)
+                });
+                for (let value of dateMap.values()) {
+                    dateSet.add(value)
+                }
+                createEchart(dateSet, 'chart', {
+                    ip: $("#flow_echars").attr("data-business-ip")
+                });
+            }
+        });
+    });
+    if($("#flow_echars").length) {
+        var date = new Date();
+        $.post("/home/defenseIp/getStatistics",{
+            business_id: $("#flow_echars").attr("data-business-id"),
+            ip: $("#flow_echars").attr("data-business-ip"),
+            date: dateFormat(date) 
+        },function(data) {
+            if(data.code==1) {
+                let dateMap = new Map();
+                let dateSet = new Set();
+                data.data.forEach((item, index, arr) => {
+                    // console.log(dateFormat(new Date(item.time * 1000),"yyyy-mm-dd HH:MM:ss"));
+                    let date = new Date(item.time * 1000)
+                    let dateString = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay() + ' ' + date.getHours() + ':' + date.getMinutes()
+                    if (dateMap.has(dateString)) {
+                        // item["upstream_bandwidth_up"] += dateMap.get(date.getHours() + ":" + date.getMinutes())["upstream_bandwidth_up"];
+                        // item["bandwidth_down"] += dateMap.get(date.getHours() + ":" + date.getMinutes())["bandwidth_down"];
+                        let maxUpstreamBandwidthUp = Math.max(item['upstream_bandwidth_up'], dateMap.get(dateString)['upstream_bandwidth_up'])
+                        let maxBandwidthDown = Math.max(item['bandwidth_down'], dateMap.get(dateString)['bandwidth_down'])
+                        item['upstream_bandwidth_up'] = maxUpstreamBandwidthUp
+                        item['bandwidth_down'] = maxBandwidthDown
+                    }
+                    dateMap.set(dateString, item)
+                });
+                for (let value of dateMap.values()) {
+                    dateSet.add(value)
+                }
+                createEchart(dateSet, 'chart', {
+                    ip: $("#flow_echars").attr("data-business-ip")
+                });
+            }
+        });
+    }
+    
     $("#server #table_data").on("check-all.bs.table",function() {
         $("#table_data").data("isCheckAll",true);
         if(!$(".pagination-detail input[name='btSelectAll']:checked").length) {
@@ -115,6 +185,11 @@ $(function() {
         this.intoHTML("#user_admin .global-balance",this.user.money);
         const cert = this.user.email && this.user.msg_phone && this.user.msg_qq;
         this.intoHTML("#index .user-info h5",this.user.nickname+'<span class="font-medium status badge badge-light ml-2">'+(cert ? '已认证' : '未认证')+'</span>');
+        this.intoHTML("#user_admin .global-user-info h5 span:eq(0)",this.user.nickname);
+        this.intoHTML("#user_admin .global-user-info h5 span:eq(1)",(cert ? '已认证' : '未认证'));
+        this.intoHTML("#user_admin .global-kefu-name",this.sales.sale_name);
+        this.intoHTML("#user_admin .global-kefu-qq",this.sales.QQ);
+        this.intoHTML("#user_admin .global-kefu-phone",this.sales.phone);
         this.intoHTML("#index .user-info p:eq(0)",'账号：'+this.user.name);
         this.intoHTML("#index .user-info p:eq(1)",'联系电话：'+this.user.msg_phone);
         this.intoHTML("#index .balance",this.user.money);
@@ -420,7 +495,7 @@ window.createdAtFormatter = function (value, row) {
 window.operatFormatter = function (value, row) {
     return '<span class="play mr-2" data-toggle="modal" data-target="#payModal" data-business="'+row.business_number+'">支付</span>\
     <span class="renew mr-2" data-toggle="modal" data-target="#renewModal" data-more=\''+JSON.stringify(row)+'\' data-bn="'+row.business_number+'">续费</span>\
-    <a class="view" href="/user/detail">查看</a>';
+    <a class="view" href="/user/detail/'+row.id+'">查看</a>';
 }
 window.showFormatter = function(value, row) {
     return '<span class="view" data-order-sn="'+row.order_sn+'">查看</span>'

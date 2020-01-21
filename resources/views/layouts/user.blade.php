@@ -56,14 +56,14 @@
                             @component('layouts.component.alert')
                                 <div class="kefu">
                                     <p class="font-regular my-0">您的专属客服</p>
-                                    <h3 class="font-heavy my-4">帅东</h3>
+                                    <h3 class="font-heavy my-4 global-kefu-name">帅东</h3>
                                     <p class="font-medium mb-3">
                                         <span>QQ号码</span>
-                                        <span class="align-self-center ml-2">515149416</span>
+                                        <span class="align-self-center ml-2 global-kefu-qq">515149416</span>
                                     </p>
                                     <p class="font-medium mb-2">
                                         <span>手机号码</span>
-                                        <span class="align-self-center ml-2">12345678901</span>
+                                        <span class="align-self-center ml-2 global-kefu-phone">12345678901</span>
                                     </p>
                                 </div>
                             @endcomponent
@@ -118,7 +118,7 @@
                                 <div class="account">
                                     <div class="media border-bottom pb-3">
                                         <img src="{{ asset("/user_assets/html_img/avatar_small.png") }}" class="align-self-center mr-2" alt="头像">
-                                        <div class="media-body mb-1">
+                                        <div class="media-body mb-1 global-user-info">
                                             <h5 class="my-0 mt-2 font-heavy d-flex">
                                                 <span>黄某某</span>
                                                 <span class="badge status font-medium badge-light ml-2">已认证</span>
@@ -158,13 +158,13 @@
                 <div class="col-2 px-0 menu d-none d-sm-flex align-items-stretch">
                     <ul class="mx-0 px-0 my-0 py-0 pt-5">
                         <li class="pl-4 ml-1 pb-4">
-                            <a class="{{ $page==='index' ? 'active' : '' }}" href="javascript:;">
+                            <a class="{{ $page==='index' ? 'active' : '' }}" href="/user/index">
                                 <span class="icon overview mr-2"></span>
                                 <span class="pl-1 font-regular">概况</span>
                             </a>
                         </li>
                         <li class="pl-4 ml-1 pb-4">
-                            <a class="{{ $page==='server' ? 'active' : '' }}" href="javascript:;">
+                            <a class="{{ strpos($page,'server')!==false ? 'active' : '' }}" href="/user/server">
                                 <span class="icon server mr-2"></span>
                                 <span class="pl-1 font-regular">服务器</span>
                             </a>

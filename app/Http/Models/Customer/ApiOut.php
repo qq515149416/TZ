@@ -1,12 +1,12 @@
-<?php 
- 
- 
-namespace App\Http\Models\Customer; 
- 
-use Illuminate\Database\Eloquent\Model; 
-use Illuminate\Database\Eloquent\SoftDeletes; 
-use Illuminate\Support\Facades\DB; 
- 
+<?php
+
+
+namespace App\Http\Models\Customer;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
+
 use App\Http\Models\DefenseIp\OrderModel as DipModel;
 use App\Http\Models\Customer\PayOrder;
 use App\Http\Models\DefenseIp\BusinessModel as DipBusinessModel;
@@ -16,26 +16,26 @@ use App\Http\Models\DefenseIp\OverlayModel;
 use App\Http\Models\DefenseIp\XADefenseDataModel;
 use App\Http\Models\Customer\Order;
 use App\Http\Models\Customer\WhiteListModel;
-class ApiOut extends Model 
-{ 
-	use SoftDeletes; 
-	 
- 
-	protected $table = 'tz_api'; //表 
-	protected $primaryKey = 'id'; //主键 
-	public $timestamps = true; 
-	protected $dates = ['deleted_at']; 
-	protected $fillable = ['user_id', 'state','api_key','api_secret']; 
- 
+class ApiOut extends Model
+{
+	use SoftDeletes;
+
+
+	protected $table = 'tz_api'; //表
+	protected $primaryKey = 'id'; //主键
+	public $timestamps = true;
+	protected $dates = ['deleted_at'];
+	protected $fillable = ['user_id', 'state','api_key','api_secret'];
+
 
 
  	//为啥不用魔术方法,因为laravel 的model类$this是有定义的,不能自己定义东西
-	/** 
+	/**
 	 *  检查签名方法
 	 * @param $apiKey -> 就是key, $par -> 要组成签名的元素,传过来的参数, $hash ->客户端传来的签名字符串
 	 * @return 验签失败 ->false ; 验签成功 ->签名用户的id
-	 */ 
-	// public function checkSign($apiKey , $par , $hash){ 
+	 */
+	// public function checkSign($apiKey , $par , $hash){
 	// 	//获取对应秘钥信息
  // 		$apply = $this->where('api_key' , $apiKey)
  // 				->where('state' , 1)
@@ -72,13 +72,13 @@ class ApiOut extends Model
 	// }
 
 
-	/** 
+	/**
 	 *  外部调用购买高防ip
 	 * @param $apiKey -> 就是key, $par -> 要组成签名的元素,传过来的参数, $hash ->客户端传来的签名字符串
 	 * 		$packageId -> 套餐id ,  $buyTime -> 购买时长/月
-	 * @return 
-	 */ 
-	public function buyDIP($check_sign ,$packageId , $buyTime ){ 
+	 * @return
+	 */
+	public function buyDIP($check_sign ,$packageId , $buyTime ){
 		//取出要做成签名的元素
 		// $par = [
 		// 	'timestamp'	=> $timestamp,
@@ -93,9 +93,9 @@ class ApiOut extends Model
 		// 		'data'	=> [],
 		// 		'msg'	=> '非法的API Key',
 		// 		'code'	=> 0,
-		// 	];	
+		// 	];
 		// }
-		
+
 		//找出所购买的套餐
 		$package = DB::table('tz_defenseip_package')->select(['site','protection_value','sell_status','channel_price'])->whereNull('deleted_at')->where('id',$packageId)->first();
 
@@ -121,7 +121,7 @@ class ApiOut extends Model
 				->where('status',0)
 				->whereNull('deleted_at')
 				->first();
-		
+
 		if($check_ip == null){
 			return [
 				'data'	=> [],
@@ -205,13 +205,13 @@ class ApiOut extends Model
 	}
 
 
-	/** 
+	/**
 	 *  外部调用购买高防ip
 	 * @param $apiKey -> 就是key, $par -> 要组成签名的元素,传过来的参数, $hash ->客户端传来的签名字符串
 	 * 		$businessNumber -> 高防业务号 ,  $renewTime -> 续费时长/月
-	 * @return 
-	 */ 
-	public function renewDIP($check_sign, $businessNumber , $renewTime ){ 
+	 * @return
+	 */
+	public function renewDIP($check_sign, $businessNumber , $renewTime ){
 		//取出要做成签名的元素
 		// $par = [
 		// 	'timestamp'		=> $timestamp,
@@ -226,9 +226,9 @@ class ApiOut extends Model
 		// 		'data'	=> [],
 		// 		'msg'	=> '非法的API Key',
 		// 		'code'	=> 0,
-		// 	];	
+		// 	];
 		// }
-		
+
 		//找出续费业务
 		$business = DB::table('tz_defenseip_business')->select(['price','status','business_number','ip_id','package_id'])
 								->whereNull('deleted_at')
@@ -286,7 +286,7 @@ class ApiOut extends Model
 		$data['payable_money']		= bcmul($data['price'],$data['duration'],2);
 		$data['order_status']		= 0;
 		$data['order_note']		= '渠道api续费';
-		
+
 
 		if ($customer->money < $data['payable_money']) {
 			return [
@@ -296,7 +296,7 @@ class ApiOut extends Model
 			];
 		}
 
-	
+
 		DB::beginTransaction();
 
 		$order_model = new DipModel();
@@ -328,12 +328,12 @@ class ApiOut extends Model
 		}
 	}
 
-	/** 
+	/**
 	 *  客户展示自己已购买的高防套餐
 	 * @param $apiKey -> 就是key, $timestamp -> 时间戳, $hash ->客户端传来的签名字符串
-	 * @return 
-	 */ 
-	public function showDIP($check_sign){ 
+	 * @return
+	 */
+	public function showDIP($check_sign){
 		// $par = [
 		// 	'timestamp'	=> $timestamp,
 		// ];
@@ -373,15 +373,15 @@ class ApiOut extends Model
 				'code'	=> 1,
 			];
 		}
-		
+
 	}
 
-	/** 
+	/**
 	 *  客户展示自己已购买的高防套餐 详情
 	 * @param $apiKey -> 就是key, $timestamp -> 时间戳, $hash ->客户端传来的签名字符串
-	 * @return 
-	 */ 
-	public function showDIPDetail($check_sign, $businessNumber){ 
+	 * @return
+	 */
+	public function showDIPDetail($check_sign, $businessNumber){
 		// $par = [
 		// 	'timestamp'		=> $timestamp,
 		// 	'businessNumber'	=> $businessNumber,
@@ -395,7 +395,7 @@ class ApiOut extends Model
 		// 		'code'	=> 0,
 		// 	];
 		// }
-		
+
 		$dip_business = DB::table('tz_defenseip_business as a')
 							->leftJoin('tz_defenseip_package as c' , 'c.id' , '=' , 'a.package_id')
 							->leftJoin('idc_machineroom as b' , 'b.id' , '=' , 'c.site')
@@ -423,16 +423,16 @@ class ApiOut extends Model
 				'code'	=> 1,
 			];
 		}
-		
+
 	}
 
 
-	/** 
+	/**
 	 *  客户搜索自己已购买的高防套餐
 	 * @param $apiKey -> 就是key, $timestamp -> 时间戳, $hash ->客户端传来的签名字符串
-	 * @return 
-	 */ 
-	public function searchDIP($check_sign, $ip){ 
+	 * @return
+	 */
+	public function searchDIP($check_sign, $ip){
 		// $par = [
 		// 	'timestamp'	=> $timestamp,
 		// 	'ip'		=> $ip,
@@ -476,13 +476,13 @@ class ApiOut extends Model
 				'msg'	=> '无数据',
 				'code'	=> 1,
 			];
-		}	
+		}
 	}
 
-	/** 
+	/**
 	 *  展示高防套餐id
-	 */ 
-	public function showDIPPackage($check_sign){ 
+	 */
+	public function showDIPPackage($check_sign){
 		// $par = [
 		// 	'timestamp'	=> $timestamp,
 		// ];
@@ -495,7 +495,7 @@ class ApiOut extends Model
 		// 		'code'	=> 0,
 		// 	];
 		// }
- 		
+
 
  		$pack = DB::table('tz_defenseip_package as a')->leftJoin('idc_machineroom as b' , 'b.id' , '=' , 'a.site')
  							->where('a.sell_status' , 1)
@@ -518,17 +518,17 @@ class ApiOut extends Model
 	}
 
 
-	/** 
+	/**
 	 *  设置高防的目标ip
-	 */ 
-	public function setDIPTarget($check_sign, $businessNumber , $targetIp){ 
+	 */
+	public function setDIPTarget($check_sign, $businessNumber , $targetIp){
 		$targetIp = trim($targetIp);
 		// $par = [
 		// 	'timestamp'		=> $timestamp,
 		// 	'businessNumber'	=> $businessNumber,
 		// 	'targetIp'		=> trim($targetIp),
 		// ];
-	
+
 		// $check_sign = $this->checkSign($apiKey,$par,$hash);
 
 		// if (!$check_sign) {
@@ -543,7 +543,7 @@ class ApiOut extends Model
  		$business = $business_model->where('business_number' , $businessNumber)
  						->where('user_id' , $check_sign)
  						->first();
- 
+
  		if (!$business) {
  			return [
 				'data'	=> [],
@@ -583,7 +583,7 @@ class ApiOut extends Model
 
 		$apiData 	= json_decode($api_model->createTarget($d_ip, $targetIp), true); //使用api接口更新目标IP地址
 		$apiData2	= json_decode($api_model->updateTarget($d_ip, $targetIp), true); //使用api接口更新目标IP地址
-		
+
 		if ($apiData['code'] == 0 || $apiData2['code'] == 0) {
 			DB::commit();
 			return [
@@ -598,14 +598,14 @@ class ApiOut extends Model
 				'msg'	=> '绑定IP失败',
 				'code'	=> 0,
 			];
-		}	
+		}
 	}
 
 
 
-	/** 
+	/**
 	 *  获取高防流量图
-	 */ 
+	 */
 	public function showDIPFlow($check_sign, $startTime , $endTime , $ip)
 	{
 		$ip = trim($ip);
@@ -615,7 +615,7 @@ class ApiOut extends Model
 		// 	'endTime'		=> $endTime,
 		// 	'ip'			=> $ip,
 		// ];
-	
+
 		// $check_sign = $this->checkSign($apiKey,$par,$hash);
 
 		// if (!$check_sign) {
@@ -627,15 +627,15 @@ class ApiOut extends Model
 		// }
 
 		$now = date('Y-m-d H:i:s',time());
-		
+
 		//查看ip是否属于客户
 		$check1 = DB::table('tz_orders')->where('order_status',1)
-						->where('end_time' , '>' ,$now)
+//						->where('end_time' , '>' ,$now)   //暂时关闭过期检测
 						->where('resource' , $ip)
 						->where('customer_id' ,$check_sign)
 						->exists();
 		$check2 = DB::table('tz_orders')->where('order_status',1)
-						->where('end_time' , '>' ,$now)
+//						->where('end_time' , '>' ,$now)    //暂时关闭过期检测
 						->where('machine_sn' , $ip)
 						->where('customer_id' ,$check_sign)
 						->exists();
@@ -664,17 +664,17 @@ class ApiOut extends Model
 			];
 		}
 	}
-	
 
-	/** 
+
+	/**
 	 *  获取所有使用中的ip
-	 */ 
+	 */
 	public function showAllIp($check_sign)
 	{
 		// $par = [
 		// 	'timestamp'		=> $timestamp,
 		// ];
-	
+
 		// $check_sign = $this->checkSign($apiKey,$par,$hash);
 
 		// if (!$check_sign) {
@@ -753,9 +753,9 @@ class ApiOut extends Model
 		}
 	}
 
-	/** 
+	/**
 	 *  提交白名单申请
-	 */ 
+	 */
 	public function setWhiteList($check_sign, $ip , $domainName , $recordNumber , $submitNote)
 	{
 		// $par = [
@@ -765,7 +765,7 @@ class ApiOut extends Model
 		// 	'recordNumber'		=> $recordNumber,
 		// 	'submitNote'		=> $submitNote,
 		// ];
-	
+
 		// $check_sign = $this->checkSign($apiKey,$par,$hash);
 
 		// if (!$check_sign) {
@@ -865,7 +865,7 @@ class ApiOut extends Model
 				'code'	=> 0,
 			];
 		}
-		
+
 		$insert_data['domain_name']	= $domainName;
 		$insert_data['record_number']	= $recordNumber;
 		$insert_data['submit_note']	= $submitNote;
@@ -879,7 +879,7 @@ class ApiOut extends Model
 		$insert_data['submit'] 		= 1;
 		$insert_data['white_status'] 	= 0;
 
-		
+
 		$row = $white_model->create($insert_data);
 		if(!$row){
 			return [
@@ -898,15 +898,15 @@ class ApiOut extends Model
 		}
 	}
 
-	/** 
+	/**
 	 *  获取所有白名单申请
-	 */ 
+	 */
 	public function showWhiteList($check_sign)
 	{
 		// $par = [
 		// 	'timestamp'		=> $timestamp,
 		// ];
-	
+
 		// $check_sign = $this->checkSign($apiKey,$par,$hash);
 
 		// if (!$check_sign) {
@@ -942,17 +942,17 @@ class ApiOut extends Model
 			'code'	=> 1,
 		];
 	}
-	
 
-	/** 
+
+	/**
 	 *  展示可购买叠加包
-	 */ 
+	 */
 	public function showOverlay($check_sign )
 	{
 		// $par = [
 		// 	'timestamp'		=> $timestamp,
 		// ];
-	
+
 		// $check_sign = $this->checkSign($apiKey,$par,$hash);
 
 		// if (!$check_sign) {
@@ -982,11 +982,11 @@ class ApiOut extends Model
 			];
 		}
 	}
-	
 
-	/** 
+
+	/**
 	 *  展示可购买叠加包
-	 */ 
+	 */
 	public function buyOverlay($check_sign , $overlayId ,$num)
 	{
 		// $par = [
@@ -994,7 +994,7 @@ class ApiOut extends Model
 		// 	'overlayId'		=> $overlayId,
 		// 	'num'			=> $num,
 		// ];
-	
+
 		// $check_sign = $this->checkSign($apiKey,$par,$hash);
 
 		// if (!$check_sign) {
@@ -1084,15 +1084,15 @@ class ApiOut extends Model
 		}
 	}
 
-	/** 
+	/**
 	 *  展示已购买叠加包
-	 */ 
+	 */
 	public function showBelong($check_sign )
 	{
 		// $par = [
 		// 	'timestamp'		=> $timestamp,
 		// ];
-	
+
 		// $check_sign = $this->checkSign($apiKey,$par,$hash);
 
 		// if (!$check_sign) {
@@ -1127,10 +1127,10 @@ class ApiOut extends Model
 			];
 		}
 	}
-	
-	/** 
+
+	/**
 	 *  展示已购买叠加包
-	 */ 
+	 */
 	public function useOverlay($check_sign , $belongId , $target , $isIgnore , $type)
 	{
 		// $par = [
@@ -1140,7 +1140,7 @@ class ApiOut extends Model
 		// 	'isIgnore'		=> $isIgnore,
 		// 	'type'			=> $type,
 		// ];
-	
+
 		// $check_sign = $this->checkSign($apiKey,$par,$hash);
 
 		// if (!$check_sign) {
@@ -1152,13 +1152,13 @@ class ApiOut extends Model
 		// }
 
 		$overlay_model = new OverlayModel();
-		
+
 		if ($type == 1) {		//是高防的时候
 			$param = [
 				'belong_id'		=> $belongId,
 				'business_number'	=> $target,
 				'is_ignore'		=> $isIgnore,
-				'is_api'			=> $check_sign, 
+				'is_api'			=> $check_sign,
 			];
 
 			$res = $overlay_model->useOverlayToDIP($param);
@@ -1172,7 +1172,7 @@ class ApiOut extends Model
 			// 	'belong_id'		=> $belongId,
 			// 	'order_id'		=> $target,
 			// 	'is_ignore'		=> $isIgnore,
-			// 	'is_api'			=> $check_sign, 
+			// 	'is_api'			=> $check_sign,
 			// ];
 
 			// $res = $overlay_model->useOverlayToIDC($param);

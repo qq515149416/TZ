@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 180);
+/******/ 	return __webpack_require__(__webpack_require__.s = 181);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1407,11 +1407,11 @@ var ExtensionAPI = __webpack_require__(120);
 
 var CoordinateSystemManager = __webpack_require__(82);
 
-var OptionManager = __webpack_require__(217);
+var OptionManager = __webpack_require__(218);
 
-var backwardCompat = __webpack_require__(218);
+var backwardCompat = __webpack_require__(219);
 
-var dataStack = __webpack_require__(220);
+var dataStack = __webpack_require__(221);
 
 var ComponentModel = __webpack_require__(14);
 
@@ -1429,21 +1429,21 @@ var _throttle = __webpack_require__(44);
 
 var throttle = _throttle.throttle;
 
-var seriesColor = __webpack_require__(222);
+var seriesColor = __webpack_require__(223);
 
-var aria = __webpack_require__(223);
+var aria = __webpack_require__(224);
 
-var loadingDefault = __webpack_require__(224);
+var loadingDefault = __webpack_require__(225);
 
-var Scheduler = __webpack_require__(225);
+var Scheduler = __webpack_require__(226);
 
-var lightTheme = __webpack_require__(226);
+var lightTheme = __webpack_require__(227);
 
-var darkTheme = __webpack_require__(227);
+var darkTheme = __webpack_require__(228);
 
-__webpack_require__(228);
+__webpack_require__(229);
 
-var mapDataStorage = __webpack_require__(229);
+var mapDataStorage = __webpack_require__(230);
 
 /*
 * Licensed to the Apache Software Foundation (ASF) under one
@@ -3680,7 +3680,7 @@ exports.setCanvasCreator = setCanvasCreator;
 exports.registerMap = registerMap;
 exports.getMap = getMap;
 exports.dataTool = dataTool;
-var ___ec_export = __webpack_require__(232);
+var ___ec_export = __webpack_require__(233);
 (function () {
     for (var key in ___ec_export) {
         if (___ec_export.hasOwnProperty(key)) {
@@ -3743,11 +3743,11 @@ var Circle = __webpack_require__(111);
 
 exports.Circle = Circle;
 
-var Sector = __webpack_require__(205);
+var Sector = __webpack_require__(206);
 
 exports.Sector = Sector;
 
-var Ring = __webpack_require__(206);
+var Ring = __webpack_require__(207);
 
 exports.Ring = Ring;
 
@@ -3767,15 +3767,15 @@ var Line = __webpack_require__(117);
 
 exports.Line = Line;
 
-var BezierCurve = __webpack_require__(209);
+var BezierCurve = __webpack_require__(210);
 
 exports.BezierCurve = BezierCurve;
 
-var Arc = __webpack_require__(210);
+var Arc = __webpack_require__(211);
 
 exports.Arc = Arc;
 
-var CompoundPath = __webpack_require__(211);
+var CompoundPath = __webpack_require__(212);
 
 exports.CompoundPath = CompoundPath;
 
@@ -3783,7 +3783,7 @@ var LinearGradient = __webpack_require__(118);
 
 exports.LinearGradient = LinearGradient;
 
-var RadialGradient = __webpack_require__(212);
+var RadialGradient = __webpack_require__(213);
 
 exports.RadialGradient = RadialGradient;
 
@@ -3791,7 +3791,7 @@ var BoundingRect = __webpack_require__(10);
 
 exports.BoundingRect = BoundingRect;
 
-var IncrementalDisplayable = __webpack_require__(213);
+var IncrementalDisplayable = __webpack_require__(214);
 
 exports.IncrementalDisplayable = IncrementalDisplayable;
 
@@ -6377,7 +6377,7 @@ var zrUtil = __webpack_require__(0);
 
 var PathProxy = __webpack_require__(48);
 
-var pathContain = __webpack_require__(199);
+var pathContain = __webpack_require__(200);
 
 var Pattern = __webpack_require__(102);
 
@@ -7283,13 +7283,13 @@ var _clazz = __webpack_require__(18);
 var enableClassExtend = _clazz.enableClassExtend;
 var enableClassCheck = _clazz.enableClassCheck;
 
-var lineStyleMixin = __webpack_require__(196);
+var lineStyleMixin = __webpack_require__(197);
 
-var areaStyleMixin = __webpack_require__(197);
+var areaStyleMixin = __webpack_require__(198);
 
-var textStyleMixin = __webpack_require__(198);
+var textStyleMixin = __webpack_require__(199);
 
-var itemStyleMixin = __webpack_require__(214);
+var itemStyleMixin = __webpack_require__(215);
 
 /*
 * Licensed to the Apache Software Foundation (ASF) under one
@@ -7530,7 +7530,7 @@ var makeInner = _model.makeInner;
 
 var layout = __webpack_require__(15);
 
-var boxLayoutMixin = __webpack_require__(215);
+var boxLayoutMixin = __webpack_require__(216);
 
 /*
 * Licensed to the Apache Software Foundation (ASF) under one
@@ -8276,7 +8276,7 @@ exports.Dispatcher = Eventful;
 
 var env = __webpack_require__(7);
 
-var _fourPointsTransform = __webpack_require__(185);
+var _fourPointsTransform = __webpack_require__(186);
 
 var buildTransformer = _fourPointsTransform.buildTransformer;
 
@@ -11132,7 +11132,7 @@ var __DEV__ = _config.__DEV__;
 
 var zrUtil = __webpack_require__(0);
 
-var OrdinalScale = __webpack_require__(235);
+var OrdinalScale = __webpack_require__(236);
 
 var IntervalScale = __webpack_require__(88);
 
@@ -11140,7 +11140,7 @@ var Scale = __webpack_require__(50);
 
 var numberUtil = __webpack_require__(6);
 
-var _barGrid = __webpack_require__(236);
+var _barGrid = __webpack_require__(237);
 
 var prepareLayoutBarSeries = _barGrid.prepareLayoutBarSeries;
 var makeColumnLayout = _barGrid.makeColumnLayout;
@@ -11148,9 +11148,9 @@ var retrieveColumnLayout = _barGrid.retrieveColumnLayout;
 
 var BoundingRect = __webpack_require__(10);
 
-__webpack_require__(237);
-
 __webpack_require__(238);
+
+__webpack_require__(239);
 
 /*
 * Licensed to the Apache Software Foundation (ASF) under one
@@ -14804,7 +14804,7 @@ var Style = __webpack_require__(75);
 
 var Element = __webpack_require__(96);
 
-var RectText = __webpack_require__(193);
+var RectText = __webpack_require__(194);
 
 /**
  * Base class of all displayable graphic objects
@@ -20389,15 +20389,15 @@ var env = __webpack_require__(7);
 
 var zrUtil = __webpack_require__(0);
 
-var Handler = __webpack_require__(183);
+var Handler = __webpack_require__(184);
 
-var Storage = __webpack_require__(187);
+var Storage = __webpack_require__(188);
 
-var Painter = __webpack_require__(191);
+var Painter = __webpack_require__(192);
 
-var Animation = __webpack_require__(194);
+var Animation = __webpack_require__(195);
 
-var HandlerProxy = __webpack_require__(195);
+var HandlerProxy = __webpack_require__(196);
 
 /*!
 * ZRender, a high performance 2d drawing library.
@@ -20863,7 +20863,7 @@ var Eventful = __webpack_require__(22);
 
 var Transformable = __webpack_require__(97);
 
-var Animatable = __webpack_require__(188);
+var Animatable = __webpack_require__(189);
 
 var zrUtil = __webpack_require__(0);
 
@@ -21460,7 +21460,7 @@ module.exports = _default;
 /* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Clip = __webpack_require__(189);
+var Clip = __webpack_require__(190);
 
 var color = __webpack_require__(39);
 
@@ -23083,7 +23083,7 @@ var Model = __webpack_require__(13);
 
 var ComponentModel = __webpack_require__(14);
 
-var globalDefault = __webpack_require__(216);
+var globalDefault = __webpack_require__(217);
 
 var colorPaletteMixin = __webpack_require__(119);
 
@@ -23771,7 +23771,7 @@ var Path = __webpack_require__(9);
 
 var PathProxy = __webpack_require__(48);
 
-var transformPath = __webpack_require__(204);
+var transformPath = __webpack_require__(205);
 
 // command chars
 // var cc = [
@@ -24608,9 +24608,9 @@ module.exports = _default;
 /* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var smoothSpline = __webpack_require__(207);
+var smoothSpline = __webpack_require__(208);
 
-var smoothBezier = __webpack_require__(208);
+var smoothBezier = __webpack_require__(209);
 
 function buildPath(ctx, shape, closePath) {
   var points = shape.points;
@@ -25067,7 +25067,7 @@ var ComponentModel = __webpack_require__(14);
 
 var colorPaletteMixin = __webpack_require__(119);
 
-var dataFormatMixin = __webpack_require__(221);
+var dataFormatMixin = __webpack_require__(222);
 
 var _layout = __webpack_require__(15);
 
@@ -25977,7 +25977,7 @@ var getDataItemValue = _model.getDataItemValue;
 
 var CoordinateSystem = __webpack_require__(82);
 
-var _referHelper = __webpack_require__(234);
+var _referHelper = __webpack_require__(235);
 
 var getCoordSysInfoBySeries = _referHelper.getCoordSysInfoBySeries;
 
@@ -29192,7 +29192,7 @@ var linearMap = _number.linearMap;
 var getPixelPrecision = _number.getPixelPrecision;
 var round = _number.round;
 
-var _axisTickLabelBuilder = __webpack_require__(242);
+var _axisTickLabelBuilder = __webpack_require__(243);
 
 var createAxisTicks = _axisTickLabelBuilder.createAxisTicks;
 var createAxisLabels = _axisTickLabelBuilder.createAxisLabels;
@@ -29559,6 +29559,242 @@ module.exports = _default;
 
 /***/ }),
 /* 132 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_RESULT__;/*
+ * Date Format 1.2.3
+ * (c) 2007-2009 Steven Levithan <stevenlevithan.com>
+ * MIT license
+ *
+ * Includes enhancements by Scott Trenda <scott.trenda.net>
+ * and Kris Kowal <cixar.com/~kris.kowal/>
+ *
+ * Accepts a date, a mask, or a date and a mask.
+ * Returns a formatted version of the given date.
+ * The date defaults to the current date/time.
+ * The mask defaults to dateFormat.masks.default.
+ */
+
+(function(global) {
+  'use strict';
+
+  var dateFormat = (function() {
+      var token = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZWN]|"[^"]*"|'[^']*'/g;
+      var timezone = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g;
+      var timezoneClip = /[^-+\dA-Z]/g;
+  
+      // Regexes and supporting functions are cached through closure
+      return function (date, mask, utc, gmt) {
+  
+        // You can't provide utc if you skip other args (use the 'UTC:' mask prefix)
+        if (arguments.length === 1 && kindOf(date) === 'string' && !/\d/.test(date)) {
+          mask = date;
+          date = undefined;
+        }
+  
+        date = date || new Date;
+  
+        if(!(date instanceof Date)) {
+          date = new Date(date);
+        }
+  
+        if (isNaN(date)) {
+          throw TypeError('Invalid date');
+        }
+  
+        mask = String(dateFormat.masks[mask] || mask || dateFormat.masks['default']);
+  
+        // Allow setting the utc/gmt argument via the mask
+        var maskSlice = mask.slice(0, 4);
+        if (maskSlice === 'UTC:' || maskSlice === 'GMT:') {
+          mask = mask.slice(4);
+          utc = true;
+          if (maskSlice === 'GMT:') {
+            gmt = true;
+          }
+        }
+  
+        var _ = utc ? 'getUTC' : 'get';
+        var d = date[_ + 'Date']();
+        var D = date[_ + 'Day']();
+        var m = date[_ + 'Month']();
+        var y = date[_ + 'FullYear']();
+        var H = date[_ + 'Hours']();
+        var M = date[_ + 'Minutes']();
+        var s = date[_ + 'Seconds']();
+        var L = date[_ + 'Milliseconds']();
+        var o = utc ? 0 : date.getTimezoneOffset();
+        var W = getWeek(date);
+        var N = getDayOfWeek(date);
+        var flags = {
+          d:    d,
+          dd:   pad(d),
+          ddd:  dateFormat.i18n.dayNames[D],
+          dddd: dateFormat.i18n.dayNames[D + 7],
+          m:    m + 1,
+          mm:   pad(m + 1),
+          mmm:  dateFormat.i18n.monthNames[m],
+          mmmm: dateFormat.i18n.monthNames[m + 12],
+          yy:   String(y).slice(2),
+          yyyy: y,
+          h:    H % 12 || 12,
+          hh:   pad(H % 12 || 12),
+          H:    H,
+          HH:   pad(H),
+          M:    M,
+          MM:   pad(M),
+          s:    s,
+          ss:   pad(s),
+          l:    pad(L, 3),
+          L:    pad(Math.round(L / 10)),
+          t:    H < 12 ? dateFormat.i18n.timeNames[0] : dateFormat.i18n.timeNames[1],
+          tt:   H < 12 ? dateFormat.i18n.timeNames[2] : dateFormat.i18n.timeNames[3],
+          T:    H < 12 ? dateFormat.i18n.timeNames[4] : dateFormat.i18n.timeNames[5],
+          TT:   H < 12 ? dateFormat.i18n.timeNames[6] : dateFormat.i18n.timeNames[7],
+          Z:    gmt ? 'GMT' : utc ? 'UTC' : (String(date).match(timezone) || ['']).pop().replace(timezoneClip, ''),
+          o:    (o > 0 ? '-' : '+') + pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4),
+          S:    ['th', 'st', 'nd', 'rd'][d % 10 > 3 ? 0 : (d % 100 - d % 10 != 10) * d % 10],
+          W:    W,
+          N:    N
+        };
+  
+        return mask.replace(token, function (match) {
+          if (match in flags) {
+            return flags[match];
+          }
+          return match.slice(1, match.length - 1);
+        });
+      };
+    })();
+
+  dateFormat.masks = {
+    'default':               'ddd mmm dd yyyy HH:MM:ss',
+    'shortDate':             'm/d/yy',
+    'mediumDate':            'mmm d, yyyy',
+    'longDate':              'mmmm d, yyyy',
+    'fullDate':              'dddd, mmmm d, yyyy',
+    'shortTime':             'h:MM TT',
+    'mediumTime':            'h:MM:ss TT',
+    'longTime':              'h:MM:ss TT Z',
+    'isoDate':               'yyyy-mm-dd',
+    'isoTime':               'HH:MM:ss',
+    'isoDateTime':           'yyyy-mm-dd\'T\'HH:MM:sso',
+    'isoUtcDateTime':        'UTC:yyyy-mm-dd\'T\'HH:MM:ss\'Z\'',
+    'expiresHeaderFormat':   'ddd, dd mmm yyyy HH:MM:ss Z'
+  };
+
+  // Internationalization strings
+  dateFormat.i18n = {
+    dayNames: [
+      'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat',
+      'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
+    ],
+    monthNames: [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+      'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+    ],
+    timeNames: [
+      'a', 'p', 'am', 'pm', 'A', 'P', 'AM', 'PM'
+    ]
+  };
+
+function pad(val, len) {
+  val = String(val);
+  len = len || 2;
+  while (val.length < len) {
+    val = '0' + val;
+  }
+  return val;
+}
+
+/**
+ * Get the ISO 8601 week number
+ * Based on comments from
+ * http://techblog.procurios.nl/k/n618/news/view/33796/14863/Calculate-ISO-8601-week-and-year-in-javascript.html
+ *
+ * @param  {Object} `date`
+ * @return {Number}
+ */
+function getWeek(date) {
+  // Remove time components of date
+  var targetThursday = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
+  // Change date to Thursday same week
+  targetThursday.setDate(targetThursday.getDate() - ((targetThursday.getDay() + 6) % 7) + 3);
+
+  // Take January 4th as it is always in week 1 (see ISO 8601)
+  var firstThursday = new Date(targetThursday.getFullYear(), 0, 4);
+
+  // Change date to Thursday same week
+  firstThursday.setDate(firstThursday.getDate() - ((firstThursday.getDay() + 6) % 7) + 3);
+
+  // Check if daylight-saving-time-switch occurred and correct for it
+  var ds = targetThursday.getTimezoneOffset() - firstThursday.getTimezoneOffset();
+  targetThursday.setHours(targetThursday.getHours() - ds);
+
+  // Number of weeks between target Thursday and first Thursday
+  var weekDiff = (targetThursday - firstThursday) / (86400000*7);
+  return 1 + Math.floor(weekDiff);
+}
+
+/**
+ * Get ISO-8601 numeric representation of the day of the week
+ * 1 (for Monday) through 7 (for Sunday)
+ * 
+ * @param  {Object} `date`
+ * @return {Number}
+ */
+function getDayOfWeek(date) {
+  var dow = date.getDay();
+  if(dow === 0) {
+    dow = 7;
+  }
+  return dow;
+}
+
+/**
+ * kind-of shortcut
+ * @param  {*} val
+ * @return {String}
+ */
+function kindOf(val) {
+  if (val === null) {
+    return 'null';
+  }
+
+  if (val === undefined) {
+    return 'undefined';
+  }
+
+  if (typeof val !== 'object') {
+    return typeof val;
+  }
+
+  if (Array.isArray(val)) {
+    return 'array';
+  }
+
+  return {}.toString.call(val)
+    .slice(8, -1).toLowerCase();
+};
+
+
+
+  if (true) {
+    !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+      return dateFormat;
+    }).call(exports, __webpack_require__, exports, module),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+  } else if (typeof exports === 'object') {
+    module.exports = dateFormat;
+  } else {
+    global.dateFormat = dateFormat;
+  }
+})(this);
+
+
+/***/ }),
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -29952,7 +30188,7 @@ var _default = SymbolClz;
 module.exports = _default;
 
 /***/ }),
-/* 133 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -30094,7 +30330,7 @@ exports.prepareDataCoordInfo = prepareDataCoordInfo;
 exports.getStackedOnPoint = getStackedOnPoint;
 
 /***/ }),
-/* 134 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -30206,7 +30442,7 @@ var _default = AxisModel;
 module.exports = _default;
 
 /***/ }),
-/* 135 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -30895,7 +31131,7 @@ var _default = AxisBuilder;
 module.exports = _default;
 
 /***/ }),
-/* 136 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -31037,7 +31273,7 @@ var _default = AxisView;
 module.exports = _default;
 
 /***/ }),
-/* 137 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -31150,7 +31386,7 @@ function layout(gridModel, axisModel, opt) {
 exports.layout = layout;
 
 /***/ }),
-/* 138 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -31246,7 +31482,7 @@ function _default(finder, ecModel) {
 module.exports = _default;
 
 /***/ }),
-/* 139 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -31413,7 +31649,7 @@ exports.register = register;
 exports.unregister = unregister;
 
 /***/ }),
-/* 140 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -31448,7 +31684,7 @@ var matrix = __webpack_require__(23);
 
 var axisHelper = __webpack_require__(29);
 
-var AxisBuilder = __webpack_require__(135);
+var AxisBuilder = __webpack_require__(136);
 
 /*
 * Licensed to the Apache Software Foundation (ASF) under one
@@ -31681,7 +31917,7 @@ exports.makeRectShape = makeRectShape;
 exports.makeSectorShape = makeSectorShape;
 
 /***/ }),
-/* 141 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -31779,7 +32015,7 @@ exports.layout = layout;
 exports.makeBackground = makeBackground;
 
 /***/ }),
-/* 142 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -31864,7 +32100,7 @@ exports.release = release;
 exports.isTaken = isTaken;
 
 /***/ }),
-/* 143 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -32014,7 +32250,6 @@ exports.clear = clear;
 exports.count = count;
 
 /***/ }),
-/* 144 */,
 /* 145 */,
 /* 146 */,
 /* 147 */,
@@ -32050,14 +32285,15 @@ exports.count = count;
 /* 177 */,
 /* 178 */,
 /* 179 */,
-/* 180 */
+/* 180 */,
+/* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(181);
+module.exports = __webpack_require__(182);
 
 
 /***/ }),
-/* 181 */
+/* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32065,7 +32301,7 @@ module.exports = __webpack_require__(181);
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _echarts = __webpack_require__(182);
+var _echarts = __webpack_require__(183);
 
 var _echarts2 = _interopRequireDefault(_echarts);
 
@@ -32168,6 +32404,17 @@ $(function () {
         $.fn.bootstrapTable.locales['zh-CN']["formatRecordsPerPage"] = function () {
             return "";
         };
+    }
+    if ($("#detail").length) {
+        var _dateFormat = __webpack_require__(132);
+        var _date = new Date();
+        $.post("/home/defenseIp/getStatistics", {
+            business_id: $("#detail").attr("data-businessid"),
+            ip: $("#detail").attr("data-ip"),
+            date: _dateFormat(_date, 'yyyy-mm-dd HH:MM:ss')
+        }, function (data) {
+            console.log(data);
+        });
     }
 
     $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['zh-CN']);
@@ -32631,7 +32878,7 @@ window.rowStyle = function (row, index) {
 };
 
 /***/ }),
-/* 182 */
+/* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32641,7 +32888,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var echarts = __webpack_require__(3);
-var dateFormat = __webpack_require__(243);
+var dateFormat = __webpack_require__(132);
 
 __webpack_require__(244);
 __webpack_require__(265);
@@ -32862,20 +33109,20 @@ exports.default = function (data, dom, params) {
 };
 
 /***/ }),
-/* 183 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var util = __webpack_require__(0);
 
 var vec2 = __webpack_require__(8);
 
-var Draggable = __webpack_require__(184);
+var Draggable = __webpack_require__(185);
 
 var Eventful = __webpack_require__(22);
 
 var eventTool = __webpack_require__(16);
 
-var GestureMgr = __webpack_require__(186);
+var GestureMgr = __webpack_require__(187);
 
 /**
  * [The interface between `Handler` and `HandlerProxy`]:
@@ -33302,7 +33549,7 @@ var _default = Handler;
 module.exports = _default;
 
 /***/ }),
-/* 184 */
+/* 185 */
 /***/ (function(module, exports) {
 
 // TODO Draggable for group
@@ -33389,7 +33636,7 @@ var _default = Draggable;
 module.exports = _default;
 
 /***/ }),
-/* 185 */
+/* 186 */
 /***/ (function(module, exports) {
 
 /**
@@ -33486,7 +33733,7 @@ function buildTransformer(src, dest) {
 exports.buildTransformer = buildTransformer;
 
 /***/ }),
-/* 186 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var eventUtil = __webpack_require__(16);
@@ -33590,7 +33837,7 @@ var _default = GestureMgr;
 module.exports = _default;
 
 /***/ }),
-/* 187 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var util = __webpack_require__(0);
@@ -33827,7 +34074,7 @@ var _default = Storage;
 module.exports = _default;
 
 /***/ }),
-/* 188 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Animator = __webpack_require__(98);
@@ -34107,10 +34354,10 @@ var _default = Animatable;
 module.exports = _default;
 
 /***/ }),
-/* 189 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var easingFuncs = __webpack_require__(190);
+var easingFuncs = __webpack_require__(191);
 
 /**
  * 动画主控制器
@@ -34213,7 +34460,7 @@ var _default = Clip;
 module.exports = _default;
 
 /***/ }),
-/* 190 */
+/* 191 */
 /***/ (function(module, exports) {
 
 /**
@@ -34596,7 +34843,7 @@ var _default = easing;
 module.exports = _default;
 
 /***/ }),
-/* 191 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var _config = __webpack_require__(45);
@@ -34611,7 +34858,7 @@ var BoundingRect = __webpack_require__(10);
 
 var timsort = __webpack_require__(74);
 
-var Layer = __webpack_require__(192);
+var Layer = __webpack_require__(193);
 
 var requestAnimationFrame = __webpack_require__(103);
 
@@ -35620,7 +35867,7 @@ var _default = Painter;
 module.exports = _default;
 
 /***/ }),
-/* 192 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var util = __webpack_require__(0);
@@ -35860,7 +36107,7 @@ var _default = Layer;
 module.exports = _default;
 
 /***/ }),
-/* 193 */
+/* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var textHelper = __webpack_require__(104);
@@ -35927,7 +36174,7 @@ var _default = RectText;
 module.exports = _default;
 
 /***/ }),
-/* 194 */
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var util = __webpack_require__(0);
@@ -36179,7 +36426,7 @@ var _default = Animation;
 module.exports = _default;
 
 /***/ }),
-/* 195 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var _event = __webpack_require__(16);
@@ -36688,7 +36935,7 @@ var _default = HandlerDomProxy;
 module.exports = _default;
 
 /***/ }),
-/* 196 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -36759,7 +37006,7 @@ var _default = {
 module.exports = _default;
 
 /***/ }),
-/* 197 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -36811,7 +37058,7 @@ var _default = {
 module.exports = _default;
 
 /***/ }),
-/* 198 */
+/* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -36887,18 +37134,18 @@ var _default = {
 module.exports = _default;
 
 /***/ }),
-/* 199 */
+/* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var PathProxy = __webpack_require__(48);
 
-var line = __webpack_require__(200);
+var line = __webpack_require__(201);
 
-var cubic = __webpack_require__(201);
+var cubic = __webpack_require__(202);
 
-var quadratic = __webpack_require__(202);
+var quadratic = __webpack_require__(203);
 
-var arc = __webpack_require__(203);
+var arc = __webpack_require__(204);
 
 var _util = __webpack_require__(109);
 
@@ -37288,7 +37535,7 @@ exports.contain = contain;
 exports.containStroke = containStroke;
 
 /***/ }),
-/* 200 */
+/* 201 */
 /***/ (function(module, exports) {
 
 /**
@@ -37332,7 +37579,7 @@ function containStroke(x0, y0, x1, y1, lineWidth, x, y) {
 exports.containStroke = containStroke;
 
 /***/ }),
-/* 201 */
+/* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var curve = __webpack_require__(27);
@@ -37370,7 +37617,7 @@ function containStroke(x0, y0, x1, y1, x2, y2, x3, y3, lineWidth, x, y) {
 exports.containStroke = containStroke;
 
 /***/ }),
-/* 202 */
+/* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var _curve = __webpack_require__(27);
@@ -37408,7 +37655,7 @@ function containStroke(x0, y0, x1, y1, x2, y2, lineWidth, x, y) {
 exports.containStroke = containStroke;
 
 /***/ }),
-/* 203 */
+/* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var _util = __webpack_require__(109);
@@ -37473,7 +37720,7 @@ function containStroke(cx, cy, r, startAngle, endAngle, anticlockwise, lineWidth
 exports.containStroke = containStroke;
 
 /***/ }),
-/* 204 */
+/* 205 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var PathProxy = __webpack_require__(48);
@@ -37578,7 +37825,7 @@ function _default(path, m) {
 module.exports = _default;
 
 /***/ }),
-/* 205 */
+/* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Path = __webpack_require__(9);
@@ -37627,7 +37874,7 @@ var _default = Path.extend({
 module.exports = _default;
 
 /***/ }),
-/* 206 */
+/* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Path = __webpack_require__(9);
@@ -37658,7 +37905,7 @@ var _default = Path.extend({
 module.exports = _default;
 
 /***/ }),
-/* 207 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var _vector = __webpack_require__(8);
@@ -37731,7 +37978,7 @@ function _default(points, isLoop) {
 module.exports = _default;
 
 /***/ }),
-/* 208 */
+/* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var _vector = __webpack_require__(8);
@@ -37841,7 +38088,7 @@ function _default(points, smooth, isLoop, constraint) {
 module.exports = _default;
 
 /***/ }),
-/* 209 */
+/* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Path = __webpack_require__(9);
@@ -37959,7 +38206,7 @@ var _default = Path.extend({
 module.exports = _default;
 
 /***/ }),
-/* 210 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Path = __webpack_require__(9);
@@ -37999,7 +38246,7 @@ var _default = Path.extend({
 module.exports = _default;
 
 /***/ }),
-/* 211 */
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Path = __webpack_require__(9);
@@ -38060,7 +38307,7 @@ var _default = Path.extend({
 module.exports = _default;
 
 /***/ }),
-/* 212 */
+/* 213 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var zrUtil = __webpack_require__(0);
@@ -38097,7 +38344,7 @@ var _default = RadialGradient;
 module.exports = _default;
 
 /***/ }),
-/* 213 */
+/* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var _util = __webpack_require__(0);
@@ -38249,7 +38496,7 @@ var _default = IncrementalDisplayble;
 module.exports = _default;
 
 /***/ }),
-/* 214 */
+/* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -38308,7 +38555,7 @@ var _default = {
 module.exports = _default;
 
 /***/ }),
-/* 215 */
+/* 216 */
 /***/ (function(module, exports) {
 
 
@@ -38364,7 +38611,7 @@ var _default = {
 module.exports = _default;
 
 /***/ }),
-/* 216 */
+/* 217 */
 /***/ (function(module, exports) {
 
 
@@ -38458,7 +38705,7 @@ var _default = {
 module.exports = _default;
 
 /***/ }),
-/* 217 */
+/* 218 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -38916,7 +39163,7 @@ var _default = OptionManager;
 module.exports = _default;
 
 /***/ }),
-/* 218 */
+/* 219 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -38945,7 +39192,7 @@ var each = _util.each;
 var isArray = _util.isArray;
 var isObject = _util.isObject;
 
-var compatStyle = __webpack_require__(219);
+var compatStyle = __webpack_require__(220);
 
 var _model = __webpack_require__(1);
 
@@ -39065,7 +39312,7 @@ function _default(option, isTheme) {
 module.exports = _default;
 
 /***/ }),
-/* 219 */
+/* 220 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -39389,7 +39636,7 @@ function _default(option, isTheme) {
 module.exports = _default;
 
 /***/ }),
-/* 220 */
+/* 221 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -39532,7 +39779,7 @@ function calculateStack(stackInfoList) {
 module.exports = _default;
 
 /***/ }),
-/* 221 */
+/* 222 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -39700,7 +39947,7 @@ var _default = {
 module.exports = _default;
 
 /***/ }),
-/* 222 */
+/* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -39798,7 +40045,7 @@ var _default = {
 module.exports = _default;
 
 /***/ }),
-/* 223 */
+/* 224 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -39976,7 +40223,7 @@ function _default(dom, ecModel) {
 module.exports = _default;
 
 /***/ }),
-/* 224 */
+/* 225 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -40112,7 +40359,7 @@ function _default(api, opts) {
 module.exports = _default;
 
 /***/ }),
-/* 225 */
+/* 226 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -40685,7 +40932,7 @@ var _default = Scheduler;
 module.exports = _default;
 
 /***/ }),
-/* 226 */
+/* 227 */
 /***/ (function(module, exports) {
 
 
@@ -40734,7 +40981,7 @@ var _default = {
 module.exports = _default;
 
 /***/ }),
-/* 227 */
+/* 228 */
 /***/ (function(module, exports) {
 
 
@@ -40911,7 +41158,7 @@ var _default = theme;
 module.exports = _default;
 
 /***/ }),
-/* 228 */
+/* 229 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -40996,7 +41243,7 @@ ComponentView.extend({
 });
 
 /***/ }),
-/* 229 */
+/* 230 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -41031,7 +41278,7 @@ var isArray = _util.isArray;
 var each = _util.each;
 var assert = _util.assert;
 
-var _parseSVG = __webpack_require__(230);
+var _parseSVG = __webpack_require__(231);
 
 var parseXML = _parseSVG.parseXML;
 
@@ -41114,7 +41361,7 @@ var parsers = {
 module.exports = _default;
 
 /***/ }),
-/* 230 */
+/* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Group = __webpack_require__(38);
@@ -41127,7 +41374,7 @@ var Circle = __webpack_require__(111);
 
 var Rect = __webpack_require__(116);
 
-var Ellipse = __webpack_require__(231);
+var Ellipse = __webpack_require__(232);
 
 var Line = __webpack_require__(117);
 
@@ -41811,7 +42058,7 @@ exports.makeViewBoxTransform = makeViewBoxTransform;
 exports.parseSVG = parseSVG;
 
 /***/ }),
-/* 231 */
+/* 232 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Path = __webpack_require__(9);
@@ -41851,7 +42098,7 @@ var _default = Path.extend({
 module.exports = _default;
 
 /***/ }),
-/* 232 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -41907,11 +42154,11 @@ var _throttle = __webpack_require__(44);
 var throttle = _throttle.throttle;
 exports.throttle = _throttle.throttle;
 
-var ecHelper = __webpack_require__(233);
+var ecHelper = __webpack_require__(234);
 
 exports.helper = ecHelper;
 
-var parseGeoJSON = __webpack_require__(239);
+var parseGeoJSON = __webpack_require__(240);
 
 exports.parseGeoJSON = parseGeoJSON;
 
@@ -41967,7 +42214,7 @@ exports.util = ecUtil;
 exports.graphic = graphic;
 
 /***/ }),
-/* 233 */
+/* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -42114,7 +42361,7 @@ exports.createScale = createScale;
 exports.mixinAxisModelCommonMethods = mixinAxisModelCommonMethods;
 
 /***/ }),
-/* 234 */
+/* 235 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -42309,7 +42556,7 @@ function isCategory(axisModel) {
 exports.getCoordSysInfoBySeries = getCoordSysInfoBySeries;
 
 /***/ }),
-/* 235 */
+/* 236 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -42463,7 +42710,7 @@ var _default = OrdinalScale;
 module.exports = _default;
 
 /***/ }),
-/* 236 */
+/* 237 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -43042,7 +43289,7 @@ exports.layout = layout;
 exports.largeLayout = largeLayout;
 
 /***/ }),
-/* 237 */
+/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -43290,7 +43537,7 @@ var _default = TimeScale;
 module.exports = _default;
 
 /***/ }),
-/* 238 */
+/* 239 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -43507,7 +43754,7 @@ var _default = LogScale;
 module.exports = _default;
 
 /***/ }),
-/* 239 */
+/* 240 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -43532,7 +43779,7 @@ module.exports = _default;
 
 var zrUtil = __webpack_require__(0);
 
-var Region = __webpack_require__(240);
+var Region = __webpack_require__(241);
 
 /*
 * Licensed to the Apache Software Foundation (ASF) under one
@@ -43666,7 +43913,7 @@ function _default(geoJson) {
 module.exports = _default;
 
 /***/ }),
-/* 240 */
+/* 241 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -43695,7 +43942,7 @@ var bbox = __webpack_require__(108);
 
 var vec2 = __webpack_require__(8);
 
-var polygonContain = __webpack_require__(241);
+var polygonContain = __webpack_require__(242);
 
 /*
 * Licensed to the Apache Software Foundation (ASF) under one
@@ -43881,7 +44128,7 @@ var _default = Region;
 module.exports = _default;
 
 /***/ }),
-/* 241 */
+/* 242 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var windingLine = __webpack_require__(110);
@@ -43919,7 +44166,7 @@ function contain(points, x, y) {
 exports.contain = contain;
 
 /***/ }),
-/* 242 */
+/* 243 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -44296,242 +44543,6 @@ exports.createAxisTicks = createAxisTicks;
 exports.calculateCategoryInterval = calculateCategoryInterval;
 
 /***/ }),
-/* 243 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_RESULT__;/*
- * Date Format 1.2.3
- * (c) 2007-2009 Steven Levithan <stevenlevithan.com>
- * MIT license
- *
- * Includes enhancements by Scott Trenda <scott.trenda.net>
- * and Kris Kowal <cixar.com/~kris.kowal/>
- *
- * Accepts a date, a mask, or a date and a mask.
- * Returns a formatted version of the given date.
- * The date defaults to the current date/time.
- * The mask defaults to dateFormat.masks.default.
- */
-
-(function(global) {
-  'use strict';
-
-  var dateFormat = (function() {
-      var token = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZWN]|"[^"]*"|'[^']*'/g;
-      var timezone = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g;
-      var timezoneClip = /[^-+\dA-Z]/g;
-  
-      // Regexes and supporting functions are cached through closure
-      return function (date, mask, utc, gmt) {
-  
-        // You can't provide utc if you skip other args (use the 'UTC:' mask prefix)
-        if (arguments.length === 1 && kindOf(date) === 'string' && !/\d/.test(date)) {
-          mask = date;
-          date = undefined;
-        }
-  
-        date = date || new Date;
-  
-        if(!(date instanceof Date)) {
-          date = new Date(date);
-        }
-  
-        if (isNaN(date)) {
-          throw TypeError('Invalid date');
-        }
-  
-        mask = String(dateFormat.masks[mask] || mask || dateFormat.masks['default']);
-  
-        // Allow setting the utc/gmt argument via the mask
-        var maskSlice = mask.slice(0, 4);
-        if (maskSlice === 'UTC:' || maskSlice === 'GMT:') {
-          mask = mask.slice(4);
-          utc = true;
-          if (maskSlice === 'GMT:') {
-            gmt = true;
-          }
-        }
-  
-        var _ = utc ? 'getUTC' : 'get';
-        var d = date[_ + 'Date']();
-        var D = date[_ + 'Day']();
-        var m = date[_ + 'Month']();
-        var y = date[_ + 'FullYear']();
-        var H = date[_ + 'Hours']();
-        var M = date[_ + 'Minutes']();
-        var s = date[_ + 'Seconds']();
-        var L = date[_ + 'Milliseconds']();
-        var o = utc ? 0 : date.getTimezoneOffset();
-        var W = getWeek(date);
-        var N = getDayOfWeek(date);
-        var flags = {
-          d:    d,
-          dd:   pad(d),
-          ddd:  dateFormat.i18n.dayNames[D],
-          dddd: dateFormat.i18n.dayNames[D + 7],
-          m:    m + 1,
-          mm:   pad(m + 1),
-          mmm:  dateFormat.i18n.monthNames[m],
-          mmmm: dateFormat.i18n.monthNames[m + 12],
-          yy:   String(y).slice(2),
-          yyyy: y,
-          h:    H % 12 || 12,
-          hh:   pad(H % 12 || 12),
-          H:    H,
-          HH:   pad(H),
-          M:    M,
-          MM:   pad(M),
-          s:    s,
-          ss:   pad(s),
-          l:    pad(L, 3),
-          L:    pad(Math.round(L / 10)),
-          t:    H < 12 ? dateFormat.i18n.timeNames[0] : dateFormat.i18n.timeNames[1],
-          tt:   H < 12 ? dateFormat.i18n.timeNames[2] : dateFormat.i18n.timeNames[3],
-          T:    H < 12 ? dateFormat.i18n.timeNames[4] : dateFormat.i18n.timeNames[5],
-          TT:   H < 12 ? dateFormat.i18n.timeNames[6] : dateFormat.i18n.timeNames[7],
-          Z:    gmt ? 'GMT' : utc ? 'UTC' : (String(date).match(timezone) || ['']).pop().replace(timezoneClip, ''),
-          o:    (o > 0 ? '-' : '+') + pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4),
-          S:    ['th', 'st', 'nd', 'rd'][d % 10 > 3 ? 0 : (d % 100 - d % 10 != 10) * d % 10],
-          W:    W,
-          N:    N
-        };
-  
-        return mask.replace(token, function (match) {
-          if (match in flags) {
-            return flags[match];
-          }
-          return match.slice(1, match.length - 1);
-        });
-      };
-    })();
-
-  dateFormat.masks = {
-    'default':               'ddd mmm dd yyyy HH:MM:ss',
-    'shortDate':             'm/d/yy',
-    'mediumDate':            'mmm d, yyyy',
-    'longDate':              'mmmm d, yyyy',
-    'fullDate':              'dddd, mmmm d, yyyy',
-    'shortTime':             'h:MM TT',
-    'mediumTime':            'h:MM:ss TT',
-    'longTime':              'h:MM:ss TT Z',
-    'isoDate':               'yyyy-mm-dd',
-    'isoTime':               'HH:MM:ss',
-    'isoDateTime':           'yyyy-mm-dd\'T\'HH:MM:sso',
-    'isoUtcDateTime':        'UTC:yyyy-mm-dd\'T\'HH:MM:ss\'Z\'',
-    'expiresHeaderFormat':   'ddd, dd mmm yyyy HH:MM:ss Z'
-  };
-
-  // Internationalization strings
-  dateFormat.i18n = {
-    dayNames: [
-      'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat',
-      'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
-    ],
-    monthNames: [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
-      'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
-    ],
-    timeNames: [
-      'a', 'p', 'am', 'pm', 'A', 'P', 'AM', 'PM'
-    ]
-  };
-
-function pad(val, len) {
-  val = String(val);
-  len = len || 2;
-  while (val.length < len) {
-    val = '0' + val;
-  }
-  return val;
-}
-
-/**
- * Get the ISO 8601 week number
- * Based on comments from
- * http://techblog.procurios.nl/k/n618/news/view/33796/14863/Calculate-ISO-8601-week-and-year-in-javascript.html
- *
- * @param  {Object} `date`
- * @return {Number}
- */
-function getWeek(date) {
-  // Remove time components of date
-  var targetThursday = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-
-  // Change date to Thursday same week
-  targetThursday.setDate(targetThursday.getDate() - ((targetThursday.getDay() + 6) % 7) + 3);
-
-  // Take January 4th as it is always in week 1 (see ISO 8601)
-  var firstThursday = new Date(targetThursday.getFullYear(), 0, 4);
-
-  // Change date to Thursday same week
-  firstThursday.setDate(firstThursday.getDate() - ((firstThursday.getDay() + 6) % 7) + 3);
-
-  // Check if daylight-saving-time-switch occurred and correct for it
-  var ds = targetThursday.getTimezoneOffset() - firstThursday.getTimezoneOffset();
-  targetThursday.setHours(targetThursday.getHours() - ds);
-
-  // Number of weeks between target Thursday and first Thursday
-  var weekDiff = (targetThursday - firstThursday) / (86400000*7);
-  return 1 + Math.floor(weekDiff);
-}
-
-/**
- * Get ISO-8601 numeric representation of the day of the week
- * 1 (for Monday) through 7 (for Sunday)
- * 
- * @param  {Object} `date`
- * @return {Number}
- */
-function getDayOfWeek(date) {
-  var dow = date.getDay();
-  if(dow === 0) {
-    dow = 7;
-  }
-  return dow;
-}
-
-/**
- * kind-of shortcut
- * @param  {*} val
- * @return {String}
- */
-function kindOf(val) {
-  if (val === null) {
-    return 'null';
-  }
-
-  if (val === undefined) {
-    return 'undefined';
-  }
-
-  if (typeof val !== 'object') {
-    return typeof val;
-  }
-
-  if (Array.isArray(val)) {
-    return 'array';
-  }
-
-  return {}.toString.call(val)
-    .slice(8, -1).toLowerCase();
-};
-
-
-
-  if (true) {
-    !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () {
-      return dateFormat;
-    }).call(exports, __webpack_require__, exports, module),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-  } else if (typeof exports === 'object') {
-    module.exports = dateFormat;
-  } else {
-    global.dateFormat = dateFormat;
-  }
-})(this);
-
-
-/***/ }),
 /* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -44739,7 +44750,7 @@ var zrUtil = __webpack_require__(0);
 
 var SymbolDraw = __webpack_require__(247);
 
-var SymbolClz = __webpack_require__(132);
+var SymbolClz = __webpack_require__(133);
 
 var lineAnimationDiff = __webpack_require__(249);
 
@@ -44754,7 +44765,7 @@ var Polygon = _poly.Polygon;
 
 var ChartView = __webpack_require__(122);
 
-var _helper = __webpack_require__(133);
+var _helper = __webpack_require__(134);
 
 var prepareDataCoordInfo = _helper.prepareDataCoordInfo;
 var getStackedOnPoint = _helper.getStackedOnPoint;
@@ -45444,7 +45455,7 @@ module.exports = _default;
 
 var graphic = __webpack_require__(4);
 
-var SymbolClz = __webpack_require__(132);
+var SymbolClz = __webpack_require__(133);
 
 var _util = __webpack_require__(0);
 
@@ -45743,7 +45754,7 @@ exports.getDefaultLabel = getDefaultLabel;
 * under the License.
 */
 
-var _helper = __webpack_require__(133);
+var _helper = __webpack_require__(134);
 
 var prepareDataCoordInfo = _helper.prepareDataCoordInfo;
 var getStackedOnPoint = _helper.getStackedOnPoint;
@@ -47978,7 +47989,7 @@ module.exports = _default;
 * under the License.
 */
 
-__webpack_require__(134);
+__webpack_require__(135);
 
 var ComponentModel = __webpack_require__(14);
 
@@ -48393,7 +48404,7 @@ module.exports = _default;
 * under the License.
 */
 
-__webpack_require__(134);
+__webpack_require__(135);
 
 __webpack_require__(264);
 
@@ -48425,11 +48436,11 @@ var zrUtil = __webpack_require__(0);
 
 var graphic = __webpack_require__(4);
 
-var AxisBuilder = __webpack_require__(135);
+var AxisBuilder = __webpack_require__(136);
 
-var AxisView = __webpack_require__(136);
+var AxisView = __webpack_require__(137);
 
-var cartesianAxisHelper = __webpack_require__(137);
+var cartesianAxisHelper = __webpack_require__(138);
 
 /*
 * Licensed to the Apache Software Foundation (ASF) under one
@@ -48890,7 +48901,7 @@ var makeInner = _model.makeInner;
 
 var modelHelper = __webpack_require__(52);
 
-var findPointFromSeries = __webpack_require__(138);
+var findPointFromSeries = __webpack_require__(139);
 
 /*
 * Licensed to the Apache Software Foundation (ASF) under one
@@ -49454,7 +49465,7 @@ module.exports = _default;
 
 var echarts = __webpack_require__(3);
 
-var globalListener = __webpack_require__(139);
+var globalListener = __webpack_require__(140);
 
 /*
 * Licensed to the Apache Software Foundation (ASF) under one
@@ -49539,11 +49550,11 @@ module.exports = _default;
 
 var BaseAxisPointer = __webpack_require__(271);
 
-var viewHelper = __webpack_require__(140);
+var viewHelper = __webpack_require__(141);
 
-var cartesianAxisHelper = __webpack_require__(137);
+var cartesianAxisHelper = __webpack_require__(138);
 
-var AxisView = __webpack_require__(136);
+var AxisView = __webpack_require__(137);
 
 /*
 * Licensed to the Apache Software Foundation (ASF) under one
@@ -50362,17 +50373,17 @@ var numberUtil = __webpack_require__(6);
 
 var graphic = __webpack_require__(4);
 
-var findPointFromSeries = __webpack_require__(138);
+var findPointFromSeries = __webpack_require__(139);
 
 var layoutUtil = __webpack_require__(15);
 
 var Model = __webpack_require__(13);
 
-var globalListener = __webpack_require__(139);
+var globalListener = __webpack_require__(140);
 
 var axisHelper = __webpack_require__(29);
 
-var axisPointerViewHelper = __webpack_require__(140);
+var axisPointerViewHelper = __webpack_require__(141);
 
 var _model = __webpack_require__(1);
 
@@ -52446,7 +52457,7 @@ var createSymbol = _symbol.createSymbol;
 
 var graphic = __webpack_require__(4);
 
-var _listComponent = __webpack_require__(141);
+var _listComponent = __webpack_require__(142);
 
 var makeBackground = _listComponent.makeBackground;
 
@@ -53134,7 +53145,7 @@ var Model = __webpack_require__(13);
 
 var DataDiffer = __webpack_require__(86);
 
-var listComponentHelper = __webpack_require__(141);
+var listComponentHelper = __webpack_require__(142);
 
 /*
 * Licensed to the Apache Software Foundation (ASF) under one
@@ -54269,7 +54280,7 @@ var BrushController = __webpack_require__(289);
 
 var BrushTargetManager = __webpack_require__(290);
 
-var history = __webpack_require__(143);
+var history = __webpack_require__(144);
 
 var sliderMove = __webpack_require__(53);
 
@@ -54605,7 +54616,7 @@ var Eventful = __webpack_require__(22);
 
 var graphic = __webpack_require__(4);
 
-var interactionMutex = __webpack_require__(142);
+var interactionMutex = __webpack_require__(143);
 
 var DataDiffer = __webpack_require__(86);
 
@@ -56753,7 +56764,7 @@ module.exports = _default;
 
 var echarts = __webpack_require__(3);
 
-var history = __webpack_require__(143);
+var history = __webpack_require__(144);
 
 var lang = __webpack_require__(24);
 
@@ -58377,7 +58388,7 @@ var Eventful = __webpack_require__(22);
 
 var eventTool = __webpack_require__(16);
 
-var interactionMutex = __webpack_require__(142);
+var interactionMutex = __webpack_require__(143);
 
 /*
 * Licensed to the Apache Software Foundation (ASF) under one

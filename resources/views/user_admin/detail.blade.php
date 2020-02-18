@@ -25,7 +25,7 @@
 @endsection
 
 @section('content')
-<div id="detail" class="container-fluid px-4 pt-3">
+<div id="detail" data-businessid="{{ $data->id }}" data-ip="{{ $data->ip }}" class="container-fluid px-4 pt-3">
     <div class="container-fluid pl-4">
         <div class="row">
             <div class="left-w">

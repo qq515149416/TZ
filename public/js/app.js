@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 144);
+/******/ 	return __webpack_require__(__webpack_require__.s = 145);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -26413,19 +26413,20 @@ Popper.Defaults = Defaults;
 /* 141 */,
 /* 142 */,
 /* 143 */,
-/* 144 */
+/* 144 */,
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(145);
-__webpack_require__(153);
+__webpack_require__(146);
 __webpack_require__(154);
 __webpack_require__(155);
 __webpack_require__(156);
-module.exports = __webpack_require__(157);
+__webpack_require__(157);
+module.exports = __webpack_require__(158);
 
 
 /***/ }),
-/* 145 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26437,7 +26438,7 @@ module.exports = __webpack_require__(157);
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__(146);
+__webpack_require__(147);
 
 window.Vue = __webpack_require__(21);
 
@@ -26447,20 +26448,20 @@ window.Vue = __webpack_require__(21);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', __webpack_require__(149));
+Vue.component('example-component', __webpack_require__(150));
 
 var app = new Vue({
   el: '#app'
 });
 
 /***/ }),
-/* 146 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-window._ = __webpack_require__(147);
+window._ = __webpack_require__(148);
 window.Popper = __webpack_require__(93).default;
 
 /**
@@ -26472,7 +26473,7 @@ window.Popper = __webpack_require__(93).default;
 try {
   window.$ = window.jQuery = __webpack_require__(19);
 
-  __webpack_require__(148);
+  __webpack_require__(149);
 } catch (e) {}
 
 /**
@@ -26517,7 +26518,7 @@ if (token) {
 // });
 
 /***/ }),
-/* 147 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -43637,7 +43638,7 @@ if (token) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12), __webpack_require__(54)(module)))
 
 /***/ }),
-/* 148 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -48164,15 +48165,15 @@ if (token) {
 
 
 /***/ }),
-/* 149 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(150)
+var normalizeComponent = __webpack_require__(151)
 /* script */
-var __vue_script__ = __webpack_require__(151)
+var __vue_script__ = __webpack_require__(152)
 /* template */
-var __vue_template__ = __webpack_require__(152)
+var __vue_template__ = __webpack_require__(153)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -48211,7 +48212,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 150 */
+/* 151 */
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -48320,7 +48321,7 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
-/* 151 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48353,7 +48354,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 152 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -48396,12 +48397,6 @@ if (false) {
 }
 
 /***/ }),
-/* 153 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
 /* 154 */
 /***/ (function(module, exports) {
 
@@ -48421,6 +48416,12 @@ if (false) {
 
 /***/ }),
 /* 157 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 158 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

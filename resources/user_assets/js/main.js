@@ -76,6 +76,17 @@ $(function() {
             return ""
         }
     }
+    if($("#detail").length) {
+        const dateFormat = require('dateformat');
+        let date = new Date();
+        $.post("/home/defenseIp/getStatistics",{
+            business_id: $("#detail").attr("data-businessid"),
+            ip: $("#detail").attr("data-ip"),
+            date: dateFormat(date, 'yyyy-mm-dd HH:MM:ss')
+        },function(data) {
+            console.log(data);
+        });
+    }
     
     $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['zh-CN']);
     $('#payDate').datetimepicker({

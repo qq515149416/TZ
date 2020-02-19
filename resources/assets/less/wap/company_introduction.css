@@ -18,6 +18,7 @@
   font-weight: bold;
   font-size: 14px;
   padding: 0px 20px;
+  margin: 0 !important;
 }
 #company_introduction .main-body .tz-container .main-content .drop-options .arrow {
   position: absolute;
@@ -673,6 +674,7 @@
 }
 #company_introduction_news .main-body .tz-container .news-content .content .content-text div,
 #company_introduction_news .main-body .tz-container .news-content .content .content-text p {
+  margin-top: 0 !important;
   font-size: 12px !important;
   font-family: "PingFang";
   color: #666a75 !important;

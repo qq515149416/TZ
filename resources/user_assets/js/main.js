@@ -76,17 +76,7 @@ $(function() {
             return ""
         }
     }
-    if($("#detail").length) {
-        const dateFormat = require('dateformat');
-        let date = new Date();
-        $.post("/home/defenseIp/getStatistics",{
-            business_id: $("#detail").attr("data-businessid"),
-            ip: $("#detail").attr("data-ip"),
-            date: dateFormat(date, 'yyyy-mm-dd HH:MM:ss')
-        },function(data) {
-            console.log(data);
-        });
-    }
+    
     
     $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['zh-CN']);
     $('#payDate').datetimepicker({
@@ -95,6 +85,28 @@ $(function() {
         minView: 2,
         autoclose: true,
         todayBtn: "linked"
+    }).on('changeDate', function(ev){
+        if(!$('#orderDate').val()) {
+            return ;
+        }
+        var date = ev.date;
+        var end_date = new Date($('#orderDate').val() + " 00:00:00");
+        $("#order #table_data").bootstrapTable("filterBy",{
+            cur_date: date,
+            end_date
+        },{
+            filterAlgorithm: function(row,filters) {
+                // console.log(row,filters)
+                var created_at = new Date(row.created_at);
+                var pay_time = new Date(row.pay_time);
+                if(Math.round(created_at.getTime()/1000) > Math.round(filters.cur_date.getTime()/1000) && Math.round(created_at.getTime()/1000) < Math.round(filters.end_date.getTime()/1000)) {
+                    return true;
+                }
+                if(Math.round(pay_time.getTime()/1000) > Math.round(filters.cur_date.getTime()/1000) && Math.round(pay_time.getTime()/1000) < Math.round(filters.end_date.getTime()/1000)) {
+                    return true;
+                }
+            }
+        })
     });
     $('#orderDate').datetimepicker({
         format: 'yyyy-mm-dd',
@@ -102,6 +114,59 @@ $(function() {
         minView: 2,
         autoclose: true,
         todayBtn: "linked"
+    }).on('changeDate', function(ev){
+        if(!$('#payDate').val()) {
+            return ;
+        }
+        var date = ev.date;
+        var start_date = new Date($('#payDate').val() + " 00:00:00");
+        $("#order #table_data").bootstrapTable("filterBy",{
+            cur_date: date,
+            start_date
+        },{
+            filterAlgorithm: function(row,filters) {
+                // console.log(row,filters)
+                var created_at = new Date(row.created_at);
+                var pay_time = new Date(row.pay_time);
+                if(Math.round(created_at.getTime()/1000) < Math.round(filters.cur_date.getTime()/1000) && Math.round(created_at.getTime()/1000) > Math.round(filters.start_date.getTime()/1000)) {
+                    return true;
+                }
+                if(Math.round(pay_time.getTime()/1000) < Math.round(filters.cur_date.getTime()/1000) && Math.round(pay_time.getTime()/1000) > Math.round(filters.start_date.getTime()/1000)) {
+                    return true;
+                }
+            }
+        })
+    });
+    $("#order .filter").submit(function(e) {
+        if($('#payDate').val() && $('#orderDate').val()) {
+            var end_date = new Date($('#orderDate').val() + " 00:00:00");
+            var start_date = new Date($('#payDate').val() + " 00:00:00");
+            $("#order #table_data").bootstrapTable("filterBy",{
+                cur_date: end_date,
+                start_date,
+                order_id: $("#orderId").val()
+            },{
+                filterAlgorithm: function(row,filters) {
+                    // console.log(row,filters)
+                    var created_at = new Date(row.created_at);
+                    var pay_time = new Date(row.pay_time);
+                    if(Math.round(created_at.getTime()/1000) < Math.round(filters.cur_date.getTime()/1000) && Math.round(created_at.getTime()/1000) > Math.round(filters.start_date.getTime()/1000)) {
+                        return row.order_sn==filters.order_id;
+                    }
+                    if(Math.round(pay_time.getTime()/1000) < Math.round(filters.cur_date.getTime()/1000) && Math.round(pay_time.getTime()/1000) > Math.round(filters.start_date.getTime()/1000)) {
+                        return row.order_sn==filters.order_id;
+                    }
+                    return row.order_sn==filters.order_id;
+                }
+            })
+            return false;
+        }
+        $("#order #table_data").bootstrapTable("filterBy",{
+            order_sn: $("#orderId").val()
+        },{
+            filterAlgorithm: 'and'
+        });
+        return false;
     });
     $('#selectDate').datetimepicker({
         format: 'yyyy-mm-dd HH:ii',
@@ -137,18 +202,19 @@ $(function() {
                 for (let value of dateMap.values()) {
                     dateSet.add(value)
                 }
-                createEchart(dateSet, 'chart', {
+                createEchart(dateSet, 'flow_echars', {
                     ip: $("#flow_echars").attr("data-business-ip")
                 });
             }
         });
     });
     if($("#flow_echars").length) {
-        var date = new Date();
+        const dateFormatComponent = require('dateformat');
+        let date = new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
         $.post("/home/defenseIp/getStatistics",{
             business_id: $("#flow_echars").attr("data-business-id"),
             ip: $("#flow_echars").attr("data-business-ip"),
-            date: dateFormat(date) 
+            date: dateFormatComponent(date,"yyyy-mm-dd hh:MM:ss")
         },function(data) {
             if(data.code==1) {
                 let dateMap = new Map();
@@ -170,7 +236,7 @@ $(function() {
                 for (let value of dateMap.values()) {
                     dateSet.add(value)
                 }
-                createEchart(dateSet, 'chart', {
+                createEchart(dateSet, 'flow_echars', {
                     ip: $("#flow_echars").attr("data-business-ip")
                 });
             }

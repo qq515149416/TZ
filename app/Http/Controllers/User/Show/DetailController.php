@@ -18,7 +18,7 @@ class DetailController extends Controller
     public function index($id)
     {
         return view("user_admin/detail",[
-            "page" => "detail",
+            "page" => "server_detail",
             "data" => $this->detail($id)
         ]);
     }

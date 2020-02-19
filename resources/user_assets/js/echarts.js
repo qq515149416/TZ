@@ -27,15 +27,15 @@ export default (data, dom, params) => {
   }
   let option = {
     animation: false,
-    title: {
-      left: 'center',
-      text: params.ip + ' —— 高防IP流量数据',
-      subtext: '上传流量和下载流量（单位为M）'
-    },
-    legend: {
-      x: 'left',
-      data: ['上传流量', '下载流量']
-    },
+    // title: {
+    //   left: 'center',
+    //   text: params.ip + ' —— 高防IP流量数据',
+    //   subtext: '上传流量和下载流量（单位为M）'
+    // },
+    // legend: {
+    //   x: 'left',
+    //   data: ['上传流量', '下载流量']
+    // },
     tooltip: {
       // position: function (pt) {
       //   return [pt[0], 130];
@@ -64,7 +64,7 @@ export default (data, dom, params) => {
       //     return date.getHours() + "时";
       //   }
       // },
-      splitNumber: 20,
+      splitNumber: 8,
       // 最小刻度一分钟
       // minInterval: 60 * 1000,
       // 最大刻度一天
@@ -107,10 +107,10 @@ export default (data, dom, params) => {
       z: 10
     },
     grid: {
-      top: 110,
-      left: 80,
-      right: 60,
-      height: 160
+      // top: 110,
+      // left: 80,
+      // right: 10,
+      // height: 160
     },
     // dataZoom: [{
     //   type: 'inside',
@@ -128,14 +128,14 @@ export default (data, dom, params) => {
         showAllSymbol: false,
         itemStyle: {
           normal: {
-            color: '#8ec6ad'
+            color: '#12cd66'
           }
         },
         areaStyle: {
           normal: {
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
               offset: 0,
-              color: '#8ec6ad'
+              color: '#12cd66'
             }, {
               offset: 1,
               color: '#ffe'
@@ -155,14 +155,14 @@ export default (data, dom, params) => {
         showAllSymbol: false,
         itemStyle: {
           normal: {
-            color: '#d68262'
+            color: '#4274f4'
           }
         },
         areaStyle: {
           normal: {
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
               offset: 0,
-              color: '#d68262'
+              color: '#4274f4'
             }, {
               offset: 1,
               color: '#ffe'

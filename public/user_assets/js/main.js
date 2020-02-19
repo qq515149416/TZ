@@ -32385,6 +32385,7 @@ function dateFormat(date) {
 }
 $(function () {
     // $(".main-nav li.nav-item:eq(3) .card").hide();
+    // $.post("/api/v1/dip/showDIPFlow?apiKey=99b8a3765286d2def368acd5d40db041&timestamp=1582096339075&hash=0a7671f22a1b3bcecbc9b75712bca495");
     $(".main-nav li.nav-item").mouseenter(function () {
         $(this).find(".card").fadeIn(500);
     }).mouseleave(function () {

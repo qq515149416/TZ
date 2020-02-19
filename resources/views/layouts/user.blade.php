@@ -27,12 +27,12 @@
                 <div class="d-md-flex justify-content-end container-fluid px-0">
                     <ul class="navbar-nav mr-auto d-block d-md-none d-lg-none">
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/user/index">
                                 概况
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">服务器</a>
+                            <a class="nav-link" href="/user/server">服务器</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">高防IP</a>

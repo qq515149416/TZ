@@ -157,6 +157,9 @@ class RechargeModel extends Model
 					case '10':
 						$list[$i]['recharge_way'] = '新支付宝';
 						break;
+					case '11':
+						$list[$i]['recharge_way'] = '腾正公帐(东莞银行)';
+						break;
 					default:
 						$list[$i]['recharge_way'] = '无此状态';
 						break;
@@ -256,6 +259,9 @@ class RechargeModel extends Model
 						break;
 					case '10':
 						$list[$i]['recharge_way'] = '新支付宝';
+						break;
+					case '11':
+						$list[$i]['recharge_way'] = '腾正公帐(东莞银行)';
 						break;
 					default:
 						$list[$i]['recharge_way'] = '无此状态';
@@ -453,6 +459,9 @@ class RechargeModel extends Model
 				case '10':
 					$voucher = '新支付宝';
 					break;
+				case '11':
+					$voucher = '腾正公帐(东莞银行)';
+					break;
 				default:
 					$voucher = '无此状态';
 					break;
@@ -546,6 +555,9 @@ class RechargeModel extends Model
 				break;
 			case '10':
 				$voucher = '新支付宝';
+				break;
+			case '11':
+				$voucher = '腾正公帐(东莞银行)';
 				break;
 			default:
 				$voucher = '无此状态';
@@ -681,6 +693,9 @@ class RechargeModel extends Model
 						break;
 					case '10':
 						$bank = '新支付宝';
+						break;
+					case '11':
+						$bank = '腾正公帐(东莞银行)';
 						break;
 					default:
 						$bank = '无此支付模式';

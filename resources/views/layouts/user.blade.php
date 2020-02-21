@@ -143,7 +143,7 @@
                             @endcomponent
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link py-0 text" href="#">
+                            <a class="nav-link py-0 text" href="/tz/member92019.html">
                                 <span class="text font-medium">
                                     跳转旧版本
                                 </span>

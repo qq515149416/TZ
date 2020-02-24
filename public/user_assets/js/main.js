@@ -32707,6 +32707,14 @@ $(function () {
         return false;
     });
     // $("#renewModal select[name='business']").UCFormSelect();
+    $("#orderDetailModal").on("shown.bs.modal", function (e) {
+        $(this).find(".order-id").html($(e.relatedTarget).attr("data-order-sn"));
+        $(this).find(".type").html($(e.relatedTarget).attr("data-order-type"));
+        $(this).find(".create-at").html($(e.relatedTarget).attr("data-created-at"));
+        $(this).find(".pay-datetime").html($(e.relatedTarget).attr("data-pay-time"));
+        $(this).find(".handle").html("￥" + $(e.relatedTarget).attr("data-price"));
+        $(this).find(".actual").html("￥" + $(e.relatedTarget).attr("data-payable-money"));
+    });
     $("#rechargeModal").on("shown.bs.modal", function (e) {
         var self = this;
         $(self).data("pay_type", $(this).find(".select-type-pay > ul > li.active").attr("data-type"));
@@ -32928,7 +32936,7 @@ window.operatFormatter = function (value, row) {
     <a class="view" href="/user/detail/' + row.id + '">查看</a>';
 };
 window.showFormatter = function (value, row) {
-    return '<span class="view" data-order-sn="' + row.order_sn + '">查看</span>';
+    return '<span class="view" data-order-sn="' + row.order_sn + '" data-payable-money="' + row.payable_money + '" data-price="' + row.price + '" data-pay-time="' + (row.pay_time || "") + '" data-created-at="' + row.created_at + '" data-order-type="' + row.order_type + '" data-toggle="modal" data-target="#orderDetailModal">查看</span>';
 };
 window.process_data = function (res) {
     if (res.code == 1) {

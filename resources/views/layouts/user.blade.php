@@ -196,7 +196,7 @@
                     </ul>
                 </div>
                 @yield('mobile_tab')
-                <div class="col px-0 pt-4 align-items-stretch content overflow-hidden-x">
+                <div class="col px-0 pt-4 pb-5 align-items-stretch content overflow-hidden-x">
                     @yield('content')
 
                 </div>

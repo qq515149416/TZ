@@ -32794,6 +32794,11 @@ $(function () {
                 });
                 $(self).find("select[name='business']").UCFormSelect("destroy");
                 $(self).find("select[name='business']").UCFormSelect();
+            } else {
+                $(self).find("select[name='business']").empty();
+                $(self).find(".price .amount").html("0");
+                $(self).find("select[name='business']").UCFormSelect("destroy");
+                $(self).find("select[name='business']").UCFormSelect();
             }
         });
     });

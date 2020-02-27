@@ -31,10 +31,10 @@
         <div class="filter d-flex justify-content-end">
             <form class="form-inline" autocomplete="off">
                 <div class="form-group mb-1 mt-3">
-                    <input type="text" class="form-control font-regular" id="payDate" placeholder="支付开始时间 / 支付结束时间">
+                    <input type="text" class="form-control font-regular" id="payDate" placeholder="支付开始时间 / 支付开始时间">
                 </div>
                 <div class="form-group mx-sm-3 mb-1 mt-3">
-                    <input type="text" class="form-control font-regular" id="orderDate" placeholder="下单开始时间 / 下单结束时间">
+                    <input type="text" class="form-control font-regular" id="orderDate" placeholder="下单结束时间 / 下单结束时间">
                 </div>
                 <div class="form-group mr-sm-3 mb-1 mt-3">
                     <input type="text" class="form-control font-regular" id="orderId" placeholder="请输入订单编号">

@@ -42,7 +42,7 @@ class XADefenseDataModel extends Model
                         'time' => $fTime,
                         'bandwidth_down' => (float)$fData['MAX(fyip.bandwidth_down)'],
                         'upstream_bandwidth_up' => (float)$fData['MAX(fyip.upstream_bandwidth_up)'],
-
+                        'bandwidth_up'=>(float)$fData['MAX(fyip.bandwidth_up)']
                     );
 //                    $data[]['time']=$fTime;
 //                    $data[]['bandwidth_down']=(float)$fData['MAX(fyip.bandwidth_down)'];
@@ -60,7 +60,7 @@ class XADefenseDataModel extends Model
                 ->where('ipaddress', '=', $ip)
                 ->whereBetween('time', [$startDate, $endDate])
                 ->orderBy('time', 'desc')
-                ->get(['time', 'bandwidth_down', 'upstream_bandwidth_up'])
+                ->get(['time', 'bandwidth_down', 'upstream_bandwidth_up','bandwidth_up'])
                 ->toArray();
         }
 

@@ -6,6 +6,7 @@
   font-family: "pingFang", "\5FAE\8F6F\96C5\9ED1", Arial, Helvetica, sans-serif;
 }
 body {
+  margin: 0px !important;
   width: 100%;
 }
 li {
@@ -267,17 +268,20 @@ input:hover {
   text-align: center;
   color: #ffffff;
   padding: 0 3px;
+  clear: none !important;
 }
 .footer .tz-main .system-technology-service ul li.footer-items img {
   width: 43px;
 }
 .footer .tz-main .system-technology-service ul li.footer-items .f-title {
+  margin: 0 !important;
   font-size: 14px;
   font-family: "PingFang";
   font-weight: bold;
   padding: 5px 0px;
 }
 .footer .tz-main .system-technology-service ul li.footer-items .f-text {
+  margin: 0 !important;
   font-size: 10px;
   font-family: "PingFang";
 }
@@ -302,6 +306,8 @@ input:hover {
   margin: 8px 0px;
 }
 .footer .tz-main .phone-call .p-text p {
+  margin: 0 !important;
+  line-height: 42px !important;
   font-size: 13px;
   font-family: "PingFang";
   color: #ffffff;
@@ -5324,6 +5330,7 @@ input:hover {
   font-weight: bold;
   font-size: 14px;
   padding: 0px 20px;
+  margin: 0 !important;
 }
 #company_introduction .main-body .tz-container .main-content .drop-options .arrow {
   position: absolute;
@@ -5994,6 +6001,7 @@ input:hover {
 }
 #company_introduction_news .main-body .tz-container .news-content .content .content-text div,
 #company_introduction_news .main-body .tz-container .news-content .content .content-text p {
+  margin-top: 0 !important;
   font-size: 12px !important;
   font-family: "PingFang";
   color: #666a75 !important;

@@ -12152,3 +12152,191 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #new_year > .product-item .content > ul.products > li .product-footer > p:last-of-type {
   margin-bottom: 0;
 }
+#nCoV {
+  background: url(/images/nCoV_bg.png?1851e2c465759da9d0ba2910cecbd0f9) no-repeat;
+  background-size: 100% 100%;
+  padding-top: 766px;
+}
+#nCoV .title {
+  text-align: center;
+}
+#nCoV .title span {
+  font-size: 30px;
+  color: #fff;
+  position: relative;
+}
+#nCoV .title span::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -73px;
+  width: 48px;
+  height: 37px;
+  background: url(/images/nCoV_zuo_bq.png?d23f0620a5671e6bed33af3067d37720) no-repeat;
+}
+#nCoV .title span::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -73px;
+  width: 48px;
+  height: 37px;
+  background: url(/images/nCoV_you_bq.png?08c5b6ca6a2e07d4eb2e3a7988c27113) no-repeat;
+}
+#nCoV .rule {
+  margin: 0 auto;
+  margin-top: 70px;
+  margin-bottom: 180px;
+  width: 934px;
+}
+#nCoV .rule h4 {
+  margin: 0;
+  font-size: 18px;
+  color: #ff0000;
+  margin-bottom: 14px;
+}
+#nCoV .rule ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 18px;
+  color: #fff;
+}
+#nCoV .rule ul li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 14px;
+}
+#nCoV .rule ul li span {
+  width: 126px;
+}
+#nCoV .rule ul li span.w280 {
+  width: 280px;
+}
+#nCoV .rule ul li p {
+  margin: 0;
+}
+#nCoV .nCoV-product {
+  width: 1180px;
+  margin: 0 auto;
+  margin-top: 55px;
+}
+#nCoV .nCoV-product.bgp {
+  margin-top: 60px;
+}
+#nCoV .nCoV-product.bgp .header::after {
+  background: url(/images/nCoV_CH_BGP.png?41c81945cc95e6ec67dae8eafef3bcc1) no-repeat;
+}
+#nCoV .nCoV-product .header {
+  padding-top: 23px;
+  padding-bottom: 16px;
+  padding-left: 26px;
+  background-color: #05c589;
+  border-radius: 4px 4px 0 0;
+  position: relative;
+}
+#nCoV .nCoV-product .header::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 56px;
+  width: 80px;
+  height: 85px;
+  background: url(/images/nCoV_CH_gaofang.png?975469b25411594dcb50820f04fc2a4e) no-repeat;
+}
+#nCoV .nCoV-product .header h4 {
+  margin: 0;
+  margin-bottom: 14px;
+  font-size: 24px;
+  color: #fff;
+}
+#nCoV .nCoV-product .header p {
+  margin: 0;
+  font-size: 14px;
+  color: #fff;
+}
+#nCoV .nCoV-product .section {
+  background-color: rgba(20, 24, 63, 0.45);
+  padding: 30px;
+  border-radius: 0 0 4px 4px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+#nCoV .nCoV-product .section .cost-performance {
+  padding-left: 44px;
+  padding-top: 10px;
+}
+#nCoV .nCoV-product .section .cost-performance .price {
+  font-size: 16px;
+  color: #fff;
+  vertical-align: middle;
+}
+#nCoV .nCoV-product .section .cost-performance .price .currency {
+  font-family: "\5FAE\8F6F\96C5\9ED1";
+  font-size: 22px;
+}
+#nCoV .nCoV-product .section .cost-performance .price .amount {
+  font-size: 36px;
+  line-height: 36px;
+  color: #ff0000;
+}
+#nCoV .nCoV-product .section .cost-performance .original-price {
+  font-size: 14px;
+  color: #fff;
+  text-decoration: line-through;
+  margin-bottom: 8px;
+  margin-top: 4px;
+  text-align: center;
+}
+#nCoV .nCoV-product .section .cost-performance .buy {
+  width: 168px;
+  height: 38px;
+  line-height: 38px;
+  text-decoration: none;
+  color: #fff;
+  font-size: 16px;
+  text-align: center;
+  display: inline-block;
+  background-color: #ff0000;
+  border-radius: 2px;
+}
+#nCoV .nCoV-product .section .physical-config {
+  width: 878px;
+  border-right: 1px dashed #84879b;
+}
+#nCoV .nCoV-product .section .physical-config .config-title {
+  display: inline-block;
+  padding: 4px 10px;
+  border: 1px solid #fff;
+  border-radius: 2px;
+  color: #fff;
+  font-size: 14px;
+}
+#nCoV .nCoV-product .section .physical-config .config {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 30px;
+  padding-right: 48px;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+#nCoV .nCoV-product .section .physical-config .config li {
+  text-align: center;
+}
+#nCoV .nCoV-product .section .physical-config .config li .attr {
+  font-size: 16px;
+  color: #fff;
+  display: block;
+}
+#nCoV .nCoV-product .section .physical-config .config li .val {
+  font-size: 18px;
+  color: #fff;
+  display: block;
+}

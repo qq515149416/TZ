@@ -56,7 +56,7 @@ class XADefenseDataModel extends Model
         } else {
             $data = DB::connection('mysql_xagf')
                 ->table("fyip_5max")
-                ->select('id', 'time', 'bandwidth_down', 'upstream_bandwidth_up')
+                ->select('id', 'time', 'bandwidth_down', 'upstream_bandwidth_up','bandwidth_up')
                 ->where('ipaddress', '=', $ip)
                 ->whereBetween('time', [$startDate, $endDate])
                 ->orderBy('time', 'desc')

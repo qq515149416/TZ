@@ -1,10 +1,10 @@
 @extends('layouts.layout')
 
-@section('title', '共抗疫 稳经济[腾正科技]')
+@section('title', '共抗疫，稳经济！300G三线高防服务器BGP服务器助力复工复产-IDC服务商[腾正科技]')
 
-@section('keywords', '共抗疫,稳经济')
+@section('keywords', '三线高防服务器，服务器最新活动，BGP服务器，企业高防服务器，企业级物理机,微端高防服务器，平台网站服务器，服务器价格')
 
-@section('description', '助力复工复产，我们（或腾正）在行动')
+@section('description', '共抗疫，稳经济！IDC服务商腾正在行动助力复工复产，100M独享300G防御游戏、支付平台爆款三线高防物理服务器仅1999元每台；100M独享10G防御企业级BGP服务器仅999元每台，点击查看活动详情！')
 
 @section('content')
 

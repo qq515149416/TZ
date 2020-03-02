@@ -92,7 +92,7 @@
                     <div class="original-price font-medium">
                         原价3800元/台
                     </div>
-                    <a class="buy font-heavy" href="javascript:;">立即购买</a>
+                    <a class="buy font-heavy" href="javascript:;" onclick="randomqq()">立即购买</a>
                 </div>
             </div>
         </div>
@@ -177,7 +177,7 @@
                     <div class="original-price font-medium">
                         原价1800元/台
                     </div>
-                    <a class="buy font-heavy" href="javascript:;">立即购买</a>
+                    <a class="buy font-heavy" href="javascript:;" onclick="randomqq()">立即购买</a>
                 </div>
             </div>
         </div>

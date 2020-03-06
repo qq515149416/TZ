@@ -20,7 +20,7 @@ class OaStaff extends Model
     {
         $list=[];   //定义空数组
         foreach ($jobId as $key => $value) {
-            $list =  array_merge($list,$this->where(['job' => $value])->get()->toArray());  //拼装数组
+            $list =  array_merge($list,$this->where(['job' => $value,'dimission'=>0])->get()->toArray());  //拼装数组
         }
         return $list;
     }

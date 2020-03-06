@@ -52,6 +52,7 @@ class AboutUsController extends Controller
                 ];
             break;
         }
+        
         return view("http/aboutUs",[
             "page" => $page,
             "tdk" => $tdk

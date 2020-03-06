@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Artisan; 
 use Encore\Admin\Facades\Admin;
 use XS;
 use XSDocument;
@@ -391,6 +392,13 @@ class ContactsController extends Controller
         // dd($result);
         // $index->flushIndex();
     }
+
+    private function clear() {
+        if(!defined('STDIN'))  define('STDIN',  fopen('php://stdin',  'rb'));
+        if(!defined('STDOUT')) define('STDOUT', fopen('php://stdout', 'wb'));
+        if(!defined('STDERR')) define('STDERR', fopen('php://stderr', 'wb'));
+        Artisan::call("view:clear");
+    }
     
     /**
      * 用于查询系统联系人（业务员）的信息
@@ -415,6 +423,8 @@ class ContactsController extends Controller
         $create = new Contacts();
         // 数据进行model层处理
         $result = $create->insert($data);
+        // 清理视图缓存
+        $this->clear();
         // 返回信息
         return tz_ajax_echo($result['data'],$result['msg'],$result['code']);
     }
@@ -447,6 +457,8 @@ class ContactsController extends Controller
         $create = new Contacts();
         // 数据进行model层处理
         $result = $create->doEdit($data);
+        // 清理视图缓存
+        $this->clear();
         // 返回信息
         return tz_ajax_echo($result,$result['msg'],$result['code']);
     }
@@ -464,6 +476,8 @@ class ContactsController extends Controller
         $edit = new Contacts();
         // 将参数传递到对应的model的方法并进行接收结果
         $result = $edit->dele($id);
+        // 清理视图缓存
+        $this->clear();
         // 返回相关数据和信息提示
         return tz_ajax_echo($result,$result['msg'],$result['code']);
     }

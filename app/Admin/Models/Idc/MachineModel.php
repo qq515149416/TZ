@@ -328,7 +328,7 @@ class MachineModel extends Model
 			}
 		}
 		if($machine->used_status == 2){//当机器的状态为使用中时，更改业务里面的resource_detail字段
-			$business = DB::table('tz_business')->where(['business_number'=>$machine->own_business])->whereBetween('business_status',[0,4])->whereBetween('remove_status',[0,1])->select('id','business_number','machine_number','resource_detail')->first();
+			$business = DB::table('tz_business')->where(['business_number'=>$machine->own_business])->whereBetween('business_status',[0,4])->whereBetween('remove_status',[0,4])->select('id','business_number','machine_number','resource_detail')->first();
 			if(!empty($business)){
 				/**
 				 * 重新对机器绑定的业务里面的详情进行更新

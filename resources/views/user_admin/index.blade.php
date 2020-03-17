@@ -34,32 +34,40 @@
             <div class="paper jumbotron-fluid rounded bg-white px-4 py-4">
                 <div class="row">
                     <div class="col text-center border-right">
-                        <span class="user-detail-icon discount mt-2">
-                        </span>
-                        <span class="user-detail-text font-medium d-block mt-2 pt-2">
-                            优惠票券
-                        </span>
+                        <a class="text-decoration-none" href="javascript:;">
+                            <span class="user-detail-icon discount mt-2">
+                            </span>
+                            <span class="user-detail-text font-medium d-block mt-2 pt-2">
+                                优惠票券
+                            </span>
+                        </a>
                     </div>
                     <div class="col text-center border-right">
-                        <span class="user-detail-icon order mt-2">
-                        </span>
-                        <span class="user-detail-text font-medium d-block mt-2 pt-2">
-                            我的订单
-                        </span>
+                        <a class="text-decoration-none" href="/user/order">
+                            <span class="user-detail-icon order mt-2">
+                            </span>
+                            <span class="user-detail-text font-medium d-block mt-2 pt-2">
+                                我的订单
+                            </span>
+                        </a>
                     </div>
                     <div class="col text-center border-right">
-                        <span class="user-detail-icon transaction mt-2">
-                        </span>
-                        <span class="user-detail-text font-medium d-block mt-2 pt-2">
-                            交易明细
-                        </span>
+                        <a class="text-decoration-none" href="javascript:;">
+                            <span class="user-detail-icon transaction mt-2">
+                            </span>
+                            <span class="user-detail-text font-medium d-block mt-2 pt-2">
+                                交易明细
+                            </span>
+                        </a>
                     </div>
                     <div class="col text-center">
-                        <span class="user-detail-icon invoice mt-2">
-                        </span>
-                        <span class="user-detail-text font-medium d-block mt-2 pt-2">
-                            发票管理
-                        </span>
+                        <a class="text-decoration-none" href="javascript:;">
+                            <span class="user-detail-icon invoice mt-2">
+                            </span>
+                            <span class="user-detail-text font-medium d-block mt-2 pt-2">
+                                发票管理
+                            </span>
+                        </a>
                     </div>
                 </div>
             </div>

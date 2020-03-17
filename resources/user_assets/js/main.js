@@ -189,7 +189,8 @@ $(function() {
                 data.data.forEach((item, index, arr) => {
                     // console.log(dateFormat(new Date(item.time * 1000),"yyyy-mm-dd HH:MM:ss"));
                     let date = new Date(item.time * 1000)
-                    let dateString = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay() + ' ' + date.getHours() + ':' + date.getMinutes()
+                    let dateString = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay() + ' ' + date.getHours();
+                    // + ':' + date.getMinutes()
                     if (dateMap.has(dateString)) {
                         // item["upstream_bandwidth_up"] += dateMap.get(date.getHours() + ":" + date.getMinutes())["upstream_bandwidth_up"];
                         // item["bandwidth_down"] += dateMap.get(date.getHours() + ":" + date.getMinutes())["bandwidth_down"];
@@ -223,7 +224,8 @@ $(function() {
                 data.data.forEach((item, index, arr) => {
                     // console.log(dateFormat(new Date(item.time * 1000),"yyyy-mm-dd HH:MM:ss"));
                     let date = new Date(item.time * 1000)
-                    let dateString = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay() + ' ' + date.getHours() + ':' + date.getMinutes()
+                    let dateString = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay() + ' ' + date.getHours();
+                    // + ':' + date.getMinutes()
                     if (dateMap.has(dateString)) {
                         // item["upstream_bandwidth_up"] += dateMap.get(date.getHours() + ":" + date.getMinutes())["upstream_bandwidth_up"];
                         // item["bandwidth_down"] += dateMap.get(date.getHours() + ":" + date.getMinutes())["bandwidth_down"];
@@ -377,7 +379,7 @@ $(function() {
                     trade_no: Math.ceil(100 + (Math.random() * 1000))
                 },function(data) {
                     if(data.code==1) {
-                        new QRCode($(self).find("#weixin_pay")[0], data.data);
+                        new QRCode($(self).find("#weixin_pay")[0], data.data.url);
                         $(self).find(".alert").show(500);
                     }
                 });

@@ -120,27 +120,51 @@
   background-color: transparent;
   border: 1px solid #d9dee6;
 }
-#user_admin .main-content .content #index .paper .user-detail-text {
+#user_admin .main-content .content #index .paper .row .col:nth-of-type(1) a:hover .user-detail-text {
+  color: #5580f5;
+}
+#user_admin .main-content .content #index .paper .row .col:nth-of-type(1) a:hover .user-detail-icon.discount {
+  background-image: url("/user_assets/images/content/discount_on.png");
+}
+#user_admin .main-content .content #index .paper .row .col:nth-of-type(2) a:hover .user-detail-text {
+  color: #5580f5;
+}
+#user_admin .main-content .content #index .paper .row .col:nth-of-type(2) a:hover .user-detail-icon.order {
+  background-image: url("/user_assets/images/content/order_on.png");
+}
+#user_admin .main-content .content #index .paper .row .col:nth-of-type(3) a:hover .user-detail-text {
+  color: #5580f5;
+}
+#user_admin .main-content .content #index .paper .row .col:nth-of-type(3) a:hover .user-detail-icon.transaction {
+  background-image: url("/user_assets/images/content/transaction_on.png");
+}
+#user_admin .main-content .content #index .paper .row .col:nth-of-type(4) a:hover .user-detail-text {
+  color: #5580f5;
+}
+#user_admin .main-content .content #index .paper .row .col:nth-of-type(4) a:hover .user-detail-icon.invoice {
+  background-image: url("/user_assets/images/content/invoice_on.png");
+}
+#user_admin .main-content .content #index .paper a .user-detail-text {
   font-size: 14px;
   color: #62676f;
 }
-#user_admin .main-content .content #index .paper .user-detail-icon {
+#user_admin .main-content .content #index .paper a .user-detail-icon {
   width: 40px;
   height: 40px;
   background-repeat: no-repeat;
   background-position: center center;
   display: inline-block;
 }
-#user_admin .main-content .content #index .paper .user-detail-icon.discount {
+#user_admin .main-content .content #index .paper a .user-detail-icon.discount {
   background-image: url("/user_assets/images/content/discount_off.png");
 }
-#user_admin .main-content .content #index .paper .user-detail-icon.order {
+#user_admin .main-content .content #index .paper a .user-detail-icon.order {
   background-image: url("/user_assets/images/content/order_off.png");
 }
-#user_admin .main-content .content #index .paper .user-detail-icon.transaction {
+#user_admin .main-content .content #index .paper a .user-detail-icon.transaction {
   background-image: url("/user_assets/images/content/transaction_off.png");
 }
-#user_admin .main-content .content #index .paper .user-detail-icon.invoice {
+#user_admin .main-content .content #index .paper a .user-detail-icon.invoice {
   background-image: url("/user_assets/images/content/invoice_off.png");
 }
 #user_admin .main-content .content #index .paper .balance-title span {

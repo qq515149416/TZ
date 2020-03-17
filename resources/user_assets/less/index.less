@@ -38,27 +38,83 @@
                 }
             }
         }
-        .user-detail-text {
-            font-size: 14px;
-            color: #62676f;
+        & {
+            .row {
+                .col:nth-of-type(1) {
+                    a:hover {
+                        .user-detail-text {
+                            color: #5580f5;
+                        }
+                        .user-detail-icon {
+                            &.discount {
+                                background-image: url("@{base_img_url}/content/discount_on.png");
+                            }
+                        }
+                    }
+                    
+                }
+                .col:nth-of-type(2) {
+                    a:hover {
+                        .user-detail-text {
+                            color: #5580f5;
+                        }
+                        .user-detail-icon {
+                            &.order {
+                                background-image: url("@{base_img_url}/content/order_on.png");
+                            }
+                        }
+                    }
+                    
+                }
+                .col:nth-of-type(3) {
+                    a:hover {
+                        .user-detail-text {
+                            color: #5580f5;
+                        }
+                        .user-detail-icon {
+                            &.transaction {
+                                background-image: url("@{base_img_url}/content/transaction_on.png");
+                            }
+                        }
+                    }
+                }
+                .col:nth-of-type(4) {
+                    a:hover {
+                        .user-detail-text {
+                            color: #5580f5;
+                        }
+                        .user-detail-icon {
+                            &.invoice {
+                                background-image: url("@{base_img_url}/content/invoice_on.png");
+                            }
+                        }
+                    }
+                }
+            }
         }
-        .user-detail-icon {
-            width: 40px;
-            height: 40px;
-            background-repeat: no-repeat;
-            background-position: center center;
-            display: inline-block;
-            &.discount {
-                background-image: url("@{base_img_url}/content/discount_off.png");
+        a {
+            .user-detail-text {
+                font-size: 14px;
+                color: #62676f;
             }
-            &.order {
-                background-image: url("@{base_img_url}/content/order_off.png");
-            }
-            &.transaction {
-                background-image: url("@{base_img_url}/content/transaction_off.png");
-            }
-            &.invoice {
-                background-image: url("@{base_img_url}/content/invoice_off.png");
+            .user-detail-icon {
+                width: 40px;
+                height: 40px;
+                background-repeat: no-repeat;
+                background-position: center center;
+                display: inline-block;
+                &.discount {
+                    background-image: url("@{base_img_url}/content/discount_off.png");
+                }
+                &.order {
+                    background-image: url("@{base_img_url}/content/order_off.png");
+                }
+                &.transaction {
+                    background-image: url("@{base_img_url}/content/transaction_off.png");
+                }
+                &.invoice {
+                    background-image: url("@{base_img_url}/content/invoice_off.png");
+                }
             }
         }
         .balance-title {

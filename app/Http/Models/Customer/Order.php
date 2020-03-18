@@ -867,7 +867,7 @@ class Order extends Model
 			 * 主机/机柜资源的业务续费
 			 */
 			if($type < 4){
-
+				$where = [];//每进一次区间清空上一次条件
 				$where[] = ['business_status','>',0];//业务状态为正常
 				$where[] = ['business_status','<',4];//业务状态为正常
 				$where[] = ['remove_status',0];//下架状态为正常
@@ -900,6 +900,7 @@ class Order extends Model
 			 * //4=>'IP',5=>'CPU',6=>'硬盘',7=>'内存',8=>'带宽',9=>'防护'资源续费
 			 */
 			if($type > 3 && $type < 10){
+				$order_where = [];//每进一次区间清空上一次条件
 				$order_where[] = ['order_status','>',0];//资源业务状态为正常
 				$order_where[] = ['order_status','<',3];//资源业务状态为正常
 				$order_where[] = ['remove_status',0];//资源业务未下架

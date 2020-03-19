@@ -894,6 +894,7 @@ class Order extends Model
 				$order['payable_money'] = bcmul($resource_data->price,$length,2);//订单应付金额
 				$order['note'] = '资源到期时间跟主业务到期时间一致，不足月按实际使用天数收费';
 				$order['price'] =$resource_data->price;//订单单价
+				$order['machineroom_name'] = $resource_detail->machineroom_name;
 			}
 
 			/**
@@ -914,12 +915,14 @@ class Order extends Model
 					return $return;
 				}
 
+				$business = Business::where(['business_number'=>$resource_data->business_sn])->select('resource_detail','endding_time')->first();
 				/**
 				 * 接收关联主机业务的到期时间
 				 */
 				$end_str = 'end'.$resource_data->business_sn;//生成带业务号的字符串
-				$$end_str = $$end_str?$$end_str:Business::where(['business_number'=>$resource_data->business_sn])->value('endding_time');
-				
+				// $$end_str = $$end_str?$$end_str:Business::where(['business_number'=>$resource_data->business_sn])->value('endding_time');
+				$$end_str = $$end_str?$$end_str:$business->endding_time;
+				$business_detail = json_decode($business->resource_detail);
 				$end_time = time_calculation($resource_data->end_time,$length,'month');//到期时间计算
 
 				/**	
@@ -941,11 +944,13 @@ class Order extends Model
 					$order['duration'] = $day;//订单时长
 					$order['note'] = '资源到期时间跟主业务到期时间一致，不足月按实际使用天数收费';
 					$order['price'] = $day_money;//订单单价
+					$order['machineroom_name'] = $business_detail->machineroom_name;
 
 				} else {
 					$order['payable_money'] = bcmul($resource_data->price,$length,2);//订单应付金额
 					$order['duration'] = $length;//订单时长
 					$order['price'] = $resource_data->price;//订单单价
+					$order['machineroom_name'] = $business_detail->machineroom_name;
 				}
 
 			}

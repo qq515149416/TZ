@@ -480,15 +480,15 @@ class OrdersModel extends Model
 			return $return;
 		}
 		//所对应资源表的业务编号和到期时间，状态修改成功后进行事务提交
-		// $xunsearch = new XS('orders');
-	    // $index = $xunsearch->index;
-        // $doc['id'] = strtolower($row);
-		// $doc['machine_sn'] = strtolower($insert['machine_sn']);
-		// $doc['business_sn'] = strtolower($insert['business_sn']);
-		// $doc['order_sn'] = strtolower($order_sn);
-		// $document = new \XSDocument($doc);
-		// $index->update($document);
-		// $index->flushIndex();
+		$xunsearch = new XS('orders');
+	    $index = $xunsearch->index;
+        $doc['id'] = strtolower($row);
+		$doc['machine_sn'] = strtolower($insert['machine_sn']);
+		$doc['business_sn'] = strtolower($insert['business_sn']);
+		$doc['order_sn'] = strtolower($order_sn);
+		$document = new \XSDocument($doc);
+		$index->update($document);
+		$index->flushIndex();
 		DB::commit();
 		$return['data'] = $order_sn;
 		$return['code'] = 1;

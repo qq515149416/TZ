@@ -94,7 +94,7 @@ class Order extends Model
 			$value->status 			= $value->order_status;
 			$value->order_status 		= $order_status[$value->order_status];
 			$value->business_name		= $admin_name[$value->business_id];
-
+			$value->machine_number = Business::where(['business_number'=>$value->business_sn])->value('machine_number');
 			//这个是属于主机的分类数组
 			$machine_arr = [ 1 , 2 , 4 , 5 , 6 , 7 , 8 , 9 ];
 			//机柜的数组

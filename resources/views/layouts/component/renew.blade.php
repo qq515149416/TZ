@@ -20,7 +20,7 @@
         <div class="duration d-flex mt-3">
           <span class="font-medium align-self-center mr-3">续费时长</span>
           <div class="duration-select d-flex">
-            <div class="duration-select-btn font-regular py-1 px-2 rounded mr-2" data-month="1">
+            <div class="duration-select-btn font-regular py-1 px-2 rounded mr-2 active" data-month="1">
               1个月
             </div>
             <div class="duration-select-btn font-regular py-1 px-2 rounded mr-2" data-month="2">
@@ -29,7 +29,7 @@
             <div class="duration-select-btn font-regular py-1 px-2 rounded mr-2" data-month="3">
               3个月
             </div>
-            <div class="duration-select-btn font-regular py-1 px-2 rounded mr-2 active" data-month="6">
+            <div class="duration-select-btn font-regular py-1 px-2 rounded mr-2" data-month="6">
               半年
             </div>
             <div class="duration-select-btn font-regular py-1 px-2 rounded mr-2" data-month="12">

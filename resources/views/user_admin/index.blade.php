@@ -82,16 +82,16 @@
                             基本信息
                         </div>
                         <div class="paper-content font-medium">
-                            <p class="my-0 mt-4 pt-1 d-flex justify-content-between user-mailbox">
-                                <span>常用邮箱&nbsp;&nbsp;123456@qq.com</span>
+                            <p class="my-0 mt-4 pt-1 d-flex justify-content-between user-mailbox" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+                                <span class="text-truncate">常用邮箱&nbsp;&nbsp;123456@qq.com</span>
                                 <span class="text-primary">已绑定</span>
                             </p>
-                            <p class="my-0 mt-4 pt-1 d-flex justify-content-between user-phone">
-                                <span>手机号码&nbsp;&nbsp;12345678901</span>
+                            <p class="my-0 mt-4 pt-1 d-flex justify-content-between user-phone" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+                                <span class="text-truncate">手机号码&nbsp;&nbsp;12345678901</span>
                                 <span class="text-primary">已绑定</span>
                             </p>
-                            <p class="mt-4 pt-1 d-flex justify-content-between user-qq">
-                                <span>QQ号码&nbsp;&nbsp;123456</span>
+                            <p class="mt-4 pt-1 d-flex justify-content-between user-qq" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+                                <span class="text-truncate">QQ号码&nbsp;&nbsp;123456</span>
                                 <span class="text-primary">已绑定</span>
                             </p>
                         </div>

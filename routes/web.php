@@ -119,6 +119,7 @@ Route::group([
     Route::get("server","User\Show\ServerController@index");    
     Route::get("order","User\Show\OrderController@index");    
     Route::get("detail/{id}","User\Show\DetailController@index");
+    Route::get("gaofang","User\Show\GaofangController@index");
 });
 /**
  * 测试组

@@ -32387,9 +32387,9 @@ $(function () {
     // $(".main-nav li.nav-item:eq(3) .card").hide();
     // $.post("/api/v1/dip/showDIPFlow?apiKey=99b8a3765286d2def368acd5d40db041&timestamp=1582096339075&hash=0a7671f22a1b3bcecbc9b75712bca495");
     $(".main-nav li.nav-item").mouseenter(function () {
-        $(this).find(".card").fadeIn(500);
+        $(this).find(".card").fadeIn(200);
     }).mouseleave(function () {
-        $(this).find(".card").fadeOut(500);
+        $(this).find(".card").fadeOut(200);
     });
     if ($("#server").length) {
         $.fn.bootstrapTable.locales['zh-CN']["formatShowingRows"] = function () {
@@ -32636,8 +32636,10 @@ $(function () {
     showInfo.ready(function () {
         this.intoHTML("#user_admin .global-balance", this.user.money);
         var cert = this.user.email && this.user.msg_phone && this.user.msg_qq;
-        this.intoHTML("#index .user-info h5", this.user.nickname + '<span class="font-medium status badge badge-light ml-2">' + (cert ? '已认证' : '未认证') + '</span>');
+        this.intoHTML("#index .user-info h5", '<span class="text-truncate" data-toggle="tooltip" data-placement="top" title="Tooltip on top">' + this.user.nickname + '</span>' + '<span class="font-medium status badge badge-light ml-2">' + (cert ? '已认证' : '未认证') + '</span>');
+        $("#index .user-info h5 span.text-truncate").attr("title", this.user.nickname);
         this.intoHTML("#user_admin .global-user-info h5 span:eq(0)", this.user.nickname);
+        $("#user_admin .global-user-info h5 span:eq(0)").attr("title", this.user.nickname);
         this.intoHTML("#user_admin .global-user-info h5 span:eq(1)", cert ? '已认证' : '未认证');
         this.intoHTML("#user_admin .global-kefu-name", this.sales.sale_name);
         this.intoHTML("#user_admin .global-kefu-qq", this.sales.QQ);
@@ -32645,10 +32647,13 @@ $(function () {
         this.intoHTML("#index .user-info p:eq(0)", '账号：' + this.user.name);
         this.intoHTML("#index .user-info p:eq(1)", '联系电话：' + this.user.msg_phone);
         this.intoHTML("#index .balance", this.user.money);
+        $("#index .user-mailbox").attr("title", this.user.email);
         this.intoHTML("#index .user-mailbox span:eq(0)", '常用邮箱&nbsp;&nbsp;' + this.user.email);
         this.intoHTML("#index .user-mailbox span:eq(1)", this.user.email ? '已绑定' : '未绑定');
+        $("#index .user-phone").attr("title", this.user.msg_phone);
         this.intoHTML("#index .user-phone span:eq(0)", '手机号码&nbsp;&nbsp;' + this.user.msg_phone);
         this.intoHTML("#index .user-phone span:eq(1)", this.user.msg_phone ? '已绑定' : '未绑定');
+        $("#index .user-qq").attr("title", this.user.msg_qq);
         this.intoHTML("#index .user-qq span:eq(0)", 'QQ号码&nbsp;&nbsp;' + this.user.msg_qq);
         this.intoHTML("#index .user-qq span:eq(1)", this.user.msg_qq ? '已绑定' : '未绑定');
         this.intoHTML("#index .sales-name", this.sales.sale_name);
@@ -32658,6 +32663,7 @@ $(function () {
         this.intoHTML("#index .idc-status span:eq(1)", '需续费：' + this.idc.renew);
         this.intoHTML("#index .dip-status span:eq(0)", '运行中：' + this.dip.use);
         this.intoHTML("#index .dip-status span:eq(1)", '需续费：' + this.dip.renew);
+        $('[data-toggle="tooltip"]').tooltip();
     });
 
     $('a[data-toggle="tab"]').on("shown.bs.tab", function (e) {
@@ -32785,6 +32791,7 @@ $(function () {
                     return "<option value='" + JSON.stringify(item) + "' >" + item.resource + "</option>";
                 }).join("");
                 $(self).find("select[name='business']").empty().html(option);
+
                 $(self).find("select[name='business']").on("change", function () {
                     var price = 0;
                     $(this).find("option:selected").each(function () {
@@ -32796,6 +32803,16 @@ $(function () {
                 });
                 $(self).find("select[name='business']").UCFormSelect("destroy");
                 $(self).find("select[name='business']").UCFormSelect();
+
+                $(self).find("dd.UCSelectAll").click(function () {
+                    var price = 0;
+                    $(self).find("select[name='business']").find("option:selected").each(function () {
+                        var data = JSON.parse($(this).val());
+                        price += Number(data.payable_money);
+                        // console.log(price);
+                    });
+                    $(self).find(".price .amount").html(price);
+                });
             } else {
                 $(self).find("select[name='business']").empty();
                 $(self).find(".price .amount").html("0");

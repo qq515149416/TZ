@@ -155,7 +155,7 @@
                             <div class="paper jumbotron-fluid rounded bg-white px-4 py-4">
                                 <div class="paper-title font-medium d-flex align-items-center">
                                     <h4 class="mx-0 my-0 mr-3">
-                                        内存使用情况
+                                        CPU使用情况
                                     </h4>
                                     <span>单位为 %</span>
                                 </div>
@@ -210,7 +210,7 @@
                             <div class="paper jumbotron-fluid rounded bg-white px-4 py-4">
                                 <div class="paper-title font-medium d-flex align-items-center">
                                     <h4 class="mx-0 my-0 mr-3">
-                                        CPU使用情况
+                                        内存使用情况
                                     </h4>
                                     <span>单位为 %</span>
                                 </div>

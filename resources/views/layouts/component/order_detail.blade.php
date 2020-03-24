@@ -36,6 +36,11 @@
               <span class="attr mr-4">支付时间</span>
               <span class="val pay-datetime">2019-07-30 14:31:20</span>
             </div>
+            <div class="w-100 mt-1 mb-4"></div>
+            <div class="col d-flex flex-wrap">
+              <span class="attr mr-4">机器编号</span>
+              <span class="val machine-sn">H-TEST-01</span>
+            </div>
           </div>
         </div>
         <table 

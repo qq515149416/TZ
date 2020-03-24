@@ -351,6 +351,7 @@ $(function() {
         $(this).find(".pay-datetime").html($(e.relatedTarget).attr("data-pay-time"));
         $(this).find(".handle").html("￥"+$(e.relatedTarget).attr("data-price"));
         $(this).find(".actual").html("￥"+$(e.relatedTarget).attr("data-payable-money"));
+        $(this).find(".machine-sn").html($(e.relatedTarget).attr("data-machine-number"));
     });
     $("#rechargeModal").on("shown.bs.modal",function(e) {
         var self = this;
@@ -609,7 +610,7 @@ window.operatFormatter = function (value, row) {
     <a class="view" href="/user/detail/'+row.id+'">查看</a>';
 }
 window.showFormatter = function(value, row) {
-    return '<span class="view" data-order-sn="'+row.order_sn+'" data-payable-money="'+row.payable_money+'" data-price="'+row.price+'" data-pay-time="'+(row.pay_time || "")+'" data-created-at="'+row.created_at+'" data-order-type="'+row.order_type+'" data-toggle="modal" data-target="#orderDetailModal">查看</span>'
+    return '<span class="view" data-machine-number="'+row.machine_number+'" data-order-sn="'+row.order_sn+'" data-payable-money="'+row.payable_money+'" data-price="'+row.price+'" data-pay-time="'+(row.pay_time || "")+'" data-created-at="'+row.created_at+'" data-order-type="'+row.order_type+'" data-toggle="modal" data-target="#orderDetailModal">查看</span>'
 }
 window.process_data = function (res) {
     if(res.code == 1) {

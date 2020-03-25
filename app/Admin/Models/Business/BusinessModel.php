@@ -907,9 +907,8 @@ class BusinessModel extends Model
             $ip['ip_detail'] = '0.0.0.0(未找到)';
             return $ip;
         }
-        $ip_company = [0=>'电信',1=>'移动',2=>'联通'];
         $ip['ip'] = $ips->ip;
-        $ip['ip_detail'] = $ips->ip.'('.$ip_company[$ips->ip_company].')';
+        $ip['ip_detail'] = $ips->ip.'('.line($ips->ip_company).')';
         return $ip;
     }
 

@@ -207,14 +207,15 @@ function time_calculation($date,$duration = 1,$time_unit = 'month',$monthly = 0)
 
 /**
  * 创建单号
+ * @param  string $first 单号前缀
  * @return string 返回生成的单号
- * 说明:重复率:百万低于1%(数据可能存在一定误差),位数:16位,
+ * @note:重复率:百万低于1%(数据可能存在一定误差),位数:16位,
  * 返回后检验是否存在此号,如有重新调用此方法重新生成单号
  * 格式:日期(年月日)+微秒数第3位开始截6个+10-99的随机数
  */
-function create_number(){
-	$number = date('Ymd',time()).substr(microtime(),2,6).mt_rand(10, 99);
-	return $number;
+function create_number($first=''){
+	$number = $first.date('Ymd',time()).substr(microtime(),2,6).mt_rand(10, 99);
+	return trim($number);//剔除特殊字符后返回
 }
 
 /**
@@ -249,5 +250,27 @@ function resource_type($type){
 function business_status($status){
 	$business_status = [0=>'审核中',1=>'未付款使用',2=>'正常使用',3=>'正常使用',4=>'锁定中'];
 	$result = $business_status[$status];
+	return $result;
+}
+
+/**
+ * 订单状态的统一转换
+ * @param  int $status 订状态的代码
+ * @return          返回转换后的对应的状态
+ */
+function order_status($status){
+	$order_status = [0=>'待支付',1=>'已支付',2=>'财务确认',3=>'取消',4=>'申请退款',5=>'退款中',6=>'退款完成'];
+	$result = $order_status[$status];
+	return $result;
+}
+
+/**
+ * IP的线路提供商
+ * @param  int $line 线路提供商的代码
+ * @return 返回转换后的对应的线路提供商
+ */
+function line($line){
+	$lines = [0=>'电信公司',1=>'移动公司',2=>'联通公司',3=>'BGP'];
+	$result = $lines[$line];
 	return $result;
 }

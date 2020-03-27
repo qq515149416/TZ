@@ -567,6 +567,25 @@
                 </div>
                 <div class="item m12">
                     <div class="title">
+                        客服
+                    </div>
+                    <div class="content">
+                        <div class="contact-item">
+                            <a href="http://wpa.qq.com/msgrd?v=3&uin=2853978333&site=qq&menu=yes">
+                                <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
+                                资源采购专员
+                            </a>
+                        </div>
+                        <div class="contact-item">
+                            <a href="http://wpa.qq.com/msgrd?v=3&uin=2853979339&site=qq&menu=yes" class="clearfix">
+                                <img class="pull-left" alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
+                                &nbsp;客服1号
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="item m12">
+                    <div class="title">
                         7*24小时技术支持
                     </div>
                     <div class="content">

@@ -622,6 +622,14 @@
 #user_admin .main-content .content #gaofang .paper .filter button.btn.btn-primary {
   background-color: #4274f4;
 }
+#user_admin .main-content .content #gaofang .paper .fixed-table-pagination .pagination-detail {
+  margin-top: 28px;
+}
+#user_admin .main-content .content #gaofang .paper .fixed-table-pagination .pagination-detail .pagination-info {
+  font-size: 14px;
+  line-height: 14px;
+  color: #666666;
+}
 #user_admin .main-content .content #gaofang .paper .data {
   font-size: 14px;
   color: #191c2b;
@@ -646,6 +654,10 @@
 }
 #user_admin .main-content .content #gaofang .paper .data td .renew {
   color: #d40000;
+}
+#user_admin .main-content .content #gaofang .paper .data td .view {
+  text-decoration: none;
+  color: #373943;
 }
 #user_admin .main-content .content #gaofang .paper .data .bs-checkbox label input[type="checkbox"] {
   display: none;

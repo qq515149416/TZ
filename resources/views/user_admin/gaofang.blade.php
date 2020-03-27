@@ -53,7 +53,9 @@
         data-pagination-loop="false" 
         data-page-size="10" 
         data-pagination="true" 
+        data-pagination-detail-h-align="right"
         data-toggle="table"
+        data-pagination-loop="false"
         data-mobile-responsive="true"
         data-check-on-init="true"
         data-row-style="rowStyle"
@@ -62,13 +64,13 @@
                 <tr>
                     <th data-field="business_number">业务编号</th>
                     <th data-field="machine_room_name">线路</th>
-                    <th data-field="ip">IP</th>
+                    <th data-field="defense_ip">IP</th>
                     <th data-field="target_ip">目标IP</th>
-                    <th data-field="defense">防御值</th>
+                    <th data-field="protection_value">防御值</th>
                     <th data-field="price">单价</th>
-                    <th data-field="business_status">业务状态</th>
-                    <th data-field="end_time">到期时间</th>                         
-                    <!-- <th data-field="operat" data-formatter="showFormatter">操作</th> -->
+                    <th data-field="status_cn">业务状态</th>
+                    <th data-field="end_at">到期时间</th>                         
+                    <th data-field="operat" data-formatter="operatFormatter">操作</th>
                 </tr>
         </thead>
         <!-- <tbody class="font-regular">

@@ -32384,6 +32384,7 @@ function dateFormat(date) {
     return date.getFullYear() + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
 }
 $(function () {
+
     // $(".main-nav li.nav-item:eq(3) .card").hide();
     // $.post("/api/v1/dip/showDIPFlow?apiKey=99b8a3765286d2def368acd5d40db041&timestamp=1582096339075&hash=0a7671f22a1b3bcecbc9b75712bca495");
     $(".main-nav li.nav-item").mouseenter(function () {
@@ -32406,7 +32407,6 @@ $(function () {
             return "";
         };
     }
-
     $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['zh-CN']);
     $('#payDate').datetimepicker({
         format: 'yyyy-mm-dd',
@@ -32975,6 +32975,8 @@ window.rowStyle = function (row, index) {
         classes: "font-regular"
     };
 };
+
+__webpack_require__(307);
 
 /***/ }),
 /* 183 */
@@ -58746,6 +58748,142 @@ function isAvailableBehavior(behaviorToCheck, e, settings) {
 
 var _default = RoamController;
 module.exports = _default;
+
+/***/ }),
+/* 307 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+$(function () {
+    if ($("#gaofang").length) {
+        var ShowInfo = function () {
+            function ShowInfo(url) {
+                var _this = this;
+
+                var param = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+                _classCallCheck(this, ShowInfo);
+
+                this.getData(url, param, function (data) {
+                    Object.assign(_this, data);
+                    _this.start();
+                });
+            }
+
+            _createClass(ShowInfo, [{
+                key: "ready",
+                value: function ready(callbrak) {
+                    var _this2 = this;
+
+                    if (!this.start) {
+                        this.start = function () {
+                            callbrak.call(_this2);
+                            // callbrak();
+                        };
+                    } else {
+                        callbrak.call(this);
+                    }
+                }
+            }, {
+                key: "intoHTML",
+                value: function intoHTML(selector, template) {
+                    $(selector).html(template);
+                }
+            }, {
+                key: "getData",
+                value: function getData(url) {
+                    var param = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+                    var callbark = arguments[2];
+
+                    $.get(url, param, function (data) {
+                        if (data.code === 1) {
+                            callbark(data.data);
+                        }
+                    });
+                }
+            }], [{
+                key: "createInstantiate",
+                value: function createInstantiate(url) {
+                    var param = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+                    if (!ShowInfo.instantiate) {
+                        ShowInfo.instantiate = new ShowInfo(url, param);
+                    }
+                    return ShowInfo.instantiate;
+                }
+            }]);
+
+            return ShowInfo;
+        }();
+
+        $.fn.bootstrapTable.locales['zh-CN']["formatShowingRows"] = function (pageFrom, pageTo, totalRows) {
+            return "共" + totalRows + "页";
+        };
+        window.operatFormatter = function (value, row) {
+            return '<span class="renew mr-2" data-toggle="modal" data-target="#renewModal" data-more=\'' + JSON.stringify(row) + '\' data-bn="' + row.business_number + '">续费</span>\
+            <a class="view" href="/user/detail/' + row.id + '">查看</a>';
+        };
+        $("#renewModal").off("shown.bs.modal");
+        $("#renewModal").on("shown.bs.modal", function (e) {
+            var showInfo = ShowInfo.createInstantiate("/home/user/userSituation");
+            var self = this;
+            var price = 0;
+            $(self).find("select[name='business']").UCFormSelect();
+            $(self).find("#postRenew").off("click");
+            $(self).find(".duration-select-btn").off("click");
+            var business = [];
+            if (!$(e.relatedTarget).attr("data-more")) {
+                business = $("#table_data").bootstrapTable("getAllSelections");
+            } else {
+                business = [JSON.parse($(e.relatedTarget).attr("data-more"))];
+            }
+            $(self).find("select[name='business']").empty();
+            business.forEach(function (item) {
+                $(self).find("select[name='business']").append("<option value='" + JSON.stringify(item) + "' disabled selected>" + item.defense_ip + "-" + item.business_number + "</option>");
+            });
+            $(self).find("select[name='business']").UCFormSelect("destroy");
+            $(self).find("select[name='business']").UCFormSelect();
+            showInfo.ready(function () {
+                this.intoHTML("#renewModal .balance .amount", this.user.money + "&nbsp;元");
+            });
+            price = JSON.parse($(self).find("select[name='business'] option:selected").val()).price;
+            console.log(price, $(self).find("select[name='business'] option:selected").val());
+            $(self).find(".price .amount").html(price * $(self).find(".duration-select-btn").attr("data-month"));
+            $(self).find("select[name='business']").on("change", function () {
+                $(this).find("option:selected").each(function () {
+                    var data = JSON.parse($(this).val());
+                    price += Number(data.price || data.money);
+                    // console.log(price);
+                });
+                $(self).find(".price .amount").html(price * $(self).find(".duration-select-btn").attr("data-month"));
+            });
+
+            $(self).find(".duration-select-btn").click(function () {
+                $(this).addClass("active").siblings().removeClass("active");
+                $(self).find(".price .amount").html(price * $(this).attr("data-month"));
+            });
+
+            $(self).find("#postRenew").click(function () {
+                $.get("/home/defenseIp/renewDefenseIp", {
+                    business_id: JSON.parse($(self).find("select[name='business'] option:selected").val()).id,
+                    buy_time: $(self).find(".duration-select-btn.active").attr("data-month")
+                }, function (data) {
+                    alert(data.msg);
+                    if (data.code == 1) {
+                        $(self).modal('hide');
+                        location.href = '/dist/highDefensePay.html?orderid=' + data.data;
+                    }
+                });
+            });
+        });
+    }
+});
 
 /***/ })
 /******/ ]);

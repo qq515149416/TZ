@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
+use Encore\Admin\Facades\Admin;
 
 class SearchModel extends Model
 {
@@ -22,8 +23,13 @@ class SearchModel extends Model
             return $search_result = [];
         }
         $search_result = [];
+        $where = [];
+        if(Admin::user()->inRoles(['HR','salesman','Promoter']){//业务员等根据购买时绑定的业务员id进行查询
+            $where[] = ['sales_id',Admin::user()->id];
+        }
         foreach($xs_result as $xs_key => $xs_value){
-            $business = $this->where(['business_number'=>$xs_value])->whereBetween('remove_status',[0,3])->select('id','client_id','sales_id','business_number','business_type','machine_number','resource_detail','money','client_id','length','start_time','endding_time','business_status','remove_status')->first();
+            $where[] = ['business_number',$xs_value];
+            $business = $this->where($where)->whereBetween('remove_status',[0,3])->select('id','client_id','sales_id','business_number','business_type','machine_number','resource_detail','money','client_id','length','start_time','endding_time','business_status','remove_status')->first();
             if(!empty($business)){
                 $business = $business->toArray();
                 $business_type = [1=>'租用主机',2=>'托管主机',3=>'租用机柜'];

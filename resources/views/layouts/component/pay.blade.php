@@ -20,7 +20,7 @@
        
         <div class="price d-flex mt-5">
           <span class="font-regular align-self-center mr-3">需要支付</span>
-          <span class="amount">888.00</span>
+          <span class="amount">0.00</span>
         </div>
         <div class="balance d-flex mt-2 border-bottom pb-4"> 
           <span class="font-regular align-self-center mr-3">账户余额</span>

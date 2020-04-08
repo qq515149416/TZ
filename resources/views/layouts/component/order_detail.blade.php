@@ -15,7 +15,7 @@
               <span class="attr mr-4">
                 订单编号
               </span>
-              <span class="val">
+              <span class="val order-id">
                 2019073098117335
               </span>
             </div>
@@ -23,22 +23,28 @@
               <span class="attr mr-4">
                 订单类型
               </span>
-              <span class="val">
+              <span class="val type">
                 购买服务器
               </span>
             </div>
             <div class="w-100 mt-1 mb-4"></div>
             <div class="col d-flex flex-wrap">
               <span class="attr mr-4">创建时间</span>
-              <span class="val">2019-07-30 14:31:20</span>
+              <span class="val create-at">2019-07-30 14:31:20</span>
             </div>
             <div class="col d-flex flex-wrap">
               <span class="attr mr-4">支付时间</span>
-              <span class="val">2019-07-30 14:31:20</span>
+              <span class="val pay-datetime">2019-07-30 14:31:20</span>
+            </div>
+            <div class="w-100 mt-1 mb-4"></div>
+            <div class="col d-flex flex-wrap">
+              <span class="attr mr-4">机器编号</span>
+              <span class="val machine-sn">H-TEST-01</span>
             </div>
           </div>
         </div>
         <table 
+        style="display: none;"
         class="order-business mt-5" 
         data-toggle="table"
         data-mobile-responsive="true"
@@ -68,11 +74,11 @@
         <div class="d-flex align-items-center order-info">
           <p class="mb-0 mr-5">
             <span class="attr mr-2">应付金额</span>
-            <span class="val">￥888.00</span>
+            <span class="val handle">￥888.00</span>
           </p>
           <p class="mb-0">
             <span class="attr mr-2">实付金额</span>
-            <span class="val">￥888.00</span>
+            <span class="val actual">￥888.00</span>
           </p>
         </div>
         <button type="button" class="btn btn-primary font-regular rounded" data-dismiss="modal">关闭</button>

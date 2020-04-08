@@ -49,7 +49,7 @@
                     </ul>
                     @yield('tab')
                     <ul class="navbar-nav main-nav d-none d-md-flex d-lg-flex align-items-center">
-                        <li class="nav-item">
+                        <li class="nav-item d-flex align-items-center">
                             <a class="nav-link py-0" href="#">
                                 <span class="customer-service icon"></span>
                             </a>
@@ -68,7 +68,7 @@
                                 </div>
                             @endcomponent
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item d-flex align-items-center">
                             <a class="nav-link py-0" href="#">
                                 <span class="erweima icon"></span>
                             </a>
@@ -90,7 +90,7 @@
                                 </div>
                             @endcomponent
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item d-flex align-items-center">
                             <a class="nav-link py-0" href="#">
                                 <span class="wallet icon"></span>
                             </a>
@@ -110,17 +110,17 @@
                                 </div>
                             @endcomponent
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item d-flex align-items-center">
                             <a class="nav-link py-0" href="#">
                                 <span class="user icon"></span>
                             </a>
-                            @component('layouts.component.alert')
+                            @component('layouts.component.alert',['style'=> 'width: 194px;'])
                                 <div class="account">
                                     <div class="media border-bottom pb-3">
                                         <img src="{{ asset("/user_assets/html_img/avatar_small.png") }}" class="align-self-center mr-2" alt="头像">
                                         <div class="media-body mb-1 global-user-info">
-                                            <h5 class="my-0 mt-2 font-heavy d-flex">
-                                                <span>黄某某</span>
+                                            <h5 class="my-0 mt-2 font-heavy d-flex justify-content-between">
+                                                <span class="text-truncate" data-toggle="tooltip" data-placement="top" title="Tooltip on top">黄某某</span>
                                                 <span class="badge status font-medium badge-light ml-2">已认证</span>
                                             </h5>
                                         </div>
@@ -142,8 +142,8 @@
                                 </div>
                             @endcomponent
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link py-0 text" href="#">
+                        <li class="nav-item d-flex align-items-center">
+                            <a class="nav-link py-0 text" href="/tz/member92019.html">
                                 <span class="text font-medium">
                                     跳转旧版本
                                 </span>
@@ -196,7 +196,7 @@
                     </ul>
                 </div>
                 @yield('mobile_tab')
-                <div class="col px-0 pt-4 align-items-stretch content overflow-hidden-x">
+                <div class="col px-0 pt-4 pb-5 align-items-stretch content overflow-hidden-x">
                     @yield('content')
 
                 </div>

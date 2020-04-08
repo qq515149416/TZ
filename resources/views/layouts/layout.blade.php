@@ -381,7 +381,7 @@
                     <!-- <dd>惠州分公司：广东省惠州市东平南路21号2栋第二层</dd> -->
                     <dd>陕西分公司：陕西省西安市高新区瑞吉大厦7层10701-7634</dd>
                     <dd>湖南分公司：湖南省长沙市高新开发区麓龙路209号单元402</dd>
-                    <dd>上海分公司：上海市金山工业区夏宁路666弄58_59号2064室</dd>
+                    <!-- <dd>上海分公司：上海市金山工业区夏宁路666弄58_59号2064室</dd> -->
                 </dl>
                 <dl class="attention wx">
                     <dt>关注我们</dt>
@@ -561,6 +561,25 @@
                             <a href="#" class="clearfix">
                                 <img class="pull-left" alt="给我发消息" src="{{ asset("/images/position.png") }}">
                                 <span style="width: 120px;" class="pull-right">广东省东莞松山湖科技十路2栋B座</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="item m12">
+                    <div class="title">
+                        客服
+                    </div>
+                    <div class="content">
+                        <div class="contact-item">
+                            <a href="http://wpa.qq.com/msgrd?v=3&uin=2853978333&site=qq&menu=yes">
+                                <img alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
+                                资源采购专员
+                            </a>
+                        </div>
+                        <div class="contact-item">
+                            <a href="http://wpa.qq.com/msgrd?v=3&uin=2853979339&site=qq&menu=yes" class="clearfix">
+                                <img class="pull-left" alt="给我发消息" src="{{ asset("/images/button_old_41.gif") }}">
+                                &nbsp;客服1号
                             </a>
                         </div>
                     </div>

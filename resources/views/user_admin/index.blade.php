@@ -34,32 +34,40 @@
             <div class="paper jumbotron-fluid rounded bg-white px-4 py-4">
                 <div class="row">
                     <div class="col text-center border-right">
-                        <span class="user-detail-icon discount mt-2">
-                        </span>
-                        <span class="user-detail-text font-medium d-block mt-2 pt-2">
-                            优惠票券
-                        </span>
+                        <a class="text-decoration-none" href="javascript:;">
+                            <span class="user-detail-icon discount mt-2">
+                            </span>
+                            <span class="user-detail-text font-medium d-block mt-2 pt-2">
+                                优惠票券
+                            </span>
+                        </a>
                     </div>
                     <div class="col text-center border-right">
-                        <span class="user-detail-icon order mt-2">
-                        </span>
-                        <span class="user-detail-text font-medium d-block mt-2 pt-2">
-                            我的订单
-                        </span>
+                        <a class="text-decoration-none" href="/user/order">
+                            <span class="user-detail-icon order mt-2">
+                            </span>
+                            <span class="user-detail-text font-medium d-block mt-2 pt-2">
+                                我的订单
+                            </span>
+                        </a>
                     </div>
                     <div class="col text-center border-right">
-                        <span class="user-detail-icon transaction mt-2">
-                        </span>
-                        <span class="user-detail-text font-medium d-block mt-2 pt-2">
-                            交易明细
-                        </span>
+                        <a class="text-decoration-none" href="javascript:;">
+                            <span class="user-detail-icon transaction mt-2">
+                            </span>
+                            <span class="user-detail-text font-medium d-block mt-2 pt-2">
+                                交易明细
+                            </span>
+                        </a>
                     </div>
                     <div class="col text-center">
-                        <span class="user-detail-icon invoice mt-2">
-                        </span>
-                        <span class="user-detail-text font-medium d-block mt-2 pt-2">
-                            发票管理
-                        </span>
+                        <a class="text-decoration-none" href="javascript:;">
+                            <span class="user-detail-icon invoice mt-2">
+                            </span>
+                            <span class="user-detail-text font-medium d-block mt-2 pt-2">
+                                发票管理
+                            </span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -74,16 +82,16 @@
                             基本信息
                         </div>
                         <div class="paper-content font-medium">
-                            <p class="my-0 mt-4 pt-1 d-flex justify-content-between user-mailbox">
-                                <span>常用邮箱&nbsp;&nbsp;123456@qq.com</span>
+                            <p class="my-0 mt-4 pt-1 d-flex justify-content-between user-mailbox" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+                                <span class="text-truncate">常用邮箱&nbsp;&nbsp;123456@qq.com</span>
                                 <span class="text-primary">已绑定</span>
                             </p>
-                            <p class="my-0 mt-4 pt-1 d-flex justify-content-between user-phone">
-                                <span>手机号码&nbsp;&nbsp;12345678901</span>
+                            <p class="my-0 mt-4 pt-1 d-flex justify-content-between user-phone" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+                                <span class="text-truncate">手机号码&nbsp;&nbsp;12345678901</span>
                                 <span class="text-primary">已绑定</span>
                             </p>
-                            <p class="mt-4 pt-1 d-flex justify-content-between user-qq">
-                                <span>QQ号码&nbsp;&nbsp;123456</span>
+                            <p class="mt-4 pt-1 d-flex justify-content-between user-qq" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+                                <span class="text-truncate">QQ号码&nbsp;&nbsp;123456</span>
                                 <span class="text-primary">已绑定</span>
                             </p>
                         </div>

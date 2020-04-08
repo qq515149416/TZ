@@ -40,7 +40,7 @@ class MachineModel extends Model
 			$used_status = [0=>'未使用',1=>'业务锁定',2=>'使用中',3=>'锁定使用',4=>'迁移'];//使用状态的转换数据
 			$machine_status = [0=>'上架',1=>'下架'];//机器上下架的转换数据
 			$business_type = [1=>'租用',2=>'托管',3=>'预备机器',4=>'托管预备机器'];//业务类型的转换数据
-			$ip_company = [0=>'电信',1=>'移动',2=>'联通'];
+			
 			// 遍历查询到的数据并进行相应的转换
 			foreach($result as $key=>$value){
 				// 状态等的转换
@@ -62,7 +62,7 @@ class MachineModel extends Model
 				
 				$result[$key]['cabinets'] = $cabinet->cabinet_id;//机柜信息的返回
 				//IP信息的返回
-				$result[$key]['ip'] = $ip->ip.'('.$ip_company[$ip->ip_company].')';
+				$result[$key]['ip'] = $ip->ip.'('.line($ip->ip_company).')';
 				$result[$key]['ip_company'] = $ip->ip_company;
 				//机房的信息返回
 				$result[$key]['machineroom_name'] = $machinerooms;
@@ -105,7 +105,6 @@ class MachineModel extends Model
 			$used_status = [0=>'未使用',1=>'业务锁定',2=>'使用中',3=>'锁定使用',4=>'迁移'];
 			$machine_status = [0=>'上架',1=>'下架'];//机器上下架的转换数据
 			$business_type = [1=>'租用',2=>'托管',3=>'备用'];//业务类型的转换数据
-			$ip_company = [0=>'电信',1=>'移动',2=>'联通'];
 			// 遍历查询到的数据并进行相应的转换
 			foreach($result as $key=>$value){
 				// 状态等的转换
@@ -123,7 +122,7 @@ class MachineModel extends Model
 				$result[$key]['cabinets'] = $cabinet->cabinet_id;//机柜信息的返回
 				//IP信息的返回
 				$result[$key]['ip'] = $ip->ip;
-				$result[$key]['ip_detail'] = $ip->ip.'('.$ip_company[$ip->ip_company].')';;
+				$result[$key]['ip_detail'] = $ip->ip.'('.line($ip->ip_company).')';;
 				//机房的信息返回
 				$result[$key]['machineroom_name'] = $machinerooms;
 				
@@ -328,8 +327,14 @@ class MachineModel extends Model
 			}
 		}
 		if($machine->used_status == 2){//当机器的状态为使用中时，更改业务里面的resource_detail字段
-			$business = DB::table('tz_business')->where(['business_number'=>$machine->own_business])->whereBetween('business_status',[0,4])->whereBetween('remove_status',[0,1])->select('id','business_number','machine_number','resource_detail')->first();
+			$business = DB::table('tz_business')->where(['business_number'=>$machine->own_business])->whereBetween('business_status',[0,5])->select('id','business_number','machine_number','resource_detail','remove_status')->first();
 			if(!empty($business)){
+				if($business->remove_status > 1){
+					DB::rollBack();
+					$return['code'] = 0;
+					$return['msg'] = '(#109)机器业务正在下架中无法进行修改！！!';
+					return $return;
+				}
 				/**
 				 * 重新对机器绑定的业务里面的详情进行更新
 				 */
@@ -668,19 +673,17 @@ class MachineModel extends Model
 	 * @return [type] [description]
 	 */
 	public function ip($ip_id){
-		$ip_company = [0=>'电信',1=>'移动',2=>'联通'];
 		if($ip_id){
 			$ips = DB::table('idc_ips')->where(['id'=>$ip_id])->select('ip','ip_company')->first();
 			if(!empty($ips)){
-				$ips->ip_detail = $ips->ip.$ip_company[$ips->ip_company];
+				$ips->ip_detail = $ips->ip.line($ips->ip_company);
 			}
 		} elseif($ip_id == 0){
 			$ips = 'IP暂未选择';
 		} else {
 			$ips = DB::table('idc_ips')->where(['ip_status'=>0])->whereNull('deleted_at')->select('id','ip','ip_company','ip_comproom')->get();
-			$ip_company = [0=>'电信',1=>'移动',2=>'联通'];
 			foreach($ips as $key => $value){
-				$ips[$key] = $this->machineRooms($value->ip_comproom).'--'.$value->id.'--'.$value->ip.'('.$ip_company[$value->ip_company].')';
+				$ips[$key] = $this->machineRooms($value->ip_comproom).'--'.$value->id.'--'.$value->ip.'('.line($value->ip_company).')';
 			}
 			$ips = $ips->toArray();
 		}

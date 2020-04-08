@@ -73,6 +73,14 @@
 @base_img_url: "/user_assets/images";
 #user_admin {
     .navbar {
+        .main-nav {
+            height: 58px - 16px;
+            margin-top: -8px;
+            margin-bottom: -8px;
+            .nav-item {
+                height: 100%;
+            }
+        }
         .top-nav {
             list-style: none;
             // display: flex;
@@ -130,6 +138,7 @@
             @import "./server.less";
             @import "./order.less";
             @import "./detail.less";
+            @import "./gaofang.less";
         }
         .menu {
             width: 170px;
@@ -212,7 +221,7 @@
           
             > .card {
                 display: none;
-                top: 30px;
+                top: 42px;
                 width: 188px;
                 right: 0;
                 border: none;
@@ -260,6 +269,15 @@
                     }
                 }
                 .account {
+                    .global-user-info {
+                        h5 {
+                            span.text-truncate {
+                                display: inline-block;
+                                width: 4em;
+                                font-size: 14px;
+                            }
+                        }
+                    }
                     .media {
                         > .media-body {
                             h5 {

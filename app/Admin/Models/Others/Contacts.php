@@ -156,7 +156,7 @@ class Contacts extends Model
             $return['code'] = 0;
             $return['msg'] = '请确保信息正确';
         }
-
+        // Artisan::call('view:clear');
         return $return;
     }
 
@@ -184,7 +184,7 @@ class Contacts extends Model
             $return['code'] = 0;
             $return['msg'] = '无法删除相关信息！！';
         }
-
+        // Artisan::call('view:clear');
         return $return;
     }
 }

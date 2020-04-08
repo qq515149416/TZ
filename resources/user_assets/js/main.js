@@ -47,12 +47,13 @@ function dateFormat(date) {
     return date.getFullYear() + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
 }
 $(function() {
+    
     // $(".main-nav li.nav-item:eq(3) .card").hide();
     // $.post("/api/v1/dip/showDIPFlow?apiKey=99b8a3765286d2def368acd5d40db041&timestamp=1582096339075&hash=0a7671f22a1b3bcecbc9b75712bca495");
     $(".main-nav li.nav-item").mouseenter(function() {
-        $(this).find(".card").fadeIn(500);
+        $(this).find(".card").fadeIn(200);
     }).mouseleave(function() {
-        $(this).find(".card").fadeOut(500);
+        $(this).find(".card").fadeOut(200);
     });
     if($("#server").length) {
         $.fn.bootstrapTable.locales['zh-CN']["formatShowingRows"] = function() {
@@ -77,8 +78,6 @@ $(function() {
             return ""
         }
     }
-    
-    
     $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['zh-CN']);
     $('#payDate').datetimepicker({
         format: 'yyyy-mm-dd',
@@ -189,7 +188,8 @@ $(function() {
                 data.data.forEach((item, index, arr) => {
                     // console.log(dateFormat(new Date(item.time * 1000),"yyyy-mm-dd HH:MM:ss"));
                     let date = new Date(item.time * 1000)
-                    let dateString = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay() + ' ' + date.getHours() + ':' + date.getMinutes()
+                    let dateString = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay() + ' ' + date.getHours();
+                    // + ':' + date.getMinutes()
                     if (dateMap.has(dateString)) {
                         // item["upstream_bandwidth_up"] += dateMap.get(date.getHours() + ":" + date.getMinutes())["upstream_bandwidth_up"];
                         // item["bandwidth_down"] += dateMap.get(date.getHours() + ":" + date.getMinutes())["bandwidth_down"];
@@ -223,7 +223,8 @@ $(function() {
                 data.data.forEach((item, index, arr) => {
                     // console.log(dateFormat(new Date(item.time * 1000),"yyyy-mm-dd HH:MM:ss"));
                     let date = new Date(item.time * 1000)
-                    let dateString = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay() + ' ' + date.getHours() + ':' + date.getMinutes()
+                    let dateString = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay() + ' ' + date.getHours();
+                    // + ':' + date.getMinutes()
                     if (dateMap.has(dateString)) {
                         // item["upstream_bandwidth_up"] += dateMap.get(date.getHours() + ":" + date.getMinutes())["upstream_bandwidth_up"];
                         // item["bandwidth_down"] += dateMap.get(date.getHours() + ":" + date.getMinutes())["bandwidth_down"];
@@ -262,8 +263,10 @@ $(function() {
     showInfo.ready(function() {
         this.intoHTML("#user_admin .global-balance",this.user.money);
         const cert = this.user.email && this.user.msg_phone && this.user.msg_qq;
-        this.intoHTML("#index .user-info h5",this.user.nickname+'<span class="font-medium status badge badge-light ml-2">'+(cert ? '已认证' : '未认证')+'</span>');
+        this.intoHTML("#index .user-info h5",'<span class="text-truncate" data-toggle="tooltip" data-placement="top" title="Tooltip on top">'+this.user.nickname+'</span>'+'<span class="font-medium status badge badge-light ml-2">'+(cert ? '已认证' : '未认证')+'</span>');
+        $("#index .user-info h5 span.text-truncate").attr("title",this.user.nickname);
         this.intoHTML("#user_admin .global-user-info h5 span:eq(0)",this.user.nickname);
+        $("#user_admin .global-user-info h5 span:eq(0)").attr("title",this.user.nickname);
         this.intoHTML("#user_admin .global-user-info h5 span:eq(1)",(cert ? '已认证' : '未认证'));
         this.intoHTML("#user_admin .global-kefu-name",this.sales.sale_name);
         this.intoHTML("#user_admin .global-kefu-qq",this.sales.QQ);
@@ -271,10 +274,13 @@ $(function() {
         this.intoHTML("#index .user-info p:eq(0)",'账号：'+this.user.name);
         this.intoHTML("#index .user-info p:eq(1)",'联系电话：'+this.user.msg_phone);
         this.intoHTML("#index .balance",this.user.money);
+        $("#index .user-mailbox").attr("title",this.user.email);
         this.intoHTML("#index .user-mailbox span:eq(0)",'常用邮箱&nbsp;&nbsp;'+this.user.email);
         this.intoHTML("#index .user-mailbox span:eq(1)",this.user.email ? '已绑定' : '未绑定');
+        $("#index .user-phone").attr("title",this.user.msg_phone);
         this.intoHTML("#index .user-phone span:eq(0)",'手机号码&nbsp;&nbsp;'+this.user.msg_phone);
         this.intoHTML("#index .user-phone span:eq(1)",this.user.msg_phone ? '已绑定' : '未绑定');
+        $("#index .user-qq").attr("title",this.user.msg_qq);
         this.intoHTML("#index .user-qq span:eq(0)",'QQ号码&nbsp;&nbsp;'+this.user.msg_qq);
         this.intoHTML("#index .user-qq span:eq(1)",this.user.msg_qq ? '已绑定' : '未绑定');
         this.intoHTML("#index .sales-name",this.sales.sale_name);
@@ -284,6 +290,7 @@ $(function() {
         this.intoHTML("#index .idc-status span:eq(1)",'需续费：'+this.idc.renew);
         this.intoHTML("#index .dip-status span:eq(0)",'运行中：'+this.dip.use);
         this.intoHTML("#index .dip-status span:eq(1)",'需续费：'+this.dip.renew);
+        $('[data-toggle="tooltip"]').tooltip();
     });
     
     $('a[data-toggle="tab"]').on("shown.bs.tab",function(e) {
@@ -336,6 +343,15 @@ $(function() {
         return false;
     })
     // $("#renewModal select[name='business']").UCFormSelect();
+    $("#orderDetailModal").on("shown.bs.modal",function(e) {
+        $(this).find(".order-id").html($(e.relatedTarget).attr("data-order-sn"));
+        $(this).find(".type").html($(e.relatedTarget).attr("data-order-type"));
+        $(this).find(".create-at").html($(e.relatedTarget).attr("data-created-at"));
+        $(this).find(".pay-datetime").html($(e.relatedTarget).attr("data-pay-time"));
+        $(this).find(".handle").html("￥"+$(e.relatedTarget).attr("data-price"));
+        $(this).find(".actual").html("￥"+$(e.relatedTarget).attr("data-payable-money"));
+        $(this).find(".machine-sn").html($(e.relatedTarget).attr("data-machine-number"));
+    });
     $("#rechargeModal").on("shown.bs.modal",function(e) {
         var self = this;
         $(self).data("pay_type",$(this).find(".select-type-pay > ul > li.active").attr("data-type"));
@@ -369,7 +385,7 @@ $(function() {
                     trade_no: Math.ceil(100 + (Math.random() * 1000))
                 },function(data) {
                     if(data.code==1) {
-                        new QRCode($(self).find("#weixin_pay")[0], data.data);
+                        new QRCode($(self).find("#weixin_pay")[0], data.data.url);
                         $(self).find(".alert").show(500);
                     }
                 });
@@ -405,6 +421,7 @@ $(function() {
                     return "<option value='"+JSON.stringify(item)+"' >"+item.resource+"</option>"
                 }).join("");
                 $(self).find("select[name='business']").empty().html(option);
+
                 $(self).find("select[name='business']").on("change",function() {
                     var price = 0;
                     $(this).find("option:selected").each(function() {
@@ -414,6 +431,22 @@ $(function() {
                     });
                     $(self).find(".price .amount").html(price);
                 });
+                $(self).find("select[name='business']").UCFormSelect("destroy");
+                $(self).find("select[name='business']").UCFormSelect();
+
+                $(self).find("dd.UCSelectAll").click(function() {
+                    var price = 0;
+                    $(self).find("select[name='business']").find("option:selected").each(function() {
+                        var data = JSON.parse($(this).val());
+                        price += Number(data.payable_money);
+                        // console.log(price);
+                    });
+                    $(self).find(".price .amount").html(price);
+                });
+
+            } else {
+                $(self).find("select[name='business']").empty();
+                $(self).find(".price .amount").html("0");
                 $(self).find("select[name='business']").UCFormSelect("destroy");
                 $(self).find("select[name='business']").UCFormSelect();
             }
@@ -576,7 +609,7 @@ window.operatFormatter = function (value, row) {
     <a class="view" href="/user/detail/'+row.id+'">查看</a>';
 }
 window.showFormatter = function(value, row) {
-    return '<span class="view" data-order-sn="'+row.order_sn+'">查看</span>'
+    return '<span class="view" data-machine-number="'+row.machine_number+'" data-order-sn="'+row.order_sn+'" data-payable-money="'+row.payable_money+'" data-price="'+row.price+'" data-pay-time="'+(row.pay_time || "")+'" data-created-at="'+row.created_at+'" data-order-type="'+row.order_type+'" data-toggle="modal" data-target="#orderDetailModal">查看</span>'
 }
 window.process_data = function (res) {
     if(res.code == 1) {
@@ -590,3 +623,5 @@ window.rowStyle = function (row, index) {
         classes: "font-regular"
     }
 }
+
+require("./gaofang");

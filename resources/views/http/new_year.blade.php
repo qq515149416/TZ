@@ -423,7 +423,7 @@
                 <ol>
                     <li class="font-medium">
                         <span>1. 活动时间：</span>
-                        <span>2020.01.01-2020.01.31。</span>
+                        <span>2020.01.01-2020.02.29。</span>
                     </li>
                     <li class="font-medium">
                         <span>2. 活动对象：</span>

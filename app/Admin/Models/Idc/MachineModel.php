@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Artisan;
 
 class MachineModel extends Model
 {
@@ -408,7 +409,7 @@ class MachineModel extends Model
 			$return['code'] = 1;
 			$return['msg'] = '修改成功！！';
 		}
-		
+		Artisan::call('business:update-xunsearch');
 		return $return;
 	}
 

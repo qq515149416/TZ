@@ -635,6 +635,9 @@
   color: #191c2b;
   border: none;
 }
+#user_admin .main-content .content #gaofang .paper .data .useip {
+  color: #4274f4;
+}
 #user_admin .main-content .content #gaofang .paper .data th {
   border: none;
   border-bottom: 1px solid #d8dae6;
@@ -1290,4 +1293,218 @@
 }
 #orderDetailModal .modal-body .order-business .border-bottom {
   border-color: #d9dee6;
+}
+#gaofangBuyModal .modal-lg {
+  min-width: 800px;
+  max-width: 980px;
+}
+#gaofangBuyModal .modal-title {
+  color: #4274f4;
+  font-size: 26px;
+  font-weight: normal;
+}
+#gaofangBuyModal .modal-title > span {
+  display: inline-block;
+  font-size: 18px;
+  color: #191c2b;
+  position: relative;
+  line-height: 18px;
+}
+#gaofangBuyModal .modal-title > span::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 1px;
+  background-color: #d9dee6;
+}
+#gaofangBuyModal .modal-footer button {
+  width: 74px;
+  height: 34px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  color: #767a81;
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+#gaofangBuyModal .modal-footer button:hover {
+  border: 1px solid transparent;
+}
+#gaofangBuyModal .modal-footer button.btn-secondary {
+  background-color: transparent;
+  border: 1px solid #d0d2e0;
+}
+#gaofangBuyModal .modal-footer button.btn-primary {
+  background-color: #4274f4;
+  color: #fff;
+}
+#gaofangBuyModal .modal-footer button.btn-warning {
+  background-color: #fd7f32;
+  border-color: #fd7f32;
+}
+#gaofangBuyModal .modal-body > .gaofang-product {
+  margin-bottom: 30px;
+}
+#gaofangBuyModal .modal-body > .gaofang-product > ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 932px;
+}
+#gaofangBuyModal .modal-body > .gaofang-product > ul > li {
+  cursor: pointer;
+  width: 210px;
+}
+#gaofangBuyModal .modal-body > .gaofang-product > ul > li.active {
+  padding: 4px;
+  border: 1px solid #4274f4;
+  border-radius: 6px;
+  -webkit-box-shadow: 0 0 9px 4px rgba(66, 116, 244, 0.5);
+          box-shadow: 0 0 9px 4px rgba(66, 116, 244, 0.5);
+}
+#gaofangBuyModal .modal-body > .gaofang-product > ul > li > .product-wrap {
+  border-bottom: 1px solid transparent;
+  background: url(/images/gaofang_product_bg.png?9c3fa19e67ed6b36dac3cb0ef1c3627a) no-repeat;
+  background-size: 100% 100%;
+  height: 100%;
+  padding-top: 28px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+#gaofangBuyModal .modal-body > .gaofang-product > ul > li > .product-wrap > h4 {
+  font-size: 16px;
+  color: #191c2b;
+  margin: 0;
+  text-align: center;
+}
+#gaofangBuyModal .modal-body > .gaofang-product > ul > li > .product-wrap > .price {
+  text-align: center;
+}
+#gaofangBuyModal .modal-body > .gaofang-product > ul > li > .product-wrap > .price > .amount {
+  font-size: 20px;
+  color: #2861f4;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+}
+#gaofangBuyModal .modal-body > .gaofang-product > ul > li > .product-wrap > .price > .unit {
+  font-size: 12px;
+  color: #6d6f78;
+}
+#gaofangBuyModal .modal-body > .gaofang-product > ul > li > .product-wrap > .product-config {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#gaofangBuyModal .modal-body > .gaofang-product > ul > li > .product-wrap > .product-config li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+#gaofangBuyModal .modal-body > .gaofang-product > ul > li > .product-wrap > .product-config li > .attr {
+  color: #6d6f78;
+  font-size: 14px;
+}
+#gaofangBuyModal .modal-body > .gaofang-product > ul > li > .product-wrap > .product-config li > .val {
+  color: #191c2b;
+  font-size: 14px;
+}
+#gaofangBuyModal .modal-body .duration > span {
+  font-size: 14px;
+  color: #191c2b;
+}
+#gaofangBuyModal .modal-body .duration > .duration-select {
+  font-size: 14px;
+  color: #62676f;
+}
+#gaofangBuyModal .modal-body .duration > .duration-select .duration-select-btn {
+  display: inline-block;
+  border: 1px solid #d0d2e0;
+  width: 4em;
+  text-align: center;
+  cursor: pointer;
+}
+#gaofangBuyModal .modal-body .duration > .duration-select .duration-select-btn.active {
+  border: 1px solid #4274f4;
+  background-color: #4274f4;
+  color: #fff;
+}
+#gaofangBuyModal .modal-body > .price {
+  color: #191c2b;
+  font-size: 14px;
+}
+#gaofangBuyModal .modal-body > .price > .amount {
+  font-size: 20px;
+  color: #4274f4;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+}
+#gaofangBuyModal .modal-body > .balance {
+  color: #191c2b;
+  font-size: 14px;
+}
+#gaofangBuyModal .modal-body > .balance > .amount {
+  font-size: 14px;
+  color: #70747b;
+}
+#gaofangBuyModal .modal-body > .balance > .amount > .tip {
+  color: #9a9ea8;
+}
+#useIpModal .modal-lg {
+  min-width: 800px;
+  max-width: 980px;
+}
+#useIpModal .modal-title {
+  color: #4274f4;
+  font-size: 26px;
+  font-weight: normal;
+}
+#useIpModal .modal-title > span {
+  display: inline-block;
+  font-size: 18px;
+  color: #191c2b;
+  position: relative;
+  line-height: 18px;
+}
+#useIpModal .modal-title > span::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 1px;
+  background-color: #d9dee6;
+}
+#useIpModal .modal-footer button {
+  width: 74px;
+  height: 34px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  color: #767a81;
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+#useIpModal .modal-footer button:hover {
+  border: 1px solid transparent;
+}
+#useIpModal .modal-footer button.btn-secondary {
+  background-color: transparent;
+  border: 1px solid #d0d2e0;
+}
+#useIpModal .modal-footer button.btn-primary {
+  background-color: #4274f4;
+  color: #fff;
+}
+#useIpModal .modal-footer button.bg-danger {
+  background-color: #02be71 !important;
+  border-color: #02be71;
 }

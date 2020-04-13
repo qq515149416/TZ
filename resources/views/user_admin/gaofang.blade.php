@@ -25,18 +25,18 @@
             </ul>
         </div>
         <div class="filter d-flex justify-content-between align-items-end">
-            <button type="button" class="btn btn-primary add-product">
+            <button data-toggle="modal" data-target="#gaofangBuyModal" type="button" class="btn btn-primary add-product">
             <svg class="bi bi-plus" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M8 3.5a.5.5 0 01.5.5v4a.5.5 0 01-.5.5H4a.5.5 0 010-1h3.5V4a.5.5 0 01.5-.5z" clip-rule="evenodd"/>
                 <path fill-rule="evenodd" d="M7.5 8a.5.5 0 01.5-.5h4a.5.5 0 010 1H8.5V12a.5.5 0 01-1 0V8z" clip-rule="evenodd"/>
             </svg>
             购买高防 IP
             </button>
-            <form class="form-inline" autocomplete="off">
+            <form class="form-inline" data-from="gaofang" autocomplete="off">
                 <div class="form-group mb-1 mt-3 mr-sm-3">
                     <select class="form-control py-0" id="type">
-                        <option>IP地址</option>
-                        <option>业务状态</option>
+                        <option value="defense_ip">IP地址</option>
+                        <option value="status_cn">业务状态</option>
                     </select>
                 </div>
                 <div class="form-group mr-sm-3 mb-1 mt-3">

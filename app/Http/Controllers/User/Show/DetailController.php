@@ -12,6 +12,9 @@ namespace App\Http\Controllers\User\Show;
 
 use App\Http\Controllers\Controller;
 use App\Http\Models\Customer\Business;
+use App\Http\Models\DefenseIp\BusinessModel;
+use Illuminate\Support\Facades\DB;
+
 
 class DetailController extends Controller
 {
@@ -23,8 +26,36 @@ class DetailController extends Controller
         ]);
     }
 
+    public function gaofang($id) 
+    {
+        return view("user_admin/gaofang_detail",[
+            "page" => "gaofang_detail",
+            "data" => $this->gaofangDetail($id)
+        ]);
+    }
+
     /**
-     * 业务详情页获取数据: 
+     * 高防IP业务详情页获取数据:
+     * @param int 业务id
+     * @return:
+     * */ 
+    public function gaofangDetail($id) 
+    {
+        if(!$id){
+            return '无法获取对应信息';
+        }
+        $business = BusinessModel::where(['id'=>$id])->first();
+        if(!$business){
+            return '暂无对应数据';
+        }
+        $business->ip = DB::table('tz_defenseip_store')->where('id',$business->ip_id)->value('ip');
+        $status = ['预留状态','正在使用','申请下架','已下架','试用','待审核'];
+        $business->status = $status[$business->status];
+        return $business;
+    }
+
+    /**
+     * IDC业务详情页获取数据: 
      * @param int 业务id 
      * @return: 
      */

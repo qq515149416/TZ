@@ -62,6 +62,7 @@ Route::group([
     Route::get('/double11', 'Show\Double11Controller@index');
     Route::get('/overseas/{page?}/{room?}', 'Show\OverseasController@index');
 });
+Route::get('/gaofang/package', 'Show\ProtectionController@gaofangApi');
 Route::get('/admin/{path?}', 'Show\AdminController@index')->where('path', '.+');
 Route::get('/double11', 'Show\Double11Controller@index'); //双11活动页  *黄晓敏需求:不要跳转移动端
 Route::get('/double12', 'Show\Double12Controller@index'); //双12活动页  *黄晓敏需求:不要跳转移动端
@@ -120,6 +121,7 @@ Route::group([
     Route::get("order","User\Show\OrderController@index");    
     Route::get("detail/{id}","User\Show\DetailController@index");
     Route::get("gaofang","User\Show\GaofangController@index");
+    Route::get("gaofang_detail/{id}","User\Show\DetailController@gaofang");
 });
 /**
  * 测试组

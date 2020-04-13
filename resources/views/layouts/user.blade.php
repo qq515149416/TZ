@@ -35,7 +35,7 @@
                             <a class="nav-link" href="/user/server">服务器</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">高防IP</a>
+                            <a class="nav-link" href="/user/gaofang">高防IP</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">财务信息</a>
@@ -170,7 +170,7 @@
                             </a>
                         </li>
                         <li class="pl-4 ml-1 pb-4">
-                            <a href="javascript:;">
+                            <a class="{{ strpos($page,'gaofang')!==false ? 'active' : '' }}" href="/user/gaofang">
                                 <span class="icon gaofang mr-2"></span>
                                 <span class="pl-1 font-regular">高防IP</span>
                             </a>
@@ -226,5 +226,7 @@
     @include('layouts.component.pay')
     @include('layouts.component.recharge')
     @include('layouts.component.order_detail')
+    @include('layouts.component.gaofangBuy')
+    @include('layouts.component.useip')
 </body>
 </html>

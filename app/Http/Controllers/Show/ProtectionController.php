@@ -83,4 +83,12 @@ class ProtectionController extends Controller
             "tabs" => $tabs
         ]);
     }
+    public function gaofangApi()
+    {
+        $model = new PackageModel();
+
+        $list = $model->showPackage();
+        
+        return $list;
+    }
 }

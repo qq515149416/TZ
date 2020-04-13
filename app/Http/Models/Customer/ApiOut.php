@@ -639,7 +639,17 @@ class ApiOut extends Model
 						->where('machine_sn' , $ip)
 						->where('customer_id' ,$check_sign)
 						->exists();
-		if (!$check1 && !$check2) {
+		//主机本机ip查看
+		$check3 = DB::table('idc_ips as a')->leftJoin('tz_business as b' , 'b.business_number' , '=' , 'a.own_business')
+ 							->where('a.ip' , $ip)
+ 							->whereNull('a.deleted_at')
+ 							->whereNull('b.deleted_at')
+ 							->where('b.remove_status' , 0)
+ 							->whereIn('b.business_status' , [0,1,2,3])
+ 							->where('b.client_id',$check_sign)
+ 							->exists();
+ 		
+		if (!$check1 && !$check2 && !$check3) {
 			return [
 				'data'	=> [],
 				'msg'	=> 'ip不属于您,无法查看',

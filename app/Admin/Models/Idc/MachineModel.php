@@ -409,7 +409,9 @@ class MachineModel extends Model
 			$return['code'] = 1;
 			$return['msg'] = '修改成功！！';
 		}
-		Artisan::call('business:update-xunsearch');
+		if($machine->used_status == 2){
+			Artisan::call('business:update-xunsearch');
+		}
 		return $return;
 	}
 

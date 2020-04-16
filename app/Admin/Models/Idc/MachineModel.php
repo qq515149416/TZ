@@ -604,14 +604,17 @@ class MachineModel extends Model
 		if($data){
 			$roomid = $data['roomid'];
 			$company = $data['ip_company'];
-			$orwhere = [];
-			$where = ['ip_comproom'=>$roomid,'ip_company'=>$company,'ip_status'=>0,'ip_lock'=>0];
+			$where = [];
+			$where[] = ['ip_comproom',$roomid];
+			$where[] = ['ip_company',$company];
 			if(isset($data['id'])){
 				$orwhere['id'] = $data['id'];
+			} else {
+				$where[] = ['ip_status',0];
+				$where[] = ['ip_lock',0];
 			}
 			$ips = DB::table('idc_ips')
 					->where($where)
-					->orWhere($orwhere)
 					->whereNull('deleted_at')
 					->select('id as ipid','ip','ip_company')
 					->get();

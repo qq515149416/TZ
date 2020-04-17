@@ -56,7 +56,7 @@ class SearchController extends Controller
         //对迅搜的搜索结果进行重要数据的获取
         $result = array_map(function($value){return $value->business_sn;},$xs_result);
         //过滤重复的数据
-        $xs_result = array_unique($result);
+        $xs_result = array_unique($result); 
         $search_result = $model->doSearch($xs_result);
         return $search_result;
     }

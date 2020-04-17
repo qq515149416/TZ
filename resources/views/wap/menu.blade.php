@@ -87,7 +87,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="/wap/cdn_speed_up">
+                                                <a href="/wap/cdn/index">
                                                     <p>CDN加速</p>
                                                 </a>
                                             </li>

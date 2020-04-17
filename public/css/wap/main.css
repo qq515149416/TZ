@@ -3382,16 +3382,17 @@ input:hover {
   color: #252b3a;
   line-height: 45px;
 }
+#CDN_speed_up .tz-container .main-content .accelerate_class ul li a {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  color: #252b3a;
+}
 #CDN_speed_up .tz-container .main-content .accelerate_class ul .class-active {
   border-bottom: 2px solid #162fac;
   color: #162fac;
 }
-#CDN_speed_up .tz-container .main-content .CDN_up {
-  height: 2947.31px;
-  overflow: hidden;
-}
 #CDN_speed_up .tz-container .main-content .class-item {
-  display: none;
   font-size: 0px;
 }
 #CDN_speed_up .tz-container .main-content .class-item-a .CDN_speedup .compouter-advantage-gn {

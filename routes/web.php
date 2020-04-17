@@ -85,7 +85,7 @@ Route::group([
     Route::get('/high_security', 'Show\wap\HighSecurityController@index');//高防服务器产品页
     Route::get('/high_proof_host', 'Show\wap\HighProofHostController@index');//高防云主机产品页
     Route::get('/high_security_ip', 'Show\wap\HighSecurityIPController@index');//高防ip产品页
-    Route::get('/cdn_speed_up', 'Show\wap\CdnSpeedUpController@index');//cdn加速产品页
+    Route::get('/cdn/{page}', 'Show\wap\CdnSpeedUpController@index');//cdn加速产品页
     Route::get('/c_shield', 'Show\wap\CshieldController@index');//防c盾产品页
     Route::get('/high_anti_cdn', 'Show\wap\HighAntiCDNController@index');//高防cdn产品页
     Route::get('/flow_stack_packet', 'Show\wap\FlowStackPacketController@index');//防御流量叠加包产品页

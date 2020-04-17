@@ -10,7 +10,7 @@ use App\Admin\Models\News\HelpTagModel;
 
 class CdnSpeedUpController extends Controller
 {
-	public function index()
+	public function index($page)
 	{
 		$product = 'CDN加速';
 
@@ -36,13 +36,49 @@ class CdnSpeedUpController extends Controller
 							->get();
 			$help_id = 0;
 		}
-		return view("wap/cdn_speed_up",[
+		switch ($page) {
+            case 'index':
+                return view("wap/cdn/cdn_speed_up",[
 
-			"help"			=> $help,
-			"help_template"	=> 'wap.product.help',
-			"help_id"		=> $help_id,
-			"page" 			=> "cdn_speed_up"
-		]);
+					"help"			=> $help,
+					"help_template"	=> 'wap.product.help',
+					"help_id"		=> $help_id,
+					"page" 			=> $page
+				]);;
+                break;
+            case 'sca':
+                return view("wap/cdn/staticContentAcceleration",[
+					"page" 			=> $page
+				]);
+                break;
+            case 'dda':
+                return view("wap/cdn/downloadDeliveryAcceleration",[
+					"page" 			=> $page
+				]);
+                break;
+            case 'dsa':
+                return view("wap/cdn/dynamicSiteAcceleration",[
+					"page" 			=> $page
+				]);
+                break;
+            case 'smvoda':
+                return view("wap/cdn/vodAcceleration",[
+					"page" 			=> $page
+				]);
+                break;
+            case 'smlba':
+                return view("wap/cdn/liveAcceleration",[
+					"page" 			=> $page
+				]);
+                break;
+        }
+		// return view("wap/cdn_speed_up",[
+
+		// 	"help"			=> $help,
+		// 	"help_template"	=> 'wap.product.help',
+		// 	"help_id"		=> $help_id,
+		// 	"page" 			=> "cdn_speed_up"
+		// ]);
 
 	}
 }

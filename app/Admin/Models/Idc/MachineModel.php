@@ -10,6 +10,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Artisan;
+use App\Admin\Models\Idc\Ips;
 
 class MachineModel extends Model
 {
@@ -605,17 +606,17 @@ class MachineModel extends Model
 			$roomid = $data['roomid'];
 			$company = $data['ip_company'];
 			$where = [];
+			$orwhere = [];
 			$where[] = ['ip_comproom',$roomid];
 			$where[] = ['ip_company',$company];
 			if(isset($data['id'])){
-				$orwhere['id'] = $data['id'];
-			} else {
-				$where[] = ['ip_status',0];
-				$where[] = ['ip_lock',0];
+				$orwhere[] = ['id',$data['id']];
 			}
-			$ips = DB::table('idc_ips')
-					->where($where)
-					->whereNull('deleted_at')
+			$where[] = ['ip_status',0];
+			$where[] = ['ip_lock',0];
+			
+			$ips = Ips::where($where)
+					->orWhere($orwhere)
 					->select('id as ipid','ip','ip_company')
 					->get();
 			if(!$ips->isEmpty()){

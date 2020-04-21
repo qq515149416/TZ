@@ -1,6 +1,6 @@
 //----------------解决方案轮播图
 // || document.querySelector("#home")
-if(document.querySelector("#mobileapp_solution") || document.querySelector("#chess_solution") || document.querySelector("#cabinet_to_rent") || document.querySelector("#bandwidth_to_ent") || document.querySelector("#server_hosting") || document.querySelector("#DDOS_high_security_IP3") || document.querySelector("#high_proof_host") || document.querySelector("#cloud_hosting") || document.querySelector("#C_shield") || document.querySelector("#server_hire")) {
+if(document.querySelector("#mobileapp_solution") || document.querySelector("#chess_solution") || document.querySelector("#cabinet_to_rent") || document.querySelector("#bandwidth_to_ent") || document.querySelector("#server_hosting") || document.querySelector("#DDOS_high_security_IP3") || document.querySelector("#high_proof_host") || document.querySelector("#cloud_hosting") || document.querySelector("#C_shield") || document.querySelector("#server_hire .slideshow")) {
   slideshow_main("slideshow");
 }
 if(document.querySelector("#CDN_speed_up .slideshow")) {

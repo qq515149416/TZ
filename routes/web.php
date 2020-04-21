@@ -78,7 +78,7 @@ Route::group([
 ], function () {
     Route::get('/', 'Show\wap\IndexController@index');//首页
     Route::get('/menu', 'Show\wap\MenuController@index');
-    Route::get('/server_hire', 'Show\wap\ServerHireController@index');//服务器租用产品页
+    Route::get('/server_hire/{page}/{room?}', 'Show\wap\ServerHireController@index');//服务器租用产品页
     Route::get('/server_hosting', 'Show\wap\ServerHostingController@index');//服务器托管产品页
     Route::get('/cabinet', 'Show\wap\CabinetController@index');//机柜租用产品页
     Route::get('/bandwidth', 'Show\wap\BandwidthController@index');//大带宽租用产品页

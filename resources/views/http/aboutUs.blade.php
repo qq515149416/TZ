@@ -499,16 +499,17 @@
                     </div>
                     <div class="body">
                         <ul class="clearfix border">
-                            <li>
-                                <div class="thumb">
-                                    <img src="{{ asset("/images/pay/01.png") }}" alt="" />
-                                </div>
-                                <div class="dec">
-                                    <p>开户名称：广东腾正计算机科技有限公司</p>
-                                    <p>银行账号：7699 0507 2010 999</p>
-                                    <p>开户支行：招商银行东莞松山湖支行</p>
-                                </div>
-                            </li>
+{{--                            庞总通知暂时屏蔽招商银行信息,待通知后再开放--}}
+{{--                            <li>--}}
+{{--                                <div class="thumb">--}}
+{{--                                    <img src="{{ asset("/images/pay/01.png") }}" alt="" />--}}
+{{--                                </div>--}}
+{{--                                <div class="dec">--}}
+{{--                                    <p>开户名称：广东腾正计算机科技有限公司</p>--}}
+{{--                                    <p>银行账号：7699 0507 2010 999</p>--}}
+{{--                                    <p>开户支行：招商银行东莞松山湖支行</p>--}}
+{{--                                </div>--}}
+{{--                            </li>--}}
                             <li>
                                 <div class="thumb">
                                     <img src="{{ asset("/images/pay/02.png") }}" alt="" />

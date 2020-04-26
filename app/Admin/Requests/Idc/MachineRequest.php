@@ -1,10 +1,10 @@
 <?php
-
 namespace App\Admin\Requests\Idc;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class MachineRequest extends FormRequest
 {
@@ -25,13 +25,15 @@ class MachineRequest extends FormRequest
      */
     public function rules()
     {   
-        $path_info = Request()->getPathInfo();
-        $array_path = explode('/',$path_info);
-        $count_path = count($array_path);
+        
 
-        if($array_path[$count_path-1] == 'insertmachine'){
+       
             return [
-                'machine_num' => 'required|unique:idc_machine,machine_num,'.Request()->id.',id,deleted_at,Null',
+                'machine_num'   =>  ['required',
+                                        Rule::unique('idc_machine','machine_num')->ignore(Request()->id)->where(function($query){
+                                            $query->whereNull('deleted_at');
+                                        })
+                                    ],
                 'cpu' => 'required',
                 'memory' => 'required',
                 'harddisk' => 'required',
@@ -48,28 +50,10 @@ class MachineRequest extends FormRequest
                 'business_type' => 'required|integer',
             ];
 
-        } elseif($array_path[$count_path-1] == 'editmachine'){
-            $id = Request('id');
-            return [
-                'machine_num' => 'sometimes|unique:idc_machine,machine_num,'.$id.',id,deleted_at,Null',
-                'cpu' => 'sometimes',
-                'memory' => 'sometimes',
-                'harddisk' => 'sometimes',
-                'cabinet' => 'sometimes|integer',
-                'ip_id' => 'sometimes|integer',
-                'machineroom' => 'sometimes|integer',
-                'bandwidth' => 'sometimes|integer',
-                'protect' => 'sometimes|integer',
-                'loginname' => 'sometimes',
-                'loginpass' => 'sometimes',
-                'machine_type' => 'sometimes',
-                'used_status' => 'sometimes|integer',
-                'machine_status' => 'sometimes|integer',
-                'business_type' => 'sometimes|integer',
-            ];
-        } 
+       
+    } 
         
-    }
+   
 
     public function messages()
     {

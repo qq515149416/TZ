@@ -80,14 +80,14 @@ Route::group([
 ], function () {
     Route::get('/', 'Show\wap\IndexController@index');//首页
     Route::get('/menu', 'Show\wap\MenuController@index');
-    Route::get('/server_hire', 'Show\wap\ServerHireController@index');//服务器租用产品页
+    Route::get('/server_hire/{page}/{room?}', 'Show\wap\ServerHireController@index');//服务器租用产品页
     Route::get('/server_hosting', 'Show\wap\ServerHostingController@index');//服务器托管产品页
     Route::get('/cabinet', 'Show\wap\CabinetController@index');//机柜租用产品页
     Route::get('/bandwidth', 'Show\wap\BandwidthController@index');//大带宽租用产品页
     Route::get('/high_security', 'Show\wap\HighSecurityController@index');//高防服务器产品页
     Route::get('/high_proof_host', 'Show\wap\HighProofHostController@index');//高防云主机产品页
     Route::get('/high_security_ip', 'Show\wap\HighSecurityIPController@index');//高防ip产品页
-    Route::get('/cdn_speed_up', 'Show\wap\CdnSpeedUpController@index');//cdn加速产品页
+    Route::get('/cdn/{page}', 'Show\wap\CdnSpeedUpController@index');//cdn加速产品页
     Route::get('/c_shield', 'Show\wap\CshieldController@index');//防c盾产品页
     Route::get('/high_anti_cdn', 'Show\wap\HighAntiCDNController@index');//高防cdn产品页
     Route::get('/flow_stack_packet', 'Show\wap\FlowStackPacketController@index');//防御流量叠加包产品页

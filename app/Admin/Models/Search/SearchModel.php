@@ -19,15 +19,15 @@ class SearchModel extends Model
      * @return array           返回搜索的结果
      *///->whereBetween('business_status',[0,4])['business_sn']
     public function doSearch($xs_result){
-        if(!$xs_result){
-            return $search_result = [];
-        }
         $search_result = [];
-        $where = [];
-        if(Admin::user()->inRoles(['HR','salesman','Promoter'])){//业务员等根据购买时绑定的业务员id进行查询
-            $where[] = ['sales_id',Admin::user()->id];
+        if(!$xs_result){
+            return $search_result;
         }
         foreach($xs_result as $xs_key => $xs_value){
+            $where = [];
+            if(Admin::user()->inRoles(['HR','salesman','Promoter'])){//业务员等根据购买时绑定的业务员id进行查询
+                $where[] = ['sales_id',Admin::user()->id];
+            }
             $where[] = ['business_number',$xs_value];
             $business = $this->where($where)->whereBetween('remove_status',[0,3])->select('id','client_id','sales_id','business_number','business_type','machine_number','resource_detail','money','client_id','length','start_time','endding_time','business_status','remove_status')->first();
             if(!empty($business)){

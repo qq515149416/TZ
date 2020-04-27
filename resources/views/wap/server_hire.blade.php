@@ -22,59 +22,69 @@
 						<div class="tz-main">
 							<div class="drop-options server-rooma">
 								<p>数据中心</p>
-								<select id="selecta">
-									<option value="湖南衡阳机房" selected>湖南衡阳机房</option>
+								<select id="selecta"onchange="window.location=this.value;" >
+									<!-- <option value="湖南衡阳机房" selected>湖南衡阳机房</option>
 									<option value="广东惠州机房">广东惠州机房</option>
-									<option value="陕西西安机房">陕西西安机房</option>
+									<option value="陕西西安机房">陕西西安机房</option> -->
+									@foreach ($machine_rooms as $item)
+                            			<option value="/wap/server_hire/{{$page}}/{{ $item['alias'] }}" class="{{ $room == $item['alias'] ? 'selected' : '' }}">{{$item['name']}}</option>
+                        			@endforeach
 								</select>
 								<span></span>
 							</div>
 							<div class="drop-options server-roomb">
 								<p>线路选择</p>
-								<select id="selectb" >
-									<option value="电信服务器租用" selected>电信服务器租用</option>
+								<select id="selectb" onchange="window.location=this.value;">
+									<!-- <option value="电信服务器租用" selected>电信服务器租用</option>
 									<option value="联通服务器租用">联通服务器租用</option>
 									<option value="双线服务器租用">双线服务器租用</option>
-									<option value="三线服务器租用">三线服务器租用</option>
+									<option value="三线服务器租用">三线服务器租用</option> -->
+									@foreach ($nav as $item)
+                					<option class="{{ $page == $item->alias ? 'selected' : '' }}{{ $item->name == '港台服务器租用' ? 'none' : '' }}" value="/wap/server_hire/{{ $item->alias }}/{{ $item->alias=='HKT' ? '' : $room }}">{{ $item->name }}</option>
+									@endforeach
+									
 								</select>
 								<span></span>
 							</div>
 						</div>
 					</div>
+					@if (count($data) == '1')
 					<!-- 轮播 -->
-					<div class="nothing">
+					<!-- <div class="nothing">
 						<div>暂无</div>
-					</div>
+					</div> -->
 					<div class="one-t">
 						<ul class="slide-ul clear">
+						@foreach ($data as $item)
 							<li class="slide-li active" id="one-a">
 								<div class="slide-li-i">
-								<div>惠州电信型</div>
+								<div>{{ $item["line"] }}</div>
 								<ol>
 									<li>
-										<p>规格</p>8核16线程 （E5530*2）
+										<p>规格</p>{{ $item["format"] }}
 									</li>
 									<li>
-										<p>硬盘</p>240G SSD | 500G SATA | 1T SATA
+										<p>硬盘</p>{{ $item["hardDisk"] }}
 									</li>
 									<li>
-										<p>带宽</p>G口 20M <p class="p1">内存</p> <span class="p">16G</span>
+										<p>带宽</p>{{ $item["bandwidth"] }} <p class="p1">内存</p> <span class="p">{{ $item["ram"] }}</span>
 									</li>
 									<li>
-										<p>IP数</p>1个
-										<p class="p2">单机防御</p><span class="pw">无</span>
+										<p>IP数</p>{{ $item["ip"] }}
+										<p class="p2">单机防御</p><span class="pw">{{ $item["defense"] }}</span>
 									</li>
 									<li>
 										<p>月付</p> 
 										<span class="span1-1">￥</span>
-										 <span class="span2-1">1100</span>
-										<p class="p3">年付</p> <span class="span1-2">￥</span> <span class="span2-2">9600</span>
+										 <span class="span2-1">{{ $item["monthlyPay"] }}</span>
+										<p class="p3">年付</p> <span class="span1-2">￥</span> <span class="span2-2">{{ $item["annualFee"] }}</span>
 									</li>
 								</ol>
 								<!-- <a href="/">立即购买</a> -->
 								</div>
 							</li>
-							<li class="slide-li" id="one-b">
+							@endforeach
+							<!-- <li class="slide-li" id="one-b">
 									<div class="slide-li-i">
 								<div>惠州联通型</div>
 								<ol>
@@ -98,7 +108,7 @@
 											class="span2-2">9600</span>
 									</li>
 								</ol>
-								<!-- <a href="/">立即购买</a> -->
+								<a href="/">立即购买</a>
 								</div>
 							</li>
 							<li class="slide-li" id="one-c">
@@ -125,14 +135,16 @@
 											class="span2-2">1200</span>
 									</li>
 								</ol>
-								<!-- <a href="/">立即购买</a> -->
+								<a href="/">立即购买</a>
 								</div>
-							</li>
+							</li> -->
 						</ul>
 					</div>
+					@endif
+					@if (count($data) > '1')
 					<div class="slideshow" id="slideshow">
 						<ul class="slideshow-ul clear">
-							<li class="slideshow-li slideshow-lia">
+							<!-- <li class="slideshow-li slideshow-lia">
 									<div class="slide-li-i">
 								<div class="s-t-a">衡阳电信A型</div>
 								<ol>
@@ -157,7 +169,7 @@
 											class="span2-2 span-a-b">8400</span>
 									</li>
 								</ol>
-								<!-- <a href="/">立即购买</a> -->
+								<a href="/">立即购买</a>
 								</div>
 							</li>
 							<li class="slideshow-li slideshow-lib">
@@ -186,7 +198,7 @@
 											class="span2-2 span-b-b" id="span-b">8400</span>
 									</li>
 								</ol>
-								<!-- <a href="/">立即购买</a> -->
+								<a href="/">立即购买</a>
 								</div>
 							</li>
 							<li class="slideshow-li slideshow-lic">
@@ -214,7 +226,7 @@
 											class="span2-2 span-c-b">13200</span>
 									</li>
 								</ol>
-								<!-- <a href="/">立即购买</a> -->
+								<a href="/">立即购买</a>
 								</div>
 							</li>
 							<li class="slideshow-li slideshow-lid">
@@ -242,9 +254,39 @@
 											class="span2-2 span-d-b">21600</span>
 									</li>
 								</ol>
-								<!-- <a href="/">立即购买</a> -->
+								<a href="/">立即购买</a>
+								</div>
+							</li> -->
+							@foreach ($data as $item)
+                            <li class="slideshow-li slideshow-lia">
+									<div class="slide-li-i">
+								<div class="s-t-a">{{ $item["line"] }}</div>
+								<ol>
+									<li>
+										<p>规格</p>{{ $item["format"] }}
+									</li>
+									<li>
+										<p>硬盘</p>{{ $item["hardDisk"] }}
+									</li>
+									<li>
+										<p>带宽</p><span class="dk-a"> {{ $item["bandwidth"] }}</span>
+										<p class="p1">内存</p> <span class="nc-a">{{ $item["ram"] }}</span>
+									</li>
+									<li>
+										<p>IP数</p> <span class="n-ip-a">{{ $item["ip"] }}</span>
+										<p class="p2">单机防御</p> <span class="fy-a">{{ $item["defense"] }}</span>
+									</li>
+									<li>
+										<p>月付</p> <span class="span1-1 ">￥</span> <span class="span2-1 span-a-a">
+										{{ $item["monthlyPay"] }}</span>
+										<p class="p3">年付</p> <span class="span1-2">￥</span> <span
+											class="span2-2 span-a-b">{{ $item["annualFee"] }}</span>
+									</li>
+								</ol>
+								<a href="/">立即购买</a>
 								</div>
 							</li>
+							@endforeach
 						</ul>
 						<!-- 点 -->
 						<div class="point">
@@ -252,7 +294,8 @@
 							</ol>
 						</div>
 					</div>
-					<div class="slideshow-a">
+					@endif
+					<!-- <div class="slideshow-a">
 						<ul class="slideshow-ul-a clear">
 							<li class="slideshow-li-a slideshow-lia ">
 								<div class="slideshow-li-a-i">
@@ -279,7 +322,7 @@
 											class="span2-2 span-a-b-a">8400</span>
 									</li>
 								</ol>
-								<!-- <a href="/">立即购买</a> -->
+								<a href="/">立即购买</a>
 								</div>
 							</li>
 							<li class="slideshow-li-a slideshow-lib ">
@@ -308,7 +351,7 @@
 											class="span2-2 span-b-b-a" id="span-b">8400</span>
 									</li>
 								</ol>
-								<!-- <a href="/">立即购买</a> -->
+								<a href="/">立即购买</a>
 								</div>
 							</li>
 							<li class="slideshow-li-a slideshow-lic ">
@@ -336,7 +379,7 @@
 											class="span2-2 span-c-b-a">13200</span>
 									</li>
 								</ol>
-								<!-- <a href="/">立即购买</a> -->
+								<a href="/">立即购买</a>
 								</div>
 							</li>
 							<li class="slideshow-li-a slideshow-lid ">
@@ -364,7 +407,7 @@
 											class="span2-2 span-d-b-a">21600</span>
 									</li>
 								</ol>
-								<!-- <a href="/">立即购买</a> -->
+								<a href="/">立即购买</a>
 								</div>
 							</li>
 							<li class="slideshow-li-a slideshow-li-s">
@@ -390,16 +433,16 @@
 											class="span2-2" style="left: 50%;margin-left: 46px;">定制</span>
 									</li>
 								</ol>
-								<!-- <a href="/">立即购买</a> -->
+								<a href="/">立即购买</a>
 								</div>
 							</li>
 						</ul>
-						<!-- 点 -->
+						点
 						<div class="point-a">
 							<ol class="clear slideshow-ol-a">
 							</ol>
 						</div>
-					</div>
+					</div> -->
 
 					<div class="title">
 						<p>热销产品</p>

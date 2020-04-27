@@ -1686,7 +1686,6 @@ input:hover {
 #server_hire .main-content .one-t {
   background-color: #fff;
   padding-top: 10px;
-  display: none;
   padding-bottom: 35px;
 }
 #server_hire .main-content .one-t .slide-ul .slide-li {
@@ -1736,7 +1735,7 @@ input:hover {
 #server_hire .main-content .one-t .slide-ul .slide-li .slide-li-i ol li .p3 {
   position: absolute;
   left: 50%;
-  margin-left: 15px;
+  margin-left: 5px;
 }
 #server_hire .main-content .one-t .slide-ul .slide-li .slide-li-i ol li span {
   display: inline-block;
@@ -1744,12 +1743,12 @@ input:hover {
 #server_hire .main-content .one-t .slide-ul .slide-li .slide-li-i ol li .p {
   position: absolute;
   left: 50%;
-  margin-left: 53px;
+  margin-left: 44px;
 }
 #server_hire .main-content .one-t .slide-ul .slide-li .slide-li-i ol li .pw {
   position: absolute;
   left: 50%;
-  margin-left: 80px;
+  margin-left: 70px;
 }
 #server_hire .main-content .one-t .slide-ul .slide-li .slide-li-i ol li .span2-1 {
   font-size: 22px;
@@ -1765,7 +1764,7 @@ input:hover {
   top: -6px;
   position: absolute;
   left: 50%;
-  margin-left: 62px;
+  margin-left: 55px;
   background: -webkit-gradient(linear, left top, right top, from(#fd7919), to(#fd4b19));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1780,7 +1779,7 @@ input:hover {
 #server_hire .main-content .one-t .slide-ul .slide-li .slide-li-i ol li .span1-2 {
   position: absolute;
   left: 50%;
-  margin-left: 51px;
+  margin-left: 43px;
   top: -3px;
   background: -webkit-gradient(linear, left top, right top, from(#fd7919), to(#fd4b19));
   -webkit-background-clip: text;
@@ -1866,7 +1865,7 @@ input:hover {
 #server_hire .main-content .slideshow .slideshow-ul .slideshow-li .slide-li-i ol li .nc-e {
   position: absolute;
   left: 50%;
-  margin-left: 53px;
+  margin-left: 44px;
 }
 #server_hire .main-content .slideshow .slideshow-ul .slideshow-li .slide-li-i ol li .fy-a,
 #server_hire .main-content .slideshow .slideshow-ul .slideshow-li .slide-li-i ol li .fy-b,
@@ -1875,7 +1874,7 @@ input:hover {
 #server_hire .main-content .slideshow .slideshow-ul .slideshow-li .slide-li-i ol li .fy-e {
   position: absolute;
   left: 50%;
-  margin-left: 78px;
+  margin-left: 70px;
 }
 #server_hire .main-content .slideshow .slideshow-ul .slideshow-li .slide-li-i ol li .span-a-b,
 #server_hire .main-content .slideshow .slideshow-ul .slideshow-li .slide-li-i ol li .span-b-b,
@@ -1890,7 +1889,7 @@ input:hover {
 #server_hire .main-content .slideshow .slideshow-ul .slideshow-li .slide-li-i ol li .p3 {
   position: absolute;
   left: 50%;
-  margin-left: 15px;
+  margin-left: 5px;
 }
 #server_hire .main-content .slideshow .slideshow-ul .slideshow-li .slide-li-i ol li span {
   display: inline-block;
@@ -1909,7 +1908,7 @@ input:hover {
   margin-top: -6px;
   position: absolute;
   left: 50%;
-  margin-left: 60px;
+  margin-left: 54px;
   background: -webkit-gradient(linear, left top, right top, from(#fd7919), to(#fd4b19));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1917,7 +1916,7 @@ input:hover {
 #server_hire .main-content .slideshow .slideshow-ul .slideshow-li .slide-li-i ol li .span1-2 {
   position: absolute;
   left: 50%;
-  margin-left: 50px;
+  margin-left: 43px;
   top: -5px;
   background: -webkit-gradient(linear, left top, right top, from(#fd7919), to(#fd4b19));
   -webkit-background-clip: text;
@@ -2009,7 +2008,7 @@ input:hover {
 #server_hire .main-content .slideshow-a .slideshow-ul-a .slideshow-li-a .slideshow-li-a-i ol li .fy-d,
 #server_hire .main-content .slideshow-a .slideshow-ul-a .slideshow-li-a .slideshow-li-a-i ol li .fy-e {
   position: absolute;
-  left: 215px;
+  left: 207px;
 }
 #server_hire .main-content .slideshow-a .slideshow-ul-a .slideshow-li-a .slideshow-li-a-i ol li .span-a-b,
 #server_hire .main-content .slideshow-a .slideshow-ul-a .slideshow-li-a .slideshow-li-a-i ol li .span-b-b,
@@ -2024,7 +2023,7 @@ input:hover {
 #server_hire .main-content .slideshow-a .slideshow-ul-a .slideshow-li-a .slideshow-li-a-i ol li .p3 {
   position: absolute;
   left: 50%;
-  margin-left: 15px;
+  margin-left: 5px;
 }
 #server_hire .main-content .slideshow-a .slideshow-ul-a .slideshow-li-a .slideshow-li-a-i ol li span {
   display: inline-block;
@@ -2043,7 +2042,7 @@ input:hover {
   top: -6px;
   position: absolute;
   left: 50%;
-  margin-left: 60px;
+  margin-left: 54px;
   background: -webkit-gradient(linear, left top, right top, from(#fd7919), to(#fd4b19));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -2071,7 +2070,7 @@ input:hover {
 #server_hire .main-content .slideshow-a .slideshow-ul-a .slideshow-li-a .slideshow-li-a-i ol li .nc-d-a {
   position: absolute;
   left: 50%;
-  margin-left: 52px;
+  margin-left: 44px;
 }
 #server_hire .main-content .slideshow-a .slideshow-ul-a .slideshow-li-a .slideshow-li-a-i ol li .fy-a-a,
 #server_hire .main-content .slideshow-a .slideshow-ul-a .slideshow-li-a .slideshow-li-a-i ol li .fy-b-a,
@@ -2079,7 +2078,7 @@ input:hover {
 #server_hire .main-content .slideshow-a .slideshow-ul-a .slideshow-li-a .slideshow-li-a-i ol li .fy-d-a {
   position: absolute;
   left: 50%;
-  margin-left: 78px;
+  margin-left: 70px;
 }
 #server_hire .main-content .slideshow-a .slideshow-ul-a .slideshow-li-a .slideshow-li-a-i a {
   display: block;
@@ -2148,6 +2147,9 @@ input:hover {
   -moz-appearance: none;
   -webkit-appearance: none;
   background-color: transparent;
+}
+#server_hire .main-content .drop-down-options .drop-options select .none {
+  display: none;
 }
 #server_hire .main-content .drop-down-options .drop-options span {
   display: inline-block;
@@ -3382,16 +3384,17 @@ input:hover {
   color: #252b3a;
   line-height: 45px;
 }
+#CDN_speed_up .tz-container .main-content .accelerate_class ul li a {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  color: #252b3a;
+}
 #CDN_speed_up .tz-container .main-content .accelerate_class ul .class-active {
   border-bottom: 2px solid #162fac;
   color: #162fac;
 }
-#CDN_speed_up .tz-container .main-content .CDN_up {
-  height: 2947.31px;
-  overflow: hidden;
-}
 #CDN_speed_up .tz-container .main-content .class-item {
-  display: none;
   font-size: 0px;
 }
 #CDN_speed_up .tz-container .main-content .class-item-a .CDN_speedup .compouter-advantage-gn {

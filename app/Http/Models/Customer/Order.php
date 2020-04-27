@@ -630,7 +630,7 @@ class Order extends Model
 		//以资源编号为键的资源数组
 		$all = $this->where($business)->where('resource_type','>',3)->orderBy('end_time','desc')->get(['order_sn','resource_type','machine_sn','resource','price','end_time','business_sn'])->groupBy('machine_sn');
 		$resource = $all->map(function($item,$key){//根据资源编号获取对应资源的最新一条订单（$key为$all的键）,map参考laravel模型的集合的可用方法
-			return $this->where(['machine_sn'=>$key,'business_sn'=>$item[0]['business_sn']])->where('order_status','<',3)->orderBy('end_time','desc')->select('order_sn','resource_type','machine_sn','resource','price','end_time','order_status')->first();	
+			return $this->where(['machine_sn'=>$key,'business_sn'=>$item[0]['business_sn'],'remove_status'=>0])->where('order_status','<',3)->orderBy('end_time','desc')->select('order_sn','resource_type','machine_sn','resource','price','end_time','order_status')->first();	
 		});
 		if(!empty($resource)){
 			$orders = [//filter和values参考laravel模型的集合的可用方法

@@ -67,7 +67,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="/wap/server_hire">
+                                                <a href="/wap/server_hire/dianxin/hunan">
                                                     <p>服务器租用</p>
                                                 </a>
                                             </li>
@@ -87,7 +87,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="/wap/cdn_speed_up">
+                                                <a href="/wap/cdn/index">
                                                     <p>CDN加速</p>
                                                 </a>
                                             </li>

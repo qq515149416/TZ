@@ -2,8 +2,8 @@
 /*
  * @Author: your name
  * @Date: 2020-01-07 11:15:21
- * @LastEditTime : 2020-01-19 15:11:55
- * @LastEditors  : Please set LastEditors
+ * @LastEditTime: 2020-04-16 12:00:14
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit      
  * @FilePath: \BJf:\OA\app\Http\Controllers\User\Show\DetailController.php
  */
@@ -14,6 +14,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Models\Customer\Business;
 use App\Http\Models\DefenseIp\BusinessModel;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 
 class DetailController extends Controller
@@ -64,7 +65,7 @@ class DetailController extends Controller
         if(!$id){
             return '无法获取对应信息';
         }
-        $business = Business::where(['id'=>$id])->select('id','business_number','business_type','machine_number','resource_detail','money','length','endding_time','business_status')->first();
+        $business = Business::where(['id'=>$id,'client_id'=>Auth::user()->id])->select('id','business_number','business_type','machine_number','resource_detail','money','length','endding_time','business_status')->first();
         if(!$business){
             return '暂无对应数据';
         }

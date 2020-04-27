@@ -68,6 +68,8 @@ Route::get('/double11', 'Show\Double11Controller@index'); //双11活动页  *黄
 Route::get('/double12', 'Show\Double12Controller@index'); //双12活动页  *黄晓敏需求:不要跳转移动端
 Route::get('/new_year', 'Show\NewYearController@index'); //双12活动页  *黄晓敏需求:不要跳转移动端
 Route::get('/nCoV', 'Show\NCoVController@index'); //双12活动页  *黄晓敏需求:不要跳转移动端
+Route::get('/labor_day', 'Show\LaborDayController@index'); //双12活动页  *黄晓敏需求:不要跳转移动端
+
 
 
 

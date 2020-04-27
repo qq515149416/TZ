@@ -14,12 +14,12 @@
             <ul>
                 <li>
                     <h5 class="font-heavy">经济型云主机</h5>
-                    <p class="font-heavy">原价五五折 / 买5个月再送1个月 / 充值再享满600送200</p>
+                    <p class="font-medium">原价五五折 / 买5个月再送1个月 / 充值再享满600送200</p>
                     <a href="#hot">GO ></a>
                 </li>
                 <li>
                     <h5 class="font-heavy">百G清洗高防服务器</h5>
-                    <p class="font-heavy">高防服务器6.6折</p>
+                    <p class="font-medium">高防服务器6.6折</p>
                     <a href="#fold">GO ></a>
                 </li>
             </ul>

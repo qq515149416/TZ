@@ -26614,19 +26614,15 @@ function machineroomtext() {
 
 //----------------解决方案轮播图
 // || document.querySelector("#home")
-if (document.querySelector("#mobileapp_solution") || document.querySelector("#chess_solution") || document.querySelector("#cabinet_to_rent") || document.querySelector("#bandwidth_to_ent") || document.querySelector("#server_hosting") || document.querySelector("#DDOS_high_security_IP3") || document.querySelector("#high_proof_host") || document.querySelector("#cloud_hosting") || document.querySelector("#C_shield") || document.querySelector("#server_hire")) {
+if (document.querySelector("#mobileapp_solution") || document.querySelector("#chess_solution") || document.querySelector("#cabinet_to_rent") || document.querySelector("#bandwidth_to_ent") || document.querySelector("#server_hosting") || document.querySelector("#DDOS_high_security_IP3") || document.querySelector("#high_proof_host") || document.querySelector("#cloud_hosting") || document.querySelector("#C_shield") || document.querySelector("#server_hire .slideshow")) {
     slideshow_main("slideshow");
 }
-if (document.querySelector("#CDN_speed_up")) {
+if (document.querySelector("#CDN_speed_up .slideshow")) {
     slideshow_main("slideshow");
-    slideshow_main("slideshow-a");
-    slideshow_main("slideshow-b");
-    slideshow_main("slideshow-c");
-    slideshow_main("slideshow-d");
 }
 function slideshow_main(id) {
     // var slideshow = document.getElementById(id).querySelector(".slideshow");
-    var slideshowUl = document.getElementById(id).querySelector(".slideshow-ul");
+    var slideshowUl = document.getElementById(id).querySelector("ul");
     var slideshowLl = document.getElementById(id).querySelectorAll(".slideshow-li");
     var slideshowOl = document.getElementById(id).querySelector(".slideshow-ol");
     var screenWidth = document.documentElement.offsetWidth;
@@ -26827,242 +26823,246 @@ if (document.querySelector("#cabinet_to_rent") || document.querySelector("#bandw
 
 
 if (document.querySelector("#server_hire")) {
-    var server_room = function server_room() {
-        var rooma = document.querySelector(".server-rooma");
-        var selecta = document.getElementById("selecta");
-        var selectb = document.getElementById("selectb");
-        if (selecta.value == "湖南衡阳机房") {
-            document.querySelector(".slideshow-a").style.display = "none";
-            document.querySelector(".one-t").style.display = "none";
-            document.querySelector(".slideshow").style.display = "block";
-            document.querySelector(".nc-a").innerHTML = "16G";
-            document.querySelector(".nc-b").innerHTML = "16G";
-            document.querySelector(".nc-c").innerHTML = "16G";
-            document.querySelector(".nc-d").innerHTML = "16G";
-            document.querySelector(".dk-a").innerHTML = "G口 20M";
-            document.querySelector(".dk-b").innerHTML = "G口 20M";
-            document.querySelector(".dk-c").innerHTML = "G口 20M";
-            document.querySelector(".dk-d").innerHTML = "G口 20M";
-            document.querySelector(".fy-b").innerHTML = "40G";
-            document.querySelector(".fy-c").innerHTML = "80G";
-            document.querySelector(".fy-d").innerHTML = "120G";
-            if (selectb.value == "联通服务器租用") {
-                document.querySelector(".slideshow").style.display = "block";
-                document.querySelector(".nothing").style.display = "none";
-                document.querySelector(".s-t-a").innerHTML = "衡阳联通A型";
-                document.querySelector(".s-t-b").innerHTML = "衡阳联通B型";
-                document.querySelector(".s-t-c").innerHTML = "衡阳联通C型";
-                document.querySelector(".s-t-d").innerHTML = "衡阳联通D型";
-                document.querySelector(".n-ip-a").innerHTML = "1个";
-                document.querySelector(".n-ip-b").innerHTML = "1个";
-                document.querySelector(".n-ip-c").innerHTML = "1个";
-                document.querySelector(".n-ip-d").innerHTML = "1个";
-                document.querySelector(".span-a-a").innerHTML = "900";
-                document.querySelector(".span-a-b").innerHTML = "8400";
-                document.querySelector(".span-b-a").innerHTML = "900";
-                document.querySelector(".span-b-b").innerHTML = "8400";
-                document.querySelector(".span-c-a").innerHTML = "1400";
-                document.querySelector(".span-c-b").innerHTML = "13200";
-                document.querySelector(".span-d-a").innerHTML = "2100";
-                document.querySelector(".span-d-b").innerHTML = "21600";
-            }
-            if (selectb.value == "电信服务器租用") {
-                document.querySelector(".slideshow").style.display = "block";
-                document.querySelector(".nothing").style.display = "none";
-                document.querySelector(".s-t-a").innerHTML = "衡阳电信A型";
-                document.querySelector(".s-t-b").innerHTML = "衡阳电信B型";
-                document.querySelector(".s-t-c").innerHTML = "衡阳电信C型";
-                document.querySelector(".s-t-d").innerHTML = "衡阳电信D型";
-                document.querySelector(".n-ip-a").innerHTML = "1个";
-                document.querySelector(".n-ip-b").innerHTML = "1个";
-                document.querySelector(".n-ip-c").innerHTML = "1个";
-                document.querySelector(".n-ip-d").innerHTML = "1个";
-                document.querySelector(".span-a-a").innerHTML = "900";
-                document.querySelector(".span-a-b").innerHTML = "8400";
-                document.querySelector(".span-b-a").innerHTML = "900";
-                document.querySelector(".span-b-b").innerHTML = "8400";
-                document.querySelector(".span-c-a").innerHTML = "1400";
-                document.querySelector(".span-c-b").innerHTML = "13200";
-                document.querySelector(".span-d-a").innerHTML = "2100";
-                document.querySelector(".span-d-b").innerHTML = "21600";
-            }
-            if (selectb.value == "双线服务器租用") {
-                document.querySelector(".slideshow").style.display = "block";
-                document.querySelector(".nothing").style.display = "none";
-                document.querySelector(".s-t-a").innerHTML = "衡阳双线A型";
-                document.querySelector(".s-t-b").innerHTML = "衡阳双线B型";
-                document.querySelector(".s-t-c").innerHTML = "衡阳双线C型";
-                document.querySelector(".s-t-d").innerHTML = "衡阳双线D型";
-                document.querySelector(".n-ip-a").innerHTML = "2个";
-                document.querySelector(".n-ip-b").innerHTML = "2个";
-                document.querySelector(".n-ip-c").innerHTML = "2个";
-                document.querySelector(".n-ip-d").innerHTML = "2个";
-                document.querySelector(".span-a-a").innerHTML = "1100";
-                document.querySelector(".span-a-b").innerHTML = "10800";
-                document.querySelector(".span-b-a").innerHTML = "1100";
-                document.querySelector(".span-b-b").innerHTML = "10800";
-                document.querySelector(".span-c-a").innerHTML = "1600";
-                document.querySelector(".span-c-b").innerHTML = "15600";
-                document.querySelector(".span-d-a").innerHTML = "2300";
-                document.querySelector(".span-d-b").innerHTML = "24000";
-            }
-            if (selectb.value == "三线服务器租用") {
-                document.querySelector(".s-t-a").innerHTML = "衡阳三线";
-                document.querySelector(".slideshow").style.display = "none";
-                document.querySelector(".nothing").style.display = "block";
-            }
+    var selecta = document.querySelectorAll("#selecta option");
+    for (var i = 0; i < selecta.length; i++) {
+        if (selecta[i].className == "selected") {
+            selecta[i].selected = 'selected';
         }
-        if (selecta.value == "广东惠州机房") {
-            document.querySelector(".slideshow-a").style.display = "none";
-            document.querySelector(".slideshow").style.display = "none";
-            document.querySelector(".one-t").style.display = "block";
-            var one_li = document.querySelectorAll(".one-t .slide-li");
-            if (selectb.value == "联通服务器租用") {
-                document.querySelector(".nothing").style.display = "none";
-                for (var i = 0; i < one_li.length; i++) {
-                    one_li[i].className = "slide-li";
-                }
-                document.querySelector("#one-b").className = "slide-li active";
-            }
-            if (selectb.value == "电信服务器租用") {
-                document.querySelector(".nothing").style.display = "none";
-                for (var i = 0; i < one_li.length; i++) {
-                    one_li[i].className = "slide-li";
-                }
-                document.querySelector("#one-a").className = "slide-li active";
-            }
-            if (selectb.value == "双线服务器租用") {
-                document.querySelector(".nothing").style.display = "none";
-                for (var i = 0; i < one_li.length; i++) {
-                    one_li[i].className = "slide-li";
-                }
-                document.querySelector("#one-c").className = "slide-li active";
-            }
-            if (selectb.value == "三线服务器租用") {
-                document.querySelector(".one-t").style.display = "none";
-                document.querySelector(".one-t").style.display = "none";
-                document.querySelector(".nothing").style.display = "block";
-            }
+    }
+    var selectb = document.querySelectorAll("#selectb option");
+    for (var j = 0; j < selectb.length; j++) {
+        if (selectb[j].className == "selected") {
+            selectb[j].selected = 'selected';
         }
-        if (selecta.value == "陕西西安机房") {
-            document.querySelector(".slideshow-a").style.display = "block";
-            document.querySelector(".slideshow").style.display = "none";
-            document.querySelector(".nothing").style.display = "none";
-            document.querySelector(".one-t").style.display = "none";
-            document.querySelector(".nc-a-a").innerHTML = "16G";
-            document.querySelector(".fy-b-a").innerHTML = "80G";
-            document.querySelector(".fy-c-a").innerHTML = "160G";
-            document.querySelector(".fy-d-a").innerHTML = "300G";
-            document.querySelector(".nc-b-a").innerHTML = "16G";
-            document.querySelector(".nc-c-a").innerHTML = "32G";
-            document.querySelector(".nc-d-a").innerHTML = "32G";
-            document.querySelector(".dk-a-a").innerHTML = "G口 20M";
-            document.querySelector(".dk-b-a").innerHTML = "G口 20M";
-            document.querySelector(".dk-c-a").innerHTML = "G口 20M";
-            document.querySelector(".dk-d-a").innerHTML = "G口 20M";
-            if (selectb.value == "联通服务器租用") {
-                document.querySelector(".s-t-a-a").innerHTML = "西安联通A型";
-                document.querySelector(".s-t-b-a").innerHTML = "西安联通B型";
-                document.querySelector(".s-t-c-a").innerHTML = "西安联通C型";
-                document.querySelector(".s-t-d-a").innerHTML = "西安联通D型";
-                document.querySelector(".s-t-e").innerHTML = "西安联通";
-                document.querySelector(".n-ip-a-a").innerHTML = "1个";
-                document.querySelector(".n-ip-b-a").innerHTML = "1个";
-                document.querySelector(".n-ip-c-a").innerHTML = "1个";
-                document.querySelector(".n-ip-d-a").innerHTML = "1个";
-                document.querySelector(".dk-a-a").innerHTML = "G口 20M";
-                document.querySelector(".dk-b-a").innerHTML = "G口 20M";
-                document.querySelector(".dk-c-a").innerHTML = "G口 100M";
-                document.querySelector(".dk-d-a").innerHTML = "G口 200M";
-                document.querySelector(".span-a-a-a").innerHTML = "1000";
-                document.querySelector(".span-a-b-a").innerHTML = "9600";
-                document.querySelector(".span-b-a-a").innerHTML = "1000";
-                document.querySelector(".span-b-b-a").innerHTML = "9600";
-                document.querySelector(".span-c-a-a").innerHTML = "1800";
-                document.querySelector(".span-c-b-a").innerHTML = "18000";
-                document.querySelector(".span-d-a-a").innerHTML = "3500";
-                document.querySelector(".span-d-b-a").innerHTML = "36000";
-            }
-            if (selectb.value == "电信服务器租用") {
-                document.querySelector(".s-t-a-a").innerHTML = "西安电信A型";
-                document.querySelector(".s-t-b-a").innerHTML = "西安电信B型";
-                document.querySelector(".s-t-c-a").innerHTML = "西安电信C型";
-                document.querySelector(".s-t-d-a").innerHTML = "西安电信D型";
-                document.querySelector(".s-t-e").innerHTML = "西安电信";
-                document.querySelector(".n-ip-a-a").innerHTML = "1个";
-                document.querySelector(".n-ip-b-a").innerHTML = "1个";
-                document.querySelector(".n-ip-c-a").innerHTML = "1个";
-                document.querySelector(".n-ip-d-a").innerHTML = "1个";
-                document.querySelector(".dk-a-a").innerHTML = "G口 20M";
-                document.querySelector(".dk-b-a").innerHTML = "G口 50M";
-                document.querySelector(".dk-c-a").innerHTML = "G口 100M";
-                document.querySelector(".dk-d-a").innerHTML = "G口 200M";
-                document.querySelector(".span-a-a-a").innerHTML = "1000";
-                document.querySelector(".span-a-b-a").innerHTML = "9600";
-                document.querySelector(".span-b-a-a").innerHTML = "1000";
-                document.querySelector(".span-b-b-a").innerHTML = "9600";
-                document.querySelector(".span-c-a-a").innerHTML = "1800";
-                document.querySelector(".span-c-b-a").innerHTML = "18000";
-                document.querySelector(".span-d-a-a").innerHTML = "3500";
-                document.querySelector(".span-d-b-a").innerHTML = "36000";
-            }
-            if (selectb.value == "双线服务器租用") {
-                document.querySelector(".s-t-a-a").innerHTML = "西安双线A型";
-                document.querySelector(".s-t-b-a").innerHTML = "西安双线B型";
-                document.querySelector(".s-t-c-a").innerHTML = "西安双线C型";
-                document.querySelector(".s-t-d-a").innerHTML = "西安双线D型";
-                document.querySelector(".s-t-e").innerHTML = "西安双线";
-                document.querySelector(".n-ip-a-a").innerHTML = "2个";
-                document.querySelector(".n-ip-b-a").innerHTML = "2个";
-                document.querySelector(".n-ip-c-a").innerHTML = "2个";
-                document.querySelector(".n-ip-d-a").innerHTML = "2个";
-                document.querySelector(".dk-a-a").innerHTML = "G口 20M";
-                document.querySelector(".dk-b-a").innerHTML = "G口 20M";
-                document.querySelector(".dk-c-a").innerHTML = "G口 100M";
-                document.querySelector(".dk-d-a").innerHTML = "G口 200M";
-                document.querySelector(".span-a-a-a").innerHTML = "1200";
-                document.querySelector(".span-a-b-a").innerHTML = "14400";
-                document.querySelector(".span-b-a-a").innerHTML = "1200";
-                document.querySelector(".span-b-b-a").innerHTML = "14400";
-                document.querySelector(".span-c-a-a").innerHTML = "2000";
-                document.querySelector(".span-c-b-a").innerHTML = "24000";
-                document.querySelector(".span-d-a-a").innerHTML = "3700";
-                document.querySelector(".span-d-b-a").innerHTML = "44400";
-            }
-            if (selectb.value == "三线服务器租用") {
-                document.querySelector(".s-t-a-a").innerHTML = "西安三线A型";
-                document.querySelector(".s-t-b-a").innerHTML = "西安三线B型";
-                document.querySelector(".s-t-c-a").innerHTML = "西安三线C型";
-                document.querySelector(".s-t-d-a").innerHTML = "西安三线D型";
-                document.querySelector(".s-t-e").innerHTML = "西安三线";
-                document.querySelector(".n-ip-a-a").innerHTML = "3个";
-                document.querySelector(".n-ip-b-a").innerHTML = "3个";
-                document.querySelector(".n-ip-c-a").innerHTML = "3个";
-                document.querySelector(".n-ip-d-a").innerHTML = "3个";
-                document.querySelector(".dk-a-a").innerHTML = "G口 20M";
-                document.querySelector(".dk-b-a").innerHTML = "G口 20M";
-                document.querySelector(".dk-c-a").innerHTML = "G口 100M";
-                document.querySelector(".dk-d-a").innerHTML = "G口 200M";
-                document.querySelector(".span-a-a-a").innerHTML = "1500";
-                document.querySelector(".span-a-b-a").innerHTML = "18000";
-                document.querySelector(".span-b-a-a").innerHTML = "1500";
-                document.querySelector(".span-b-b-a").innerHTML = "18000";
-                document.querySelector(".span-c-a-a").innerHTML = "2300";
-                document.querySelector(".span-c-b-a").innerHTML = "27600";
-                document.querySelector(".span-d-a-a").innerHTML = "4000";
-                document.querySelector(".span-d-b-a").innerHTML = "48000";
-            }
-        }
-    };
+    }
+    // function server_room() {
+    //     var rooma = document.querySelector(".server-rooma");
+    //     var selecta = document.getElementById("selecta");
+    //     var selectb = document.getElementById("selectb");
+    //     if(selecta.value=="湖南衡阳机房"){
+    //         document.querySelector(".slideshow-a").style.display="none";
+    //         document.querySelector(".one-t").style.display="none";
+    //         document.querySelector(".slideshow").style.display="block";
+    //             document.querySelector(".nc-a").innerHTML="16G";
+    //             document.querySelector(".nc-b").innerHTML="16G";
+    //             document.querySelector(".nc-c").innerHTML="16G";
+    //             document.querySelector(".nc-d").innerHTML="16G";
+    //             document.querySelector(".dk-a").innerHTML="G口 20M";
+    //             document.querySelector(".dk-b").innerHTML="G口 20M";
+    //             document.querySelector(".dk-c").innerHTML="G口 20M";
+    //             document.querySelector(".dk-d").innerHTML="G口 20M";
+    //             document.querySelector(".fy-b").innerHTML="40G";
+    //             document.querySelector(".fy-c").innerHTML="80G";
+    //             document.querySelector(".fy-d").innerHTML="120G";
+    //         if(selectb.value=="联通服务器租用"){
+    //             document.querySelector(".slideshow").style.display="block";
+    //             document.querySelector(".nothing").style.display="none";
+    //             document.querySelector(".s-t-a").innerHTML="衡阳联通A型";
+    //             document.querySelector(".s-t-b").innerHTML="衡阳联通B型";
+    //             document.querySelector(".s-t-c").innerHTML="衡阳联通C型";
+    //             document.querySelector(".s-t-d").innerHTML="衡阳联通D型";
+    //             document.querySelector(".n-ip-a").innerHTML="1个";
+    //             document.querySelector(".n-ip-b").innerHTML="1个";
+    //             document.querySelector(".n-ip-c").innerHTML="1个";
+    //             document.querySelector(".n-ip-d").innerHTML="1个";
+    //             document.querySelector(".span-a-a").innerHTML="900"
+    //             document.querySelector(".span-a-b").innerHTML="8400";
+    //             document.querySelector(".span-b-a").innerHTML="900";
+    //             document.querySelector(".span-b-b").innerHTML="8400";
+    //             document.querySelector(".span-c-a").innerHTML="1400";
+    //             document.querySelector(".span-c-b").innerHTML="13200";
+    //             document.querySelector(".span-d-a").innerHTML="2100";
+    //             document.querySelector(".span-d-b").innerHTML="21600";
 
-    var s1 = document.querySelector("#selecta");
-    var s2 = document.querySelector("#selectb");
-    document.querySelector("#selectb").onchange = function () {
-        server_room();
-    };
-    document.querySelector("#selecta").onchange = function () {
-        server_room();
-    };
+    //         }
+    //         if(selectb.value=="电信服务器租用"){
+    //             document.querySelector(".slideshow").style.display="block";
+    //             document.querySelector(".nothing").style.display="none";
+    //             document.querySelector(".s-t-a").innerHTML="衡阳电信A型";
+    //             document.querySelector(".s-t-b").innerHTML="衡阳电信B型";
+    //             document.querySelector(".s-t-c").innerHTML="衡阳电信C型";
+    //             document.querySelector(".s-t-d").innerHTML="衡阳电信D型";
+    //             document.querySelector(".n-ip-a").innerHTML="1个";
+    //             document.querySelector(".n-ip-b").innerHTML="1个";
+    //             document.querySelector(".n-ip-c").innerHTML="1个";
+    //             document.querySelector(".n-ip-d").innerHTML="1个";
+    //             document.querySelector(".span-a-a").innerHTML="900"
+    //             document.querySelector(".span-a-b").innerHTML="8400";
+    //             document.querySelector(".span-b-a").innerHTML="900";
+    //             document.querySelector(".span-b-b").innerHTML="8400";
+    //             document.querySelector(".span-c-a").innerHTML="1400";
+    //             document.querySelector(".span-c-b").innerHTML="13200";
+    //             document.querySelector(".span-d-a").innerHTML="2100";
+    //             document.querySelector(".span-d-b").innerHTML="21600";
+    //         }
+    //         if(selectb.value=="双线服务器租用"){
+    //             document.querySelector(".slideshow").style.display="block";
+    //             document.querySelector(".nothing").style.display="none";
+    //             document.querySelector(".s-t-a").innerHTML="衡阳双线A型";
+    //             document.querySelector(".s-t-b").innerHTML="衡阳双线B型";
+    //             document.querySelector(".s-t-c").innerHTML="衡阳双线C型";
+    //             document.querySelector(".s-t-d").innerHTML="衡阳双线D型";
+    //             document.querySelector(".n-ip-a").innerHTML="2个";
+    //             document.querySelector(".n-ip-b").innerHTML="2个";
+    //             document.querySelector(".n-ip-c").innerHTML="2个";
+    //             document.querySelector(".n-ip-d").innerHTML="2个";
+    //             document.querySelector(".span-a-a").innerHTML="1100"
+    //             document.querySelector(".span-a-b").innerHTML="10800";
+    //             document.querySelector(".span-b-a").innerHTML="1100";
+    //             document.querySelector(".span-b-b").innerHTML="10800";
+    //             document.querySelector(".span-c-a").innerHTML="1600";
+    //             document.querySelector(".span-c-b").innerHTML="15600";
+    //             document.querySelector(".span-d-a").innerHTML="2300";
+    //             document.querySelector(".span-d-b").innerHTML="24000";
+    //         }
+    //         if(selectb.value=="三线服务器租用"){
+    //             document.querySelector(".s-t-a").innerHTML="衡阳三线";
+    //             document.querySelector(".slideshow").style.display="none";
+    //             document.querySelector(".nothing").style.display="block";
+    //         }
+    //     }
+    //     if(selecta.value=="广东惠州机房"){
+    //         document.querySelector(".slideshow-a").style.display="none";
+    //         document.querySelector(".slideshow").style.display="none";
+    //         document.querySelector(".one-t").style.display="block";
+    //         var one_li = document.querySelectorAll(".one-t .slide-li");
+    //         if(selectb.value=="联通服务器租用"){
+    //             document.querySelector(".nothing").style.display="none";
+    //             for(var i=0 ;i<one_li.length;i++){
+    //                 one_li[i].className="slide-li";
+    //             }
+    //             document.querySelector("#one-b").className="slide-li active";
+    //         }
+    //         if(selectb.value=="电信服务器租用"){
+    //             document.querySelector(".nothing").style.display="none";
+    //             for(var i=0 ;i<one_li.length;i++){
+    //                 one_li[i].className="slide-li";
+    //             }
+    //             document.querySelector("#one-a").className="slide-li active";
+    //         }
+    //         if(selectb.value=="双线服务器租用"){
+    //             document.querySelector(".nothing").style.display="none";
+    //             for(var i=0 ;i<one_li.length;i++){
+    //                 one_li[i].className="slide-li";
+    //             }
+    //             document.querySelector("#one-c").className="slide-li active";
+    //         }
+    //         if(selectb.value=="三线服务器租用"){
+    //             document.querySelector(".one-t").style.display="none";
+    //             document.querySelector(".one-t").style.display="none";
+    //             document.querySelector(".nothing").style.display="block";
+    //         }
+    //     }
+    //     if(selecta.value=="陕西西安机房"){
+    //         document.querySelector(".slideshow-a").style.display="block";
+    //         document.querySelector(".slideshow").style.display="none";
+    //         document.querySelector(".nothing").style.display="none";
+    //         document.querySelector(".one-t").style.display="none";
+    //         document.querySelector(".nc-a-a").innerHTML="16G";
+    //         document.querySelector(".fy-b-a").innerHTML="80G";
+    //         document.querySelector(".fy-c-a").innerHTML="160G";
+    //         document.querySelector(".fy-d-a").innerHTML="300G";
+    //         document.querySelector(".nc-b-a").innerHTML="16G";
+    //         document.querySelector(".nc-c-a").innerHTML="32G";
+    //         document.querySelector(".nc-d-a").innerHTML="32G";
+    //         document.querySelector(".dk-a-a").innerHTML="G口 20M";
+    //         document.querySelector(".dk-b-a").innerHTML="G口 20M";
+    //         document.querySelector(".dk-c-a").innerHTML="G口 20M";
+    //         document.querySelector(".dk-d-a").innerHTML="G口 20M";
+    //         if(selectb.value=="联通服务器租用"){
+    //             document.querySelector(".s-t-a-a").innerHTML="西安联通A型";
+    //             document.querySelector(".s-t-b-a").innerHTML="西安联通B型";
+    //             document.querySelector(".s-t-c-a").innerHTML="西安联通C型";
+    //             document.querySelector(".s-t-d-a").innerHTML="西安联通D型";
+    //             document.querySelector(".s-t-e").innerHTML="西安联通";
+    //             document.querySelector(".n-ip-a-a").innerHTML="1个";
+    //             document.querySelector(".n-ip-b-a").innerHTML="1个";
+    //             document.querySelector(".n-ip-c-a").innerHTML="1个";
+    //             document.querySelector(".n-ip-d-a").innerHTML="1个";
+    //             document.querySelector(".dk-a-a").innerHTML="G口 20M";
+    //             document.querySelector(".dk-b-a").innerHTML="G口 20M";
+    //             document.querySelector(".dk-c-a").innerHTML="G口 100M";
+    //             document.querySelector(".dk-d-a").innerHTML="G口 200M";
+    //             document.querySelector(".span-a-a-a").innerHTML="1000"
+    //             document.querySelector(".span-a-b-a").innerHTML="9600";
+    //             document.querySelector(".span-b-a-a").innerHTML="1000";
+    //             document.querySelector(".span-b-b-a").innerHTML="9600";
+    //             document.querySelector(".span-c-a-a").innerHTML="1800";
+    //             document.querySelector(".span-c-b-a").innerHTML="18000";
+    //             document.querySelector(".span-d-a-a").innerHTML="3500";
+    //             document.querySelector(".span-d-b-a").innerHTML="36000";
+    //         }
+    //         if(selectb.value=="电信服务器租用"){
+    //             document.querySelector(".s-t-a-a").innerHTML="西安电信A型";
+    //             document.querySelector(".s-t-b-a").innerHTML="西安电信B型";
+    //             document.querySelector(".s-t-c-a").innerHTML="西安电信C型";
+    //             document.querySelector(".s-t-d-a").innerHTML="西安电信D型";
+    //             document.querySelector(".s-t-e").innerHTML="西安电信";
+    //             document.querySelector(".n-ip-a-a").innerHTML="1个";
+    //             document.querySelector(".n-ip-b-a").innerHTML="1个";
+    //             document.querySelector(".n-ip-c-a").innerHTML="1个";
+    //             document.querySelector(".n-ip-d-a").innerHTML="1个";
+    //             document.querySelector(".dk-a-a").innerHTML="G口 20M";
+    //             document.querySelector(".dk-b-a").innerHTML="G口 50M";
+    //             document.querySelector(".dk-c-a").innerHTML="G口 100M";
+    //             document.querySelector(".dk-d-a").innerHTML="G口 200M";
+    //             document.querySelector(".span-a-a-a").innerHTML="1000"
+    //             document.querySelector(".span-a-b-a").innerHTML="9600";
+    //             document.querySelector(".span-b-a-a").innerHTML="1000";
+    //             document.querySelector(".span-b-b-a").innerHTML="9600";
+    //             document.querySelector(".span-c-a-a").innerHTML="1800";
+    //             document.querySelector(".span-c-b-a").innerHTML="18000";
+    //             document.querySelector(".span-d-a-a").innerHTML="3500";
+    //             document.querySelector(".span-d-b-a").innerHTML="36000";
+    //         }
+    //         if(selectb.value=="双线服务器租用"){
+    //             document.querySelector(".s-t-a-a").innerHTML="西安双线A型";
+    //             document.querySelector(".s-t-b-a").innerHTML="西安双线B型";
+    //             document.querySelector(".s-t-c-a").innerHTML="西安双线C型";
+    //             document.querySelector(".s-t-d-a").innerHTML="西安双线D型";
+    //             document.querySelector(".s-t-e").innerHTML="西安双线";
+    //             document.querySelector(".n-ip-a-a").innerHTML="2个";
+    //             document.querySelector(".n-ip-b-a").innerHTML="2个";
+    //             document.querySelector(".n-ip-c-a").innerHTML="2个";
+    //             document.querySelector(".n-ip-d-a").innerHTML="2个";
+    //             document.querySelector(".dk-a-a").innerHTML="G口 20M";
+    //             document.querySelector(".dk-b-a").innerHTML="G口 20M";
+    //             document.querySelector(".dk-c-a").innerHTML="G口 100M";
+    //             document.querySelector(".dk-d-a").innerHTML="G口 200M";
+    //             document.querySelector(".span-a-a-a").innerHTML="1200"
+    //             document.querySelector(".span-a-b-a").innerHTML="14400";
+    //             document.querySelector(".span-b-a-a").innerHTML="1200";
+    //             document.querySelector(".span-b-b-a").innerHTML="14400";
+    //             document.querySelector(".span-c-a-a").innerHTML="2000";
+    //             document.querySelector(".span-c-b-a").innerHTML="24000";
+    //             document.querySelector(".span-d-a-a").innerHTML="3700";
+    //             document.querySelector(".span-d-b-a").innerHTML="44400";
+    //         }
+    //         if(selectb.value=="三线服务器租用"){
+    //             document.querySelector(".s-t-a-a").innerHTML="西安三线A型";
+    //             document.querySelector(".s-t-b-a").innerHTML="西安三线B型";
+    //             document.querySelector(".s-t-c-a").innerHTML="西安三线C型";
+    //             document.querySelector(".s-t-d-a").innerHTML="西安三线D型";
+    //             document.querySelector(".s-t-e").innerHTML="西安三线";
+    //             document.querySelector(".n-ip-a-a").innerHTML="3个";
+    //             document.querySelector(".n-ip-b-a").innerHTML="3个";
+    //             document.querySelector(".n-ip-c-a").innerHTML="3个";
+    //             document.querySelector(".n-ip-d-a").innerHTML="3个";
+    //             document.querySelector(".dk-a-a").innerHTML="G口 20M";
+    //             document.querySelector(".dk-b-a").innerHTML="G口 20M";
+    //             document.querySelector(".dk-c-a").innerHTML="G口 100M";
+    //             document.querySelector(".dk-d-a").innerHTML="G口 200M";
+    //             document.querySelector(".span-a-a-a").innerHTML="1500"
+    //             document.querySelector(".span-a-b-a").innerHTML="18000";
+    //             document.querySelector(".span-b-a-a").innerHTML="1500";
+    //             document.querySelector(".span-b-b-a").innerHTML="18000";
+    //             document.querySelector(".span-c-a-a").innerHTML="2300";
+    //             document.querySelector(".span-c-b-a").innerHTML="27600";
+    //             document.querySelector(".span-d-a-a").innerHTML="4000";
+    //             document.querySelector(".span-d-b-a").innerHTML="48000";
+    //         }
+    //     }
+    // }
 }
 
 /***/ }),
@@ -27633,34 +27633,33 @@ if (document.querySelector("#server_hosting")) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-
 // CDN加速
-if (document.querySelector("#CDN_speed_up")) {
-    var accelerate_li = document.querySelector(".accelerate_class").getElementsByTagName("li");
-    var class_item = document.querySelectorAll(".class-item");
-    var class_item_a = document.querySelector(".class-item-a");
-    var class_i_active = document.querySelector(".class-i-active");
-    var CDN_up = document.querySelector(".CDN_up");
-    var classitema = document.querySelector(".class-item-a");
-    var rectangular_l = document.querySelector(".rectangular-l").querySelector("div");
-    rectangular_l.style.height = document.querySelector(".rectangular").offsetHeight - 30 + "px";
-    CDN_up.style.height = classitema.offsetHeight + 'px';
-    for (var i = 0; i < accelerate_li.length; i++) {
-        accelerate_li[i].index = i;
-        accelerate_li[i].onclick = function () {
-            for (var j = 0; j < accelerate_li.length; j++) {
+// if(document.querySelector("#CDN_speed_up")) {
+//     var accelerate_li = document.querySelector(".accelerate_class").getElementsByTagName("li");
+//     var class_item = document.querySelectorAll(".class-item");
+//     var class_item_a = document.querySelector(".class-item-a");
+//     var class_i_active = document.querySelector(".class-i-active");
+//     var CDN_up = document.querySelector(".CDN_up");
+//     var classitema = document.querySelector(".class-item-a");
+//     var rectangular_l = document.querySelector(".rectangular-l").querySelector("div");
+//     rectangular_l.style.height = document.querySelector(".rectangular").offsetHeight - 30 +"px";
+//   CDN_up.style.height=classitema.offsetHeight+'px';
+//     for (var i = 0; i < accelerate_li.length; i++) {
+//         accelerate_li[i].index = i;
+//         accelerate_li[i].onclick = function () {
+//             for (var j = 0; j < accelerate_li.length; j++) {
 
-                accelerate_li[j].className = " ";
-                class_item[j].className = "class-item ";
-            }
-            document.querySelector(".CDN_up").style.height = "100%";
-            this.className = "class-active";
-            class_item[this.index].className = "class-item class-i-active";
-            class_item_a.style.display = "none";
-        };
-    }
-}
+//                 accelerate_li[j].className = " ";
+//                 class_item[j].className = "class-item ";
+//             }
+//             document.querySelector(".CDN_up").style.height="100%";
+//             this.className = "class-active";
+//             class_item[this.index].className = "class-item class-i-active";
+//             class_item_a.style.display = "none";
+//         }
+//     }
+// }
+
 
 /***/ }),
 /* 173 */

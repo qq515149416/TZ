@@ -12368,7 +12368,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   height: 166px;
   background-color: rgba(23, 7, 27, 0.7);
   padding-left: 26px;
-  padding-top: 32px;
+  padding-top: 28px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   color: #ffffff;
@@ -12517,6 +12517,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
 #labor_day .edition-heart .labor-day-product > .labor-day-server > article ul li span {
   display: block;
   text-align: center;
+  text-indent: -40px;
 }
 #labor_day .edition-heart .labor-day-product > .labor-day-server > article ul li span.attr {
   font-size: 16px;
@@ -12570,6 +12571,7 @@ html .tz-kefu .tz-kefu-item.tz-kefu-top .tz-kefu-item-btn:hover {
   font-size: 14px;
   text-decoration: line-through;
   margin: 10px 0;
+  margin-top: 4px;
 }
 #labor_day .edition-heart .labor-day-product > .labor-day-server > article a.buy {
   display: inline-block;

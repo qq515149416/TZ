@@ -15,16 +15,17 @@
                 <li>
                     <h5 class="font-heavy">经济型云主机</h5>
                     <p class="font-heavy">原价五五折 / 买5个月再送1个月 / 充值再享满600送200</p>
-                    <a href="#">GO ></a>
+                    <a href="#hot">GO ></a>
                 </li>
                 <li>
                     <h5 class="font-heavy">百G清洗高防服务器</h5>
                     <p class="font-heavy">高防服务器6.6折</p>
-                    <a href="#">GO ></a>
+                    <a href="#fold">GO ></a>
                 </li>
             </ul>
         </div>
         <div class="labor-day-product">
+            <a name="hot"></a>
             <h3 class="font-heavy">经济型云主机</h3>
             <div class="labor-day-server">
                 <header class="hot">
@@ -80,13 +81,14 @@
                         <div class="original-price">
                             原价168元/月
                         </div>
-                        <a class="buy font-heavy" href="#">立即购买</a>
+                        <a class="buy font-heavy" href="javascript:;" onclick="randomqq()">立即购买</a>
                     </div>
                 </article>
             </div>
         </div>
 
         <div class="labor-day-product">
+            <a name="fold"></a>
             <h3 class="font-heavy">百G清洗高防服务器</h3>
             <div class="labor-day-server">
                 <header class="fold">
@@ -141,7 +143,7 @@
                         <div class="original-price">
                             原价10000元/年
                         </div>
-                        <a class="buy font-heavy" href="#">立即购买</a>
+                        <a class="buy font-heavy" href="javascript:;" onclick="randomqq()">立即购买</a>
                     </div>
                 </article>
             </div>

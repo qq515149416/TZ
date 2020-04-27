@@ -70,7 +70,7 @@
                                 <span class="val font-heavy">衡阳电信</span>
                             </li>
                         </ul>
-                        <b class="tip font-medium">活动对象 ：此充值优惠每个ID只享受1次，优惠金额以提交的信息登记为准</b>
+                        <b class="tip font-heavy">活动对象 ：此充值优惠每个ID只享受1次，优惠金额以提交的信息登记为准</b>
                     </div>
                     <div class="pull-right">
                         <div class="price">

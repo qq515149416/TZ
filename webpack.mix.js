@@ -21,7 +21,8 @@ mix.less('resources/assets/less/index.less', 'public/css')
    .less('resources/assets/less/wap/main.less', 'public/css/wap')
    .js('resources/user_assets/js/main.js', 'public/user_assets/js')
    .less('resources/user_assets/less/main.less', 'public/user_assets/css')
-   .copyDirectory('resources/user_assets/images', 'public/user_assets/images');
+   .copyDirectory('resources/user_assets/images', 'public/user_assets/images')
+   .copyDirectory('resources/assets/images/laborDay', 'public/images/laborDay');
 
 // mix.js('resources/user_assets/js/main.js', 'public/user_assets/js')
 //    .less('resources/user_assets/less/main.less', 'public/user_assets/css')

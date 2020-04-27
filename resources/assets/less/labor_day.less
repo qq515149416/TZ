@@ -1,0 +1,259 @@
+#labor_day {
+    background: url(../images/laborDay/bg.png) no-repeat;
+    background-size: 100% 100%;
+    .edition-heart {
+        width: 1145px;
+        margin: 0 auto;
+        .content-style();
+    }
+    
+}
+
+.content-style() {
+    .labor-day-nav {
+        padding-top: 636px;
+        ul {
+            width: 896px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            list-style: none;
+            padding: 0;
+            li {
+                width: 436px;
+                height: 166px;
+                background-color: rgba(23, 7, 27, .7);
+                padding-left: 26px;
+                padding-top: 32px;
+                box-sizing: border-box;
+                color: #ffffff;
+                border-radius: 6px;
+                h5 {
+                    margin: 0;
+                    font-size: 24px;
+                    font-weight: normal;
+                }
+                p {
+                    margin-top: 20px;
+                    margin-bottom: 24px;
+                    font-size: 14px;
+                    color: #fff;   
+                }
+                a {
+                    display: inline-block;
+                    height: 28px;
+                    width: 116px;
+                    border-radius: 14px;
+                    background-color: #f73416;
+                    font-size: 18px;
+                    font-family: Arial, Helvetica, sans-serif;
+                    text-align: center;
+                    line-height: 28px;
+                    text-decoration: none;
+                    color: #fff;
+                }
+            }
+        }
+    }
+
+    .labor-day-product {
+        margin-top: 90px;
+        > h3 {
+            display: inline-block;
+            margin: 0;
+            font-size: 30px;
+            color: #fed083;
+            font-weight: normal;
+            margin-bottom: 38px;
+            position: relative;
+            &::after {
+                content: "";
+                position: absolute;
+                width: 55px;
+                height: 18px;
+                top: 50%;
+                transform: translateY(-50%);
+                right: -55px - 10px;
+                background: url(../images/laborDay/bT-tuxiang.png) no-repeat;
+            }
+        }
+        > .labor-day-server {
+            > header {
+                height: 80px;
+                border-radius: 4px 4px 0 0;
+                background: linear-gradient(to right,#ff9200, #ea4321);
+                padding-left: 26px;
+                position: relative;
+                &::after {
+                    content: "";
+                    position: absolute;
+                    width: 137px;
+                    height: 40px;
+                    top: 15px;
+                    right: -8px;
+                }
+                &.hot::after {
+                    background: url(../images/laborDay/HOT-tubiao.png) no-repeat;
+                }
+                &.fold::after {
+                    background: url(../images/laborDay/6.6-tubiao.png) no-repeat;
+                }
+                > h5 {
+                    margin: 0;
+                    font-size: 22px;
+                    font-weight: normal;
+                    color: #fff;
+                    height: 80px;
+                    line-height: 80px;
+                }
+            }
+            > article {
+                padding-top: 30px;
+                padding-left: 26px;
+                // padding-bottom: 38px;
+                background-color: #fff;
+                border-radius: 0 0 4px 4px;
+                > .pull-left {
+                    width: 862px;
+                    // border-right: 1px solid #e8e8e9;
+                    position: relative;
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        width: 1px;
+                        height: 116px;
+                        background-color: #e8e8e9;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        right: 0;
+                    }
+                }
+                > .pull-right {
+                    width: 248px;
+                    text-align: center;
+                }
+                .tag {
+                    margin-bottom: 28px;
+                    span {
+                        padding: 3px 5px;
+                        border: 1px solid #d8d8d8;
+                        color: #aeb1b5;
+                        font-size: 14px;
+                        border-radius: 2px;
+                    }
+                }
+                ul {
+                    width: 840px;
+                    list-style: none;
+                    margin: 0;
+                    padding: 0;
+                    display: flex;
+                    // justify-content: space-between;
+                    margin-bottom: 38px;
+                    &.full-width {
+                        width: 100%;
+                    }
+                    li {
+                        flex: 1;
+                        &.col-2 {
+                            flex: 2;
+                        }
+                        &.col-3 {
+                            flex: 3;
+                        }
+                        span {
+                            display: block;
+                            text-align: center;
+                            &.attr {
+                                font-size: 16px;
+                                color: #a0a3a8;
+                            }
+                            &.val {
+                                margin-top: 18px;
+                                font-size: 18px;
+                                color: #4e4a4a;
+                            }
+                        }
+                    }
+                }
+                b.tip {
+                    font-size: 16px;
+                    color: #f73416;
+                    font-weight: normal;
+                    padding-bottom: 38px;
+                    display: block;
+                }
+                p.tip {
+                    display: flex;
+                    align-items: stretch;
+                    font-size: 14px;
+                    color: #a0a3a8;
+                    margin-bottom: 20px;
+                    span:first-of-type {
+                        min-width: 5em;
+                    }
+                }
+                .price {
+                    padding-top: 44px - 10px;
+                    .currency {
+                        font-family: "微软雅黑";
+                        font-size: 22px;
+                        color: #ff0000;
+                    }
+                    .amount {
+                        font-size: 36px;
+                        line-height: 36px;
+                        color: #ff0000;
+                    }
+                    .unit {
+                        color: #4e4a4a;
+                        font-size: 16px;
+                    }
+                }
+                .original-price {
+                    color: #bbbdc0;
+                    font-size: 14px;
+                    text-decoration: line-through;
+                    margin: 10px 0;
+                }
+                a.buy {
+                    display: inline-block;
+                    height: 38px;
+                    width: 160px;
+                    text-align: center;
+                    text-decoration: none;
+                    line-height: 38px;
+                    background-color: #ff0000;
+                    border-radius: 2px;
+                    font-size: 16px;
+                    color: #fff;
+                }
+            }
+        }
+        
+        
+    }
+    .legend {
+        margin-top: 90px;
+        margin-left: 122px;
+        margin-bottom: 126px;
+        h6 {
+            margin: 0;
+            color: #ff0000;
+            font-size: 18px;
+            margin-bottom: 14px;
+        }
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            li {
+                display: flex;
+                p {
+                    color: #fff;
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+}

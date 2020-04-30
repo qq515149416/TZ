@@ -793,6 +793,25 @@ Route::group([
     });
 
     /**
+     * 防火墙
+     */
+    Route::group([
+        'prefix' => 'waf',
+    ], function (Router $router) {
+        $router->get('show', 'Waf\WafController@show');//展示防火墙套餐
+        $router->post('insert', 'Waf\WafController@insert');//添加防火墙套餐
+        $router->post('edit', 'Waf\WafController@edit');//编辑防火墙套餐
+        $router->post('del', 'Waf\WafController@del');//删除防火墙套餐
+
+        // $router->post('buyNowByAdmin', 'DefenseIp\OverlayController@buyNowByAdmin');//购买叠加包接口
+        // $router->get('showBelong', 'DefenseIp\OverlayController@showBelong');//展示某客户所属叠加包接口
+        // $router->post('useOverlayToDIP', 'DefenseIp\OverlayController@useOverlayToDIP');//将叠加包使用到高防ip接口
+        // $router->post('useOverlayToIDC', 'DefenseIp\OverlayController@useOverlayToIDC');//将叠加包使用到IDC业务接口
+        // $router->get('showBelongBySite', 'DefenseIp\OverlayController@showBelongBySite');//展示指定机房叠加包接口
+
+    });
+
+    /**
      * 发票
      */
     Route::group([

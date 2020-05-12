@@ -398,8 +398,8 @@
                     <div class="body">
                         <ul>
                             <li>电话：18038235325</li>
-                            <li>QQ：345276762</li>
-                            <li>邮箱：345276762@qq.com</li>
+                            <li>QQ：2851217790</li>
+                            <li>邮箱：2851217790@qq.com</li>
                         </ul>
                     </div>
                 </div>

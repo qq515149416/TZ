@@ -397,9 +397,9 @@
                     </div>
                     <div class="body">
                         <ul>
-                            <li>电话：18922986777</li>
-                            <li>QQ：2851506990</li>
-                            <li>邮箱：pzw@tzidc.com</li>
+                            <li>电话：18038235325</li>
+                            <li>QQ：345276762</li>
+                            <li>邮箱：345276762@qq.com</li>
                         </ul>
                     </div>
                 </div>

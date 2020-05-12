@@ -57,7 +57,7 @@
                     <div class="tz-main">
                         <div class="nabar-header">
                            <a href="/wap">
-                            <img src="{{ asset("/images/wap/logo.png") }}" alt="">
+                            <img src="{{ asset("/images/wap/tzlogo.png") }}" alt="">
                            </a>
                         </div>
                         <div class="nabar-right right">

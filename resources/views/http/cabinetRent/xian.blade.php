@@ -1,10 +1,10 @@
 @extends('layouts.layout')
 
-@section('title', '西安带宽租用-独享带宽租用-大带宽租用-服务器带宽价格[腾正科技]')
+@section('title', '专业IDC服务商,云主机，高防服务器，高防IP，服务器租用,服务器托管，带宽租用,CDN加速')
 
-@section('keywords', '西安带宽租用，独享带宽租用，大带宽租用，服务器带宽价格，G口带宽租用')
+@section('keywords', '云主机,高防服务器,高防IP,服务器租用,服务器托管,带宽租用,CDN加速,高防CDN,云服务器,机柜租用,云计算,IDC 服务器商,网络安全服务商')
 
-@section('description', '腾正自主西安T3+级机房，T级集群防火墙，高质量G口、万兆大带宽资源接入，提供安全可靠价格优惠的百M、千兆、万兆、G口大带宽租用及独享带宽租用服务，咨询热线0769-22226555')
+@section('description', '专业IDC服务提供商，主营服务器租用、服务器托管、机柜租用、大带宽租用、云主机、高防服务器、高防IP、CDN加速等数据存储、计算及安全综合应用解决方案服务。')
 
 @section('content')
 <div class="tz-cabinet-rent" id="xian-cabinet">
@@ -21,9 +21,9 @@
             <a class="apply-btn" href="javascript: void(0);">立即申请</a>
         </div>
         <div class="tab">
-            <a class="tab-item" href="/cabinet-rent/huizhou">惠州机柜带宽</a>
-            <a class="tab-item" href="/cabinet-rent/hengyang">衡阳机柜带宽</a>
-            <a class="tab-item active" href="/cabinet-rent/xian">西安机柜带宽</a>
+            <a class="tab-item" href="/cabinet-rent/huizhou">惠州机柜租用</a>
+            <a class="tab-item" href="/cabinet-rent/hengyang">衡阳机柜租用</a>
+            <a class="tab-item active" href="/cabinet-rent/xian">西安机柜租用</a>
         </div>
     </div>
     <!--机房-->

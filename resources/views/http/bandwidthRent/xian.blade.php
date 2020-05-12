@@ -20,9 +20,9 @@
             <a class="apply-btn" href="javascript: void(0);">立即申请</a>
         </div>
         <div class="tab">
-            <a class="tab-item" href="/bandwidth-rent/huizhou">惠州机柜租用</a>
-            <a class="tab-item" href="/bandwidth-rent/hengyang">衡阳机柜租用</a>
-            <a class="tab-item active" href="/bandwidth-rent/xian">西安机柜租用</a>
+            <a class="tab-item" href="/bandwidth-rent/huizhou">惠州带宽租用</a>
+            <a class="tab-item" href="/bandwidth-rent/hengyang">衡阳带宽租用</a>
+            <a class="tab-item active" href="/bandwidth-rent/xian">西安带宽租用</a>
         </div>
     </div>
     <!--机房-->

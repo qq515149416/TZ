@@ -43,9 +43,9 @@ class SearchModel extends Model
                 if(!empty($customer)){
                     $qq = isset($customer->msg_qq)?$customer->msg_qq:'';
                     $phone = isset($customer->msg_phone)?$customer->msg_phone:'';
-                    $business['client_name'] = '用户:'.$customer->nickname.
-                                                'QQ:'.$qq.
-                                                '手机:'.$phone.
+                    $business['client_name'] = '用户:'.$customer->nickname.'<br />'.
+                                                'QQ:'.$qq.'<br />'.
+                                                '手机:'.$phone.'<br />'.
                                                 '备注:'.$customer->remarks;
                 }
                 $note = DB::table('idc_machine')->where(['machine_num'=>$business['machine_number']])->value('machine_note');

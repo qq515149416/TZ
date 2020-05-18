@@ -1890,7 +1890,7 @@ class OrdersModel extends Model
 		$insert['business_name'] = $sales->name?$sales->name:$sales->username;
 		$insert['resource_type'] = $insert_data['resource_type'];
 		$insert['price'] = $insert_data['price'];
-		$insert['duration'] = $insert_data['duration'];
+		$insert['duration'] = $insert_data['duration']?$insert_data['duration']:1;
 		$end_time = time_calculation(date('Y-m-d H:i:s',time()),$insert_data['duration'],'month',$business->monthly);
 		if(date('Y-m-d',strtotime($business->endding_time)) < date('Y-m-d',strtotime($end_time)) || $business->monthly != 0){//当主业务到期时间小于资源到期时间时，以主业务时间为到期时间
 			$insert['end_time'] = $business->monthly ? $end_time : $business->endding_time;//存在月结日则用月结日计算后的日期，没有则跟主业务的到期时间保持一致

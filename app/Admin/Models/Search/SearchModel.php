@@ -25,7 +25,9 @@ class SearchModel extends Model
         }
         foreach($xs_result as $xs_key => $xs_value){
             $where = [];
-            if(Admin::user()->inRoles(['HR','salesman','Promoter'])){//业务员等根据购买时绑定的业务员id进行查询
+            if(!Admin::user()->inRoles(['HR','salesman','Promoter'])){//业务员等根据购买时绑定的业务员id进行查询
+                $where = []; 
+            } else {
                 $where[] = ['sales_id',Admin::user()->id];
             }
             $where[] = ['business_number',$xs_value];

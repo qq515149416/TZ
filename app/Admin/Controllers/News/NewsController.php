@@ -163,8 +163,8 @@ class NewsController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('帮助管理');
-            $content->description('帮助添加');
+            $content->header('文章管理');
+            $content->description('文章添加');
 
             $content->body($this->form());
         });

@@ -60,7 +60,7 @@ Route::group([
     Route::get('/army_day', 'Show\ArmyDayController@index');
     Route::get('/mid_autumn', 'Show\MidAutumnController@index');
     Route::get('/double11', 'Show\Double11Controller@index');
-    Route::get('/overseas/{page?}/{room?}', 'Show\OverseasController@index');
+//    Route::get('/overseas/{page?}/{room?}', 'Show\OverseasController@index');   //海外服务器,暂时屏蔽
 });
 Route::get('/gaofang/package', 'Show\ProtectionController@gaofangApi');
 Route::get('/admin/{path?}', 'Show\AdminController@index')->where('path', '.+');
@@ -118,9 +118,9 @@ Route::group([
     'prefix' => 'user',
     'middleware' => ['UserOperationLog','NewCheckLogin']
 ], function () {
-    Route::get("index","User\Show\IndexController@index");    
-    Route::get("server","User\Show\ServerController@index");    
-    Route::get("order","User\Show\OrderController@index");    
+    Route::get("index","User\Show\IndexController@index");
+    Route::get("server","User\Show\ServerController@index");
+    Route::get("order","User\Show\OrderController@index");
     Route::get("detail/{id}","User\Show\DetailController@index");
     Route::get("gaofang","User\Show\GaofangController@index");
     Route::get("gaofang_detail/{id}","User\Show\DetailController@gaofang");

@@ -774,7 +774,7 @@ class OrdersModel extends Model
 		//以资源编号为键的资源数组
 		$all = $this->where($business)->where('resource_type','>',3)->orderBy('end_time','desc')->get(['order_sn','resource_type','machine_sn','resource','price','end_time','business_sn'])->groupBy('machine_sn');
 		$resource = $all->map(function($item,$key){//根据资源编号获取对应资源的最新一条订单（$key为$all的键）,map参考laravel模型的集合的可用方法
-			return $this->where(['machine_sn'=>$key,'business_sn'=>$item[0]['business_sn'],'remove_status'=>0])->where('order_status','<',3)->orderBy('end_time','desc')->select('order_sn','resource_type','machine_sn','resource','price','end_time','order_status')->first();	
+			return $this->where(['machine_sn'=>$key,'business_sn'=>$item[0]['business_sn'],'remove_status'=>0])->where('resource_type','>',3)->where('order_status','<',3)->orderBy('end_time','desc')->select('order_sn','resource_type','machine_sn','resource','price','end_time','order_status')->first();	
 		});
 		if(!empty($resource)){
 			$orders['IP'] = $resource->filter(function($value,$key){return $value->resource_type == 4;})->values();
@@ -1890,7 +1890,7 @@ class OrdersModel extends Model
 		$insert['business_name'] = $sales->name?$sales->name:$sales->username;
 		$insert['resource_type'] = $insert_data['resource_type'];
 		$insert['price'] = $insert_data['price'];
-		$insert['duration'] = $insert_data['duration'];
+		$insert['duration'] = $insert_data['duration']?$insert_data['duration']:1;
 		$end_time = time_calculation(date('Y-m-d H:i:s',time()),$insert_data['duration'],'month',$business->monthly);
 		if(date('Y-m-d',strtotime($business->endding_time)) < date('Y-m-d',strtotime($end_time)) || $business->monthly != 0){//当主业务到期时间小于资源到期时间时，以主业务时间为到期时间
 			$insert['end_time'] = $business->monthly ? $end_time : $business->endding_time;//存在月结日则用月结日计算后的日期，没有则跟主业务的到期时间保持一致
@@ -2639,20 +2639,22 @@ class OrdersModel extends Model
 					 * 获取租用/托管机器的数据，判断是否存在该机器
 					 * @var [type]
 					 */
-					$resource = get_object_vars(DB::table('idc_machine')
+					$data = DB::table('idc_machine')
 							   ->leftjoin('idc_ips','idc_machine.ip_id','=','idc_ips.id')
 							   ->leftjoin('idc_machineroom','idc_machine.machineroom','=','idc_machineroom.id')
 							   ->leftjoin('idc_cabinet','idc_machine.cabinet','=','idc_cabinet.id')
 							   ->where(['machine_num'=>$change->after_resource_number,'idc_machine.own_business'=>$order->business_sn])
 							   ->select('idc_machine.id','idc_machine.machine_num','idc_machine.cpu','idc_machine.memory','idc_machine.harddisk','idc_machine.cabinet','idc_machine.ip_id','idc_machine.machineroom','idc_machine.bandwidth','idc_machine.protect','idc_machine.loginname','idc_machine.loginpass','idc_machine.machine_type','idc_machineroom.id as machineroom_id','idc_machineroom.machine_room_name as machineroom_name','idc_cabinet.cabinet_id as cabinets','idc_ips.ip','idc_ips.ip_company')
-							   ->first());	
-					if(empty($resource)){
+							   ->first();
+					if(empty($data)){
 						DB::rollBack();
 						$return['data'] = [];
 						$return['code'] = 0;
 						$return['msg'] = '(#107)无对应的资源可更换';
 						return $return;
 					}
+					$resource = get_object_vars($data);	
+					
 					$ip_company = [0=>'电信',1=>'移动',2=>'联通',3=>'BGP',Null=>'未选择'];
 					$resource['ip'] = $resource['ip']?$resource['ip']:'0.0.0.0';
 					$resource['ip_detail'] = $resource['ip'].'('.$ip_company[$resource['ip_company']].')';

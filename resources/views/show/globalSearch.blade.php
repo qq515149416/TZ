@@ -16,7 +16,7 @@
                     @if ($key === 'ip')
                     <td><b>@join($item)</b></td>
                     @else
-                    <td>{{ $item }}</td>
+                    <td>{!! $item !!}</td>
                     @endif
                 @endforeach
                 <td class="text-center">

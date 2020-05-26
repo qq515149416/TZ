@@ -26,7 +26,10 @@ class SearchModel extends Model
         foreach($xs_result as $xs_key => $xs_value){
             $where = [];
             if(Admin::user()->inRoles(['HR','salesman','Promoter'])){//业务员等根据购买时绑定的业务员id进行查询
-                $where[] = ['sales_id',Admin::user()->id];
+                $where[] = ['sales_id',Admin::user()->id]; 
+            }
+            if(Admin::user()->inRoles(['CMO','NCSE'])){
+                $where = [];
             }
             $where[] = ['business_number',$xs_value];
             $business = $this->where($where)->whereBetween('remove_status',[0,3])->select('id','client_id','sales_id','business_number','business_type','machine_number','resource_detail','money','client_id','length','start_time','endding_time','business_status','remove_status')->first();
@@ -43,9 +46,9 @@ class SearchModel extends Model
                 if(!empty($customer)){
                     $qq = isset($customer->msg_qq)?$customer->msg_qq:'';
                     $phone = isset($customer->msg_phone)?$customer->msg_phone:'';
-                    $business['client_name'] = '用户:'.$customer->nickname.
-                                                'QQ:'.$qq.
-                                                '手机:'.$phone.
+                    $business['client_name'] = '用户:'.$customer->nickname.'<br />'.
+                                                'QQ:'.$qq.'<br />'.
+                                                '手机:'.$phone.'<br />'.
                                                 '备注:'.$customer->remarks;
                 }
                 $note = DB::table('idc_machine')->where(['machine_num'=>$business['machine_number']])->value('machine_note');

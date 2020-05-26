@@ -803,11 +803,40 @@ Route::group([
         $router->post('edit', 'Waf\WafController@edit');//编辑防火墙套餐
         $router->post('del', 'Waf\WafController@del');//删除防火墙套餐
 
-        // $router->post('buyNowByAdmin', 'DefenseIp\OverlayController@buyNowByAdmin');//购买叠加包接口
-        // $router->get('showBelong', 'DefenseIp\OverlayController@showBelong');//展示某客户所属叠加包接口
-        // $router->post('useOverlayToDIP', 'DefenseIp\OverlayController@useOverlayToDIP');//将叠加包使用到高防ip接口
-        // $router->post('useOverlayToIDC', 'DefenseIp\OverlayController@useOverlayToIDC');//将叠加包使用到IDC业务接口
-        // $router->get('showBelongBySite', 'DefenseIp\OverlayController@showBelongBySite');//展示指定机房叠加包接口
+        $router->post('buyNowByAdmin', 'Waf\WafController@buyNowByAdmin');//工作人员申请购买防火墙接口
+        $router->get('showExamine', 'Waf\WafController@showExamine');//展示需要审核的购买申请
+        $router->post('examine', 'Waf\WafController@examine');//审核方法
+        $router->post('renewByAdmin ', 'Waf\WafController@renewByAdmin');//工作人员续费防火墙业务接口
+        $router->get('showBusiness', 'Waf\WafController@showBusiness');//展示客户的防火墙业务接口
+
+        Route::group([
+            'prefix' => 'api',
+        ], function (Router $router) {
+
+            //域名的基本crud
+            $router->post('insertDomain', 'Waf\WafController@insertDomain');//添加域名
+            $router->post('delDomain', 'Waf\WafController@delDomain');//为客户删除域名
+            $router->post('editDomain', 'Waf\WafController@editDomain');//为客户编辑域名基本配置
+            $router->post('showDomain', 'Waf\WafController@showDomain');//展示域名基本配置
+
+            //cc防护配置
+            $router->post('showDomainProtection', 'Waf\WafController@showDomainProtection');//获取域名防护配置
+            $router->post('editDomainProtection', 'Waf\WafController@editDomainProtection');//修改域名防护配置
+            
+            //cc防护配置
+            $router->post('showDomainCCProtection', 'Waf\WafController@showDomainCCProtection');//获取CC攻击防护配置
+            $router->post('editDomainCCProtection', 'Waf\WafController@editDomainCCProtection');//修改CC攻击防护配置
+
+            //web防护配置
+            $router->post('showDomainWebProtection', 'Waf\WafController@showDomainWebProtection');//获取Web攻击防护配置
+            $router->post('editDomainWebProtection', 'Waf\WafController@editDomainWebProtection');//修改Web攻击防护配置
+            
+            //ip黑白名单配置
+            $router->post('insertDomainIPRule', 'Waf\WafController@insertDomainIPRule');//创建IP黑白名单
+            $router->post('delDomainIPRule', 'Waf\WafController@delDomainIPRule');//删除IP黑白名单
+            $router->post('showDomainIPRule', 'Waf\WafController@showDomainIPRule');//查看IP黑白名单列表
+            
+        });
 
     });
 

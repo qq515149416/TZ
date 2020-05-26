@@ -7,145 +7,27 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Encore\Admin\Facades\Admin;
-// use App\Admin\Models\DefenseIp\OrderModel; //后台高防ip的订单模型
-// use App\Admin\Models\Business\OrdersModel; //后台的订单支付模型
+use App\Admin\Models\DefenseIp\OrderModel; //后台的订单模型,放错地方了
+use App\Admin\Models\Business\OrdersModel; //后台的订单支付模型
 // use App\Admin\Models\DefenseIp\BusinessModel;
 
 use Carbon\Carbon;
 //use App\Http\Controllers\DefenseIp\ApiController;
 
 
-class WafModel extends Model
+class WafBusinessModel extends Model
 {
 
 	use SoftDeletes;
 	
 
-	protected $table = 'tz_waf_package'; //表
+	protected $table = 'tz_waf_business'; //表
 	protected $primaryKey = 'id'; //主键
 	public $timestamps = true;
 	protected $dates = ['deleted_at'];
-	protected $fillable = ['name', 'description','https_switch','web_switch','cc_switch','domain_num','sell_status','price'];
+	protected $fillable = ['business_number', 'user_id','package_id','price','status','end_at','examine_time','start_time'];
 	protected $time_limit = 60;//两次购买的时间限制
 
-	/**
-	 *
-	 */
-	public function insert($par){
-		$check = $this->where('name',$par['name'])->exists();
-		
-		if($check){
-			return [
-				'data'	=> [],
-				'msg'	=> '已存在同名套餐',
-				'code'	=> 0,
-			];
-		}
-
-		if($this->create($par)){
-			return [
-				'data'	=> [],
-				'msg'	=> '创建成功',
-				'code'	=> 1,
-			];
-		}else{
-			return [
-				'data'	=> [],
-				'msg'	=> '创建失败',
-				'code'	=> 0,
-			];
-		}
-	}
-	
-	public function del($del_id){
-		$pac = $this->find($del_id);
-		if($pac == null){
-			return [
-				'data'	=> [],
-				'msg'	=> '不存在',
-				'code'	=> 0,
-			];
-		}
-		$del_res = $pac->delete();
-		if($del_res){
-			return [
-				'data'	=> [],
-				'msg'	=> '删除成功',
-				'code'	=> 1,
-			];
-		}else{
-			return [
-				'data'	=> [],
-				'msg'	=> '删除失败',
-				'code'	=> 0,
-			];
-		}
-	}
-
-	public function edit($par){
-		if (isset($par['name'])) {
-			$check = $this->where('name',$par['name'])->value('id');
-			if($check){
-				if ($check != $par['edit_id']) {
-					return [
-						'data'	=> [],
-						'msg'	=> '已存在同名套餐',
-						'code'	=> 0,
-					];
-				}	
-			}
-		}
-
-		$pac = $this->find($par['edit_id']);
-		if($pac == null){
-			return [
-				'data'	=> [],
-				'msg'	=> '不存在',
-				'code'	=> 0,
-			];
-		}
-		$edit_res = $pac->update($par);
-
-		if($edit_res){
-			return [
-				'data'	=> [],
-				'msg'	=> '编辑成功',
-				'code'	=> 1,
-			];
-		}else{
-			return [
-				'data'	=> [],
-				'msg'	=> '编辑失败',
-				'code'	=> 0,
-			];
-		}
-	}
-
-	public function show($par){
-
-		if ($par['sell_status'] == '*') {
-			$pac = $this->get();
-		}else{
-			$pac = $this->where('sell_status',$par['sell_status'])->get();
-		}
-				
-		if($pac->isEmpty()){
-			return [
-				'data'	=> [],
-				'msg'	=> '无上架套餐',
-				'code'	=> 1,
-			];
-		}else{
-			foreach ($pac as $k => $v) {
-				$v = $this->trans($v);
-			}
-			return [
-				'data'	=> $pac,
-				'msg'	=> '获取成功',
-				'code'	=> 1,
-			];
-		}
-	}
 
 	public function trans($pac){
 		switch ($pac->sell_status) {
@@ -188,7 +70,9 @@ class WafModel extends Model
 		];
 	}
 
+	//后台工作人员购买防火墙
 	public function buyNowByAdmin($par){
+		//检查客户是否属于登录账号
 		$admin_user_id 	= Admin::user()->id;
 		$checkAdminUser = $this->checkAdminUser($par['user_id']);
 		if ($checkAdminUser['code'] != 1) {
@@ -199,137 +83,481 @@ class WafModel extends Model
 				$customer->name = $customer->nickname;
 			}
 		}
-		$pay_model = new OrdersModel();
-
-		$check_time_limit = $pay_model->where('customer_id',$par['user_id'])->max('created_at');
 		
-		if ($check_time_limit != null) {
-			$check_time = strtotime($check_time_limit);
-			if (bcsub(time(),$check_time,0) < $this->time_limit) {
+		//检查套餐是否存在并上架
+		$check_pack = DB::table('tz_waf_package')->whereNull('deleted_at')->where('sell_status',1)->where('id',$par['package_id'])->value('price');
+		if (!$check_pack) {
+			return[
+				'data'	=> '',
+				'msg'	=> '套餐不存在或已下架',
+				'code'	=> 0,
+			];
+		}
+		DB::beginTransaction();
+		
+		//生成业务数据
+		$data = [
+			'business_number'	=> 'W_'.time().'_admin_'.substr(md5($admin_user_id.'tz'),0,4),
+			'user_id'			=> $par['user_id'],
+			'package_id'		=> $par['package_id'],
+			'status'			=> 5,
+		];
+		//有传价格就按传过来的算,没传就按套餐原价算
+		if (isset($par['price'])) {
+			$data['price'] = $par['price'];
+		}else{
+			$data['price'] = $check_pack;
+		}
+		
+		//因为可先使用后付款,创建待审核状态业务
+		$insert = $this->create($data);
+		if($insert == false){
+			DB::rollBack();
+			return[
+				'data'	=> '',
+				'msg'	=> '防火墙业务申请提交失败',
+				'code'	=> 0,
+			];
+		}
+		
+		DB::commit();
+		return[
+			'data'	=> '',
+			'msg'	=> '防火墙业务申请提交成功',
+			'code'	=> 1,
+		];
+
+	}
+
+	//获取待审核业务
+	public function showExamine(){
+		$res = $this->where('status',5)->get();
+		if($res->isEmpty()){
+			return [
+				'data'	=> '',
+				'msg'	=> '无数据',
+				'code'	=> 1,
+			];		
+		}
+		for ($i=0; $i < count($res); $i++) { 
+			$res[$i] = $this->transUp($res[$i]);
+		}
+		
+		return [
+				'data'	=> $res,
+				'msg'	=> '获取成功',
+				'code'	=> 1,
+			];
+	}
+
+	//渲染方法
+	protected function transUp($business){
+		switch ($business->status) {
+			case '5':
+				$business->status = '待审核';
+				break;	
+			default:
+				$business->status = '无需审核';
+				break;
+		}
+		$user_info = DB::table('tz_users')->where('id',$business->user_id)->first();
+
+		if($user_info == null){
+			$business->user = '客户信息查找失败';
+			$business->nick_name = '客户信息查找失败';
+		}else{
+			
+			$business->nickname = $user_info->nickname;
+
+			$admin_id = $user_info->salesman_id;
+			$business->admin_user = DB::table('admin_users')->where('id',$admin_id)->value('name');
+		}	
+		$business->package_name = DB::table('tz_waf_package')->where('id',$business->package_id)->value('name');
+
+		return $business;
+	}
+
+	/**
+	*	进行审核的方法	
+	*	@param $business_id 	-待审核业务的id		$res 	-审核结果 : 3 - 不通过 ; 4 - 通过
+	**/
+	public function examine($business_id,$res){
+		//建立业务模型
+		$business = $this->find($business_id);
+
+		if(!$business){
+			return [
+				'data'	=> '',
+				'msg'	=> '没找到该业务',
+				'code'	=> 0,
+			];
+		}
+
+		if($business->status != 5){	//5是待审核,别的已经审核过了就不用再审核了
+			return [
+				'data'	=> '',
+				'msg'	=> '该业务无需审核',
+				'code'	=> 0,
+			];
+		}
+
+		
+		$business->status = $res;
+		$res = $business->save();
+		if($res != true){
+			return [
+				'data'	=> '',
+				'msg'	=> '审核失败',
+				'code'	=> 0,
+			];
+		}else{
+			return [
+				'data'	=> '',
+				'msg'	=> '审核成功',
+				'code'	=> 1,
+			];
+		}	
+	}
+
+
+	/**
+	*续费
+	* @param  $business_id  -业务id ; $buy_time  -购买时长 ;$start_time -试用业务转正需要用到,开始计费时间
+	* @return 
+	*/
+	public function renew($business_id,$buy_time,$start_time='no'){
+		//获取后台登录人员id
+		$user_id = Admin::user()->id;
+		//获取业务信息
+		$business = $this->find($business_id);	
+		if(!$business){
+			return [
+				'data'	=> '',
+				'msg'	=> '无此业务',
+				'code'	=> 0,
+			];
+		}
+		//获取业务所属业务员
+		$business_admin_user = DB::table('tz_users')->where('id',$business->user_id)->select(['salesman_id','email','name','nickname'])->first();
+		//判断登录人员是否该业务所属业务员,或者是超级管理员
+		if($user_id != $business_admin_user->salesman_id  && !Admin::user()->isAdministrator()){
+			return [
+				'data'	=> '',
+				'msg'	=> '客户不属于您',
+				'code'	=> 0,
+			];
+		}
+		//判断业务使用状态
+		if($business->status == 2|| $business->status == 3){	//如果业务是下架或下架中状态
+			return [
+				'data'	=> '',
+				'msg'	=> '业务已下架,无法续费',
+				'code'	=> 0,
+			];
+		}
+		if($business->status == 5){ //如果业务还没审核
+			return [
+				'data'	=> '',
+				'msg'	=> '业务审核中,无法续费',
+				'code'	=> 0,
+			];
+		}
+
+		//判断计费开始时间是否符合区间
+
+		// if($start_time != 0){
+		// 	if($start_time < $business->examine_time || $start_time > date("Y-m-d H:i:s",time()) ){
+		// 		return [
+		// 			'data'	=> '',
+		// 			'msg'	=> '业务计费开始时间只能从 审核时间 到 当前时间内选择',
+		// 			'code'	=> 0,
+		// 		]; 
+		// 	}
+		// }
+		
+		DB::beginTransaction();	
+		//判断如果是试用业务的话,是否有传开始计费时间
+		if($business->status == 4){
+			if ($start_time == 'no') {
 				return [
-					'data'	=> [],
-					'msg'	=> $this->time_limit .'秒内只能创建一次订单',
+					'data'	=> '',
+					'msg'	=> '业务为试用,请选择开始计费时间',
+					'code'	=> 0,
+				]; 
+			}else{
+				$business->start_time = $start_time;
+				if(!$business->save()){
+					DB::rollBack();
+					return [
+						'data'	=> '',
+						'msg'	=> '业务开始计费时间录入失败',
+						'code'	=> 0,
+					]; 
+				}
+			}
+		}
+		
+		//获取订单模型
+		$orderModel = new OrderModel();
+		
+		//查看是否有已存在未付款的订单
+		$checkOrder = $orderModel
+				->where('business_sn',$business->business_number)
+				->where('order_status',0)
+				->first();
+		//如果存在未付款订单,就更新已存在的订单,不存在就生成一个
+		if($checkOrder != null){ 
+			if($business->status == 4){	//判断业务状态,如果是试用状态, 要更新结束时间
+
+				$end_time = time_calculation($start_time,$buy_time,'month');
+				
+				$end = strtotime($end_time);
+				if($end < time()){	
+					return [
+						'data'	=> '',
+						'msg'	=> '续费时长需比试用时间长',
+						'code'	=> 0,
+					];
+				}
+				$checkOrder->end_time = $end_time;
+			}
+			$checkOrder->duration 	= $buy_time;					//更新购买时长
+			$checkOrder->payable_money 	= bcmul($checkOrder->price,$buy_time,2);	//更新价格
+	
+			$res = $checkOrder->save();
+			if($res != true){
+				DB::rollBack();
+				return [
+					'data'	=> $checkOrder->id,
+					'msg'	=> '续费订单已存在,更新失败',
 					'code'	=> 0,
 				];
 			}
-		}
+			$order_id = $checkOrder->id;
+		}else{
+			if($business->status == 4){//如果是试用转正式的,算是新购
+				$order_type = 1;
+				$order_sn = 'WS_'.time().'_admin_'.substr(md5($user_id.'tz'),0,4);
 
-		DB::beginTransaction();
+				$end_time = time_calculation($start_time,$buy_time,'month');
 
-		$overlay = $this->find($par['overlay_id']);
-		if($overlay == null){
-			return [
-				'data'	=> [],
-				'msg'	=> '叠加包信息获取失败',
-				'code'	=> 0,
-			];
-		}
-		if ($overlay->sell_status != 1) {
-			return [
-				'data'	=> [],
-				'msg'	=> '该叠加包未上架',
-				'code'	=> 0,
-			];
-		}
+				$end = strtotime($end_time);
+				if($end < time()){
+					return [
+						'data'	=> '',
+						'msg'	=> '续费时长需比试用时间长',
+						'code'	=> 0,
+					];
+					
+				}
+			}else{//如果是普通续费
+				$order_sn = 'WO_'.time().'_admin_'.substr(md5($user_id.'tz'),0,4);
+				$order_type = 2;
+				$end_time = '';
+			}
+			if($business_admin_user->name == null){
+				$business_admin_user->name = $business_admin_user->email;
+			}
+			
+			$order = [
+				'order_sn'		=> $order_sn,
+				'business_sn'		=> $business->business_number,
+				'customer_id'		=> $business->user_id,
+				'customer_name'	=> $business_admin_user->nickname,
+				'business_id'		=> $business_admin_user->salesman_id,
+				'business_name'	=> DB::table('admin_users')->where('id',$business_admin_user->salesman_id)->value('name'),
+				'resource_type'		=> 13,
+				'order_type'		=> $order_type,
+				'machine_sn'		=> $business->package_id,
+				'resource'		=> DB::table('tz_waf_package')->where('id',$business->package_id)->value('name'),
+				//价格是根据业务申请时的套餐价格而定,往后不会更改,除非你手动去改它
+				'price'			=> $business->price,								
+				'duration'		=> $buy_time,
+				'payable_money'	=> bcmul($business->price,$buy_time,2),
+				'end_time'		=> $end_time,
+				'order_status'		=> 0,
+				'order_note'		=> '业务员手动为客户防火墙续费',
+			];	
 
-		$order_model = new OrderModel();
-		//检测有没有填写自定义价格,没有的话就用默认的原价,有的话就按自定义的付款
-		if (!isset($par['price'])) {
-			$par['price'] = $overlay->price;
+			$create_order = $orderModel->renewOrder($order);
+			if($create_order == false){
+				DB::rollBack();
+				return [
+					'data'	=> '',
+					'msg'	=> '创建订单失败',
+					'code'	=> 0,
+				];
+			}
+			$order_id = $create_order->id;
 		}
 		
-		$order = [
-			'order_sn'		=> 'DJB_'.time().'_admin_'.$admin_user_id,
-			'business_sn'		=> '叠加包',
-			'customer_id'		=> $par['user_id'],
-			'customer_name'	=> $customer->name,
-			'business_id'		=> $admin_user_id,
-			'business_name'		=> DB::table('admin_users')->where('id',$admin_user_id)->value('name'),
-			'resource_type'		=> 12,
-			'order_type'		=> 1,
-			'machine_sn'		=> $par['overlay_id'],
-			'resource'		=> $overlay->name,
-			'price'			=> $par['price'],
-			'duration'		=> $par['buy_num'],
-			'payable_money'		=> bcmul($par['price'], $par['buy_num'],2),
-			'order_status'		=> 0,
-		];
-		$make_order = $order_model->create($order);
-		if(!$make_order){
-			DB::rollBack();
-			return [
-				'data'	=> [],
-				'msg'	=> '订单创建失败',
-				'code'	=> 0,
-			];
-		}
+		$pay_model = new OrdersModel();
 
-		
-		$pay_res = $pay_model->payOrderByBalance([$make_order->id],0);
+		$res = $this->paySuccess($order_id,time());
+
+		//$pay_res = $pay_model->payOrderByBalance([ $order_id ],0);
+		$pay_res = ['code' => 1] ;//这里!!!开发用,线上一定要关掉并打开上面那行!
 
 		if($pay_res['code'] != 1){
 			DB::rollBack();
 			return $pay_res;
 		}
-		
 		DB::commit();
-		return [
-			'data'	=> [],
-			'msg'	=> '购买成功',
-			'code'	=> 1,
-		];
+		$return['data']	= '';
+		$return['msg']	= '续费成功';
+		$return['code']	= 1;
+		
+		return $return;
 	}
 
-	public function showBelong($par){
-		$belong_model = new OverlayBelongModel();
-		switch ($par['status']) {
-			case '*':
-				$overlay = $belong_model
-					->where('tz_overlay_belong.user_id',$par['user_id'])
-					->leftJoin('tz_overlay as b','b.id', '=' , 'tz_overlay_belong.overlay_id')
-					->leftJoin('idc_machineroom as c' , 'c.id' , '=' , 'b.site')
-					->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period','c.machine_room_name','c.id as machine_room_id'])
-					->get();
-				break;
-			case '1':
-				$overlay = $belong_model
-					->where('tz_overlay_belong.status',1)
-					->where('tz_overlay_belong.user_id',$par['user_id'])
-					->leftJoin('tz_overlay as b','b.id', '=' , 'tz_overlay_belong.overlay_id')
-					->leftJoin('idc_machineroom as c' , 'c.id' , '=' , 'b.site')
-					->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period','c.machine_room_name','c.id as machine_room_id'])
-					->get();
-				break;
-			case '0':
-				$overlay = $belong_model
-					->where('tz_overlay_belong.status',0)
-					->where('tz_overlay_belong.user_id',$par['user_id'])
-					->leftJoin('tz_overlay as b','b.id', '=' , 'tz_overlay_belong.overlay_id')
-					->leftJoin('idc_machineroom as c' , 'c.id' , '=' , 'b.site')
-					->select(['tz_overlay_belong.*','b.name','b.protection_value','b.validity_period','c.machine_room_name','c.id as machine_room_id'])
-					->get();
-				break;
-			default:
-				return [
-					'data'	=> [],
-					'msg'	=> '无此状态',
-					'code'	=> 0,
-				];
-				break;
-		}
-		if($overlay->isEmpty()){
+	protected function paySuccess($order_id,$pay_time){
+			$orderModel = new OrderModel();
+			$order = $orderModel->find($order_id);
+			$row = $order->toArray();
+			//dd($order->toArray());
+			if($row['order_type'] == 1){
+				//如果是新购的防火墙,要区分前台新购的还是试用新购的
+				$checkBusiness = DB::table('tz_waf_business')
+					->where('business_number',$row['business_sn'])
+					->whereNull('deleted_at')
+					->first();
+				//如果存在该业务
+				if($checkBusiness != null){
+					//如果该业务是试用
+					if ($checkBusiness->status == 4 ) {
+						$business_up = [
+							'status'            => 1,
+							'end_at'            => $row['end_time'],
+						];
+						$update_business = DB::table('tz_waf_business')
+									->where('business_number',$row['business_sn'])
+									->whereNull('deleted_at')
+									->update($business_up);
+						
+						if($update_business == 0){
+							$return['msg']  = '更新业务到期时间失败!';
+							$return['code'] = 3;
+							return $return;
+						}
+						
+					}else{
+						$return['msg']  = '业务已存在,请勿重复付款!';
+						$return['code'] = 2;
+						return $return;
+					}
+				}else{
+					$package = DB::table('tz_waf_package')
+					->select(['price'])
+					->where('id',$row['machine_sn'])
+					->where('sell_status',1)
+					->whereNull('deleted_at')
+					->first();
+					if($package == null){
+						$return['msg']  = '该套餐已下架!';
+						$return['code'] = 2;
+						return $return;
+					}
+
+					$now = date('Y-m-d H:i:s',time());
+					$end = time_calculation($now,$row['duration'],'month');
+					// Carbon::now()->addMonth($row['duration'])->toDateTimeString();
+
+
+					$business = [
+						'business_number'   => $row['business_sn'],
+						'user_id'       => $row['customer_id'],
+						'package_id'        => $row['machine_sn'],
+						
+						'price'         => $package->price,
+						'status'            => 1,
+						'end_at'            => $end,
+						'start_time'	=> $now,
+						'created_at'        => $now,
+					];
+					$build_business = DB::table('tz_waf_business')->insert($business);
+
+					if($build_business != true){
+						$return['msg']  = '创建防火墙业务失败!';
+						$return['code'] = 3;
+						return $return;
+					}
+					$relevance = [
+						'type'		=> 3,
+						'business_id'	=> $business['business_number'],
+					];
+					$build_relevance = DB::table('tz_business_relevance')->insert($relevance);
+					if($build_relevance != true){
+						$return['msg'] 	= '创建防火墙业务关联失败!';
+						$return['code']	= 3;
+						return $return;
+					}
+					
+					$return['data'] = ['end' => $end];
+				}
+			}else{
+				$business = DB::table('tz_waf_business')
+						->where('business_number',$row['business_sn'])
+						->whereNull('deleted_at')
+						->first();
+				//判断业务是否已下架
+				if($business->status == 2||$business->status == 3)
+				{
+					$return['msg']  = '业务已下架,无法续费!';
+					$return['code'] = 4;
+					return $return;
+				}
+
+				$end = time_calculation($business->end_at,$row['duration'],'month');
+				// Carbon::parse($business->end_at)->addMonth($row['duration'])->toDateTimeString();
+				$upEnd = DB::table('tz_waf_business')
+						->where('business_number',$row['business_sn'])
+						->whereNull('deleted_at')
+						->update(['end_at'=>$end]);
+
+				if($upEnd != 1){
+					$return['msg']  = '更新业务结束时间失败!';
+					$return['code'] = 3;
+					return $return;
+				}
+				$return['data'] = ['end' => $end];
+			}
+	}
+
+
+	public function showBusiness($user_id){
+		//判断客户所属业务员
+		$business_admin_user = DB::table('tz_users')->where('id',$user_id)->value('salesman_id');
+		if (Admin::user()->id != $business_admin_user) {
 			return [
 				'data'	=> [],
-				'msg'	=> '无叠加包',
+				'msg'	=> '客户不属于您',
 				'code'	=> 0,
 			];
 		}
-		foreach ($overlay as $k => $v) {
-			$v = $this->transBelong($v);
+		
+		$business = $this->where('user_id',$user_id)
+				->leftJoin('tz_waf_package as b' , 'b.id' ,'=' ,'tz_waf_business.package_id')
+				->select('tz_waf_business.*' , 'b.name as package_name')
+				->get()
+				->toArray();
+		
+		if (!$business) {
+			return [
+				'data'	=> [],
+				'msg'	=> '无业务',
+				'code'	=> 1,
+			];
+		}
+		foreach ($business as $k => $v) {
+			$status_arr = [ 1 => '正在使用' , 2 => '申请下架中' , 3 => '已下架' , 4 => '试用中' , 5 => '待审核'];
+			$business[$k]['status_msg'] = $status_arr[$business[$k]['status']];
+			if ($v['status'] == 4 || $v['status'] == 1) {
+				$business[$k]['domain_name'] = DB::table('tz_waf_domain')->where('business_id' , $business[$k]['id'])->select('id' , 'domain_name')->get()->toArray();
+			}
 		}
 		
 		return [
-			'data'	=> $overlay,
+			'data'	=> $business,
 			'msg'	=> '获取成功',
 			'code'	=> 1,
 		];

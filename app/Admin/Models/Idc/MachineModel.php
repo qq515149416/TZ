@@ -982,11 +982,11 @@ class MachineModel extends Model
 		$rows = $this->where(['machineroom'=>50])->get();
 		foreach($rows as $key => $value){
 			$value->fip = '无';
-			$fip = DB::table('idc_ips')->where(['own_business'=>$value->own_business,'ip_comproom'=>50])->get();
+			$fip = DB::table('tz_orders')->where(['business_sn'=>$value->own_business,'remove_status'=>0,'resource_type'=>4])->whereNull('deleted_at')->get();
 			if(!$fip->isEmpty()){
 				$ip = '';
 				foreach($fip as $values){
-					$ip = $ip.','.$values->ip." ";
+					$ip = $ip.','.$values->machine_sn." ";
 				}
 				$value->fip = $ip;
 				

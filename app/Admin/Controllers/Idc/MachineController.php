@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use think\Request as ThinkRequest;
 
 /**
  * 机器的相关操作接口
@@ -135,6 +136,11 @@ class MachineController extends Controller
         $excel = new MachineModel();
         $return = $excel->handleExcel($file);
         return tz_ajax_echo($return['data'],$return['msg'],$return['code']);
+    }
+
+    public function downExcel(){
+      $excel = new MachineModel();
+      $excel->downExcel();
     }
 
 }

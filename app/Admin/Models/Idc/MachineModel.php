@@ -957,4 +957,83 @@ class MachineModel extends Model
 		return $return;
 	}
 
+	public function downExcel(){
+		$spreadsheet = new Spreadsheet();
+		$worksheet = $spreadsheet->getActiveSheet();
+		$worksheet->setTitle('机器与副IP表格');
+		$worksheet->setCellValueByColumnAndRow(1, 1, '机器与副IP表格');
+		$row_value = 	['机器编号','CPU','内存','硬盘','机房','机柜编号','IP','副IP','带宽(M)','防护(G)','登陆名','登录密码','机器型号','所属业务编号','业务到期时间','备注']; ;//填写的字段
+		$row = $worksheet->fromArray($row_value,NULL,'A2');//分配字段从A4开始填写（横向）
+		
+		$highest_row = $worksheet->getHighestRow();//总行数
+		$highest_colum = $worksheet->getHighestColumn();//总列数
+		//标题样式
+		$title_font = [
+			'font' => [
+				'bold' => true,//加粗
+				'size' => '20px',//字体大小
+			],
+			'alignment' => [//内容居中
+				'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+			],
+		];
+		$worksheet->mergeCells('A1:'.$highest_colum.'1')->getStyle('A1:'.$highest_colum.'1')->applyFromArray($title_font);//设置标题样式
+	   
+		$rows = $this->where(['machineroom'=>50])->get();
+		foreach($rows as $key => $value){
+			$value->fip = '无';
+			$fip = DB::table('tz_orders')->where(['business_sn'=>$value->own_business,'remove_status'=>0,'resource_type'=>4])->whereNull('deleted_at')->get();
+			if(!$fip->isEmpty()){
+				$ip = '';
+				foreach($fip as $values){
+					$ip = $ip.','.$values->machine_sn." ";
+				}
+				$value->fip = $ip;
+				
+			}
+			$value->ip = $value->ip_id?$this->ip($value->ip_id)->ip:'0.0.0.0';
+			$value->cabinet = $value->cabinet?$this->cabinet($value->cabinet):'无';
+			$value->machineroom = $value->machineroom?$this->machineRooms($value->machineroom):'未知';	
+		}
+		$len = count($rows);
+		// $rows = $rows->toArray();
+		// $worksheet->getCell($colum.'1')->setValue('字段填写对照表(注意:由于数据的随时变化,为了准确性,每次批量前都请重新下载模板)');
+		$j = 0;
+		for ($i=0; $i < $len; $i++) {
+			$row = $rows[$i]->toArray();
+			$j = $i + 3; //从表格第3行开始
+			$worksheet->setCellValueByColumnAndRow(1, $j, $row['machine_num']);
+			$worksheet->setCellValueByColumnAndRow(2, $j, $row['cpu']);
+			$worksheet->setCellValueByColumnAndRow(3, $j, $row['memory']);
+			$worksheet->setCellValueByColumnAndRow(4, $j, $row['harddisk']);
+			$worksheet->setCellValueByColumnAndRow(5, $j, $row['machineroom']);
+			$worksheet->setCellValueByColumnAndRow(6, $j, $row['cabinet']);
+			$worksheet->setCellValueByColumnAndRow(7, $j, $row['ip']);
+			$worksheet->setCellValueByColumnAndRow(8, $j,$row['fip']);
+			$worksheet->setCellValueByColumnAndRow(9, $j, $row['bandwidth']);
+			$worksheet->setCellValueByColumnAndRow(10, $j, $row['protect']);
+			$worksheet->setCellValueByColumnAndRow(11, $j, $row['loginname']);
+			$worksheet->setCellValueByColumnAndRow(12, $j, $row['loginpass']);
+			$worksheet->setCellValueByColumnAndRow(13, $j, $row['machine_type']);
+			$worksheet->setCellValueByColumnAndRow(14, $j, $row['own_business']);
+			$worksheet->setCellValueByColumnAndRow(15, $j, $row['business_end']);
+			$worksheet->setCellValueByColumnAndRow(15, $j, $row['machine_note']);
+		}
+		
+		/**
+		 * 下载模板
+		 * @var [type]
+		 */
+
+		$filename = '机器与副IP表格.xlsx';
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Content-Disposition: attachment;filename="'.$filename.'"');
+		header('Cache-Control: max-age=0');
+		$writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+		$writer->save('php://output');
+		$spreadsheet->disconnectWorksheets();
+		unset($spreadsheet);
+		exit;
+	}
+
 }

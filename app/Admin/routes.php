@@ -12,6 +12,7 @@ Route::group([
     $router->get('auth/login', 'User\AuthController@getLogin');
     $router->post('auth/login', 'User\AuthController@postLogin');
     $router->get('/', 'HomeController@index');
+    $router->get('downexcel','Idc\MachineController@downExcel');
 
 
     /**

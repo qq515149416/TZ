@@ -820,7 +820,7 @@ Route::group([
             $router->post('editDomain', 'Waf\WafController@editDomain');//为客户编辑域名基本配置
             $router->post('showDomain', 'Waf\WafController@showDomain');//展示域名基本配置
 
-            //cc防护配置
+            //防护开关配置
             $router->post('showDomainProtection', 'Waf\WafController@showDomainProtection');//获取域名防护配置
             $router->post('editDomainProtection', 'Waf\WafController@editDomainProtection');//修改域名防护配置
             

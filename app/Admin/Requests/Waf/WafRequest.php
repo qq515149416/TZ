@@ -102,7 +102,7 @@ class WafRequest extends FormRequest
 					'private_key'			=> 'required_if:https,1',
 					'enc_https'			=> 'required_if:https,1|boolean',
 					'redirect_https'			=> 'required_if:https,1|boolean',
-					'proxy'				=> 'required|in:1,0',
+					'proxy'				=> 'required|boolean',
 					'proxy_ip'			=> 'required_if:proxy,1|ip'
 				];
 				break;

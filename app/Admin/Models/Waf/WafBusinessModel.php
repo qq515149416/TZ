@@ -201,22 +201,43 @@ class WafBusinessModel extends Model
 			];
 		}
 
-		
+		DB::beginTransaction();	
 		$business->status = $res;
+		$business->examine_time = date("Y-m-d H:i:s");
 		$res = $business->save();
+
 		if($res != true){
+			DB::rollBack();
 			return [
 				'data'	=> '',
 				'msg'	=> '审核失败',
 				'code'	=> 0,
 			];
-		}else{
+		}
+
+		$relevance = [
+			'type'		=> 3,
+			'business_id'	=> $business->business_number,
+			'created_at'	=> $business->examine_time,
+		];
+
+		$build_relevance = DB::table('tz_business_relevance')->insert($relevance);
+		if($build_relevance != true){
+			
+			DB::rollBack();
 			return [
 				'data'	=> '',
-				'msg'	=> '审核成功',
-				'code'	=> 1,
+				'msg'	=> '创建防火墙业务关联失败',
+				'code'	=> 0,
 			];
-		}	
+		}
+		DB::commit();
+		return [
+			'data'	=> '',
+			'msg'	=> '审核成功',
+			'code'	=> 1,
+		];
+			
 	}
 
 

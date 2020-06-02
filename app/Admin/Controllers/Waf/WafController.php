@@ -804,6 +804,13 @@ class WafController extends Controller
 			case 'showDomainIPRule':
 				$res = $api_controller->showDomainIPRule($domain_info->domain_name);
 				$msg = '获取域名黑白名单情况成功';
+
+				if ($res['result']) {
+					$rule = ['deny' => '黑名单' , 'allow' => '白名单'];
+					foreach ($res['message'] as $k => $v) {
+						$res['message'][$k]['rule_action'] = $rule[$res['message'][$k]['rule_action']];
+					}
+				}
 				break;
 			case 'showDomain':
 				$res = $api_controller->showDomain($domain_info->domain_name);
@@ -830,7 +837,15 @@ class WafController extends Controller
 				'code'	=> 0
 			];
 		}
-		
+		// foreach ($res['message'] as $k => $v) {
+
+		// 	// if ($v == "true") {
+		// 	// 	$res['message'][$k] = 1;
+		// 	// }
+		// 	// if ($v == "false") {
+		// 	// 	$res['message'][$k] = 0;
+		// 	// }
+		// }
 		
 
 		return [
